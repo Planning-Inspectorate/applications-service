@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: Applications Service API Documentation
+  description:
+    API to <ul><li>create, retrieve and modify planning applications</li></ul>
+  version: 1.0.3
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: 'http://localhost:3000/'
+
