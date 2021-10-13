@@ -12,6 +12,9 @@ const VIEW = {
 
   REGISTER: {
     TYPE_OF_PARTY: 'register/type-of-party',
+    TEST1: 'register/test1',
+    TEST2: 'register/test2',
+    TEST3: 'register/test3',
   }
 };
 

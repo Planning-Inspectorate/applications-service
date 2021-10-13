@@ -43,17 +43,20 @@
                         {
                             value: "mySay",
                             text: "An person interested in having my say",
-                            attributes: { "data-cy": "answer-mySay"}
+                            attributes: { "data-cy": "answer-mySay"},
+                            checked: type === "mySay"
                         },
                         {
                             value: "organisation",
                             text: "Someone registering for an organisation I work or volunteer for",
-                            attributes: { "data-cy": "answer-organisation"}
+                            attributes: { "data-cy": "answer-organisation"},
+                            checked: type === "organisation"
                         },
                         {
                             value: "behalfOfOrganisation",
                             text: "Someone registering on behalf of anothet person or organisation",
-                            attributes: { "data-cy": "answer-behalfOfOrganisation"}
+                            attributes: { "data-cy": "answer-behalfOfOrganisation"},
+                            checked: type === "behalfOfOrganisation"
                         }
                     ]
                 }) }}
