@@ -9,16 +9,7 @@
 const path = require('path');
 
 module.exports = {
-  db: {
-    mongodb: {
-      url: process.env.MONGODB_URL,
-      dbName: process.env.MONGODB_DB_NAME,
-      opts: {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
-    },
-  },
+  db: {},
   docs: {
     api: {
       path: process.env.DOCS_API_PATH || path.join(__dirname, '..', '..', 'api'),
@@ -26,11 +17,7 @@ module.exports = {
   },
   logger: {
     level: process.env.LOGGER_LEVEL || 'info',
-    redact: [
-      'config.db.mongodb',
-      'config.messageQueue.horizonHASPublisher.connection.password',
-      'config.services.notify.apiKey',
-    ],
+    redact: ['config.services.notify.apiKey'],
   },
   server: {
     port: Number(process.env.SERVER_PORT || 3000),

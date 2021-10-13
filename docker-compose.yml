@@ -12,42 +12,15 @@ services:
   applications-service-api:
     image: node:14-alpine
     environment:
-      APP_APPLICATIONS_BASE_URL: http://forms-web-app:9003
-      APP_LPA_QUESTIONNAIRE_BASE_URL: http://lpa-questionnaire-web-app:9001
+      APP_APPLICATIONS_BASE_URL: http://forms-web-app:9004
       DOCS_API_PATH: /opt/app/api
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
-      HORIZON_HAS_PUBLISHER_HOST: rabbitmq
-      HORIZON_HAS_PUBLISHER_PASSWORD: admin
-      HORIZON_HAS_PUBLISHER_PORT: 5672
-      HORIZON_HAS_PUBLISHER_QUEUE: docker_queue
-      HORIZON_HAS_PUBLISHER_USERNAME: admin
       LOGGER_LEVEL: 'debug'
-      LPA_DATA_PATH: /opt/app/data/lpa-list.csv
-      LPA_TRIALIST_DATA_PATH: /opt/app/data/lpa-trialists.json
-      MONGODB_AUTO_INDEX: 'true'
-      MONGODB_DB_NAME: applications-service-api
-      MONGODB_URL: mongodb://mongodb:27017
       SERVER_SHOW_ERRORS: 'true'
     ports:
       - 3000:3000
     working_dir: /opt/app
-    # links:
-    #   - document-service-api
-    #   - mock-horizon
-    #   - mock-notify
-    #   - mock-os-places
-    #   - mongodb
-    #   - rabbitmq
-    # depends_on:
-    #   - applications-service-api-data
-    #   - document-service-api
-    #   - mock-horizon
-    #   - mock-notify
-    #   - mock-os-places
-    #   - mongodb
-    #   - rabbitmq
     volumes:
-      - ./packages/common:/opt/app/node_modules/@pins/common:ro # Replace the module to avoid symlink errors
       - ./packages/applications-service-api:/opt/app:ro
     command: npm run start:dev
 
@@ -61,36 +34,21 @@ services:
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
       FILE_UPLOAD_TMP_PATH: '/tmp'
       GOOGLE_ANALYTICS_ID: G-TZBWMVPTHV
-      SESSION_MONGODB_URL: mongodb://mongodb:27017/lpa-sessions
-      SESSION_KEY: some_secure_key_goes_here
       # please override this locally if using not using localhost or ip address to browse the site in dev.
       SUBDOMAIN_OFFSET: 0
       USE_SECURE_SESSION_COOKIES: 'false'
       PDF_SERVICE_API_URL: 'http://pdf-service-api:3000'
     ports:
-      - 9003:3000
+      - 9004:3000
       # node debugger
       # - 9229:9229
     working_dir: /opt/app
     links:
       - applications-service-api
-      # - document-service-api
-      - mongodb
-      # - pdf-service-api
     depends_on:
       - applications-service-api
-      # - document-service-api
-      - mongodb
-      # - pdf-service-api
     volumes:
-      - ./packages/common:/opt/app/node_modules/@pins/common
       - ./packages/forms-web-app:/opt/app
     command: npm run start:dev
     # if enabling debug, be sure to uncomment / expose the debug port above.
     # command: npm run start:dev:debug
-
-  
-  mongodb:
-    image: mongo:3.6.21
-    ports:
-      - 4000:27017

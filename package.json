@@ -21,11 +21,10 @@
     "test:e2e:files": "cd ./e2e-tests && ./create-large-test-files.sh",
     "test:e2e:smoke": "cd ./e2e-tests && BASEURL=$BASEURL npm run test:e2e:smoke",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "document:applications-service-api": "cd ./packages/applications-service-api && npm install && npm run documentation",
-    "document:common": "cd ./packages/common && npm install && npm run documentation"
+    "document:applications-service-api": "cd ./packages/applications-service-api && npm install && npm run documentation"
   },
   "repository": {
-    "type": "git", 
+    "type": "git",
     "url": "git+https://github.com/Planning-Inspectorate/applications-service.git"
   },
   "author": "Foundry4 <www.foundry4.com>",

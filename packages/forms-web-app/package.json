@@ -32,13 +32,11 @@
   },
   "dependencies": {
     "@ministryofjustice/frontend": "0.2.0",
-    "@pins/common": "file:../common",
     "@testing-library/dom": "^7.31.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/user-event": "^12.8.3",
     "accessible-autocomplete": "^2.0.3",
     "compression": "^1.7.4",
-    "connect-mongodb-session": "^2.4.1",
     "cookie-parser": "~1.4.4",
     "date-fns": "^2.23.0",
     "express": "~4.16.1",

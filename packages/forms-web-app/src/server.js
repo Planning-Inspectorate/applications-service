@@ -7,7 +7,7 @@ const http = require('http');
 const config = require('./config');
 const app = require('./app');
 const logger = require('./lib/logger');
-const healthChecks = require('./lib/healthchecks');
+// const healthChecks = require('./lib/healthchecks');
 
 /**
  * Get port from environment and store in Express.
@@ -24,7 +24,7 @@ const server = http.createServer(app);
  * Add healthchecks
  */
 
-healthChecks(server);
+// healthChecks(server);
 
 /**
  * Event listener for HTTP server "error" event.
