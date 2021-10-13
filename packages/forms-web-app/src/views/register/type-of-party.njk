@@ -1,0 +1,72 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set title = "Type of interested party - Register to have your say - GOV.UK" %}
+
+{% block pageTitle %}
+    {% if errors %}
+        {% set title = "Error: " + title %}
+    {% endif %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {% if errors %}
+                {{ govukErrorSummary({
+                    titleText: "There is a problem",
+                    errorList: errorSummary
+                }) }}
+            {% endif %}
+
+            <form action="" method="post" novalidate>
+                <p>Register to have your say about a national infrastructure project</p>
+
+                {{ govukRadios({
+                    idPrefix: "type-of-party",
+                    name: "type-of-party",
+                    errorMessage: errors['type-of-party'] and {
+                        text: errors['type-of-party'].msg
+                    },
+                    fieldset: {
+                        legend: {
+                            text: "What type of interested party are you?",
+                            isPageHeading: true,
+                            classes: "govuk-fieldset__legend--l"
+                        }
+                    },
+                    items: [
+                        {
+                            value: "mySay",
+                            text: "An person interested in having my say",
+                            attributes: { "data-cy": "answer-mySay"}
+                        },
+                        {
+                            value: "organisation",
+                            text: "Someone registering for an organisation I work or volunteer for",
+                            attributes: { "data-cy": "answer-organisation"}
+                        },
+                        {
+                            value: "behalfOfOrganisation",
+                            text: "Someone registering on behalf of anothet person or organisation",
+                            attributes: { "data-cy": "answer-behalfOfOrganisation"}
+                        }
+                    ]
+                }) }}
+
+                {{ govukButton({
+                    text: "Continue",
+                    type: "submit",
+                    attributes: { "data-cy":"button-save-and-continue"}
+                }) }}
+            </form>
+        </div>
+    </div> 
+{% endblock %}
+
+  
+
