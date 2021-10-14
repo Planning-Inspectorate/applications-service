@@ -1,6 +1,4 @@
 Feature: Register - Type of interested party
-    Prospective appellant states whether their planning permission application has been Granted, or Refused,
-    or they don't have received the decision yet
 
 Scenario: Navigate to Type of party page and verify the content in the page
     Given I navigate to the Type of party page
