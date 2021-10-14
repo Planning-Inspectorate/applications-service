@@ -5,12 +5,9 @@
  */
 const logger = require('./lib/logger');
 const server = require('./server');
-const mongodb = require('./db/db');
 
 async function main() {
-  await mongodb.connect(() => {
-    server();
-  });
+  server();
 }
 
 main().catch((err) => {

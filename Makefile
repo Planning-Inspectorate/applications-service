@@ -21,18 +21,6 @@ install:
 	# echo "-- Complete --"
 .PHONY: install
 
-openfaas:
-	curl -sSL https://raw.githubusercontent.com/openfaas/faasd/master/cloud-config.txt > .faasd.txt
-
-	sed -i -e "s~ssh-rsa.*~${PUB_KEY}~g" .faasd.txt
-
-	multipass launch \
-		--cloud-init .faasd.txt \
-		--name faasd
-
-	rm .faasd.txt
-.PHONY: openfaas
-
 run:
 	docker-compose run \
 		--rm \
@@ -64,10 +52,3 @@ uninstall:
 		(cd $${dir} && rm -Rf node_modules); \
   	done
 .PHONY: uninstall
-
-update-functions:
-	faas-cli remove -f functions.yml
-	faas-cli up -f functions.yml --tag sha \
-		--env APPLICATIONS_SERVICE_URL=http://app.${DEPLOY_NAMESPACE}.svc.cluster.local:3000 \
-		--env DOCUMENT_SERVICE_URL=http://app.${DEPLOY_NAMESPACE}.svc.cluster.local:3001
-.PHONY: update-functions

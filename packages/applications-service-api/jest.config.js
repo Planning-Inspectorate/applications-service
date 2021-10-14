@@ -1,5 +1,4 @@
 module.exports = {
-  preset: '@shelf/jest-mongodb',
   watchPathIgnorePatterns: ['globalConfig'],
   collectCoverage: true,
   collectCoverageFrom: ['./src/**/*.js'],
