@@ -113,7 +113,7 @@ stages:
               searchFolder: $(Pipeline.Workspace)
               mergeTestResults: true
               failTaskOnFailedTests: true
-              testRunTitle: 'Appeal Service API Jest Tests'
+              testRunTitle: 'Application Service API Jest Tests'
           - task: PublishCodeCoverageResults@1
             displayName: Publish Code Coverage Results
             inputs:
