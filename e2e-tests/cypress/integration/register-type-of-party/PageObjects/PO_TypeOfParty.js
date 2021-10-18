@@ -4,7 +4,7 @@ class PO_TypeOfParty {
     }
   
     validatePageTitle() {
-      cy.title().should('eq', "Type of interested party - Register to have your say - GOV.UK");
+      cy.title().should('eq', "Type of interested party - Register to have your say");
     }
     
     validateText() {
