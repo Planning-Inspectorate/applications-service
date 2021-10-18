@@ -10,3 +10,8 @@ Scenario: Continue fron Type of paty page without selection any party is provide
     Given I navigate to the Type of party page
     When Select continue without selecting any option
     Then Progress is halted with a message that a Type of party is required
+
+Scenario: User selects An person interested in having my say and is taken to full-name page
+    Given I navigate to the Type of party page
+    When User selects An person interested in having my say
+    Then User is navigated to full-name page
