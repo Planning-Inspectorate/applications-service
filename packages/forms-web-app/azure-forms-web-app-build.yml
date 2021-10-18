@@ -5,10 +5,7 @@
 trigger:
   branches:
     include:
-#      - feature/*
-#      - fix/*
-#      - subtask/*
-      - master
+      -  main
   paths:
     include:
       - packages/forms-web-app
@@ -26,10 +23,10 @@ variables:
   # -----------------------------------------------------------------------
 
   # Container registry service connection established during pipeline creation
-  formsWebAppDockerfilePath: '$(Build.SourcesDirectory)/packages/forms-web-app/Dockerfile'
-  imageRepository: 'forms-web-app'
+  applicationsFormsDockerfilePath: '$(Build.SourcesDirectory)/packages/forms-web-app/Dockerfile'
+  imageRepository: 'applications-forms-web-app'
   containerRegistry: 'pinscommonukscontainers3887default.azurecr.io'
-  dockerRegistryServiceConnection: 'applications-service-api-registry-connection' ## this needs renamed
+  dockerRegistryServiceConnection: 'applications-service-api-registry-connection'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -51,11 +48,11 @@ stages:
                 Write-Host "Setting the name of the build to '$buildName'."
                 Write-Host "##vso[build.updatebuildnumber]$buildName"
 
-  - stage: Build_and_Push_Forms_Web_App
-    displayName: Build, Test and Push Forms Web App
+  - stage: Build_and_Push_Applications_Service_Forms_Web_App
+    displayName: Build, Test and Push Applications Service Forms Web App
     jobs:
-      - job: Build_Test_Push_Forms_Web_App
-        displayName: Build Forms Web App
+      - job: Build_Test_Push_Applications_Service
+        displayName: Build Applications Service Forms Web App
         pool:
           vmImage: $(vmImageName)
         steps:
@@ -64,16 +61,17 @@ stages:
             inputs:
               command: build
               repository: $(imageRepository)
-              dockerfile: $(formsWebAppDockerfilePath)
+              dockerfile: $(applicationsFormsDockerfilePath)
               containerRegistry: $(dockerRegistryServiceConnection)
               arguments: >
-                --build-arg APP_NAME=forms-web-app
+                --build-arg APP_NAME=applications-forms-web-app
                 --build-arg BUILD_ID=$(Build.BuildNumber)
                 --build-arg VERSION=$(versionNumber)
               tags: |
                 $(versionNumber)
-                forms-web-app
+                applications-forms-web-app
                 latest
+<<<<<<< HEAD
           - task: PowerShell@2
             displayName: Copy Test Results
             inputs:
@@ -136,6 +134,70 @@ stages:
                       Write-Host "Tests failed"
                       exit $exitCode
                   }
+=======
+          # - task: PowerShell@2
+          #   displayName: Copy Test Results
+          #   inputs:
+          #     targetType: 'inline'
+          #     script: |
+          #       Write-Host "Looking for images with tag $(versionNumber)"
+          #       $imageId = (docker images ***/$(imageRepository):$(versionNumber) --quiet)
+
+          #       Write-Host "Setting the imageId to '${imageId}'."
+
+          #       Write-Host "Running Docker..."
+          #       $containerId = docker run -d ${imageId}
+          #       Write-Host "Setting the containerId to '${containerId}'."
+
+          #       # I found that is was sometimes necessary to have a delay before attempting the copy
+          #       # A more elegant retry solution would be better
+          #       Start-Sleep -Seconds 2
+
+          #       $testLocation = "${containerId}:/opt/app/junit.xml"
+          #       $coverageLocation = "${containerId}:/opt/app/coverage"
+          #       $exitCodeLocation = "${containerId}:/npm.exitcode"
+
+          #       Write-Host "Copying test results from '$testLocation'"
+          #       docker cp "${testLocation}" "$(Pipeline.Workspace)/junit.xml"
+
+          #       Write-Host "Copying coverage results from '$coverageLocation'"
+          #       docker cp "${coverageLocation}" "$(Pipeline.Workspace)/coverage"
+
+          #       Write-Host "Copying exit code from '$exitCodeLocation'."
+          #       docker cp "${exitCodeLocation}" "$(Pipeline.Workspace)/npm.exitcode"
+          # - task: PublishTestResults@2
+          #   displayName: Publish Test Results
+          #   condition: succeededOrFailed()
+          #   inputs:
+          #     testResultsFormat: 'JUnit'
+          #     testResultsFiles: 'junit.xml'
+          #     searchFolder: $(Pipeline.Workspace)
+          #     mergeTestResults: true
+          #     failTaskOnFailedTests: true
+          #     testRunTitle: 'Applications Service Forms Web App Jest Tests'
+          # - task: PublishCodeCoverageResults@1
+          #   displayName: Publish Code Coverage Results
+          #   inputs:
+          #     codeCoverageTool: Cobertura
+          #     summaryFileLocation: $(Pipeline.Workspace)/coverage/cobertura-coverage.xml
+          # - task: PowerShell@2
+          #   displayName: Verify Tests Passed
+          #   inputs:
+          #     targetType: 'inline'
+          #     script: |
+          #       # Check exitcode file exists
+          #         If("$(Test-Path $(Pipeline.Workspace)/npm.exitcode))" -eq "False") {
+          #             Write-Host "Exit code for test run not found"
+          #             exit 9
+          #         }
+
+          #         $exitCode = cat $(Pipeline.Workspace)/npm.exitcode
+
+          #         If($exitCode -ne "0") {
+          #             Write-Host "Tests failed"
+          #             exit $exitCode
+          #         }
+>>>>>>> main
           - task: Docker@2
             displayName: Push Image
             inputs:
@@ -144,5 +206,5 @@ stages:
               containerRegistry: $(dockerRegistryServiceConnection)
               tags: |
                 $(versionNumber)
-                forms-web-app
+                applications-forms-web-app
                 latest
