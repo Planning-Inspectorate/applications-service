@@ -30,3 +30,14 @@ Then('Progress is halted with a message that a Type of party is required', () =>
   cy.title().should('include', 'Error: ');
   cy.confirmTextOnPage('Select what type of interested party are you');
 })
+
+When('User selects An person interested in having my say', () => {
+  cy.get('[data-cy="answer-mySay"]').click();
+  cy.wait(Cypress.env('demoDelay'));
+  cy.clickSaveAndContinue();
+})
+
+Then('User is navigated to full-name page', () => {
+  cy.url().should('include', '/register/full-name')
+  cy.wait(Cypress.env('demoDelay'));
+})

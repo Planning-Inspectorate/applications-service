@@ -41,7 +41,7 @@
       {% block backButton %}
         {{ govukBackLink({
           text: "Back",
-          href: navigation[1],
+          href: "javascript:history.back()",
           attributes: {
             'data-cy': 'back'
           }
