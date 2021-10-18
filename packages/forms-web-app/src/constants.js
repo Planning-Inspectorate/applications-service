@@ -1,9 +1,9 @@
 module.exports = {
-  ELIGIBILITY: {
-    PLANNING_PERMISSION_STATUS: {
-      GRANTED: 'granted',
-      REFUSED: 'refused',
-      NODECISION: 'nodecisionreceived',
+  REGISTER: {
+    TYPE_OF_PARTY: {
+      MY_SAY: 'mySay',
+      ORGANISATION: 'organisation',
+      BEHALF_OF_ORGANISATION: 'behalfOfOrganisation',
     },
   },
 };

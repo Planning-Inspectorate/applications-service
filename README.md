@@ -148,9 +148,6 @@ bf2a09e erm, not sure why CI has broken so another go
 067c88e gah, I'm stupid. I can see why CI broke
 ```
 
-This is not linear because you're fixing something inside the PR. This should be [rebased](https://github.com/foundry4/appeal-planning-decision/wiki/An-intro-to-Git-Rebase)
-so it's linear:
-
 ```shell
 6fd721a (feature/my-wonderful-feature): feat(some-brilliant-feat): this is a brilliant feature I've worked hard on
 ```
