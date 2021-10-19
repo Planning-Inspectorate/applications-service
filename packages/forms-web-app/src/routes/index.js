@@ -6,10 +6,12 @@ const homeRouter = require('./home');
 const cookieRouter = require('./cookies');
 const guidancePagesRouter = require('./guidance-pages');
 const registerRouter = require('./register');
+const interestedPartyRouter = require('./interested-party-guide');
 
 router.use('/', homeRouter);
 router.use(guidancePagesRouter);
 router.use('/cookies', cookieRouter);
 router.use('/register', registerRouter);
+router.use('/interested-party-guide', interestedPartyRouter);
 
 module.exports = router;

@@ -1,0 +1,772 @@
+{% extends "layouts/layout.njk" %}
+
+{% block pageTitle %}
+  A303 Dewsbury project overview
+{% endblock %}
+
+{% block headIcons %}
+  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
+{% endblock %}
+
+{% block head %}
+  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+
+  {% for stylesheetUrl in extensionConfig.stylesheets %}
+    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
+  {% endfor %}
+
+<!-- Mapbox resources -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+<!-- end Mapbox -->
+{% endblock %}
+
+
+{% block header %}
+  <!-- Blank header with no service name for the start page -->
+  {{ pinsHeader() }}
+{% endblock %}
+
+{% block beforeContent %} 
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">A404 Dewsbury project information</h1>
+  <p>The potential A404 Dewsbury to Berwick Down scheme proposes to construct a new section of dual carriageway to address problems associated with the single carriageway section of the A303 between Amesbury’s Countess roundabout and the dual carriageway section to the west of Winterbourne Stoke. </p>
+  <p><a href="#">Sign-up for updates via email, letter or text</a>.</p>
+
+  <div class="pins-timeline">
+    <p>This project is at: <strong>Pre-application and application received stage</strong></p>
+    <ol>
+      <li class="completed">Pre-application and application received<div class="pins-timeline-badge">&#10003;</div></li>
+      <li class="current">Pre-examination<div class="pins-timeline-badge">!</div></li>
+      <li>Examination of the project<div class="pins-timeline-badge"></div></li>
+      <li>Recommendation and decision<div class="pins-timeline-badge"></div></li>
+      <li>Outcome of the project<div class="pins-timeline-badge"></div></li>
+    </ol>
+    <p>This means you cannot register to have your say yet. You will be able to register at the start of the gathering and reviewing information stage.</p>
+    <p><a href="#">Find out more about the process for Development Consent Orders</a>.</p>
+  </div>
+  <h2 class="govuk-heading-m">Affected area</h2>
+<div class="pins-map-enclosure">
+  <div id='map' class="pins-affected-area-map--embed"></div>
+  <div class="pins-map-key-box">
+    <h3>Key</h3>
+    <ul id="menu" class="pins-map-menu pins-map-key-list">
+      <li>
+        <input type="radio" name="mapToggle" value="satellite" id="satellite-v9">
+        <label for="satellite-v9">Satellite</label>
+      </li>
+      <li>
+        <input type="radio" name="mapToggle" value="map" id="streets-v11" checked="checked">
+        <label for="streets-v11">Map</label>
+      </li>
+    </ul>
+    <ul class="pins-map-key-items pins-map-key-list">
+      <li><span class="pins-map-key-icon--development_area"></span>Development area</li>
+      <li><span class="pins-map-key-icon--red_line_boundary"></span>Red line boundary</li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+  <p><a href="#">View an interactive map of the areas that will be affected by this project.</a></p>
+  <h3 class="govuk-heading-s">Check for impact on an area</h3>
+  <p>Use this service to find out:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>the impact this project will have for an area in England or Wales</li>
+  </ul>
+  <a href="../0-1-0/postcode" class="govuk-button">Start now</a>
+  <h2 class="govuk-heading-m">About the project</h2>
+  <ul class="pins-list-columns">
+    <li><h3 class="govuk-heading-s"><a href="">Application introduction</a></h3><p>Information about the project and what the developer is proposing</p></li>
+    <li><h3 class="govuk-heading-s">Environmental information</h3><p>Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.</p></li>
+    <li><h3 class="govuk-heading-s">Drawings</h3><p>How the propsed project will look and the area it will impact.</p></li>
+  </ul>
+
+  <h2 class="govuk-heading-m">Register to have your say</h2>
+  <p>If you want to have your say about this project, you can register and tell us what you think.</p>
+  <p><a href="#">Register to have your say about a national infrastructure project</a>.</p>
+
+  <h2 class="govuk-heading-m">More detailed project information</h2>
+  <p>If you are looking for more detailed information about this project, you can <a href="#">view all project information</a>.</p>
+{% endblock %}
+
+{% block footer %}
+  {{ pinsFooter() }}
+
+  <script>
+  	mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
+    const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+      center: [ -1.6297334421922187,
+      53.68704018442503], // starting position
+      zoom: 13, // starting zoom,
+      logoPosition: 'top-left'
+    });
+
+    const layerList = document.getElementById('menu');
+    const inputs = layerList.getElementsByTagName('input');
+
+      for (const input of inputs) {
+        input.onclick = (layer) => {
+          const layerId = layer.target.id;
+          map.setStyle('mapbox://styles/mapbox/' + layerId);
+        };
+      }
+
+
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+    // Red line boundary
+      map.on('style.load', () => {
+        // Add a data source containing GeoJSON data.
+        map.addSource( 'redline_boundary', {
+          'type': 'geojson',
+          'data': {
+            "geometry": {
+              "coordinates": [
+                [
+                  [
+                    -1.66781759147932,
+                    53.677617502883294
+                  ],
+                  [
+                    -1.6687472314275453,
+                    53.67835967912643
+                  ],
+                  [
+                    -1.6687472314275453,
+                    53.67874273271616
+                  ],
+                  [
+                    -1.668019687120676,
+                    53.67974823181541
+                  ],
+                  [
+                    -1.6672921428138352,
+                    53.68061006908121
+                  ],
+                  [
+                    -1.6660795689684278,
+                    53.68130431405379
+                  ],
+                  [
+                    -1.6632906491255994,
+                    53.68185491399845
+                  ],
+                  [
+                    -1.6622397517926686,
+                    53.6819027919143
+                  ],
+                  [
+                    -1.6599358614874689,
+                    53.6819027919143
+                  ],
+                  [
+                    -1.65932957456522,
+                    53.68120855680695
+                  ],
+                  [
+                    -1.6569448460032845,
+                    53.681974608686176
+                  ],
+                  [
+                    -1.6554089191337766,
+                    53.681064920528485
+                  ],
+                  [
+                    -1.6537517348786253,
+                    53.68142401030633
+                  ],
+                  [
+                    -1.654075087903692,
+                    53.6817591580035
+                  ],
+                  [
+                    -1.654196345288284,
+                    53.68223793580151
+                  ],
+                  [
+                    -1.6539538305200097,
+                    53.682644892650586
+                  ],
+                  [
+                    -1.6541559261603993,
+                    53.68329122779875
+                  ],
+                  [
+                    -1.6518924549831127,
+                    53.68420086786938
+                  ],
+                  [
+                    -1.6473160672570089,
+                    53.68605510344503
+                  ],
+                  [
+                    -1.6473359537079943,
+                    53.68648715160512
+                  ],
+                  [
+                    -1.6473369782351597,
+                    53.686707005698224
+                  ],
+                  [
+                    -1.6446429767793802,
+                    53.68735965938754
+                  ],
+                  [
+                    -1.6441939765367408,
+                    53.688568250619
+                  ],
+                  [
+                    -1.6427245211970956,
+                    53.689462585796804
+                  ],
+                  [
+                    -1.6404795199829891,
+                    53.69052609479479
+                  ],
+                  [
+                    -1.6394590648859264,
+                    53.69086447838757
+                  ],
+                  [
+                    -1.6378671549344404,
+                    53.691082009261464
+                  ],
+                  [
+                    -1.636316063186598,
+                    53.69105783921978
+                  ],
+                  [
+                    -1.6347241532351404,
+                    53.69088864854024
+                  ],
+                  [
+                    -1.6342751529924726,
+                    53.690791967846764
+                  ],
+                  [
+                    -1.63382615274989,
+                    53.69059860579347
+                  ],
+                  [
+                    -1.6330506068764237,
+                    53.69064694638999
+                  ],
+                  [
+                    -1.632438333818385,
+                    53.6909611589148
+                  ],
+                  [
+                    -1.6321934245947602,
+                    53.69132370891384
+                  ],
+                  [
+                    -1.632356697410188,
+                    53.69161374666538
+                  ],
+                  [
+                    -1.6317444243521493,
+                    53.69200046055917
+                  ],
+                  [
+                    -1.6312546059058661,
+                    53.692628863060634
+                  ],
+                  [
+                    -1.6306015146433026,
+                    53.69291889182054
+                  ],
+                  [
+                    -1.6296218777498837,
+                    53.69311224321737
+                  ],
+                  [
+                    -1.6281116042065662,
+                    53.693208918582656
+                  ],
+                  [
+                    -1.6266013306623108,
+                    53.69306390545148
+                  ],
+                  [
+                    -1.6254176027498772,
+                    53.69303973654755
+                  ],
+                  [
+                    -1.6237032381866072,
+                    53.69299139869847
+                  ],
+                  [
+                    -1.6214174187698234,
+                    53.69253218636305
+                  ],
+                  [
+                    -1.619009144740346,
+                    53.6915654071789
+                  ],
+                  [
+                    -1.618682599109519,
+                    53.6913962185391
+                  ],
+                  [
+                    -1.618233598866908,
+                    53.69134787880287
+                  ],
+                  [
+                    -1.6179070532351147,
+                    53.6913962185391
+                  ],
+                  [
+                    -1.614723173879554,
+                    53.692242133984024
+                  ],
+                  [
+                    -1.6140292644132899,
+                    53.69248382697651
+                  ],
+                  [
+                    -1.611416899364798,
+                    53.692918870866094
+                  ],
+                  [
+                    -1.6092127163552732,
+                    53.693523091032546
+                  ],
+                  [
+                    -1.606967715142133,
+                    53.693788945158445
+                  ],
+                  [
+                    -1.6050492595588821,
+                    53.69398229255927
+                  ],
+                  [
+                    -1.5992122564038027,
+                    53.69422397556119
+                  ],
+                  [
+                    -1.5970080733943064,
+                    53.69419980732357
+                  ],
+                  [
+                    -1.595497799850051,
+                    53.694103134233785
+                  ],
+                  [
+                    -1.594640617569354,
+                    53.694103134233785
+                  ],
+                  [
+                    -1.5944773447529599,
+                    53.69434481654196
+                  ],
+                  [
+                    -1.5939467081031182,
+                    53.69468316944264
+                  ],
+                  [
+                    -1.592395616355276,
+                    53.69424814378519
+                  ],
+                  [
+                    -1.5917017068890686,
+                    53.69349892239225
+                  ],
+                  [
+                    -1.5907220699965876,
+                    53.693668102581995
+                  ],
+                  [
+                    -1.5894567056759286,
+                    53.69400646092174
+                  ],
+                  [
+                    -1.5891709782486885,
+                    53.69381311363216
+                  ],
+                  [
+                    -1.5910077974228045,
+                    53.693257235227776
+                  ],
+                  [
+                    -1.5913751612582416,
+                    53.69308805338687
+                  ],
+                  [
+                    -1.591211888442814,
+                    53.69284636386328
+                  ],
+                  [
+                    -1.5905179789765498,
+                    53.6926046729524
+                  ],
+                  [
+                    -1.5901506151421358,
+                    53.692290472693486
+                  ],
+                  [
+                    -1.5891709782486885,
+                    53.69163789543259
+                  ],
+                  [
+                    -1.5890077054332608,
+                    53.69132368795863
+                  ],
+                  [
+                    -1.5895383420831024,
+                    53.691299518055644
+                  ],
+                  [
+                    -1.5919466161126365,
+                    53.69023602859431
+                  ],
+                  [
+                    -1.5941916173257482,
+                    53.689970152031606
+                  ],
+                  [
+                    -1.595620254461835,
+                    53.6902601991078
+                  ],
+                  [
+                    -1.5954569816464073,
+                    53.689970152031606
+                  ],
+                  [
+                    -1.5959876182972152,
+                    53.689728444608676
+                  ],
+                  [
+                    -1.5976203464522882,
+                    53.6895592485869
+                  ],
+                  [
+                    -1.5995388020346013,
+                    53.689535077670996
+                  ],
+                  [
+                    -1.6021103488795063,
+                    53.6891483411317
+                  ],
+                  [
+                    -1.6046410775208528,
+                    53.68929336775014
+                  ],
+                  [
+                    -1.60557989620969,
+                    53.68994598135188
+                  ],
+                  [
+                    -1.6061105328605265,
+                    53.690115175819614
+                  ],
+                  [
+                    -1.6068044423257675,
+                    53.69023602859431
+                  ],
+                  [
+                    -1.6081106248500134,
+                    53.690115175819614
+                  ],
+                  [
+                    -1.6092535345588885,
+                    53.68980095698112
+                  ],
+                  [
+                    -1.6094576255788695,
+                    53.69033271056472
+                  ],
+                  [
+                    -1.6102739896559797,
+                    53.69006683461225
+                  ],
+                  [
+                    -1.6117434449966197,
+                    53.69004266398804
+                  ],
+                  [
+                    -1.6120291724237745,
+                    53.689099998814555
+                  ],
+                  [
+                    -1.612478172666414,
+                    53.68929336775014
+                  ],
+                  [
+                    -1.6146007192677416,
+                    53.688374857396354
+                  ],
+                  [
+                    -1.6150905377149627,
+                    53.68822982761424
+                  ],
+                  [
+                    -1.616437538442824,
+                    53.68810896908067
+                  ],
+                  [
+                    -1.6175804481516707,
+                    53.68810896908067
+                  ],
+                  [
+                    -1.6205601770346334,
+                    53.68832651419112
+                  ],
+                  [
+                    -1.6228459964523836,
+                    53.689075827635065
+                  ],
+                  [
+                    -1.6246828156274375,
+                    53.69009100522288
+                  ],
+                  [
+                    -1.627295180675958,
+                    53.689099998814555
+                  ],
+                  [
+                    -1.629591045966464,
+                    53.68781271009357
+                  ],
+                  [
+                    -1.6297951369865018,
+                    53.68742595773412
+                  ],
+                  [
+                    -1.6326524112586185,
+                    53.688634547062634
+                  ],
+                  [
+                    -1.6337136845592681,
+                    53.688827918135786
+                  ],
+                  [
+                    -1.6347341396563309,
+                    53.68873123271021
+                  ],
+                  [
+                    -1.6355505037343505,
+                    53.68844117510113
+                  ],
+                  [
+                    -1.63632604960776,
+                    53.68815111549415
+                  ],
+                  [
+                    -1.6370607772776111,
+                    53.687256752459774
+                  ],
+                  [
+                    -1.6373056865012359,
+                    53.686120642294526
+                  ],
+                  [
+                    -1.6377138685392936,
+                    53.68467024434901
+                  ],
+                  [
+                    -1.638815960044525,
+                    53.68355823875922
+                  ],
+                  [
+                    -1.640203778976968,
+                    53.682639603298355
+                  ],
+                  [
+                    -1.642163052762868,
+                    53.6818176493218
+                  ],
+                  [
+                    -1.6442447811606087,
+                    53.6808989758936
+                  ],
+                  [
+                    -1.6468163280055137,
+                    53.68101985512121
+                  ],
+                  [
+                    -1.647959237714332,
+                    53.68099567930335
+                  ],
+                  [
+                    -1.6497552386858274,
+                    53.68097150347157
+                  ],
+                  [
+                    -1.6503113346278724,
+                    53.6808989549786
+                  ],
+                  [
+                    -1.6505562438514687,
+                    53.6807297234771
+                  ],
+                  [
+                    -1.651046062297695,
+                    53.68036708225574
+                  ],
+                  [
+                    -1.6529236996764212,
+                    53.67901319410703
+                  ],
+                  [
+                    -1.6537808819580846,
+                    53.67857800653124
+                  ],
+                  [
+                    -1.6552911555013736,
+                    53.67799774943586
+                  ],
+                  [
+                    -1.6577402477344663,
+                    53.67717570486721
+                  ],
+                  [
+                    -1.658760702831529,
+                    53.676885567659696
+                  ],
+                  [
+                    -1.6592505212777837,
+                    53.676764676566705
+                  ],
+                  [
+                    -1.660801613025626,
+                    53.676764676566705
+                  ],
+                  [
+                    -1.6622710683652997,
+                    53.67674049830637
+                  ],
+                  [
+                    -1.6652507972492288,
+                    53.67695810214897
+                  ],
+                  [
+                    -1.6665161615698878,
+                    53.67727241682553
+                  ],
+                  [
+                    -1.6674141620551381,
+                    53.67751419575018
+                  ],
+                  [
+                    -1.66781759147932,
+                    53.677617502883294
+                  ]
+                ]
+              ],
+              "type": "Polygon",
+              "name": "redline-boundary"
+            },
+            "type": "Feature"
+          }
+        },
+
+        map.addSource('development_area', {
+          'type': 'geojson',
+          'data': {
+            "type": "Feature",
+            "geometry": {
+              "coordinates": [
+                [-1.592515, 53.692572],
+                [-1.593525, 53.691974],
+                [-1.594415, 53.691639],
+                [-1.595748, 53.691471],
+                [-1.597446, 53.691591],
+                [-1.603105, 53.692141],
+                [-1.604519, 53.692213],
+                [-1.607066, 53.692069],
+                [-1.610623, 53.691639],
+                [-1.612239, 53.691351],
+                [-1.616888, 53.690059],
+                [-1.617817, 53.689844],
+                [-1.618302, 53.689748],
+                [-1.618828, 53.689772],
+                [-1.619636, 53.689915],
+                [-1.624648, 53.691495],
+                [-1.625052, 53.691734],
+                [-1.626669, 53.690705],
+                [-1.627558, 53.690298],
+                [-1.628084, 53.690155],
+                [-1.628852, 53.690059],
+                [-1.629458, 53.689915],
+                [-1.630307, 53.689628],
+                [-1.630994, 53.689389],
+                [-1.632045, 53.689245],
+                [-1.632974, 53.689197],
+                [-1.635278, 53.689389],
+                [-1.636329, 53.689508],
+                [-1.637461, 53.68958],
+                [-1.637946, 53.689508],
+                [-1.63835, 53.689197],
+                [-1.643241, 53.685846],
+                [-1.644898, 53.684721],
+                [-1.648778, 53.683046],
+                [-1.64995, 53.682519],
+                [-1.651203, 53.681585],
+                [-1.652497, 53.68058],
+                [-1.654679, 53.680053],
+                [-1.656781, 53.679766],
+                [-1.658762, 53.679838],
+                [-1.659489, 53.679862],
+                [-1.662399, 53.679311],
+                [-1.663167, 53.679167]
+              ],
+              "type": "LineString"
+            }
+          }
+        })
+      );
+
+      // Red line boundary
+      map.addLayer({
+          'id': 'outline',
+          'type': 'line',
+          'source': 'redline_boundary',
+          'layout': {},
+          'paint': {
+            'line-dasharray': [4, 2],
+            'line-color': '#D4351C',
+            'line-width': 3
+          }
+      });
+
+      // Fill the red line boundary
+      // map.addLayer({
+      //     'id': 'filler',
+      //     'type': 'fill',
+      //     'source': 'redline_boundary',
+      //     'paint': {
+      //       'fill-color': '#D4351C',
+      //       'fill-opacity': 0.1
+      //     }
+      // });
+
+      // Development area line
+      map.addLayer({
+          'id': 'development_line',
+          'type': 'line',
+          'source': 'development_area',
+          'paint': {
+            'line-color': '#D4351C',
+            'line-width': 7
+          }
+      });
+
+    });
+
+    </script>
+
+{% endblock %}

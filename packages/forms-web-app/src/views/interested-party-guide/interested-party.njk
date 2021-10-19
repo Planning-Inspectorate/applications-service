@@ -1,0 +1,161 @@
+{% extends "layouts/layout.njk" %}
+
+{% block pageTitle %}
+  Having your say about a national infrastructure project 
+{% endblock %}
+
+{% block pageScripts %}
+  <script src="/public/javascripts/step-by-step-nav.js"></script>
+  <script type="text/javascript">
+    var $element = $('#step-by-step-navigation')
+    var stepByStepNavigation = new GOVUK.Modules.AppStepNav()
+    stepByStepNavigation.start($element)
+  </script>
+{% endblock %}
+
+{% block beforeContent %}
+  <div class="govuk-breadcrumbs">
+    <ol class="govuk-breadcrumbs__list">
+      <li class="govuk-breadcrumbs__list-item">
+        <a class="govuk-breadcrumbs__link" href="../index.html">Home</a>
+      </li>
+      <li class="govuk-breadcrumbs__list-item">
+        Interested Party Guide
+      </li>
+    </ol>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      Having your say about a national infrastructure project 
+    </h1>
+    <p>This guide is for individuals and organisations who want to have their say about a project. The overall process is called the <a href="../dco-process-guide/index.html">Development Consent Order (DCO) process</a>. A developer submits their application to the Planning Inspectorate and we examine the project and make a recommendation to the Secretary of State about if the project should go ahead.</p>
+    <p>As part of this process, members of the public, organisations and people acting on behalf of others can have their say about the project and tell us why they think it should or should not go ahead.</p>
+
+    <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
+      <ol class="app-step-nav__steps">
+        <li class="app-step-nav__step js-step" id="having-your-say-at-the-pre-application-stage" >
+          <div class="app-step-nav__header js-toggle-panel" data-position="1">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 1
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Having your say at the pre-application stage
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-having-your-say-at-the-pre-application-stage-1">
+            <p>Before the developer sends their application to the Planning Inspectorate, they must carry out a public consultation.</p>
+            <p><a href="./have-say-pre-application">Find out how to get involved before the project is submitted to the Planning Inspectorate</a></p>
+          </div>
+
+        </li>
+        <li class="app-step-nav__step js-step" id="registering-to-have-your-say-about-a-national-infrastructure-project" >
+          <div class="app-step-nav__header js-toggle-panel" data-position="2">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 2
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Registering to have your say about a national infrastructure project
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-registering-to-have-your-say-about-a-national-infrastructure-project-2">
+            <p><a href="./register-to-have-your-say">Find out how to register to have your say about a national infrastructure project</a></p>
+          </div>
+
+        </li>
+        <li class="app-step-nav__step js-step" id="get-involved-in-the-preliminary-meeting" >
+          <div class="app-step-nav__header js-toggle-panel" data-position="3">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 3
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Get involved in the preliminary meeting
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-get-involved-in-the-preliminary-meeting-3">
+            <p>After you register to have your say, you can get involved with the next stages of the process, by attending the preliminary meeting and submitting comments at the examination stage.
+            </p>
+            <p><a href="./get-involved-preliminary-meetings">What you can do after you register to have your say</a></p>
+          </div>
+
+        </li>
+        <li class="app-step-nav__step js-step" id="have-your-say-during-the-examination-of-the-project" >
+          <div class="app-step-nav__header js-toggle-panel" data-position="4">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 4
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                Have your say during the examination of the project
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-have-your-say-during-the-examination-of-the-project-4">
+            <p>When the Planning Inspectorate starts the examination of the project, you can submit your comments and reply to any comments submitted by others.</p>
+            <p><a href="./have-say-during-project-examination">Submitting comments during the examination of the project</a></p>
+          </div>
+
+        </li>
+        <li class="app-step-nav__step js-step" id="what-you-can-do-after-the-decision-has-been-made" >
+          <div class="app-step-nav__header js-toggle-panel" data-position="5">
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden">Step</span> 5
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                What you can do after the decision has been made
+              </span>
+            </h2>
+          </div>
+
+          <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-what-you-can-do-after-the-decision-has-been-made-5">
+            <p><a href="./after-making-the-decision">What happens after a decision has been made</a></p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

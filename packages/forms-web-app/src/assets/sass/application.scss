@@ -1,0 +1,531 @@
+// global styles for <a> and <p> tags
+$govuk-global-styles: true;
+$govuk-new-link-styles: true;
+
+// We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework.
+$govuk-assets-path: '/govuk/assets/';
+
+// Import GOV.UK Frontend and any extension styles if extensions have been configured
+@import "lib/extensions/extensions";
+
+// Patterns that aren't in Frontend
+@import "patterns/step-by-step-header";
+@import "patterns/step-by-step-nav";
+@import "patterns/step-by-step-related";
+@import "patterns/task-list";
+@import "patterns/related-items";
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+// PINS styles start here
+// PINS specific colours
+$pins-blue: #1D70B8;
+
+$pins-banner-background-color: #074745; // Dark green for main part of banner
+$pins-banner-background-secondary-color: #13A19B;
+$pins-banner-nav-background-color: #0A625F;
+$pins-timeline-background: #F0F0F0;
+$pins-circle-inner-background-color: $pins-blue;
+$pins-timeline-badge-background-solid: $pins-blue;
+$pins-timeline-badge-background-solid-current: $pins-blue;
+$pins-timeline-badge-icon-colour: govuk-colour("white");
+$pins-timeline-progress-colour: #707070;
+$pins-grey-background-colour: #f3f2f1;
+$pins-footer-background-colour: $pins-grey-background-colour;
+$pins-aside-background-colour: $pins-grey-background-colour;
+$pins-aside-border-colour: #707070;
+
+$pins-map-key-background: #f0f0f0;
+$pins-map-key-border: #707070;
+$pins-map-red: #D4351C;
+
+$pins-step-by-step-main-border-colour: #D8D9DA;
+$pins-step-by-step-sidebar-border-colour: $pins-blue;
+
+$pins-timeline-circle-size: 50px;
+
+@mixin pins-step-by-step-primary-topper {
+    border-top:1px solid $pins-timeline-progress-colour;
+    padding-top: 20px;
+}
+
+// For use on pages with a contents bar on the side
+// // Don't forget to add .pins-sidebar--container as a variable!
+/*
+    {% set containerClasses = "pins-sidebar--container" %}
+*/
+.pins-sidebar--container {
+    max-width: 1100px;
+    &.govuk-main-wrapper {
+        padding-top: 0;
+    }
+    
+    .pins-pane-width {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .pins-aside-page-contents {
+        flex: 0 0 260px;
+        height: auto;
+        padding: 20px;
+        background-color: $pins-aside-background-colour;
+        border-bottom: 1px solid $pins-aside-border-colour;
+        ul ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 15px;
+            ul {
+                padding-left: 15px;
+            }
+        }
+        li {
+            margin-bottom: 15px;
+        }
+
+        ul.govuk-list {
+            font-size: 16px;
+        }
+    }
+}
+
+
+.pins-header {
+    background-color: $pins-banner-background-color;
+    border-bottom-color: $pins-banner-background-secondary-color;
+
+    .govuk-header__container {
+        padding-top: 13px;
+        padding-bottom: 13px;
+        border-bottom: none;
+    }
+
+    @media (min-width: 48.0625em) {
+        .govuk-header__content {
+            float: right;
+            width: auto;
+            margin-top: 17px;
+        }
+        .govuk-header__navigation {
+            background-color: $pins-banner-nav-background-color;
+            border-radius: 25px;
+            padding: 0 2rem;
+            font-weight: 400;
+        }
+    }
+
+    .govuk-header__navigation-item--active a:link, 
+    .govuk-header__navigation-item--active a:hover, 
+    .govuk-header__navigation-item--active a:visited {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+    .govuk-header__link:hover {
+        border-bottom: none;
+    }
+
+    .pins-header__logotype {
+        svg.pins-header__logotype-crest {
+           height: 60px;
+           fill: currentColor;
+       }
+    }
+
+}
+
+// Contents list
+.pins-contents-list-title {
+    margin-bottom: 0;
+}
+
+.pins-contents-list li {
+    padding: 7.5px 25px 0;
+    position: relative;
+    &:before{
+        content: "—";
+        position: absolute;
+        left: 0;
+        width: 20px;
+        overflow: hidden;
+    }
+}
+// End contents list
+
+// Step by step
+.pins-step-by-step-section-main {
+    @include pins-step-by-step-primary-topper();
+}
+
+    .pins-step-by-step-navigation {
+        @include pins-step-by-step-primary-topper();
+        padding-left: 2em;
+        position:relative;
+        a {
+            text-decoration: none;
+            strong {
+                display: block;
+                margin-bottom: .5em;
+            }
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    svg.pins-step-by-step-navigation-icon {
+        position:absolute;
+        top: 22px;
+        left: 0;
+        width: 20px;
+        overflow: hidden;
+    }
+    
+    .pins-step-by-step-navigation-show-all-steps {
+        display: block;
+        text-align: right;
+        font-family: $govuk-font-family;
+        color: $pins-step-by-step-sidebar-border-colour;
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+.pins-step-by-step-section-sidebar {
+    border-top: 1px solid $pins-step-by-step-sidebar-border-colour;
+}
+// End step-by-step
+
+// Note/notice
+.pins-info-notice {
+    border-left: 10px solid #b1b4b6;
+    padding: .5em 0 .5em 1em;
+    margin: 1em 0;
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+// End note/notice
+
+// Overview page //
+//  // Overview page timeline
+.pins-timeline {
+    display: block;
+    background-color: $pins-timeline-background;
+    padding: 20px;
+    margin-bottom: 20px;
+    ol {
+        display: none;
+    }
+    @media (min-width: 48.0625em) {
+        ol {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+
+            padding-left: 0;
+            font-family: $govuk-font-family;
+            
+        
+            // Timeline connecting line
+            &::before{
+                content: '';
+                position:absolute;
+                left: 8%;
+                bottom: $pins-timeline-circle-size/2;
+                width: 85%;
+                border-bottom: 3px solid $pins-timeline-progress-colour;
+                margin-bottom: -3px;
+            }
+
+            li {
+                position: relative;
+                font-size: 0.8em;
+                list-style: none;
+                text-align: center;
+                
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    width: 20%;
+                    max-width: 150px;
+
+                .pins-timeline-badge {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    /* Alternative method for laying out
+                    display: block;
+                    line-height: 150%;
+                    vertical-align: middle;
+                    */
+                    
+                    color: $pins-timeline-badge-icon-colour;
+                    box-shadow: inset 0 0 0 2px $pins-timeline-badge-background-solid,inset 0 0 0 3px white;
+                    background-color: $pins-timeline-badge-background-solid;
+                    
+                    height: $pins-timeline-circle-size;
+                    width: $pins-timeline-circle-size;
+                    
+                    border-radius: 50%;
+                    margin: 10px auto 0;
+                    
+                    font-size: 2em;
+                }
+
+                &.completed {
+                    font-size: .6em;
+                    font-weight: normal;
+                }
+
+                &.current {
+                    .pins-timeline-badge {
+                        background-color: $pins-timeline-badge-background-solid-current;
+                    }
+                }
+            }
+        }
+    }
+}
+//  // End overview page timeline
+
+//  //  Map styling
+.pins-map-enclosure {
+    position: relative;
+    height: 443px;
+    width: 100%;
+    margin-bottom: 20px;
+    
+    .pins-map-key-box {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background-color: $pins-map-key-background;
+        border: 1px solid $pins-map-key-border;
+        width: 200px;
+        padding: 10px 15px 5px;
+        font-family: $govuk-font-family;
+        h3 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        ul.pins-map-key-list {
+            margin-bottom: 0;
+            padding-left: 0;
+            li {
+                list-style: none;
+                
+            }
+        }
+        
+        ul.pins-map-menu {
+            border-bottom: 1px solid $pins-map-key-border;
+            padding-bottom: 10px;
+            li {
+                margin-bottom: 10px;
+            }
+            input[type="radio"] {
+                display: none;
+            }
+            input[type="radio"] + ::before {
+                content: '';
+                display: inline-block;
+                vertical-align: bottom;
+                height: 1rem;
+                width: 1rem;
+                background-color: white;
+                border: 1px solid $pins-map-key-border;
+                border-radius: 50%;
+                margin-left: 8px;
+                margin-right: 10px;
+            }
+
+            input[type="radio"]:checked + ::before {
+                background: radial-gradient(black 0%, black 40%, transparent 50%, transparent);
+            }
+        }
+
+        ul.pins-map-key-items {
+            li {
+                margin-bottom: 15px;
+                span {
+                    position: relative;
+                    overflow: hidden;
+                    display: inline-block;
+                    
+                    width: 30px;
+                    height: 4px;
+                    border-radius: 5px;
+                    margin-bottom: 3px;
+                    margin-right: 5px;
+                    
+                    transform: rotate(-45deg);
+                }
+                .pins-map-key-icon--development_area {
+                    background-color: $pins-map-red;
+                }
+                .pins-map-key-icon--red_line_boundary {
+                    background: repeating-linear-gradient(
+                        90deg,
+                        $pins-map-red,
+                        $pins-map-red 5px,
+                        $pins-map-key-background,
+                        $pins-map-key-background 10px
+                      );
+                }
+            }
+        }
+    }
+
+    .pins-affected-area-map--embed {
+        // width: 100%;
+        // height: 443px;
+        width: 100%;
+        height: 100%;
+    }
+}
+//  //  End map styling
+
+// PINS column layout
+.pins-list-columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 0;
+    li {
+        flex-basis: 30%;
+        list-style: none;
+    }
+}
+// End PINS column layout
+
+// Side filtering
+.govuk-accordion label {
+    font-family: $govuk-font-family;
+}
+
+h2.govuk-accordion__section-heading,
+.govuk-accordion__section-heading .govuk-accordion__section-button,
+.pins-filter-checkboxes .govuk-label {
+    font-size: 16px;
+}
+
+.pins-filter-checkboxes {
+    clear: both; // Fixes a strange overhang on the accordion
+
+    .govuk-accordion__section-content {
+        padding-top: 10px;
+    }
+    &.govuk-checkboxes--small .govuk-checkboxes__label {
+        padding: 0;
+        &:before {
+            height: 20px;
+            width: 20px;
+            &:hover {
+                box-shadow: 0 0 0 6px #b1b4b6;
+            }
+        }
+
+        &:after {
+            top: 13px;
+            left: 4px;
+        }
+    }
+}
+// End side filtering
+
+// Document library
+.document-results-sort {
+    margin: 20px 0;
+    label, select {
+        font-size: 16px;
+    }
+    select {
+        margin-left: 10px;
+        height: auto;
+    }
+}
+
+.pins-document-library-search {
+    .pins-document-library-search-wrapper,
+    .govuk-accordion__open-all {
+        margin-bottom: 15px;
+    }
+    .pins-document-library-search-wrapper {
+        display: flex;
+        width: 100%;
+    }
+    .search-documents-input,
+    .search-documents-submit {
+        box-sizing: border-box;
+    }
+    .pins-label-small {
+        font-size: 16px;
+        font-family: $govuk-font-family;
+        display: block;
+        margin-bottom: 3px;
+    }
+    .search-documents-input {
+        margin: 0;
+        height: 30px;
+        min-width: 0;
+        border: 1px solid #0B0C0C;
+        border-right: none;
+    }
+    .search-documents-submit {
+        flex-basis: auto;
+        position: relative;
+        overflow: hidden;
+        text-indent: 200%;
+        word-wrap: none;
+        padding: 6px;
+        height: 30px;
+        width: 40px;
+        border: none;
+        margin: 0;
+        cursor: pointer;
+        background: url('../images/icon-search-2x.png') 9px 50% no-repeat $pins-blue;
+        background-size: 80%;
+    }
+}
+
+.pins-search-results-group {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #BFC1C3;
+    margin-bottom: 40px;
+    .pins-search-results-group-heading,
+    .pins-search-results-group-items li {
+        font-size: 16px;
+    }
+    .pins-search-results-group-heading {
+        font-weight: 400;
+        font-family: $govuk-font-family;
+        width: 33%;
+        margin-top: 0;
+    }
+
+    .pins-search-results-group-items {
+        flex-grow: 1;
+        max-width: 65%;
+        margin-bottom: 10px;
+        li {
+            margin-bottom: 30px;
+        }
+    }
+}
+// end document library
+
+.pins-search-results-pagination {
+    text-align: right;
+    a {
+        display: inline-block;
+        margin-left: 10px;
+    }
+}
