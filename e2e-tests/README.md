@@ -35,3 +35,13 @@ any authentication):
 #### Test data
 
 
+From the `e2e-tests` folder, the tests can be run locally setting the delay period with commands like this for 
+selection of tests by tags i.e. only those with `@wip` tag:
+```
+node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@wip"
+```
+or like this to select a specific feature file:
+```
+node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 --spec cypress/integration/register-type-of-party.feature
+```
+

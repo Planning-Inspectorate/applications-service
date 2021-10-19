@@ -1,3 +1,4 @@
+@testSuite
 Feature: Register - Type of interested party
 
 Scenario: Navigate to Type of party page and verify the content in the page
