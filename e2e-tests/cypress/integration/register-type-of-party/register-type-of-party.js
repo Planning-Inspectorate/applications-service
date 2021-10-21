@@ -19,11 +19,7 @@ And('I can see the logo gov uk text', () => {
 })
 
 And('I can see the text This service is only for Application service', () => {
-  pageObject.pageHeaderlink()
-})
-
-When('Select continue without selecting any option', () => {
-  cy.clickSaveAndContinue();
+  pageObject.validatePageHeaderlink()
 })
 
 Then('Progress is halted with a message that a Type of party is required', () => {
@@ -31,10 +27,15 @@ Then('Progress is halted with a message that a Type of party is required', () =>
   cy.confirmTextOnPage('Select what type of interested party are you');
 })
 
-When('User selects An person interested in having my say', () => {
-  cy.get('[data-cy="answer-mySay"]').click();
+When('User selects {string}', (radioChoice) => {
+  if(radioChoice === "An person interested in having my say") {
+    cy.get('[data-cy="answer-mySay"]').click();
+  } else if(radioChoice === "Someone registering for an organisation I work or volunteer for") {
+    cy.get('[data-cy="answer-organisation"]').click();
+  } else if(radioChoice === "Someone registering on behalf of anothet person or organisation") {
+    cy.get('[data-cy="answer-behalfOfOrganisation"]').click();
+  }  
   cy.wait(Cypress.env('demoDelay'));
-  cy.clickSaveAndContinue();
 })
 
 Then('User is navigated to full-name page', () => {

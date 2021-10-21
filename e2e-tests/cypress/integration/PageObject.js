@@ -4,10 +4,11 @@ class PageObject {
       assert.exists(headerLogo, 'GOV UK Logo exists');
     }
   
-    pageHeaderlink() {
+    validatePageHeaderlink() {
       const headerLink = cy.get('.govuk-header__content > .govuk-header__link')
       assert.exists(headerLink, 'Application Service')
       headerLink.should('have.attr', 'href').and('eq', '/');
     }
+
 }
 export default PageObject;
