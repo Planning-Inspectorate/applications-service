@@ -31,10 +31,10 @@
 {% from "govuk/components/textarea/macro.njk"            import govukTextarea %}
 {% from "govuk/components/warning-text/macro.njk"        import govukWarningText %}
 
-{% from "govuk/components/pins-header/macro.njk"                      import pinsHeader %}
-{% from "govuk/components/pins-footer/macro.njk"                      import pinsFooter %}
-{% from "govuk/components/pins-step-by-step-navigation/macro.njk"     import pinsStepByStepNavigation %}
-{% from "govuk/components/pins-contents-sidebar/macro.njk"            import pinsContentSidebar %}
+{% from "pins/components/header/macro.njk"                      import pinsHeader %}
+{% from "pins/components/footer/macro.njk"                      import pinsFooter %}
+{% from "pins/components/step-by-step-navigation/macro.njk"     import pinsStepByStepNavigation %}
+{% from "pins/components/contents-sidebar/macro.njk"            import pinsContentSidebar %}
 
 {% block head %}
   {% include "includes/head.njk" %}

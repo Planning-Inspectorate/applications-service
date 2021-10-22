@@ -41,6 +41,7 @@ const viewPaths = [
   path.join(__dirname, '..', 'node_modules', 'govuk-frontend'),
   path.join(__dirname, '..', 'node_modules', '@ministryofjustice', 'frontend'),
   path.join(__dirname, 'views'),
+  path.join(__dirname, '..', 'node_modules', '@planning-inspectorate', 'pins-components'),
 ];
 
 const env = nunjucks.configure(viewPaths, nunjucksConfig);
