@@ -1,44 +1,41 @@
-import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
+import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import PO_TypeOfParty from './PageObjects/PO_TypeOfParty'
 import PageObject from '../PageObject'
 const typeOfPartyPage = new PO_TypeOfParty()
 const pageObject = new PageObject()
 
 Given('I navigate to the Type of party page', () => {
-  typeOfPartyPage.navigatetoTypeOfPartyPageURL()
+    typeOfPartyPage.navigatetoTypeOfPartyPageURL()
 })
 
-Then('I am on the Type of party page', () => {
-  pageObject.validateHeaderLogo()
-  typeOfPartyPage.validatePageTitle()
-  typeOfPartyPage.validateText()
+Then('I verify the page title and heading of interested party page', () => {
+    typeOfPartyPage.validatePageTitleandHeading()
+})
+
+And("I can see the radio options content", () => {
+    typeOfPartyPage.validateRadioOptionContent()
 })
 
 And('I can see the logo gov uk text', () => {
-  pageObject.validateHeaderLogo()
+    pageObject.validateHeaderLogo()
 })
 
 And('I can see the text This service is only for Application service', () => {
-  pageObject.validatePageHeaderlink()
+    pageObject.validatePageHeaderlink()
 })
 
-Then('Progress is halted with a message that a Type of party is required', () => {
-  cy.title().should('include', 'Error: ');
-  cy.confirmTextOnPage('Select what type of interested party are you');
+Then('below error message should be presented on interested party page', function (table) {
+    cy.assertErrorMessage(table)
 })
 
 When('User selects {string}', (radioChoice) => {
-  if(radioChoice === "An person interested in having my say") {
-    cy.get('[data-cy="answer-mySay"]').click();
-  } else if(radioChoice === "Someone registering for an organisation I work or volunteer for") {
-    cy.get('[data-cy="answer-organisation"]').click();
-  } else if(radioChoice === "Someone registering on behalf of anothet person or organisation") {
-    cy.get('[data-cy="answer-behalfOfOrganisation"]').click();
-  }  
-  cy.wait(Cypress.env('demoDelay'));
+    cy.selectRadioOption(radioChoice)
+})
+
+And('User clicks on continue button', () => {
+    cy.clickSaveAndContinue();
 })
 
 Then('User is navigated to full-name page', () => {
-  cy.url().should('include', '/register/full-name')
-  cy.wait(Cypress.env('demoDelay'));
+    typeOfPartyPage.assertUseronFullNamePage()
 })
