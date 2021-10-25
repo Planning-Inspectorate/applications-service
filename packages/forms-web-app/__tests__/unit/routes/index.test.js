@@ -17,6 +17,6 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/', homeRouter);
     expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
     expect(use).toHaveBeenCalledWith('/register', registerRouter);
-    expect(use.mock.calls.length).toBe(4);
+    expect(use.mock.calls.length).toBe(11);
   });
 });

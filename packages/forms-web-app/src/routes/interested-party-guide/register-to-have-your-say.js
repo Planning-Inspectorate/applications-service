@@ -18,5 +18,5 @@ router.post(
     validationErrorHandler,
     registerToHaveYourSayController.postRegisterToHaveYourSay
   );
-  
+
   module.exports = router;
