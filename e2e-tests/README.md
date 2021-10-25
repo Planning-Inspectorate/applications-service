@@ -36,6 +36,10 @@ any authentication):
 
 
 From the `e2e-tests` folder, the tests can be run locally setting the delay period with commands like this for 
+to run all the tests use `@testSuite` tag:
+```
+node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@testSuite"
+```
 selection of tests by tags i.e. only those with `@wip` tag:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@wip"

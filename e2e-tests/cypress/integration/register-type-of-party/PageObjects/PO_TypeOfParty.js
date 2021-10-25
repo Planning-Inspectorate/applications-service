@@ -1,17 +1,25 @@
 class PO_TypeOfParty {
     navigatetoTypeOfPartyPageURL() {
-      cy.visit('/register/type-of-party');
+        cy.visit('/register/type-of-party');
     }
-  
-    validatePageTitle() {
-      cy.title().should('eq', "Type of interested party - Register to have your say");
+
+    validatePageTitleandHeading() {
+        cy.title().should('eq', "Type of interested party - Register to have your say");
+        cy.get('h1').invoke('text').then((text) => {
+            expect(text).to.contain('What type of interested party are you?');
+        })
     }
-    
-    validateText() {
-      const radioOptions = cy.get('#type-of-party');
-      assert.exists(radioOptions, 'An person interested in having my say');
-      assert.exists(radioOptions, 'Someone registering for an organisation I work or volunteer for');
-      assert.exists(radioOptions, 'Someone registering on behalf of anothet person or organisation');
+
+    validateRadioOptionContent() {
+        const radioOptions = cy.get('#type-of-party');
+        assert.exists(radioOptions, 'An person interested in having my say');
+        assert.exists(radioOptions, 'Someone registering for an organisation I work or volunteer for');
+        assert.exists(radioOptions, 'Someone registering on behalf of anothet person or organisation');
+    }
+
+    assertUseronFullNamePage() {
+        cy.url().should('include', '/register/full-name')
+        cy.wait(Cypress.env('demoDelay'));
     }
 }
 export default PO_TypeOfParty;

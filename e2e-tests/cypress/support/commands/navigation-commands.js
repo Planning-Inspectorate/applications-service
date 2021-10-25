@@ -2,10 +2,11 @@
 
 
 // Common
-Cypress.Commands.add('clickSaveAndContinue', require('../register-navigation/clickSaveAndContinue'));
+Cypress.Commands.add('clickSaveAndContinue', require('../common-methods/clickSaveAndContinue'));
 
-// Register
-Cypress.Commands.add(
-    'confirmTextOnPage',
-    require('../register-navigation-confirmation/register/confirmTextOnPage'),
-);
+Cypress.Commands.add('confirmTextOnPage', require('../common-methods/confirmTextOnPage'));
+
+Cypress.Commands.add('assertErrorMessage', require('../common-methods/assertErrorMessage'));
+
+// Register Type of Party page select radio choice
+Cypress.Commands.add('selectRadioOption', require('../register-type-of-party-page/selectRadioOption'));
