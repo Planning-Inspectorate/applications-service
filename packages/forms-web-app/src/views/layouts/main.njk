@@ -1,19 +1,32 @@
 {% extends "govuk/template.njk" %}
 
-{% from "govuk/components/header/macro.njk" import govukHeader %}
+
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "pins/components/header/macro.njk" import pinsHeader %}
+{% from "pins/components/footer/macro.njk" import pinsFooter %}
+
+
+{% block headIcons %}
+  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
+{% endblock %}
 
 {% block head %}
-  {% include "includes/head.njk" %}
+{% include "includes/head.njk" %}
+  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+
+  {% for stylesheetUrl in extensionConfig.stylesheets %}
+    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
+  {% endfor %}
 {% endblock %}
 
 {% block header %}
   {% include "includes/cookie-banner.njk" %}
 
-  {{ govukHeader({
-    homepageUrl: "https://www.gov.uk/",
-    serviceName: 'Application Service',
+  {{ pinsHeader({
+    homepageUrl: "/",
+    serviceName: serviceName,
     serviceUrl: "/",
     containerClasses: "govuk-width-container"
   }) }}
@@ -60,4 +73,8 @@
     {% include "includes/scripts.njk" %}
     {% block pageScripts %}{% endblock %}
   {% endblock %}
+{% endblock %}
+
+{% block footer %}
+    {{ pinsFooter() }}
 {% endblock %}
