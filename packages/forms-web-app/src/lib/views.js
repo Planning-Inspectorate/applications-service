@@ -2,7 +2,7 @@ const VIEW = {
   APPLICATION_NUMBER: 'application-number',
 
   COOKIES: 'cookies',
-
+  OVERVIEW: 'overview',
   GUIDANCE_PAGES: {
     BEFORE_APPLY: 'guidance-pages/before-apply',
   },
