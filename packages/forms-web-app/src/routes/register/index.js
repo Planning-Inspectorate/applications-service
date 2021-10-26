@@ -2,10 +2,12 @@ const express = require('express');
 
 const router = express.Router();
 
+const startRouter = require('./start');
 const typeOfPartyRouter = require('./type-of-party');
-const fullNmaeRouter = require('./full-name');
+const fullNameRouter = require('./full-name');
 
+router.use('/', startRouter);
 router.use('/', typeOfPartyRouter);
-router.use('/', fullNmaeRouter);
+router.use('/', fullNameRouter);
 
 module.exports = router;

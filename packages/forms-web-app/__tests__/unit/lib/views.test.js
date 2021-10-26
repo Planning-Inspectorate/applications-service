@@ -18,6 +18,7 @@ describe('lib/views', () => {
       REGISTER: {
         TYPE_OF_PARTY: 'register/type-of-party',
         FULL_NAME: 'register/full-name',
+        START: 'register/start',
         TEST2: 'register/test2',
         TEST3: 'register/test3',
       },
