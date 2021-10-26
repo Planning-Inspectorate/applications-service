@@ -9,7 +9,6 @@ exports.postFullName = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
   if (errors['full-name'] || Object.keys(errors).length > 0) {
-    // const errorMessage = errors['full-name'].msg;
     res.render(VIEW.REGISTER.FULL_NAME, {
       errors,
       errorSummary,
