@@ -18,7 +18,7 @@ ADD jest.config.js jest.config.js
 
 # ADD node_modules node_modules
 ADD package.json package.json
-ADD .sequlizerc .sequlizerc 
+ADD .sequelizerc .sequelizerc
 ADD package-lock.json package-lock.json
 
 RUN npm i --production
