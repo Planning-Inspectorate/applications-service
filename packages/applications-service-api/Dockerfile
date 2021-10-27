@@ -12,6 +12,7 @@ RUN mkdir -p /opt/app/data
 # COPY --from=pinscommonukscontainers3887default.azurecr.io/common:latest /opt/app ../common
 ADD api api
 ADD src src
+ADD database database
 ADD __tests__ __tests__
 ADD jest.config.js jest.config.js
 
