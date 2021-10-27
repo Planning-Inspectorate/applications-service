@@ -9,4 +9,35 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 servers:
   - url: 'http://localhost:3000/'
-
+paths:
+  '/api/v1/applications/{id}':
+    get:
+      summary: Returns an existing application
+      description: description goes here
+      tags:
+        - Applications
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier
+      responses:
+        '200':
+          description: Returns an application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          description: The application could not be found
+components:
+  schemas:
+    Application:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
