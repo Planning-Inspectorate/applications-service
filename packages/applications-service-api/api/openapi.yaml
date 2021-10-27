@@ -9,4 +9,40 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 servers:
   - url: 'http://localhost:3000/'
-
+paths:
+  '/api/v1/interested-party':
+    post:
+      summary: Creates an interested party
+      description: description goes here
+      tags:
+        - Interested party
+      responses:
+        '201':
+          description: Returns a newly created interested party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestedParty'
+components:
+  schemas:
+    InterestedParty:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fullName:
+          type: string
+          example: 'Hugo Boss'
+          maxLength: 20
+        createdAt:
+          type: string
+          format: date
+          example: '2020-10-29T12:00:00.000Z'
+          description: 'The creation date of the interested party was decided in ISO format'
+        updatedAt:
+          type: string
+          format: date
+          example: '2020-10-30T13:32:58.000Z'
+          description: 'The last interested party update date was decided in ISO format'
+      description: All of the data and state information for an interested party
