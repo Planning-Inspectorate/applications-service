@@ -1,0 +1,210 @@
+{% extends "layouts/layout.njk" %}
+
+{% block pageTitle %}
+  A404 Dewsbury project overview
+{% endblock %}
+
+{% block headIcons %}
+  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
+{% endblock %}
+
+{% block head %}
+  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+
+  {% for stylesheetUrl in extensionConfig.stylesheets %}
+    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
+  {% endfor %}
+
+<!-- Mapbox resources -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+<!-- end Mapbox -->
+{% endblock %}
+
+{% block header %}
+  {{ pinsHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">A404 Dewsbury project information</h1>
+  <p class="govuk-body">The potential A404 Dewsbury to Berwick Down scheme proposes to construct a new section of dual carriageway to address problems associated with the single carriageway section of the A404 between Amesbury’s Countess roundabout and the dual carriageway section to the west of Winterbourne Stoke. </p>
+  <p class="govuk-body"><a class="govuk-link" href="#">Sign-up for updates via email, letter or text</a>.</p>
+
+  <div class="pins-timeline">
+    <p class="govuk-body">This project is at: <strong>Pre-application and application received stage</strong></p>
+    <ol>
+      <li class="completed">Pre-application and application received<div class="pins-timeline-badge">&#10003;</div></li>
+      <li class="current">Pre-examination<div class="pins-timeline-badge">!</div></li>
+      <li>Examination of the project<div class="pins-timeline-badge"></div></li>
+      <li>Recommendation and decision<div class="pins-timeline-badge"></div></li>
+      <li>Outcome of the project<div class="pins-timeline-badge"></div></li>
+    </ol>
+    <p class="govuk-body">This means you cannot register to have your say yet. You will be able to register at the start of the gathering and reviewing information stage.</p>
+    <p class="govuk-body"><a class="govuk-link" href="/dco-process-guide">Find out more about the process for Development Consent Orders</a>.</p>
+  </div>
+  <h2 class="govuk-heading-m">Affected area</h2>
+<div class="pins-map-enclosure">
+  <div id='map' class="pins-affected-area-map--embed"></div>
+  <div class="pins-map-key-box">
+    <h3>Key</h3>
+    <ul id="menu" class="pins-map-menu pins-map-key-list">
+      <li>
+        <input type="radio" name="mapToggle" value="satellite" id="satellite-v9">
+        <label for="satellite-v9">Satellite</label>
+      </li>
+      <li>
+        <input type="radio" name="mapToggle" value="map" id="streets-v11" checked="checked">
+        <label for="streets-v11">Map</label>
+      </li>
+    </ul>
+    <ul class="pins-map-key-items pins-map-key-list">
+      <li><span class="pins-map-key-icon--development_area"></span>Development area</li>
+      <li><span class="pins-map-key-icon--red_line_boundary"></span>Red line boundary</li>
+    </ul>
+  </div>
+</div>
+  <!-- <p class="govuk-body"><a href="#">View an interactive map of the areas that will be affected by this project.</a></p> -->
+  <h3 class="govuk-heading-s">Check for impact on an area</h3>
+  <p class="govuk-body">Use this service to find out:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>the impact this project will have for an area in England or Wales</li>
+  </ul>
+  <a href="/check-for-impact/postcode" class="govuk-button">Start now</a>
+  <h2 class="govuk-heading-m">About the project</h2>
+  <ul class="pins-list-columns">
+    <li><h3 class="govuk-heading-s"><a class="govuk-link" href="#">Application introduction</a></h3><p class="govuk-body">Information about the project and what the developer is proposing</p></li>
+    <li><h3 class="govuk-heading-s"><a class="govuk-link" href="#">Environmental information</a></h3><p class="govuk-body">Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.</p></li>
+    <li><h3 class="govuk-heading-s"><a class="govuk-link" href="#">Drawings</a></h3><p class="govuk-body">How the propsed project will look and the area it will impact.</p></li>
+  </ul>
+
+  <h2 class="govuk-heading-m">Register to have your say</h2>
+  <p class="govuk-body">If you want to have your say about this project, you can register and tell us what you think.</p>
+  <p class="govuk-body"><a class="govuk-link" href="/register/start">Register to have your say about a national infrastructure project</a>.</p>
+
+  <h2 class="govuk-heading-m">More detailed project information</h2>
+  <p class="govuk-body">If you are looking for more detailed information about this project, you can <a class="govuk-link" href="#">view all project information</a>.</p>
+{% endblock %}
+
+{% block footer %}
+  {{ pinsFooter() }}
+
+  <script>
+  	mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
+    const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+      center: [ -1.6297334421922187,
+      53.68704018442503], // starting position
+      zoom: 13, // starting zoom,
+      logoPosition: 'top-left'
+    });
+
+    const layerList = document.getElementById('menu');
+    const inputs = layerList.getElementsByTagName('input');
+
+      for (const input of inputs) {
+        input.onclick = (layer) => {
+          const layerId = layer.target.id;
+          map.setStyle('mapbox://styles/mapbox/' + layerId);
+        };
+      }
+
+
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+    // Red line boundary
+      map.on('style.load', () => {
+        // Add a data source containing GeoJSON data.
+        map.addSource( 'redline_boundary', {
+          'type': 'geojson',
+          'data': {
+            "geometry": {
+              "coordinates": [
+                [
+                  [
+                    -1.66781759147932,
+                    53.677617502883294
+                  ],
+                  [
+                    -1.6687472314275453,
+                    53.67835967912643
+                  ],
+                  [
+                    -1.66781759147932,
+                    53.677617502883294
+                  ]
+                ]
+              ],
+              "type": "Polygon",
+              "name": "redline-boundary"
+            },
+            "type": "Feature"
+          }
+        },
+
+        map.addSource('development_area', {
+          'type': 'geojson',
+          'data': {
+            "type": "Feature",
+            "geometry": {
+              "coordinates": [
+                [-1.592515, 53.692572],
+                [-1.593525, 53.691974],
+                [-1.663167, 53.679167]
+              ],
+              "type": "LineString"
+            }
+          }
+        })
+      );
+
+      // Red line boundary
+      map.addLayer({
+          'id': 'outline',
+          'type': 'line',
+          'source': 'redline_boundary',
+          'layout': {},
+          'paint': {
+            'line-dasharray': [4, 2],
+            'line-color': '#D4351C',
+            'line-width': 3
+          }
+      });
+
+      // Fill the red line boundary
+      // map.addLayer({
+      //     'id': 'filler',
+      //     'type': 'fill',
+      //     'source': 'redline_boundary',
+      //     'paint': {
+      //       'fill-color': '#D4351C',
+      //       'fill-opacity': 0.1
+      //     }
+      // });
+
+      // Development area line
+      map.addLayer({
+          'id': 'development_line',
+          'type': 'line',
+          'source': 'development_area',
+          'paint': {
+            'line-color': '#D4351C',
+            'line-width': 7
+          }
+      });
+
+    });
+
+    </script>
+
+{% endblock %}
