@@ -1,7 +1,7 @@
 {% extends "layouts/layout.njk" %}
 
 {% block pageTitle %}
-  Having your say about a national infrastructure project 
+  Having your say about a national infrastructure project
 {% endblock %}
 
 {% block pageScripts %}
@@ -14,10 +14,19 @@
 {% endblock %}
 
 {% block beforeContent %}
+
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+
   <div class="govuk-breadcrumbs">
     <ol class="govuk-breadcrumbs__list">
       <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="../index.html">Home</a>
+        <a class="govuk-breadcrumbs__link" href="/interested-party-guide/index">Home</a>
       </li>
       <li class="govuk-breadcrumbs__list-item">
         Interested Party Guide
@@ -32,10 +41,22 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-l">
-      Having your say about a national infrastructure project 
+      Having your say about a national infrastructure project
     </h1>
-    <p>This guide is for individuals and organisations who want to have their say about a project. The overall process is called the <a href="../dco-process-guide/index.html">Development Consent Order (DCO) process</a>. A developer submits their application to the Planning Inspectorate and we examine the project and make a recommendation to the Secretary of State about if the project should go ahead.</p>
-    <p>As part of this process, members of the public, organisations and people acting on behalf of others can have their say about the project and tell us why they think it should or should not go ahead.</p>
+    <p class="govuk-body">This guide is for individuals and organisations who want to have their say about a project.</p>
+    <p class="govuk-body">National infrastructure projects are also called Nationally Significant Infrastructure Projects (NSIP). They are large developments which cross the threshold from a normal planning application because of the impact they will have. This can be developments like:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>offshore wind farms</li>
+      <li>power stations</li>
+      <li>main roads</li>
+      <li>railways</li>
+      <li>utilities (new cables and water pipes)</li>
+    </ul>
+    <p class="govuk-body">The overall process is called the Development Consent Order (DCO) process. A developer submits their application to the Planning Inspectorate and we examine the project and make a recommendation to the Secretary of State about if the project should go ahead.</p>
+    <p class="govuk-body">As part of this process, members of the public, organisations and people acting on behalf of others can have their say about the project and tell us why they think it should or should not go ahead.</p>
+    <p class="govuk-body">For more information about the overall process and everyone involved, there is a guide about <a class="govuk-link" href="../dco-process-guide/index.html">the process for national infrastructure projects</a>.</p>
+
+
 
     <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
       <ol class="app-step-nav__steps">
@@ -51,14 +72,14 @@
               </span>
 
               <span class="js-step-title">
-                Having your say at the pre-application stage
+                Taking part in the Pre-application stage
               </span>
             </h2>
           </div>
 
           <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-having-your-say-at-the-pre-application-stage-1">
-            <p>Before the developer sends their application to the Planning Inspectorate, they must carry out a public consultation.</p>
-            <p><a href="./have-say-pre-application">Find out how to get involved before the project is submitted to the Planning Inspectorate</a></p>
+            <p class="govuk-body">Pre-application is the first stage of the process. This is where the developer must run a consultation and engage with people and organisations in the area. You can get involved at this stage by finding the developer's website. They must provide information about how you can submit your comments to them.</p>
+            <p class="govuk-body"><a class="govuk-link" href="/interested-party-guide/have-say-pre-application">Find out how to get involved before the project is submitted to the Planning Inspectorate</a></p>
           </div>
 
         </li>
@@ -80,7 +101,8 @@
           </div>
 
           <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-registering-to-have-your-say-about-a-national-infrastructure-project-2">
-            <p><a href="./register-to-have-your-say">Find out how to register to have your say about a national infrastructure project</a></p>
+            <p class="govuk-body">To get involved once the application is submitted to the Planning Inspectorate, you must register to have your say at the Pre-examination stage. Pre-examination is where we prepare for an Examination. We will identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the Examination stage. Registration is open for at least 30 days.</p>
+            <p class="govuk-body"><a class="govuk-link" href="/interested-party-guide/register-to-have-your-say">Find out how to register to have your say about a national infrastructure project</a></p>
           </div>
 
         </li>
@@ -96,15 +118,14 @@
               </span>
 
               <span class="js-step-title">
-                Get involved in the preliminary meeting
+                Get involved in the Preliminary Meeting
               </span>
             </h2>
           </div>
 
           <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-get-involved-in-the-preliminary-meeting-3">
-            <p>After you register to have your say, you can get involved with the next stages of the process, by attending the preliminary meeting and submitting comments at the examination stage.
-            </p>
-            <p><a href="./get-involved-preliminary-meetings">What you can do after you register to have your say</a></p>
+            <p class="govuk-body">In the months after the registration for having your say closes, the Examining Authority will hold a Preliminary Meeting. This meeting is to discuss the proposed timetable for the Examination of the application.</p>
+            <p class="govuk-body"><a class="govuk-link" href="/interested-party-guide/get-involved-preliminary-meetings">What you can do after you register to have your say</a></p>
           </div>
 
         </li>
@@ -120,14 +141,14 @@
               </span>
 
               <span class="js-step-title">
-                Have your say during the examination of the project
+                Have your say during the Examination of the application
               </span>
             </h2>
           </div>
 
           <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-have-your-say-during-the-examination-of-the-project-4">
-            <p>When the Planning Inspectorate starts the examination of the project, you can submit your comments and reply to any comments submitted by others.</p>
-            <p><a href="./have-say-during-project-examination">Submitting comments during the examination of the project</a></p>
+            <p class="govuk-body">The Examination stage is where the Examining Authority, the developer and anyone who has registered to have their say will get involved and comment on the proposed development at a number of set deadlines. You can also attend any hearings or meetings  that happen during this stage. The Examination takes six months.</p>
+            <p class="govuk-body"><a class="govuk-link" href="/interested-party-guide/have-say-during-project-examination">Submitting comments during the Examination of the project</a></p>
           </div>
 
         </li>
@@ -149,7 +170,8 @@
           </div>
 
           <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-what-you-can-do-after-the-decision-has-been-made-5">
-            <p><a href="./after-making-the-decision">What happens after a decision has been made</a></p>
+            <p class="govuk-body">Once a decision is made by the Secretary of State, there is a six week period where people can challenge the decision in the High Court. This is called a Judicial Review.</p>
+            <p class="govuk-body"><a class="govuk-link" href="/interested-party-guide/after-making-the-decision">What happens after a decision has been made</a></p>
           </div>
         </li>
       </ol>
