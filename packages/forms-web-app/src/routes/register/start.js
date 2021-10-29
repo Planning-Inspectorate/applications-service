@@ -1,14 +1,10 @@
 const express = require('express');
-const { VIEW } = require('../../lib/views');
+
+const startController = require('../../controllers/register/start');
 
 const router = express.Router();
 
-router.get('/start', (req, res) => {
-    res.render(VIEW.REGISTER.START);
-});
-
-router.get('/', (req, res) => {
-    res.render(VIEW.REGISTER.START);
-});
+router.get('/', startController.getStart);
+router.get('/start', startController.getStart);
 
 module.exports = router;

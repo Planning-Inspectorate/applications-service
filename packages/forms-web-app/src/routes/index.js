@@ -10,10 +10,10 @@ const registerRouter = require('./register');
 const interestedPartyRouter = require('./interested-party-guide');
 
 router.use('/', homeRouter);
-router.use(guidancePagesRouter);
+router.use('/', guidancePagesRouter);
 router.use('/cookies', cookieRouter);
 router.use('/overview', overviewRouter);
 router.use('/register', registerRouter);
-router.use('/interested-party-guide', interestedPartyRouter);
+router.use(interestedPartyRouter);
 
 module.exports = router;

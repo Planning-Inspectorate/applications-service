@@ -20,7 +20,7 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
     expect(use).toHaveBeenCalledWith('/register', registerRouter);
     expect(use).toHaveBeenCalledWith('/overview', overviewRouter);
-    expect(use).toHaveBeenCalledWith('/interested-party-guide', interestedPartyRouter);
+    expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use.mock.calls.length).toBe(6);
   });
 });
