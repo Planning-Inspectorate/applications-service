@@ -6,6 +6,7 @@ trigger:
   branches:
     include:
       - main
+      - feature/APS_414_manually_implement_connectivity
   paths:
     include:
       - packages/applications-service-api

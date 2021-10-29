@@ -1,0 +1,56 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+
+
+{% block pageTitle %}
+  Start registration
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <p class="govuk-body">Use this service to:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>have your say about a national infrastructure project</li>
+      </ul>
+
+      <p class="govuk-body">Registering takes around 5 minutes.</p>
+
+      <a href="/register/type-of-party" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"  data-module="govuk-button">
+        Start now
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
+        </svg>
+      </a>
+
+      <h2 class="govuk-heading-m">Before you start</h2>
+
+      <p class="govuk-body">We need to know anything you think is important to tell us about the proposed project, in as much detail as possible</p>
+
+      <p class="govuk-body">You will need your:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>full name</li>
+        <li>address</li>
+        <li>email address</li>
+        <li>telephone number</li>
+        <li>comments about the project</li>
+      </ul>
+
+      <p class="govuk-body">This information will be:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
+          <li>published on our website</li>
+        </ul>
+
+
+      <p class="govuk-body">You can also <a href="#" class="govuk-link">register by post</a>.</p>
+
+      <p class="govuk-body">You can’t register for this service if you’re in the UK illegally.</p>
+
+    </div>
+  </div>
+{% endblock %}
+

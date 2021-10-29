@@ -4,20 +4,6 @@
   Getting involved or commenting on a project in your local area
 {% endblock %}
 
-{% block headIcons %}
-  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
-{% endblock %}
-
-{% block head %}
-  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
-  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
-
-  {% for stylesheetUrl in extensionConfig.stylesheets %}
-    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
-  {% endfor %}
-{% endblock %}
-
-
 {% block header %}
   {{ pinsHeader() }}
 {% endblock %}
@@ -34,36 +20,36 @@
 
 {% endblock %}
 {% block content %}
-  
+
     <h1 class="govuk-heading-xl">
       Get involved in the preliminary meeting
     </h1>
     <h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
     <ol class="govuk-list pins-contents-list">
-        <li><a href="#attending-the-preliminary-hearing">Attending the preliminary hearing</a></li>
-        <li><a href="#what-happens-next">What happens next</a></li>
+        <li><a class="govuk-link" href="#attending-the-preliminary-hearing">Attending the preliminary hearing</a></li>
+        <li><a class="govuk-link" href="#what-happens-next">What happens next</a></li>
     </ol>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="pins-step-by-step-section-main">
                 <h2 class="govuk-heading-m" id="attending-the-preliminary-hearing">Attending the preliminary hearing</h2>
-                <p>To get involved at this stage, you must be registered to have your say, and have an interested party reference.</p>
-                <p>After the registration period has closed, you will be invited to a Preliminary Meeting. This is to talk about how the application will be examined.
-                <p>You cannot give your views about the proposed development at this stage.
-                <p>You can talk about:
+                <p class="govuk-body">To get involved at this stage, you must be registered to have your say, and have an interested party reference.</p>
+                <p class="govuk-body">After the registration period has closed, you will be invited to a Preliminary Meeting. This is to talk about how the application will be examined.
+                <p class="govuk-body">You cannot give your views about the proposed development at this stage.
+                <p class="govuk-body">You can talk about:
                 <ul class="govuk-list govuk-list--bullet">
                   <li>any issues with travel or working patterns that affect your ability to attend hearings</li>
                   <li>any other local events happening at the same time</li>
                   <li>if there are any suitable local places to hold the hearings</li>
                   <li>if there are any groups of people who need a different approach to be able to take part in the process</li>
                 </ul>
-                <p><a href="#">Advice Note 8.3: Influencing how an application is Examined: the Preliminary Meeting.pdf</a></p>
+                <p class="govuk-body"><a class="govuk-link" href="#">Advice Note 8.3: Influencing how an application is Examined: the Preliminary Meeting.pdf</a></p>
                 <h2 class="govuk-heading-m" id="what-happens-next">What happens next</h2>
-                <p>A week after the preliminary meeting, the Planning Inspectorate will publish the details of the meeting on the website. The detailed examination of the project starts the next day.</p>
-                <p>Everyone who registered to have their say will be contacted to let them know when they can submit further comments and what to do next.</p>
+                <p class="govuk-body">A week after the preliminary meeting, the Planning Inspectorate will publish the details of the meeting on the website. The detailed examination of the project starts the next day.</p>
+                <p class="govuk-body">Everyone who registered to have their say will be contacted to let them know when they can submit further comments and what to do next.</p>
                 <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
-                    <a href="./have-say-during-project-examination">
+                    <a class="govuk-link" href="/interested-party-guide/have-say-during-project-examination">
                         <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
                             <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
                           </svg> -->
@@ -89,7 +75,7 @@
     </div>
 
 {% endblock %}
-    
+
 {% block footer %}
     {{ pinsFooter() }}
 {% endblock %}

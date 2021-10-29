@@ -4,19 +4,6 @@
   What you can do after the decision has been made
 {% endblock %}
 
-{% block headIcons %}
-  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
-{% endblock %}
-
-{% block head %}
-  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
-  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
-
-  {% for stylesheetUrl in extensionConfig.stylesheets %}
-    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
-  {% endfor %}
-{% endblock %}
-
 {% block header %}
   {{ pinsHeader() }}
 {% endblock %}
@@ -33,27 +20,27 @@
 
 {% endblock %}
 {% block content %}
-  
+
     <h1 class="govuk-heading-xl">
       What you can do after the decision has been made
     </h1>
     <h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
     <ol class="govuk-list pins-contents-list">
-        <li><a href="#what-happens-next">What happens next</a></li>
-        <li><a href="#judicial-review">Judicial review</a></li>
+        <li><a class="govuk-link" href="#what-happens-next">What happens next</a></li>
+        <li><a class="govuk-link" href="#judicial-review">Judicial review</a></li>
     </ol>
 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <div class="pins-step-by-step-section-main">
                 <h2 class="govuk-heading-m" id="what-happens-next">What happens next</h2>
-                <p>Once a decision is made by the relevant Secretary of State, it will be published by the Planning Inspectorate in the project information area of our website.</p>
-                <p>The decision will also be sent to everyone who registered to have their say.</p>
+                <p class="govuk-body">Once a decision is made by the relevant Secretary of State, it will be published by the Planning Inspectorate in the project information area of our website.</p>
+                <p class="govuk-body">The decision will also be sent to everyone who registered to have their say.</p>
                 <h2 class="govuk-heading-m" id="judicial-review">Judicial review</h2>
-                <p>Once a decision is made, there is a 6 week period where people can challenge the decision in the High Court. This is called a Judicial Review. This is a legal process which can take years.
+                <p class="govuk-body">Once a decision is made, there is a 6 week period where people can challenge the decision in the High Court. This is called a Judicial Review. This is a legal process which can take years.
                 </p>
                 <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
-                    <a href="./overview.html">
+                    <a class="govuk-link" href="/overview">
                         <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
                             <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
                           </svg> -->
@@ -79,7 +66,7 @@
     </div>
 
 {% endblock %}
-    
+
 {% block footer %}
     {{ pinsFooter() }}
 {% endblock %}
