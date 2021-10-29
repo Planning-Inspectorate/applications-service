@@ -9,20 +9,3 @@ info:
 servers:
   - url: 'http://localhost:3000/' # needs to be variable replaced
 
-paths:
-  /test:
-    get:
-      summary: Returns a list of log messages relating to database connectivity.
-      responses:
-        '200': # status code
-          description: A JSON array of log messages
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-        '500': # status code
-          description: Something went wrong.
-        default:
-          description: Something went wrong.
