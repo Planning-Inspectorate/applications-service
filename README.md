@@ -53,6 +53,10 @@ Then go to [localhost:9004](http://localhost:9004) (forms-web-app) or
 > As a convention, public facing web service will use the port range `9000-9999`
 > and API services will use the port range `3000-3999`
 
+> A database for local development can be accessed at http://localhost:9000/ via [Adminer](https://www.adminer.org/) 
+> which is running in its own container locally 
+> Alternatively, you can use [MySQL Workbench](https://www.mysql.com/products/workbench/)
+
 To run a single service (and it's dependencies):
 
 ```

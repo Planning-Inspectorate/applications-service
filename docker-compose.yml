@@ -55,14 +55,17 @@ services:
 
   db:
     image: mysql
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment: 
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
-    
+      MYSQL_DATABASE: ipclive
+      MYSQL_USER: pins
+      MYSQL_PASSWORD: pins
+    ports: 
+      - 3306:3306 
     volumes: 
       - ./init:/docker-entrypoint-initdb.d
 
