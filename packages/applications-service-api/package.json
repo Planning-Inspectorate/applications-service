@@ -41,6 +41,7 @@
     "notifications-node-client": "^5.1.0",
     "pino": "^6.13.2",
     "rhea": "^1.0.24",
+    "sequelize": "^6.7.0",
     "supertest": "^6.1.5",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.1",

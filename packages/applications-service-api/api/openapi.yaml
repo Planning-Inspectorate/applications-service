@@ -1,12 +1,11 @@
 openapi: 3.0.3
 info:
   title: Applications Service API Documentation
-  description:
-    API to <ul><li>create, retrieve and modify planning applications</li></ul>
-  version: 1.0.3
+  description: API to <ul><li>create, retrieve and modify planning applications</li></ul>
+  version: 1.0.4
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
 servers:
-  - url: 'http://localhost:3000/'
+  - url: 'http://localhost:3000/' # needs to be variable replaced
 
