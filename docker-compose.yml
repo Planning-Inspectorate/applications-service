@@ -18,59 +18,59 @@ services:
       LOGGER_LEVEL: 'debug'
       SERVER_SHOW_ERRORS: 'true'
     ports:
-      - 3000:3000
-    working_dir: /opt/app
+      - '3000:3000'
+    working_dir: '/opt/app'
     volumes:
-      - ./packages/applications-service-api:/opt/app:ro
-    command: npm run start:dev
+      - './packages/applications-service-api:/opt/app:ro'
+    command: 'npm run start:dev'
 
   forms-web-app:
     image: node:14-alpine
     environment:
-      APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
-      DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
+      APPLICATIONS_SERVICE_API_URL: 'http://applications-service-api:3000'
+      DOCUMENTS_SERVICE_API_URL: 'http://document-service-api:3000'
       FILE_UPLOAD_DEBUG: 'false'
-      FILE_UPLOAD_MAX_FILE_SIZE_BYTES: 15000000
+      FILE_UPLOAD_MAX_FILE_SIZE_BYTES: '15000000'
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
       FILE_UPLOAD_TMP_PATH: '/tmp'
-      GOOGLE_ANALYTICS_ID: G-TZBWMVPTHV
+      GOOGLE_ANALYTICS_ID: 'G-TZBWMVPTHV'
       # please override this locally if using not using localhost or ip address to browse the site in dev.
-      SUBDOMAIN_OFFSET: 0
+      SUBDOMAIN_OFFSET: '0'
       USE_SECURE_SESSION_COOKIES: 'false'
       PDF_SERVICE_API_URL: 'http://pdf-service-api:3000'
     ports:
-      - 9004:3000
+      - '9004:3000'
       # node debugger
       # - 9229:9229
-    working_dir: /opt/app
+    working_dir: '/opt/app'
     links:
-      - applications-service-api
+      - 'applications-service-api'
     depends_on:
-      - applications-service-api
+      - 'applications-service-api'
     volumes:
-      - ./packages/forms-web-app:/opt/app
-    command: npm run start:dev
+      - './packages/forms-web-app:/opt/app'
+    command: 'npm run start:dev'
     # if enabling debug, be sure to uncomment / expose the debug port above.
     # command: npm run start:dev:debug
 
   db:
-    image: mysql
+    image: 'mysql'
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: 'always'
     environment: 
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ipclive
-      MYSQL_USER: pins
-      MYSQL_PASSWORD: pins
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'ipclive'
+      MYSQL_USER: 'pins'
+      MYSQL_PASSWORD: 'pins'
     ports: 
-      - 3306:3306 
+      - '3306:3306' 
     volumes: 
-      - ./init:/docker-entrypoint-initdb.d
+      - './init:/docker-entrypoint-initdb.d'
 
   adminer:
-    image: adminer
-    restart: always
+    image: 'adminer'
+    restart: 'always'
     ports: 
-      - 9000:8080  
+      - '9000:8080'  
