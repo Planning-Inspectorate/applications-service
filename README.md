@@ -90,7 +90,8 @@ When trying to start the server (**make serve**), with Docker Compose up and run
 no matching manifest for linux/arm64/v8 in the manifest list entries:
 ```
 
-``` docker-compose up
+``` 
+docker-compose up
 [+] Running 1/17
  ⠇ db Pulling                                                                                             1.8s
  ⠇ adminer Pulling                                                                                           1.8s
@@ -109,7 +110,8 @@ no matching manifest for linux/arm64/v8 in the manifest list entries:
   ⠋ ab023144139a Waiting                                                                                       0.0s
   ⠋ c9a46da6deea Waiting                                                                                       0.0s
   ⠋ 2653012098a8 Waiting                                                                                       0.0s
-no matching manifest for linux/arm64/v8 in the manifest list entries```
+no matching manifest for linux/arm64/v8 in the manifest list entries
+```
 
 This is resolved by entering the following line in the **docker-compose.yml** file in the db configuration of the services:
 
@@ -119,7 +121,8 @@ platform: linux/x86_64
 
 Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
 
-```db:
+```
+db:
   image: 'mysql'
   cap_add:
 
@@ -139,7 +142,8 @@ Example with the line '**platform: linux/x86_64**' added in the **docker-compose
 
   volumes:
 
-'./init:/docker-entrypoint-initdb.d'```
+'./init:/docker-entrypoint-initdb.d'
+```
 
 
 ## Branching
