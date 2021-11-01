@@ -114,7 +114,7 @@ docker-compose up
 no matching manifest for linux/arm64/v8 in the manifest list entries
 ```
 
-This is resolved by entering the following line in the **docker-compose.yml** file in the **db** configuration of the **services**:
+This is resolved by entering the following line in the **docker-compose.yml** file in the **db** settings of the **services**:
 
 ```
 platform: linux/x86_64
