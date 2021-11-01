@@ -136,7 +136,7 @@ db:
    MYSQL_DATABASE: 'ipclive'
    MYSQL_USER: 'pins'
    MYSQL_PASSWORD: 'pins'
-   **platform: linux/x86_64**
+   platform: linux/x86_64
   ports:
 
  '3306:3306'
