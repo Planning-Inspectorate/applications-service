@@ -36,7 +36,7 @@ module.exports = {
     logger.debug(`Retrieving all applications ...`);
     try {
       const documents = await getAllApplicationsFromApplicationApiService();
-      console.log(documents);
+      // console.log(documents);
 
       res.status(200).send(documents);
     } catch (e) {

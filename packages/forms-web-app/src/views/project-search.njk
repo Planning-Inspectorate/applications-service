@@ -46,7 +46,6 @@
 
 {% block content %}
   <h1 class="govuk-heading-l">All Projects</h1>
-
   <div class="govuk-grid-row">
     <section class="pins-document-library-search govuk-grid-column-one-quarter">
       <label class="pins-label-small" for="search_documents">Search</label>
@@ -168,7 +167,6 @@
                       <option selected>Alphabetical A-Z</option>
                     </select>
           <hr />
-
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -178,66 +176,15 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body">
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Yorkshire GREEN</a></td>
-      <td class="govuk-table__cell">National Grid Electricity Transmission(NGET) </td>
-      <td class="govuk-table__cell"> <strong class="govuk-tag govuk-tag--blue">Pre-application </strong> </td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Yorkshire and Humber CCS Cross Country Pipeline</a></td>
-      <td class="govuk-table__cell">National Grid Carbon Limited</td>
-      <td class="govuk-table__cell"> <strong class="govuk-tag govuk-tag--green">Acceptance and application</strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">York Potash Harbour Facilities Order</a></td>
-      <td class="govuk-table__cell">York Potash Ltd </td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Pre-application</strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Wylfa Newdd Nuclear Power Station</a></td>
-      <td class="govuk-table__cell">Horizon Nuclear Power</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--purple">Examination</strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Wrexham Energy Centre</a></td>
-      <td class="govuk-table__cell">Wrexham Power Limited </td>
-      <td class="govuk-table__cell"> <strong class="govuk-tag govuk-tag--orange"> Pre-examination </strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Woodside Link Houghton Regis Bedfordshire</a></td>
-      <td class="govuk-table__cell">Central Bedfordshire Council</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--orange"> Pre-examination </strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Willington C Gas Pipeline</a></td>
-      <td class="govuk-table__cell">RWE npower</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow"> Decision </strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Whitemoss Landfill Western Extension</a></td>
-      <td class="govuk-table__cell">Whitemoss Landfill Limited</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">Acceptance and application</strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">West Midlands Interchange</a></td>
-      <td class="govuk-table__cell">Four Ashes Limited</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Pre-application</strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">West Burton C power station</a></td>
-      <td class="govuk-table__cell">EDF Energy(Thermal Generation)Limited</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--yellow"> Decision </strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">Walney Extension offshore Wind Farm</a></td>
-      <td class="govuk-table__cell">DONG Energy Walney Extension (UK) Ltd</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--blue">Pre-application</strong></td>
-    </tr>
-    <tr class="govuk-table__row">
-    <td class="govuk-table__cell"> <a href="#">VPI Immingham OCGT</a></td>
-      <td class="govuk-table__cell">VPI Immingham B Ltd</td>
-      <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--purple">Examination</strong></td>
-    </tr>
+
+        {% for list in appList %}
+          <tr class="govuk-table__row">
+          <td class="govuk-table__cell"> <a href="/overview/{{ list.CaseReference }}">{{ list.ProjectName }}</a></td>
+            <td class="govuk-table__cell">{{ list.PromoterName }}</td>
+            <td class="govuk-table__cell"> <strong class="govuk-tag govuk-tag--blue">{{ list.Stage }}</strong> </td>
+          </tr>
+        {% endfor %}  
+
       </tbody>
     </table>
   </div>

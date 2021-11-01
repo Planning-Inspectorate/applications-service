@@ -7,7 +7,7 @@ const parentLogger = require('./logger');
 
 async function handler(path, method = 'GET', opts = {}, headers = {}) {
   const correlationId = uuid.v4();
-  const url = `${config.appeals.url}${path}`;
+  const url = `${config.applications.url}${path}`;
 
   const logger = parentLogger.child({
     correlationId,
@@ -18,7 +18,7 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
     logger.debug({ url, method, opts, headers }, 'New call');
 
     return await utils.promiseTimeout(
-      config.appeals.timeout,
+      config.applications.timeout,
       Promise.resolve().then(async () => {
         const apiResponse = await fetch(url, {
           method,
@@ -62,6 +62,6 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
 }
 
 
-exports.getAllProjectList = async (sessionId) => {
-  return handler(`/api/v1/appeals/${sessionId}`);
+exports.getAllProjectList = async () => {
+  return handler('/api/v1/applications');
 };

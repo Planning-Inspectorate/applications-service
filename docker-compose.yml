@@ -48,6 +48,7 @@ services:
     depends_on:
       - 'applications-service-api'
     volumes:
+      - ./packages/common:/opt/app/node_modules/@pins/common
       - './packages/forms-web-app:/opt/app'
     command: 'npm run start:dev'
     # if enabling debug, be sure to uncomment / expose the debug port above.
