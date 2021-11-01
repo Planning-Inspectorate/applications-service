@@ -7,5 +7,10 @@ class PO_FullName{
         })
     }
 
+    assertUseronTypeofInterestedPartyPage() {
+        cy.url().should('include', '/register/type-of-party')
+        cy.wait(Cypress.env('demoDelay'));
+    }
+
 }
 export default PO_FullName;
