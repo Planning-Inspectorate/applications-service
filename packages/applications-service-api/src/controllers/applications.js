@@ -1,4 +1,6 @@
+const { promises: fs } = require('fs');
 const logger = require('../lib/logger');
+const config = require('../lib/config');
 
 const {
   getApplication: getApplicationFromApplicationApiService,
@@ -10,6 +12,13 @@ const ApiError = require('../error/apiError');
 module.exports = {
   async getApplication(req, res) {
     const { id } = req.params;
+
+    const { trialistPath } = config;
+    const trialists = JSON.parse(await fs.readFile(trialistPath, 'utf8'));
+
+    if (!trialists.includes(id)) {
+      throw ApiError.applicationNotAcceptable(id);
+    }
 
     logger.debug(`Retrieving application ${id} ...`);
     try {
@@ -36,7 +45,6 @@ module.exports = {
     logger.debug(`Retrieving all applications ...`);
     try {
       const documents = await getAllApplicationsFromApplicationApiService();
-      console.log(documents);
 
       res.status(200).send(documents);
     } catch (e) {

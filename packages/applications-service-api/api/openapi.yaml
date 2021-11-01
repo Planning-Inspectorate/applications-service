@@ -18,7 +18,7 @@ paths:
       parameters:
         - in: path
           name: id
-          example: 'EN010009'
+          example: 'EN010116'
           required: true
           schema:
             type: string
@@ -32,6 +32,8 @@ paths:
                 $ref: '#/components/schemas/Application'
         '404':
           description: The application could not be found
+        '406':
+          description: Application not eligible
   '/api/v1/applications':
     get:
       summary: Returns all existing applications

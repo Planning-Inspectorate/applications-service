@@ -17,6 +17,7 @@ services:
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       LOGGER_LEVEL: 'debug'
       SERVER_SHOW_ERRORS: 'true'
+      TRIALIST_DATA_PATH: /opt/app/data/trialists.json
     ports:
       - '3000:3000'
     working_dir: '/opt/app'
