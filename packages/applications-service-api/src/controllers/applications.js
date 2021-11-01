@@ -8,18 +8,18 @@ const ApiError = require('../error/apiError');
 
 module.exports = {
   async getApplication(req, res) {
-    const idParam = req.params.id;
+    const { id } = req.params;
 
-    logger.debug(`Retrieving application ${idParam} ...`);
+    logger.debug(`Retrieving application ${id} ...`);
     try {
-      const document = await getApplicationFromApplicationApiService(idParam);
+      const document = await getApplicationFromApplicationApiService(id);
 
       if (document === null) {
-        throw ApiError.applicationNotFound(idParam);
+        throw ApiError.applicationNotFound(id);
       }
 
-      logger.debug(`Application ${idParam} retrieved`);
-      res.status(200).send(document.application);
+      logger.debug(`Application ${id} retrieved`);
+      res.status(200).send(document.dataValues);
     } catch (e) {
       if (e instanceof ApiError) {
         logger.debug(e.message);
@@ -27,7 +27,7 @@ module.exports = {
         return;
       }
       logger.error(e.message);
-      res.status(500).send(`Problem getting the application ${idParam}\n${e}`);
+      res.status(500).send(`Problem getting the application ${id} \n ${e}`);
     }
   },
 };
