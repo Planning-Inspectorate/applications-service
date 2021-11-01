@@ -4,6 +4,7 @@ const { utils } = require('@pins/common');
 
 const config = require('../config');
 const parentLogger = require('./logger');
+const { logger } = require('../config');
 
 async function handler(path, method = 'GET', opts = {}, headers = {}) {
   const correlationId = uuid.v4();
@@ -60,6 +61,10 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
     throw err;
   }
 }
+
+exports.getProjectData = async (case_ref) => {
+  return handler(`/api/v1/applications/${case_ref}`);
+};
 
 
 exports.getAllProjectList = async () => {
