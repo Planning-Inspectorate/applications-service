@@ -28,5 +28,5 @@ Then('I verify the page title and heading of full name page', () => {
 })
 
 And('I can see the text This service is only for Application service', () => {
-    pageObject.validatePageHeaderlink()
+    pageObject.validateHeaderContent()
 })

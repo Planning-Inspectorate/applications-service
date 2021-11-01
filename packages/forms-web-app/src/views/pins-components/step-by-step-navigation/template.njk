@@ -1,0 +1,389 @@
+{% set id = params.id %}
+{% set headingLevel = params.headingLevel if params.headingLevel else 2 %}
+{% set headingLink = params.headingLink if params.headingLink else "#" %}
+{% set partOfProcess = params.partOfProcess if params.partOfProcess else true %}
+
+<!--{% set xxxx = params.xxxx if params.xxxx else yyyy %}-->
+
+<div class="pins-step-by-step-section-sidebar">          
+{% if params.useIPDefaultStepByStep %}
+    <div class="app-step-nav-related app-step-nav-related--singular">
+        <h2 class="app-step-nav-related__heading">
+            <span class="app-step-nav-related__pretitle">Part of</span>
+            <a href="/interested-party-guide/index">The Nationally Significant Infrastructure planning process step by step</a>
+        </h2>
+        {# <span class="pins-step-by-step-navigation-show-all-steps">Show all</span> #}
+    </div>
+    <div id="step-by-step-navigation-default-ip-guide" class="pins-step-nav app-step-nav">
+      <ol class="app-step-nav__steps">
+        <li aria-current="step" data-show id="having-your-say-at-pre-application-stage" class="app-step-nav__step
+        {% if params.currentDefaultStep == 1 %} 
+          app-step-nav__step--active
+        {% endif %} 
+        ">
+          <div class="app-step-nav__header " data-position="1">
+              <h3 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                    <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                        <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 1
+                        <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                    </span>
+                    </span>
+                </span>
+                <span>
+                    Having your say at the pre-application stage
+                </span>
+              </h3>
+          </div>
+          <div class="app-step-nav__panel js-panel" id="step-panel-having-your-say-at-pre-application-stage-1">
+              <p class="app-step-nav__paragraph">Before the developer sends their application to the Planning Inspectorate, they must carry out a public consultation.</p>
+              <p class="app-step-nav__paragraph"><a href="/interested-party-guide/have-say-pre-application" class="app-step-nav__link">Find out how to get involved before the planning project is submitted to the Planning Inspectorate</a></p>
+          </div>
+        </li>
+        <li aria-current="step" data-show id="registering-to-have-your-say" class="app-step-nav__step
+        {% if params.currentDefaultStep == 2 %} 
+          app-step-nav__step--active
+        {% endif %} 
+        ">
+          <div class="app-step-nav__header " data-position="2">
+              <h3 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                    <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                        <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 2
+                        <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                    </span>
+                    </span>
+                </span>
+                <span>
+                    Registering to have your say about a national infrastructure project
+                </span>
+              </h3>
+          </div>
+          <div class="app-step-nav__panel js-panel" id="step-panel-registering-to-have-your-say-1">
+              <p class="app-step-nav__paragraph"><a href="/interested-party-guide/register-to-have-your-say" class="app-step-nav__link">Find out how to register to have your say about a national infrastructure project</a></p>
+          </div>
+        </li>
+        <li aria-current="step" data-show id="get-involved-in-the-preliminary-meeting" class="app-step-nav__step
+          {% if params.currentDefaultStep == 3 %} 
+              app-step-nav__step--active
+          {% endif %} 
+        ">
+            <div class="app-step-nav__header " data-position="3">
+                <h3 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                    <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                        <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 3
+                        <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                    </span>
+                    </span>
+                </span>
+                <span>
+                    Get involved in the preliminary meeting
+                </span>
+                </h3>
+            </div>
+            <div class="app-step-nav__panel js-panel" id="step-panel-get-involved-in-the-preliminary-meeting-1">
+                <p class="app-step-nav__paragraph">After you register to have your say, you can get involved with the next stages of the process, by attending the preliminary meeting and submitting comments at the examination stage.</p>
+                <p class="app-step-nav__paragraph"><a href="/interested-party-guide/get-involved-preliminary-meetings" class="app-step-nav__link">What you can do after you register to have your say</a></p>
+            </div>
+        </li>
+        <li aria-current="step" data-show id="have-your-say-during-examination" class="app-step-nav__step
+        {% if params.currentDefaultStep == 4 %} 
+            app-step-nav__step--active
+        {% endif %} 
+        ">
+            <div class="app-step-nav__header " data-position="4">
+                <h3 class="app-step-nav__title">
+                  <span class="app-step-nav__circle app-step-nav__circle--number">
+                      <span class="app-step-nav__circle-inner">
+                      <span class="app-step-nav__circle-background">
+                          <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 4
+                          <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                      </span>
+                      </span>
+                  </span>
+                  <span>
+                      Have your say during the examination of the project
+                  </span>
+                </h3>
+            </div>
+            <div class="app-step-nav__panel js-panel" id="step-panel-have-your-say-during-examination-1">
+                <p class="app-step-nav__paragraph">When the Planning Inspectorate starts the examination of the project, you can submit your comments and reply to any comments submitted by others.</p>
+                <p class="app-step-nav__paragraph"><a href="/interested-party-guide/have-say-during-project-examination" class="app-step-nav__link">Submitting comments during the examination of the project</a></p>
+            </div>
+        </li>
+        <li aria-current="step" data-show id="what-you-can-do-after-decision" class="app-step-nav__step
+          {% if params.currentDefaultStep == 5 %} 
+              app-step-nav__step--active
+          {% endif %} 
+        ">
+            <div class="app-step-nav__header " data-position="5">
+                <h3 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                    <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                        <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 5
+                        <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                    </span>
+                    </span>
+                </span>
+                <span>
+                    What you can do after the decision has been made
+                </span>
+                </h3>
+            </div>
+            <div class="app-step-nav__panel js-panel" id="step-panel-what-you-can-do-after-decision-1">
+                <p class="app-step-nav__paragraph"><a href="/interested-party-guide/after-making-the-decision" class="app-step-nav__link">What happens after a decision has been made</a></p>
+            </div>
+        </li>
+      </ol>
+    </div>
+{% elif params.useProcessDefaultStepByStep %}
+    <div class="app-step-nav-related app-step-nav-related--singular">
+        <h2 class="app-step-nav-related__heading">
+            <span class="app-step-nav-related__pretitle">Part of</span>
+            <a href="/interested-party-guide/index">The Development Consent Order process for National Infrastructure Projects (NSIPs)</a>
+        </h2>
+        {# <span class="pins-step-by-step-navigation-show-all-steps">Show all</span> #}
+    </div>
+    <div id="step-by-step-navigation-default-process-guide" class="pins-step-nav app-step-nav">
+      <ol class="app-step-nav__steps">
+        <li aria-current="step" data-show id="pre-application" class="app-step-nav__step
+          {% if params.currentDefaultStep == 1 %} 
+            app-step-nav__step--active
+          {% endif %} 
+          ">
+          <div class="app-step-nav__header " data-position="1">
+              <h3 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                      <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 1
+                      <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                  </span>
+                  </span>
+              </span>
+              <span>
+                  Pre-application
+              </span>
+              </h3>
+          </div>
+          <div class="app-step-nav__panel js-panel" id="step-panel-pre-application-1">
+              <p class="app-step-nav__paragraph">Pre-application is the first stage of the process. This is where the developer must create several documents outlining the development they are proposing.</p>
+              <p class="app-step-nav__paragraph"><a href="pre-application.html" class="app-step-nav__link">Find out about what the developer needs to do and check our detailed guides</a></p>
+          </div>
+        </li>
+        <li aria-current="step" data-show id="review-of-the-application" class="app-step-nav__step
+          {% if params.currentDefaultStep == 2 %} 
+            app-step-nav__step--active
+          {% endif %} 
+          ">
+          <div class="app-step-nav__header " data-position="2">
+              <h3 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                      <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 2
+                      <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                  </span>
+                  </span>
+              </span>
+              <span>
+                  Review of the application
+              </span>
+              </h3>
+          </div>
+          <div class="app-step-nav__panel js-panel" id="step-panel-rreview-of-the-application-1">
+              <p class="app-step-nav__paragraph">This is when the developer sends us all of the information in their application. We look at all of the documents to check if we can accept the application for examination.</p>              
+              <p class="app-step-nav__paragraph"><a href="review-of-the-application.html" class="app-step-nav__link">How the review works and what happens next</a></p>
+          </div>
+        </li>
+        <li aria-current="step" data-show id="pre-examination-of-the-project" class="app-step-nav__step
+          {% if params.currentDefaultStep == 3 %} 
+              app-step-nav__step--active
+          {% endif %} 
+          ">
+          <div class="app-step-nav__header " data-position="3">
+              <h3 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                      <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 3
+                      <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                  </span>
+                  </span>
+              </span>
+              <span>
+                  Pre-examination of the project
+              </span>
+              </h3>
+          </div>
+          <div class="app-step-nav__panel js-panel" id="step-panel-pre-examination-of-the-project-1">
+              <p class="app-step-nav__paragraph">The pre-examination stage is where we prepare for an examination. We will identify an inspector or a panel of inspectors called the examining authority and make a plan for the examination stage.</p>
+              <p class="app-step-nav__paragraph"><a href="pre-examination.html" class="app-step-nav__link">What happens during pre-examination The preliminary meeting</a></p>
+          </div>
+        </li>
+        <li aria-current="step" data-show id="examination-of-the-project" class="app-step-nav__step
+          {% if params.currentDefaultStep == 4 %} 
+              app-step-nav__step--active
+          {% endif %} 
+          ">
+            <div class="app-step-nav__header " data-position="4">
+                <h3 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                    <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                        <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 4
+                        <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                    </span>
+                    </span>
+                </span>
+                <span>
+                    Examination of the project
+                </span>
+                </h3>
+            </div>
+            <div class="app-step-nav__panel js-panel" id="step-panel-examination-of-the-project-1">
+                <p class="app-step-nav__paragraph">The examination stage is where the examining inspector or panel of inspectors, the developer and anyone who wants to have their say will get involved and comment on the proposed development.</p>
+                <p class="app-step-nav__paragraph"><a href="examination.html" class="app-step-nav__link">What happens at the examination of the project</a></p>
+            </div>
+        </li>
+        <li aria-current="step" data-show id="recommendation-and-decision" class="app-step-nav__step
+          {% if params.currentDefaultStep == 5 %} 
+              app-step-nav__step--active
+          {% endif %} 
+          ">
+            <div class="app-step-nav__header " data-position="5">
+                <h3 class="app-step-nav__title">
+                <span class="app-step-nav__circle app-step-nav__circle--number">
+                    <span class="app-step-nav__circle-inner">
+                    <span class="app-step-nav__circle-background">
+                        <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 5
+                        <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                    </span>
+                    </span>
+                </span>
+                <span>
+                    Recommendation and decision
+                </span>
+                </h3>
+            </div>
+            <div class="app-step-nav__panel js-panel" id="step-panel-recommendation-and-decision-1">
+                <p class="app-step-nav__paragraph">Recommendation and decision is where we write our recommendation report. This must be completed and sent to the Secretary of State within three months of the end of examination. The Secretary of State then makes the final decision.</p>
+                <p class="app-step-nav__paragraph"><a href="recommendation-and-decision.html" class="app-step-nav__link">Making our recommendation and who makes the final decision</a></p>
+            </div>
+        </li>
+        <li aria-current="step" data-show id="what-happens-after-a-decision-is-made" class="app-step-nav__step
+            {% if params.currentDefaultStep == 6 %} 
+                app-step-nav__step--active
+            {% endif %} 
+          ">
+          <div class="app-step-nav__header " data-position="6">
+              <h3 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                  <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                      <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> 6
+                      <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                  </span>
+                  </span>
+              </span>
+              <span>
+                  What happens after a decision is made
+              </span>
+              </h3>
+          </div>
+          <div class="app-step-nav__panel js-panel" id="step-panel-what-happens-after-a-decision-is-made-1">
+              <p class="app-step-nav__paragraph">Once a decision is made by the Secretary of State, there is a 6 week period where people can challenge the decision in the High Court. This is called a Judicial Review.</p>
+              <p class="app-step-nav__paragraph"><a href="what-happens-after-a-decision-has-been-made.html" class="app-step-nav__link">What you can do after the decision has been made</a></p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  {% else %}
+    <div class="app-step-nav-related app-step-nav-related--singular">
+        <h2 class="app-step-nav-related__heading">
+            {% if params.partOfProcess %}<span class="app-step-nav-related__pretitle">Part of</span>{% endif %}
+            {% if params.headingContainsLink %}<a href="{{ params.headingLink }}">{% endif %}
+            {{ params.heading }}
+            {% if params.headingContainsLink %}</a>{% endif %}
+        </h2>
+        <span class="pins-step-by-step-navigation-show-all-steps">Show all</span>
+    </div>
+
+    <div id="step-by-step-navigation" class="pins-step-nav app-step-nav">
+      <ol class="app-step-nav__steps">
+        {% set currentIndex = 1 %}
+        {% for step in params.steps %}
+        <li class="app-step-nav__step {{ 'app-step-nav__step--active' if step.isActive }}" aria-current="step" data-show id="{{ id }}-heading-{{ currentIndex }}" >
+          <div class="app-step-nav__header " data-position="{{ currentIndex }}">
+              <h3 class="app-step-nav__title">
+                {% if step.isOrStep %}
+                  <span class="app-step-nav__circle app-step-nav__circle--logic">
+                    <span class="app-step-nav__circle-inner">
+                      <span class="app-step-nav__circle-background">
+                          Or
+                      </span>
+                    </span>
+                  </span>
+                {% else %}
+                  <span class="app-step-nav__circle app-step-nav__circle--number">
+                      <span class="app-step-nav__circle-inner">
+                      <span class="app-step-nav__circle-background">
+                          <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> {{ currentIndex }}
+                          <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+                      </span>
+                      </span>
+                  </span>
+                  {% set currentIndex = currentIndex + 1 %}
+                {% endif %}
+                
+
+              <span>
+                  {{ step.heading.html | safe if step.heading.html else step.heading.text }}
+              </span>
+              </h3>
+          </div>
+
+          <div class="app-step-nav__panel js-panel" id="step-panel-{{id}}-{{ loop.index }}">
+              {% if step.content.html%}
+                {{ step.content.html | safe }}
+              {% else %}
+                <p class="app-step-nav__paragraph">{{ step.content.text }}</p>
+              {% endif %}
+
+              {% if step.subList %}
+                <ol class="app-step-nav__list " data-length="{{ step.subList.length }}">
+                  {% for subStep in step.subList %}
+                  <li class="app-step-nav__list-item {{ 'app-step-nav__list-item--active' if subStep.isActive }}">
+                    {% if subStep.href %}
+                      <a data-position="1.{{ loop.index }}" class="app-step-nav__link" href="{{ subStep.href if subStep.href }}">
+                        {% if item.isActive %}
+                          <span class="app-step-nav__link-active-context govuk-visually-hidden">You are currently viewing: </span>
+                        {% endif %}  
+                        {{subStep.text}}
+                      </a>
+                    {% else %}
+                      <p class="app-step-nav__paragraph">{{item.text}}</p>
+                    {% endif %}
+                  </li>
+                  {% endfor %}
+                  {# <li class="app-step-nav__list-item ">
+                      <a data-position="1.2" class="app-step-nav__link" href="#">Requirements for driving legally </a>
+                  </li>
+                  <li class="app-step-nav__list-item ">
+                      <a data-position="1.3" class="app-step-nav__link" href="#">Driving eyesight rules </a>
+                  </li> #}
+                </ol>
+              {% endif %}
+              
+          </div>
+
+        </li>
+        {% endfor %}
+      </ol>
+  {% endif %}
+</div>

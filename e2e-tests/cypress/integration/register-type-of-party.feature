@@ -18,6 +18,19 @@ Feature: What type of interested party are you page
             | ErrorMsg                                     |
             | Select what type of interested party are you |
 
+    Scenario: User click on Planning inspectorate logo
+        When I click on "planning inspectorate" logo
+        Then I navigate to "planning inspectorate" home page
+
+    Scenario: User click on crown copyright logo
+        When I click on "crown copyright" logo
+        Then I navigate to "crown copyright" home page
+
+    Scenario: User click on feedback link
+        When I click on feedback link
+        Then I navigate to "feedback" home page
+
+
     Scenario: User selects An person interested in having my say and click continue
         When User selects "An person interested in having my say"
         And User clicks on continue button

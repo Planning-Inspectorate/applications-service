@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "pins",
+    "password": "pins",
+    "database": "ipclive",
+    "host": "db",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "pins",
+    "password": null,
+    "database": "ipclive",
+    "host": "db",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "pins",
+    "password": null,
+    "database": "ipclive",
+    "host": "db",
+    "dialect": "mysql"
+  }
+}

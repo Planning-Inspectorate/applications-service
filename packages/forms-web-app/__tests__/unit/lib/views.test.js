@@ -14,7 +14,7 @@ describe('lib/views', () => {
       MESSAGES: {
         COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
       },
-    
+      OVERVIEW: 'overview',
       REGISTER: {
         TYPE_OF_PARTY: 'register/type-of-party',
         FULL_NAME: 'register/full-name',

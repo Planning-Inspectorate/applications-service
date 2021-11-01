@@ -1,6 +1,7 @@
 const httpPort = Number(process.env.PORT || 3000);
 
 module.exports = {
+  serviceName: 'Register to have your say',
   application: {
     defaultDisplayDateFormat: 'DD MMMM YYYY',
   },

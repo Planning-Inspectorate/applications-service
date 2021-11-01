@@ -13,6 +13,7 @@ module.exports = {
     '<rootDir>/src/public/javascripts/main.js',
     '<rootDir>/src/assets',
     '<rootDir>/src/public',
+    '<rootDir>/src/views/pins-components',
   ],
   testMatch: ['**/?(*.)+(spec|test).js'],
   coverageThreshold: {

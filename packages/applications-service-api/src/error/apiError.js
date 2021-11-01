@@ -7,6 +7,10 @@ class ApiError {
   static badRequest(msg) {
     return new ApiError(400, msg);
   }
+
+  static applicationNotFound(id) {
+    return new ApiError(404, { errors: [`The application ${id} was not found`] });
+  }
 }
 
 module.exports = ApiError;

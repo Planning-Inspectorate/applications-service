@@ -21,7 +21,7 @@ And('I can see the logo gov uk text', () => {
 })
 
 And('I can see the text This service is only for Application service', () => {
-    pageObject.validatePageHeaderlink()
+    pageObject.validateHeaderContent()
 })
 
 Then('below error message should be presented on interested party page', function (table) {
@@ -38,4 +38,22 @@ And('User clicks on continue button', () => {
 
 Then('User is navigated to full-name page', () => {
     typeOfPartyPage.assertUseronFullNamePage()
+})
+
+Then('I click on {string} logo', (logoLink) => {
+    switch (logoLink) {
+        case "planning inspectorate": pageObject.clickOnPlanningInspectorateLogo();
+            break;
+        case "crown copyright": pageObject.clickOnCrownCopyRight();
+            break;
+        default: throw console.error('uanble to find specified logo link: ' + logoLink);
+    }
+})
+
+Then('I click on feedback link', () => {
+    pageObject.clickOnProvideFeedbackLink()
+})
+
+Then('I navigate to {string} home page', (thirdPartyPage) => {
+    pageObject.assertUseronThirdPartyPage(thirdPartyPage)
 })
