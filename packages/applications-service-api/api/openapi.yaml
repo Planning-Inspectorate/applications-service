@@ -8,4 +8,152 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 servers:
   - url: 'http://localhost:3000/' # needs to be variable replaced
-
+paths:
+  '/api/v1/applications/{id}':
+    get:
+      summary: Returns an existing application
+      description: Returns an existing application (Project) by id (Case Reference)
+      tags:
+        - Applications
+      parameters:
+        - in: path
+          name: id
+          example: 'EN010009'
+          required: true
+          schema:
+            type: string
+          description: Unique identifier
+      responses:
+        '200':
+          description: Returns an application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '404':
+          description: The application could not be found
+  '/api/v1/applications':
+    get:
+      summary: Returns all existing applications
+      description: Returns all existing applications (Projects)
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Returns all applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/Application'
+        '404':
+          description: No applications found
+components:
+  schemas:
+    Application:
+      type: object
+      properties:
+        CaseReference:
+          type: string
+          example: 'EN010009'
+        ProjectName: 
+          type: string
+          example: 'St James Barton Giant Wind Turbine'
+        Proposal: 
+          type: string
+          example: 'EN01 - Generating Stations'
+        Stage: 
+          type: integer
+          example: 3
+        PromoterName: 
+          type: string
+          example: 'Horizon Dev Environment DJW'
+        PromoterFirstName:
+          type: string
+          example: 'Postman'
+        PromoterLastName: 
+          type: string
+          example: 'Pat'
+        ApplicantEmailAddress: 
+          type: string
+          example: 'david.white@pins.gsi.gov.uk'
+        ApplicantPhoneNumber: 
+          type: string
+          example: '1234'
+        WebAddress: 
+          type: string
+          example: ''
+        ProjectEmailAddress: 
+          type: string
+          example: 'david.white@pins.gsi.gov.uk'
+        Region: 
+          type: string
+          example: 'Wales'
+        ProjectLocation: 
+          type: string
+          example: 'St James Barton, BRISTOL THU 16 JAN'
+        AnticipatedGridRefEasting: 
+          type: number
+          example: 347128
+        AnticipatedGridRefNorthing: 
+          type: number
+          example: 176491
+        MapZoomLevel: 
+          type: string
+          example: ''
+        AnticipatedDateOfSubmission: 
+          type: string
+          example: ''
+        AnticipatedSubmissionDateNonSpecific:
+          type: string
+          example: 'Longâ€” â€“dash' 
+        DateOfDCOSubmission: 
+          type: string
+          example: '2015-12-10'
+        DateOfDCOAcceptance_NonAcceptance: 
+          type: string
+          example: ''
+        DateOfPreliminaryMeeting: 
+          type: string
+          example: ''
+        ConfirmedStartOfExamination: 
+          type: string
+          example: ''
+        DateTimeExaminationEnds:
+          type: string
+          example: ''
+        DateOfRepresentationPeriodOpen: 
+          type: string
+          example: '2017-02-14'
+        DateOfRelevantRepresentationClose: 
+          type: string
+          example: '2018-08-01'
+        DateRRepAppearOnWebsite: 
+          type: string
+          example: '2017-08-01'
+        Stage4ExtensiontoExamCloseDate: 
+          type: string
+          example: ''
+        stage5ExtensionToRecommendationDeadline: 
+          type: string
+          example: ''
+        Stage5ExtensiontoDecisionDeadline: 
+          type: string
+          example: ''
+        DateOfRecommendations: 
+          type: string
+          example: ''
+        ConfirmedDateOfDecision: 
+          type: string
+          example: ''
+        DateProjectWithdrawn: 
+          type: string
+          example: ''
+        sourceSystem: 
+          type: string
+          example: 'HORIZON'
+        dateOfNonAcceptance: 
+          type: string
+          example: '' 
