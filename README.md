@@ -117,9 +117,9 @@ This is resolved by entering the following line in the **docker-compose.yml** fi
 platform: linux/x86_64
 ```
 
-```Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
+Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
 
-db:
+```db:
   image: 'mysql'
   cap_add:
 
