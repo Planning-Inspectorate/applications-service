@@ -90,7 +90,7 @@ When trying to start the server (**make serve**), with Docker Compose up and run
 no matching manifest for linux/arm64/v8 in the manifest list entries:
 ```
 
-` docker-compose up
+``` docker-compose up
 [+] Running 1/17
  ⠇ db Pulling                                                                                             1.8s
  ⠇ adminer Pulling                                                                                           1.8s
@@ -109,7 +109,7 @@ no matching manifest for linux/arm64/v8 in the manifest list entries:
   ⠋ ab023144139a Waiting                                                                                       0.0s
   ⠋ c9a46da6deea Waiting                                                                                       0.0s
   ⠋ 2653012098a8 Waiting                                                                                       0.0s
-no matching manifest for linux/arm64/v8 in the manifest list entries`
+no matching manifest for linux/arm64/v8 in the manifest list entries```
 
 This is resolved by entering the following line in the **docker-compose.yml** file in the db configuration of the services:
 
@@ -117,29 +117,29 @@ This is resolved by entering the following line in the **docker-compose.yml** fi
 platform: linux/x86_64
 ```
 
-`Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
->
-> db:
->   image: 'mysql'
->   cap_add:
->
->    SYS_NICE # CAP_SYS_NICE
->
->   command: '--default-authentication-plugin=mysql_native_password'
->   restart: 'always'
->   environment:
->    MYSQL_ROOT_PASSWORD: 'root'
->    MYSQL_DATABASE: 'ipclive'
->    MYSQL_USER: 'pins'
->    MYSQL_PASSWORD: 'pins'
->    **platform: linux/x86_64**
->   ports:
->
->  '3306:3306'
->
->   volumes:
->
-> './init:/docker-entrypoint-initdb.d'`
+```Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
+
+db:
+  image: 'mysql'
+  cap_add:
+
+   SYS_NICE # CAP_SYS_NICE
+
+  command: '--default-authentication-plugin=mysql_native_password'
+  restart: 'always'
+  environment:
+   MYSQL_ROOT_PASSWORD: 'root'
+   MYSQL_DATABASE: 'ipclive'
+   MYSQL_USER: 'pins'
+   MYSQL_PASSWORD: 'pins'
+   **platform: linux/x86_64**
+  ports:
+
+ '3306:3306'
+
+  volumes:
+
+'./init:/docker-entrypoint-initdb.d'```
 
 
 ## Branching
