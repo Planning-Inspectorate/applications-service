@@ -32,6 +32,24 @@ paths:
                 $ref: '#/components/schemas/Application'
         '404':
           description: The application could not be found
+  '/api/v1/applications':
+    get:
+      summary: Returns all existing applications
+      description: Returns all existing applications (Projects)
+      tags:
+        - Applications
+      responses:
+        '200':
+          description: Returns all applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/Application'
+        '404':
+          description: No applications found
 components:
   schemas:
     Application:

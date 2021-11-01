@@ -5,6 +5,12 @@ const getApplication = async (id) => {
   return project;
 };
 
+const getAllApplications = async () => {
+  const projects = await db.Project.findAll();
+  return projects;
+};
+
 module.exports = {
   getApplication,
+  getAllApplications,
 };
