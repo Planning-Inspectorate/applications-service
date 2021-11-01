@@ -83,6 +83,65 @@ To stop all services:
 make down
 ```
 
+### Issues with Running the Server
+
+When trying to start the server (**make serve**), with Docker Compose up and running, with some OS versions this message is output:
+```
+no matching manifest for linux/arm64/v8 in the manifest list entries:
+```
+
+> docker-compose up
+> [+] Running 1/17
+>  ⠇ db Pulling                                                                                             1.8s
+>  ⠇ adminer Pulling                                                                                           1.8s
+>   ⠿ 552d1f2373af Already exists                                                                                    0.0s
+>   ⠋ f327d3d40ef4 Pulling fs layer                                                                                   0.0s
+>   ⠋ a3586b69bdc1 Pulling fs layer                                                                                   0.0s
+>   ⠋ 226a5565cd99 Pulling fs layer                                                                                   0.0s
+>   ⠋ a29c49208f73 Waiting                                                                                       0.0s
+>   ⠋ e04acff31b30 Waiting                                                                                       0.0s
+>   ⠋ 1fd966f11fdc Waiting                                                                                       0.0s
+>   ⠋ af329026e61b Waiting                                                                                       0.0s
+>   ⠋ d1c16c674cf6 Waiting                                                                                       0.0s
+>   ⠋ 1f79445e9e05 Waiting                                                                                       0.0s
+>   ⠋ 102c95209aff Waiting                                                                                       0.0s
+>   ⠋ d8471d71259d Waiting                                                                                       0.0s
+>   ⠋ ab023144139a Waiting                                                                                       0.0s
+>   ⠋ c9a46da6deea Waiting                                                                                       0.0s
+>   ⠋ 2653012098a8 Waiting                                                                                       0.0s
+> no matching manifest for linux/arm64/v8 in the manifest list entries
+
+This is resolved by entering the following line in the **docker-compose.yml** file in the db configuration of the services:
+
+```
+platform: linux/x86_64
+```
+
+> Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
+>
+> db:
+>   image: 'mysql'
+>   cap_add:
+>
+>    SYS_NICE # CAP_SYS_NICE
+>
+>   command: '--default-authentication-plugin=mysql_native_password'
+>   restart: 'always'
+>   environment:
+>    MYSQL_ROOT_PASSWORD: 'root'
+>    MYSQL_DATABASE: 'ipclive'
+>    MYSQL_USER: 'pins'
+>    MYSQL_PASSWORD: 'pins'
+>    **platform: linux/x86_64**
+>   ports:
+>
+>  '3306:3306'
+>
+>   volumes:
+>
+> './init:/docker-entrypoint-initdb.d'
+
+
 ## Branching
 
 Please follow the established [branching strategy](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/425132090/Branching+strategy).
