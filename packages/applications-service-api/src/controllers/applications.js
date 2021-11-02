@@ -45,7 +45,6 @@ module.exports = {
     logger.debug(`Retrieving all applications ...`);
     try {
       const documents = await getAllApplicationsFromApplicationApiService();
-
       res.status(200).send(documents);
     } catch (e) {
       if (e instanceof ApiError) {
