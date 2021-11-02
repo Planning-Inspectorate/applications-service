@@ -15,10 +15,11 @@ function getJsonDetails(app) {
 exports.getProjectList = async (req, res) => {
 
   const appList = await getAppList();
+  const noOfProjects = appList.length;
   let requiredAppdata = [];
-  for(var i = 0; i < appList.length; i++) {
+  for(var i = 0; i < noOfProjects; i++) {
     let obj = getJsonDetails(appList[i]);
     requiredAppdata.push(obj);
   }
-  res.render(VIEW.PROJECT_SEARCH, {appList: requiredAppdata});
+  res.render(VIEW.PROJECT_SEARCH, {appList: requiredAppdata, noOfProjects: noOfProjects});
 };
