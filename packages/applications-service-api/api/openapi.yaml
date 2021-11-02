@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Applications Service API Documentation
   description: API to <ul><li>create, retrieve and modify planning applications</li></ul>
-  version: 1.0.4
+  version: 1.0.5
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
@@ -50,6 +50,22 @@ paths:
                   $ref: '#/components/schemas/Application'
         '404':
           description: No applications found
+  '/test':
+    get:
+      summary: Returns a list of log messages relating to database connectivity.
+      responses:
+        '200': # status code
+          description: A JSON array of log messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500': # status code
+          description: Something went wrong.
+        default:
+          description: Something went wrong.
 components:
   schemas:
     Application:
@@ -58,102 +74,102 @@ components:
         CaseReference:
           type: string
           example: 'EN010009'
-        ProjectName: 
+        ProjectName:
           type: string
           example: 'St James Barton Giant Wind Turbine'
-        Proposal: 
+        Proposal:
           type: string
           example: 'EN01 - Generating Stations'
-        Stage: 
+        Stage:
           type: integer
           example: 3
-        PromoterName: 
+        PromoterName:
           type: string
           example: 'Horizon Dev Environment DJW'
         PromoterFirstName:
           type: string
           example: 'Postman'
-        PromoterLastName: 
+        PromoterLastName:
           type: string
           example: 'Pat'
-        ApplicantEmailAddress: 
+        ApplicantEmailAddress:
           type: string
           example: 'david.white@pins.gsi.gov.uk'
-        ApplicantPhoneNumber: 
+        ApplicantPhoneNumber:
           type: string
           example: '1234'
-        WebAddress: 
+        WebAddress:
           type: string
           example: ''
-        ProjectEmailAddress: 
+        ProjectEmailAddress:
           type: string
           example: 'david.white@pins.gsi.gov.uk'
-        Region: 
+        Region:
           type: string
           example: 'Wales'
-        ProjectLocation: 
+        ProjectLocation:
           type: string
           example: 'St James Barton, BRISTOL THU 16 JAN'
-        AnticipatedGridRefEasting: 
+        AnticipatedGridRefEasting:
           type: number
           example: 347128
-        AnticipatedGridRefNorthing: 
+        AnticipatedGridRefNorthing:
           type: number
           example: 176491
-        MapZoomLevel: 
+        MapZoomLevel:
           type: string
           example: ''
-        AnticipatedDateOfSubmission: 
+        AnticipatedDateOfSubmission:
           type: string
           example: ''
         AnticipatedSubmissionDateNonSpecific:
           type: string
-          example: 'Longâ€” â€“dash' 
-        DateOfDCOSubmission: 
+          example: 'Longâ€” â€“dash'
+        DateOfDCOSubmission:
           type: string
           example: '2015-12-10'
-        DateOfDCOAcceptance_NonAcceptance: 
+        DateOfDCOAcceptance_NonAcceptance:
           type: string
           example: ''
-        DateOfPreliminaryMeeting: 
+        DateOfPreliminaryMeeting:
           type: string
           example: ''
-        ConfirmedStartOfExamination: 
+        ConfirmedStartOfExamination:
           type: string
           example: ''
         DateTimeExaminationEnds:
           type: string
           example: ''
-        DateOfRepresentationPeriodOpen: 
+        DateOfRepresentationPeriodOpen:
           type: string
           example: '2017-02-14'
-        DateOfRelevantRepresentationClose: 
+        DateOfRelevantRepresentationClose:
           type: string
           example: '2018-08-01'
-        DateRRepAppearOnWebsite: 
+        DateRRepAppearOnWebsite:
           type: string
           example: '2017-08-01'
-        Stage4ExtensiontoExamCloseDate: 
+        Stage4ExtensiontoExamCloseDate:
           type: string
           example: ''
-        stage5ExtensionToRecommendationDeadline: 
+        stage5ExtensionToRecommendationDeadline:
           type: string
           example: ''
-        Stage5ExtensiontoDecisionDeadline: 
+        Stage5ExtensiontoDecisionDeadline:
           type: string
           example: ''
-        DateOfRecommendations: 
+        DateOfRecommendations:
           type: string
           example: ''
-        ConfirmedDateOfDecision: 
+        ConfirmedDateOfDecision:
           type: string
           example: ''
-        DateProjectWithdrawn: 
+        DateProjectWithdrawn:
           type: string
           example: ''
-        sourceSystem: 
+        sourceSystem:
           type: string
           example: 'HORIZON'
-        dateOfNonAcceptance: 
+        dateOfNonAcceptance:
           type: string
-          example: '' 
+          example: ''
