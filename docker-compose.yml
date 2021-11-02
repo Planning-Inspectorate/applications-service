@@ -18,6 +18,7 @@ services:
       LOGGER_LEVEL: 'debug'
       SERVER_SHOW_ERRORS: 'true'
       TRIALIST_DATA_PATH: /opt/app/data/trialists.json
+      NODE_ENV: local
     ports:
       - '3000:3000'
     working_dir: '/opt/app'
@@ -57,21 +58,21 @@ services:
   db:
     image: 'mysql'
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE # CAP_SYS_NICE
     command: '--default-authentication-plugin=mysql_native_password'
     restart: 'always'
-    environment: 
+    environment:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: 'ipclive'
       MYSQL_USER: 'pins'
       MYSQL_PASSWORD: 'pins'
-    ports: 
-      - '3306:3306' 
-    volumes: 
+    ports:
+      - '3306:3306'
+    volumes:
       - './init:/docker-entrypoint-initdb.d'
 
   adminer:
     image: 'adminer'
     restart: 'always'
-    ports: 
-      - '9000:8080'  
+    ports:
+      - '9000:8080'
