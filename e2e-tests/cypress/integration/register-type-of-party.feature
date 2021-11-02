@@ -30,6 +30,9 @@ Feature: What type of interested party are you page
         When I click on feedback link
         Then I navigate to "feedback" home page
 
+    Scenario: User click on back link
+        When I click on back link
+        Then I navigate to start page
 
     Scenario: User selects An person interested in having my say and click continue
         When User selects "An person interested in having my say"

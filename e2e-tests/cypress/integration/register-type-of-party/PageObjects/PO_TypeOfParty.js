@@ -1,6 +1,8 @@
 class PO_TypeOfParty {
-    navigatetoTypeOfPartyPageURL() {
-        cy.visit('/register/type-of-party');
+    
+    navigatetoTypeOfPartyPage() {
+        cy.visit('/register/start');
+        cy.clickOnHref("/register/type-of-party");
     }
 
     validatePageTitleandHeading() {
@@ -19,6 +21,11 @@ class PO_TypeOfParty {
 
     assertUseronFullNamePage() {
         cy.url().should('include', '/register/full-name')
+        cy.wait(Cypress.env('demoDelay'));
+    }
+
+    assertUseronStartPage() {
+        cy.url().should('include', '/register/start')
         cy.wait(Cypress.env('demoDelay'));
     }
 }
