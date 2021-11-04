@@ -1,29 +1,49 @@
-const uuid = require('uuid');
+// const uuid = require('uuid');
 const logger = require('../lib/logger');
 
-const { insertInterestedParty } = require('../services/interested-party.service');
-const { interestedPartyDocument } = require('../models/interested-party');
+const {
+  insertInterestedParty,
+  getInterestedParty: getInterestedPartyFromInterestedPartyApiService,
+} = require('../services/interested-party.service');
+
+const ApiError = require('../error/apiError');
 
 module.exports = {
+  async getInterestedParty(req, res) {
+    const { caseRef } = req.params;
+
+    logger.debug(`Retrieving interested party by case reference ${caseRef} ...`);
+    try {
+      const document = await getInterestedPartyFromInterestedPartyApiService(caseRef);
+
+      if (document === null) {
+        throw ApiError.interestedPartyNotFound(caseRef);
+      }
+
+      logger.debug(`Interested party for projet ${caseRef} retrieved`);
+      res.status(200).send(document.dataValues);
+    } catch (e) {
+      if (e instanceof ApiError) {
+        logger.debug(e.message);
+        res.status(e.code).send({ code: e.code, errors: e.message.errors });
+        return;
+      }
+      logger.error(e.message);
+      res.status(500).send(`Problem getting interested party for project ${caseRef} \n ${e}`);
+    }
+  },
+
   async createInterestedParty(req, res) {
-    const interestedParty = JSON.parse(JSON.stringify(interestedPartyDocument));
-    interestedParty.id = uuid.v4();
-
-    const now = new Date(new Date().toISOString());
-    interestedParty.createdAt = now;
-    interestedParty.updatedAt = now;
-
-    logger.debug(`Creating appeal ${interestedParty.id} ...`);
+    const interestedParty = req.body;
+    delete interestedParty.ID;
 
     const document = await insertInterestedParty(interestedParty);
-
-    if (document.result && document.result.ok) {
-      logger.debug(`InterestedParty ${interestedParty.id} created`);
-      res.status(201).send(interestedParty);
+    if (document) {
+      logger.debug(`InterestedParty ${document.ID} created`);
+      res.status(201).send(document);
       return;
     }
 
-    logger.error(`Problem while ${interestedParty.id} created`);
     res.status(500).send(interestedParty);
   },
 };
