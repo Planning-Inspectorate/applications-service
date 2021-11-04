@@ -9,11 +9,15 @@ class ApiError {
   }
 
   static applicationNotFound(id) {
-    return new ApiError(404, { errors: [`The application ${id} was not found`] });
+    return new ApiError(404, { errors: [`Application ${id} was not found`] });
   }
 
   static applicationNotAcceptable(id) {
     return new ApiError(406, { errors: [`Application ${id} is not eligible`] });
+  }
+
+  static noApplicationsFound() {
+    return new ApiError(404, { errors: [`No applications found`] });
   }
 }
 

@@ -45,6 +45,11 @@ module.exports = {
     logger.debug(`Retrieving all applications ...`);
     try {
       const documents = await getAllApplicationsFromApplicationApiService();
+
+      if (!documents.length) {
+        throw ApiError.noApplicationsFound();
+      }
+
       res.status(200).send(documents);
     } catch (e) {
       if (e instanceof ApiError) {
@@ -53,7 +58,7 @@ module.exports = {
         return;
       }
       logger.error(e.message);
-      res.status(500).send(`Problem getting applications \n ${e}`);
+      res.status(500).send(`Problem getting all applications \n ${e}`);
     }
   },
 };
