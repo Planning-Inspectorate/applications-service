@@ -15,6 +15,10 @@ class ApiError {
   static interestedPartyNotFound(caseRef) {
     return new ApiError(404, { errors: [`Interested party for projet ${caseRef} not found`] });
   }
+
+  static applicationNotAcceptable(id) {
+    return new ApiError(406, { errors: [`Application ${id} is not eligible`] });
+  }
 }
 
 module.exports = ApiError;

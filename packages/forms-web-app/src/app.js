@@ -8,6 +8,7 @@ const dateFilter = require('nunjucks-date-filter');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const fileUpload = require('express-fileupload');
+const { prometheus } = require('@pins/common');
 const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
 const filterByKey = require('./lib/filter-by-key');
 const addKeyValuePair = require('./lib/add-key-value-pair');
@@ -20,6 +21,8 @@ const logger = require('./lib/logger');
 const routes = require('./routes');
 
 const app = express();
+
+prometheus.init(app);
 
 app.use(
   pinoExpress({

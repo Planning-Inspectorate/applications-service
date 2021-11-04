@@ -5,7 +5,7 @@ const typeOfPartyPage = new PO_TypeOfParty()
 const pageObject = new PageObject()
 
 Given('I navigate to the Type of party page', () => {
-    typeOfPartyPage.navigatetoTypeOfPartyPageURL()
+    typeOfPartyPage.navigatetoTypeOfPartyPage()
 })
 
 Then('I verify the page title and heading of interested party page', () => {
@@ -40,6 +40,10 @@ Then('User is navigated to full-name page', () => {
     typeOfPartyPage.assertUseronFullNamePage()
 })
 
+Then('I navigate to start page', () => {
+    typeOfPartyPage.assertUseronStartPage()
+})
+
 Then('I click on {string} logo', (logoLink) => {
     switch (logoLink) {
         case "planning inspectorate": pageObject.clickOnPlanningInspectorateLogo();
@@ -52,6 +56,10 @@ Then('I click on {string} logo', (logoLink) => {
 
 Then('I click on feedback link', () => {
     pageObject.clickOnProvideFeedbackLink()
+})
+
+Then('I click on back link', () => {
+    cy.clickOnBackLink();
 })
 
 Then('I navigate to {string} home page', (thirdPartyPage) => {

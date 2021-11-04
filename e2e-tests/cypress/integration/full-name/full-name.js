@@ -6,7 +6,8 @@ const pageObject = new PageObject()
 const fullNamePage = new PO_FullName()
 
 Given('I navigate to what is your full name page selecting {string}', (radiochoice) => {
-    cy.visit('/register/type-of-party', { failOnStatusCode: false });
+    cy.visit('/register/start', { failOnStatusCode: false });
+    cy.clickOnHref("/register/type-of-party");
     cy.selectRadioOption(radiochoice);
     cy.clickSaveAndContinue();
 });
@@ -29,4 +30,12 @@ Then('I verify the page title and heading of full name page', () => {
 
 And('I can see the text This service is only for Application service', () => {
     pageObject.validateHeaderContent()
+})
+
+Then('I click on back link', () => {
+    cy.clickOnBackLink();
+})
+
+Then('I navigate to type of interested party page', () => {
+    fullNamePage.assertUseronTypeofInterestedPartyPage()
 })
