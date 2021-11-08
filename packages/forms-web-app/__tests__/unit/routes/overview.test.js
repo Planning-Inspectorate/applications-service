@@ -12,6 +12,6 @@ describe('routes/overview', () => {
   });
 
   it('should define the expected routes', () => {
-    expect(get).toHaveBeenCalledWith('/', overviewController.getOverview);
+    expect(get).toHaveBeenCalledWith('/:case_ref', overviewController.getOverview);
   });
 });

@@ -9,7 +9,7 @@ function getJsonDetails(app) {
   item ["ProjectName"] = app.ProjectName;
   item ["CaseReference"] = app.CaseReference;
   item ["PromoterName"] = app.PromoterName;
-  item ["Stage"] = Status[app.Stage];//Status(app.Stage);
+  item ["Stage"] = Status[app.Stage];
   return item;ProjectName
 }
 exports.getProjectList = async (req, res) => {
