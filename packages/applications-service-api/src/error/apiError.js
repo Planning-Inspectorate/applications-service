@@ -19,6 +19,10 @@ class ApiError {
   static applicationNotAcceptable(id) {
     return new ApiError(406, { errors: [`Application ${id} is not eligible`] });
   }
+
+  static noApplicationsFound() {
+    return new ApiError(404, { errors: [`No applications found`] });
+  }
 }
 
 module.exports = ApiError;
