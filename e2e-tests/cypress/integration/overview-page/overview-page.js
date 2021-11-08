@@ -6,14 +6,10 @@ Given('I navigate to project Overview page', () => {
     cy.visit('/overview', { failOnStatusCode: false });
 });
 
-And('I verify the page title and heading of overview page', () => {
-    overviewPage.validatePageTitleandHeading()
-});
+Then('I am on the {string} page', (pageName) => {
+    cy.assertUserOnThePage(pageName)
+})
 
 And('I click on register to have your say about national infrastructure project link', () => {
     cy.clickOnHref("/register/start");
 });
-
-Then('user is navigated to project start page', () => {
-    overviewPage.assertUseronStartPage()
-})
