@@ -12,5 +12,9 @@ Cypress.Commands.add('clickOnHref', require('../common-methods/clickOnHref'));
 
 Cypress.Commands.add('clickOnBackLink', require('../common-methods/clickOnBackLink'));
 
+Cypress.Commands.add('clickLinkTonavigateToPage', require('../common-methods/clickLinkTonavigateToPage'));
+
+Cypress.Commands.add('assertUserOnThePage', require('../common-methods/assertUserOnThePage'));
+
 // Register Type of Party page select radio choice
 Cypress.Commands.add('selectRadioOption', require('../register-type-of-party-page/selectRadioOption'));

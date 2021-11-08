@@ -8,8 +8,8 @@ Given('I navigate to the Type of party page', () => {
     typeOfPartyPage.navigatetoTypeOfPartyPage()
 })
 
-Then('I verify the page title and heading of interested party page', () => {
-    typeOfPartyPage.validatePageTitleandHeading()
+Then('I am on the {string} page', (pageName) => {
+    cy.assertUserOnThePage(pageName)
 })
 
 And("I can see the radio options content", () => {
@@ -36,14 +36,6 @@ And('User clicks on continue button', () => {
     cy.clickSaveAndContinue();
 })
 
-Then('User is navigated to full-name page', () => {
-    typeOfPartyPage.assertUseronFullNamePage()
-})
-
-Then('I navigate to start page', () => {
-    typeOfPartyPage.assertUseronStartPage()
-})
-
 Then('I click on {string} logo', (logoLink) => {
     switch (logoLink) {
         case "planning inspectorate": pageObject.clickOnPlanningInspectorateLogo();
@@ -60,8 +52,4 @@ Then('I click on feedback link', () => {
 
 Then('I click on back link', () => {
     cy.clickOnBackLink();
-})
-
-Then('I navigate to {string} home page', (thirdPartyPage) => {
-    pageObject.assertUseronThirdPartyPage(thirdPartyPage)
 })

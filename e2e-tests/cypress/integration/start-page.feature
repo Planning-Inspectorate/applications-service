@@ -6,6 +6,6 @@ Feature: Start page - Register to have your say
 
     Scenario: Navigate to the start page
         Given I navigate to Register to have your say page
-        And I verify the page title and heading of start page
-        When I click on start now button "/register/type-of-party"
-        Then user is navigated to type of interested party page
+        Then I am on the "register to have your say" page
+        When I click on start now button
+        Then I am on the "What type of interested party are you?" page

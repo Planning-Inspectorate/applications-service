@@ -6,6 +6,6 @@ Feature: Overview page
 
     Scenario: Navigate to overview page
         Given I navigate to project Overview page
-        And I verify the page title and heading of overview page
+        And I am on the "A404 Dewsbury project overview" page
         When I click on register to have your say about national infrastructure project link
-        Then user is navigated to project start page
+        Then I am on the "register to have your say" page

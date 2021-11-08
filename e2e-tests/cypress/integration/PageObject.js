@@ -27,26 +27,5 @@ class PageObject {
         cy.wait(Cypress.env('demoDelay'));
     }
 
-    assertUseronThirdPartyPage(pageName) {
-        switch (pageName) {
-            case "planning inspectorate":
-                cy.url().should('include', '/before-you-apply');
-                cy.title().should('eq', "Lorem Ipsum");
-                cy.wait(Cypress.env('demoDelay'));
-                break;
-            case "crown copyright":
-                cy.url().should('include', '/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/');
-                cy.title().should('eq', "Crown copyright - The National Archives");
-                cy.wait(Cypress.env('demoDelay'));
-                break;
-            case "feedback":
-                cy.url().should('include', '/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUOFg4UFdEUThGTlU3S0hFUTlERVYwMVRLTy4u');
-                cy.title().should('eq', "Give feedback about submitting your Planning Appeal (Beta)");
-                cy.wait(Cypress.env('demoDelay'));
-                break;
-            default: throw console.error('uanble to find specified page name: ' + pageName);
-        }
-    }
-
 }
 export default PageObject;

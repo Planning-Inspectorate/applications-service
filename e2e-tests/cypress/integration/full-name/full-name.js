@@ -24,10 +24,6 @@ And('I can see the logo gov uk text', () => {
     pageObject.validateHeaderLogo()
 })
 
-Then('I verify the page title and heading of full name page', () => {
-    fullNamePage.validatePageTitleandHeading()
-})
-
 And('I can see the text This service is only for Application service', () => {
     pageObject.validateHeaderContent()
 })
@@ -36,6 +32,6 @@ Then('I click on back link', () => {
     cy.clickOnBackLink();
 })
 
-Then('I navigate to type of interested party page', () => {
-    fullNamePage.assertUseronTypeofInterestedPartyPage()
+Then('I am on the {string} page', (pageName) => {
+    cy.assertUserOnThePage(pageName)
 })
