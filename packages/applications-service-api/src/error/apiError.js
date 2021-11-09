@@ -19,6 +19,10 @@ class ApiError {
   static noApplicationsFound() {
     return new ApiError(404, { errors: [`No applications found`] });
   }
+
+  static interestedPartyNotFound(caseRef) {
+    return new ApiError(404, { errors: [`Interested party for projet ${caseRef} not found`] });
+  }
 }
 
 module.exports = ApiError;
