@@ -2,12 +2,18 @@ openapi: 3.0.3
 info:
   title: Applications Service API Documentation
   description: API to <ul><li>create, retrieve and modify planning applications</li></ul>
-  version: 1.0.4
+  version: 1.0.5
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
 servers:
-  - url: 'http://localhost:3000/' # needs to be variable replaced
+  - url: '{environment}/'
+    variables:
+      environment:
+        default: 'http://localhost:3000'
+        enum:
+          - 'http://localhost:3000'
+          - 'https://applications-service-api.azurewebsites.net'
 paths:
   '/api/v1/applications/{id}':
     get:
@@ -18,7 +24,7 @@ paths:
       parameters:
         - in: path
           name: id
-          example: 'EN010009'
+          example: 'EN010116'
           required: true
           schema:
             type: string
@@ -32,6 +38,8 @@ paths:
                 $ref: '#/components/schemas/Application'
         '404':
           description: The application could not be found
+        '406':
+          description: Application not eligible
   '/api/v1/applications':
     get:
       summary: Returns all existing applications
@@ -50,49 +58,22 @@ paths:
                   $ref: '#/components/schemas/Application'
         '404':
           description: No applications found
-  '/api/v1/interested-party/{caseRef}':
+  '/test':
     get:
-      summary: Returns an existing interested party
-      description: Returns an existing interested party by case reference
-      tags:
-        - Interested Party
-      parameters:
-        - in: path
-          name: caseRef
-          example: 'EN010009'
-          required: true
-          schema:
-            type: string
-          description: Case reference
+      summary: Returns a list of log messages relating to database connectivity.
       responses:
-        '200':
-          description: Returns an interested party
+        '200': # status code
+          description: A JSON array of log messages
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InterestedParty'
-        '404':
-          description: The application could not be found
-  '/api/v1/interested-party':      
-      post:
-        summary: Creates an interested party
-        description: description goes here
-        tags:
-          - Interested party
-        requestBody:
-          description: Interested party details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InterestedPartyReqBody'
-          required: true
-        responses:
-          '201':
-            description: Returns a newly created interested party
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/InterestedPartyReqBody'  
+                type: array
+                items:
+                  type: string
+        '500': # status code
+          description: Something went wrong.
+        default:
+          description: Something went wrong.
 components:
   schemas:
     Application:
@@ -101,283 +82,102 @@ components:
         CaseReference:
           type: string
           example: 'EN010009'
-        ProjectName: 
+        ProjectName:
           type: string
           example: 'St James Barton Giant Wind Turbine'
-        Proposal: 
+        Proposal:
           type: string
           example: 'EN01 - Generating Stations'
-        Stage: 
+        Stage:
           type: integer
           example: 3
-        PromoterName: 
+        PromoterName:
           type: string
           example: 'Horizon Dev Environment DJW'
         PromoterFirstName:
           type: string
           example: 'Postman'
-        PromoterLastName: 
+        PromoterLastName:
           type: string
           example: 'Pat'
-        ApplicantEmailAddress: 
+        ApplicantEmailAddress:
           type: string
           example: 'david.white@pins.gsi.gov.uk'
-        ApplicantPhoneNumber: 
+        ApplicantPhoneNumber:
           type: string
           example: '1234'
-        WebAddress: 
+        WebAddress:
           type: string
           example: ''
-        ProjectEmailAddress: 
+        ProjectEmailAddress:
           type: string
           example: 'david.white@pins.gsi.gov.uk'
-        Region: 
+        Region:
           type: string
           example: 'Wales'
-        ProjectLocation: 
+        ProjectLocation:
           type: string
           example: 'St James Barton, BRISTOL THU 16 JAN'
-        AnticipatedGridRefEasting: 
+        AnticipatedGridRefEasting:
           type: number
           example: 347128
-        AnticipatedGridRefNorthing: 
+        AnticipatedGridRefNorthing:
           type: number
           example: 176491
-        MapZoomLevel: 
+        MapZoomLevel:
           type: string
           example: ''
-        AnticipatedDateOfSubmission: 
+        AnticipatedDateOfSubmission:
           type: string
           example: ''
         AnticipatedSubmissionDateNonSpecific:
           type: string
-          example: 'Longâ€” â€“dash' 
-        DateOfDCOSubmission: 
+          example: 'Longâ€” â€“dash'
+        DateOfDCOSubmission:
           type: string
           example: '2015-12-10'
-        DateOfDCOAcceptance_NonAcceptance: 
+        DateOfDCOAcceptance_NonAcceptance:
           type: string
           example: ''
-        DateOfPreliminaryMeeting: 
+        DateOfPreliminaryMeeting:
           type: string
           example: ''
-        ConfirmedStartOfExamination: 
+        ConfirmedStartOfExamination:
           type: string
           example: ''
         DateTimeExaminationEnds:
           type: string
           example: ''
-        DateOfRepresentationPeriodOpen: 
+        DateOfRepresentationPeriodOpen:
           type: string
           example: '2017-02-14'
-        DateOfRelevantRepresentationClose: 
+        DateOfRelevantRepresentationClose:
           type: string
           example: '2018-08-01'
-        DateRRepAppearOnWebsite: 
+        DateRRepAppearOnWebsite:
           type: string
           example: '2017-08-01'
-        Stage4ExtensiontoExamCloseDate: 
+        Stage4ExtensiontoExamCloseDate:
           type: string
           example: ''
-        stage5ExtensionToRecommendationDeadline: 
+        stage5ExtensionToRecommendationDeadline:
           type: string
           example: ''
-        Stage5ExtensiontoDecisionDeadline: 
+        Stage5ExtensiontoDecisionDeadline:
           type: string
           example: ''
-        DateOfRecommendations: 
+        DateOfRecommendations:
           type: string
           example: ''
-        ConfirmedDateOfDecision: 
+        ConfirmedDateOfDecision:
           type: string
           example: ''
-        DateProjectWithdrawn: 
+        DateProjectWithdrawn:
           type: string
           example: ''
-        sourceSystem: 
+        sourceSystem:
           type: string
           example: 'HORIZON'
-        dateOfNonAcceptance: 
-          type: string
-          example: '' 
-    InterestedParty:
-      type: object
-      properties:
-        ID: 
-          type: number
-          example: 30000120
-        caseref: 
-          type: string
-          example: 'EN010009'
-        behalf: 
-          type: string
-          example: 'me'
-        mename: 
-          type: string
-          example: 'David White'
-        mebuild: 
-          type: string
-          example: 'Temple Quay'
-        mestreet: 
+        dateOfNonAcceptance:
           type: string
           example: ''
-        metown: 
-          type: string
-          example: 'BRISTOL'
-        mecounty: 
-          type: string
-          example: ''
-        mecode: 
-          type: string
-          example: 'BS1 6PN'
-        mecountry: 
-          type: string
-          example: 'United Kingdom'
-        memail: 
-          type: string
-          example: 'david.white@planninginspectorate.gov.uk'
-        mephone: 
-          type: string
-          example: '0303 111 111'
-        orgname: 
-          type: string
-          example: ''
-        contactName: 
-          type: string
-          example: ''
-        contactJob: 
-          type: string
-          example: ''
-        orgbuild: 
-          type: string
-          example: ''
-        orgstreet: 
-          type: string
-          example: ''
-        orgtown: 
-          type: string
-          example: ''
-        orgcounty: 
-          type: string
-          example: ''
-        orgcode: 
-          type: string
-          example: ''
-        orgcountry: 
-          type: string
-          example: ''
-        orgmail: 
-          type: string
-          example: ''
-        orgphone: 
-          type: string
-          example: ''
-        youname: 
-          type: string
-          example: ''
-        youbuild: 
-          type: string
-          example: ''
-        youstreet: 
-          type: string
-          example: ''
-        youtown: 
-          type: string
-          example: ''
-        youcounty: 
-          type: string
-          example: ''
-        youcode: 
-          type: string
-          example: ''
-        youcountry: 
-          type: string
-          example: ''
-        youmail: 
-          type: string
-          example: ''
-        youphone: 
-          type: string
-          example: ''
-        agname: 
-          type: string
-          example: ''
-        agorgname: 
-          type: string
-          example: ''
-        agbuild: 
-          type: string
-          example: ''
-        agstreet: 
-          type: string
-          example: ''
-        agtown: 
-          type: string
-          example: ''
-        agcounty: 
-          type: string
-          example: ''
-        agcode: 
-          type: string
-          example: ''
-        agcountry: 
-          type: string
-          example: ''
-        agmail: 
-          type: string
-          example: ''
-        agphone: 
-          type: string
-          example: ''
-        therep: 
-          type: string
-          example: 'this is my test that form unchanged for non material change projects after ACR051 developed.  Jun 2021'
-        validated: 
-          type: date
-          example: '2021-06-22T14:45:46.000Z'
-        emailed: 
-          type: date
-          example: '2021-06-22T14:45:46.000Z'
-        exported: 
-          type: date
-          example: ''
-        web_ref: 
-          type: number
-          example: 1
-      description: All of the data and state information for an interested party
-    InterestedPartyReqBody:
-      type: object
-      properties:
-        caseref: 
-          type: string
-          example: 'EN010009'
-        behalf: 
-          type: string
-          example: 'me'
-        mename: 
-          type: string
-          example: 'Test Name'
-        mebuild: 
-          type: string
-          example: 'Test Build'
-        mestreet: 
-          type: string
-          example: ''
-        metown: 
-          type: string
-          example: 'BRISTOL'
-        mecounty: 
-          type: string
-          example: ''
-        mecode: 
-          type: string
-          example: 'BS1 6PN'
-        mecountry: 
-          type: string
-          example: 'United Kingdom'
-        memail: 
-          type: string
-          example: 'test.white@planninginspectorate.gov.uk'
-        mephone: 
-          type: string
-          example: '0303 111 111'

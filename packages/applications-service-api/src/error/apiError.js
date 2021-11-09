@@ -9,11 +9,7 @@ class ApiError {
   }
 
   static applicationNotFound(id) {
-    return new ApiError(404, { errors: [`The application ${id} not found`] });
-  }
-
-  static interestedPartyNotFound(caseRef) {
-    return new ApiError(404, { errors: [`Interested party for projet ${caseRef} not found`] });
+    return new ApiError(404, { errors: [`Application ${id} was not found`] });
   }
 
   static applicationNotAcceptable(id) {
