@@ -154,7 +154,11 @@
           </div>
         </div>
       </div> <br><br>
-      <a href="#" class="govuk-button">Apply filters</a>
+        {{ govukButton({
+          text: "Apply filters",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
     </section>
     <section class="documents-results govuk-grid-column-three-quarters">
       <p class="results"><strong><span id="results-number">18</span> results<strong></p>
