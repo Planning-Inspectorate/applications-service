@@ -60,10 +60,12 @@
   <div class="govuk-grid-row">
     <section class="pins-document-library-search govuk-grid-column-one-quarter">
       <label class="pins-label-small" for="search_documents">Search</label>
-      <div class="pins-document-library-search-wrapper">
-        <input class="search-documents-input" type="text" name="search" id="search_documents">
-        <button class="search-documents-submit" type="submit" value="Search">Search</button>
-      </div>
+      <form action="" method="POST" novalidate>
+        <div class="pins-document-library-search-wrapper">
+          <input class="search-documents-input" type="text" name="search" id="search_documents">
+          <button class="search-documents-submit" type="submit" value="Search">Search</button>
+        </div>
+      </form>
       <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
         <h3 class="govuk-heading-s">Filter documents</h3>
         <div class="govuk-accordion__section govuk-checkboxes--small pins-filter-checkboxes">

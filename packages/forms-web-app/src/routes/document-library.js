@@ -5,4 +5,9 @@ const router = express.Router();
 
 router.get('/:case_ref', documentLibraryController.getDocumentLibrary);
 
+router.post(
+    '/:case_ref',
+    documentLibraryController.postSearchDocumentLibrary
+  );
+
 module.exports = router;

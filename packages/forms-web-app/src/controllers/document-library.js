@@ -19,3 +19,14 @@ exports.getDocumentLibrary = async (req, res) => {
   logger.info(styleClass);
   res.render(VIEW.DOCUMENT_OVERVIEW);
 };
+
+exports.postSearchDocumentLibrary = async (req, res) => {
+  const { body } = req;
+
+  const search = body['search'];
+  console.log('----------------------------------'+search);
+  logger.info('----------------------------------'+search);
+  const appData = await getAppData(req.params.case_ref);
+
+  res.render(VIEW.DOCUMENT_OVERVIEW);
+};
