@@ -31,5 +31,6 @@ module.exports = {
       baseUrl: process.env.APP_APPLICATIONS_BASE_URL,
     },
   },
-  trialistPath: process.env.TRIALIST_DATA_PATH,
+  trialistPath:
+    process.env.TRIALIST_DATA_PATH || path.join(__dirname, '..', '..', 'data', 'trialists.json'),
 };
