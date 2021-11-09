@@ -83,7 +83,7 @@ To stop all services:
 make down
 ```
 
-### Issues with Running the Server
+### Troubleshooting
 
 When trying to start the server (**make serve**), with Docker Compose up and running, with some OS versions this message is output:
 ```
