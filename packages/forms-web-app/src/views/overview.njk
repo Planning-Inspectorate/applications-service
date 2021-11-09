@@ -41,6 +41,21 @@
     </svg>
 {% endset %}
 
+{% set containerClasses = "pins-sidebar--container" %}
+{% set hasContentsAside = true %}
+
+{% block contentsAside %}
+  <aside class="pins-aside-page-contents">
+    <h2 class="govuk-heading-s">Contents</h2>
+    <ul class="govuk-list">
+      <li><strong> {{ appData.ProjectName }} project information</strong></li>
+      <li><a href="#">About the application</a></li>
+      <li><a href="#">Topics for Examination</a></li>
+      <li><a href="/document-library/{{ appData.CaseReference }}">All Examination documents</a></li>
+      <li><a href="../dco-process-guide/recommendation-and-decision">Recommendation and decision</a></li>
+  </aside>
+{% endblock %}
+
 {% block content %}
   <h1 class="govuk-heading-l">{{ appData.ProjectName }} project information</h1>
   <p class="govuk-body">The potential A404 Dewsbury to Berwick Down scheme proposes to construct a new section of dual carriageway to address problems associated with the single carriageway section of the A404 between Amesbury’s Countess roundabout and the dual carriageway section to the west of Winterbourne Stoke. </p>
