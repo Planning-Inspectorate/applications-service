@@ -85,7 +85,7 @@ make down
 
 ### Issues with Running the Server
 
-When trying to start the server (**make serve**), with Docker Compose up and running, with some OS versions this message is output:
+On (**make serve**), you may get the following error:
 ```
 no matching manifest for linux/arm64/v8 in the manifest list entries:
 ```
