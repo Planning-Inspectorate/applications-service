@@ -1,5 +1,5 @@
 CREATE TABLE ipclive.wp_ipc_relreps (
-  ID INT(11) NOT NULL AUTO_INCREMENT,
+  ID INT(11) NOT NULL,
   caseref VARCHAR(10) NULL,
   behalf TEXT NULL,
   mename TEXT NULL,
