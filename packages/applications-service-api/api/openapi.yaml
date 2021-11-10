@@ -74,6 +74,49 @@ paths:
           description: Something went wrong.
         default:
           description: Something went wrong.
+  '/api/v1/interested-party/{caseRef}':
+    get:
+      summary: Returns an existing interested party
+      description: Returns an existing interested party by case reference
+      tags:
+        - Interested Party
+      parameters:
+        - in: path
+          name: caseRef
+          example: 'EN010009'
+          required: true
+          schema:
+            type: string
+          description: Case reference
+      responses:
+        '200':
+          description: Returns an interested party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestedParty'
+        '404':
+          description: The application could not be found
+  '/api/v1/interested-party':      
+      post:
+        summary: Creates an interested party
+        description: description goes here
+        tags:
+          - Interested party
+        requestBody:
+          description: Interested party details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestedPartyReqBody'
+          required: true
+        responses:
+          '201':
+            description: Returns a newly created interested party
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/InterestedPartyReqBody'
 components:
   schemas:
     Application:
@@ -181,3 +224,184 @@ components:
         dateOfNonAcceptance:
           type: string
           example: ''
+    InterestedParty:
+      type: object
+      properties:
+        ID: 
+          type: number
+          example: 30000120
+        caseref: 
+          type: string
+          example: 'EN010009'
+        behalf: 
+          type: string
+          example: 'me'
+        mename: 
+          type: string
+          example: 'David White'
+        mebuild: 
+          type: string
+          example: 'Temple Quay'
+        mestreet: 
+          type: string
+          example: ''
+        metown: 
+          type: string
+          example: 'BRISTOL'
+        mecounty: 
+          type: string
+          example: ''
+        mecode: 
+          type: string
+          example: 'BS1 6PN'
+        mecountry: 
+          type: string
+          example: 'United Kingdom'
+        memail: 
+          type: string
+          example: 'david.white@planninginspectorate.gov.uk'
+        mephone: 
+          type: string
+          example: '0303 111 111'
+        orgname: 
+          type: string
+          example: ''
+        contactName: 
+          type: string
+          example: ''
+        contactJob: 
+          type: string
+          example: ''
+        orgbuild: 
+          type: string
+          example: ''
+        orgstreet: 
+          type: string
+          example: ''
+        orgtown: 
+          type: string
+          example: ''
+        orgcounty: 
+          type: string
+          example: ''
+        orgcode: 
+          type: string
+          example: ''
+        orgcountry: 
+          type: string
+          example: ''
+        orgmail: 
+          type: string
+          example: ''
+        orgphone: 
+          type: string
+          example: ''
+        youname: 
+          type: string
+          example: ''
+        youbuild: 
+          type: string
+          example: ''
+        youstreet: 
+          type: string
+          example: ''
+        youtown: 
+          type: string
+          example: ''
+        youcounty: 
+          type: string
+          example: ''
+        youcode: 
+          type: string
+          example: ''
+        youcountry: 
+          type: string
+          example: ''
+        youmail: 
+          type: string
+          example: ''
+        youphone: 
+          type: string
+          example: ''
+        agname: 
+          type: string
+          example: ''
+        agorgname: 
+          type: string
+          example: ''
+        agbuild: 
+          type: string
+          example: ''
+        agstreet: 
+          type: string
+          example: ''
+        agtown: 
+          type: string
+          example: ''
+        agcounty: 
+          type: string
+          example: ''
+        agcode: 
+          type: string
+          example: ''
+        agcountry: 
+          type: string
+          example: ''
+        agmail: 
+          type: string
+          example: ''
+        agphone: 
+          type: string
+          example: ''
+        therep: 
+          type: string
+          example: 'this is my test that form unchanged for non material change projects after ACR051 developed.  Jun 2021'
+        validated: 
+          type: date
+          example: '2021-06-22T14:45:46.000Z'
+        emailed: 
+          type: date
+          example: '2021-06-22T14:45:46.000Z'
+        exported: 
+          type: date
+          example: ''
+        web_ref: 
+          type: number
+          example: 1
+      description: All of the data and state information for an interested party
+    InterestedPartyReqBody:
+      type: object
+      properties:
+        caseref: 
+          type: string
+          example: 'EN010009'
+        behalf: 
+          type: string
+          example: 'me'
+        mename: 
+          type: string
+          example: 'Test Name'
+        mebuild: 
+          type: string
+          example: 'Test Build'
+        mestreet: 
+          type: string
+          example: ''
+        metown: 
+          type: string
+          example: 'BRISTOL'
+        mecounty: 
+          type: string
+          example: ''
+        mecode: 
+          type: string
+          example: 'BS1 6PN'
+        mecountry: 
+          type: string
+          example: 'United Kingdom'
+        memail: 
+          type: string
+          example: 'test.white@planninginspectorate.gov.uk'
+        mephone: 
+          type: string
+          example: '0303 111 111'
