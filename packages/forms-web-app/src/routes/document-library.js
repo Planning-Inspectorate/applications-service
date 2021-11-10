@@ -6,8 +6,13 @@ const router = express.Router();
 router.get('/:case_ref', documentLibraryController.getDocumentLibrary);
 
 router.post(
-    '/:case_ref',
+    '/search/:case_ref',
     documentLibraryController.postSearchDocumentLibrary
-  );
+);
+
+router.post(
+    '/filter/:case_ref',
+    documentLibraryController.postFilterDocumentLibrary
+);
 
 module.exports = router;

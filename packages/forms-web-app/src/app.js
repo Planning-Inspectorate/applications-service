@@ -5,6 +5,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const nunjucks = require('nunjucks');
 const dateFilter = require('nunjucks-date-filter');
+const session = require('express-session');
+const sessionConfig = require('./lib/session');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const fileUpload = require('express-fileupload');
@@ -70,6 +72,7 @@ app.use(lusca.xssProtection(true));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session(sessionConfig()));
 app.use(removeUnwantedCookiesMiddelware);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(

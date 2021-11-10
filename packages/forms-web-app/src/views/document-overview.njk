@@ -60,12 +60,13 @@
   <div class="govuk-grid-row">
     <section class="pins-document-library-search govuk-grid-column-one-quarter">
       <label class="pins-label-small" for="search_documents">Search</label>
-      <form action="" method="POST" novalidate>
+      <form action="/document-library/search/EN010116" method="POST" novalidate>
         <div class="pins-document-library-search-wrapper">
           <input class="search-documents-input" type="text" name="search" id="search_documents">
           <button class="search-documents-submit" type="submit" value="Search">Search</button>
         </div>
       </form>
+      <form action="/document-library/filter/EN010116" method="POST" novalidate>
       <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
         <h3 class="govuk-heading-s">Filter documents</h3>
         <div class="govuk-accordion__section govuk-checkboxes--small pins-filter-checkboxes">
@@ -81,15 +82,15 @@
             <label class="govuk-label govuk-checkboxes__label" for="theme-noise-traffic-air">Noise, traffic and air quality</label>
           </div>
           <div id="accordion-content-landscape-and-visual" class="govuk-accordion__section-content  govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
-            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-landscape-visual">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme1" id="theme-landscape-visual">
             <label class="govuk-label govuk-checkboxes__label" for="theme-landscape-visual">Landscape and visual</label>
           </div>
           <div id="accordion-content-heritage" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
-            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="heritage">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme2" id="heritage">
             <label class="govuk-label govuk-checkboxes__label" for="heritage">Heritage</label>
           </div>
           <div id="accordion-content-theme-wildlife-habitats" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
-            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme3" id="theme-wildlife-habitats">
             <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">Local wildlife and habitats</label>
           </div>
         </div>
@@ -161,6 +162,7 @@
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
+      </form>
     </section>
     <section class="documents-results govuk-grid-column-three-quarters">
       <p class="results"><strong><span id="results-number">18</span> results<strong></p>

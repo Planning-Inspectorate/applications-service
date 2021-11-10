@@ -22,10 +22,20 @@ exports.getDocumentLibrary = async (req, res) => {
 
 exports.postSearchDocumentLibrary = async (req, res) => {
   const { body } = req;
-
+  //const { application } = req.session;
   const search = body['search'];
-  console.log('----------------------------------'+search);
-  logger.info('----------------------------------'+search);
+  req.session.document =  search;
+  const appData = await getAppData(req.params.case_ref);
+
+  res.render(VIEW.DOCUMENT_OVERVIEW);
+};
+
+exports.postFilterDocumentLibrary = async (req, res) => {
+  const { body } = req;
+  const theme = body['theme'];
+
+  // console.log('----------------------------------'+theme);
+  logger.info('----------------------------------'+JSON.stringify(body));
   const appData = await getAppData(req.params.case_ref);
 
   res.render(VIEW.DOCUMENT_OVERVIEW);
