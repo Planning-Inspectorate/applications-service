@@ -1,4 +1,6 @@
 const { promises: fs } = require('fs');
+const { StatusCodes } = require('http-status-codes');
+
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
@@ -29,7 +31,7 @@ module.exports = {
       }
 
       logger.debug(`Application ${id} retrieved`);
-      res.status(200).send(document.dataValues);
+      res.status(StatusCodes.OK).send(document.dataValues);
     } catch (e) {
       if (e instanceof ApiError) {
         logger.debug(e.message);
@@ -37,7 +39,9 @@ module.exports = {
         return;
       }
       logger.error(e.message);
-      res.status(500).send(`Problem getting the application ${id} \n ${e}`);
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send(`Problem getting application ${id} \n ${e}`);
     }
   },
 
@@ -50,7 +54,7 @@ module.exports = {
         throw ApiError.noApplicationsFound();
       }
 
-      res.status(200).send(documents);
+      res.status(StatusCodes.OK).send(documents);
     } catch (e) {
       if (e instanceof ApiError) {
         logger.debug(e.message);
@@ -58,7 +62,9 @@ module.exports = {
         return;
       }
       logger.error(e.message);
-      res.status(500).send(`Problem getting all applications \n ${e}`);
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send(`Problem getting all applications \n ${e}`);
     }
   },
 };

@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const logger = require('../lib/logger');
 
 const {
@@ -20,7 +21,7 @@ module.exports = {
       }
 
       logger.debug(`Interested party for projet ${caseRef} retrieved`);
-      res.status(200).send(document.dataValues);
+      res.status(StatusCodes.OK).send(document.dataValues);
     } catch (e) {
       if (e instanceof ApiError) {
         logger.debug(e.message);
@@ -28,7 +29,9 @@ module.exports = {
         return;
       }
       logger.error(e.message);
-      res.status(500).send(`Problem getting interested party for project ${caseRef} \n ${e}`);
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send(`Problem getting interested party for project ${caseRef} \n ${e}`);
     }
   },
 
@@ -39,10 +42,10 @@ module.exports = {
     const document = await insertInterestedParty(interestedParty);
     if (document) {
       logger.debug(`InterestedParty ${document.ID} created`);
-      res.status(201).send(document);
+      res.status(StatusCodes.CREATED).send(document);
       return;
     }
 
-    res.status(500).send(interestedParty);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(interestedParty);
   },
 };
