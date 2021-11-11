@@ -3,15 +3,15 @@ const documentLibraryController = require('../controllers/document-library');
 
 const router = express.Router();
 
-router.get('/:case_ref', documentLibraryController.getDocumentLibrary);
+router.get('/:case_ref/:page', documentLibraryController.getDocumentLibrary);
 
 router.post(
-    '/search/:case_ref',
+    '/search/:case_ref/:page',
     documentLibraryController.postSearchDocumentLibrary
 );
 
 router.post(
-    '/filter/:case_ref',
+    '/filter/:case_ref/:page',
     documentLibraryController.postFilterDocumentLibrary
 );
 
