@@ -35,7 +35,7 @@ module.exports = {
       }));
 
       const wrapper = {
-        documents: byType(rows),
+        documents: [byType(rows)],
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
