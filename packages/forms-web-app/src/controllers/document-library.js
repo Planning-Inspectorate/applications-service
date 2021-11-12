@@ -58,9 +58,13 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   req.session.document_search =  search;
   const filters = req.session.document_filters;
   const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
-  const appData = await searchDocument(caseRef, searchDocumentData);
-  delete req.session;
-  res.render(VIEW.DOCUMENT_OVERVIEW);
+  const respData = await searchDocument(caseRef, searchDocumentData);
+  const documents = respData.documents[0];
+  const pageData = getPageData(output);
+  let typeList = [];
+  let docList = [];
+  filterData(documents, typeList, docList);
+  res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
 };
 
 exports.postFilterDocumentLibrary = async (req, res) => {
@@ -71,6 +75,11 @@ exports.postFilterDocumentLibrary = async (req, res) => {
   req.session.document_filters =  filters;
   const search = req.session.document_search;
   const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
-  const appData = await searchDocument(caseRef, searchDocumentData);
-  res.render(VIEW.DOCUMENT_OVERVIEW);
+  const respData = await searchDocument(caseRef, searchDocumentData);
+  const documents = respData.documents[0];
+  const pageData = getPageData(output);
+  let typeList = [];
+  let docList = [];
+  filterData(documents, typeList, docList);
+  res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
 };
