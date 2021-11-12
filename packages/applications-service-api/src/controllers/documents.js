@@ -35,7 +35,7 @@ module.exports = {
       }));
 
       const wrapper = {
-        documents: [byType(rows)],
+        documents: Object.entries(byType(rows)).map((e) => ({ [e[0]]: e[1] })),
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
