@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const ApiError = require('./apiError');
 
 // eslint-disable-next-line no-unused-vars

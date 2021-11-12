@@ -117,6 +117,37 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/InterestedPartyReqBody'
+  '/api/v1/documents/{caseRef}':      
+      post:
+        summary: Returns project documents
+        description: description goes here
+        tags:
+          - Documents
+        parameters:
+        - in: path
+          name: caseRef
+          example: 'TR040009'
+          required: true
+          schema:
+            type: string
+          description: Case reference
+        requestBody:
+          description: Search and filtering criteria, required page number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentSearchCriteria'
+          required: true
+        responses:
+          '200':
+            description: Returns list of documents
+            content:
+              application/json:
+                schema:
+                  type: object
+                  $ref: '#/components/schemas/DocumentListWrapper'
+          '404':
+            description: No documents found
 components:
   schemas:
     Application:
@@ -405,3 +436,112 @@ components:
         mephone: 
           type: string
           example: '0303 111 111'
+    DocumentSearchCriteria:
+      type: object
+      properties:
+        pageNo: 
+          type: number
+          example: 1
+        searchTerm: 
+          type: string
+          example: ''
+    DocumentListWrapper:
+      type: object
+      properties:
+        documents: 
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/DocumentListGroup'
+        totalItems:
+          type: number
+          example: 3
+        itemsPerPage:
+          type: number
+          example: 20
+        totalPages: 
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
+    DocumentListGroup:
+      type: object
+      additionalProperties:
+        # x-additionalPropertiesName: group
+        type: array
+        items:
+          type: object
+          $ref: '#/components/schemas/Document'
+    Document:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 12601 
+        dataID:
+          type: string
+          example: 'TR040009-000004'
+        case_reference:
+          type: string
+          example: 'TR040009'
+        Stage: 
+          type: number
+          example: 1
+        type: 
+          type: string
+          example: 'Transboundary'
+        filter_1: 
+          type: string
+          example: 'Environmental Impact Assessment'
+        filter_2: 
+          type: string
+          example: ''
+        category: 
+          type: string
+          example: ''
+        description: 
+          type: string
+          example: ''
+        size: 
+          type: number
+          example: 50427
+        mime: 
+          type: string
+          example: 'application/pdf'
+        path: 
+          type: string
+          example: 'TR040009/TR040009-000004-Regulation 24 Transboundary Screening document.pdf'
+        status: 
+          type: string
+          example: 'Published'
+        date_published: 
+          type: string
+          example: '2015-06-10'
+        deadline_date: 
+          type: string
+          example: ''
+        personal_name: 
+          type: string
+          example: ''
+        representative: 
+          type: string
+          example: ''
+        who_from: 
+          type: number
+          example: null
+        doc_reference: 
+          type: string
+          example: ''
+        author: 
+          type: string
+          example: ''
+        details: 
+          type: string
+          example: ''
+        last_modified: 
+          type: string
+          example: '2016-04-28 08:42:58'
+        date_created: 
+          type: string
+          example: '2016-04-28 08:42:58'
