@@ -29,6 +29,10 @@ class ApiError {
       errors: [`Interested party for project ${caseRef} not found`],
     });
   }
+
+  static noDocumentsFound() {
+    return new ApiError(404, { errors: [`No documents found`] });
+  }
 }
 
 module.exports = ApiError;

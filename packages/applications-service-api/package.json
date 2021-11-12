@@ -42,6 +42,7 @@
     "node-fetch": "^2.6.2",
     "notifications-node-client": "^5.1.0",
     "pino": "^6.13.2",
+    "ramda": "^0.27.1",
     "rhea": "^1.0.24",
     "sequelize": "~5.22.4",
     "supertest": "^6.1.5",
