@@ -68,7 +68,7 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   const method = 'POST';
 
   return handler(documentServiceApiUrl, method, {
-    body: JSON.stringify(search_data),
+    body: search_data,
   });
 };
 

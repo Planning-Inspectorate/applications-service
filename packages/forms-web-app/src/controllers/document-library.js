@@ -42,9 +42,7 @@ exports.getDocumentLibrary = async (req, res) => {
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
   
   const respData = await searchDocument(caseRef, searchDocumentData);
-  logger.info('-----'+JSON.stringify(respData));
   const documents = respData.documents[0];
-  logger.info('-----'+JSON.stringify(documents));
   const pageData = getPageData(respData);
   let typeList = [];
   let docList = [];
@@ -58,11 +56,12 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   const { body } = req;
   const search = body['search'];
   req.session.document_search =  search;
-  const filters = req.session.document_filters;
-  const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
+  const filters = req.session.document_filters | [];
+  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
+  logger.info('-----------'+searchDocumentData);
   const respData = await searchDocument(caseRef, searchDocumentData);
   const documents = respData.documents[0];
-  const pageData = getPageData(output);
+  const pageData = getPageData(respData);
   let typeList = [];
   let docList = [];
   filterData(documents, typeList, docList);
@@ -79,7 +78,7 @@ exports.postFilterDocumentLibrary = async (req, res) => {
   const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
   const respData = await searchDocument(caseRef, searchDocumentData);
   const documents = respData.documents[0];
-  const pageData = getPageData(output);
+  const pageData = getPageData(respData);
   let typeList = [];
   let docList = [];
   filterData(documents, typeList, docList);
