@@ -41,7 +41,8 @@ exports.getDocumentLibrary = async (req, res) => {
   const search = req.session.document_search
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
   
-  const documents = output.documents[0];
+  const respData = await searchDocument(caseRef, searchDocumentData);
+  const documents = respData.documents[0];
   const pageData = getPageData(output);
   let typeList = [];
   let docList = [];

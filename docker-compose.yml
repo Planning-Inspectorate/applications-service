@@ -73,6 +73,7 @@ services:
       MYSQL_DATABASE: 'ipclive'
       MYSQL_USER: 'pins'
       MYSQL_PASSWORD: 'pins'
+      MYSQL_ROOT_HOST: '%'
     ports:
       - '3306:3306'
     volumes:

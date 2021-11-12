@@ -31,6 +31,7 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
           ...opts,
         });
         if (!apiResponse.ok) {
+          logger.debug(apiResponse);
           logger.debug(apiResponse, 'API Response not OK');
           try {
             const errorResponse = await apiResponse.json();
@@ -62,7 +63,6 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
 }
 
 exports.searchDocumentList = async (case_ref, search_data) => {
-  parentLogger.info('-----------------------');
   parentLogger.info(search_data);
   const documentServiceApiUrl = `/api/v1/documents/${case_ref}`;
   const method = 'POST';
