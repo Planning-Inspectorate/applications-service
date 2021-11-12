@@ -28,7 +28,7 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
             'X-Correlation-ID': correlationId,
             ...headers,
           },
-          ...opts,
+          opts,
         });
         if (!apiResponse.ok) {
           logger.debug(apiResponse);
