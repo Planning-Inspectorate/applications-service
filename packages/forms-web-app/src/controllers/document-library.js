@@ -1,18 +1,52 @@
 const config = require('../config');
 const documentSearch = require('../lib/document-search.json');
+const output = require('../lib/output.json');
 const { VIEW } = require('../lib/views');
 const logger = require('../lib/logger');
 const { searchDocument } = require('../services/document.service');
 
+function getJsonDetails(doc) {
+  item = {}
+  item ["path"] = doc.path;
+  item ["name"] = doc.path.replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/','').split('/')[1].split('.pdf')[0];
+  return item;
+}
+
+function getPageData(doc) {
+  item = {}
+  item ["totalItems"] = doc.totalItems;
+  item ["itemsPerPage"] = doc.itemsPerPage;
+  item ["totalPages"] = doc.totalPages;
+  item ["currentPage"] = doc.currentPage;
+  return item;
+}
+
+function filterData(documents, typeList, docList) {
+  for (var key in documents) {  
+    typeList.push(key);
+    let subDocList = [];
+   for (var subKey in documents[key]) {  
+     subDocList.push(getJsonDetails(documents[key][subKey]));
+   }
+   docList.push(subDocList);
+ }
+}
+
 exports.getDocumentLibrary = async (req, res) => {
   const caseRef = req.params.case_ref;
-  const pageNumber = req.params.page;
-  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', '');
- 
-  logger.info(searchDocumentData);
-  //const appData = await searchDocument(caseRef, searchDocumentData);
-
-  res.render(VIEW.DOCUMENT_OVERVIEW);
+  const pageNumber = req.params.page;;
+  if (pageNumber === 1) {
+    req.session.document_search = '';
+  }
+  const search = req.session.document_search
+  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
+  
+  const documents = output.documents[0];
+  const pageData = getPageData(output);
+  let typeList = [];
+  let docList = [];
+  filterData(documents, typeList, docList);
+  res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
 };
 
 exports.postSearchDocumentLibrary = async (req, res) => {
@@ -32,13 +66,10 @@ exports.postFilterDocumentLibrary = async (req, res) => {
   const caseRef = req.params.case_ref;
   const pageNumber = req.params.page;
   const { body } = req;
-  logger.info('--------'+ JSON.stringify(body));
-  const filters = ['abc', '123'];//body['theme'];
+  const filters = []; // should be taken from request TODO
   req.session.document_filters =  filters;
   const search = req.session.document_search;
   const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
-
   const appData = await searchDocument(caseRef, searchDocumentData);
-
   res.render(VIEW.DOCUMENT_OVERVIEW);
 };
