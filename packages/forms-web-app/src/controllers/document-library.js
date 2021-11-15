@@ -1,6 +1,5 @@
 const config = require('../config');
 const documentSearch = require('../lib/document-search.json');
-const output = require('../lib/output.json');
 const { VIEW } = require('../lib/views');
 const logger = require('../lib/logger');
 const { searchDocument } = require('../services/document.service');
@@ -22,32 +21,39 @@ function getPageData(doc) {
 }
 
 function filterData(documents, typeList, docList) {
-  for (var key in documents) {  
-    typeList.push(key);
-    let subDocList = [];
-   for (var subKey in documents[key]) {  
-     subDocList.push(getJsonDetails(documents[key][subKey]));
-   }
-   docList.push(subDocList);
- }
+  Object.keys(documents).forEach(function(key) {
+    Object.keys(documents[key]).forEach(function(key) {
+      typeList.push(key); 
+    })
+    Object.values(documents[key]).forEach(function(docs) {
+      let subDocList = [];
+      for (key in docs) { 
+        subDocList.push(getJsonDetails(docs[key]));
+      }
+      docList.push(subDocList);
+    })
+  })
 }
 
-exports.getDocumentLibrary = async (req, res) => {
-  const caseRef = req.params.case_ref;
-  const pageNumber = req.params.page;;
-  if (pageNumber === 1) {
-    req.session.document_search = '';
-  }
-  const search = req.session.document_search
-  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
-  
-  const respData = await searchDocument(caseRef, searchDocumentData);
-  const documents = respData.documents[0];
+function renderData(res, caseRef, respData){
+  const documents = respData.documents;
   const pageData = getPageData(respData);
   let typeList = [];
   let docList = [];
   filterData(documents, typeList, docList);
   res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
+}
+
+exports.getDocumentLibrary = async (req, res) => {
+  const caseRef = req.params.case_ref;
+  const pageNumber = req.params.page;
+  let search = req.session.document_search
+  if (pageNumber === '1') {
+    search = '';
+  }
+  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
+  const respData = await searchDocument(caseRef, searchDocumentData);
+  renderData(res, caseRef, respData);
 };
 
 exports.postSearchDocumentLibrary = async (req, res) => {
@@ -58,14 +64,12 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   req.session.document_search =  search;
   const filters = req.session.document_filters | [];
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
-  logger.info('-----------'+searchDocumentData);
   const respData = await searchDocument(caseRef, searchDocumentData);
-  const documents = respData.documents[0];
-  const pageData = getPageData(respData);
-  let typeList = [];
-  let docList = [];
-  filterData(documents, typeList, docList);
-  res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
+  if (respData.resp_code === 404) {
+    res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
+  } else {
+    renderData(res, caseRef, respData);
+  }
 };
 
 exports.postFilterDocumentLibrary = async (req, res) => {
@@ -77,10 +81,5 @@ exports.postFilterDocumentLibrary = async (req, res) => {
   const search = req.session.document_search;
   const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
   const respData = await searchDocument(caseRef, searchDocumentData);
-  const documents = respData.documents[0];
-  const pageData = getPageData(respData);
-  let typeList = [];
-  let docList = [];
-  filterData(documents, typeList, docList);
-  res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
+  renderData(res, caseRef, respData);
 };

@@ -5,7 +5,7 @@ describe('lib/views', () => {
     expect(VIEW).toEqual({
 
       APPLICATION_NUMBER: 'application-number',
-
+      DOCUMENT_OVERVIEW: 'document-overview',
       COOKIES: 'cookies',
     
       GUIDANCE_PAGES: {
