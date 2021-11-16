@@ -19,6 +19,8 @@ services:
       SERVER_SHOW_ERRORS: 'true'
       TRIALIST_DATA_PATH: /opt/app/data/trialists.json
       NODE_ENV: local
+      DOCUMENTS_PER_PAGE: '20'
+      DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ 
     ports:
       - '3000:3000'
     working_dir: '/opt/app'

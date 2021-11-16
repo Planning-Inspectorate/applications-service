@@ -33,4 +33,8 @@ module.exports = {
   },
   trialistPath:
     process.env.TRIALIST_DATA_PATH || path.join(__dirname, '..', '..', 'data', 'trialists.json'),
+  itemsPerPage: Number(process.env.DOCUMENTS_PER_PAGE || 20),
+  documentsHost:
+    process.env.DOCUMENTS_HOST ||
+    'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/',
 };

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const express = require('express');
 const test = require('../../database/test/test_connection');
 

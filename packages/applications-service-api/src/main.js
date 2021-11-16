@@ -1,8 +1,5 @@
-/**
- * Main
- *
- * This is the main starting point for the application.
- */
+/* istanbul ignore file */
+
 const logger = require('./lib/logger');
 const server = require('./server');
 
