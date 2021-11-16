@@ -66,7 +66,7 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
   const respData = await searchDocument(caseRef, searchDocumentData);
   if (respData.resp_code === 404) {
-    res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
+    res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
   } else {
     renderData(res, caseRef, respData);
   }
