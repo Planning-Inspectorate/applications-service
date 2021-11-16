@@ -41,7 +41,11 @@ function renderData(res, caseRef, respData){
   let typeList = [];
   let docList = [];
   filterData(documents, typeList, docList);
-  res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
+  if (respData.resp_code === 404) {
+    res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
+  } else {
+    res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
+  }
 }
 
 exports.getDocumentLibrary = async (req, res) => {
@@ -65,11 +69,7 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   const filters = req.session.document_filters | [];
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
   const respData = await searchDocument(caseRef, searchDocumentData);
-  if (respData.resp_code === 404) {
-    res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
-  } else {
-    renderData(res, caseRef, respData);
-  }
+  renderData(res, caseRef, respData);
 };
 
 exports.postFilterDocumentLibrary = async (req, res) => {
