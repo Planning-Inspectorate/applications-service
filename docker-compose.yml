@@ -38,6 +38,8 @@ services:
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
       FILE_UPLOAD_TMP_PATH: '/tmp'
       GOOGLE_ANALYTICS_ID: 'G-TZBWMVPTHV'
+      SESSION_MONGODB_URL: mongodb://mongodb:27017/test
+      SESSION_KEY: some_secure_key_goes_here
       # please override this locally if using not using localhost or ip address to browse the site in dev.
       SUBDOMAIN_OFFSET: '0'
       USE_SECURE_SESSION_COOKIES: 'false'
@@ -49,8 +51,10 @@ services:
     working_dir: '/opt/app'
     links:
       - 'applications-service-api'
+      - mongodb
     depends_on:
       - 'applications-service-api'
+      - mongodb
     volumes:
       - ./packages/common:/opt/app/node_modules/@pins/common
       - './packages/forms-web-app:/opt/app'
@@ -69,10 +73,16 @@ services:
       MYSQL_DATABASE: 'ipclive'
       MYSQL_USER: 'pins'
       MYSQL_PASSWORD: 'pins'
+      MYSQL_ROOT_HOST: '%'
     ports:
       - '3306:3306'
     volumes:
       - './init:/docker-entrypoint-initdb.d'
+
+  mongodb:
+    image: mongo:3.6.21
+    ports:
+      - 4000:27017
 
   adminer:
     image: 'adminer'

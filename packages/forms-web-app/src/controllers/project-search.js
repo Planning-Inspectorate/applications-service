@@ -2,7 +2,7 @@ const config = require('../config');
 const {Status} = require('../utils/status')
 const { VIEW } = require('../lib/views');
 const logger = require('../lib/logger');
-const { getAppList } = require('../services/application-list.service');
+const { getAppList } = require('../services/application.service');
 
 function getJsonDetails(app) {
   item = {}
@@ -10,7 +10,7 @@ function getJsonDetails(app) {
   item ["CaseReference"] = app.CaseReference;
   item ["PromoterName"] = app.PromoterName;
   item ["Stage"] = Status[app.Stage];
-  return item;ProjectName
+  return item;
 }
 exports.getProjectList = async (req, res) => {
 

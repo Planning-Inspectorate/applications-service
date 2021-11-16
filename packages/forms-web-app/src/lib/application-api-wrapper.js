@@ -32,6 +32,10 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
         });
         if (!apiResponse.ok) {
           logger.debug(apiResponse, 'API Response not OK');
+          if(apiResponse.status === 404){
+            const respData = {resp_code: 404 };
+            return respData;
+          }
           try {
             const errorResponse = await apiResponse.json();
             /* istanbul ignore else */
@@ -49,7 +53,7 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
         logger.debug('Successfully called');
 
         const data = await apiResponse.json();
-
+        const wrappedResp = {...data, resp_code: apiResponse.status}
         logger.debug('Successfully parsed to JSON');
 
         return data;
@@ -65,7 +69,14 @@ exports.getProjectData = async (case_ref) => {
   return handler(`/api/v1/applications/${case_ref}`);
 };
 
-
 exports.getAllProjectList = async () => {
   return handler('/api/v1/applications');
+};
+
+exports.searchDocumentList = async (case_ref, search_data) => {
+  const documentServiceApiUrl = `/api/v1/documents/${case_ref}`;
+  const method = 'POST';
+  return handler(documentServiceApiUrl, method, {
+    body: search_data,
+  });
 };

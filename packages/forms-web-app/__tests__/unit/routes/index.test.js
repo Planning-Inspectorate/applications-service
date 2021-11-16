@@ -5,6 +5,7 @@ const cookieRouter = require('../../../src/routes/cookies');
 const overviewRouter = require('../../../src/routes/overview');
 const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/interested-party-guide');
+const documentLibraryRouter = require('../../../src/routes/document-library');
 
 describe('routes/index', () => {
   beforeEach(() => {
@@ -23,6 +24,7 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/overview', overviewRouter);
     expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
-    expect(use.mock.calls.length).toBe(7);
+    expect(use).toHaveBeenCalledWith('/document-library', documentLibraryRouter);
+    expect(use.mock.calls.length).toBe(8);
   });
 });
