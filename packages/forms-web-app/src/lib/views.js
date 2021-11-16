@@ -3,7 +3,7 @@ const VIEW = {
 
   COOKIES: 'cookies',
   OVERVIEW: 'overview',
-  DOCUMENT_OVERVIEW: 'document-overview',
+  DOCUMENT_LIBRARY: 'document-library',
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {
     BEFORE_APPLY: 'guidance-pages/before-apply',

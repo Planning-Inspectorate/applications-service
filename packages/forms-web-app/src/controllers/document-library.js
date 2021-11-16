@@ -41,7 +41,7 @@ function renderData(res, caseRef, respData){
   let typeList = [];
   let docList = [];
   filterData(documents, typeList, docList);
-  res.render(VIEW.DOCUMENT_OVERVIEW, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
+  res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
 }
 
 exports.getDocumentLibrary = async (req, res) => {

@@ -43,21 +43,21 @@ describe('controllers/document-library', () => {
   describe('getDocumentLibrary', () => {
     it('should call the correct template', async () => {
       await documentLibraryController.getDocumentLibrary(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_OVERVIEW, {"caseRef": "ABCD1234", "docList": docList, "typeList": ["test"], pageData: pageData});
+      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_LIBRARY, {"caseRef": "ABCD1234", "docList": docList, "typeList": ["test"], pageData: pageData});
     });
   });
 
   describe('postSearchDocumentLibrary', () => {
     it('should call the correct template', async () => {
       await documentLibraryController.postSearchDocumentLibrary(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_OVERVIEW, {"caseRef": "ABCD1234", "docList": docList, "typeList": ["test"], pageData: pageData});
+      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_LIBRARY, {"caseRef": "ABCD1234", "docList": docList, "typeList": ["test"], pageData: pageData});
     });
   });
 
   describe('postFilterDocumentLibrary', () => {
     it('should call the correct template', async () => {
       await documentLibraryController.postFilterDocumentLibrary(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_OVERVIEW, {"caseRef": "ABCD1234", "docList": docList, "typeList": ["test"], pageData: pageData});
+      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_LIBRARY, {"caseRef": "ABCD1234", "docList": docList, "typeList": ["test"], pageData: pageData});
     });
   });
 });
