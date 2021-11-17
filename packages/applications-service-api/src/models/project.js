@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       AnticipatedGridRefEasting: DataTypes.FLOAT,
       AnticipatedGridRefNorthing: DataTypes.FLOAT,
       MapZoomLevel: DataTypes.TEXT,
+      LatLong: DataTypes.TEXT,
       AnticipatedDateOfSubmission: DataTypes.DATE,
       AnticipatedSubmissionDateNonSpecific: DataTypes.TEXT,
       DateOfDCOSubmission: DataTypes.DATE,

@@ -201,6 +201,9 @@ components:
         MapZoomLevel:
           type: string
           example: ''
+        LatLong:
+          type: string
+          example: '53.620078025496,-0.70283147423378'
         AnticipatedDateOfSubmission:
           type: string
           example: ''
