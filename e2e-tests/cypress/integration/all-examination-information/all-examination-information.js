@@ -3,7 +3,8 @@ import PO_AllExamInfo from "./PageObjects/PO_AllExamInfo";
 const allExamInfo = new PO_AllExamInfo();
 
 Given('I navigate to All Examination information page', () => {
-    cy.visit('/overview/EN010116', { failOnStatusCode: false });
+    cy.visit('/project-search', { failOnStatusCode: false });
+    cy.clickOnHref("/overview/EN010116");
     cy.clickLinkTonavigateToPage('All Examination documents');
 });
 

@@ -3,7 +3,8 @@ import PO_OverviewPage from "./PageObjects/PO_OverviewPage";
 const overviewPage = new PO_OverviewPage()
 
 Given('I navigate to project Overview page', () => {
-    cy.visit('/overview/EN010116', { failOnStatusCode: false });
+    cy.visit('/project-search', { failOnStatusCode: false });
+    cy.clickOnHref("/overview/EN010116");
 });
 
 Then('I am on the {string} page', (pageName) => {
