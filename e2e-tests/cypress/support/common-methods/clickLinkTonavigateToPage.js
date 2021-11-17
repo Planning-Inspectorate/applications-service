@@ -18,5 +18,11 @@ module.exports = (pageName) => {
         case "the nationally significant infrastructure planning process step by step":
             cy.clickOnHref('/interested-party-guide/index');
             break;
+        case "all examination documents":
+            cy.clickOnHref('/document-library/EN010116/1');
+            break;
+        case "a404 dewsbury project information":
+            cy.clickOnHref('/overview/EN010116');
+            break;
     }
 };

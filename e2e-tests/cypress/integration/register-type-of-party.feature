@@ -34,7 +34,7 @@ Feature: What type of interested party are you page
         When I click on back link
         Then I am on the "Register to have your say" page
 
-    Scenario: User selects An person interested in having my say and click continue
-        When User selects "An person interested in having my say"
+    Scenario: User selects A person interested in having my say and click continue
+        When User selects "A person interested in having my say"
         And User clicks on continue button
         Then I am on the "what is your full name?" page
