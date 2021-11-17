@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       CaseReference: DataTypes.STRING,
       ProjectName: DataTypes.TEXT,
       Proposal: DataTypes.TEXT,
+      Summary: DataTypes.TEXT,
       Stage: DataTypes.TINYINT,
       PromoterName: DataTypes.TEXT,
       PromoterFirstName: DataTypes.TEXT,
