@@ -36,14 +36,14 @@ function filterData(documents, typeList, docList) {
 }
 
 function renderData(res, caseRef, respData){
-  const documents = respData.documents;
-  const pageData = getPageData(respData);
-  let typeList = [];
-  let docList = [];
-  filterData(documents, typeList, docList);
   if (respData.resp_code === 404) {
     res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
   } else {
+    const documents = respData.documents;
+    const pageData = getPageData(respData);
+    let typeList = [];
+    let docList = [];
+    filterData(documents, typeList, docList);
     res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: docList, typeList: typeList, pageData: pageData });
   }
 }
