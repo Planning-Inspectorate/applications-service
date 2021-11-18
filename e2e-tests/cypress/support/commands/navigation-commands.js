@@ -16,5 +16,9 @@ Cypress.Commands.add('clickLinkTonavigateToPage', require('../common-methods/cli
 
 Cypress.Commands.add('assertUserOnThePage', require('../common-methods/assertUserOnThePage'));
 
+Cypress.Commands.add('clickProjectLink', require('../common-methods/clickProjectLink'));
+
+Cypress.Commands.add('clickContentsLink', require('../common-methods/clickContentsLink'));
+
 // Register Type of Party page select radio choice
 Cypress.Commands.add('selectRadioOption', require('../register-type-of-party-page/selectRadioOption'));

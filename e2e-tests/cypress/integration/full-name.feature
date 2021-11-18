@@ -5,7 +5,7 @@ Feature: What is your full name page
     So that I can verify the functionality
 
     Background: Navigate to full name page
-    Given I navigate to what is your full name page selecting "An person interested in having my say"
+    Given I navigate to what is your full name page selecting "A person interested in having my say"
 
     Scenario: Navigate to full name page and verify the content in the page and validate error message
         And I can see the logo gov uk text

@@ -38,8 +38,8 @@ Feature: What you can do after the decision has been made page
 
     Scenario: click Next link
         When I click on Next link
-        Then I am on the "A404 Dewsbury project overview" page
+        Then I am on the "A404 Dewsbury" page
 
     Scenario: click Find a project link
         When I click on Find a project link
-        Then I am on the "A404 Dewsbury project overview" page
+        Then I am on the "A404 Dewsbury" page

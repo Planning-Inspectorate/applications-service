@@ -21,12 +21,12 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/register/start')
             break;
-        case "a404 dewsbury project overview":
-            cy.title().should('eq', "A404 Dewsbury project overview");
+        case "north lincolnshire green energy park project information":
+            cy.title().should('eq', "North Lincolnshire Green Energy Park project information");
             cy.get('h1').invoke('text').then((text) => {
-                expect(text).to.contain('A404 Dewsbury project information');
+                expect(text).to.contain('North Lincolnshire Green Energy Park project information');
             })
-            cy.url().should('include', '/overview')
+            cy.url().should('include', '/overview/EN010116')
             break;
         case "having your say about a national infrastructure project":
             cy.title().should('eq', "Having your say about a national infrastructure project");
@@ -81,6 +81,13 @@ module.exports = (pageName) => {
                 expect(text).to.contain('What you can do after the decision has been made');
             })
             cy.url().should('include', '/interested-party-guide/after-making-the-decision')
+            break;
+        case "a404 dewsbury":
+            cy.title().should('eq', "A404 Dewsbury");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('A404 Dewsbury');
+            })
+            cy.url().should('include', '/document-library/EN010116/1')
             break;
         default: throw console.error('uanble to find specified page name: ' + pageName);
     }
