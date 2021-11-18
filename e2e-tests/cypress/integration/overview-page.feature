@@ -5,7 +5,7 @@ Feature: Overview page
     So that I can verify the functionality
 
     Background: Navigate to overview page
-        Given I navigate to project Overview page
+        Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
 
     Scenario: verify page title, heading and click on register to have your say about national infrastructure project
         And I am on the "North Lincolnshire Green Energy Park project information" page

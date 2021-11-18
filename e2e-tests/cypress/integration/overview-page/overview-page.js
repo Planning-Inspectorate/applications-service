@@ -2,9 +2,9 @@ import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import PO_OverviewPage from "./PageObjects/PO_OverviewPage";
 const overviewPage = new PO_OverviewPage()
 
-Given('I navigate to project Overview page', () => {
+Given('I navigate to {string} project Overview page', (projectName) => {
     cy.visit('/project-search', { failOnStatusCode: false });
-    cy.clickOnHref("/overview/EN010116");
+    cy.clickProjectLink(projectName);
 });
 
 Then('I am on the {string} page', (pageName) => {

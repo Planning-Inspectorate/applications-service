@@ -4,8 +4,8 @@ const allExamInfo = new PO_AllExamInfo();
 
 Given('I navigate to All Examination information page', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
-    cy.clickOnHref("/overview/EN010116");
-    cy.clickLinkTonavigateToPage('All Examination documents');
+    cy.clickProjectLink('North Lincolnshire Green Energy Park');
+    cy.clickContentsLink('All Examination documents');
 });
 
 Then('I am on the {string} page', (pageName) => {
@@ -13,7 +13,7 @@ Then('I am on the {string} page', (pageName) => {
 })
 
 And('I click on {string} link', (pageName) => {
-    cy.clickLinkTonavigateToPage(pageName);
+    cy.clickContentsLink(pageName);
  })
 
  When('I enter text {string} into search field', (searchInput) => {
