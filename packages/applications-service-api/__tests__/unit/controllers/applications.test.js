@@ -21,6 +21,7 @@ const projectData = {
   AnticipatedGridRefEasting: 485899,
   AnticipatedGridRefNorthing: 414508,
   MapZoomLevel: 'Region',
+  LatLong: '53.620078025496,-0.70283147423378',
   AnticipatedDateOfSubmission: '0000-00-00',
   AnticipatedSubmissionDateNonSpecific: 'Q3 2021',
   DateOfDCOSubmission: '0000-00-00',
