@@ -162,6 +162,9 @@ components:
         Proposal:
           type: string
           example: 'EN01 - Generating Stations'
+        Summary: 
+          type: string
+          example: 'The Project consists of an Energy Recovery Facility (ERF) converting up to 650,000 tonnes per annum ...'
         Stage:
           type: integer
           example: 3
