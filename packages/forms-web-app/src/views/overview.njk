@@ -57,7 +57,6 @@
 {% endblock %}
 
 {% block content %}
-
   <h1 class="govuk-heading-l">{{ appData.ProjectName }} project information</h1>
   <p class="govuk-body">{{ appData.Summary }}</p>
   <p class="govuk-body"><a class="govuk-link" href="#">Sign-up for updates via email, letter or text</a>.</p>
@@ -139,6 +138,7 @@
           map.setStyle('mapbox://styles/mapbox/' + layerId);
         };
       }
+
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
