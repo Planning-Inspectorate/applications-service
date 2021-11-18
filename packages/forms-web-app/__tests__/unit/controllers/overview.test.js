@@ -17,9 +17,9 @@ describe('controllers/overview', () => {
 
   describe('getOverview', () => {
     it('should call the correct template', async () => {
-      getProjectData.mockImplementation(() => Promise.resolve({}));
+      getProjectData.mockImplementation(() => Promise.resolve({"LatLong": "7.56655, -5.87687"}));
       await overviewController.getOverview(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.OVERVIEW, {"appData": {}, "stage": undefined, "styleClass": ["", "", "", "", ""]});
+      expect(res.render).toHaveBeenCalledWith(VIEW.OVERVIEW, {"appData": {"LatLong": "7.56655, -5.87687"}, "coordinates": ["7.56655"," -5.87687"], "stage": undefined, "styleClass": ["", "", "", "", ""]});
     });
   });
 });

@@ -6,7 +6,7 @@ const { getAppData } = require('../services/application.service');
 
 exports.getOverview = async (req, res) => {
   const appData = await getAppData(req.params.case_ref);
-  logger.info(appData);
+  const coordinates = appData.LatLong.split(",");
   let styleClass = [];
   for (let i = 1; i <= 5; i++) {
     if (i === appData.Stage) {
@@ -17,6 +17,6 @@ exports.getOverview = async (req, res) => {
       styleClass.push('');
     }
   } 
-  logger.info(styleClass);
-  res.render(VIEW.OVERVIEW, {appData: appData, stage: Status[appData.Stage], styleClass: styleClass});
+
+  res.render(VIEW.OVERVIEW, {appData: appData, coordinates: coordinates, stage: Status[appData.Stage], styleClass: styleClass});
 };
