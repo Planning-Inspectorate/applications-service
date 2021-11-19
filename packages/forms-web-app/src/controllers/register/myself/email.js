@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getEmail = async (req, res) => {
-  res.render(VIEW.REGISTER.EMAIL);
+  res.render(VIEW.REGISTER.MYSELF.EMAIL);
 };
 
 exports.postEmail = async (req, res) => {
