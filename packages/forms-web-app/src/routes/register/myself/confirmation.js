@@ -1,6 +1,6 @@
 const express = require('express');
 
-const confirmationController = require('../../controllers/register/confirmation');
+const confirmationController = require('../../../controllers/register/confirmation');
 
 const router = express.Router();
 

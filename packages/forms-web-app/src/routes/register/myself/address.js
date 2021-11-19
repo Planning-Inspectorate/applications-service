@@ -1,10 +1,10 @@
 const express = require('express');
 
-const addressController = require('../../controllers/register/address');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const addressController = require('../../../controllers/register/address');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: addressValidationRules,
-} = require('../../validators/register/address');
+} = require('../../../validators/register/address');
 
 
 const router = express.Router();

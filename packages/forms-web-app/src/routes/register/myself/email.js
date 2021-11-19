@@ -1,10 +1,10 @@
 const express = require('express');
 
-const emailController = require('../../controllers/register/email');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const emailController = require('../../../controllers/register/email');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: emailValidationRules,
-} = require('../../validators/register/email');
+} = require('../../../validators/register/email');
 
 
 const router = express.Router();

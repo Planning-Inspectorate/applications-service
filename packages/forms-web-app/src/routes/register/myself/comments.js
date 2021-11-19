@@ -1,10 +1,10 @@
 const express = require('express');
 
-const commentsController = require('../../controllers/register/comments');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const commentsController = require('../../../controllers/register/comments');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: commentsValidationRules,
-} = require('../../validators/register/comments');
+} = require('../../../validators/register/comments');
 
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const checkYourAnswersController = require('../../controllers/register/check-your-answers');
+const checkYourAnswersController = require('../../../controllers/register/check-your-answers');
 
 const router = express.Router();
 

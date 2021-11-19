@@ -1,6 +1,6 @@
 const express = require('express');
 
-const startController = require('../../controllers/register/start');
+const startController = require('../../../controllers/register/start');
 
 const router = express.Router();
 

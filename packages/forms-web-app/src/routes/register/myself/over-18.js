@@ -1,11 +1,11 @@
 const express = require('express');
 
-const over18Controller = require('../../controllers/register/over-18');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const over18Controller = require('../../../controllers/register/over-18');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {
     rules: over18Rules,
-  } = require('../../validators/register/over-18');
+  } = require('../../../validators/register/over-18');
 
 const router = express.Router();
 

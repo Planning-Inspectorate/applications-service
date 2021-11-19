@@ -1,6 +1,6 @@
 const express = require('express');
 
-const declarationController = require('../../controllers/register/declaration');
+const declarationController = require('../../../controllers/register/declaration');
 
 const router = express.Router();
 
