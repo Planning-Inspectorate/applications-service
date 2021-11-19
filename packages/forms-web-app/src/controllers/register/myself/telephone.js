@@ -9,7 +9,7 @@ exports.postTelephone = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
   if (errors['telephone'] || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.TELEPHONE, {
+    res.render(VIEW.REGISTER.MYSELF.TELEPHONE, {
       errors,
       errorSummary,
     });
@@ -18,5 +18,5 @@ exports.postTelephone = async (req, res) => {
 
   req.session.registrationData['telephone'] = body['telephone'];
   logger.info('-----------------------'+JSON.stringify(req.session));
-  res.redirect(`/${VIEW.REGISTER.COMMENTS}`);
+  res.redirect(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
 };

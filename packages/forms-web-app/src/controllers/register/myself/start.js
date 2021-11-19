@@ -9,5 +9,5 @@ exports.getStart = async (req, res) => {
     req.session.registrationData = registrationData;
   }
   logger.info('-----------------------'+JSON.stringify(req.session));
-  res.render(VIEW.REGISTER.START, {serviceName: config.serviceName});
+  res.render(VIEW.REGISTER.MYSELF.START, {serviceName: config.serviceName});
 };

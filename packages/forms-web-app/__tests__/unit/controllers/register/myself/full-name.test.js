@@ -43,7 +43,7 @@ describe('controllers/register/full-name', () => {
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.OVER_18}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {
@@ -59,7 +59,7 @@ describe('controllers/register/full-name', () => {
             );
             expect(res.redirect).not.toHaveBeenCalled();
 
-            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.FULL_NAME, {
+            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.FULL_NAME, {
                 errorSummary: [{ text: 'There were errors here', href: '#' }],
                 errors: { a: 'b' }
             });
