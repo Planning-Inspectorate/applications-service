@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getTelephone = async (req, res) => {
-  res.render(VIEW.REGISTER.TELEPHONE);
+  res.render(VIEW.REGISTER.MYSELF.TELEPHONE);
 };
 
 exports.postTelephone = async (req, res) => {
