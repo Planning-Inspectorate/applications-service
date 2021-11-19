@@ -1,0 +1,67 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../macros/bool-to-sentence-case.njk" import boolToSentenceCaseField %}
+{% from "../macros/summary-field.njk" import summaryField %}
+
+{% block pageTitle %}
+  Check your answers - Register to have your say
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+<a class="govuk-back-link" href="javascript:history.back()">Back</a>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-xl">Check your answers before registering</h1>
+
+      <h2 class="govuk-heading-m">Personal details</h2>
+      {{ govukSummaryList({
+        classes: "govuk-summary-list govuk-!-margin-bottom-9",
+        rows: [
+          {
+            key: {
+              text: "Who are you registering for?"
+            },
+            value: {
+              text: summaryField( data['type-of-party'] | title, { 'data-cy': "type-of-party" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/type-of-party?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "if the application was made in your name",
+                  attributes: { "data-cy": "whoAreYou" }
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+
+
+
+     
+
+      <form action="/register/declaration" method="get" novalidate>
+        {{ govukButton({
+          text: "Save and continue",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
