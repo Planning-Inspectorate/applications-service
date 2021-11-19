@@ -1,11 +1,11 @@
-const startController = require('../../../../src/controllers/register/start');
+const startController = require('../../../../src/controllers/register/myself/start');
 const { VIEW } = require('../../../../src/lib/views');
 const config = require('../../../../src/config');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');
 
-describe('controllers/register/start', () => {
+describe('controllers/register/myself/start', () => {
     let req;
     let res;
 
@@ -18,7 +18,7 @@ describe('controllers/register/start', () => {
     describe('getStart', () => {
         it('should call the correct template', () => {
             startController.getStart(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/start', {"serviceName": config.serviceName});
+            expect(res.render).toHaveBeenCalledWith('register/myself/start', {"serviceName": config.serviceName});
         });
     });
 });

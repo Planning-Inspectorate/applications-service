@@ -1,11 +1,11 @@
 const { use } = require('../router-mock');
 
-describe('routes/register/index', () => {
+describe('routes/register/myself/index', () => {
   beforeEach(() => {
     jest.resetModules();
 
     // eslint-disable-next-line global-require
-    require('../../../../src/routes/register');
+    require('../../../../src/routes/register/myself');
   });
 
   afterEach(() => {
@@ -13,6 +13,6 @@ describe('routes/register/index', () => {
   });
 
   it('should define the expected routes', () => {
-    expect(use.mock.calls.length).toBe(3);
+    expect(use.mock.calls.length).toBe(11);
   });
 });

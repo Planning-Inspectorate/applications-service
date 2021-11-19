@@ -1,13 +1,13 @@
 const { get, post } = require('../router-mock');
-const fullNameController = require('../../../../src/controllers/register/full-name');
+const fullNameController = require('../../../../src/controllers/register/myself/full-name');
 const { validationErrorHandler } = require('../../../../src/validators/validation-error-handler');
 
-jest.mock('../../../../src/validators/register/full-name');
+jest.mock('../../../../src/validators/register/myself/full-name');
 
-describe('routes/register/full-name', () => {
+describe('routes/register/myself/full-name', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require
-    require('../../../../src/routes/register/full-name');
+    require('../../../../src/routes/register/myself/full-name');
   });
 
   afterEach(() => {

@@ -1,4 +1,4 @@
-const typeOfPartyController = require('../../../../src/controllers/register/type-of-party');
+const typeOfPartyController = require('../../../../src/controllers/register/myself/type-of-party');
 const { VIEW } = require('../../../../src/lib/views');
 const logger = require('../../../../src/lib/logger');
 const { APPLICATION_DOCUMENT } = require('../../../../src/lib/empty-application');
@@ -6,12 +6,19 @@ const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');
 
-describe('controllers/register/type-of-party', () => {
+describe('controllers/register/myself/type-of-party', () => {
     let req;
     let res;
 
     beforeEach(() => {
-        req = mockReq();
+        req = {
+            ...mockReq(),
+            session: {
+                registrationData: {
+                    'type-of-party': 'me'
+                }
+            },
+        };
         res = mockRes();
 
         ({ empty: application } = APPLICATION_DOCUMENT);
@@ -22,13 +29,13 @@ describe('controllers/register/type-of-party', () => {
     describe('getTypeOfParty', () => {
         it('should call the correct template', () => {
             typeOfPartyController.getTypeOfParty(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/type-of-party');
+            expect(res.render).toHaveBeenCalledWith('register/myself/type-of-party', {"type": "me"});
         });
     });
 
     describe('forwardPage', () => {
         it(`should return '/${VIEW.REGISTER.FULL_NAME}' if 1st option selected`, async () => {
-            const pageRedirect = typeOfPartyController.forwardPage('mySay');
+            const pageRedirect = typeOfPartyController.forwardPage('me');
 
             expect(pageRedirect).toEqual(VIEW.REGISTER.FULL_NAME);
         });
@@ -55,7 +62,7 @@ describe('controllers/register/type-of-party', () => {
 
     describe('postTypeOfParty', () => {
         it(`'should post data and redirect to '/${VIEW.REGISTER.FULL_NAME}' if 1st option is selected`, async () => {
-            const typeOfParty = 'mySay';
+            const typeOfParty = 'me';
             const mockRequest = {
                 ...req,
                 body: {

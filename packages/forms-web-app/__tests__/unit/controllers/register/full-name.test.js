@@ -1,4 +1,4 @@
-const fullNameController = require('../../../../src/controllers/register/full-name');
+const fullNameController = require('../../../../src/controllers/register/myself/full-name');
 const { VIEW } = require('../../../../src/lib/views');
 const logger = require('../../../../src/lib/logger');
 const { APPLICATION_DOCUMENT } = require('../../../../src/lib/empty-application');
@@ -11,7 +11,14 @@ describe('controllers/register/full-name', () => {
     let res;
 
     beforeEach(() => {
-        req = mockReq();
+        req = {
+            ...mockReq(),
+            session: {
+                registrationData: {
+                    'full-name': 'test'
+                }
+            },
+        };
         res = mockRes();
 
         ({ empty: application } = APPLICATION_DOCUMENT);
@@ -22,7 +29,7 @@ describe('controllers/register/full-name', () => {
     describe('getFullName', () => {
         it('should call the correct template', () => {
             fullNameController.getFullName(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/full-name');
+            expect(res.render).toHaveBeenCalledWith('register/myself/full-name');
         });
     });
 
@@ -40,7 +47,7 @@ describe('controllers/register/full-name', () => {
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.TEST2}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.OVER_18}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {
