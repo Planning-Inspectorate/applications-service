@@ -1,0 +1,62 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set title="Are you 18 or over - Register to have your say" %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title="Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+      <form action="" method="POST" novalidate>
+        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+            {{ govukRadios({
+            fieldset: {
+                legend: {
+                text: "Are you 18 or over?",
+                isPageHeading: true,
+                classes: "govuk-label--l"
+                }
+            },
+            idPrefix: "over-18",
+            name: "over-18",
+            items: [
+                {
+                value: "yes",
+                text: "Yes"
+                },
+                {
+                value: "no",
+                text: "No"
+                }
+            ]
+            }) }}
+        </div>
+
+        {{ govukButton({
+          text: "Continue",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
