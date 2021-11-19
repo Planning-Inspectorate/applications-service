@@ -3,7 +3,7 @@ const { VIEW } = require('../../../lib/views');
 
 const {
   validTypeOfPartyOptions,
-} = require('../../../validators/register/type-of-party');
+} = require('../../../validators/register/myself/type-of-party');
 const { REGISTER } = require('../../../constants');
 
 exports.getTypeOfParty = async (req, res) => {

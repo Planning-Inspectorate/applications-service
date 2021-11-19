@@ -5,7 +5,7 @@ const { validationErrorHandler } = require('../../../validators/validation-error
 
 const {
     rules: over18Rules,
-  } = require('../../../validators/register/over-18');
+  } = require('../../../validators/register/myself/over-18');
 
 const router = express.Router();
 

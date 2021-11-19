@@ -5,7 +5,7 @@ const { validationErrorHandler } = require('../../../validators/validation-error
 
 const {
     rules: typeOfPartyRules,
-  } = require('../../../validators/register/type-of-party');
+  } = require('../../../validators/register/myself/type-of-party');
 
 const router = express.Router();
 

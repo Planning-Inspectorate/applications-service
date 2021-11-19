@@ -4,7 +4,7 @@ const fullNameController = require('../../../controllers/register/myself/full-na
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: fullNameValidationRules,
-} = require('../../../validators/register/full-name');
+} = require('../../../validators/register/myself/full-name');
 
 
 const router = express.Router();

@@ -4,7 +4,7 @@ const commentsController = require('../../../controllers/register/myself/comment
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: commentsValidationRules,
-} = require('../../../validators/register/comments');
+} = require('../../../validators/register/myself/comments');
 
 
 const router = express.Router();
