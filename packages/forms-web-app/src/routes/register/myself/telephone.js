@@ -1,6 +1,6 @@
 const express = require('express');
 
-const telephoneController = require('../../../controllers/register/telephone');
+const telephoneController = require('../../../controllers/register/myself/telephone');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: telephoneValidationRules,

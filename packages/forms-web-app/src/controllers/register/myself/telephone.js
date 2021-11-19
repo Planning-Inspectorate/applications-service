@@ -1,5 +1,5 @@
-const logger = require('../../lib/logger');
-const { VIEW } = require('../../lib/views');
+const logger = require('../../../lib/logger');
+const { VIEW } = require('../../../lib/views');
 
 exports.getTelephone = async (req, res) => {
   res.render(VIEW.REGISTER.TELEPHONE);

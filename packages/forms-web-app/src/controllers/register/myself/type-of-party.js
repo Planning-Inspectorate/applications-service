@@ -1,10 +1,10 @@
-const logger = require('../../lib/logger');
-const { VIEW } = require('../../lib/views');
+const logger = require('../../../lib/logger');
+const { VIEW } = require('../../../lib/views');
 
 const {
   validTypeOfPartyOptions,
-} = require('../../validators/register/type-of-party');
-const { REGISTER } = require('../../constants');
+} = require('../../../validators/register/type-of-party');
+const { REGISTER } = require('../../../constants');
 
 exports.getTypeOfParty = async (req, res) => {
   res.render(VIEW.REGISTER.TYPE_OF_PARTY, {type: req.session.registrationData['type-of-party']});

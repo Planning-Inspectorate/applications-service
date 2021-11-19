@@ -1,6 +1,6 @@
 const express = require('express');
 
-const fullNameController = require('../../../controllers/register/full-name');
+const fullNameController = require('../../../controllers/register/myself/full-name');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: fullNameValidationRules,

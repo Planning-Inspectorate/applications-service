@@ -1,6 +1,6 @@
 const express = require('express');
 
-const addressController = require('../../../controllers/register/address');
+const addressController = require('../../../controllers/register/myself/address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: addressValidationRules,

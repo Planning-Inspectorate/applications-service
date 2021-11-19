@@ -1,6 +1,6 @@
 const express = require('express');
 
-const over18Controller = require('../../../controllers/register/over-18');
+const over18Controller = require('../../../controllers/register/myself/over-18');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const commentsController = require('../../../controllers/register/comments');
+const commentsController = require('../../../controllers/register/myself/comments');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: commentsValidationRules,

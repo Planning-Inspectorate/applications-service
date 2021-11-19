@@ -1,6 +1,6 @@
 const express = require('express');
 
-const typeOfPartyController = require('../../../controllers/register/type-of-party');
+const typeOfPartyController = require('../../../controllers/register/myself/type-of-party');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {

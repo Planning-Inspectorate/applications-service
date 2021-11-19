@@ -1,6 +1,6 @@
 const express = require('express');
 
-const emailController = require('../../../controllers/register/email');
+const emailController = require('../../../controllers/register/myself/email');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: emailValidationRules,
