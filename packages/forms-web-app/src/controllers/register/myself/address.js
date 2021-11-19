@@ -9,7 +9,7 @@ exports.postAddress = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
   if (Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.ADDRESS, {
+    res.render(VIEW.REGISTER.MYSELF.ADDRESS, {
       errors,
       errorSummary,
     });
