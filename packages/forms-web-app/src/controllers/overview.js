@@ -6,7 +6,11 @@ const { getAppData } = require('../services/application.service');
 
 exports.getOverview = async (req, res) => {
   const appData = await getAppData(req.params.case_ref);
+  logger.info('-----'+JSON.stringify(appData));
+
   const coordinates = appData.LatLong.split(",");
+  const revCoordinates = [coordinates[1], coordinates[0]]
+  appData.LatLong = revCoordinates;
   let styleClass = [];
   for (let i = 1; i <= 5; i++) {
     if (i === appData.Stage) {
@@ -17,6 +21,6 @@ exports.getOverview = async (req, res) => {
       styleClass.push('');
     }
   } 
-
-  res.render(VIEW.OVERVIEW, {appData: appData, coordinates: coordinates, stage: Status[appData.Stage], styleClass: styleClass});
+logger.info('-----'+JSON.stringify(appData));
+  res.render(VIEW.OVERVIEW, {appData: appData, stage: Status[appData.Stage], styleClass: styleClass});
 };

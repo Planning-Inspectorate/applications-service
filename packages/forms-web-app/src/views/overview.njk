@@ -124,7 +124,7 @@
     const map = new mapboxgl.Map({
       container: 'map', // container ID
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
-      center: [{{ coordinates[1] }}, {{ coordinates[0] }}], // starting position
+      center: [{{ appData.LatLong }}], // starting position
       zoom: 10, // starting zoom,
       logoPosition: 'top-left'
     });
