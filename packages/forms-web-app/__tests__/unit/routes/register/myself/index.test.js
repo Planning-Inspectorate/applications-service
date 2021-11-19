@@ -1,11 +1,11 @@
-const { use } = require('../router-mock');
+const { use } = require('../../router-mock');
 
 describe('routes/register/myself/index', () => {
   beforeEach(() => {
     jest.resetModules();
 
     // eslint-disable-next-line global-require
-    require('../../../../src/routes/register/myself');
+    require('../../../../../src/routes/register/myself');
   });
 
   afterEach(() => {

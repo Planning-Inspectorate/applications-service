@@ -1,10 +1,10 @@
-const { get } = require('../router-mock');
-const startController = require('../../../../src/controllers/register/myself/start');
+const { get } = require('../../router-mock');
+const startController = require('../../../../../src/controllers/register/myself/start');
 
 describe('routes/register/myself/start', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require
-    require('../../../../src/routes/register/myself/start');
+    require('../../../../../src/routes/register/myself/start');
   });
 
   afterEach(() => {
