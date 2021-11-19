@@ -1,10 +1,9 @@
-const fullNameController = require('../../../../src/controllers/register/myself/full-name');
-const { VIEW } = require('../../../../src/lib/views');
-const logger = require('../../../../src/lib/logger');
-const { APPLICATION_DOCUMENT } = require('../../../../src/lib/empty-application');
-const { mockReq, mockRes } = require('../../mocks');
+const fullNameController = require('../../../../../src/controllers/register/myself/full-name');
+const { VIEW } = require('../../../../../src/lib/views');
+const logger = require('../../../../../src/lib/logger');
+const { mockReq, mockRes } = require('../../../mocks');
 
-jest.mock('../../../../src/lib/logger');
+jest.mock('../../../../../src/lib/logger');
 
 describe('controllers/register/full-name', () => {
     let req;
@@ -20,9 +19,6 @@ describe('controllers/register/full-name', () => {
             },
         };
         res = mockRes();
-
-        ({ empty: application } = APPLICATION_DOCUMENT);
-
         jest.resetAllMocks();
     });
 

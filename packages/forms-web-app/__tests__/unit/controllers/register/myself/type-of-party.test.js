@@ -1,10 +1,10 @@
-const typeOfPartyController = require('../../../../src/controllers/register/myself/type-of-party');
-const { VIEW } = require('../../../../src/lib/views');
-const logger = require('../../../../src/lib/logger');
-const { APPLICATION_DOCUMENT } = require('../../../../src/lib/empty-application');
-const { mockReq, mockRes } = require('../../mocks');
+const typeOfPartyController = require('../../../../../src/controllers/register/myself/type-of-party');
+const { VIEW } = require('../../../../../src/lib/views');
+const logger = require('../../../../../src/lib/logger');
+const { APPLICATION_DOCUMENT } = require('../../../../../src/lib/empty-application');
+const { mockReq, mockRes } = require('../../../mocks');
 
-jest.mock('../../../../src/lib/logger');
+jest.mock('../../../../../src/lib/logger');
 
 describe('controllers/register/myself/type-of-party', () => {
     let req;

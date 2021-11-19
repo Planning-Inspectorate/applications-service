@@ -1,9 +1,9 @@
-const startController = require('../../../../src/controllers/register/myself/start');
-const { VIEW } = require('../../../../src/lib/views');
-const config = require('../../../../src/config');
-const { mockReq, mockRes } = require('../../mocks');
+const startController = require('../../../../../src/controllers/register/myself/start');
+const { VIEW } = require('../../../../../src/lib/views');
+const config = require('../../../../../src/config');
+const { mockReq, mockRes } = require('../../../mocks');
 
-jest.mock('../../../../src/lib/logger');
+jest.mock('../../../../../src/lib/logger');
 
 describe('controllers/register/myself/start', () => {
     let req;
