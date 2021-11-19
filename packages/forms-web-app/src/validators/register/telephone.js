@@ -3,9 +3,9 @@ const { body } = require('express-validator');
 
 const rules = () => {
   return [
-    body('full-name')
+    body('telephone')
       .notEmpty()
-      .withMessage('Enter your full name'),
+      .withMessage('Enter your telephone number'),
   ];
 };
 
