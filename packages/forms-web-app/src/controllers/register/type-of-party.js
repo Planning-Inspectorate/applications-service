@@ -7,7 +7,7 @@ const {
 const { REGISTER } = require('../../constants');
 
 exports.getTypeOfParty = async (req, res) => {
-  res.render(VIEW.REGISTER.TYPE_OF_PARTY);
+  res.render(VIEW.REGISTER.TYPE_OF_PARTY, {type: req.session.registrationData['type-of-party']});
 };
 
 const forwardPage = (partyType) => {
@@ -28,6 +28,7 @@ exports.postTypeOfParty = async (req, res) => {
 
   const typeOfParty = body['type-of-party'];
   let selectedParty = null;
+  req.session.registrationData['type-of-party'] = typeOfParty;
 
   if (validTypeOfPartyOptions.includes(typeOfParty)) {
     selectedParty = typeOfParty;

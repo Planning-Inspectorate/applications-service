@@ -7,6 +7,7 @@ exports.getFullName = async (req, res) => {
 
 exports.postFullName = async (req, res) => {
   const { body } = req;
+
   const { errors = {}, errorSummary = [] } = body;
   if (errors['full-name'] || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.FULL_NAME, {
@@ -15,5 +16,8 @@ exports.postFullName = async (req, res) => {
     });
     return;
   }
-  res.redirect(`/${VIEW.REGISTER.TEST2}`);
+
+  req.session.registrationData['full-name'] = body['full-name'];
+  logger.info('-----------------------'+JSON.stringify(req.session));
+  res.redirect(`/${VIEW.REGISTER.OVER_18}`);
 };
