@@ -3,6 +3,9 @@
 {% from "govuk/components/button/macro.njk" import govukButton %},
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
 {% set title="Comments - Register to have your say" %}
 
@@ -13,36 +16,69 @@
   {{ title }}
 {% endblock %}
 
+{% block beforeContent %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+<a class="govuk-back-link" href="javascript:history.back()">Back</a>
+{% endblock %}
+
 {% block content %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% if errorSummary %}
-        {{ govukErrorSummary({
-          titleText: "There is a problem",
-          errorList: errorSummary
+      <form autocomplete="off" class="form" action="topic" method="post">
+        <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
+
+       <!-- {{ govukWarningText({
+          text: "This information will be published on our website for the public. You should not include any personal details or sensistive information with your comment.",
+          iconFallbackText: "Warning"
+        }) }} -->
+
+        {{ govukDetails({
+          summaryText: "Do not include any personal details.",
+          html: '
+            <h2 class="govuk-heading-m">Use of language and sensitive information</h2>
+            <p class="govuk-body">You should not use racist, inflammatory or abusive language, or include sensitive information (also called special category information) about yourself or others in your comments.</p>
+            <h2 class="govuk-heading-m">Examples of sensitive information</h2>
+            <p class="govuk-body">Sensitive information refers to:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>comments from children</li>
+              <li>information relating to children</li>
+              <li>information relating to health</li>
+              <li>information relating to crime</li>
+            </ul>
+            <p class="govuk-body">It also means any information relating to an individual&#39;s:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>race</li>
+              <li>ethnic origin</li>
+              <li>politics</li>
+              <li>religion</li>
+              <li>trade union membership</li>
+              <li>genetics</li>
+              <li>physical characteristics</li>
+              <li>sex life</li>
+              <li>sexual orientation</li>
+            </ul>'
         }) }}
-      {% endif %}
-      <form action="" method="POST" novalidate>
-        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
-          {{ govukInput({
-            label: {
-                text: "Enter comments?",
-                classes: "govuk-label--l",
-                isPageHeading: true
-            },
-            hint: {
-                text: "We will use your email address to send you information about this project."
-            },
-            id: "comments",
-            name: "comments",
-            attributes: {"data-cy": "comments"},
-            errorMessage: errors['comments'] and {
-              text: errors['comments'].msg
-            }
-          }) }}
-        </div>
+
+        <p class="govuk-body">You can talk about anything you think is important to tell us about the propsed project in as much detail as possible.</p>
+        <p class="govuk-body">This information will be:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
+          <li>published on our website</li>
+        </ul>
+
+
+        {{ govukTextarea({
+          maxwords: 200,
+          id: "comment",
+          name: "comment"
+        }) }}
 
         {{ govukButton({
           text: "Continue",
@@ -51,8 +87,8 @@
         }) }}
 
       </form>
+
     </div>
   </div>
 
 {% endblock %}
-

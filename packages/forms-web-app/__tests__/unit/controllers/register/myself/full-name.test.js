@@ -5,7 +5,7 @@ const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/full-name', () => {
+describe('controllers/register/myself/full-name', () => {
     let req;
     let res;
 

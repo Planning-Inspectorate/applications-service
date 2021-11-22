@@ -9,7 +9,7 @@ exports.postComments = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
   if (errors['comments'] || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.COMMENTS, {
+    res.render(VIEW.REGISTER.MYSELF.COMMENTS, {
       errors,
       errorSummary,
     });
