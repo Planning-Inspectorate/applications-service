@@ -1,4 +1,3 @@
-const config = require('../config');
 const {Status} = require('../utils/status')
 const { VIEW } = require('../lib/views');
 const logger = require('../lib/logger');

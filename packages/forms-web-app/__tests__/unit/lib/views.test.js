@@ -17,10 +17,10 @@ describe('lib/views', () => {
       OVERVIEW: 'overview',
       PROJECT_SEARCH: "project-search",
       REGISTER: {
+        START: 'register/start',
+        TYPE_OF_PARTY: 'register/type-of-party',
         MYSELF : {
-          TYPE_OF_PARTY: 'register/myself/type-of-party',
           FULL_NAME: 'register/myself/full-name',
-          START: 'register/myself/start',
           ADDRESS: 'register/myself/address',
           CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
           COMMENTS: 'register/myself/comments',
@@ -29,7 +29,6 @@ describe('lib/views', () => {
           EMAIL: 'register/myself/email',
           FULL_NAME: 'register/myself/full-name',
           OVER_18: 'register/myself/over-18',
-          START:'register/myself/start',
           TELEPHONE:'register/myself/telephone',
         },
         TEST2: 'register/test2',

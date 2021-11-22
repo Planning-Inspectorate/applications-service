@@ -1,5 +1,5 @@
 const { body } = require('express-validator');
-const { REGISTER } = require('../../../constants');
+const { REGISTER } = require('../../constants');
 
 const validTypeOfPartyOptions = [
   REGISTER.TYPE_OF_PARTY.MY_SAY,

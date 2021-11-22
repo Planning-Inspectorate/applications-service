@@ -1,12 +1,12 @@
-const { VIEW } = require('../../../lib/views');
+const { VIEW } = require('../../lib/views');
 
 const {
   validTypeOfPartyOptions,
-} = require('../../../validators/register/myself/type-of-party');
-const { REGISTER } = require('../../../constants');
+} = require('../../validators/register/type-of-party');
+const { REGISTER } = require('../../constants');
 
 exports.getTypeOfParty = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.TYPE_OF_PARTY, {type: req.session.registrationData['type-of-party']});
+  res.render(VIEW.REGISTER.TYPE_OF_PARTY, {type: req.session.registrationData['type-of-party']});
 };
 
 const forwardPage = (partyType) => {
@@ -14,7 +14,7 @@ const forwardPage = (partyType) => {
     [REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.MYSELF.FULL_NAME,
     [REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.TEST2,
     [REGISTER.TYPE_OF_PARTY.BEHALF_OF_ORGANISATION]: VIEW.REGISTER.TEST3,
-    default: VIEW.REGISTER.MYSELF.TYPE_OF_PARTY,
+    default: VIEW.REGISTER.TYPE_OF_PARTY,
   };
   return party[partyType] || party.default;
 };

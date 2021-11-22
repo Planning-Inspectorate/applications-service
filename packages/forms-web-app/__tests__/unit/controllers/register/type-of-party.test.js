@@ -1,10 +1,10 @@
-const typeOfPartyController = require('../../../../../src/controllers/register/myself/type-of-party');
-const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
+const typeOfPartyController = require('../../../../src/controllers/register/type-of-party');
+const { VIEW } = require('../../../../src/lib/views');
+const { mockReq, mockRes } = require('../../mocks');
 
-jest.mock('../../../../../src/lib/logger');
+jest.mock('../../../../src/lib/logger');
 
-describe('controllers/register/myself/type-of-party', () => {
+describe('controllers/register/type-of-party', () => {
     let req;
     let res;
 
@@ -25,12 +25,12 @@ describe('controllers/register/myself/type-of-party', () => {
     describe('getTypeOfParty', () => {
         it('should call the correct template', () => {
             typeOfPartyController.getTypeOfParty(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/type-of-party', {"type": "me"});
+            expect(res.render).toHaveBeenCalledWith('register/type-of-party', {"type": "me"});
         });
     });
 
     describe('forwardPage', () => {
-        it(`should return '/${VIEW.REGISTER.FULL_NAME}' if 1st option selected`, async () => {
+        it(`should return '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option selected`, async () => {
             const pageRedirect = typeOfPartyController.forwardPage('me');
 
             expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.FULL_NAME);
@@ -51,7 +51,7 @@ describe('controllers/register/myself/type-of-party', () => {
         it(`should return '/${VIEW.REGISTER.TYPE_OF_PARTY}' if it is 'default'`, async () => {
             const pageRedirect = typeOfPartyController.forwardPage('default');
 
-            expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.TYPE_OF_PARTY);
+            expect(pageRedirect).toEqual(VIEW.REGISTER.TYPE_OF_PARTY);
         });
 
     });
@@ -88,7 +88,7 @@ describe('controllers/register/myself/type-of-party', () => {
 
             expect(res.redirect).not.toHaveBeenCalled();
 
-            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.TYPE_OF_PARTY, {
+            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.TYPE_OF_PARTY, {
                 errorSummary: [{ text: 'There were errors here', href: '#' }],
                 errors: { a: 'b' },
                 type: null
