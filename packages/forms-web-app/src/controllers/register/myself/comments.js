@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getComments = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.COMMENTS, {comments: req.session.registrationData['comments']});
+  res.render(VIEW.REGISTER.MYSELF.COMMENTS, {comments: req.session.mySelfRegdata['comments']});
 };
 
 exports.postComments = async (req, res) => {
@@ -16,7 +16,7 @@ exports.postComments = async (req, res) => {
     return;
   }
 
-  req.session.registrationData['comments'] = body['comments'];
+  req.session.mySelfRegdata['comments'] = body['comments'];
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);

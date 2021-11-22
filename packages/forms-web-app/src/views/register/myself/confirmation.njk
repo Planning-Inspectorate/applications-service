@@ -17,11 +17,11 @@
       </div>
 
       <p>
-        We have sent a confirmation email to: {{ data['email'] }}
+        We have sent a confirmation email to: {{ email }}
       </p>
 
       <h2 class="govuk-heading-m">What happens next</h2>
-      <p>You are now registered to comment on the A404 Dewsbury project once the Examination stage starts.</p>
+      <p>You are now registered to comment on the {{ projectName}} project once the Examination stage starts.</p>
 
       <h2 class="govuk-heading-m">How and when to submit further comments</h2>
       <p>You must submit your comments by completing the form on the project page. You will need your interested party reference number to make sure your comments are included in the Examination of the application.</p>
@@ -31,7 +31,7 @@
       <a href="sample-email.html" class="govuk-button">View sample email</a>
 
 
-      <a href="/overview/EN010116" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+      <a href="/overview/{{ claimRef }}" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
         Go back to project page
         <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
           <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />

@@ -5,7 +5,7 @@ const { getAppData } = require('../services/application.service');
 
 exports.getOverview = async (req, res) => {
   const appData = await getAppData(req.params.case_ref);
-  logger.info(appData);
+
   let styleClass = [];
   for (let i = 1; i <= 5; i++) {
     if (i === appData.Stage) {
@@ -16,6 +16,7 @@ exports.getOverview = async (req, res) => {
       styleClass.push('');
     }
   } 
-  logger.info(styleClass);
+  req.session.claimRef = req.params.case_ref;
+  req.session.projectName = appData.ProjectName;
   res.render(VIEW.OVERVIEW, {appData: appData, stage: Status[appData.Stage], styleClass: styleClass});
 };

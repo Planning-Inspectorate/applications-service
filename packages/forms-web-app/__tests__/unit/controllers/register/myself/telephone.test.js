@@ -12,7 +12,7 @@ describe('controllers/register/myself/telephone', () => {
         req = {
             ...mockReq(),
             session: {
-                registrationData: {
+                mySelfRegdata: {
                     'telephone': '06876767'
                 }
             },

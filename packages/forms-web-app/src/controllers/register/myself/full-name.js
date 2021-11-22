@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getFullName = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.FULL_NAME, {fullName: req.session.registrationData['full-name']});
+  res.render(VIEW.REGISTER.MYSELF.FULL_NAME, {fullName: req.session.mySelfRegdata['full-name']});
 };
 
 exports.postFullName = async (req, res) => {
@@ -17,7 +17,7 @@ exports.postFullName = async (req, res) => {
     return;
   }
 
-  req.session.registrationData['full-name'] = body['full-name'];
+  req.session.mySelfRegdata['full-name'] = body['full-name'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {

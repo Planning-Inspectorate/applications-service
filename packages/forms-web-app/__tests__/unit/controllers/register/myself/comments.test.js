@@ -12,7 +12,7 @@ describe('controllers/register/myself/comments', () => {
         req = {
             ...mockReq(),
             session: {
-                registrationData: {
+                mySelfRegdata: {
                     'comments': 'test'
                 }
             },

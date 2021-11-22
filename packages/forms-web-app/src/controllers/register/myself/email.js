@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getEmail = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.EMAIL, {email: req.session.registrationData['email']});
+  res.render(VIEW.REGISTER.MYSELF.EMAIL, {email: req.session.mySelfRegdata['email']});
 };
 
 exports.postEmail = async (req, res) => {
@@ -16,7 +16,7 @@ exports.postEmail = async (req, res) => {
     return;
   }
 
-  req.session.registrationData['email'] = body['email'];
+  req.session.mySelfRegdata['email'] = body['email'];
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);

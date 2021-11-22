@@ -12,7 +12,7 @@ describe('controllers/register/type-of-party', () => {
         req = {
             ...mockReq(),
             session: {
-                registrationData: {
+                mySelfRegdata: {
                     'type-of-party': 'me'
                 }
             },
