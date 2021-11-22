@@ -31,7 +31,7 @@ module.exports = {
       }
 
       logger.debug(`Application ${id} retrieved`);
-      res.status(StatusCodes.OK).send(document.dataValues);
+      res.status(StatusCodes.OK).send(document);
     } catch (e) {
       if (e instanceof ApiError) {
         logger.debug(e.message);

@@ -202,11 +202,13 @@ components:
           type: number
           example: 176491
         MapZoomLevel:
-          type: string
-          example: ''
-        LatLong:
-          type: string
-          example: '53.620078025496,-0.70283147423378'
+          type: number
+          example: 7
+        LongLat:
+          type: array
+          items:
+            type: string
+            example: ['-0.70283147423378', '53.620078025496']
         AnticipatedDateOfSubmission:
           type: string
           example: ''
