@@ -58,7 +58,7 @@
 
 {% block content %}
   <h1 class="govuk-heading-l">{{ appData.ProjectName }} project information</h1>
-  <p class="govuk-body">The potential A404 Dewsbury to Berwick Down scheme proposes to construct a new section of dual carriageway to address problems associated with the single carriageway section of the A404 between Amesbury’s Countess roundabout and the dual carriageway section to the west of Winterbourne Stoke. </p>
+  <p class="govuk-body">{{ appData.Summary }}</p>
   <p class="govuk-body"><a class="govuk-link" href="#">Sign-up for updates via email, letter or text</a>.</p>
 
   <div class="pins-timeline">
@@ -124,9 +124,8 @@
     const map = new mapboxgl.Map({
       container: 'map', // container ID
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
-      center: [ -1.6297334421922187,
-      53.68704018442503], // starting position
-      zoom: 13, // starting zoom,
+      center: [{{ appData.LongLat }}], // starting position
+      zoom: {{ appData.MapZoomLevel }}, // starting zoom,
       logoPosition: 'top-left'
     });
 
@@ -143,89 +142,6 @@
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-    // Red line boundary
-      map.on('style.load', () => {
-        // Add a data source containing GeoJSON data.
-        map.addSource( 'redline_boundary', {
-          'type': 'geojson',
-          'data': {
-            "geometry": {
-              "coordinates": [
-                [
-                  [
-                    -1.66781759147932,
-                    53.677617502883294
-                  ],
-                  [
-                    -1.6687472314275453,
-                    53.67835967912643
-                  ],
-                  [
-                    -1.66781759147932,
-                    53.677617502883294
-                  ]
-                ]
-              ],
-              "type": "Polygon",
-              "name": "redline-boundary"
-            },
-            "type": "Feature"
-          }
-        },
-
-        map.addSource('development_area', {
-          'type': 'geojson',
-          'data': {
-            "type": "Feature",
-            "geometry": {
-              "coordinates": [
-                [-1.592515, 53.692572],
-                [-1.593525, 53.691974],
-                [-1.663167, 53.679167]
-              ],
-              "type": "LineString"
-            }
-          }
-        })
-      );
-
-      // Red line boundary
-      map.addLayer({
-          'id': 'outline',
-          'type': 'line',
-          'source': 'redline_boundary',
-          'layout': {},
-          'paint': {
-            'line-dasharray': [4, 2],
-            'line-color': '#D4351C',
-            'line-width': 3
-          }
-      });
-
-      // Fill the red line boundary
-      // map.addLayer({
-      //     'id': 'filler',
-      //     'type': 'fill',
-      //     'source': 'redline_boundary',
-      //     'paint': {
-      //       'fill-color': '#D4351C',
-      //       'fill-opacity': 0.1
-      //     }
-      // });
-
-      // Development area line
-      map.addLayer({
-          'id': 'development_line',
-          'type': 'line',
-          'source': 'development_area',
-          'paint': {
-            'line-color': '#D4351C',
-            'line-width': 7
-          }
-      });
-
-    });
-
-    </script>
+  </script>
 
 {% endblock %}
