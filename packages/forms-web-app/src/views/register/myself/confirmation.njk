@@ -1,1 +1,47 @@
-confirmation
+{% extends "layouts/main.njk" %}
+
+{% block pageTitle %}
+  Confirmation - Register to have your say
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Registration complete</h1>
+        <div class="govuk-panel__body">
+          Your interested party reference number<br><strong>1234 5678 90</strong>
+        </div>
+      </div>
+
+      <p>
+        We have sent a confirmation email to: {{ data['email'] }}
+      </p>
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p>You are now registered to comment on the A404 Dewsbury project once the Examination stage starts.</p>
+
+      <h2 class="govuk-heading-m">How and when to submit further comments</h2>
+      <p>You must submit your comments by completing the form on the project page. You will need your interested party reference number to make sure your comments are included in the Examination of the application.</p>
+      <p>We will email to let you know when the Examination for this project starts.</p>
+      <p>You can check our guide to <a href="/interested-party-guide">find out more about having your say during the Examination of the application, (opens in new tab)</a>.</p>
+
+      <a href="sample-email.html" class="govuk-button">View sample email</a>
+
+
+      <a href="/overview/EN010116" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+        Go back to project page
+        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+        </svg>
+      </a>
+
+      <p><a href="https://www.gov.uk/service-manual/user-centred-design/resources/patterns/feedback-pages.html">What did you think of this service?</a> (takes 30 seconds)</p>
+
+
+    </div>
+  </div>
+
+{% endblock %}

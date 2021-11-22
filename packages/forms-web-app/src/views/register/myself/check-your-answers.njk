@@ -9,17 +9,6 @@
   Check your answers - Register to have your say
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "beta"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-  }) }}
-
-<a class="govuk-back-link" href="javascript:history.back()">Back</a>
-{% endblock %}
-
 {% set address %}
   {{ data.address.line1 }}<br>
   {% if data.address.line2 %}
@@ -171,12 +160,9 @@
         ]
       }) }}
 
-      <form action="/register/declaration" method="get" novalidate>
-        {{ govukButton({
-          text: "Accept and continue",
-          attributes: { "data-cy":"button-accept-and-continue"}
-        }) }}
-      </form>
+      <a href="/register/myself/declaration" role="button"  class="govuk-button govuk-button"  data-module="govuk-button">
+        Accept and continue
+      </a>
     </div>
   </div>
 {% endblock %}
