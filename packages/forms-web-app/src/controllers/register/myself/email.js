@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getEmail = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.EMAIL);
+  res.render(VIEW.REGISTER.MYSELF.EMAIL, {email: req.session.registrationData['email']});
 };
 
 exports.postEmail = async (req, res) => {
@@ -17,6 +17,5 @@ exports.postEmail = async (req, res) => {
   }
 
   req.session.registrationData['email'] = body['email'];
-  logger.info('-----------------------'+JSON.stringify(req.session));
   res.redirect(`/${VIEW.REGISTER.MYSELF.TELEPHONE}`);
 };

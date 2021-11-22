@@ -31,7 +31,13 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form autocomplete="off" class="form" action="topic" method="post">
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+      <form action="" method="POST" novalidate>
         <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
 
        <!-- {{ govukWarningText({
@@ -76,8 +82,13 @@
 
         {{ govukTextarea({
           maxwords: 200,
-          id: "comment",
-          name: "comment"
+          id: "comments",
+          name: "comments",
+          value: comments,
+          attributes: {"data-cy": "comments"},
+          errorMessage: errors['comments'] and {
+              text: errors['comments'].msg
+          }
         }) }}
 
         {{ govukButton({

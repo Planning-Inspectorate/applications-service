@@ -30,7 +30,8 @@ describe('controllers/register/myself/address', () => {
     describe('getAddress', () => {
         it('should call the correct template', () => {
             addressController.getAddress(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/address');
+            expect(res.render).toHaveBeenCalledWith('register/myself/address',
+                {"address": {"country": "UK", "line1": "abc", "line2": "xyz", "line3": "xyz", "postcode": "ABC 123"}});
         });
     });
 

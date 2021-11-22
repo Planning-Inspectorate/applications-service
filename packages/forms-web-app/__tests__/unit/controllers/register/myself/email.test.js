@@ -24,7 +24,7 @@ describe('controllers/register/myself/email', () => {
     describe('getEmail', () => {
         it('should call the correct template', () => {
             emailController.getEmail(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/email');
+            expect(res.render).toHaveBeenCalledWith('register/myself/email', {"email": "anc@test.com"});
         });
     });
 

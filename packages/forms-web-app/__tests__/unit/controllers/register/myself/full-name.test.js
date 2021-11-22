@@ -24,7 +24,7 @@ describe('controllers/register/myself/full-name', () => {
     describe('getFullName', () => {
         it('should call the correct template', () => {
             fullNameController.getFullName(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/full-name');
+            expect(res.render).toHaveBeenCalledWith('register/myself/full-name', {"fullName": "test"});
         });
     });
 

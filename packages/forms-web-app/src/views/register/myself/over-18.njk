@@ -37,12 +37,16 @@
             name: "over-18",
             items: [
                 {
-                value: "yes",
-                text: "Yes"
+                  value: "yes",
+                  text: "Yes",
+                  attributes: { "data-cy": "answer-yes"},
+                  checked: over18 === "yes"
                 },
                 {
-                value: "no",
-                text: "No"
+                  value: "no",
+                  text: "No",
+                  attributes: { "data-cy": "answer-no"},
+                  checked: over18 === "no"
                 }
             ]
             }) }}

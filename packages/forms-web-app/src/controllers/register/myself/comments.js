@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getComments = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.COMMENTS);
+  res.render(VIEW.REGISTER.MYSELF.COMMENTS, {comments: req.session.registrationData['comments']});
 };
 
 exports.postComments = async (req, res) => {

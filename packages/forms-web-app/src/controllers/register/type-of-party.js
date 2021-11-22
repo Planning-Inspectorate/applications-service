@@ -24,7 +24,7 @@ exports.forwardPage = forwardPage;
 exports.postTypeOfParty = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
-
+  
   const typeOfParty = body['type-of-party'];
   let selectedParty = null;
   req.session.registrationData['type-of-party'] = typeOfParty;

@@ -24,7 +24,7 @@ describe('controllers/register/myself/telephone', () => {
     describe('getTelephone', () => {
         it('should call the correct template', () => {
             telephoneController.getTelephone(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/telephone');
+            expect(res.render).toHaveBeenCalledWith('register/myself/telephone', {"telephone": "06876767"});
         });
     });
 

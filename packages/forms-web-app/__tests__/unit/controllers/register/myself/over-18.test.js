@@ -24,7 +24,7 @@ describe('controllers/register/myself/over-18', () => {
     describe('getOver18', () => {
         it('should call the correct template', () => {
             over18Controller.getOver18(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/over-18');
+            expect(res.render).toHaveBeenCalledWith('register/myself/over-18', {"over18": "yes"});
         });
     });
 

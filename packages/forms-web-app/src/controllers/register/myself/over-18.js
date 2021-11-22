@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOver18 = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.OVER_18);
+  res.render(VIEW.REGISTER.MYSELF.OVER_18, {over18: req.session.registrationData['over-18']});
 };
 
 exports.postOver18 = async (req, res) => {

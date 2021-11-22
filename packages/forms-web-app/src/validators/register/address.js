@@ -6,12 +6,12 @@ const rules = () => {
     body('address-line-1')
       .notEmpty()
       .withMessage('Enter address line 1'),
-      body('address-line-2')
+      body('address-postcode')
       .notEmpty()
-      .withMessage('Enter address line 2'),
-      body('address-line-3')
+      .withMessage('Enter address postcode'),
+      body('address-country')
       .notEmpty()
-      .withMessage('Enter address line 3'),
+      .withMessage('Enter address country'),
   ];
 };
 

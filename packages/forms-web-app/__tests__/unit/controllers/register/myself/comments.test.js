@@ -24,7 +24,7 @@ describe('controllers/register/myself/comments', () => {
     describe('getComments', () => {
         it('should call the correct template', () => {
             commentsController.getComments(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/comments');
+            expect(res.render).toHaveBeenCalledWith('register/myself/comments', {"comments": "test"});
         });
     });
 

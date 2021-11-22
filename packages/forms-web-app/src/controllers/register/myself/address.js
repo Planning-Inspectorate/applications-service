@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getAddress = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.ADDRESS);
+  res.render(VIEW.REGISTER.MYSELF.ADDRESS, {address: req.session.registrationData['address']});
 };
 
 exports.postAddress = async (req, res) => {

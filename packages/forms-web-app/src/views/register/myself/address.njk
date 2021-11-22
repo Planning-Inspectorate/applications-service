@@ -41,7 +41,8 @@
                 text: 'Address line 1'
               },
               id: "address-line-1",
-              name: "address-line-1"
+              name: "address-line-1",
+              value: address.line1
             }) }}
 
             {{ govukInput({
@@ -49,7 +50,8 @@
                 text: 'Address line 2'
               },
               id: "address-line-2",
-              name: "address-line-2"
+              name: "address-line-2",
+              value: address.line2
             }) }}
 
             {{ govukInput({
@@ -58,7 +60,8 @@
               },
               classes: "govuk-!-width-two-thirds",
               id: "address-line-3",
-              name: "address-line-3"
+              name: "address-line-3",
+              value: address.line3
             }) }}
 
             {{ govukInput({
@@ -67,7 +70,8 @@
               },
               classes: "govuk-input--width-10",
               id: "address-postcode",
-              name: "address-postcode"
+              name: "address-postcode",
+              value: address.postcode
             }) }}
 
             {{ govukInput({
@@ -76,7 +80,8 @@
               },
               classes: "govuk-!-width-two-thirds",
               id: "address-country",
-              name: "address-country"
+              name: "address-country",
+              value: address.country
             }) }}
 
           {% endcall %}
