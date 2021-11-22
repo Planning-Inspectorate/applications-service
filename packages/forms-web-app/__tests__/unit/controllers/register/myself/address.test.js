@@ -12,7 +12,7 @@ describe('controllers/register/myself/address', () => {
         req = {
             ...mockReq(),
             session: {
-                registrationData: {
+                mySelfRegdata: {
                     "address": {
                         "line1": "abc",
                         "line2": "xyz",
@@ -48,6 +48,9 @@ describe('controllers/register/myself/address', () => {
                         "address-country": "UK"
                     }
                 },
+                query:{
+                    mode: ""
+                }
             };
             await addressController.postAddress(
                 mockRequest,

@@ -12,10 +12,11 @@ describe('controllers/register/type-of-party', () => {
         req = {
             ...mockReq(),
             session: {
-                mySelfRegdata: {
-                    'type-of-party': 'me'
-                }
+                typeOfParty: 'myself'
             },
+            query: {
+                mode: ''
+            }
         };
         res = mockRes();
 
@@ -25,13 +26,13 @@ describe('controllers/register/type-of-party', () => {
     describe('getTypeOfParty', () => {
         it('should call the correct template', () => {
             typeOfPartyController.getTypeOfParty(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/type-of-party', {"type": "me"});
+            expect(res.render).toHaveBeenCalledWith('register/type-of-party', {"type": "myself"});
         });
     });
 
     describe('forwardPage', () => {
         it(`should return '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option selected`, async () => {
-            const pageRedirect = typeOfPartyController.forwardPage('me');
+            const pageRedirect = typeOfPartyController.forwardPage('myself');
 
             expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.FULL_NAME);
         });
@@ -58,7 +59,7 @@ describe('controllers/register/type-of-party', () => {
 
     describe('postTypeOfParty', () => {
         it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option is selected`, async () => {
-            const typeOfParty = 'me';
+            const typeOfParty = 'myself';
             const mockRequest = {
                 ...req,
                 body: {

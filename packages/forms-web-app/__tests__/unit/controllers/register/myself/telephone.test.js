@@ -35,6 +35,9 @@ describe('controllers/register/myself/telephone', () => {
                 body: {
                     'telephone': '676876876',
                 },
+                query: {
+                    mode: ''
+                }
             };
             await telephoneController.postTelephone(
                 mockRequest,

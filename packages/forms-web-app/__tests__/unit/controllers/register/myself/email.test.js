@@ -12,7 +12,7 @@ describe('controllers/register/myself/email', () => {
         req = {
             ...mockReq(),
             session: {
-                registrationData: {
+                mySelfRegdata: {
                     'email': 'anc@test.com'
                 }
             },
@@ -35,6 +35,9 @@ describe('controllers/register/myself/email', () => {
                 body: {
                     'email': 'anc@test.com',
                 },
+                query: {
+                    mode: ''
+                }
             };
             await emailController.postEmail(
                 mockRequest,

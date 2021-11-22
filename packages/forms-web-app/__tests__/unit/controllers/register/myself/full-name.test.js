@@ -36,6 +36,9 @@ describe('controllers/register/myself/full-name', () => {
                 body: {
                     'full-name': fullName,
                 },
+                query: {
+                    'mode': ""
+                }
             };
             await fullNameController.postFullName(
                 mockRequest,

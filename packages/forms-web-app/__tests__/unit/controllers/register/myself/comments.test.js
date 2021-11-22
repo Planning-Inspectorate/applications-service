@@ -35,6 +35,9 @@ describe('controllers/register/myself/comments', () => {
                 body: {
                     'comments': 'test',
                 },
+                query: {
+                    'mode': ''
+                }
             };
             await commentsController.postComments(
                 mockRequest,

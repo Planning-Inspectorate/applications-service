@@ -12,7 +12,7 @@ describe('controllers/register/myself/over-18', () => {
         req = {
             ...mockReq(),
             session: {
-                registrationData: {
+                mySelfRegdata: {
                     'over-18': 'yes'
                 }
             },
@@ -35,6 +35,9 @@ describe('controllers/register/myself/over-18', () => {
                 body: {
                     'over-18': 'yes',
                 },
+                query: {
+                    mode: ''
+                }
             };
             await over18Controller.postOver18(
                 mockRequest,
