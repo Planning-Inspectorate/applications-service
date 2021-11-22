@@ -17,5 +17,10 @@ exports.postTelephone = async (req, res) => {
   }
 
   req.session.registrationData['telephone'] = body['telephone'];
-  res.redirect(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
+
+  if (req.query.mode === 'edit') {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+  } else {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
+  }
 };

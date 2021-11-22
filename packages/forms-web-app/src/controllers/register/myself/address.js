@@ -21,6 +21,9 @@ exports.postAddress = async (req, res) => {
   req.session.registrationData.address['line3'] = body['address-line-3'];
   req.session.registrationData.address['postcode'] = body['address-postcode'];
   req.session.registrationData.address['country'] = body['address-country'];
-  logger.info('-----------------------'+JSON.stringify(req.session));
-  res.redirect(`/${VIEW.REGISTER.MYSELF.EMAIL}`);
+  if (req.query.mode === 'edit') {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+  } else {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.EMAIL}`);
+  }
 };

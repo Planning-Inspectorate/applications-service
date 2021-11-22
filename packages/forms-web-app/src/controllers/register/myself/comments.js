@@ -17,6 +17,11 @@ exports.postComments = async (req, res) => {
   }
 
   req.session.registrationData['comments'] = body['comments'];
-  logger.info('-----------------------'+JSON.stringify(req.session));
-  res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+
+  if (req.query.mode === 'edit') {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+  } else {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`); //TODO change
+  }
+  
 };

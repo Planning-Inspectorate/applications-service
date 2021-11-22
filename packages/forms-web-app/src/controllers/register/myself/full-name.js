@@ -18,6 +18,9 @@ exports.postFullName = async (req, res) => {
   }
 
   req.session.registrationData['full-name'] = body['full-name'];
-  logger.info('-----------------------'+JSON.stringify(req.session));
-  res.redirect(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
+  if (req.query.mode === 'edit') {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+  } else {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
+  }
 };

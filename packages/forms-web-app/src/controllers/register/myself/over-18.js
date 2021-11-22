@@ -18,6 +18,10 @@ exports.postOver18 = async (req, res) => {
   }
 
   req.session.registrationData['over-18'] = over18;
-  logger.info('-----------------------'+JSON.stringify(req.session));
-  res.redirect(`/${VIEW.REGISTER.MYSELF.ADDRESS}`);
+  
+  if (req.query.mode === 'edit') {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+  } else {
+    res.redirect(`/${VIEW.REGISTER.MYSELF.ADDRESS}`);
+  }
 };

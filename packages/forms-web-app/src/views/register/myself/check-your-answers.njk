@@ -20,6 +20,18 @@
 <a class="govuk-back-link" href="javascript:history.back()">Back</a>
 {% endblock %}
 
+{% set address %}
+  {{ data.address.line1 }}<br>
+  {% if data.address.line2 %}
+    {{ data.address.line2 }}<br>
+  {% endif %}
+  {% if data.address.line3 %}
+    {{ data.address.line3 }}<br>
+  {% endif %}
+  {{ data.address.postcode }}<br>
+  {{ data.address.country }}
+{% endset %}
+
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
@@ -35,7 +47,7 @@
               text: "Who are you registering for?"
             },
             value: {
-              text: summaryField( data['type-of-party'] | title, { 'data-cy': "type-of-party" })
+              text: summaryField( "Myself", { 'data-cy': "type-of-party" })
             },
             actions: {
               items: [
@@ -43,7 +55,115 @@
                   href: "/register/type-of-party?mode=edit",
                   text: "Change",
                   visuallyHiddenText: "if the application was made in your name",
-                  attributes: { "data-cy": "whoAreYou" }
+                  attributes: { "data-cy": "who-are-you" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Full name"
+            },
+            value: {
+              text: summaryField( data['full-name'], { 'data-cy': "full-name" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/full-name?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "full-name" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Are you 18 or over?"
+            },
+            value: {
+              text: summaryField( data['over-18'] | title, { 'data-cy': "over-18" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/over-18?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "over-18" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Address"
+            },
+            value: {
+              html: address
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/address?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "address" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Email address"
+            },
+            value: {
+              text: summaryField( data['email'], { 'data-cy': "email" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/email?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "email" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Telephone number"
+            },
+            value: {
+              text: summaryField( data['telephone'], { 'data-cy': "telephone" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/telephone?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "telephone" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Your comments"
+            },
+            value: {
+              text: summaryField( data['comments'], { 'data-cy': "comments" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/comments?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "comments" }
                 }
               ]
             }
@@ -51,15 +171,10 @@
         ]
       }) }}
 
-
-
-
-     
-
       <form action="/register/declaration" method="get" novalidate>
         {{ govukButton({
-          text: "Save and continue",
-          attributes: { "data-cy":"button-save-and-continue"}
+          text: "Accept and continue",
+          attributes: { "data-cy":"button-accept-and-continue"}
         }) }}
       </form>
     </div>
