@@ -1,7 +1,7 @@
 {
     "myself": {
         "behalf": "me",
-        "claim_ref": null,
+        "claim-ref": null,
         "full-name": null,
         "over-18": null,
         "address": {

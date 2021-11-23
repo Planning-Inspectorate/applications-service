@@ -1,5 +1,4 @@
 const confirmationController = require('../../../../../src/controllers/register/myself/confirmation');
-const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');

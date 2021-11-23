@@ -67,8 +67,8 @@
       <li {{ styleClass[0] }}>Pre-application and application received<div class="pins-timeline-badge">{% if(appData.Stage > 1) %} &#10003;{% else %} {{current |safe}} {% endif %}</div></li>
       <li {{ styleClass[1] }}>Pre-examination<div class="pins-timeline-badge">{% if(appData.Stage === 2) %} {{current |safe}} {% elseif(appData.Stage > 2) %} &#10003; {% endif %}</div></li>
       <li {{ styleClass[2] }}>Examination of the project<div class="pins-timeline-badge">{% if(appData.Stage === 3) %} {{current |safe}} {% elseif(appData.Stage > 3) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[3] }}>Rsecommendation and decision<div class="pins-timeline-badge">{% if(appData.Stage === 4) %} {{current |safe}} {% elseif(appData.Stage > 4) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[4] }}>Outcome of the project<div class="pins-timeline-badge">{% if(appData.Stage === 5) %} {{current |safe}} {% elseif(appData.Stage > 5) %} &#10003; {% endif %}</div></li>
+      <li {{ styleClass[3] }}>Recommendation and decision<div class="pins-timeline-badge">{% if(appData.Stage === 4) %} {{current |safe}} {% elseif(appData.Stage > 4) %} &#10003; {% endif %}</div></li>
+      <li {{ styleClass[4] }}>Outcome of the project<div class="pins-timeline-badge">{% if(appData.Stage === 6 or appData.Stage === 7 or appData.Stage === 8) %} {{current |safe}} {% endif %}</div></li>
     </ol>
     <p class="govuk-body">This means you cannot register to have your say yet. You will be able to register at the start of the gathering and reviewing information stage.</p>
     <p class="govuk-body"><a class="govuk-link" href="/dco-process-guide">Find out more about the process for Development Consent Orders</a>.</p>
