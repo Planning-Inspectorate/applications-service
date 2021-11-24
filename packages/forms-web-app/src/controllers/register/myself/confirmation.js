@@ -3,8 +3,8 @@ const { VIEW } = require('../../../lib/views');
 const { postSelfRegistrationData } = require('../../../services/registration.service');
 
 exports.getConfirmation = async (req, res) => {
-  req.session.mySelfRegdata['claim-ref'] = req.session.claimRef;
+  req.session.mySelfRegdata['case_ref'] = req.session.caseRef;
   const registrationData = req.session.mySelfRegdata;
-  const respData = await postSelfRegistrationData(registrationData);
-  res.render(VIEW.REGISTER.MYSELF.CONFIRMATION, {ipRefNo: respData.ipRefNo, email: req.session.mySelfRegdata.email, projectName: req.session.projectName, claimRef: req.session.claimRef});
+  const ipRefNo = await postSelfRegistrationData(JSON.stringify(registrationData));
+  res.render(VIEW.REGISTER.MYSELF.CONFIRMATION, {ipRefNo: ipRefNo, email: req.session.mySelfRegdata.email, projectName: req.session.projectName, claimRef: req.session.claimRef});
 };

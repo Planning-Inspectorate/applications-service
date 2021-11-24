@@ -17,7 +17,6 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
 
   try {
     logger.debug({ url, method, opts, headers }, 'New call');
-
     return await utils.promiseTimeout(
       config.applications.timeout,
       Promise.resolve().then(async () => {
@@ -82,7 +81,7 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 };
 
 exports.postSelfRegistration = async (registeration_data) => {
-  const registrationServiceApiUrl = `/api/v1/interested-party`;
+  const registrationServiceApiUrl = '/api/v1/interested-party';
   const method = 'POST';
   return handler(registrationServiceApiUrl, method, {
     body: registeration_data,

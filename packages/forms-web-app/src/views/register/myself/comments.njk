@@ -33,19 +33,49 @@
           text: "This information will be published on our website for the public. You should not include any personal details or sensistive information with your comment.",
           iconFallbackText: "Warning"
         }) }} -->
+        {{ govukDetails({
+          summaryText: "Do not include any personal details.",
+          html: '
+            <h2 class="govuk-heading-m">Use of language and sensitive information</h2>
+            <p class="govuk-body">You should not use racist, inflammatory or abusive language, or include sensitive information (also called special category information) about yourself or others in your comments.</p>
+            <h2 class="govuk-heading-m">Examples of sensitive information</h2>
+            <p class="govuk-body">Sensitive information refers to:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>comments from children</li>
+              <li>information relating to children</li>
+              <li>information relating to health</li>
+              <li>information relating to crime</li>
+            </ul>
+            <p class="govuk-body">It also means any information relating to an individual&#39;s:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>race</li>
+              <li>ethnic origin</li>
+              <li>politics</li>
+              <li>religion</li>
+              <li>trade union membership</li>
+              <li>genetics</li>
+              <li>physical characteristics</li>
+              <li>sex life</li>
+              <li>sexual orientation</li>
+            </ul>'
+        }) }}
+
+        <p class="govuk-body">You can talk about anything you think is important to tell us about the propsed project in as much detail as possible.</p>
+        <p class="govuk-body">This information will be:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
+          <li>published on our website</li>
+        </ul>
 
         {{ govukInput({
           label: {
-              text: "Topic",
+              text: "Please enter topic",
               classes: "govuk-label--l",
               isPageHeading: true
           },
-          hint: {
-                text: "Topic hint"
-          },
           id: "topic",
           name: "topic",
-          value: topic,
+          value: comment.topic,
           attributes: {"data-cy": "topic"},
           errorMessage: errors['topic'] and {
             text: errors['topic'].msg
@@ -54,20 +84,17 @@
 
         {{ govukTextarea({
           maxwords: 200,
-          id: "comments",
+          id: "comment",
           label: {
             text: "Please enter comment",
             classes: "govuk-label--l",
             isPageHeading: true
           },
-          hint: {
-            text: "Comment hint"
-          },
-          name: "comments",
-          value: comments,
-          attributes: {"data-cy": "comments"},
-          errorMessage: errors['comments'] and {
-              text: errors['comments'].msg
+          name: "comment",
+          value: comment.comment,
+          attributes: {"data-cy": "comment"},
+          errorMessage: errors['comment'] and {
+              text: errors['comment'].msg
           }
         }) }}
 

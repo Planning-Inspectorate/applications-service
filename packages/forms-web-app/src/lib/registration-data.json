@@ -1,7 +1,7 @@
 {
     "myself": {
+        "case_ref": null,
         "behalf": "me",
-        "claim-ref": null,
         "full-name": null,
         "over-18": null,
         "address": {
@@ -12,8 +12,7 @@
             "country": null
         },
         "email": null,
-        "telephone": null,
-        "comments": null
+        "telephone": null
     },
     "org":{
         "behalf": "them"

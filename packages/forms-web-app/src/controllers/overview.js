@@ -16,7 +16,7 @@ exports.getOverview = async (req, res) => {
       styleClass.push('');
     }
   } 
-  req.session.claimRef = req.params.case_ref;
+  req.session.caseRef = req.params.case_ref;
   req.session.projectName = appData.ProjectName;
   res.render(VIEW.OVERVIEW, {appData: appData, stage: Status[appData.Stage], styleClass: styleClass});
 };

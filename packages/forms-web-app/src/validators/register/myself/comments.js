@@ -3,9 +3,12 @@ const { body } = require('express-validator');
 
 const rules = () => {
   return [
-    body('comments')
+    body('topic')
       .notEmpty()
-      .withMessage('Enter comments'),
+      .withMessage('Please enter topic'),
+    body('comment')
+      .notEmpty()
+      .withMessage('Please enter comments'),
   ];
 };
 

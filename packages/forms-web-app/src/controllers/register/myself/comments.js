@@ -1,9 +1,15 @@
 const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
+const config = require('../../../config');
 
 exports.getComments = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.COMMENTS);
-  //, {comments: req.session.mySelfRegdata['comments']}
+  if (req.query.mode === 'edit') {
+    const index = req.query.index; 
+    const comment = req.session.comments[index];
+    res.render(VIEW.REGISTER.MYSELF.COMMENTS, {comment: comment});
+  } else {
+    res.render(VIEW.REGISTER.MYSELF.COMMENTS);
+  }
 };
 
 exports.postComments = async (req, res) => {
@@ -16,20 +22,23 @@ exports.postComments = async (req, res) => {
     });
     return;
   }
-  let coms = req.session.coms;
-  if (coms === undefined) {
-    coms = [];
-  } 
-  coms.push(body);
-  req.session.coms = coms;
-  logger.info('------------'+JSON.stringify(body));
-  logger.info('------------'+JSON.stringify(req.session.coms));
-  // req.session.mySelfRegdata['comments'] = body['comments'];
-
+  
   if (req.query.mode === 'edit') {
+    const index = req.query.index; 
+    req.session.comments[index] = body;
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`); //TODO change
+    let comments = req.session.comments;
+    if (comments === undefined) {
+      comments = [];
+    } 
+    comments.push(body);
+    req.session.comments = comments;
+    if (req.session.comments.length < config.applications.noOfCommentsAllowed) {
+      res.redirect(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);  
+    } else {
+      res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+    }
   }
   
 };

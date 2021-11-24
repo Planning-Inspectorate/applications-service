@@ -138,27 +138,37 @@
                 }
               ]
             }
-          },
-          {
-            key: {
-              text: "Your comments"
-            },
-            value: {
-              text: summaryField( data['comments'], { 'data-cy': "comments" })
-            },
-            actions: {
-              items: [
-                {
-                  href: "/register/myself/comments?mode=edit",
-                  text: "Change",
-                  visuallyHiddenText: "??",
-                  attributes: { "data-cy": "comments" }
-                }
-              ]
-            }
           }
         ]
       }) }}
+
+      <h2 class="govuk-heading-m">Comments</h2>
+      {%for comment in comments %}
+
+        {{ govukSummaryList({
+          classes: "govuk-summary-list govuk-!-margin-bottom-9",
+          rows: [
+            {
+              key: {
+                text: comment.topic
+              },
+              value: {
+                text: summaryField( comment.comment, { 'data-cy': "comment" })
+              },
+              actions: {
+                items: [
+                  {
+                    href: "/register/myself/comments?mode=edit&index="+loop.index0,
+                    text: "Change",
+                    visuallyHiddenText: "??",
+                    attributes: { "data-cy": "comments" }
+                  }
+                ]
+              }
+            }
+          ]
+        }) }}
+      {% endfor %}
 
       <a href="/register/myself/declaration" role="button"  class="govuk-button govuk-button"  data-module="govuk-button">
         Accept and continue
