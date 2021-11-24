@@ -9,7 +9,7 @@ exports.postOver18 = async (req, res) => {
   const { body } = req;
   const over18 = body['over-18'];
   const { errors = {}, errorSummary = [] } = body;
-  if (errors['full-name'] || Object.keys(errors).length > 0) {
+  if (errors['over-18'] || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.MYSELF.OVER_18, {
       errors,
       errorSummary,
