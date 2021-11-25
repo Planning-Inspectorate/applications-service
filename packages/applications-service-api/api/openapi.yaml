@@ -100,7 +100,7 @@ paths:
   '/api/v1/interested-party':      
       post:
         summary: Creates an interested party
-        description: description goes here
+        description: Creates an interested party for a project 
         tags:
           - Interested party
         requestBody:
@@ -112,11 +112,12 @@ paths:
           required: true
         responses:
           '201':
-            description: Returns a newly created interested party
+            description: Returns the ID ( sometimes called web reference, not to be confused with web_ref in db ) of the newly created interested party
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/InterestedPartyReqBody'
+                  type: string
+                  example: '30000001'
   '/api/v1/documents/{caseRef}':      
       post:
         summary: Returns project documents
@@ -411,39 +412,27 @@ components:
     InterestedPartyReqBody:
       type: object
       properties:
-        caseref: 
+        case_ref: 
           type: string
           example: 'EN010009'
         behalf: 
           type: string
           example: 'me'
-        mename: 
+        full-name:
           type: string
-          example: 'Test Name'
-        mebuild: 
+          example: 'Humpty Dumpty'
+        over-18:
           type: string
-          example: 'Test Build'
-        mestreet: 
+          example: 'yes'
+        address:
+          type: object
+          $ref: '#/components/schemas/Address'
+        email:
           type: string
-          example: ''
-        metown: 
+          example: 'test@test.com'  
+        telephone:
           type: string
-          example: 'BRISTOL'
-        mecounty: 
-          type: string
-          example: ''
-        mecode: 
-          type: string
-          example: 'BS1 6PN'
-        mecountry: 
-          type: string
-          example: 'United Kingdom'
-        memail: 
-          type: string
-          example: 'test.white@planninginspectorate.gov.uk'
-        mephone: 
-          type: string
-          example: '0303 111 111'
+          example: '0132232432'
     DocumentSearchCriteria:
       type: object
       properties:
@@ -553,3 +542,21 @@ components:
         date_created: 
           type: string
           example: '2016-04-28 08:42:58'
+    Address:
+      type: object
+      properties:
+        line1: 
+          type: string
+          example: 'Queens Building'
+        line2: 
+          type: string
+          example: 'Queens Wall Street'
+        line3: 
+          type: string
+          example: 'London'
+        postcode: 
+          type: string
+          example: 'HE127TY'
+        country:
+          type: string
+          example: 'UK'
