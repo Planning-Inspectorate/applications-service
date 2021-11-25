@@ -143,12 +143,20 @@
       }) }}
 
       <h2 class="govuk-heading-m">Comments</h2>
-      {%for comment in comments %}
 
-        {{ govukSummaryList({
-          classes: "govuk-summary-list govuk-!-margin-bottom-9",
-          rows: [
-            {
+      {% set commentsRow = [] %}
+        {% set initialCommentRow = {
+              key: {
+                text: "Topic"
+              },
+              value: {
+                text: summaryField( "Comments", { 'data-cy': "comment" })
+              }
+            } 
+        %}
+      {{ (commentsRow.push(initialCommentRow), null) }}
+      {% for comment in comments %}
+        {% set commentRow = {
               key: {
                 text: comment.topic
               },
@@ -162,13 +170,25 @@
                     text: "Change",
                     visuallyHiddenText: "??",
                     attributes: { "data-cy": "comments" }
+                  },
+                  {
+                    href: "/register/myself/comments?mode=remove&index="+loop.index0,
+                    text: "Remove",
+                    visuallyHiddenText: "??",
+                    attributes: { "data-cy": "comments" }
                   }
                 ]
               }
-            }
-          ]
-        }) }}
+          } 
+        %}
+        {{ (commentsRow.push(commentRow), null) }}
       {% endfor %}
+      {{ govukSummaryList({
+          classes: "govuk-summary-list govuk-!-margin-bottom-9",
+          rows: commentsRow
+      }) }}
+
+
 
       <a href="/register/myself/declaration" role="button"  class="govuk-button govuk-button"  data-module="govuk-button">
         Accept and continue
