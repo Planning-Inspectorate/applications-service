@@ -4,6 +4,7 @@ const { StatusCodes } = require('http-status-codes');
 const {
   getInterestedParty,
   createInterestedParty,
+  updateComments,
 } = require('../../../src/controllers/interested-party');
 
 const ipData = {
@@ -49,13 +50,13 @@ const ipData = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep:
-    'this is my test that form unchanged for non material change projects after ACR051 developed.  Jun 2021',
+  therep: '{"comments":[{"type":"Noise","comment":"I dont like noise either"}]}',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
   web_ref: 1,
 };
+
 const createIp = {
   case_ref: 'EN010009',
   behalf: 'me',
@@ -88,6 +89,12 @@ jest.mock('../../../src/models', () => {
     }
     if (query === 'create') {
       return InterestedParty.build({ ...createIp });
+    }
+    if (query === 'update') {
+      if (queryOptions[1].where.ID === 30000120) {
+        return InterestedParty.build({ ...ipData });
+      }
+      return null;
     }
   });
   const db = {
@@ -142,5 +149,28 @@ describe('insertInterestedParty', () => {
     await createInterestedParty(req, res);
 
     expect(res._getStatusCode()).toEqual(StatusCodes.CREATED);
+  });
+});
+
+describe('updateComments', () => {
+  it('should update comments for party', async () => {
+    const req = httpMocks.createRequest({
+      params: {
+        ID: 30000120,
+      },
+      body: {
+        comments: [
+          {
+            type: 'Traffic',
+            comment: "I don't like traffic",
+          },
+        ],
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await updateComments(req, res);
+
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
   });
 });
