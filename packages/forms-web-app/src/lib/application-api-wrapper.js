@@ -52,10 +52,10 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
         logger.debug('Successfully called');
 
         const data = await apiResponse.json();
-        const wrappedResp = {...data, resp_code: apiResponse.status}
+        const wrappedResp = {data, resp_code: apiResponse.status}
         logger.debug('Successfully parsed to JSON');
 
-        return data;
+        return wrappedResp;
       })
     );
   } catch (err) {
