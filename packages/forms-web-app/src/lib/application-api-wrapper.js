@@ -83,7 +83,16 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 exports.postSelfRegistration = async (registeration_data) => {
   const registrationServiceApiUrl = '/api/v1/interested-party';
   const method = 'POST';
+
   return handler(registrationServiceApiUrl, method, {
     body: registeration_data,
+  });
+};
+
+exports.putComments = async (ipRefNo, comments_data) => {
+  const commentsServiceApiUrl = `/api/v1/interested-party/${ipRefNo}/comments`;
+  const method = 'PUT';
+  return handler(commentsServiceApiUrl, method, {
+    body: comments_data,
   });
 };
