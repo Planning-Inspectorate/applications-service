@@ -33,6 +33,12 @@ class ApiError {
   static noDocumentsFound() {
     return new ApiError(404, { errors: [`No documents found`] });
   }
+
+  static commentsForPartyWithIDNotUpdated(ID) {
+    return new ApiError(StatusCodes.BAD_REQUEST, {
+      errors: [`Failed to update comments for party with ID ${ID}`],
+    });
+  }
 }
 
 module.exports = ApiError;

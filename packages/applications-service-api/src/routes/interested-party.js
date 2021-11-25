@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get('/:caseRef', interestedPartyController.getInterestedParty);
 router.post('/', interestedPartyController.createInterestedParty);
+router.put('/:ID/comments', interestedPartyController.updateComments);
 
 module.exports = router;

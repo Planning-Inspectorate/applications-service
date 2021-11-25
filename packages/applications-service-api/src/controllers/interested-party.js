@@ -4,6 +4,7 @@ const logger = require('../lib/logger');
 const {
   insertInterestedParty,
   getInterestedParty: getInterestedPartyFromInterestedPartyApiService,
+  updateInterestedPartyComments,
 } = require('../services/interested-party.service');
 
 const ApiError = require('../error/apiError');
@@ -28,7 +29,9 @@ module.exports = {
         res.status(e.code).send({ code: e.code, errors: e.message.errors });
         return;
       }
+      /* istanbul ignore next */
       logger.error(e.message);
+      /* istanbul ignore next */
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .send(`Problem getting interested party for project ${caseRef} \n ${e}`);
@@ -71,9 +74,36 @@ module.exports = {
       res.status(StatusCodes.CREATED).send(JSON.stringify(document.ID));
       return;
     }
-
+    /* istanbul ignore next */
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .send(`Problem creating interested party for project ${caseref}`);
+  },
+
+  async updateComments(req, res) {
+    const { ID } = req.params;
+    const comments = req.body;
+
+    try {
+      const update = await updateInterestedPartyComments(ID, comments);
+
+      if (update === 0) {
+        throw ApiError.commentsForPartyWithIDNotUpdated(ID);
+      }
+
+      res.status(StatusCodes.OK).send();
+    } catch (e) {
+      if (e instanceof ApiError) {
+        logger.debug(e.message);
+        res.status(e.code).send({ code: e.code, errors: e.message.errors });
+        return;
+      }
+      /* istanbul ignore next */
+      logger.error(e.message);
+      /* istanbul ignore next */
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send(`Problem updating comments for interested party with ID ${ID} \n ${e}`);
+    }
   },
 };

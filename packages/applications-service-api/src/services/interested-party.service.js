@@ -10,7 +10,17 @@ const insertInterestedParty = async (interestedParty) => {
   return party;
 };
 
+const updateInterestedPartyComments = async (ID, comments) => {
+  const update = await db.InterestedParty.update(
+    { therep: JSON.stringify(comments) },
+    { where: { ID } }
+  );
+
+  return update[0];
+};
+
 module.exports = {
   insertInterestedParty,
   getInterestedParty,
+  updateInterestedPartyComments,
 };
