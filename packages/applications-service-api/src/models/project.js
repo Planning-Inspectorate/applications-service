@@ -1,8 +1,5 @@
 const { Model } = require('sequelize');
 
-const area = ['COUNTRY', 'REGION', 'COUNTY', 'BOROUGH', 'DISTRICT', 'CITY', 'TOWN', 'JUNCTION'];
-const MAPZOOMLVL_OFFSET = 5;
-const DEFAULT_MAPZOOMLVL = 9;
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {}
   Project.init(
@@ -23,15 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       ProjectLocation: DataTypes.TEXT,
       AnticipatedGridRefEasting: DataTypes.FLOAT,
       AnticipatedGridRefNorthing: DataTypes.FLOAT,
-      MapZoomLevel: {
-        type: DataTypes.TEXT,
-        get() {
-          const rawValue = this.getDataValue('MapZoomLevel');
-          return rawValue
-            ? MAPZOOMLVL_OFFSET + area.indexOf(rawValue.toUpperCase())
-            : MAPZOOMLVL_OFFSET + DEFAULT_MAPZOOMLVL;
-        },
-      },
+      MapZoomLevel: DataTypes.TEXT,
       LatLong: DataTypes.TEXT,
       AnticipatedDateOfSubmission: DataTypes.DATE,
       AnticipatedSubmissionDateNonSpecific: DataTypes.TEXT,
