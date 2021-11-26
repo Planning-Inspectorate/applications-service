@@ -5,8 +5,8 @@ const getAppList = async () => {
     return projectList;
 }
 
-const getAppData = async (claim_ref) => {
-    const projectData = await getProjectData(claim_ref);
+const getAppData = async (case_ref) => {
+    const projectData = await getProjectData(case_ref);
     return projectData;
 }
 

@@ -19,6 +19,7 @@ exports.postComments = async (req, res) => {
     res.render(VIEW.REGISTER.MYSELF.COMMENTS, {
       errors,
       errorSummary,
+      comment: body
     });
     return;
   }

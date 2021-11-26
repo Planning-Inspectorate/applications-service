@@ -43,7 +43,7 @@
               },
               id: "address-line-1",
               name: "address-line-1",
-              value: address.line1
+              value: address['address-line-1']
             }) }}
 
             {{ govukInput({
@@ -52,7 +52,7 @@
               },
               id: "address-line-2",
               name: "address-line-2",
-              value: address.line2
+              value: address['address-line-2']
             }) }}
 
             {{ govukInput({
@@ -62,7 +62,7 @@
               classes: "govuk-!-width-two-thirds",
               id: "address-line-3",
               name: "address-line-3",
-              value: address.line3
+              value: address['address-line-3']
             }) }}
 
             {{ govukInput({
@@ -72,7 +72,7 @@
               classes: "govuk-input--width-10",
               id: "address-postcode",
               name: "address-postcode",
-              value: address.postcode
+              value: address['address-postcode']
             }) }}
 
             {{ govukInput({
@@ -82,7 +82,7 @@
               classes: "govuk-!-width-two-thirds",
               id: "address-country",
               name: "address-country",
-              value: address.country
+              value: address['address-country']
             }) }}
 
           {% endcall %}

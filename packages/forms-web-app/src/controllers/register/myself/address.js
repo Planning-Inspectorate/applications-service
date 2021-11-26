@@ -12,6 +12,7 @@ exports.postAddress = async (req, res) => {
     res.render(VIEW.REGISTER.MYSELF.ADDRESS, {
       errors,
       errorSummary,
+      address: body
     });
     return;
   }
