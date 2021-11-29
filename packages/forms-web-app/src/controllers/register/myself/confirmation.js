@@ -9,5 +9,8 @@ exports.getConfirmation = async (req, res) => {
   const ipRefNo = response.data;
   const commentsData = JSON.stringify({comments: req.session.comments});
   await postCommentsData(ipRefNo, commentsData);
-  res.render(VIEW.REGISTER.MYSELF.CONFIRMATION, {ipRefNo: ipRefNo, email: req.session.mySelfRegdata.email, projectName: req.session.projectName, caseRef: req.session.caseRef});
+  const email = req.session.mySelfRegdata.email;
+  delete req.session.comments;
+  delete req.session.mySelfRegdata;
+  res.render(VIEW.REGISTER.MYSELF.CONFIRMATION, {ipRefNo: ipRefNo, email: email, projectName: req.session.projectName, caseRef: req.session.caseRef});
 };

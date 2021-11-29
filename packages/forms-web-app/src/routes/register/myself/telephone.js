@@ -4,7 +4,7 @@ const telephoneController = require('../../../controllers/register/myself/teleph
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: telephoneValidationRules,
-} = require('../../../validators/register/telephone');
+} = require('../../../validators/register/myself/telephone');
 
 
 const router = express.Router();

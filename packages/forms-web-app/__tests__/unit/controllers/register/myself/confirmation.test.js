@@ -37,10 +37,12 @@ describe('controllers/register/myself/confirmation', () => {
     });
 
     describe('getConfirmation', () => {
-        it('should call the correct template', () => {
-            confirmationController.getConfirmation(req, res);
-            // expect(res.render).toHaveBeenCalledWith('register/myself/confirmation',
-            //  {ipRefNo: '30020010', email: 'anc@test.com', projectName: 'ABC', caseRef: 'ABC123'});
+        it('should call the correct template', async () => {
+            await confirmationController.getConfirmation(req, res);
+            expect(req.session.comments).toBe(undefined);
+            expect(req.session.mySelfRegdata).toBe(undefined);
+            expect(res.render).toHaveBeenCalledWith('register/myself/confirmation',
+              {ipRefNo: '30020010', email: 'anc@test.com', projectName: 'ABC', caseRef: 'ABC123'});
         });
     });
 });
