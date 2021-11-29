@@ -8,4 +8,4 @@ Feature: Start page - Register to have your say
         Given I navigate to Register to have your say page
         Then I am on the "register to have your say" page
         When I click on start now button
-        Then I am on the "What type of interested party are you?" page
+        Then I am on the "who are you registering for?" page

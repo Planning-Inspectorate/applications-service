@@ -1,11 +1,11 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_TypeOfParty from './PageObjects/PO_TypeOfParty'
+import PO_WhoYouRegisterFor from './PageObjects/PO_WhoYouRegisterFor'
 import PageObject from '../PageObject'
-const typeOfPartyPage = new PO_TypeOfParty()
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor()
 const pageObject = new PageObject()
 
-Given('I navigate to the Type of party page', () => {
-    typeOfPartyPage.navigatetoTypeOfPartyPage()
+Given('I navigate to the who are you registering for page', () => {
+    whoYouRegisterForPage.navigatetoTypeOfPartyPage()
 })
 
 Then('I am on the {string} page', (pageName) => {
@@ -13,7 +13,7 @@ Then('I am on the {string} page', (pageName) => {
 })
 
 And("I can see the radio options content", () => {
-    typeOfPartyPage.validateRadioOptionContent()
+    whoYouRegisterForPage.validateRadioOptionContent()
 })
 
 And('I can see the logo gov uk text', () => {
@@ -24,7 +24,7 @@ And('I can see the text This service is only for Application service', () => {
     pageObject.validateHeaderContent()
 })
 
-Then('below error message should be presented on interested party page', function (table) {
+Then('below error message should be presented on who are you registering for page', function (table) {
     cy.assertErrorMessage(table)
 })
 

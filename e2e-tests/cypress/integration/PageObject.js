@@ -1,5 +1,3 @@
-import PO_TypeOfParty from "./register-type-of-party/PageObjects/PO_TypeOfParty";
-
 class PageObject {
     validateHeaderLogo() {
         const headerLogo = cy.get('.govuk-header__logo');

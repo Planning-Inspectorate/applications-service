@@ -20,5 +20,7 @@ Cypress.Commands.add('clickProjectLink', require('../common-methods/clickProject
 
 Cypress.Commands.add('clickContentsLink', require('../common-methods/clickContentsLink'));
 
+Cypress.Commands.add('selectRadioYesOrNo', require('../common-methods/selectRadioYesOrNo'));
+
 // Register Type of Party page select radio choice
 Cypress.Commands.add('selectRadioOption', require('../register-type-of-party-page/selectRadioOption'));

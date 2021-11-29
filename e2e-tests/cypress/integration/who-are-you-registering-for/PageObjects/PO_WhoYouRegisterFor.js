@@ -1,4 +1,4 @@
-class PO_TypeOfParty {
+class PO_WhoYouRegisterFor {
     
     navigatetoTypeOfPartyPage() {
         cy.visit('/register/start');
@@ -13,4 +13,4 @@ class PO_TypeOfParty {
     }
 
 }
-export default PO_TypeOfParty;
+export default PO_WhoYouRegisterFor;

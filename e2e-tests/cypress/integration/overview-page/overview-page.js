@@ -16,5 +16,5 @@ And('I click on register to have your say about national infrastructure project 
 });
 
 And('I click on {string} link', (pageName) => {
-    cy.clickLinkTonavigateToPage(pageName);
+    cy.clickContentsLink(pageName);
  })
