@@ -35,3 +35,7 @@ Then('I click on back link', () => {
 Then('I am on the {string} page', (pageName) => {
     cy.assertUserOnThePage(pageName)
 })
+
+And('I enter text {string} into full name field', (inputData) => {
+    fullNamePage.enterTextIntoFullNameField(inputData);
+})

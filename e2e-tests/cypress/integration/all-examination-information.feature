@@ -22,3 +22,6 @@ Feature: All Examination information page
             | Environmental Impact Assessment Scoping             |
             | EN010116-000001-Smalll Test document for Doc upload |
         And sort by drop down should be having Recently updated
+        When I enter text "test01" into search field
+        And I click on search
+        Then No documents found Please try with different search text should be displayed

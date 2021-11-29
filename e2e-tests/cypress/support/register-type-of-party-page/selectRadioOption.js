@@ -1,6 +1,6 @@
 module.exports = (radioChoice) => {
     switch (radioChoice) {
-        case "A person interested in having my say":
+        case "Myself":
             cy.get('[data-cy="answer-mySay"]').click();
             break;
         case "Someone registering for an organisation I work or volunteer for":
