@@ -21,6 +21,10 @@ services:
       NODE_ENV: local
       DOCUMENTS_PER_PAGE: '20'
       DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ 
+      SRV_NOTIFY_BASE_URL: https://api.notifications.service.gov.uk/
+      SRV_NOTIFY_SERVICE_ID: '9b89eb93-3071-432c-9c6b-4e07dbda9071'
+      SRV_NOTIFY_API_KEY:  'applicationsservice-9b89eb93-3071-432c-9c6b-4e07dbda9071-101fa83a-8d08-40af-92b6-246b95074e5a'
+      SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP: '830c9c01-1f81-4198-be72-11ab173c128a'
     ports:
       - '3000:3000'
     working_dir: '/opt/app'
