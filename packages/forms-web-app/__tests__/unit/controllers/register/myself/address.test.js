@@ -41,11 +41,11 @@ describe('controllers/register/myself/address', () => {
                 ...req,
                 body: {
                     "address": {
-                        "address-line-1": "abc",
-                        "address-line-2": "xyz",
-                        "address-line-3": "xyz",
-                        "address-postcode": "ABC 123",
-                        "address-country": "UK"
+                        "line1": "abc",
+                        "line2": "xyz",
+                        "line3": "xyz",
+                        "postcode": "ABC 123",
+                        "country": "UK"
                     }
                 },
                 query:{

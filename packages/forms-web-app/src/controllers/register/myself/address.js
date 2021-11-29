@@ -17,11 +17,11 @@ exports.postAddress = async (req, res) => {
     return;
   }
 
-  req.session.mySelfRegdata.address['line1'] = body['address-line-1'];
-  req.session.mySelfRegdata.address['line2'] = body['address-line-2'];
-  req.session.mySelfRegdata.address['line3'] = body['address-line-3'];
-  req.session.mySelfRegdata.address['postcode'] = body['address-postcode'];
-  req.session.mySelfRegdata.address['country'] = body['address-country'];
+  req.session.mySelfRegdata.address['line1'] = body['line1'];
+  req.session.mySelfRegdata.address['line2'] = body['line2'];
+  req.session.mySelfRegdata.address['line3'] = body['line3'];
+  req.session.mySelfRegdata.address['postcode'] = body['postcode'];
+  req.session.mySelfRegdata.address['country'] = body['country'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {

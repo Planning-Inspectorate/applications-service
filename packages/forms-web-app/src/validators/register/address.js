@@ -3,13 +3,13 @@ const { body } = require('express-validator');
 
 const rules = () => {
   return [
-    body('address-line-1')
+    body('line1')
       .notEmpty()
       .withMessage('Enter address line 1'),
-      body('address-postcode')
+      body('postcode')
       .notEmpty()
       .withMessage('Enter address postcode'),
-      body('address-country')
+      body('country')
       .notEmpty()
       .withMessage('Enter address country'),
   ];
