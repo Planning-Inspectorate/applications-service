@@ -74,9 +74,27 @@ describe('controllers/register/myself/address', () => {
             expect(res.redirect).not.toHaveBeenCalled();
 
             expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.ADDRESS, {
-                errorSummary: [{ text: 'There were errors here', href: '#' }],
-                errors: { a: 'b' }
-            });
+                   "address": {
+                     "errorSummary": [
+                       {
+                         "href": "#",
+                         "text": "There were errors here",
+                       },
+                     ],
+                     "errors": {
+                       "a": "b",
+                     },
+                   },
+                   "errorSummary": [
+                     {
+                       "href": "#",
+                       "text": "There were errors here",
+                     },
+                   ],
+                   "errors": {
+                     "a": "b",
+                   },
+                 });
         });
     });
 });

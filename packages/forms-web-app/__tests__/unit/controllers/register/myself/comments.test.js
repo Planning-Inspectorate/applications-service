@@ -78,9 +78,27 @@ describe('controllers/register/myself/comments', () => {
             expect(res.redirect).not.toHaveBeenCalled();
 
             expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.COMMENTS, {
-                errorSummary: [{ text: 'There were errors here', href: '#' }],
-                errors: { a: 'b' }
-            });
+                   "comment": {
+                     "errorSummary": [
+                        {
+                         "href": "#",
+                         "text": "There were errors here",
+                       },
+                     ],
+                     "errors": {
+                       "a": "b",
+                     },
+                   },
+                   "errorSummary": [
+                      {
+                       "href": "#",
+                       "text": "There were errors here",
+                     },
+                   ],
+                   "errors": {
+                     "a": "b",
+                   },
+                 });
         });
     });
 });
