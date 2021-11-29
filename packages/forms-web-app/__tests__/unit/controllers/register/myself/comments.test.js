@@ -11,11 +11,7 @@ describe('controllers/register/myself/comments', () => {
     beforeEach(() => {
         req = {
             ...mockReq(),
-            session: {
-                mySelfRegdata: {
-                    'comments': 'test'
-                }
-            },
+            query:{},
         };
         res = mockRes();
         jest.resetAllMocks();
@@ -24,12 +20,33 @@ describe('controllers/register/myself/comments', () => {
     describe('getComments', () => {
         it('should call the correct template', () => {
             commentsController.getComments(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/comments', {"comments": "test"});
+            expect(res.render).toHaveBeenCalledWith('register/myself/comments');
+        });
+
+        it('should call the correct template in edit mode', () => {
+            req = {
+                ...mockReq(),
+                query: {
+                    mode: 'edit',
+                    index: 0
+                },
+                session: {
+                    comments: [{
+                        'topic': 'topic',
+                        'comment': 'test'
+                    }]
+                },
+            };
+            commentsController.getComments(req, res);
+            expect(res.render).toHaveBeenCalledWith('register/myself/comments', {comment: {
+                'topic': 'topic',
+                'comment': 'test'
+            }});
         });
     });
 
     describe('postComments', () => {
-        it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if comments is provided`, async () => {
+        it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}' if comments is provided`, async () => {
             const mockRequest = {
                 ...req,
                 body: {
@@ -44,7 +61,7 @@ describe('controllers/register/myself/comments', () => {
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {

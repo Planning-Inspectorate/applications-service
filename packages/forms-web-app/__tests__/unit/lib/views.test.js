@@ -24,6 +24,7 @@ describe('lib/views', () => {
           ADDRESS: 'register/myself/address',
           CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
           COMMENTS: 'register/myself/comments',
+          ADD_ANOTHER_COMMENT: 'register/myself/add-another-comment',
           CONFIRMATION: 'register/myself/confirmation',
           DECLARATION: 'register/myself/declaration',
           EMAIL: 'register/myself/email',

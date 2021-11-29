@@ -17,7 +17,7 @@ describe('controllers/overview', () => {
 
   describe('getOverview', () => {
     it('should call the correct template', async () => {
-      getProjectData.mockImplementation(() => Promise.resolve({}));
+      getProjectData.mockImplementation(() => Promise.resolve({resp_code : 200, data : {}}));
       await overviewController.getOverview(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.OVERVIEW, {"appData": {}, "stage": undefined, "styleClass": ["", "", "", "", ""]});
     });
