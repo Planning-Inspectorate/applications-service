@@ -130,19 +130,25 @@ describe('getApplication', () => {
     expect(data).toEqual(project);
   });
 
-  it('should throw application not eligible', async () => {
-    const req = httpMocks.createRequest({
-      params: {
-        id: 'EN010009',
-      },
-    });
+  // TODO Uncomment bellow test when below code (applications.js) is uncommneted
+  // TODO Temporarily commented
+  // if (!trialists.includes(id)) {
+  //   throw ApiError.applicationNotAcceptable(id);
+  // }
 
-    const res = httpMocks.createResponse();
+  // it('should throw application not eligible', async () => {
+  //   const req = httpMocks.createRequest({
+  //     params: {
+  //       id: 'EN010009',
+  //     },
+  //   });
 
-    await expect(() => getApplication(req, res)).rejects.toEqual(
-      new ApiError(StatusCodes.NOT_ACCEPTABLE, { errors: ['Application EN010009 is not eligible'] })
-    );
-  });
+  //   const res = httpMocks.createResponse();
+
+  //   await expect(() => getApplication(req, res)).rejects.toEqual(
+  //     new ApiError(StatusCodes.NOT_ACCEPTABLE, { errors: ['Application EN010009 is not eligible'] })
+  //   );
+  // });
 
   it('should return application not found', async () => {
     const req = httpMocks.createRequest({
