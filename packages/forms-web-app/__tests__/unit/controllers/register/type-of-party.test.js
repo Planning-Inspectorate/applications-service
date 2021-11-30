@@ -1,7 +1,5 @@
 const typeOfPartyController = require('../../../../src/controllers/register/type-of-party');
 const { VIEW } = require('../../../../src/lib/views');
-const logger = require('../../../../src/lib/logger');
-const { APPLICATION_DOCUMENT } = require('../../../../src/lib/empty-application');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');
@@ -11,10 +9,16 @@ describe('controllers/register/type-of-party', () => {
     let res;
 
     beforeEach(() => {
-        req = mockReq();
+        req = {
+            ...mockReq(),
+            session: {
+                typeOfParty: 'myself'
+            },
+            query: {
+                mode: ''
+            }
+        };
         res = mockRes();
-
-        ({ empty: application } = APPLICATION_DOCUMENT);
 
         jest.resetAllMocks();
     });
@@ -22,15 +26,15 @@ describe('controllers/register/type-of-party', () => {
     describe('getTypeOfParty', () => {
         it('should call the correct template', () => {
             typeOfPartyController.getTypeOfParty(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/type-of-party');
+            expect(res.render).toHaveBeenCalledWith('register/type-of-party', {"type": "myself"});
         });
     });
 
     describe('forwardPage', () => {
-        it(`should return '/${VIEW.REGISTER.FULL_NAME}' if 1st option selected`, async () => {
-            const pageRedirect = typeOfPartyController.forwardPage('mySay');
+        it(`should return '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option selected`, async () => {
+            const pageRedirect = typeOfPartyController.forwardPage('myself');
 
-            expect(pageRedirect).toEqual(VIEW.REGISTER.FULL_NAME);
+            expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.FULL_NAME);
         });
 
         it(`should return '/${VIEW.REGISTER.TEST2}' if 2nd option selected`, async () => {
@@ -54,8 +58,8 @@ describe('controllers/register/type-of-party', () => {
     });
 
     describe('postTypeOfParty', () => {
-        it(`'should post data and redirect to '/${VIEW.REGISTER.FULL_NAME}' if 1st option is selected`, async () => {
-            const typeOfParty = 'mySay';
+        it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option is selected`, async () => {
+            const typeOfParty = 'myself';
             const mockRequest = {
                 ...req,
                 body: {
@@ -67,7 +71,7 @@ describe('controllers/register/type-of-party', () => {
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.FULL_NAME}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.FULL_NAME}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {

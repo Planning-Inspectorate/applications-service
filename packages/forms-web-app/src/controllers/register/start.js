@@ -1,3 +1,4 @@
+const logger = require('../../lib/logger');
 const { VIEW } = require('../../lib/views');
 const config = require('../../config');
 

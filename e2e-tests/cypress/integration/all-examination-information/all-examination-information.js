@@ -31,3 +31,7 @@ And('I click on {string} link', (pageName) => {
  And('sort by drop down should be having Recently updated', () => {
      allExamInfo.assertResultsSortedByIsPresent();
  })
+
+ Then('No documents found Please try with different search text should be displayed', () => {
+    cy.confirmTextOnPage("No documents found. Please try with different search text.");
+ })

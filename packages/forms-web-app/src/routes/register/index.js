@@ -4,10 +4,10 @@ const router = express.Router();
 
 const startRouter = require('./start');
 const typeOfPartyRouter = require('./type-of-party');
-const fullNameRouter = require('./full-name');
+const myselfRegistrationRouter = require('./myself');
 
 router.use('/', startRouter);
 router.use('/', typeOfPartyRouter);
-router.use('/', fullNameRouter);
+router.use('/myself', myselfRegistrationRouter);
 
 module.exports = router;

@@ -24,7 +24,6 @@
             {% endif %}
 
             <form action="" method="post" novalidate>
-                <p>Register to have your say about a national infrastructure project</p>
 
                 {{ govukRadios({
                     idPrefix: "type-of-party",
@@ -34,27 +33,27 @@
                     },
                     fieldset: {
                         legend: {
-                            text: "What type of interested party are you?",
+                            text: "Who are you registering for?",
                             isPageHeading: true,
                             classes: "govuk-fieldset__legend--l"
                         }
                     },
                     items: [
                         {
-                            value: "mySay",
-                            text: "A person interested in having my say",
+                            value: "myself",
+                            text: "Myself",
                             attributes: { "data-cy": "answer-mySay"},
-                            checked: type === "mySay"
+                            checked: type === "myself"
                         },
                         {
                             value: "organisation",
-                            text: "Someone registering for an organisation I work or volunteer for",
+                            text: "An organisation I work or volunteer for",
                             attributes: { "data-cy": "answer-organisation"},
                             checked: type === "organisation"
                         },
                         {
                             value: "behalfOfOrganisation",
-                            text: "Someone registering on behalf of another person or organisation",
+                            text: "On behalf of another person or organisation",
                             attributes: { "data-cy": "answer-behalfOfOrganisation"},
                             checked: type === "behalfOfOrganisation"
                         }

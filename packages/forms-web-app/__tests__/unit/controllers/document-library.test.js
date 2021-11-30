@@ -25,18 +25,19 @@ describe('controllers/document-library', () => {
     };
     res = mockRes();
 
-    searchDocumentList.mockImplementation(() => Promise.resolve({
-      "documents": [{
-        "test":[{
-          "type": "test",
-          "path": "https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/abc/name",
-        }]
-      }],
-      "totalItems": 1,
-      "itemsPerPage": 20,
-      "totalPages": 1,
-      "currentPage": 1
-      } 
+    searchDocumentList.mockImplementation(() => Promise.resolve(
+      {resp_code : 200, data : {
+        "documents": [{
+          "test":[{
+            "type": "test",
+            "path": "https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/abc/name",
+          }]
+        }],
+        "totalItems": 1,
+        "itemsPerPage": 20,
+        "totalPages": 1,
+        "currentPage": 1
+        }} 
     ));
   });
 

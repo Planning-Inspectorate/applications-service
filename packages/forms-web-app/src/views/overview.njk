@@ -36,7 +36,7 @@
 {% endblock %}
 
 {% set current %}
-    <svg class="svg-inline--fa fa-hourglass-half fa-w-12 stage-in-progress commons" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="hourglass-half" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 800 500" data-fa-i2svg="">
+    <svg class="svg-inline--fa fa-hourglass-half fa-w-12 stage-in-progress commons" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="hourglass-half" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 700 500" data-fa-i2svg="">
         <path fill="currentColor" d="M360 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24 0 90.965 51.016 167.734 120.842 192C75.016 280.266 24 357.035 24 448c-13.255 0-24 10.745-24 24v16c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24 0-90.965-51.016-167.734-120.842-192C308.984 231.734 360 154.965 360 64c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24zm-75.078 384H99.08c17.059-46.797 52.096-80 92.92-80 40.821 0 75.862 33.196 92.922 80zm.019-256H99.078C91.988 108.548 88 86.748 88 64h208c0 22.805-3.987 44.587-11.059 64z"></path>
     </svg>
 {% endset %}
@@ -58,7 +58,7 @@
 
 {% block content %}
   <h1 class="govuk-heading-l">{{ appData.ProjectName }} project information</h1>
-  <p class="govuk-body">The potential A404 Dewsbury to Berwick Down scheme proposes to construct a new section of dual carriageway to address problems associated with the single carriageway section of the A404 between Amesbury’s Countess roundabout and the dual carriageway section to the west of Winterbourne Stoke. </p>
+  <p class="govuk-body">{{ appData.Summary }}</p>
   <p class="govuk-body"><a class="govuk-link" href="#">Sign-up for updates via email, letter or text</a>.</p>
 
   <div class="pins-timeline">
@@ -67,8 +67,8 @@
       <li {{ styleClass[0] }}>Pre-application and application received<div class="pins-timeline-badge">{% if(appData.Stage > 1) %} &#10003;{% else %} {{current |safe}} {% endif %}</div></li>
       <li {{ styleClass[1] }}>Pre-examination<div class="pins-timeline-badge">{% if(appData.Stage === 2) %} {{current |safe}} {% elseif(appData.Stage > 2) %} &#10003; {% endif %}</div></li>
       <li {{ styleClass[2] }}>Examination of the project<div class="pins-timeline-badge">{% if(appData.Stage === 3) %} {{current |safe}} {% elseif(appData.Stage > 3) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[3] }}>Rsecommendation and decision<div class="pins-timeline-badge">{% if(appData.Stage === 4) %} {{current |safe}} {% elseif(appData.Stage > 4) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[4] }}>Outcome of the project<div class="pins-timeline-badge">{% if(appData.Stage === 5) %} {{current |safe}} {% elseif(appData.Stage > 5) %} &#10003; {% endif %}</div></li>
+      <li {{ styleClass[3] }}>Recommendation and decision<div class="pins-timeline-badge">{% if(appData.Stage === 4) %} {{current |safe}} {% elseif(appData.Stage > 4) %} &#10003; {% endif %}</div></li>
+      <li {{ styleClass[4] }}>Outcome of the project<div class="pins-timeline-badge">{% if(appData.Stage === 6 or appData.Stage === 7 or appData.Stage === 8) %} {{current |safe}} {% endif %}</div></li>
     </ol>
     <p class="govuk-body">This means you cannot register to have your say yet. You will be able to register at the start of the gathering and reviewing information stage.</p>
     <p class="govuk-body"><a class="govuk-link" href="/dco-process-guide">Find out more about the process for Development Consent Orders</a>.</p>
@@ -124,9 +124,8 @@
     const map = new mapboxgl.Map({
       container: 'map', // container ID
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
-      center: [ -1.6297334421922187,
-      53.68704018442503], // starting position
-      zoom: 13, // starting zoom,
+      center: [{{ appData.LongLat }}], // starting position
+      zoom: {{ appData.MapZoomLevel }}, // starting zoom,
       logoPosition: 'top-left'
     });
 
@@ -143,89 +142,6 @@
 
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
-    // Red line boundary
-      map.on('style.load', () => {
-        // Add a data source containing GeoJSON data.
-        map.addSource( 'redline_boundary', {
-          'type': 'geojson',
-          'data': {
-            "geometry": {
-              "coordinates": [
-                [
-                  [
-                    -1.66781759147932,
-                    53.677617502883294
-                  ],
-                  [
-                    -1.6687472314275453,
-                    53.67835967912643
-                  ],
-                  [
-                    -1.66781759147932,
-                    53.677617502883294
-                  ]
-                ]
-              ],
-              "type": "Polygon",
-              "name": "redline-boundary"
-            },
-            "type": "Feature"
-          }
-        },
-
-        map.addSource('development_area', {
-          'type': 'geojson',
-          'data': {
-            "type": "Feature",
-            "geometry": {
-              "coordinates": [
-                [-1.592515, 53.692572],
-                [-1.593525, 53.691974],
-                [-1.663167, 53.679167]
-              ],
-              "type": "LineString"
-            }
-          }
-        })
-      );
-
-      // Red line boundary
-      map.addLayer({
-          'id': 'outline',
-          'type': 'line',
-          'source': 'redline_boundary',
-          'layout': {},
-          'paint': {
-            'line-dasharray': [4, 2],
-            'line-color': '#D4351C',
-            'line-width': 3
-          }
-      });
-
-      // Fill the red line boundary
-      // map.addLayer({
-      //     'id': 'filler',
-      //     'type': 'fill',
-      //     'source': 'redline_boundary',
-      //     'paint': {
-      //       'fill-color': '#D4351C',
-      //       'fill-opacity': 0.1
-      //     }
-      // });
-
-      // Development area line
-      map.addLayer({
-          'id': 'development_line',
-          'type': 'line',
-          'source': 'development_area',
-          'paint': {
-            'line-color': '#D4351C',
-            'line-width': 7
-          }
-      });
-
-    });
-
-    </script>
+  </script>
 
 {% endblock %}

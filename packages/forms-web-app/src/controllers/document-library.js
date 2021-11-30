@@ -35,10 +35,11 @@ function filterData(documents, typeList, docList) {
   })
 }
 
-function renderData(res, caseRef, respData){
-  if (respData.resp_code === 404) {
+function renderData(res, caseRef, response){
+  if (response.resp_code === 404) {
     res.render(VIEW.DOCUMENT_LIBRARY, { caseRef: caseRef, docList: [], typeList: [], pageData: {} });
   } else {
+    const respData = response.data;
     const documents = respData.documents;
     const pageData = getPageData(respData);
     let typeList = [];
@@ -56,8 +57,8 @@ exports.getDocumentLibrary = async (req, res) => {
     search = '';
   }
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
-  const respData = await searchDocument(caseRef, searchDocumentData);
-  renderData(res, caseRef, respData);
+  const response = await searchDocument(caseRef, searchDocumentData);
+  renderData(res, caseRef, response);
 };
 
 exports.postSearchDocumentLibrary = async (req, res) => {
@@ -68,8 +69,8 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   req.session.document_search =  search;
   const filters = req.session.document_filters | [];
   const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
-  const respData = await searchDocument(caseRef, searchDocumentData);
-  renderData(res, caseRef, respData);
+  const response = await searchDocument(caseRef, searchDocumentData);
+  renderData(res, caseRef, response);
 };
 
 exports.postFilterDocumentLibrary = async (req, res) => {
@@ -80,6 +81,6 @@ exports.postFilterDocumentLibrary = async (req, res) => {
   req.session.document_filters =  filters;
   const search = req.session.document_search;
   const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
-  const respData = await searchDocument(caseRef, searchDocumentData);
-  renderData(res, caseRef, respData);
+  const response = await searchDocument(caseRef, searchDocumentData);
+  renderData(res, caseRef, response);
 };

@@ -1,7 +1,7 @@
 module.exports = {
   REGISTER: {
     TYPE_OF_PARTY: {
-      MY_SAY: 'mySay',
+      MY_SAY: 'myself',
       ORGANISATION: 'organisation',
       BEHALF_OF_ORGANISATION: 'behalfOfOrganisation',
     },

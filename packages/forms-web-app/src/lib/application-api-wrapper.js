@@ -6,7 +6,7 @@ const config = require('../config');
 const parentLogger = require('./logger');
 const { logger } = require('../config');
 
-async function handler(path, method = 'GET', opts = {}, headers = {}) {
+async function handler(callingMethod, path, method = 'GET', opts = {}, headers = {}) {
   const correlationId = uuid.v4();
   const url = `${config.applications.url}${path}`;
 
@@ -17,7 +17,6 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
 
   try {
     logger.debug({ url, method, opts, headers }, 'New call');
-
     return await utils.promiseTimeout(
       config.applications.timeout,
       Promise.resolve().then(async () => {
@@ -50,13 +49,16 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
           }
         }
 
-        logger.debug('Successfully called');
-
+        logger.debug('Successfully called ', callingMethod);
+        
+        if (callingMethod === 'putComments'){
+          return apiResponse;
+        }
         const data = await apiResponse.json();
-        const wrappedResp = {...data, resp_code: apiResponse.status}
+        const wrappedResp = {data, resp_code: apiResponse.status}
         logger.debug('Successfully parsed to JSON');
 
-        return data;
+        return wrappedResp;
       })
     );
   } catch (err) {
@@ -66,17 +68,34 @@ async function handler(path, method = 'GET', opts = {}, headers = {}) {
 }
 
 exports.getProjectData = async (case_ref) => {
-  return handler(`/api/v1/applications/${case_ref}`);
+  return handler('getProjectData', `/api/v1/applications/${case_ref}`);
 };
 
 exports.getAllProjectList = async () => {
-  return handler('/api/v1/applications');
+  return handler('getAllProjectList', '/api/v1/applications');
 };
 
 exports.searchDocumentList = async (case_ref, search_data) => {
   const documentServiceApiUrl = `/api/v1/documents/${case_ref}`;
   const method = 'POST';
-  return handler(documentServiceApiUrl, method, {
+  return handler('searchDocumentList', documentServiceApiUrl, method, {
     body: search_data,
+  });
+};
+
+exports.postSelfRegistration = async (registeration_data) => {
+  const registrationServiceApiUrl = '/api/v1/interested-party';
+  const method = 'POST';
+
+  return handler('postSelfRegistration', registrationServiceApiUrl, method, {
+    body: registeration_data,
+  });
+};
+
+exports.putComments = async (ipRefNo, comments_data) => {
+  const commentsServiceApiUrl = `/api/v1/interested-party/${ipRefNo}/comments`;
+  const method = 'PUT';
+  return handler('putComments', commentsServiceApiUrl, method, {
+    body: comments_data,
   });
 };

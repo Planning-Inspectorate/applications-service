@@ -1,0 +1,20 @@
+{
+    "myself": {
+        "case_ref": null,
+        "behalf": "me",
+        "full-name": null,
+        "over-18": null,
+        "address": {
+            "line1": null,
+            "line2": null,
+            "line3": null,
+            "postcode": null,
+            "country": null
+        },
+        "email": null,
+        "telephone": null
+    },
+    "org":{
+        "behalf": "them"
+    }
+}

@@ -11,7 +11,7 @@ const ruleTypeOfParty = () =>
   body('type-of-party')
     .notEmpty()
     .withMessage(
-      'Select what type of interested party are you'
+      'Select who are you registering for'
     )
     .bail()
     .isIn(validTypeOfPartyOptions);

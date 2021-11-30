@@ -1,18 +1,17 @@
-const logger = require('../../lib/logger');
 const { VIEW } = require('../../lib/views');
-
+const registrationData = require('../../lib/registration-data.json');
 const {
   validTypeOfPartyOptions,
 } = require('../../validators/register/type-of-party');
 const { REGISTER } = require('../../constants');
 
 exports.getTypeOfParty = async (req, res) => {
-  res.render(VIEW.REGISTER.TYPE_OF_PARTY);
+  res.render(VIEW.REGISTER.TYPE_OF_PARTY, {type: req.session.typeOfParty});
 };
 
 const forwardPage = (partyType) => {
   const party = {
-    [REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.FULL_NAME,
+    [REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.MYSELF.FULL_NAME,
     [REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.TEST2,
     [REGISTER.TYPE_OF_PARTY.BEHALF_OF_ORGANISATION]: VIEW.REGISTER.TEST3,
     default: VIEW.REGISTER.TYPE_OF_PARTY,
@@ -40,6 +39,11 @@ exports.postTypeOfParty = async (req, res) => {
       errorSummary,
     });
     return;
+  }
+
+  req.session.typeOfParty = typeOfParty;
+  if (typeOfParty === 'myself') {
+    req.session.mySelfRegdata = registrationData.myself;
   }
 
   res.redirect(`/${forwardPage(selectedParty)}`);

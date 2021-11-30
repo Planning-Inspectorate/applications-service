@@ -38,9 +38,10 @@ module.exports = {
     const { trialistPath } = config;
     const trialists = JSON.parse(await fs.readFile(trialistPath, 'utf8'));
 
-    if (!trialists.includes(id)) {
-      throw ApiError.applicationNotAcceptable(id);
-    }
+    // TODO Temporarily commented
+    // if (!trialists.includes(id)) {
+    //   throw ApiError.applicationNotAcceptable(id);
+    // }
 
     logger.debug(`Retrieving application ${id} ...`);
     try {
