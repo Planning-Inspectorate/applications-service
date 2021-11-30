@@ -1,4 +1,5 @@
 const db = require('../models');
+const notify = require('../lib/notify');
 
 const getInterestedParty = async (caseRef) => {
   const party = await db.InterestedParty.findOne({ where: { caseRef } });
@@ -16,7 +17,31 @@ const updateInterestedPartyComments = async (ID, comments) => {
     { where: { ID } }
   );
 
-  return update[0];
+  const updateStatus = update[0];
+  if (updateStatus) {
+    const party = await db.InterestedParty.findOne({ where: { ID } });
+    const project = await db.Project.findOne({
+      where: { CaseReference: party.dataValues.caseref },
+    });
+
+    const { behalf } = party.dataValues;
+    const { ProjectName: projectName } = project.dataValues;
+
+    let email;
+    let ipName;
+    let ipRef;
+
+    if (behalf === 'me') {
+      email = party.dataValues.memail;
+      ipName = party.dataValues.mename;
+      ipRef = `${party.dataValues.ID}`;
+    }
+
+    await notify.sendIPRegistrationConfirmationEmailToIP({ email, projectName, ipName, ipRef });
+    await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });
+  }
+
+  return updateStatus;
 };
 
 module.exports = {

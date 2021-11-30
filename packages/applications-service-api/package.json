@@ -25,6 +25,7 @@
     "./**/*.{js, json}": "npm run format"
   },
   "dependencies": {
+    "@planning-inspectorate/pins-notify": "^1.0.2",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "date-fns": "^2.23.0",
@@ -40,7 +41,6 @@
     "mysql2": "^2.3.2",
     "neat-csv": "^5.2.0",
     "node-fetch": "^2.6.2",
-    "notifications-node-client": "^5.1.0",
     "pino": "^6.13.2",
     "ramda": "^0.27.1",
     "rhea": "^1.0.24",
