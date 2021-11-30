@@ -9,7 +9,7 @@ module.exports = {
     startingPoint: '/before-you-apply',
     timeout: Number(process.env.APPLICATIONS_SERVICE_API_TIMEOUT || 10000),
     url: process.env.APPLICATIONS_SERVICE_API_URL,
-    noOfCommentsAllowed: 4,
+    noOfCommentsAllowed: 16,
   },
   db: {
     session: {
