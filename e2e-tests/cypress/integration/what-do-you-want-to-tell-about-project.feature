@@ -17,6 +17,7 @@ Feature: What do you want to tell us about this proposed project? page
 
     Scenario: verify page title, heading, error message and continue
         Then I am on the "What do you want to tell us about this proposed project?" page
+        And Do not include any personal details is present on the page
         And User clicks on continue button
         Then below error message should be presented on What do you want to tell us about this proposed project page
             | ErrorMsg              |
