@@ -17,8 +17,11 @@ const DEFAULT_MAPZOOMLVL = 9;
 
 function addMapZoomLvlAndLongLat(document) {
   const mapZoomLevel = document.MapZoomLevel;
-  const latLong = document.LatLong.split(',');
-  const LongLat = [latLong[1], latLong[0]];
+  let LongLat = [0, 0];
+  if (document.LatLong) {
+    const latLong = document.LatLong.split(',');
+    LongLat = [latLong[1], latLong[0]];
+  }
 
   const application = {
     ...document,
