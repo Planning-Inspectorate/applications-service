@@ -58,3 +58,11 @@ And('User clicks on accept and register button', () => {
 And('I click on find out more about having your say during the Examination of the application link', () => {
     cy.clickOnHref('/interested-party-guide');
 })
+
+And('I enter {string} into topic field', (dataInput) => {
+    tellAboutProject.enterTextIntoTopicField(dataInput);
+})
+
+When('user selects {string} radio option on Do you want to add another comment page', (radioChoice) => {
+    cy.selectRadioYesOrNo(radioChoice)
+})

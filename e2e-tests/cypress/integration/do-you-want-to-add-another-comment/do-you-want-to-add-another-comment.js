@@ -33,7 +33,7 @@ Then('I am on the {string} page', (pageName) => {
     cy.assertUserOnThePage(pageName)
 })
 
-Then('below error message should be presented on What do you want to tell us about this proposed project page', function (table) {
+Then('below error message should be presented on Do you want to add another comment page', function (table) {
     cy.assertErrorMessage(table)
 })
 

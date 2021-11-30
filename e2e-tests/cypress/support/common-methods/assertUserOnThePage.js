@@ -138,12 +138,19 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/register/myself/declaration')
             break;
-            case "registration complete":
+        case "registration complete":
             cy.title().should('eq', "Confirmation - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Registration complete');
             })
             cy.url().should('include', '/register/myself/confirmation')
+            break;
+        case "do you want to add another comment?":
+            cy.title().should('eq', "Add another comment - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Do you want to add another comment?');
+            })
+            cy.url().should('include', '/register/myself/add-another-comment')
             break;
         default: throw console.error('uanble to find specified page name: ' + pageName);
     }

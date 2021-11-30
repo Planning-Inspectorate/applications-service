@@ -1,7 +1,11 @@
 class PO_TellAboutProject {
 
     enterTextIntoCommentsField(dataInput) {
-        cy.get('#comments').type(dataInput);
+        cy.get('#comment').type(dataInput);
+    }
+
+    enterTextIntoTopicField(dataInput) {
+        cy.get('#topic').type(dataInput);
     }
 
 }
