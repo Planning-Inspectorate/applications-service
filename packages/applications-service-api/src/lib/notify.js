@@ -20,8 +20,8 @@ async function sendIPRegistrationConfirmationEmailToIP(details) {
         project_name: details.projectName,
         interested_party_name: details.ipName,
         interested_party_ref: details.ipRef,
-        preliminary_meeting_url: 'url',
-        having_your_say_url: 'another_url',
+        preliminary_meeting_url: config.services.notify.preliminaryMeetingUrl,
+        having_your_say_url: config.services.notify.havingYourSayUrl,
       })
       .setReference(details.ipRef)
       .sendEmail();

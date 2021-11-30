@@ -40,8 +40,8 @@ describe('sendIPRegistrationConfirmationEmailToIP', () => {
       project_name: details.projectName,
       interested_party_name: details.ipName,
       interested_party_ref: details.ipRef,
-      preliminary_meeting_url: 'url',
-      having_your_say_url: 'another_url',
+      preliminary_meeting_url: 'https://applications-service-web-app.azurewebsites.net/',
+      having_your_say_url: 'https://applications-service-web-app.azurewebsites.net/',
     });
     expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
     expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
