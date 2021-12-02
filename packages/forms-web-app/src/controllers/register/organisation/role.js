@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getRole = async (req, res) => {
-  res.render(VIEW.REGISTER.ORGANISATION.ROLE, {fullName: req.session.orgRegdata['role']});
+  res.render(VIEW.REGISTER.ORGANISATION.ROLE, {role: req.session.orgRegdata['role']});
 };
 
 exports.postRole = async (req, res) => {

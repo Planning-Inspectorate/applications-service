@@ -1,10 +1,10 @@
-const fullNameController = require('../../../../../src/controllers/register/myself/full-name');
+const emailController = require('../../../../../src/controllers/register/organisation/email');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/myself/full-name', () => {
+describe('controllers/register/organisation/email', () => {
     let req;
     let res;
 
@@ -12,8 +12,8 @@ describe('controllers/register/myself/full-name', () => {
         req = {
             ...mockReq(),
             session: {
-                mySelfRegdata: {
-                    'full-name': 'test'
+                orgRegdata: {
+                    'email': 'anc@test.com'
                 }
             },
         };
@@ -21,31 +21,30 @@ describe('controllers/register/myself/full-name', () => {
         jest.resetAllMocks();
     });
 
-    describe('getFullName', () => {
+    describe('getEmail', () => {
         it('should call the correct template', () => {
-            fullNameController.getFullName(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/full-name', {"fullName": "test"});
+            emailController.getEmail(req, res);
+            expect(res.render).toHaveBeenCalledWith('register/organisation/email', {"email": "anc@test.com"});
         });
     });
 
-    describe('postFullName', () => {
-        it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.OVER_18}' if name is provided`, async () => {
-            const fullName = 'test';
+    describe('postEmail', () => {
+        it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.TELEPHONE}' if email is provided`, async () => {
             const mockRequest = {
                 ...req,
                 body: {
-                    'full-name': fullName,
+                    'email': 'anc@test.com',
                 },
                 query: {
-                    'mode': ""
+                    mode: ''
                 }
             };
-            await fullNameController.postFullName(
+            await emailController.postEmail(
                 mockRequest,
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.TELEPHONE}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {
@@ -55,13 +54,13 @@ describe('controllers/register/myself/full-name', () => {
                     errors: { a: 'b' }
                 },
             };
-            await fullNameController.postFullName(
+            await emailController.postEmail(
                 mockRequest,
                 res
             );
             expect(res.redirect).not.toHaveBeenCalled();
 
-            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.FULL_NAME, {
+            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.EMAIL, {
                 errorSummary: [{ text: 'There were errors here', href: '#' }],
                 errors: { a: 'b' }
             });

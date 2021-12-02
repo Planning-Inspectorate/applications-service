@@ -1,10 +1,10 @@
-const fullNameController = require('../../../../../src/controllers/register/myself/full-name');
+const telephoneController = require('../../../../../src/controllers/register/organisation/telephone');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/myself/full-name', () => {
+describe('controllers/register/organisation/telephone', () => {
     let req;
     let res;
 
@@ -12,8 +12,8 @@ describe('controllers/register/myself/full-name', () => {
         req = {
             ...mockReq(),
             session: {
-                mySelfRegdata: {
-                    'full-name': 'test'
+                orgRegdata: {
+                    'telephone': '06876767'
                 }
             },
         };
@@ -21,31 +21,30 @@ describe('controllers/register/myself/full-name', () => {
         jest.resetAllMocks();
     });
 
-    describe('getFullName', () => {
+    describe('getTelephone', () => {
         it('should call the correct template', () => {
-            fullNameController.getFullName(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/full-name', {"fullName": "test"});
+            telephoneController.getTelephone(req, res);
+            expect(res.render).toHaveBeenCalledWith('register/organisation/telephone', {"telephone": "06876767"});
         });
     });
 
-    describe('postFullName', () => {
-        it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.OVER_18}' if name is provided`, async () => {
-            const fullName = 'test';
+    describe('postTelephone', () => {
+        it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.COMMENTS}' if telephone is provided`, async () => {
             const mockRequest = {
                 ...req,
                 body: {
-                    'full-name': fullName,
+                    'telephone': '676876876',
                 },
                 query: {
-                    'mode': ""
+                    mode: ''
                 }
             };
-            await fullNameController.postFullName(
+            await telephoneController.postTelephone(
                 mockRequest,
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.COMMENTS}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {
@@ -55,13 +54,13 @@ describe('controllers/register/myself/full-name', () => {
                     errors: { a: 'b' }
                 },
             };
-            await fullNameController.postFullName(
+            await telephoneController.postTelephone(
                 mockRequest,
                 res
             );
             expect(res.redirect).not.toHaveBeenCalled();
 
-            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.FULL_NAME, {
+            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.TELEPHONE, {
                 errorSummary: [{ text: 'There were errors here', href: '#' }],
                 errors: { a: 'b' }
             });

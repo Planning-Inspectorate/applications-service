@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOrganisationName = async (req, res) => {
-  res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {fullName: req.session.orgRegdata['organisation-name']});
+  res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {organisationName: req.session.orgRegdata['organisation-name']});
 };
 
 exports.postOrganisationName = async (req, res) => {
