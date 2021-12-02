@@ -21,6 +21,6 @@ exports.postRole = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.ORGANISATION.OVER_18}`);
+    res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADDRESS}`);
   }
 };
