@@ -27,7 +27,9 @@ const VIEW = {
       DECLARATION: 'register/myself/declaration',
       CONFIRMATION: 'register/myself/confirmation',
     },
-    TEST2: 'register/test2',
+    ORGANISATION: {
+      FULL_NAME: 'register/organisation/full-name',
+    },
     TEST3: 'register/test3',
   },
 
