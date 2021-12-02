@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       emailed: DataTypes.TIME,
       exported: DataTypes.TIME,
       web_ref: DataTypes.INTEGER,
+      over18: DataTypes.INTEGER,
     },
     {
       sequelize,
