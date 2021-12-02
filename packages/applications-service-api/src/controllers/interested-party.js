@@ -9,6 +9,8 @@ const {
 
 const ApiError = require('../error/apiError');
 
+const over18Values = ['NO', 'YES'];
+
 module.exports = {
   async getInterestedParty(req, res) {
     const { caseRef } = req.params;
@@ -45,6 +47,7 @@ module.exports = {
       'full-name': mename,
       email: memail,
       telephone: mephone,
+      'over-18': over18,
     } = req.body;
 
     const {
@@ -66,6 +69,7 @@ module.exports = {
       metown,
       mecode,
       mecountry,
+      over18: over18Values.indexOf(over18.toUpperCase()),
     };
 
     const document = await insertInterestedParty(interestedParty);
