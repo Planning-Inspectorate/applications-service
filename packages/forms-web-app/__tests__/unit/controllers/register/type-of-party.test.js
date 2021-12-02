@@ -37,10 +37,10 @@ describe('controllers/register/type-of-party', () => {
             expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.FULL_NAME);
         });
 
-        it(`should return '/${VIEW.REGISTER.TEST2}' if 2nd option selected`, async () => {
+        it(`should return '/${VIEW.REGISTER.ORGANISATION.FULL_NAME}' if 2nd option selected`, async () => {
             const pageRedirect = typeOfPartyController.forwardPage('organisation');
 
-            expect(pageRedirect).toEqual(VIEW.REGISTER.TEST2);
+            expect(pageRedirect).toEqual(VIEW.REGISTER.ORGANISATION.FULL_NAME);
         });
 
         it(`should return '/${VIEW.REGISTER.TEST3}' if 3rd option selected`, async () => {
