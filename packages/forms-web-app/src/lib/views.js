@@ -29,6 +29,7 @@ const VIEW = {
     },
     ORGANISATION: {
       FULL_NAME: 'register/organisation/full-name',
+      OVER_18: 'register/organisation/over-18',
     },
     TEST3: 'register/test3',
   },

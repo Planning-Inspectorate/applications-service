@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const fullNameRouter = require('./full-name');
-// const over18Router = require('./over-18');
+const over18Router = require('./over-18');
 // const addressRouter = require('./address');
 // const emailRouter = require('./email');
 // const telephoneRouter = require('./telephone');
@@ -14,7 +14,7 @@ const fullNameRouter = require('./full-name');
 // const confirmationRouter = require('./confirmation');
 
 router.use('/', fullNameRouter);
-// router.use('/', over18Router);
+router.use('/', over18Router);
 // router.use('/', addressRouter);
 // router.use('/', emailRouter);
 // router.use('/', telephoneRouter);

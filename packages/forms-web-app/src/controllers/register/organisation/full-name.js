@@ -17,7 +17,7 @@ exports.postFullName = async (req, res) => {
     return;
   }
 
-  req.session.mySelfRegdata['full-name'] = body['full-name'];
+  req.session.orgRegdata['full-name'] = body['full-name'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
   } else {
