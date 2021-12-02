@@ -19,6 +19,8 @@
         "behalf": "them",
         "full-name": null,
         "over-18": null,
+        "organisation-name": null,
+        "role": null,
         "address": {
             "line1": null,
             "line2": null,
