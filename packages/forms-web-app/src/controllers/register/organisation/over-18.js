@@ -22,6 +22,6 @@ exports.postOver18 = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADDRESS}`);
+    res.redirect(`/${VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME}`);
   }
 };

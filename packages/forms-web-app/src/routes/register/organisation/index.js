@@ -4,6 +4,7 @@ const router = express.Router();
 
 const fullNameRouter = require('./full-name');
 const over18Router = require('./over-18');
+const organisationNameRouter = require('./organisation-name');
 // const addressRouter = require('./address');
 // const emailRouter = require('./email');
 // const telephoneRouter = require('./telephone');
@@ -15,6 +16,7 @@ const over18Router = require('./over-18');
 
 router.use('/', fullNameRouter);
 router.use('/', over18Router);
+router.use('/', organisationNameRouter);
 // router.use('/', addressRouter);
 // router.use('/', emailRouter);
 // router.use('/', telephoneRouter);

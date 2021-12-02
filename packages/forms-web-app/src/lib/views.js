@@ -30,6 +30,7 @@ const VIEW = {
     ORGANISATION: {
       FULL_NAME: 'register/organisation/full-name',
       OVER_18: 'register/organisation/over-18',
+      ORGANISATION_NAME: 'register/organisation/organisation-name',
     },
     TEST3: 'register/test3',
   },
