@@ -7,7 +7,7 @@ const {
   updateComments,
 } = require('../../../src/controllers/interested-party');
 
-const ipData = {
+const ipDataOwnBehalf = {
   ID: 30000120,
   caseref: 'EN010009',
   behalf: 'me',
@@ -57,7 +57,7 @@ const ipData = {
   web_ref: 1,
 };
 
-const createIp = {
+const createIpOnOwnBehalf = {
   case_ref: 'EN010009',
   behalf: 'me',
   'full-name': 'Humpty Dumpty',
@@ -67,6 +67,24 @@ const createIp = {
     line2: 'Queens Wall Street',
     line3: 'London',
     postcode: 'HE127TY',
+    country: 'UK',
+  },
+  email: 'test@test.com',
+  telephone: '0132232432',
+};
+
+const createIpOnOrgBehalf = {
+  case_ref: 'EN010009',
+  behalf: 'them',
+  'full-name': 'Mr Bean',
+  'over-18': 'yes',
+  'organisation-name': 'Ministry of Coffee and Social Affairs',
+  role: 'Coffee connoisseur',
+  address: {
+    line1: 'Coffee Building',
+    line2: 'Coffee Wall Street',
+    line3: 'London',
+    postcode: 'CO127FE',
     country: 'UK',
   },
   email: 'test@test.com',
@@ -83,16 +101,16 @@ jest.mock('../../../src/models', () => {
   InterestedParty.$queryInterface.$useHandler((query, queryOptions) => {
     if (query === 'findOne') {
       if (queryOptions[0].where.caseRef === 'EN010009') {
-        return InterestedParty.build({ ...ipData });
+        return InterestedParty.build({ ...ipDataOwnBehalf });
       }
       return null;
     }
     if (query === 'create') {
-      return InterestedParty.build({ ...createIp });
+      return InterestedParty.build({ ...createIpOnOwnBehalf });
     }
     if (query === 'update') {
       if (queryOptions[1].where.ID === 30000120) {
-        return InterestedParty.build({ ...ipData });
+        return InterestedParty.build({ ...ipDataOwnBehalf });
       }
       return null;
     }
@@ -118,7 +136,7 @@ describe('getInterestedParty', () => {
     delete data.createdAt;
     delete data.updatedAt;
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual(ipData);
+    expect(data).toEqual(ipDataOwnBehalf);
   });
 
   it('should return interested party not found', async () => {
@@ -139,10 +157,22 @@ describe('getInterestedParty', () => {
 });
 
 describe('insertInterestedParty', () => {
-  it('should create an interested party', async () => {
+  it('should create an interested party on own behalf', async () => {
     const req = httpMocks.createRequest({
       body: {
-        ...createIp,
+        ...createIpOnOwnBehalf,
+      },
+    });
+    const res = httpMocks.createResponse();
+    await createInterestedParty(req, res);
+
+    expect(res._getStatusCode()).toEqual(StatusCodes.CREATED);
+  });
+
+  it('should create an interested party on organisation behalf', async () => {
+    const req = httpMocks.createRequest({
+      body: {
+        ...createIpOnOrgBehalf,
       },
     });
     const res = httpMocks.createResponse();
