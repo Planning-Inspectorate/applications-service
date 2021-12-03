@@ -9,7 +9,7 @@ const {
 
 const ApiError = require('../error/apiError');
 
-const over18Values = ['NO', 'YES'];
+const over18Values = { yes: 'over18', no: 'under18' };
 
 module.exports = {
   async getInterestedParty(req, res) {
@@ -69,7 +69,9 @@ module.exports = {
       metown,
       mecode,
       mecountry,
-      over18: over18Values.indexOf(over18.toUpperCase()),
+      // Do not remove this comment:
+      // Store over18/under18 information in field wp_ipc_relreps.<behalf>county as field over18 does not exist
+      mecounty: over18Values[over18.toLowerCase()],
     };
 
     const document = await insertInterestedParty(interestedParty);
