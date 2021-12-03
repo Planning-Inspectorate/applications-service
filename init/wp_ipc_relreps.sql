@@ -62,7 +62,6 @@ CREATE TABLE ipclive.wp_ipc_relreps (
   ish VARCHAR(45) NULL,
   created VARCHAR(45) NULL,
   modified VARCHAR(45) NULL,
-  over18 TINYINT NULL,
   PRIMARY KEY (ID));
 
 INSERT INTO ipclive.wp_ipc_relreps (ID,paperID,caseref,behalf,mename,mebuild,mestreet,metown,mecounty,mecode,mecountry,memail,mephone,youname,youorgname,youbuild,youstreet,youtown,youcounty,youcode,youcountry,youmail,youphone,orgname,contactname,contactjob,orgbuild,orgstreet,orgtown,orgcounty,orgcode,orgcountry,orgmail,orgphone,agname,agorgname,agbuild,agstreet,agtown,agcounty,agcode,agcountry,agmail,agphone,contact,interest,interestother,interesttypeowner,interesttypepower,interesttypeclaim,interesttypeother,cah,therep,wr,pm,ofh,ish,created,modified,validated,emailed,exported,web_ref) VALUES (1,NULL,'TR010001','me','Chris B','Here 4, Test','Here 4, Test, Test','Heretown','SOMERSET','H1 1HL','','chris.bungay@planninginspectorate.gov.uk','11111','',NULL,'','','','','','','','','','','','','','','','','','','','','','','','','','','','','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Test',NULL,NULL,NULL,NULL,'2019-10-11 12:09:17',NULL,'2019-10-11 12:09:17','2019-10-11 12:09:17','2020-02-07 16:01:05',1);
