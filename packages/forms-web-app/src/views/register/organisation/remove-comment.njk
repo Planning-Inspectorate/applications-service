@@ -1,0 +1,69 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set title="Remove comment - Register to have your say" %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title="Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    
+      {{ comment.topic }}
+
+      {{ comment.comment }}
+
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+      <form action="" method="POST" novalidate>
+        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+            {{ govukRadios({
+            fieldset: {
+                legend: {
+                text: "Are you sure you want to remove this comment?",
+                isPageHeading: true,
+                classes: "govuk-label--l"
+                }
+            },
+            idPrefix: "remove-comment",
+            name: "remove-comment",
+            items: [
+                {
+                  value: "yes",
+                  text: "Yes",
+                  attributes: { "data-cy": "answer-yes"}
+                },
+                {
+                  value: "no",
+                  text: "No",
+                  attributes: { "data-cy": "answer-no"}
+                }
+            ]
+            }) }}
+        </div>
+        <input type="hidden" name="index" value={{ index }} />
+        {{ govukButton({
+          text: "Continue",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+

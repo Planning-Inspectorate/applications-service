@@ -3,6 +3,8 @@
 {% from "govuk/components/button/macro.njk" import govukButton %},
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../../macros/summary-field.njk" import summaryField %}
 
 {% set title="Add another comment - Register to have your say" %}
 
@@ -17,6 +19,42 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">You have added {{ comments.length }} comment{% if comments.length > 1 %}s{%endif%}</h1>
+      {% set commentsRow = [] %}
+      {% for comment in comments %}
+        {% set commentRow = {
+              key: {
+                text: comment.topic
+              },
+              value: {
+                text: summaryField( comment.comment, { 'data-cy': "comment" })
+              },
+              actions: {
+                items: [
+                  {
+                    href: "/register/organisation/comments?mode=edit&index="+loop.index0,
+                    text: "Change",
+                    visuallyHiddenText: "??",
+                    attributes: { "data-cy": "comments" }
+                  },
+                  {
+                    href: "/register/organisation/remove-comment?index="+loop.index0,
+                    text: "Remove",
+                    visuallyHiddenText: "??",
+                    attributes: { "data-cy": "comments" }
+                  }
+                ]
+              }
+          } 
+        %}
+        {{ (commentsRow.push(commentRow), null) }}
+      {% endfor %}
+      {{ govukSummaryList({
+          classes: "govuk-summary-list govuk-!-margin-bottom-9",
+          rows: commentsRow
+      }) }}
+
       {% if errorSummary %}
         {{ govukErrorSummary({
           titleText: "There is a problem",
@@ -28,7 +66,7 @@
             {{ govukRadios({
             fieldset: {
                 legend: {
-                text: "Do you want to add another comment?",
+                text: "Do you want to add another registration comment?",
                 isPageHeading: true,
                 classes: "govuk-label--l"
                 }
@@ -51,7 +89,7 @@
             ]
             }) }}
         </div>
-
+        <input type="hidden" name="length" value={{ comments.length }} />
         {{ govukButton({
           text: "Continue",
           type: "Submit",
