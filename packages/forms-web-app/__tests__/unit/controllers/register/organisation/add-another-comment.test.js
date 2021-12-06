@@ -19,7 +19,7 @@ describe('controllers/register/organisation/add-another-comment', () => {
     describe('getAnotherComment', () => {
         it('should call the correct template', () => {
             addAnotherCommentController.getAnotherComment(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/organisation/add-another-comment');
+            expect(res.render).toHaveBeenCalledWith('register/organisation/add-another-comment', {"comments": undefined});
         });
     });
 
