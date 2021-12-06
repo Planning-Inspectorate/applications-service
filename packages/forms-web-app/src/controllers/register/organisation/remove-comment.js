@@ -4,11 +4,6 @@ const { VIEW } = require('../../../lib/views');
 exports.getRemoveComment = async (req, res) => {
   const index = req.query.index;
   const comment = req.session.comments[index];
-  logger.info('------'+index);
-  logger.info('------'+JSON.stringify(req.session.comments));
-  
-  logger.info('------'+comment);
-  
   res.render(VIEW.REGISTER.ORGANISATION.REMOVE_COMMENT, {comment: comment, index: index});
 };
 
@@ -27,6 +22,9 @@ exports.postRemoveComment = async (req, res) => {
     const index = body['index'];
     req.session.comments.splice(index, 1);
   }
-  res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);
-
+  if (req.query.src === 'add'){
+    res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);
+  } else {
+    res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+  }
 };

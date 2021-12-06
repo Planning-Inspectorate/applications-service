@@ -27,7 +27,11 @@ exports.postComments = async (req, res) => {
   if (req.query.mode === 'edit') {
     const index = req.query.index; 
     req.session.comments[index] = body;
-    res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+    if (req.query.src === 'add'){
+      res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);
+    } else {
+      res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+    }
   } else {
     let comments = req.session.comments;
     if (comments === undefined) {

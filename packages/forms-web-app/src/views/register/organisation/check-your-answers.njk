@@ -166,15 +166,15 @@
               actions: {
                 items: [
                   {
-                    href: "/register/organisation/comments?mode=edit&index="+loop.index0,
+                    href: "/register/organisation/comments?mode=edit&src=check&index="+loop.index0,
                     text: "Change",
-                    visuallyHiddenText: "??",
+                    visuallyHiddenText: "this comment",
                     attributes: { "data-cy": "comments" }
                   },
                   {
-                    href: "/register/organisation/comments?mode=remove&index="+loop.index0,
+                    href: "/register/organisation/remove-comment?src=check&index="+loop.index0,
                     text: "Remove",
-                    visuallyHiddenText: "??",
+                    visuallyHiddenText: "this comment",
                     attributes: { "data-cy": "comments" }
                   }
                 ]
