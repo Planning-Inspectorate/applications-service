@@ -1,6 +1,9 @@
 const db = require('../models');
 const notify = require('../lib/notify');
 
+const BEHALF_ME = 'ME';
+const BEHALF_ORG = 'THEM';
+
 const getInterestedParty = async (caseRef) => {
   const party = await db.InterestedParty.findOne({ where: { caseRef } });
   return party;
@@ -31,9 +34,13 @@ const updateInterestedPartyComments = async (ID, comments) => {
     let ipName;
     let ipRef;
 
-    if (behalf === 'me') {
+    if (behalf.toUpperCase() === BEHALF_ME) {
       email = party.dataValues.memail;
       ipName = party.dataValues.mename;
+      ipRef = `${party.dataValues.ID}`;
+    } else if (behalf.toUpperCase() === BEHALF_ORG) {
+      email = party.dataValues.orgmail;
+      ipName = party.dataValues.contactname;
       ipRef = `${party.dataValues.ID}`;
     }
 

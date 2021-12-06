@@ -109,6 +109,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InterestedPartyReqBody'
+              examples:
+                me:
+                  summary: An example of a request body when submitting on own behalf 
+                  value:
+                    case_ref: 'EN010009'
+                    behalf: 'me'
+                    full-name: 'Humpty Dumpty'
+                    over-18: 'yes'
+                    address:
+                      line1: 'Queens Building'
+                      line2: 'Queens Wall Street'
+                      line3: 'London'
+                      postcode: 'HE127TY'
+                      country: 'UK'    
+                    email: 'test@test.com' 
+                    telephone: '0132232432'
+                organisation:
+                  summary: An example of a request body when submitting on behalf of an organisation
+                  value:
+                    case_ref: 'EN010009'
+                    behalf: 'them'
+                    full-name: 'Mr Bean'
+                    over-18: 'yes'
+                    organisation-name: 'Ministry of Coffee and Social Affairs'
+                    role: 'Coffee connoisseur'
+                    address:
+                      line1: 'Coffee Building'
+                      line2: 'Coffee Wall Street'
+                      line3: 'London'
+                      postcode: 'CO127FE'
+                      country: 'UK'    
+                    email: 'test@test.com' 
+                    telephone: '0132232432'
           required: true
         responses:
           '201':
@@ -441,25 +474,19 @@ components:
       properties:
         case_ref: 
           type: string
-          example: 'EN010009'
         behalf: 
           type: string
-          example: 'me'
         full-name:
           type: string
-          example: 'Humpty Dumpty'
         over-18:
           type: string
-          example: 'yes'
         address:
           type: object
           $ref: '#/components/schemas/Address'
         email:
           type: string
-          example: 'test@test.com'  
         telephone:
           type: string
-          example: '0132232432'
     DocumentSearchCriteria:
       type: object
       properties:
@@ -574,19 +601,14 @@ components:
       properties:
         line1: 
           type: string
-          example: 'Queens Building'
         line2: 
           type: string
-          example: 'Queens Wall Street'
         line3: 
           type: string
-          example: 'London'
         postcode: 
           type: string
-          example: 'HE127TY'
         country:
-          type: string
-          example: 'UK'
+          type: string       
     Comments:
       type: object
       properties:

@@ -130,7 +130,7 @@ describe('getApplication', () => {
     expect(data).toEqual(project);
   });
 
-  // TODO Uncomment bellow test when below code (applications.js) is uncommneted
+  // TODO Uncomment bellow test when below code in applications.js is uncommneted
   // TODO Temporarily commented
   // if (!trialists.includes(id)) {
   //   throw ApiError.applicationNotAcceptable(id);
