@@ -155,34 +155,58 @@
             } 
         %}
       {{ (commentsRow.push(initialCommentRow), null) }}
-      {% for comment in comments %}
-        {% set commentRow = {
-              key: {
-                text: comment.topic
-              },
-              value: {
-                text: summaryField( comment.comment, { 'data-cy': "comment" })
-              },
-              actions: {
-                items: [
-                  {
-                    href: "/register/organisation/comments?mode=edit&src=check&index="+loop.index0,
-                    text: "Change",
-                    visuallyHiddenText: "this comment",
-                    attributes: { "data-cy": "comments" }
-                  },
-                  {
-                    href: "/register/organisation/remove-comment?src=check&index="+loop.index0,
-                    text: "Remove",
-                    visuallyHiddenText: "this comment",
-                    attributes: { "data-cy": "comments" }
-                  }
-                ]
-              }
-          } 
-        %}
-        {{ (commentsRow.push(commentRow), null) }}
-      {% endfor %}
+      {% if comments.length == 1 %}
+          {% set commentRow = {
+                key: {
+                  text: comments[0].topic
+                },
+                value: {
+                  text: summaryField( comments[0].comment, { 'data-cy': "comment" })
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/register/organisation/comments?mode=edit&src=check&index="+0,
+                      text: "Change",
+                      visuallyHiddenText: "this comment",
+                      attributes: { "data-cy": "comments" }
+                    }
+                  ]
+                }
+            } 
+          %}
+          {{ (commentsRow.push(commentRow), null) }}
+      {% else %}
+        {% for comment in comments %}
+          {% set commentRow = {
+                key: {
+                  text: comment.topic
+                },
+                value: {
+                  text: summaryField( comment.comment, { 'data-cy': "comment" })
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/register/organisation/comments?mode=edit&src=check&index="+loop.index0,
+                      text: "Change",
+                      visuallyHiddenText: "this comment",
+                      attributes: { "data-cy": "comments" }
+                    },
+                    {
+                      href: "/register/organisation/remove-comment?src=check&index="+loop.index0,
+                      text: "Remove",
+                      visuallyHiddenText: "this comment",
+                      attributes: { "data-cy": "comments" }
+                    }
+                  ]
+                }
+            } 
+          %}
+          {{ (commentsRow.push(commentRow), null) }}
+        {% endfor %}
+      {% endif %}
+
       {{ govukSummaryList({
           classes: "govuk-summary-list govuk-!-margin-bottom-9",
           rows: commentsRow

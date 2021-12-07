@@ -18,9 +18,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
     
-      {{ comment.topic }}
+      <h2 class="govuk-heading-m">{{ comment.topic }}</h2>
 
-      {{ comment.comment }}
+      <p class="govuk-body">{{ comment.comment }}</p>
 
       {% if errorSummary %}
         {{ govukErrorSummary({
