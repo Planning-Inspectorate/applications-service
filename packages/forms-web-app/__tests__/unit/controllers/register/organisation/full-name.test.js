@@ -1,10 +1,10 @@
-const fullNameController = require('../../../../../src/controllers/register/myself/full-name');
+const fullNameController = require('../../../../../src/controllers/register/organisation/full-name');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/myself/full-name', () => {
+describe('controllers/register/organisation/full-name', () => {
     let req;
     let res;
 
@@ -12,7 +12,7 @@ describe('controllers/register/myself/full-name', () => {
         req = {
             ...mockReq(),
             session: {
-                mySelfRegdata: {
+                orgRegdata: {
                     'full-name': 'test'
                 }
             },
@@ -24,12 +24,12 @@ describe('controllers/register/myself/full-name', () => {
     describe('getFullName', () => {
         it('should call the correct template', () => {
             fullNameController.getFullName(req, res);
-            expect(res.render).toHaveBeenCalledWith('register/myself/full-name', {"fullName": "test"});
+            expect(res.render).toHaveBeenCalledWith('register/organisation/full-name', {"fullName": "test"});
         });
     });
 
     describe('postFullName', () => {
-        it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.OVER_18}' if name is provided`, async () => {
+        it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.OVER_18}' if name is provided`, async () => {
             const fullName = 'test';
             const mockRequest = {
                 ...req,
@@ -45,7 +45,7 @@ describe('controllers/register/myself/full-name', () => {
                 res
             );
 
-            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
+            expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.OVER_18}`);
         });
         it('should re-render the template with errors if there is any validation error', async () => {
             const mockRequest = {
@@ -61,7 +61,7 @@ describe('controllers/register/myself/full-name', () => {
             );
             expect(res.redirect).not.toHaveBeenCalled();
 
-            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.FULL_NAME, {
+            expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.FULL_NAME, {
                 errorSummary: [{ text: 'There were errors here', href: '#' }],
                 errors: { a: 'b' }
             });

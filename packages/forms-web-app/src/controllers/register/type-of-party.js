@@ -12,7 +12,7 @@ exports.getTypeOfParty = async (req, res) => {
 const forwardPage = (partyType) => {
   const party = {
     [REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.MYSELF.FULL_NAME,
-    [REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.TEST2,
+    [REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.ORGANISATION.FULL_NAME,
     [REGISTER.TYPE_OF_PARTY.BEHALF_OF_ORGANISATION]: VIEW.REGISTER.TEST3,
     default: VIEW.REGISTER.TYPE_OF_PARTY,
   };
@@ -44,6 +44,8 @@ exports.postTypeOfParty = async (req, res) => {
   req.session.typeOfParty = typeOfParty;
   if (typeOfParty === 'myself') {
     req.session.mySelfRegdata = registrationData.myself;
+  } else if (typeOfParty === 'organisation') {
+    req.session.orgRegdata = registrationData.org;
   }
 
   res.redirect(`/${forwardPage(selectedParty)}`);

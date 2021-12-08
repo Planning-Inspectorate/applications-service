@@ -1,0 +1,104 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "../../macros/summary-field.njk" import summaryField %}
+
+{% set title="Add another comment - Register to have your say" %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title="Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">You have added {{ comments.length }} comment{% if comments.length > 1 %}s{%endif%}</h1>
+      {% set commentsRow = [] %}
+      {% for comment in comments %}
+        {% set commentRow = {
+              key: {
+                text: comment.topic
+              },
+              value: {
+                text: summaryField( comment.comment, { 'data-cy': "comment" })
+              },
+              actions: {
+                items: [
+                  {
+                    href: "/register/organisation/comments?mode=edit&src=add&index="+loop.index0,
+                    text: "Change",
+                    visuallyHiddenText: "??",
+                    attributes: { "data-cy": "comments" }
+                  },
+                  {
+                    href: "/register/organisation/remove-comment?src=add&index="+loop.index0,
+                    text: "Remove",
+                    visuallyHiddenText: "??",
+                    attributes: { "data-cy": "comments" }
+                  }
+                ]
+              }
+          } 
+        %}
+        {{ (commentsRow.push(commentRow), null) }}
+      {% endfor %}
+      {{ govukSummaryList({
+          classes: "govuk-summary-list govuk-!-margin-bottom-9",
+          rows: commentsRow
+      }) }}
+
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+      <form action="" method="POST" novalidate>
+        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+            {{ govukRadios({
+            fieldset: {
+                legend: {
+                text: "Do you want to add another registration comment?",
+                isPageHeading: true,
+                classes: "govuk-label--l"
+                }
+            },
+            idPrefix: "add-another-comment",
+            name: "add-another-comment",
+            items: [
+                {
+                  value: "yes",
+                  text: "Yes",
+                  attributes: { "data-cy": "answer-yes"},
+                  checked: addAnotherComment === "yes"
+                },
+                {
+                  value: "no",
+                  text: "No",
+                  attributes: { "data-cy": "answer-no"},
+                  checked: addAnotherComment === "no"
+                }
+            ]
+            }) }}
+        </div>
+        <input type="hidden" name="length" value={{ comments.length }} />
+        {{ govukButton({
+          text: "Continue",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
