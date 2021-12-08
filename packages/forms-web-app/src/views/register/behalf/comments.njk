@@ -29,10 +29,45 @@
       <form action="" method="POST" novalidate>
         <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
 
-       <!-- {{ govukWarningText({
-          text: "This information will be published on our website for the public. You should not include any personal details or sensistive information with your comment.",
-          iconFallbackText: "Warning"
-        }) }} -->
+        <p class="govuk-body">Your registration comments (also known as a relevant representation) should relate to the application. You must include a summary of points which you agree and/or disagree with about the application, highlighting what you consider to be the main issues and impacts.
+        <p class="govuk-body">Information about how you think a project may affect your day-to-day life may also be of interest to the Examining Authority.</p>
+        <p class="govuk-body">This information will be:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>used by the Examining Authority to decide how the project should be examined</li>
+          <li>published on our website</li>
+        </ul>
+        <p class="govuk-body">These are your registration comments. You will be able to tell us more during the Examination of the project.</p>
+
+        {{ govukInput({
+          label: {
+              text: "What topic does the comment relate to?",
+              classes: "govuk-label--s",
+              isPageHeading: true
+          },
+          id: "topic",
+          name: "topic",
+          value: comment.topic,
+          attributes: {"data-cy": "topic"},
+          errorMessage: errors['topic'] and {
+            text: errors['topic'].msg
+          }
+        }) }}
+
+        {{ govukTextarea({
+          maxwords: 200,
+          id: "comment",
+          label: {
+            text: "Please enter comment",
+            classes: "govuk-label--s",
+            isPageHeading: true
+          },
+          name: "comment",
+          value: comment.comment,
+          attributes: {"data-cy": "comment"},
+          errorMessage: errors['comment'] and {
+              text: errors['comment'].msg
+          }
+        }) }}
         {{ govukDetails({
           summaryText: "Do not include any personal details.",
           html: '
@@ -59,45 +94,7 @@
               <li>sexual orientation</li>
             </ul>'
         }) }}
-
-        <p class="govuk-body">You can talk about anything you think is important to tell us about the propsed project in as much detail as possible.</p>
-        <p class="govuk-body">This information will be:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
-          <li>published on our website</li>
-        </ul>
-
-        {{ govukInput({
-          label: {
-              text: "Please enter topic",
-              classes: "govuk-label--l",
-              isPageHeading: true
-          },
-          id: "topic",
-          name: "topic",
-          value: comment.topic,
-          attributes: {"data-cy": "topic"},
-          errorMessage: errors['topic'] and {
-            text: errors['topic'].msg
-          }
-        }) }}
-
-        {{ govukTextarea({
-          maxwords: 200,
-          id: "comment",
-          label: {
-            text: "Please enter comment",
-            classes: "govuk-label--l",
-            isPageHeading: true
-          },
-          name: "comment",
-          value: comment.comment,
-          attributes: {"data-cy": "comment"},
-          errorMessage: errors['comment'] and {
-              text: errors['comment'].msg
-          }
-        }) }}
-
+        
         {{ govukButton({
           text: "Continue",
           type: "Submit",
