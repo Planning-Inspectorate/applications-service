@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOver18 = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18, {over18: req.session.behalfRegdata['over-18']});
+  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18, {over18: req.session.behalfRegdata.representee['over-18']});
 };
 
 exports.postOver18 = async (req, res) => {
@@ -17,7 +17,7 @@ exports.postOver18 = async (req, res) => {
     return;
   }
 
-  req.session.behalfRegdata['over-18'] = over18;
+  req.session.behalfRegdata.representee['over-18'] = over18;
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);

@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getEmail = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_EMAIL, {email: req.session.behalfRegdata['email']});
+  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_EMAIL, {email: req.session.behalfRegdata.representee['email']});
 };
 
 exports.postEmail = async (req, res) => {
@@ -16,7 +16,7 @@ exports.postEmail = async (req, res) => {
     return;
   }
 
-  req.session.behalfRegdata['email'] = body['email'];
+  req.session.behalfRegdata.representee['email'] = body['email'];
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);

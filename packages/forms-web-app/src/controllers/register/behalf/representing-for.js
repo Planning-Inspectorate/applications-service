@@ -10,7 +10,7 @@ exports.postRepresentingFor = async (req, res) => {
   const representing = body['representing'];
   const { errors = {}, errorSummary = [] } = body;
   if (errors['representing'] || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18, {
+    res.render(VIEW.REGISTER.BEHALF.REPRESENTING_FOR, {
       errors,
       errorSummary,
     });
@@ -22,6 +22,6 @@ exports.postRepresentingFor = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_ADDRESS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_NAME}`);
   }
 };

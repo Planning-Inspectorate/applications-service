@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getTelephone = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_TELEPHONE, {telephone: req.session.behalfRegdata['telephone']});
+  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_TELEPHONE, {telephone: req.session.behalfRegdata.representee['telephone']});
 };
 
 exports.postTelephone = async (req, res) => {
@@ -16,8 +16,7 @@ exports.postTelephone = async (req, res) => {
     return;
   }
 
-  req.session.behalfRegdata['telephone'] = body['telephone'];
-
+  req.session.behalfRegdata.representee['telephone'] = body['telephone'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
   } else {

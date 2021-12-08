@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 const ruleRepresentingFor = () =>
-  body('representing-for')
+  body('representing')
     .notEmpty()
     .withMessage(
       'Select who are you representing for'

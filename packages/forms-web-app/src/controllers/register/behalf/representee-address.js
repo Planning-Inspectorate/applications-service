@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getAddress = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_ADDRESS, {address: req.session.behalfRegdata['address']});
+  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_ADDRESS, {address: req.session.behalfRegdata.representee['address']});
 };
 
 exports.postAddress = async (req, res) => {
@@ -17,11 +17,11 @@ exports.postAddress = async (req, res) => {
     return;
   }
 
-  req.session.behalfRegdata.address['line1'] = body['line1'];
-  req.session.behalfRegdata.address['line2'] = body['line2'];
-  req.session.behalfRegdata.address['line3'] = body['line3'];
-  req.session.behalfRegdata.address['postcode'] = body['postcode'];
-  req.session.behalfRegdata.address['country'] = body['country'];
+  req.session.behalfRegdata.representee.address['line1'] = body['line1'];
+  req.session.behalfRegdata.representee.address['line2'] = body['line2'];
+  req.session.behalfRegdata.representee.address['line3'] = body['line3'];
+  req.session.behalfRegdata.representee.address['postcode'] = body['postcode'];
+  req.session.behalfRegdata.representee.address['country'] = body['country'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
   } else {
