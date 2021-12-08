@@ -4,7 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-{% set title = "Type of interested party - Register to have your say" %}
+{% set title = "Who are you representing? - Register to have your say" %}
 
 {% block pageTitle %}
     {% if errors %}
@@ -26,36 +26,36 @@
             <form action="" method="post" novalidate>
 
                 {{ govukRadios({
-                    idPrefix: "type-of-party",
-                    name: "type-of-party",
-                    errorMessage: errors['type-of-party'] and {
-                        text: errors['type-of-party'].msg
+                    idPrefix: "representing",
+                    name: "representing",
+                    errorMessage: errors['representing'] and {
+                        text: errors['representing'].msg
                     },
                     fieldset: {
                         legend: {
-                            text: "Who are you registering for?",
+                            text: "Who are you representing?",
                             isPageHeading: true,
                             classes: "govuk-fieldset__legend--l"
                         }
                     },
                     items: [
                         {
-                            value: "myself",
-                            text: "Myself",
-                            attributes: { "data-cy": "answer-mySay"},
-                            checked: type === "myself"
+                            value: "person",
+                            text: "A person",
+                            attributes: { "data-cy": "answer-person"},
+                            checked: representing === "person"
                         },
                         {
                             value: "organisation",
-                            text: "An organisation I work or volunteer for",
+                            text: "An organisation or charity",
                             attributes: { "data-cy": "answer-organisation"},
-                            checked: type === "organisation"
+                            checked: representing === "organisation"
                         },
                         {
-                            value: "behalf",
-                            text: "On behalf of another person or organisation",
-                            attributes: { "data-cy": "answer-behalf"},
-                            checked: type === "behalf"
+                            value: "family",
+                            text: "A family group",
+                            attributes: { "data-cy": "answer-family"},
+                            checked: representing === "family"
                         }
                     ]
                 }) }}

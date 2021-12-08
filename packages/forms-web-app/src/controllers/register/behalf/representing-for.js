@@ -2,14 +2,14 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getRepresentingFor = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.REPRESENTING_FOR, {representingFor: req.session.behalfRegdata['representing-for']});
+  res.render(VIEW.REGISTER.BEHALF.REPRESENTING_FOR, {representing: req.session.behalfRegdata['representing']});
 };
 
 exports.postRepresentingFor = async (req, res) => {
   const { body } = req;
-  const representingFor = body['representing-for'];
+  const representing = body['representing'];
   const { errors = {}, errorSummary = [] } = body;
-  if (errors['representing-for'] || Object.keys(errors).length > 0) {
+  if (errors['representing'] || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18, {
       errors,
       errorSummary,
@@ -17,7 +17,7 @@ exports.postRepresentingFor = async (req, res) => {
     return;
   }
 
-  req.session.behalfRegdata['representing-for'] = representingFor;
+  req.session.behalfRegdata['representing'] = representing;
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
