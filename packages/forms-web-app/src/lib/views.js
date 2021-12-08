@@ -49,12 +49,17 @@ const VIEW = {
       REPRESENTEE_ADDRESS: 'register/behalf/representee-address',
       REPRESENTEE_EMAIL: 'register/behalf/representee-email',
       REPRESENTEE_TELEPHONE: 'register/behalf/representee-telephone',
-
       FULL_NAME: 'register/behalf/full-name',
       OVER_18: 'register/behalf/over-18',
       ADDRESS: 'register/behalf/address',
       EMAIL: 'register/behalf/email',
       TELEPHONE: 'register/behalf/telephone',
+      COMMENTS: 'register/behalf/comments',
+      ADD_ANOTHER_COMMENT: 'register/behalf/add-another-comment',
+      REMOVE_COMMENT: 'register/behalf/remove-comment',
+      CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
+      DECLARATION: 'register/behalf/declaration',
+      CONFIRMATION: 'register/behalf/confirmation',
     }
   },
 
