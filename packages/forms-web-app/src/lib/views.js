@@ -42,13 +42,13 @@ const VIEW = {
       DECLARATION: 'register/organisation/declaration',
       CONFIRMATION: 'register/organisation/confirmation',
     },
-    ONBEHALF: {
-      REPRESENTING_FOR: 'register/organisation/onbehalf/representing-for',
-      REPRESENTEE_NAME: 'register/organisation/onbehalf/representee-name',
-      REPRESENTEE_OVER18: 'register/organisation/onbehalf/representee-over-18',
-      REPRESENTEE_ADDRESS: 'register/organisation/onbehalf/representee-address',
-      REPRESENTEE_EMAIL: 'register/organisation/onbehalf/representee-email',
-      REPRESENTEE_TELEPHONE: 'register/organisation/onbehalf/representee-telephone',
+    BEHALF: {
+      REPRESENTING_FOR: 'register/behalf/representing-for',
+      REPRESENTEE_NAME: 'register/behalf/representee-name',
+      REPRESENTEE_OVER_18: 'register/behalf/representee-over-18',
+      REPRESENTEE_ADDRESS: 'register/behalf/representee-address',
+      REPRESENTEE_EMAIL: 'register/behalf/representee-email',
+      REPRESENTEE_TELEPHONE: 'register/behalf/representee-telephone',
     }
   },
 

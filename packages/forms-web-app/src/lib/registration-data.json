@@ -31,7 +31,7 @@
         "email": null,
         "telephone": null
     },
-    "agent":{
+    "behalf":{
         "case_ref": null,
         "behalf": "you",
         "representing": null,
