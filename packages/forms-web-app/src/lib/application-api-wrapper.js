@@ -83,11 +83,11 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   });
 };
 
-exports.postSelfRegistration = async (registeration_data) => {
+exports.postRegistration = async (registeration_data) => {
   const registrationServiceApiUrl = '/api/v1/interested-party';
   const method = 'POST';
 
-  return handler('postSelfRegistration', registrationServiceApiUrl, method, {
+  return handler('postRegistration', registrationServiceApiUrl, method, {
     body: registeration_data,
   });
 };
