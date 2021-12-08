@@ -49,6 +49,12 @@ const VIEW = {
       REPRESENTEE_ADDRESS: 'register/behalf/representee-address',
       REPRESENTEE_EMAIL: 'register/behalf/representee-email',
       REPRESENTEE_TELEPHONE: 'register/behalf/representee-telephone',
+
+      FULL_NAME: 'register/behalf/full-name',
+      OVER_18: 'register/behalf/over-18',
+      ADDRESS: 'register/behalf/address',
+      EMAIL: 'register/behalf/email',
+      TELEPHONE: 'register/behalf/telephone',
     }
   },
 

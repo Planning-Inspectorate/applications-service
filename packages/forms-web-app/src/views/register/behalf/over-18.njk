@@ -2,9 +2,9 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %},
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-{% set title="Email address - Register to have your say" %}
+{% set title="Are you 18 or over - Register to have your say" %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -25,26 +25,31 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
-          {{ govukInput({
-            label: {
-                text: "What is their email address?",
-                classes: "govuk-label--l",
-                isPageHeading: true
+            {{ govukRadios({
+            fieldset: {
+                legend: {
+                text: "Are you 18 or over?",
+                isPageHeading: true,
+                classes: "govuk-label--l"
+                }
             },
-            hint: {
-                text: "We will use your email address to send you information about this project."
-            },
-            id: "email",
-            name: "email",
-            value: email,
-            autocomplete: "email",
-            spellcheck: false,
-            attributes: {"data-cy": "email"},
-            errorMessage: errors['email'] and {
-              text: errors['email'].msg
-            }
-          }) }}
+            idPrefix: "over-18",
+            name: "over-18",
+            items: [
+                {
+                  value: "yes",
+                  text: "Yes",
+                  attributes: { "data-cy": "answer-yes"},
+                  checked: over18 === "yes"
+                },
+                {
+                  value: "no",
+                  text: "No",
+                  attributes: { "data-cy": "answer-no"},
+                  checked: over18 === "no"
+                }
+            ]
+            }) }}
         </div>
 
         {{ govukButton({

@@ -4,7 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title="Email address - Register to have your say" %}
+{% set title="Your telephone number - Register to have your say" %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -28,21 +28,20 @@
           
           {{ govukInput({
             label: {
-                text: "What is their email address?",
+                text: "What is your telephone number?",
                 classes: "govuk-label--l",
                 isPageHeading: true
             },
             hint: {
-                text: "We will use your email address to send you information about this project."
+                text: "We will use your phone number to get in touch with you about the project if we cannot reach you by email."
             },
-            id: "email",
-            name: "email",
-            value: email,
-            autocomplete: "email",
-            spellcheck: false,
-            attributes: {"data-cy": "email"},
-            errorMessage: errors['email'] and {
-              text: errors['email'].msg
+            classes: "govuk-input--width-20",
+            id: "telephone",
+            name: "telephone",
+            value: telephone,
+            attributes: {"data-cy": "telephone"},
+            errorMessage: errors['telephone'] and {
+              text: errors['telephone'].msg
             }
           }) }}
         </div>
