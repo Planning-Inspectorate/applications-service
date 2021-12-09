@@ -171,8 +171,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Comments'
-          required: true
+                type: object
+                properties:
+                  mode:
+                    type: string
+                    example: 'final'
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      $ref: '#/components/schemas/Comment'
+                    required: true
         responses:
           '200':
             description: Comments updated successfully
@@ -608,15 +617,8 @@ components:
         postcode: 
           type: string
         country:
-          type: string       
-    Comments:
-      type: object
-      properties:
-        comments: 
-          type: array
-          items:
-            type: object
-            $ref: '#/components/schemas/Comment'
+          type: string
+          example: 'UK'
     Comment:
       type: object
       properties:
@@ -626,4 +628,3 @@ components:
         comment:
           type: string
           example: 'I dont like traffic'
-               

@@ -33,6 +33,33 @@ async function sendIPRegistrationConfirmationEmailToIP(details) {
   }
 }
 
+async function sendMagicLinkToIP(details) {
+  try {
+    const notifyClient = createNotifyClient.createNotifyClient({
+      baseUrl: config.services.notify.baseUrl,
+      serviceId: config.services.notify.serviceId,
+      apiKey: config.services.notify.apiKey,
+    });
+
+    await notifyBuilder
+      .reset()
+      .setNotifyClient(notifyClient)
+      .setTemplateId(config.services.notify.templates.MagicLinkEmail)
+      .setDestinationEmailAddress(details.email)
+      .setTemplateVariablesFromObject({
+        'email address': details.email,
+        interested_party_name: details.ipName,
+        'planning application number': details.caseRef,
+        'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
+      })
+      .setReference(details.ipRef)
+      .sendEmail();
+  } catch (e) {
+    logger.error({ err: e }, 'Unable to send magic link email to interested party.');
+  }
+}
+
 module.exports = {
   sendIPRegistrationConfirmationEmailToIP,
+  sendMagicLinkToIP,
 };

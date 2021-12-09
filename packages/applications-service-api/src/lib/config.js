@@ -45,6 +45,7 @@ module.exports = {
       templates: {
         IPRegistrationConfirmationEmailToIP:
           process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
+        MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
       },
       preliminaryMeetingUrl:
         process.env.PRELIMINARY_MEETING_URL ||
@@ -52,6 +53,12 @@ module.exports = {
       havingYourSayUrl:
         process.env.HAVING_YOUR_SAY_URL ||
         'https://applications-service-web-app.azurewebsites.net/',
+      magicLinkDomain:
+        process.env.MAGIC_LINK_DOMAIN || 'https://applications-service-web-app.azurewebsites.net/',
+    },
+    encryption: {
+      algorithm: 'aes-256-ctr',
+      secretKey: process.env.ENCRYPTION_SECRET_KEY || 'x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K',
     },
   },
 };

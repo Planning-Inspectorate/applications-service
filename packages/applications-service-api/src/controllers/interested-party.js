@@ -127,10 +127,10 @@ module.exports = {
 
   async updateComments(req, res) {
     const { ID } = req.params;
-    const comments = req.body;
+    const { comments, mode } = req.body;
 
     try {
-      const update = await updateInterestedPartyComments(ID, comments);
+      const update = await updateInterestedPartyComments(ID, comments, mode);
 
       if (update === 0) {
         throw ApiError.commentsForPartyWithIDNotUpdated(ID);
