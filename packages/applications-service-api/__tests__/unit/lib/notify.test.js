@@ -1,5 +1,8 @@
 const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
-const { sendIPRegistrationConfirmationEmailToIP } = require('../../../src/lib/notify');
+const {
+  sendIPRegistrationConfirmationEmailToIP,
+  sendMagicLinkToIP,
+} = require('../../../src/lib/notify');
 
 const config = require('.../../../src/lib/config');
 
@@ -19,6 +22,10 @@ jest.mock('@planning-inspectorate/pins-notify', () => ({
 }));
 
 describe('sendIPRegistrationConfirmationEmailToIP', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should send an email', async () => {
     const details = {
       email: 'elvin.ali@planninginspectorate.gov.uk',
@@ -42,6 +49,38 @@ describe('sendIPRegistrationConfirmationEmailToIP', () => {
       interested_party_ref: details.ipRef,
       preliminary_meeting_url: 'https://applications-service-web-app.azurewebsites.net/',
       having_your_say_url: 'https://applications-service-web-app.azurewebsites.net/',
+    });
+    expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
+    expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('sendMagicLinkToIP', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should send an email', async () => {
+    const details = {
+      email: 'elvin.ali@planninginspectorate.gov.uk',
+      ipName: 'David White',
+      caseRef: 'EN010009',
+      ipRef: '30000120',
+    };
+    await sendMagicLinkToIP(details);
+
+    expect(notifyBuilder.reset).toHaveBeenCalled();
+    expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
+      config.services.notify.templates.MagicLinkEmail
+    );
+    expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith(
+      'elvin.ali@planninginspectorate.gov.uk'
+    );
+    expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+      'email address': details.email,
+      interested_party_name: details.ipName,
+      'planning application number': details.caseRef,
+      'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
     });
     expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
     expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);

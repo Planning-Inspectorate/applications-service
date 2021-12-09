@@ -1,8 +1,11 @@
 const db = require('../models');
 const notify = require('../lib/notify');
+const crypto = require('../lib/crypto');
 
 const BEHALF_ME = 'ME';
 const BEHALF_ORG = 'THEM';
+const MODE_DRAFT = 'DRAFT';
+const MODE_FINAL = 'FINAL';
 
 const getInterestedParty = async (caseRef) => {
   const party = await db.InterestedParty.findOne({ where: { caseRef } });
@@ -14,17 +17,19 @@ const insertInterestedParty = async (interestedParty) => {
   return party;
 };
 
-const updateInterestedPartyComments = async (ID, comments) => {
+const updateInterestedPartyComments = async (ID, comments, mode) => {
   const update = await db.InterestedParty.update(
     { therep: JSON.stringify(comments) },
     { where: { ID } }
   );
 
   const updateStatus = update[0];
+
   if (updateStatus) {
     const party = await db.InterestedParty.findOne({ where: { ID } });
+    const caseRef = party.dataValues.caseref;
     const project = await db.Project.findOne({
-      where: { CaseReference: party.dataValues.caseref },
+      where: { CaseReference: caseRef },
     });
 
     const { behalf } = party.dataValues;
@@ -44,8 +49,13 @@ const updateInterestedPartyComments = async (ID, comments) => {
       ipRef = `${party.dataValues.ID}`;
     }
 
-    await notify.sendIPRegistrationConfirmationEmailToIP({ email, projectName, ipName, ipRef });
-    await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });
+    if (mode.toUpperCase() === MODE_FINAL) {
+      await notify.sendIPRegistrationConfirmationEmailToIP({ email, projectName, ipName, ipRef });
+      await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });
+    } else if (mode.toUpperCase() === MODE_DRAFT) {
+      const token = crypto.encrypt(ID);
+      await notify.sendMagicLinkToIP({ email, ipName, caseRef, token, ipRef });
+    }
   }
 
   return updateStatus;
