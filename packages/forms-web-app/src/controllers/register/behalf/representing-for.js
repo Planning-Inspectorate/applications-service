@@ -20,7 +20,7 @@ exports.postRepresentingFor = async (req, res) => {
   req.session.behalfRegdata['representing'] = representing;
 
   if (req.query.mode === 'edit') {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_NAME}`);
   }

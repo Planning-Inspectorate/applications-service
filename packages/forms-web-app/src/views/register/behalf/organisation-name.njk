@@ -2,9 +2,9 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %},
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title="Are you 18 or over - Register to have your say" %}
+{% set title="Organisation name - Register to have your say" %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -25,31 +25,22 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-            {{ govukRadios({
-            fieldset: {
-                legend: {
-                text: "Are you 18 or over?",
-                isPageHeading: true,
-                classes: "govuk-label--l"
-                }
+          
+          {{ govukInput({
+            label: {
+                text: "What is the name of your organisation or charity?",
+                classes: "govuk-label--l",
+                isPageHeading: true
             },
-            idPrefix: "over-18",
-            name: "over-18",
-            items: [
-                {
-                  value: "yes",
-                  text: "Yes",
-                  attributes: { "data-cy": "answer-yes"},
-                  checked: over18 === "yes"
-                },
-                {
-                  value: "no",
-                  text: "No",
-                  attributes: { "data-cy": "answer-no"},
-                  checked: over18 === "no"
-                }
-            ]
-            }) }}
+            classes: "govuk-input--width-20",
+            id: "organisation-name",
+            name: "organisation-name",
+            value: organisationName,
+            attributes: {"data-cy": "organisation-name"},
+            errorMessage: errors['organisation-name'] and {
+              text: errors['organisation-name'].msg
+            }
+          }) }}
         </div>
 
         {{ govukButton({

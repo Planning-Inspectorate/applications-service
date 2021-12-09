@@ -42,7 +42,7 @@ exports.postComments = async (req, res) => {
     if (req.session.comments.length < config.applications.noOfCommentsAllowed) {
       res.redirect(`/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}`);  
     } else {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
+      res.redirect(`/${VIEW.REGISTER.BEHALF.FULL_NAME}`);
     }
   }
   

@@ -18,8 +18,8 @@ exports.postTelephone = async (req, res) => {
 
   req.session.behalfRegdata.representee['telephone'] = body['telephone'];
   if (req.query.mode === 'edit') {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_COMMENTS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.COMMENTS}`);
   }
 };

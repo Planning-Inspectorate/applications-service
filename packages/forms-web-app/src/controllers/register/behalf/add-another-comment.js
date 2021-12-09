@@ -20,7 +20,7 @@ exports.postAnotherComment = async (req, res) => {
   if (addAnotherComment === 'yes') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.COMMENTS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.FULL_NAME}`);
   }
 
   // if (req.query.mode === 'edit') {

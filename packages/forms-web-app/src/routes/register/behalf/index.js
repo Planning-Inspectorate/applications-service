@@ -10,11 +10,10 @@ const representeeEmailRouter = require('./representee-email');
 const representeeTelephoneRouter = require('./representee-telephone');
 
 const fullNameRouter = require('./full-name');
-const over18Router = require('./over-18');
 const addressRouter = require('./address');
 const emailRouter = require('./email');
 const telephoneRouter = require('./telephone');
-
+const organisationNameRouter = require('./organisation-name');
 
 const commentsRouter = require('./comments');
 const addAnotherCommentRouter = require('./add-another-comment');
@@ -31,10 +30,10 @@ router.use('/', representeeEmailRouter);
 router.use('/', representeeTelephoneRouter);
 
 router.use('/', fullNameRouter);
-router.use('/', over18Router);
 router.use('/', addressRouter);
 router.use('/', emailRouter);
 router.use('/', telephoneRouter);
+router.use('/', organisationNameRouter);
 
 router.use('/', commentsRouter);
 router.use('/', addAnotherCommentRouter);

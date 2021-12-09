@@ -21,6 +21,10 @@ exports.postFullName = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.OVER_18}`);
+    if (req.session.behalfRegdata.representing === 'organisation') {
+      res.redirect(`/${VIEW.REGISTER.BEHALF.ORGANISATION_NAME}`);
+    } else {
+      res.redirect(`/${VIEW.REGISTER.BEHALF.ADDRESS}`);
+    }
   }
 };

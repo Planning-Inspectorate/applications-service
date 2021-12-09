@@ -23,7 +23,7 @@ exports.postAddress = async (req, res) => {
   req.session.behalfRegdata.representee.address['postcode'] = body['postcode'];
   req.session.behalfRegdata.representee.address['country'] = body['country'];
   if (req.query.mode === 'edit') {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_EMAIL}`);
   }

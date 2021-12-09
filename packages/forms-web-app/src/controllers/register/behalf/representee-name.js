@@ -23,7 +23,7 @@ exports.postFullName = async (req, res) => {
 
   req.session.behalfRegdata.representee['full-name'] = body['full-name'];
   if (req.query.mode === 'edit') {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_CHECK_YOUR_ANSWERS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
     res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18}`);
   }
