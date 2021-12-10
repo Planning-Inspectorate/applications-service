@@ -39,6 +39,12 @@ class ApiError {
       errors: [`Failed to update comments for party with ID ${ID}`],
     });
   }
+
+  static interestedPartyNotFoundByID(ID) {
+    return new ApiError(StatusCodes.NOT_FOUND, {
+      errors: [`Interested party ${ID} not found`],
+    });
+  }
 }
 
 module.exports = ApiError;

@@ -61,8 +61,14 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
   return updateStatus;
 };
 
+const getInterestedPartyById = async (ID) => {
+  const party = await db.InterestedParty.findOne({ where: { ID } });
+  return party;
+};
+
 module.exports = {
   insertInterestedParty,
   getInterestedParty,
   updateInterestedPartyComments,
+  getInterestedPartyById,
 };

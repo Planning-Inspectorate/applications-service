@@ -1,12 +1,17 @@
 const { StatusCodes } = require('http-status-codes');
+const crypto = require('../lib/crypto');
+
 const logger = require('../lib/logger');
 
 const {
   insertInterestedParty,
   getInterestedParty: getInterestedPartyFromInterestedPartyApiService,
   updateInterestedPartyComments,
+  getInterestedPartyById: getInterestedPartyFromInterestedPartyApiServiceById,
 } = require('../services/interested-party.service');
-
+const {
+  getApplication: getApplicationFromApplicationApiService,
+} = require('../services/application.service');
 const ApiError = require('../error/apiError');
 
 const over18Values = { yes: 'over18', no: 'under18' };
@@ -137,6 +142,63 @@ module.exports = {
       }
 
       res.status(StatusCodes.OK).send();
+    } catch (e) {
+      /* istanbul ignore next */
+      if (e instanceof ApiError) {
+        logger.debug(e.message);
+        res.status(e.code).send({ code: e.code, errors: e.message.errors });
+        return;
+      }
+      /* istanbul ignore next */
+      logger.error(e.message);
+      /* istanbul ignore next */
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .send(`Problem updating comments for interested party with ID ${ID} \n ${e}`);
+    }
+  },
+
+  async confirmEmailAddress(req, res) {
+    const { token } = req.params;
+    const { email } = req.body;
+
+    const ID = crypto.decrypt(token);
+    logger.debug(`Retrieving interested party by ID ${ID} ...`);
+
+    try {
+      const document = await getInterestedPartyFromInterestedPartyApiServiceById(ID);
+
+      if (document === null) {
+        throw ApiError.interestedPartyNotFoundByID(ID);
+      }
+      logger.debug(`Interested party ${ID} retrieved`);
+      const party = document.dataValues;
+      const { behalf, memail, orgmail, caseref } = party;
+
+      let ipMail;
+      if (behalf.toUpperCase() === BEHALF_ME) {
+        ipMail = memail;
+      } else if (behalf.toUpperCase() === BEHALF_ORG) {
+        ipMail = orgmail;
+      }
+      if (email !== ipMail) {
+        throw ApiError.interestedPartyNotFoundByID(ID);
+      }
+      const project = await getApplicationFromApplicationApiService(caseref);
+
+      if (project === null) {
+        throw ApiError.applicationNotFound(caseref);
+      }
+
+      const { DateOfRelevantRepresentationClose } = project.dataValues;
+
+      const repCloseDate = new Date(DateOfRelevantRepresentationClose);
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0);
+
+      const submissionPeriodClosed = repCloseDate < currentDate;
+
+      res.status(StatusCodes.OK).send({ ...party, submissionPeriodClosed });
     } catch (e) {
       /* istanbul ignore next */
       if (e instanceof ApiError) {
