@@ -43,10 +43,10 @@ describe('controllers/register/type-of-party', () => {
             expect(pageRedirect).toEqual(VIEW.REGISTER.ORGANISATION.FULL_NAME);
         });
 
-        it(`should return '/${VIEW.REGISTER.TEST3}' if 3rd option selected`, async () => {
-            const pageRedirect = typeOfPartyController.forwardPage('behalfOfOrganisation');
+        it(`should return '/${VIEW.REGISTER.BEHALF.REPRESENTING_FOR}' if 3rd option selected`, async () => {
+            const pageRedirect = typeOfPartyController.forwardPage('behalf');
 
-            expect(pageRedirect).toEqual(VIEW.REGISTER.TEST3);
+            expect(pageRedirect).toEqual(VIEW.REGISTER.BEHALF.REPRESENTING_FOR);
         });
 
         it(`should return '/${VIEW.REGISTER.TYPE_OF_PARTY}' if it is 'default'`, async () => {
