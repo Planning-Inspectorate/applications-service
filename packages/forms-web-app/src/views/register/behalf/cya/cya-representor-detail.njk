@@ -1,0 +1,108 @@
+{% set address %}
+  {{ data.representor.address.line1 }}<br>
+  {% if data.representor.address.line2 %}
+    {{ data.representor.address.line2 }}<br>
+  {% endif %}
+  {% if data.representor.address.line3 %}
+    {{ data.representor.address.line3 }}<br>
+  {% endif %}
+  {{ data.representor.address.postcode }}<br>
+  {{ data.representor.address.country }}
+{% endset %}
+
+ <h2 class="govuk-heading-m">Your details</h2>
+    {{ govukSummaryList({
+        classes: "govuk-summary-list govuk-!-margin-bottom-9",
+        rows: [
+          {
+            key: {
+              text: "Who are you representing for?"
+            },
+            value: {
+              text: summaryField( "An organisation or charity", { 'data-cy': "representing-for" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/behalf/representing-for?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "representing-for",
+                  attributes: { "data-cy": "representing-for" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Full name"
+            },
+            value: {
+              text: summaryField( data.representor['full-name'], { 'data-cy': "full-name" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/behalf/full-name?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "full-name" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Address"
+            },
+            value: {
+              html: address
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/behalf/address?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "address" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Email address"
+            },
+            value: {
+              text: summaryField( data.representor['email'], { 'data-cy': "email" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/behalf/email?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "email" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Telephone number"
+            },
+            value: {
+              text: summaryField( data.representor['telephone'], { 'data-cy': "telephone" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/behalf/telephone?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "telephone" }
+                }
+              ]
+            }
+          }
+        ]
+    }) }}
