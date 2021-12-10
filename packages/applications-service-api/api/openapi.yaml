@@ -657,10 +657,10 @@ components:
           example: 'Traffic'
         comment:
           type: string
-          example: 'I dont like traffic'
+          example: 'I don't like traffic'
     Email:
       type: object
       properties:
         email:
           type: string
-          example: 'elvin.ali@planninginspectorate.gov.uk'           
+          example: 'elvin.ali@planninginspectorate.gov.uk'
