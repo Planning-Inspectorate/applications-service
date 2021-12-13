@@ -1,11 +1,11 @@
 @testSuite
-Feature: Registration complete page
+Feature: Organisation Registration complete page
     As a Test user
-    I want to navigate to Regsitration complete page
+    I want to navigate to Organisation Regsitration complete page
     So that I can verify the functionality
 
-    Background: Complete registration journey
-        Given I navigate to UK address details page
+    Background: Complete Organisation registration journey
+        Given I navigate to UK address details page using organisation route
         And I enter below data into address details page
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
@@ -19,7 +19,7 @@ Feature: Registration complete page
         And User clicks on continue button
         And user selects "No" radio option on Do you want to add another comment page
         And User clicks on continue button
-        And User clicks on accept and continue button for "myself"
+        And User clicks on accept and continue button for "organisation"
         And User clicks on accept and register button
 
     Scenario: verify page title, heading

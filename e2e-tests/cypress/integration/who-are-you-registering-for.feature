@@ -34,3 +34,8 @@ Feature: who are you registering for? page
         When User selects "Myself"
         And User clicks on continue button
         Then I am on the "what is your full name?" page
+
+    Scenario: User selects An organisation I work or volunteer for and click continue
+        When User selects "An organisation I work or volunteer for"
+        And User clicks on continue button
+        Then I am on the "what is your full name?" page

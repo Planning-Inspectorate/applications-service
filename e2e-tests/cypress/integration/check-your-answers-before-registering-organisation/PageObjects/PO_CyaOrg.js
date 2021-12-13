@@ -1,4 +1,4 @@
-class PO_CyaBeforeReg {
+class PO_CyaOrg {
 
     assertDataOnPage(table) {
         const data = table.hashes()
@@ -43,12 +43,10 @@ class PO_CyaBeforeReg {
             cy.get('[data-cy="telephone"]').last().click();
             break;
             case "Your comments change": 
-            cy.get('[data-cy="comments-change"]').last().click();
-            break;
-            case "Your comments remove": 
-            cy.get('[data-cy="comments-remove"]').last().click();
+            cy.get('[data-cy="comments"]').last().click();
             break;
         }
     }
+
 }
-export default PO_CyaBeforeReg;
+export default PO_CyaOrg;

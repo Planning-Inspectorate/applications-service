@@ -12,7 +12,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is your full name?');
             })
-            cy.url().should('include', '/register/myself/full-name')
+            cy.url().should('include', '/full-name')
             break;
         case "register to have your say":
             cy.title().should('eq', "Start registration");
@@ -94,63 +94,91 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Are you 18 or over?');
             })
-            cy.url().should('include', '/register/myself/over-18')
+            cy.url().should('include', '/over-18')
             break;
         case "uk address details":
             cy.title().should('eq', "UK address details - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('UK address details');
             })
-            cy.url().should('include', '/register/myself/address')
+            cy.url().should('include', '/address')
             break;
         case "what is your email address?":
             cy.title().should('eq', "Email address - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is your email address?');
             })
-            cy.url().should('include', '/register/myself/email')
+            cy.url().should('include', '/email')
             break;
         case "what is your telephone number?":
             cy.title().should('eq', "Your telephone number - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is your telephone number?');
             })
-            cy.url().should('include', '/register/myself/telephone')
+            cy.url().should('include', '/telephone')
             break;
         case "what do you want to tell us about this proposed project?":
             cy.title().should('eq', "Comments - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What do you want to tell us about this proposed project?');
             })
-            cy.url().should('include', '/register/myself/comments')
+            cy.url().should('include', '/comments')
             break;
         case "check your answers before registering":
             cy.title().should('eq', "Check your answers - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Check your answers before registering');
             })
-            cy.url().should('include', '/register/myself/check-your-answers')
+            cy.url().should('include', '/check-your-answers')
             break;
         case "declaration":
             cy.title().should('eq', "Declaration - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Declaration');
             })
-            cy.url().should('include', '/register/myself/declaration')
+            cy.url().should('include', '/declaration')
             break;
         case "registration complete":
             cy.title().should('eq', "Confirmation - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Registration complete');
             })
-            cy.url().should('include', '/register/myself/confirmation')
+            cy.url().should('include', '/confirmation')
+            break;
+        case "what is the name of your organisation or charity?":
+            cy.title().should('eq', "Organisation name - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('What is the name of your organisation or charity?');
+            })
+            cy.url().should('include', '/register/organisation/organisation-name')
+            break;
+        case "what is your job title or volunteer role?":
+            cy.title().should('eq', "Your role - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('What is your job title or volunteer role?');
+            })
+            cy.url().should('include', '/register/organisation/role')
+            break;
+        case "are you sure you want to remove this comment?":
+            cy.title().should('eq', "Remove comment - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Are you sure you want to remove this comment?');
+            })
+            cy.url().should('include', '/register/organisation/remove-comment')
             break;
         case "do you want to add another comment?":
             cy.title().should('eq', "Add another comment - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Do you want to add another comment?');
             })
-            cy.url().should('include', '/register/myself/add-another-comment')
+            cy.url().should('include', '/add-another-comment')
+            break;
+        case "do you want to add another registration comment?":
+            cy.title().should('eq', "Add another comment - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Do you want to add another registration comment?');
+            })
+            cy.url().should('include', '/add-another-comment')
             break;
         default: throw console.error('uanble to find specified page name: ' + pageName);
     }
