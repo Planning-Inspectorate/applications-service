@@ -1,0 +1,108 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+{% set title="Comments - Register to have your say" %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title="Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+      <form action="" method="POST" novalidate>
+        <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
+
+        <p class="govuk-body">Your registration comments (also known as a relevant representation) should relate to the application. You must include a summary of points which you agree and/or disagree with about the application, highlighting what you consider to be the main issues and impacts.
+        <p class="govuk-body">Information about how you think a project may affect your day-to-day life may also be of interest to the Examining Authority.</p>
+        <p class="govuk-body">This information will be:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>used by the Examining Authority to decide how the project should be examined</li>
+          <li>published on our website</li>
+        </ul>
+        <p class="govuk-body">These are your registration comments. You will be able to tell us more during the Examination of the project.</p>
+
+        {{ govukInput({
+          label: {
+              text: "What topic does the comment relate to?",
+              classes: "govuk-label--s",
+              isPageHeading: true
+          },
+          id: "topic",
+          name: "topic",
+          value: comment.topic,
+          attributes: {"data-cy": "topic"},
+          errorMessage: errors['topic'] and {
+            text: errors['topic'].msg
+          }
+        }) }}
+
+        {{ govukTextarea({
+          maxwords: 200,
+          id: "comment",
+          label: {
+            text: "Please enter comment",
+            classes: "govuk-label--s",
+            isPageHeading: true
+          },
+          name: "comment",
+          value: comment.comment,
+          attributes: {"data-cy": "comment"},
+          errorMessage: errors['comment'] and {
+              text: errors['comment'].msg
+          }
+        }) }}
+        {{ govukDetails({
+          summaryText: "Do not include any personal details.",
+          html: '
+            <h2 class="govuk-heading-m">Use of language and sensitive information</h2>
+            <p class="govuk-body">You should not use racist, inflammatory or abusive language, or include sensitive information (also called special category information) about yourself or others in your comments.</p>
+            <h2 class="govuk-heading-m">Examples of sensitive information</h2>
+            <p class="govuk-body">Sensitive information refers to:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>comments from children</li>
+              <li>information relating to children</li>
+              <li>information relating to health</li>
+              <li>information relating to crime</li>
+            </ul>
+            <p class="govuk-body">It also means any information relating to an individual&#39;s:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>race</li>
+              <li>ethnic origin</li>
+              <li>politics</li>
+              <li>religion</li>
+              <li>trade union membership</li>
+              <li>genetics</li>
+              <li>physical characteristics</li>
+              <li>sex life</li>
+              <li>sexual orientation</li>
+            </ul>'
+        }) }}
+        
+        {{ govukButton({
+          text: "Continue",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
+      </form>
+
+    </div>
+  </div>
+
+{% endblock %}

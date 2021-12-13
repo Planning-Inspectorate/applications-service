@@ -13,7 +13,7 @@ const forwardPage = (partyType) => {
   const party = {
     [REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.MYSELF.FULL_NAME,
     [REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.ORGANISATION.FULL_NAME,
-    [REGISTER.TYPE_OF_PARTY.BEHALF_OF_ORGANISATION]: VIEW.REGISTER.TEST3,
+    [REGISTER.TYPE_OF_PARTY.BEHALF]: VIEW.REGISTER.BEHALF.REPRESENTING_FOR,
     default: VIEW.REGISTER.TYPE_OF_PARTY,
   };
   return party[partyType] || party.default;
@@ -46,6 +46,8 @@ exports.postTypeOfParty = async (req, res) => {
     req.session.mySelfRegdata = registrationData.myself;
   } else if (typeOfParty === 'organisation') {
     req.session.orgRegdata = registrationData.org;
+  } else if (typeOfParty === 'behalf') {
+    req.session.behalfRegdata = registrationData.behalf;
   }
 
   res.redirect(`/${forwardPage(selectedParty)}`);

@@ -1,5 +1,5 @@
 const confirmationController = require('../../../../../src/controllers/register/myself/confirmation');
-const { postSelfRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
+const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 jest.mock('../../../../../src/lib/application-api-wrapper');
@@ -27,7 +27,7 @@ describe('controllers/register/myself/confirmation', () => {
         };
         res = mockRes();
 
-        postSelfRegistration.mockImplementation(() => Promise.resolve(
+        postRegistration.mockImplementation(() => Promise.resolve(
             {resp_code : 200, data : "30020010"} 
         ));
 
