@@ -28,12 +28,7 @@ module.exports = class OrgIP extends InterestedParty {
       country: youcountry,
     } = data.representee.address;
 
-    const {
-      'full-name': agname,
-      'over-18': representorOver18,
-      email: agmail,
-      telephone: agphone,
-    } = data.representor;
+    const { 'full-name': agname, email: agmail, telephone: agphone } = data.representor;
 
     const {
       line1: agbuild,
@@ -57,7 +52,6 @@ module.exports = class OrgIP extends InterestedParty {
       youcode,
       youcountry,
       agname,
-      agcounty: consts.over18Values[representorOver18.toLowerCase()],
       agbuild,
       agstreet,
       agtown,
@@ -66,6 +60,7 @@ module.exports = class OrgIP extends InterestedParty {
       agmail,
       agphone,
     };
+
     return interestedParty;
   }
 

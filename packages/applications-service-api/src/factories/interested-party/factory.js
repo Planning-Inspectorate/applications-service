@@ -9,12 +9,14 @@ module.exports.createIP = (behalf) => {
     case consts.behalfs.own: {
       return new OwnIP(behalf);
     }
-    case consts.behalfs.org:
+    case consts.behalfs.org: {
       return new OrgIP(behalf);
-    case consts.behalfs.agent:
+    }
+    case consts.behalfs.agent: {
       return new AgentIP(behalf);
-
-    default:
+    }
+    default: {
       throw new Error('Unsupported interested type behalf');
+    }
   }
 };
