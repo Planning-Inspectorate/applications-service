@@ -22,10 +22,6 @@ Feature: who are you registering for? page
         When I click on "planning inspectorate" logo
         Then I am on the "planning inspectorate" page
 
-    Scenario: User click on crown copyright logo
-        When I click on "crown copyright" logo
-        Then I am on the "crown copyright" page
-
     Scenario: User click on feedback link
         When I click on feedback link
         Then I am on the "feedback" page
@@ -36,5 +32,10 @@ Feature: who are you registering for? page
 
     Scenario: User selects Myself and click continue
         When User selects "Myself"
+        And User clicks on continue button
+        Then I am on the "what is your full name?" page
+
+    Scenario: User selects An organisation I work or volunteer for and click continue
+        When User selects "An organisation I work or volunteer for"
         And User clicks on continue button
         Then I am on the "what is your full name?" page

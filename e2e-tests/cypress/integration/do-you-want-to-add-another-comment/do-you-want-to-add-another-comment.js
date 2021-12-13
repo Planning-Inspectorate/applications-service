@@ -4,11 +4,17 @@ import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetai
 import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
 import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
 import PO_TellAboutProject from "../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
+import PO_AddAnotherComment from "./PageObjects/PO_AddAnotherComment";
+import PO_WhatIsOrgName from "../what-is-name-of-organisation-or-charity/PageObjects/PO_WhatIsOrgName";
+import PO_WhatIsJobTitle from "../what-is-your-job-title-or-volunteer-role/PageObjects/PO_WhatIsJobTitle";
 const fullNamePage = new PO_FullName
 const addressDetails = new PO_AddressDetails
 const emailAddressPage = new PO_EmailAddress
 const teleNumberPage = new PO_TeleNumber
 const tellAboutProject = new PO_TellAboutProject
+const addAnotherComment = new PO_AddAnotherComment
+const orgNamePage = new PO_WhatIsOrgName
+const jobTitlePage = new PO_WhatIsJobTitle
 
 Given('I navigate to UK address details page', () => {
     cy.visit('/register/start', { failOnStatusCode: false });
@@ -18,6 +24,21 @@ Given('I navigate to UK address details page', () => {
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");
     cy.clickSaveAndContinue();
     cy.selectRadioYesOrNo("Yes");
+    cy.clickSaveAndContinue();
+});
+
+Given('I navigate to UK address details page using organisation route', () => {
+    cy.visit('/register/start', { failOnStatusCode: false });
+    cy.clickOnHref("/register/type-of-party");
+    cy.selectRadioOption("An organisation I work or volunteer for");
+    cy.clickSaveAndContinue();
+    fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");
+    cy.clickSaveAndContinue();
+    cy.selectRadioYesOrNo("Yes");
+    cy.clickSaveAndContinue();
+    orgNamePage.enterTextIntoOrgNameField("Test Organisation");
+    cy.clickSaveAndContinue();
+    jobTitlePage.enterTextIntoJobTitleField("Test Volunteer Title");
     cy.clickSaveAndContinue();
 });
 
@@ -33,7 +54,7 @@ Then('I am on the {string} page', (pageName) => {
     cy.assertUserOnThePage(pageName)
 })
 
-Then('below error message should be presented on What do you want to tell us about this proposed project page', function (table) {
+Then('below error message should be presented on Do you want to add another comment page', function (table) {
     cy.assertErrorMessage(table)
 })
 
@@ -57,6 +78,6 @@ When('user selects {string} radio option on Do you want to add another comment p
     cy.selectRadioYesOrNo(radioChoice)
 })
 
-And('Do not include any personal details is present on the page', () => {
-    tellAboutProject.assertDoNotIncludePersonalDetailsPresent();
+And('User clicks on {string} link', (link) => {
+    addAnotherComment.clickOnLink(link);
 })
