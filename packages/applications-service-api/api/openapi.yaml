@@ -102,7 +102,7 @@ paths:
         summary: Creates an interested party
         description: Creates an interested party for a project 
         tags:
-          - Interested party
+          - Interested Party
         requestBody:
           description: Interested party details
           content:
@@ -142,6 +142,35 @@ paths:
                       country: 'UK'    
                     email: 'test@test.com' 
                     telephone: '0132232432'
+                agent:
+                  summary: An example of a request body when submitting on behalf of an agent
+                  value: 
+                    case_ref: 'EN010009'
+                    behalf: 'you'
+                    representing: 'person|organisation|family'
+                    representee:
+                        full-name: 'Harry Potter' 
+                        over-18: 'yes'
+                        address:
+                          line1: '4'
+                          line2: 'Privet Drive' 
+                          line3: 'Little Whinging'
+                          postcode: 'RG12 9FG'
+                          country: 'UK'
+                        email: 'harry.potter@hogwarts.org.uk'
+                        telephone: '0132232432'
+                    representor:
+                        full-name: 'Hermione Granger' 
+                        over-18: 'yes'
+                        address:
+                          line1: '95'
+                          line2: 'Boar Lane' 
+                          line3: 'Sellack'
+                          postcode: 'HR9 6LR'
+                          country: 'UK'
+                        email: 'hermione.granger@hogwarts.org.uk'
+                        telephone: '0137732432'
+                        organisation-name: 'Hogwarts School of Witchcraft and Wizardry'    
           required: true
         responses:
           '201':
@@ -157,7 +186,7 @@ paths:
         summary: Persist interested party's comments
         description: Persist interested party's comments
         tags:
-          - Interested party
+          - Interested Party
         parameters:
           - in: path
             name: ID
