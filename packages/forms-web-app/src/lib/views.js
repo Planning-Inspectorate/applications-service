@@ -60,7 +60,8 @@ const VIEW = {
       CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
       DECLARATION: 'register/behalf/declaration',
       CONFIRMATION: 'register/behalf/confirmation',
-    }
+    },
+    SAVE_CONFIRMATION: 'register/save-confirmation'
   },
 
   INTERESTED_PARTY_GUIDE: {

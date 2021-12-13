@@ -7,10 +7,14 @@ exports.getConfirmation = async (req, res) => {
   const registrationData = JSON.stringify(req.session.orgRegdata);
   const response = await postRegistrationData(registrationData);
   const ipRefNo = response.data;
-  const commentsData = JSON.stringify({comments: req.session.comments});
+  const commentsData = JSON.stringify({comments: req.session.comments, mode: req.session.mode});
   await postCommentsData(ipRefNo, commentsData);
   const email = req.session.orgRegdata.email;
   delete req.session.comments;
   delete req.session.orgRegdata;
-  res.render(VIEW.REGISTER.ORGANISATION.CONFIRMATION, {ipRefNo: ipRefNo, email: email, projectName: req.session.projectName, caseRef: req.session.caseRef});
+  if (req.session.mode === 'save') {
+    res.render(VIEW.REGISTER.SAVE_CONFIRMATION, {ipRefNo: ipRefNo, email: email});
+  } else {
+    res.render(VIEW.REGISTER.ORGANISATION.CONFIRMATION, {ipRefNo: ipRefNo, email: email, projectName: req.session.projectName, caseRef: req.session.caseRef});
+  }
 };
