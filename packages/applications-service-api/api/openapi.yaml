@@ -181,6 +181,36 @@ paths:
                   type: string
                   example: '30000001'
                   $ref: '#/components/schemas/InterestedPartyReqBody'
+  '/api/v1/interested-party/{token}':
+    post:
+      summary: Retrieves an interested party by token
+      description: Retrieves an interested party by token and returns the interested party details if email provided in body matches retrieved party's email
+      tags:
+        - Interested Party
+      parameters:
+        - in: path
+          name: token
+          example: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e1'
+          required: true
+          schema:
+            type: string
+          description: Encrypted interested party ID
+      requestBody:
+          description: Interested party email
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+          required: true
+      responses:
+        '200':
+          description: Returns an interested party
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestedParty'
+        '404':
+          description: Interested party could not be found
   '/api/v1/interested-party/{ID}/comments':      
       put:
         summary: Persist interested party's comments
@@ -656,4 +686,10 @@ components:
           example: 'Traffic'
         comment:
           type: string
-          example: 'I dont like traffic'
+          example: 'I don't like traffic'
+    Email:
+      type: object
+      properties:
+        email:
+          type: string
+          example: 'elvin.ali@planninginspectorate.gov.uk'
