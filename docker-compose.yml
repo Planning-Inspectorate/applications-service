@@ -27,6 +27,9 @@ services:
       SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP: '830c9c01-1f81-4198-be72-11ab173c128a'
       PRELIMINARY_MEETING_URL: https://applications-service-web-app.azurewebsites.net/
       HAVING_YOUR_SAY_URL: https://applications-service-web-app.azurewebsites.net/
+      SRV_NOTIFY_MAGIC_LINK_EMAIL: '4ca6b93a-4c45-4abe-a8ea-69ba13c80915'
+      MAGIC_LINK_DOMAIN: https://applications-service-web-app.azurewebsites.net/
+      ENCRYPTION_SECRET_KEY: 'x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K'
     ports:
       - '3000:3000'
     working_dir: '/opt/app'
