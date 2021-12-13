@@ -4,13 +4,11 @@ import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetai
 import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
 import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
 import PO_TellAboutProject from "../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
-import PO_CyaBeforeReg from "../check-your-answers-before-registering/PageObjects/PO_CyaBeforeReg";
 const fullNamePage = new PO_FullName
 const addressDetails = new PO_AddressDetails
 const emailAddressPage = new PO_EmailAddress
 const teleNumberPage = new PO_TeleNumber
 const tellAboutProject = new PO_TellAboutProject
-const cyaBeforeReg = new PO_CyaBeforeReg
 
 Given('I navigate to UK address details page', () => {
     cy.visit('/register/start', { failOnStatusCode: false });
@@ -23,16 +21,20 @@ Given('I navigate to UK address details page', () => {
     cy.clickSaveAndContinue();
 });
 
-And('User clicks on continue button', () => {
-    cy.clickSaveAndContinue();
-})
-
 And('I enter below data into address details page', function (table) {
     addressDetails.enterTextIntoAddressFields(table)
 })
 
+And('User clicks on continue button', () => {
+    cy.clickSaveAndContinue();
+})
+
 Then('I am on the {string} page', (pageName) => {
     cy.assertUserOnThePage(pageName)
+})
+
+Then('below error message should be presented on Do you want to add another comment page', function (table) {
+    cy.assertErrorMessage(table)
 })
 
 And('I enter {string} into email address field', (dataInput) => {
@@ -45,18 +47,6 @@ And('I enter {string} into telephone number field', (dataInput) => {
 
 And('I enter {string} into comments field', (dataInput) => {
     tellAboutProject.enterTextIntoCommentsField(dataInput);
-})
-
-And('User clicks on accept and continue button', () => {
-    cy.clickOnHref('/register/myself/declaration');
-})
-
-And('User clicks on accept and register button', () => {
-    cy.get('[data-cy="button-accept-and-regoster"]').click();
-})
-
-And('I click on find out more about having your say during the Examination of the application link', () => {
-    cy.clickOnHref('/interested-party-guide');
 })
 
 And('I enter {string} into topic field', (dataInput) => {

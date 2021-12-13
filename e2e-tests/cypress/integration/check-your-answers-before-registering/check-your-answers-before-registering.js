@@ -47,6 +47,10 @@ And('I enter {string} into comments field', (dataInput) => {
     tellAboutProject.enterTextIntoCommentsField(dataInput);
 })
 
+And('I enter {string} into topic field', (dataInput) => {
+    tellAboutProject.enterTextIntoTopicField(dataInput);
+})
+
 And('I verify below data is present on Check your answers before registering page', function (table) {
     cyaBeforeReg.assertDataOnPage(table)
 })
@@ -57,4 +61,8 @@ And('I click on {string} change link', (linkType) => {
 
 And('User clicks on accept and continue button', () => {
     cy.clickOnHref('/register/myself/declaration');
+})
+
+When('user selects {string} radio option on Do you want to add another comment page', (radioChoice) => {
+    cy.selectRadioYesOrNo(radioChoice)
 })
