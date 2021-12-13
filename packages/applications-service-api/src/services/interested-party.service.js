@@ -1,9 +1,10 @@
 const db = require('../models');
 const notify = require('../lib/notify');
 const crypto = require('../lib/crypto');
+const IPFactory = require('../factories/interested-party/factory');
 
-const BEHALF_ME = 'ME';
-const BEHALF_ORG = 'THEM';
+// const BEHALF_OWN = 'ME';
+// const BEHALF_ORGANISATION = 'THEM';
 const MODE_DRAFT = 'DRAFT';
 const MODE_FINAL = 'FINAL';
 
@@ -35,20 +36,9 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
     const { behalf } = party.dataValues;
     const { ProjectName: projectName } = project.dataValues;
 
-    let email;
-    let ipName;
-    let ipRef;
-
-    if (behalf.toUpperCase() === BEHALF_ME) {
-      email = party.dataValues.memail;
-      ipName = party.dataValues.mename;
-      ipRef = `${party.dataValues.ID}`;
-    } else if (behalf.toUpperCase() === BEHALF_ORG) {
-      email = party.dataValues.orgmail;
-      ipName = party.dataValues.contactname;
-      ipRef = `${party.dataValues.ID}`;
-    }
-
+    const { email, ipName, ipRef } = IPFactory.createIP(behalf).getEmailingDetails(
+      party.dataValues
+    );
     if (mode.toUpperCase() === MODE_FINAL) {
       await notify.sendIPRegistrationConfirmationEmailToIP({ email, projectName, ipName, ipRef });
       await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });

@@ -4,7 +4,7 @@ const { REGISTER } = require('../../constants');
 const validTypeOfPartyOptions = [
   REGISTER.TYPE_OF_PARTY.MY_SAY,
   REGISTER.TYPE_OF_PARTY.ORGANISATION,
-  REGISTER.TYPE_OF_PARTY.BEHALF_OF_ORGANISATION,
+  REGISTER.TYPE_OF_PARTY.BEHALF,
 ];
 
 const ruleTypeOfParty = () =>

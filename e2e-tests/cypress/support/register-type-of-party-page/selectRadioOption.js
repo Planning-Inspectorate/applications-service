@@ -3,7 +3,7 @@ module.exports = (radioChoice) => {
         case "Myself":
             cy.get('[data-cy="answer-mySay"]').click();
             break;
-        case "Someone registering for an organisation I work or volunteer for":
+        case "An organisation I work or volunteer for":
             cy.get('[data-cy="answer-organisation"]').click();
             break;
         case "Someone registering on behalf of another person or organisation":

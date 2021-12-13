@@ -2,6 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 const crypto = require('../lib/crypto');
 
 const logger = require('../lib/logger');
+const IPFactory = require('../factories/interested-party/factory');
+const consts = require('../factories/interested-party/const');
 
 const {
   insertInterestedParty,
@@ -13,10 +15,6 @@ const {
   getApplication: getApplicationFromApplicationApiService,
 } = require('../services/application.service');
 const ApiError = require('../error/apiError');
-
-const over18Values = { yes: 'over18', no: 'under18' };
-const BEHALF_ME = 'ME';
-const BEHALF_ORG = 'THEM';
 
 module.exports = {
   async getInterestedParty(req, res) {
@@ -48,75 +46,8 @@ module.exports = {
   },
 
   async createInterestedParty(req, res) {
-    let interestedParty;
     const { behalf, case_ref: caseref } = req.body;
-    if (behalf.toUpperCase() === BEHALF_ME) {
-      const {
-        'full-name': mename,
-        email: memail,
-        telephone: mephone,
-        'over-18': over18,
-      } = req.body;
-
-      const {
-        line1: mebuild,
-        line2: mestreet,
-        line3: metown,
-        postcode: mecode,
-        country: mecountry,
-      } = req.body.address;
-
-      interestedParty = {
-        caseref,
-        behalf,
-        mename,
-        memail,
-        mephone,
-        mebuild,
-        mestreet,
-        metown,
-        mecode,
-        mecountry,
-        // Do not remove this comment:
-        // Store over18/under18 information in field wp_ipc_relreps.<behalf>county as field over18 does not exist
-        mecounty: over18Values[over18.toLowerCase()],
-      };
-    } else if (behalf.toUpperCase() === BEHALF_ORG) {
-      const {
-        'full-name': contactname,
-        email: orgmail,
-        telephone: orgphone,
-        'over-18': over18,
-        'organisation-name': orgname,
-        role: contactjob,
-      } = req.body;
-
-      const {
-        line1: orgbuild,
-        line2: orgstreet,
-        line3: orgtown,
-        postcode: orgcode,
-        country: orgcountry,
-      } = req.body.address;
-
-      interestedParty = {
-        caseref,
-        behalf,
-        orgname,
-        contactname,
-        contactjob,
-        orgbuild,
-        orgstreet,
-        orgtown,
-        orgcode,
-        orgcountry,
-        orgmail,
-        orgphone,
-        // Do not remove this comment:
-        // Store over18/under18 information in field wp_ipc_relreps.<behalf>county as field over18 does not exist
-        orgcounty: over18Values[over18.toLowerCase()],
-      };
-    }
+    const interestedParty = IPFactory.createIP(behalf).get(req.body);
 
     const document = await insertInterestedParty(interestedParty);
     if (document) {
@@ -176,9 +107,9 @@ module.exports = {
       const { behalf, memail, orgmail, caseref } = party;
 
       let ipMail;
-      if (behalf.toUpperCase() === BEHALF_ME) {
+      if (behalf.toUpperCase() === consts.behalfs.own) {
         ipMail = memail;
-      } else if (behalf.toUpperCase() === BEHALF_ORG) {
+      } else if (behalf.toUpperCase() === consts.behalfs.org) {
         ipMail = orgmail;
       }
       if (email !== ipMail) {

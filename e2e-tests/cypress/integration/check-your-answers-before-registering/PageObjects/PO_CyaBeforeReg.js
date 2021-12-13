@@ -3,13 +3,22 @@ class PO_CyaBeforeReg {
     assertDataOnPage(table) {
         const data = table.hashes()
         for (let index = 0; index < data.length; index++) {
-            cy.get('.govuk-summary-list__key').eq(index).should('contain.text', data[index].Column1);
+            cy.get('.govuk-summary-list__key').eq(index).should(($div) => {
+                const text = $div.text().replace('kr', '').replace('\xa0', '').trim()
+                expect(text).to.include(data[index].Column1)
+              })
         }
         for (let index = 0; index < data.length; index++) {
-            cy.get('.govuk-summary-list__value').eq(index).should('contain.text', data[index].Column2);
+            cy.get('.govuk-summary-list__value').eq(index).should(($div) => {
+                const text = $div.text().replace('kr', '').replace('\xa0', '').trim()
+                expect(text).to.include(data[index].Column2)
+              })
         }
         for (let index = 0; index < data.length; index++) {
-            cy.get('.govuk-summary-list__actions').eq(index).should('contain.text', data[index].Column3);
+            cy.get('.govuk-summary-list__actions').eq(index).should(($div) => {
+                const text = $div.text().replace('kr', '').replace('\xa0', '').trim()
+                expect(text).to.include(data[index].Column3)
+              })
         }
     }
 
@@ -33,8 +42,11 @@ class PO_CyaBeforeReg {
             case "Telephone number": 
             cy.get('[data-cy="telephone"]').last().click();
             break;
-            case "Your comments": 
-            cy.get('[data-cy="comments"]').last().click();
+            case "Your comments change": 
+            cy.get('[data-cy="comments-change"]').last().click();
+            break;
+            case "Your comments remove": 
+            cy.get('[data-cy="comments-remove"]').last().click();
             break;
         }
     }

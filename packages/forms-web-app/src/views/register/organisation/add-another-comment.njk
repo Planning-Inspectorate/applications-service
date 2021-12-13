@@ -36,13 +36,13 @@
                     href: "/register/organisation/comments?mode=edit&src=add&index="+loop.index0,
                     text: "Change",
                     visuallyHiddenText: "??",
-                    attributes: { "data-cy": "comments" }
+                    attributes: { "data-cy": "comments-change-"+loop.index0 }
                   },
                   {
                     href: "/register/organisation/remove-comment?src=add&index="+loop.index0,
                     text: "Remove",
                     visuallyHiddenText: "??",
-                    attributes: { "data-cy": "comments" }
+                    attributes: { "data-cy": "comments-remove-"+loop.index0 }
                   }
                 ]
               }

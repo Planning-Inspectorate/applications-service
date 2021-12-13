@@ -48,3 +48,15 @@ And('I enter {string} into telephone number field', (dataInput) => {
 And('I enter {string} into comments field', (dataInput) => {
     tellAboutProject.enterTextIntoCommentsField(dataInput);
 })
+
+And('I enter {string} into topic field', (dataInput) => {
+    tellAboutProject.enterTextIntoTopicField(dataInput);
+})
+
+When('user selects {string} radio option on Do you want to add another comment page', (radioChoice) => {
+    cy.selectRadioYesOrNo(radioChoice)
+})
+
+And('Do not include any personal details is present on the page', () => {
+    tellAboutProject.assertDoNotIncludePersonalDetailsPresent();
+})

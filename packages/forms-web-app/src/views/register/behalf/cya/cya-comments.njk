@@ -1,0 +1,69 @@
+<h2 class="govuk-heading-m">Comments</h2>
+
+      {% set commentsRow = [] %}
+        {% set initialCommentRow = {
+              key: {
+                text: "Topic"
+              },
+              value: {
+                text: summaryField( "Comments", { 'data-cy': "comment" })
+              }
+            } 
+        %}
+      {{ (commentsRow.push(initialCommentRow), null) }}
+      {% if comments.length == 1 %}
+          {% set commentRow = {
+                key: {
+                  text: comments[0].topic
+                },
+                value: {
+                  text: summaryField( comments[0].comment, { 'data-cy': "comment" })
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/register/behalf/comments?mode=edit&src=check&index="+0,
+                      text: "Change",
+                      visuallyHiddenText: "this comment",
+                      attributes: { "data-cy": "comments" }
+                    }
+                  ]
+                }
+            } 
+          %}
+          {{ (commentsRow.push(commentRow), null) }}
+      {% else %}
+        {% for comment in comments %}
+          {% set commentRow = {
+                key: {
+                  text: comment.topic
+                },
+                value: {
+                  text: summaryField( comment.comment, { 'data-cy': "comment" })
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/register/behalf/comments?mode=edit&src=check&index="+loop.index0,
+                      text: "Change",
+                      visuallyHiddenText: "this comment",
+                      attributes: { "data-cy": "comments" }
+                    },
+                    {
+                      href: "/register/behalf/remove-comment?src=check&index="+loop.index0,
+                      text: "Remove",
+                      visuallyHiddenText: "this comment",
+                      attributes: { "data-cy": "comments" }
+                    }
+                  ]
+                }
+            } 
+          %}
+          {{ (commentsRow.push(commentRow), null) }}
+        {% endfor %}
+      {% endif %}
+
+      {{ govukSummaryList({
+          classes: "govuk-summary-list govuk-!-margin-bottom-9",
+          rows: commentsRow
+      }) }}

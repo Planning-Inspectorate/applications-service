@@ -147,6 +147,39 @@ const projectData = {
   DateOfRelevantRepresentationClose: '2024-12-09',
 };
 
+const createIpOnAgentBehalf = {
+  case_ref: 'EN010009',
+  behalf: 'you',
+  representing: 'person|organisation|family',
+  representee: {
+    'full-name': 'Harry Potter',
+    'over-18': 'yes',
+    address: {
+      line1: '4',
+      line2: 'Privet Drive',
+      line3: 'Little Whinging',
+      postcode: 'RG12 9FG',
+      country: 'UK',
+    },
+    email: 'harry.potter@hogwarts.org.uk',
+    telephone: '0132232432',
+  },
+  representor: {
+    'full-name': 'Hermione Granger',
+    'over-18': 'yes',
+    address: {
+      line1: '95',
+      line2: 'Boar Lane',
+      line3: 'Sellack',
+      postcode: 'HR9 6LR',
+      country: 'UK',
+    },
+    email: 'hermione.granger@hogwarts.org.uk',
+    telephone: '0137732432',
+    'organisation-name': 'Hogwarts School of Witchcraft and Wizardry',
+  },
+};
+
 jest.mock('../../../src/models', () => {
   // eslint-disable-next-line global-require
   const SequelizeMock = require('sequelize-mock');
@@ -242,6 +275,18 @@ describe('insertInterestedParty', () => {
     const req = httpMocks.createRequest({
       body: {
         ...createIpOnOrgBehalf,
+      },
+    });
+    const res = httpMocks.createResponse();
+    await createInterestedParty(req, res);
+
+    expect(res._getStatusCode()).toEqual(StatusCodes.CREATED);
+  });
+
+  it('should create an interested party on agent behalf', async () => {
+    const req = httpMocks.createRequest({
+      body: {
+        ...createIpOnAgentBehalf,
       },
     });
     const res = httpMocks.createResponse();

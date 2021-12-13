@@ -47,8 +47,13 @@ And('I enter {string} into comments field', (dataInput) => {
     tellAboutProject.enterTextIntoCommentsField(dataInput);
 })
 
-And('User clicks on accept and continue button', () => {
-    cy.clickOnHref('/register/myself/declaration');
+And('User clicks on accept and continue button for {string}', (linkType) => {
+    switch (linkType) {
+        case "myself": cy.clickOnHref('/register/myself/declaration');
+            break;
+        case "organisation": cy.clickOnHref('/register/organisation/declaration');
+            break;
+    }
 })
 
 And('User clicks on accept and register button', () => {
@@ -57,4 +62,12 @@ And('User clicks on accept and register button', () => {
 
 And('I click on find out more about having your say during the Examination of the application link', () => {
     cy.clickOnHref('/interested-party-guide');
+})
+
+And('I enter {string} into topic field', (dataInput) => {
+    tellAboutProject.enterTextIntoTopicField(dataInput);
+})
+
+When('user selects {string} radio option on Do you want to add another comment page', (radioChoice) => {
+    cy.selectRadioYesOrNo(radioChoice)
 })

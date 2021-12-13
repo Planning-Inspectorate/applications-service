@@ -1,0 +1,74 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set title = "Who are you representing? - Register to have your say" %}
+
+{% block pageTitle %}
+    {% if errors %}
+        {% set title = "Error: " + title %}
+    {% endif %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {% if errors %}
+                {{ govukErrorSummary({
+                    titleText: "There is a problem",
+                    errorList: errorSummary
+                }) }}
+            {% endif %}
+
+            <form action="" method="post" novalidate>
+
+                {{ govukRadios({
+                    idPrefix: "representing",
+                    name: "representing",
+                    errorMessage: errors['representing'] and {
+                        text: errors['representing'].msg
+                    },
+                    fieldset: {
+                        legend: {
+                            text: "Who are you representing?",
+                            isPageHeading: true,
+                            classes: "govuk-fieldset__legend--l"
+                        }
+                    },
+                    items: [
+                        {
+                            value: "person",
+                            text: "A person",
+                            attributes: { "data-cy": "answer-person"},
+                            checked: representing === "person"
+                        },
+                        {
+                            value: "organisation",
+                            text: "An organisation or charity",
+                            attributes: { "data-cy": "answer-organisation"},
+                            checked: representing === "organisation"
+                        },
+                        {
+                            value: "family",
+                            text: "A family group",
+                            attributes: { "data-cy": "answer-family"},
+                            checked: representing === "family"
+                        }
+                    ]
+                }) }}
+
+                {{ govukButton({
+                    text: "Continue",
+                    type: "submit",
+                    attributes: { "data-cy":"button-save-and-continue"}
+                }) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+
+
