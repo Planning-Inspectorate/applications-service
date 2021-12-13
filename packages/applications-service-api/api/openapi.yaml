@@ -686,7 +686,7 @@ components:
           example: 'Traffic'
         comment:
           type: string
-          example: 'I don't like traffic'
+          example: 'I dont like traffic'
     Email:
       type: object
       properties:
