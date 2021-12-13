@@ -37,12 +37,20 @@ exports.postComments = async (req, res) => {
     if (comments === undefined) {
       comments = [];
     } 
+    const mode = body.mode;
+    delete body.mode;
     comments.push(body);
     req.session.comments = comments;
-    if (req.session.comments.length < config.applications.noOfCommentsAllowed) {
-      res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);  
+    if (mode === 'save') {
+      req.session.mode = 'save';
+      res.redirect(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);  
     } else {
-      res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+      req.session.mode = 'final';
+      if (req.session.comments.length < config.applications.noOfCommentsAllowed) {
+        res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);  
+      } else {
+        res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+      }
     }
   }
   
