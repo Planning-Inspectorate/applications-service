@@ -52,11 +52,36 @@ const ipDataOwnBehalf = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep: '{"comments":[{"type":"Noise","comment":"I dont like noise either"}]}',
+  therep: '[{"type":"Noise","comment":"I dont like noise either"}]',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
   web_ref: 1,
+};
+
+const ipDataOwnBehalfResult = {
+  personal_data: {
+    case_ref: 'EN010009',
+    behalf: 'me',
+    'full-name': 'David White',
+    'over-18': undefined,
+    address: {
+      line1: 'Temple Quay',
+      line2: '',
+      line3: 'BRISTOL',
+      postcode: 'BS1 6PN',
+      country: 'United Kingdom',
+    },
+    email: 'david.white@planninginspectorate.gov.uk',
+    telephone: '0303 111 111',
+  },
+  comments: [
+    {
+      type: 'Noise',
+      comment: 'I dont like noise either',
+    },
+  ],
+  submissionPeriodClosed: false,
 };
 
 const ipDataOrgBehalf = {
@@ -102,11 +127,38 @@ const ipDataOrgBehalf = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep: '{"comments":[{"type":"Noise","comment":"I dont like noise either"}]}',
+  therep: '[{"type":"Noise","comment":"I dont like noise either"}]',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
   web_ref: 1,
+};
+
+const ipDataOrgBehalfResult = {
+  personal_data: {
+    case_ref: 'EN010009',
+    behalf: 'them',
+    'full-name': undefined,
+    'over-18': 'yes',
+    'organisation-name': 'Ministry of Coffee and Social Affairs',
+    role: undefined,
+    address: {
+      line1: 'Coffee Building',
+      line2: 'Coffee Wall Street',
+      line3: 'London',
+      postcode: 'CO127FE',
+      country: 'UK',
+    },
+    email: 'Mr.Bean@MinistryofCoffeeandSocialAffairs.gov.uk',
+    telephone: '0132232432',
+  },
+  comments: [
+    {
+      type: 'Noise',
+      comment: 'I dont like noise either',
+    },
+  ],
+  submissionPeriodClosed: false,
 };
 
 const createIpOnOwnBehalf = {
@@ -337,10 +389,10 @@ describe('confirmEmailAddress on behalf of individual', () => {
     delete data.createdAt;
     delete data.updatedAt;
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual({ ...ipDataOwnBehalf, submissionPeriodClosed: false });
+    expect(data).toEqual({ ...ipDataOwnBehalfResult });
   });
 
-  it('should return interested party not found when token is tampered', async () => {
+  it('should return interested party not found when token has been tampered with', async () => {
     const req = httpMocks.createRequest({
       params: {
         token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e',
@@ -397,6 +449,6 @@ describe('confirmEmailAddress on behalf of organisation', () => {
     delete data.createdAt;
     delete data.updatedAt;
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual({ ...ipDataOrgBehalf, submissionPeriodClosed: false });
+    expect(data).toEqual({ ...ipDataOrgBehalfResult });
   });
 });
