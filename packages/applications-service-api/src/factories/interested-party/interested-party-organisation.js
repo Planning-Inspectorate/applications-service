@@ -53,4 +53,52 @@ module.exports = class OrgIP extends InterestedParty {
   getEmailingDetails(data) {
     return { email: data.orgmail, ipName: data.contactname, ipRef: `${data.ID}` };
   }
+
+  map(data) {
+    const {
+      // eslint-disable-next-line camelcase
+      caseref: case_ref,
+      behalf,
+      orgname,
+      contactname,
+      contactjob,
+      orgcounty: over18,
+      orgmail: email,
+      orgphone: telephone,
+      orgbuild: line1,
+      orgstreet: line2,
+      orgtown: line3,
+      orgcode: postcode,
+      orgcountry: country,
+      therep,
+    } = data;
+
+    const personalData = {
+      case_ref,
+      behalf,
+      'full-name': contactname,
+      'over-18': consts.over18[over18.toLowerCase()],
+      'organisation-name': orgname,
+      role: contactjob,
+      address: {
+        line1,
+        line2,
+        line3,
+        postcode,
+        country,
+      },
+      email,
+      telephone,
+    };
+    let comments;
+    try {
+      comments = JSON.parse(therep);
+    } catch (e) {
+      comments = [{ topic: '', comment: therep }];
+    }
+    return {
+      personal_data: { ...personalData },
+      comments,
+    };
+  }
 };
