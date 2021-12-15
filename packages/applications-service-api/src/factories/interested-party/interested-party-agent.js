@@ -11,7 +11,7 @@ module.exports = class OrgIP extends InterestedParty {
   }
 
   get(data) {
-    const { behalf, case_ref: caseref, 'organisation-name': agorgname } = data;
+    const { behalf, case_ref: caseref } = data;
 
     const {
       'full-name': youname,
@@ -28,7 +28,12 @@ module.exports = class OrgIP extends InterestedParty {
       country: youcountry,
     } = data.representee.address;
 
-    const { 'full-name': agname, email: agmail, telephone: agphone } = data.representor;
+    const {
+      'full-name': agname,
+      email: agmail,
+      telephone: agphone,
+      'organisation-name': agorgname,
+    } = data.representor;
 
     const {
       line1: agbuild,
@@ -65,6 +70,81 @@ module.exports = class OrgIP extends InterestedParty {
   }
 
   getEmailingDetails(data) {
-    return { email: data.agmail, ipName: data.agname, ipRef: `${data.ID}` };
+    return {
+      email: data.agmail || data.youmail,
+      ipName: data.agname || data.youname,
+      ipRef: `${data.ID}`,
+    };
+  }
+
+  map(data) {
+    const {
+      // eslint-disable-next-line camelcase
+      caseref: case_ref,
+      behalf,
+      agorgname,
+      youname,
+      youcounty: over18,
+      youmail,
+      youphone,
+      youbuild,
+      youstreet,
+      youtown,
+      youcode,
+      youcountry,
+      agname,
+      agbuild,
+      agstreet,
+      agtown,
+      agcode,
+      agcountry,
+      agmail,
+      agphone,
+      therep,
+    } = data;
+
+    const personalData = {
+      case_ref,
+      behalf,
+      representing: null,
+      representee: {
+        'full-name': youname,
+        'over-18': consts.over18[over18.toLowerCase()],
+        address: {
+          line1: youbuild,
+          line2: youstreet,
+          line3: youtown,
+          postcode: youcode,
+          country: youcountry,
+        },
+        email: youmail,
+        telephone: youphone,
+      },
+      representor: {
+        'full-name': agname,
+        'over-18': null,
+        address: {
+          line1: agbuild,
+          line2: agstreet,
+          line3: agtown,
+          postcode: agcode,
+          country: agcountry,
+        },
+        email: agmail,
+        telephone: agphone,
+        'organisation-name': agorgname,
+      },
+    };
+
+    let comments;
+    try {
+      comments = JSON.parse(therep);
+    } catch (e) {
+      comments = [{ topic: '', comment: therep }];
+    }
+    return {
+      personal_data: { ...personalData },
+      comments,
+    };
   }
 };
