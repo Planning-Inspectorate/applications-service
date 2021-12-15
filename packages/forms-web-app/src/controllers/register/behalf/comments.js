@@ -41,8 +41,8 @@ exports.postComments = async (req, res) => {
     delete body.mode;
     comments.push(body);
     req.session.comments = comments;
-    if (mode === 'save') {
-      req.session.mode = 'save';
+    if (mode === 'draft') {
+      req.session.mode = 'draft';
       res.redirect(`/${VIEW.REGISTER.BEHALF.CONFIRMATION}`);  
     } else {
       req.session.mode = 'final';

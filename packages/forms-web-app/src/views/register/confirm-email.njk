@@ -1,0 +1,61 @@
+{% extends "layouts/main.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set title="Confirm email address - Register to have your say" %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title="Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+      <form action="" method="POST" novalidate>
+        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+          
+          {{ govukInput({
+            label: {
+                text: "Confirm your email address?",
+                classes: "govuk-label--l",
+                isPageHeading: true
+            },
+            hint: {
+                text: "This is the email address that you gave wile registration and received email"
+            },
+            id: "email",
+            name: "email",
+            value: email,
+            autocomplete: "email",
+            spellcheck: false,
+            attributes: {"data-cy": "email"},
+            errorMessage: errors['email'] and {
+              text: errors['email'].msg
+            }
+          }) }}
+        </div>
+
+        {{ govukButton({
+          text: "Confirm",
+          type: "Submit",
+          attributes: { "data-cy":"button-confirm"}
+        }) }}
+
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+

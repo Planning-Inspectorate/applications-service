@@ -86,7 +86,6 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 exports.postRegistration = async (registeration_data) => {
   const registrationServiceApiUrl = '/api/v1/interested-party';
   const method = 'POST';
-
   return handler('postRegistration', registrationServiceApiUrl, method, {
     body: registeration_data,
   });
@@ -97,5 +96,13 @@ exports.putComments = async (ipRefNo, comments_data) => {
   const method = 'PUT';
   return handler('putComments', commentsServiceApiUrl, method, {
     body: comments_data,
+  });
+};
+
+exports.authenticateToken = async (token, email) => {
+  const authTokenServiceApiUrl = `/api/v1/interested-party/${token}`;
+  const method = 'POST';
+  return handler('authenticateToken', authTokenServiceApiUrl, method, {
+    body: email,
   });
 };
