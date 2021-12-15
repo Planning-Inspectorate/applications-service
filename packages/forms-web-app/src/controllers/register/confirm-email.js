@@ -37,7 +37,6 @@ exports.postConfirmEmail = async (req, res) => {
             req.session.orgRegdata = personal_data;
             res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);
           } else if(type === 'you') {
-            logger.info('----'+JSON.stringify(personal_data));
             req.session.behalfRegdata = personal_data;
             res.redirect(`/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}`);
           }
