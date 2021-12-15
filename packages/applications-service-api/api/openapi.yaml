@@ -168,7 +168,7 @@ paths:
                           line3: 'Sellack'
                           postcode: 'HR9 6LR'
                           country: 'UK'
-                        email: 'hermione.granger@hogwarts.org.uk'
+                        email: 'elvin.ali@planninginspectorate.gov.uk'
                         telephone: '0137732432'
                         organisation-name: 'Hogwarts School of Witchcraft and Wizardry'    
           required: true
@@ -180,7 +180,6 @@ paths:
                 schema:
                   type: string
                   example: '30000001'
-                  $ref: '#/components/schemas/InterestedPartyReqBody'
   '/api/v1/interested-party/{token}':
     post:
       summary: Retrieves an interested party by token
@@ -234,7 +233,7 @@ paths:
                 properties:
                   mode:
                     type: string
-                    example: 'final'
+                    example: 'draft'
                   comments:
                     type: array
                     items:

@@ -70,7 +70,11 @@ module.exports = class OrgIP extends InterestedParty {
   }
 
   getEmailingDetails(data) {
-    return { email: data.agmail, ipName: data.agname, ipRef: `${data.ID}` };
+    return {
+      email: data.agmail || data.youmail,
+      ipName: data.agname || data.youname,
+      ipRef: `${data.ID}`,
+    };
   }
 
   map(data) {
@@ -139,7 +143,7 @@ module.exports = class OrgIP extends InterestedParty {
       comments = [{ topic: '', comment: therep }];
     }
     return {
-      personal_data: { ...personalData },
+      ...personalData,
       comments,
     };
   }
