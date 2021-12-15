@@ -5,7 +5,6 @@ const config = require('../../../config');
 exports.getComments = async (req, res) => {
   if (req.query.mode === 'edit') {
     const index = req.query.index;
-    logger.info('-------------'+JSON.stringify(req.session.comments)); 
     const comment = req.session.comments[index];
     res.render(VIEW.REGISTER.ORGANISATION.COMMENTS, {comment: comment});
   } else {
