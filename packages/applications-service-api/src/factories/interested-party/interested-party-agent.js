@@ -143,7 +143,7 @@ module.exports = class OrgIP extends InterestedParty {
       comments = [{ topic: '', comment: therep }];
     }
     return {
-      ...personalData,
+      personal_data: { ...personalData },
       comments,
     };
   }
