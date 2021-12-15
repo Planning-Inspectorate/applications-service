@@ -63,7 +63,8 @@ const VIEW = {
     },
     SAVE_CONFIRMATION: 'register/save-confirmation',
     CONFIRM_EMAIL: 'register/confirm-email',
-    TOKEN_NOT_VERIFIED: 'register/not-verified'
+    TOKEN_NOT_VERIFIED: 'register/not-verified',
+    TOKEN_EXPIRED: 'register/token-expired'
   },
 
   INTERESTED_PARTY_GUIDE: {

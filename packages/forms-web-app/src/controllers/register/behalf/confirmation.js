@@ -12,7 +12,7 @@ exports.getConfirmation = async (req, res) => {
   const email = req.session.behalfRegdata.representor.email;
   delete req.session.comments;
   delete req.session.behalfRegdata;
-  if (req.session.mode === 'save') {
+  if (req.session.mode === 'draft') {
     res.render(VIEW.REGISTER.SAVE_CONFIRMATION, {ipRefNo: ipRefNo, email: email});
   } else {
     res.render(VIEW.REGISTER.BEHALF.CONFIRMATION, {ipRefNo: ipRefNo, email: email, projectName: req.session.projectName, caseRef: req.session.caseRef});
