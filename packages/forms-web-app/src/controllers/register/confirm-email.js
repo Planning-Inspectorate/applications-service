@@ -25,7 +25,7 @@ exports.postConfirmEmail = async (req, res) => {
         res.render(VIEW.REGISTER.TOKEN_NOT_VERIFIED);
     } else {
         const { personal_data, comments, submissionPeriodClosed } = response.data;
-        if(submissionPeriodClosed === false) {
+        if(submissionPeriodClosed === true) {
           res.render(VIEW.REGISTER.TOKEN_EXPIRED);
         } else {
           const type = personal_data.behalf;
