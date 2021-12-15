@@ -180,6 +180,34 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/add-another-comment')
             break;
+        case "who are you representing?":
+            cy.title().should('eq', "Who are you representing? - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Who are you representing?');
+            })
+            cy.url().should('include', '/representing-for')
+            break;
+        case "what is the full name of the person you are representing?":
+            cy.title().should('eq', "Your full name - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('What is the full name of the person you are representing?');
+            })
+            cy.url().should('include', '/representee-name')
+            break;
+        case "what is the full name of the organisation or charity that you are representing?":
+            cy.title().should('eq', "Your full name - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('What is the full name of the organisation or charity that you are representing?');
+            })
+            cy.url().should('include', '/representee-name')
+            break;
+        case "what is the name of the family group you are representing?":
+            cy.title().should('eq', "Your full name - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('What is the name of the family group you are representing?');
+            })
+            cy.url().should('include', '/representee-name')
+            break;
         default: throw console.error('uanble to find specified page name: ' + pageName);
     }
     cy.wait(Cypress.env('demoDelay'));

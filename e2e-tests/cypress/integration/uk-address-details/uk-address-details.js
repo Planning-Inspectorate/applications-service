@@ -5,8 +5,7 @@ const fullNamePage = new PO_FullName
 const addressDetails = new PO_AddressDetails
 
 Given('I navigate to UK address details page', () => {
-    cy.visit('/register/start', { failOnStatusCode: false });
-    cy.clickOnHref("/register/type-of-party");
+    cy.visit('/register/type-of-party', { failOnStatusCode: false });
     cy.selectRadioOption("Myself");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");
