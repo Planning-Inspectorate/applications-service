@@ -25,6 +25,6 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/document-library', documentLibraryRouter);
-    expect(use.mock.calls.length).toBe(8);
+    expect(use.mock.calls.length).toBe(9);
   });
 });
