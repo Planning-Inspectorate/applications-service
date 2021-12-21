@@ -22,6 +22,7 @@ const VIEW = {
       TELEPHONE: 'register/myself/telephone',
       COMMENTS: 'register/myself/comments',
       ADD_ANOTHER_COMMENT: 'register/myself/add-another-comment',
+      REMOVE_COMMENT: 'register/myself/remove-comment',
       CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
       DECLARATION: 'register/myself/declaration',
       CONFIRMATION: 'register/myself/confirmation',
@@ -61,6 +62,9 @@ const VIEW = {
       CONFIRMATION: 'register/behalf/confirmation',
     },
     SAVE_CONFIRMATION: 'register/save-confirmation',
+    CONFIRM_EMAIL: 'register/confirm-email',
+    TOKEN_NOT_VERIFIED: 'register/not-verified',
+    TOKEN_EXPIRED: 'register/token-expired',
   },
   INTERESTED_PARTY_GUIDE: {
     INTERESTED_PARTY: 'interested-party-guide/interested-party',

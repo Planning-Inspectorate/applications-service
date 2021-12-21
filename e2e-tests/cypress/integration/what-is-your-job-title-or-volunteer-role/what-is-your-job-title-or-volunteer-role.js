@@ -8,8 +8,7 @@ const jobTitlePage = new PO_WhatIsJobTitle()
 
 
 Given('I navigate to What is your job title or volunteer role page', () => {
-    cy.visit('/register/start', { failOnStatusCode: false });
-    cy.clickOnHref("/register/type-of-party");
+    cy.visit('/register/type-of-party', { failOnStatusCode: false });
     cy.selectRadioOption("An organisation I work or volunteer for");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");

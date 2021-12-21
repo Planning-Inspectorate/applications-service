@@ -11,6 +11,7 @@ const registerRouter = require('./register');
 const interestedPartyRouter = require('./interested-party-guide');
 const documentLibraryRouter = require('./document-library');
 const footerPagesRouter = require('./footer-pages');
+const confirmEmailRouter = require('./register/confirm-email');
 
 router.use('/', homeRouter);
 router.use('/', guidancePagesRouter);
@@ -21,5 +22,5 @@ router.use('/project-search', projectSearchRouter);
 router.use('/register', registerRouter);
 router.use(interestedPartyRouter);
 router.use('/document-library', documentLibraryRouter);
-
+router.use('/interested-party/confirm-your-email', confirmEmailRouter);
 module.exports = router;

@@ -1,8 +1,7 @@
 class PO_WhoYouRegisterFor {
     
     navigatetoTypeOfPartyPage() {
-        cy.visit('/register/start');
-        cy.clickOnHref("/register/type-of-party");
+        cy.visit('/register/type-of-party');  
     }
 
     validateRadioOptionContent() {

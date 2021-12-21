@@ -16,8 +16,12 @@ describe('lib/views', () => {
         COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
       },
       REGISTER: {
+        SAVE_CONFIRMATION: 'register/save-confirmation',
         START: 'register/start',
+        TOKEN_EXPIRED: 'register/token-expired',
+        TOKEN_NOT_VERIFIED: 'register/not-verified',
         TYPE_OF_PARTY: 'register/type-of-party',
+        CONFIRM_EMAIL: 'register/confirm-email',
         MYSELF: {
           FULL_NAME: 'register/myself/full-name',
           OVER_18: 'register/myself/over-18',
@@ -64,8 +68,8 @@ describe('lib/views', () => {
           DECLARATION: 'register/behalf/declaration',
           CONFIRMATION: 'register/behalf/confirmation',
         },
-        SAVE_CONFIRMATION: 'register/save-confirmation',
       },
+
       INTERESTED_PARTY_GUIDE: {
         INTERESTED_PARTY: 'interested-party-guide/interested-party',
         HAVE_SAY_PRE_APPLICATION: 'interested-party-guide/have-say-pre-application',

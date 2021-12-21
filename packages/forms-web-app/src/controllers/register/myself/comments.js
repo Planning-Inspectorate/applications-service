@@ -27,7 +27,11 @@ exports.postComments = async (req, res) => {
   if (req.query.mode === 'edit') {
     const index = req.query.index; 
     req.session.comments[index] = body;
-    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+    if (req.query.src === 'add'){
+      res.redirect(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
+    } else {
+      res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+    }
   } else {
     let comments = req.session.comments;
     if (comments === undefined) {
@@ -37,8 +41,8 @@ exports.postComments = async (req, res) => {
     delete body.mode;
     comments.push(body);
     req.session.comments = comments;
-    if (mode === 'save') {
-      req.session.mode = 'save';
+    if (mode === 'draft') {
+      req.session.mode = 'draft';
       res.redirect(`/${VIEW.REGISTER.MYSELF.CONFIRMATION}`);  
     } else {
       req.session.mode = 'final';

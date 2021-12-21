@@ -31,8 +31,8 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
         });
         if (!apiResponse.ok) {
           logger.debug(apiResponse, 'API Response not OK');
-          if(apiResponse.status === 404){
-            const respData = {resp_code: 404 };
+          if (apiResponse.status === 404) {
+            const respData = { resp_code: 404 };
             return respData;
           }
           try {
@@ -50,12 +50,12 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
         }
 
         logger.debug('Successfully called ', callingMethod);
-        
-        if (callingMethod === 'putComments'){
+
+        if (callingMethod === 'putComments') {
           return apiResponse;
         }
         const data = await apiResponse.json();
-        const wrappedResp = {data, resp_code: apiResponse.status}
+        const wrappedResp = { data, resp_code: apiResponse.status };
         logger.debug('Successfully parsed to JSON');
 
         return wrappedResp;
@@ -86,7 +86,6 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 exports.postRegistration = async (registeration_data) => {
   const registrationServiceApiUrl = '/api/v1/interested-party';
   const method = 'POST';
-
   return handler('postRegistration', registrationServiceApiUrl, method, {
     body: registeration_data,
   });
@@ -97,5 +96,13 @@ exports.putComments = async (ipRefNo, comments_data) => {
   const method = 'PUT';
   return handler('putComments', commentsServiceApiUrl, method, {
     body: comments_data,
+  });
+};
+
+exports.authenticateToken = async (token, email) => {
+  const authTokenServiceApiUrl = `/api/v1/interested-party/${token}`;
+  const method = 'POST';
+  return handler('authenticateToken', authTokenServiceApiUrl, method, {
+    body: email,
   });
 };

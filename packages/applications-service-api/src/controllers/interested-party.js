@@ -104,13 +104,15 @@ module.exports = {
       }
       logger.debug(`Interested party ${ID} retrieved`);
       const party = document.dataValues;
-      const { behalf, memail, orgmail, caseref } = party;
+      const { behalf, memail, orgmail, agmail, youmail, caseref } = party;
 
       let ipMail;
       if (behalf.toUpperCase() === consts.behalfs.own) {
         ipMail = memail;
       } else if (behalf.toUpperCase() === consts.behalfs.org) {
         ipMail = orgmail;
+      } else if (behalf.toUpperCase() === consts.behalfs.agent) {
+        ipMail = agmail || youmail;
       }
       if (email !== ipMail) {
         throw ApiError.interestedPartyNotFoundByID(ID);
@@ -129,7 +131,8 @@ module.exports = {
 
       const submissionPeriodClosed = repCloseDate < currentDate;
 
-      res.status(StatusCodes.OK).send({ ...party, submissionPeriodClosed });
+      const interestedParty = IPFactory.createIP(behalf).map(party);
+      res.status(StatusCodes.OK).send({ ...interestedParty, submissionPeriodClosed });
     } catch (e) {
       /* istanbul ignore next */
       if (e instanceof ApiError) {
