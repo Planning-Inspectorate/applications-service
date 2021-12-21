@@ -11,7 +11,6 @@ const VIEW = {
   MESSAGES: {
     COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
   },
-
   REGISTER: {
     START: 'register/start',
     TYPE_OF_PARTY: 'register/type-of-party',
@@ -61,18 +60,23 @@ const VIEW = {
       DECLARATION: 'register/behalf/declaration',
       CONFIRMATION: 'register/behalf/confirmation',
     },
-    SAVE_CONFIRMATION: 'register/save-confirmation'
+    SAVE_CONFIRMATION: 'register/save-confirmation',
   },
-
   INTERESTED_PARTY_GUIDE: {
     INTERESTED_PARTY: 'interested-party-guide/interested-party',
     HAVE_SAY_PRE_APPLICATION: 'interested-party-guide/have-say-pre-application',
     REGISTER_TO_HAVE_YOUR_SAY: 'interested-party-guide/register-to-have-your-say',
     GET_INVOLVED_PRELIMINARY_MEETINGS: 'interested-party-guide/get-involved-preliminary-meetings',
-    HAVE_SAY_DURING_PROJECT_EXAMINATION: 'interested-party-guide/have-say-during-project-examination',
+    HAVE_SAY_DURING_PROJECT_EXAMINATION:
+      'interested-party-guide/have-say-during-project-examination',
     AFTER_MAKING_THE_DECISION: 'interested-party-guide/after-making-the-decision',
   },
-
+  FOOTER_PAGES: {
+    TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
+    SITEMAP: 'footer-pages/sitemap',
+    ACCESSIBILITY: 'footer-pages/accessibility',
+    COOKIES: 'footer-pages/cookies-info',
+  },
 };
 
 module.exports = {

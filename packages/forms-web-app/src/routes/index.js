@@ -10,9 +10,11 @@ const guidancePagesRouter = require('./guidance-pages');
 const registerRouter = require('./register');
 const interestedPartyRouter = require('./interested-party-guide');
 const documentLibraryRouter = require('./document-library');
+const footerPagesRouter = require('./footer-pages');
 
 router.use('/', homeRouter);
 router.use('/', guidancePagesRouter);
+router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 router.use('/overview', overviewRouter);
 router.use('/project-search', projectSearchRouter);
