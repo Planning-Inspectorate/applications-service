@@ -1,0 +1,60 @@
+<nav>
+  <ul class="govuk-list sidenav">
+    <li class="govuk-body-s {% if 'index' in current %} active {% endif %}">
+      {% if not 'index' in current %}
+      <a href="./">A404 Dewsbury project information</a>
+      {% else %} A404 Dewsbury project information {% endif %}
+    </li>
+    <li class="govuk-body-s {% if 'project-timeline' in current %} active {% endif %}">
+      {% if not 'project-timeline' in current %}
+      <a href="./project-timeline">Project timeline</a>
+      {% else %} Project timeline {% endif %}
+    </li>
+    <li class="govuk-body-s {% if 'about-the-application' in current %} active {% endif %}">
+      {% if not 'about-the-application' in current %}
+      <a href="./about-the-application">Project application documents</a>
+      {% else %} Project application documents {% endif %}
+    </li>
+    <li class="govuk-body-s {% if 'comments' in current %} active {% endif %}">
+      {% if not 'comments' in current %}
+      <a href="./representations">Registration comments</a>
+      {% else %} Registration comments {% endif %}
+    </li>
+    <li class="govuk-body-s {% if 'timetable' in current %} active {% endif %}">
+      {% if not 'timetable' in current %}
+      <a href="./timetable">Examination timetable</a>
+      {% else %} Examination timetable {% endif %}
+    </li>
+    <li
+      class="govuk-body-s {% if 'all-examination-documents' in current %} active {% endif %}"
+    >
+      {% if not 'all-examination-documents' in current %}
+      <a href="./all-examination-documents">All Examination documents</a>
+      {% else %} All Examination documents {% endif %}
+    </li>
+    <li class="govuk-body-s {% if 'recommendations' in current %} active {% endif %}">
+      {% if not 'recommendations' in current %}
+      <a href="/wrong-turn">Recommendation and decision</a>
+      {% else %} Recommendation and decision {% endif %}
+    </li>
+  </ul>
+  <hr
+    class="
+      govuk-section-break govuk-section-break--l govuk-section-break--visible
+    "
+  />
+  <h3 class="govuk-heading-s">Related guides</h3>
+  <ul class="govuk-list sidenav">
+    <li class="govuk-body-s">
+      <a href="../dco-process-guide/">
+      Find out more about the decision making process for national infrastructure projects
+      </a
+      >
+    </li>
+    <li class="govuk-body-s">
+      <a href="../interested-party-guide/"
+        >Having your say about a national infrastructure project</a
+      >
+    </li>
+  </ul>
+</nav>
