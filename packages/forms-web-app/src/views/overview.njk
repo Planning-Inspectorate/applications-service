@@ -59,36 +59,29 @@
             <strong>{{ dateOfClosure }}</strong>.
           </p>
           <a href="/register/start" class="govuk-button">Register to have your say</a>
-          <p>
+          <p class="govuk-body">
             <a class="govuk-link" href="/interested-party-guide"
-            >Find out more about registering to have your say</a
-          >.
-        </p>
+            >Find out more about registering to have your say</a>.
+          </p>
 
-          <hr
-          class="
-            govuk-section-break
+          <hr class="govuk-section-break
             govuk-section-break--xl
-            govuk-section-break--visible
-          "
-/>
+            govuk-section-break--visible"/>
 
           <h2 class="govuk-heading-m">Affected area</h2>
 
-          <p>
-          This proposed road will be a linear route between Amesbury and Berwick
-          Down, Wiltshire.
-        </p>
-          <p>You can:</p>
+          <p class="govuk-body">
+            This proposed road will be a linear route between Amesbury and Berwick
+            Down, Wiltshire.
+          </p>
+          <p class="govuk-body">You can:</p>
           <ul class="govuk-list">
             <li>
-              <a class="govuk-link" href="#"
-              >View a map of the area of the proposed project.</a
+              <a class="govuk-link" href="#">View a map of the area of the proposed project.</a
             >
             </li>
             <li>
-              <a class="govuk-l ink"href="#"
-              >Check if your postcode is within the project area.
+              <a class="govuk-l ink"href="#">Check if your postcode is within the project area.
             </a>
             </li>
           </ul>
@@ -96,34 +89,28 @@
             <div id='map' class="pins-affected-area-map--embed"></div>
           </div>
 
-          <hr
-          class="
-            govuk-section-break
+          <hr class="govuk-section-break
             govuk-section-break--xl
-            govuk-section-break--visible
-          "
-/>
+            govuk-section-break--visible"/>
 
           <h2 class="govuk-heading-m">About the developer</h2>
 
-          <p>The Developer proposing this project is {{ appData.PromoterName }}.</p>
+          <p class="govuk-body">The Developer proposing this project is {{ appData.PromoterName }}.</p>
 
           <p class="govuk-body govuk-!-margin-top-6">
-            <a class="govuk-link" href={{ appData.WebAddress}}
-            >Visit the project website by {{ appData.PromoterName }}</a
-          >
+            <a class="govuk-link" href=//{{ appData.WebAddress }}
+            >Visit the project website by {{ appData.PromoterName }}</a>
           for more information.
         </p>
-          <hr
-          class="
-            govuk-section-break
+
+          <hr class="govuk-section-break
             govuk-section-break--xl
-            govuk-section-break--visible
-          "/>
+            govuk-section-break--visible"/>
+
           <h2 class="govuk-heading-m">
               Talk to an advisor 
           </h2>
-          <p>If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:</p>
+          <p class="govuk-body">If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:</p>
           <ul class="govuk-list">
             <li>Email: <a class="govuk-link" href="mailto:{{ appData.ProjectEmailAddress }}">{{ appData.ProjectEmailAddress }}</a>
             </li>
@@ -134,8 +121,7 @@
     </main>
   </div>
 {% endblock %}
-{% block footer %}
-  {{ pinsFooter() }}
+{% block pageScripts %}
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
     const map = new mapboxgl.Map({

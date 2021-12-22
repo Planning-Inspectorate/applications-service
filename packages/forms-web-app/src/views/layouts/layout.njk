@@ -5,35 +5,36 @@
 {% extends "govuk/template.njk" %}
 
 {% from "govuk/components/back-link/macro.njk"           import govukBackLink %}
-{% from "govuk/components/breadcrumbs/macro.njk"         import govukBreadcrumbs %}
-{% from "govuk/components/button/macro.njk"              import govukButton %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/cookie-banner/macro.njk"       import govukCookieBanner %}
 {% from "govuk/components/error-message/macro.njk"       import govukErrorMessage %}
 {% from "govuk/components/error-summary/macro.njk"       import govukErrorSummary %}
-{% from "govuk/components/fieldset/macro.njk"            import govukFieldset %}
-{% from "govuk/components/input/macro.njk"               import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/phase-banner/macro.njk"        import govukPhaseBanner %}
-{% from "govuk/components/radios/macro.njk"              import govukRadios %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/skip-link/macro.njk"           import govukSkipLink %}
-{% from "govuk/components/tag/macro.njk"                 import govukTag %}
-{% from "govuk/components/textarea/macro.njk"            import govukTextarea %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-{% from "pins/components/header/macro.njk"                      import pinsHeader %}
-{% from "pins/components/footer/macro.njk"                      import pinsFooter %}
+{% from "pins/components/header/macro.njk" import pinsHeader %}
+{% from "pins/components/footer/macro.njk" import pinsFooter %}
 {% from "pins/components/contents-sidebar/macro.njk"            import pinsContentSidebar %}
 {% from "../pins-components/step-by-step-navigation/macro.njk"  import pinsStepByStepNavigation %}
 
 {% block headIcons %}
-  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
+  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon"/>
 {% endblock %}
 
 {% block head %}
   {% include "includes/head.njk" %}
   <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
-  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/>
+  <!--<![endif]-->
 
   {% for stylesheetUrl in extensionConfig.stylesheets %}
-    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
+    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
   {% endfor %}
 {% endblock %}
 
@@ -51,26 +52,47 @@
   }) }}
 {% endblock %}
 
-
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
-{% if useAutoStoreData %}
-  {% block footer %}
-    {{ govukFooter({
-      meta: {
-        items: [
-          {
-            href: "https://govuk-prototype-kit.herokuapp.com/",
-            text: "GOV.UK Prototype Kit " + releaseVersion
-          },
-          {
-            href: "/prototype-admin/clear-data",
-            text: "Clear data"
-          }
-        ]
-      }
-    }) }}
-  {% endblock %}
+
+{% if host %}
+  {% set tc_href = host + 'terms-and-conditions' %}
+  {% set sm_href = host + 'sitemap' %}
+  {% set ac_href = host + 'accessibility' %}
+  {% set ck_href = host + 'cookies-info' %}
 {% endif %}
+
+{% block footer %}
+  {{ pinsFooter({
+        items: [
+              {
+                href: sm_href,
+                text: "Sitemap",
+                attributes: { "data-cy":"Privacy" }
+              },
+              {
+                href: tc_href,
+                text: "Terms and conditions",
+                attributes: { "data-cy":"Terms and conditions" }
+              },
+              {
+                href: ac_href,
+                text: "Accessibility",
+                attributes: { "data-cy":"Accessibility" }
+              },
+              {
+                href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
+                text: "Privacy Notice (on GOV.UK)",
+                attributes: { "data-cy":"Privacy Notice (on GOV.UK)" }
+              },
+              {
+                href: ck_href,
+                text: "Cookies",
+                attributes: { "data-cy":"Cookies" }
+              }
+            ]
+      }) 
+    }}
+{% endblock %}
 
 {% block bodyEnd %}
   {% block scripts %}
