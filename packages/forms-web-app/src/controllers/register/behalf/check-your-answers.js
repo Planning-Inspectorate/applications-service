@@ -1,8 +1,8 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
-const config = require('../../../config');
 
 exports.getCheckYourAnswers = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS,
-    {data: req.session.behalfRegdata, comments: req.session.comments});
+  res.render(VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS, {
+    data: req.session.behalfRegdata,
+    comments: req.session.comments,
+  });
 };
