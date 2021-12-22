@@ -6,6 +6,7 @@ const overviewRouter = require('../../../src/routes/overview');
 const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/interested-party-guide');
 const documentLibraryRouter = require('../../../src/routes/document-library');
+const footerPagesRouter = require('../../../src/routes/footer-pages');
 
 describe('routes/index', () => {
   beforeEach(() => {
@@ -25,6 +26,7 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/document-library', documentLibraryRouter);
+    expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
     expect(use.mock.calls.length).toBe(9);
   });
 });
