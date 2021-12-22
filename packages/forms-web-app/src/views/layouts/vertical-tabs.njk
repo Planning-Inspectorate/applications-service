@@ -1,9 +1,9 @@
 <nav>
   <ul class="govuk-list sidenav">
     <li class="govuk-body-s {% if 'index' in current %} active {% endif %}">
-      {% if not 'index' in current %}
-      <a href="./">A404 Dewsbury project information</a>
-      {% else %} A404 Dewsbury project information {% endif %}
+      {% if not 'overview' in current %}
+      <a href="./">{{ appData.ProjectName }} project information</a>
+      {% else %} {{ appData.ProjectName }} project information {% endif %}
     </li>
     <li class="govuk-body-s {% if 'project-timeline' in current %} active {% endif %}">
       {% if not 'project-timeline' in current %}
