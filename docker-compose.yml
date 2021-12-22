@@ -52,6 +52,7 @@ services:
       SUBDOMAIN_OFFSET: '0'
       USE_SECURE_SESSION_COOKIES: 'false'
       PDF_SERVICE_API_URL: 'http://pdf-service-api:3000'
+      HOST_URL: 'http://localhost:9004/'
     ports:
       - '9004:3000'
       # node debugger

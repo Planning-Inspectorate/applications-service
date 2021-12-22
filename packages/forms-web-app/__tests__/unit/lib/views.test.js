@@ -4,17 +4,17 @@ describe('lib/views', () => {
   it('should have the expected defined constants', () => {
     expect(VIEW).toEqual({
       APPLICATION_NUMBER: 'application-number',
-      DOCUMENT_LIBRARY: 'document-library',
-      COOKIES: 'cookies',
 
+      COOKIES: 'cookies',
+      OVERVIEW: 'overview',
+      DOCUMENT_LIBRARY: 'document-library',
+      PROJECT_SEARCH: 'project-search',
       GUIDANCE_PAGES: {
         BEFORE_APPLY: 'guidance-pages/before-apply',
       },
       MESSAGES: {
         COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
       },
-      OVERVIEW: 'overview',
-      PROJECT_SEARCH: 'project-search',
       REGISTER: {
         SAVE_CONFIRMATION: 'register/save-confirmation',
         START: 'register/start',
@@ -79,6 +79,12 @@ describe('lib/views', () => {
         HAVE_SAY_DURING_PROJECT_EXAMINATION:
           'interested-party-guide/have-say-during-project-examination',
         AFTER_MAKING_THE_DECISION: 'interested-party-guide/after-making-the-decision',
+      },
+      FOOTER_PAGES: {
+        TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
+        SITEMAP: 'footer-pages/sitemap',
+        ACCESSIBILITY: 'footer-pages/accessibility',
+        COOKIES: 'footer-pages/cookies-info',
       },
     });
   });

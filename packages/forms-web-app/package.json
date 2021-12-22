@@ -33,7 +33,7 @@
   "dependencies": {
     "@pins/common": "file:../common",
     "@ministryofjustice/frontend": "0.2.0",
-    "@planning-inspectorate/pins-components": "^1.0.0",
+    "@planning-inspectorate/pins-components": "^1.0.1",
     "@testing-library/dom": "^7.31.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/user-event": "^12.8.3",
