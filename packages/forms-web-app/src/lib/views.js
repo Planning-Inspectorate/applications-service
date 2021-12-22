@@ -11,7 +11,6 @@ const VIEW = {
   MESSAGES: {
     COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
   },
-
   REGISTER: {
     START: 'register/start',
     TYPE_OF_PARTY: 'register/type-of-party',
@@ -23,6 +22,7 @@ const VIEW = {
       TELEPHONE: 'register/myself/telephone',
       COMMENTS: 'register/myself/comments',
       ADD_ANOTHER_COMMENT: 'register/myself/add-another-comment',
+      REMOVE_COMMENT: 'register/myself/remove-comment',
       CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
       DECLARATION: 'register/myself/declaration',
       CONFIRMATION: 'register/myself/confirmation',
@@ -64,18 +64,23 @@ const VIEW = {
     SAVE_CONFIRMATION: 'register/save-confirmation',
     CONFIRM_EMAIL: 'register/confirm-email',
     TOKEN_NOT_VERIFIED: 'register/not-verified',
-    TOKEN_EXPIRED: 'register/token-expired'
+    TOKEN_EXPIRED: 'register/token-expired',
   },
-
   INTERESTED_PARTY_GUIDE: {
     INTERESTED_PARTY: 'interested-party-guide/interested-party',
     HAVE_SAY_PRE_APPLICATION: 'interested-party-guide/have-say-pre-application',
     REGISTER_TO_HAVE_YOUR_SAY: 'interested-party-guide/register-to-have-your-say',
     GET_INVOLVED_PRELIMINARY_MEETINGS: 'interested-party-guide/get-involved-preliminary-meetings',
-    HAVE_SAY_DURING_PROJECT_EXAMINATION: 'interested-party-guide/have-say-during-project-examination',
+    HAVE_SAY_DURING_PROJECT_EXAMINATION:
+      'interested-party-guide/have-say-during-project-examination',
     AFTER_MAKING_THE_DECISION: 'interested-party-guide/after-making-the-decision',
   },
-
+  FOOTER_PAGES: {
+    TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
+    SITEMAP: 'footer-pages/sitemap',
+    ACCESSIBILITY: 'footer-pages/accessibility',
+    COOKIES: 'footer-pages/cookies-info',
+  },
 };
 
 module.exports = {
