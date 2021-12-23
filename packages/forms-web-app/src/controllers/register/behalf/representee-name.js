@@ -1,9 +1,8 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getFullName = async (req, res) => {
   res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_NAME, {
-    representing: req.session.behalfRegdata['representing'],
+    representing: req.session.behalfRegdata.representing,
     fullName: req.session.behalfRegdata.representee['full-name'],
   });
 };
@@ -13,7 +12,7 @@ exports.postFullName = async (req, res) => {
   const { errors = {}, errorSummary = [] } = body;
   if (errors['full-name'] || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_NAME, {
-      representing: req.session.behalfRegdata['representing'],
+      representing: req.session.behalfRegdata.representing,
       errors,
       errorSummary,
     });
@@ -23,11 +22,9 @@ exports.postFullName = async (req, res) => {
   req.session.behalfRegdata.representee['full-name'] = body['full-name'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
+  } else if (req.session.behalfRegdata.representing === 'organisation') {
+    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_ADDRESS}`);
   } else {
-    if (req.session.behalfRegdata['representing'] === 'organisation') {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_ADDRESS}`);
-    } else {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18}`);
-    }
+    res.redirect(`/${VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18}`);
   }
 };

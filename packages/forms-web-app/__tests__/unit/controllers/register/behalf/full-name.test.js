@@ -31,7 +31,7 @@ describe('controllers/register/behalf/full-name', () => {
   });
 
   describe('postFullName', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.ADDRESS}' if name is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.EMAIL}' if name is provided`, async () => {
       const fullName = 'test';
       const mockRequest = {
         ...req,
@@ -44,7 +44,7 @@ describe('controllers/register/behalf/full-name', () => {
       };
       await fullNameController.postFullName(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.ADDRESS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.EMAIL}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {

@@ -1,8 +1,7 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getAnotherComment = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT, {comments: req.session.comments});
+  res.render(VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT, { comments: req.session.comments });
 };
 
 exports.postAnotherComment = async (req, res) => {
@@ -20,7 +19,7 @@ exports.postAnotherComment = async (req, res) => {
   if (addAnotherComment === 'yes') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.COMMENTS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.FULL_NAME}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   }
 
   // if (req.query.mode === 'edit') {

@@ -39,7 +39,7 @@ describe('controllers/register/behalf/address', () => {
   });
 
   describe('postAddress', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.EMAIL}' if address is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.REPRESENTING_FOR}' if address is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -57,7 +57,7 @@ describe('controllers/register/behalf/address', () => {
       };
       await addressController.postAddress(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.EMAIL}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.REPRESENTING_FOR}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {

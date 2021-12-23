@@ -1,8 +1,9 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getFullName = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.FULL_NAME, {fullName: req.session.behalfRegdata.representor['full-name']});
+  res.render(VIEW.REGISTER.BEHALF.FULL_NAME, {
+    fullName: req.session.behalfRegdata.representor['full-name'],
+  });
 };
 
 exports.postFullName = async (req, res) => {
@@ -20,11 +21,9 @@ exports.postFullName = async (req, res) => {
   req.session.behalfRegdata.representor['full-name'] = body['full-name'];
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
+  } else if (req.session.behalfRegdata.representing === 'organisation') {
+    res.redirect(`/${VIEW.REGISTER.BEHALF.ORGANISATION_NAME}`);
   } else {
-    if (req.session.behalfRegdata.representing === 'organisation') {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.ORGANISATION_NAME}`);
-    } else {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.ADDRESS}`);
-    }
+    res.redirect(`/${VIEW.REGISTER.BEHALF.EMAIL}`);
   }
 };
