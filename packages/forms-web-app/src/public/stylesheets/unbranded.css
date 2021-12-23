@@ -8944,6 +8944,17 @@ h2.govuk-accordion__section-heading,
   margin-left: 10px;
 }
 
+li.side-menu {
+  margin-bottom: 20px;
+}
+
+li.side-menu.active {
+  background: #f0f0f0;
+  padding: 0.7em;
+  margin-left: calc(-0.7em - 6px);
+  border-left: 6px solid #13a19b;
+  font-weight: 700;
+}
 
 @media (min-width: 40.0625em) {
   .govuk-summary-list__actions-list-item {
