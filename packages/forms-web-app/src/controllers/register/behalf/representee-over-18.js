@@ -1,8 +1,9 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOver18 = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18, {over18: req.session.behalfRegdata.representee['over-18']});
+  res.render(VIEW.REGISTER.BEHALF.REPRESENTEE_OVER_18, {
+    over18: req.session.behalfRegdata.representee['over-18'],
+  });
 };
 
 exports.postOver18 = async (req, res) => {
