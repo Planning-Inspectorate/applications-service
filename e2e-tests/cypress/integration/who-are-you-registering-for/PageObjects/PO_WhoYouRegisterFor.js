@@ -1,7 +1,10 @@
 class PO_WhoYouRegisterFor {
-    
+
     navigatetoTypeOfPartyPage() {
-        cy.visit('/register/type-of-party');  
+        cy.visit('/project-search', { failOnStatusCode: false });
+        cy.clickProjectLink('North Lincolnshire Green Energy Park');
+        cy.clickOnHref("/register/start");
+        cy.clickOnHref('/register/type-of-party');
     }
 
     validateRadioOptionContent() {

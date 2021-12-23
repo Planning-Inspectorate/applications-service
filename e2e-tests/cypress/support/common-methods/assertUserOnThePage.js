@@ -208,6 +208,48 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/representee-name')
             break;
+        case "your comments are saved":
+            cy.title().should('eq', "Confirmation - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Your comments are saved');
+            })
+            cy.url().should('include', '/confirmation')
+            break;
+        case "sitemap":
+            cy.title().should('eq', "GOV.UK - The best place to find government services and information");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Sitemap');
+            })
+            cy.url().should('include', '/sitemap')
+            break;
+        case "terms and conditions":
+            cy.title().should('eq', "GOV.UK - The best place to find government services and information");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Terms and conditions');
+            })
+            cy.url().should('include', '/terms-and-conditions')
+            break;
+        case "accessibility":
+            cy.title().should('eq', "GOV.UK - The best place to find government services and information");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Accessibility statement');
+            })
+            cy.url().should('include', '/accessibility')
+            break;
+        case "privacy notice":
+            cy.title().should('eq', "Customer Privacy Notice - GOV.UK");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Customer Privacy Notice');
+            })
+            cy.url().should('include', '/customer-privacy-notice')
+            break;
+        case "cookies":
+            cy.title().should('eq', "GOV.UK - The best place to find government services and information");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Cookies');
+            })
+            cy.url().should('include', '/cookies-info')
+            break;
         default: throw console.error('uanble to find specified page name: ' + pageName);
     }
     cy.wait(Cypress.env('demoDelay'));
