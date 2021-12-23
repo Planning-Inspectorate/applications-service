@@ -34,7 +34,8 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
     });
 
     const { behalf } = party.dataValues;
-    const { ProjectName: projectName } = project.dataValues;
+    const { ProjectName: projectName, DateOfRelevantRepresentationClose: repCloseDate } =
+      project.dataValues;
 
     const { email, ipName, ipRef } = IPFactory.createIP(behalf).getEmailingDetails(
       party.dataValues
@@ -44,7 +45,7 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
       await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });
     } else if (mode.toUpperCase() === MODE_DRAFT) {
       const token = crypto.encrypt(ID);
-      await notify.sendMagicLinkToIP({ email, ipName, caseRef, token, ipRef });
+      await notify.sendMagicLinkToIP({ email, ipName, projectName, repCloseDate, token, ipRef });
     }
   }
 
