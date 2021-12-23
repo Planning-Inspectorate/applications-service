@@ -11,7 +11,10 @@ const teleNumberPage = new PO_TeleNumber
 const tellAboutProject = new PO_TellAboutProject
 
 Given('I navigate to UK address details page', () => {
-    cy.visit('/register/type-of-party', { failOnStatusCode: false });
+    cy.visit('/project-search', { failOnStatusCode: false });
+    cy.clickProjectLink('North Lincolnshire Green Energy Park');
+    cy.clickOnHref("/register/start");
+    cy.clickOnHref('/register/type-of-party', { failOnStatusCode: false });
     cy.selectRadioOption("Myself");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");
@@ -58,4 +61,12 @@ When('user selects {string} radio option on Do you want to add another comment p
 
 And('Do not include any personal details is present on the page', () => {
     tellAboutProject.assertDoNotIncludePersonalDetailsPresent();
+})
+
+And('user clicks on save and exit button', () => {
+    cy.contains('Save & Exit').click();
+})
+
+Then('I can see email sent confimation text', () => {
+    cy.get('[data-cy="email-confirmation"]').should('contain.text', 'We have sent a confirmation email to: testpins2@gmail.com');
 })

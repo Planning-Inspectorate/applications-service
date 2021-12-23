@@ -3,7 +3,9 @@ import PO_StartPage from "./PageObjects/PO_StartPage";
 const startPage = new PO_StartPage()
 
 Given('I navigate to Register to have your say page', () => {
-    cy.visit('/register/type-of-party');
+    cy.visit('/project-search', { failOnStatusCode: false });
+    cy.clickProjectLink('North Lincolnshire Green Energy Park');
+    cy.clickOnHref("/register/start");
 })
 
 When('I click on start now button', () => {
