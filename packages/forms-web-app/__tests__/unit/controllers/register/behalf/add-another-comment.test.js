@@ -37,7 +37,7 @@ describe('controllers/register/behalf/add-another-comment', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.COMMENTS}`);
     });
-    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.FULL_NAME}' if add-another-comment is provided as no`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}' if add-another-comment is provided as no`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -46,7 +46,7 @@ describe('controllers/register/behalf/add-another-comment', () => {
       };
       await addAnotherCommentController.postAnotherComment(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.FULL_NAME}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
