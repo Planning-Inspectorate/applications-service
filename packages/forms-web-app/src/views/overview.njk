@@ -129,16 +129,8 @@
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
       center: [{{ appData.LongLat }}], // starting position
       zoom: {{ appData.MapZoomLevel }}, // starting zoom,
-      logoPosition: 'top-left'
+      logoPosition: 'top-left',
     });
-    const layerList = document.getElementById('menu');
-    const inputs = layerList.getElementsByTagName('input');
-    for (const input of inputs) {
-      input.onclick = (layer) => {
-        const layerId = layer.target.id;
-        map.setStyle('mapbox://styles/mapbox/' + layerId);
-      };
-    }
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   </script>
 {% endblock %}

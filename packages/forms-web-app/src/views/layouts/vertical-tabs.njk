@@ -1,40 +1,41 @@
 <nav>
   <ul class="govuk-list sidenav">
-    <li class="govuk-body-s {% if 'index' in current %} active {% endif %}">
+    <li class="govuk-body-s {% if 'overview' in current %} active {% endif %}">
       {% if not 'overview' in current %}
-      <a href="./">{{ appData.ProjectName }} project information</a>
-      {% else %} {{ appData.ProjectName }} project information {% endif %}
+        <a href="./">{{ appData.ProjectName }} project information</a>
+      {% else %}
+        {{ appData.ProjectName }} project information {% endif %}
     </li>
     <li class="govuk-body-s {% if 'project-timeline' in current %} active {% endif %}">
       {% if not 'project-timeline' in current %}
-      <a href="./project-timeline">Project timeline</a>
+        <a href="./project-timeline">Project timeline</a>
       {% else %} Project timeline {% endif %}
     </li>
     <li class="govuk-body-s {% if 'about-the-application' in current %} active {% endif %}">
       {% if not 'about-the-application' in current %}
-      <a href="./about-the-application">Project application documents</a>
+        <a href="./about-the-application">Project application documents</a>
       {% else %} Project application documents {% endif %}
     </li>
     <li class="govuk-body-s {% if 'comments' in current %} active {% endif %}">
       {% if not 'comments' in current %}
-      <a href="./representations">Registration comments</a>
+        <a href="./representations">Registration comments</a>
       {% else %} Registration comments {% endif %}
     </li>
     <li class="govuk-body-s {% if 'timetable' in current %} active {% endif %}">
       {% if not 'timetable' in current %}
-      <a href="./timetable">Examination timetable</a>
+        <a href="./timetable">Examination timetable</a>
       {% else %} Examination timetable {% endif %}
     </li>
     <li
       class="govuk-body-s {% if 'all-examination-documents' in current %} active {% endif %}"
     >
       {% if not 'all-examination-documents' in current %}
-      <a href="./all-examination-documents">All Examination documents</a>
+        <a href="./all-examination-documents">All Examination documents</a>
       {% else %} All Examination documents {% endif %}
     </li>
     <li class="govuk-body-s {% if 'recommendations' in current %} active {% endif %}">
       {% if not 'recommendations' in current %}
-      <a href="/wrong-turn">Recommendation and decision</a>
+        <a href="/wrong-turn">Recommendation and decision</a>
       {% else %} Recommendation and decision {% endif %}
     </li>
   </ul>
@@ -42,7 +43,7 @@
     class="
       govuk-section-break govuk-section-break--l govuk-section-break--visible
     "
-  />
+/>
   <h3 class="govuk-heading-s">Related guides</h3>
   <ul class="govuk-list sidenav">
     <li class="govuk-body-s">
