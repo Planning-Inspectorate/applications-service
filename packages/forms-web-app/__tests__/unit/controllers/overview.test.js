@@ -17,9 +17,18 @@ describe('controllers/overview', () => {
 
   describe('getOverview', () => {
     it('should call the correct template', async () => {
-      getProjectData.mockImplementation(() => Promise.resolve({resp_code : 200, data : {}}));
+      getProjectData.mockImplementation(() =>
+        Promise.resolve({
+          resp_code: 200,
+          data: { DateOfRelevantRepresentationClose: '2020-02-02' },
+        })
+      );
       await overviewController.getOverview(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.OVERVIEW, {"appData": {}, "stage": undefined, "styleClass": ["", "", "", "", ""]});
+      expect(res.render).toHaveBeenCalledWith(VIEW.OVERVIEW, {
+        appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
+        stage: undefined,
+        dateOfClosure: 'Sunday 02 February 2020',
+      });
     });
   });
 });

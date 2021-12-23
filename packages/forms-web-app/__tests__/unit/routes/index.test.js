@@ -27,6 +27,6 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/document-library', documentLibraryRouter);
     expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
-    expect(use.mock.calls.length).toBe(9);
+    expect(use.mock.calls.length).toBe(10);
   });
 });

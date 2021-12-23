@@ -1,10 +1,10 @@
-const commentsController = require('../../../../../src/controllers/register/myself/comments');
+const removeCommentController = require('../../../../../src/controllers/register/myself/remove-comment');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/myself/comments', () => {
+describe('controllers/register/myself/remove-comment', () => {
   let req;
   let res;
 
@@ -17,13 +17,22 @@ describe('controllers/register/myself/comments', () => {
     jest.resetAllMocks();
   });
 
-  describe('getComments', () => {
+  describe('getRemoveComment', () => {
+    req = {
+      ...mockReq(),
+      query: {
+        index: 0,
+      },
+      session: {
+        comments: [
+          {
+            topic: 'topic',
+            comment: 'test',
+          },
+        ],
+      },
+    };
     it('should call the correct template', () => {
-      commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/myself/comments');
-    });
-
-    it('should call the correct template in edit mode', () => {
       req = {
         ...mockReq(),
         query: {
@@ -39,48 +48,64 @@ describe('controllers/register/myself/comments', () => {
           ],
         },
       };
-      commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/myself/comments', {
+      removeCommentController.getRemoveComment(req, res);
+      expect(res.render).toHaveBeenCalledWith('register/myself/remove-comment', {
         comment: {
           topic: 'topic',
           comment: 'test',
         },
+        index: 0,
       });
     });
   });
 
-  describe('postComments', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}' if comments is provided`, async () => {
+  describe('postRemoveComment', () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}' if remove comment is yes and src is add`, async () => {
       const mockRequest = {
         ...req,
         body: {
-          comments: 'test',
+          'remove-comment': 'yes',
         },
         query: {
-          mode: '',
+          src: 'add',
+        },
+        session: {
+          comments: [
+            {
+              topic: 'topic',
+              comment: 'test',
+            },
+          ],
         },
       };
-      await commentsController.postComments(mockRequest, res);
+      await removeCommentController.postRemoveComment(mockRequest, res);
 
       expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
     });
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if comments is provided and mode is edit`, async () => {
+
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if remove comment is yes and src is check`, async () => {
       const mockRequest = {
         ...req,
         body: {
-          comments: 'test',
+          'remove-comment': 'yes',
         },
         query: {
-          mode: 'edit',
+          src: 'check',
         },
         session: {
-          comments: [],
+          comments: [
+            {
+              topic: 'topic',
+              comment: 'test',
+            },
+          ],
         },
       };
-      await commentsController.postComments(mockRequest, res);
+      await removeCommentController.postRemoveComment(mockRequest, res);
 
       expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
     });
+
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
         ...req,
@@ -89,21 +114,10 @@ describe('controllers/register/myself/comments', () => {
           errors: { a: 'b' },
         },
       };
-      await commentsController.postComments(mockRequest, res);
+      await removeCommentController.postRemoveComment(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.COMMENTS, {
-        comment: {
-          errorSummary: [
-            {
-              href: '#',
-              text: 'There were errors here',
-            },
-          ],
-          errors: {
-            a: 'b',
-          },
-        },
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.REMOVE_COMMENT, {
         errorSummary: [
           {
             href: '#',

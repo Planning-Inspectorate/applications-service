@@ -5,143 +5,132 @@
 {% endblock %}
 
 {% block headIcons %}
-  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon" />
+  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon"/>
 {% endblock %}
 
 {% block head %}
   <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
-  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
+  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/>
+  <!--<![endif]-->
 
   {% for stylesheetUrl in extensionConfig.stylesheets %}
-    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css" />
+    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
   {% endfor %}
 
-<!-- Mapbox resources -->
+  <!-- Mapbox resources -->
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
-<!-- end Mapbox -->
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+  <!-- end Mapbox -->
 {% endblock %}
 
 {% block header %}
   {{ pinsHeader() }}
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "beta"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-  }) }}
-{% endblock %}
-
-{% set current %}
-    <svg class="svg-inline--fa fa-hourglass-half fa-w-12 stage-in-progress commons" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="hourglass-half" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-150 0 700 500" data-fa-i2svg="">
-        <path fill="currentColor" d="M360 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24 0 90.965 51.016 167.734 120.842 192C75.016 280.266 24 357.035 24 448c-13.255 0-24 10.745-24 24v16c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24v-16c0-13.255-10.745-24-24-24 0-90.965-51.016-167.734-120.842-192C308.984 231.734 360 154.965 360 64c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24zm-75.078 384H99.08c17.059-46.797 52.096-80 92.92-80 40.821 0 75.862 33.196 92.922 80zm.019-256H99.078C91.988 108.548 88 86.748 88 64h208c0 22.805-3.987 44.587-11.059 64z"></path>
-    </svg>
-{% endset %}
-
-{% set containerClasses = "pins-sidebar--container" %}
-{% set hasContentsAside = true %}
-
-{% block contentsAside %}
-  <aside class="pins-aside-page-contents">
-    <h2 class="govuk-heading-s">Contents</h2>
-    <ul class="govuk-list">
-      <li><strong> {{ appData.ProjectName }} project information</strong></li>
-      <li><a href="#">About the application</a></li>
-      <li><a href="#">Topics for Examination</a></li>
-      <li><a href="/document-library/{{ appData.CaseReference }}/1">All Examination documents</a></li>
-      <li><a href="../dco-process-guide/recommendation-and-decision">Recommendation and decision</a></li>
-  </aside>
-{% endblock %}
-
 {% block content %}
-  <h1 class="govuk-heading-l">{{ appData.ProjectName }} project information</h1>
-  <p class="govuk-body">{{ appData.Summary }}</p>
-  <p class="govuk-body"><a class="govuk-link" href="#">Sign-up for updates via email, letter or text</a>.</p>
 
-  <div class="pins-timeline">
-    <p class="govuk-body">This project is at: <strong> {{ stage }} </strong></p>
-    <ol>
-      <li {{ styleClass[0] }}>Pre-application and application received<div class="pins-timeline-badge">{% if(appData.Stage > 1) %} &#10003;{% else %} {{current |safe}} {% endif %}</div></li>
-      <li {{ styleClass[1] }}>Pre-examination<div class="pins-timeline-badge">{% if(appData.Stage === 2) %} {{current |safe}} {% elseif(appData.Stage > 2) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[2] }}>Examination of the project<div class="pins-timeline-badge">{% if(appData.Stage === 3) %} {{current |safe}} {% elseif(appData.Stage > 3) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[3] }}>Recommendation and decision<div class="pins-timeline-badge">{% if(appData.Stage === 4) %} {{current |safe}} {% elseif(appData.Stage > 4) %} &#10003; {% endif %}</div></li>
-      <li {{ styleClass[4] }}>Outcome of the project<div class="pins-timeline-badge">{% if(appData.Stage === 6 or appData.Stage === 7 or appData.Stage === 8) %} {{current |safe}} {% endif %}</div></li>
-    </ol>
-    <p class="govuk-body">This means you cannot register to have your say yet. You will be able to register at the start of the gathering and reviewing information stage.</p>
-    <p class="govuk-body"><a class="govuk-link" href="/dco-process-guide">Find out more about the process for Development Consent Orders</a>.</p>
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+          <h1 class="govuk-heading-xl">{{ appData.ProjectName }}</h1>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+          {% set current = 'overview' %}
+          {% include "layouts/vertical-tabs.njk" %}
+        </div>
+        <div class="govuk-grid-column-three-quarters">
+          <h2 class="govuk-heading-m">Project information</h2>
+
+          <p class="govuk-body">{{ appData.Summary }}</p>
+
+          <hr class="govuk-section-break
+            govuk-section-break--xl
+            govuk-section-break--visible"/>
+
+          <h2 class="govuk-heading-m">Project stage</h2>
+
+          <p class="govuk-body"> This project is in the <strong>{{ stage }}</strong> stage</p>
+          <p class="govuk-body">
+            If you want to comment on this proposed project, you can now register
+            to have your say. Registration will close at 23:59 on
+            <strong>{{ dateOfClosure }}</strong>.
+          </p>
+          <a href="/register/start" class="govuk-button">Register to have your say</a>
+          <p class="govuk-body">
+            <a class="govuk-link" href="/interested-party-guide"
+            >Find out more about registering to have your say</a>.
+          </p>
+
+          <hr class="govuk-section-break
+            govuk-section-break--xl
+            govuk-section-break--visible"/>
+
+          <h2 class="govuk-heading-m">Affected area</h2>
+
+          <p class="govuk-body">
+            This proposed road will be a linear route between Amesbury and Berwick
+            Down, Wiltshire.
+          </p>
+          <p class="govuk-body">You can:</p>
+          <ul class="govuk-list">
+            <li>
+              <a class="govuk-link" href="#">View a map of the area of the proposed project.</a
+            >
+            </li>
+            <li>
+              <a class="govuk-l ink"href="#">Check if your postcode is within the project area.
+            </a>
+            </li>
+          </ul>
+          <div class="pins-map-enclosure">
+            <div id='map' class="pins-affected-area-map--embed"></div>
+          </div>
+
+          <hr class="govuk-section-break
+            govuk-section-break--xl
+            govuk-section-break--visible"/>
+
+          <h2 class="govuk-heading-m">About the developer</h2>
+
+          <p class="govuk-body">The Developer proposing this project is {{ appData.PromoterName }}.</p>
+
+          <p class="govuk-body govuk-!-margin-top-6">
+            <a class="govuk-link" href=//{{ appData.WebAddress }}
+            >Visit the project website by {{ appData.PromoterName }}</a>
+          for more information.
+        </p>
+
+          <hr class="govuk-section-break
+            govuk-section-break--xl
+            govuk-section-break--visible"/>
+
+          <h2 class="govuk-heading-m">
+              Talk to an advisor 
+          </h2>
+          <p class="govuk-body">If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:</p>
+          <ul class="govuk-list">
+            <li>Email: <a class="govuk-link" href="mailto:{{ appData.ProjectEmailAddress }}">{{ appData.ProjectEmailAddress }}</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </main>
   </div>
-  <h2 class="govuk-heading-m">Affected area</h2>
-<div class="pins-map-enclosure">
-  <div id='map' class="pins-affected-area-map--embed"></div>
-  <div class="pins-map-key-box">
-    <h3>Key</h3>
-    <ul id="menu" class="pins-map-menu pins-map-key-list">
-      <li>
-        <input type="radio" name="mapToggle" value="satellite" id="satellite-v9">
-        <label for="satellite-v9">Satellite</label>
-      </li>
-      <li>
-        <input type="radio" name="mapToggle" value="map" id="streets-v11" checked="checked">
-        <label for="streets-v11">Map</label>
-      </li>
-    </ul>
-    <ul class="pins-map-key-items pins-map-key-list">
-      <li><span class="pins-map-key-icon--development_area"></span>Development area</li>
-      <li><span class="pins-map-key-icon--red_line_boundary"></span>Red line boundary</li>
-    </ul>
-  </div>
-</div>
-  <!-- <p class="govuk-body"><a href="#">View an interactive map of the areas that will be affected by this project.</a></p> -->
-  <h3 class="govuk-heading-s">Check for impact on an area</h3>
-  <p class="govuk-body">Use this service to find out:</p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>the impact this project will have for an area in England or Wales</li>
-  </ul>
-  <a href="/check-for-impact/postcode" class="govuk-button">Start now</a>
-  <h2 class="govuk-heading-m">About the project</h2>
-  <ul class="pins-list-columns">
-    <li><h3 class="govuk-heading-s"><a class="govuk-link" href="#">Application introduction</a></h3><p class="govuk-body">Information about the project and what the developer is proposing</p></li>
-    <li><h3 class="govuk-heading-s"><a class="govuk-link" href="#">Environmental information</a></h3><p class="govuk-body">Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.</p></li>
-    <li><h3 class="govuk-heading-s"><a class="govuk-link" href="#">Drawings</a></h3><p class="govuk-body">How the propsed project will look and the area it will impact.</p></li>
-  </ul>
-
-  <h2 class="govuk-heading-m">Register to have your say</h2>
-  <p class="govuk-body">If you want to have your say about this project, you can register and tell us what you think.</p>
-  <p class="govuk-body"><a class="govuk-link" href="/register/start">Register to have your say about a national infrastructure project</a>.</p>
-
-  <h2 class="govuk-heading-m">More detailed project information</h2>
-  <p class="govuk-body">If you are looking for more detailed information about this project, you can <a class="govuk-link" href="#">view all project information</a>.</p>
 {% endblock %}
-
-{% block footer %}
-  {{ pinsFooter() }}
-
+{% block pageScripts %}
   <script>
-  	mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
+    mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
     const map = new mapboxgl.Map({
       container: 'map', // container ID
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
       center: [{{ appData.LongLat }}], // starting position
       zoom: {{ appData.MapZoomLevel }}, // starting zoom,
-      logoPosition: 'top-left'
+      logoPosition: 'top-left',
     });
-
-    const layerList = document.getElementById('menu');
-    const inputs = layerList.getElementsByTagName('input');
-
-      for (const input of inputs) {
-        input.onclick = (layer) => {
-          const layerId = layer.target.id;
-          map.setStyle('mapbox://styles/mapbox/' + layerId);
-        };
-      }
-
-
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-
   </script>
-
 {% endblock %}
