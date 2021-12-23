@@ -1,7 +1,7 @@
 {% extends "layouts/layout.njk" %}
 
 {% block pageTitle %}
-  {{ appData.ProjectName }} project overview
+  {{ projectName }} project overview
 {% endblock %}
 
 {% block headIcons %}
@@ -33,7 +33,7 @@
     <main class="govuk-main-wrapper">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
-          <h1 class="govuk-heading-xl">{{ appData.ProjectName }}</h1>
+          <h1 class="govuk-heading-xl">{{ projectName }}</h1>
         </div>
       </div>
       <div class="govuk-grid-row">
@@ -98,10 +98,11 @@
           <p class="govuk-body">The Developer proposing this project is {{ appData.PromoterName }}.</p>
 
           <p class="govuk-body govuk-!-margin-top-6">
-            <a class="govuk-link" href=//{{ appData.WebAddress }}
-            >Visit the project website by {{ appData.PromoterName }}</a>
-          for more information.
-        </p>
+            <a class="govuk-link" href=//{{ appData.WebAddress }}>
+              Visit the project website by {{ appData.PromoterName }}
+            </a>
+              for more information.
+          </p>
 
           <hr class="govuk-section-break
             govuk-section-break--xl
@@ -129,7 +130,7 @@
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
       center: [{{ appData.LongLat }}], // starting position
       zoom: {{ appData.MapZoomLevel }}, // starting zoom,
-      logoPosition: 'top-left',
+      logoPosition: 'top-left'
     });
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   </script>
