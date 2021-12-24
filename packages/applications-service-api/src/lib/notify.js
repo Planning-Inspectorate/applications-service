@@ -49,7 +49,8 @@ async function sendMagicLinkToIP(details) {
       .setTemplateVariablesFromObject({
         'email address': details.email,
         interested_party_name: details.ipName,
-        'planning application number': details.caseRef,
+        ProjectName: details.projectName,
+        DateOfRelevantRepresentationClose: details.repCloseDate,
         'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
       })
       .setReference(details.ipRef)
