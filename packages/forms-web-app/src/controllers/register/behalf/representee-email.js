@@ -18,7 +18,6 @@ exports.postEmail = async (req, res) => {
   }
 
   req.session.behalfRegdata.representee.email = body.email;
-  req.session.behalfRegdata.representor.email = body.email; // TODO REMOVE
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);

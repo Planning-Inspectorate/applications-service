@@ -7,6 +7,16 @@ Feature: Agent representing a person journey
     Background: Navigate to check your answers page as a representative of a person
         Given I navigate to UK address details page as a representative of a person
         And I enter below data into address details page
+            | AddressLine1                  | AddressLine2 | AddressLine3 | PostCode | Country        |
+            | Representative Address Line 1 |              |              | NE27 0BB | United Kingdom |
+        And User clicks on continue button
+        And user selects "A person" on who are you representing page
+        And User clicks on continue button
+        And I enter text "Test MiddleName LastName" into full name field
+        And User clicks on continue button
+        And user selects "Yes" radio option on are you 18 or over page
+        And User clicks on continue button
+        And I enter below data into address details page
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
         And User clicks on continue button
@@ -18,16 +28,6 @@ Feature: Agent representing a person journey
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
         And User clicks on continue button
         And user selects "No" radio option on Do you want to add another comment page
-        And User clicks on continue button
-        And I enter text "RepresentativeTest MiddleName LastName" into full name field
-        And User clicks on continue button
-        And I enter below data into address details page
-            | AddressLine1                  | AddressLine2 | AddressLine3 | PostCode | Country        |
-            | Representative Address Line 1 |              |              | NE27 0BB | United Kingdom |
-        And User clicks on continue button
-        And I enter "Representative_test@gmail.com" into email address field
-        And User clicks on continue button
-        And I enter "1234567888" into telephone number field
         And User clicks on continue button
 
     Scenario: verify page title, heading, data and complete Agent representing a person journey
