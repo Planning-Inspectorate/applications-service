@@ -21,13 +21,21 @@ Given('I navigate to UK address details page as a representative of a person', (
     cy.clickOnHref('/register/type-of-party');
     cy.selectRadioOption("On behalf of another person or organisation");
     cy.clickSaveAndContinue();
-    whoYouRepresenting.selectRadioOption("A person");
+    fullNamePage.enterTextIntoFullNameField("RepresentativeTest MiddleName LastName");
     cy.clickSaveAndContinue();
-    fullNamePage.enterTextIntoFullNameField("Test MiddleName LastName");
+    emailAddressPage.enterTextIntoEmailField("Representative_test@gmail.com");
     cy.clickSaveAndContinue();
-    cy.selectRadioYesOrNo("Yes");
+    teleNumberPage.enterTextIntoTelephoneNumberField("1234567888");
     cy.clickSaveAndContinue();
 });
+
+When('user selects {string} radio option on are you 18 or over page', (radioChoice) => {
+    cy.selectRadioYesOrNo(radioChoice)
+})
+
+When('user selects {string} on who are you representing page', (radioChoice) => {
+    whoYouRepresenting.selectRadioOption(radioChoice)
+})
 
 And('I enter below data into address details page', function (table) {
     addressDetails.enterTextIntoAddressFields(table)
