@@ -71,8 +71,8 @@ module.exports = class OrgIP extends InterestedParty {
 
   getEmailingDetails(data) {
     return {
-      email: data.agmail || data.youmail,
-      ipName: data.agname || data.youname,
+      email: data.agmail,
+      ipName: data.agname,
       ipRef: `${data.ID}`,
     };
   }

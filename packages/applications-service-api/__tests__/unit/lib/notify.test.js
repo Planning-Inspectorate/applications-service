@@ -64,7 +64,8 @@ describe('sendMagicLinkToIP', () => {
     const details = {
       email: 'elvin.ali@planninginspectorate.gov.uk',
       ipName: 'David White',
-      caseRef: 'EN010009',
+      projectName: 'St James Barton Giant Wind Turbine',
+      repCloseDate: '2024-08-01',
       ipRef: '30000120',
     };
     await sendMagicLinkToIP(details);
@@ -79,7 +80,8 @@ describe('sendMagicLinkToIP', () => {
     expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
       'email address': details.email,
       interested_party_name: details.ipName,
-      'planning application number': details.caseRef,
+      ProjectName: details.projectName,
+      DateOfRelevantRepresentationClose: details.repCloseDate,
       'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
     });
     expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
