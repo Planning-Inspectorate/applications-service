@@ -3,6 +3,7 @@ const VIEW = {
 
   COOKIES: 'cookies',
   OVERVIEW: 'overview',
+  PROJECT_TIMELINE: 'project-timeline',
   DOCUMENT_LIBRARY: 'document-library',
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {

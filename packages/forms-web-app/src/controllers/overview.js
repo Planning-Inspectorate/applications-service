@@ -23,8 +23,11 @@ exports.getOverview = async (req, res) => {
     }
     req.session.caseRef = req.params.case_ref;
     req.session.projectName = appData.ProjectName;
+    req.session.appData = appData;
     res.render(VIEW.OVERVIEW, {
+      caseRef: req.session.caseRef,
       appData: appData,
+      projectName: appData.ProjectName,
       dateOfClosure: dateOfClosure,
       stage: Status[appData.Stage],
     });
