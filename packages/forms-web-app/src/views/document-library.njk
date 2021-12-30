@@ -1,98 +1,192 @@
 {% extends "layouts/layout.njk" %}
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
 {% block pageTitle %}
-  A303 Dewsbury project overview
-{% endblock %}
-
-{% block header %}
-  <!-- Blank header with no service name for the start page -->
-  {{ pinsHeader() }}
-{% endblock %}
-
-{% block beforeContent %}
-
-  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "beta"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-  }) }}
-
-{% endblock %}
-
-{% set containerClasses = "pins-sidebar--container" %}
-{% set hasContentsAside = true %}
-
-{% block contentsAside %}
-  <aside class="pins-aside-page-contents">
-    <h2 class="govuk-heading-s">Contents</h2>
-    <ul class="govuk-list">
-      <li><a class="govuk-link" href="/overview/{{ caseRef }}">A404 Dewsbury project information</a></li>
-      <li><a class="govuk-link" href="/about-the-application">About the application</a></li>
-      <li><strong>All Examination documents</strong></li>
-      <li><a class="govuk-link" href="#">Recommendation and decision</a></li>
-  </aside>
+  {{ projectName }} project overview
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-l">A404 Dewsbury</h1>
-  <h2 class="govuk-heading-m">All examination information</h2>
 
-  <div class="govuk-grid-row">
-    <section class="pins-document-library-search govuk-grid-column-one-quarter">
-      <label class="pins-label-small" for="search_documents">Search</label>
-      <form action="/document-library/search/{{ caseRef }}/1" method="POST" novalidate>
-        <div class="pins-document-library-search-wrapper">
-          <input class="search-documents-input" type="text" name="search" id="search_documents">
-          <button class="search-documents-submit" type="submit" value="Search">Search</button>
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+          <h1 class="govuk-heading-l">All Projects</h1>
         </div>
-      </form>
-    </section>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+          {% set current = 'all-examination-documents' %}
+          {% include "layouts/vertical-tabs.njk" %}
+        </div>
+        <div class="govuk-grid-column-three-quarters">
+          <h2 class="govuk-heading-m">All examination documents</h2>
 
-    <section class="documents-results govuk-grid-column-three-quarters">
-      {% if typeList.length === 0 %}
-        <p class="results"><strong><span id="results-number">{{ pageData.totalItems }}</span>No documents found. Please try with different search text.<strong></p>
-          
-      {% else %}
-        <p class="results"><strong><span id="results-number">{{ pageData.totalItems }}</span> results<strong></p>
-          <hr/>
-          <div class="document-results-sort">
-            <label class="govuk-label" for="document-results-sort">Sort by</span>
-            <select id="document-results-sort" class="govuk-select">
-              <option selected>Recently updated</option>
-            </select>
-          </div>
-      {% endif %}
+          <div class="govuk-grid-row ">
 
-      {% for i in range(0, typeList.length) -%}
-        <div class="pins-search-results-group">
-          <h3 class="pins-search-results-group-heading">{{ typeList[i] }}</h3>
-            <div class="pins-search-results-group-items">
-              <ul class="govuk-list">
-              {% for docs in docList[i] %}
-                  <li><a href="{{ docs.path }}">{{ docs.name }}</a></li>
-              {% endfor %}
-              </ul>
+            <div class="govuk-grid-column-two-thirds">
+              <p class="results">
+                <strong>
+                  <span id="results-number">{{ noOfProjects }}</span>
+                  {% if typeList.length === 0 %}
+                    No documents found. Please try with different search text.
+                  {% else %}
+                    <span id="results-number">{{ pageData.totalItems }}</span> results
+                  {% endif %}
+                </strong>
+              </p>
             </div>
-        </div>
-      {% endfor %}
-               
-      <div class="pins-search-results-pagination" id="pins-search-results-pagination">
-        {% for i in range(1, pageData.totalPages + 1) %}
-            {% if pageData.currentPage === i %}
-              <a href="/document-library/{{ caseRef }}/{{ i }}" class="govuk-link govuk-link--no-underline">{{ i }}</a>
-            {% else %}
-              <a href="/document-library/{{ caseRef }}/{{ i }}" class="govuk-link">{{ i }}</a>
-            {% endif %}           
-        {% endfor %}
-      </div> 
+          
+            <button id="toggleFilters" class="govuk-button govuk-button">Show search and filters</button>
+            <form action="/document-library/search/{{ caseRef }}/1" method="POST" novalidate>
+            <div id="expandingFilterSection" class="expandingFilterSection hidden govuk-!-margin-bottom-6">
+              <div class="govuk-form-group">
+                <h3 class="govuk-label-wrapper">
+                  <label class="govuk-label govuk-label--m" for="search">
+                Keywords </label>
+                </h3>
+                <input class="govuk-input" id="search" name="search" type="text">
+              </div>
 
-    </section>
-  </div>  
-{% endblock %}
+              <div class="govuk-form-group">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                  <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+                Filter by theme
+              </h2>
+                </legend>
+                <fieldset class="govuk-fieldset" aria-labelledby="who-submitted">
+                  <div class="govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-noise-traffic-air">
+                      <label class="govuk-label govuk-checkboxes__label" for="theme-noise-traffic-air">Noise, traffic and air quality</label>
+                    </div>
 
-{% block footer %}
-  {{ pinsFooter() }}
-{% endblock %}
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-landscape-visual">
+                      <label class="govuk-label govuk-checkboxes__label" for="theme-landscape-visual">Landscape and visual</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="heritage">
+                      <label class="govuk-label govuk-checkboxes__label" for="heritage">Heritage</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+                      <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">Local wildlife and habitats</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="govuk-form-group">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                  <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+                Who submitted
+              </h2>
+                </legend>
+
+                <fieldset class="govuk-fieldset" aria-labelledby="who-submitted">
+                  <div class="govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-examining-panel">
+                      <label class="govuk-label govuk-checkboxes__label" for="who-submitted-examining-panel">Examining authority</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-developer">
+                      <label class="govuk-label govuk-checkboxes__label" for="who-submitted-developer">Developer</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-individual-interested-party">
+                      <label class="govuk-label govuk-checkboxes__label" for="who-submitted-individual-interested-party">Individual interested party</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-organisation-interested-party">
+                      <label class="govuk-label govuk-checkboxes__label" for="who-submitted-organisation-interested-party">Organisation interested party</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-official-body-and-local-authority">
+                      <label class="govuk-label govuk-checkboxes__label" for="who-submitted-official-body-and-local-authority">Official bodies and local authorities</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="govuk-form-group">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                  <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+                Filter by type of information
+              </h2>
+                </legend>
+
+                <fieldset class="govuk-fieldset" aria-labelledby="who-submitted">
+                  <div class="govuk-checkboxes--small" data-module="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Topics-and-replies">
+                      <label class="govuk-label govuk-checkboxes__label" for="type-plans-and-drawings">Topics and replies</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Deadlines">
+                      <label class="govuk-label govuk-checkboxes__label" for="type-environmental">Deadlines</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Hearing-agendas">
+                      <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Hearing agendas</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Recordings-of-hearings">
+                      <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Recordings of hearings</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Procedural-decisions">
+                      <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Procedural decisions</label>
+                    </div>
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Site-inspections">
+                      <label class="govuk-label govuk-checkboxes__label" for="type-consultation-reports">Site inspections</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <button class="govuk-button" type="submit" value="Search">Apply filters</button>
+              {# <a href="#" id="closeFilters" class="govuk-button">Apply filters</a> #}
+            </div>
+            </form>
+          </div>
+          <hr/>
+
+          <div class="pins-search-results-group">
+
+            <p class="results">
+              <strong>
+                <strong></p>
+
+                {% for i in range(0, typeList.length) -%}
+                  <div class="pins-search-results-group">
+                    <h3 class="pins-search-results-group-heading">{{ typeList[i] }}</h3>
+                    <div class="pins-search-results-group-items">
+                      <ul class="govuk-list">
+                        {% for docs in docList[i] %}
+                          <li>
+                            <a class = "govuk-link" href="{{ docs.path }}" target="_blank">{{ docs.name }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                {% endfor %}
+
+              </div>
+              <div class="pins-search-results-pagination" id="pins-search-results-pagination">
+                {% for i in range(1, pageData.totalPages + 1) %}
+                  {% if pageData.currentPage === i %}
+                    <a href="/document-library/{{ caseRef }}/{{ i }}" class="govuk-link govuk-link--no-underline">{{ i }}</a>
+                  {% else %}
+                    <a href="/document-library/{{ caseRef }}/{{ i }}" class="govuk-link">{{ i }}</a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    {% endblock %}
+
