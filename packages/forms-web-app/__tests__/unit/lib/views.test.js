@@ -9,6 +9,7 @@ describe('lib/views', () => {
       OVERVIEW: 'overview',
       DOCUMENT_LIBRARY: 'document-library',
       PROJECT_SEARCH: 'project-search',
+      PROJECT_TIMELINE: 'project-timeline',
       GUIDANCE_PAGES: {
         BEFORE_APPLY: 'guidance-pages/before-apply',
       },

@@ -5,8 +5,10 @@ Feature: Who are you representing? page
     So that I can verify the functionality
 
     Background: Navigate to Who are you representing? page
-        Given I navigate to the who are you registering for page
-        When User selects "On behalf of another person or organisation"
+        Given I navigate to UK address details page as a representative of a person
+        And I enter below data into address details page
+            | AddressLine1                  | AddressLine2 | AddressLine3 | PostCode | Country        |
+            | Representative Address Line 1 |              |              | NE27 0BB | United Kingdom |
         And User clicks on continue button
 
     Scenario: verify page title, heading, error message, select a person and continue
