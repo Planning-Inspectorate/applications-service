@@ -20,12 +20,16 @@ describe('controllers/timetable', () => {
       getProjectData.mockImplementation(() =>
         Promise.resolve({
           resp_code: 200,
-          data: { ProjectName: 'St James Barton Giant Wind Turbine' },
+          data: {
+            ProjectName: 'St James Barton Giant Wind Turbine',
+            CaseReference: 'EN010009',
+          },
         })
       );
       await controller.getTimetable(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.TIMETABLE, {
-        appData: { ProjectName: 'St James Barton Giant Wind Turbine' },
+        projectName: 'St James Barton Giant Wind Turbine',
+        caseRef: 'EN010009',
       });
     });
   });

@@ -20,12 +20,16 @@ describe('controllers/all-examination-documents', () => {
       getProjectData.mockImplementation(() =>
         Promise.resolve({
           resp_code: 200,
-          data: { ProjectName: 'St James Barton Giant Wind Turbine' },
+          data: {
+            ProjectName: 'St James Barton Giant Wind Turbine',
+            CaseReference: 'EN010009',
+          },
         })
       );
       await controller.getAllExaminationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.ALL_EXAMINATION_DOCUMENTS, {
-        appData: { ProjectName: 'St James Barton Giant Wind Turbine' },
+        projectName: 'St James Barton Giant Wind Turbine',
+        caseRef: 'EN010009',
       });
     });
   });
