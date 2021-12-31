@@ -88,6 +88,10 @@ describe('lib/views', () => {
         ACCESSIBILITY: 'footer-pages/accessibility',
         COOKIES: 'footer-pages/cookies-info',
       },
+      REPRESENTATIONS: 'representations',
+      TIMETABLE: 'timetable',
+      ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
+      RECOMMENDATIONS: 'recommendations',
     });
   });
 });
