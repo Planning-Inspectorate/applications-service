@@ -7,7 +7,8 @@ exports.getTimetable = async (req, res) => {
     const appData = response.data;
 
     res.render(VIEW.TIMETABLE, {
-      appData,
+      projectName: appData.ProjectName,
+      caseRef: appData.CaseReference,
     });
   }
 };

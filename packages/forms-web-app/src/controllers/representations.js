@@ -7,7 +7,8 @@ exports.getRepresentations = async (req, res) => {
     const appData = response.data;
 
     res.render(VIEW.REPRESENTATIONS, {
-      appData,
+      projectName: appData.ProjectName,
+      caseRef: appData.CaseReference,
     });
   }
 };

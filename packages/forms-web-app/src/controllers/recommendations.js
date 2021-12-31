@@ -7,7 +7,8 @@ exports.getRecommendations = async (req, res) => {
     const appData = response.data;
 
     res.render(VIEW.RECOMMENDATIONS, {
-      appData,
+      projectName: appData.ProjectName,
+      caseRef: appData.CaseReference,
     });
   }
 };

@@ -7,7 +7,8 @@ exports.getAllExaminationDocuments = async (req, res) => {
     const appData = response.data;
 
     res.render(VIEW.ALL_EXAMINATION_DOCUMENTS, {
-      appData,
+      projectName: appData.ProjectName,
+      caseRef: appData.CaseReference,
     });
   }
 };
