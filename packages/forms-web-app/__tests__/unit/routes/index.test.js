@@ -7,6 +7,10 @@ const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/interested-party-guide');
 const documentLibraryRouter = require('../../../src/routes/document-library');
 const footerPagesRouter = require('../../../src/routes/footer-pages');
+const representationsRouter = require('../../../src/routes/representations');
+const timetableRouter = require('../../../src/routes/timetable');
+const allExaminationDocsRouter = require('../../../src/routes/all-examination-documents');
+const recommendationsRouter = require('../../../src/routes/recommendations');
 
 describe('routes/index', () => {
   beforeEach(() => {
@@ -27,6 +31,10 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/document-library', documentLibraryRouter);
     expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
-    expect(use.mock.calls.length).toBe(10);
+    expect(use).toHaveBeenCalledWith('/', representationsRouter);
+    expect(use).toHaveBeenCalledWith('/', timetableRouter);
+    expect(use).toHaveBeenCalledWith('/', allExaminationDocsRouter);
+    expect(use).toHaveBeenCalledWith('/', recommendationsRouter);
+    expect(use.mock.calls.length).toBe(14);
   });
 });

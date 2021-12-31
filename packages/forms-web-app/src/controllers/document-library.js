@@ -7,7 +7,7 @@ const { searchDocument } = require('../services/document.service');
 function getJsonDetails(doc) {
   item = {}
   item ["path"] = doc.path;
-  item ["name"] = doc.path.replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/','').split('/')[1].split('.pdf')[0];
+  item ["name"] = doc.path && doc.path.replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/','').split('/')[1].split('.pdf')[0];
   return item;
 }
 

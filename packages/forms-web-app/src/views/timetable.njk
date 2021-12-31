@@ -1,0 +1,57 @@
+{% extends "layouts/layout.njk" %}
+
+{% block pageTitle %}
+  {{ appData.ProjectName }}
+{% endblock %}
+
+{% block headIcons %}
+  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon"/>
+{% endblock %}
+
+{% block head %}
+  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/>
+  <!--<![endif]-->
+
+  {% for stylesheetUrl in extensionConfig.stylesheets %}
+    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
+  {% endfor %}
+
+  <!-- Mapbox resources -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+  <!-- end Mapbox -->
+{% endblock %}
+
+{% block header %}
+  {{ pinsHeader() }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+          <h1 class="govuk-heading-xl">{{ appData.ProjectName }}</h1>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-quarter">
+          {% set current = 'timetable' %}
+          {% include "layouts/vertical-tabs.njk" %}
+        </div>
+
+        <div class="govuk-grid-column-three-quarters">
+
+          <h2 class="govuk-heading-m">Examination timetable</h2>
+          <p>Currently there are no events to display. The examination timetable will be published at the Examination stage.</p>
+           <p>
+             <a href="/overview/{{ appData.CaseReference }}" class="govuk-link">Return to the project overview</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+{% endblock %}
