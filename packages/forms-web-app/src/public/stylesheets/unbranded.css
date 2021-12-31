@@ -8944,6 +8944,10 @@ h2.govuk-accordion__section-heading,
   margin-left: 10px;
 }
 
+.hidden {
+  display: none;
+}
+
 li.side-menu {
   margin-bottom: 20px;
 }
