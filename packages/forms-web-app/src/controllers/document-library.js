@@ -1,21 +1,21 @@
-const config = require('../config');
 const documentSearch = require('../lib/document-search.json');
 const { VIEW } = require('../lib/views');
-const logger = require('../lib/logger');
 const { searchDocument } = require('../services/document.service');
 
 function getJsonDetails(doc) {
-  item = {};
+  const item = {};
   item.path = doc.path;
-  item.name = doc.path
-    .replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
-    .split('/')[1]
-    .split('.pdf')[0];
+  item.name =
+    doc.path &&
+    doc.path
+      .replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
+      .split('/')[1]
+      .split('.pdf')[0];
   return item;
 }
 
 function getPageData(doc) {
-  item = {};
+  const item = {};
   item.totalItems = doc.totalItems;
   item.itemsPerPage = doc.itemsPerPage;
   item.totalPages = doc.totalPages;
@@ -29,7 +29,7 @@ function filterData(documents, typeList, docList) {
       typeList.push(key);
     });
     Object.values(documents[key]).forEach(function (docs) {
-      let subDocList = [];
+      const subDocList = [];
       for (key in docs) {
         subDocList.push(getJsonDetails(docs[key]));
       }
@@ -39,28 +39,28 @@ function filterData(documents, typeList, docList) {
 }
 
 function renderData(req, res, caseRef, response) {
-  const projectName = req.session.projectName;
+  const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.DOCUMENT_LIBRARY, {
-      projectName: projectName,
-      caseRef: caseRef,
+      projectName,
+      caseRef,
       docList: [],
       typeList: [],
       pageData: {},
     });
   } else {
     const respData = response.data;
-    const documents = respData.documents;
+    const { documents } = respData;
     const pageData = getPageData(respData);
-    let typeList = [];
-    let docList = [];
+    const typeList = [];
+    const docList = [];
     filterData(documents, typeList, docList);
     res.render(VIEW.DOCUMENT_LIBRARY, {
-      projectName: projectName,
-      caseRef: caseRef,
-      docList: docList,
-      typeList: typeList,
-      pageData: pageData,
+      projectName,
+      caseRef,
+      docList,
+      typeList,
+      pageData,
     });
   }
 }
@@ -68,11 +68,13 @@ function renderData(req, res, caseRef, response) {
 exports.getDocumentLibrary = async (req, res) => {
   const caseRef = req.params.case_ref;
   const pageNumber = req.params.page;
-  let search = req.session.document_search
+  let search = req.session.document_search;
   if (pageNumber === '1') {
     search = '';
   }
-  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
+  const searchDocumentData = JSON.stringify({ ...documentSearch, filters: [] })
+    .replace(0, pageNumber)
+    .replace('$search_term$', search);
   const response = await searchDocument(caseRef, searchDocumentData);
   renderData(req, res, caseRef, response);
 };
@@ -82,9 +84,11 @@ exports.postSearchDocumentLibrary = async (req, res) => {
   const pageNumber = req.params.page;
   const { body } = req;
   const { search } = body;
-  req.session.document_search =  search;
+  req.session.document_search = search;
   const filters = req.session.document_filters | [];
-  const searchDocumentData = JSON.stringify({...documentSearch, filters: []}).replace(0, pageNumber).replace('$search_term$', search);
+  const searchDocumentData = JSON.stringify({ ...documentSearch, filters: [] })
+    .replace(0, pageNumber)
+    .replace('$search_term$', search);
   const response = await searchDocument(caseRef, searchDocumentData);
   renderData(req, res, caseRef, response);
 };
@@ -92,11 +96,12 @@ exports.postSearchDocumentLibrary = async (req, res) => {
 exports.postFilterDocumentLibrary = async (req, res) => {
   const caseRef = req.params.case_ref;
   const pageNumber = req.params.page;
-  const { body } = req;
   const filters = []; // should be taken from request TODO
-  req.session.document_filters =  filters;
+  req.session.document_filters = filters;
   const search = req.session.document_search;
-  const searchDocumentData = JSON.stringify({...documentSearch, filters: filters}).replace(0, pageNumber).replace('$search_term$', search);
+  const searchDocumentData = JSON.stringify({ ...documentSearch, filters })
+    .replace(0, pageNumber)
+    .replace('$search_term$', search);
   const response = await searchDocument(caseRef, searchDocumentData);
   renderData(req, res, caseRef, response);
 };
