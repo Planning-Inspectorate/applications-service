@@ -4,16 +4,19 @@
       {% if not 'overview' in current %}
         <a href="/overview/{{ caseRef }}">{{ projectName }} project information</a>
       {% else %}
-        {{ projectName }} project information {% endif %}
+        {{ projectName }} project information
+      {% endif %}
     </li>
     <li class="side-menu govuk-body-s {% if 'project-timeline' in current %} active {% endif %}">
       {% if not 'project-timeline' in current %}
-        <a href="./project-timeline">Project timeline</a>
-      {% else %} Project timeline {% endif %}
+        <a href="/overview/project-timeline">Project timeline</a>
+      {% else %} 
+        Project timeline
+      {% endif %}
     </li>
     <li class="side-menu govuk-body-s {% if 'about-the-application' in current %} active {% endif %}">
       {% if not 'about-the-application' in current %}
-        <a href="/about-the-application">Project application documents</a>
+        <a href="/document-library/{{ caseRef }}/1">Project application documents</a>
       {% else %} Project application documents {% endif %}
     </li>
     <li class="side-menu govuk-body-s {% if 'comments' in current %} active {% endif %}">
