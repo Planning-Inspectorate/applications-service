@@ -6,11 +6,11 @@ const getDocuments = async (caseRef, pageNo, searchTerm, filters) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
-  // SELECT * FROM ipclive.wp_ipc_documents_api where case_reference like 'caseRef'
+  // SELECT * FROM ipclive.wp_ipc_documents_api where case_reference like 'caseRef' AND Stage IN (1, 2, 3)
   // AND (desc like %searchTerm% OR path like %searchTerm% OR filter_1 like %searchTerm% or filter_2 like %searchTerm%)
   // AND filter[0] AND filter[1] ... AND filter[n];
 
-  let where = { case_reference: caseRef };
+  let where = { case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } };
   if (searchTerm) {
     where = { [Op.and]: [{ case_reference: caseRef }] };
     where[Op.and].push({
