@@ -1,9 +1,9 @@
 const express = require('express');
 
-const overviewController = require('../../controllers/overview');
+const examinationController = require('../../controllers/examination/examination');
 
 const router = express.Router();
 
-router.get('/:case_ref', overviewController.getOverview);
+router.get('/:case_ref', examinationController.getExamination);
 
 module.exports = router;

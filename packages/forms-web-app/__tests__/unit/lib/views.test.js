@@ -6,7 +6,9 @@ describe('lib/views', () => {
       APPLICATION_NUMBER: 'application-number',
 
       COOKIES: 'cookies',
-      OVERVIEW: 'overview',
+      EXAMINATION: {
+        EXAMINATION: 'examination/examination',
+      },
       DOCUMENT_LIBRARY: 'document-library',
       PROJECT_SEARCH: 'project-search',
       PROJECT_TIMELINE: 'project-timeline',

@@ -1,15 +1,15 @@
 const moment = require('moment');
-const { Status } = require('../utils/status');
-const { VIEW } = require('../lib/views');
-const logger = require('../lib/logger');
-const { getAppData } = require('../services/application.service');
+const { Status } = require('../../utils/status');
+const { VIEW } = require('../../lib/views');
+const logger = require('../../lib/logger');
+const { getAppData } = require('../../services/application.service');
 
 function dayOfWeekAsString(dayIndex) {
   return (
     ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dayIndex] || ''
   );
 }
-exports.getOverview = async (req, res) => {
+exports.getExamination = async (req, res) => {
   const response = await getAppData(req.params.case_ref);
   if (response.resp_code === 200) {
     const appData = response.data;
@@ -24,7 +24,7 @@ exports.getOverview = async (req, res) => {
     req.session.caseRef = req.params.case_ref;
     req.session.projectName = appData.ProjectName;
     req.session.appData = appData;
-    res.render(VIEW.OVERVIEW, {
+    res.render(VIEW.EXAMINATION.EXAMINATION, {
       projectName: appData.ProjectName,
       caseRef: req.session.caseRef,
       appData: appData,

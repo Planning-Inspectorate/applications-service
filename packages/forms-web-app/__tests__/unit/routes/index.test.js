@@ -35,6 +35,6 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/', timetableRouter);
     expect(use).toHaveBeenCalledWith('/', allExaminationDocsRouter);
     expect(use).toHaveBeenCalledWith('/', recommendationsRouter);
-    expect(use.mock.calls.length).toBe(14);
+    expect(use.mock.calls.length).toBe(15);
   });
 });

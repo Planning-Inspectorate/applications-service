@@ -2,7 +2,9 @@ const VIEW = {
   APPLICATION_NUMBER: 'application-number',
 
   COOKIES: 'cookies',
-  OVERVIEW: 'overview',
+  EXAMINATION: {
+    EXAMINATION: 'examination/examination',
+  },
   PROJECT_TIMELINE: 'project-timeline',
   DOCUMENT_LIBRARY: 'document-library',
   PROJECT_SEARCH: 'project-search',
