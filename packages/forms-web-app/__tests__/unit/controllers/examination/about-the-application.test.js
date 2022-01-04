@@ -1,11 +1,11 @@
-const documentLibraryController = require('../../../src/controllers/document-library');
-const { searchDocumentList } = require('../../../src/lib/application-api-wrapper');
-const { mockReq, mockRes } = require('../mocks');
-const { VIEW } = require('../../../src/lib/views');
+const aboutTheApplicationController = require('../../../../src/controllers/examination/about-the-application');
+const { searchDocumentList } = require('../../../../src/lib/application-api-wrapper');
+const { mockReq, mockRes } = require('../../mocks');
+const { VIEW } = require('../../../../src/lib/views');
 
-jest.mock('../../../src/lib/application-api-wrapper');
+jest.mock('../../../../src/lib/application-api-wrapper');
 
-describe('controllers/document-library', () => {
+describe('controllers/about-the-application', () => {
   let req;
   let res;
   const docList = [
@@ -29,13 +29,13 @@ describe('controllers/document-library', () => {
     req = {
       ...mockReq(),
       params: {
-        case_ref: 'ABCD1234',
         page: 1,
       },
       body: {
         search: 'test',
       },
       session: {
+        caseRef: 'ABCD1234',
         projectName: 'ABC',
       },
     };
@@ -68,10 +68,10 @@ describe('controllers/document-library', () => {
     );
   });
 
-  describe('getDocumentLibrary', () => {
+  describe('getAboutTheApplication', () => {
     it('should call the correct template', async () => {
-      await documentLibraryController.getDocumentLibrary(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_LIBRARY, {
+      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',
@@ -80,10 +80,10 @@ describe('controllers/document-library', () => {
     });
   });
 
-  describe('postSearchDocumentLibrary', () => {
+  describe('postSearchDocument', () => {
     it('should call the correct template', async () => {
-      await documentLibraryController.postSearchDocumentLibrary(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_LIBRARY, {
+      await aboutTheApplicationController.postSearchDocument(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',
@@ -92,10 +92,10 @@ describe('controllers/document-library', () => {
     });
   });
 
-  describe('postFilterDocumentLibrary', () => {
+  describe('postFilterDocument', () => {
     it('should call the correct template', async () => {
-      await documentLibraryController.postFilterDocumentLibrary(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.DOCUMENT_LIBRARY, {
+      await aboutTheApplicationController.postFilterDocument(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',

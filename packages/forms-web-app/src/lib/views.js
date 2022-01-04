@@ -4,9 +4,9 @@ const VIEW = {
   COOKIES: 'cookies',
   EXAMINATION: {
     EXAMINATION: 'examination/examination',
-    PROJECT_TIMELINE: 'project-timeline',
+    PROJECT_TIMELINE: 'examination/project-timeline',
+    ABOUT_THE_APPLICATION: 'examination/about-the-application',
   },
-  DOCUMENT_LIBRARY: 'document-library',
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {
     BEFORE_APPLY: 'guidance-pages/before-apply',
