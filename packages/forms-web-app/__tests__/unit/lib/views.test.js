@@ -8,10 +8,10 @@ describe('lib/views', () => {
       COOKIES: 'cookies',
       EXAMINATION: {
         EXAMINATION: 'examination/examination',
+        PROJECT_TIMELINE: 'project-timeline',
       },
       DOCUMENT_LIBRARY: 'document-library',
       PROJECT_SEARCH: 'project-search',
-      PROJECT_TIMELINE: 'project-timeline',
       GUIDANCE_PAGES: {
         BEFORE_APPLY: 'guidance-pages/before-apply',
       },

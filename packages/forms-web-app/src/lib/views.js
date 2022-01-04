@@ -4,8 +4,8 @@ const VIEW = {
   COOKIES: 'cookies',
   EXAMINATION: {
     EXAMINATION: 'examination/examination',
+    PROJECT_TIMELINE: 'project-timeline',
   },
-  PROJECT_TIMELINE: 'project-timeline',
   DOCUMENT_LIBRARY: 'document-library',
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {

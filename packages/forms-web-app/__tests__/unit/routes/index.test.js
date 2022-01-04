@@ -2,7 +2,7 @@ const { use } = require('./router-mock');
 const registerRouter = require('../../../src/routes/register');
 const homeRouter = require('../../../src/routes/home');
 const cookieRouter = require('../../../src/routes/cookies');
-const overviewRouter = require('../../../src/routes/overview');
+const examinationRouter = require('../../../src/routes/examination');
 const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/interested-party-guide');
 const documentLibraryRouter = require('../../../src/routes/document-library');
@@ -26,7 +26,7 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/', homeRouter);
     expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
     expect(use).toHaveBeenCalledWith('/register', registerRouter);
-    expect(use).toHaveBeenCalledWith('/overview', overviewRouter);
+    expect(use).toHaveBeenCalledWith('/examination', examinationRouter);
     expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/document-library', documentLibraryRouter);
@@ -35,6 +35,6 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/', timetableRouter);
     expect(use).toHaveBeenCalledWith('/', allExaminationDocsRouter);
     expect(use).toHaveBeenCalledWith('/', recommendationsRouter);
-    expect(use.mock.calls.length).toBe(15);
+    expect(use.mock.calls.length).toBe(14);
   });
 });
