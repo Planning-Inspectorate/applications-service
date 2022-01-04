@@ -54,6 +54,24 @@ const env = nunjucks.configure(viewPaths, nunjucksConfig);
 dateFilter.setDefaultFormat(config.application.defaultDisplayDateFormat);
 env.addFilter('date', dateFilter);
 
+env.addFilter('getkeys', function (object) {
+  return Object.keys(object);
+});
+
+env.addFilter('tostring', function (object) {
+  return JSON.stringify(object);
+});
+
+env.addFilter('docname', function (object) {
+  return (
+    object &&
+    object
+      .replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
+      .split('/')[1]
+      .split('.pdf')[0]
+  );
+});
+
 env.addFilter('formatBytes', fileSizeDisplayHelper);
 env.addFilter('filterByKey', filterByKey);
 env.addFilter('addKeyValuePair', addKeyValuePair);
