@@ -1,18 +1,7 @@
+const logger = require('../lib/logger');
 const documentSearch = require('../lib/document-search.json');
 const { VIEW } = require('../lib/views');
 const { searchDocument } = require('../services/document.service');
-
-function getJsonDetails(doc) {
-  const item = {};
-  item.path = doc.path;
-  item.name =
-    doc.path &&
-    doc.path
-      .replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
-      .split('/')[1]
-      .split('.pdf')[0];
-  return item;
-}
 
 function getPageData(doc) {
   const item = {};
@@ -23,43 +12,23 @@ function getPageData(doc) {
   return item;
 }
 
-function filterData(documents, typeList, docList) {
-  Object.keys(documents).forEach(function (key) {
-    Object.keys(documents[key]).forEach(function (key) {
-      typeList.push(key);
-    });
-    Object.values(documents[key]).forEach(function (docs) {
-      const subDocList = [];
-      for (key in docs) {
-        subDocList.push(getJsonDetails(docs[key]));
-      }
-      docList.push(subDocList);
-    });
-  });
-}
-
 function renderData(req, res, caseRef, response) {
   const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.DOCUMENT_LIBRARY, {
       projectName,
       caseRef,
-      docList: [],
-      typeList: [],
       pageData: {},
     });
   } else {
     const respData = response.data;
     const { documents } = respData;
+    logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
-    const typeList = [];
-    const docList = [];
-    filterData(documents, typeList, docList);
     res.render(VIEW.DOCUMENT_LIBRARY, {
+      documents,
       projectName,
       caseRef,
-      docList,
-      typeList,
       pageData,
     });
   }
