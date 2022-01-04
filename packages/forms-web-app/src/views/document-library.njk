@@ -171,7 +171,7 @@
                       <ul class="govuk-list">
                         {% for doc in documents[stageDoc][stage][docType] | getkeys %}
                           <li>
-                            <a href="{{ documents[stageDoc][stage][docType][doc].path }}">{{ documents[stageDoc][stage][docType][doc].path | docname }}</a>
+                            <a href="{{ documents[stageDoc][stage][docType][doc].path }}" class="govuk-link" target="_blank">{{ documents[stageDoc][stage][docType][doc].path | docname }}</a>
                           </li>
                         {% endfor %}
                       </ul>
