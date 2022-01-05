@@ -11,10 +11,7 @@ const interestedPartyRouter = require('./interested-party-guide');
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('./examination');
-
-const timetableRouter = require('./timetable');
 const allExaminationDocsRouter = require('./all-examination-documents');
-const recommendationsRouter = require('./recommendations');
 
 router.use('/', homeRouter);
 router.use('/', guidancePagesRouter);
@@ -25,9 +22,6 @@ router.use('/register', registerRouter);
 router.use('/examination', examinationRouter);
 router.use(interestedPartyRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
-
-router.use('/timetable', timetableRouter);
 router.use('/all-examination-documents', allExaminationDocsRouter);
-router.use('/recommendations', recommendationsRouter);
 
 module.exports = router;

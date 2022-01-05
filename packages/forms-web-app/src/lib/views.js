@@ -7,6 +7,7 @@ const VIEW = {
     PROJECT_TIMELINE: 'examination/project-timeline',
     ABOUT_THE_APPLICATION: 'examination/about-the-application',
     REPRESENTATIONS: 'examination/representations',
+    TIMETABLE: 'examination/timetable',
   },
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {
@@ -85,7 +86,7 @@ const VIEW = {
     ACCESSIBILITY: 'footer-pages/accessibility',
     COOKIES: 'footer-pages/cookies-info',
   },
-  TIMETABLE: 'timetable',
+
   ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
   RECOMMENDATIONS: 'recommendations',
 };

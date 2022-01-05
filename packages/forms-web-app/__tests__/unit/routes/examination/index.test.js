@@ -3,6 +3,7 @@ const aboutTheApplicationRouter = require('../../../../src/routes/examination/ab
 const examinationController = require('../../../../src/controllers/examination/examination');
 const representationsController = require('../../../../src/controllers/examination/representations');
 const projectTimelineController = require('../../../../src/controllers/examination/project-timeline');
+const timetableController = require('../../../../src/controllers/examination/timetable');
 
 describe('routes/examination', () => {
   beforeEach(() => {
@@ -25,6 +26,7 @@ describe('routes/examination', () => {
       '/project-timeline',
       projectTimelineController.getProjectTimeLine
     );
+    expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
     expect(get).toHaveBeenCalledWith('/:case_ref', examinationController.getExamination);
   });
 });
