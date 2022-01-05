@@ -8,7 +8,7 @@ const VIEW = {
     ABOUT_THE_APPLICATION: 'examination/about-the-application',
     REPRESENTATIONS: 'examination/representations',
     TIMETABLE: 'examination/timetable',
-
+    ALL_EXAMINATION_DOCUMENTS: 'examination/all-examination-documents',
     RECOMMENDATIONS: 'examination/recommendations',
   },
   PROJECT_SEARCH: 'project-search',
@@ -88,8 +88,6 @@ const VIEW = {
     ACCESSIBILITY: 'footer-pages/accessibility',
     COOKIES: 'footer-pages/cookies-info',
   },
-
-  ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
 };
 
 module.exports = {

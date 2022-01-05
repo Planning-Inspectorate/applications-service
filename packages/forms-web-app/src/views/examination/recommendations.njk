@@ -16,7 +16,7 @@
   {% for stylesheetUrl in extensionConfig.stylesheets %}
     <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
   {% endfor %}
-  
+
 {% endblock %}
 
 {% block header %}
@@ -41,9 +41,9 @@
         <div class="govuk-grid-column-three-quarters">
 
           <h2 class="govuk-heading-m">Recommendation and decision</h2>
-          <p>There are no documents to display at the moment. These documents will be published at the Recommendation and decision stage.</p>
-           <p>
-             <a href="/overview/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+          <p class="govuk-body">There are no documents to display at the moment. These documents will be published at the Recommendation and decision stage.</p>
+          <p class="govuk-body">
+            <a href="/examination/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
           </p>
         </div>
       </div>

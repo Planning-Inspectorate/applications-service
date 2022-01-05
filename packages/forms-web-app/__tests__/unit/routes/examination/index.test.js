@@ -5,6 +5,7 @@ const representationsController = require('../../../../src/controllers/examinati
 const projectTimelineController = require('../../../../src/controllers/examination/project-timeline');
 const timetableController = require('../../../../src/controllers/examination/timetable');
 const recommendationsController = require('../../../../src/controllers/examination/recommendations');
+const allExaminationDocumentsController = require('../../../../src/controllers/examination/all-examination-documents');
 
 describe('routes/examination', () => {
   beforeEach(() => {
@@ -31,7 +32,13 @@ describe('routes/examination', () => {
       '/recommendations',
       recommendationsController.getRecommendations
     );
+    expect(get).toHaveBeenCalledWith(
+      '/all-examination-documents',
+      allExaminationDocumentsController.getAllExaminationDocuments
+    );
     expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
     expect(get).toHaveBeenCalledWith('/:case_ref', examinationController.getExamination);
+    expect(use.mock.calls.length).toBe(1);
+    expect(get.mock.calls.length).toBe(6);
   });
 });

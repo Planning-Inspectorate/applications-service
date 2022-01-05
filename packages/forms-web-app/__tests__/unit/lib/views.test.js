@@ -12,7 +12,7 @@ describe('lib/views', () => {
         ABOUT_THE_APPLICATION: 'examination/about-the-application',
         REPRESENTATIONS: 'examination/representations',
         TIMETABLE: 'examination/timetable',
-
+        ALL_EXAMINATION_DOCUMENTS: 'examination/all-examination-documents',
         RECOMMENDATIONS: 'examination/recommendations',
       },
 
@@ -95,7 +95,6 @@ describe('lib/views', () => {
         ACCESSIBILITY: 'footer-pages/accessibility',
         COOKIES: 'footer-pages/cookies-info',
       },
-      ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
     });
   });
 });
