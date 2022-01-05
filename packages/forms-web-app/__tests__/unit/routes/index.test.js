@@ -6,7 +6,7 @@ const examinationRouter = require('../../../src/routes/examination');
 const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/interested-party-guide');
 const footerPagesRouter = require('../../../src/routes/footer-pages');
-const representationsRouter = require('../../../src/routes/representations');
+
 const timetableRouter = require('../../../src/routes/timetable');
 const allExaminationDocsRouter = require('../../../src/routes/all-examination-documents');
 const recommendationsRouter = require('../../../src/routes/recommendations');
@@ -29,10 +29,10 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
-    expect(use).toHaveBeenCalledWith('/', representationsRouter);
+
     expect(use).toHaveBeenCalledWith('/', timetableRouter);
     expect(use).toHaveBeenCalledWith('/', allExaminationDocsRouter);
     expect(use).toHaveBeenCalledWith('/', recommendationsRouter);
-    expect(use.mock.calls.length).toBe(13);
+    expect(use.mock.calls.length).toBe(12);
   });
 });

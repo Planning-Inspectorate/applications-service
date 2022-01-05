@@ -19,9 +19,9 @@
         <a href="/examination/about-the-application/1">Project application documents</a>
       {% else %} Project application documents {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'comments' in current %} active {% endif %}">
-      {% if not 'comments' in current %}
-        <a href="/representations/{{ caseRef }}">Registration comments</a>
+    <li class="side-menu govuk-body-s {% if 'representations' in current %} active {% endif %}">
+      {% if not 'representations' in current %}
+        <a href="/examination/representations">Registration comments</a>
       {% else %} Registration comments {% endif %}
     </li>
     <li class="side-menu govuk-body-s {% if 'timetable' in current %} active {% endif %}">

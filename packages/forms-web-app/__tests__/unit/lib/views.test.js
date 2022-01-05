@@ -10,6 +10,7 @@ describe('lib/views', () => {
         EXAMINATION: 'examination/examination',
         PROJECT_TIMELINE: 'examination/project-timeline',
         ABOUT_THE_APPLICATION: 'examination/about-the-application',
+        REPRESENTATIONS: 'examination/representations',
       },
 
       PROJECT_SEARCH: 'project-search',
@@ -91,7 +92,6 @@ describe('lib/views', () => {
         ACCESSIBILITY: 'footer-pages/accessibility',
         COOKIES: 'footer-pages/cookies-info',
       },
-      REPRESENTATIONS: 'representations',
       TIMETABLE: 'timetable',
       ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
       RECOMMENDATIONS: 'recommendations',
