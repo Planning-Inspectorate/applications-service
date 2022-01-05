@@ -1,4 +1,5 @@
-const { get } = require('../router-mock');
+const { get, use } = require('../router-mock');
+const aboutTheApplicationRouter = require('../../../../src/routes/examination/about-the-application');
 const examinationController = require('../../../../src/controllers/examination/examination');
 const representationsController = require('../../../../src/controllers/examination/representations');
 const projectTimelineController = require('../../../../src/controllers/examination/project-timeline');
@@ -14,6 +15,8 @@ describe('routes/examination', () => {
   });
 
   it('should define the expected routes', () => {
+    expect(use).toHaveBeenCalledWith('/about-the-application', aboutTheApplicationRouter);
+
     expect(get).toHaveBeenCalledWith(
       '/representations',
       representationsController.getRepresentations
