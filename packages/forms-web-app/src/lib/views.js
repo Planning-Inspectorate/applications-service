@@ -8,6 +8,8 @@ const VIEW = {
     ABOUT_THE_APPLICATION: 'examination/about-the-application',
     REPRESENTATIONS: 'examination/representations',
     TIMETABLE: 'examination/timetable',
+
+    RECOMMENDATIONS: 'examination/recommendations',
   },
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {
@@ -88,7 +90,6 @@ const VIEW = {
   },
 
   ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
-  RECOMMENDATIONS: 'recommendations',
 };
 
 module.exports = {

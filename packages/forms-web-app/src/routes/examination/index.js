@@ -6,7 +6,9 @@ const projectTimeLineController = require('../../controllers/examination/project
 const aboutTheApplicationRouter = require('./about-the-application');
 const representationsController = require('../../controllers/examination/representations');
 const timetableController = require('../../controllers/examination/timetable');
+const recommendationsController = require('../../controllers/examination/recommendations');
 
+router.get('/recommendations', recommendationsController.getRecommendations);
 router.get('/timetable', timetableController.getTimetable);
 router.get('/representations', representationsController.getRepresentations);
 router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);

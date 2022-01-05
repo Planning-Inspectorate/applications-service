@@ -12,6 +12,8 @@ describe('lib/views', () => {
         ABOUT_THE_APPLICATION: 'examination/about-the-application',
         REPRESENTATIONS: 'examination/representations',
         TIMETABLE: 'examination/timetable',
+
+        RECOMMENDATIONS: 'examination/recommendations',
       },
 
       PROJECT_SEARCH: 'project-search',
@@ -94,7 +96,6 @@ describe('lib/views', () => {
         COOKIES: 'footer-pages/cookies-info',
       },
       ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
-      RECOMMENDATIONS: 'recommendations',
     });
   });
 });
