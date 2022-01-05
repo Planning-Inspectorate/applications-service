@@ -1,6 +1,5 @@
 const startController = require('../../../../src/controllers/register/start');
 const { VIEW } = require('../../../../src/lib/views');
-const config = require('../../../../src/config');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');
@@ -21,11 +20,16 @@ describe('controllers/register/start', () => {
         ...mockReq(),
         session: {
           caseRef: 'ABC123',
+          projectName: 'St James Barton Giant Wind Turbine',
+          appData: {
+            DateOfRelevantRepresentationCloseFormatted: '01 September 2024',
+          },
         },
       };
       startController.getStart(req, res);
       expect(res.render).toHaveBeenCalledWith('register/start', {
-        serviceName: config.serviceName,
+        projectName: 'St James Barton Giant Wind Turbine',
+        closeDate: '01 September 2024',
       });
     });
     it('should redirect to correct route if caseRef not provided', () => {

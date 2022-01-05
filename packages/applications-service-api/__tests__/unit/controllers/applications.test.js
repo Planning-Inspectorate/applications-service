@@ -31,7 +31,7 @@ const projectData = {
   ConfirmedStartOfExamination: '0000-00-00',
   DateTimeExaminationEnds: null,
   DateOfRepresentationPeriodOpen: '0000-00-00',
-  DateOfRelevantRepresentationClose: '0000-00-00',
+  DateOfRelevantRepresentationClose: '2024-08-01',
   DateRRepAppearOnWebsite: '0000-00-00',
   Stage4ExtensiontoExamCloseDate: '0000-00-00',
   stage5ExtensionToRecommendationDeadline: '0000-00-00',
@@ -70,7 +70,7 @@ const project = {
   ConfirmedStartOfExamination: '0000-00-00',
   DateTimeExaminationEnds: null,
   DateOfRepresentationPeriodOpen: '0000-00-00',
-  DateOfRelevantRepresentationClose: '0000-00-00',
+  DateOfRelevantRepresentationClose: '2024-08-01',
   DateRRepAppearOnWebsite: '0000-00-00',
   Stage4ExtensiontoExamCloseDate: '0000-00-00',
   stage5ExtensionToRecommendationDeadline: '0000-00-00',
@@ -80,6 +80,7 @@ const project = {
   DateProjectWithdrawn: '0000-00-00',
   sourceSystem: null,
   dateOfNonAcceptance: null,
+  DateOfRelevantRepresentationCloseFormatted: '01 August 2024',
 };
 
 jest.mock('../../../src/models', () => {
@@ -176,6 +177,7 @@ describe('getAllApplications', () => {
     delete dataValue.updatedAt;
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(data.length).toBe(1);
+    delete project.DateOfRelevantRepresentationCloseFormatted;
     expect(dataValue).toEqual({ ...project });
   });
 });
