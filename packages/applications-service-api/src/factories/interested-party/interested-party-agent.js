@@ -48,7 +48,7 @@ module.exports = class OrgIP extends InterestedParty {
       behalf,
       agorgname,
       youname,
-      youcounty: consts.over18Values[representeeOver18.toLowerCase()],
+      youcounty: representeeOver18 ? consts.over18Values[representeeOver18.toLowerCase()] : '',
       youmail,
       youphone,
       youbuild,
