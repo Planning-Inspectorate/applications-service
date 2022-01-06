@@ -22,14 +22,14 @@ describe('controllers/register/start', () => {
           caseRef: 'ABC123',
           projectName: 'St James Barton Giant Wind Turbine',
           appData: {
-            DateOfRelevantRepresentationCloseFormatted: '01 September 2024',
+            DateOfRelevantRepresentationClose: '2024-09-01',
           },
         },
       };
       startController.getStart(req, res);
       expect(res.render).toHaveBeenCalledWith('register/start', {
         projectName: 'St James Barton Giant Wind Turbine',
-        closeDate: '01 September 2024',
+        closeDate: '2024-09-01',
       });
     });
     it('should redirect to correct route if caseRef not provided', () => {

@@ -10,7 +10,6 @@ const {
 } = require('../services/application.service');
 
 const ApiError = require('../error/apiError');
-const { toInteger } = require('lodash');
 
 const area = ['COUNTRY', 'REGION', 'COUNTY', 'BOROUGH', 'DISTRICT', 'CITY', 'TOWN', 'JUNCTION'];
 const MAPZOOMLVL_OFFSET = 5;
@@ -36,34 +35,12 @@ function addMapZoomLvlAndLongLat(document) {
   return application;
 }
 
-function formatDate(date) {
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  const splits = date.split('-');
-
-  const month = months[parseInt(splits[1], 10) - 1];
-
-  return `${splits[2]} ${month} ${splits[0]}`;
-}
-
 module.exports = {
   async getApplication(req, res) {
     const { id } = req.params;
 
     const { trialistPath } = config;
+    // eslint-disable-next-line no-unused-vars
     const trialists = JSON.parse(await fs.readFile(trialistPath, 'utf8'));
 
     // TODO Temporarily commented
@@ -80,11 +57,6 @@ module.exports = {
       }
 
       const application = addMapZoomLvlAndLongLat(document.dataValues);
-
-      application.DateOfRelevantRepresentationCloseFormatted =
-        application.DateOfRelevantRepresentationClose
-          ? formatDate(application.DateOfRelevantRepresentationClose)
-          : null;
 
       logger.debug(`Application ${id} retrieved`);
       res.status(StatusCodes.OK).send(application);
