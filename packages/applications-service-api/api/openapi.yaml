@@ -248,7 +248,7 @@ paths:
   '/api/v1/documents/{caseRef}':      
       post:
         summary: Returns project documents
-        description: description goes here
+        description: Returns project documents
         tags:
           - Documents
         parameters:
@@ -570,7 +570,7 @@ components:
           type: array
           items:
             type: object
-            $ref: '#/components/schemas/DocumentListGroup'
+            $ref: '#/components/schemas/DocumentListGroupByStage'
         totalItems:
           type: number
           example: 3
@@ -583,7 +583,13 @@ components:
         currentPage:
           type: number
           example: 1
-    DocumentListGroup:
+    DocumentListGroupByStage:
+      type: object
+      additionalProperties:
+        # x-additionalPropertiesName: group
+        type: object
+        $ref: '#/components/schemas/DocumentListGroupByType'
+    DocumentListGroupByType:
       type: object
       additionalProperties:
         # x-additionalPropertiesName: group
