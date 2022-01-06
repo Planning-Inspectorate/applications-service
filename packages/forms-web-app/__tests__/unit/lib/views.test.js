@@ -6,10 +6,17 @@ describe('lib/views', () => {
       APPLICATION_NUMBER: 'application-number',
 
       COOKIES: 'cookies',
-      OVERVIEW: 'overview',
-      DOCUMENT_LIBRARY: 'document-library',
+      EXAMINATION: {
+        EXAMINATION: 'examination/examination',
+        PROJECT_TIMELINE: 'examination/project-timeline',
+        ABOUT_THE_APPLICATION: 'examination/about-the-application',
+        REPRESENTATIONS: 'examination/representations',
+        TIMETABLE: 'examination/timetable',
+        ALL_EXAMINATION_DOCUMENTS: 'examination/all-examination-documents',
+        RECOMMENDATIONS: 'examination/recommendations',
+      },
+
       PROJECT_SEARCH: 'project-search',
-      PROJECT_TIMELINE: 'project-timeline',
       GUIDANCE_PAGES: {
         BEFORE_APPLY: 'guidance-pages/before-apply',
       },
@@ -88,10 +95,6 @@ describe('lib/views', () => {
         ACCESSIBILITY: 'footer-pages/accessibility',
         COOKIES: 'footer-pages/cookies-info',
       },
-      REPRESENTATIONS: 'representations',
-      TIMETABLE: 'timetable',
-      ALL_EXAMINATION_DOCUMENTS: 'all-examination-documents',
-      RECOMMENDATIONS: 'recommendations',
     });
   });
 });
