@@ -40,6 +40,7 @@ module.exports = {
     const { id } = req.params;
 
     const { trialistPath } = config;
+    // eslint-disable-next-line no-unused-vars
     const trialists = JSON.parse(await fs.readFile(trialistPath, 'utf8'));
 
     // TODO Temporarily commented
