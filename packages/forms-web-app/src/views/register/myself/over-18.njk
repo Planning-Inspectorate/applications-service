@@ -8,7 +8,7 @@
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -25,13 +25,16 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-            {{ govukRadios({
+          {{ govukRadios({
             fieldset: {
                 legend: {
                 text: "Are you 18 or over?",
                 isPageHeading: true,
                 classes: "govuk-label--l"
                 }
+            },
+            hint: {
+              text: "You can still register to have your say if you are under 18, but we will process your personal details in a different way."
             },
             idPrefix: "over-18",
             name: "over-18",
@@ -63,4 +66,3 @@
   </div>
 
 {% endblock %}
-
