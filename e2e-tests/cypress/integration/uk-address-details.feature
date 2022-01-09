@@ -8,7 +8,7 @@ Feature: UK Address details page
         Given I navigate to UK address details page
 
     Scenario: Verify page title, heading, error messages and continue 
-        Then I am on the "UK address details" page
+        Then I am on the "what is your address?" page
         And User clicks on continue button
         Then below error message should be presented on UK address details page
             | ErrorMsg               |

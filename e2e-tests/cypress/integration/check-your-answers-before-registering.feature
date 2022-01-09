@@ -49,7 +49,7 @@ Feature: Check your answers before registering page
 
     Scenario: Click on Address change link
         And I click on "Address" change link
-        Then I am on the "uk address details" page
+        Then I am on the "what is your address?" page
 
     Scenario: Click on Email address change link
         And I click on "Email address" change link
