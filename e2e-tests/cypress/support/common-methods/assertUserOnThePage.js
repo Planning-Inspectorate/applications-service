@@ -24,9 +24,9 @@ module.exports = (pageName) => {
         case "north lincolnshire green energy park project information":
             cy.title().should('eq', "North Lincolnshire Green Energy Park project overview");
             cy.get('h1').invoke('text').then((text) => {
-                expect(text).to.contain('North Lincolnshire Green Energy Park project information');
+                expect(text).to.contain('North Lincolnshire Green Energy Park');
             })
-            cy.url().should('include', '/overview/EN010116')
+            cy.url().should('include', '/examination/EN010116')
             break;
         case "having your say about a national infrastructure project":
             cy.title().should('eq', "Having your say about a national infrastructure project");
@@ -100,6 +100,13 @@ module.exports = (pageName) => {
             cy.title().should('eq', "UK address details - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('UK address details');
+            })
+            cy.url().should('include', '/address')
+            break;
+        case "what is your address?":
+            cy.title().should('eq', "UK address details - Register to have your say");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('What is your address?');
             })
             cy.url().should('include', '/address')
             break;
