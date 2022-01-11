@@ -23,7 +23,9 @@ exports.postComments = async (req, res) => {
     return;
   }
 
-  if (req.query.mode === 'edit') {
+  const mode = req.body.mode ? req.body.mode : req.query.mode;
+
+  if (mode === 'edit') {
     const { index } = req.query;
     req.session.comments[index] = body;
     if (req.query.src === 'add') {
@@ -36,7 +38,7 @@ exports.postComments = async (req, res) => {
     if (comments === undefined) {
       comments = [];
     }
-    const { mode } = body;
+
     delete body.mode;
     comments.push(body);
     req.session.comments = comments;

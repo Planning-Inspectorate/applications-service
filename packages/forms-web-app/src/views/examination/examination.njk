@@ -17,6 +17,11 @@
     <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
   {% endfor %}
 
+  <!-- Mapbox resources -->
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+  <!-- end Mapbox -->
+
 {% endblock %}
 
 {% block header %}
@@ -34,7 +39,7 @@
       </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-quarter">
-          {% set current = 'overview' %}
+          {% set current = 'examination' %}
           {% include "layouts/vertical-tabs.njk" %}
         </div>
         <div class="govuk-grid-column-three-quarters">

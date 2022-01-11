@@ -15,9 +15,9 @@ Feature: Are you 18 or over page
             | Select yes if you are 18 or over |
         And user selects "Yes" radio option on are you 18 or over page
         And User clicks on continue button
-        Then I am on the "UK address details" page
+        Then I am on the "what is your address?" page
 
     Scenario: select No and continue
         And user selects "No" radio option on are you 18 or over page
         And User clicks on continue button
-        Then I am on the "UK address details" page
+        Then I am on the "what is your address?" page

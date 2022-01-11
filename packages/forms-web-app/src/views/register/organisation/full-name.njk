@@ -8,7 +8,7 @@
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -25,15 +25,12 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
+
           {{ govukInput({
             label: {
                 text: "What is your full name?",
                 classes: "govuk-label--l",
                 isPageHeading: true
-            },
-            hint: {
-                html: "<p>We will publish this on the website along with your comments about the project.</p>"
             },
             classes: "govuk-input--width-20",
             id: "full-name",
@@ -57,4 +54,3 @@
   </div>
 
 {% endblock %}
-

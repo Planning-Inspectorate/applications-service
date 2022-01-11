@@ -1,11 +1,14 @@
-const logger = require('../../lib/logger');
 const { VIEW } = require('../../lib/views');
-const config = require('../../config');
+const { formatDate } = require('../../utils/date-utils');
 
 exports.getStart = async (req, res) => {
   if (req.session.caseRef === undefined) {
     res.redirect(`/${VIEW.PROJECT_SEARCH}`);
   } else {
-    res.render(VIEW.REGISTER.START, {serviceName: config.serviceName});
+    const closeDate = req.session.appData.DateOfRelevantRepresentationClose;
+    res.render(VIEW.REGISTER.START, {
+      projectName: req.session.projectName,
+      closeDate: closeDate ? formatDate(closeDate) : '',
+    });
   }
 };

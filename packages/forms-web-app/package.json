@@ -31,8 +31,8 @@
     "./**/*.{js, json}": "npm run format"
   },
   "dependencies": {
-    "@pins/common": "file:../common",
     "@ministryofjustice/frontend": "0.2.0",
+    "@pins/common": "file:../common",
     "@planning-inspectorate/pins-components": "^1.0.1",
     "@testing-library/dom": "^7.31.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -57,6 +57,7 @@
     "jest-html-reporters": "^2.1.6",
     "jest-junit": "^12.2.0",
     "lusca": "^1.6.1",
+    "moment": "^2.29.1",
     "node-fetch": "^2.6.2",
     "nunjucks": "^3.2.2",
     "nunjucks-date-filter": "^0.1.1",
