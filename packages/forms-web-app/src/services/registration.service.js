@@ -1,19 +1,23 @@
-const { postRegistration, putComments, authenticateToken } = require('../lib/application-api-wrapper');
+const {
+  postRegistration,
+  putComments,
+  authenticateToken,
+} = require('../lib/application-api-wrapper');
 
-const postRegistrationData = async (registration_data) => {
-    return await postRegistration(registration_data); 
-}
+const postRegistrationData = async (registrationData) => {
+  return postRegistration(registrationData);
+};
 
-const postCommentsData = async (ipRefNo, comments_data) => {
-    return await putComments(ipRefNo, comments_data); 
-}
+const postCommentsData = async (ipRefNo, commentsData) => {
+  return putComments(ipRefNo, commentsData);
+};
 
 const postAuthToken = async (token, email) => {
-    return await authenticateToken(token, email); 
-}
+  return authenticateToken(token, email);
+};
 
 module.exports = {
-    postRegistrationData,
-    postCommentsData,
-    postAuthToken
+  postRegistrationData,
+  postCommentsData,
+  postAuthToken,
 };

@@ -1,10 +1,9 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getRemoveComment = async (req, res) => {
-  const index = req.query.index;
+  const { index } = req.query;
   const comment = req.session.comments[index];
-  res.render(VIEW.REGISTER.MYSELF.REMOVE_COMMENT, {comment: comment, index: index});
+  res.render(VIEW.REGISTER.MYSELF.REMOVE_COMMENT, { comment, index });
 };
 
 exports.postRemoveComment = async (req, res) => {
@@ -18,13 +17,10 @@ exports.postRemoveComment = async (req, res) => {
     return;
   }
   const removeComment = body['remove-comment'];
-  if (removeComment === 'yes'){
-    const index = body['index'];
+  if (removeComment === 'yes') {
+    const { index } = body;
     req.session.comments.splice(index, 1);
   }
-  if (req.query.src === 'add'){
-    res.redirect(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
-  } else {
-    res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
-  }
+
+  res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
 };
