@@ -60,7 +60,7 @@ describe('controllers/register/myself/remove-comment', () => {
   });
 
   describe('postRemoveComment', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}' if remove comment is yes and src is add`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if remove comment is yes and src is add`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -80,7 +80,7 @@ describe('controllers/register/myself/remove-comment', () => {
       };
       await removeCommentController.postRemoveComment(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
     });
 
     it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if remove comment is yes and src is check`, async () => {

@@ -20,7 +20,7 @@ describe('controllers/register/myself/comments', () => {
   describe('getComments', () => {
     it('should call the correct template', () => {
       commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/myself/comments');
+      expect(res.render).toHaveBeenCalledWith('register/myself/comments', { comment: undefined });
     });
 
     it('should call the correct template in edit mode', () => {
@@ -31,18 +31,14 @@ describe('controllers/register/myself/comments', () => {
           index: 0,
         },
         session: {
-          comments: [
-            {
-              topic: 'topic',
-              comment: 'test',
-            },
-          ],
+          comment: {
+            comment: 'test',
+          },
         },
       };
       commentsController.getComments(req, res);
       expect(res.render).toHaveBeenCalledWith('register/myself/comments', {
         comment: {
-          topic: 'topic',
           comment: 'test',
         },
       });
@@ -50,7 +46,7 @@ describe('controllers/register/myself/comments', () => {
   });
 
   describe('postComments', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}' if comments is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if comments is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -62,7 +58,7 @@ describe('controllers/register/myself/comments', () => {
       };
       await commentsController.postComments(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
     });
     it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if comments is provided and mode is edit`, async () => {
       const mockRequest = {

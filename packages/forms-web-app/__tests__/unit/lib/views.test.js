@@ -37,7 +37,6 @@ describe('lib/views', () => {
           EMAIL: 'register/myself/email',
           TELEPHONE: 'register/myself/telephone',
           COMMENTS: 'register/myself/comments',
-          ADD_ANOTHER_COMMENT: 'register/myself/add-another-comment',
           REMOVE_COMMENT: 'register/myself/remove-comment',
           CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
           DECLARATION: 'register/myself/declaration',

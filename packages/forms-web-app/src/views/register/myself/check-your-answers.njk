@@ -138,51 +138,28 @@
                 }
               ]
             }
+          },
+          {
+            key: {
+              text: "Registration comments"
+            },
+            value: {
+              text: summaryField( data['comment'], { 'data-cy': "comment" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/myself/comments?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "comment" }
+                }
+              ]
+            }
           }
         ]
       }) }}
 
-      <h2 class="govuk-heading-m">Comments</h2>
-
-      {% set commentsRow = [] %}
-        {% set initialCommentRow = {
-              key: {
-                text: "Topic"
-              },
-              value: {
-                text: summaryField( "Comments", { 'data-cy': "comment" })
-              }
-            } 
-        %}
-      {{ (commentsRow.push(initialCommentRow), null) }}
-      {% for comment in comments %}
-        {% set commentRow = {
-              key: {
-                text: comment.topic
-              },
-              value: {
-                text: summaryField( comment.comment, { 'data-cy': "comment" })
-              },
-              actions: {
-                items: [
-                  {
-                    href: "/register/myself/comments?mode=edit&index="+loop.index0,
-                    text: "Change",
-                    visuallyHiddenText: "??",
-                    attributes: { "data-cy": "comments-change" }
-                  },
-                  {
-                    href: "/register/myself/comments?mode=remove&index="+loop.index0,
-                    text: "Remove",
-                    visuallyHiddenText: "??",
-                    attributes: { "data-cy": "comments-remove" }
-                  }
-                ]
-              }
-          } 
-        %}
-        {{ (commentsRow.push(commentRow), null) }}
-      {% endfor %}
       {{ govukSummaryList({
           classes: "govuk-summary-list govuk-!-margin-bottom-9",
           rows: commentsRow

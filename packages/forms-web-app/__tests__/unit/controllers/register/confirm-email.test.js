@@ -32,7 +32,7 @@ describe('controllers/register/confirm-email', () => {
   });
 
   describe('postConfirmEmail', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}' if email is provided and is myself journey`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.COMMENTS}' if email is provided and is myself journey`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -41,7 +41,7 @@ describe('controllers/register/confirm-email', () => {
       };
       await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.ADD_ANOTHER_COMMENT}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
     });
 
     it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}' if email is provided and is organisation journey`, async () => {
