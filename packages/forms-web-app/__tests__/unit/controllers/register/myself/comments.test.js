@@ -32,7 +32,6 @@ describe('controllers/register/myself/comments', () => {
         },
         session: {
           comment: {
-            topic: 'topic',
             comment: 'test',
           },
         },
@@ -40,7 +39,6 @@ describe('controllers/register/myself/comments', () => {
       commentsController.getComments(req, res);
       expect(res.render).toHaveBeenCalledWith('register/myself/comments', {
         comment: {
-          topic: 'topic',
           comment: 'test',
         },
       });
