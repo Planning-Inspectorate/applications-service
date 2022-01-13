@@ -55,17 +55,6 @@
           }
         }) }}
 
-        {# {{ govukTextarea({
-           label: {
-              text: "Registration comments",
-              classes: "govuk-label--s",
-              isPageHeading: true
-            },
-          maxwords: 200,
-          id: "myself-comment",
-          name: "myself-comment"
-        }) }} #}
-
         {{ govukDetails({
           summaryText: "Do not include any personal details.",
           html: '
@@ -99,11 +88,16 @@
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
 
-        <button type="submit" class="govuk-button" name="mode" value="draft" data-module="govuk-button" attributes: { "data-cy":"button-save-and-return"}>Save & Exit</button>
-      </form>
-      {# TODO - I still need to submit the form, how do I do that with a link ? #}
-      {# <a class="govuk-body govuk-link" href="../save-and-continue/confirmation">Save and come back later</a> #}
+        {{ govukButton({
+          text: "Save & Exit",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-return"},
+          classes: "govuk-button--secondary",
+          name: "mode",
+          value: "draft"
+        }) }}
 
+       </form>
     </div>
   </div>
 

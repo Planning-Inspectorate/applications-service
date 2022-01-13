@@ -35,9 +35,6 @@ exports.postConfirmEmail = async (req, res) => {
       if (type === 'me') {
         req.session.comment = comments;
         req.session.mySelfRegdata = personal_data;
-        // res.render(VIEW.REGISTER.MYSELF.COMMENTS, {
-        //   comment: comments,
-        // });
         res.redirect(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
       } else if (type === 'them') {
         req.session.orgRegdata = personal_data;

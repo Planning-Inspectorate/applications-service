@@ -1,12 +1,8 @@
 const { VIEW } = require('../../../lib/views');
 
 exports.getComments = async (req, res) => {
-  if (req.query.mode === 'edit') {
-    const { comment } = req.session;
-    res.render(VIEW.REGISTER.MYSELF.COMMENTS, { comment });
-  } else {
-    res.render(VIEW.REGISTER.MYSELF.COMMENTS);
-  }
+  const { comment } = req.session;
+  res.render(VIEW.REGISTER.MYSELF.COMMENTS, { comment });
 };
 
 exports.postComments = async (req, res) => {
