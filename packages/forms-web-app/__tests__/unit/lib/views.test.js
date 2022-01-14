@@ -67,7 +67,6 @@ describe('lib/views', () => {
           TELEPHONE: 'register/behalf/telephone',
           ORGANISATION_NAME: 'register/behalf/organisation-name',
           COMMENTS: 'register/behalf/comments',
-          ADD_ANOTHER_COMMENT: 'register/behalf/add-another-comment',
           CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
           DECLARATION: 'register/behalf/declaration',
           CONFIRMATION: 'register/behalf/confirmation',

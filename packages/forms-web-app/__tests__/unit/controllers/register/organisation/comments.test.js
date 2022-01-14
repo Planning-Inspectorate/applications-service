@@ -20,7 +20,9 @@ describe('controllers/register/organisation/comments', () => {
   describe('getComments', () => {
     it('should call the correct template', () => {
       commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/comments');
+      expect(res.render).toHaveBeenCalledWith('register/organisation/comments', {
+        comment: undefined,
+      });
     });
 
     it('should call the correct template in edit mode', () => {
@@ -31,20 +33,12 @@ describe('controllers/register/organisation/comments', () => {
           index: 0,
         },
         session: {
-          comments: [
-            {
-              topic: 'topic',
-              comment: 'test',
-            },
-          ],
+          comment: 'test',
         },
       };
       commentsController.getComments(req, res);
       expect(res.render).toHaveBeenCalledWith('register/organisation/comments', {
-        comment: {
-          topic: 'topic',
-          comment: 'test',
-        },
+        comment: 'test',
       });
     });
   });
@@ -54,13 +48,13 @@ describe('controllers/register/organisation/comments', () => {
       const mockRequest = {
         ...req,
         body: {
-          comments: 'test',
+          comment: 'test',
         },
         query: {
           mode: 'edit',
         },
         session: {
-          comments: [],
+          comment: '',
         },
       };
       await commentsController.postComments(mockRequest, res);
