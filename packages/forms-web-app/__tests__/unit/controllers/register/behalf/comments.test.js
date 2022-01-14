@@ -31,9 +31,8 @@ describe('controllers/register/behalf/comments', () => {
           index: 0,
         },
         session: {
-          comments: [
+          comment: [
             {
-              topic: 'topic',
               comment: 'test',
             },
           ],
@@ -42,7 +41,6 @@ describe('controllers/register/behalf/comments', () => {
       commentsController.getComments(req, res);
       expect(res.render).toHaveBeenCalledWith('register/behalf/comments', {
         comment: {
-          topic: 'topic',
           comment: 'test',
         },
       });
