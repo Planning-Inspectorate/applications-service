@@ -28,11 +28,7 @@ exports.postComments = async (req, res) => {
   if (mode === 'edit') {
     const { index } = req.query;
     req.session.comments[index] = body;
-    if (req.query.src === 'add') {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}`);
-    } else {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
-    }
+    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
     let { comments } = req.session;
     if (comments === undefined) {
@@ -42,16 +38,13 @@ exports.postComments = async (req, res) => {
     delete body.mode;
     comments.push(body);
     req.session.comments = comments;
+
     if (mode === 'draft') {
       req.session.mode = 'draft';
       res.redirect(`/${VIEW.REGISTER.BEHALF.CONFIRMATION}`);
     } else {
       req.session.mode = 'final';
-      if (req.session.comments.length < config.applications.noOfCommentsAllowed) {
-        res.redirect(`/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}`);
-      } else {
-        res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
-      }
+      res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
     }
   }
 };

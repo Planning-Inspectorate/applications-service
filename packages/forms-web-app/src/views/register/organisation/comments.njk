@@ -11,7 +11,7 @@
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -29,7 +29,7 @@
       <form action="" method="POST" novalidate>
         <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
 
-       <!-- {{ govukWarningText({
+        <!-- {{ govukWarningText({
           text: "This information will be published on our website for the public. You should not include any personal details or sensistive information with your comment.",
           iconFallbackText: "Warning"
         }) }} -->
@@ -66,21 +66,6 @@
           <li>used by the examining panel to decide if they recommend the project goes ahead</li>
           <li>published on our website</li>
         </ul>
-
-        {{ govukInput({
-          label: {
-              text: "Please enter topic",
-              classes: "govuk-label--l",
-              isPageHeading: true
-          },
-          id: "topic",
-          name: "topic",
-          value: comment.topic,
-          attributes: {"data-cy": "topic"},
-          errorMessage: errors['topic'] and {
-            text: errors['topic'].msg
-          }
-        }) }}
 
         {{ govukTextarea({
           maxwords: 200,

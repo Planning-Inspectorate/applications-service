@@ -16,7 +16,6 @@ const telephoneRouter = require('./telephone');
 const organisationNameRouter = require('./organisation-name');
 
 const commentsRouter = require('./comments');
-const addAnotherCommentRouter = require('./add-another-comment');
 const removeCommentRouter = require('./remove-comment');
 const checkYourAnswersRouter = require('./check-your-answers');
 const declarationRouter = require('./declaration');
@@ -36,7 +35,6 @@ router.use('/', telephoneRouter);
 router.use('/', organisationNameRouter);
 
 router.use('/', commentsRouter);
-router.use('/', addAnotherCommentRouter);
 router.use('/', removeCommentRouter);
 router.use('/', checkYourAnswersRouter);
 router.use('/', declarationRouter);

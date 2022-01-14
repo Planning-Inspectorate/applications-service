@@ -11,7 +11,7 @@
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -31,29 +31,14 @@
 
         <p class="govuk-body">Your registration comments (also known as a relevant representation) should relate to the application. You must include a summary of points which you agree and/or disagree with about the application, highlighting what you consider to be the main issues and impacts.
         <p class="govuk-body">Information about how you think a project may affect your day-to-day life may also be of interest to the Examining Authority.</p>
-        <p class="govuk-body">This information will be:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>used by the Examining Authority to decide how the project should be examined</li>
-          <li>published on our website</li>
-        </ul>
-        <p class="govuk-body">These are your registration comments. You will be able to tell us more during the Examination of the project.</p>
+          <p class="govuk-body">This information will be:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>used by the Examining Authority to decide how the project should be examined</li>
+            <li>published on our website</li>
+          </ul>
+          <p class="govuk-body">These are your registration comments. You will be able to tell us more during the Examination of the project.</p>
 
-        {{ govukInput({
-          label: {
-              text: "What topic does the comment relate to?",
-              classes: "govuk-label--s",
-              isPageHeading: true
-          },
-          id: "topic",
-          name: "topic",
-          value: comment.topic,
-          attributes: {"data-cy": "topic"},
-          errorMessage: errors['topic'] and {
-            text: errors['topic'].msg
-          }
-        }) }}
-
-        {{ govukTextarea({
+          {{ govukTextarea({
           maxwords: 200,
           id: "comment",
           label: {
@@ -62,13 +47,13 @@
             isPageHeading: true
           },
           name: "comment",
-          value: comment.comment,
+          value: comment,
           attributes: {"data-cy": "comment"},
           errorMessage: errors['comment'] and {
               text: errors['comment'].msg
           }
         }) }}
-        {{ govukDetails({
+          {{ govukDetails({
           summaryText: "Do not include any personal details.",
           html: '
             <h2 class="govuk-heading-m">Use of language and sensitive information</h2>
@@ -94,17 +79,17 @@
               <li>sexual orientation</li>
             </ul>'
         }) }}
-        
-        {{ govukButton({
+
+          {{ govukButton({
           text: "Continue",
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
 
-        <button type="submit" class="govuk-button" name="mode" value="draft" data-module="govuk-button" attributes: { "data-cy":"button-save-and-return"}>Save & Exit</button>
-      </form>
+          <button type="submit" class="govuk-button" name="mode" value="draft" data-module="govuk-button" attributes: { "data-cy":"button-save-and-return"}>Save & Exit</button>
+        </form>
 
+      </div>
     </div>
-  </div>
 
-{% endblock %}
+  {% endblock %}
