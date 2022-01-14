@@ -9,7 +9,7 @@ exports.getConfirmation = async (req, res) => {
   const registrationData = JSON.stringify(req.session.behalfRegdata);
   const response = await postRegistrationData(registrationData);
   const ipRefNo = response.data;
-  const commentsData = JSON.stringify({ comments: req.session.comments, mode: req.session.mode });
+  const commentsData = JSON.stringify({ comments: req.session.comment, mode: req.session.mode });
   await postCommentsData(ipRefNo, commentsData);
   const { email } = req.session.behalfRegdata.representor;
   delete req.session.comments;
