@@ -2,19 +2,14 @@ const { VIEW } = require('../../../lib/views');
 const config = require('../../../config');
 
 exports.getComments = async (req, res) => {
-  if (req.query.mode === 'edit') {
-    const { index } = req.query;
-    const comment = req.session.comments[index];
-    res.render(VIEW.REGISTER.BEHALF.COMMENTS, { comment });
-  } else {
-    res.render(VIEW.REGISTER.BEHALF.COMMENTS);
-  }
+  const { comment } = req.session;
+  res.render(VIEW.REGISTER.BEHALF.COMMENTS, { comment });
 };
 
 exports.postComments = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
-  if (errors.comments || Object.keys(errors).length > 0) {
+  if (errors.comment || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.BEHALF.COMMENTS, {
       errors,
       errorSummary,
@@ -30,14 +25,9 @@ exports.postComments = async (req, res) => {
     req.session.comments[index] = body;
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
-    let { comments } = req.session;
-    if (comments === undefined) {
-      comments = [];
-    }
-
     delete body.mode;
-    comments.push(body);
-    req.session.comments = comments;
+    const { comment } = body;
+    req.session.comment = comment;
 
     if (mode === 'draft') {
       req.session.mode = 'draft';
