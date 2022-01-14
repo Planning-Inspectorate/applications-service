@@ -2,9 +2,8 @@ const db = require('../models');
 const notify = require('../lib/notify');
 const crypto = require('../lib/crypto');
 const IPFactory = require('../factories/interested-party/factory');
+const { formatDate } = require('../utils/date-utils');
 
-// const BEHALF_OWN = 'ME';
-// const BEHALF_ORGANISATION = 'THEM';
 const MODE_DRAFT = 'DRAFT';
 const MODE_FINAL = 'FINAL';
 
@@ -45,7 +44,14 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
       await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });
     } else if (mode.toUpperCase() === MODE_DRAFT) {
       const token = crypto.encrypt(ID);
-      await notify.sendMagicLinkToIP({ email, ipName, projectName, repCloseDate, token, ipRef });
+      await notify.sendMagicLinkToIP({
+        email,
+        ipName,
+        projectName,
+        repCloseDate: formatDate(repCloseDate),
+        token,
+        ipRef,
+      });
     }
   }
 
