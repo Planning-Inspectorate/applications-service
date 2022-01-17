@@ -14,24 +14,20 @@ Feature: Check your answers before registering page
         And User clicks on continue button
         And I enter "1234567899" into telephone number field
         And User clicks on continue button
-        And I enter "Project topic" into topic field
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
-        And User clicks on continue button
-        And user selects "No" radio option on Do you want to add another comment page
         And User clicks on continue button
 
     Scenario: verify page title, heading, data and continue
         Then I am on the "Check your answers before registering" page
         And I verify below data is present on Check your answers before registering page
-            | Column1                      | Column2                                                                                                  | Column3                                                                                                                                            |
-            | Who are you registering for? | Myself                                                                                                   | Change                                                                                                                                             |
-            | Full name                    | TestFirstName TestMiddleName TestLastName                                                                | Change                                                                                                                                             |
-            | Are you 18 or over?          | Yes                                                                                                      | Change                                                                                                                                             |
-            | Address                      | \n          Address Line 1\n          \n          \n          NE27 0QQ\n          United Kingdom\n       | Change                                                                                                                                             |
-            | Email address                | test@gmail.com                                                                                           | Change                                                                                                                                             |
-            | Telephone number             | 1234567899                                                                                               | Change                                                                                                                                             |
-            | Topic                        | Comments                                                                                                 |                                                                                                                                                    |
-            | Project topic                | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change ??\n                      \n                  \n                \n                  \n                    \n                      Remove ?? |
+            | Column1                      | Column2                                                                                                  | Column3   |
+            | Who are you registering for? | Myself                                                                                                   | Change    |
+            | Full name                    | TestFirstName TestMiddleName TestLastName                                                                | Change    |
+            | Are you 18 or over?          | Yes                                                                                                      | Change    |
+            | Address                      | \n          Address Line 1\n          \n          \n          NE27 0QQ\n          United Kingdom\n       | Change    |
+            | Email address                | test@gmail.com                                                                                           | Change    |
+            | Telephone number             | 1234567899                                                                                               | Change    |
+            | Registration comments        | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change ?? |
         And User clicks on accept and continue button for "myself"
         Then I am on the "Declaration" page
 
@@ -61,8 +57,4 @@ Feature: Check your answers before registering page
 
     Scenario: Click on Comments change link
         And I click on "Your comments change" change link
-        Then I am on the "what do you want to tell us about this proposed project?" page
-
-    Scenario: Click on Comments remove link
-        And I click on "Your comments remove" change link
         Then I am on the "what do you want to tell us about this proposed project?" page

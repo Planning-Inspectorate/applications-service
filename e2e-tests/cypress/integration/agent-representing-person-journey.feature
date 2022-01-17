@@ -50,5 +50,3 @@ Feature: Agent representing a person journey
         Then I am on the "Declaration" page
         And User clicks on accept and register button
         Then I am on the "Registration complete" page
-        And I click on find out more about having your say during the Examination of the application link
-        Then I am on the "Having your say about a national infrastructure project" page

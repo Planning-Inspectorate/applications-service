@@ -17,8 +17,6 @@ Feature: Check your answers before registering organisation page
         And I enter "Project topic" into topic field
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
         And User clicks on continue button
-        And user selects "No" radio option on Do you want to add another comment page
-        And User clicks on continue button
 
     Scenario: verify page title, heading, data and continue
         Then I am on the "Check your answers before registering" page
@@ -49,7 +47,7 @@ Feature: Check your answers before registering organisation page
 
     Scenario: Click on Address change link
         And I click on "Address" change link
-        Then I am on the "uk address details" page
+        Then I am on the "what is your address?" page
 
     Scenario: Click on Email address change link
         And I click on "Email address" change link

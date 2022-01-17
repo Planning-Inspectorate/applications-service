@@ -17,4 +17,4 @@ Feature: What is your job title or volunteer role? page
     Scenario: User enter data and continue
         And I enter text "Volunteer role" into name of job title field
         And User clicks on continue button
-        Then I am on the "UK address details" page
+        Then I am on the "what is your address?" page
