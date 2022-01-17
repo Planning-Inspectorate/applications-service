@@ -3,7 +3,7 @@ const config = require('../../../config');
 
 exports.getComments = async (req, res) => {
   const { comment } = req.session;
-  res.render(VIEW.REGISTER.ORGANISATION.COMMENTS, { comment });
+  res.render(VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT, { comment });
 };
 
 exports.postComments = async (req, res) => {
@@ -11,7 +11,7 @@ exports.postComments = async (req, res) => {
   const { errors = {}, errorSummary = [] } = body;
 
   if (errors.comment || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.ORGANISATION.COMMENTS, {
+    res.render(VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT, {
       errors,
       errorSummary,
       comment: body,

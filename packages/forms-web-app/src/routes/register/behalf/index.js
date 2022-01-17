@@ -15,7 +15,7 @@ const emailRouter = require('./email');
 const telephoneRouter = require('./telephone');
 const organisationNameRouter = require('./organisation-name');
 
-const commentsRouter = require('./comments');
+const commentsRouter = require('./tell-us-about-project');
 const checkYourAnswersRouter = require('./check-your-answers');
 const declarationRouter = require('./declaration');
 const confirmationRouter = require('./confirmation');

@@ -21,6 +21,6 @@ exports.postTelephone = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.COMMENTS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT}`);
   }
 };

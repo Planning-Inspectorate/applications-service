@@ -3,14 +3,14 @@ const config = require('../../../config');
 
 exports.getComments = async (req, res) => {
   const { comment } = req.session;
-  res.render(VIEW.REGISTER.BEHALF.COMMENTS, { comment });
+  res.render(VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT, { comment });
 };
 
 exports.postComments = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
   if (errors.comment || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.BEHALF.COMMENTS, {
+    res.render(VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT, {
       errors,
       errorSummary,
       comment: body,
