@@ -104,7 +104,7 @@ module.exports = (pageName) => {
             cy.url().should('include', '/address')
             break;
         case "what is your address?":
-            cy.title().should('eq', "UK address details - Register to have your say");
+            cy.title().should('eq', "What is your address? - Register to have your say");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is your address?');
             })

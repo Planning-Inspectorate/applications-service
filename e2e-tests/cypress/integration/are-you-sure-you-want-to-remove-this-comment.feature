@@ -1,4 +1,4 @@
-@testSuite
+@ignore
 Feature: Are you sure you want to remove this comment? page
     As a Test user
     I want to navigate to Are you sure you want to remove this comment page
@@ -14,7 +14,6 @@ Feature: Are you sure you want to remove this comment? page
         And User clicks on continue button
         And I enter "1234567899" into telephone number field
         And User clicks on continue button
-        And I enter "Project topic" into topic field
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
         And User clicks on continue button
         And User clicks on "remove" link

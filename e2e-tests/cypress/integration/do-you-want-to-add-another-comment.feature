@@ -1,4 +1,4 @@
-@testSuite
+@ignore
 Feature: Do you want to add another comment? page
     As a Test user
     I want to navigate to Do you want to add another comment page

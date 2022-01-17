@@ -43,10 +43,7 @@ class PO_CyaBeforeReg {
             cy.get('[data-cy="telephone"]').last().click();
             break;
             case "Your comments change": 
-            cy.get('[data-cy="comments-change"]').last().click();
-            break;
-            case "Your comments remove": 
-            cy.get('[data-cy="comments-remove"]').last().click();
+            cy.get('[data-cy="comment"]').last().click();
             break;
         }
     }
