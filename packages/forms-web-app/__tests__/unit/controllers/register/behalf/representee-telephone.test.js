@@ -45,7 +45,7 @@ describe('controllers/register/behalf/representee-telephone', () => {
       };
       await telephoneController.postTelephone(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.COMMENTS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
