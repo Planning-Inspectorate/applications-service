@@ -21,9 +21,8 @@ describe('controllers/register/behalf/confirmation', () => {
         },
         projectName: 'ABC',
         caseRef: 'ABC123',
-        comments: {
+        comment: {
           comment: 'comment',
-          topic: 'topic',
         },
       },
     };
