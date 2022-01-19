@@ -1,14 +1,10 @@
 const { body } = require('express-validator');
 
-
 const rules = () => {
   return [
-    body('topic')
-      .notEmpty()
-      .withMessage('Please enter topic'),
     body('comment')
       .notEmpty()
-      .withMessage('Please enter comments'),
+      .withMessage('Enter what you want to tell us about this proposed project'),
   ];
 };
 

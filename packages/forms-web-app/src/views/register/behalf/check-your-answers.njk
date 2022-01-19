@@ -9,17 +9,15 @@
   Check your answers - Register to have your say
 {% endblock %}
 
-
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
       <h1 class="govuk-heading-xl">Check your answers before registering</h1>
-  
+
       {% include './cya/cya-representor-detail.njk' %}
       {% include './cya/cya-representee-detail.njk' %}
-      {% include './cya/cya-comments.njk' %}
-     
+
       <a href="/register/behalf/declaration" role="button"  class="govuk-button govuk-button"  data-module="govuk-button">
         Accept and continue
       </a>

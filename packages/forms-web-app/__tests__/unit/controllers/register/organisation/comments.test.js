@@ -1,10 +1,10 @@
-const commentsController = require('../../../../../src/controllers/register/organisation/comments');
+const commentsController = require('../../../../../src/controllers/register/organisation/tell-us-about-project');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/comments', () => {
+describe('controllers/register/organisation/tell-us-about-project', () => {
   let req;
   let res;
 
@@ -20,7 +20,9 @@ describe('controllers/register/organisation/comments', () => {
   describe('getComments', () => {
     it('should call the correct template', () => {
       commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/comments');
+      expect(res.render).toHaveBeenCalledWith('register/organisation/tell-us-about-project', {
+        comment: undefined,
+      });
     });
 
     it('should call the correct template in edit mode', () => {
@@ -31,20 +33,12 @@ describe('controllers/register/organisation/comments', () => {
           index: 0,
         },
         session: {
-          comments: [
-            {
-              topic: 'topic',
-              comment: 'test',
-            },
-          ],
+          comment: 'test',
         },
       };
       commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/comments', {
-        comment: {
-          topic: 'topic',
-          comment: 'test',
-        },
+      expect(res.render).toHaveBeenCalledWith('register/organisation/tell-us-about-project', {
+        comment: 'test',
       });
     });
   });
@@ -54,13 +48,13 @@ describe('controllers/register/organisation/comments', () => {
       const mockRequest = {
         ...req,
         body: {
-          comments: 'test',
+          comment: 'test',
         },
         query: {
           mode: 'edit',
         },
         session: {
-          comments: [],
+          comment: '',
         },
       };
       await commentsController.postComments(mockRequest, res);
@@ -80,7 +74,7 @@ describe('controllers/register/organisation/comments', () => {
       await commentsController.postComments(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.COMMENTS, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT, {
         comment: {
           errorSummary: [
             {

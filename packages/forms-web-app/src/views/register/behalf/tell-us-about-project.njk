@@ -7,11 +7,11 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-{% set title="Comments - Register to have your say" %}
+{% set title="What do you want to tell us about the proposed project? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -29,10 +29,28 @@
       <form action="" method="POST" novalidate>
         <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
 
-       <!-- {{ govukWarningText({
-          text: "This information will be published on our website for the public. You should not include any personal details or sensistive information with your comment.",
-          iconFallbackText: "Warning"
-        }) }} -->
+        <p class="govuk-body">You must include comments with your registration. Your comments must be about what you consider to be the main issues and impacts. You can also include anything that may affect your day-to-day life.</p>
+        <p class="govuk-body">This information will be:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
+          <li>published on our website</li>
+        </ul>
+        <p class="govuk-body">You will be able to submit further comments during the Examination of the application once you have registered.</p>
+        {{ govukTextarea({
+          maxwords: 200,
+          id: "comment",
+          label: {
+            text: "Registration comments",
+            classes: "govuk-label--s",
+            isPageHeading: true
+          },
+          name: "comment",
+          value: comment,
+          attributes: {"data-cy": "comment"},
+          errorMessage: errors['comment'] and {
+              text: errors['comment'].msg
+          }
+        }) }}
         {{ govukDetails({
           summaryText: "Do not include any personal details.",
           html: '
@@ -58,44 +76,6 @@
               <li>sex life</li>
               <li>sexual orientation</li>
             </ul>'
-        }) }}
-
-        <p class="govuk-body">You can talk about anything you think is important to tell us about the propsed project in as much detail as possible.</p>
-        <p class="govuk-body">This information will be:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
-          <li>published on our website</li>
-        </ul>
-
-        {{ govukInput({
-          label: {
-              text: "Please enter topic",
-              classes: "govuk-label--l",
-              isPageHeading: true
-          },
-          id: "topic",
-          name: "topic",
-          value: comment.topic,
-          attributes: {"data-cy": "topic"},
-          errorMessage: errors['topic'] and {
-            text: errors['topic'].msg
-          }
-        }) }}
-
-        {{ govukTextarea({
-          maxwords: 200,
-          id: "comment",
-          label: {
-            text: "Please enter comment",
-            classes: "govuk-label--l",
-            isPageHeading: true
-          },
-          name: "comment",
-          value: comment.comment,
-          attributes: {"data-cy": "comment"},
-          errorMessage: errors['comment'] and {
-              text: errors['comment'].msg
-          }
         }) }}
 
         {{ govukButton({

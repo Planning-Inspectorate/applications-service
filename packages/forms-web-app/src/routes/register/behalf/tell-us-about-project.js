@@ -1,18 +1,17 @@
 const express = require('express');
 
-const commentsController = require('../../../controllers/register/behalf/comments');
+const commentsController = require('../../../controllers/register/behalf/tell-us-about-project');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: commentsValidationRules,
-} = require('../../../validators/register/behalf/comments');
-
+} = require('../../../validators/register/behalf/tell-us-about-project');
 
 const router = express.Router();
 
-router.get('/comments', commentsController.getComments);
+router.get('/tell-us-about-project', commentsController.getComments);
 
 router.post(
-  '/comments',
+  '/tell-us-about-project',
   commentsValidationRules(),
   validationErrorHandler,
   commentsController.postComments

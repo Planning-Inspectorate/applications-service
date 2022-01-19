@@ -7,11 +7,11 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-{% set title="Comments - Register to have your say" %}
+{% set title="What do you want to tell us about this proposed project? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -29,35 +29,18 @@
       <form action="" method="POST" novalidate>
         <h1 class="govuk-heading-l">What do you want to tell us about this proposed project?</h1>
 
-        <p class="govuk-body">Your registration comments (also known as a relevant representation) should relate to the application. You must include a summary of points which you agree and/or disagree with about the application, highlighting what you consider to be the main issues and impacts.
-        <p class="govuk-body">Information about how you think a project may affect your day-to-day life may also be of interest to the Examining Authority.</p>
+        <p class="govuk-body">You must include comments with your registration. Your comments must be about what you consider to be the main issues and impacts. You can also include anything that may affect your day-to-day life.</p>
         <p class="govuk-body">This information will be:</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>used by the Examining Authority to decide how the project should be examined</li>
+          <li>used by the examining panel to decide if they recommend the project goes ahead</li>
           <li>published on our website</li>
         </ul>
-        <p class="govuk-body">These are your registration comments. You will be able to tell us more during the Examination of the project.</p>
-
-        {{ govukInput({
-          label: {
-              text: "What topic does the comment relate to?",
-              classes: "govuk-label--s",
-              isPageHeading: true
-          },
-          id: "topic",
-          name: "topic",
-          value: comment.topic,
-          attributes: {"data-cy": "topic"},
-          errorMessage: errors['topic'] and {
-            text: errors['topic'].msg
-          }
-        }) }}
-
+        <p class="govuk-body">You will be able to submit further comments during the Examination of the application once you have registered.</p>
         {{ govukTextarea({
           maxwords: 200,
           id: "comment",
           label: {
-            text: "Please enter comment",
+            text: "Registration comments",
             classes: "govuk-label--s",
             isPageHeading: true
           },
@@ -68,6 +51,7 @@
               text: errors['comment'].msg
           }
         }) }}
+
         {{ govukDetails({
           summaryText: "Do not include any personal details.",
           html: '
@@ -94,7 +78,7 @@
               <li>sexual orientation</li>
             </ul>'
         }) }}
-        
+
         {{ govukButton({
           text: "Continue",
           type: "Submit",
