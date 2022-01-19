@@ -83,32 +83,16 @@ describe('controllers/register/myself/comments', () => {
         body: {
           errorSummary: [{ text: 'There were errors here', href: '#' }],
           errors: { a: 'b' },
+          comment: '',
         },
       };
       await commentsController.postComments(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
       expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.COMMENTS, {
-        comment: {
-          errorSummary: [
-            {
-              href: '#',
-              text: 'There were errors here',
-            },
-          ],
-          errors: {
-            a: 'b',
-          },
-        },
-        errorSummary: [
-          {
-            href: '#',
-            text: 'There were errors here',
-          },
-        ],
-        errors: {
-          a: 'b',
-        },
+        errors: { a: 'b' },
+        errorSummary: [{ href: '#', text: 'There were errors here' }],
+        comment: '',
       });
     });
   });

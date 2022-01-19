@@ -8,24 +8,23 @@ exports.getComments = async (req, res) => {
 exports.postComments = async (req, res) => {
   const { body } = req;
 
-  const { errors = {}, errorSummary = [] } = body;
+  const { errors = {}, errorSummary = [], comment } = body;
   if (errors.comment || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.MYSELF.COMMENTS, {
       errors,
       errorSummary,
-      comment: body,
+      comment,
     });
     return;
   }
 
   const mode = req.body.mode ? req.body.mode : req.query.mode;
   if (mode === 'edit') {
-    const { comment } = body;
     req.session.comment = comment;
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {
     delete body.mode;
-    const { comment } = body;
+
     req.session.comment = comment;
     if (mode === 'draft') {
       req.session.mode = 'draft';
