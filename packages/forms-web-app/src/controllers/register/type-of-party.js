@@ -46,6 +46,7 @@ exports.postTypeOfParty = async (req, res) => {
     req.session.orgRegdata = registrationData.org;
   } else if (typeOfParty === 'behalf') {
     req.session.behalfRegdata = registrationData.behalf;
+    req.session.behalfRegdata.representing = 'organisation';
   }
 
   res.redirect(`/${forwardPage(selectedParty)}`);

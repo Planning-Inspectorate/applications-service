@@ -28,9 +28,12 @@
           
           {{ govukInput({
             label: {
-                text: "What is the name of your organisation or charity?",
+                text: "What is the name of the organisation you work for?",
                 classes: "govuk-label--l",
                 isPageHeading: true
+            },
+            hint: {
+                text: "We will publish your organisation name, your client's name and their comments on the website."
             },
             classes: "govuk-input--width-20",
             id: "organisation-name",
@@ -50,6 +53,7 @@
         }) }}
 
       </form>
+      <a class="govuk-body govuk-link" href="/register/behalf/address">I don't work for an organisation</a>
     </div>
   </div>
 
