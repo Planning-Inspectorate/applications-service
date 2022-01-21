@@ -7,7 +7,7 @@ const {
 
 jest.mock('../../../../src/validators/register/type-of-party');
 
-describe('routes/register/type-of-party', () => {
+describe('routes/register/who-registering-for', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require
     require('../../../../src/routes/register/type-of-party');
@@ -18,12 +18,9 @@ describe('routes/register/type-of-party', () => {
   });
 
   it('should define the expected routes', () => {
-    expect(get).toHaveBeenCalledWith(
-      '/type-of-party',
-      typeOfPartyController.getTypeOfParty
-    );
+    expect(get).toHaveBeenCalledWith('/who-registering-for', typeOfPartyController.getTypeOfParty);
     expect(post).toHaveBeenCalledWith(
-      '/type-of-party',
+      '/who-registering-for',
       typeOfPartyValidationRules(),
       validationErrorHandler,
       typeOfPartyController.postTypeOfParty
