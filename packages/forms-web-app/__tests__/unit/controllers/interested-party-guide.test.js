@@ -1,8 +1,8 @@
-const interestedPartyGuideController = require('../../../src/controllers/interested-party-guide');
+const interestedPartyGuideController = require('../../../src/controllers/having-your-say-guide');
 const { mockReq, mockRes } = require('../mocks');
 const { VIEW } = require('../../../src/lib/views');
 
-describe('controllers/interested-party-guide', () => {
+describe('controllers/having-your-say-guide', () => {
   let req;
   let res;
 
