@@ -55,6 +55,7 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
           return apiResponse;
         }
         const data = await apiResponse.json();
+        parentLogger.info('Response received: ' + JSON.stringify(data));
         const wrappedResp = { data, resp_code: apiResponse.status };
         logger.debug('Successfully parsed to JSON');
 
