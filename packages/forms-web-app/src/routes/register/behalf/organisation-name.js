@@ -6,7 +6,6 @@ const {
   rules: organisationNameValidationRules,
 } = require('../../../validators/register/behalf/organisation-name');
 
-
 const router = express.Router();
 
 router.get('/organisation-name', organisationNameController.getOrganisationName);
