@@ -26,7 +26,7 @@ describe('controllers/register/type-of-party', () => {
   describe('getTypeOfParty', () => {
     it('should call the correct template', () => {
       typeOfPartyController.getTypeOfParty(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/type-of-party', { type: 'myself' });
+      expect(res.render).toHaveBeenCalledWith('register/who-registering-for', { type: 'myself' });
     });
   });
 

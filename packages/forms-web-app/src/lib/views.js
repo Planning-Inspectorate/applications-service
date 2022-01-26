@@ -20,7 +20,7 @@ const VIEW = {
   },
   REGISTER: {
     START: 'register/start',
-    TYPE_OF_PARTY: 'register/type-of-party',
+    TYPE_OF_PARTY: 'register/who-registering-for',
     MYSELF: {
       FULL_NAME: 'register/myself/full-name',
       OVER_18: 'register/myself/over-18',

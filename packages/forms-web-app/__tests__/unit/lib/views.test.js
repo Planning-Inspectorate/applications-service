@@ -28,7 +28,7 @@ describe('lib/views', () => {
         START: 'register/start',
         TOKEN_EXPIRED: 'register/token-expired',
         TOKEN_NOT_VERIFIED: 'register/not-verified',
-        TYPE_OF_PARTY: 'register/type-of-party',
+        TYPE_OF_PARTY: 'register/who-registering-for',
         CONFIRM_EMAIL: 'register/confirm-email',
         MYSELF: {
           FULL_NAME: 'register/myself/full-name',

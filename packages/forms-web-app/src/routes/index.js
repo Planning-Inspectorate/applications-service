@@ -18,6 +18,7 @@ router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 router.use('/project-search', projectSearchRouter);
 router.use('/register', registerRouter);
+router.use('/register-have-your-say', registerRouter);
 router.use('/examination', examinationRouter);
 router.use(interestedPartyRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);

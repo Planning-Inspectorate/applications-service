@@ -10,9 +10,7 @@ const validTypeOfPartyOptions = [
 const ruleTypeOfParty = () =>
   body('type-of-party')
     .notEmpty()
-    .withMessage(
-      'Select who are you registering for'
-    )
+    .withMessage('Select who you are registering for')
     .bail()
     .isIn(validTypeOfPartyOptions);
 
