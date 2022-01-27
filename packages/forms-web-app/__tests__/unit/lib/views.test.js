@@ -79,8 +79,7 @@ describe('lib/views', () => {
         REGISTER_TO_HAVE_YOUR_SAY: 'interested-party-guide/register-to-have-your-say',
         GET_INVOLVED_PRELIMINARY_MEETINGS:
           'interested-party-guide/get-involved-preliminary-meetings',
-        HAVE_SAY_DURING_PROJECT_EXAMINATION:
-          'interested-party-guide/have-say-during-project-examination',
+        HAVE_SAY_DURING_PROJECT_EXAMINATION: 'interested-party-guide/have-your-say-examination',
         AFTER_MAKING_THE_DECISION: 'interested-party-guide/after-making-the-decision',
       },
       FOOTER_PAGES: {
