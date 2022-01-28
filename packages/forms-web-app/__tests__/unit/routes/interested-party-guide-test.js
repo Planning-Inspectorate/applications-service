@@ -14,8 +14,8 @@ describe('routes/having-your-say-guide', () => {
   it('should define the expected routes', () => {
     expect(get).toHaveBeenCalledWith('/having-your-say-guide', getHavingYourSayAboutProject);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/index', getHavingYourSayAboutProject);
-    expect(get).toHaveBeenCalledWith('/having-your-say-guide/have-say-pre-application', getHavingYourSayPreApp);
-    expect(get).toHaveBeenCalledWith('/having-your-say-guide/register-to-have-your-say', getRegisteringToHaveYourSay);
+    expect(get).toHaveBeenCalledWith('/having-your-say-guide/taking-part-pre-application', getHavingYourSayPreApp);
+    expect(get).toHaveBeenCalledWith('/having-your-say-guide/registering-have-your-say', getRegisteringToHaveYourSay);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/get-involved-preliminary-meetings', getInvolvedInPreliminaryMeeting);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/have-say-during-project-examination', getHavingYourSayExamination);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/after-making-the-decision', getWhatYouCanDoAfterDecision);
