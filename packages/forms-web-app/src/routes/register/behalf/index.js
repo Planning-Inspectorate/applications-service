@@ -13,7 +13,7 @@ const fullNameRouter = require('./full-name');
 const addressRouter = require('./address');
 const emailRouter = require('./email');
 const telephoneRouter = require('./telephone');
-const organisationNameRouter = require('./organisation-name');
+const organisationNameRouter = require('../agent/name-of-organisation');
 
 const commentsRouter = require('./tell-us-about-project');
 const checkYourAnswersRouter = require('./check-your-answers');
