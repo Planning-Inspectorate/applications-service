@@ -28,7 +28,7 @@ const VIEW = {
       EMAIL_ADDRESS: 'register/myself/email-address',
       TELEPHONE: 'register/myself/telephone',
       TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
-      CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
+      CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
       DECLARATION: 'register/myself/declaration',
       CONFIRMATION: 'register/myself/confirmation',
     },
