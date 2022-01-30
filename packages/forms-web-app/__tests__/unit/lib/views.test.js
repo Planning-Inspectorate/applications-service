@@ -34,7 +34,7 @@ describe('lib/views', () => {
           FULL_NAME: 'register/myself/full-name',
           OVER_18: 'register/myself/are-you-18-over',
           ADDRESS: 'register/myself/address',
-          EMAIL: 'register/myself/email',
+          EMAIL_ADDRESS: 'register/myself/email-address',
           TELEPHONE: 'register/myself/telephone',
           COMMENTS: 'register/myself/comments',
           CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
