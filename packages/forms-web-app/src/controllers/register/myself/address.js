@@ -25,6 +25,6 @@ exports.postAddress = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.MYSELF.EMAIL_ADDRESS}`);
+    res.redirect(`/${VIEW.REGISTER.MYSELF.TELEPHONE}`);
   }
 };

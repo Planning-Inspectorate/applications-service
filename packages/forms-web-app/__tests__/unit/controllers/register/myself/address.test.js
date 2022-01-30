@@ -55,7 +55,7 @@ describe('controllers/register/myself/address', () => {
       };
       await addressController.postAddress(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.EMAIL_ADDRESS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.TELEPHONE}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
