@@ -1,11 +1,11 @@
 module.exports = (pageName) => {
     switch (pageName.toLowerCase()) {
         case "who are you registering for?":
-            cy.title().should('eq', "Type of interested party - Register to have your say");
+            cy.title().should('eq', "Who are you registering for - Register to have your say about a national infrastructure project - National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Who are you registering for?');
             })
-            cy.url().should('include', '/register/type-of-party')
+            cy.url().should('include', '/register/who-registering-for')
             break;
         case "what is your full name?":
             cy.title().should('eq', "Your full name - Register to have your say");
@@ -15,11 +15,11 @@ module.exports = (pageName) => {
             cy.url().should('include', '/full-name')
             break;
         case "register to have your say":
-            cy.title().should('eq', "Start registration");
+            cy.title().should('eq', "Register to have your say about a national infrastructure project - National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {
-                expect(text).to.contain('Register to have your say');
+                expect(text).to.contain('Register to have your say about a national infrastructure project');
             })
-            cy.url().should('include', '/register/start')
+            cy.url().should('include', '/register-have-your-say')
             break;
         case "north lincolnshire green energy park project information":
             cy.title().should('eq', "North Lincolnshire Green Energy Park project overview");
@@ -260,4 +260,10 @@ module.exports = (pageName) => {
         default: throw console.error('uanble to find specified page name: ' + pageName);
     }
     cy.wait(Cypress.env('demoDelay'));
+
+    cy.checkPageA11y({
+        // known issue: https://github.com/alphagov/govuk-frontend/issues/979
+        exclude: ['.govuk-radios__input'],
+      });
+
 };
