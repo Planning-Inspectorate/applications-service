@@ -39,7 +39,7 @@ describe('lib/views', () => {
           TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
           DECLARATION: 'register/myself/declaration',
-          CONFIRMATION: 'register/myself/confirmation',
+          REGISTRATION_COMPLETE: 'register/myself/registration-complete',
         },
         ORGANISATION: {
           FULL_NAME: 'register/organisation/full-name',

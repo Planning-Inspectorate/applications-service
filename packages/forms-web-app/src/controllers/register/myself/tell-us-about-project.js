@@ -28,7 +28,7 @@ exports.postComments = async (req, res) => {
     req.session.comment = comment;
     if (mode === 'draft') {
       req.session.mode = 'draft';
-      res.redirect(`/${VIEW.REGISTER.MYSELF.CONFIRMATION}`);
+      res.redirect(`/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}`);
     } else {
       req.session.mode = 'final';
       res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);

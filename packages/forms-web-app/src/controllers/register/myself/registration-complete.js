@@ -17,7 +17,7 @@ exports.getConfirmation = async (req, res) => {
   if (req.session.mode === 'draft') {
     res.render(VIEW.REGISTER.SAVE_CONFIRMATION, { ipRefNo, email });
   } else {
-    res.render(VIEW.REGISTER.MYSELF.CONFIRMATION, {
+    res.render(VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE, {
       ipRefNo,
       email,
       projectName: req.session.projectName,

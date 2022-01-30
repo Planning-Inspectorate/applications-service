@@ -10,7 +10,7 @@ const telephoneRouter = require('./telephone');
 const tellUsAboutProjectRouter = require('./tell-us-about-project');
 const checkYourAnswersRouter = require('./check-your-answers');
 const declarationRouter = require('./declaration');
-const confirmationRouter = require('./confirmation');
+const registrationCompleteRouter = require('./registration-complete');
 
 router.use('/', fullNameRouter);
 router.use('/', over18Router);
@@ -20,6 +20,6 @@ router.use('/', telephoneRouter);
 router.use('/', tellUsAboutProjectRouter);
 router.use('/', checkYourAnswersRouter);
 router.use('/', declarationRouter);
-router.use('/', confirmationRouter);
+router.use('/', registrationCompleteRouter);
 
 module.exports = router;

@@ -1,11 +1,11 @@
-const confirmationController = require('../../../../../src/controllers/register/myself/confirmation');
+const confirmationController = require('../../../../../src/controllers/register/myself/registration-complete');
 const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/myself/confirmation', () => {
+describe('controllers/register/myself/registration-complete', () => {
   let req;
   let res;
 
@@ -38,7 +38,7 @@ describe('controllers/register/myself/confirmation', () => {
       await confirmationController.getConfirmation(req, res);
       expect(req.session.comments).toBe(undefined);
       expect(req.session.mySelfRegdata).toBe(undefined);
-      expect(res.render).toHaveBeenCalledWith('register/myself/confirmation', {
+      expect(res.render).toHaveBeenCalledWith('register/myself/registration-complete', {
         ipRefNo: '30020010',
         email: 'anc@test.com',
         projectName: 'ABC',
