@@ -10,15 +10,15 @@
 {% endblock %}
 
 {% set address %}
-  {{ data.address.line1 }}<br>
-  {% if data.address.line2 %}
-    {{ data.address.line2 }}<br>
-  {% endif %}
-  {% if data.address.line3 %}
-    {{ data.address.line3 }}<br>
-  {% endif %}
-  {{ data.address.postcode }}<br>
-  {{ data.address.country }}
+{{ data.address.line1 }}<br>
+{% if data.address.line2 %}
+  {{ data.address.line2 }}<br>
+{% endif %}
+{% if data.address.line3 %}
+  {{ data.address.line3 }}<br>
+{% endif %}
+{{ data.address.postcode }}<br>
+{{ data.address.country }}
 {% endset %}
 
 {% block content %}
@@ -72,7 +72,7 @@
               text: "Are you 18 or over?"
             },
             value: {
-              text: summaryField( data['over-18'] | title, { 'data-cy': "over-18" })
+              text: summaryField( data['over-18'] | title, { 'data-cy': "are-you-18-over" })
             },
             actions: {
               items: [
@@ -164,8 +164,6 @@
           classes: "govuk-summary-list govuk-!-margin-bottom-9",
           rows: commentsRow
       }) }}
-
-
 
       <a href="/register/myself/declaration" role="button"  class="govuk-button govuk-button"  data-module="govuk-button">
         Accept and continue

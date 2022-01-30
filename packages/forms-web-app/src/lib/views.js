@@ -23,7 +23,7 @@ const VIEW = {
     TYPE_OF_PARTY: 'register/who-registering-for',
     MYSELF: {
       FULL_NAME: 'register/myself/full-name',
-      OVER_18: 'register/myself/over-18',
+      OVER_18: 'register/myself/are-you-18-over',
       ADDRESS: 'register/myself/address',
       EMAIL: 'register/myself/email',
       TELEPHONE: 'register/myself/telephone',

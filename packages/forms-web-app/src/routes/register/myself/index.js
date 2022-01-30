@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const fullNameRouter = require('./full-name');
-const over18Router = require('./over-18');
+const over18Router = require('./are-you-18-over');
 const addressRouter = require('./address');
 const emailRouter = require('./email');
 const telephoneRouter = require('./telephone');
