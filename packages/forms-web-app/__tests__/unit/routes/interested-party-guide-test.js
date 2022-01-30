@@ -31,7 +31,7 @@ describe('routes/interested-party-guide', () => {
       getHavingYourSayExamination
     );
     expect(get).toHaveBeenCalledWith(
-      '/interested-party-guide/after-making-the-decision',
+      '/interested-party-guide/what-happens-after-decision',
       getWhatYouCanDoAfterDecision
     );
   });

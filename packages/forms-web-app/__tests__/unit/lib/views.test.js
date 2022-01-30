@@ -80,7 +80,7 @@ describe('lib/views', () => {
         GET_INVOLVED_PRELIMINARY_MEETINGS:
           'interested-party-guide/get-involved-preliminary-meetings',
         HAVE_SAY_DURING_PROJECT_EXAMINATION: 'interested-party-guide/have-your-say-examination',
-        AFTER_MAKING_THE_DECISION: 'interested-party-guide/after-making-the-decision',
+        AFTER_MAKING_THE_DECISION: 'interested-party-guide/what-happens-after-decision',
       },
       FOOTER_PAGES: {
         TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
