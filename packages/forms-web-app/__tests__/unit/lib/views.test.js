@@ -36,7 +36,7 @@ describe('lib/views', () => {
           ADDRESS: 'register/myself/address',
           EMAIL_ADDRESS: 'register/myself/email-address',
           TELEPHONE: 'register/myself/telephone',
-          COMMENTS: 'register/myself/comments',
+          TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/myself/check-your-answers',
           DECLARATION: 'register/myself/declaration',
           CONFIRMATION: 'register/myself/confirmation',

@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getTelephone = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.TELEPHONE, {telephone: req.session.mySelfRegdata['telephone']});
+  res.render(VIEW.REGISTER.MYSELF.TELEPHONE, { telephone: req.session.mySelfRegdata['telephone'] });
 };
 
 exports.postTelephone = async (req, res) => {
@@ -21,6 +21,6 @@ exports.postTelephone = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
+    res.redirect(`/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`);
   }
 };
