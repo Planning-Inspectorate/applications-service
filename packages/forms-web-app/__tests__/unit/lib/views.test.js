@@ -65,7 +65,7 @@ describe('lib/views', () => {
           ADDRESS: 'register/behalf/address',
           EMAIL: 'register/behalf/email',
           TELEPHONE: 'register/behalf/telephone',
-          ORGANISATION_NAME: 'register/behalf/organisation-name',
+          ORGANISATION_NAME: 'register/agent/name-of-organisation',
           TELL_US_ABOUT_PROJECT: 'register/behalf/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
           DECLARATION: 'register/behalf/declaration',

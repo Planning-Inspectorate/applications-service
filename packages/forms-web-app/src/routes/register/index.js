@@ -13,5 +13,6 @@ router.use('/', typeOfPartyRouter);
 router.use('/myself', myselfRegistrationRouter);
 router.use('/organisation', organisationRegistrationRouter);
 router.use('/behalf', behalfRegistrationRouter);
+router.use('/agent', behalfRegistrationRouter);
 
 module.exports = router;
