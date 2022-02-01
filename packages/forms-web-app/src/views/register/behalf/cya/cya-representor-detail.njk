@@ -52,6 +52,24 @@
           },
           {
             key: {
+              text: "Organisation name"
+            },
+            value: {
+              text: summaryField( data.representor['organisation-name'], { 'data-cy': "organisation-name" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/behalf/organisation-name?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "organisation-name" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
               text: "Address"
             },
             value: {

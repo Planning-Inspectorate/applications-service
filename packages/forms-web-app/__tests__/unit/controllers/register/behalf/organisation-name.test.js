@@ -1,10 +1,10 @@
-const organisationNameController = require('../../../../../src/controllers/register/behalf/organisation-name');
+const organisationNameController = require('../../../../../src/controllers/register/agent/name-of-organisation');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/behalf/organisation-name', () => {
+describe('controllers/register/agent/name-of-organisation', () => {
   let req;
   let res;
 
@@ -26,14 +26,14 @@ describe('controllers/register/behalf/organisation-name', () => {
   describe('getOrganisationName', () => {
     it('should call the correct template', () => {
       organisationNameController.getOrganisationName(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/behalf/organisation-name', {
+      expect(res.render).toHaveBeenCalledWith('register/agent/name-of-organisation', {
         organisationName: 'test',
       });
     });
   });
 
   describe('postOrganisationName', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.ADDRESS}' if name is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.EMAIL}' if name is provided`, async () => {
       const organisationName = 'test';
       const mockRequest = {
         ...req,
@@ -46,7 +46,7 @@ describe('controllers/register/behalf/organisation-name', () => {
       };
       await organisationNameController.postOrganisationName(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.ADDRESS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.EMAIL}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {

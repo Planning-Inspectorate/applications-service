@@ -53,6 +53,8 @@
     }
   },
   "dependencies": {
+    "axe-core": "^4.3.5",
+    "cypress-axe": "^0.14.0",
     "moment": "^2.29.1"
   }
 }

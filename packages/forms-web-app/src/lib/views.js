@@ -20,7 +20,7 @@ const VIEW = {
   },
   REGISTER: {
     START: 'register/start',
-    TYPE_OF_PARTY: 'register/type-of-party',
+    TYPE_OF_PARTY: 'register/who-registering-for',
     MYSELF: {
       FULL_NAME: 'register/myself/full-name',
       OVER_18: 'register/myself/over-18',
@@ -56,7 +56,7 @@ const VIEW = {
       ADDRESS: 'register/behalf/address',
       EMAIL: 'register/behalf/email',
       TELEPHONE: 'register/behalf/telephone',
-      ORGANISATION_NAME: 'register/behalf/organisation-name',
+      ORGANISATION_NAME: 'register/agent/name-of-organisation',
       TELL_US_ABOUT_PROJECT: 'register/behalf/tell-us-about-project',
       CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
       DECLARATION: 'register/behalf/declaration',

@@ -28,7 +28,7 @@ describe('lib/views', () => {
         START: 'register/start',
         TOKEN_EXPIRED: 'register/token-expired',
         TOKEN_NOT_VERIFIED: 'register/not-verified',
-        TYPE_OF_PARTY: 'register/type-of-party',
+        TYPE_OF_PARTY: 'register/who-registering-for',
         CONFIRM_EMAIL: 'register/confirm-email',
         MYSELF: {
           FULL_NAME: 'register/myself/full-name',
@@ -65,7 +65,7 @@ describe('lib/views', () => {
           ADDRESS: 'register/behalf/address',
           EMAIL: 'register/behalf/email',
           TELEPHONE: 'register/behalf/telephone',
-          ORGANISATION_NAME: 'register/behalf/organisation-name',
+          ORGANISATION_NAME: 'register/agent/name-of-organisation',
           TELL_US_ABOUT_PROJECT: 'register/behalf/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
           DECLARATION: 'register/behalf/declaration',

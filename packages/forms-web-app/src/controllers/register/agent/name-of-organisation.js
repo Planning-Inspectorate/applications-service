@@ -1,8 +1,9 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOrganisationName = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.ORGANISATION_NAME, {organisationName: req.session.behalfRegdata.representor['organisation-name']});
+  res.render(VIEW.REGISTER.BEHALF.ORGANISATION_NAME, {
+    organisationName: req.session.behalfRegdata.representor['organisation-name'],
+  });
 };
 
 exports.postOrganisationName = async (req, res) => {
@@ -21,6 +22,6 @@ exports.postOrganisationName = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.ADDRESS}`);
+    res.redirect(`/${VIEW.REGISTER.BEHALF.EMAIL}`);
   }
 };

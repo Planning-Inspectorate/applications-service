@@ -12,7 +12,7 @@ const getDocuments = async (caseRef, pageNo, searchTerm, filters) => {
 
   let where = { case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } };
   if (searchTerm) {
-    where = { [Op.and]: [{ case_reference: caseRef }] };
+    where = { [Op.and]: [{ case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } }] };
     where[Op.and].push({
       [Op.or]: [
         {

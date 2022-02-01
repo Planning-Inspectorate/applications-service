@@ -37,7 +37,7 @@ function renderData(req, res, caseRef, response) {
 exports.getAboutTheApplication = async (req, res) => {
   const caseRef = req.session.caseRef;
   const pageNumber = req.params.page;
-  let search = req.session.document_search;
+  let search = req.session.document_search ? req.session.document_search : '';
   if (pageNumber === '1') {
     search = '';
   }
