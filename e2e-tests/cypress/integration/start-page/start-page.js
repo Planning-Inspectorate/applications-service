@@ -5,11 +5,11 @@ const startPage = new PO_StartPage()
 Given('I navigate to Register to have your say page', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
     cy.clickProjectLink('North Lincolnshire Green Energy Park');
-    cy.clickOnHref("/register/start");
+    cy.clickOnHref("/register-have-your-say");
 })
 
 When('I click on start now button', () => {
-    cy.clickOnHref('/register/type-of-party');
+    cy.clickOnHref('/register/who-registering-for');
 })
 
 Then('I am on the {string} page', (pageName) => {

@@ -56,7 +56,7 @@ const VIEW = {
       ADDRESS: 'register/behalf/address',
       EMAIL: 'register/behalf/email',
       TELEPHONE: 'register/behalf/telephone',
-      ORGANISATION_NAME: 'register/behalf/organisation-name',
+      ORGANISATION_NAME: 'register/agent/name-of-organisation',
       TELL_US_ABOUT_PROJECT: 'register/behalf/tell-us-about-project',
       CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
       DECLARATION: 'register/behalf/declaration',
@@ -73,7 +73,7 @@ const VIEW = {
     REGISTER_TO_HAVE_YOUR_SAY: 'interested-party-guide/register-to-have-your-say',
     GET_INVOLVED_PRELIMINARY_MEETINGS: 'interested-party-guide/get-involved-preliminary-meetings',
     HAVE_SAY_DURING_PROJECT_EXAMINATION: 'interested-party-guide/have-your-say-examination',
-    AFTER_MAKING_THE_DECISION: 'interested-party-guide/after-making-the-decision',
+    AFTER_MAKING_THE_DECISION: 'interested-party-guide/what-happens-after-decision',
   },
   FOOTER_PAGES: {
     TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',

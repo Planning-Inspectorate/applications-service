@@ -18,6 +18,6 @@ router.get(
   getInvolvedInPreliminaryMeeting
 );
 router.get('/interested-party-guide/have-your-say-examination', getHavingYourSayExamination);
-router.get('/interested-party-guide/after-making-the-decision', getWhatYouCanDoAfterDecision);
+router.get('/interested-party-guide/what-happens-after-decision', getWhatYouCanDoAfterDecision);
 
 module.exports = router;
