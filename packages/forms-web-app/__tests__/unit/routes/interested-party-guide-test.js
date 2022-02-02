@@ -18,6 +18,6 @@ describe('routes/having-your-say-guide', () => {
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/registering-have-your-say', getRegisteringToHaveYourSay);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/get-involved-preliminary-meetings', getInvolvedInPreliminaryMeeting);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/have-say-during-project-examination', getHavingYourSayExamination);
-    expect(get).toHaveBeenCalledWith('/having-your-say-guide/after-making-the-decision', getWhatYouCanDoAfterDecision);
+    expect(get).toHaveBeenCalledWith('/having-your-say-guide/what-happens-after-decision', getWhatYouCanDoAfterDecision);
   });
 });

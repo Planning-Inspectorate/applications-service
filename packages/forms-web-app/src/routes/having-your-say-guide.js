@@ -21,6 +21,6 @@ router.get(
   '/having-your-say-guide/have-say-during-project-examination',
   getHavingYourSayExamination
 );
-router.get('/having-your-say-guide/after-making-the-decision', getWhatYouCanDoAfterDecision);
+router.get('/having-your-say-guide/what-happens-after-decision', getWhatYouCanDoAfterDecision);
 
 module.exports = router;
