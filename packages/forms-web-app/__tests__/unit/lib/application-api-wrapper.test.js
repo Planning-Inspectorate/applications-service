@@ -11,7 +11,6 @@ const {
 const config = require('../../../src/config');
 
 const mockLogger = jest.fn();
-
 jest.mock('../../../src/lib/logger', () => ({
   child: () => ({
     debug: mockLogger,
@@ -33,7 +32,6 @@ describe('lib/application-api-wrapper', () => {
     jest.useRealTimers();
   });
 
-  
   describe('getAllProjectList', () => {
     it(`should call the expected URL`, async () => {
       fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
@@ -52,14 +50,14 @@ describe('lib/application-api-wrapper', () => {
 
   describe('searchDocumentList', () => {
     it(`should call the expected URL`, async () => {
-      const search_data = {"pageNo":1,"searchTerm":"test","filters":[]};
+      const search_data = { pageNo: 1, searchTerm: 'test', filters: [] };
       fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
       await searchDocumentList('ABC123', search_data);
       expect(fetch.mock.calls[0][0]).toEqual('http://fake.url/api/v1/documents/ABC123');
     });
 
     it('should gracefully handle a fetch failure', async () => {
-      const search_data = {"pageNo":1,"searchTerm":"test","filters":[]};
+      const search_data = { pageNo: 1, searchTerm: 'test', filters: [] };
       fetch.mockResponseOnce(JSON.stringify({ errors: ['No documents found'] }), {
         status: 404,
       });
@@ -71,7 +69,7 @@ describe('lib/application-api-wrapper', () => {
     });
 
     it('should gracefully handle a fetch failure', async () => {
-      const search_data = {"pageNo":1,"searchTerm":"test","filters":[]};
+      const search_data = { pageNo: 1, searchTerm: 'test', filters: [] };
       fetch.mockResponseOnce(JSON.stringify({ errors: ['Internal server error'] }), {
         status: 500,
       });
@@ -82,5 +80,4 @@ describe('lib/application-api-wrapper', () => {
       }
     });
   });
- 
 });

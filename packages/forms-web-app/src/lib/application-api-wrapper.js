@@ -4,7 +4,6 @@ const { utils } = require('@pins/common');
 
 const config = require('../config');
 const parentLogger = require('./logger');
-const { logger } = require('../config');
 
 async function handler(callingMethod, path, method = 'GET', opts = {}, headers = {}) {
   const correlationId = uuid.v4();
@@ -55,7 +54,7 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
           return apiResponse;
         }
         const data = await apiResponse.json();
-        parentLogger.info('Response received: ' + JSON.stringify(data));
+        logger.debug('Response received: ' + JSON.stringify(data));
         const wrappedResp = { data, resp_code: apiResponse.status };
         logger.debug('Successfully parsed to JSON');
 
