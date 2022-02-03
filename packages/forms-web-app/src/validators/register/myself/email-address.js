@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 const rules = () => {
-  return [body('comment').notEmpty().withMessage('Please enter registration comments')];
+  return [body('email').notEmpty().withMessage('Enter your email address')];
 };
 
 module.exports = {

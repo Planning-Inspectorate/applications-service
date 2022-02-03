@@ -4,11 +4,11 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title="Your full name - Register to have your say" %}
+{% set title="What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -25,7 +25,7 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
+
           {{ govukInput({
             label: {
                 text: "What is your full name?",
@@ -36,7 +36,6 @@
                 html: "<p>We will publish this on the website along with your comments about the project.</p>
                 <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
             },
-            classes: "govuk-input--width-20",
             id: "full-name",
             name: "full-name",
             value: fullName,
@@ -58,4 +57,3 @@
   </div>
 
 {% endblock %}
-

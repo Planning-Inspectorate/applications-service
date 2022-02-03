@@ -2,7 +2,7 @@ const { VIEW } = require('../../../lib/views');
 
 exports.getComments = async (req, res) => {
   const { comment } = req.session;
-  res.render(VIEW.REGISTER.MYSELF.COMMENTS, { comment });
+  res.render(VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT, { comment });
 };
 
 exports.postComments = async (req, res) => {
@@ -10,7 +10,7 @@ exports.postComments = async (req, res) => {
 
   const { errors = {}, errorSummary = [], comment } = body;
   if (errors.comment || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.MYSELF.COMMENTS, {
+    res.render(VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT, {
       errors,
       errorSummary,
       comment,
@@ -28,7 +28,7 @@ exports.postComments = async (req, res) => {
     req.session.comment = comment;
     if (mode === 'draft') {
       req.session.mode = 'draft';
-      res.redirect(`/${VIEW.REGISTER.MYSELF.CONFIRMATION}`);
+      res.redirect(`/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}`);
     } else {
       req.session.mode = 'final';
       res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);

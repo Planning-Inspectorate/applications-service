@@ -1,10 +1,10 @@
-const commentsController = require('../../../../../src/controllers/register/myself/comments');
+const commentsController = require('../../../../../src/controllers/register/myself/tell-us-about-project');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/myself/comments', () => {
+describe('controllers/register/myself/tell-us-about-project', () => {
   let req;
   let res;
 
@@ -20,7 +20,9 @@ describe('controllers/register/myself/comments', () => {
   describe('getComments', () => {
     it('should call the correct template', () => {
       commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/myself/comments', { comment: undefined });
+      expect(res.render).toHaveBeenCalledWith('register/myself/tell-us-about-project', {
+        comment: undefined,
+      });
     });
 
     it('should call the correct template in edit mode', () => {
@@ -37,7 +39,7 @@ describe('controllers/register/myself/comments', () => {
         },
       };
       commentsController.getComments(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/myself/comments', {
+      expect(res.render).toHaveBeenCalledWith('register/myself/tell-us-about-project', {
         comment: {
           comment: 'test',
         },
@@ -89,7 +91,7 @@ describe('controllers/register/myself/comments', () => {
       await commentsController.postComments(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.COMMENTS, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT, {
         errors: { a: 'b' },
         errorSummary: [{ href: '#', text: 'There were errors here' }],
         comment: '',

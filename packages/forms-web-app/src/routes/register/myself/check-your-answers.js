@@ -4,6 +4,6 @@ const checkYourAnswersController = require('../../../controllers/register/myself
 
 const router = express.Router();
 
-router.get('/check-your-answers', checkYourAnswersController.getCheckYourAnswers);
+router.get('/check-answers', checkYourAnswersController.getCheckYourAnswers);
 
 module.exports = router;

@@ -1,18 +1,17 @@
 const express = require('express');
 
-const emailController = require('../../../controllers/register/myself/email');
+const emailController = require('../../../controllers/register/myself/email-address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: emailValidationRules,
-} = require('../../../validators/register/myself/email');
-
+} = require('../../../validators/register/myself/email-address');
 
 const router = express.Router();
 
-router.get('/email', emailController.getEmail);
+router.get('/email-address', emailController.getEmail);
 
 router.post(
-  '/email',
+  '/email-address',
   emailValidationRules(),
   validationErrorHandler,
   emailController.postEmail

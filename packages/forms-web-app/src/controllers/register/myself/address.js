@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getAddress = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.ADDRESS, {address: req.session.mySelfRegdata['address']});
+  res.render(VIEW.REGISTER.MYSELF.ADDRESS, { address: req.session.mySelfRegdata['address'] });
 };
 
 exports.postAddress = async (req, res) => {
@@ -12,7 +12,7 @@ exports.postAddress = async (req, res) => {
     res.render(VIEW.REGISTER.MYSELF.ADDRESS, {
       errors,
       errorSummary,
-      address: body
+      address: body,
     });
     return;
   }
@@ -25,6 +25,6 @@ exports.postAddress = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.MYSELF.EMAIL}`);
+    res.redirect(`/${VIEW.REGISTER.MYSELF.TELEPHONE}`);
   }
 };

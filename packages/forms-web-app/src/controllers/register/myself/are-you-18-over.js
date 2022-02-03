@@ -2,7 +2,7 @@ const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOver18 = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.OVER_18, {over18: req.session.mySelfRegdata['over-18']});
+  res.render(VIEW.REGISTER.MYSELF.OVER_18, { over18: req.session.mySelfRegdata['over-18'] });
 };
 
 exports.postOver18 = async (req, res) => {
@@ -22,6 +22,6 @@ exports.postOver18 = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.MYSELF.ADDRESS}`);
+    res.redirect(`/${VIEW.REGISTER.MYSELF.EMAIL_ADDRESS}`);
   }
 };
