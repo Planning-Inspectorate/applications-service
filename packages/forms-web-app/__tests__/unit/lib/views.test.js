@@ -72,15 +72,15 @@ describe('lib/views', () => {
           CONFIRMATION: 'register/behalf/confirmation',
         },
       },
-
       INTERESTED_PARTY_GUIDE: {
-        INTERESTED_PARTY: 'interested-party-guide/interested-party',
-        HAVE_SAY_PRE_APPLICATION: 'interested-party-guide/have-say-pre-application',
-        REGISTER_TO_HAVE_YOUR_SAY: 'interested-party-guide/register-to-have-your-say',
+        INTERESTED_PARTY: 'having-your-say-guide/interested-party',
+        HAVE_SAY_PRE_APPLICATION: 'having-your-say-guide/taking-part-pre-application',
+        REGISTER_TO_HAVE_YOUR_SAY: 'having-your-say-guide/registering-have-your-say',
         GET_INVOLVED_PRELIMINARY_MEETINGS:
-          'interested-party-guide/get-involved-preliminary-meetings',
-        HAVE_SAY_DURING_PROJECT_EXAMINATION: 'interested-party-guide/have-your-say-examination',
-        AFTER_MAKING_THE_DECISION: 'interested-party-guide/what-happens-after-decision',
+          'having-your-say-guide/get-involved-preliminary-meetings',
+        HAVE_SAY_DURING_PROJECT_EXAMINATION:
+          'having-your-say-guide/have-say-during-project-examination',
+        AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision',
       },
       FOOTER_PAGES: {
         TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
