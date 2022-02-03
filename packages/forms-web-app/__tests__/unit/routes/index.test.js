@@ -4,7 +4,7 @@ const homeRouter = require('../../../src/routes/home');
 const cookieRouter = require('../../../src/routes/cookies');
 const examinationRouter = require('../../../src/routes/examination');
 const projectSearchRouter = require('../../../src/routes/project-search');
-const interestedPartyRouter = require('../../../src/routes/interested-party-guide');
+const interestedPartyRouter = require('../../../src/routes/having-your-say-guide');
 const footerPagesRouter = require('../../../src/routes/footer-pages');
 
 describe('routes/index', () => {

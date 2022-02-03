@@ -8,8 +8,11 @@ exports.getHavingYourSayPreApp = (_, res) => {
   res.render(VIEW.INTERESTED_PARTY_GUIDE.HAVE_SAY_PRE_APPLICATION);
 };
 
-exports.getRegisteringToHaveYourSay = (_, res) => {
-  res.render(VIEW.INTERESTED_PARTY_GUIDE.REGISTER_TO_HAVE_YOUR_SAY);
+exports.getRegisteringToHaveYourSay = (req, res) => {
+  res.render(VIEW.INTERESTED_PARTY_GUIDE.REGISTER_TO_HAVE_YOUR_SAY, {
+    projectName: req.session.projectName,
+    caseRef: req.session.caseRef,
+  });
 };
 
 exports.getInvolvedInPreliminaryMeeting = (_, res) => {
