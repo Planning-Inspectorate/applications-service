@@ -14,7 +14,7 @@ router.get('/having-your-say-guide/index', getHavingYourSayAboutProject);
 router.get('/having-your-say-guide/taking-part-pre-application', getHavingYourSayPreApp);
 router.get('/having-your-say-guide/registering-have-your-say', getRegisteringToHaveYourSay);
 router.get(
-  '/having-your-say-guide/get-involved-preliminary-meetings',
+  '/having-your-say-guide/get-involved-preliminary-meeting',
   getInvolvedInPreliminaryMeeting
 );
 router.get(

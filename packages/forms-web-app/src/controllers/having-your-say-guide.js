@@ -16,7 +16,7 @@ exports.getRegisteringToHaveYourSay = (req, res) => {
 };
 
 exports.getInvolvedInPreliminaryMeeting = (_, res) => {
-  res.render(VIEW.INTERESTED_PARTY_GUIDE.GET_INVOLVED_PRELIMINARY_MEETINGS);
+  res.render(VIEW.INTERESTED_PARTY_GUIDE.GET_INVOLVED_PRELIMINARY_MEETING);
 };
 
 exports.getHavingYourSayExamination = (_, res) => {

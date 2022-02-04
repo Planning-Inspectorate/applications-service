@@ -46,7 +46,7 @@ describe('controllers/having-your-say-guide', () => {
     it('should call the correct template', async () => {
       await interestedPartyGuideController.getInvolvedInPreliminaryMeeting(req, res);
       expect(res.render).toHaveBeenCalledWith(
-        VIEW.INTERESTED_PARTY_GUIDE.GET_INVOLVED_PRELIMINARY_MEETINGS
+        VIEW.INTERESTED_PARTY_GUIDE.GET_INVOLVED_PRELIMINARY_MEETING
       );
     });
   });
