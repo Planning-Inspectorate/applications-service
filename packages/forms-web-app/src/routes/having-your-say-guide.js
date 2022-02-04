@@ -17,10 +17,7 @@ router.get(
   '/having-your-say-guide/get-involved-preliminary-meeting',
   getInvolvedInPreliminaryMeeting
 );
-router.get(
-  '/having-your-say-guide/have-say-during-project-examination',
-  getHavingYourSayExamination
-);
+router.get('/having-your-say-guide/have-your-say-examination', getHavingYourSayExamination);
 router.get('/having-your-say-guide/what-happens-after-decision', getWhatYouCanDoAfterDecision);
 
 module.exports = router;

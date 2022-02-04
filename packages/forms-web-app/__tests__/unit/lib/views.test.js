@@ -77,8 +77,7 @@ describe('lib/views', () => {
         HAVE_SAY_PRE_APPLICATION: 'having-your-say-guide/taking-part-pre-application',
         REGISTER_TO_HAVE_YOUR_SAY: 'having-your-say-guide/registering-have-your-say',
         GET_INVOLVED_PRELIMINARY_MEETING: 'having-your-say-guide/get-involved-preliminary-meeting',
-        HAVE_SAY_DURING_PROJECT_EXAMINATION:
-          'having-your-say-guide/have-say-during-project-examination',
+        HAVE_SAY_DURING_PROJECT_EXAMINATION: 'having-your-say-guide/have-your-say-examination',
         AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision',
       },
       FOOTER_PAGES: {
