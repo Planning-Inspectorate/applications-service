@@ -16,8 +16,8 @@ describe('routes/having-your-say-guide', () => {
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/index', getHavingYourSayAboutProject);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/taking-part-pre-application', getHavingYourSayPreApp);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/registering-have-your-say', getRegisteringToHaveYourSay);
-    expect(get).toHaveBeenCalledWith('/having-your-say-guide/get-involved-preliminary-meetings', getInvolvedInPreliminaryMeeting);
-    expect(get).toHaveBeenCalledWith('/having-your-say-guide/have-say-during-project-examination', getHavingYourSayExamination);
+    expect(get).toHaveBeenCalledWith('/having-your-say-guide/get-involved-preliminary-meeting', getInvolvedInPreliminaryMeeting);
+    expect(get).toHaveBeenCalledWith('/having-your-say-guide/have-your-say-examination', getHavingYourSayExamination);
     expect(get).toHaveBeenCalledWith('/having-your-say-guide/what-happens-after-decision', getWhatYouCanDoAfterDecision);
   });
 });
