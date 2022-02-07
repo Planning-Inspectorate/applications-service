@@ -4,11 +4,11 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title="Email address - Register to have your say" %}
+{% set title = "What is their email address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -25,7 +25,7 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
+
           {{ govukInput({
             label: {
                 text: "What is their email address?",
@@ -58,4 +58,3 @@
   </div>
 
 {% endblock %}
-

@@ -4,7 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title="Your full name - Register to have your say" %}
+{% set title = "What is your full name? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -32,7 +32,6 @@
                 classes: "govuk-label--l",
                 isPageHeading: true
             },
-            classes: "govuk-input--width-20",
             id: "full-name",
             name: "full-name",
             value: fullName,

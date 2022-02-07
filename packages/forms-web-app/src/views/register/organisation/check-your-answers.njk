@@ -6,7 +6,7 @@
 {% from "../../macros/summary-field.njk" import summaryField %}
 
 {% block pageTitle %}
-  Check your answers - Register to have your say
+  Check your answers before registering - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning
 {% endblock %}
 
 {% set address %}
@@ -41,7 +41,7 @@
             actions: {
               items: [
                 {
-                  href: "/register/type-of-party?mode=edit",
+                  href: "/register/who-registering-for?mode=edit",
                   text: "Change",
                   visuallyHiddenText: "if the application was made in your name",
                   attributes: { "data-cy": "who-are-you" }
@@ -85,6 +85,42 @@
               ]
             }
           },
+          {
+            key: {
+              text: "What is the name of your organisation or charity?"
+            },
+            value: {
+              text: summaryField( data['organisation-name'] | title, { 'data-cy': "organisation-name" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/organisation/organisation-name?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "organisation-name" }
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "What is your job title or volunteer role?"
+            },
+            value: {
+              text: summaryField( data['role'] | title, { 'data-cy': "volunteer-role" })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/register/organisation/role?mode=edit",
+                  text: "Change",
+                  visuallyHiddenText: "??",
+                  attributes: { "data-cy": "volunteer-role" }
+                }
+              ]
+            }
+          },                    
           {
             key: {
               text: "Address"
@@ -149,7 +185,7 @@
             actions: {
               items: [
                 {
-                  href: "/register/organisation/comments?mode=edit",
+                  href: "/register/organisation/tell-us-about-project?mode=edit",
                   text: "Change",
                   visuallyHiddenText: "??",
                   attributes: { "data-cy": "comment" }
@@ -161,7 +197,7 @@
       }) }}
 
       <a href="/register/organisation/declaration" role="button"  class="govuk-button govuk-button"  data-module="govuk-button">
-        Accept and continue
+        Continue to declaration
       </a>
     </div>
   </div>
