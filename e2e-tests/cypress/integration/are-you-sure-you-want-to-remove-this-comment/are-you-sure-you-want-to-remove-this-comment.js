@@ -19,8 +19,8 @@ const addAnotherComment = new PO_AddAnotherComment
 Given('I navigate to UK address details page using organisation route', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
     cy.clickProjectLink('North Lincolnshire Green Energy Park');
-    cy.clickOnHref("/register/start");
-    cy.clickOnHref('/register/type-of-party', { failOnStatusCode: false });
+    cy.clickOnHref("/register-have-your-say");
+    cy.clickOnHref('/register/who-registering-for');
     cy.selectRadioOption("An organisation I work or volunteer for");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");

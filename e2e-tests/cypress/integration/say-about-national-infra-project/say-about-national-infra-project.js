@@ -1,7 +1,7 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 
 Given('I navigate to Having your say about a national infrastructure project page', () => {
-    cy.visit('/interested-party-guide');
+    cy.visit('/having-your-say-guide');
 })
 
 Then('I am on the {string} page', (pageName) => {

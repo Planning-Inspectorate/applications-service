@@ -12,7 +12,7 @@ Feature: Having your say about a national infrastructure project page
 
     Scenario: Navigate to Taking part in the Pre-application stage
         And I click on "Taking part in the Pre-application stage" link
-        Then I am on the "Having your say at the pre-application stage" page
+        Then I am on the "taking part at the pre-application stage" page
 
     Scenario: Navigate to Registering to have your say about a national infrastructure project
         And I click on "Registering to have your say about a national infrastructure project" link

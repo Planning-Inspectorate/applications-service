@@ -10,8 +10,6 @@ Feature: Registration complete page
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
         And User clicks on continue button
-        And I enter "test@gmail.com" into email address field
-        And User clicks on continue button
         And I enter "1234567899" into telephone number field
         And User clicks on continue button
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field

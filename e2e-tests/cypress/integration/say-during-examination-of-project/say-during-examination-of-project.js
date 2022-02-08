@@ -3,7 +3,7 @@ import PO_SayDuringExaminationOfProject from "./PageObjects/PO_SayDuringExaminat
 const sayDuringExaminationOfProject = new PO_SayDuringExaminationOfProject();
 
 Given('I navigate to Have your say during the examination of the project page', () => {
-    cy.visit('/interested-party-guide');
+    cy.visit('/having-your-say-guide');
     cy.get('button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button').click();
     cy.clickLinkTonavigateToPage('Have your say during the examination of the project');
 })

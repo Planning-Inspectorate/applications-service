@@ -10,16 +10,18 @@ Feature: Registering to have your say about a national infrastructure project pa
     Scenario: verify page title and click Nationally Significant Infrastructure planning process step by step link
         Then I am on the "registering to have your say about a national infrastructure project" page
         And I verify below links present on Registering to have your say about a national infrastructure project
-            | Links                            |
-            | Who can register                 |
-            | How to register to have your say |
-            | Find a project and register      |
-            | More detailed advice             |
+            | Links                     |
+            | Who can register          |
+            | When to register          |
+            | What you need to register |
+            | After you have registered |
+            | Register to have your say |
+            | More detailed advice      |
         When I click on "The Nationally Significant Infrastructure planning process step by step" link
         Then I am on the "Having your say about a national infrastructure project" page
 
     Scenario: click Having your say at the pre-application stage link
-        When I click on "taking part in the pre-application stage" link
+        When I click on "having your say at pre-application stage" link
         Then I am on the "Having your say at the pre-application stage" page
 
     Scenario: click Registering to have your say about a national infrastructure project link

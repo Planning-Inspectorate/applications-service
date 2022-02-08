@@ -10,8 +10,6 @@ Feature: Check your answers before registering page
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
         And User clicks on continue button
-        And I enter "test@gmail.com" into email address field
-        And User clicks on continue button
         And I enter "1234567899" into telephone number field
         And User clicks on continue button
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
@@ -24,9 +22,9 @@ Feature: Check your answers before registering page
             | Who are you registering for? | Myself                                                                                                   | Change    |
             | Full name                    | TestFirstName TestMiddleName TestLastName                                                                | Change    |
             | Are you 18 or over?          | Yes                                                                                                      | Change    |
-            | Address                      | \n          Address Line 1\n          \n          \n          NE27 0QQ\n          United Kingdom\n       | Change    |
             | Email address                | test@gmail.com                                                                                           | Change    |
             | Telephone number             | 1234567899                                                                                               | Change    |
+            | Address                      | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                             | Change    |
             | Registration comments        | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change ?? |
         And User clicks on accept and continue button for "myself"
         Then I am on the "Declaration" page
@@ -43,10 +41,6 @@ Feature: Check your answers before registering page
         And I click on "Are you 18 or over?" change link
         Then I am on the "are you 18 or over?" page
 
-    Scenario: Click on Address change link
-        And I click on "Address" change link
-        Then I am on the "what is your address?" page
-
     Scenario: Click on Email address change link
         And I click on "Email address" change link
         Then I am on the "what is your email address?" page
@@ -54,6 +48,10 @@ Feature: Check your answers before registering page
     Scenario: Click on Telephone number change link
         And I click on "Telephone number" change link
         Then I am on the "what is your telephone number?" page
+
+    Scenario: Click on Address change link
+        And I click on "Address" change link
+        Then I am on the "what is your address?" page
 
     Scenario: Click on Comments change link
         And I click on "Your comments change" change link
