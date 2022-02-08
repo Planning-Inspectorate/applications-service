@@ -38,15 +38,15 @@ exports.postTypeOfParty = async (req, res) => {
     });
     return;
   }
-
-  req.session.typeOfParty = typeOfParty;
-  if (typeOfParty === 'myself') {
-    req.session.mySelfRegdata = registrationData.myself;
-  } else if (typeOfParty === 'organisation') {
-    req.session.orgRegdata = registrationData.org;
-  } else if (typeOfParty === 'behalf') {
-    req.session.behalfRegdata = registrationData.behalf;
+  if (typeOfParty !== req.session.typeOfParty) {
+    req.session.typeOfParty = typeOfParty;
+    if (typeOfParty === 'myself') {
+      req.session.mySelfRegdata = registrationData.myself;
+    } else if (typeOfParty === 'organisation') {
+      req.session.orgRegdata = registrationData.org;
+    } else if (typeOfParty === 'behalf') {
+      req.session.behalfRegdata = registrationData.behalf;
+    }
   }
-
   res.redirect(`/${forwardPage(selectedParty)}`);
 };
