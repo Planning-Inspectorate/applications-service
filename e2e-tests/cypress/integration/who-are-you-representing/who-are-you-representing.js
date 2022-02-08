@@ -4,20 +4,24 @@ import PO_FullName from "../full-name/PageObjects/PO_FullName";
 import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
 import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
 import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetails";
+import PO_NameofOrgYouWorkFor from "../what-is-the-name-of-the-organisation-you-work-for/PageObjects/PO_NameofOrgYouWorkFor";
 const whoYouRepresenting = new PO_WhoYouRepresenting
 const fullNamePage = new PO_FullName
 const emailAddressPage = new PO_EmailAddress
 const teleNumberPage = new PO_TeleNumber
 const addressDetails = new PO_AddressDetails
+const nameOfOrgYouWorkFor = new PO_NameofOrgYouWorkFor
 
 Given('I navigate to UK address details page as a representative of a person', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
     cy.clickProjectLink('North Lincolnshire Green Energy Park');
-    cy.clickOnHref("/register/start");
-    cy.clickOnHref('/register/type-of-party');
+    cy.clickOnHref("/register-have-your-say");
+    cy.clickOnHref('/register/who-registering-for');
     cy.selectRadioOption("On behalf of another person or organisation");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("RepresentativeTest MiddleName LastName");
+    cy.clickSaveAndContinue();
+    nameOfOrgYouWorkFor.enterNameOfOrgYouWorkFor("Organisation Name");
     cy.clickSaveAndContinue();
     emailAddressPage.enterTextIntoEmailField("Representative_test@gmail.com");
     cy.clickSaveAndContinue();

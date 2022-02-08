@@ -6,6 +6,7 @@ import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleN
 import PO_TellAboutProject from "../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
 import PO_CyaBeforeReg from "../check-your-answers-before-registering/PageObjects/PO_CyaBeforeReg";
 import PO_WhoYouRepresenting from "../who-are-you-representing/PageObjects/PO_WhoYouRepresenting";
+import PO_NameofOrgYouWorkFor from "../what-is-the-name-of-the-organisation-you-work-for/PageObjects/PO_NameofOrgYouWorkFor";
 const fullNamePage = new PO_FullName
 const addressDetails = new PO_AddressDetails
 const emailAddressPage = new PO_EmailAddress
@@ -13,15 +14,18 @@ const teleNumberPage = new PO_TeleNumber
 const tellAboutProject = new PO_TellAboutProject
 const cyaBeforeReg = new PO_CyaBeforeReg
 const whoYouRepresenting = new PO_WhoYouRepresenting
+const nameOfOrgYouWorkFor = new PO_NameofOrgYouWorkFor
 
 Given('I navigate to UK address details page as a representative of a person', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
     cy.clickProjectLink('North Lincolnshire Green Energy Park');
-    cy.clickOnHref("/register/start");
-    cy.clickOnHref('/register/type-of-party');
+    cy.clickOnHref("/register-have-your-say");
+    cy.clickOnHref('/register/who-registering-for');
     cy.selectRadioOption("On behalf of another person or organisation");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("RepresentativeTest MiddleName LastName");
+    cy.clickSaveAndContinue();
+    nameOfOrgYouWorkFor.enterNameOfOrgYouWorkFor("Organisation Name");
     cy.clickSaveAndContinue();
     emailAddressPage.enterTextIntoEmailField("Representative_test@gmail.com");
     cy.clickSaveAndContinue();

@@ -12,7 +12,7 @@ Then('I am on the {string} page', (pageName) => {
 })
 
 And('I click on register to have your say about national infrastructure project link', () => {
-    cy.clickOnHref("/register/start");
+    cy.clickOnHref("/register-have-your-say");
 });
 
 And('I click on {string} link', (pageName) => {
@@ -44,7 +44,7 @@ And('I click on {string} link', (pageName) => {
  })
 
  And('I click on Find out more about registering to have your say', () => {
-    cy.get('a[href*="/interested-party-guide"]').last().click();
+    cy.get('a[href*="/having-your-say-guide"]').last().click();
 })
 
 And('I click on required {string} link', (requiredLink) => {

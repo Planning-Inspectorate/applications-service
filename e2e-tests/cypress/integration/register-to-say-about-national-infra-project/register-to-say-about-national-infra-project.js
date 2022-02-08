@@ -3,7 +3,7 @@ import PO_RegisterToSayAboutNationalInfraProject from "./PageObjects/PO_Register
 const registerToSayAboutNationalInfraProject = new PO_RegisterToSayAboutNationalInfraProject();
 
 Given('I navigate to Registering to have your say about a national infrastructure project page', () => {
-    cy.visit('/interested-party-guide');
+    cy.visit('/having-your-say-guide');
     cy.get('button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button').click();
     cy.clickLinkTonavigateToPage('registering to have your say about a national infrastructure project');
 })

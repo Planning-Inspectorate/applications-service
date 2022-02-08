@@ -13,13 +13,15 @@ const tellAboutProject = new PO_TellAboutProject
 Given('I navigate to UK address details page', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
     cy.clickProjectLink('North Lincolnshire Green Energy Park');
-    cy.clickOnHref("/register/start");
-    cy.clickOnHref('/register/type-of-party', { failOnStatusCode: false });
+    cy.clickOnHref("/register-have-your-say");
+    cy.clickOnHref('/register/who-registering-for');
     cy.selectRadioOption("Myself");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");
     cy.clickSaveAndContinue();
     cy.selectRadioYesOrNo("Yes");
+    cy.clickSaveAndContinue();
+    emailAddressPage.enterTextIntoEmailField("testpins2@gmail.com");
     cy.clickSaveAndContinue();
 });
 

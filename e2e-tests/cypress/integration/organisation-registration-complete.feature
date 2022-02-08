@@ -14,11 +14,10 @@ Feature: Organisation Registration complete page
         And User clicks on continue button
         And I enter "1234567899" into telephone number field
         And User clicks on continue button
-        And I enter "Project topic" into topic field
         And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
         And User clicks on continue button
         And User clicks on accept and continue button for "organisation"
         And User clicks on accept and register button
 
     Scenario: verify page title, heading
-        Then I am on the "Registration complete" page
+        Then I am on the "Registration complete organisation" page

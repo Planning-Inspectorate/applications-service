@@ -10,8 +10,6 @@ Feature: What is your telephone number page
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
         And User clicks on continue button
-        And I enter "test@gmail.com" into email address field
-        And User clicks on continue button
 
     Scenario: verify page title, heading, error message and continue
         Then I am on the "What is your telephone number?" page

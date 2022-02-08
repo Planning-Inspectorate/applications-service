@@ -16,7 +16,7 @@ Feature: who are you registering for? page
         And User clicks on continue button
         Then below error message should be presented on who are you registering for page
             | ErrorMsg                           |
-            | Select who are you registering for |
+            | Select who you are registering for |
 
     Scenario: User click on Planning inspectorate logo
         When I click on "planning inspectorate" logo
@@ -38,4 +38,4 @@ Feature: who are you registering for? page
     Scenario: User selects An organisation I work or volunteer for and click continue
         When User selects "An organisation I work or volunteer for"
         And User clicks on continue button
-        Then I am on the "what is your full name?" page
+        Then I am on the "what is your full name? organisation" page

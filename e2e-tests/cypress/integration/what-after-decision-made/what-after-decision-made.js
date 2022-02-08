@@ -3,7 +3,7 @@ import PO_WhatAfterDecisionMade from "./PageObjects/PO_WhatAfterDecisionMade";
 const afterDecisionMade = new PO_WhatAfterDecisionMade();
 
 Given('I navigate to What you can do after the decision has been made page', () => {
-    cy.visit('/interested-party-guide');
+    cy.visit('/having-your-say-guide');
     cy.get('button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button').click();
     cy.clickLinkTonavigateToPage('What you can do after the decision has been made');
 })

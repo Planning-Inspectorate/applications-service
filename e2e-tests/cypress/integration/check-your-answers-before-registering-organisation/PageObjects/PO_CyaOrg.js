@@ -43,7 +43,7 @@ class PO_CyaOrg {
             cy.get('[data-cy="telephone"]').last().click();
             break;
             case "Your comments change": 
-            cy.get('[data-cy="comments"]').last().click();
+            cy.get('[data-cy="comment"]').last().click();
             break;
         }
     }
