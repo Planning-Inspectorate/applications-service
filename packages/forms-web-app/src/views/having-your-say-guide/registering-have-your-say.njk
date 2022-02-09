@@ -116,13 +116,11 @@
         </div>
       </div>
 
-      <div class="govuk-grid-column-one-third">
-        {{ pinsStepByStepNavigation({
-            id: "ip-step-by-step-one",
-            useIPDefaultStepByStep: true,
-            currentDefaultStep: 2
-        }) }}
-      </div>
+  <div class="govuk-grid-column-one-third">
+    {% set currentDefaultStep = 2 %}
+    {% include "../includes/step-by-step-navigation.njk" %}
+  </div>
+
 
     </div>
 

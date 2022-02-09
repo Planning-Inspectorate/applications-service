@@ -53,6 +53,7 @@
     }
   },
   "dependencies": {
+    "@planning-inspectorate/pins-components": "^2.0.0",
     "axe-core": "^4.3.5",
     "cypress-axe": "^0.14.0",
     "moment": "^2.29.1"
