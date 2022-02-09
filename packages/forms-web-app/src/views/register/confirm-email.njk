@@ -4,11 +4,11 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title="Confirm email address - Register to have your say" %}
+{% set title = "Confirm email address - Register to have your say" %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -25,7 +25,7 @@
       {% endif %}
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
+
           {{ govukInput({
             label: {
                 text: "Confirm your email address?",
@@ -58,4 +58,3 @@
   </div>
 
 {% endblock %}
-

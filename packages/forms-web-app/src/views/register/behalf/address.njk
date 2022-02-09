@@ -5,12 +5,11 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 
-
-{% set title="UK address details - Register to have your say" %}
+{% set title = "What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title="Error: " + title %}
+    {% set title = "Error: " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -25,10 +24,10 @@
           errorList: errorSummary
         }) }}
       {% endif %}
-      
+
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-          
+
           {% call govukFieldset({
             legend: {
               text: "UK address details",
@@ -37,7 +36,7 @@
             }
           }) %}
 
-            {{ govukInput({
+          {{ govukInput({
               label: {
                 text: 'Address line 1'
               },
@@ -46,18 +45,18 @@
               value: address['line1']
             }) }}
 
-            {{ govukInput({
+          {{ govukInput({
               label: {
-                text: 'Address line 2'
+                text: 'Address line 2 (Optional)'
               },
               id: "address-line-2",
               name: "line2",
               value: address['line2']
             }) }}
 
-            {{ govukInput({
+          {{ govukInput({
               label: {
-                text: "Address line 3"
+                text: "Address line 3 (Optional)"
               },
               classes: "govuk-!-width-two-thirds",
               id: "address-line-3",
@@ -65,7 +64,7 @@
               value: address['line3']
             }) }}
 
-            {{ govukInput({
+          {{ govukInput({
               label: {
                 text: "Postcode"
               },
@@ -75,7 +74,7 @@
               value: address['postcode']
             }) }}
 
-            {{ govukInput({
+          {{ govukInput({
               label: {
                 text: "Country"
               },
@@ -99,4 +98,3 @@
   </div>
 
 {% endblock %}
-
