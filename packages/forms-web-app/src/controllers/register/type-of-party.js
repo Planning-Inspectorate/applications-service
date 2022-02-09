@@ -38,8 +38,6 @@ exports.postTypeOfParty = async (req, res) => {
     });
     return;
   }
-  console.log('-----' + typeOfParty);
-  console.log('-----' + req.session.typeOfParty);
   if (typeOfParty !== req.session.typeOfParty) {
     req.session.typeOfParty = typeOfParty;
     if (typeOfParty === 'myself') {
