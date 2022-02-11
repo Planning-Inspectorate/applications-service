@@ -9,6 +9,7 @@ describe('lib/views', () => {
       DCO_PROCESS_GUIDE: {
         DECISION_MAKINH_PROCESS_GUIDE:
           'decision-making-process-guide/decision-making-process-guide',
+        PRE_APPLICATION: 'decision-making-process-guide/pre-application',
       },
       EXAMINATION: {
         EXAMINATION: 'examination/examination',

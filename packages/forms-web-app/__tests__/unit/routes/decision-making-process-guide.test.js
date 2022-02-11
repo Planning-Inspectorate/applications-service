@@ -1,6 +1,7 @@
 const { get } = require('./router-mock');
 const {
   getDecisionMakingProcessGuide,
+  getPreApplication,
 } = require('../../../src/controllers/decision-making-process-guide');
 
 describe('routes/decision-making-process-guide', () => {
@@ -17,6 +18,10 @@ describe('routes/decision-making-process-guide', () => {
     expect(get).toHaveBeenCalledWith(
       '/decision-making-process-guide',
       getDecisionMakingProcessGuide
+    );
+    expect(get).toHaveBeenCalledWith(
+      '/decision-making-process-guide/pre-application',
+      getPreApplication
     );
   });
 });
