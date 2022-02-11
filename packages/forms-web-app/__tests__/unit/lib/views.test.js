@@ -6,6 +6,10 @@ describe('lib/views', () => {
       APPLICATION_NUMBER: 'application-number',
 
       COOKIES: 'cookies',
+      DCO_PROCESS_GUIDE: {
+        DECISION_MAKINH_PROCESS_GUIDE:
+          'decision-making-process-guide/decision-making-process-guide',
+      },
       EXAMINATION: {
         EXAMINATION: 'examination/examination',
         PROJECT_TIMELINE: 'examination/project-timeline',
