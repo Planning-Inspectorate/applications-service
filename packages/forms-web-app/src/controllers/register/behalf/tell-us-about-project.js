@@ -8,12 +8,13 @@ exports.getComments = async (req, res) => {
 
 exports.postComments = async (req, res) => {
   const { body } = req;
-  const { errors = {}, errorSummary = [] } = body;
+
+  const { errors = {}, errorSummary = [], comment } = body;
   if (errors.comment || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT, {
       errors,
       errorSummary,
-      comment: body,
+      comment,
     });
     return;
   }
@@ -21,8 +22,7 @@ exports.postComments = async (req, res) => {
   const mode = req.body.mode ? req.body.mode : req.query.mode;
 
   if (mode === 'edit') {
-    const { index } = req.query;
-    req.session.comments[index] = body;
+    req.session.comment = comment;
     res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
   } else {
     delete body.mode;
