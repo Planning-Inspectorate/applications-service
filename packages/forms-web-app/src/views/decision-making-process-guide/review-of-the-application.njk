@@ -1,0 +1,76 @@
+{% extends "layouts/layout.njk" %}
+
+{% block pageTitle %}
+  Review of the application - National Infrastructure Planning
+{% endblock %}
+
+{% block header %}
+  {{ pinsHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+{% endblock %}
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+  Review of the application
+</h1>
+<h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
+<ol class="govuk-list pins-contents-list">
+    <li><a class="govuk-link" href="#about-the-review-of-the-application">About the review of the application</a></li>
+    <li><a class="govuk-link" href="#what-the-planning-inspectorate-does-to-review-the-application">What the Planning Inspectorate does to review the application</a></li>
+</ol>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="pins-step-by-step-section-main">
+            <h2 class="govuk-heading-m" id="about-the-review-of-the-application">About the review of the application</h2>
+            <p class="govuk-body">This is called the Acceptance stage. This when the developer sends us all of the information in their application, including details of the consultation they have carried out. The Planning Inspectorate looks at the documents to check if we can accept the application for Examination. We have 28 days to make this decision.</p>
+            <p class="govuk-body">This stage can have one of three outcomes:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>we accept the application for examination</li>
+              <li>we do not accept the application</li>
+              <li>the developer withdraws their application</li>
+            </ul>
+            <p class="govuk-body">We have 28 days to make the decision from when the developer sends us the application. If it is accepted, this does not mean the development can go ahead, this means we’ve accepted the application for Examination.</p>
+            
+            <h2 class="govuk-heading-m" id="what-the-planning-inspectorate-does-to-review-the-application">What the Planning Inspectorate does to review the application</h2>
+            <p class="govuk-body">Our team will check the application to make sure the Examining Authority has everything it needs to be able to properly examine the project at the Examination stage.</p>
+            <p class="govuk-body">If there is anything missing or we need more information, we may not be able to accept it for Examination.</p>
+            
+            <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
+                <a class="govuk-link" href="/decision-making-process-guide/pre-examination">
+                    <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
+                        <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
+                      </svg> -->
+                    <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
+                    <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
+                    </svg>
+                    <strong>Next</strong>
+                    <span>Preparing for the Examination stage</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+  <div class="govuk-grid-column-one-third">
+    {% set currentDefaultStep = 1 %}
+    {% include "../includes/dco-step-by-step-navigation.njk" %}
+  </div>
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+    {{ pinsFooter() }}
+{% endblock %}
