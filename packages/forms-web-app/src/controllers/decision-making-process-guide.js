@@ -7,3 +7,7 @@ exports.getDecisionMakingProcessGuide = (_, res) => {
 exports.getPreApplication = (_, res) => {
   res.render(VIEW.DCO_PROCESS_GUIDE.PRE_APPLICATION);
 };
+
+exports.getExaminationOfTheApplication = (_, res) => {
+  res.render(VIEW.DCO_PROCESS_GUIDE.EXAMINATION_OF_THE_APPLICATION);
+};
