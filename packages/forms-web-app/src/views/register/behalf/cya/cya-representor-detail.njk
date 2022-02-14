@@ -1,33 +1,33 @@
 {% set address %}
-  {{ data.representor.address.line1 }}<br>
-  {% if data.representor.address.line2 %}
-    {{ data.representor.address.line2 }}<br>
-  {% endif %}
-  {% if data.representor.address.line3 %}
-    {{ data.representor.address.line3 }}<br>
-  {% endif %}
-  {{ data.representor.address.postcode }}<br>
-  {{ data.representor.address.country }}
+{{ data.representor.address.line1 }}<br>
+{% if data.representor.address.line2 %}
+  {{ data.representor.address.line2 }}<br>
+{% endif %}
+{% if data.representor.address.line3 %}
+  {{ data.representor.address.line3 }}<br>
+{% endif %}
+{{ data.representor.address.postcode }}<br>
+{{ data.representor.address.country }}
 {% endset %}
 
- <h2 class="govuk-heading-m">Your details</h2>
-    {{ govukSummaryList({
+<h2 class="govuk-heading-m">Your details</h2>
+{{ govukSummaryList({
         classes: "govuk-summary-list govuk-!-margin-bottom-9",
         rows: [
           {
             key: {
-              text: "Who are you representing for?"
+              text: "Who are you registering for?"
             },
             value: {
-              text: summaryField( "An organisation or charity", { 'data-cy': "representing-for" })
+              text: summaryField( "An organisation or charity", { 'data-cy': "type-of-party" })
             },
             actions: {
               items: [
                 {
-                  href: "/register/behalf/representing-for?mode=edit",
+                  href: "/register/who-registering-for?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "representing-for",
-                  attributes: { "data-cy": "representing-for" }
+                  visuallyHiddenText: "registering-for",
+                  attributes: { "data-cy": "registering-for" }
                 }
               ]
             }

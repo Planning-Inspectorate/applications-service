@@ -36,14 +36,15 @@
           <li>published on our website</li>
         </ul>
         <p class="govuk-body">You will be able to submit further comments during the Examination of the application once you have registered.</p>
+
         {{ govukTextarea({
-          maxwords: 200,
-          id: "comment",
           label: {
             text: "Registration comments",
             classes: "govuk-label--s",
             isPageHeading: true
           },
+          maxwords: 200,
+          id: "comment",
           name: "comment",
           value: comment,
           attributes: {"data-cy": "comment"},
@@ -51,6 +52,7 @@
               text: errors['comment'].msg
           }
         }) }}
+
         {{ govukDetails({
           summaryText: "Do not include any personal details.",
           html: '

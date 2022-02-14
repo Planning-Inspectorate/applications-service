@@ -87,26 +87,9 @@ describe('controllers/register/behalf/tell-us-about-project', () => {
       expect(res.redirect).not.toHaveBeenCalled();
 
       expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT, {
-        comment: {
-          errorSummary: [
-            {
-              href: '#',
-              text: 'There were errors here',
-            },
-          ],
-          errors: {
-            a: 'b',
-          },
-        },
-        errorSummary: [
-          {
-            href: '#',
-            text: 'There were errors here',
-          },
-        ],
-        errors: {
-          a: 'b',
-        },
+        errors: { a: 'b' },
+        errorSummary: [{ href: '#', text: 'There were errors here' }],
+        comment: undefined,
       });
     });
   });
