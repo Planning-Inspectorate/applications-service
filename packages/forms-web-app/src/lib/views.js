@@ -79,6 +79,7 @@ const VIEW = {
     DECISION_MAKINH_PROCESS_GUIDE: 'decision-making-process-guide/decision-making-process-guide',
     PRE_APPLICATION: 'decision-making-process-guide/pre-application',
     EXAMINATION_OF_THE_APPLICATION: 'decision-making-process-guide/examination-of-the-application',
+    REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
   },
   FOOTER_PAGES: {
     TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
