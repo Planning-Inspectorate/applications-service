@@ -12,6 +12,7 @@ describe('lib/views', () => {
         PRE_APPLICATION: 'decision-making-process-guide/pre-application',
         EXAMINATION_OF_THE_APPLICATION:
           'decision-making-process-guide/examination-of-the-application',
+        REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
       },
       EXAMINATION: {
         EXAMINATION: 'examination/examination',

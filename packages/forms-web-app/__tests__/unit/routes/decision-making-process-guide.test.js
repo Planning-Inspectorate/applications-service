@@ -3,6 +3,7 @@ const {
   getDecisionMakingProcessGuide,
   getPreApplication,
   getExaminationOfTheApplication,
+  getReviewOfTheApplication,
 } = require('../../../src/controllers/decision-making-process-guide');
 
 describe('routes/decision-making-process-guide', () => {
@@ -25,8 +26,13 @@ describe('routes/decision-making-process-guide', () => {
       getPreApplication
     );
     expect(get).toHaveBeenCalledWith(
+<<<<<<< HEAD
       '/decision-making-process-guide/examination-of-the-application',
       getExaminationOfTheApplication
+=======
+      '/decision-making-process-guide/review-of-the-application',
+      getReviewOfTheApplication
+>>>>>>> main
     );
   });
 });
