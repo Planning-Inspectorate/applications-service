@@ -13,8 +13,9 @@ exports.getConfirmation = async (req, res) => {
   const commentsData = JSON.stringify({ comments: req.session.comment, mode: req.session.mode });
   await postCommentsData(ipRefNo, commentsData);
   const email = req.session.orgRegdata.email;
-  delete req.session.comments;
+  delete req.session.comment;
   delete req.session.orgRegdata;
+  delete req.session.typeOfParty;
   if (req.session.mode === 'draft') {
     res.render(VIEW.REGISTER.SAVE_CONFIRMATION, { ipRefNo: ipRefNo, email: email });
   } else {

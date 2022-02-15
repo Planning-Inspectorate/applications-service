@@ -36,7 +36,8 @@ describe('controllers/register/myself/registration-complete', () => {
   describe('getConfirmation', () => {
     it('should call the correct template', async () => {
       await confirmationController.getConfirmation(req, res);
-      expect(req.session.comments).toBe(undefined);
+      expect(req.session.comment).toBe(undefined);
+      expect(req.session.typeOfParty).toBe(undefined);
       expect(req.session.mySelfRegdata).toBe(undefined);
       expect(res.render).toHaveBeenCalledWith('register/myself/registration-complete', {
         ipRefNo: '30020010',
