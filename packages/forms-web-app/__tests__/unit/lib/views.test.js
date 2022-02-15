@@ -13,6 +13,7 @@ describe('lib/views', () => {
         EXAMINATION_OF_THE_APPLICATION:
           'decision-making-process-guide/examination-of-the-application',
         REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
+        PRE_EXAMINATION: 'decision-making-process-guide/pre-examination',
       },
       EXAMINATION: {
         EXAMINATION: 'examination/examination',

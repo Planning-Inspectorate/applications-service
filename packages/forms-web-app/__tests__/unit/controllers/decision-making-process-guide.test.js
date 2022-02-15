@@ -32,4 +32,11 @@ describe('controllers/decision-making-process-guide', () => {
       expect(res.render).toHaveBeenCalledWith(VIEW.DCO_PROCESS_GUIDE.REVIEW_OF_THE_APPLICATION);
     });
   });
+
+  describe('getPreExamination', () => {
+    it('should call the correct template', async () => {
+      await dcoProcessGuideController.getPreExamination(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.DCO_PROCESS_GUIDE.PRE_EXAMINATION);
+    });
+  });
 });

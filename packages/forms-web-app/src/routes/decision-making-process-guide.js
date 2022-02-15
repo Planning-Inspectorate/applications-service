@@ -4,6 +4,7 @@ const {
   getPreApplication,
   getExaminationOfTheApplication,
   getReviewOfTheApplication,
+  getPreExamination,
 } = require('../controllers/decision-making-process-guide');
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.get(
   getExaminationOfTheApplication
 );
 router.get('/decision-making-process-guide/review-of-the-application', getReviewOfTheApplication);
+router.get('/decision-making-process-guide/pre-examination', getPreExamination);
 
 module.exports = router;
