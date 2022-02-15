@@ -26,13 +26,12 @@ describe('routes/decision-making-process-guide', () => {
       getPreApplication
     );
     expect(get).toHaveBeenCalledWith(
-<<<<<<< HEAD
       '/decision-making-process-guide/examination-of-the-application',
       getExaminationOfTheApplication
-=======
+    );
+    expect(get).toHaveBeenCalledWith(
       '/decision-making-process-guide/review-of-the-application',
       getReviewOfTheApplication
->>>>>>> main
     );
   });
 });
