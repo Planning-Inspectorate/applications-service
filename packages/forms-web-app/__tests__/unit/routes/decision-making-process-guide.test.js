@@ -4,6 +4,9 @@ const {
   getPreApplication,
   getExaminationOfTheApplication,
   getReviewOfTheApplication,
+  getPreExamination,
+  getRecommendationAndDecision,
+  getWhatHappensAfterTheDecisionIsMade,
 } = require('../../../src/controllers/decision-making-process-guide');
 
 describe('routes/decision-making-process-guide', () => {
@@ -32,6 +35,18 @@ describe('routes/decision-making-process-guide', () => {
     expect(get).toHaveBeenCalledWith(
       '/decision-making-process-guide/review-of-the-application',
       getReviewOfTheApplication
+    );
+    expect(get).toHaveBeenCalledWith(
+      '/decision-making-process-guide/pre-examination',
+      getPreExamination
+    );
+    expect(get).toHaveBeenCalledWith(
+      '/decision-making-process-guide/recommendation-and-decision',
+      getRecommendationAndDecision
+    );
+    expect(get).toHaveBeenCalledWith(
+      '/decision-making-process-guide/what-happens-after-the-decision-is-made',
+      getWhatHappensAfterTheDecisionIsMade
     );
   });
 });

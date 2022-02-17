@@ -1,0 +1,76 @@
+{% extends "layouts/layout.njk" %}
+
+{% block pageTitle %}
+  Recommendation and decision - National Infrastructure Planning
+{% endblock %}
+
+{% block header %}
+  {{ pinsHeader() }}
+{% endblock %}
+
+{% block beforeContent %}
+
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "alpha"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+
+{% endblock %}
+{% block content %}
+
+<h1 class="govuk-heading-xl">
+  Recommendation and Decision
+</h1>
+<h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
+<ol class="govuk-list pins-contents-list">
+    <li><a class="govuk-link" href="#about-the-recommendation-of-the-project">About the recommendation of the project</a></li>
+    <li><a class="govuk-link" href="#what-the-planning-inspectorate-does-to-make-the-recommendation">What the Planning Inspectorate does to make the recommendation</a></li>
+    <li><a class="govuk-link" href="#who-makes-the-final-decision">Who makes the final decision</a></li>
+</ol>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="pins-step-by-step-section-main">
+            <h2 class="govuk-heading-m" id="about-the-recommendation-of-the-project">About the recommedation and decision</h2>
+            <p class="govuk-body">In this stage, the Examining Authority writes its recommendation report. This must be completed and sent to the Secretary of State within three months of the end of Examination.</p>
+            <p class="govuk-body">The Secretary of State will then use the recommendation report to make the final decision.</p>
+            
+            <h2 class="govuk-heading-m" id="what-the-planning-inspectorate-does-to-make-the-recommendation">What the Planning Inspectorate does to make the recommendation</h2>
+            <p class="govuk-body">After the Examining Authority has completed all its enquiries and understood everyone's views during the Examination, it will then write its recommendation report.</p>
+            <p class="govuk-body">The Examining Authority has three months to write its report.</p>
+
+            <h2 class="govuk-heading-m" id="who-makes-the-final-decision">Who makes the final decision</h2>
+            <p class="govuk-body">The Secretary of State for the relevant government department will read the Examining Authority's recommendation report.</p>
+            <p class="govuk-body">They then make the final decision about if they should grant a Development Consent Order (DCO) for the developer to build their Nationally Significant Infrastructure Project.</p>
+            <p class="govuk-body">They have three months to decide, and the Planning Inspectorate publishes the Secretary of State's final decision on our website.</p>
+            
+            <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
+                <a class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">
+                    <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
+                        <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
+                      </svg> -->
+                    <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
+                    <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
+                    </svg>
+                    <strong>Next</strong>
+                    <span>What happens after a decision has been made</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+  <div class="govuk-grid-column-one-third">
+    {% set currentDefaultStep = 1 %}
+    {% include "../includes/dco-step-by-step-navigation.njk" %}
+  </div>
+
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+    {{ pinsFooter() }}
+{% endblock %}
