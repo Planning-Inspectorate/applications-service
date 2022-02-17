@@ -19,3 +19,11 @@ exports.getReviewOfTheApplication = (_, res) => {
 exports.getPreExamination = (_, res) => {
   res.render(VIEW.DCO_PROCESS_GUIDE.PRE_EXAMINATION);
 };
+
+exports.getRecommendationAndDecision = (_, res) => {
+  res.render(VIEW.DCO_PROCESS_GUIDE.RECOMMENDATION_AND_DECISION);
+};
+
+exports.getWhatHappensAfterTheDecisionIsMade = (_, res) => {
+  res.render(VIEW.DCO_PROCESS_GUIDE.WHAT_HAPPENS_AFTER_THE_DECISION_IS_MADE);
+};
