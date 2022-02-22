@@ -31,17 +31,17 @@ exports.postConfirmEmail = async (req, res) => {
     } else {
       const type = personal_data.behalf;
       req.session.comments = comments;
+      req.session.comment = comments;
 
       if (type === 'me') {
-        req.session.comment = comments;
         req.session.mySelfRegdata = personal_data;
-        res.redirect(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
+        res.redirect(`/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`);
       } else if (type === 'them') {
         req.session.orgRegdata = personal_data;
-        res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`);
+        res.redirect(`/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`);
       } else if (type === 'you') {
         req.session.behalfRegdata = personal_data;
-        res.redirect(`/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}`);
+        res.redirect(`/${VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT}`);
       }
     }
   }

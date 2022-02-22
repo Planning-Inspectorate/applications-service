@@ -1,4 +1,3 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 const {
   postRegistrationData,
@@ -6,22 +5,29 @@ const {
 } = require('../../../services/registration.service');
 
 exports.getConfirmation = async (req, res) => {
-  req.session.orgRegdata['case_ref'] = req.session.caseRef;
+  req.session.orgRegdata.case_ref = req.session.caseRef;
   const registrationData = JSON.stringify(req.session.orgRegdata);
-  const response = await postRegistrationData(registrationData);
-  const ipRefNo = response.data;
+
+  let { ipRefNo } = req.session.orgRegdata;
+
+  if (!ipRefNo) {
+    const response = await postRegistrationData(registrationData);
+    ipRefNo = response.data;
+  }
+
   const commentsData = JSON.stringify({ comments: req.session.comment, mode: req.session.mode });
-  await postCommentsData(ipRefNo, commentsData);
-  const email = req.session.orgRegdata.email;
+  if (commentsData) await postCommentsData(ipRefNo, commentsData);
+
+  const { email } = req.session.orgRegdata;
   delete req.session.comment;
   delete req.session.orgRegdata;
   delete req.session.typeOfParty;
   if (req.session.mode === 'draft') {
-    res.render(VIEW.REGISTER.SAVE_CONFIRMATION, { ipRefNo: ipRefNo, email: email });
+    res.render(VIEW.REGISTER.SAVE_CONFIRMATION, { ipRefNo, email });
   } else {
     res.render(VIEW.REGISTER.ORGANISATION.CONFIRMATION, {
-      ipRefNo: ipRefNo,
-      email: email,
+      ipRefNo,
+      email,
       projectName: req.session.projectName,
       caseRef: req.session.caseRef,
     });

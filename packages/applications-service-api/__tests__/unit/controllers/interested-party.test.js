@@ -61,6 +61,7 @@ const ipDataOwnBehalf = {
 
 const ipDataOwnBehalfResult = {
   personal_data: {
+    ipRefNo: 30000120,
     case_ref: 'EN010009',
     behalf: 'me',
     'full-name': 'David White',
@@ -136,6 +137,7 @@ const ipDataOrgBehalf = {
 
 const ipDataOrgBehalfResult = {
   personal_data: {
+    ipRefNo: 30000135,
     case_ref: 'EN010009',
     behalf: 'them',
     'full-name': undefined,

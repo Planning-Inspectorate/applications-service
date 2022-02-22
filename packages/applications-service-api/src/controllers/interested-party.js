@@ -66,11 +66,7 @@ module.exports = {
     const { comments, mode } = req.body;
 
     try {
-      const update = await updateInterestedPartyComments(ID, comments, mode);
-
-      if (update === 0) {
-        throw ApiError.commentsForPartyWithIDNotUpdated(ID);
-      }
+      await updateInterestedPartyComments(ID, comments, mode);
 
       res.status(StatusCodes.OK).send();
     } catch (e) {

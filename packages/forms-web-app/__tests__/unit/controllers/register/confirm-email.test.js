@@ -2,6 +2,7 @@ const confirmEmailController = require('../../../../src/controllers/register/con
 const { authenticateToken } = require('../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../mocks');
+
 jest.mock('../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../src/lib/logger');
 
@@ -32,7 +33,7 @@ describe('controllers/register/confirm-email', () => {
   });
 
   describe('postConfirmEmail', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.COMMENTS}' if email is provided and is myself journey`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}' if email is provided and is myself journey`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -41,10 +42,10 @@ describe('controllers/register/confirm-email', () => {
       };
       await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.COMMENTS}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`);
     });
 
-    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}' if email is provided and is organisation journey`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}' if email is provided and is organisation journey`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -60,7 +61,7 @@ describe('controllers/register/confirm-email', () => {
       await confirmEmailController.postConfirmEmail(mockRequest, res);
 
       expect(res.redirect).toHaveBeenCalledWith(
-        `/${VIEW.REGISTER.ORGANISATION.ADD_ANOTHER_COMMENT}`
+        `/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`
       );
     });
 
@@ -79,7 +80,7 @@ describe('controllers/register/confirm-email', () => {
       );
       await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT}`);
     });
 
     it('should re-render the template with errors if there is any validation error', async () => {

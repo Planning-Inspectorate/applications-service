@@ -7,10 +7,17 @@ const {
 exports.getConfirmation = async (req, res) => {
   req.session.behalfRegdata.case_ref = req.session.caseRef;
   const registrationData = JSON.stringify(req.session.behalfRegdata);
-  const response = await postRegistrationData(registrationData);
-  const ipRefNo = response.data;
+
+  let { ipRefNo } = req.session.behalfRegdata;
+
+  if (!ipRefNo) {
+    const response = await postRegistrationData(registrationData);
+    ipRefNo = response.data;
+  }
+
   const commentsData = JSON.stringify({ comments: req.session.comment, mode: req.session.mode });
-  await postCommentsData(ipRefNo, commentsData);
+  if (commentsData) await postCommentsData(ipRefNo, commentsData);
+
   const { email } = req.session.behalfRegdata.representor;
   delete req.session.comment;
   delete req.session.behalfRegdata;
