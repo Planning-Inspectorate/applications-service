@@ -10,10 +10,6 @@ exports.getConfirmation = async (req, res) => {
 
   let { ipRefNo } = req.session.orgRegdata;
 
-  console.log('~~~~~~~~~~~~~~ELVIN 1~~~~~~~~~~~~~~~~~');
-  console.log(ipRefNo);
-  console.log('~~~~~~~~~~~~~~ELVIN 2~~~~~~~~~~~~~~~~~');
-
   if (!ipRefNo) {
     const response = await postRegistrationData(registrationData);
     ipRefNo = response.data;
