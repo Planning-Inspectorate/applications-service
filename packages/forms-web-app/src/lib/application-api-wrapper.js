@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
 const { utils } = require('@pins/common');
@@ -54,7 +55,7 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
           return apiResponse;
         }
         const data = await apiResponse.json();
-        logger.debug('Response received: ' + JSON.stringify(data));
+        logger.debug(`Response received: ${JSON.stringify(data)}`);
         const wrappedResp = { data, resp_code: apiResponse.status };
         logger.debug('Successfully parsed to JSON');
 

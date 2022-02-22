@@ -79,6 +79,7 @@ module.exports = class OrgIP extends InterestedParty {
 
   map(data) {
     const {
+      ID: ipRefNo,
       // eslint-disable-next-line camelcase
       caseref: case_ref,
       behalf,
@@ -104,6 +105,7 @@ module.exports = class OrgIP extends InterestedParty {
     } = data;
 
     const personalData = {
+      ipRefNo,
       case_ref,
       behalf,
       representing: null,
