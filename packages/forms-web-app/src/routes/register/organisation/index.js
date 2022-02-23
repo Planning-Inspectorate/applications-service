@@ -12,6 +12,7 @@ const telephoneRouter = require('./telephone');
 const commentsRouter = require('./tell-us-about-project');
 const checkYourAnswersRouter = require('./check-your-answers');
 const declarationRouter = require('./declaration');
+const registrationSavedRouter = require('./registration-saved');
 const confirmationRouter = require('./confirmation');
 
 router.use('/', fullNameRouter);
@@ -24,6 +25,7 @@ router.use('/', telephoneRouter);
 router.use('/', commentsRouter);
 router.use('/', checkYourAnswersRouter);
 router.use('/', declarationRouter);
+router.use('/', registrationSavedRouter);
 router.use('/', confirmationRouter);
 
 module.exports = router;

@@ -17,12 +17,13 @@ exports.getConfirmation = async (req, res) => {
   const commentsData = JSON.stringify({ comments: req.session.comment, mode: req.session.mode });
   if (commentsData) await postCommentsData(ipRefNo, commentsData);
   const { email } = req.session.mySelfRegdata;
-  delete req.session.comment;
-  delete req.session.typeOfParty;
-  delete req.session.mySelfRegdata;
   if (req.session.mode === 'draft') {
-    res.render(VIEW.REGISTER.SAVE_CONFIRMATION, { ipRefNo, email });
+    req.session.ipRefNo = ipRefNo;
+    res.redirect(`/${VIEW.REGISTER.MYSELF.REGISTRATION_SAVED}`);
   } else {
+    delete req.session.comment;
+    delete req.session.mySelfRegdata;
+    delete req.session.typeOfParty;
     res.render(VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE, {
       ipRefNo,
       email,

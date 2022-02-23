@@ -1,0 +1,27 @@
+{% extends "layouts/main.njk" %}
+
+{% block pageTitle %}
+  Your registration has been saved - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Your registration has been saved</h1>
+        <div class="govuk-panel__body">
+          Your interested party reference number<br>
+          <strong>{{ ipRefNo }}</strong>
+        </div>
+      </div>
+
+      <p class="govuk-body" data-cy="email-confirmation">
+        We have sent a link to get back to your saved registration to: {{ email }}
+      </p>
+      <p class="govuk-body"> To return to your saved registration, click the link in the email.</p>
+    </div>
+  </div>
+
+{% endblock %}

@@ -18,6 +18,7 @@ const organisationNameRouter = require('../agent/name-of-organisation');
 const commentsRouter = require('./tell-us-about-project');
 const checkYourAnswersRouter = require('./check-your-answers');
 const declarationRouter = require('./declaration');
+const registrationSavedRouter = require('../agent/registration-saved');
 const confirmationRouter = require('./confirmation');
 
 router.use('/', representingForRouter);
@@ -36,6 +37,7 @@ router.use('/', organisationNameRouter);
 router.use('/', commentsRouter);
 router.use('/', checkYourAnswersRouter);
 router.use('/', declarationRouter);
+router.use('/', registrationSavedRouter);
 router.use('/', confirmationRouter);
 
 module.exports = router;
