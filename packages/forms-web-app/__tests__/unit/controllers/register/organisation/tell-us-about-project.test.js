@@ -53,9 +53,6 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
         query: {
           mode: 'edit',
         },
-        session: {
-          comment: '',
-        },
       };
       await commentsController.postComments(mockRequest, res);
 
@@ -75,26 +72,9 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
       expect(res.redirect).not.toHaveBeenCalled();
 
       expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT, {
-        comment: {
-          errorSummary: [
-            {
-              href: '#',
-              text: 'There were errors here',
-            },
-          ],
-          errors: {
-            a: 'b',
-          },
-        },
-        errorSummary: [
-          {
-            href: '#',
-            text: 'There were errors here',
-          },
-        ],
-        errors: {
-          a: 'b',
-        },
+        errors: { a: 'b' },
+        errorSummary: [{ href: '#', text: 'There were errors here' }],
+        comment: undefined,
       });
     });
   });

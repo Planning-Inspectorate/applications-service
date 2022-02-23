@@ -36,7 +36,6 @@ describe('lib/views', () => {
         COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
       },
       REGISTER: {
-        SAVE_CONFIRMATION: 'register/save-confirmation',
         START: 'register/start',
         TOKEN_EXPIRED: 'register/token-expired',
         TOKEN_NOT_VERIFIED: 'register/not-verified',
@@ -51,6 +50,7 @@ describe('lib/views', () => {
           TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
           DECLARATION: 'register/myself/declaration',
+          REGISTRATION_SAVED: 'register/myself/registration-saved',
           REGISTRATION_COMPLETE: 'register/myself/registration-complete',
         },
         ORGANISATION: {
@@ -64,6 +64,7 @@ describe('lib/views', () => {
           TELL_US_ABOUT_PROJECT: 'register/organisation/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/organisation/check-your-answers',
           DECLARATION: 'register/organisation/declaration',
+          REGISTRATION_SAVED: 'register/organisation/registration-saved',
           CONFIRMATION: 'register/organisation/confirmation',
         },
         BEHALF: {
@@ -81,6 +82,7 @@ describe('lib/views', () => {
           TELL_US_ABOUT_PROJECT: 'register/behalf/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
           DECLARATION: 'register/behalf/declaration',
+          REGISTRATION_SAVED: 'register/agent/registration-saved',
           CONFIRMATION: 'register/behalf/confirmation',
         },
       },
