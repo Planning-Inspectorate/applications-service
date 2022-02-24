@@ -22,7 +22,14 @@ describe('controllers/about-the-application', () => {
       },
     },
   ];
-  const pageData = { totalItems: 1, itemsPerPage: 20, totalPages: 1, currentPage: 1 };
+  const pageData = {
+    totalItems: 1,
+    itemsPerPage: 20,
+    totalPages: 1,
+    currentPage: 1,
+    toRange: 1,
+    fromRange: 1,
+  };
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -30,12 +37,12 @@ describe('controllers/about-the-application', () => {
       ...mockReq(),
       params: {
         page: 1,
+        case_ref: 'ABCD1234',
       },
       body: {
         search: 'test',
       },
       session: {
-        caseRef: 'ABCD1234',
         projectName: 'ABC',
       },
     };
@@ -76,6 +83,7 @@ describe('controllers/about-the-application', () => {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
         pageData: pageData,
+        paginationData: [1],
       });
     });
   });
@@ -88,6 +96,7 @@ describe('controllers/about-the-application', () => {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
         pageData: pageData,
+        paginationData: [1],
       });
     });
   });
@@ -100,6 +109,7 @@ describe('controllers/about-the-application', () => {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
         pageData: pageData,
+        paginationData: [1],
       });
     });
   });

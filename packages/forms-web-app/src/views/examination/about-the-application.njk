@@ -182,15 +182,24 @@
             {% endfor %}
           </div>
           <div class="pins-search-results-pagination" id="pins-search-results-pagination">
-            {% for i in range(1, pageData.totalPages + 1) %}
-              {% if pageData.currentPage === i %}
-                <a href="/document-library/{{ caseRef }}/{{ i }}" class="govuk-link govuk-link--no-underline">{{ i }}</a>
-              {% else %}
-                <a href="/document-library/{{ caseRef }}/{{ i }}" class="govuk-link">{{ i }}</a>
-              {% endif %}
-            {% endfor %}
+            {% if pageData.totalPages !== 1 %}
+              {% for page in paginationData %}
+              &nbsp;
+              {% if page === 'prev' %}
+                  <a href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage - 1 }}" class="govuk-link">&lt; Previous</a>
+                {% elif page === pageData.currentPage %}
+                  <a href="/examination/about-the-application/{{ caseRef }}/{{ page }}" class="govuk-link govuk-link--no-underline">{{ page }}</a>
+                {% elif page === 'next' %}
+                  <a href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage + 1 }}" class="govuk-link">Next &gt;</a>
+                {% elif page === '...' %}
+                  {{ page }}
+                {% else %}
+                  <a href="/examination/about-the-application/{{ caseRef }}/{{ page }}" class="govuk-link">{{ page }}</a>
+                {% endif %}
+              {% endfor %}
+              Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results
+            {% endif %}
           </div>
-
         </div>
       </main>
     </div>
