@@ -28,23 +28,22 @@ Feature: Agent representing a person journey
         And User clicks on continue button
 
     Scenario: verify page title, heading, data and complete Agent representing a person journey
-        Then I am on the "Check your answers before registering organisation" page
+        Then I am on the "check your answers before registering on behalf of someone else" page
         And I verify below data is present on Check your answers before registering page
-            | Column1                                                   | Column2                                                                                                           | Column3                 |
-            | Who are you representing for?                             | An organisation or charity                                                                                        | Change representing-for |
-            | Full name                                                 | RepresentativeTest MiddleName LastName                                                                            | Change ??               |
-            | Organisation name                                         | Organisation Name                                                                                                 | Change ??               |
-            | Address                                                   | \n          Representative Address Line 1\n          \n          \n          NE27 0BB\n          United Kingdom\n | Change ??               |
-            | Email address                                             | Representative_test@gmail.com                                                                                     | Change ??               |
-            | Telephone number                                          | 1234567888                                                                                                        | Change ??               |
-            | What is the full name of the person you are representing? | Test MiddleName LastName                                                                                          | Change ??               |
-            | Are they 18 or over?                                      | Yes                                                                                                               | Change ??               |
-            | Their address                                             | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                                      | Change ??               |
-            | Their email address                                       | test@gmail.com                                                                                                    | Change ??               |
-            | Their telephone number                                    | 1234567899                                                                                                        | Change ??               |
-            | Registration comments                                     | used by the examining panel to decide if they recommend the project goes ahead, published on our website          | Change ??               |
+            | Column1                                                   | Column2                                                                                                   | Column3                |
+            | Who are you registering for?                              | An organisation or charity                                                                                | Change registering-for |
+            | Full name                                                 | RepresentativeTest MiddleName LastName                                                                    | Change ??              |
+            | Organisation name                                         | Organisation Name                                                                                         | Change ??              |
+            | Address                                                   | \n          Representative Address Line 1\n        \n        \n        NE27 0BB\n        United Kingdom\n | Change ??              |
+            | Email address                                             | Representative_test@gmail.com                                                                             | Change ??              |
+            | Telephone number                                          | 1234567888                                                                                                | Change ??              |
+            | What is the full name of the person you are representing? | Test MiddleName LastName                                                                                  | Change ??              |
+            | Are they 18 or over?                                      | Yes                                                                                                       | Change ??              |
+            | Their address                                             | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                              | Change ??              |
+            | Their email address                                       | test@gmail.com                                                                                            | Change ??              |
+            | Their telephone number                                    | 1234567899                                                                                                | Change ??              |
+            | Registration comments                                     | used by the examining panel to decide if they recommend the project goes ahead, published on our website  | Change ??              |
         And User clicks on accept and continue button for "on behalf"
-        Then I am on the "Declaration organisation" page
+        Then I am on the "declaration registering on behalf of someone else" page
         And User clicks on accept and register button
-        Then I am on the "Registration complete organisation" page
-
+        Then I am on the "registration complete registering on behalf of someone else" page

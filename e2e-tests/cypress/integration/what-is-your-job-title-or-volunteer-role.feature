@@ -11,8 +11,8 @@ Feature: What is your job title or volunteer role? page
         Then I am on the "What is your job title or volunteer role?" page
         And User clicks on continue button
         Then below error message should be presented on What is your job title or volunteer role page
-            | ErrorMsg                                    |
-            | Enter your your job title or volunteer role |
+            | ErrorMsg                               |
+            | Enter your job title or volunteer role |
 
     Scenario: User enter data and continue
         And I enter text "Volunteer role" into name of job title field
