@@ -31,7 +31,7 @@ describe('controllers/register/organisation/telephone', () => {
   });
 
   describe('postTelephone', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}' if telephone is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.ADDRESS}' if telephone is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -43,9 +43,7 @@ describe('controllers/register/organisation/telephone', () => {
       };
       await telephoneController.postTelephone(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(
-        `/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`
-      );
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.ADDRESS}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {

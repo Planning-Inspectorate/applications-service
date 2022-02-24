@@ -1,16 +1,15 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getTelephone = async (req, res) => {
   res.render(VIEW.REGISTER.ORGANISATION.TELEPHONE, {
-    telephone: req.session.orgRegdata['telephone'],
+    telephone: req.session.orgRegdata.telephone,
   });
 };
 
 exports.postTelephone = async (req, res) => {
   const { body } = req;
   const { errors = {}, errorSummary = [] } = body;
-  if (errors['telephone'] || Object.keys(errors).length > 0) {
+  if (errors.telephone || Object.keys(errors).length > 0) {
     res.render(VIEW.REGISTER.ORGANISATION.TELEPHONE, {
       errors,
       errorSummary,
@@ -18,11 +17,11 @@ exports.postTelephone = async (req, res) => {
     return;
   }
 
-  req.session.orgRegdata['telephone'] = body['telephone'];
+  req.session.orgRegdata.telephone = body.telephone;
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`);
+    res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADDRESS}`);
   }
 };
