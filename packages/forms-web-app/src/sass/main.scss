@@ -2,7 +2,7 @@
 @import 'node_modules/accessible-autocomplete/src/autocomplete';
 @import 'node_modules/@ministryofjustice/frontend/moj/components/task-list/task-list';
 @import 'node_modules/@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload';
-
+@import 'pagination';
 a {
   @extend .govuk-link;
 }

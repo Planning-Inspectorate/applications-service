@@ -181,25 +181,35 @@
               {% endfor %}
             {% endfor %}
           </div>
-          <div class="pins-search-results-pagination" id="pins-search-results-pagination">
-            {% if pageData.totalPages !== 1 %}
-              {% for page in paginationData %}
-              &nbsp;
-              {% if page === 'prev' %}
-                  <a href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage - 1 }}" class="govuk-link">&lt; Previous</a>
-                {% elif page === pageData.currentPage %}
-                  <a href="/examination/about-the-application/{{ caseRef }}/{{ page }}" class="govuk-link govuk-link--no-underline">{{ page }}</a>
-                {% elif page === 'next' %}
-                  <a href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage + 1 }}" class="govuk-link">Next &gt;</a>
-                {% elif page === '...' %}
-                  {{ page }}
-                {% else %}
-                  <a href="/examination/about-the-application/{{ caseRef }}/{{ page }}" class="govuk-link">{{ page }}</a>
-                {% endif %}
-              {% endfor %}
-              Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results
-            {% endif %}
-          </div>
+
+          {% if pageData.totalPages !== 1 %}
+            <nav class="hmcts-pagination" id="pagination-label">
+              <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+              <ul class="hmcts-pagination__list">
+                {% for page in paginationData %}
+                  {% if page === 'prev' %}
+                    <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
+                      <a class="hmcts-pagination__link" href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                    </li>
+                  {% elif page === pageData.currentPage %}
+                    <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+                  {% elif page === 'next' %}
+                    <li class="hmcts-pagination__item  hmcts-pagination__item--next">
+                      <a class="hmcts-pagination__link" href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                    </li>
+                  {% elif page === '...' %}
+                    <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+                  {% else %}
+                    <li class="hmcts-pagination__item">
+                      <a class="hmcts-pagination__link" href="/examination/about-the-application/{{ caseRef }}/{{ page }}">{{ page }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
+            </nav>
+          {% endif %}
+
         </div>
       </main>
     </div>
