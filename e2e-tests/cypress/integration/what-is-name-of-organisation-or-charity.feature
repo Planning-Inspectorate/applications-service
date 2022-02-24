@@ -11,8 +11,8 @@ Feature: What is the name of your organisation or charity? page
         Then I am on the "What is the name of your organisation or charity?" page
         And User clicks on continue button
         Then below error message should be presented on What is the name of your organisation or charity page
-            | ErrorMsg                     |
-            | Enter your organisation name |
+            | ErrorMsg                                       |
+            | Enter the name of your organisation or charity |
 
     Scenario: User enter data and continue
         And I enter text "Organisation Name" into name of organisation field
