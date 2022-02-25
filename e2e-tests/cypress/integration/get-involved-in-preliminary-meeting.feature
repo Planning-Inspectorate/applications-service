@@ -17,21 +17,17 @@ Feature: Get involved in the preliminary meeting page
         When I click on "The Nationally Significant Infrastructure planning process step by step" link
         Then I am on the "Having your say about a national infrastructure project" page
 
-    Scenario: click Having your say at the pre-application stage link
-        When I click on "having your say at pre-application stage" link
-        Then I am on the "Having your say at the pre-application stage" page
+    Scenario: click taking part in the pre-application stage link
+        When I click on "taking part in the pre-application stage" link
+        Then I am on the "taking part at the pre-application stage" page
 
     Scenario: click Registering to have your say about a national infrastructure project link
-        When I click on registering to have your say about a national infrastructure project link
+        When I click on "registering to have your say about a national infrastructure project" link
         Then I am on the "Registering to have your say about a national infrastructure project" page
 
     Scenario: click get involved in the preliminary meeting link
-        When I click on get involved in the preliminary meeting link
+        When I click on "get involved in the preliminary meeting" link
         Then I am on the "Get involved in the preliminary meeting" page
-
-    Scenario: click Have your say during the examination of the project link
-        When I click on Have your say during the examination of the project link
-        Then I am on the "Have your say during the examination of the project" page
 
     Scenario: click What you can do after the decision has been made link
         When I click on "what you can do after the decision has been made" link

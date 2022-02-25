@@ -1,10 +1,10 @@
-const addressController = require('../../../../../src/controllers/register/behalf/address');
+const addressController = require('../../../../../src/controllers/register/agent/address');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/behalf/address', () => {
+describe('controllers/register/agent/address', () => {
   let req;
   let res;
 
@@ -32,7 +32,7 @@ describe('controllers/register/behalf/address', () => {
   describe('getAddress', () => {
     it('should call the correct template', () => {
       addressController.getAddress(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/behalf/address', {
+      expect(res.render).toHaveBeenCalledWith('register/agent/address', {
         address: { country: 'UK', line1: 'abc', line2: 'xyz', line3: 'xyz', postcode: 'ABC 123' },
       });
     });

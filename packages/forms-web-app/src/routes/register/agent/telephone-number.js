@@ -1,18 +1,17 @@
 const express = require('express');
 
-const telephoneController = require('../../../controllers/register/behalf/telephone');
+const telephoneController = require('../../../controllers/register/agent/telephone-number');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: telephoneValidationRules,
-} = require('../../../validators/register/behalf/telephone');
-
+} = require('../../../validators/register/agent/telephone-number');
 
 const router = express.Router();
 
-router.get('/telephone', telephoneController.getTelephone);
+router.get('/telephone-number', telephoneController.getTelephone);
 
 router.post(
-  '/telephone',
+  '/telephone-number',
   telephoneValidationRules(),
   validationErrorHandler,
   telephoneController.postTelephone

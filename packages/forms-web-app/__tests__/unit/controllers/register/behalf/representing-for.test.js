@@ -1,10 +1,10 @@
-const representingForController = require('../../../../../src/controllers/register/behalf/representing-for');
+const representingForController = require('../../../../../src/controllers/register/agent/who-representing');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/behalf/representing-for', () => {
+describe('controllers/register/agent/who-representing', () => {
   let req;
   let res;
 
@@ -24,7 +24,7 @@ describe('controllers/register/behalf/representing-for', () => {
   describe('getRepresentingFor', () => {
     it('should call the correct template', () => {
       representingForController.getRepresentingFor(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/behalf/representing-for', {
+      expect(res.render).toHaveBeenCalledWith('register/agent/who-representing', {
         representing: 'family',
       });
     });

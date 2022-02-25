@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
 const rules = () => {
-  return [body('email').notEmpty().withMessage('Enter your email address')];
+  return [body('telephone').notEmpty().withMessage('Enter your telephone number')];
 };
 
 module.exports = {

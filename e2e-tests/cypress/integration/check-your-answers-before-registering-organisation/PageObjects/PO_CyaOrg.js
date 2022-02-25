@@ -33,6 +33,12 @@ class PO_CyaOrg {
             case "Are you 18 or over?": 
             cy.get('[data-cy="over-18"]').last().click();
             break;
+            case "What is the name of your organisation or charity?": 
+            cy.get('[data-cy="organisation-name"]').last().click();
+            break;
+            case "What is your job title or volunteer role?": 
+            cy.get('[data-cy="volunteer-role"]').last().click();
+            break;
             case "Address": 
             cy.get('[data-cy="address"]').last().click();
             break;
@@ -45,6 +51,7 @@ class PO_CyaOrg {
             case "Your comments change": 
             cy.get('[data-cy="comment"]').last().click();
             break;
+            default: throw new Error('Cannot find change link type');
         }
     }
 
