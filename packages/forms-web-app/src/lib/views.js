@@ -30,6 +30,7 @@ const VIEW = {
       TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
       CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
       DECLARATION: 'register/myself/declaration',
+      REGISTRATION_SAVED: 'register/myself/registration-saved',
       REGISTRATION_COMPLETE: 'register/myself/registration-complete',
     },
     ORGANISATION: {
@@ -43,6 +44,7 @@ const VIEW = {
       TELL_US_ABOUT_PROJECT: 'register/organisation/tell-us-about-project',
       CHECK_YOUR_ANSWERS: 'register/organisation/check-your-answers',
       DECLARATION: 'register/organisation/declaration',
+      REGISTRATION_SAVED: 'register/organisation/registration-saved',
       CONFIRMATION: 'register/organisation/confirmation',
     },
     BEHALF: {
@@ -60,9 +62,9 @@ const VIEW = {
       TELL_US_ABOUT_PROJECT: 'register/behalf/tell-us-about-project',
       CHECK_YOUR_ANSWERS: 'register/behalf/check-your-answers',
       DECLARATION: 'register/behalf/declaration',
+      REGISTRATION_SAVED: 'register/agent/registration-saved',
       CONFIRMATION: 'register/behalf/confirmation',
     },
-    SAVE_CONFIRMATION: 'register/save-confirmation',
     CONFIRM_EMAIL: 'register/confirm-email',
     TOKEN_NOT_VERIFIED: 'register/not-verified',
     TOKEN_EXPIRED: 'register/token-expired',

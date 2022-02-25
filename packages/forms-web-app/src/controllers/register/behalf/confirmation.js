@@ -19,12 +19,13 @@ exports.getConfirmation = async (req, res) => {
   if (commentsData) await postCommentsData(ipRefNo, commentsData);
 
   const { email } = req.session.behalfRegdata.representor;
-  delete req.session.comment;
-  delete req.session.behalfRegdata;
-  delete req.session.typeOfParty;
   if (req.session.mode === 'draft') {
-    res.render(VIEW.REGISTER.SAVE_CONFIRMATION, { ipRefNo, email });
+    req.session.ipRefNo = ipRefNo;
+    res.redirect(`/${VIEW.REGISTER.BEHALF.REGISTRATION_SAVED}`);
   } else {
+    delete req.session.comment;
+    delete req.session.behalfRegdata;
+    delete req.session.typeOfParty;
     res.render(VIEW.REGISTER.BEHALF.CONFIRMATION, {
       ipRefNo,
       email,
