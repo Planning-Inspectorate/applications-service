@@ -4,7 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = "Confirm email address - Register to have your say" %}
+{% set title = "What is the email address you used to save your registration? - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -28,12 +28,12 @@
 
           {{ govukInput({
             label: {
-                text: "Confirm your email address?",
+                text: "What is the email address you used to save your registration?",
                 classes: "govuk-label--l",
                 isPageHeading: true
             },
             hint: {
-                text: "This is the email address that you gave wile registration and received email"
+                text: "This must be the email address where we sent the link to return to your saved registration"
             },
             id: "email",
             name: "email",
