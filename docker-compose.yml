@@ -19,7 +19,7 @@ services:
       SERVER_SHOW_ERRORS: 'true'
       TRIALIST_DATA_PATH: /opt/app/data/trialists.json
       NODE_ENV: local
-      DOCUMENTS_PER_PAGE: '20'
+      DOCUMENTS_PER_PAGE: '1'
       DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ 
       SRV_NOTIFY_BASE_URL: https://api.notifications.service.gov.uk/
       SRV_NOTIFY_SERVICE_ID: '9b89eb93-3071-432c-9c6b-4e07dbda9071'

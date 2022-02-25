@@ -22,7 +22,6 @@ function renderData(req, res, caseRef, response) {
     res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
       projectName,
       caseRef,
-      pageData: {},
     });
   } else {
     const respData = response.data;
