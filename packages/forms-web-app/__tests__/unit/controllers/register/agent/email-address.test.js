@@ -33,7 +33,7 @@ describe('controllers/register/agent/email-address', () => {
   });
 
   describe('postEmail', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.TELEPHONE}' if email is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.TELEPHONE}' if email is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -45,7 +45,7 @@ describe('controllers/register/agent/email-address', () => {
       };
       await emailController.postEmail(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.TELEPHONE}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.TELEPHONE}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
@@ -58,7 +58,7 @@ describe('controllers/register/agent/email-address', () => {
       await emailController.postEmail(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.BEHALF.EMAIL, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.EMAIL, {
         errorSummary: [{ text: 'There were errors here', href: '#' }],
         errors: { a: 'b' },
       });

@@ -83,7 +83,7 @@ And('User clicks on accept and continue button for {string}', (linkType) => {
             break;
         case "organisation": cy.clickOnHref('/register/organisation/declaration');
             break;
-        case "on behalf": cy.clickOnHref('/register/behalf/declaration');
+        case "on behalf": cy.clickOnHref('/register/agent/declaration');
             break;
     }
 })

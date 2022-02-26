@@ -1,10 +1,10 @@
-const fullNameController = require('../../../../../src/controllers/register/agent/full-name');
+const fullNameController = require('../../../../../src/controllers/register/agent/name-person-representing');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/agent/full-name', () => {
+describe('controllers/register/agent/name-person-representing', () => {
   let req;
   let res;
 
@@ -13,7 +13,7 @@ describe('controllers/register/agent/full-name', () => {
       ...mockReq(),
       session: {
         behalfRegdata: {
-          representor: {
+          representee: {
             'full-name': 'test',
           },
         },
@@ -26,12 +26,14 @@ describe('controllers/register/agent/full-name', () => {
   describe('getFullName', () => {
     it('should call the correct template', () => {
       fullNameController.getFullName(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/agent/full-name', { fullName: 'test' });
+      expect(res.render).toHaveBeenCalledWith('register/agent/name-person-representing', {
+        fullName: 'test',
+      });
     });
   });
 
   describe('postFullName', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.ORGANISATION_NAME}' if name is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18}' if name is provided`, async () => {
       const fullName = 'test';
       const mockRequest = {
         ...req,
@@ -44,7 +46,7 @@ describe('controllers/register/agent/full-name', () => {
       };
       await fullNameController.postFullName(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.ORGANISATION_NAME}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
@@ -57,7 +59,7 @@ describe('controllers/register/agent/full-name', () => {
       await fullNameController.postFullName(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.FULL_NAME, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_NAME, {
         errorSummary: [{ text: 'There were errors here', href: '#' }],
         errors: { a: 'b' },
       });
