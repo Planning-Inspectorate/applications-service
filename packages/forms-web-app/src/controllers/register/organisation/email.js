@@ -20,6 +20,6 @@ exports.postEmail = async (req, res) => {
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.ORGANISATION.TELEPHONE}`);
+    res.redirect(`/${VIEW.REGISTER.ORGANISATION.ADDRESS}`);
   }
 };
