@@ -1,3 +1,3 @@
 variables:
   azureContainerRegistryName: pinscrsharedtoolinguks
-  azureServiceConnection: applications-service-arm-connection
+  azureServiceConnection: Docker Connection (Tooling)
