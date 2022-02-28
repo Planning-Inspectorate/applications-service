@@ -43,7 +43,7 @@ extends:
             --build-arg BUILD_ID=$(Build.BuildNumber) \
             --build-arg VERSION=$(versionNumber)
 
-            docker push -a
+            docker push -a $(azureContainerRegistryName).azurecr.io/$(repository)
             docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar
       - publish: $(Build.ArtifactStagingDirectory)
         artifact: forms-web-app-image
