@@ -23,7 +23,7 @@ extends:
     validateName: Build and Push
     validationSteps:
       - script: |
-          $buildName = "$(versionNumber)_$(Build.BuildId)"
+          buildName=$(versionNumber)_$(Build.BuildId)
           echo "Setting the name of the build to '$buildName'."
           echo "##vso[build.updatebuildnumber]$buildName"
         displayName: Set Build Number
