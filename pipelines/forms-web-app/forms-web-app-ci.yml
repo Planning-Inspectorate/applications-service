@@ -38,13 +38,12 @@ extends:
 
             docker build $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile \
             -t $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) \
+            -t $(azureContainerRegistryName).azurecr.io/$(repository):${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }} \
             --build-arg APP_NAME=applications-forms-web-app \
             --build-arg BUILD_ID=$(Build.BuildNumber) \
             --build-arg VERSION=$(versionNumber)
 
             docker push -a
-            docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar'
+            docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar
       - publish: $(Build.ArtifactStagingDirectory)
         artifact: forms-web-app-image
-      # -t $(azureContainerRegistryName).azurecr.io/$(repository):${{ replace(replace(variables.Build.SourceBranch, 'refs/heads/', ''), '/', '.') }} \
-
