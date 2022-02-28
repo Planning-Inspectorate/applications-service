@@ -1,0 +1,32 @@
+FROM node:14
+ARG APP_NAME
+ARG BUILD_ID
+ARG VERSION
+ARG COMMON_IMAGE
+WORKDIR /opt/app
+ENV APP_NAME="${APP_NAME}"
+ENV BUILD_ID="${BUILD_ID}"
+ENV VERSION="${VERSION}"
+
+FROM ${COMMON_IMAGE}:latest as common
+
+# This must be built locally from the common package
+COPY --from=common /opt/app ../common
+
+ADD package.json package.json
+ADD package-lock.json package-lock.json
+ADD __tests__ __tests__
+ADD jest.config.js jest.config.js
+
+RUN npm i
+COPY . ./
+
+RUN npm run build
+RUN npm prune --production \
+  && npm rebuild \
+  && npm version ${VERSION} --no-git-tag-version --allow-same-version || true
+
+RUN npm run documentation; echo $? > /npm.exitcode
+EXPOSE 3000
+
+CMD [ "npm", "run", "start" ]

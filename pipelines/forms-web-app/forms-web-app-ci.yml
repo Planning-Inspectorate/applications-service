@@ -36,14 +36,16 @@ extends:
           inlineScript: |
             az acr login --name $(azureContainerRegistryName)
 
-            docker build $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile \
+            docker build . \
+            -f $(Build.Repository.LocalPath)/pipelines/forms-web-app/Dockerfile
             -t $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) \
             -t $(azureContainerRegistryName).azurecr.io/$(repository):${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }} \
             --build-arg APP_NAME=applications-forms-web-app \
             --build-arg BUILD_ID=$(Build.BuildNumber) \
             --build-arg VERSION=$(versionNumber)
 
-            docker push -a $(azureContainerRegistryName).azurecr.io/$(repository)
+            docker push -a $(azureContainerRegistryName).azurecr.io/$(repository) $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber)
             docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar
+          workingDirectory: $(Build.Repository.LocalPath)/packages/forms-web-app
       - publish: $(Build.ArtifactStagingDirectory)
         artifact: forms-web-app-image
