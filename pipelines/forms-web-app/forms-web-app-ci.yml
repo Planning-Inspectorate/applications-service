@@ -1,0 +1,49 @@
+trigger:
+  paths:
+    include:
+      - packages/forms-web-app
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: feature/terraform-rename-azure-cli-step
+
+pool:
+  vmImage: ubuntu-latest
+
+extends:
+  template: stages/wrapper_ci.yml@templates
+  parameters:
+    globalVariables:
+      - template: pipelines/forms-web-app/variables.yml@self
+      - template: pipelines/variables.yml@self
+    validateName: Build and Push
+    validationSteps:
+      - script: |
+          $buildName = "$(versionNumber)_$(Build.BuildId)"
+          echo "Setting the name of the build to '$buildName'."
+          echo "##vso[build.updatebuildnumber]$buildName"
+        displayName: Set Build Number
+      - task: AzureCLI@2
+        displayName: Build and Push Docker Image to ACR
+        inputs:
+          azureSubscription: ${{ parameters.azureServiceConnection }}
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az acr login --name ${{ parameters.azureContainerRegistryName }}
+
+            docker build $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile \
+            -t $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) \
+            -t $(azureContainerRegistryName).azurecr.io/$(repository):${{ replace(replace(variables.Build.SourceBranch, 'refs/heads/', ''), '/', '.') }}
+            --build-arg APP_NAME=applications-forms-web-app \
+            --build-arg BUILD_ID=$(Build.BuildNumber) \
+            --build-arg VERSION=$(versionNumber)
+
+            docker push -a
+            docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar'
+      - publish: $(Build.ArtifactStagingDirectory)
+        artifact: forms-web-app-image
