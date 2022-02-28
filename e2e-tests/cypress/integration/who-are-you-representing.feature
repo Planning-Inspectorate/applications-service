@@ -15,8 +15,8 @@ Feature: Who are you representing? page
         Then I am on the "Who are you representing?" page
         And User clicks on continue button
         Then below error message should be presented on who are you representing page
-            | ErrorMsg                            |
-            | Select who are you representing for |
+            | ErrorMsg                        |
+            | Select who you are representing |
         And user selects "A person" on who are you representing page
         And User clicks on continue button
         Then I am on the "What is the full name of the person you are representing?" page
