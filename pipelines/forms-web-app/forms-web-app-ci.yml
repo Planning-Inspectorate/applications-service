@@ -30,11 +30,11 @@ extends:
       - task: AzureCLI@2
         displayName: Build and Push Docker Image to ACR
         inputs:
-          azureSubscription: ${{ parameters.azureServiceConnection }}
+          azureSubscription: $(azureServiceConnection)
           scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |
-            az acr login --name ${{ parameters.azureContainerRegistryName }}
+            az acr login --name $(azureContainerRegistryName)
 
             docker build $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile \
             -t $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) \
