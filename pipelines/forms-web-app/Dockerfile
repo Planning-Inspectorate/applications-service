@@ -1,11 +1,9 @@
 FROM node:14
-ARG APP_NAME
-ARG BUILD_ID
+
 ARG VERSION
-WORKDIR /opt/app
-ENV APP_NAME="${APP_NAME}"
-ENV BUILD_ID="${BUILD_ID}"
 ENV VERSION="${VERSION}"
+
+WORKDIR /opt/app
 
 # This must be built locally from the common package
 COPY --from=pinscrsharedtoolinguks.azurecr.io/applications-service/common:latest /opt/app ../common

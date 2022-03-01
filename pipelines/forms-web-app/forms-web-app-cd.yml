@@ -1,7 +1,7 @@
 parameters:
   - name: deploymentTag
     type: string
-    default: latest
+    default: none
   - name: environments
     type: object
     default:

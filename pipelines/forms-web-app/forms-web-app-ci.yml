@@ -26,9 +26,7 @@ extends:
           buildName=$(versionNumber)_$(Build.BuildId)
           echo "Setting the name of the build to '$buildName'."
           echo "##vso[build.updatebuildnumber]$buildName"
-          echo "##vso[build.addbuildtag]$(versionNumber)"
-          echo "##vso[build.addbuildtag]${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }}"
-        displayName: Set Build Number and Tags
+        displayName: Set Build Number
       - template: steps/azure_web_app_acr_push.yml@templates
         parameters:
           azurecrName: $(azurecrName)
