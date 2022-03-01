@@ -20,7 +20,7 @@ extends:
     globalVariables:
       - template: pipelines/forms-web-app/variables.yml@self
       - template: pipelines/variables.yml@self
-    validateName: Build and Push
+    validateName: Build Test and Push
     validationSteps:
       - script: |
           buildName=$(versionNumber)_$(Build.BuildId)
@@ -29,26 +29,11 @@ extends:
           echo "##vso[build.addbuildtag]$(versionNumber)"
           echo "##vso[build.addbuildtag]${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }}"
         displayName: Set Build Number and Tags
-      - task: AzureCLI@2
-        displayName: Build and Push Docker Image to ACR
-        inputs:
-          azureSubscription: $(azurecrServiceConnection)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az acr login --name $(azureContainerRegistryName)
-
-            docker build . \
-            -f $(Build.Repository.LocalPath)/pipelines/forms-web-app/Dockerfile \
-            -t $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) \
-            -t $(azureContainerRegistryName).azurecr.io/$(repository):${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }} \
-            --build-arg APP_NAME=applications-forms-web-app \
-            --build-arg BUILD_ID=$(Build.BuildNumber) \
-            --build-arg VERSION=$(versionNumber)
-
-            docker push -a $(azureContainerRegistryName).azurecr.io/$(repository)
-            docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar
+      - template: steps/azure_web_app_acr_push.yml@templates
+        parameters:
+          azurecrName: $(azurecrName)
+          azurecrServiceConnection: $(azurecrServiceConnection)
+          dockerfilePath: $(Build.Repository.LocalPath)/pipelines/forms-web-app/Dockerfile
+          repository: $(repository)
+          versionNumber: $(versionNumber)
           workingDirectory: $(Build.Repository.LocalPath)/packages/forms-web-app
-      - publish: $(Build.ArtifactStagingDirectory)
-        artifact: docker-image
-        displayName: Publish Docker image as artifact
