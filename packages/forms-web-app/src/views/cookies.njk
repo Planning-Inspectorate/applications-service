@@ -58,19 +58,23 @@
               </span>
               </div>
 
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                Do you want to accept analytics cookies?
+              </legend>
+
               {{ govukRadios({
                 idPrefix: "usage-cookies",
                 name: "usage-cookies",
                 items: [
                   {
                     value: "on",
-                    text: "On",
+                    text: "Yes",
                     attributes: { "data-cy":"usage-cookies-yes"},
                     checked: cookiePolicy.usage == true
                   },
                   {
                     value: "off",
-                    text: "Off",
+                    text: "No",
                     attributes: { "data-cy":"usage-cookies-no"},
                     checked: cookiePolicy.usage == false
                   }

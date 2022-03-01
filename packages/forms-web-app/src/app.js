@@ -15,6 +15,8 @@ const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
 const filterByKey = require('./lib/filter-by-key');
 const addKeyValuePair = require('./lib/add-key-value-pair');
 const renderTemplateFilter = require('./lib/render-template-filter');
+const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
+const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 require('express-async-errors');
 
@@ -92,6 +94,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session(sessionConfig()));
+app.use(flashMessageCleanupMiddleware);
+app.use(flashMessageToNunjucks(env));
 app.use(removeUnwantedCookiesMiddelware);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(
