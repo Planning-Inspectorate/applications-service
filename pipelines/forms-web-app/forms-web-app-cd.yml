@@ -41,36 +41,16 @@ extends:
     deploymentStages:
       - name: Deploy
         deploymentSteps:
-          - task: DownloadPipelineArtifact@2
-            displayName: Download Docker Image
-            inputs:
-              allowPartiallySucceededBuilds: true
-              pipeline: forms-web-app CI
-              project: $(System.TeamProject)
-              source: specific
-              tags: ${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }},${{ parameters.deploymentTag }}
-          - task: AzureCLI@2
-            displayName: Load Docker Image
-            inputs:
-              azureSubscription: $(azurecrServiceConnection)
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                az acr login --name $(azureContainerRegistryName)
-
-                docker load --input $(Pipeline.Workspace)/docker-image/image.tar
-          - task: AzureWebAppContainer@1
-            displayName: Azure Web App on Container Deploy
-            inputs:
-              appName: pins-app-applications-service-ni-wfe-dev-uks-001
-              azureSubscription: $(projectName)-$(ENVIRONMENT)
-              imageName: $(azureContainerRegistryName).azurecr.io/$(repository):${{ parameters.deploymentTag }}
-          - script: |
-              docker tag $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) $(azureContainerRegistryName).azurecr.io/$(repository):$(ENVIRONMENT)
-              docker tag $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) $(azureContainerRegistryName).azurecr.io/$(repository):$(version.MajorMinor)
-              docker push $(azureContainerRegistryName).azurecr.io/$(repository):$(version.MajorMinor)
-              docker push $(azureContainerRegistryName).azurecr.io/$(repository):$(ENVIRONMENT)
-            displayName: Tag Docker Image
+          - template: ${{variables['Build.SourcesDirectory']}}/steps/azure_web_app_deploy.yml@templates
+            parameters:
+              appName: pins-app-applications-service-ni-wfe-$(ENVIRONMENT)-uks-001
+              artifactSourcePipeline: forms-web-app CI
+              azurecrName: $(azurecrName)
+              azurecrServiceConnection: $(azurecrServiceConnection)
+              azureEnvironmentServiceConnection: $(projectName)-$(ENVIRONMENT)
+              deploymentTag: ${{ parameters.deploymentTag }}
+              releaseVersion: $(version.MajorMinor)
+              repository: $(repository)
     globalVariables:
       - template: pipelines/forms-web-app/variables.yml@self
       - template: pipelines/variables.yml@self          

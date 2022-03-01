@@ -1,4 +1,4 @@
 variables:
-  azureContainerRegistryName: pinscrsharedtoolinguks
+  azurecrName: pinscrsharedtoolinguks
   azurecrServiceConnection: applications-service-tooling
   projectName: applications-service 
