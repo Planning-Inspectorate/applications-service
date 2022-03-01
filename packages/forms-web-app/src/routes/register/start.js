@@ -4,7 +4,7 @@ const startController = require('../../controllers/register/start');
 
 const router = express.Router();
 
-router.get('/', startController.getStart);
-router.get('/start', startController.getStart);
+router.get('/:case_ref', startController.getStart);
+router.get('/:case_ref/start', startController.getStart);
 
 module.exports = router;

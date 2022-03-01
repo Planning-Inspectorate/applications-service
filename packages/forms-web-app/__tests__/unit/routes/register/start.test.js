@@ -12,8 +12,7 @@ describe('routes/register/start', () => {
   });
 
   it('should define the expected routes', () => {
-    expect(get).toHaveBeenCalledWith('/start', startController.getStart);
+    expect(get).toHaveBeenCalledWith('/:case_ref', startController.getStart);
+    expect(get).toHaveBeenCalledWith('/:case_ref/start', startController.getStart);
   });
-
-
 });
