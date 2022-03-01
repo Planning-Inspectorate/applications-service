@@ -32,7 +32,7 @@ extends:
       - task: AzureCLI@2
         displayName: Build and Push Docker Image to ACR
         inputs:
-          azureSubscription: $(azureServiceConnection)
+          azureSubscription: $(azurecrServiceConnection)
           scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |

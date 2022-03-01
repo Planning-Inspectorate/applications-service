@@ -42,6 +42,7 @@ extends:
       - name: Deploy
         deploymentSteps:
           - task: DownloadPipelineArtifact@2
+            displayName: Download Docker Image
             inputs:
               allowPartiallySucceededBuilds: true
               pipeline: forms-web-app CI
@@ -51,7 +52,7 @@ extends:
           - task: AzureCLI@2
             displayName: Load Docker Image
             inputs:
-              azureSubscription: $(azureServiceConnection)
+              azureSubscription: $(azurecrServiceConnection)
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
@@ -62,13 +63,14 @@ extends:
             displayName: Azure Web App on Container Deploy
             inputs:
               appName: pins-app-applications-service-ni-wfe-dev-uks-001
-              azureSubscription: $(azureServiceConnection)
+              azureSubscription: $(projectName)-$(ENVIRONMENT)
               imageName: $(azureContainerRegistryName).azurecr.io/$(repository):${{ parameters.deploymentTag }}
           - script: |
               docker tag $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) $(azureContainerRegistryName).azurecr.io/$(repository):$(ENVIRONMENT)
               docker tag $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) $(azureContainerRegistryName).azurecr.io/$(repository):$(version.MajorMinor)
               docker push $(azureContainerRegistryName).azurecr.io/$(repository):$(version.MajorMinor)
               docker push $(azureContainerRegistryName).azurecr.io/$(repository):$(ENVIRONMENT)
+            displayName: Tag Docker Image
     globalVariables:
       - template: pipelines/forms-web-app/variables.yml@self
       - template: pipelines/variables.yml@self          

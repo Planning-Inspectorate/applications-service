@@ -1,3 +1,4 @@
 variables:
   azureContainerRegistryName: pinscrsharedtoolinguks
-  azureServiceConnection: Docker Connection (Tooling)
+  azurecrServiceConnection: applications-service-tooling
+  projectName: applications-service 
