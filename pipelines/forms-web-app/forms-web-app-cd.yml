@@ -28,7 +28,7 @@ resources:
   repositories:
     - repository: templates
       type: github
-      endpoint: Planning-Inspectorate
+      endpoint: Applications Token
       name: Planning-Inspectorate/common-pipeline-templates
 
 pool:
