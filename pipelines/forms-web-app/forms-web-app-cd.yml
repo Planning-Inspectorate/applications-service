@@ -47,7 +47,8 @@ extends:
               artifactSourcePipeline: forms-web-app CI
               azurecrName: $(azurecrName)
               azurecrServiceConnection: $(azurecrServiceConnection)
-              azureEnvironmentServiceConnection: $(projectName)-$[variables.ENVIRONMENT]
+              environment: $(ENVIRONMENT)
+              projectName: applications-service
               deploymentTag: ${{ parameters.deploymentTag }}
               releaseVersion: $(version.MajorMinor)
               repository: $(repository)
