@@ -9,7 +9,7 @@ parameters:
       - name: Test
         dependsOn:
           - Dev
-      - name: Production
+      - name: Prod
         dependsOn:
           - Test
 
