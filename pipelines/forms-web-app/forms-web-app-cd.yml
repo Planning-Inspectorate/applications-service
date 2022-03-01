@@ -36,25 +36,19 @@ pool:
   vmImage: ubuntu-latest
 
 extends:
-  template: stages/wrapper_cd.yml@templates
+  template: stages/wrapper_web_app_cd.yml@templates
   parameters:
-    deploymentStages:
-      - name: Deploy
-        deploymentSteps:
-          - template: ${{variables['Build.SourcesDirectory']}}/steps/azure_web_app_deploy.yml@templates
-            parameters:
-              appName: pins-app-applications-service-ni-wfe-$(ENVIRONMENT)-uks-001
-              artifactSourcePipeline: forms-web-app CI
-              azurecrName: $(azurecrName)
-              azurecrServiceConnection: $(azurecrServiceConnection)
-              environment: $(ENVIRONMENT)
-              projectName: applications-service
-              deploymentTag: ${{ parameters.deploymentTag }}
-              releaseVersion: $(version.MajorMinor)
-              repository: $(repository)
+    appName: pins-app-applications-service-ni-wfe-$(ENVIRONMENT)-uks-001
+    artifactSourcePipeline: forms-web-app CI
+    azurecrName: $(azurecrName)
+    azurecrServiceConnection: $(azurecrServiceConnection)
+    deploymentTag: ${{ parameters.deploymentTag }}
     globalVariables:
       - template: pipelines/forms-web-app/variables.yml@self
-      - template: pipelines/variables.yml@self          
+      - template: pipelines/variables.yml@self  
+    projectName: $(projectName) 
+    releaseVersion: $(version.MajorMinor)
+    repository: $(repository)
     ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI') }}:
       environments:
         - name: Dev
