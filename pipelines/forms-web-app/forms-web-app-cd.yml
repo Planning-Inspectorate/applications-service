@@ -18,6 +18,9 @@ trigger:
   branches:
     include:
       - main
+  paths:
+    include:
+      - packages/forms-web-app
 
 pr: none
 
