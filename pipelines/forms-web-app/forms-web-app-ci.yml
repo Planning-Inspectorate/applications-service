@@ -26,7 +26,9 @@ extends:
           buildName=$(versionNumber)_$(Build.BuildId)
           echo "Setting the name of the build to '$buildName'."
           echo "##vso[build.updatebuildnumber]$buildName"
-        displayName: Set Build Number
+          echo "##vso[build.addbuildtag]$(versionNumber)"
+          echo "##vso[build.addbuildtag]${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }}"
+        displayName: Set Build Number and Tags
       - task: AzureCLI@2
         displayName: Build and Push Docker Image to ACR
         inputs:
@@ -48,4 +50,5 @@ extends:
             docker save $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) -o $(Build.ArtifactStagingDirectory)/image.tar
           workingDirectory: $(Build.Repository.LocalPath)/packages/forms-web-app
       - publish: $(Build.ArtifactStagingDirectory)
-        artifact: forms-web-app-image
+        artifact: docker-image
+        displayName: Publish Docker image as artifact

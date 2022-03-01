@@ -1,0 +1,75 @@
+parameters:
+  - name: deploymentTag
+    type: string
+    default: latest
+  - name: environments
+    type: object
+    default:
+      - name: Dev
+      - name: Test
+        dependsOn:
+          - Dev
+      - name: Production
+        dependsOn:
+          - Test
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+
+pool:
+  vmImage: ubuntu-latest
+
+extends:
+  template: stages/wrapper_cd.yml@templates
+  parameters:
+    deploymentStages:
+      - name: Deploy
+        deploymentSteps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              allowPartiallySucceededBuilds: true
+              pipeline: forms-web-app CI
+              project: $(System.TeamProject)
+              source: specific
+              tags: ${{ replace(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), '/', '.') }},${{ parameters.deploymentTag }}
+          - task: AzureCLI@2
+            displayName: Load Docker Image
+            inputs:
+              azureSubscription: $(azureServiceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az acr login --name $(azureContainerRegistryName)
+
+                docker load --input $(Pipeline.Workspace)/docker-image/image.tar
+          - task: AzureWebAppContainer@1
+            displayName: Azure Web App on Container Deploy
+            inputs:
+              appName: pins-app-applications-service-ni-wfe-dev-uks-001
+              azureSubscription: $(azureServiceConnection)
+              imageName: $(azureContainerRegistryName).azurecr.io/$(repository):${{ parameters.deploymentTag }}
+          - script: |
+              docker tag $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) $(azureContainerRegistryName).azurecr.io/$(repository):$(ENVIRONMENT)
+              docker tag $(azureContainerRegistryName).azurecr.io/$(repository):$(versionNumber) $(azureContainerRegistryName).azurecr.io/$(repository):$(version.MajorMinor)
+              docker push $(azureContainerRegistryName).azurecr.io/$(repository):$(version.MajorMinor)
+              docker push $(azureContainerRegistryName).azurecr.io/$(repository):$(ENVIRONMENT)
+    globalVariables:
+      - template: pipelines/forms-web-app/variables.yml@self
+      - template: pipelines/variables.yml@self          
+    ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI') }}:
+      environments:
+        - name: Dev
+    ${{ else }}:
+      environments: ${{ parameters.environments }}

@@ -2,16 +2,13 @@ FROM node:14
 ARG APP_NAME
 ARG BUILD_ID
 ARG VERSION
-ARG COMMON_IMAGE
 WORKDIR /opt/app
 ENV APP_NAME="${APP_NAME}"
 ENV BUILD_ID="${BUILD_ID}"
 ENV VERSION="${VERSION}"
 
-FROM ${COMMON_IMAGE}:latest as common
-
 # This must be built locally from the common package
-COPY --from=common /opt/app ../common
+COPY --from=pinscrsharedtoolinguks.azurecr.io/applications-service/common:latest /opt/app ../common
 
 ADD package.json package.json
 ADD package-lock.json package-lock.json
