@@ -13,14 +13,7 @@ parameters:
         dependsOn:
           - Test
 
-trigger:
-  batch: true
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - packages/forms-web-app
+trigger: none
 
 pr: none
 
@@ -30,6 +23,13 @@ resources:
       type: github
       endpoint: Applications Token
       name: Planning-Inspectorate/common-pipeline-templates
+  pipelines:
+    - pipeline: forms-web-app-ci
+      source: forms-web-app CI
+      trigger: 
+        branches:
+          include: 
+            - main
 
 pool:
   vmImage: ubuntu-latest
