@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('../config');
 
 const router = express.Router();
 
@@ -17,10 +18,14 @@ router.use('/', homeRouter);
 router.use('/', guidancePagesRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
-router.use('/project-search', projectSearchRouter);
+if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
+  router.use('/project-search', projectSearchRouter);
+}
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
-router.use('/examination', examinationRouter);
+if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
+  router.use('/examination', examinationRouter);
+}
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
