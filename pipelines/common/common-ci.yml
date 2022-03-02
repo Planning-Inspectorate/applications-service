@@ -35,7 +35,7 @@ extends:
       - task: AzureCLI@2
         displayName: Build and Push Docker Image to ACR
         inputs:
-          azureSubscription: $(projectName)-tooling
+          azureSubscription: applications-service-tooling
           scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |
