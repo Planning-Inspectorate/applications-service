@@ -5,7 +5,7 @@ const router = express.Router();
 const representingForRouter = require('./who-representing');
 const representeeNameRouter = require('./name-person-representing');
 const representeeOver18Router = require('./are-they-18-over');
-const representeeAddressRouter = require('./what-their-address');
+const representeeAddressRouter = require('./their-postal-address');
 const representeeEmailRouter = require('./their-email-address');
 const representeeTelephoneRouter = require('./their-telephone-number');
 

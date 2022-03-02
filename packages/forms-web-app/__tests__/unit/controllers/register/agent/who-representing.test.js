@@ -31,7 +31,7 @@ describe('controllers/register/agent/who-representing', () => {
   });
 
   describe('postRepresentingFor', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}' if representing-for is provided`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}' if representing-for is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -43,7 +43,7 @@ describe('controllers/register/agent/who-representing', () => {
       };
       await representingForController.postRepresentingFor(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {

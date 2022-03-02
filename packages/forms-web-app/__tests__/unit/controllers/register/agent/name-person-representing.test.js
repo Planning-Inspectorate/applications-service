@@ -56,12 +56,58 @@ describe('controllers/register/agent/name-person-representing', () => {
           errors: { a: 'b' },
         },
       };
+
+      mockRequest.session.behalfRegdata.representing = 'person';
+
       await fullNameController.postFullName(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
       expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_NAME, {
         errorSummary: [{ text: 'There were errors here', href: '#' }],
         errors: { a: 'b' },
+        representing: 'person',
+      });
+    });
+
+    it('should re-render the template with errors if there is any validation error', async () => {
+      const mockRequest = {
+        ...req,
+        body: {
+          errorSummary: [{ text: 'There were errors here', href: '#' }],
+          errors: { a: 'b' },
+        },
+      };
+
+      mockRequest.session.behalfRegdata.representing = 'family';
+
+      await fullNameController.postFullName(mockRequest, res);
+      expect(res.redirect).not.toHaveBeenCalled();
+
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY, {
+        errorSummary: [{ text: 'There were errors here', href: '#' }],
+        errors: { a: 'b' },
+        representing: 'family',
+      });
+    });
+
+    it('should re-render the template with errors if there is any validation error', async () => {
+      const mockRequest = {
+        ...req,
+        body: {
+          errorSummary: [{ text: 'There were errors here', href: '#' }],
+          errors: { a: 'b' },
+        },
+      };
+
+      mockRequest.session.behalfRegdata.representing = 'organisation';
+
+      await fullNameController.postFullName(mockRequest, res);
+      expect(res.redirect).not.toHaveBeenCalled();
+
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION, {
+        errorSummary: [{ text: 'There were errors here', href: '#' }],
+        errors: { a: 'b' },
+        representing: 'organisation',
       });
     });
   });

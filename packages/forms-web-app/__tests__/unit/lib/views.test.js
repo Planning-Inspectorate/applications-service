@@ -70,8 +70,10 @@ describe('lib/views', () => {
         AGENT: {
           REPRESENTING_FOR: 'register/agent/who-representing',
           REPRESENTEE_NAME: 'register/agent/name-person-representing',
+          REPRESENTEE_NAME_FAMILY: 'register/agent/name-family-group-representing',
+          REPRESENTEE_NAME_ORGANISATION: 'register/agent/name-organisation-representing',
           REPRESENTEE_OVER_18: 'register/agent/are-they-18-over',
-          REPRESENTEE_ADDRESS: 'register/agent/what-their-address',
+          REPRESENTEE_ADDRESS: 'register/agent/their-postal-address',
           REPRESENTEE_EMAIL: 'register/agent/their-email-address',
           REPRESENTEE_TELEPHONE: 'register/agent/their-telephone-number',
           FULL_NAME: 'register/agent/full-name',

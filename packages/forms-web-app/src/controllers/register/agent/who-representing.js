@@ -22,7 +22,11 @@ exports.postRepresentingFor = async (req, res) => {
 
   if (req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-  } else {
+  } else if (representing === 'person') {
     res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
+  } else if (representing === 'organisation') {
+    res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`);
+  } else if (representing === 'family') {
+    res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`);
   }
 };

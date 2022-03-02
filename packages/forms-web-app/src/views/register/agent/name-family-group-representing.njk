@@ -4,7 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = "What is the full name of the person you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+{% set title = "What is the name of the family group you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -28,7 +28,7 @@
 
           {{ govukInput({
             label: {
-                text: "What is the full name of the person you are representing?",
+                text: "What is the name of the family group you are representing?",
                 classes: "govuk-label--l",
                 isPageHeading: true
             },
