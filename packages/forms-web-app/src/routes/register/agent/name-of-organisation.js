@@ -4,7 +4,7 @@ const organisationNameController = require('../../../controllers/register/agent/
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
   rules: organisationNameValidationRules,
-} = require('../../../validators/agent/name-of-organisation');
+} = require('../../../validators/register/agent/name-of-organisation');
 
 const router = express.Router();
 

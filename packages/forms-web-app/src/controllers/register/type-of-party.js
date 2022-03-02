@@ -11,7 +11,7 @@ const forwardPage = (partyType) => {
   const party = {
     [REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.MYSELF.FULL_NAME,
     [REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.ORGANISATION.FULL_NAME,
-    [REGISTER.TYPE_OF_PARTY.BEHALF]: VIEW.REGISTER.BEHALF.FULL_NAME,
+    [REGISTER.TYPE_OF_PARTY.AGENT]: VIEW.REGISTER.AGENT.FULL_NAME,
     default: VIEW.REGISTER.TYPE_OF_PARTY,
   };
   return party[partyType] || party.default;
@@ -54,7 +54,7 @@ exports.postTypeOfParty = async (req, res) => {
     } else if (typeOfParty === 'organisation') {
       res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
     } else if (typeOfParty === 'behalf') {
-      res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
+      res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
     }
   } else {
     res.redirect(`/${forwardPage(selectedParty)}`);
