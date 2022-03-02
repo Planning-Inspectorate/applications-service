@@ -3,7 +3,7 @@ module.exports = {
     TYPE_OF_PARTY: {
       MY_SAY: 'myself',
       ORGANISATION: 'organisation',
-      BEHALF: 'behalf',
+      AGENT: 'behalf',
     },
   },
   INTERESTED_PARTY_GUIDE: {

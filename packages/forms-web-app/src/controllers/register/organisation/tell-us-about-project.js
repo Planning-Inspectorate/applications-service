@@ -1,5 +1,5 @@
+/* eslint-disable no-shadow */
 const { VIEW } = require('../../../lib/views');
-const config = require('../../../config');
 
 exports.getComments = async (req, res) => {
   const { comment } = req.session;

@@ -1,7 +1,7 @@
 const { VIEW } = require('../../../lib/views');
 
 exports.getOrganisationName = async (req, res) => {
-  res.render(VIEW.REGISTER.BEHALF.ORGANISATION_NAME, {
+  res.render(VIEW.REGISTER.AGENT.ORGANISATION_NAME, {
     organisationName: req.session.behalfRegdata.representor['organisation-name'],
   });
 };
@@ -11,7 +11,7 @@ exports.postOrganisationName = async (req, res) => {
 
   const { errors = {}, errorSummary = [] } = body;
   if (errors['organisation-name'] || Object.keys(errors).length > 0) {
-    res.render(VIEW.REGISTER.BEHALF.ORGANISATION_NAME, {
+    res.render(VIEW.REGISTER.AGENT.ORGANISATION_NAME, {
       errors,
       errorSummary,
     });
@@ -20,8 +20,8 @@ exports.postOrganisationName = async (req, res) => {
 
   req.session.behalfRegdata.representor['organisation-name'] = body['organisation-name'];
   if (req.query.mode === 'edit') {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.CHECK_YOUR_ANSWERS}`);
+    res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
   } else {
-    res.redirect(`/${VIEW.REGISTER.BEHALF.EMAIL}`);
+    res.redirect(`/${VIEW.REGISTER.AGENT.EMAIL}`);
   }
 };

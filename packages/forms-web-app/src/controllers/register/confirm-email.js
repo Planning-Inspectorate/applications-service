@@ -41,7 +41,7 @@ exports.postConfirmEmail = async (req, res) => {
         res.redirect(`/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`);
       } else if (type === 'you') {
         req.session.behalfRegdata = personal_data;
-        res.redirect(`/${VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT}`);
+        res.redirect(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
       }
     }
   }

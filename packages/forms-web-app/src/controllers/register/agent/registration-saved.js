@@ -7,5 +7,5 @@ exports.getRegistrationSaved = async (req, res) => {
   delete req.session.behalfRegdata;
   delete req.session.typeOfParty;
   delete req.session.ipRefNo;
-  res.render(VIEW.REGISTER.BEHALF.REGISTRATION_SAVED, { ipRefNo, email });
+  res.render(VIEW.REGISTER.AGENT.REGISTRATION_SAVED, { ipRefNo, email });
 };

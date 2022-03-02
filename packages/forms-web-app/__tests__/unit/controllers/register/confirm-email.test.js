@@ -65,7 +65,7 @@ describe('controllers/register/confirm-email', () => {
       );
     });
 
-    it(`'should post data and redirect to '/${VIEW.REGISTER.BEHALF.ADD_ANOTHER_COMMENT}' if email is provided and is agents journey`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.ADD_ANOTHER_COMMENT}' if email is provided and is agents journey`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -80,7 +80,7 @@ describe('controllers/register/confirm-email', () => {
       );
       await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.BEHALF.TELL_US_ABOUT_PROJECT}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
     });
 
     it('should re-render the template with errors if there is any validation error', async () => {

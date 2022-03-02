@@ -4,7 +4,7 @@
   <!--[if gt IE 8]><!--><link href="/public/stylesheets/main.css" media="all" rel="stylesheet" type="text/css" /><!--<![endif]-->
 
   {% if featureFlag.googleTagManager %}
-    {% if googleTagManagerId %}
+    {% if googleTagManagerId and cookies.cookie_policy.usage %}
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -15,7 +15,6 @@
     {% endif %}
   {% else %}
     <script id="gaId" type='text/plain'>{{ googleAnalyticsId }}</script>
-
     {% if googleAnalyticsId and cookies.cookie_policy.usage %}
       <!-- Global site tag (gtag.js) - Google Analytics -->
       {# <script data-cy="Google Analytics" async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId | safe }}"></script> #}

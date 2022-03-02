@@ -19,8 +19,8 @@ services:
       SERVER_SHOW_ERRORS: 'true'
       TRIALIST_DATA_PATH: /opt/app/data/trialists.json
       NODE_ENV: local
-      DOCUMENTS_PER_PAGE: '1'
-      DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ 
+      DOCUMENTS_PER_PAGE: '20'
+      DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/
       SRV_NOTIFY_BASE_URL: https://api.notifications.service.gov.uk/
       SRV_NOTIFY_SERVICE_ID: '9b89eb93-3071-432c-9c6b-4e07dbda9071'
       SRV_NOTIFY_API_KEY:  'applicationsservice-9b89eb93-3071-432c-9c6b-4e07dbda9071-101fa83a-8d08-40af-92b6-246b95074e5a'
@@ -46,7 +46,7 @@ services:
       FILE_UPLOAD_MAX_FILE_SIZE_BYTES: '15000000'
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
       FILE_UPLOAD_TMP_PATH: '/tmp'
-      GOOGLE_ANALYTICS_ID: 'G-TZBWMVPTHV'
+      GOOGLE_ANALYTICS_ID: 'G-X21W2S2FN3'
       SESSION_KEY: some_secure_key_goes_here
       # please override this locally if using not using localhost or ip address to browse the site in dev.
       SUBDOMAIN_OFFSET: '0'
