@@ -12,7 +12,6 @@ resources:
       type: github
       endpoint: Applications Token
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: feature/terraform-rename-azure-cli-step
 
 pool:
   vmImage: ubuntu-latest
@@ -20,9 +19,12 @@ pool:
 extends:
   template: stages/wrapper_ci.yml@templates
   parameters:
+    azurecrName: $(azurecrName)
+    authType: acr
     globalVariables:
       - template: pipelines/common/variables.yml@self
       - template: pipelines/variables.yml@self
+    projectName: $(projectName)
     validateName: Build and Push
     validationSteps:
       - script: |
@@ -33,13 +35,13 @@ extends:
       - task: AzureCLI@2
         displayName: Build and Push Docker Image to ACR
         inputs:
-          azureSubscription: $(azureServiceConnection)
+          azureSubscription: $(projectName)-tooling
           scriptType: bash
           scriptLocation: inlineScript
           inlineScript: |
-            az acr login --name $(azureContainerRegistryName)
+            az acr login --name $(azurecrName)
 
-            docker build . -t $(azureContainerRegistryName).azurecr.io/$(repository):latest
+            docker build . -t $(azurecrName).azurecr.io/$(repository):latest
 
-            docker push -a $(azureContainerRegistryName).azurecr.io/$(repository)
+            docker push -a $(azurecrName).azurecr.io/$(repository)
           workingDirectory: $(Build.Repository.LocalPath)/packages/common
