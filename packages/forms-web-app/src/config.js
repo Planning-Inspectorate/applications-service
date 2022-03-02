@@ -39,9 +39,9 @@ module.exports = {
     useSecureSessionCookie: process.env.USE_SECURE_SESSION_COOKIES === 'true',
     googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
     googleTagManagerId: process.env.GOOGLE_TAG_MANAGER_ID,
-    usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
   },
   featureFlag: {
     googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
+    usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
   },
 };

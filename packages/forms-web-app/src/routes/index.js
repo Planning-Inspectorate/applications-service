@@ -18,10 +18,14 @@ router.use('/', homeRouter);
 router.use('/', guidancePagesRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
-if (!config.server.usePrivateBetaV1RoutesOnly) router.use('/project-search', projectSearchRouter);
+if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
+  router.use('/project-search', projectSearchRouter);
+}
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
-if (!config.server.usePrivateBetaV1RoutesOnly) router.use('/examination', examinationRouter);
+if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
+  router.use('/examination', examinationRouter);
+}
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
