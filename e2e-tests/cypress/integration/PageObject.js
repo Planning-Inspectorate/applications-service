@@ -25,5 +25,10 @@ class PageObject {
         cy.wait(Cypress.env('demoDelay'));
     }
 
+    enterTextIntoField(dataInput, fieldSelector) {
+      if (dataInput.length > 0)
+        cy.get(fieldSelector).type(dataInput);
+    }
+
 }
 export default PageObject;
