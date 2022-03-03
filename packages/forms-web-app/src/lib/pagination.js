@@ -3,7 +3,6 @@ const generatePageNumbers = (currentPage, totalPages) => {
   if (currentPage === 1 || totalPages === currentPage) {
     delta = 2;
   }
-  console.log(' currentPage: ' + currentPage + ' totalPage: ' + totalPages + ' delta: ' + delta);
   const range = Array(totalPages)
     .fill()
     .map((_, index) => index + 1);
