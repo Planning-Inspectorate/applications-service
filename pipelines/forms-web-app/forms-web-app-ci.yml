@@ -16,9 +16,12 @@ pool:
 extends:
   template: stages/wrapper_ci.yml@templates
   parameters:
+    azurecrName: $(azurecrName)
+    authType: acr
     globalVariables:
       - template: pipelines/forms-web-app/variables.yml@self
       - template: pipelines/variables.yml@self
+    projectName: $(projectName)
     validateName: Build Test and Push
     validationSteps:
       - script: |
@@ -29,7 +32,6 @@ extends:
       - template: steps/azure_web_app_acr_push.yml@templates
         parameters:
           azurecrName: $(azurecrName)
-          azurecrServiceConnection: $(azurecrServiceConnection)
           dockerfilePath: $(Build.Repository.LocalPath)/pipelines/forms-web-app/Dockerfile
           repository: $(repository)
           versionNumber: $(versionNumber)
