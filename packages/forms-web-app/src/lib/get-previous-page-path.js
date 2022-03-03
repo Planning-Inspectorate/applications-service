@@ -1,16 +1,11 @@
-const getBaseUrl = require('./get-base-url');
+const config = require('../config');
 
 module.exports = (req) => {
   const referer = req.get('Referer');
-  const baseUrl = getBaseUrl(req);
 
-  if (!referer || !baseUrl) {
+  if (!referer || !referer.startsWith(config.server.host)) {
     return '/';
   }
 
-  if (!referer.startsWith(baseUrl)) {
-    return '/';
-  }
-
-  return referer.replace(baseUrl, '');
+  return referer.replace(config.server.host, '');
 };

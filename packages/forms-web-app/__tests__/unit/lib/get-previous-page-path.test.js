@@ -1,7 +1,5 @@
 const getPreviousPagePath = require('../../../src/lib/get-previous-page-path');
-const getBaseUrl = require('../../../src/lib/get-base-url');
-
-jest.mock('../../../src/lib/get-base-url');
+const config = require('../../../src/config');
 
 describe('lib/get-previous-page-path', () => {
   let req;
@@ -33,27 +31,27 @@ describe('lib/get-previous-page-path', () => {
   [
     {
       title: 'referer undefined',
-      baseUrl: 'https://example.org',
+      host: 'https://example.org',
       referer: undefined,
     },
     {
-      title: 'baseUrl undefined',
-      baseUrl: undefined,
+      title: 'host config undefined',
+      host: undefined,
       referer: 'https://example.com/some/path/here',
     },
     {
       title: 'empty referer',
-      baseUrl: 'https://example.com',
+      host: 'https://example.com',
       referer: '',
     },
     {
-      title: 'referer and base urls do not match',
-      baseUrl: 'http://example.org',
+      title: 'referer and host config do not match',
+      host: 'http://example.org',
       referer: 'https://example.com/some/path/here',
     },
-  ].forEach(({ title, baseUrl, referer }) => {
+  ].forEach(({ title, host, referer }) => {
     test(`unhappy path - should return root url - ${title}`, () => {
-      getBaseUrl.mockImplementation(() => baseUrl);
+      config.server.host = host;
       setupReqGetMock({ referer });
       expect(getPreviousPagePath(req)).toEqual('/');
     });
@@ -61,18 +59,18 @@ describe('lib/get-previous-page-path', () => {
 
   [
     {
-      baseUrl: 'https://example.com',
+      host: 'https://example.com',
       referer: 'https://example.com/some',
       expected: '/some',
     },
     {
-      baseUrl: 'http://example.org',
+      host: 'http://example.org',
       referer: 'http://example.org/some/nested/path?and=stuff',
       expected: '/some/nested/path?and=stuff',
     },
-  ].forEach(({ baseUrl, referer, expected }) => {
+  ].forEach(({ host, referer, expected }) => {
     test(`happy path - should return the expected path - ${expected}`, () => {
-      getBaseUrl.mockImplementation(() => baseUrl);
+      config.server.host = host;
       setupReqGetMock({ referer });
       expect(getPreviousPagePath(req)).toEqual(expected);
     });
