@@ -404,6 +404,13 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/what-happens-after-the-decision-is-made')
             break;
+        case "change your cookie settings":
+            cy.title().should('eq', "Change your cookie settings - Application service - GOV.UK");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('Change your cookie settings');
+            })
+            cy.url().should('include', '/cookies')
+            break;
         default: throw new Error('uanble to find specified page name: ' + pageName);
     }
     cy.wait(Cypress.env('demoDelay'));
