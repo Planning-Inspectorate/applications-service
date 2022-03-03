@@ -32,8 +32,6 @@ Cypress.Commands.add('checkPageA11y', () => {
 
   cy.checkA11y(
     {
-      exclude: ['.govuk-radios__input'],
-      exclude: ['.govuk-footer'],
     },
     null,
     callback,
