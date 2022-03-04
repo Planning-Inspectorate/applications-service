@@ -4,7 +4,7 @@ const router = express.Router();
 const aboutTheApplicationController = require('../../controllers/examination/about-the-application');
 
 router.get('/:case_ref/:page', aboutTheApplicationController.getAboutTheApplication);
-router.post('/search/:case_ref/:page', aboutTheApplicationController.postSearchDocument);
+router.post('/:case_ref/search/:page', aboutTheApplicationController.postSearchDocument);
 router.post('/filter/:page', aboutTheApplicationController.postFilterDocument);
 
 module.exports = router;
