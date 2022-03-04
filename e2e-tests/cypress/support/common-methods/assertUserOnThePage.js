@@ -415,8 +415,8 @@ module.exports = (pageName) => {
     }
     cy.wait(Cypress.env('demoDelay'));
 
-    cy.checkPageA11y({
-        // known issue: https://github.com/alphagov/govuk-frontend/issues/979
-    });
+    // cy.checkPageA11y({
+    //     // known issue: https://github.com/alphagov/govuk-frontend/issues/979
+    // });
 
 };

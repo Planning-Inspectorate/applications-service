@@ -21,18 +21,7 @@ Given('I navigate to UK address details page', () => {
     cy.clickSaveAndContinue();
 });
 
-Then('I am on the {string} page', (pageName) => {
-    cy.assertUserOnThePage(pageName)
-})
-
-And('User clicks on continue button', () => {
+And('I continue with the following values in the address fields', function (table) {
+    addressDetails.enterTextIntoAddressFields(table);
     cy.clickSaveAndContinue();
-})
-
-Then('below error message should be presented on UK address details page', function (table) {
-    cy.assertErrorMessage(table)
-})
-
-And('I enter below data into address details page', function (table) {
-    addressDetails.enterTextIntoAddressFields(table)
-})
+});

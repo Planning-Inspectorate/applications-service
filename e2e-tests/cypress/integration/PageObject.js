@@ -30,5 +30,10 @@ class PageObject {
         cy.get(fieldSelector).type(dataInput);
     }
 
+  enterTextIntoFieldDirectly(dataInput, fieldSelector) {
+    if (dataInput.length > 0)
+      cy.get(fieldSelector).invoke('val', dataInput)
+  }
+
 }
 export default PageObject;

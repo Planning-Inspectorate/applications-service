@@ -1,4 +1,6 @@
-class PO_AddressDetails {
+import PageObject from "../../PageObject";
+
+class PO_AddressDetails extends PageObject{
 
     enterTextIntoAddressFields(table) {
         const addressFields = table.hashes()
