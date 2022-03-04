@@ -1,0 +1,38 @@
+trigger:
+  paths:
+    include:
+      - packages/applications-service-api
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Applications Token
+      name: Planning-Inspectorate/common-pipeline-templates
+
+pool:
+  vmImage: ubuntu-latest
+
+extends:
+  template: stages/wrapper_ci.yml@templates
+  parameters:
+    azurecrName: $(azurecrName)
+    authType: acr
+    globalVariables:
+      - template: pipelines/applications-service-api/variables.yml@self
+      - template: pipelines/variables.yml@self
+    projectName: $(projectName)
+    validateName: Build Test and Push
+    validationSteps:
+      - script: |
+          buildName=$(versionNumber)_$(Build.BuildId)
+          echo "Setting the name of the build to '$buildName'."
+          echo "##vso[build.updatebuildnumber]$buildName"
+        displayName: Set Build Number
+      - template: steps/azure_web_app_acr_push.yml@templates
+        parameters:
+          azurecrName: $(azurecrName)
+          dockerfilePath: $(dockerFilePath)
+          repository: $(repository)
+          versionNumber: $(versionNumber)
+          workingDirectory: $(Build.Repository.LocalPath)/packages/applications-service-api
