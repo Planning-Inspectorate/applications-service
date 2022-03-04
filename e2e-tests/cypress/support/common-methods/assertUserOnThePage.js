@@ -192,7 +192,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Check your answers before registering');
             })
-            cy.url().should('include', '/check-your-answers')
+            cy.url().should('include', '/check-answers')
             break;
         case "check your answers before registering":
             cy.title().should('eq', "Check your answers before registering - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning");
@@ -234,7 +234,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Registration complete');
             })
-            cy.url().should('include', '/confirmation')
+            cy.url().should('include', '/registration-complete')
             break;
         case "registration complete":
             cy.title().should('eq', "Registration complete -Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning");
@@ -283,7 +283,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Who are you representing?');
             })
-            cy.url().should('include', '/representing-for')
+            cy.url().should('include', '/agent/who-representing')
             break;
         case "what is the full name of the person you are representing?":
             cy.title().should('eq', "What is the full name of the person you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning");
@@ -297,21 +297,21 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is the full name of the organisation or charity that you are representing?');
             })
-            cy.url().should('include', '/name-person-representing')
+            cy.url().should('include', '/name-organisation-representing')
             break;
         case "what is the name of the family group you are representing?":
             cy.title().should('eq', "What is the name of the family group you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is the name of the family group you are representing?');
             })
-            cy.url().should('include', '/name-person-representing')
+            cy.url().should('include', '/name-family-group-representing')
             break;
         case "your comments are saved":
-            cy.title().should('eq', "Confirmation - Register to have your say");
+            cy.title().should('eq', "Your registration has been saved - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {
-                expect(text).to.contain('Your comments are saved');
+                expect(text).to.contain('Your registration has been saved');
             })
-            cy.url().should('include', '/registration-complete')
+            cy.url().should('include', '/registration-saved')
             break;
         case "sitemap":
             cy.title().should('eq', "GOV.UK - The best place to find government services and information");
@@ -404,10 +404,10 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/what-happens-after-the-decision-is-made')
             break;
-        case "change your cookie settings":
-            cy.title().should('eq', "Change your cookie settings - Application service - GOV.UK");
+        case "cookies settings":
+            cy.title().should('eq', "Cookies - Application service - GOV.UK");
             cy.get('h1').invoke('text').then((text) => {
-                expect(text).to.contain('Change your cookie settings');
+                expect(text).to.contain('Cookies');
             })
             cy.url().should('include', '/cookies')
             break;
@@ -417,7 +417,6 @@ module.exports = (pageName) => {
 
     cy.checkPageA11y({
         // known issue: https://github.com/alphagov/govuk-frontend/issues/979
-        exclude: ['.govuk-radios__input'],
     });
 
 };

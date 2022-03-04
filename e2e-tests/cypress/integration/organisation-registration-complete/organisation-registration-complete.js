@@ -29,6 +29,8 @@ Given('I navigate to UK address details page using organisation route', () => {
     cy.clickSaveAndContinue();
     jobTitlePage.enterTextIntoJobTitleField("Test Volunteer Title");
     cy.clickSaveAndContinue();
+    emailAddressPage.enterTextIntoEmailField("test@gmail.com");
+    cy.clickSaveAndContinue();
 });
 
 And('I enter below data into address details page', function (table) {

@@ -70,5 +70,5 @@ And('user clicks on save and exit button', () => {
 })
 
 Then('I can see email sent confimation text', () => {
-    cy.get('[data-cy="email-confirmation"]').should('contain.text', 'We have sent a confirmation email to: testpins2@gmail.com');
+    cy.get('[data-cy="email-confirmation"]').should('contain.text', 'We have sent a link to get back to your saved registration to: testpins2@gmail.com');
 })

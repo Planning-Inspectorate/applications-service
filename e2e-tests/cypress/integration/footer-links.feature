@@ -25,4 +25,4 @@ Feature: verify footer links
 
     Scenario: click on Cookies
         And I click on "Cookies" footer link
-        Then I am on the "Cookies" page
+        Then I am on the "Cookies settings" page

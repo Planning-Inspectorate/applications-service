@@ -24,7 +24,7 @@ Feature: cookies banner page
 
     Scenario: Navigate to cookies page, verify page title and heading, select yes and save changes
         And I click on "view" cookies button
-        Then I am on the "Change your cookie settings" page
+        Then I am on the "Cookies settings" page
         And I select "yes" radio choice
         And I click on save changes on cookie settings page
         Then I verify below text is present on the page
