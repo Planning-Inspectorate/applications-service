@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const aboutTheApplicationController = require('../../controllers/examination/about-the-application');
+const aboutTheApplicationRouter = require('../../routes/examination/about-the-application');
 const examinationController = require('../../controllers/examination/examination');
 const projectTimeLineController = require('../../controllers/examination/project-timeline');
 const representationsController = require('../../controllers/examination/representations');
@@ -14,20 +14,6 @@ router.get('/timetable', timetableController.getTimetable);
 router.get('/representations', representationsController.getRepresentations);
 router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
 
-router.get('/:case_ref', examinationController.getExamination);
-
-router.get(
-  '/:case_ref/about-the-application/:page',
-  aboutTheApplicationController.getAboutTheApplication
-);
-
-router.post(
-  '/:case_ref/about-the-application/search/:page',
-  aboutTheApplicationController.postSearchDocument
-);
-router.post(
-  '/:case_ref/about-the-application/filter/:page',
-  aboutTheApplicationController.postFilterDocument
-);
+router.use(aboutTheApplicationRouter);
 
 module.exports = router;
