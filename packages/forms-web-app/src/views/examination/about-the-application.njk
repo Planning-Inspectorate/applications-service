@@ -41,7 +41,7 @@
             </div>
 
             <button id="toggleFilters" class="govuk-button govuk-button">Show search and filters</button>
-            <form action="/examination/about-the-application/{{ caseRef }}/search/1" method="POST" novalidate>
+            <form action="/examination/{{ caseRef }}/about-the-application/search/1" method="POST" novalidate>
               <div id="expandingFilterSection" class="expandingFilterSection hidden govuk-!-margin-bottom-6">
                 <div class="govuk-form-group">
                   <h3 class="govuk-label-wrapper">
@@ -191,19 +191,19 @@
                   {% for page in paginationData %}
                     {% if page === 'prev' %}
                       <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
-                        <a class="hmcts-pagination__link" href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                        <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
                       </li>
                     {% elif page === pageData.currentPage %}
                       <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
                     {% elif page === 'next' %}
                       <li class="hmcts-pagination__item  hmcts-pagination__item--next">
-                        <a class="hmcts-pagination__link" href="/examination/about-the-application/{{ caseRef }}/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                        <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
                       </li>
                     {% elif page === '...' %}
                       <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
                     {% else %}
                       <li class="hmcts-pagination__item">
-                        <a class="hmcts-pagination__link" href="/examination/about-the-application/{{ caseRef }}/{{ page }}">{{ page }}</a>
+                        <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ page }}">{{ page }}</a>
                       </li>
                     {% endif %}
                   {% endfor %}

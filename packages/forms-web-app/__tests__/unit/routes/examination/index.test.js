@@ -1,5 +1,5 @@
-const { get, use } = require('../router-mock');
-const aboutTheApplicationRouter = require('../../../../src/routes/examination/about-the-application');
+const { get, post, use } = require('../router-mock');
+const aboutTheApplicationController = require('../../../../src/controllers/examination/about-the-application');
 const examinationController = require('../../../../src/controllers/examination/examination');
 const representationsController = require('../../../../src/controllers/examination/representations');
 const projectTimelineController = require('../../../../src/controllers/examination/project-timeline');
@@ -18,7 +18,20 @@ describe('routes/examination', () => {
   });
 
   it('should define the expected routes', () => {
-    expect(use).toHaveBeenCalledWith('/about-the-application', aboutTheApplicationRouter);
+    expect(get).toHaveBeenCalledWith(
+      '/:case_ref/about-the-application/:page',
+      aboutTheApplicationController.getAboutTheApplication
+    );
+
+    expect(post).toHaveBeenCalledWith(
+      '/:case_ref/about-the-application/search/:page',
+      aboutTheApplicationController.postSearchDocument
+    );
+
+    expect(post).toHaveBeenCalledWith(
+      '/:case_ref/about-the-application/filter/:page',
+      aboutTheApplicationController.postFilterDocument
+    );
 
     expect(get).toHaveBeenCalledWith(
       '/representations',
@@ -38,7 +51,7 @@ describe('routes/examination', () => {
     );
     expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
     expect(get).toHaveBeenCalledWith('/:case_ref', examinationController.getExamination);
-    expect(use.mock.calls.length).toBe(1);
-    expect(get.mock.calls.length).toBe(6);
+    expect(post.mock.calls.length).toBe(2);
+    expect(get.mock.calls.length).toBe(7);
   });
 });
