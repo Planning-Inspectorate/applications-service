@@ -22,7 +22,7 @@ Feature: What is your email address page
       | some-ultra-long-name-from-outta-space-the-galaxy-and-probably-the-known-universe@some-ultra-long-subdomain-from-outta-space-the-galaxy-and-probably-the-known-universe.some-ultra-long-domain-from-outta-space-the-galaxy-and-probably-the-known-universe.gov.uk | Email address must be between 3 and 255 characters |
       | test@                                                                                                                                                                                                                                                            | Enter an email address in the correct format       |
       | test@gmail                                                                                                                                                                                                                                                       | Enter an email address in the correct format       |
-      | test@g.com                                                                                                                                                                                                                                                       | Enter an email address in the correct format       |
+      | test@.com                                                                                                                                                                                                                                                       | Enter an email address in the correct format       |
 
 
   Scenario Outline: User continues with valid data
@@ -32,4 +32,4 @@ Feature: What is your email address page
     Examples:
       | text                                                                                                                                                                                                                                                            |
       | test@gmail.com                                                                                                                                                                                                                                                  |
-      | some-ultra-long-name-from-outta-space-the-galaxy-and-probably-the-known-universe@some-ultra-long-subdomain-from-outta-space-the-galaxy-and-probably-the-known-universe.some-ultra-long-domain-from-outta-space-the-galaxy-and-probably-the-known-universe.co.uk |
+      | someone@some-ultra-long-sub-domain-from-outta-space-and-the-galaxy.some-ultra-long-sub-domain-from-outta-space-and-the-galaxy.some-ultra-long-sub-domain-from-outta-space-and-the-galaxy.some-ultra-long-domain-from-outta-space-maybe-even-the-universe.co.uk |
