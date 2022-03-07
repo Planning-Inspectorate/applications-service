@@ -32,7 +32,7 @@ resources:
             - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: pins-odt-agent-pool
 
 extends:
   template: stages/wrapper_web_app_cd.yml@templates
