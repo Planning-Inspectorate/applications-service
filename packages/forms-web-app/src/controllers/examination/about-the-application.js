@@ -1,4 +1,5 @@
 const logger = require('../../lib/logger');
+const { generatePagination } = require('../../lib/pagination');
 const documentSearch = require('../../lib/document-search.json');
 const { VIEW } = require('../../lib/views');
 const { searchDocument } = require('../../services/document.service');
@@ -9,6 +10,9 @@ function getPageData(doc) {
   item.itemsPerPage = doc.itemsPerPage;
   item.totalPages = doc.totalPages;
   item.currentPage = doc.currentPage;
+  item.fromRange = doc.itemsPerPage * (doc.currentPage - 1) + 1;
+  item.toRange =
+    doc.currentPage === doc.totalPages ? doc.totalItems : doc.itemsPerPage * doc.currentPage;
   return item;
 }
 
@@ -18,24 +22,25 @@ function renderData(req, res, caseRef, response) {
     res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
       projectName,
       caseRef,
-      pageData: {},
     });
   } else {
     const respData = response.data;
     const { documents } = respData;
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
+    const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
     res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
       documents,
       projectName,
       caseRef,
       pageData,
+      paginationData,
     });
   }
 }
 
 exports.getAboutTheApplication = async (req, res) => {
-  const caseRef = req.session.caseRef;
+  const caseRef = req.params.case_ref;
   const pageNumber = req.params.page;
   let search = req.session.document_search ? req.session.document_search : '';
   if (pageNumber === '1') {
@@ -49,7 +54,7 @@ exports.getAboutTheApplication = async (req, res) => {
 };
 
 exports.postSearchDocument = async (req, res) => {
-  const caseRef = req.session.caseRef;
+  const caseRef = req.params.case_ref;
   const pageNumber = req.params.page;
   const { body } = req;
   const { search } = body;
@@ -63,7 +68,7 @@ exports.postSearchDocument = async (req, res) => {
 };
 
 exports.postFilterDocument = async (req, res) => {
-  const caseRef = req.session.caseRef;
+  const caseRef = req.params.case_ref;
   const pageNumber = req.params.page;
   const filters = []; // should be taken from request TODO
   req.session.document_filters = filters;

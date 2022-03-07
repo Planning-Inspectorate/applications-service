@@ -3,6 +3,7 @@ const registerRouter = require('../../../src/routes/register');
 const homeRouter = require('../../../src/routes/home');
 const cookieRouter = require('../../../src/routes/cookies');
 const examinationRouter = require('../../../src/routes/examination');
+const aboutTheApplicationRouter = require('../../../src/routes/examination/about-the-application');
 const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/having-your-say-guide');
 const footerPagesRouter = require('../../../src/routes/footer-pages');

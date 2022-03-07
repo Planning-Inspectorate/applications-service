@@ -16,7 +16,7 @@
     </li>
     <li class="side-menu govuk-body-s {% if 'about-the-application' in current %} active {% endif %}">
       {% if not 'about-the-application' in current %}
-        <a href="/examination/about-the-application/1">Project application documents</a>
+        <a href="/examination/{{ caseRef }}/about-the-application/1">Project application documents</a>
       {% else %} Project application documents {% endif %}
     </li>
     <li class="side-menu govuk-body-s {% if 'representations' in current %} active {% endif %}">
