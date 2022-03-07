@@ -1,0 +1,55 @@
+parameters:
+  - name: deploymentTag
+    type: string
+    default: none
+  - name: environments
+    type: object
+    default:
+      - name: Dev
+      - name: Test
+        dependsOn:
+          - Dev
+      - name: Prod
+        dependsOn:
+          - Test
+
+trigger: none
+
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Applications Token
+      name: Planning-Inspectorate/common-pipeline-templates
+  pipelines:
+    - pipeline: applications-service-api-ci
+      source: applications-service-api CI
+      trigger: 
+        branches:
+          include: 
+            - main
+
+pool:
+  vmImage: ubuntu-latest
+
+extends:
+  template: stages/wrapper_web_app_cd.yml@templates
+  parameters:
+    appName: pins-app-applications-service-ni-api-$(ENVIRONMENT)-uks-001
+    artifactSourcePipeline: applications-service-api CI
+    azurecrName: $(azurecrName)
+    azurecrServiceConnection: $(azurecrServiceConnection)
+    deploymentTag: ${{ parameters.deploymentTag }}
+    globalVariables:
+      - template: pipelines/applications-service-api/variables.yml@self
+      - template: pipelines/variables.yml@self  
+    projectName: $(projectName) 
+    releaseVersion: $(version.MajorMinor)
+    repository: $(repository)
+    ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI') }}:
+      environments:
+        - name: Dev
+    ${{ else }}:
+      environments: ${{ parameters.environments }}
