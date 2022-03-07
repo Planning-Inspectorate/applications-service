@@ -21,9 +21,6 @@ exports.getConfirmation = async (req, res) => {
     req.session.ipRefNo = ipRefNo;
     res.redirect(`/${VIEW.REGISTER.MYSELF.REGISTRATION_SAVED}`);
   } else {
-    delete req.session.comment;
-    delete req.session.mySelfRegdata;
-    delete req.session.typeOfParty;
     res.render(VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE, {
       ipRefNo,
       email,

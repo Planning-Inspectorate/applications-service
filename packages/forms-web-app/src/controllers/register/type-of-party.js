@@ -4,6 +4,10 @@ const { validTypeOfPartyOptions } = require('../../validators/register/type-of-p
 const { REGISTER } = require('../../constants');
 
 exports.getTypeOfParty = async (req, res) => {
+  // delete req.session.comment;
+  // delete req.session.mySelfRegdata;
+  // delete req.session.typeOfParty;
+
   res.render(VIEW.REGISTER.TYPE_OF_PARTY, { type: req.session.typeOfParty });
 };
 

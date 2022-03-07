@@ -1,8 +1,7 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getFullName = async (req, res) => {
-  res.render(VIEW.REGISTER.MYSELF.FULL_NAME, {fullName: req.session.mySelfRegdata['full-name']});
+  res.render(VIEW.REGISTER.MYSELF.FULL_NAME, { fullName: req.session.mySelfRegdata['full-name'] });
 };
 
 exports.postFullName = async (req, res) => {
