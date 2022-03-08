@@ -1,7 +1,9 @@
-class PO_TeleNumber {
+import PageObject from "../../PageObject";
+
+class PO_TeleNumber extends PageObject {
 
     enterTextIntoTelephoneNumberField(dataInput) {
-        cy.get('#telephone').type(dataInput);
+      super.enterTextIntoField(dataInput, '#telephone');
     }
 
 }

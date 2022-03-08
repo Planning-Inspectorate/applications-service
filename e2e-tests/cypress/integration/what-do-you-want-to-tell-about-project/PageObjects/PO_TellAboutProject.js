@@ -1,11 +1,17 @@
-class PO_TellAboutProject {
+import PageObject from "../../PageObject";
+
+class PO_TellAboutProject extends PageObject{
 
     enterTextIntoCommentsField(dataInput) {
-        cy.get('#comment').type(dataInput);
+        super.enterTextIntoField(dataInput, '#comment')
     }
 
+  enterTextIntoCommentsFieldDirectly(dataInput) {
+    super.enterTextIntoFieldDirectly(dataInput, '#comment')
+  }
+
     enterTextIntoTopicField(dataInput) {
-        cy.get('#topic').type(dataInput);
+      super.enterTextIntoField(dataInput, '#topic')
     }
 
     assertDoNotIncludePersonalDetailsPresent() {

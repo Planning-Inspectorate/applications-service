@@ -1,5 +1,4 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_TypeOfParty from './PageObjects/PO_FullName'
 import PageObject from '../PageObject'
 import PO_FullName from "./PageObjects/PO_FullName";
 const pageObject = new PageObject()
@@ -18,10 +17,6 @@ Then('below error message should be presented on full name page', function (tabl
     cy.assertErrorMessage(table)
 })
 
-And('User clicks on continue button', () => {
-    cy.clickSaveAndContinue();
-})
-
 And('I can see the logo gov uk text', () => {
     pageObject.validateHeaderLogo()
 })
@@ -38,6 +33,7 @@ Then('I am on the {string} page', (pageName) => {
     cy.assertUserOnThePage(pageName)
 })
 
-And('I enter text {string} into full name field', (inputData) => {
-    fullNamePage.enterTextIntoFullNameField(inputData);
+When('I continue with the value {string} in the full name field', (text) => {
+  fullNamePage.enterTextIntoFullNameField(text);
+  cy.clickSaveAndContinue();
 })

@@ -1,7 +1,9 @@
-class PO_FullName{
+import PageObject from "../../PageObject";
+
+class PO_FullName extends PageObject {
 
     enterTextIntoFullNameField(inputData) {
-        cy.get('[data-cy="full-name"]').type(inputData);
+      super.enterTextIntoField(inputData, '[data-cy="full-name"]')
     }
 
 }

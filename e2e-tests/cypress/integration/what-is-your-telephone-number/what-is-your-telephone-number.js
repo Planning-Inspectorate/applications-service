@@ -31,18 +31,11 @@ And('User clicks on continue button', () => {
     cy.clickSaveAndContinue();
 })
 
-Then('I am on the {string} page', (pageName) => {
-    cy.assertUserOnThePage(pageName)
-})
-
 Then('below error message should be presented on What is your telephone number page', function (table) {
     cy.assertErrorMessage(table)
 })
 
-And('I enter {string} into email address field', (dataInput) => {
-    emailAddressPage.enterTextIntoEmailField(dataInput);
-})
-
-And('I enter {string} into telephone number field', (dataInput) => {
-    teleNumberPage.enterTextIntoTelephoneNumberField(dataInput);
+When('I continue with the value {string} in the telephone number field', (text) => {
+  teleNumberPage.enterTextIntoTelephoneNumberField(text);
+  cy.clickSaveAndContinue();
 })

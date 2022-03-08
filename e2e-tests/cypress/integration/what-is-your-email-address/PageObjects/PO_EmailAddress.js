@@ -1,7 +1,9 @@
-class PO_EmailAddress {
+import PageObject from "../../PageObject";
+
+class PO_EmailAddress extends PageObject{
 
     enterTextIntoEmailField(dataInput) {
-        cy.get('#email').type(dataInput);
+      super.enterTextIntoField(dataInput, '#email')
     }
 
 }

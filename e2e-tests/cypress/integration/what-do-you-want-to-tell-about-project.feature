@@ -6,30 +6,45 @@ Feature: What do you want to tell us about this proposed project? page
 
     Background: Navigate to What do you want to tell us about this proposed project? page
         Given I navigate to UK address details page
-        And I enter below data into address details page
-            | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
-            | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
-        And User clicks on continue button
-        And I enter "1234567899" into telephone number field
-        And User clicks on continue button
+        And I continue with the following values in the address fields
+          | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
+          | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
+        And I continue with the value "1234567899" in the telephone number field
 
-    Scenario: verify page title, heading, error message and continue
-        Then I am on the "What do you want to tell us about this proposed project?" page
-        And Do not include any personal details is present on the page
-        And User clicks on continue button
-        Then below error message should be presented on What do you want to tell us about this proposed project page
-            | ErrorMsg                                                   |
-            | Enter what you want to tell us about this proposed project |
-        And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
-        And User clicks on continue button
-        Then I am on the "Check your answers before registering" page
+    Scenario: Verify page title, heading and content
+      Then I am on the "What do you want to tell us about this proposed project?" page
+      And advice to not include any personal details is present on the page
 
-    Scenario: click save and exit
-        And user clicks on save and exit button
-        Then below error message should be presented on What do you want to tell us about this proposed project page
-            | ErrorMsg                                                   |
-            | Enter what you want to tell us about this proposed project |
-        And I enter "used by the examining panel to decide if they recommend the project goes ahead, published on our website" into comments field
-        And user clicks on save and exit button
-        Then I am on the "your comments are saved" page
-        Then I can see email sent confimation text
+    Scenario: User continues with no comment
+      When I continue with an empty value in the comments field
+      Then the following error message should be presented: "Enter what you want to tell us about this proposed project"
+
+    Scenario: User saves with no comment
+      When I save and exit with an empty value in the comments field
+      Then the following error message should be presented: "Enter what you want to tell us about this proposed project"
+
+    Scenario: User continues with comment beyond max characters constraint
+      When I continue with a comment beyond the maximum characters allowed
+      Then the following error message should be presented: "What you want to tell us must be 65535 characters or less"
+
+    Scenario: User saves with no comment beyond max characters constraint
+      When I save and exit with a comment beyond the maximum characters allowed
+      Then the following error message should be presented: "What you want to tell us must be 65535 characters or less"
+
+    Scenario: User continues with comment at max characters constraint
+      When I continue with a comment at the maximum characters allowed
+      Then I am on the "Check your answers before registering" page
+
+    Scenario: User saves with comment at max characters constraint
+      When I save and exit with a comment at the maximum characters allowed
+      Then I am on the "your comments are saved" page
+      And I can see email sent confirmation text
+
+    Scenario: User continues with a short comment
+      When I continue with a short comment
+      Then I am on the "Check your answers before registering" page
+
+    Scenario: User saves with a short comment
+      When I save and exit with a short comment
+      Then I am on the "your comments are saved" page
+      And I can see email sent confirmation text
