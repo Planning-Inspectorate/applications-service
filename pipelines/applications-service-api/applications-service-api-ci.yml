@@ -10,9 +10,6 @@ resources:
       endpoint: Applications Token
       name: Planning-Inspectorate/common-pipeline-templates
 
-pool:
-  vmImage: ubuntu-latest
-
 extends:
   template: stages/wrapper_ci.yml@templates
   parameters:

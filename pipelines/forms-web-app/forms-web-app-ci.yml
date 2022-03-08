@@ -10,9 +10,6 @@ resources:
       endpoint: Applications Token
       name: Planning-Inspectorate/common-pipeline-templates
 
-pool:
-  vmImage: ubuntu-latest
-
 extends:
   template: stages/wrapper_ci.yml@templates
   parameters:
@@ -32,7 +29,7 @@ extends:
       - template: steps/azure_web_app_acr_push.yml@templates
         parameters:
           azurecrName: $(azurecrName)
-          dockerfilePath: $(Build.Repository.LocalPath)/pipelines/forms-web-app/Dockerfile
+          dockerfilePath: $(dockerFilePath)
           repository: $(repository)
           versionNumber: $(versionNumber)
           workingDirectory: $(Build.Repository.LocalPath)/packages/forms-web-app

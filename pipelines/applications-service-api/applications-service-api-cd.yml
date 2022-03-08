@@ -31,9 +31,6 @@ resources:
           include: 
             - main
 
-pool:
-  vmImage: ubuntu-latest
-
 extends:
   template: stages/wrapper_web_app_cd.yml@templates
   parameters:
