@@ -68,7 +68,7 @@ const VIEW = {
       CONFIRMATION: 'register/agent/registration-complete',
     },
     CONFIRM_EMAIL: 'register/confirm-email',
-    TOKEN_NOT_VERIFIED: 'register/not-verified',
+    TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
     TOKEN_EXPIRED: 'register/token-expired',
   },
   INTERESTED_PARTY_GUIDE: {

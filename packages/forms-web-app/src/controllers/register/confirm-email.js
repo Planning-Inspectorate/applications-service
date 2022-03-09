@@ -22,7 +22,7 @@ exports.postConfirmEmail = async (req, res) => {
 
   const response = await postAuthToken(token, email);
   if (response.resp_code === 404) {
-    res.render(VIEW.REGISTER.TOKEN_NOT_VERIFIED);
+    res.redirect(`/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=${token}`);
   } else {
     const { personal_data, comments, submissionPeriodClosed } = response.data;
 

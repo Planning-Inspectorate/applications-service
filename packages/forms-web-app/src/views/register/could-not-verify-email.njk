@@ -1,0 +1,18 @@
+{% extends "layouts/main.njk" %}
+
+{% block pageTitle %}
+  We could not verify your email address - Register to have your say about a national infrastructure project - National Infrastructure Planning
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">We could not verify your email address</h1>
+      <p class="govuk-body">Your email address does not match our records.</p>
+      <p class="govuk-body">You can go back to <a class="govuk-link" href="/interested-party/confirm-your-email?token={{token}}">enter your email address again</a>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
