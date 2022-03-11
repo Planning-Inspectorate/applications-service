@@ -1,8 +1,8 @@
 @testSuite @registration @organisation
 Feature: What is your full name page
-  As an organisation
+  As a representative from an organisation
   I want to provide my full name page
-  So that I can be registered as an interested party
+  So that my organisation can be registered as an interested party
 
   Background: Start registration as organisation
     Given I am registering as an organisation

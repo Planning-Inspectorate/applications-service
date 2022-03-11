@@ -2,7 +2,7 @@
 Feature: Are you 18 or over page
     As an organisation
     I want to indicate whether I am 18 years old or older
-    So that I can be registered as an interested party
+    So that my organisation can be registered as an interested party
 
     Background: Navigate to Are you 18 or over page
         Given I am registering as an organisation
@@ -11,7 +11,7 @@ Feature: Are you 18 or over page
     Scenario: Verify page title, Heading, error message and select yes and continue
         Then I am on the "Are you 18 or over? organisation" page
         And I click on the continue button
-        Then below error message should be presented on are you 18 or over page
+        Then the following error messages should be presented
             | ErrorMsg                         |
             | Select yes if you are 18 or over |
         When user selects "Yes" radio option on are you 18 or over page

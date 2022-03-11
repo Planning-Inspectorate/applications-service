@@ -7,14 +7,6 @@ And('I have been asked whether I am 18 or over', () => {
     cy.clickSaveAndContinue();
 });
 
-Then('below error message should be presented on are you 18 or over page', function (table) {
-    cy.assertErrorMessage(table)
-})
-
 When('user selects {string} radio option on are you 18 or over page', (radioChoice) => {
     cy.selectRadioYesOrNo(radioChoice)
-})
-
-Then('I am on the {string} page', (pageName) => {
-    cy.assertUserOnThePage(pageName)
 })
