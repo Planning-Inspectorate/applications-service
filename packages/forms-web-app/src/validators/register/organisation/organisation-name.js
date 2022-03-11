@@ -2,9 +2,10 @@ const { body } = require('express-validator');
 
 const rules = () => {
   return [
+    body('organisation-name').notEmpty().withMessage('Enter your organisation or charity name'),
     body('organisation-name')
-      .notEmpty()
-      .withMessage('Enter the name of your organisation or charity'),
+      .isLength({ min: 1, max: 255 })
+      .withMessage('Name of your organisation or charity name must be 255 characters or less'),
   ];
 };
 
