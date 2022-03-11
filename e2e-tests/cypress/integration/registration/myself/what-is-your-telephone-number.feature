@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: What is your telephone number page
   As a Test user
   I want to navigate to What is your telephone number page

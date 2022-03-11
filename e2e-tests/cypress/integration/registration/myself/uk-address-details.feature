@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: UK Address details page
     As a Test user
     I want to navigate to UK Address details page

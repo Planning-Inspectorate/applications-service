@@ -1,10 +1,10 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_FullName from "../full-name/PageObjects/PO_FullName";
+import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullName";
 import PO_WhatIsOrgName from "../what-is-name-of-organisation-or-charity/PageObjects/PO_WhatIsOrgName";
-import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetails";
-import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
-import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
-import PO_TellAboutProject from "../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
+import PO_AddressDetails from "../registration/myself/uk-address-details/PageObjects/PO_AddressDetails";
+import PO_EmailAddress from "../registration/myself/what-is-your-email-address/PageObjects/PO_EmailAddress";
+import PO_TeleNumber from "../registration/myself/what-is-your-telephone-number/PageObjects/PO_TeleNumber";
+import PO_TellAboutProject from "../registration/myself/what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
 import PO_WhatIsJobTitle from "../what-is-your-job-title-or-volunteer-role/PageObjects/PO_WhatIsJobTitle";
 import PO_AddAnotherComment from "../do-you-want-to-add-another-comment/PageObjects/PO_AddAnotherComment";
 const fullNamePage = new PO_FullName

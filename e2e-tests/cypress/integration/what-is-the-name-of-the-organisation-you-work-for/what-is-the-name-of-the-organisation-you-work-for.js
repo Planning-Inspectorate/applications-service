@@ -1,7 +1,7 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 
 import PO_NameofOrgYouWorkFor from "../what-is-the-name-of-the-organisation-you-work-for/PageObjects/PO_NameofOrgYouWorkFor";
-import PO_FullName from "../full-name/PageObjects/PO_FullName";
+import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullName";
 const fullNamePage = new PO_FullName()
 const nameOfOrgYouWorkFor = new PO_NameofOrgYouWorkFor;
 

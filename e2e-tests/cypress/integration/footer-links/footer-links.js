@@ -1,5 +1,5 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_WhoYouRegisterFor from "../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor";
+import PO_WhoYouRegisterFor from "../registration/who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor";
 const whoYouRegisterForPage = new PO_WhoYouRegisterFor()
 
 Given('I navigate to the who are you registering for page', () => {

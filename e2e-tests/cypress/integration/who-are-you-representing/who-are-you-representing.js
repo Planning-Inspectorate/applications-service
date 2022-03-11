@@ -1,9 +1,9 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
 import PO_WhoYouRepresenting from "./PageObjects/PO_WhoYouRepresenting";
-import PO_FullName from "../full-name/PageObjects/PO_FullName";
-import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
-import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
-import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetails";
+import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullName";
+import PO_EmailAddress from "../registration/myself/what-is-your-email-address/PageObjects/PO_EmailAddress";
+import PO_TeleNumber from "../registration/myself/what-is-your-telephone-number/PageObjects/PO_TeleNumber";
+import PO_AddressDetails from "../registration/myself/uk-address-details/PageObjects/PO_AddressDetails";
 import PO_NameofOrgYouWorkFor from "../what-is-the-name-of-the-organisation-you-work-for/PageObjects/PO_NameofOrgYouWorkFor";
 const whoYouRepresenting = new PO_WhoYouRepresenting
 const fullNamePage = new PO_FullName

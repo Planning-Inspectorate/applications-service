@@ -1,10 +1,10 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_FullName from "../full-name/PageObjects/PO_FullName";
-import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetails";
-import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
-import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
-import PO_TellAboutProject from "../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
-import PO_CyaBeforeReg from "../check-your-answers-before-registering/PageObjects/PO_CyaBeforeReg";
+import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullName";
+import PO_AddressDetails from "../registration/myself/uk-address-details/PageObjects/PO_AddressDetails";
+import PO_EmailAddress from "../registration/myself/what-is-your-email-address/PageObjects/PO_EmailAddress";
+import PO_TeleNumber from "../registration/myself/what-is-your-telephone-number/PageObjects/PO_TeleNumber";
+import PO_TellAboutProject from "../registration/myself/what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
+import PO_CyaBeforeReg from "../registration/myself/check-your-answers-before-registering/PageObjects/PO_CyaBeforeReg";
 import PO_WhoYouRepresenting from "../who-are-you-representing/PageObjects/PO_WhoYouRepresenting";
 import PO_NameofOrgYouWorkFor from "../what-is-the-name-of-the-organisation-you-work-for/PageObjects/PO_NameofOrgYouWorkFor";
 const fullNamePage = new PO_FullName
