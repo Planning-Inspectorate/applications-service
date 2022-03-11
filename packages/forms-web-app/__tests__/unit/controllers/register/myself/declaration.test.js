@@ -22,11 +22,16 @@ describe('controllers/register/myself/declaration', () => {
   });
 
   describe('postDeclaration', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CONFIRMATION}'`, async () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}'`, async () => {
       const mockRequest = {
         ...req,
-        body: {
-          'declaration-confirmed': 'true',
+        session: {
+          mySelfRegdata: {
+            email: 'anc@test.com',
+            ipRefNo: 'ABC123',
+          },
+          projectName: 'ABC',
+          caseRef: 'ABC123',
         },
       };
       await declarationController.postDeclaration(mockRequest, res);

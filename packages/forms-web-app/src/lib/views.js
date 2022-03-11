@@ -65,7 +65,7 @@ const VIEW = {
       CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
       DECLARATION: 'register/agent/declaration',
       REGISTRATION_SAVED: 'register/agent/registration-saved',
-      CONFIRMATION: 'register/agent/registration-complete',
+      REGISTRATION_COMPLETE: 'register/agent/registration-complete',
     },
     CONFIRM_EMAIL: 'register/confirm-email',
     TOKEN_NOT_VERIFIED: 'register/not-verified',

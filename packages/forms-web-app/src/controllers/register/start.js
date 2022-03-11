@@ -4,6 +4,10 @@ const { getAppData } = require('../../services/application.service');
 const logger = require('../../lib/logger');
 
 exports.getStart = async (req, res) => {
+  delete req.session.comment;
+  delete req.session.mySelfRegdata;
+  delete req.session.typeOfParty;
+
   const response = await getAppData(req.params.case_ref);
   if (response.resp_code === 200) {
     const appData = response.data;
