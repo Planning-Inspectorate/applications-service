@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: What do you want to tell us about this proposed project? page
     As a Test user
     I want to navigate to What do you want to tell us about this proposed project? page
@@ -25,11 +25,11 @@ Feature: What do you want to tell us about this proposed project? page
 
     Scenario: User continues with comment beyond max characters constraint
       When I continue with a comment beyond the maximum characters allowed
-      Then the following error message should be presented: "What you want to tell us must be 65535 characters or less"
+      Then the following error message should be presented: "What you want to tell us must be 65234 characters or less"
 
     Scenario: User saves with no comment beyond max characters constraint
       When I save and exit with a comment beyond the maximum characters allowed
-      Then the following error message should be presented: "What you want to tell us must be 65535 characters or less"
+      Then the following error message should be presented: "What you want to tell us must be 65234 characters or less"
 
     Scenario: User continues with comment at max characters constraint
       When I continue with a comment at the maximum characters allowed

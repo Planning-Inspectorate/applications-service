@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: Check your answers before registering page
     As a Test user
     I want to navigate to Check your answers before registering page

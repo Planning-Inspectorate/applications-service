@@ -1,5 +1,5 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_FullName from "../full-name/PageObjects/PO_FullName";
+import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullName";
 import PO_WhatIsJobTitle from "./PageObjects/PO_WhatIsJobTitle";
 import PO_WhatIsOrgName from "../what-is-name-of-organisation-or-charity/PageObjects/PO_WhatIsOrgName";
 const orgNamePage = new PO_WhatIsOrgName()

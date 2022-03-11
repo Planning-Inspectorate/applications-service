@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: What is your full name page
   As a Test user
   I want to navigate to what is your full name page

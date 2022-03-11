@@ -44,8 +44,15 @@ selection of tests by tags i.e. only those with `@wip` tag:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@wip"
 ```
+A much more efficient way of running a selection of tests by tag which avoids firing up a browser for skipped feature files:
+```
+node_modules/.bin/cypress-tags run --headed -b chrome --env demoDelay=1000 -e TAGS="@registration and @myself"
+```
 or like this to select a specific feature file:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 --spec cypress/integration/register-type-of-party.feature
 ```
-
+or like this to run feature files in a specific directory:
+```
+node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 --spec "cypress/integration/registration/myself/**/*.feature"
+```

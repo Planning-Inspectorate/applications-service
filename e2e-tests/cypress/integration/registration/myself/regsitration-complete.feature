@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: Registration complete page
     As a Test user
     I want to navigate to Regsitration complete page

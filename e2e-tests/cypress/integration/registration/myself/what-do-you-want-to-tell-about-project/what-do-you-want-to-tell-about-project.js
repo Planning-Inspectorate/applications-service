@@ -48,14 +48,14 @@ And('I save and exit with an empty value in the comments field', () => {
 
 And('I continue with a comment beyond the maximum characters allowed', () => {
   cy.fixture('comment-too-long.txt').then( (comment) => {
-    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment);
+    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
     cy.clickSaveAndContinue();
   });
 })
 
 And('I save and exit with a comment beyond the maximum characters allowed', () => {
   cy.fixture('comment-too-long.txt').then( (comment) => {
-    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment);
+    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
     cy.get('[data-cy="button-save-and-return"]').first().click();
     cy.wait(Cypress.env('demoDelay'));
   });
@@ -63,14 +63,14 @@ And('I save and exit with a comment beyond the maximum characters allowed', () =
 
 And('I continue with a comment at the maximum characters allowed', () => {
   cy.fixture('comment-max-length.txt').then( (comment) => {
-    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment);
+    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
     cy.clickSaveAndContinue();
   });
 })
 
 And('I save and exit with a comment at the maximum characters allowed', () => {
   cy.fixture('comment-max-length.txt').then( (comment) => {
-    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment);
+    tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
     cy.get('[data-cy="button-save-and-return"]').first().click();
     cy.wait(Cypress.env('demoDelay'));
   });

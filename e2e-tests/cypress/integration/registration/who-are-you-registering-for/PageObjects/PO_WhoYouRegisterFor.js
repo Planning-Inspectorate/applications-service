@@ -1,4 +1,6 @@
-class PO_WhoYouRegisterFor {
+import PageObject from "../../../PageObject";
+
+class PO_WhoYouRegisterFor extends PageObject {
 
     navigatetoTypeOfPartyPage() {
         cy.visit('/project-search', { failOnStatusCode: false });

@@ -1,7 +1,5 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PageObject from '../PageObject'
 import PO_FullName from "./PageObjects/PO_FullName";
-const pageObject = new PageObject()
 const fullNamePage = new PO_FullName()
 
 Given('I navigate to what is your full name page selecting {string}', (radiochoice) => {
@@ -18,11 +16,11 @@ Then('below error message should be presented on full name page', function (tabl
 })
 
 And('I can see the logo gov uk text', () => {
-    pageObject.validateHeaderLogo()
+  fullNamePage.validateHeaderLogo()
 })
 
 And('I can see the text This service is only for Application service', () => {
-    pageObject.validateHeaderContent()
+  fullNamePage.validateHeaderContent()
 })
 
 Then('I click on back link', () => {

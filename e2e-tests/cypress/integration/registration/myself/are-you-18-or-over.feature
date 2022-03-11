@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: Are you 18 or over page
     As a Test user
     I want to navigate to Are you 18 or over page

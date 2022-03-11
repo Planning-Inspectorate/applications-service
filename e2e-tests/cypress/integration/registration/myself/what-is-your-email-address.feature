@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @myself
 Feature: What is your email address page
   As a Test user
   I want to navigate to What is your email address page
