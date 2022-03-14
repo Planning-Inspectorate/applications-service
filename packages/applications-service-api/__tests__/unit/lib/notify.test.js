@@ -81,8 +81,9 @@ describe('sendMagicLinkToIP', () => {
       'email address': details.email,
       interested_party_name: details.ipName,
       ProjectName: details.projectName,
-      DateOfRelevantRepresentationClose: details.repCloseDate,
+      DateOfRelevantRepresentationClose: `${details.repCloseDate} at 11:59pm GMT`,
       'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
+      interested_party_number: details.ipRef,
     });
     expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
     expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
