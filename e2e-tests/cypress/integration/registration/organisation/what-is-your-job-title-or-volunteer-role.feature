@@ -1,11 +1,12 @@
-@testSuite
+@testSuite @registration @organisation
 Feature: What is your job title or volunteer role? page
   As a Test user
   I want to navigate to What is your job title or volunteer role? page
   So that I can verify the functionality
 
   Background: Navigate to What is your job title or volunteer role? page
-    Given I have been asked to provide my job title or volunteer role
+    Given I am registering as an organisation
+    And I have been asked to provide my job title or volunteer role
 
   Scenario Outline: User continues with invalid data
     When I continue with the value "<text>" in the job title/role field

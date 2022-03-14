@@ -1,4 +1,4 @@
-@testSuite @registration @myself
+@testSuite @registration @organisation
 Feature: Are you 18 or over page
     As an organisation
     I want to indicate whether I am 18 years old or older
