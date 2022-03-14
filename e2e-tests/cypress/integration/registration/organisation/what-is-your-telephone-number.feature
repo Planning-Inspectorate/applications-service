@@ -4,7 +4,7 @@ Feature: What is your telephone number page
   I want to provide my telephone number
   So that my organisation can be registered as an interested party
 
-  Background: Start registration as an organisation and progress to telphone number page
+  Background: Start registration as an organisation and progress to telephone number page
     Given I am registering as an organisation
     And I have been asked to provide my telephone number
 
