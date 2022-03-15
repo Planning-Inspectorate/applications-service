@@ -313,6 +313,13 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/registration-saved')
             break;
+        case "your comments are saved organisation":
+          cy.title().should('eq', "Your registration has been saved - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning");
+          cy.get('h1').invoke('text').then((text) => {
+            expect(text).to.contain('Your registration has been saved');
+          })
+          cy.url().should('include', '/registration-saved')
+          break;
         case "sitemap":
             cy.title().should('eq', "GOV.UK - The best place to find government services and information");
             cy.get('h1').invoke('text').then((text) => {
