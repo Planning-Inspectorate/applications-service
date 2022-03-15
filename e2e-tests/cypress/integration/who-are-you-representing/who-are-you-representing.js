@@ -4,13 +4,13 @@ import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullNam
 import PO_EmailAddress from "../registration/myself/what-is-your-email-address/PageObjects/PO_EmailAddress";
 import PO_TeleNumber from "../registration/myself/what-is-your-telephone-number/PageObjects/PO_TeleNumber";
 import PO_AddressDetails from "../registration/myself/uk-address-details/PageObjects/PO_AddressDetails";
-import PO_NameofOrgYouWorkFor from "../what-is-the-name-of-the-organisation-you-work-for/PageObjects/PO_NameofOrgYouWorkFor";
+import OrganisationNamePage from "../registration/organisation/organisation-name/PageObjects/OrganisationNamePage";
 const whoYouRepresenting = new PO_WhoYouRepresenting
 const fullNamePage = new PO_FullName
 const emailAddressPage = new PO_EmailAddress
 const teleNumberPage = new PO_TeleNumber
 const addressDetails = new PO_AddressDetails
-const nameOfOrgYouWorkFor = new PO_NameofOrgYouWorkFor
+const organisationNamePage = new OrganisationNamePage
 
 Given('I navigate to UK address details page as a representative of a person', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
@@ -21,7 +21,7 @@ Given('I navigate to UK address details page as a representative of a person', (
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("RepresentativeTest MiddleName LastName");
     cy.clickSaveAndContinue();
-    nameOfOrgYouWorkFor.enterNameOfOrgYouWorkFor("Organisation Name");
+    organisationNamePage.enterTextIntoOrganisationNameField("Organisation Name");
     cy.clickSaveAndContinue();
     emailAddressPage.enterTextIntoEmailField("Representative_test@gmail.com");
     cy.clickSaveAndContinue();

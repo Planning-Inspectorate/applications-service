@@ -47,13 +47,15 @@
       {% endblock %}
 
       {% block backButton %}
-        {{ govukBackLink({
-          text: "Back",
-          href: "javascript:history.back()",
-          attributes: {
-            'data-cy': 'back'
-          }
-        }) }}
+        {% if not hideBackLink %}
+          {{ govukBackLink({
+            text: "Back",
+            href: "javascript:history.back()",
+            attributes: {
+              'data-cy': 'back'
+            }
+          }) }}
+        {% endif %}
       {% endblock %}
 
       <div class="govuk-main-wrapper {{ mainClasses }}">
