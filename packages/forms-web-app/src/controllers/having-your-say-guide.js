@@ -1,4 +1,5 @@
 const { VIEW } = require('../lib/views');
+const { nsipProjectLink } = require('../lib/nsip-project-link');
 
 exports.getHavingYourSayAboutProject = (_, res) => {
   res.render(VIEW.INTERESTED_PARTY_GUIDE.INTERESTED_PARTY);
@@ -11,7 +12,7 @@ exports.getHavingYourSayPreApp = (_, res) => {
 exports.getRegisteringToHaveYourSay = (req, res) => {
   res.render(VIEW.INTERESTED_PARTY_GUIDE.REGISTER_TO_HAVE_YOUR_SAY, {
     projectName: req.session.projectName,
-    caseRef: req.session.caseRef,
+    nsipProjectLink: req.session.appData ? nsipProjectLink(req.session.appData) : '',
   });
 };
 
