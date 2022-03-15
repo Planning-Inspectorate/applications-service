@@ -38,7 +38,7 @@
           <p class="govuk-body">We will use this to get in touch with you about the project</p>
           {{ govukInput({
               label: {
-                text: 'Address line 1'
+                html: "Address line 1 <span class='govuk-visually-hidden'>of 3</span>"
               },
               id: "address-line-1",
               name: "line1",
@@ -47,7 +47,7 @@
 
           {{ govukInput({
               label: {
-                text: 'Address line 2 (Optional)'
+                html: "Address line 2 <span class='govuk-visually-hidden'>of 3</span> (Optional)"
               },
               id: "address-line-2",
               name: "line2",
@@ -56,7 +56,8 @@
 
           {{ govukInput({
               label: {
-                text: "Address line 3 (Optional)"
+                html: "Address line 3 <span class='govuk-visually-hidden'>of 3</span> (Optional)"
+
               },
               classes: "govuk-!-width-two-thirds",
               id: "address-line-3",
