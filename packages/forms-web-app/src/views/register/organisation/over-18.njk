@@ -41,13 +41,13 @@
             items: [
                 {
                   value: "yes",
-                  text: "Yes",
+                  html: "Yes <span class='govuk-visually-hidden'>, I’m 18 or older</span>",
                   attributes: { "data-cy": "answer-yes"},
                   checked: over18 === "yes"
                 },
                 {
                   value: "no",
-                  text: "No",
+                  html: "No <span class='govuk-visually-hidden'>, I’m under 18</span>",
                   attributes: { "data-cy": "answer-no"},
                   checked: over18 === "no"
                 }
