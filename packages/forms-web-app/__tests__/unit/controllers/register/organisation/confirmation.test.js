@@ -1,7 +1,7 @@
 const confirmationController = require('../../../../../src/controllers/register/organisation/confirmation');
 const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
-const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
+
 jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
@@ -37,11 +37,7 @@ describe('controllers/register/organisation/confirmation', () => {
   describe('getConfirmation', () => {
     it('should call the correct template', async () => {
       await confirmationController.getConfirmation(req, res);
-      expect(req.session.comment).toBe(undefined);
-      expect(req.session.typeOfParty).toBe(undefined);
-      expect(req.session.orgRegdata).toBe(undefined);
       expect(res.render).toHaveBeenCalledWith('register/organisation/confirmation', {
-        ipRefNo: '30020010',
         email: 'anc@test.com',
         projectName: 'ABC',
         caseRef: 'ABC123',
