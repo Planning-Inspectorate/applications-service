@@ -23,8 +23,10 @@ Feature: What is your job title or volunteer role? page
     Then I am on the "what is your email address? organisation" page
 
     Examples:
-      | text                                                              |
-      | Administration Officer                                            |
-      | qJr3qypBAeTMVBPLUHa3hDAM8FwKiVMZqCJLAHgyewrjFv9cmc5CG9VETkzE8ypB  |
+      | text                                                             |
+      | Administration Officer                                           |
+      | AO                                                               |
+      | CIO                                                              |
+      | qJr3qypBAeTMVBPLUHa3hDAM8FwKiVMZqCJLAHgyewrjFv9cmc5CG9VETkzE8ypB |
       | Some long job title or volunteer role within maximum characters! |
 
