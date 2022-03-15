@@ -50,8 +50,9 @@ async function sendMagicLinkToIP(details) {
         'email address': details.email,
         interested_party_name: details.ipName,
         ProjectName: details.projectName,
-        DateOfRelevantRepresentationClose: details.repCloseDate,
+        DateOfRelevantRepresentationClose: `${details.repCloseDate} at 11:59pm GMT`,
         'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
+        interested_party_number: details.ipRef,
       })
       .setReference(details.ipRef)
       .sendEmail();
