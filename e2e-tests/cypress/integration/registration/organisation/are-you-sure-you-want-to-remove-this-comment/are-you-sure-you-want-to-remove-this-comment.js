@@ -1,20 +1,20 @@
-import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import PO_FullName from "../registration/myself/full-name/PageObjects/PO_FullName";
-import PO_AddressDetails from "../registration/myself/uk-address-details/PageObjects/PO_AddressDetails";
-import PO_EmailAddress from "../registration/myself/what-is-your-email-address/PageObjects/PO_EmailAddress";
-import PO_TeleNumber from "../registration/myself/what-is-your-telephone-number/PageObjects/PO_TeleNumber";
-import PO_TellAboutProject from "../registration/myself/what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
-import PO_CyaOrg from "./PageObjects/PO_CyaOrg";
-import PO_WhatIsOrgName from "../what-is-name-of-organisation-or-charity/PageObjects/PO_WhatIsOrgName";
+import { Given, Then, And } from "cypress-cucumber-preprocessor/steps";
+import PO_FullName from "../full-name/PageObjects/PO_FullName";
+import OrganisationNamePage from "../organisation-name/PageObjects/OrganisationNamePage";
 import PO_WhatIsJobTitle from "../what-is-your-job-title-or-volunteer-role/PageObjects/PO_WhatIsJobTitle";
+import PO_AddressDetails from "../uk-address-details/PageObjects/PO_AddressDetails";
+import PO_EmailAddress from "../what-is-your-email-address/PageObjects/PO_EmailAddress";
+import PO_TeleNumber from "../what-is-your-telephone-number/PageObjects/PO_TeleNumber";
+import PO_TellAboutProject from "../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject";
+import PO_AddAnotherComment from "../do-you-want-to-add-another-comment/PageObjects/PO_AddAnotherComment";
 const fullNamePage = new PO_FullName
+const orgNamePage = new OrganisationNamePage
+const jobTitlePage = new PO_WhatIsJobTitle
 const addressDetails = new PO_AddressDetails
 const emailAddressPage = new PO_EmailAddress
 const teleNumberPage = new PO_TeleNumber
 const tellAboutProject = new PO_TellAboutProject
-const cyaOrg = new PO_CyaOrg
-const orgNamePage = new PO_WhatIsOrgName
-const jobTitlePage = new PO_WhatIsJobTitle
+const addAnotherComment = new PO_AddAnotherComment
 
 Given('I navigate to UK address details page using organisation route', () => {
     cy.visit('/project-search', { failOnStatusCode: false });
@@ -27,11 +27,9 @@ Given('I navigate to UK address details page using organisation route', () => {
     cy.clickSaveAndContinue();
     cy.selectRadioYesOrNo("Yes");
     cy.clickSaveAndContinue();
-    orgNamePage.enterTextIntoOrgNameField("Test Organisation");
+    orgNamePage.enterTextIntoOrganisationNameField("Test Organisation");
     cy.clickSaveAndContinue();
     jobTitlePage.enterTextIntoJobTitleField("Test Volunteer Title");
-    cy.clickSaveAndContinue();
-    emailAddressPage.enterTextIntoEmailField("test@gmail.com");
     cy.clickSaveAndContinue();
 });
 
@@ -45,6 +43,10 @@ And('User clicks on continue button', () => {
 
 Then('I am on the {string} page', (pageName) => {
     cy.assertUserOnThePage(pageName)
+})
+
+Then('below error message should be presented on Are you sure you want to remove this comment page', function (table) {
+    cy.assertErrorMessage(table)
 })
 
 And('I enter {string} into email address field', (dataInput) => {
@@ -63,23 +65,10 @@ And('I enter {string} into topic field', (dataInput) => {
     tellAboutProject.enterTextIntoTopicField(dataInput);
 })
 
-And('I verify below data is present on Check your answers before registering page', function (table) {
-    cyaOrg.assertDataOnPage(table)
+And('User clicks on {string} link', (link) => {
+    addAnotherComment.clickOnLink(link);
 })
 
-And('I click on {string} change link', (linkType) => {
-    cyaOrg.clickOnChangeLink(linkType);
-})
-
-And('User clicks on accept and continue button for {string}', (linkType) => {
-    switch (linkType) {
-        case "myself": cy.clickOnHref('/register/myself/declaration');
-            break;
-        case "organisation": cy.clickOnHref('/register/organisation/declaration');
-            break;
-    }
-})
-
-When('user selects {string} radio option on Do you want to add another comment page', (radioChoice) => {
-    cy.selectRadioYesOrNo(radioChoice)
+And('user selects {string} radio option on Are you sure you want to remove this comment page', (radioChoice) => {
+    cy.selectRadioYesOrNo(radioChoice);
 })

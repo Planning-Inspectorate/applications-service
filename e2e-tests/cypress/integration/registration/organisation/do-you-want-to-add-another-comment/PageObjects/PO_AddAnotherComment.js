@@ -8,7 +8,7 @@ class PO_AddAnotherComment {
             case "remove":
                 cy.get('[data-cy="comments-remove-0"]').click();
                 break;
-            default: throw console.error('uanble to find specified radio option: ' + linkType);
+            default: throw console.error('unable to find specified radio option: ' + linkType);
         }
     }
 

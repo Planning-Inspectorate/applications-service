@@ -6,11 +6,11 @@ Feature: Are you sure you want to remove this comment? page
 
     Background: Navigate to Are you sure you want to remove this comment? page
         Given I navigate to UK address details page using organisation route
+      And I enter "test@gmail.com" into email address field
+      And User clicks on continue button
         And I enter below data into address details page
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
-        And User clicks on continue button
-        And I enter "test@gmail.com" into email address field
         And User clicks on continue button
         And I enter "1234567899" into telephone number field
         And User clicks on continue button

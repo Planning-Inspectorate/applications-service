@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @organisation
 Feature: Organisation Registration complete page
     As a Test user
     I want to navigate to Organisation Regsitration complete page

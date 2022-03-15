@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @registration @organisation
 Feature: Check your answers before registering organisation page
     As a Test user
     I want to navigate to Check your answers before registering organisation page

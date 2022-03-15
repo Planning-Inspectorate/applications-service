@@ -27,7 +27,7 @@ Given('I have been asked for comments on a proposed project', () => {
   cy.assertUserOnThePage('What is your job title or volunteer role?')
   jobTitlePage.enterTextIntoJobTitleField("Test job title")
   cy.clickSaveAndContinue();
-  emailAddressPage.enterTextIntoEmailField('test@test.com')
+  emailAddressPage.enterTextIntoEmailField('testpins2@gmail.com')
   cy.clickSaveAndContinue();
   addressDetails.enterTextFromObjectIntoAddressFields({
     AddressLine1: 'Address Line 1', PostCode: 'NE27 0QQ', Country: 'United Kingdom',
