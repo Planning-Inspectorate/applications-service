@@ -1,4 +1,5 @@
 const { VIEW } = require('../../../lib/views');
+const { nsipProjectLink } = require('../../../lib/nsip-project-link');
 
 exports.getConfirmation = async (req, res) => {
   const { ipRefNo, email } = req.session.orgRegdata;
@@ -9,8 +10,7 @@ exports.getConfirmation = async (req, res) => {
     res.render(VIEW.REGISTER.ORGANISATION.CONFIRMATION, {
       ipRefNo,
       email,
-      projectName: req.session.projectName,
-      caseRef: req.session.caseRef,
+      nsipProjectLink: nsipProjectLink(req.session.appData),
     });
   }
 };
