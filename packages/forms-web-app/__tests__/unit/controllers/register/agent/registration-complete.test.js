@@ -19,6 +19,10 @@ describe('controllers/register/agent/registration-complete', () => {
         },
         projectName: 'ABC',
         caseRef: 'ABC123',
+        appData: {
+          ProjectName: 'ABC',
+          Region: 'eastern',
+        },
         comment: {
           comment: 'comment',
         },
@@ -38,8 +42,7 @@ describe('controllers/register/agent/registration-complete', () => {
       await confirmationController.getConfirmation(req, res);
       expect(res.render).toHaveBeenCalledWith('register/agent/registration-complete', {
         email: 'anc@test.com',
-        projectName: 'ABC',
-        caseRef: 'ABC123',
+        nsipProjectLink: 'https://infrastructure.planninginspectorate.gov.uk/projects/eastern/abc',
       });
     });
   });
