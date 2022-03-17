@@ -52,7 +52,3 @@ And('I click on get involved in the preliminary meeting link', () => {
 And('the page does not include a link to a project', () => {
   cy.get('#project-link').should('not.exist');
 })
-
-And('the page includes a link to the project', () => {
-  cy.get('#project-link').should("have.attr", "href", "https://infrastructure.planninginspectorate.gov.uk/projects/yorkshire-and-the-humber/north-lincolnshire-green-energy-park");
-})
