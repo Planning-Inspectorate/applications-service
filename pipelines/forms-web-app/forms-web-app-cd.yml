@@ -45,7 +45,7 @@ extends:
     projectName: $(projectName) 
     releaseVersion: $(version.MajorMinor)
     repository: $(repository)
-    ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI') }}:
+    ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'ResourceTrigger') }}:
       environments:
         - name: Dev
     ${{ else }}:
