@@ -5,7 +5,7 @@ Feature: What is their email address? page
     So that I can register on their behalf as an interested party
 
     Background: Start registration as agent and progress to What is their email address? page
-        Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
+        Given I am registering as an "Agent"
         And I have been asked to provide representee email address
 
     Scenario: User click on back link

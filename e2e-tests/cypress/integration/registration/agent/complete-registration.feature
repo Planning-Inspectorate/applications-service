@@ -5,7 +5,7 @@ Feature: Complete registration as Agent representing a person journey
     So that I can register on their behalf as an interested party
 
     Background: Start registration as an agent and progress to check your answers page as a representative of a person
-        Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
+        Given I am registering as an "Agent"
         And I have been asked to check my answers
 
     Scenario: verify page title, heading, data and complete Agent representing a person journey

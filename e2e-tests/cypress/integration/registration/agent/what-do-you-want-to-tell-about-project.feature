@@ -5,7 +5,7 @@ Feature: What do you want to tell us about this proposed project? page
     So that my representee can have their views on a proposed project considered
 
     Background: Start registration as an agent and progress to comments page
-        Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
+        Given I am registering as an "Agent"
         And I have been asked to provide comments on a proposed project
 
     Scenario: Verify page title, heading and content

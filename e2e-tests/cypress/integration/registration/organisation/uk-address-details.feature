@@ -5,7 +5,7 @@ Feature: UK Address details page
   So that my organisation can be registered as an interested party
 
   Background: Start registration as an organisation and progress to postal address page
-    Given I am registering as an "An organisation I work or volunteer for"
+    Given I am registering as an "Organisation"
     And I have been asked to provide my postal address
 
   Scenario: User continues with no data

@@ -5,7 +5,7 @@ Feature: What is the full name of the person you are representing? page
     So that I can register on their behalf as an interested party
 
     Background: Start registration as an agent and progress to What is the full name of the person you are representing? page
-        Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
+        Given I am registering as an "Agent"
         And I have been asked to provide details of the name of the person you are representing
 
     Scenario: User click on back link

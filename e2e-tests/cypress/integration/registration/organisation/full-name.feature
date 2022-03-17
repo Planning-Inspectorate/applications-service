@@ -5,7 +5,7 @@ Feature: What is your full name page
   So that my organisation can be registered as an interested party
 
   Background: Start registration as organisation
-    Given I am registering as an "An organisation I work or volunteer for"
+    Given I am registering as an "Organisation"
 
   Scenario: User click on back link
     When I click on back link

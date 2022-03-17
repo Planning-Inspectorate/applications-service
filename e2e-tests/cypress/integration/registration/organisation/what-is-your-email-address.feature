@@ -5,7 +5,7 @@ Feature: What is your email address page
   So that my organisation can be registered as an interested party
 
   Background: Start registration as an organisation and progress to email address page
-    Given I am registering as an "An organisation I work or volunteer for"
+    Given I am registering as an "Organisation"
     And I have been asked to provide my email address
 
   Scenario Outline: User continues with invalid data

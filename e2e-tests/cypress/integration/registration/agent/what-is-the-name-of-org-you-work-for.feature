@@ -5,7 +5,7 @@ Feature: What is the name of the organisation you work for? page
     So that I can register on their behalf as an interested party
 
     Background: Start registration as agent and progress to What is the name of the organisation you work for? page
-        Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
+        Given I am registering as an "Agent"
         And I have been asked what is the name of the organisation you work for
 
     Scenario: User click on back link

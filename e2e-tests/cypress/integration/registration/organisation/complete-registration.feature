@@ -5,7 +5,7 @@ Feature: Organisation Registration complete page
     So that I can verify the functionality
 
   Background: Start registration as an organisation and progress to check answers page
-    Given I am registering as an "An organisation I work or volunteer for"
+    Given I am registering as an "Organisation"
     And I have been asked to check my answers
 
     Scenario: Complete registration

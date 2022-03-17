@@ -5,7 +5,7 @@ Feature: What is your full name page
   So that I can register on their behalf as an interested party 
 
   Background: Start registration as an agent and progress to What is your full name page
-    Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
+    Given I am registering as an "Agent"
 
   Scenario: User click on back link
     When I click on back link
