@@ -5,7 +5,7 @@ Feature: What is your job title or volunteer role? page
   So that I can verify the functionality
 
   Background: Navigate to What is your job title or volunteer role? page
-    Given I am registering as an organisation
+    Given I am registering as an "An organisation I work or volunteer for"
     And I have been asked to provide my job title or volunteer role
 
   Scenario Outline: User continues with invalid data

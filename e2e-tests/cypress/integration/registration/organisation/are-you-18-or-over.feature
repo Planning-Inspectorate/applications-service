@@ -5,7 +5,7 @@ Feature: Are you 18 or over page
     So that my organisation can be registered as an interested party
 
     Background: Navigate to Are you 18 or over page
-        Given I am registering as an organisation
+        Given I am registering as an "An organisation I work or volunteer for"
         And I have been asked whether I am 18 or over
 
     Scenario: Verify page title, Heading, error message and select yes and continue

@@ -5,7 +5,7 @@ Feature: What is your telephone number page
   So that my organisation can be registered as an interested party
 
   Background: Start registration as an organisation and progress to telephone number page
-    Given I am registering as an organisation
+    Given I am registering as an "An organisation I work or volunteer for"
     And I have been asked to provide my telephone number
 
   Scenario Outline: User continues with invalid data

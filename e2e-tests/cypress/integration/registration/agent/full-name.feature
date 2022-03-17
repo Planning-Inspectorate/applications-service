@@ -1,11 +1,11 @@
-@testSuite @registration @organisation
+@testSuite @registration @agent
 Feature: What is your full name page
-  As a representative from an organisation
-  I want to provide my full name page
-  So that my organisation can be registered as an interested party
+  As a agent registering on behalf of another person, a family or organisation I do not work for
+  I want to provide my full name
+  So that I can register on their behalf as an interested party 
 
-  Background: Start registration as organisation
-    Given I am registering as an "An organisation I work or volunteer for"
+  Background: Start registration as an agent and progress to What is your full name page
+    Given I am registering as an "On behalf of another person, a family group or an organisation I do not work for"
 
   Scenario: User click on back link
     When I click on back link
@@ -13,7 +13,7 @@ Feature: What is your full name page
 
   Scenario: Navigate to full name page and verify the content in the page
     Then I can see the logo gov uk text
-    And I am on the "what is your full name? organisation" page
+    And I am on the "what is your full name? agent" page
     And I can see the text This service is only for Application service
 
   Scenario Outline: User continues with invalid data
@@ -30,7 +30,7 @@ Feature: What is your full name page
 
   Scenario Outline: User continues with valid data
     When I continue with the value "<text>" in the full name field
-    Then I am on the "Are you 18 or over? organisation" page
+    Then I am on the "what is the name of the organisation you work for?" page
 
     Examples:
       | text                                                             |

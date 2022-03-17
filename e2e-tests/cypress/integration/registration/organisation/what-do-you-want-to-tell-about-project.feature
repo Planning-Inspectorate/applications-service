@@ -5,7 +5,7 @@ Feature: What do you want to tell us about this proposed project? page
   So that my organisation can have their views on a proposed project considered
 
     Background: Start registration as an organisation and progress to comments page
-      Given I am registering as an organisation
+      Given I am registering as an "An organisation I work or volunteer for"
       And I have been asked for comments on a proposed project
 
     Scenario: Verify page title, heading and content

@@ -6,7 +6,7 @@ module.exports = (radioChoice) => {
         case "An organisation I work or volunteer for":
             cy.get('[data-cy="answer-organisation"]').click();
             break;
-        case "On behalf of another person or organisation":
+        case "On behalf of another person, a family group or an organisation I do not work for":
             cy.get('[data-cy="answer-behalf"]').click();
             break;
         default: throw console.error('uanble to find specified radio option: ' + radioChoice);
