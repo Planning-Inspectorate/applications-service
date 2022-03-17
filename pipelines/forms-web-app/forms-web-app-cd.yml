@@ -34,7 +34,7 @@ resources:
 extends:
   template: stages/wrapper_web_app_cd.yml@templates
   parameters:
-    appName: pins-app-applications-service-ni-wfe-$(ENVIRONMENT)-uks-001
+    appName: pins-app-applications-service-applications-wfe-$(ENVIRONMENT)-uks-001
     artifactSourcePipeline: forms-web-app CI
     azurecrName: $(azurecrName)
     azurecrServiceConnection: $(azurecrServiceConnection)
@@ -45,7 +45,7 @@ extends:
     projectName: $(projectName) 
     releaseVersion: $(version.MajorMinor)
     repository: $(repository)
-    ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI') }}:
+    ${{ if in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'ResourceTrigger') }}:
       environments:
         - name: Dev
     ${{ else }}:

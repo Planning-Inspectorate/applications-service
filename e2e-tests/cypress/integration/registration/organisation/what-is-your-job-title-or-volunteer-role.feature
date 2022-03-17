@@ -5,11 +5,11 @@ Feature: What is your job title or volunteer role? page
   So that I can verify the functionality
 
   Background: Navigate to What is your job title or volunteer role? page
-    Given I am registering as an organisation
+    Given I am registering as an "Organisation"
     And I have been asked to provide my job title or volunteer role
 
   Scenario Outline: User continues with invalid data
-    When I continue with the value "<text>" in the job title/role field
+    When I continue with the value "<text>" in the job title or role field
     Then the following error message should be presented: "<error message>"
 
     Examples:
@@ -19,12 +19,14 @@ Feature: What is your job title or volunteer role? page
       | Some really long job title or volunteer role which exceeds max chars | Your job title or volunteer role must be 64 characters or less |
 
   Scenario Outline: User continues with valid data
-    When I continue with the value "<text>" in the job title/role field
+    When I continue with the value "<text>" in the job title or role field
     Then I am on the "what is your email address? organisation" page
 
     Examples:
-      | text                                                              |
-      | Administration Officer                                            |
-      | qJr3qypBAeTMVBPLUHa3hDAM8FwKiVMZqCJLAHgyewrjFv9cmc5CG9VETkzE8ypB  |
+      | text                                                             |
+      | Administration Officer                                           |
+      | AO                                                               |
+      | CIO                                                              |
+      | qJr3qypBAeTMVBPLUHa3hDAM8FwKiVMZqCJLAHgyewrjFv9cmc5CG9VETkzE8ypB |
       | Some long job title or volunteer role within maximum characters! |
 

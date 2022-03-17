@@ -12,6 +12,10 @@ describe('controllers/having-your-say-guide', () => {
       session: {
         caseRef: 'EN010009',
         projectName: 'St James Barton Giant Wind Turbine',
+        appData: {
+          ProjectName: 'St James Barton Giant Wind Turbine',
+          Region: 'eastern',
+        },
       },
     };
     res = mockRes();
@@ -37,7 +41,10 @@ describe('controllers/having-your-say-guide', () => {
       await interestedPartyGuideController.getRegisteringToHaveYourSay(req, res);
       expect(res.render).toHaveBeenCalledWith(
         VIEW.INTERESTED_PARTY_GUIDE.REGISTER_TO_HAVE_YOUR_SAY,
-        { caseRef: 'EN010009', projectName: 'St James Barton Giant Wind Turbine' }
+        {
+          projectName: 'St James Barton Giant Wind Turbine',
+          nsipProjectLink: 'https://infrastructure.planninginspectorate.gov.uk/projects/eastern/st-james-barton-giant-wind-turbine',
+        }
       );
     });
   });

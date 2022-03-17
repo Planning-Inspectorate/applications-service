@@ -19,7 +19,7 @@ Given('I have been asked to provide my job title or volunteer role', () => {
     cy.assertUserOnThePage('What is your job title or volunteer role?')
 });
 
-When('I continue with the value {string} in the job title\\/role field', (inputData) => {
+When('I continue with the value {string} in the job title or role field', (inputData) => {
     jobTitlePage.enterTextIntoJobTitleField(inputData);
     cy.clickSaveAndContinue();
 })
