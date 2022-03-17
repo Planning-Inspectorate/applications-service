@@ -15,7 +15,9 @@ describe('controllers/register/agent/registration-complete', () => {
       ...mockReq(),
       session: {
         behalfRegdata: {
-          email: 'anc@test.com',
+          representor: {
+            email: 'anc@test.com',
+          },
         },
         projectName: 'ABC',
         caseRef: 'ABC123',
