@@ -5,7 +5,7 @@ Feature: Organisation name page
   So that my organisation can be registered as an interested party
 
   Background: Start registration as organisation
-    Given I am registering as an organisation
+    Given I am registering as an "Organisation"
     And I have been asked for the name of my organisation or charity
 
   Scenario: User click on back link
