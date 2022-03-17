@@ -1,7 +1,7 @@
-@testSuite @registration @agent
+@testSuite @registration @agent @completion
 Feature: Complete registration as Agent representing a person journey
     As a agent registering on behalf of another person, a family or organisation I do not work for
-    I want to verify my answers before completing registration 
+    I want to verify my answers before completing registration
     So that I can register on their behalf as an interested party
 
     Background: Start registration as an agent and progress to check your answers page as a representative of a person
@@ -28,3 +28,4 @@ Feature: Complete registration as Agent representing a person journey
         Then I am on the "declaration registering on behalf of someone else" page
         And User clicks on accept and register button
         Then I am on the "registration complete registering on behalf of someone else" page
+        And the page includes a link to the project

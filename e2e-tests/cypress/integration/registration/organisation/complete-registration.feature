@@ -1,4 +1,4 @@
-@testSuite @registration @organisation
+@testSuite @registration @organisation @completion
 Feature: Organisation Registration complete page
     As a Test user
     I want to navigate to Organisation Regsitration complete page
@@ -12,3 +12,4 @@ Feature: Organisation Registration complete page
         When I confirm my answers are correct
         And I accept the declaration
         Then I am on the "Registration complete organisation" page
+        And the page includes a link to the project

@@ -1,7 +1,7 @@
-@testSuite @registration @myself
+@testSuite @registration @myself @completion
 Feature: Registration complete page
     As a Test user
-    I want to navigate to Regsitration complete page
+    I want to navigate to Registration complete page
     So that I can verify the functionality
 
     Background: Complete registration journey
@@ -19,3 +19,4 @@ Feature: Registration complete page
 
     Scenario: verify page title, heading
         Then I am on the "Registration complete" page
+        And the page includes a link to the project

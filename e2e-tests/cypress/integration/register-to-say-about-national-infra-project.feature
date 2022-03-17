@@ -4,11 +4,15 @@ Feature: Registering to have your say about a national infrastructure project pa
     I want to navigate to Registering to have your say about a national infrastructure project page
     So that I can verify the functionality
 
-    Background: Navigate to page
-        Given I navigate to Registering to have your say about a national infrastructure project page
+    Background: Navigate to initial page within "Have your say" guide
+        Given I have navigated to the "Have your say" guide
+        And I select the "How to register link"
 
     Scenario: verify page title and click Nationally Significant Infrastructure planning process step by step link
+        Given I have navigated to the "Have your say" guide
+        When I select the "How to register link"
         Then I am on the "registering to have your say about a national infrastructure project" page
+        And the page does not include a link to a project
         And I verify below links present on Registering to have your say about a national infrastructure project
             | Links                     |
             | Who can register          |
@@ -19,6 +23,13 @@ Feature: Registering to have your say about a national infrastructure project pa
             | More detailed advice      |
         When I click on "The Nationally Significant Infrastructure planning process step by step" link
         Then I am on the "Having your say about a national infrastructure project" page
+
+    Scenario: View a project before selecting "Have your say during the examination of the project" link
+        Given I have viewed the overview page for a project
+        And I have selected the "Have your say" link from the related guides section
+        When I select the "How to register link"
+        Then I am on the "registering to have your say about a national infrastructure project" page
+        And the page includes a link to the project
 
     Scenario: click taking part in the pre-application stage link
         When I click on "taking part in the pre-application stage" link
