@@ -10,7 +10,6 @@ RUN mkdir -p /opt/app/data
 
 ADD api api
 ADD src src
-ADD database database
 ADD __tests__ __tests__
 ADD jest.config.js jest.config.js
 ADD data data
