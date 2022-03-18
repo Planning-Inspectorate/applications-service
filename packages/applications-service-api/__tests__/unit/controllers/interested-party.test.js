@@ -354,7 +354,7 @@ describe('updateComments', () => {
   it('should update comments for party', async () => {
     const req = httpMocks.createRequest({
       params: {
-        ID: 30000120,
+        ID: '30000120',
       },
       body: {
         comments: [
