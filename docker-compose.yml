@@ -19,6 +19,12 @@ services:
       SERVER_SHOW_ERRORS: 'true'
       TRIALIST_DATA_PATH: /opt/app/data/trialists.json
       NODE_ENV: local
+      MYSQL_USERNAME: pins
+      MYSQL_PASSWORD: pins
+      MYSQL_DATABASE: ipclive
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_DIALECT: mysql
       DOCUMENTS_PER_PAGE: '20'
       DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/
       SRV_NOTIFY_BASE_URL: https://api.notifications.service.gov.uk/
