@@ -36,7 +36,7 @@ describe('controllers/about-the-application', () => {
     req = {
       ...mockReq(),
       params: {
-        page: 1,
+        page: '1',
         case_ref: 'ABCD1234',
       },
       body: {
@@ -84,6 +84,19 @@ describe('controllers/about-the-application', () => {
         caseRef: 'ABCD1234',
         pageData: pageData,
         paginationData: [1],
+      });
+    });
+
+    it('should call the correct template if received 404', async () => {
+      searchDocumentList.mockImplementation(() =>
+        Promise.resolve({
+          resp_code: 404,
+        })
+      );
+      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
+        projectName: 'ABC',
+        caseRef: 'ABCD1234',
       });
     });
   });

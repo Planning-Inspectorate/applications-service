@@ -43,7 +43,25 @@ describe('controllers/having-your-say-guide', () => {
         VIEW.INTERESTED_PARTY_GUIDE.REGISTER_TO_HAVE_YOUR_SAY,
         {
           projectName: 'St James Barton Giant Wind Turbine',
-          nsipProjectLink: 'https://infrastructure.planninginspectorate.gov.uk/projects/eastern/st-james-barton-giant-wind-turbine',
+          nsipProjectLink:
+            'https://infrastructure.planninginspectorate.gov.uk/projects/eastern/st-james-barton-giant-wind-turbine',
+        }
+      );
+    });
+    it('should call the correct template with blank project link if no app session data', async () => {
+      req = {
+        ...mockReq(),
+        session: {
+          caseRef: 'EN010009',
+          projectName: 'St James Barton Giant Wind Turbine',
+        },
+      };
+      await interestedPartyGuideController.getRegisteringToHaveYourSay(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        VIEW.INTERESTED_PARTY_GUIDE.REGISTER_TO_HAVE_YOUR_SAY,
+        {
+          projectName: 'St James Barton Giant Wind Turbine',
+          nsipProjectLink: '',
         }
       );
     });
