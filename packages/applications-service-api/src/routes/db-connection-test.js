@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 const express = require('express');
-const test = require('../../database/test/test_connection');
+const test = require('../database/test/test_connection');
 
 const router = express.Router();
 
