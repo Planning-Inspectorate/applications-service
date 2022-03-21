@@ -1,7 +1,9 @@
 const declarationController = require('../../../../../src/controllers/register/organisation/declaration');
+const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
+jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
 describe('controllers/register/organisation/declaration', () => {
@@ -12,6 +14,12 @@ describe('controllers/register/organisation/declaration', () => {
     req = mockReq();
     res = mockRes();
     jest.resetAllMocks();
+
+    postRegistration.mockImplementation(() =>
+      Promise.resolve({ resp_code: 200, data: '30020010' })
+    );
+
+    putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
   });
 
   describe('getDeclaration', () => {
@@ -32,6 +40,24 @@ describe('controllers/register/organisation/declaration', () => {
           },
           projectName: 'ABC',
           caseRef: 'ABC123',
+        },
+      };
+      await declarationController.postDeclaration(mockRequest, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);
+    });
+
+    it(`'should create session data and post, redirect to '/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}' if no ipRef exists in session`, async () => {
+      const mockRequest = {
+        ...req,
+        session: {
+          orgRegdata: {
+            email: 'anc@test.com',
+          },
+          projectName: 'ABC',
+          caseRef: 'ABC123',
+          mode: 'final',
+          comment: 'comment',
         },
       };
       await declarationController.postDeclaration(mockRequest, res);
