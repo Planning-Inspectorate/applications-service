@@ -83,6 +83,43 @@ describe('controllers/register/confirm-email', () => {
       expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
     });
 
+    it(`'should render '/${VIEW.REGISTER.TOKEN_EXPIRED}' if registration period is closed`, async () => {
+      const mockRequest = {
+        ...req,
+        body: {
+          email: 'anc@test.com',
+        },
+      };
+      authenticateToken.mockImplementation(() =>
+        Promise.resolve({
+          resp_code: 200,
+          data: { submissionPeriodClosed: true, personal_data: { behalf: 'you' }, comments: [] },
+        })
+      );
+      await confirmEmailController.postConfirmEmail(mockRequest, res);
+
+      expect(res.render).toHaveBeenCalledWith(`${VIEW.REGISTER.TOKEN_EXPIRED}`);
+    });
+
+    it(`'should redirect to '/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}' if received 404`, async () => {
+      const mockRequest = {
+        ...req,
+        body: {
+          email: 'anc@test.com',
+        },
+      };
+      authenticateToken.mockImplementation(() =>
+        Promise.resolve({
+          resp_code: 404,
+        })
+      );
+      await confirmEmailController.postConfirmEmail(mockRequest, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(
+        `/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=abc`
+      );
+    });
+
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
         ...req,

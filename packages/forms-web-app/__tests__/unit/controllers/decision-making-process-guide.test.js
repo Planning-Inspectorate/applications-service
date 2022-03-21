@@ -26,6 +26,15 @@ describe('controllers/decision-making-process-guide', () => {
     });
   });
 
+  describe('getExaminationOfTheApplication', () => {
+    it('should call the correct template', async () => {
+      await dcoProcessGuideController.getExaminationOfTheApplication(req, res);
+      expect(res.render).toHaveBeenCalledWith(
+        VIEW.DCO_PROCESS_GUIDE.EXAMINATION_OF_THE_APPLICATION
+      );
+    });
+  });
+
   describe('getReviewOfTheApplication', () => {
     it('should call the correct template', async () => {
       await dcoProcessGuideController.getReviewOfTheApplication(req, res);

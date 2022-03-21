@@ -1,6 +1,9 @@
 const commentsController = require('../../../../../src/controllers/register/organisation/tell-us-about-project');
+const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
+
+jest.mock('../../../../../src/lib/application-api-wrapper');
 
 jest.mock('../../../../../src/lib/logger');
 
@@ -15,6 +18,12 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
     };
     res = mockRes();
     jest.resetAllMocks();
+
+    postRegistration.mockImplementation(() =>
+      Promise.resolve({ resp_code: 200, data: '30020010' })
+    );
+
+    putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
   });
 
   describe('getComments', () => {
@@ -59,6 +68,25 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
       expect(res.redirect).toHaveBeenCalledWith(
         `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
       );
+    });
+
+    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}' if comments is provided and mode is draft`, async () => {
+      const mockRequest = {
+        ...req,
+        body: {
+          comments: 'test',
+        },
+        query: {
+          mode: 'draft',
+        },
+        session: {
+          comment: 'comment',
+          orgRegdata: {},
+        },
+      };
+      await commentsController.postComments(mockRequest, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
