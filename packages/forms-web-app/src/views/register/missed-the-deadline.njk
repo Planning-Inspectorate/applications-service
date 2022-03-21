@@ -1,0 +1,25 @@
+{% extends "layouts/register-main.njk" %}
+
+{% block pageTitle %}
+  You have missed the deadline - Register to have your say about a national infrastructure project - National Infrastructure Planning
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">Registration period for the {{ projectData.ProjectName }} project has now closed</h1>
+      <p class="govuk-body">You have missed the deadline to register to have your say about the {{ projectData.ProjectName }} project.</p>
+
+      <p class="govuk-body">You can still <a href="{{ nsipProjectLink }}" class='govuk-link'>follow the progress of the application on the national infrastructure planning website.</a>
+      </p>
+
+      <p class="govuk-body">If you have any questions, please contact the case team:</p>
+
+      <ul class="govuk-list">
+        <li>Email: {{ projectData.ProjectEmailAddress }}</li>
+        <li>Telephone: 0303 444 5000</li>
+      </ul>
+
+    {% endblock %}

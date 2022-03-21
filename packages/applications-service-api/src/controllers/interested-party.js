@@ -119,7 +119,9 @@ module.exports = {
         throw ApiError.applicationNotFound(caseref);
       }
 
-      const { DateOfRelevantRepresentationClose } = project.dataValues;
+      const { DateOfRelevantRepresentationClose, Region, ProjectName, ProjectEmailAddress } =
+        project.dataValues;
+      const projectData = { Region, ProjectName, ProjectEmailAddress };
 
       const repCloseDate = new Date(DateOfRelevantRepresentationClose);
       const currentDate = new Date();
@@ -128,7 +130,7 @@ module.exports = {
       const submissionPeriodClosed = repCloseDate < currentDate;
 
       const interestedParty = IPFactory.createIP(behalf).map(party);
-      res.status(StatusCodes.OK).send({ ...interestedParty, submissionPeriodClosed });
+      res.status(StatusCodes.OK).send({ ...interestedParty, submissionPeriodClosed, projectData });
     } catch (e) {
       /* istanbul ignore next */
       if (e instanceof ApiError) {
