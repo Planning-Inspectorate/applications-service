@@ -83,6 +83,11 @@ const ipDataOwnBehalfResult = {
     },
   ],
   submissionPeriodClosed: false,
+  projectData: {
+    ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
+    ProjectName: 'St James Barton Giant Wind Turbine',
+    Region: 'Wales',
+  },
 };
 
 const ipDataOrgBehalf = {
@@ -161,6 +166,11 @@ const ipDataOrgBehalfResult = {
     },
   ],
   submissionPeriodClosed: false,
+  projectData: {
+    ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
+    ProjectName: 'St James Barton Giant Wind Turbine',
+    Region: 'Wales',
+  },
 };
 
 const createIpOnOwnBehalf = {
@@ -199,6 +209,9 @@ const createIpOnOrgBehalf = {
 
 const projectData = {
   DateOfRelevantRepresentationClose: '2024-12-09',
+  ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
+  ProjectName: 'St James Barton Giant Wind Turbine',
+  Region: 'Wales',
 };
 
 const createIpOnAgentBehalf = {
@@ -244,10 +257,10 @@ jest.mock('../../../src/models', () => {
   InterestedParty.$queryInterface.$useHandler((query, queryOptions) => {
     if (query === 'findOne') {
       if (queryOptions[0].where.caseRef === 'EN010009' || queryOptions[0].where.ID === '30000120') {
-        return InterestedParty.build({ ...ipDataOwnBehalf });
+        return InterestedParty.build({ ...ipDataOwnBehalf }, { ...projectData });
       }
       if (queryOptions[0].where.ID === '30000135') {
-        return InterestedParty.build({ ...ipDataOrgBehalf });
+        return InterestedParty.build({ ...ipDataOrgBehalf }, { ...projectData });
       }
 
       return null;

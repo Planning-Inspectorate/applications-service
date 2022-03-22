@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { VIEW } = require('../../lib/views');
 const { postAuthToken } = require('../../services/registration.service');
+const { nsipProjectLink } = require('../../lib/nsip-project-link');
 
 exports.getConfirmEmail = async (req, res) => {
   res.render(VIEW.REGISTER.CONFIRM_EMAIL);
@@ -24,10 +25,13 @@ exports.postConfirmEmail = async (req, res) => {
   if (response.resp_code === 404) {
     res.redirect(`/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=${token}`);
   } else {
-    const { personal_data, comments, submissionPeriodClosed } = response.data;
+    const { personal_data, comments, submissionPeriodClosed, projectData } = response.data;
 
     if (submissionPeriodClosed === true) {
-      res.render(VIEW.REGISTER.TOKEN_EXPIRED);
+      res.render(VIEW.REGISTER.MISSED_DEADLINE, {
+        nsipProjectLink: nsipProjectLink(projectData),
+        projectData,
+      });
     } else {
       const type = personal_data.behalf;
       req.session.comments = comments;
