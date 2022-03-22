@@ -91,8 +91,6 @@ const VIEW = {
       'decision-making-process-guide/what-happens-after-the-decision-is-made',
   },
   FOOTER_PAGES: {
-    TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
-    SITEMAP: 'footer-pages/sitemap',
     ACCESSIBILITY: 'footer-pages/accessibility',
     COOKIES: 'footer-pages/cookies-info',
   },

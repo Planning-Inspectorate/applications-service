@@ -98,8 +98,6 @@ describe('lib/views', () => {
         AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision',
       },
       FOOTER_PAGES: {
-        TERMS_AND_CONDITIONS: 'footer-pages/terms-and-conditions',
-        SITEMAP: 'footer-pages/sitemap',
         ACCESSIBILITY: 'footer-pages/accessibility',
         COOKIES: 'footer-pages/cookies-info',
       },

@@ -21,9 +21,7 @@
 {% block header %}
 
   {{ pinsHeader({
-    homepageUrl: "/",
     serviceName: serviceName,
-    serviceUrl: "/",
     containerClasses: "govuk-width-container"
   }) }}
 {% endblock %}
@@ -76,8 +74,6 @@
 {% set a_href = "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice" %}
 
 {% if host %}
-  {% set tc_href = host + 'terms-and-conditions' %}
-  {% set sm_href = host + 'sitemap' %}
   {% set ac_href = host + 'accessibility' %}
   {% set ck_href = host + 'cookies' %}
 {% endif %}
@@ -86,12 +82,7 @@
   {{ pinsFooter({
         items: [
               {
-                href: sm_href,
-                text: "Sitemap",
-                attributes: { "data-cy":"Privacy" }
-              },
-              {
-                href: tc_href,
+                href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
                 text: "Terms and conditions",
                 attributes: { "data-cy":"Terms and conditions" }
               },

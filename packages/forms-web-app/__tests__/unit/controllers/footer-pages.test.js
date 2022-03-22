@@ -12,20 +12,6 @@ describe('controllers/footer-pages', () => {
     jest.resetAllMocks();
   });
 
-  describe('getTermsAndConditions', () => {
-    it('should call the correct template', async () => {
-      await footerPagesController.getTermsAndConditions(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.FOOTER_PAGES.TERMS_AND_CONDITIONS);
-    });
-  });
-
-  describe('getSitemap', () => {
-    it('should call the correct template', async () => {
-      await footerPagesController.getSitemap(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.FOOTER_PAGES.SITEMAP);
-    });
-  });
-
   describe('getAccessibility', () => {
     it('should call the correct template', async () => {
       await footerPagesController.getAccessibility(req, res);
