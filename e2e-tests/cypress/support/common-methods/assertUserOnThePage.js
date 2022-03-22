@@ -58,8 +58,12 @@ module.exports = (pageName) => {
             cy.title().should('eq', "Crown copyright - The National Archives");
             break;
         case "feedback":
-            cy.url().should('include', '/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUOFg4UFdEUThGTlU3S0hFUTlERVYwMVRLTy4u');
-            cy.title().should('eq', "Give feedback about submitting your Planning Appeal (Beta)");
+            cy.url().should('include', '/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u');
+            cy.title().should('eq', "Help us to improve our service");
+            break;
+        case "project page":
+            cy.url().should('include', '/projects/yorkshire-and-the-humber/north-lincolnshire-green-energy-park/');
+            cy.title().should('eq', "North Lincolnshire Green Energy Park | National Infrastructure Planning");
             break;
         case "having your say at the pre-application stage":
             cy.title().should('eq', "Having your say at the pre-application stage");
