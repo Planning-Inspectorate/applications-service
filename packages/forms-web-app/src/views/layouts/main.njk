@@ -14,10 +14,11 @@
   {% for stylesheetUrl in extensionConfig.stylesheets %}
     <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
   {% endfor %}
+
+  {% include "includes/cookie-banner.njk" %}
 {% endblock %}
 
 {% block header %}
-  {% include "includes/cookie-banner.njk" %}
 
   {{ pinsHeader({
     serviceName: serviceName,
