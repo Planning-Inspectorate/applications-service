@@ -11,14 +11,14 @@
 {% endset %}
 
 {% if data.representing === 'person' %}
-  {% set representing = "What is the full name of the person you are representing?" %}
+  {% set representing = "The name of the person you are representing" %}
 {% elseif data.representing === 'organisation' %}
-  {% set representing = "What is the full name of the organisation or charity that you are representing?" %}
+  {% set representing = "The name of the organisation or charity that you are representing" %}
 {% elseif data.representing === 'family' %}
-  {% set representing = "What is the name of the family group you are representing?" %}
+  {% set representing = "The name of the family group you are representing" %}
 {% endif %}
 
-<h2 class="govuk-heading-m">Who you are representing</h2>
+<h2 class="govuk-heading-m">Who you are representing?</h2>
 {{ govukSummaryList({
         classes: "govuk-summary-list govuk-!-margin-bottom-9",
         rows: [
