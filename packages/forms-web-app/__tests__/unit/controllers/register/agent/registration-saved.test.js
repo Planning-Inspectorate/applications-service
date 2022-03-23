@@ -12,7 +12,9 @@ describe('controllers/register/agent/registration-saved', () => {
       ...mockReq(),
       session: {
         behalfRegdata: {
-          email: 'test@test.com',
+          representor: {
+            email: 'test@test.com',
+          },
         },
         ipRefNo: '10',
         typeOfParty: 'org',
