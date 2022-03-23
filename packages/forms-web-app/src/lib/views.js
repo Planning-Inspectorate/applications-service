@@ -69,7 +69,6 @@ const VIEW = {
     },
     CONFIRM_EMAIL: 'register/confirm-email',
     TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
-    TOKEN_EXPIRED: 'register/token-expired',
     MISSED_DEADLINE: 'register/missed-the-deadline',
   },
   INTERESTED_PARTY_GUIDE: {
