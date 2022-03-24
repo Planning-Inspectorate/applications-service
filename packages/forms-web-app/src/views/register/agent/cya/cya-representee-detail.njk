@@ -18,12 +18,7 @@
   {% set representing = "The name of the family group you are representing" %}
 {% endif %}
 
-<h2 class="govuk-heading-m">Who you are representing?</h2>
-{% if data.representing === 'organisation' %}
-  {{ govukSummaryList({
-        classes: "govuk-summary-list govuk-!-margin-bottom-9",
-        rows: [
-          {
+{% set rows = [{
             key: {
               text: representing
             },
@@ -40,104 +35,9 @@
                 }
               ]
             }
-          },
-          {
-            key: {
-              text: "Their address"
-            },
-            value: {
-              html: address
-            },
-            actions: {
-              items: [
-                {
-                  href: "/register/agent/their-postal-address?mode=edit",
-                  text: "Change",
-                  visuallyHiddenText: "??",
-                  attributes: { "data-cy": "address" }
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Their email address"
-            },
-            value: {
-              text: summaryField( data.representee['email'], { 'data-cy': "email" })
-            },
-            actions: {
-              items: [
-                {
-                  href: "/register/agent/email-address?mode=edit",
-                  text: "Change",
-                  visuallyHiddenText: "??",
-                  attributes: { "data-cy": "email" }
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Their telephone number"
-            },
-            value: {
-              text: summaryField( data.representee['telephone'], { 'data-cy': "telephone" })
-            },
-            actions: {
-              items: [
-                {
-                  href: "/register/agent/their-telephone-number?mode=edit",
-                  text: "Change",
-                  visuallyHiddenText: "??",
-                  attributes: { "data-cy": "telephone" }
-                }
-              ]
-            }
-          },
-          {
-            key: {
-              text: "Registration comments"
-            },
-            value: {
-              text: summaryField( data['comment'], { 'data-cy': "comment" })
-            },
-            actions: {
-              items: [
-                {
-                  href: "/register/agent/tell-us-about-project?mode=edit",
-                  text: "Change",
-                  visuallyHiddenText: "??",
-                  attributes: { "data-cy": "comment" }
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
-{% else %}
-  {{ govukSummaryList({
-        classes: "govuk-summary-list govuk-!-margin-bottom-9",
-        rows: [
-          {
-            key: {
-              text: representing
-            },
-            value: {
-              text: summaryField( data.representee["full-name"], { 'data-cy': "full-name" })
-            },
-            actions: {
-              items: [
-                {
-                  href: "/register/agent/name-person-representing?mode=edit",
-                  text: "Change",
-                  visuallyHiddenText: "??",
-                  attributes: { "data-cy": "full-name" }
-                }
-              ]
-            }
-          },
-          {
+          }] %}
+{% if data.representing !== 'organisation' %}
+  {% set rows = (rows.push({
             key: {
               text: "Are they 18 or over?"
             },
@@ -154,8 +54,9 @@
                 }
               ]
             }
-          },
-          {
+          }), rows) %}
+{% endif %}
+{% set rows = (rows.push({
             key: {
               text: "Their address"
             },
@@ -172,8 +73,8 @@
                 }
               ]
             }
-          },
-          {
+          }), rows) %}
+{% set rows = (rows.push({
             key: {
               text: "Their email address"
             },
@@ -190,8 +91,8 @@
                 }
               ]
             }
-          },
-          {
+          }), rows) %}
+{% set rows = (rows.push({
             key: {
               text: "Their telephone number"
             },
@@ -208,8 +109,8 @@
                 }
               ]
             }
-          },
-          {
+          }), rows) %}
+{% set rows = (rows.push({
             key: {
               text: "Registration comments"
             },
@@ -226,7 +127,10 @@
                 }
               ]
             }
-          }
-        ]
+          }), rows) %}
+
+<h2 class="govuk-heading-m">Who you are representing?</h2>
+{{ govukSummaryList({
+        classes: "govuk-summary-list govuk-!-margin-bottom-9",
+        rows: rows
       }) }}
-{% endif %}
