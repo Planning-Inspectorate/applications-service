@@ -83,7 +83,7 @@ describe('controllers/register/confirm-email', () => {
       expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
     });
 
-    it(`'should render '/${VIEW.REGISTER.TOKEN_EXPIRED}' if registration period is closed`, async () => {
+    it(`'should render '/${VIEW.REGISTER.MISSED_DEADLINE}' if registration period is closed`, async () => {
       const mockRequest = {
         ...req,
         body: {
@@ -93,12 +93,21 @@ describe('controllers/register/confirm-email', () => {
       authenticateToken.mockImplementation(() =>
         Promise.resolve({
           resp_code: 200,
-          data: { submissionPeriodClosed: true, personal_data: { behalf: 'you' }, comments: [] },
+          data: {
+            submissionPeriodClosed: true,
+            personal_data: { behalf: 'you' },
+            comments: [],
+            projectData: { Region: 'Wales', ProjectName: 'St James Barton Giant Wind Turbine' },
+          },
         })
       );
       await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-      expect(res.render).toHaveBeenCalledWith(`${VIEW.REGISTER.TOKEN_EXPIRED}`);
+      expect(res.render).toHaveBeenCalledWith(`${VIEW.REGISTER.MISSED_DEADLINE}`, {
+        nsipProjectLink:
+          'https://infrastructure.planninginspectorate.gov.uk/projects/wales/st-james-barton-giant-wind-turbine',
+        projectData: { ProjectName: 'St James Barton Giant Wind Turbine', Region: 'Wales' },
+      });
     });
 
     it(`'should redirect to '/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}' if received 404`, async () => {

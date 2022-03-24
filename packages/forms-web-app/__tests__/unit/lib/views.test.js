@@ -37,7 +37,6 @@ describe('lib/views', () => {
       },
       REGISTER: {
         START: 'register/start',
-        TOKEN_EXPIRED: 'register/token-expired',
         TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
         TYPE_OF_PARTY: 'register/who-registering-for',
         CONFIRM_EMAIL: 'register/confirm-email',
