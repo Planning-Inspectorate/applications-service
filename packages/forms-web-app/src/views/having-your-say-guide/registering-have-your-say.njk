@@ -4,10 +4,6 @@
   Registering to have your say about a national infrastructure project - National Infrastructure Planning
 {% endblock %}
 
-{% block headIcons %}
-  <link rel="shortcut icon" href="{{ asset_path }}images/unbranded.ico?0.18.3" type="image/x-icon"/>
-{% endblock %}
-
 {% block head %}
   <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
   <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/>
@@ -16,10 +12,6 @@
   {% for stylesheetUrl in extensionConfig.stylesheets %}
     <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
   {% endfor %}
-{% endblock %}
-
-{% block header %}
-  {{ pinsHeader() }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -119,16 +111,11 @@
         </div>
       </div>
 
-  <div class="govuk-grid-column-one-third">
-    {% set currentDefaultStep = 2 %}
-    {% include "../includes/step-by-step-navigation.njk" %}
-  </div>
-
+      <div class="govuk-grid-column-one-third">
+        {% set currentDefaultStep = 2 %}
+        {% include "../includes/step-by-step-navigation.njk" %}
+      </div>
 
     </div>
 
-  {% endblock %}
-
-  {% block footer %}
-    {{ pinsFooter() }}
   {% endblock %}
