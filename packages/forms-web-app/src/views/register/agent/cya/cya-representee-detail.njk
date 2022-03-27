@@ -12,10 +12,13 @@
 
 {% if data.representing === 'person' %}
   {% set representing = "The name of the person you are representing" %}
+  {% set representingHiddenText = "the name of the person you are representing" %}
 {% elseif data.representing === 'organisation' %}
   {% set representing = "The name of the organisation or charity that you are representing" %}
+  {% set representingHiddenText = "the name of the organisation or charity that you are representing" %}
 {% elseif data.representing === 'family' %}
   {% set representing = "The name of the family group you are representing" %}
+  {% set representingHiddenText = "the name of the family group you are representing " %}
 {% endif %}
 
 <h2 class="govuk-heading-m">Who you are representing?</h2>
@@ -34,7 +37,7 @@
                 {
                   href: "/register/agent/name-person-representing?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "??",
+                  visuallyHiddenText: representingHiddenText,
                   attributes: { "data-cy": "full-name" }
                 }
               ]
@@ -52,7 +55,7 @@
                 {
                   href: "/register/agent/are-they-18-over?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "??",
+                  visuallyHiddenText: "if they are over 18",
                   attributes: { "data-cy": "over-18" }
                 }
               ]
@@ -70,7 +73,7 @@
                 {
                   href: "/register/agent/their-postal-address?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "??",
+                  visuallyHiddenText: "their address",
                   attributes: { "data-cy": "address" }
                 }
               ]
@@ -88,7 +91,7 @@
                 {
                   href: "/register/agent/email-address?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "??",
+                  visuallyHiddenText: "their email address",
                   attributes: { "data-cy": "email" }
                 }
               ]
@@ -106,7 +109,7 @@
                 {
                   href: "/register/agent/their-telephone-number?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "??",
+                  visuallyHiddenText: "their telephone number",
                   attributes: { "data-cy": "telephone" }
                 }
               ]
@@ -124,7 +127,7 @@
                 {
                   href: "/register/agent/tell-us-about-project?mode=edit",
                   text: "Change",
-                  visuallyHiddenText: "??",
+                  visuallyHiddenText: "registration comments",
                   attributes: { "data-cy": "comment" }
                 }
               ]
