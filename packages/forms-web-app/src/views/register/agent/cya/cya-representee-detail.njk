@@ -18,11 +18,7 @@
   {% set representing = "The name of the family group you are representing" %}
 {% endif %}
 
-<h2 class="govuk-heading-m">Who you are representing?</h2>
-{{ govukSummaryList({
-        classes: "govuk-summary-list govuk-!-margin-bottom-9",
-        rows: [
-          {
+{% set rows = [{
             key: {
               text: representing
             },
@@ -39,8 +35,9 @@
                 }
               ]
             }
-          },
-          {
+          }] %}
+{% if data.representing !== 'organisation' %}
+  {% set rows = (rows.push({
             key: {
               text: "Are they 18 or over?"
             },
@@ -57,8 +54,9 @@
                 }
               ]
             }
-          },
-          {
+          }), rows) %}
+{% endif %}
+{% set rows = (rows.push({
             key: {
               text: "Their address"
             },
@@ -129,6 +127,9 @@
                 }
               ]
             }
-          }
-        ]
+          }), rows) %}
+<h2 class="govuk-heading-m">Who you are representing?</h2>
+{{ govukSummaryList({
+        classes: "govuk-summary-list govuk-!-margin-bottom-9",
+        rows: rows
       }) }}
