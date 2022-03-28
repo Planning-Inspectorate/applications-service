@@ -20,3 +20,14 @@ Feature: Registration complete page
     Scenario: verify page title, heading
         Then I am on the "Registration complete" page
         And the page includes a link to the project
+
+    Scenario: click on feedback link
+        When I click on feedback link
+        Then I am on the "feedback" page
+
+     Scenario: click on go back to project page link
+        When I click on go back to project page link
+        Then I am on the "project page" page
+
+    Scenario: click on go back to project page link
+        When I click on find out more about having your say during the Examination of the application link

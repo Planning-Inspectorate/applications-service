@@ -52,3 +52,12 @@ And('I click on get involved in the preliminary meeting link', () => {
 And('the page does not include a link to a project', () => {
   cy.get('#project-link').should('not.exist');
 })
+
+Then('I click on feedback link', () => {
+    cy.get('.govuk-link').each(($e1, index) => {
+        const text = $e1.text();
+        if(text.includes("feedback")){
+            cy.get('.govuk-link').eq(index).click(); 
+        }
+    })
+  })

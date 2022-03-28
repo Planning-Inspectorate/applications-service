@@ -24,8 +24,8 @@ Feature: Check your answers before registering organisation page
             | Are you 18 or over?                               | Yes                                                                                                      | Change  |
             | What is the name of your organisation or charity? | Test Organisation                                                                                        | Change  |
             | What is your job title or volunteer role?         | Test Volunteer Title                                                                                     | Change  |
-            | Address                                           | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                             | Change  |
             | Email address                                     | test@gmail.com                                                                                           | Change  |
+            | Address                                           | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                             | Change  |
             | Telephone number                                  | 1234567899                                                                                               | Change  |
             | Registration comments                             | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change  |
         And User clicks on accept and continue button for "organisation"
