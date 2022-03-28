@@ -4,10 +4,6 @@
   Pre-application - National Infrastructure Planning
 {% endblock %}
 
-{% block header %}
-  {{ pinsHeader() }}
-{% endblock %}
-
 {% block beforeContent %}
 
   {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
@@ -21,78 +17,90 @@
 {% endblock %}
 {% block content %}
 
-<h1 class="govuk-heading-xl">
+  <h1 class="govuk-heading-xl">
   Pre-application
 </h1>
-<h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
-<ol class="govuk-list pins-contents-list">
-    <li><a class="govuk-link" href="#the-pre-application-stage">The Pre-application stage</a></li>
-    <li><a class="govuk-link" href="#about-the-pre-application-service-for-developers">About the Pre-application service for developers</a></li>
-    <li><a class="govuk-link" href="#people-or-organisations-who-want-to-comment">People or organisations who want to comment at the Pre-application stage</a></li>
-    <li><a class="govuk-link" href="#advice-for-local-authorities">Advice for local authorities at the Pre-application stage</a></li>
-    <li><a class="govuk-link" href="#more-detailed-advice">More detailed advice</a></li>
-</ol>
+  <h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
+  <ol class="govuk-list pins-contents-list">
+    <li>
+      <a class="govuk-link" href="#the-pre-application-stage">The Pre-application stage</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#about-the-pre-application-service-for-developers">About the Pre-application service for developers</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#people-or-organisations-who-want-to-comment">People or organisations who want to comment at the Pre-application stage</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#advice-for-local-authorities">Advice for local authorities at the Pre-application stage</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
+    </li>
+  </ol>
 
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <div class="pins-step-by-step-section-main">
-            <h2 class="govuk-heading-m" id="the-pre-application-stage">The Pre-application stage</h2>
-            <p class="govuk-body">Before a developer sends their application for a proposed development to the Planning Inspectorate, they must carry out public consultation. This happens at the Pre-application stage.</p>
-            <p class="govuk-body">The developer must consult:</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>the general public</li>
-              <li>parish councils</li>
-              <li>statutory consultees</li>
-              <li>local authorities and councils</li>
-              <li>land owners and tenants</li>
-            </ul>
-            <h2 class="govuk-heading-m" id="about-the-pre-application-service-for-developers">About the Pre-application service for developers</h2>
-            <p class="govuk-body">The Planning Inspectorate offers a Pre-application service for developers who are preparing an application. This is a free service.</p>
-            <p class="govuk-body">This includes:</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>providing advice about how to prepare an application, helping developers avoid extra cost</li>
-              <li>pre-submission checks and reviews of draft documents</li>
-              <li>checking developers have followed all the required steps</li>
-            </ul>
-            <p>You can <a class="govuk-link" href="#">learn more about the Pre-application service in the Pre-application prospectus</a>.</p>
-            <h2 class="govuk-heading-m" id="people-or-organisations-who-want-to-comment">People or organisations who want to comment at the Pre-application stage</h2>
-            <p class="govuk-body">If you want to comment on a project at the Pre-application stage, you need to contact the developer. The developer must consult with the local community.</p>
-            <p class="govuk-body">Getting involved in the developer's consultation during the Pre-application stage is very important. This is your opportunity to put forward any questions and concerns, and also find out more about the development and how it might impact the area.</p>
-            <p class="govuk-body">There is a guide with more information about what people or organisations who want to have their say can do at each stage.</p>
-            <p class="govuk-body"><a class="govuk-link" href="../having-your-say-guide/">Check the guide for having your say about a national infrastructure project</a></p>
-            
-            <h2 class="govuk-heading-m" id="advice-for-local-authorities">Advice for local authorities at the Pre-application stage</h2>
-            <p class="govuk-body">There is a variety of considerations and opportunities for local authorities to engage. You can view our detailed advice notes with more information about <a class="govuk-link" href="#">what you need to do if you are representing a local authority</a>.</p>            
-            <p class="govuk-body"><a class="govuk-link" href="#">Check advice notes for developers at the pre-application stage</a></p>
+      <div class="pins-step-by-step-section-main">
+        <h2 class="govuk-heading-m" id="the-pre-application-stage">The Pre-application stage</h2>
+        <p class="govuk-body">Before a developer sends their application for a proposed development to the Planning Inspectorate, they must carry out public consultation. This happens at the Pre-application stage.</p>
+        <p class="govuk-body">The developer must consult:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>the general public</li>
+          <li>parish councils</li>
+          <li>statutory consultees</li>
+          <li>local authorities and councils</li>
+          <li>land owners and tenants</li>
+        </ul>
+        <h2 class="govuk-heading-m" id="about-the-pre-application-service-for-developers">About the Pre-application service for developers</h2>
+        <p class="govuk-body">The Planning Inspectorate offers a Pre-application service for developers who are preparing an application. This is a free service.</p>
+        <p class="govuk-body">This includes:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>providing advice about how to prepare an application, helping developers avoid extra cost</li>
+          <li>pre-submission checks and reviews of draft documents</li>
+          <li>checking developers have followed all the required steps</li>
+        </ul>
+        <p>You can <a class="govuk-link" href="#">learn more about the Pre-application service in the Pre-application prospectus</a>.</p>
+        <h2 class="govuk-heading-m" id="people-or-organisations-who-want-to-comment">People or organisations who want to comment at the Pre-application stage</h2>
+        <p class="govuk-body">If you want to comment on a project at the Pre-application stage, you need to contact the developer. The developer must consult with the local community.</p>
+        <p class="govuk-body">Getting involved in the developer's consultation during the Pre-application stage is very important. This is your opportunity to put forward any questions and concerns, and also find out more about the development and how it might impact the area.</p>
+        <p class="govuk-body">There is a guide with more information about what people or organisations who want to have their say can do at each stage.</p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="../having-your-say-guide/">Check the guide for having your say about a national infrastructure project</a>
+        </p>
 
-            <h2 class="govuk-heading-m" id="more-detailed-advice">More detailed advice</h2>
-            <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>            
-            <p class="govuk-body"><a class="govuk-link" href="#">Read the full set of detailed advice notes</a></p>
+        <h2 class="govuk-heading-m" id="advice-for-local-authorities">Advice for local authorities at the Pre-application stage</h2>
+        <p class="govuk-body">There is a variety of considerations and opportunities for local authorities to engage. You can view our detailed advice notes with more information about <a class="govuk-link" href="#">what you need to do if you are representing a local authority</a>.</p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="#">Check advice notes for developers at the pre-application stage</a>
+        </p>
 
-            <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
-                <a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">
-                    <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
+        <h2 class="govuk-heading-m" id="more-detailed-advice">More detailed advice</h2>
+        <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="#">Read the full set of detailed advice notes</a>
+        </p>
+
+        <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
+          <a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">
+            <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
                         <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
                       </svg> -->
-                    <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
-                    <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
-                    </svg>
-                    <strong>Next</strong>
-                    <span>Review of the application</span>
-                </a>
-            </div>
+            <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
+              <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
+            </svg>
+            <strong>Next</strong>
+            <span>Review of the application</span>
+          </a>
         </div>
+      </div>
     </div>
 
-  <div class="govuk-grid-column-one-third">
-    {% set currentDefaultStep = 1 %}
-    {% include "../includes/dco-step-by-step-navigation.njk" %}
-  </div>
+    <div class="govuk-grid-column-one-third">
+      {% set currentDefaultStep = 1 %}
+      {% include "../includes/dco-step-by-step-navigation.njk" %}
+    </div>
 
   </div>
 
-{% endblock %}
-
-{% block footer %}
-    {{ pinsFooter() }}
 {% endblock %}

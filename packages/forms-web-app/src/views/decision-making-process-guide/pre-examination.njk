@@ -4,10 +4,6 @@
   Pre-examination - National Infrastructure Planning
 {% endblock %}
 
-{% block header %}
-  {{ pinsHeader() }}
-{% endblock %}
-
 {% block beforeContent %}
 
   {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
@@ -21,74 +17,82 @@
 {% endblock %}
 {% block content %}
 
-<h1 class="govuk-heading-xl">
+  <h1 class="govuk-heading-xl">
   Pre-examination
 </h1>
-<h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
-<ol class="govuk-list pins-contents-list">
-    <li><a class="govuk-link" href="#preparing-for-the-examination-stage">Pre-examination stage</a></li>
-    <li><a class="govuk-link" href="#registering-to-have-your-say">Registering to have your say</a></li>
-    <li><a class="govuk-link" href="#the-preliminary-meeting">The Preliminary Meeting</a></li>
-    <li><a class="govuk-link" href="#what-happens-next">What happens next</a></li>
-    <li><a class="govuk-link" href="#more-detailed-technical-advice">More detailed advice</a></li>
-</ol>
+  <h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
+  <ol class="govuk-list pins-contents-list">
+    <li>
+      <a class="govuk-link" href="#preparing-for-the-examination-stage">Pre-examination stage</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#registering-to-have-your-say">Registering to have your say</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#the-preliminary-meeting">The Preliminary Meeting</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#what-happens-next">What happens next</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#more-detailed-technical-advice">More detailed advice</a>
+    </li>
+  </ol>
 
-<div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <div class="pins-step-by-step-section-main">
-            <h2 class="govuk-heading-m" id="preparing-for-the-examination-stage">Pre-examination stage</h2>
-            <p class="govuk-body">The Pre-examination stage is where we prepare for an Examination. We will identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the Examination stage.</p>
-            <p class="govuk-body">This involves the Examining Authority deciding which issues will need to be discussed and what questions it might need to ask. The Examining Authority will also plan out what happens during the Examination, if it needs to arrange any hearings and each of the deadlines for comments.</p>
-            
-            <h2 class="govuk-heading-m" id="registering-to-have-your-say">Registering to have your say</h2>
-            <p class="govuk-body">You must register during the Pre-examination stage to make sure your views are included in the Examination of the application.</p>
-            <p class="govuk-body">The registration for each project will be open for at least 30 days to give you time to register. The deadline for registering will be in the developer's advert, or you can check the project page.</p>
-            <p>There is a separate guide with more information about the steps in the process for <a class="govuk-link" href="../having-your-say-guide/">people or organisations who want to have their say about a national infrastructure project</a>.</p>
-            
-            <h2 class="govuk-heading-m" id="the-preliminary-meeting">The Preliminary Meeting</h2>
-            <p class="govuk-body">In the months after the registration for having your say closes, the Examining Authority will hold a Preliminary Meeting.</p>
-            <p class="govuk-body">Several weeks before this meeting, a letter called the Rule 6 letter is sent to everyone who registered to have their say. This is to let everyone know when and where the meeting will be held. It will also include a draft timetable for the Examination of the application.</p>
-            <p class="govuk-body">You cannot give your views about the proposed development at this meeting.</p>
-            <p class="govuk-body">You can talk about</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>anything that may affect your ability to attend hearings or meet deadlines, for example other local events happening at the same time or issues with travel or working patterns</li>
-              <li>if there are any suitable local places to hold the hearings</li>
-              <li>if there are any groups of people who need a different approach to be able to take part in the process</li>
-              <li>any other matters relating to the draft Examination timetable</li>
-            </ul>
-            
-            <h2 class="govuk-heading-m" id="what-happens-next">What happens next</h2>
-            <p class="govuk-body">The Planning Inspectorate will publish the meeting notes and a live stream recording on the project section of this website a week after the Preliminary Meeting.</p>
-            <p class="govuk-body">A letter called the Rule 8 letter is sent to everyone who registered, as well as official bodies and people whose land is affected. This will have details of the Examination including the finalised timetable with all deadlines for Examination comments.</p>
+      <div class="pins-step-by-step-section-main">
+        <h2 class="govuk-heading-m" id="preparing-for-the-examination-stage">Pre-examination stage</h2>
+        <p class="govuk-body">The Pre-examination stage is where we prepare for an Examination. We will identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the Examination stage.</p>
+        <p class="govuk-body">This involves the Examining Authority deciding which issues will need to be discussed and what questions it might need to ask. The Examining Authority will also plan out what happens during the Examination, if it needs to arrange any hearings and each of the deadlines for comments.</p>
 
-            <h2 class="govuk-heading-m" id="more-detailed-technical-advice">More detailed advice</h2>
-            <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
-            <p class="govuk-body"><a class="govuk-link" href="#">Read the full set of detailed advice notes</a></p>
+        <h2 class="govuk-heading-m" id="registering-to-have-your-say">Registering to have your say</h2>
+        <p class="govuk-body">You must register during the Pre-examination stage to make sure your views are included in the Examination of the application.</p>
+        <p class="govuk-body">The registration for each project will be open for at least 30 days to give you time to register. The deadline for registering will be in the developer's advert, or you can check the project page.</p>
+        <p>There is a separate guide with more information about the steps in the process for <a class="govuk-link" href="../having-your-say-guide/">people or organisations who want to have their say about a national infrastructure project</a>.</p>
 
-            <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
-                <a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application">
-                    <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
+        <h2 class="govuk-heading-m" id="the-preliminary-meeting">The Preliminary Meeting</h2>
+        <p class="govuk-body">In the months after the registration for having your say closes, the Examining Authority will hold a Preliminary Meeting.</p>
+        <p class="govuk-body">Several weeks before this meeting, a letter called the Rule 6 letter is sent to everyone who registered to have their say. This is to let everyone know when and where the meeting will be held. It will also include a draft timetable for the Examination of the application.</p>
+        <p class="govuk-body">You cannot give your views about the proposed development at this meeting.</p>
+        <p class="govuk-body">You can talk about</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>anything that may affect your ability to attend hearings or meet deadlines, for example other local events happening at the same time or issues with travel or working patterns</li>
+          <li>if there are any suitable local places to hold the hearings</li>
+          <li>if there are any groups of people who need a different approach to be able to take part in the process</li>
+          <li>any other matters relating to the draft Examination timetable</li>
+        </ul>
+
+        <h2 class="govuk-heading-m" id="what-happens-next">What happens next</h2>
+        <p class="govuk-body">The Planning Inspectorate will publish the meeting notes and a live stream recording on the project section of this website a week after the Preliminary Meeting.</p>
+        <p class="govuk-body">A letter called the Rule 8 letter is sent to everyone who registered, as well as official bodies and people whose land is affected. This will have details of the Examination including the finalised timetable with all deadlines for Examination comments.</p>
+
+        <h2 class="govuk-heading-m" id="more-detailed-technical-advice">More detailed advice</h2>
+        <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="#">Read the full set of detailed advice notes</a>
+        </p>
+
+        <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
+          <a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application">
+            <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
                         <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
                       </svg> -->
-                    <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
-                    <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
-                    </svg>
-                    <strong>Next</strong>
-                    <span>Examination of the application</span>
-                </a>
-            </div>
+            <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
+              <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
+            </svg>
+            <strong>Next</strong>
+            <span>Examination of the application</span>
+          </a>
         </div>
+      </div>
     </div>
 
-  <div class="govuk-grid-column-one-third">
-    {% set currentDefaultStep = 1 %}
-    {% include "../includes/dco-step-by-step-navigation.njk" %}
-  </div>
+    <div class="govuk-grid-column-one-third">
+      {% set currentDefaultStep = 1 %}
+      {% include "../includes/dco-step-by-step-navigation.njk" %}
+    </div>
 
   </div>
 
-{% endblock %}
-
-{% block footer %}
-    {{ pinsFooter() }}
 {% endblock %}
