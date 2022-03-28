@@ -54,3 +54,7 @@ Feature: Registering to have your say about a national infrastructure project pa
     Scenario: click Get involved in the preliminary meeting link
         When I click on Get involved in the preliminary meeting link
         Then I am on the "Get involved in the preliminary meeting" page
+
+    Scenario: click on feedback link
+        When I click on feedback link
+        Then I am on the "feedback" page

@@ -7,10 +7,6 @@ Feature: verify footer links
     Background: Navigate to the service
         Given I navigate to the who are you registering for page
 
-    Scenario: click on Sitemap
-        And I click on "Sitemap" footer link
-        Then I am on the "Sitemap" page
-
     Scenario: click on Terms and conditions
         And I click on "Terms and conditions" footer link
         Then I am on the "Terms and conditions" page
@@ -26,3 +22,7 @@ Feature: verify footer links
     Scenario: click on Cookies
         And I click on "Cookies" footer link
         Then I am on the "Cookies settings" page
+
+    Scenario: click on The Planning Inspectorate link
+        And I click on "The Planning Inspectorate" footer link
+        Then I am on the "The Planning Inspectorate" page

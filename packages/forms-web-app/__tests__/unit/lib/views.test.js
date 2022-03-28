@@ -97,7 +97,7 @@ describe('lib/views', () => {
         AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision',
       },
       FOOTER_PAGES: {
-        ACCESSIBILITY: 'footer-pages/accessibility',
+        ACCESSIBILITY: 'footer-pages/accessibility-statement',
         COOKIES: 'footer-pages/cookies-info',
       },
     });

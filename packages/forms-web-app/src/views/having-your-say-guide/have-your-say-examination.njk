@@ -4,10 +4,6 @@
   Have your say during the Examination of the application - National Infrastructure Planning
 {% endblock %}
 
-{% block header %}
-  {{ pinsHeader() }}
-{% endblock %}
-
 {% block beforeContent %}
 
   {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
@@ -82,16 +78,11 @@
       </div>
     </div>
 
-  <div class="govuk-grid-column-one-third">
-    {% set currentDefaultStep = 4 %}
-    {% include "../includes/step-by-step-navigation.njk" %}
+    <div class="govuk-grid-column-one-third">
+      {% set currentDefaultStep = 4 %}
+      {% include "../includes/step-by-step-navigation.njk" %}
+    </div>
+
   </div>
 
-
-  </div>
-
-{% endblock %}
-
-{% block footer %}
-  {{ pinsFooter() }}
 {% endblock %}

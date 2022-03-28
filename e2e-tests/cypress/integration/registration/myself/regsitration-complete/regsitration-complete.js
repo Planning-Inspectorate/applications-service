@@ -65,7 +65,7 @@ And('User clicks on accept and register button', () => {
 })
 
 And('I click on find out more about having your say during the Examination of the application link', () => {
-    cy.clickOnHref('/interested-party-guide');
+    cy.clickOnHref('/having-your-say-guide/have-your-say-examination');
 })
 
 And('I enter {string} into topic field', (dataInput) => {
@@ -74,4 +74,17 @@ And('I enter {string} into topic field', (dataInput) => {
 
 When('user selects {string} radio option on Do you want to add another comment page', (radioChoice) => {
     cy.selectRadioYesOrNo(radioChoice)
+})
+
+Then('I click on feedback link', () => {
+    cy.get('.govuk-link').each(($e1, index) => {
+        const text = $e1.text();
+        if (text.includes("feedback")) {
+            cy.get('.govuk-link').eq(index).click();
+        }
+    })
+})
+
+Then('I click on go back to project page link', () => {
+    cy.get('#project-link').click();
 })
