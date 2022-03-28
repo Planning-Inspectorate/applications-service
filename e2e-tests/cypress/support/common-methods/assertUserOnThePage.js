@@ -385,7 +385,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Accessibility statement');
             })
-            cy.url().should('include', '/accessibility')
+            cy.url().should('include', '/accessibility-statement')
             break;
         case "privacy notice":
             cy.title().should('eq', "Customer Privacy Notice - GOV.UK");

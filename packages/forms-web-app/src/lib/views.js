@@ -90,7 +90,7 @@ const VIEW = {
       'decision-making-process-guide/what-happens-after-the-decision-is-made',
   },
   FOOTER_PAGES: {
-    ACCESSIBILITY: 'footer-pages/accessibility',
+    ACCESSIBILITY: 'footer-pages/accessibility-statement',
     COOKIES: 'footer-pages/cookies-info',
   },
 };
