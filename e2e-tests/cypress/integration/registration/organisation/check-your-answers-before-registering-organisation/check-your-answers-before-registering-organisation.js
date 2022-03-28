@@ -21,7 +21,7 @@ Given('I navigate to UK address details page using organisation route', () => {
     cy.clickProjectLink('North Lincolnshire Green Energy Park');
     cy.clickOnHref("/register-have-your-say");
     cy.clickOnHref('/register/who-registering-for');
-    cy.selectRadioOption("An organisation I work or volunteer for");
+    cy.selectRadioOption("Organisation");
     cy.clickSaveAndContinue();
     fullNamePage.enterTextIntoFullNameField("TestFirstName TestMiddleName TestLastName");
     cy.clickSaveAndContinue();
