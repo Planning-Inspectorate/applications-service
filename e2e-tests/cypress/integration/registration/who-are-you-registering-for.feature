@@ -9,18 +9,12 @@ Feature: who are you registering for? page
 
 
     Scenario: Navigate to who are you registering for? page and verify the content in the page and validate error message
-        And I can see the logo gov uk text
         And I am on the "who are you registering for?" page
-        And I can see the text This service is only for Application service
         And I can see the radio options content
         And User clicks on continue button
         Then below error message should be presented on who are you registering for page
             | ErrorMsg                           |
             | Select who you are registering for |
-
-    Scenario: User click on Planning inspectorate logo
-        When I click on "planning inspectorate" logo
-        Then I am on the "planning inspectorate" page
 
     Scenario: User click on feedback link
         When I click on feedback link
@@ -36,6 +30,10 @@ Feature: who are you registering for? page
         Then I am on the "what is your full name?" page
 
     Scenario: User selects An organisation I work or volunteer for and click continue
-        When User selects "An organisation I work or volunteer for"
+        When User selects "Organisation"
         And User clicks on continue button
         Then I am on the "what is your full name? organisation" page
+
+    Scenario: click on Crown copyright logo
+        And I click on "crown copyright" logo
+        Then I am on the "crown copyright" page
