@@ -7,17 +7,19 @@ Given('I navigate to the who are you registering for page', () => {
 })
 
 And('I click on {string} footer link', (linkType) => {
-    switch(linkType) {
+    switch (linkType) {
         case "Sitemap": cy.get('[data-cy="Privacy"]').click();
-        break;
+            break;
         case "Terms and conditions": cy.get('[data-cy="Terms and conditions"]').click();
-        break;
+            break;
         case "Accessibility": cy.get('[data-cy="Accessibility"]').click();
-        break;
+            break;
         case "Privacy Notice": cy.get('[data-cy="Privacy Notice (on GOV.UK)"]').click();
-        break;
+            break;
         case "Cookies": cy.get('[data-cy="Cookies"]').click();
-        break;
+            break;
+        case "The Planning Inspectorate": cy.clickOnHref("http://planninginspectorate.gov.uk/");
+            break;
     }
 })
 

@@ -53,17 +53,17 @@ module.exports = (pageName) => {
             cy.url().should('include', '/before-you-apply');
             cy.title().should('eq', "Lorem Ipsum");
             break;
+        case "the planning inspectorate":
+            cy.url().should('include', '/planning-inspectorate');
+            cy.title().should('eq', "Planning Inspectorate - GOV.UK");
+            break;
         case "crown copyright":
-            cy.url().should('include', '/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/');
-            cy.title().should('eq', "Crown copyright - The National Archives");
+            cy.url().should('include', 'information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/');
+            cy.title().should('eq', "Crown copyright - Re-using PSI");
             break;
         case "feedback":
             cy.url().should('include', '/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u');
             cy.title().should('eq', "Help us to improve our service");
-            break;
-        case "project page":
-            cy.url().should('include', '/projects/yorkshire-and-the-humber/north-lincolnshire-green-energy-park/');
-            cy.title().should('eq', "North Lincolnshire Green Energy Park | National Infrastructure Planning");
             break;
         case "having your say at the pre-application stage":
             cy.title().should('eq', "Having your say at the pre-application stage");
@@ -374,9 +374,9 @@ module.exports = (pageName) => {
             cy.url().should('include', '/sitemap')
             break;
         case "terms and conditions":
-            cy.title().should('eq', "GOV.UK - The best place to find government services and information");
+            cy.title().should('eq', "Terms and conditions | National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {
-                expect(text).to.contain('Terms and conditions');
+                expect(text).to.contain('National Infrastructure Planning');
             })
             cy.url().should('include', '/terms-and-conditions')
             break;
