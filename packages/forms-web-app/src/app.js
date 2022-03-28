@@ -82,6 +82,7 @@ env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('host', config.server.host);
+env.addGlobal('serviceName', config.serviceName);
 
 if (config.server.useSecureSessionCookie) {
   app.set('trust proxy', 1); // trust first proxy

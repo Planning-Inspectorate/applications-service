@@ -2,12 +2,13 @@ const { VIEW } = require('../../lib/views');
 const { formatDate } = require('../../utils/date-utils');
 const { getAppData } = require('../../services/application.service');
 const logger = require('../../lib/logger');
+const config = require('../../config');
 
 exports.getStart = async (req, res) => {
   delete req.session.comment;
   delete req.session.mySelfRegdata;
   delete req.session.typeOfParty;
-
+  req.session.serviceName = config.serviceName;
   const response = await getAppData(req.params.case_ref);
   if (response.resp_code === 200) {
     const appData = response.data;

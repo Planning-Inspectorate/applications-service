@@ -1,7 +1,7 @@
 const httpPort = Number(process.env.PORT || 3000);
 
 module.exports = {
-  serviceName: 'Register to have your say',
+  serviceName: 'Register to have your say about a national infrastructure project',
   application: {
     defaultDisplayDateFormat: 'DD MMMM YYYY',
   },

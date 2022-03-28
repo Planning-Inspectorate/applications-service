@@ -7,7 +7,6 @@ const { removeUnwantedCookies } = require('../lib/remove-unwanted-cookies');
 
 const getExistingCookiePolicy = (req) => {
   let cookiePolicy = {};
-
   try {
     cookiePolicy =
       req.cookies &&
@@ -21,6 +20,7 @@ const getExistingCookiePolicy = (req) => {
 };
 
 exports.getCookies = (req, res) => {
+  delete req.session.serviceName;
   res.render(VIEW.COOKIES, {
     cookiePolicy: getExistingCookiePolicy(req),
     displayCookieBanner: false,

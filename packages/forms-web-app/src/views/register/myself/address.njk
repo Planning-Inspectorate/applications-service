@@ -1,4 +1,4 @@
-{% extends "layouts/register-main.njk" %}
+{% extends "layouts/main.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %},
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -35,7 +35,7 @@
               isPageHeading: true
             }
           }) %}
-          
+
           {{ govukInput({
               label: {
                 html: "Address line 1 <span class='govuk-visually-hidden'>of 3</span>"

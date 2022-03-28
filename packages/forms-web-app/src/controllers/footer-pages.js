@@ -1,9 +1,12 @@
+const session = require('express-session');
 const { VIEW } = require('../lib/views');
 
-exports.getAccessibility = (_, res) => {
+exports.getAccessibility = (req, res) => {
+  delete req.session.serviceName;
   res.render(VIEW.FOOTER_PAGES.ACCESSIBILITY);
 };
 
-exports.getCookiesInfo = (_, res) => {
+exports.getCookiesInfo = (req, res) => {
+  delete req.session.serviceName;
   res.render(VIEW.FOOTER_PAGES.COOKIES);
 };

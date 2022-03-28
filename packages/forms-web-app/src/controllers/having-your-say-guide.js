@@ -1,7 +1,7 @@
 const { VIEW } = require('../lib/views');
 const { nsipProjectLink } = require('../lib/nsip-project-link');
 
-exports.getHavingYourSayAboutProject = (_, res) => {
+exports.getHavingYourSayAboutProject = (req, res) => {
   res.render(VIEW.INTERESTED_PARTY_GUIDE.INTERESTED_PARTY);
 };
 
