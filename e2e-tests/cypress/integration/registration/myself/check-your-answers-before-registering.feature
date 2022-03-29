@@ -18,14 +18,14 @@ Feature: Check your answers before registering page
     Scenario: verify page title, heading, data and continue
         Then I am on the "Check your answers before registering" page
         And I verify below data is present on Check your answers before registering page
-            | Column1                      | Column2                                                                                                  | Column3   |
-            | Who are you registering for? | Myself                                                                                                   | Change    |
-            | Full name                    | TestFirstName TestMiddleName TestLastName                                                                | Change    |
-            | Are you 18 or over?          | Yes                                                                                                      | Change    |
-            | Email address                | test@gmail.com                                                                                           | Change    |
-            | Telephone number             | 1234567899                                                                                               | Change    |
-            | Address                      | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                             | Change    |
-            | Registration comments        | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change ?? |
+            | Column1                      | Column2                                                                                                  | Column3                      |
+            | Who are you registering for? | Myself                                                                                                   | Change                       |
+            | Full name                    | TestFirstName TestMiddleName TestLastName                                                                | Change                       |
+            | Are you 18 or over?          | Yes                                                                                                      | Change                       |
+            | Email address                | test@gmail.com                                                                                           | Change                       |
+            | Telephone number             | 1234567899                                                                                               | Change                       |
+            | Address                      | Address Line 1\n        \n        \n        NE27 0QQ\n        United Kingdom                             | Change                       |
+            | Registration comments        | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change registration comments |
         And User clicks on accept and continue button for "myself"
         Then I am on the "Declaration" page
 

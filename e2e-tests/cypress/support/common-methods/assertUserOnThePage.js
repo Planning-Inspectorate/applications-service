@@ -42,6 +42,12 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/examination/EN010116')
             break;
+        case "north lincolnshire green energy park":
+            cy.title().should('eq', "North Lincolnshire Green Energy Park | National Infrastructure Planning");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('National Infrastructure Planning');
+            })
+            break;
         case "having your say about a national infrastructure project":
             cy.title().should('eq', "Having your say about a national infrastructure project - step by step - National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {

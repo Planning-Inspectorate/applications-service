@@ -11,19 +11,19 @@ Feature: Complete registration as Agent representing a person journey
     Scenario: verify page title, heading, data and complete Agent representing a person journey
         Then I am on the "check your answers before registering on behalf of someone else" page
         And I verify below data is present on Check your answers before registering page
-            | Column1                                                   | Column2                                                                                  | Column3                |
-            | Who are you registering for?                              | An organisation or charity                                                               | Change registering-for |
-            | Full name                                                 | TestFirstName TestMiddleName TestLastName                                                | Change ??              |
-            | Organisation name                                         | Test Organisation Name                                                                   | Change ??              |
-            | Address                                                   | \nAddress Line 1\n        \n        \n        NE27 0BB\n        United Kingdom\n         | Change ??              |
-            | Email address                                             | testpins2@gmail.com                                                                      | Change ??              |
-            | Telephone number                                          | 123456789                                                                                | Change ??              |
-            | What is the full name of the person you are representing? | Representee FirstName Representee LastName                                               | Change ??              |
-            | Are they 18 or over?                                      | Yes                                                                                      | Change ??              |
-            | Their address                                             | Representee Address Line 1\n        \n        \n        NE27 0BB\n        United Kingdom | Change ??              |
-            | Their email address                                       | representeetestpins2@gmail.com                                                           | Change ??              |
-            | Their telephone number                                    | 12121212121                                                                              | Change ??              |
-            | Registration comments                                     | I am against the proposal since it will reduce resident parking provision                | Change ??              |
+            | Column1                                     | Column2                                                                                  | Column3                                            |
+            | Who are you registering for?                | On behalf of another person, a family group or an organisation I do not work for         | Change who are you registering for                 |
+            | Full name                                   | TestFirstName TestMiddleName TestLastName                                                | Change your full name                              |
+            | Organisation name                           | Test Organisation Name                                                                   | Change your organisation name                      |
+            | Address                                     | \nAddress Line 1\n        \n        \n        NE27 0BB\n        United Kingdom\n         | Change your address                                |
+            | Email address                               | testpins2@gmail.com                                                                      | Change your email address                          |
+            | Telephone number                            | 123456789                                                                                | Change your telephone number                       |
+            | The name of the person you are representing | Representee FirstName Representee LastName                                               | Change the name of the person you are representing |
+            | Are they 18 or over?                        | Yes                                                                                      | Change if they are over 18                         |
+            | Their address                               | Representee Address Line 1\n        \n        \n        NE27 0BB\n        United Kingdom | Change their address                               |
+            | Their email address                         | representeetestpins2@gmail.com                                                           | Change their email address                         |
+            | Their telephone number                      | 12121212121                                                                              | Change their telephone number                      |
+            | Registration comments                       | I am against the proposal since it will reduce resident parking provision                | Change registration comments                       |
         And User clicks on accept and continue button for "on behalf"
         Then I am on the "declaration registering on behalf of someone else" page
         And User clicks on accept and register button

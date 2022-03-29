@@ -19,7 +19,7 @@ Feature: Check your answers before registering organisation page
         Then I am on the "Check your answers before registering organisation" page
         And I verify below data is present on Check your answers before registering page
             | Column1                                           | Column2                                                                                                  | Column3 |
-            | Who are you registering for?                      | Organisation                                                                                             | Change  |
+            | Who are you registering for?                      | An organisation I work or volunteer for                                                                  | Change  |
             | Full name                                         | TestFirstName TestMiddleName TestLastName                                                                | Change  |
             | Are you 18 or over?                               | Yes                                                                                                      | Change  |
             | What is the name of your organisation or charity? | Test Organisation                                                                                        | Change  |

@@ -11,10 +11,8 @@ Feature: What is your full name page
     When I click on back link
     Then I am on the "who are you registering for?" page
 
-  Scenario: Navigate to full name page and verify the content in the page
-    Then I can see the logo gov uk text
+  Scenario: Navigate to full name page
     And I am on the "what is your full name? organisation" page
-    And I can see the text This service is only for Application service
 
   Scenario Outline: User continues with invalid data
     When I continue with the value "<text>" in the full name field
