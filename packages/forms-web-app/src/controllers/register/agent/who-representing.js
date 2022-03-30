@@ -18,21 +18,16 @@ exports.postRepresentingFor = async (req, res) => {
     });
     return;
   }
-  const oldRepresenting = req.session.behalfRegdata.representing;
-  req.session.behalfRegdata.representing = representing;
-  if (req.query.mode === 'edit' && representing !== oldRepresenting) {
+  // const oldRepresenting = req.session.behalfRegdata.representing;
+  const representingChanged = req.session.behalfRegdata.representing !== representing;
+  if (!representingChanged && req.query.mode === 'edit') {
+    res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+  } else if (req.query.mode === 'edit') {
     req.session.behalfRegdata.representee = registrationData.behalf.representee;
     delete req.session.comment;
-    if (representing === 'person') {
-      res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
-    } else if (representing === 'organisation') {
-      res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`);
-    } else if (representing === 'family') {
-      res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`);
-    }
-  } else if (req.query.mode === 'edit') {
-    res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-  } else if (representing === 'person') {
+  }
+  req.session.behalfRegdata.representing = representing;
+  if (representing === 'person') {
     res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
   } else if (representing === 'organisation') {
     res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`);
