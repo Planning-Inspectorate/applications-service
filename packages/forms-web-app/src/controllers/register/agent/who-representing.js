@@ -1,4 +1,5 @@
 const { VIEW } = require('../../../lib/views');
+const registrationData = require('../../../lib/registration-data.json');
 
 exports.getRepresentingFor = async (req, res) => {
   res.render(VIEW.REGISTER.AGENT.REPRESENTING_FOR, {
@@ -17,12 +18,16 @@ exports.postRepresentingFor = async (req, res) => {
     });
     return;
   }
-
-  req.session.behalfRegdata.representing = representing;
-
-  if (req.query.mode === 'edit') {
+  // const oldRepresenting = req.session.behalfRegdata.representing;
+  const representingChanged = req.session.behalfRegdata.representing !== representing;
+  if (!representingChanged && req.query.mode === 'edit') {
     res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-  } else if (representing === 'person') {
+  } else if (req.query.mode === 'edit') {
+    req.session.behalfRegdata.representee = registrationData.behalf.representee;
+    delete req.session.comment;
+  }
+  req.session.behalfRegdata.representing = representing;
+  if (representing === 'person') {
     res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
   } else if (representing === 'organisation') {
     res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`);
