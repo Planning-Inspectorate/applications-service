@@ -45,7 +45,7 @@ const VIEW = {
       CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
       DECLARATION: 'register/organisation/declaration',
       REGISTRATION_SAVED: 'register/organisation/registration-saved',
-      CONFIRMATION: 'register/organisation/confirmation',
+      CONFIRMATION: 'register/organisation/registration-complete',
     },
     AGENT: {
       REPRESENTING_FOR: 'register/agent/who-representing',
