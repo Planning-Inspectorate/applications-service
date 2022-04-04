@@ -1,10 +1,10 @@
-const roleController = require('../../../../../src/controllers/register/organisation/role');
+const roleController = require('../../../../../src/controllers/register/organisation/what-job-title-or-role');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/role', () => {
+describe('controllers/register/organisation/what-job-title-or-role', () => {
   let req;
   let res;
 
@@ -24,7 +24,9 @@ describe('controllers/register/organisation/role', () => {
   describe('getRole', () => {
     it('should call the correct template', () => {
       roleController.getRole(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/role', { role: 'test' });
+      expect(res.render).toHaveBeenCalledWith('register/organisation/what-job-title-or-role', {
+        role: 'test',
+      });
     });
   });
 
