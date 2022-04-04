@@ -42,7 +42,7 @@ const VIEW = {
       EMAIL: 'register/organisation/email-address',
       TELEPHONE: 'register/organisation/telephone-number',
       TELL_US_ABOUT_PROJECT: 'register/organisation/tell-us-about-project',
-      CHECK_YOUR_ANSWERS: 'register/organisation/check-your-answers',
+      CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
       DECLARATION: 'register/organisation/declaration',
       REGISTRATION_SAVED: 'register/organisation/registration-saved',
       CONFIRMATION: 'register/organisation/confirmation',
