@@ -1,10 +1,10 @@
-const emailController = require('../../../../../src/controllers/register/organisation/email');
+const emailController = require('../../../../../src/controllers/register/organisation/email-address');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/email', () => {
+describe('controllers/register/organisation/email-address', () => {
   let req;
   let res;
 
@@ -24,7 +24,7 @@ describe('controllers/register/organisation/email', () => {
   describe('getEmail', () => {
     it('should call the correct template', () => {
       emailController.getEmail(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/email', {
+      expect(res.render).toHaveBeenCalledWith('register/organisation/email-address', {
         email: 'anc@test.com',
       });
     });
