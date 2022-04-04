@@ -37,7 +37,7 @@ const VIEW = {
       FULL_NAME: 'register/organisation/full-name',
       OVER_18: 'register/organisation/are-you-18-over',
       ORGANISATION_NAME: 'register/organisation/name-of-organisation-or-charity',
-      ROLE: 'register/organisation/role',
+      ROLE: 'register/organisation/what-job-title-or-role',
       ADDRESS: 'register/organisation/address',
       EMAIL: 'register/organisation/email',
       TELEPHONE: 'register/organisation/telephone',
