@@ -4,7 +4,7 @@ const router = express.Router();
 
 const fullNameRouter = require('./full-name');
 const over18Router = require('./are-you-18-over');
-const organisationNameRouter = require('./organisation-name');
+const organisationNameRouter = require('./name-of-organisation-or-charity');
 const roleRouter = require('./role');
 const addressRouter = require('./address');
 const emailRouter = require('./email');
