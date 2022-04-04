@@ -1,10 +1,10 @@
-const telephoneController = require('../../../../../src/controllers/register/organisation/telephone');
+const telephoneController = require('../../../../../src/controllers/register/organisation/telephone-number');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/telephone', () => {
+describe('controllers/register/organisation/telephone-number', () => {
   let req;
   let res;
 
@@ -24,7 +24,7 @@ describe('controllers/register/organisation/telephone', () => {
   describe('getTelephone', () => {
     it('should call the correct template', () => {
       telephoneController.getTelephone(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/telephone', {
+      expect(res.render).toHaveBeenCalledWith('register/organisation/telephone-number', {
         telephone: '06876767',
       });
     });

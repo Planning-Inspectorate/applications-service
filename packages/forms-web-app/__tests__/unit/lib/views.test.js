@@ -60,7 +60,7 @@ describe('lib/views', () => {
           ROLE: 'register/organisation/what-job-title-or-role',
           ADDRESS: 'register/organisation/address',
           EMAIL: 'register/organisation/email-address',
-          TELEPHONE: 'register/organisation/telephone',
+          TELEPHONE: 'register/organisation/telephone-number',
           TELL_US_ABOUT_PROJECT: 'register/organisation/tell-us-about-project',
           CHECK_YOUR_ANSWERS: 'register/organisation/check-your-answers',
           DECLARATION: 'register/organisation/declaration',
