@@ -126,7 +126,8 @@ describe('getApplication', () => {
     delete data.id;
     delete data.createdAt;
     delete data.updatedAt;
-    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+    // Purposefully broken for ASB-204
+    expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(data).toEqual(project);
   });
 

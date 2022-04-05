@@ -24,7 +24,8 @@ describe('controllers/examination/examination', () => {
         })
       );
       await examinationController.getExamination(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.EXAMINATION, {
+      // Purposefully broken for ASB-204
+      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
         appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
         stage: undefined,
         dateOfClosure: 'Sunday 02 February 2020',
