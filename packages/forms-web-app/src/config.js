@@ -6,7 +6,6 @@ module.exports = {
     defaultDisplayDateFormat: 'DD MMMM YYYY',
   },
   applications: {
-    startingPoint: '/before-you-apply',
     timeout: Number(process.env.APPLICATIONS_SERVICE_API_TIMEOUT || 10000),
     url: process.env.APPLICATIONS_SERVICE_API_URL,
     noOfCommentsAllowed: 16,
