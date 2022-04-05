@@ -53,8 +53,8 @@ Then go to [localhost:9004](http://localhost:9004) (forms-web-app) or
 > As a convention, public facing web service will use the port range `9000-9999`
 > and API services will use the port range `3000-3999`
 
-> A database for local development can be accessed at http://localhost:9000/ via [Adminer](https://www.adminer.org/) 
-> which is running in its own container locally 
+> A database for local development can be accessed at http://localhost:9000/ via [Adminer](https://www.adminer.org/)
+> which is running in its own container locally
 > Alternatively, you can use [MySQL Workbench](https://www.mysql.com/products/workbench/)
 
 To run a single service (and it's dependencies):
@@ -86,12 +86,14 @@ make down
 ### Troubleshooting
 
 On (**make serve**), you may get the following error:
+
 ```
 no matching manifest for linux/arm64/v8 in the manifest list entries:
 ```
+
 Example output message:
 
-``` 
+```
 docker-compose up
 [+] Running 1/17
  ⠇ db Pulling                                                                                             1.8s
@@ -146,7 +148,6 @@ db:
 './init:/docker-entrypoint-initdb.d'
 ```
 
-
 ## Branching
 
 Please follow the established [branching strategy](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/425132090/Branching+strategy).
@@ -159,11 +160,18 @@ to generate the release numbers for the artifacts.
 
 ## Releases
 
-TO DO 
+TO DO
 
 ## Deployments
 
-TO DO 
+TO DO
+
+## Automatically format and lint code on git commit
+
+We use [pre-commit](https://pre-commit.com/index.html) to format and lint code before committing.
+Follow [these instructions](https://pre-commit.com/index.html#install) to install pre-commit.
+Run `pre-commit install` in the project root directory
+Pre-commit will now run automatically on git commit
 
 ## Commit Message Format
 
@@ -244,7 +252,6 @@ Or:
 
     git add .
     npm run commit
-
 
 ## Logging
 
