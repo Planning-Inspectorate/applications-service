@@ -18,8 +18,9 @@ ADD package.json package.json
 ADD .sequelizerc .sequelizerc
 ADD package-lock.json package-lock.json
 
-RUN npm i --production
-RUN npm run documentation; echo $? > /npm.exitcode
+RUN npm i
+RUN npm run documentation
+RUN npm prune --production
 EXPOSE 3000
 USER node
 CMD [ "npm", "start" ]
