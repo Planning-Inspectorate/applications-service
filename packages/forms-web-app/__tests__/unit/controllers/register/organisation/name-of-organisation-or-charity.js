@@ -1,10 +1,10 @@
-const organisationNameController = require('../../../../../src/controllers/register/organisation/organisation-name');
+const organisationNameController = require('../../../../../src/controllers/register/organisation/name-of-organisation-or-charity');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/organisation-name', () => {
+describe('controllers/register/organisation/name-of-organisation-or-charity', () => {
   let req;
   let res;
 
@@ -24,9 +24,12 @@ describe('controllers/register/organisation/organisation-name', () => {
   describe('getOrganisationName', () => {
     it('should call the correct template', () => {
       organisationNameController.getOrganisationName(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/organisation-name', {
-        organisationName: 'test',
-      });
+      expect(res.render).toHaveBeenCalledWith(
+        'register/organisation/name-of-organisation-or-charity',
+        {
+          organisationName: 'test',
+        }
+      );
     });
   });
 

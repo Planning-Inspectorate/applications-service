@@ -3,17 +3,17 @@ const express = require('express');
 const router = express.Router();
 
 const fullNameRouter = require('./full-name');
-const over18Router = require('./over-18');
-const organisationNameRouter = require('./organisation-name');
-const roleRouter = require('./role');
+const over18Router = require('./are-you-18-over');
+const organisationNameRouter = require('./name-of-organisation-or-charity');
+const roleRouter = require('./what-job-title-or-role');
 const addressRouter = require('./address');
-const emailRouter = require('./email');
-const telephoneRouter = require('./telephone');
+const emailRouter = require('./email-address');
+const telephoneRouter = require('./telephone-number');
 const commentsRouter = require('./tell-us-about-project');
-const checkYourAnswersRouter = require('./check-your-answers');
+const checkYourAnswersRouter = require('./check-answers');
 const declarationRouter = require('./declaration');
 const registrationSavedRouter = require('./registration-saved');
-const confirmationRouter = require('./confirmation');
+const confirmationRouter = require('./registration-complete');
 
 router.use('/', fullNameRouter);
 router.use('/', over18Router);
