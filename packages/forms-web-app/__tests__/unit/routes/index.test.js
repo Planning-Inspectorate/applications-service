@@ -23,6 +23,6 @@ describe('routes/index', () => {
     expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
     expect(use).toHaveBeenCalledWith(interestedPartyRouter);
     expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
-    expect(use.mock.calls.length).toBe(11);
+    expect(use.mock.calls.length).toBe(10);
   });
 });
