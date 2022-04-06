@@ -3,7 +3,6 @@ const config = require('../config');
 
 const router = express.Router();
 
-const homeRouter = require('./home');
 const cookieRouter = require('./cookies');
 const projectSearchRouter = require('./project-search');
 const guidancePagesRouter = require('./guidance-pages');
@@ -14,7 +13,6 @@ const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('./examination');
 
-router.use('/', homeRouter);
 router.use('/', guidancePagesRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
