@@ -1,7 +1,6 @@
 jest.mock('uuid');
 
 const fetch = require('node-fetch');
-const uuid = require('uuid');
 const {
   getProjectData,
   getAllProjectList,
@@ -50,31 +49,31 @@ describe('lib/application-api-wrapper', () => {
 
   describe('searchDocumentList', () => {
     it(`should call the expected URL`, async () => {
-      const search_data = { pageNo: 1, searchTerm: 'test', filters: [] };
+      const searchData = { pageNo: 1, searchTerm: 'test', filters: [] };
       fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
-      await searchDocumentList('ABC123', search_data);
+      await searchDocumentList('ABC123', searchData);
       expect(fetch.mock.calls[0][0]).toEqual('http://fake.url/api/v1/documents/ABC123');
     });
 
     it('should gracefully handle a fetch failure', async () => {
-      const search_data = { pageNo: 1, searchTerm: 'test', filters: [] };
+      const searchData = { pageNo: 1, searchTerm: 'test', filters: [] };
       fetch.mockResponseOnce(JSON.stringify({ errors: ['No documents found'] }), {
         status: 404,
       });
       try {
-        await searchDocumentList('ABC123', search_data);
+        await searchDocumentList('ABC123', searchData);
       } catch (e) {
         expect(e.toString()).toEqual('Error: No documents found');
       }
     });
 
     it('should gracefully handle a fetch failure', async () => {
-      const search_data = { pageNo: 1, searchTerm: 'test', filters: [] };
+      const searchData = { pageNo: 1, searchTerm: 'test', filters: [] };
       fetch.mockResponseOnce(JSON.stringify({ errors: ['Internal server error'] }), {
         status: 500,
       });
       try {
-        await searchDocumentList('ABC123', search_data);
+        await searchDocumentList('ABC123', searchData);
       } catch (e) {
         expect(e.toString()).toEqual('Error: Internal server error');
       }

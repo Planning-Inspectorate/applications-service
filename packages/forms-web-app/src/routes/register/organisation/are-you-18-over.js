@@ -1,9 +1,9 @@
 const express = require('express');
 
-const over18Controller = require('../../../controllers/register/myself/are-you-18-over');
+const over18Controller = require('../../../controllers/register/organisation/are-you-18-over');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
-const { rules: over18Rules } = require('../../../validators/register/myself/are-you-18-over');
+const { rules: over18Rules } = require('../../../validators/register/organisation/are-you-18-over');
 
 const router = express.Router();
 

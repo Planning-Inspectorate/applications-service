@@ -1,4 +1,4 @@
-const confirmationController = require('../../../../../src/controllers/register/organisation/confirmation');
+const confirmationController = require('../../../../../src/controllers/register/organisation/registration-complete');
 const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
@@ -6,7 +6,7 @@ const { mockReq, mockRes } = require('../../../mocks');
 jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/confirmation', () => {
+describe('controllers/register/organisation/registration-complete', () => {
   let req;
   let res;
 
@@ -42,7 +42,7 @@ describe('controllers/register/organisation/confirmation', () => {
   describe('getConfirmation', () => {
     it('should call the correct template', async () => {
       await confirmationController.getConfirmation(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/confirmation', {
+      expect(res.render).toHaveBeenCalledWith('register/organisation/registration-complete', {
         email: 'anc@test.com',
         nsipProjectLink: 'https://infrastructure.planninginspectorate.gov.uk/projects/eastern/abc',
       });

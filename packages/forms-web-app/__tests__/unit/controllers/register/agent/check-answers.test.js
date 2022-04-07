@@ -1,5 +1,4 @@
 const cyaController = require('../../../../../src/controllers/register/agent/check-answers');
-const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');

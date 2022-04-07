@@ -18,6 +18,7 @@ Feature: Complete registration as Agent representing a person journey
             | Address                                     | \nAddress Line 1\n        \n        \n        NE27 0BB\n        United Kingdom\n         | Change your address                                |
             | Email address                               | testpins2@gmail.com                                                                      | Change your email address                          |
             | Telephone number                            | 123456789                                                                                | Change your telephone number                       |
+            | Who are you representing                    | A person                                                                                 | Change Change who are you registering for          |
             | The name of the person you are representing | Representee FirstName Representee LastName                                               | Change the name of the person you are representing |
             | Are they 18 or over?                        | Yes                                                                                      | Change if they are over 18                         |
             | Their address                               | Representee Address Line 1\n        \n        \n        NE27 0BB\n        United Kingdom | Change their address                               |
@@ -29,3 +30,17 @@ Feature: Complete registration as Agent representing a person journey
         And User clicks on accept and register button
         Then I am on the "registration complete registering on behalf of someone else" page
         And the page includes a link to the project
+
+    Scenario: click change link, select organisation or charity and continue
+        And I click on "Who are you representing" change link
+        Then I am on the "Who are you representing?" page
+        And user selects "An organisation or charity" on who are you representing page
+        And I click on the continue button
+        Then I am on the "What is the full name of the organisation or charity that you are representing?" page
+
+    Scenario: click change link, select A family group and continue
+        And I click on "Who are you representing" change link
+        Then I am on the "Who are you representing?" page
+        And user selects "A family group" on who are you representing page
+        And I click on the continue button
+        Then I am on the "What is the name of the family group you are representing?" page

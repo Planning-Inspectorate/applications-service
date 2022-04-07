@@ -6,7 +6,6 @@ const {
   rules: addressValidationRules,
 } = require('../../../validators/register/organisation/address');
 
-
 const router = express.Router();
 
 router.get('/address', addressController.getAddress);

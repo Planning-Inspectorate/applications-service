@@ -13,17 +13,19 @@ COPY --from=pinscommonukscontainers3887default.azurecr.io/common:latest /opt/app
 ADD package.json package.json
 ADD package-lock.json package-lock.json
 ADD __tests__ __tests__
+ADD .eslintrc .eslintrc
 ADD jest.config.js jest.config.js
 
 RUN npm i
 COPY . ./
 
+RUN npm run lint
 RUN npm run build
 RUN npm prune --production \
   && npm rebuild \
   && npm version ${VERSION} --no-git-tag-version --allow-same-version || true
 
-RUN npm run documentation; echo $? > /npm.exitcode
+RUN npm run documentation
 EXPOSE 3000
 
 CMD [ "npm", "run", "start" ]

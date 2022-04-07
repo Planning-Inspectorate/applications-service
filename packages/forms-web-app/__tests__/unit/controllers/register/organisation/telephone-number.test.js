@@ -1,10 +1,10 @@
-const emailController = require('../../../../../src/controllers/register/organisation/email');
+const telephoneController = require('../../../../../src/controllers/register/organisation/telephone-number');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/email', () => {
+describe('controllers/register/organisation/telephone-number', () => {
   let req;
   let res;
 
@@ -13,7 +13,7 @@ describe('controllers/register/organisation/email', () => {
       ...mockReq(),
       session: {
         orgRegdata: {
-          email: 'anc@test.com',
+          telephone: '06876767',
         },
       },
     };
@@ -21,29 +21,31 @@ describe('controllers/register/organisation/email', () => {
     jest.resetAllMocks();
   });
 
-  describe('getEmail', () => {
+  describe('getTelephone', () => {
     it('should call the correct template', () => {
-      emailController.getEmail(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/email', {
-        email: 'anc@test.com',
+      telephoneController.getTelephone(req, res);
+      expect(res.render).toHaveBeenCalledWith('register/organisation/telephone-number', {
+        telephone: '06876767',
       });
     });
   });
 
-  describe('postEmail', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.ADDRESS}' if email is provided`, async () => {
+  describe('postTelephone', () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}' if telephone is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
-          email: 'anc@test.com',
+          telephone: '676876876',
         },
         query: {
           mode: '',
         },
       };
-      await emailController.postEmail(mockRequest, res);
+      await telephoneController.postTelephone(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.ADDRESS}`);
+      expect(res.redirect).toHaveBeenCalledWith(
+        `/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`
+      );
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
@@ -53,10 +55,10 @@ describe('controllers/register/organisation/email', () => {
           errors: { a: 'b' },
         },
       };
-      await emailController.postEmail(mockRequest, res);
+      await telephoneController.postTelephone(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.EMAIL, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.TELEPHONE, {
         errorSummary: [{ text: 'There were errors here', href: '#' }],
         errors: { a: 'b' },
       });

@@ -1,10 +1,10 @@
-const fullNameController = require('../../../../../src/controllers/register/organisation/full-name');
+const over18Controller = require('../../../../../src/controllers/register/organisation/are-you-18-over');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/logger');
 
-describe('controllers/register/organisation/full-name', () => {
+describe('controllers/register/organisation/are-you-18-over', () => {
   let req;
   let res;
 
@@ -13,7 +13,7 @@ describe('controllers/register/organisation/full-name', () => {
       ...mockReq(),
       session: {
         orgRegdata: {
-          'full-name': 'test',
+          'over-18': 'yes',
         },
       },
     };
@@ -21,30 +21,29 @@ describe('controllers/register/organisation/full-name', () => {
     jest.resetAllMocks();
   });
 
-  describe('getFullName', () => {
+  describe('getOver18', () => {
     it('should call the correct template', () => {
-      fullNameController.getFullName(req, res);
-      expect(res.render).toHaveBeenCalledWith('register/organisation/full-name', {
-        fullName: 'test',
+      over18Controller.getOver18(req, res);
+      expect(res.render).toHaveBeenCalledWith('register/organisation/are-you-18-over', {
+        over18: 'yes',
       });
     });
   });
 
-  describe('postFullName', () => {
-    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.OVER_18}' if name is provided`, async () => {
-      const fullName = 'test';
+  describe('postOver18', () => {
+    it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME}' if over-18 is provided`, async () => {
       const mockRequest = {
         ...req,
         body: {
-          'full-name': fullName,
+          'over-18': 'yes',
         },
         query: {
           mode: '',
         },
       };
-      await fullNameController.postFullName(mockRequest, res);
+      await over18Controller.postOver18(mockRequest, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.OVER_18}`);
+      expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME}`);
     });
     it('should re-render the template with errors if there is any validation error', async () => {
       const mockRequest = {
@@ -54,10 +53,10 @@ describe('controllers/register/organisation/full-name', () => {
           errors: { a: 'b' },
         },
       };
-      await fullNameController.postFullName(mockRequest, res);
+      await over18Controller.postOver18(mockRequest, res);
       expect(res.redirect).not.toHaveBeenCalled();
 
-      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.FULL_NAME, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.ORGANISATION.OVER_18, {
         errorSummary: [{ text: 'There were errors here', href: '#' }],
         errors: { a: 'b' },
       });

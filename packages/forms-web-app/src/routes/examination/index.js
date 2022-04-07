@@ -1,7 +1,7 @@
 const express = require('express');
+
 const router = express.Router();
-const aboutTheApplicationRouter = require('../../routes/examination/about-the-application');
-const examinationController = require('../../controllers/examination/examination');
+const aboutTheApplicationRouter = require('./about-the-application');
 const projectTimeLineController = require('../../controllers/examination/project-timeline');
 const representationsController = require('../../controllers/examination/representations');
 const timetableController = require('../../controllers/examination/timetable');

@@ -1,4 +1,3 @@
 module.exports.APPLICATION_DOCUMENT = {
-  empty: {
-  },
+  empty: {},
 };

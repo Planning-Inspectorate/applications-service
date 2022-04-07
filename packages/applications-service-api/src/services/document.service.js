@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const db = require('../models');
 const config = require('../lib/config');
 
-const getDocuments = async (caseRef, pageNo, searchTerm, filters) => {
+const getDocuments = async (caseRef, pageNo, searchTerm) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
