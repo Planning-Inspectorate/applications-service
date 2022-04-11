@@ -21,7 +21,7 @@ ADD package-lock.json package-lock.json
 
 RUN npm i --production
 RUN npm run lint
-RUN npm run documentation; echo $? > /npm.exitcode
+RUN npm run documentation
 EXPOSE 3000
 USER node
 CMD [ "npm", "start" ]
