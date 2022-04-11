@@ -55,10 +55,6 @@ module.exports = (pageName) => {
             })
             cy.url().should('include', '/having-your-say-guide')
             break;
-        case "planning inspectorate":
-            cy.url().should('include', '/before-you-apply');
-            cy.title().should('eq', "Lorem Ipsum");
-            break;
         case "the planning inspectorate":
             cy.url().should('include', '/planning-inspectorate');
             cy.title().should('eq', "Planning Inspectorate - GOV.UK");
@@ -132,7 +128,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Are you 18 or over?');
             })
-            cy.url().should('include', '/over-18')
+            cy.url().should('include', '/are-you-18-over')
             break;
         case "uk address details":
             cy.title().should('eq', "UK address details - Register to have your say");
@@ -230,7 +226,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Check your answers before registering');
             })
-            cy.url().should('include', '/check-your-answers')
+            cy.url().should('include', '/check-answers')
             break;
         case "check your answers before registering on behalf of someone else":
             cy.title().should('eq', "Check your answers before registering - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning");
@@ -272,7 +268,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('Registration complete');
             })
-            cy.url().should('include', '/confirmation')
+            cy.url().should('include', '/organisation/registration-complete')
             break;
         case "registration complete registering on behalf of someone else":
             cy.title().should('eq', "Registration complete -Registering on behalf of someone else- Register to have your say about a national infrastructure project - National Infrastructure Planning");
@@ -293,14 +289,14 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is the name of your organisation or charity?');
             })
-            cy.url().should('include', '/register/organisation/organisation-name')
+            cy.url().should('include', '/register/organisation/name-of-organisation-or-charity')
             break;
         case "what is your job title or volunteer role?":
             cy.title().should('eq', "What is your job title or volunteer role? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning");
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('What is your job title or volunteer role?');
             })
-            cy.url().should('include', '/register/organisation/role')
+            cy.url().should('include', '/register/organisation/what-job-title-or-role')
             break;
         case "are you sure you want to remove this comment?":
             cy.title().should('eq', "Remove comment - Register to have your say");
@@ -497,6 +493,13 @@ module.exports = (pageName) => {
                 expect(text).to.contain('What is their telephone number?');
             })
             cy.url().should('include', '/their-telephone-number')
+            break;
+        case "project search":
+            cy.title().should('eq', "Project search");
+            cy.get('h1').invoke('text').then((text) => {
+                expect(text).to.contain('All Projects');
+            })
+            cy.url().should('include', '/project-search')
             break;
         default: throw new Error('uanble to find specified page name: ' + pageName);
     }
