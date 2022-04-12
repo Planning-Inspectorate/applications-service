@@ -13,7 +13,6 @@ ADD src src
 ADD __tests__ __tests__
 ADD jest.config.js jest.config.js
 ADD .eslintrc .eslintrc
-ADD .prettierrc .prettierrc
 ADD data data
 
 ADD package.json package.json
