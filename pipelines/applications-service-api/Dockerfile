@@ -15,8 +15,10 @@ ADD data data
 ADD package.json package.json
 ADD .sequelizerc .sequelizerc
 ADD package-lock.json package-lock.json
+ADD .eslintrc .eslintrc
 
 RUN npm i
+RUN npm run lint
 RUN npm run documentation
 RUN npm prune --production
 

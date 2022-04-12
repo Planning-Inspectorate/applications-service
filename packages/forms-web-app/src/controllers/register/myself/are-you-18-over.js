@@ -1,4 +1,3 @@
-const logger = require('../../../lib/logger');
 const { VIEW } = require('../../../lib/views');
 
 exports.getOver18 = async (req, res) => {

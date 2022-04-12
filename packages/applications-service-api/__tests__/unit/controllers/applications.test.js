@@ -2,7 +2,6 @@
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const { getApplication, getAllApplications } = require('../../../src/controllers/applications');
-const ApiError = require('../../../src/error/apiError');
 
 const projectData = {
   CaseReference: 'EN010116',

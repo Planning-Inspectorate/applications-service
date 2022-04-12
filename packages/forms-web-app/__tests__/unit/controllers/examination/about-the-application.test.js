@@ -82,7 +82,7 @@ describe('controllers/about-the-application', () => {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',
-        pageData: pageData,
+        pageData,
         paginationData: [1],
       });
     });
@@ -108,7 +108,7 @@ describe('controllers/about-the-application', () => {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',
-        pageData: pageData,
+        pageData,
         paginationData: [1],
       });
     });
@@ -121,7 +121,7 @@ describe('controllers/about-the-application', () => {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',
-        pageData: pageData,
+        pageData,
         paginationData: [1],
       });
     });

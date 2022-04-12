@@ -1,11 +1,8 @@
-const expressSession = require('express-session');
 const session = require('../../../src/lib/session');
 const config = require('../../../src/config');
 
 jest.mock('express-session');
 jest.mock('../../../src/lib/logger');
-
-const mockOn = jest.fn();
 
 describe('lib/session', () => {
   it('should throw if unable to find the session secret', () => {
@@ -21,7 +18,6 @@ describe('lib/session', () => {
     expect(configuredSession.resave).toEqual(false);
     expect(configuredSession.saveUninitialized).toEqual(true);
     expect(configuredSession.secret).toEqual(config.server.sessionSecret);
-
   });
 
   it('should configure with the expected config when useSecureSessionCookie', () => {
@@ -34,6 +30,5 @@ describe('lib/session', () => {
     expect(configuredSession.resave).toEqual(false);
     expect(configuredSession.saveUninitialized).toEqual(true);
     expect(configuredSession.secret).toEqual(config.server.sessionSecret);
-
   });
 });

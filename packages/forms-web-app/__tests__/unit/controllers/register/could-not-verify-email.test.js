@@ -1,5 +1,4 @@
 const couldNotVerifyEmailController = require('../../../../src/controllers/register/could-not-verify-email');
-const { VIEW } = require('../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');

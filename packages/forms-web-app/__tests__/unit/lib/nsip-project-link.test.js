@@ -78,7 +78,9 @@ describe('lib/nsip-project-link', () => {
       Region: 'South East',
     };
     const projectLink = nsipProjectLink(projectData);
-    expect(projectLink).toBe('https://infrastructure.planninginspectorate.gov.uk/projects/south-east/oikos-marine-om-south-west-south-side-development-her-majestys-order');
+    expect(projectLink).toBe(
+      'https://infrastructure.planninginspectorate.gov.uk/projects/south-east/oikos-marine-om-south-west-south-side-development-her-majestys-order'
+    );
   });
   it('should generate a link when the NSIP base URL config is overridden', () => {
     config.server.nsipBaseUrl = 'https://somethingelse.planninginspectorate.gov.uk';

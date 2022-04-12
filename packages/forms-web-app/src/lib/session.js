@@ -1,5 +1,3 @@
-const session = require('express-session');
-const logger = require('./logger');
 const config = require('../config');
 
 module.exports = () => {

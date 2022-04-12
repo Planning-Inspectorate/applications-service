@@ -35,9 +35,7 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
   const { ProjectName: projectName, DateOfRelevantRepresentationClose: repCloseDate } =
     project.dataValues;
 
-  const { email, ipName, ipRef } = IPFactory.createIP(behalf).getEmailingDetails(
-    party.dataValues
-  );
+  const { email, ipName, ipRef } = IPFactory.createIP(behalf).getEmailingDetails(party.dataValues);
   if (mode && mode.toUpperCase() === MODE_FINAL) {
     await notify.sendIPRegistrationConfirmationEmailToIP({ email, projectName, ipName, ipRef });
     await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });

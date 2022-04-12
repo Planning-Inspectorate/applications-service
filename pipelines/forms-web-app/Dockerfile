@@ -12,10 +12,12 @@ ADD package.json package.json
 ADD package-lock.json package-lock.json
 ADD __tests__ __tests__
 ADD jest.config.js jest.config.js
+ADD .eslintrc .eslintrc
 
 RUN npm i
 COPY . ./
 
+RUN npm run lint
 RUN npm run build
 RUN npm prune --production \
   && npm rebuild \

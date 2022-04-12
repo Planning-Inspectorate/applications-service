@@ -1,6 +1,8 @@
 const { get, post } = require('../../router-mock');
 const fullNameController = require('../../../../../src/controllers/register/myself/full-name');
-const { validationErrorHandler } = require('../../../../../src/validators/validation-error-handler');
+const {
+  validationErrorHandler,
+} = require('../../../../../src/validators/validation-error-handler');
 
 jest.mock('../../../../../src/validators/register/myself/full-name');
 
@@ -15,10 +17,7 @@ describe('routes/register/myself/full-name', () => {
   });
 
   it('should define the expected routes', () => {
-    expect(get).toHaveBeenCalledWith(
-      '/full-name',
-      fullNameController.getFullName
-    );
+    expect(get).toHaveBeenCalledWith('/full-name', fullNameController.getFullName);
     expect(post).toHaveBeenCalledWith(
       '/full-name',
       undefined,

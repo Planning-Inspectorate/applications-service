@@ -59,7 +59,6 @@ exports.postSearchDocument = async (req, res) => {
   const { body } = req;
   const { search } = body;
   req.session.document_search = search;
-  const filters = req.session.document_filters | [];
   const searchDocumentData = JSON.stringify({ ...documentSearch, filters: [] })
     .replace(0, pageNumber)
     .replace('$search_term$', search);

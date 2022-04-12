@@ -6,7 +6,6 @@ const {
   rules: telephoneValidationRules,
 } = require('../../../validators/register/myself/telephone');
 
-
 const router = express.Router();
 
 router.get('/telephone', telephoneController.getTelephone);
