@@ -26,7 +26,7 @@
 
 {% set rows = [{
             key: {
-              text: "Who are you representing"
+              text: "Who are you representing?"
             },
             value: {
               text: summaryField( representing, { 'data-cy': "representing" })
@@ -152,7 +152,7 @@
               ]
             }
           }), rows) %}
-<h2 class="govuk-heading-m">Who you are representing?</h2>
+<h2 class="govuk-heading-m">Who you are representing</h2>
 {{ govukSummaryList({
         classes: "govuk-summary-list govuk-!-margin-bottom-9",
         rows: rows
