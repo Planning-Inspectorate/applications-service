@@ -13,8 +13,7 @@
         "endOfLine": "auto",
         "singleQuote": true,
         "printWidth": 100,
-        "trailingComma": "es5",
-        "jsxSingleQuote": true
+        "trailingComma": "es5"
       }
     ]
   },
