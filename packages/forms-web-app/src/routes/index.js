@@ -5,7 +5,6 @@ const router = express.Router();
 
 const cookieRouter = require('./cookies');
 const projectSearchRouter = require('./project-search');
-const guidancePagesRouter = require('./guidance-pages');
 const registerRouter = require('./register');
 const interestedPartyRouter = require('./having-your-say-guide');
 const decisionMakingProcessGuideRouter = require('./decision-making-process-guide');
@@ -13,7 +12,6 @@ const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('./examination');
 
-router.use('/', guidancePagesRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
