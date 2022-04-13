@@ -15,17 +15,6 @@ Feature: Overview page
     Scenario: click on Project timeline link
         When I click on "Project timeline" link
 
-    Scenario: click on Project application documents link
-        When I click on "Project application documents" link
-        Then below rows should be returned
-            | Data                                                |
-            | Environmental Impact Assessment Scoping             |
-            | EN010116-000001-Smalll Test document for Doc upload |
-            | Transboundary                                       |
-            | EN010116-000002-Transboundary test document         |
-        And I click on Show search and filters
-        When I enter text "EN010116-000001-Smalll Test document for Doc upload" into search field
-
     Scenario: click on Registration comments link
         When I click on "Registration comments" link
         Then I click on required "Return to the project overview" link
