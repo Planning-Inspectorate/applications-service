@@ -1,6 +1,7 @@
 {% extends "layouts/main.njk" %}
 
 {% block header %}
+  {% include "includes/cookie-banner.njk" %}
   {{ pinsHeader({
     serviceName: "Register to have your say about a national infrastructure project",
     containerClasses: "govuk-width-container"
