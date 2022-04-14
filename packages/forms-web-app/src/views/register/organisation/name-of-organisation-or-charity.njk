@@ -37,7 +37,7 @@
             },
             id: "organisation-name",
             name: "organisation-name",
-            value: organisationName,
+            value: organisationName or errors['organisation-name'].value,
             attributes: {"data-cy": "organisation-name"},
             errorMessage: errors['organisation-name'] and {
               text: errors['organisation-name'].msg

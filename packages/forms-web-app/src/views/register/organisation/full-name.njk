@@ -34,7 +34,7 @@
             },
             id: "full-name",
             name: "full-name",
-            value: fullName,
+            value: fullName or errors['full-name'].value,
             attributes: {"data-cy": "full-name"},
             errorMessage: errors['full-name'] and {
               text: errors['full-name'].msg

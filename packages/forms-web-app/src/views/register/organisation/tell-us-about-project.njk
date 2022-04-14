@@ -45,7 +45,7 @@
             isPageHeading: true
           },
           name: "comment",
-          value: comment,
+          value: comment or errors['comment'].value,
           attributes: {"data-cy": "comment"},
           errorMessage: errors['comment'] and {
               text: errors['comment'].msg

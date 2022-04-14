@@ -37,7 +37,7 @@
             },
             id: "email",
             name: "email",
-            value: email,
+            value: email or errors['email'].value,
             autocomplete: "email",
             spellcheck: false,
             attributes: {"data-cy": "email"},
