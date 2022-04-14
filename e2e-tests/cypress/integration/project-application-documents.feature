@@ -17,7 +17,7 @@ Feature: Project Application documents page
             | Next set of pages |
         Then I verify text "Showing 1 to 20 of 46 results" is present on the page
         Then I verify that only "20" results present on each page
-        And I click on pagination "2"
+        When I navigate to page "2" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
@@ -27,7 +27,7 @@ Feature: Project Application documents page
             | Next set of pages     |
         Then I verify text "Showing 21 to 40 of 46 results" is present on the page
         Then I verify that only "20" results present on each page
-        And I click on pagination "3"
+        When I navigate to page "3" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
@@ -38,7 +38,7 @@ Feature: Project Application documents page
         Then I verify that only "6" results present on each page
 
     Scenario: verify Next/Previous pagination links on Project application documents page
-        And I click on pagination "Next set of pages"
+        And I navigate to page "Next set of pages" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
@@ -48,7 +48,7 @@ Feature: Project Application documents page
             | Next set of pages     |
         Then I verify text "Showing 21 to 40 of 46 results" is present on the page
         Then I verify that only "20" results present on each page
-        And I click on pagination "Next set of pages"
+        When I navigate to page "Next set of pages" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
@@ -57,7 +57,7 @@ Feature: Project Application documents page
             | 3                     |
         Then I verify text "Showing 41 to 46 of 46 results" is present on the page
         Then I verify that only "6" results present on each page
-        And I click on pagination "Previous set of pages"
+        When I navigate to page "Previous set of pages" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
@@ -67,7 +67,7 @@ Feature: Project Application documents page
             | Next set of pages     |
         Then I verify text "Showing 21 to 40 of 46 results" is present on the page
         Then I verify that only "20" results present on each page
-        And I click on pagination "Previous set of pages"
+        When I navigate to page "Previous set of pages" of the results
         Then I verify below pagination is present on the page
             | Data              |
             | 1                 |

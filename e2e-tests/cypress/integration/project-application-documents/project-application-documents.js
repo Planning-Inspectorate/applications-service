@@ -27,7 +27,7 @@ And('I click on {string} link', (pageName) => {
      projectAppDocs.assertIfPaginationIsPresent(table);
  })
 
- And('I click on pagination {string}', (paginationLink) => {
+ And('I navigate to page {string} of the results', (paginationLink) => {
      projectAppDocs.clickOnPaginationLink(paginationLink);
  })
 
