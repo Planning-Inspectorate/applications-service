@@ -45,6 +45,10 @@ class ApiError {
       errors: [`Interested party ${ID} not found`],
     });
   }
+
+  static noBannersFound() {
+    return new ApiError(404, { errors: [`No banners found`] });
+  }
 }
 
 module.exports = ApiError;
