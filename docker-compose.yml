@@ -9,6 +9,11 @@
 
 version: '3.7'
 services:
+  redis:
+    image: redis:6.2.5-alpine
+    ports:
+      - '6379:6379'
+
   applications-service-api:
     image: node:14-alpine
     environment:
@@ -60,6 +65,7 @@ services:
       PDF_SERVICE_API_URL: 'http://pdf-service-api:3000'
       HOST_URL: 'http://localhost:9004/'
       PRIVATE_BETA_V1_ROUTES_ONLY: 'false'
+      FEATURE_SESSION_STORE: 'true'
     ports:
       - '9004:3000'
       # node debugger
