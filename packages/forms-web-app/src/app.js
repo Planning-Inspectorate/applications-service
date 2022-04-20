@@ -7,6 +7,7 @@ const nunjucks = require('nunjucks');
 const dateFilter = require('nunjucks-date-filter');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const fileUpload = require('express-fileupload');
@@ -91,10 +92,9 @@ if (config.server.useSecureSessionCookie) {
 let sessionStoreConfig = sessionConfig();
 
 if (config.featureFlag.useSessionStore) {
-  const { createClient } = require('redis');
   const redisClient = createClient({ url: 'redis://redis:6379' });
   redisClient.on('error', function (err) {
-    logger.error('Could not establish a connection with redis. ' + err);
+    logger.error(`Could not establish a connection with redis. ${err}`);
   });
   redisClient.on('connect', () => {
     logger.info('Connected to redis successfully');
