@@ -32,6 +32,7 @@ module.exports = {
   server: {
     host: process.env.HOST_URL || `http://localhost:${httpPort}`, // This is used for the HTML generator
     port: httpPort,
+    redisUrl: process.env.REDIS_URL || 'redis://redis:6379',
     sessionSecret: process.env.SESSION_KEY,
     // https://expressjs.com/en/5x/api.html#app.set - to account for .gov.uk
     subdomainOffset: parseInt(process.env.SUBDOMAIN_OFFSET, 10) || 3,
@@ -43,6 +44,6 @@ module.exports = {
   featureFlag: {
     googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
     usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
-    useSessionStore: process.env.FEATURE_SESSION_STORE === 'true',
+    useRedisSessionStore: process.env.FEATURE_SESSION_STORE === 'true',
   },
 };
