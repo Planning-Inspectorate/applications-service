@@ -92,11 +92,11 @@ let sessionStoreConfig = sessionConfig();
 
 if (config.featureFlag.useSessionStore) {
   const { createClient } = require('redis');
-  let redisClient = createClient({ url: 'redis://redis:6379' });
+  const redisClient = createClient({ url: 'redis://redis:6379' });
   redisClient.on('error', function (err) {
     logger.error('Could not establish a connection with redis. ' + err);
   });
-  redisClient.on('connect', function (err) {
+  redisClient.on('connect', () => {
     logger.info('Connected to redis successfully');
   });
 
