@@ -34,7 +34,7 @@
             },
             id: "role",
             name: "role",
-            value: role,
+            value: role or errors['role'].value,
             attributes: {"data-cy": "role"},
             errorMessage: errors['role'] and {
               text: errors['role'].msg
