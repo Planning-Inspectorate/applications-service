@@ -29,14 +29,13 @@ module.exports = {
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
       const byType = R.groupBy(R.prop('type'));
-      const byStage = R.groupBy(R.prop('Stage'));
       const rows = documents.rows.map((row) => ({
         ...row.dataValues,
         path: row.dataValues.path ? `${documentsHost}${row.dataValues.path}` : null,
       }));
 
       const wrapper = {
-        documents: Object.entries(byStage(rows)).map((e) => ({ [e[0]]: byType(e[1]) })),
+        documents: byType(rows),
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
