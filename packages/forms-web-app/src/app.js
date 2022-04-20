@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const nunjucks = require('nunjucks');
 const dateFilter = require('nunjucks-date-filter');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const fileUpload = require('express-fileupload');
@@ -87,13 +89,26 @@ if (config.server.useSecureSessionCookie) {
   app.set('trust proxy', 1); // trust first proxy
 }
 
+let sessionStoreConfig = sessionConfig();
+
+if (config.featureFlag.useRedisSessionStore) {
+  const redisClient = createClient({ url: config.db.session.redisUrl });
+  redisClient.on('error', function (err) {
+    logger.error(`Could not establish a connection with redis. ${err}`);
+  });
+  redisClient.on('connect', () => {
+    logger.info('Connected to redis successfully');
+  });
+
+  sessionStoreConfig = { ...sessionStoreConfig, store: new RedisStore({ client: redisClient }) };
+}
 app.use(compression());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session(sessionConfig()));
+app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(env));
 app.use(removeUnwantedCookiesMiddelware);
