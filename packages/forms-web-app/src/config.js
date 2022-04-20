@@ -12,16 +12,7 @@ module.exports = {
   },
   db: {
     session: {
-      uri: process.env.SESSION_MONGODB_URL,
-      databaseName: process.env.SESSION_MONGODB_DB_NAME,
-      collection: process.env.SESSION_MONGODB_COLLECTION || 'sessions',
-      expiresColumn: '_ts',
-      expires: 1000 * 60 * 60 * 24 * 14, // value in milliseconds
-      expiresAfterSeconds: 60 * 60 * 24 * 14, // value in seconds
-      connectionOptions: {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
+      redisUrl: process.env.REDIS_URL || 'redis://redis:6379',
     },
   },
   isProduction: process.env.NODE_ENV === 'production',
@@ -32,7 +23,6 @@ module.exports = {
   server: {
     host: process.env.HOST_URL || `http://localhost:${httpPort}`, // This is used for the HTML generator
     port: httpPort,
-    redisUrl: process.env.REDIS_URL || 'redis://redis:6379',
     sessionSecret: process.env.SESSION_KEY,
     // https://expressjs.com/en/5x/api.html#app.set - to account for .gov.uk
     subdomainOffset: parseInt(process.env.SUBDOMAIN_OFFSET, 10) || 3,

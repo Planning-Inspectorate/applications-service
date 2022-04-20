@@ -92,7 +92,7 @@ if (config.server.useSecureSessionCookie) {
 let sessionStoreConfig = sessionConfig();
 
 if (config.featureFlag.useRedisSessionStore) {
-  const redisClient = createClient({ url: config.server.redisUrl });
+  const redisClient = createClient({ url: config.db.session.redisUrl });
   redisClient.on('error', function (err) {
     logger.error(`Could not establish a connection with redis. ${err}`);
   });
