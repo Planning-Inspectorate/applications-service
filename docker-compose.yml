@@ -66,7 +66,7 @@ services:
       HOST_URL: 'http://localhost:9004/'
       REDIS_URL: 'redis://redis:6379'
       PRIVATE_BETA_V1_ROUTES_ONLY: 'false'
-      FEATURE_SESSION_STORE: 'true'
+      FEATURE_REDIS_SESSION_STORE: 'true'
     ports:
       - '9004:3000'
       # node debugger
