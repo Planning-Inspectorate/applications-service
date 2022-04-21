@@ -276,8 +276,8 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v2/documents?caseRef={caseRef}':
-    post:
+  '/api/v2/documents?caseRef={caseRef}&page={page}':
+    get:
       summary: Returns project documents
       description: Returns project documents
       tags:
@@ -290,13 +290,13 @@ paths:
           schema:
             type: string
           description: Case reference
-      requestBody:
-        description: Search and filtering criteria, required page number
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DocumentSearchCriteria'
-        required: true
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
       responses:
         '200':
           description: Returns list of documents
