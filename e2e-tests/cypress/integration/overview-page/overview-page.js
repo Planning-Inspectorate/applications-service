@@ -19,26 +19,6 @@ And('I click on {string} link', (pageName) => {
     cy.clickContentsLink(pageName);
  })
 
- When('I enter text {string} into search field', (searchInput) => {
-    overviewPage.enterTextIntoSearchField(searchInput);
- })
-
- And('I click on Show search and filters', () => {
-    overviewPage.clickOnSearch();
- })
-
- Then('below rows should be returned', (table) => {
-    overviewPage.assertResultsPresentOnPage(table);
- })
-
- And('sort by drop down should be having Recently updated', () => {
-    overviewPage.assertResultsSortedByIsPresent();
- })
-
- Then('No documents found Please try with different search text should be displayed', () => {
-    cy.confirmTextOnPage("No documents found. Please try with different search text.");
- })
-
  And('I click on Apply filters', () => {
      overviewPage.clickOnApplyFilters();
  })
