@@ -1,4 +1,3 @@
-const R = require('ramda');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
@@ -28,14 +27,13 @@ module.exports = {
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
-      const byType = R.groupBy(R.prop('type'));
       const rows = documents.rows.map((row) => ({
         ...row.dataValues,
         path: row.dataValues.path ? `${documentsHost}${row.dataValues.path}` : null,
       }));
 
       const wrapper = {
-        documents: byType(rows),
+        documents: rows,
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
