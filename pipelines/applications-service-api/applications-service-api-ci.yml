@@ -3,6 +3,11 @@ trigger:
     include:
       - packages/applications-service-api
 
+pr:
+  branches:
+    include:
+      - '*'
+
 resources:
   repositories:
     - repository: templates
