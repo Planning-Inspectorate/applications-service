@@ -276,7 +276,7 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v2/documents?caseRef=TR040009':
+  '/api/v2/documents?caseRef={caseRef}':
     post:
       summary: Returns project documents
       description: Returns project documents
