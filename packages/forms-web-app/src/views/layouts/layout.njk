@@ -43,11 +43,11 @@
   {# Set serviceName in config.js. #}
   {{ pinsHeader({
     serviceName: serviceName,
-    containerClasses: "govuk-width-container"
+    containerClasses: "project-header"
   }) }}
 {% endblock %}
 
-{% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
+{% set mainClasses = mainClasses | default("govuk-!-padding-top-0") %}
 
 {% if host %}
   {% set ac_href = host + 'accessibility-statement' %}
