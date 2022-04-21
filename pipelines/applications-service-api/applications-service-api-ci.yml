@@ -4,9 +4,10 @@ trigger:
       - packages/applications-service-api
 
 pr:
-  branches:
+  paths:
     include:
-      - '*'
+      - packages/applications-service-api
+      - packages/forms-web-app
 
 resources:
   repositories:
