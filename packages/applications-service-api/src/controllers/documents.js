@@ -2,9 +2,7 @@ const R = require('ramda');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
-const {
-  getDocuments: getDocumentsFromDocumentsApiService,
-} = require('../services/document.service');
+const { getOrderedDocuments, getDocuments } = require('../services/document.service');
 
 const ApiError = require('../error/apiError');
 
@@ -15,12 +13,7 @@ module.exports = {
 
     logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
     try {
-      const documents = await getDocumentsFromDocumentsApiService(
-        caseRef,
-        pageNo,
-        searchTerm,
-        filters
-      );
+      const documents = await getDocuments(caseRef, pageNo, searchTerm, filters);
 
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
@@ -57,8 +50,7 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef } = req.query;
-    const { pageNo = 1, searchTerm = null, filters = null } = req.body;
+    const { caseRef, pageNo = 1 } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
@@ -66,12 +58,7 @@ module.exports = {
 
     logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
     try {
-      const documents = await getDocumentsFromDocumentsApiService(
-        caseRef,
-        pageNo,
-        searchTerm,
-        filters
-      );
+      const documents = await getOrderedDocuments(caseRef, pageNo);
 
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
