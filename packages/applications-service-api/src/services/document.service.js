@@ -41,6 +41,7 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
   const documents = await db.Document.findAndCountAll({
     where,
     offset,
+    order: [['date_published', 'DESC']],
     limit,
   });
 
