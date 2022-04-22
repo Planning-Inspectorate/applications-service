@@ -3,6 +3,12 @@ trigger:
     include:
       - packages/forms-web-app
 
+pr:
+  paths:
+    include:
+      - packages/applications-service-api
+      - packages/forms-web-app
+
 resources:
   repositories:
     - repository: templates
