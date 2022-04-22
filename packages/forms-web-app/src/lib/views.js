@@ -6,6 +6,7 @@ const VIEW = {
     EXAMINATION: 'examination/examination',
     PROJECT_TIMELINE: 'examination/project-timeline',
     ABOUT_THE_APPLICATION: 'examination/about-the-application',
+    ABOUT_THE_APPLICATION_2: 'examination/about-the-application-2',
     REPRESENTATIONS: 'examination/representations',
     TIMETABLE: 'examination/timetable',
     ALL_EXAMINATION_DOCUMENTS: 'examination/all-examination-documents',

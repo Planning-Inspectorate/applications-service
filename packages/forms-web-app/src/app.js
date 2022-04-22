@@ -13,7 +13,9 @@ const uuid = require('uuid');
 const fileUpload = require('express-fileupload');
 const { prometheus } = require('@pins/common');
 const sessionConfig = require('./lib/session');
+const { Status: projectStageNames } = require('./utils/status')
 const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
+const fileTypeDisplayHelper = require('./lib/file-type-display-helper')
 const filterByKey = require('./lib/filter-by-key');
 const addKeyValuePair = require('./lib/add-key-value-pair');
 const renderTemplateFilter = require('./lib/render-template-filter');
@@ -77,6 +79,7 @@ env.addFilter('docname', function (object) {
 });
 
 env.addFilter('formatBytes', fileSizeDisplayHelper);
+env.addFilter('formatMimeType', fileTypeDisplayHelper);
 env.addFilter('filterByKey', filterByKey);
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('render', renderTemplateFilter(nunjucks));
@@ -84,6 +87,7 @@ env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('host', config.server.host);
+env.addGlobal('projectStageNames', projectStageNames);
 
 if (config.server.useSecureSessionCookie) {
   app.set('trust proxy', 1); // trust first proxy
