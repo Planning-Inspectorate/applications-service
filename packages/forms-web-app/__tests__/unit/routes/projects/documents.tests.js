@@ -1,12 +1,12 @@
 const { get, post } = require('../router-mock');
 
-const aboutTheApplicationController = require('../../../../src/controllers/examination/about-the-application.old');
-const examinationController = require('../../../../src/controllers/examination/examination');
+const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
+const examinationController = require('../../../../src/controllers/projects/examination');
 
-describe('routes/examination/about-the-application', () => {
+describe('routes/projects/documents', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require
-    require('../../../../src/routes/examination/about-the-application');
+    require('../../../../src/routes/projects/documents');
   });
 
   afterEach(() => {
@@ -14,15 +14,15 @@ describe('routes/examination/about-the-application', () => {
   });
   it('should define the expected routes', () => {
     expect(get).toHaveBeenCalledWith(
-      '/:case_ref/about-the-application/:page',
+      '/:case_ref/documents/:page',
       aboutTheApplicationController.getAboutTheApplication
     );
     expect(post).toHaveBeenCalledWith(
-      '/:case_ref/about-the-application/search/:page',
+      '/:case_ref/documents/search/:page',
       aboutTheApplicationController.postSearchDocument
     );
     expect(post).toHaveBeenCalledWith(
-      '/:case_ref/about-the-application/filter/:page',
+      '/:case_ref/documents/filter/:page',
       aboutTheApplicationController.postFilterDocument
     );
     expect(get).toHaveBeenCalledWith('/:case_ref', examinationController.getExamination);

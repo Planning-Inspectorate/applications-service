@@ -1,11 +1,11 @@
-const aboutTheApplicationController = require('../../../../src/controllers/examination/about-the-application');
+const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
 const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
 jest.mock('../../../../src/lib/application-api-wrapper');
 
-describe('controllers/about-the-application', () => {
+describe('controllers/documents', () => {
   let req;
   let res;
   const docList = [
@@ -63,7 +63,7 @@ describe('controllers/about-the-application', () => {
   describe('getAboutTheApplication', () => {
     it('should call the correct template', async () => {
       await aboutTheApplicationController.getAboutTheApplication(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         documents: docList,
         projectName: 'ABC',
         caseRef: 'ABCD1234',
@@ -79,7 +79,7 @@ describe('controllers/about-the-application', () => {
         })
       );
       await aboutTheApplicationController.getAboutTheApplication(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
+      expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
       });

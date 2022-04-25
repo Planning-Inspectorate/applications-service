@@ -19,7 +19,7 @@ function renderData(req, res, params, response) {
   const { caseRef } = params;
   const { projectName } = req.session;
   if (response.resp_code === 404) {
-    res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
+    res.render(VIEW.PROJECTS.DOCUMENTS, {
       projectName,
       caseRef,
     });
@@ -29,7 +29,7 @@ function renderData(req, res, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
     const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
-    res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
+    res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
       caseRef,
