@@ -1,7 +1,7 @@
 const { VIEW } = require('../../lib/views');
 
-exports.getRepresentations = async (req, res) => {
-  res.render(VIEW.EXAMINATION.REPRESENTATIONS, {
+exports.getRecommendations = async (req, res) => {
+  res.render(VIEW.PROJECTS.RECOMMENDATIONS, {
     projectName: req.session.projectName,
     caseRef: req.session.caseRef,
   });

@@ -1,8 +1,8 @@
-const controller = require('../../../../src/controllers/examination/representations');
+const controller = require('../../../../src/controllers/projects/all-examination-documents');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
-describe('controllers/examination/representations', () => {
+describe('controllers/projects/all-examination-documents', () => {
   let req;
   let res;
 
@@ -18,10 +18,10 @@ describe('controllers/examination/representations', () => {
     res = mockRes();
   });
 
-  describe('getRepresentations', () => {
+  describe('getAllExaminationDocuments', () => {
     it('should call the correct template', async () => {
-      await controller.getRepresentations(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.REPRESENTATIONS, {
+      await controller.getAllExaminationDocuments(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.ALL_EXAMINATION_DOCUMENTS, {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
       });
