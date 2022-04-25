@@ -10,7 +10,7 @@ const interestedPartyRouter = require('./having-your-say-guide');
 const decisionMakingProcessGuideRouter = require('./decision-making-process-guide');
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
-const examinationRouter = require('./examination');
+const projectsRouter = require('./projects');
 
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
@@ -20,7 +20,7 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-  router.use('/examination', examinationRouter);
+  router.use('/projects', projectsRouter);
 }
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);

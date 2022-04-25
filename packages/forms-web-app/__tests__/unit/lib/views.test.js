@@ -18,14 +18,14 @@ describe('lib/views', () => {
         WHAT_HAPPENS_AFTER_THE_DECISION_IS_MADE:
           'decision-making-process-guide/what-happens-after-the-decision-is-made',
       },
-      EXAMINATION: {
-        EXAMINATION: 'examination/examination',
-        PROJECT_TIMELINE: 'examination/project-timeline',
-        ABOUT_THE_APPLICATION: 'examination/about-the-application',
-        REPRESENTATIONS: 'examination/representations',
-        TIMETABLE: 'examination/timetable',
-        ALL_EXAMINATION_DOCUMENTS: 'examination/all-examination-documents',
-        RECOMMENDATIONS: 'examination/recommendations',
+      PROJECTS: {
+        PROJECTS: 'projects/examination',
+        PROJECT_TIMELINE: 'projects/project-timeline',
+        DOCUMENTS: 'projects/documents',
+        REPRESENTATIONS: 'projects/representations',
+        TIMETABLE: 'projects/timetable',
+        ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
+        RECOMMENDATIONS: 'projects/recommendations',
       },
 
       PROJECT_SEARCH: 'project-search',

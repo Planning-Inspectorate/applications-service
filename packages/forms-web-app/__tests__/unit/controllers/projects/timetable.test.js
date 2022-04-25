@@ -1,8 +1,8 @@
-const controller = require('../../../../src/controllers/examination/all-examination-documents');
+const controller = require('../../../../src/controllers/projects/timetable');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
-describe('controllers/examination/all-examination-documents', () => {
+describe('controllers/projects/timetable', () => {
   let req;
   let res;
 
@@ -18,10 +18,10 @@ describe('controllers/examination/all-examination-documents', () => {
     res = mockRes();
   });
 
-  describe('getAllExaminationDocuments', () => {
+  describe('getTimetable', () => {
     it('should call the correct template', async () => {
-      await controller.getAllExaminationDocuments(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ALL_EXAMINATION_DOCUMENTS, {
+      await controller.getTimetable(req, res);
+      expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.TIMETABLE, {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
       });
