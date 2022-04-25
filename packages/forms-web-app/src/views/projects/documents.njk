@@ -5,7 +5,12 @@
 {% block columnTwo %}
   <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
-
+      <form action="/projects/{{ caseRef }}/documents/1" method="POST" novalidate>
+        <p>
+          <input class="govuk-input govuk-!-width-one-half" id="search" name="search" type="text">
+          <button class="govuk-button">Search</button>
+        </p>
+      </form>
       <p class="results">
         <strong>
           {% if documents %}
@@ -16,7 +21,12 @@
               results
              {% endif %}
           {% else %}
-            No documents found. Please try with different search text.
+            <p style="govuk-body">
+              No documents were found matching your search terms.
+            </p>
+            <p style="govuk-body">
+              Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
+            </p>
           {% endif %}
         </strong>
       </p>
