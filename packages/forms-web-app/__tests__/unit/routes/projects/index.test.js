@@ -1,14 +1,14 @@
 const { get } = require('../router-mock');
-const representationsController = require('../../../../src/controllers/examination/representations');
-const projectTimelineController = require('../../../../src/controllers/examination/project-timeline');
-const timetableController = require('../../../../src/controllers/examination/timetable');
-const recommendationsController = require('../../../../src/controllers/examination/recommendations');
-const allExaminationDocumentsController = require('../../../../src/controllers/examination/all-examination-documents');
+const representationsController = require('../../../../src/controllers/projects/representations');
+const projectTimelineController = require('../../../../src/controllers/projects/project-timeline');
+const timetableController = require('../../../../src/controllers/projects/timetable');
+const recommendationsController = require('../../../../src/controllers/projects/recommendations');
+const allExaminationDocumentsController = require('../../../../src/controllers/projects/all-examination-documents');
 
 describe('routes/examination', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require
-    require('../../../../src/routes/examination');
+    require('../../../../src/routes/projects');
   });
 
   afterEach(() => {
