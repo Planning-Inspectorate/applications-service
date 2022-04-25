@@ -1,32 +1,12 @@
-{% extends "layouts/layout.njk" %}
+{% extends "layouts/project-2-columns.njk" %}
 
-{% block pageTitle %}
-    {{ projectName }} project overview
+{% set activeProjectLink = 'project-timeline' %}
+
+{% block columnTwo %}
+    <h2 class="govuk-heading-l">Project timeline</h2>
+    <p class="govuk-body">There are no timeline entries to display at the moment. Timelines will be published at the Recommendation and decision stage.</p>
+    <p class="govuk-body">
+        <a href="/examination/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+    </p>
 {% endblock %}
 
-{% block content %}
-
-    <div class="govuk-width-container">
-        <main class="govuk-main-wrapper">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
-                    <h1 class="govuk-heading-xl">{{ projectName }}</h1>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-quarter">
-                    {% set current = 'project-timeline' %}
-                    {% include "layouts/vertical-tabs.njk" %}
-                </div>
-                <div class="govuk-grid-column-three-quarters">
-                    <h2 class="govuk-heading-m">Project timeline</h2>
-                    <p class="govuk-body">There are notimeline to display at the moment. These timelines will be published at the Recommendation and decision stage.</p>
-                    <p class="govuk-body">
-                        <a href="/examination/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
-                    </p>
-                </div>
-            </div>
-        </main>
-    </div>
-{% endblock %}
-{% block pageScripts %}{% endblock %}

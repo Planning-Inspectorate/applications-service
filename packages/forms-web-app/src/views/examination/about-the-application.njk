@@ -1,218 +1,87 @@
-{% extends "layouts/layout.njk" %}
+{% extends "layouts/project-3-columns.njk" %}
 
-{% block pageTitle %}
-  {{ projectName }} project overview
-{% endblock %}
+{% set activeProjectLink = 'about-the-application' %}
 
-{% block content %}
+{% block columnTwo %}
+  <div class="govuk-grid-row">
+    <h2 class="govuk-heading-l">Project application documents</h2>
 
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
-          <h1 class="govuk-heading-xl">{{ projectName }}</h1>
-        </div>
-      </div>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-quarter">
-          {% set current = 'about-the-application' %}
-          {% include "layouts/vertical-tabs.njk" %}
-        </div>
-        <div class="govuk-grid-column-three-quarters">
-          <h2 class="govuk-heading-m">Project application documents</h2>
-
-          <div class="govuk-grid-row ">
-
-            <div class="govuk-grid-column-two-thirds">
-              <p class="results">
-                <strong>
-                  {% if documents %}
-                    <span id="results-number">{{ pageData.totalItems }}</span>
-                    {% if pageData.totalItems === 1 %}
-                      result
-                     {% else %}
-                      results
-                     {% endif %}
-                  {% else %}
-                    No documents found. Please try with different search text.
-                  {% endif %}
-                </strong>
-              </p>
-            </div>
-
-            <button id="toggleFilters" class="govuk-button govuk-button">Show search and filters</button>
-            <form action="/examination/{{ caseRef }}/about-the-application/search/1" method="POST" novalidate>
-              <div id="expandingFilterSection" class="expandingFilterSection hidden govuk-!-margin-bottom-6">
-                <div class="govuk-form-group">
-                  <h3 class="govuk-label-wrapper">
-                    <label class="govuk-label govuk-label--m" for="search">
-                Keywords </label>
-                  </h3>
-                  <input class="govuk-input" id="search" name="search" type="text">
-                </div>
-
-                <div class="govuk-form-group">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
-                Filter by theme
-              </h2>
-                  </legend>
-                  <fieldset class="govuk-fieldset" aria-labelledby="who-submitted">
-                    <div class="govuk-checkboxes--small" data-module="govuk-checkboxes">
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-noise-traffic-air">
-                        <label class="govuk-label govuk-checkboxes__label" for="theme-noise-traffic-air">Noise, traffic and air quality</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-landscape-visual">
-                        <label class="govuk-label govuk-checkboxes__label" for="theme-landscape-visual">Landscape and visual</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="heritage">
-                        <label class="govuk-label govuk-checkboxes__label" for="heritage">Heritage</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
-                        <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">Local wildlife and habitats</label>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-
-                <div class="govuk-form-group">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
-                Who submitted
-              </h2>
-                  </legend>
-
-                  <fieldset class="govuk-fieldset" aria-labelledby="who-submitted">
-                    <div class="govuk-checkboxes--small" data-module="govuk-checkboxes">
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-examining-panel">
-                        <label class="govuk-label govuk-checkboxes__label" for="who-submitted-examining-panel">Examining authority</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-developer">
-                        <label class="govuk-label govuk-checkboxes__label" for="who-submitted-developer">Developer</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-individual-interested-party">
-                        <label class="govuk-label govuk-checkboxes__label" for="who-submitted-individual-interested-party">Individual interested party</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-organisation-interested-party">
-                        <label class="govuk-label govuk-checkboxes__label" for="who-submitted-organisation-interested-party">Organisation interested party</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-official-body-and-local-authority">
-                        <label class="govuk-label govuk-checkboxes__label" for="who-submitted-official-body-and-local-authority">Official bodies and local authorities</label>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-                <div class="govuk-form-group">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                    <h2 class="govuk-heading-m govuk-!-margin-bottom-0">
-                      Filter by type of information
-                    </h2>
-                  </legend>
-
-                  <fieldset class="govuk-fieldset" aria-labelledby="who-submitted">
-                    <div class="govuk-checkboxes--small" data-module="govuk-checkboxes">
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Topics-and-replies">
-                        <label class="govuk-label govuk-checkboxes__label" for="type-plans-and-drawings">Topics and replies</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Deadlines">
-                        <label class="govuk-label govuk-checkboxes__label" for="type-environmental">Deadlines</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Hearing-agendas">
-                        <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Hearing agendas</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Recordings-of-hearings">
-                        <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Recordings of hearings</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Procedural-decisions">
-                        <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Procedural decisions</label>
-                      </div>
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="Site-inspections">
-                        <label class="govuk-label govuk-checkboxes__label" for="type-consultation-reports">Site inspections</label>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-                <button class="govuk-button" type="submit" value="Search">Apply filters</button>
-                {# <a href="#" id="closeFilters" class="govuk-button">Apply filters</a> #}
-              </div>
-            </form>
-          </div>
+      <p class="results">
+        <strong>
           {% if documents %}
-            <p class="results">
-              <strong></p>
-              <hr/>
-              {% for stageDoc in documents | getkeys %}
-                {% for stage in documents[stageDoc] | getkeys %}
-                  {% if stage == 1 %}
-                    <h2 class="govuk-heading-m">Pre-application documents</h2>
-                  {% elseif stage == 2 %}
-                    <h2 class="govuk-heading-m">Review of the application documents</h2>
-                  {% elseif stage == 3 %}
-                    <h2 class="govuk-heading-m">Pre-examination documents</h2>
-                  {% endif %}
-                  {% for docType in documents[stageDoc][stage] | getkeys %}
-                    <div class="pins-search-results-group">
-                      <h3 class="pins-search-results-group-heading">{{ docType }}</h3>
-                      <div class="pins-search-results-group-items">
-                        <ul class="govuk-list">
-                          {% for doc in documents[stageDoc][stage][docType] | getkeys %}
-                            <li>
-                              <a href="{{ documents[stageDoc][stage][docType][doc].path }}" class="govuk-link" target="_blank">{{ documents[stageDoc][stage][docType][doc].path | docname }}</a>
-                            </li>
-                          {% endfor %}
-                        </ul>
-                      </div>
-                    </div>
-                  {% endfor %}
-                {% endfor %}
-              {% endfor %}
-            {% endif %}
-          </div>
-          {% if documents %}
-            {% if pageData.totalPages !== 1 %}
-              <nav class="hmcts-pagination" id="pagination-label">
-                <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
-                <ul class="hmcts-pagination__list">
-                  {% for page in paginationData %}
-                    {% if page === 'prev' %}
-                      <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
-                        <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
-                      </li>
-                    {% elif page === pageData.currentPage %}
-                      <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
-                    {% elif page === 'next' %}
-                      <li class="hmcts-pagination__item  hmcts-pagination__item--next">
-                        <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
-                      </li>
-                    {% elif page === '...' %}
-                      <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
-                    {% else %}
-                      <li class="hmcts-pagination__item">
-                        <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ page }}">{{ page }}</a>
-                      </li>
-                    {% endif %}
-                  {% endfor %}
-                </ul>
-                <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
-              </nav>
-            {% endif %}
+            <span id="results-number">{{ pageData.totalItems }}</span>
+            {% if pageData.totalItems === 1 %}
+              result
+             {% else %}
+              results
+             {% endif %}
+          {% else %}
+            No documents found. Please try with different search text.
           {% endif %}
-        </div>
-      </main>
-    </div>
-  {% endblock %}
+        </strong>
+      </p>
+  </div>
+  <div class="govuk-grid-row">
+    {% if documents %}
+      <p class="results">
+        <strong></p>
+        <hr/>
+        {% for stageDoc in documents | getkeys %}
+          {% for stage in documents[stageDoc] | getkeys %}
+            {% if stage == 1 %}
+              <h2 class="govuk-heading-m">Pre-application documents</h2>
+            {% elseif stage == 2 %}
+              <h2 class="govuk-heading-m">Review of the application documents</h2>
+            {% elseif stage == 3 %}
+              <h2 class="govuk-heading-m">Pre-examination documents</h2>
+            {% endif %}
+            {% for docType in documents[stageDoc][stage] | getkeys %}
+              <div class="pins-search-results-group">
+                <h3 class="pins-search-results-group-heading">{{ docType }}</h3>
+                <div class="pins-search-results-group-items">
+                  <ul class="govuk-list">
+                    {% for doc in documents[stageDoc][stage][docType] | getkeys %}
+                      <li>
+                        <a href="{{ documents[stageDoc][stage][docType][doc].path }}" class="govuk-link" target="_blank">{{ documents[stageDoc][stage][docType][doc].path | docname }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+
+    {% if documents %}
+      {% if pageData.totalPages !== 1 %}
+        <nav class="hmcts-pagination" id="pagination-label">
+          <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+          <ul class="hmcts-pagination__list">
+            {% for page in paginationData %}
+              {% if page === 'prev' %}
+                <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
+                  <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                </li>
+              {% elif page === pageData.currentPage %}
+                <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+              {% elif page === 'next' %}
+                <li class="hmcts-pagination__item  hmcts-pagination__item--next">
+                  <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                </li>
+              {% elif page === '...' %}
+                <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+              {% else %}
+                <li class="hmcts-pagination__item">
+                  <a class="hmcts-pagination__link" href="/examination/{{ caseRef }}/about-the-application/{{ page }}">{{ page }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+          <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
+        </nav>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

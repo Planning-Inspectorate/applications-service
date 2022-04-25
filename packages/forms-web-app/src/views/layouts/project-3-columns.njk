@@ -1,0 +1,18 @@
+{#- Provides a 3-column layout within the project section of the site -#}
+{% extends "layouts/project.njk" %}
+
+{% block content %}
+  <div class="govuk-grid-row govuk-!-margin-left-6 govuk-!-margin-right-6">
+      <div class="govuk-grid-column-one-quarter">
+        {% include "layouts/vertical-tabs.njk" %}
+      </div>
+      <div class="govuk-grid-column-one-half">
+        {% block columnTwo %}{% endblock %}
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        {% block columnThree %}{% endblock %}
+      </div>
+  </div>
+{% endblock %}
+
+
