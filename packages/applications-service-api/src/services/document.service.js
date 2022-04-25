@@ -47,6 +47,23 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
   return documents;
 };
 
+const getOrderedDocuments = async (caseRef, pageNo) => {
+  const { itemsPerPage: limit } = config;
+  const offset = (pageNo - 1) * limit;
+
+  const where = { case_reference: caseRef };
+
+  const documents = await db.Document.findAndCountAll({
+    where,
+    offset,
+    order: [['date_published', 'DESC']],
+    limit,
+  });
+
+  return documents;
+};
+
 module.exports = {
   getDocuments,
+  getOrderedDocuments,
 };

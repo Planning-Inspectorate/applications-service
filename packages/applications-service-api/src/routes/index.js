@@ -15,5 +15,6 @@ router.use('/api/v1/interested-party', interestedPartyRouter);
 router.use('/api-docs', apiDocsRouter);
 router.use('/test', dbConnectionTestRouter);
 router.use('/api/v1/documents', documentRouter);
+router.use('/api/v2/documents', documentRouter);
 
 module.exports = router;

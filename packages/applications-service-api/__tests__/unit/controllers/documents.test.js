@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
-const { getDocuments } = require('../../../src/controllers/documents');
+const { getDocuments, getV2Documents } = require('../../../src/controllers/documents');
 
 const documentListWrapper = {
   documents: [
@@ -93,6 +93,90 @@ const documentListWrapper = {
           },
         ],
       },
+    },
+  ],
+  totalItems: 7,
+  itemsPerPage: 3,
+  totalPages: 3,
+  currentPage: 1,
+};
+
+const v2DocumentListWrapper = {
+  documents: [
+    {
+      id: 76320,
+      dataID: 'TR0100012',
+      case_reference: 'EN010009',
+      Stage: 1,
+      type: 'Dave',
+      filter_1: 'CR-1234-A',
+      filter_2: '',
+      category: '',
+      description: '',
+      size: 412846,
+      mime: 'application/pdf',
+      path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/EN010009/TR0100012-Advice-note-6-Annex-PINS.pdf',
+      status: 'Published',
+      date_published: '2019-10-10',
+      deadline_date: null,
+      personal_name: '122',
+      representative: '',
+      who_from: null,
+      doc_reference: null,
+      author: null,
+      details: null,
+      last_modified: '2019-11-27 12:25:41',
+      date_created: '2019-11-06 15:19:51',
+    },
+    {
+      id: 76321,
+      dataID: 'EN010009-000006',
+      case_reference: 'EN010009',
+      Stage: 4,
+      type: 'Rule 6 letter - notification of the preliminary meeting and matters to be discussed',
+      filter_1: 'Filter 1',
+      filter_2: '',
+      category: '',
+      description: 'a rule 6 letter',
+      size: 0,
+      mime: '',
+      path: null,
+      status: 'Published',
+      date_published: '2015-12-10',
+      deadline_date: null,
+      personal_name: 'David',
+      representative: '',
+      who_from: null,
+      doc_reference: null,
+      author: null,
+      details: null,
+      last_modified: '2019-11-27 12:20:51',
+      date_created: '2019-11-27 12:20:51',
+    },
+    {
+      id: 76322,
+      dataID: 'EN010009-000008',
+      case_reference: 'EN010009',
+      Stage: 1,
+      type: 'Correspondence',
+      filter_1: 'Webfilter1',
+      filter_2: '',
+      category: '',
+      description: 'stuff',
+      size: 0,
+      mime: '',
+      path: null,
+      status: 'Published',
+      date_published: '2017-08-15',
+      deadline_date: null,
+      personal_name: 'Barry',
+      representative: '',
+      who_from: null,
+      doc_reference: null,
+      author: null,
+      details: null,
+      last_modified: '2019-11-27 12:20:52',
+      date_created: '2019-11-27 12:20:52',
     },
   ],
   totalItems: 7,
@@ -416,5 +500,63 @@ describe('getDocuments', () => {
     const data = res._getData();
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(data).toEqual(documentSearchListWrapper);
+  });
+});
+
+describe('getV2Documents', () => {
+  it('should get documents from mock', async () => {
+    const req = httpMocks.createRequest({
+      query: {
+        caseRef: 'EN010009',
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getV2Documents(req, res);
+    const data = res._getData();
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+    expect(data).toEqual(v2DocumentListWrapper);
+  });
+
+  it('should return required query parameter missing', async () => {
+    const req = httpMocks.createRequest({
+      query: {},
+    });
+
+    const res = httpMocks.createResponse();
+    try {
+      await getV2Documents(req, res);
+    } catch (e) {
+      expect(e.code).toEqual(StatusCodes.BAD_REQUEST);
+      expect(e.message).toEqual('Required query parameter caseRef missing');
+    }
+  });
+
+  it('should return documents not found', async () => {
+    const req = httpMocks.createRequest({
+      query: {
+        caseRef: 'EN000000',
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getV2Documents(req, res);
+    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
+    expect(res._getData()).toEqual({ code: StatusCodes.NOT_FOUND, errors: ['No documents found'] });
+  });
+
+  it('should return internal server error', async () => {
+    const req = httpMocks.createRequest({
+      query: {
+        caseRef: 'ENF0000F',
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getV2Documents(req, res);
+    expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
+    expect(res._getData()).toEqual(
+      `Problem getting documents for project ENF0000F \n TypeError: Cannot read property 'rows' of null`
+    );
   });
 });
