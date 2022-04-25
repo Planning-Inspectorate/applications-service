@@ -1,8 +1,6 @@
-{% extends "layouts/layout.njk" %}
+{% extends "layouts/project-2-columns.njk" %}
 
-{% block pageTitle %}
-  {{ projectName }} project overview
-{% endblock %}
+{% set activeProjectLink = 'examination' %}
 
 {% block head %}
   {{ super() }}
@@ -14,101 +12,86 @@
 
 {% endblock %}
 
-{% block content %}
+{% block columnTwo %}
+  <h2 class="govuk-heading-l">Project information</h2>
 
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
-          <h1 class="govuk-heading-xl">{{ projectName }}</h1>
-        </div>
-      </div>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-quarter">
-          {% set current = 'examination' %}
-          {% include "layouts/vertical-tabs.njk" %}
-        </div>
-        <div class="govuk-grid-column-three-quarters">
-          <h2 class="govuk-heading-m">Project information</h2>
+  <p class="govuk-body">{{ appData.Summary }}</p>
 
-          <p class="govuk-body">{{ appData.Summary }}</p>
+  <hr class="govuk-section-break
+    govuk-section-break--xl
+    govuk-section-break--visible"/>
 
-          <hr class="govuk-section-break
-            govuk-section-break--xl
-            govuk-section-break--visible"/>
+  <h2 class="govuk-heading-m">Project stage</h2>
 
-          <h2 class="govuk-heading-m">Project stage</h2>
+  <p class="govuk-body"> This project is in the <strong>{{ stage }}</strong> stage</p>
+  <p class="govuk-body">
+    If you want to comment on this proposed project, you can now register
+    to have your say. Registration will close at 23:59 on
+    <strong>{{ dateOfClosure }}</strong>.
+  </p>
+  <a href="/register-have-your-say/{{ appData.CaseReference }}" class="govuk-button">Register to have your say</a>
+  <p class="govuk-body">
+    <a class="govuk-link" href="/having-your-say-guide"
+    >Find out more about registering to have your say</a>.
+  </p>
 
-          <p class="govuk-body"> This project is in the <strong>{{ stage }}</strong> stage</p>
-          <p class="govuk-body">
-            If you want to comment on this proposed project, you can now register
-            to have your say. Registration will close at 23:59 on
-            <strong>{{ dateOfClosure }}</strong>.
-          </p>
-          <a href="/register-have-your-say/{{ appData.CaseReference }}" class="govuk-button">Register to have your say</a>
-          <p class="govuk-body">
-            <a class="govuk-link" href="/having-your-say-guide"
-            >Find out more about registering to have your say</a>.
-          </p>
+  <hr class="govuk-section-break
+    govuk-section-break--xl
+    govuk-section-break--visible"/>
 
-          <hr class="govuk-section-break
-            govuk-section-break--xl
-            govuk-section-break--visible"/>
+  <h2 class="govuk-heading-m">Affected area</h2>
 
-          <h2 class="govuk-heading-m">Affected area</h2>
-
-          <p class="govuk-body">
-            This proposed road will be a linear route between Amesbury and Berwick
-            Down, Wiltshire.
-          </p>
-          <p class="govuk-body">You can:</p>
-          <ul class="govuk-list">
-            <li>
-              <a class="govuk-link" href="#">View a map of the area of the proposed project.</a
-            >
-            </li>
-            <li>
-              <a class="govuk-l ink"href="#">Check if your postcode is within the project area.
-            </a>
-            </li>
-          </ul>
-          <div class="pins-map-enclosure">
-            <div id='map' class="pins-affected-area-map--embed"></div>
-          </div>
-
-          <hr class="govuk-section-break
-            govuk-section-break--xl
-            govuk-section-break--visible"/>
-
-          <h2 class="govuk-heading-m">About the developer</h2>
-
-          <p class="govuk-body">The Developer proposing this project is {{ appData.PromoterName }}.</p>
-
-          <p class="govuk-body govuk-!-margin-top-6">
-            <a class="govuk-link" href=//{{ appData.WebAddress }}>
-              Visit the project website by {{ appData.PromoterName }}
-            </a>
-              for more information.
-          </p>
-
-          <hr class="govuk-section-break
-            govuk-section-break--xl
-            govuk-section-break--visible"/>
-
-          <h2 class="govuk-heading-m">
-              Talk to an advisor
-          </h2>
-          <p class="govuk-body">If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:</p>
-          <ul class="govuk-list">
-            <li>Email: <a class="govuk-link" href="mailto:{{ appData.ProjectEmailAddress }}">{{ appData.ProjectEmailAddress }}</a>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </main>
+  <p class="govuk-body">
+    This proposed road will be a linear route between Amesbury and Berwick
+    Down, Wiltshire.
+  </p>
+  <p class="govuk-body">You can:</p>
+  <ul class="govuk-list">
+    <li>
+      <a class="govuk-link" href="#">View a map of the area of the proposed project.</a
+    >
+    </li>
+    <li>
+      <a class="govuk-l ink"href="#">Check if your postcode is within the project area.
+    </a>
+    </li>
+  </ul>
+  <div class="pins-map-enclosure">
+    <div id='map' class="pins-affected-area-map--embed"></div>
   </div>
+
+  <hr class="govuk-section-break
+    govuk-section-break--xl
+    govuk-section-break--visible"/>
+
+  <h2 class="govuk-heading-m">About the developer</h2>
+
+  <p class="govuk-body">The Developer proposing this project is {{ appData.PromoterName }}.</p>
+
+  <p class="govuk-body govuk-!-margin-top-6">
+    <a class="govuk-link" href=//{{ appData.WebAddress }}>
+      Visit the project website by {{ appData.PromoterName }}
+    </a>
+      for more information.
+  </p>
+
+  <hr class="govuk-section-break
+    govuk-section-break--xl
+    govuk-section-break--visible"/>
+
+  <h2 class="govuk-heading-m">
+      Talk to an advisor
+  </h2>
+  <p class="govuk-body">If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:</p>
+  <ul class="govuk-list">
+    <li>Email: <a class="govuk-link" href="mailto:{{ appData.ProjectEmailAddress }}">{{ appData.ProjectEmailAddress }}</a>
+    </li>
+  </ul>
+
+</div>
+</div>
 {% endblock %}
+
 {% block pageScripts %}
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
