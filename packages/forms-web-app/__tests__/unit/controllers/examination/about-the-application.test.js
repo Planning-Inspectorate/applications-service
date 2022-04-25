@@ -85,30 +85,4 @@ describe('controllers/about-the-application', () => {
       });
     });
   });
-
-  describe('postSearchDocument', () => {
-    it('should call the correct template', async () => {
-      await aboutTheApplicationController.postSearchDocument(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
-        documents: docList,
-        projectName: 'ABC',
-        caseRef: 'ABCD1234',
-        pageData,
-        paginationData: [1],
-      });
-    });
-  });
-
-  describe('postFilterDocument', () => {
-    it('should call the correct template', async () => {
-      await aboutTheApplicationController.postFilterDocument(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
-        documents: docList,
-        projectName: 'ABC',
-        caseRef: 'ABCD1234',
-        pageData,
-        paginationData: [1],
-      });
-    });
-  });
 });
