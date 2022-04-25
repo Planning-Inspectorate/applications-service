@@ -106,4 +106,4 @@ dist
 /.idea
 .idea
 
-packages/forms-web-app/junit.xml
+junit.xml

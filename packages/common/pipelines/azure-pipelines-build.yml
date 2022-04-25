@@ -1,4 +1,9 @@
 trigger:
+  paths:
+    include:
+      - packages/common
+
+pr:
   branches:
     include:
       - main
@@ -10,7 +15,7 @@ resources:
   repositories:
     - repository: templates
       type: github
-      endpoint: Applications Token
+      endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
 
 extends:
@@ -19,8 +24,8 @@ extends:
     azurecrName: $(azurecrName)
     authType: acr
     globalVariables:
-      - template: pipelines/common/variables.yml@self
-      - template: pipelines/variables.yml@self
+      - template: azure-pipelines-variables.yml@self
+      - template: packages/common/pipelines/azure-pipelines-variables.yml@self
     projectName: $(projectName)
     validateName: Build and Push
     validationSteps:
@@ -29,16 +34,12 @@ extends:
           echo "Setting the name of the build to '$buildName'."
           echo "##vso[build.updatebuildnumber]$buildName"
         displayName: Set Build Number
-      - task: AzureCLI@2
-        displayName: Build and Push Docker Image to ACR
-        inputs:
-          azureSubscription: applications-service-tooling
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az acr login --name $(azurecrName)
-
-            docker build . -t $(azurecrName).azurecr.io/$(repository):latest
-
-            docker push -a $(azurecrName).azurecr.io/$(repository)
-          workingDirectory: $(Build.Repository.LocalPath)/packages/common
+      - template: steps/azure_web_app_acr_push.yml@templates
+        parameters:
+          azurecrName: $(azurecrName)
+          dockerfilePath: $(dockerFilePath)
+          repository: $(repository)
+          runTests: true
+          testRunTitle: Applications Service Common Jest Tests
+          versionNumber: $(versionNumber)
+          workingDirectory: $(Build.Repository.LocalPath)
