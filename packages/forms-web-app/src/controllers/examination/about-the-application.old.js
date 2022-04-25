@@ -1,8 +1,11 @@
+/**
+ * Kept temporarily for reference while new document search is under development.
+ */
 const logger = require('../../lib/logger');
 const { generatePagination } = require('../../lib/pagination');
 const documentSearch = require('../../lib/document-search.json');
 const { VIEW } = require('../../lib/views');
-const { searchDocumentsV2 } = require('../../services/document.service');
+const { searchDocument } = require('../../services/document.service');
 
 function getPageData(doc) {
   const item = {};
@@ -16,8 +19,7 @@ function getPageData(doc) {
   return item;
 }
 
-function renderData(req, res, params, response) {
-  const { caseRef } = params;
+function renderData(req, res, caseRef, response) {
   const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
@@ -30,14 +32,7 @@ function renderData(req, res, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
     const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
-    console.log({
-      documents,
-      projectName,
-      caseRef,
-      pageData,
-      paginationData,
-    });
-    res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION_2, {
+    res.render(VIEW.EXAMINATION.ABOUT_THE_APPLICATION, {
       documents,
       projectName,
       caseRef,
@@ -48,12 +43,17 @@ function renderData(req, res, params, response) {
 }
 
 exports.getAboutTheApplication = async (req, res) => {
-  const params = {
-    caseRef: req.params.case_ref,
-    pageNumber: 1,
-  };
-  const response = await searchDocumentsV2(params);
-  renderData(req, res, params, response);
+  const caseRef = req.params.case_ref;
+  const pageNumber = req.params.page;
+  let search = req.session.document_search ? req.session.document_search : '';
+  if (pageNumber === '1') {
+    search = '';
+  }
+  const searchDocumentData = JSON.stringify({ ...documentSearch, filters: [] })
+    .replace(0, pageNumber)
+    .replace('$search_term$', search);
+  const response = await searchDocument(caseRef, searchDocumentData);
+  renderData(req, res, caseRef, response);
 };
 
 exports.postSearchDocument = async (req, res) => {
@@ -65,8 +65,8 @@ exports.postSearchDocument = async (req, res) => {
   const searchDocumentData = JSON.stringify({ ...documentSearch, filters: [] })
     .replace(0, pageNumber)
     .replace('$search_term$', search);
-  const response = await searchDocumentsV2(caseRef, searchDocumentData);
-  renderData(req, res, params, response);
+  const response = await searchDocument(caseRef, searchDocumentData);
+  renderData(req, res, caseRef, response);
 };
 
 exports.postFilterDocument = async (req, res) => {
@@ -78,6 +78,6 @@ exports.postFilterDocument = async (req, res) => {
   const searchDocumentData = JSON.stringify({ ...documentSearch, filters })
     .replace(0, pageNumber)
     .replace('$search_term$', search);
-  const response = await searchDocumentsV2(caseRef, searchDocumentData);
-  renderData(req, res, params, response);
+  const response = await searchDocument(caseRef, searchDocumentData);
+  renderData(req, res, caseRef, response);
 };
