@@ -1,36 +1,12 @@
-{% extends "layouts/layout.njk" %}
+{% extends "layouts/project-2-columns.njk" %}
 
-{% block pageTitle %}
-  {{ appData.ProjectName }}
-{% endblock %}
+{% set activeProjectLink = 'representations' %}
 
-{% block content %}
+{% block columnTwo %}
+  <h2 class="govuk-heading-l">Registration Comments</h2>
 
-  <div class="govuk-width-container">
-    <main class="govuk-main-wrapper">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-          <h1 class="govuk-heading-xl">{{ projectName }}</h1>
-
-        </div>
-      </div>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-quarter">
-
-          {% set current = 'representations' %}
-          {% include "layouts/vertical-tabs.njk" %}
-
-        </div>
-        <div class="govuk-grid-column-three-quarters">
-          <h2 class="govuk-heading-m">Registration Comments</h2>
-
-          <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
-          <p class="govuk-body">
-            <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
-          </p>
-        </div>
-      </div>
-    </main>
-  </div>
-
+  <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+  <p class="govuk-body">
+    <a href="/examination/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+  </p>
 {% endblock %}
