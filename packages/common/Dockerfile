@@ -16,7 +16,10 @@ WORKDIR /opt/app
 COPY --from=build /opt/app ./
 
 COPY packages/common/jest.config.js ./jest.config.js
+COPY packages/common/.eslint* ./
+COPY packages/common/.prettier* ./
 
+RUN npm run lint
 RUN npm run documentation; echo $? > /npm.exitcode
 
 # Stage 3/3: Final image

@@ -21,6 +21,7 @@ COPY --from=build /opt/app ./
 COPY packages/applications-service-api/__tests__ ./__tests__
 COPY packages/applications-service-api/jest.config.js jest.config.js
 COPY packages/applications-service-api/.eslint* ./
+COPY packages/applications-service-api/.prettier* ./
 
 RUN npm run lint
 RUN npm run documentation; echo $? > /npm.exitcode
