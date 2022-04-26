@@ -6,7 +6,7 @@ WORKDIR /opt/app
 COPY packages/common/src ./src
 COPY packages/common/package*.json ./
 
-RUN npm ci --production
+RUN npm ci
 
 # Stage 2/3: Run Tests
 FROM node:14-alpine AS test
