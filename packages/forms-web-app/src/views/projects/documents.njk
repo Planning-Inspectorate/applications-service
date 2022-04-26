@@ -11,23 +11,16 @@
         </p>
       </form>
       <p class="results">
-        <strong>
           {% if documents %}
-            <span id="results-number">{{ pageData.totalItems }}</span>
-            {% if pageData.totalItems === 1 %}
-              result
-             {% else %}
-              results
-             {% endif %}
+            <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.</p>
           {% else %}
             <p style="govuk-body">
               No documents were found matching your search terms.
             </p>
             <p style="govuk-body">
-              Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
+              Would you like to clear your search and view all documents</br> instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
             </p>
           {% endif %}
-        </strong>
       </p>
   </div>
 {% endblock %}
