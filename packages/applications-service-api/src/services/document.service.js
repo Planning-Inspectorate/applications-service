@@ -47,11 +47,40 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
   return documents;
 };
 
-const getOrderedDocuments = async (caseRef, pageNo) => {
+const getOrderedDocuments = async (caseRef, pageNo, searchTerm) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
-  const where = { case_reference: caseRef };
+  let where = { case_reference: caseRef };
+  if (searchTerm) {
+    const orOptions = [
+      {
+        description: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+      {
+        personal_name: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+      {
+        dataID: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+      {
+        mime: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+    ];
+
+    where = { [Op.and]: [{ case_reference: caseRef }] };
+    where[Op.and].push({
+      [Op.or]: orOptions,
+    });
+  }
 
   const documents = await db.Document.findAndCountAll({
     where,

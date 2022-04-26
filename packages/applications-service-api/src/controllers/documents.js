@@ -50,7 +50,7 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef, pageNo = 1 } = req.query;
+    const { caseRef, page, searchTerm } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
@@ -58,7 +58,7 @@ module.exports = {
 
     logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
     try {
-      const documents = await getOrderedDocuments(caseRef, pageNo);
+      const documents = await getOrderedDocuments(caseRef, page || 1, searchTerm);
 
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
@@ -76,7 +76,7 @@ module.exports = {
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
-        currentPage: pageNo,
+        currentPage: page,
       };
 
       logger.debug(`Documents for project ${caseRef} retrieved`);
