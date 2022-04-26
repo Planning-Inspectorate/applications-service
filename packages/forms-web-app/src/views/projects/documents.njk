@@ -1,8 +1,7 @@
 {% extends "layouts/project-3-columns.njk" %}
 
 {% set activeProjectLink = 'about-the-application' %}
-
-{% block columnTwo %}
+{% block resultSec %}
   <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
       <form action="/projects/{{ caseRef }}/documents/1" method="POST" novalidate>
@@ -31,6 +30,8 @@
         </strong>
       </p>
   </div>
+{% endblock %}
+{% block columnTwo %}
   <div class="govuk-grid-row">
     {% if documents %}
       <p class="results">
@@ -93,5 +94,7 @@
       {% endif %}
     {% endif %}
   </div>
-</div>
+{% endblock %}
+
+{% block columnThree %}
 {% endblock %}
