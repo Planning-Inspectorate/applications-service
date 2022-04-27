@@ -4,16 +4,18 @@ trigger:
       - packages/applications-service-api
 
 pr:
+  branches:
+    include:
+      - main
   paths:
     include:
       - packages/applications-service-api
-      - packages/forms-web-app
 
 resources:
   repositories:
     - repository: templates
       type: github
-      endpoint: Applications Token
+      endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
 
 extends:
@@ -22,8 +24,8 @@ extends:
     azurecrName: $(azurecrName)
     authType: acr
     globalVariables:
-      - template: pipelines/applications-service-api/variables.yml@self
-      - template: pipelines/variables.yml@self
+      - template: azure-pipelines-variables.yml@self
+      - template: packages/applications-service-api/pipelines/azure-pipelines-variables.yml@self
     projectName: $(projectName)
     validateName: Build Test and Push
     validationSteps:
@@ -37,5 +39,7 @@ extends:
           azurecrName: $(azurecrName)
           dockerfilePath: $(dockerFilePath)
           repository: $(repository)
+          runTests: true
+          testRunTitle: Applications Service API Jest Tests
           versionNumber: $(versionNumber)
-          workingDirectory: $(Build.Repository.LocalPath)/packages/applications-service-api
+          workingDirectory: $(Build.Repository.LocalPath)
