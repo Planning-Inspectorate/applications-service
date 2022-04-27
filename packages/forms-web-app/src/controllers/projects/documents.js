@@ -10,8 +10,9 @@ function getPageData(doc) {
   item.totalPages = doc.totalPages;
   item.currentPage = doc.currentPage;
   item.fromRange = doc.itemsPerPage * (doc.currentPage - 1) + 1;
+  const currentPageNumber = parseInt(doc.currentPage, 10);
   item.toRange =
-    doc.currentPage === doc.totalPages ? doc.totalItems : doc.itemsPerPage * doc.currentPage;
+    currentPageNumber === doc.totalPages ? doc.totalItems : doc.itemsPerPage * doc.currentPage;
   return item;
 }
 
@@ -43,7 +44,7 @@ function renderData(req, res, params, response) {
 exports.getAboutTheApplication = async (req, res) => {
   const params = {
     caseRef: req.params.case_ref,
-    pageNumber: 1,
+    pageNo: req.params.page,
   };
   const response = await searchDocumentsV2(params);
   renderData(req, res, params, response);

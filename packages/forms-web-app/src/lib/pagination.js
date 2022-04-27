@@ -22,11 +22,12 @@ const generatePageNumbers = (currentPage, totalPages) => {
 };
 
 const generatePagination = (currentPage, totalPages) => {
-  let pageNumbers = generatePageNumbers(currentPage, totalPages);
-  if (currentPage !== 1) {
+  const currentPageNumber = parseInt(currentPage, 10);
+  let pageNumbers = generatePageNumbers(currentPageNumber, totalPages);
+  if (currentPageNumber !== 1) {
     pageNumbers = ['prev', ...pageNumbers];
   }
-  if (currentPage !== totalPages) {
+  if (currentPageNumber !== totalPages) {
     pageNumbers = [...pageNumbers, 'next'];
   }
   return pageNumbers;

@@ -18,12 +18,12 @@
         {% for document in documents %}
           <li class="pins-govuk-result-list__item">
             <a class="govuk-link pins-govuk-result-list__item-title" href="{{ document.path }}"target="_blank">
-              {{ document.description or document.personal_name  }} ({{ document.mime | formatMimeType }}, {{ document.bytes | formatBytes }})
+              {{ document.description or document.personal_name  }} ({{ document.mime | formatMimeType }}, {{ document.size | formatBytes }})
             </a>
             <p class="pins-govuk-result-list__item-description ">
               {% if document.representative %}
                 Published by {{ document.representative }} on behalf of {{ document.personal_name }}
-              {% elseif document.description %}
+              {% elseif document.description and document.personal_name %}
                 Published by {{ document.personal_name }}
               {% endif %}
             </p>
@@ -53,7 +53,7 @@
                 <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
                   <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
-              {% elif page === pageData.currentPage %}
+              {% elif page == pageData.currentPage %}
                 <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
                 <li class="hmcts-pagination__item  hmcts-pagination__item--next">
