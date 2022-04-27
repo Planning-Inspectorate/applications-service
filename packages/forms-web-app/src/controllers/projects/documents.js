@@ -29,6 +29,7 @@ function renderData(req, res, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
     const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
+    console.log(documents)
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
