@@ -29,7 +29,7 @@ RUN npm run lint
 RUN npm run documentation; echo $? > /npm.exitcode
 
 # Stage 3/3: Run app
-FROM node:14-alpine AS app
+FROM build AS app
 
 WORKDIR /opt/app
 
