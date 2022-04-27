@@ -65,7 +65,7 @@ const getOrderedDocuments = async (caseRef, pageNo, searchTerm) => {
         },
       },
       {
-        dataID: {
+        representative: {
           [Op.like]: `%${searchTerm}%`,
         },
       },
