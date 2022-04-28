@@ -3,85 +3,73 @@
 {% set activeProjectLink = 'about-the-application' %}
 
 {% block columnTwo %}
-  <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
 
       <p class="results">
-        <strong>
-          {% if documents %}
-            <span id="results-number">{{ pageData.totalItems }}</span>
-            {% if pageData.totalItems === 1 %}
-              result
-             {% else %}
-              results
-             {% endif %}
-          {% else %}
-            No documents found. Please try with different search text.
-          {% endif %}
-        </strong>
+        {% if documents %}
+          Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.
+        {% else %}
+          No documents found. Please try with different search text.
+        {% endif %}
       </p>
-  </div>
-  <div class="govuk-grid-row">
+
     {% if documents %}
-      <p class="results">
-        <strong></p>
-        <hr/>
-        {% for stageDoc in documents | getkeys %}
-          {% for stage in documents[stageDoc] | getkeys %}
-            {% if stage == 1 %}
-              <h2 class="govuk-heading-m">Pre-application documents</h2>
-            {% elseif stage == 2 %}
-              <h2 class="govuk-heading-m">Review of the application documents</h2>
-            {% elseif stage == 3 %}
-              <h2 class="govuk-heading-m">Pre-examination documents</h2>
-            {% endif %}
-            {% for docType in documents[stageDoc][stage] | getkeys %}
-              <div class="pins-search-results-group">
-                <h3 class="pins-search-results-group-heading">{{ docType }}</h3>
-                <div class="pins-search-results-group-items">
-                  <ul class="govuk-list">
-                    {% for doc in documents[stageDoc][stage][docType] | getkeys %}
-                      <li>
-                        <a href="{{ documents[stageDoc][stage][docType][doc].path }}" class="govuk-link" target="_blank">{{ documents[stageDoc][stage][docType][doc].path | docname }}</a>
-                      </li>
-                    {% endfor %}
-                  </ul>
-                </div>
+      <ul class="pins-govuk-result-list">
+        {% for document in documents %}
+          <li class="pins-govuk-result-list__item">
+            <a class="govuk-link pins-govuk-result-list__item-title" href="{{ document.path }}"target="_blank">
+              {{ document.description or document.personal_name  }} ({{ document.mime | formatMimeType }}, {{ document.size | formatBytes }})
+            </a>
+            <p class="pins-govuk-result-list__item-description ">
+              {% if document.representative %}
+                Published by {{ document.representative }} on behalf of {{ document.personal_name }}
+              {% elseif document.description and document.personal_name %}
+                Published by {{ document.personal_name }}
+              {% endif %}
+            </p>
+            <div class="govuk-grid-row document-metadata">
+              <div class="govuk-grid-column-one-third">
+                {{ document.date_published }}
               </div>
-            {% endfor %}
-          {% endfor %}
+              <div class="govuk-grid-column-one-third">
+                {{ projectStageNames[document.Stage] }}
+              </div>
+              <div class="govuk-grid-column-one-third">
+                {{ document.filter_1 }}
+              </div>
+            </div>
+          </li>
         {% endfor %}
-      {% endif %}
+      </ul>
+    {% endif %}
 
     {% if documents %}
       {% if pageData.totalPages !== 1 %}
-        <nav class="hmcts-pagination" id="pagination-label">
+        <nav class="moj-pagination" id="pagination-label">
           <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
-          <ul class="hmcts-pagination__list">
+          <ul class="moj-pagination__list">
             {% for page in paginationData %}
               {% if page === 'prev' %}
-                <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
-                  <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                <li class="moj-pagination__item  moj-pagination__item--prev">
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === pageData.currentPage %}
-                <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+                <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
-                <li class="hmcts-pagination__item  hmcts-pagination__item--next">
-                  <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                <li class="moj-pagination__item  moj-pagination__item--next">
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === '...' %}
-                <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+                <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% else %}
-                <li class="hmcts-pagination__item">
-                  <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}">{{ page }}</a>
+                <li class="moj-pagination__item">
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}">{{ page }}</a>
                 </li>
               {% endif %}
             {% endfor %}
           </ul>
-          <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
+          <p class="moj-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
         </nav>
       {% endif %}
     {% endif %}
-  </div>
-</div>
 {% endblock %}

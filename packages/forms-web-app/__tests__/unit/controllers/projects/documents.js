@@ -1,5 +1,5 @@
 const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
-const { searchDocumentList } = require('../../../../src/lib/application-api-wrapper');
+const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
@@ -10,16 +10,10 @@ describe('controllers/documents', () => {
   let res;
   const docList = [
     {
-      1: {
-        test: [
-          {
-            case_reference: 'ABCD1234',
-            Stage: 1,
-            type: 'test',
-            path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
-          },
-        ],
-      },
+      case_reference: 'ABCD1234',
+      Stage: 1,
+      type: 'test',
+      path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
     },
   ];
   const pageData = {
@@ -39,31 +33,22 @@ describe('controllers/documents', () => {
         page: '1',
         case_ref: 'ABCD1234',
       },
-      body: {
-        search: 'test',
-      },
       session: {
         projectName: 'ABC',
       },
     };
     res = mockRes();
 
-    searchDocumentList.mockImplementation(() =>
+    searchDocumentListV2.mockImplementation(() =>
       Promise.resolve({
         resp_code: 200,
         data: {
           documents: [
             {
-              1: {
-                test: [
-                  {
-                    case_reference: 'ABCD1234',
-                    Stage: 1,
-                    type: 'test',
-                    path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
-                  },
-                ],
-              },
+              case_reference: 'ABCD1234',
+              Stage: 1,
+              type: 'test',
+              path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
             },
           ],
           totalItems: 1,
@@ -88,7 +73,7 @@ describe('controllers/documents', () => {
     });
 
     it('should call the correct template if received 404', async () => {
-      searchDocumentList.mockImplementation(() =>
+      searchDocumentListV2.mockImplementation(() =>
         Promise.resolve({
           resp_code: 404,
         })
@@ -97,32 +82,6 @@ describe('controllers/documents', () => {
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         projectName: 'ABC',
         caseRef: 'ABCD1234',
-      });
-    });
-  });
-
-  describe('postSearchDocument', () => {
-    it('should call the correct template', async () => {
-      await aboutTheApplicationController.postSearchDocument(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
-        documents: docList,
-        projectName: 'ABC',
-        caseRef: 'ABCD1234',
-        pageData,
-        paginationData: [1],
-      });
-    });
-  });
-
-  describe('postFilterDocument', () => {
-    it('should call the correct template', async () => {
-      await aboutTheApplicationController.postFilterDocument(req, res);
-      expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
-        documents: docList,
-        projectName: 'ABC',
-        caseRef: 'ABCD1234',
-        pageData,
-        paginationData: [1],
       });
     });
   });

@@ -51,7 +51,7 @@ const getOrderedDocuments = async (caseRef, pageNo) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
-  const where = { case_reference: caseRef };
+  const where = { case_reference: caseRef, Stage: { [Op.gt]: 0 } };
 
   const documents = await db.Document.findAndCountAll({
     where,
