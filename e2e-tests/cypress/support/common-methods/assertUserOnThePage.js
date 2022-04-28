@@ -40,7 +40,7 @@ module.exports = (pageName) => {
             cy.get('h1').invoke('text').then((text) => {
                 expect(text).to.contain('North Lincolnshire Green Energy Park');
             })
-            cy.url().should('include', '/examination/EN010116')
+            cy.url().should('include', '/projects/EN010116')
             break;
         case "north lincolnshire green energy park":
             cy.title().should('eq', "North Lincolnshire Green Energy Park | National Infrastructure Planning");
