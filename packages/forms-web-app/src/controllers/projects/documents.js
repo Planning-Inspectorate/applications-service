@@ -8,11 +8,10 @@ function getPageData(doc) {
   item.totalItems = doc.totalItems;
   item.itemsPerPage = doc.itemsPerPage;
   item.totalPages = doc.totalPages;
-  item.currentPage = doc.currentPage;
+  item.currentPage = parseInt(doc.currentPage, 10);
   item.fromRange = doc.itemsPerPage * (doc.currentPage - 1) + 1;
-  const currentPageNumber = parseInt(doc.currentPage, 10);
   item.toRange =
-    currentPageNumber === doc.totalPages ? doc.totalItems : doc.itemsPerPage * doc.currentPage;
+    item.currentPage === doc.totalPages ? doc.totalItems : doc.itemsPerPage * doc.currentPage;
   return item;
 }
 
@@ -30,7 +29,6 @@ function renderData(req, res, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
     const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
-    console.log(documents);
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,

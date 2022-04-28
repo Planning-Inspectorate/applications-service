@@ -45,30 +45,30 @@
 
     {% if documents %}
       {% if pageData.totalPages !== 1 %}
-        <nav class="hmcts-pagination" id="pagination-label">
+        <nav class="moj-pagination" id="pagination-label">
           <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
-          <ul class="hmcts-pagination__list">
+          <ul class="moj-pagination__list">
             {% for page in paginationData %}
               {% if page === 'prev' %}
-                <li class="hmcts-pagination__item  hmcts-pagination__item--prev">
-                  <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                <li class="moj-pagination__item  moj-pagination__item--prev">
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
-              {% elif page == pageData.currentPage %}
-                <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+              {% elif page === pageData.currentPage %}
+                <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
-                <li class="hmcts-pagination__item  hmcts-pagination__item--next">
-                  <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                <li class="moj-pagination__item  moj-pagination__item--next">
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === '...' %}
-                <li class="hmcts-pagination__item hmcts-pagination__item--active">{{ page }}</li>
+                <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% else %}
-                <li class="hmcts-pagination__item">
-                  <a class="hmcts-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}">{{ page }}</a>
+                <li class="moj-pagination__item">
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}">{{ page }}</a>
                 </li>
               {% endif %}
             {% endfor %}
           </ul>
-          <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
+          <p class="moj-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
         </nav>
       {% endif %}
     {% endif %}
