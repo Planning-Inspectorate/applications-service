@@ -1,4 +1,5 @@
 const R = require('ramda');
+const { unslugify } = require('unslugify');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
@@ -50,15 +51,23 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef, pageNo = 1 } = req.query;
+    const { caseRef, page, searchTerm, stage, type } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
     }
 
+    const slugified = type && !(type instanceof Array) ? [type] : type;
+
     logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
     try {
-      const documents = await getOrderedDocuments(caseRef, pageNo);
+      const documents = await getOrderedDocuments(
+        caseRef,
+        page || 1,
+        searchTerm,
+        stage && !(stage instanceof Array) ? [stage] : stage,
+        slugified && slugified.map((s) => unslugify(s))
+      );
 
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
@@ -76,7 +85,7 @@ module.exports = {
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
-        currentPage: pageNo,
+        currentPage: page,
       };
 
       logger.debug(`Documents for project ${caseRef} retrieved`);
