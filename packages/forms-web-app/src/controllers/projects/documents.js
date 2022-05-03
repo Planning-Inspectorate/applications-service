@@ -24,6 +24,10 @@ function renderData(req, res, params, response) {
       caseRef,
     });
   } else {
+    let queryUrl = '';
+    if (params.searchTerm !== '') {
+      queryUrl = `?searchTerm=${params.searchTerm}`;
+    }
     const respData = response.data;
     const { documents } = respData;
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
@@ -36,15 +40,18 @@ function renderData(req, res, params, response) {
       pageData,
       paginationData,
       searchTerm,
+      queryUrl,
     });
   }
 }
 
 exports.getAboutTheApplication = async (req, res) => {
+  const searchTerm = req.query.searchTerm;
+  req.session.searchTerm = searchTerm ? searchTerm : '';
   const params = {
     caseRef: req.params.case_ref,
     pageNo: req.params.page,
-    searchTerm: req.query.searchTerm,
+    searchTerm: req.session.searchTerm,
   };
   const response = await searchDocumentsV2(params);
   renderData(req, res, params, response);

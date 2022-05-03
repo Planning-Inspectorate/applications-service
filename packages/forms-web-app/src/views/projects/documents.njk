@@ -63,19 +63,19 @@
             {% for page in paginationData %}
               {% if page === 'prev' %}
                 <li class="moj-pagination__item  moj-pagination__item--prev">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}{{ queryUrl }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === pageData.currentPage %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
                 <li class="moj-pagination__item  moj-pagination__item--next">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}{{ queryUrl }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === '...' %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% else %}
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}">{{ page }}</a>
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}{{ queryUrl }}">{{ page }}</a>
                 </li>
               {% endif %}
             {% endfor %}
