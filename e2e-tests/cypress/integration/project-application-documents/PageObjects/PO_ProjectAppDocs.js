@@ -17,7 +17,7 @@ class PO_ProjectAppDocs {
 
     assertIfPaginationIsPresent(table) {
         const contents = table.hashes();
-        cy.get('.hmcts-pagination__item').each(($e1, index) => {
+        cy.get('.moj-pagination__item').each(($e1, index) => {
             const actualText = $e1.text();
             const expectedText = contents[index].Data;
             expect(actualText).to.contain(expectedText);
@@ -25,21 +25,34 @@ class PO_ProjectAppDocs {
     }
 
     clickOnPaginationLink(paginationLink) {
-        cy.get('.hmcts-pagination__item').each(($e1, index) => {
+        cy.get('.moj-pagination__item').each(($e1, index) => {
             const text = $e1.text();
 
             if (text.includes(paginationLink)) {
-                cy.get('.hmcts-pagination__item').eq(index).click();
+                cy.get('.moj-pagination__item').eq(index).click();
             }
         })
     }
 
     assertDocumentResultsText(resultText) {
-        cy.get('.hmcts-pagination__results').should('contain.text', resultText)
+        cy.get('.moj-pagination__results').should('contain.text', resultText)
     }
 
     assertResultsPerPage(resultsPerPage) {
-        cy.get('.pins-search-results-group').should('have.length', resultsPerPage)
+        cy.get('.pins-govuk-result-list__item').should('have.length', resultsPerPage)
+    }
+
+    verifyDocumentsDisplayedinDescendingOrder(table) {
+        const contents = table.hashes();
+        cy.get('[data-cy="published-date"]').each(($e1, index) => {
+            const actualText = $e1.text();
+            const expectedText = contents[index].Data;
+            expect(actualText).to.contain(expectedText);
+        })
+    }
+
+    verifyNoDocsFoundText() {
+        cy.get('.results').should('contain.text', "No documents found. Please try with different search text.")
     }
 
 }

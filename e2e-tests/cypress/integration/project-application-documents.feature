@@ -155,3 +155,34 @@ Feature: Project Application documents page
             | 8                     |
         Then I verify text "Showing 141 to 152 of 152 results" is present on the page
         Then I verify that only "12" results present on each page
+
+    Scenario: verify documents available for project is in descending order by date published
+        Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+        When I click on "Project application documents" link
+        Then I can verify that the project documents displayed in descending order
+            | Data       |
+            | 2019-04-22 |
+            | 2019-04-21 |
+            | 2019-04-20 |
+            | 2019-04-19 |
+            | 2019-04-18 |
+            | 2019-04-17 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+            | 2019-04-16 |
+
+    Scenario: verify no documents displayed for a project
+        Given I navigate to "Ho Ho Hooo" project Overview page
+        When I click on "Project application documents" link
+        Then I verify that no documents found text displayed on the page
