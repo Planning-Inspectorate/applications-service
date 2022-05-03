@@ -1,4 +1,5 @@
 const logger = require('../../lib/logger');
+const moment = require('moment');
 const { generatePagination } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
 const { searchDocumentsV2 } = require('../../services/document.service');
@@ -46,6 +47,8 @@ function renderData(req, res, params, response) {
 }
 
 exports.getAboutTheApplication = async (req, res) => {
+  const dt = moment('2019-04-22', 'YYYY-MM-DD').format('YYYY-MM-DD');
+  console.log('-----------> '+dt);
   const { searchTerm } = req.query;
   req.session.searchTerm = searchTerm;
   const params = {
