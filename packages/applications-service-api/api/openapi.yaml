@@ -635,6 +635,9 @@ components:
         currentPage:
           type: number
           example: 1
+        filters:
+          type: object
+          $ref: '#/components/schemas/Filters'
     DocumentListGroupByStage:
       type: object
       additionalProperties:
@@ -750,3 +753,23 @@ components:
         email:
           type: string
           example: 'elvin.ali@planninginspectorate.gov.uk'
+    Filters:
+      type: object
+      properties:
+        stageFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
+        typeFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
+    Filter:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: number

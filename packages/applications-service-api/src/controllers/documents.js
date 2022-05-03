@@ -3,7 +3,7 @@ const { unslugify } = require('unslugify');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
-const { getOrderedDocuments, getDocuments } = require('../services/document.service');
+const { getOrderedDocuments, getDocuments, getFilters } = require('../services/document.service');
 
 const ApiError = require('../error/apiError');
 
@@ -73,6 +73,9 @@ module.exports = {
         throw ApiError.noDocumentsFound();
       }
 
+      const stageFilters = await getFilters('Stage');
+      const typeFilters = await getFilters('filter_1');
+
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
       const rows = documents.rows.map((row) => ({
@@ -86,6 +89,20 @@ module.exports = {
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
         currentPage: page,
+        filters: {
+          stageFilters: stageFilters
+            ? stageFilters.map((f) => ({
+                name: f.dataValues.Stage,
+                count: f.dataValues.count,
+              }))
+            : [],
+          typeFilters: typeFilters
+            ? typeFilters.map((f) => ({
+                name: f.dataValues.filter_1,
+                count: f.dataValues.count,
+              }))
+            : [],
+        },
       };
 
       logger.debug(`Documents for project ${caseRef} retrieved`);

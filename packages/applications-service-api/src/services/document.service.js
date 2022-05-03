@@ -108,7 +108,17 @@ const getOrderedDocuments = async (caseRef, pageNo, searchTerm, stage, type) => 
   return documents;
 };
 
+const getFilters = async (filter) => {
+  const filters = await db.Document.findAll({
+    attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
+    group: [filter],
+  });
+
+  return filters;
+};
+
 module.exports = {
   getDocuments,
   getOrderedDocuments,
+  getFilters,
 };
