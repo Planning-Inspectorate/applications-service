@@ -1,4 +1,4 @@
-{% extends "layouts/contentHeader.njk" %}
+{% extends "layouts/project-3-columns.njk" %}
 
 {% set activeProjectLink = 'about-the-application' %}
 {% block resultSec %}
@@ -24,7 +24,7 @@
       </p>
   </div>
 {% endblock %}
-{% block columnTwo %}
+{% block mainResultContent %}
     {% if documents %}
       <ul class="pins-govuk-result-list">
         {% for document in documents %}
