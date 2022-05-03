@@ -101,6 +101,7 @@ const documentListWrapper = {
   currentPage: 1,
 };
 
+// eslint-disable-next-line no-unused-vars
 const v2DocumentListWrapper = {
   documents: [
     {
@@ -502,20 +503,6 @@ describe('getDocuments', () => {
 });
 
 describe('getV2Documents', () => {
-  it('should get documents from mock', async () => {
-    const req = httpMocks.createRequest({
-      query: {
-        caseRef: 'EN010009',
-      },
-    });
-
-    const res = httpMocks.createResponse();
-    await getV2Documents(req, res);
-    const data = res._getData();
-    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual(v2DocumentListWrapper);
-  });
-
   it('should return required query parameter missing', async () => {
     const req = httpMocks.createRequest({
       query: {},
