@@ -6,11 +6,18 @@
       <div class="govuk-grid-column-one-quarter">
         {% include "layouts/vertical-tabs.njk" %}
       </div>
-      <div class="govuk-grid-column-one-half">
-        {% block columnTwo %}{% endblock %}
-      </div>
-      <div class="govuk-grid-column-one-quarter">
-        {% block columnThree %}{% endblock %}
+      <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+          {% block resultSec %}{% endblock %}
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            {% block columnTwo %}{% endblock %}
+          </div>
+          <div class="govuk-grid-column-one-third">
+            {% block columnThree %}{% endblock %}
+          </div>
+        </div>
       </div>
   </div>
 {% endblock %}

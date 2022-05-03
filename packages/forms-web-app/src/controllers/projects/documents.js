@@ -16,7 +16,7 @@ function getPageData(doc) {
 }
 
 function renderData(req, res, params, response) {
-  const { caseRef } = params;
+  const { caseRef, searchTerm } = params;
   const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
@@ -35,6 +35,7 @@ function renderData(req, res, params, response) {
       caseRef,
       pageData,
       paginationData,
+      searchTerm,
     });
   }
 }
@@ -43,6 +44,7 @@ exports.getAboutTheApplication = async (req, res) => {
   const params = {
     caseRef: req.params.case_ref,
     pageNo: req.params.page,
+    searchTerm: req.query.searchTerm,
   };
   const response = await searchDocumentsV2(params);
   renderData(req, res, params, response);
