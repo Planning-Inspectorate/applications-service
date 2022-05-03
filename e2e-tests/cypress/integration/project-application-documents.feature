@@ -155,3 +155,34 @@ Feature: Project Application documents page
             | 8                     |
         Then I verify text "Showing 141 to 152 of 152 results" is present on the page
         Then I verify that only "12" results present on each page
+
+    Scenario: verify documents available for project is in descending order by date published
+        Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+        When I click on "Project application documents" link
+        Then I can verify that the project documents displayed in descending order
+            | Date       | Stage           | Title                 |
+            | 2019-04-22 | Pre Application | Material Change - 9   |
+            | 2019-04-21 | Pre Application | Material Change - 8   |
+            | 2019-04-20 | Pre Application | Material Change - 7   |
+            | 2019-04-19 | Pre Application | Material Change - 6   |
+            | 2019-04-18 | Pre Application | Material Change - 5   |
+            | 2019-04-17 | Pre Application | Material Change - 4   |
+            | 2019-04-16 | Pre Application | Material Change - 111 |
+            | 2019-04-16 | Pre Application | Material Change - 99  |
+            | 2019-04-16 | Pre Application | Material Change - 100 |
+            | 2019-04-16 | Pre Application | Material Change - 101 |
+            | 2019-04-16 | Pre Application | Material Change - 102 |
+            | 2019-04-16 | Pre Application | Material Change - 103 |
+            | 2019-04-16 | Pre Application | Material Change - 104 |
+            | 2019-04-16 | Pre Application | Material Change - 105 |
+            | 2019-04-16 | Pre Application | Material Change - 106 |
+            | 2019-04-16 | Pre Application | Material Change - 107 |
+            | 2019-04-16 | Pre Application | Material Change - 115 |
+            | 2019-04-16 | Pre Application | Material Change - 113 |
+            | 2019-04-16 | Pre Application | Material Change - 114 |
+            | 2019-04-16 | Pre Application | Material Change - 112 |
+
+    Scenario: verify no documents displayed for a project
+        Given I navigate to "Ho Ho Hooo" project Overview page
+        When I click on "Project application documents" link
+        Then I verify that no documents found text displayed on the page

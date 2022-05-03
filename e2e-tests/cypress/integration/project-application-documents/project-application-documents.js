@@ -4,7 +4,11 @@ const projectAppDocs = new PO_ProjectAppDocs();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
     cy.visit('/project-search', { failOnStatusCode: false });
-    cy.clickProjectLink(projectName);
+    if(projectName.includes('Ho Ho Hooo')) {
+        cy.visit('/projects/TR033002');
+    } else{
+        cy.clickProjectLink(projectName);
+    }
 });
 
 And('I click on {string} link', (pageName) => {
@@ -37,4 +41,12 @@ And('I click on {string} link', (pageName) => {
 
  Then('I verify that only {string} results present on each page', (resultsPerPage) => {
     projectAppDocs.assertResultsPerPage(resultsPerPage);
+ })
+
+ And('I can verify that the project documents displayed in descending order', (table) => {
+     projectAppDocs.verifyDocumentsDisplayedinDescendingOrder(table);
+ })
+
+ Then('I verify that no documents found text displayed on the page', () => {
+     projectAppDocs.verifyNoDocsFoundText();
  })
