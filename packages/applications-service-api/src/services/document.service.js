@@ -51,7 +51,7 @@ const getOrderedDocuments = async (caseRef, pageNo, searchTerm, stage, type) => 
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
-  let where = { case_reference: caseRef };
+  let where = { case_reference: caseRef, Stage: { [Op.gt]: 0 } };
   if (stage) where = { ...where, Stage: { [Op.in]: stage } };
   if (type) where = { ...where, filter_1: { [Op.in]: type } };
 
@@ -79,7 +79,7 @@ const getOrderedDocuments = async (caseRef, pageNo, searchTerm, stage, type) => 
       },
     ];
 
-    where = { [Op.and]: [{ case_reference: caseRef }] };
+    where = { [Op.and]: [{ case_reference: caseRef, Stage: { [Op.gt]: 0 } }] };
 
     if (stage) {
       where[Op.and].push({
