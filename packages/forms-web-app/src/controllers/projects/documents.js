@@ -1,5 +1,4 @@
 const logger = require('../../lib/logger');
-const moment = require('moment');
 const { generatePagination } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
 const { searchDocumentsV2 } = require('../../services/document.service');
