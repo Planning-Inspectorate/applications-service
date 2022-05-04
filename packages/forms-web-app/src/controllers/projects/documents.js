@@ -46,12 +46,10 @@ function renderData(req, res, params, response) {
 }
 
 exports.getAboutTheApplication = async (req, res) => {
-  const { searchTerm } = req.query;
-  req.session.searchTerm = searchTerm;
   const params = {
-    caseRef: req.params.case_ref,
-    pageNo: req.params.page,
-    searchTerm: req.session.searchTerm,
+    ...{ caseRef: req.params.case_ref },
+    ...{ page: req.params.page },
+    ...(req.query.searchTerm && { searchTerm: req.query.searchTerm }),
   };
   const response = await searchDocumentsV2(params);
   renderData(req, res, params, response);
