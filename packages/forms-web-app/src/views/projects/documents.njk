@@ -1,7 +1,7 @@
 {% extends "layouts/project-3-columns.njk" %}
 
 {% set activeProjectLink = 'about-the-application' %}
-{% block resultSec %}
+{% block contentHeader %}
   <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
       <form action="/projects/{{ caseRef }}/documents/1" method="GET" novalidate>
@@ -24,7 +24,7 @@
       </p>
   </div>
 {% endblock %}
-{% block contentHeader %}
+{% block columnTwo %}
     {% if documents %}
       <ul class="pins-govuk-result-list">
         {% for document in documents %}
