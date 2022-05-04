@@ -4,6 +4,7 @@ const { VIEW } = require('../../lib/views');
 const { searchDocumentsV2 } = require('../../services/document.service');
 
 function getPageData(doc) {
+  console.log('-------------------doc> '+JSON.stringify(doc));
   const item = {};
   item.totalItems = doc.totalItems;
   item.itemsPerPage = doc.itemsPerPage;
@@ -33,6 +34,7 @@ function renderData(req, res, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
     const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
+    console.log('-------------->'+JSON.stringify(pageData));
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
@@ -47,10 +49,10 @@ function renderData(req, res, params, response) {
 
 exports.getAboutTheApplication = async (req, res) => {
   const { searchTerm } = req.query;
-  req.session.searchTerm = searchTerm;
+  req.session.searchTerm = searchTerm === undefined ? '' : searchTerm;
   const params = {
     caseRef: req.params.case_ref,
-    pageNo: req.params.page,
+    page: req.params.page,
     searchTerm: req.session.searchTerm,
   };
   const response = await searchDocumentsV2(params);

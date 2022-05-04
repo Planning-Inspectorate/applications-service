@@ -10,22 +10,14 @@
           <button class="govuk-button">Search</button>
         </p>
       </form>
-      <p class="results">
-          {% if documents %}
-            <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.</p>
-          {% else %}
-            <p style="govuk-body">
-              No documents were found matching your search terms.
-            </p>
-            <p style="govuk-body">
-              Would you like to clear your search and view all documents</br> instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
-            </p>
-          {% endif %}
-      </p>
   </div>
 {% endblock %}
 {% block columnTwo %}
+  <div class="govuk-grid-row">
     {% if documents %}
+    <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.</p>
+      <strong></p>
+
       <ul class="pins-govuk-result-list">
         {% for document in documents %}
           <li class="pins-govuk-result-list__item">
@@ -53,6 +45,13 @@
           </li>
         {% endfor %}
       </ul>
+    {% else %}
+      <p style="govuk-body">
+        No documents were found matching your search terms.
+      </p>
+      <p style="govuk-body">
+        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
+      </p>
     {% endif %}
 
     {% if documents %}
@@ -84,4 +83,101 @@
         </nav>
       {% endif %}
     {% endif %}
+  </div>
 {% endblock %}
+
+
+{% block columnThree %}
+  <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+        {% set projectStageFilter %}
+        {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
+        name: "stage", items: [
+        {
+        text: "Pre-application",
+        value: "Pre-application"
+        },
+        {
+        text: "Review of the application",
+        value: "Review of the application"
+        },
+        {
+        text: "Pre-Examination",
+        value: "Pre-Examination"
+        }
+
+        ] }) }}
+      {% endset %}
+
+      {% set documentTypeFilter %}
+          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "type",
+          name: "type", items: [
+          {
+          value: "Additional submissions",
+          text: "Additional submissions"
+          },
+          {
+          value: "Acceptance letter",
+          text: "Acceptance letter"
+          },
+          {
+          value: "Examination Library",
+          text: "Examination Library"
+          },
+          {
+          value: "Environmental statement",
+          text: "Environmental statement"
+          },
+          {
+          value: "Adequacy of consultation report",
+          text: "Adequacy of consultation report"
+          },
+          {
+          value: "Procedural decisions",
+          text: "Procedural decisions"
+          },
+          {
+          value: "Consultation reports",
+          text: "Consultation reports"
+          },
+          {
+          value: "Site inspections",
+          text: "Site inspections"
+          }
+
+          ]
+          }) }}
+      {% endset %}
+
+      <div style="background-color: #f3f2f1; padding: 10px;">
+      <h2 class="govuk-heading-m">Filter by</h2>
+
+      {{ govukAccordion({
+          id: "accordion-default",
+          classes: "filter-accordion",
+          headingLevel: 3,
+          items: [
+              {
+                  heading: {
+                      html: '<span class="filter-heading">Project stage</span>'
+                  },
+                  content: {
+                      html: projectStageFilter
+                  }
+              },
+              {
+                  heading: {
+                      html: '<span class="filter-heading">Document type</span>'
+                  },
+                  content: {
+                      html: documentTypeFilter
+                  }
+              }
+          ]
+          })
+      }}
+
+      <button class="govuk-button">Apply Filters</button>  
+  </div>
+
+{% endblock %}
+</form>
