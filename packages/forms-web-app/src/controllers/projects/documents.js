@@ -16,7 +16,7 @@ function getPageData(doc) {
 }
 
 function renderData(req, res, params, response) {
-  const { caseRef } = params;
+  const { caseRef, searchTerm } = params;
   const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
@@ -24,6 +24,10 @@ function renderData(req, res, params, response) {
       caseRef,
     });
   } else {
+    let queryUrl = '';
+    if (params.searchTerm !== '') {
+      queryUrl = `?searchTerm=${params.searchTerm}`;
+    }
     const respData = response.data;
     const { documents } = respData;
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
@@ -35,14 +39,19 @@ function renderData(req, res, params, response) {
       caseRef,
       pageData,
       paginationData,
+      searchTerm,
+      queryUrl,
     });
   }
 }
 
 exports.getAboutTheApplication = async (req, res) => {
+  const { searchTerm } = req.query;
+  req.session.searchTerm = searchTerm;
   const params = {
     caseRef: req.params.case_ref,
     pageNo: req.params.page,
+    searchTerm: req.session.searchTerm,
   };
   const response = await searchDocumentsV2(params);
   renderData(req, res, params, response);

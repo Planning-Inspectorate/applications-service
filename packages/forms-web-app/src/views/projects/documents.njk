@@ -1,18 +1,30 @@
 {% extends "layouts/project-3-columns.njk" %}
 
 {% set activeProjectLink = 'about-the-application' %}
-
-{% block columnTwo %}
+{% block contentHeader %}
+  <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
-
+      <form action="/projects/{{ caseRef }}/documents/1" method="GET" novalidate>
+        <p>
+          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value={{ searchTerm }}>
+          <button class="govuk-button">Search</button>
+        </p>
+      </form>
       <p class="results">
-        {% if documents %}
-          Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.
-        {% else %}
-          No documents found. Please try with different search text.
-        {% endif %}
+          {% if documents %}
+            <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.</p>
+          {% else %}
+            <p style="govuk-body">
+              No documents were found matching your search terms.
+            </p>
+            <p style="govuk-body">
+              Would you like to clear your search and view all documents</br> instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
+            </p>
+          {% endif %}
       </p>
-
+  </div>
+{% endblock %}
+{% block columnTwo %}
     {% if documents %}
       <ul class="pins-govuk-result-list">
         {% for document in documents %}
@@ -51,19 +63,19 @@
             {% for page in paginationData %}
               {% if page === 'prev' %}
                 <li class="moj-pagination__item  moj-pagination__item--prev">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}{{ queryUrl }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === pageData.currentPage %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
                 <li class="moj-pagination__item  moj-pagination__item--next">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}{{ queryUrl }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
                 </li>
               {% elif page === '...' %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% else %}
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}">{{ page }}</a>
+                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}{{ queryUrl }}">{{ page }}</a>
                 </li>
               {% endif %}
             {% endfor %}
