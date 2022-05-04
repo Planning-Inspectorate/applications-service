@@ -45,7 +45,7 @@ function renderData(req, res, params, response) {
   }
 }
 
-exports.getAboutTheApplication = async (req, res) => { 
+exports.getAboutTheApplication = async (req, res) => {
   const { searchTerm } = req.query;
   req.session.searchTerm = searchTerm;
   const params = {
