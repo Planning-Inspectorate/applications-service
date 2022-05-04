@@ -1,8 +1,9 @@
 const R = require('ramda');
+const { unslugify } = require('unslugify');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
-const { getOrderedDocuments, getDocuments } = require('../services/document.service');
+const { getOrderedDocuments, getDocuments, getFilters } = require('../services/document.service');
 
 const ApiError = require('../error/apiError');
 
@@ -50,19 +51,30 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef, pageNo = 1 } = req.query;
+    const { caseRef, page, searchTerm, stage, type } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
     }
 
+    const slugified = type && !(type instanceof Array) ? [type] : type;
+
     logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
     try {
-      const documents = await getOrderedDocuments(caseRef, pageNo);
+      const documents = await getOrderedDocuments(
+        caseRef,
+        page || 1,
+        searchTerm,
+        stage && !(stage instanceof Array) ? [stage] : stage,
+        slugified && slugified.map((s) => unslugify(s))
+      );
 
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
       }
+
+      const stageFilters = await getFilters('Stage');
+      const typeFilters = await getFilters('filter_1');
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
@@ -76,7 +88,21 @@ module.exports = {
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
-        currentPage: pageNo,
+        currentPage: page,
+        filters: {
+          stageFilters: stageFilters
+            ? stageFilters.map((f) => ({
+                name: f.dataValues.Stage,
+                count: f.dataValues.count,
+              }))
+            : [],
+          typeFilters: typeFilters
+            ? typeFilters.map((f) => ({
+                name: f.dataValues.filter_1,
+                count: f.dataValues.count,
+              }))
+            : [],
+        },
       };
 
       logger.debug(`Documents for project ${caseRef} retrieved`);

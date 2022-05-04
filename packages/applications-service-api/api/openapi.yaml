@@ -276,7 +276,7 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v2/documents?caseRef={caseRef}&page={page}':
+  '/api/v2/documents?caseRef=&page=&searchTerm=&stage=&type=':
     get:
       summary: Returns project documents
       description: Returns project documents
@@ -297,6 +297,27 @@ paths:
           schema:
             type: integer
           description: Page number
+        - in: query
+          name: searchTerm
+          example: 'pdf'
+          required: false
+          schema:
+            type: string
+          description: Search term
+        - in: query
+          name: stage
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          description: Stage
+        - in: query
+          name: type
+          required: false
+          schema:
+            type: array
+          description: Type
       responses:
         '200':
           description: Returns list of documents
@@ -614,6 +635,9 @@ components:
         currentPage:
           type: number
           example: 1
+        filters:
+          type: object
+          $ref: '#/components/schemas/Filters'
     DocumentListGroupByStage:
       type: object
       additionalProperties:
@@ -729,3 +753,23 @@ components:
         email:
           type: string
           example: 'elvin.ali@planninginspectorate.gov.uk'
+    Filters:
+      type: object
+      properties:
+        stageFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
+        typeFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
+    Filter:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: number
