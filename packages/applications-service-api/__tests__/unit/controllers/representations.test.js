@@ -31,6 +31,33 @@ const mockData = [
     DoNotPublish: null,
     Attachments: 'WS010006-000002',
   },
+  {
+    ID: 21,
+    ProjectName: 'Auto_Test',
+    CaseReference: 'EN010009',
+    DataID: null,
+    UniqueReference: 'TR010109-34671',
+    WebReference: null,
+    PersonalName: 'Frosty Flights (Frosty Flights)',
+    Representative: null,
+    IndvdlOnBhalfName: null,
+    OrgOnBhalfName: null,
+    AgentOrgOnBhalfContactName: null,
+    RepFrom: 'Parish Councils',
+    InterestInLand: null,
+    SpecifyOther: null,
+    CompulsoryAcquisitionHearing: null,
+    RepresentationOriginal: null,
+    RepresentationRedacted: 'Some comments',
+    RelevantOrNot: null,
+    SubmitFurtherWrittenReps: null,
+    PreliminaryMeeting: null,
+    OpenFloorHearings: null,
+    IssuesSpecificHearings: null,
+    DateRrepReceived: '2021-08-01T00:00:00.000Z',
+    DoNotPublish: null,
+    Attachments: 'TR010109-000002',
+  },
 ];
 
 jest.mock('../../../src/models', () => {
@@ -45,6 +72,12 @@ jest.mock('../../../src/models', () => {
     }
     if (queryOptions[0].where.CaseReference === 'EN000000') {
       return [];
+    }
+    const symbolKey = Reflect.ownKeys(queryOptions[0].where).find(
+      (key) => key.toString() === 'Symbol(and)'
+    );
+    if (queryOptions[0].where[symbolKey][0].CaseReference === 'EN010009') {
+      return [mockData[1]];
     }
     return null;
   });
@@ -96,5 +129,20 @@ describe('getRepresentationsForApplication', () => {
     await getRepresentationsForApplication(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res._getData()).toContain(`Problem getting representations`);
+  });
+
+  it('should get documents from mock by search criteria', async () => {
+    const req = httpMocks.createRequest({
+      query: {
+        applicationId: 'EN010009',
+        searchTerm: 'Frosty',
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getRepresentationsForApplication(req, res);
+    const data = res._getData();
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+    expect(data).toEqual([mockData[1]]);
   });
 });

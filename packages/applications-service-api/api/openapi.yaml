@@ -328,7 +328,7 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v1/representations?applicationId=':
+  '/api/v1/representations?applicationId=&searchTerm=':
     get:
       summary: Returns project representations
       description: Returns project representations
@@ -342,6 +342,13 @@ paths:
           schema:
             type: string
           description: Case reference
+        - in: query
+          name: searchTerm
+          example: 'Frosty'
+          required: false
+          schema:
+            type: string
+          description: Search term
       responses:
         '200':
           description: Returns list of representations
