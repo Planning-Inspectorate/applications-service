@@ -63,8 +63,8 @@ exports.getAboutTheApplication = async (req, res) => {
   const queryArray = req.url.split('?');
   const query = queryArray.length > 1 ? queryArray[1] : '';
   const params = {
-    caseRef: req.params.case_ref,
-    page: req.params.page,
+    ...{ caseRef: req.params.case_ref },
+    ...{ page: req.params.page },
   };
   const { searchTerm } = req.query;
   const response = await searchDocumentsV2(params, query);
