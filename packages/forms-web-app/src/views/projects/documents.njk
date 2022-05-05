@@ -6,7 +6,7 @@
     <h2 class="govuk-heading-l">Project application documents</h2>
       <form action="/projects/{{ caseRef }}/documents/1" method="GET" novalidate>
         <p>
-          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value={{ searchTerm }}>
+          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
           <button class="govuk-button">Search</button>
         </p>
       </form>
