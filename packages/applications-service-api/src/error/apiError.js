@@ -45,6 +45,10 @@ class ApiError {
       errors: [`Interested party ${ID} not found`],
     });
   }
+
+  static noRepresentationsFound() {
+    return new ApiError(StatusCodes.NOT_FOUND, { errors: [`No representations found`] });
+  }
 }
 
 module.exports = ApiError;
