@@ -73,8 +73,8 @@ module.exports = {
         throw ApiError.noDocumentsFound();
       }
 
-      const stageFilters = await getFilters('Stage');
-      const typeFilters = await getFilters('filter_1');
+      const stageFilters = await getFilters('Stage', caseRef);
+      const typeFilters = await getFilters('filter_1', caseRef);
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
