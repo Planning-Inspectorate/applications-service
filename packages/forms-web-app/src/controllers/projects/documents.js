@@ -1,10 +1,10 @@
 const logger = require('../../lib/logger');
+const { Status: projectStageNames } = require('../../utils/status');
 const { generatePagination } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
 const { searchDocumentsV2 } = require('../../services/document.service');
 
 function getPageData(doc) {
-  console.log('-------------------doc> '+JSON.stringify(doc));
   const item = {};
   item.totalItems = doc.totalItems;
   item.itemsPerPage = doc.itemsPerPage;
@@ -16,13 +16,14 @@ function getPageData(doc) {
   return item;
 }
 
-function renderData(req, res, params, response) {
-  const { caseRef, searchTerm } = params;
+function renderData(req, res, searchTerm, params, response) {
+  const { caseRef } = params;
   const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       projectName,
       caseRef,
+      searchTerm,
     });
   } else {
     let queryUrl = '';
@@ -30,11 +31,21 @@ function renderData(req, res, params, response) {
       queryUrl = `?searchTerm=${params.searchTerm}`;
     }
     const respData = response.data;
-    const { documents } = respData;
+    const { documents, filters } = respData;
+    const { stageFilters, typeFilters } = filters;
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const pageData = getPageData(respData);
     const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
-    console.log('-------------->'+JSON.stringify(pageData));
+
+    var customStageFilters = [];
+
+    stageFilters.forEach(function (stage) {
+      customStageFilters.push({
+        text: `${projectStageNames[stage.name]} (${stage.count})`,
+        value: stage.name,
+      });
+    }, Object.create(null));
+
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
@@ -43,18 +54,19 @@ function renderData(req, res, params, response) {
       paginationData,
       searchTerm,
       queryUrl,
+      customStageFilters,
     });
   }
 }
 
 exports.getAboutTheApplication = async (req, res) => {
-  const { searchTerm } = req.query;
-  req.session.searchTerm = searchTerm === undefined ? '' : searchTerm;
+  const queryArray = req.url.split('?');
+  const query = queryArray.length > 1 ? queryArray[1] : '';
   const params = {
     caseRef: req.params.case_ref,
     page: req.params.page,
-    searchTerm: req.session.searchTerm,
   };
-  const response = await searchDocumentsV2(params);
-  renderData(req, res, params, response);
+  const { searchTerm } = req.query;
+  const response = await searchDocumentsV2(params, query);
+  renderData(req, res, searchTerm, params, response);
 };

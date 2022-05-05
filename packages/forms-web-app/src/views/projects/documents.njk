@@ -4,12 +4,10 @@
 {% block contentHeader %}
   <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
-      <form action="/projects/{{ caseRef }}/documents/1" method="GET" novalidate>
         <p>
-          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value={{ searchTerm }}>
+          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
           <button class="govuk-button">Search</button>
         </p>
-      </form>
   </div>
 {% endblock %}
 {% block columnTwo %}
@@ -91,61 +89,7 @@
   <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
         {% set projectStageFilter %}
         {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
-        name: "stage", items: [
-        {
-        text: "Pre-application",
-        value: "Pre-application"
-        },
-        {
-        text: "Review of the application",
-        value: "Review of the application"
-        },
-        {
-        text: "Pre-Examination",
-        value: "Pre-Examination"
-        }
-
-        ] }) }}
-      {% endset %}
-
-      {% set documentTypeFilter %}
-          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "type",
-          name: "type", items: [
-          {
-          value: "Additional submissions",
-          text: "Additional submissions"
-          },
-          {
-          value: "Acceptance letter",
-          text: "Acceptance letter"
-          },
-          {
-          value: "Examination Library",
-          text: "Examination Library"
-          },
-          {
-          value: "Environmental statement",
-          text: "Environmental statement"
-          },
-          {
-          value: "Adequacy of consultation report",
-          text: "Adequacy of consultation report"
-          },
-          {
-          value: "Procedural decisions",
-          text: "Procedural decisions"
-          },
-          {
-          value: "Consultation reports",
-          text: "Consultation reports"
-          },
-          {
-          value: "Site inspections",
-          text: "Site inspections"
-          }
-
-          ]
-          }) }}
+        name: "stage", items: customStageFilters }) }}
       {% endset %}
 
       <div style="background-color: #f3f2f1; padding: 10px;">
@@ -163,21 +107,11 @@
                   content: {
                       html: projectStageFilter
                   }
-              },
-              {
-                  heading: {
-                      html: '<span class="filter-heading">Document type</span>'
-                  },
-                  content: {
-                      html: documentTypeFilter
-                  }
               }
           ]
           })
       }}
 
-      <button class="govuk-button">Apply Filters</button>  
+      <button class="govuk-button">Apply Filters</button>
   </div>
-
 {% endblock %}
-</form>
