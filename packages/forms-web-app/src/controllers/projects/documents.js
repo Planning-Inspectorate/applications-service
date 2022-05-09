@@ -24,9 +24,9 @@ function renderData(req, res, searchTerm, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const paginationData = getPaginationData(respData);
     const pageOptions = calculatePageOptions(paginationData);
-    let modifiedStageFilters = [];
-    let top5TypeFilters = [];
-    let otherTypeFilters = [];
+    const modifiedStageFilters = [];
+    const top5TypeFilters = [];
+    const otherTypeFilters = [];
     typeFilters.sort(function (a, b) {
       return b.count - a.count;
     });
