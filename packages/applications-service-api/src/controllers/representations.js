@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+const { unslugify } = require('unslugify');
 
 const logger = require('../lib/logger');
 const config = require('../lib/config');
@@ -12,13 +13,17 @@ const ApiError = require('../error/apiError');
 
 module.exports = {
   async getRepresentationsForApplication(req, res) {
-    const { applicationId, page, searchTerm } = req.query;
+    const { applicationId, page, searchTerm, type } = req.query;
+
+    const slugified = type && !(type instanceof Array) ? [type] : type;
+
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
       const representations = await getRepresentationsForApplication(
         applicationId,
         page || 1,
-        searchTerm
+        searchTerm,
+        slugified && slugified.map((s) => unslugify(s))
       );
 
       if (!representations.rows.length) {
