@@ -328,6 +328,39 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
+  '/api/v1/representations?applicationId=&page=':
+    get:
+      summary: Returns project representations
+      description: Returns project representations
+      tags:
+        - Representations
+      parameters:
+        - in: query
+          name: applicationId
+          example: 'EN010009'
+          required: true
+          schema:
+            type: string
+          description: Case reference
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
+      responses:
+        '200':
+          description: Returns list of representations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/RepresentationListWrapper'
+        '404':
+          description: No representations found
 components:
   schemas:
     Application:
@@ -773,3 +806,101 @@ components:
           type: string
         count:
           type: number
+    Representation:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 2
+        ProjectName:
+          type: string
+          example: 'SPT Feb 2020'
+        CaseReference:
+          type: string
+          example: 'EN010009'
+        DataID:
+          type: number
+          example: null
+        UniqueReference:
+          type: string
+          example: 'WS010006-34601'
+        WebReference:
+          type: number
+          example: null
+        PersonalName:
+          type: string
+          example: 'Test (Test)'
+        Representative:
+          type: string
+          example: null
+        IndvdlOnBhalfName:
+          type: string
+          example: null
+        OrgOnBhalfName:
+          type: string
+          example: null
+        AgentOrgOnBhalfContactName:
+          type: string
+          example: null
+        RepFrom:
+          type: string
+          example: 'Members of the Public/Businesses'
+        InterestInLand:
+          type: string
+          example: null
+        SpecifyOther:
+          type: string
+          example: null
+        CompulsoryAcquisitionHearing:
+          type: string
+          example: null
+        RepresentationOriginal:
+          type: string
+          example: null
+        RepresentationRedacted:
+          type: string
+          example: 'Some comments'
+        RelevantOrNot:
+          type: string
+          example: null
+        SubmitFurtherWrittenReps:
+          type: string
+          example: null
+        PreliminaryMeeting:
+          type: string
+          example: null
+        OpenFloorHearings:
+          type: string
+          example: null
+        IssuesSpecificHearings:
+          type: string
+          example: null
+        DateRrepReceived:
+          type: date
+          example: '2020-02-19T00:00:00.000Z'
+        DoNotPublish:
+          type: string
+          example: null
+        Attachments:
+          type: string
+          example: 'WS010006-000002'
+    RepresentationListWrapper:
+      type: object
+      properties:
+        representations:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Representation'
+        totalItems:
+          type: number
+          example: 3
+        itemsPerPage:
+          type: number
+          example: 20
+        totalPages:
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
