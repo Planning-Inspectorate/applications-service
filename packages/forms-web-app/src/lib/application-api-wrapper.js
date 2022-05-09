@@ -84,11 +84,11 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   });
 };
 
-exports.searchDocumentListV2 = async (params) => {
+exports.searchDocumentListV2 = async (params, query) => {
   const queryString = Object.keys(params)
     .map((key) => `${key}=${params[key]}`)
     .join('&');
-  const documentServiceApiUrl = `/api/v2/documents?${queryString}`;
+  const documentServiceApiUrl = `/api/v2/documents?${queryString}&${query}`;
   const method = 'GET';
   return handler('searchDocumentListV2', documentServiceApiUrl, method);
 };

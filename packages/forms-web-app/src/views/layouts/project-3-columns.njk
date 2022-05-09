@@ -2,24 +2,26 @@
 {% extends "layouts/project.njk" %}
 
 {% block content %}
-  <div class="govuk-grid-row govuk-!-margin-left-6 govuk-!-margin-right-6">
-      <div class="govuk-grid-column-one-quarter">
-        {% include "layouts/vertical-tabs.njk" %}
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
-          {% block contentHeader %}{% endblock %}
+  <form action="/projects/{{ caseRef }}/documents/1" method="GET" novalidate>
+    <div class="govuk-grid-row govuk-!-margin-left-6 govuk-!-margin-right-6">
+        <div class="govuk-grid-column-one-quarter">
+          {% include "layouts/vertical-tabs.njk" %}
         </div>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            {% block columnTwo %}{% endblock %}
+        <div class="govuk-grid-column-three-quarters">
+          <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+            {% block contentHeader %}{% endblock %}
           </div>
-          <div class="govuk-grid-column-one-third">
-            {% block columnThree %}{% endblock %}
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              {% block columnTwo %}{% endblock %}
+            </div>
+            <div class="govuk-grid-column-one-third">
+              {% block columnThree %}{% endblock %}
+            </div>
           </div>
         </div>
-      </div>
-  </div>
+    </div>
+  </form>
 {% endblock %}
 
 
