@@ -84,6 +84,12 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   });
 };
 
+exports.searchRepresentations = async (case_ref) => {
+  const documentServiceApiUrl = `/api/v1/representations?applicationId=${case_ref}`;
+  const method = 'GET';
+  return handler('searchRepresentations', documentServiceApiUrl, method);
+};
+
 exports.searchDocumentListV2 = async (params) => {
   const queryString = Object.keys(params)
     .map((key) => `${key}=${params[key]}`)

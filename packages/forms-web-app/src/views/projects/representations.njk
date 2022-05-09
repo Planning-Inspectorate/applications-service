@@ -1,12 +1,34 @@
-{% extends "layouts/project-2-columns.njk" %}
+{% extends "layouts/project-3-columns.njk" %}
 
 {% set activeProjectLink = 'representations' %}
 
 {% block columnTwo %}
   <h2 class="govuk-heading-l">Registration Comments</h2>
 
-  <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
-  <p class="govuk-body">
-    <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
-  </p>
+      {% if representations %}
+        <ul class="pins-govuk-result-list">
+          {% for representation in representations %}
+            <li class="pins-govuk-result-list__item">
+              <a href="#" class="govuk-link pins-govuk-result-list__item-title">
+                {{ representation.PersonalName  }}
+              </a>
+              <p class="pins-govuk-result-list__item-description ">
+                  {{ representation.RepresentationRedacted | truncate(200) }}
+                  {% if representation.RepresentationRedacted.length > 200 %}
+                    <a href="#" class="govuk-link">Read more</a>
+                  {% endif %}
+              </p>
+              <div class="govuk-grid-row document-metadata">
+                <div class="govuk-grid-column-one-third" data-cy="published-date">
+                  {{ representation.DateRrepReceived | date }}
+                </div>
+                <div class="govuk-grid-column-two-thirds" data-cy="published-stage">
+                  {{ representation.RepFrom }}
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
 {% endblock %}
