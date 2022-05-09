@@ -89,7 +89,7 @@ jest.mock('../../../src/models', () => {
       (key) => key.toString() === 'Symbol(and)'
     );
     if (queryOptions[0].where[symbolKey][0].CaseReference === 'EN010009') {
-      return [mockData[1]];
+      return mockData;
     }
     return null;
   });
@@ -151,10 +151,11 @@ describe('getRepresentationsForApplication', () => {
     expect(res._getData()).toContain(`Problem getting representations`);
   });
 
-  it('should get documents from mock by search criteria', async () => {
+  it('should get representations from mock by search criteria', async () => {
     const req = httpMocks.createRequest({
       query: {
         applicationId: 'EN010009',
+        page: 1,
         searchTerm: 'Frosty',
       },
     });
@@ -163,6 +164,6 @@ describe('getRepresentationsForApplication', () => {
     await getRepresentationsForApplication(req, res);
     const data = res._getData();
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual([mockData[1]]);
+    expect(data).toEqual(returnData);
   });
 });
