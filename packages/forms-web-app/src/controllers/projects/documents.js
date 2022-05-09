@@ -4,19 +4,18 @@ const { getPaginationData, calculatePageOptions } = require('../../lib/paginatio
 const { VIEW } = require('../../lib/views');
 const { searchDocumentsV2 } = require('../../services/document.service');
 
-function renderData(req, res, searchTerm, params, response) {
-  const { caseRef } = params;
+function renderData(req, res, params, response) {
   const { projectName } = req.session;
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       projectName,
-      caseRef,
-      searchTerm,
+      caseRef: params.caseRef,
+      searchTerm: params.searchTerm,
     });
   } else {
     let queryUrl = '';
     if (params.searchTerm) {
-      queryUrl = `?searchTerm=${params.searchTerm}`;
+      queryUrl = `&searchTerm=${params.searchTerm}`;
     }
     const respData = response.data;
     const { documents, filters } = respData;
@@ -63,10 +62,10 @@ function renderData(req, res, searchTerm, params, response) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
-      caseRef,
+      caseRef: params.caseRef,
       paginationData,
       pageOptions,
-      searchTerm,
+      searchTerm: params.searchTerm,
       queryUrl,
       modifiedStageFilters,
       top5TypeFilters,
@@ -75,14 +74,13 @@ function renderData(req, res, searchTerm, params, response) {
   }
 }
 
-exports.getAboutTheApplication = async (req, res) => {
-  const queryArray = req.url.split('?');
-  const query = queryArray.length > 1 ? queryArray[1] : '';
+exports.getApplicationDocuments = async (req, res) => {
   const params = {
-    ...{ caseRef: req.params.case_ref },
-    ...{ page: req.params.page },
+    caseRef: req.params.case_ref,
+    classification: 'application',
+    page: '1',
+    ...req.query,
   };
-  const { searchTerm } = req.query;
-  const response = await searchDocumentsV2(params, query);
-  renderData(req, res, searchTerm, params, response);
+  const response = await searchDocumentsV2(params);
+  renderData(req, res, params, response);
 };

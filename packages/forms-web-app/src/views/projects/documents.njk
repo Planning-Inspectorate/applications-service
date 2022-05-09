@@ -49,13 +49,13 @@
         No documents were found matching your search terms.
       </p>
       <p style="govuk-body">
-        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
+        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/application-documents" >Clear search</a>
       </p>
     {% endif %}
 
     {% if documents %}
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/documents/:page{{ queryUrl }}
+          /projects/{{ caseRef }}/application-documents?page=:page{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
     {% endif %}
@@ -76,7 +76,7 @@
         {% set otherProjectTypeFilter %}
           {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "otherType",
           name: "type", items: otherTypeFilters }) }}
-        {% endset %}        
+        {% endset %}
       <div style="background-color: #f3f2f1; padding: 10px;">
       <h2 class="govuk-heading-m">Filter by</h2>
 
@@ -108,7 +108,7 @@
                   content: {
                       html: otherProjectTypeFilter
                   }
-              }              
+              }
           ]
           })
       }}

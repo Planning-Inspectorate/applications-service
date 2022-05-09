@@ -62,7 +62,7 @@ describe('controllers/documents', () => {
 
   describe('getAboutTheApplication', () => {
     it('should call the correct template', async () => {
-      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         documents: docList,
         projectName: 'ABC',

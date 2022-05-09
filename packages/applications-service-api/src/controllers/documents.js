@@ -51,7 +51,7 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef, page, searchTerm, stage, type } = req.query;
+    const { caseRef, page = 1, searchTerm, stage, type, classification = 'all' } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
@@ -63,7 +63,8 @@ module.exports = {
     try {
       const documents = await getOrderedDocuments(
         caseRef,
-        page || 1,
+        classification,
+        page,
         searchTerm,
         stage && !(stage instanceof Array) ? [stage] : stage,
         slugified && slugified.map((s) => unslugify(s))
@@ -73,8 +74,8 @@ module.exports = {
         throw ApiError.noDocumentsFound();
       }
 
-      const stageFilters = await getFilters('Stage', caseRef);
-      const typeFilters = await getFilters('filter_1', caseRef);
+      const stageFilters = await getFilters('Stage', caseRef, classification);
+      const typeFilters = await getFilters('filter_1', caseRef, classification);
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;

@@ -11,11 +11,13 @@ version: '3.7'
 services:
   redis:
     image: redis:6.2.5-alpine
+    container_name: redis
     ports:
       - '6379:6379'
 
   applications-service-api:
     image: node:14-alpine
+    container_name: applications-service-api
     environment:
       APP_APPLICATIONS_BASE_URL: http://forms-web-app:9004
       DOCS_API_PATH: /opt/app/api
@@ -48,8 +50,9 @@ services:
       - './packages/applications-service-api:/opt/app:ro'
     command: 'npm run start:dev'
 
-  forms-web-app:
+  applications-web-app:
     image: node:14-alpine
+    container_name: applications-web-app
     environment:
       APPLICATIONS_SERVICE_API_URL: 'http://applications-service-api:3000'
       DOCUMENTS_SERVICE_API_URL: 'http://document-service-api:3000'
@@ -85,6 +88,7 @@ services:
 
   db:
     image: 'mysql'
+    container_name: ni_db
     cap_add:
       - SYS_NICE # CAP_SYS_NICE
     command: '--default-authentication-plugin=mysql_native_password'
@@ -102,6 +106,7 @@ services:
 
   adminer:
     image: 'adminer'
+    container_name: adminer
     restart: 'always'
     ports:
       - '9000:8080'
