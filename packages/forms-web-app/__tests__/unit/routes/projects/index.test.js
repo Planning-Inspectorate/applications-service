@@ -17,7 +17,7 @@ describe('routes/examination', () => {
 
   it('should define the expected routes', () => {
     expect(get).toHaveBeenCalledWith(
-      '/representations',
+      '/:case_ref/representations',
       representationsController.getRepresentations
     );
     expect(get).toHaveBeenCalledWith(
@@ -33,6 +33,6 @@ describe('routes/examination', () => {
       allExaminationDocumentsController.getAllExaminationDocuments
     );
     expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
-    expect(get.mock.calls.length).toBe(7);
+    expect(get.mock.calls.length).toBe(8);
   });
 });
