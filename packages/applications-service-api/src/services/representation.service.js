@@ -1,7 +1,10 @@
 const { Op } = require('sequelize');
 const db = require('../models');
+const config = require('../lib/config');
 
-const getRepresentationsForApplication = async (applicationId, searchTerm) => {
+const getRepresentationsForApplication = async (applicationId, page, searchTerm) => {
+  const { itemsPerPage: limit } = config;
+  const offset = (page - 1) * limit;
   let where = { CaseReference: applicationId };
 
   if (searchTerm) {
@@ -30,7 +33,14 @@ const getRepresentationsForApplication = async (applicationId, searchTerm) => {
     });
   }
 
-  return db.Representation.findAll({ where, order: [['DateRrepReceived', 'DESC']] });
+  const representations = await db.Representation.findAndCountAll({
+    where,
+    offset,
+    order: [['DateRrepReceived', 'DESC']],
+    limit,
+  });
+
+  return representations;
 };
 
 module.exports = {
