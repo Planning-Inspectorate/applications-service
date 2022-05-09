@@ -1,4 +1,5 @@
 {% extends "layouts/project-3-columns.njk" %}
+{% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'about-the-application' %}
 {% block contentHeader %}
@@ -13,7 +14,7 @@
 {% block columnTwo %}
   <div class="govuk-grid-row">
     {% if documents %}
-    <p class="hmcts-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> documents, newest first.</p>
+    <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> documents, newest first.</p>
       <strong></p>
 
       <ul class="pins-govuk-result-list">
@@ -53,33 +54,10 @@
     {% endif %}
 
     {% if documents %}
-      {% if pageData.totalPages !== 1 %}
-        <nav class="moj-pagination" id="pagination-label">
-          <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
-          <ul class="moj-pagination__list">
-            {% for page in paginationData %}
-              {% if page === 'prev' %}
-                <li class="moj-pagination__item  moj-pagination__item--prev">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage - 1 }}{{ queryUrl }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
-                </li>
-              {% elif page === pageData.currentPage %}
-                <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
-              {% elif page === 'next' %}
-                <li class="moj-pagination__item  moj-pagination__item--next">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ pageData.currentPage + 1 }}{{ queryUrl }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
-                </li>
-              {% elif page === '...' %}
-                <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
-              {% else %}
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/projects/{{ caseRef }}/documents/{{ page }}{{ queryUrl }}">{{ page }}</a>
-                </li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-          <p class="moj-pagination__results">Showing <b>{{ pageData.fromRange }}</b> to <b>{{ pageData.toRange }}</b> of <b>{{ pageData.totalItems }}</b> results</p>
-        </nav>
-      {% endif %}
+        {% set pageLinkTemplate -%}
+          /projects/{{ caseRef }}/documents/:page{{ queryUrl }}
+        {%- endset %}
+        {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
     {% endif %}
   </div>
 {% endblock %}
@@ -88,10 +66,17 @@
 {% block columnThree %}
   <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
         {% set projectStageFilter %}
-        {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
-        name: "stage", items: customStageFilters }) }}
-      {% endset %}
-
+          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
+          name: "stage", items: customStageFilters }) }}
+        {% endset %}
+        {% set top5ProjectTypeFilter %}
+          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",
+          name: "top5Type", items: top5TypeFilters }) }}
+        {% endset %}
+        {% set otherProjectTypeFilter %}
+          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "otherType",
+          name: "otherType", items: otherTypeFilters }) }}
+        {% endset %}        
       <div style="background-color: #f3f2f1; padding: 10px;">
       <h2 class="govuk-heading-m">Filter by</h2>
 
@@ -107,7 +92,23 @@
                   content: {
                       html: projectStageFilter
                   }
-              }
+              },
+              {
+                  heading: {
+                      html: '<span class="filter-heading">Project type</span>'
+                  },
+                  content: {
+                      html: top5ProjectTypeFilter
+                  }
+              },
+              {
+                  heading: {
+                      html: '<span class="filter-heading">Everything else</span>'
+                  },
+                  content: {
+                      html: otherProjectTypeFilter
+                  }
+              }              
           ]
           })
       }}

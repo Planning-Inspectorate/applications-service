@@ -1,20 +1,8 @@
 const logger = require('../../lib/logger');
 const { Status: projectStageNames } = require('../../utils/status');
-const { generatePagination } = require('../../lib/pagination');
+const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
 const { searchDocumentsV2 } = require('../../services/document.service');
-
-function getPageData(doc) {
-  const item = {};
-  item.totalItems = doc.totalItems;
-  item.itemsPerPage = doc.itemsPerPage;
-  item.totalPages = doc.totalPages;
-  item.currentPage = parseInt(doc.currentPage, 10);
-  item.fromRange = doc.itemsPerPage * (doc.currentPage - 1) + 1;
-  item.toRange =
-    item.currentPage === doc.totalPages ? doc.totalItems : doc.itemsPerPage * doc.currentPage;
-  return item;
-}
 
 function renderData(req, res, searchTerm, params, response) {
   const { caseRef } = params;
@@ -27,17 +15,21 @@ function renderData(req, res, searchTerm, params, response) {
     });
   } else {
     let queryUrl = '';
-    if (params.searchTerm !== '') {
+    if (params.searchTerm) {
       queryUrl = `?searchTerm=${params.searchTerm}`;
     }
     const respData = response.data;
     const { documents, filters } = respData;
     const { stageFilters, typeFilters } = filters;
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
-    const pageData = getPageData(respData);
-    const paginationData = generatePagination(pageData.currentPage, pageData.totalPages);
-
+    const paginationData = getPaginationData(respData);
+    const pageOptions = calculatePageOptions(paginationData);
     var customStageFilters = [];
+    var top5TypeFilters = [];
+    var otherTypeFilters = [];
+    typeFilters.sort(function (a, b) {
+      return b.count - a.count;
+    });
 
     stageFilters.forEach(function (stage) {
       customStageFilters.push({
@@ -46,15 +38,31 @@ function renderData(req, res, searchTerm, params, response) {
       });
     }, Object.create(null));
 
+    typeFilters.slice(0, 5).forEach(function (type) {
+      top5TypeFilters.push({
+        text: `${type.name} (${type.count})`,
+        value: type.name,
+      });
+    }, Object.create(null));
+
+    typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
+      otherTypeFilters.push({
+        text: `${type.name} (${type.count})`,
+        value: type.name,
+      });
+    }, Object.create(null));
+
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
       caseRef,
-      pageData,
       paginationData,
+      pageOptions,
       searchTerm,
       queryUrl,
       customStageFilters,
+      top5TypeFilters,
+      otherTypeFilters,
     });
   }
 }
