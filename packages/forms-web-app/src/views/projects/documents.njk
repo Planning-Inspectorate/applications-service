@@ -71,11 +71,11 @@
         {% endset %}
         {% set top5ProjectTypeFilter %}
           {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",
-          name: "top5Type", items: top5TypeFilters }) }}
+          name: "type", items: top5TypeFilters }) }}
         {% endset %}
         {% set otherProjectTypeFilter %}
           {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "otherType",
-          name: "otherType", items: otherTypeFilters }) }}
+          name: "type", items: otherTypeFilters }) }}
         {% endset %}        
       <div style="background-color: #f3f2f1; padding: 10px;">
       <h2 class="govuk-heading-m">Filter by</h2>
