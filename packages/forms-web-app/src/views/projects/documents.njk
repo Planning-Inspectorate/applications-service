@@ -67,7 +67,7 @@
   <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
         {% set projectStageFilter %}
           {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
-          name: "stage", items: customStageFilters }) }}
+          name: "stage", items: modifiedStageFilters }) }}
         {% endset %}
         {% set top5ProjectTypeFilter %}
           {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",

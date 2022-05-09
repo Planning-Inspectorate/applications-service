@@ -24,26 +24,34 @@ function renderData(req, res, searchTerm, params, response) {
     logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
     const paginationData = getPaginationData(respData);
     const pageOptions = calculatePageOptions(paginationData);
-    var customStageFilters = [];
-    var top5TypeFilters = [];
-    var otherTypeFilters = [];
+    let modifiedStageFilters = [];
+    let top5TypeFilters = [];
+    let otherTypeFilters = [];
     typeFilters.sort(function (a, b) {
       return b.count - a.count;
     });
 
     stageFilters.forEach(function (stage) {
-      customStageFilters.push({
+      modifiedStageFilters.push({
         text: `${projectStageNames[stage.name]} (${stage.count})`,
         value: stage.name,
       });
     }, Object.create(null));
 
-    typeFilters.slice(0, 5).forEach(function (type) {
-      top5TypeFilters.push({
-        text: `${type.name} (${type.count})`,
-        value: type.name,
-      });
-    }, Object.create(null));
+    typeFilters
+      .slice(0, 5)
+      .sort(function (a, b) {
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      })
+      .forEach(function (type) {
+        top5TypeFilters.push({
+          text: `${type.name} (${type.count})`,
+          value: type.name,
+        });
+      }, Object.create(null));
 
     typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
       otherTypeFilters.push({
@@ -60,7 +68,7 @@ function renderData(req, res, searchTerm, params, response) {
       pageOptions,
       searchTerm,
       queryUrl,
-      customStageFilters,
+      modifiedStageFilters,
       top5TypeFilters,
       otherTypeFilters,
     });
