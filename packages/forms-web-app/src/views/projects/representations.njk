@@ -8,13 +8,11 @@
     <h2 class="govuk-heading-l">Registration Comments</h2>
       <p class="results">
           {% if representations %}
-            <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> representations, newest first.</p>
+            <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.</p>
           {% else %}
-            <p style="govuk-body">
-              No representations were found matching your search terms.
-            </p>
-            <p style="govuk-body">
-              Would you like to clear your search and view all representations</br> instead? <a style="govuk-link" href="/projects/{{ caseRef }}/representations" >Clear search</a>
+            <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+            <p class="govuk-body">
+              <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
             </p>
           {% endif %}
       </p>
