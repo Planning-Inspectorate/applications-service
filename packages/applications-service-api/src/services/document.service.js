@@ -108,13 +108,16 @@ const getOrderedDocuments = async (caseRef, pageNo, searchTerm, stage, type) => 
   return documents;
 };
 
-const getFilters = async (filter) => {
-  let where = {};
+const getFilters = async (filter, caseRef) => {
+  let where = { case_reference: caseRef };
+  let order = [];
   if (filter === 'Stage') {
-    where = { Stage: { [Op.gt]: 0 } };
+    where = { ...where, Stage: { [Op.gt]: 0 } };
+    order = [['Stage']];
   }
   const filters = await db.Document.findAll({
     where,
+    order,
     attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
     group: [filter],
   });
