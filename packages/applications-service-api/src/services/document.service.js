@@ -112,7 +112,7 @@ const getFilters = async (filter, caseRef) => {
   let where = { case_reference: caseRef };
   let order = [];
   if (filter === 'Stage') {
-    where = {...where, Stage: { [Op.gt]: 0 } };
+    where = { ...where, Stage: { [Op.gt]: 0 } };
     order = [['Stage']];
   }
   const filters = await db.Document.findAll({
