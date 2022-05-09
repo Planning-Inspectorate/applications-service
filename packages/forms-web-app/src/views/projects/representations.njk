@@ -1,10 +1,27 @@
 {% extends "layouts/project-3-columns.njk" %}
+{% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'representations' %}
 
-{% block columnTwo %}
-  <h2 class="govuk-heading-l">Registration Comments</h2>
+{% block contentHeader %}
+  <div class="govuk-grid-row">
+    <h2 class="govuk-heading-l">Registration Comments</h2>
+      <p class="results">
+          {% if representations %}
+            <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> representations, newest first.</p>
+          {% else %}
+            <p style="govuk-body">
+              No representations were found matching your search terms.
+            </p>
+            <p style="govuk-body">
+              Would you like to clear your search and view all representations</br> instead? <a style="govuk-link" href="/projects/{{ caseRef }}/representations" >Clear search</a>
+            </p>
+          {% endif %}
+      </p>
+  </div>
+{% endblock %}
 
+{% block columnTwo %}
       {% if representations %}
         <ul class="pins-govuk-result-list">
           {% for representation in representations %}
@@ -30,5 +47,10 @@
           {% endfor %}
         </ul>
       {% endif %}
-
+      {% if representations %}
+          {% set pageLinkTemplate -%}
+            /projects/{{ caseRef }}/representations?page=:page
+          {%- endset %}
+          {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
+      {% endif %}
 {% endblock %}

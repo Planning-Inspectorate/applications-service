@@ -84,8 +84,8 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   });
 };
 
-exports.searchRepresentations = async (case_ref) => {
-  const documentServiceApiUrl = `/api/v1/representations?applicationId=${case_ref}`;
+exports.searchRepresentations = async (case_ref, page = 1) => {
+  const documentServiceApiUrl = `/api/v1/representations?applicationId=${case_ref}&page=${page}`;
   const method = 'GET';
   return handler('searchRepresentations', documentServiceApiUrl, method);
 };
