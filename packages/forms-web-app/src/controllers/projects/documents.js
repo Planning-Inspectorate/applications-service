@@ -2,11 +2,12 @@ const logger = require('../../lib/logger');
 const { Status: projectStageNames } = require('../../utils/status');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
+const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 
-function renderData(req, res, searchTerm, params, response) {
+function renderData(req, res, searchTerm, params, response, projectName) {
   const { caseRef } = params;
-  const { projectName } = req.session;
+
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       projectName,
@@ -76,6 +77,8 @@ function renderData(req, res, searchTerm, params, response) {
 }
 
 exports.getAboutTheApplication = async (req, res) => {
+  const applicationResponse = await getAppData(req.params.case_ref);
+  const projectName = applicationResponse.data.ProjectName;
   const queryArray = req.url.split('?');
   const query = queryArray.length > 1 ? queryArray[1] : '';
   const params = {
@@ -84,5 +87,5 @@ exports.getAboutTheApplication = async (req, res) => {
   };
   const { searchTerm } = req.query;
   const response = await searchDocumentsV2(params, query);
-  renderData(req, res, searchTerm, params, response);
+  renderData(req, res, searchTerm, params, response, projectName);
 };
