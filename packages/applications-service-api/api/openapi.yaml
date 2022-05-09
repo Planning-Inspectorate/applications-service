@@ -328,7 +328,7 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v1/representations?applicationId=':
+  '/api/v1/representations?applicationId=&page=':
     get:
       summary: Returns project representations
       description: Returns project representations
@@ -342,6 +342,13 @@ paths:
           schema:
             type: string
           description: Case reference
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
       responses:
         '200':
           description: Returns list of representations
@@ -351,7 +358,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: '#/components/schemas/Representation'
+                  $ref: '#/components/schemas/RepresentationListWrapper'
         '404':
           description: No representations found
 components:
@@ -877,3 +884,23 @@ components:
         Attachments:
           type: string
           example: 'WS010006-000002'
+    RepresentationListWrapper:
+      type: object
+      properties:
+        representations:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Representation'
+        totalItems:
+          type: number
+          example: 3
+        itemsPerPage:
+          type: number
+          example: 20
+        totalPages:
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
