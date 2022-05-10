@@ -85,6 +85,12 @@ jest.mock('../../../src/models', () => {
     if (queryOptions[0].where.CaseReference === 'EN000000') {
       return { rows: [] };
     }
+    const symbolKey = Reflect.ownKeys(queryOptions[0].where).find(
+      (key) => key.toString() === 'Symbol(and)'
+    );
+    if (queryOptions[0].where[symbolKey][0].CaseReference === 'EN010009') {
+      return mockData;
+    }
     return null;
   });
   const db = {
@@ -143,5 +149,21 @@ describe('getRepresentationsForApplication', () => {
     await getRepresentationsForApplication(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res._getData()).toContain(`Problem getting representations`);
+  });
+
+  it('should get representations from mock by search criteria', async () => {
+    const req = httpMocks.createRequest({
+      query: {
+        applicationId: 'EN010009',
+        page: 1,
+        searchTerm: 'Frosty',
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getRepresentationsForApplication(req, res);
+    const data = res._getData();
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+    expect(data).toEqual(returnData);
   });
 });

@@ -9,10 +9,14 @@ const ApiError = require('../error/apiError');
 
 module.exports = {
   async getRepresentationsForApplication(req, res) {
-    const { applicationId, page } = req.query;
+    const { applicationId, page, searchTerm } = req.query;
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
-      const representations = await getRepresentationsForApplication(applicationId, page || 1);
+      const representations = await getRepresentationsForApplication(
+        applicationId,
+        page || 1,
+        searchTerm
+      );
 
       if (!representations.rows.length) {
         throw ApiError.noRepresentationsFound();
