@@ -9,7 +9,6 @@ const config = require('../lib/config');
  * @param classification the classification of documents requested - these map to a set of document stages
  */
 const addStageClause = (where, classification) => {
-  console.log(where[Op.and]);
   if (classification === 'all') {
     // Include all stages except zero which is reserved for registration comment attachments
     where[Op.and].push({
