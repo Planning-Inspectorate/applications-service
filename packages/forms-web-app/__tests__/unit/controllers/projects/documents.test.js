@@ -18,14 +18,6 @@ describe('controllers/documents', () => {
       path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
     },
   ];
-  const pageData = {
-    totalItems: 1,
-    itemsPerPage: 20,
-    totalPages: 1,
-    currentPage: 1,
-    toRange: 1,
-    fromRange: 1,
-  };
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -40,7 +32,6 @@ describe('controllers/documents', () => {
     };
     res = mockRes();
 
-    
     searchDocumentListV2.mockImplementation(() =>
       Promise.resolve({
         resp_code: 200,
@@ -73,7 +64,6 @@ describe('controllers/documents', () => {
         },
       })
     );
-
   });
 
   describe('getAboutTheApplication', () => {
