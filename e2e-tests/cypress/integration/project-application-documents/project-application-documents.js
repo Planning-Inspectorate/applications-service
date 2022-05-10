@@ -15,7 +15,7 @@ And('I click on {string} link', (pageName) => {
     cy.clickContentsLink(pageName);
  })
 
- And('I click on Show search and filters', () => {
+ And('I click on search button', () => {
     projectAppDocs.clickOnSearch();
  })
 
@@ -49,4 +49,16 @@ And('I click on {string} link', (pageName) => {
 
  Then('I verify that no documents found text displayed on the page', () => {
      projectAppDocs.verifyNoDocsFoundText();
+ })
+
+ Then('I can verify that below project documents were returned', (table) => {
+     projectAppDocs.verifyResultsReturned(table);
+ })
+
+ Then('I can verify that no documents were found matching your search terms text', () => {
+     projectAppDocs.verifyNoDocsFoundText();
+ })
+
+ And('I click on clear search link', () => {
+     projectAppDocs.clickOnClearSearch();
  })
