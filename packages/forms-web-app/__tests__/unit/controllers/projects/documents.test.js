@@ -74,9 +74,14 @@ describe('controllers/documents', () => {
         projectName: 'St James Barton Giant Wind Turbine',
         caseRef: 'ABCD1234',
         modifiedStageFilters: [],
-        otherTypeFilters: [],
         pageOptions: [1],
-        top5TypeFilters: [],
+        top5TypeFilters: [
+          {
+            checked: false,
+            text: 'Everything else (0)',
+            value: 'everything_else',
+          },
+        ],
         queryUrl: '',
         searchTerm: undefined,
         paginationData: {
