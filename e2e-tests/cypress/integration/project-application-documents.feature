@@ -188,17 +188,24 @@ Feature: Project Application documents page
         Then I verify that no documents found text displayed on the page
 
     Scenario: search returns matching documents
-        Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
         When I click on "Project application documents" link
-        When I enter text "consultee" into search field
+        When I enter text "england" into search field
         And I click on search button
         Then I can verify that below project documents were returned
-            | Document                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-            | \n            \n              Consultee List sent to the Secretary of State (, 0Bytes)\n            \n            \n              \n                Published by EDF Energy\n              \n            \n            \n              \n                2019-04-16\n              \n              \n                Pre Application\n              \n              \n                Material Change\n              \n            \n                                   |
-            | \n            \n              Response to Consultee Consent Letter (, 0Bytes)\n            \n            \n              \n                Published by Department for Business, Energy & Industrial Strategy\n              \n            \n            \n              \n                2019-04-16\n              \n              \n                Pre Application\n              \n              \n                Material Change\n              \n            \n |
+            | Document                                                                                                                                                                                                                                                                                   |
+            | Additional Submission Ã¢â‚¬â€œ Accepted at the discretion of the Examining Authority - Signed Statement of Common Ground between the Applicant and Natural England. (PDF, 846KB) Published by Removed2019-12-11ExaminationAdditional Submissions                                           |
+            | Deadline 4 Submission - 12.2.4 - Statement of Common Ground between the Applicant and Natural England (PDF, 403KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                                    |
+            | Deadline 4 Submission - 12.2.3 - Statement of Common Ground between the Applicant and Historic England (PDF, 197KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                                   |
+            | Deadline 2 Submission - 10.3.4 Updated Statement of Common Ground between the Applicant and Historic England (PDF, 283KB) Published by Removed 2019-06-28ExaminationDeadline 2                                                                                                             |
+            | Additional Submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Agreed Statement of Common Ground between the Applicant and Public Health England (PDF, 268KB) Published by Removed 2019-05-23Pre ExaminationAdditional Submissions                                   |
+            | Deadline 3 Submission - 11.4.9 Letters of no Impediment to the Applicant from Natural England (PDF, 470KB) Published by Removed 2019-02-08ExaminationDeadline 3                                                                                                                            |
+            | Deadline 3 Submission - A statement on Climate Change and Carbon Sequestration, supported by a partial transcript of evidence given by the Chairman of Natural England to the Environmental Audit Committee on 23rd July (PDF, 580KB) Published by Removed 2019-02-08ExaminationDeadline 3 |
+            | 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB) Published by NULL on behalf of Removed 2018-11-23AcceptanceEnvironmental Statement                                                                                          |
+            | 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB) Published by NULL on behalf of Removed 2018-11-23AcceptanceEnvironmental Statement                                                                                                                       |
         When I enter text "" into search field
         And I click on search button
-        Then I verify text "Showing 1 to 20 of 152 results" is present on the page
+        Then I verify text "Showing 1 to 20 of 987 results" is present on the page
 
 
     Scenario: search returns no matching documents
@@ -223,4 +230,3 @@ Feature: Project Application documents page
             | 8                     |
         Then I verify text "Showing 141 to 149 of 149 results" is present on the page
         Then I verify that only "9" results present on each page
-

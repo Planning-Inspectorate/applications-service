@@ -73,7 +73,7 @@ class PO_ProjectAppDocs {
         cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
             const actualText = $e1.text();
             const expectedText = contents[index].Document;
-            expect(actualText).to.contain(expectedText);
+            expect(actualText.replace(/\s/g, "").trim()).to.contain(expectedText.replace(/\s/g, "").trim());
         })
     }
 
