@@ -75,13 +75,7 @@ describe('controllers/documents', () => {
         caseRef: 'ABCD1234',
         modifiedStageFilters: [],
         pageOptions: [1],
-        top5TypeFilters: [
-          {
-            checked: false,
-            text: 'Everything else (0)',
-            value: 'everything_else',
-          },
-        ],
+        top5TypeFilters: [],
         queryUrl: '',
         searchTerm: undefined,
         paginationData: {

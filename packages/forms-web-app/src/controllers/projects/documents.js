@@ -68,7 +68,7 @@ function renderData(
           checked: typeList.includes(type.name),
         });
       }, Object.create(null));
-    if( top5TypeFilters.length > 5) {
+    if (top5TypeFilters.length > 5) {
       top5TypeFilters.push({
         text: `Everything else (${otherTypeFiltersCount})`,
         value: 'everything_else',
