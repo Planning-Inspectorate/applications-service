@@ -5,7 +5,16 @@ const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 
-function renderData(req, res, searchTerm, params, response, projectName, stageList, typeList) {
+function renderData(
+  req,
+  res,
+  searchTerm,
+  params,
+  response,
+  projectName,
+  stageList = [],
+  typeList = []
+) {
   const { caseRef } = params;
 
   if (response.resp_code === 404) {
@@ -27,7 +36,7 @@ function renderData(req, res, searchTerm, params, response, projectName, stageLi
     const pageOptions = calculatePageOptions(paginationData);
     const modifiedStageFilters = [];
     const top5TypeFilters = [];
-    const otherTypeFilters = [];
+    let otherTypeFiltersCount = 0;
     typeFilters.sort(function (a, b) {
       return b.count - a.count;
     });
@@ -38,6 +47,10 @@ function renderData(req, res, searchTerm, params, response, projectName, stageLi
         value: stage.name,
         checked: stageList.includes(stage.name),
       });
+    }, Object.create(null));
+
+    typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
+      otherTypeFiltersCount += type.count;
     }, Object.create(null));
 
     typeFilters
@@ -55,15 +68,13 @@ function renderData(req, res, searchTerm, params, response, projectName, stageLi
           checked: typeList.includes(type.name),
         });
       }, Object.create(null));
-
-    typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
-      otherTypeFilters.push({
-        text: `${type.name} (${type.count})`,
-        value: type.name,
-        checked: typeList.includes(type.name),
+    if (typeFilters.length > 5) {
+      top5TypeFilters.push({
+        text: `Everything else (${otherTypeFiltersCount})`,
+        value: 'everything_else',
+        checked: typeList.includes('everything_else'),
       });
-    }, Object.create(null));
-
+    }
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
@@ -74,7 +85,6 @@ function renderData(req, res, searchTerm, params, response, projectName, stageLi
       queryUrl,
       modifiedStageFilters,
       top5TypeFilters,
-      otherTypeFilters,
     });
   }
 }

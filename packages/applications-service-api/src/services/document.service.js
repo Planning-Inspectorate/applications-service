@@ -47,13 +47,25 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
   return documents;
 };
 
-const getOrderedDocuments = async (caseRef, pageNo, searchTerm, stage, type) => {
+const getOrderedDocuments = async (
+  isEveryThingSelected,
+  caseRef,
+  pageNo,
+  searchTerm,
+  stage,
+  type
+) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
   let where = { case_reference: caseRef, Stage: { [Op.gt]: 0 } };
   if (stage) where = { ...where, Stage: { [Op.in]: stage } };
-  if (type) where = { ...where, filter_1: { [Op.in]: type } };
+
+  if (isEveryThingSelected) {
+    if (type) where = { ...where, filter_1: { [Op.notIn]: type } };
+  } else if (type) {
+    where = { ...where, filter_1: { [Op.in]: type } };
+  }
 
   if (searchTerm) {
     const orOptions = [
@@ -104,7 +116,6 @@ const getOrderedDocuments = async (caseRef, pageNo, searchTerm, stage, type) => 
     order: [['date_published', 'DESC']],
     limit,
   });
-
   return documents;
 };
 
