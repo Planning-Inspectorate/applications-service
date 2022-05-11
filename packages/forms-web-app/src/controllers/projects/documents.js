@@ -68,13 +68,13 @@ function renderData(
           checked: typeList.includes(type.name),
         });
       }, Object.create(null));
-
-    top5TypeFilters.push({
-      text: `Everything else (${otherTypeFiltersCount})`,
-      value: 'everything_else',
-      checked: typeList.includes('everything_else'),
-    });
-
+    if( top5TypeFilters.length > 5) {
+      top5TypeFilters.push({
+        text: `Everything else (${otherTypeFiltersCount})`,
+        value: 'everything_else',
+        checked: typeList.includes('everything_else'),
+      });
+    }
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
