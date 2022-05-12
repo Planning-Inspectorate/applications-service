@@ -43,6 +43,11 @@ const getRepresentationsForApplication = async (applicationId, page, searchTerm)
   return representations;
 };
 
+const getRepresentationById = async (ID) => {
+  return db.Representation.findOne({ where: { ID } });
+};
+
 module.exports = {
   getRepresentationsForApplication,
+  getRepresentationById,
 };

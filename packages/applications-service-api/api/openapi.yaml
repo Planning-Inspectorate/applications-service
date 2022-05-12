@@ -368,6 +368,32 @@ paths:
                   $ref: '#/components/schemas/RepresentationListWrapper'
         '404':
           description: No representations found
+  '/api/v1/representations/{id}':
+    get:
+      summary: Returns representation by id
+      description: Returns representation by id
+      tags:
+        - Representations
+      parameters:
+        - in: path
+          name: id
+          example: 10
+          required: true
+          schema:
+            type: integer
+          description: Representation id
+      responses:
+        '200':
+          description: Returns a representation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/Representation'
+        '404':
+          description: Representation not found
 components:
   schemas:
     Application:
