@@ -26,6 +26,10 @@ function renderData(
     if (params.searchTerm) {
       queryUrl = `&searchTerm=${params.searchTerm}`;
     }
+    if (params.stage) {
+      const stageQueryParams = params.type instanceof Array ? [...params.stage] : [params.stage];
+      queryUrl = `${queryUrl}&stage=${stageQueryParams.join('&stage=')}`;
+    }
     if (params.type) {
       const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
       queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
