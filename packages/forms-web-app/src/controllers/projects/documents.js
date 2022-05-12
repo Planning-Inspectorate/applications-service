@@ -15,18 +15,24 @@ function renderData(
   stageList = [],
   typeList = []
 ) {
-  const { caseRef } = params;
-
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       projectName,
-      caseRef,
-      searchTerm,
+      caseRef: params.caseRef,
+      searchTerm: params.searchTerm,
     });
   } else {
     let queryUrl = '';
     if (params.searchTerm) {
-      queryUrl = `?searchTerm=${params.searchTerm}`;
+      queryUrl = `&searchTerm=${params.searchTerm}`;
+    }
+    if (params.stage) {
+      const stageQueryParams = params.type instanceof Array ? [...params.stage] : [params.stage];
+      queryUrl = `${queryUrl}&stage=${stageQueryParams.join('&stage=')}`;
+    }
+    if (params.type) {
+      const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
+      queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
     }
     const respData = response.data;
     const { documents, filters } = respData;
@@ -36,10 +42,6 @@ function renderData(
     const pageOptions = calculatePageOptions(paginationData);
     const modifiedStageFilters = [];
     const top5TypeFilters = [];
-    let otherTypeFiltersCount = 0;
-    typeFilters.sort(function (a, b) {
-      return b.count - a.count;
-    });
 
     stageFilters.forEach(function (stage) {
       modifiedStageFilters.push({
@@ -49,6 +51,7 @@ function renderData(
       });
     }, Object.create(null));
 
+    let otherTypeFiltersCount = 0;
     typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
       otherTypeFiltersCount += type.count;
     }, Object.create(null));
@@ -78,10 +81,10 @@ function renderData(
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       documents,
       projectName,
-      caseRef,
+      caseRef: params.caseRef,
       paginationData,
       pageOptions,
-      searchTerm,
+      searchTerm: params.searchTerm,
       queryUrl,
       modifiedStageFilters,
       top5TypeFilters,
@@ -89,16 +92,16 @@ function renderData(
   }
 }
 
-exports.getAboutTheApplication = async (req, res) => {
+exports.getApplicationDocuments = async (req, res) => {
   const applicationResponse = await getAppData(req.params.case_ref);
   const projectName = applicationResponse.data.ProjectName;
-  const queryArray = req.url.split('?');
-  const query = queryArray.length > 1 ? queryArray[1] : '';
   const params = {
-    ...{ caseRef: req.params.case_ref },
-    ...{ page: req.params.page },
+    caseRef: req.params.case_ref,
+    classification: 'application',
+    page: '1',
+    ...req.query,
   };
   const { searchTerm, stage, type } = req.query;
-  const response = await searchDocumentsV2(params, query);
+  const response = await searchDocumentsV2(params);
   renderData(req, res, searchTerm, params, response, projectName, stage, type);
 };

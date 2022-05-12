@@ -68,7 +68,7 @@ describe('controllers/documents', () => {
 
   describe('getAboutTheApplication', () => {
     it('should call the correct template', async () => {
-      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         documents: docList,
         projectName: 'St James Barton Giant Wind Turbine',
@@ -95,7 +95,7 @@ describe('controllers/documents', () => {
           resp_code: 404,
         })
       );
-      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         projectName: 'St James Barton Giant Wind Turbine',
         caseRef: 'ABCD1234',

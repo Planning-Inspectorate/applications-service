@@ -2,15 +2,15 @@
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'about-the-application' %}
+
 {% block contentHeader %}
-  <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
-        <p>
-          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
-          <button class="govuk-button" data-cy="search-button">Search</button>
-        </p>
-  </div>
+    <p>
+      <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
+      <button class="govuk-button" data-cy="search-button">Search</button>
+    </p>
 {% endblock %}
+
 {% block columnTwo %}
   <div class="govuk-grid-row">
     {% if documents %}
@@ -49,13 +49,13 @@
         No documents were found matching your search terms.
       </p>
       <p style="govuk-body">
-        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" data-cy="clear-search">Clear search</a>
+        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/application-documents" data-cy="clear-search">Clear search</a>
       </p>
     {% endif %}
 
     {% if documents %}
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/documents/:page{{ queryUrl }}
+          /projects/{{ caseRef }}/application-documents?page=:page{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
     {% endif %}

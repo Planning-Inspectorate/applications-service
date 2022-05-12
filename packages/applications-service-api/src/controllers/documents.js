@@ -50,50 +50,44 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef, page, searchTerm, stage } = req.query;
-    let { type } = req.query;
-    let isEveryThingElseSelected = false;
-    const typeNotToSearch = [];
-
-    if (type && type.includes('everything_else')) {
-      isEveryThingElseSelected = true;
-
-      const typeFilters = await getFilters('filter_1', caseRef);
-      typeFilters.sort(function (a, b) {
-        return JSON.parse(JSON.stringify(b)).count - JSON.parse(JSON.stringify(a)).count;
-      });
-      const top5TypeFilters = typeFilters.slice(0, 5);
-
-      const typeFiltersNotToSearch = top5TypeFilters.filter((t) => !type.includes(t.filter_1));
-
-      typeFiltersNotToSearch.forEach(function (t) {
-        typeNotToSearch.push(JSON.parse(JSON.stringify(t)).filter_1);
-      }, Object.create(null));
-    }
+    const { caseRef, page = 1, searchTerm, stage, classification, type } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
     }
-    if (isEveryThingElseSelected) {
-      type = typeNotToSearch;
+
+    const stageFiltersAvailable = await getFilters('Stage', caseRef, classification);
+    const typeFiltersAvailable = await getFilters('filter_1', caseRef, classification);
+
+    let typeFilters = [];
+
+    if (type) {
+      typeFilters = type instanceof Array ? [...type] : type.split(',');
+
+      if (typeFilters.includes('everything_else')) {
+        if (typeFiltersAvailable.length > 5) {
+          const everythingElseFilterValues = typeFiltersAvailable.slice(5).map(function (t) {
+            return t.filter_1;
+          });
+          typeFilters = typeFilters.filter((e) => e !== 'everything_else');
+          typeFilters.push(everythingElseFilterValues);
+        }
+      }
     }
-    const slugified = type && !(type instanceof Array) ? [type] : type;
-    logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
+
     try {
       const documents = await getOrderedDocuments(
-        isEveryThingElseSelected,
         caseRef,
-        page || 1,
+        classification,
+        page,
         searchTerm,
         stage && !(stage instanceof Array) ? [stage] : stage,
-        slugified
+        typeFilters
       );
+      console.log(documents.rows.length);
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
       }
-
-      const stageFilters = await getFilters('Stage', caseRef);
-      const typeFilters = await getFilters('filter_1', caseRef);
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
@@ -109,14 +103,14 @@ module.exports = {
         totalPages: Math.ceil(totalItems / itemsPerPage),
         currentPage: page,
         filters: {
-          stageFilters: stageFilters
-            ? stageFilters.map((f) => ({
+          stageFilters: stageFiltersAvailable
+            ? stageFiltersAvailable.map((f) => ({
                 name: f.dataValues.Stage,
                 count: f.dataValues.count,
               }))
             : [],
-          typeFilters: typeFilters
-            ? typeFilters.map((f) => ({
+          typeFilters: typeFiltersAvailable
+            ? typeFiltersAvailable.map((f) => ({
                 name: f.dataValues.filter_1,
                 count: f.dataValues.count,
               }))

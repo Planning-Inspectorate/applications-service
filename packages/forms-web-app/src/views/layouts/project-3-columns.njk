@@ -2,13 +2,13 @@
 {% extends "layouts/project.njk" %}
 
 {% block content %}
-  <form action="/projects/{{ caseRef }}/documents/1" method="GET" novalidate>
+  <form action="/projects/{{ caseRef }}/application-documents" method="GET" novalidate>
     <div class="govuk-grid-row govuk-!-margin-left-6 govuk-!-margin-right-6">
         <div class="govuk-grid-column-one-quarter">
           {% include "layouts/vertical-tabs.njk" %}
         </div>
         <div class="govuk-grid-column-three-quarters">
-          <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+          <div class="govuk-grid-row">
             {% block contentHeader %}{% endblock %}
           </div>
           <div class="govuk-grid-row">
