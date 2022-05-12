@@ -2,15 +2,15 @@
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'about-the-application' %}
+
 {% block contentHeader %}
-  <div class="govuk-grid-row">
     <h2 class="govuk-heading-l">Project application documents</h2>
-        <p>
-          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
-          <button class="govuk-button">Search</button>
-        </p>
-  </div>
+    <p>
+      <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
+      <button class="govuk-button" data-cy="search-button">Search</button>
+    </p>
 {% endblock %}
+
 {% block columnTwo %}
   <div class="govuk-grid-row">
     {% if documents %}
@@ -45,11 +45,11 @@
         {% endfor %}
       </ul>
     {% else %}
-      <p style="govuk-body">
+      <p style="govuk-body" data-cy="no-docs-text">
         No documents were found matching your search terms.
       </p>
       <p style="govuk-body">
-        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/application-documents" >Clear search</a>
+        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/application-documents" data-cy="clear-search">Clear search</a>
       </p>
     {% endif %}
 
@@ -73,10 +73,6 @@
           {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",
           name: "type", items: top5TypeFilters }) }}
         {% endset %}
-        {% set otherProjectTypeFilter %}
-          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "otherType",
-          name: "type", items: otherTypeFilters }) }}
-        {% endset %}
       <div style="background-color: #f3f2f1; padding: 10px;">
       <h2 class="govuk-heading-m">Filter by</h2>
 
@@ -87,7 +83,7 @@
           items: [
               {
                   heading: {
-                      html: '<span class="filter-heading">Project stage</span>'
+                      html: '<span class="filter-heading">Document stage</span>'
                   },
                   content: {
                       html: projectStageFilter
@@ -99,14 +95,6 @@
                   },
                   content: {
                       html: top5ProjectTypeFilter
-                  }
-              },
-              {
-                  heading: {
-                      html: '<span class="filter-heading">Everything else</span>'
-                  },
-                  content: {
-                      html: otherProjectTypeFilter
                   }
               }
           ]

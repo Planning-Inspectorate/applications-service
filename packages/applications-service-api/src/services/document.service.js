@@ -16,15 +16,15 @@ const addStageClause = (where, classification) => {
     });
   } else if (classification === 'application') {
     where[Op.and].push({
-      Stage: { [Op.in]: [1, 2, 3] },
+      Stage: [1, 2, 3],
     });
   } else if (classification === 'examination') {
     where[Op.and].push({
-      Stage: { [Op.eq]: 4 },
+      Stage: 4,
     });
   } else if (classification === 'finalisation') {
     where[Op.and].push({
-      Stage: { [Op.in]: [5, 6, 7] },
+      Stage: [5, 6, 7],
     });
   }
 };
@@ -74,15 +74,20 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
   return documents;
 };
 
-const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, type) => {
+const getOrderedDocuments = async (
+  caseRef,
+  classification,
+  pageNo,
+  searchTerm,
+  stage,
+  type
+) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
   const where = { [Op.and]: [{ case_reference: caseRef }] };
-  console.log(where);
+
   addStageClause(where, classification);
-  // if (stage) where = { ...where, Stage: { [Op.in]: stage } };
-  // if (type) where = { ...where, filter_1: { [Op.in]: type } };
 
   if (searchTerm) {
     const orOptions = [
@@ -108,22 +113,21 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
       },
     ];
 
-    // where = { [Op.and]: [{ case_reference: caseRef, Stage: { [Op.gt]: 0 } }] };
-
-    if (stage) {
-      where[Op.and].push({
-        Stage: { [Op.in]: stage },
-      });
-    }
-
-    if (type) {
-      where[Op.and].push({
-        filter_1: { [Op.in]: type },
-      });
-    }
-
     where[Op.and].push({
       [Op.or]: orOptions,
+    });
+  }
+
+  if (stage) {
+    where[Op.and].push({
+      Stage: { [Op.in]: stage },
+    });
+  }
+
+  if (type && type.length > 0) {
+    console.log(['one', 'two']);
+    where[Op.and].push({
+      filter_1: type,
     });
   }
 
@@ -133,16 +137,18 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
     order: [['date_published', 'DESC']],
     limit,
   });
-
   return documents;
 };
 
 const getFilters = async (filter, caseRef, classification) => {
   const where = { [Op.and]: [{ case_reference: caseRef }] };
   addStageClause(where, classification);
+
   let order = [];
   if (filter === 'Stage') {
     order = [['Stage']];
+  } else if (filter === 'filter_1') {
+    order = [db.sequelize.literal('count DESC')];
   }
   const filters = await db.Document.findAll({
     where,
