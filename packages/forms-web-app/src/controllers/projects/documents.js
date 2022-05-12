@@ -26,6 +26,10 @@ function renderData(
     if (params.searchTerm) {
       queryUrl = `&searchTerm=${params.searchTerm}`;
     }
+    if (params.type) {
+      const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
+      queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
+    }
     const respData = response.data;
     const { documents, filters } = respData;
     const { stageFilters, typeFilters } = filters;
@@ -34,7 +38,6 @@ function renderData(
     const pageOptions = calculatePageOptions(paginationData);
     const modifiedStageFilters = [];
     const top5TypeFilters = [];
-    let otherTypeFiltersCount = 0;
 
     stageFilters.forEach(function (stage) {
       modifiedStageFilters.push({
@@ -44,6 +47,7 @@ function renderData(
       });
     }, Object.create(null));
 
+    let otherTypeFiltersCount = 0;
     typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
       otherTypeFiltersCount += type.count;
     }, Object.create(null));

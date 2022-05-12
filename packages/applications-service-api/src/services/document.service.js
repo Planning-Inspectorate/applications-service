@@ -118,7 +118,6 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
   }
 
   if (type && type.length > 0) {
-    console.log(['one', 'two']);
     where[Op.and].push({
       filter_1: type,
     });
