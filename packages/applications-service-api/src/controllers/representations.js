@@ -1,4 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
+const { unslugify } = require('unslugify');
 
 const logger = require('../lib/logger');
 const config = require('../lib/config');
@@ -6,24 +7,31 @@ const config = require('../lib/config');
 const {
   getRepresentationsForApplication,
   getRepresentationById,
+  getFilters,
 } = require('../services/representation.service');
 
 const ApiError = require('../error/apiError');
 
 module.exports = {
   async getRepresentationsForApplication(req, res) {
-    const { applicationId, page, searchTerm } = req.query;
+    const { applicationId, page, searchTerm, type } = req.query;
+
+    const slugified = type && !(type instanceof Array) ? [type] : type;
+
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
       const representations = await getRepresentationsForApplication(
         applicationId,
         page || 1,
-        searchTerm
+        searchTerm,
+        slugified && slugified.map((s) => unslugify(s))
       );
 
       if (!representations.rows.length) {
         throw ApiError.noRepresentationsFound();
       }
+
+      const typeFilters = await getFilters('RepFrom', applicationId);
 
       const { itemsPerPage } = config;
       const totalItems = representations.count;
@@ -34,6 +42,14 @@ module.exports = {
         itemsPerPage,
         totalPages: Math.ceil(totalItems / itemsPerPage),
         currentPage: page,
+        filters: {
+          typeFilters: typeFilters
+            ? typeFilters.map((f) => ({
+                name: f.dataValues.RepFrom,
+                count: f.dataValues.count,
+              }))
+            : [],
+        },
       };
 
       res.status(StatusCodes.OK).send(wrapper);

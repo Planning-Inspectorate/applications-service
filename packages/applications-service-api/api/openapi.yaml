@@ -328,7 +328,7 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v1/representations?applicationId=&page=&searchTerm=':
+  '/api/v1/representations?applicationId=&page=&searchTerm=&type=':
     get:
       summary: Returns project representations
       description: Returns project representations
@@ -356,6 +356,12 @@ paths:
           schema:
             type: string
           description: Search term
+        - in: query
+          name: type
+          required: false
+          schema:
+            type: array
+          description: Type
       responses:
         '200':
           description: Returns list of representations
@@ -937,3 +943,14 @@ components:
         currentPage:
           type: number
           example: 1
+        filters:
+          type: object
+          $ref: '#/components/schemas/RepFilters'
+    RepFilters:
+      type: object
+      properties:
+        typeFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
