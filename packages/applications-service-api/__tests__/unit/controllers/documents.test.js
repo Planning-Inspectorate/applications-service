@@ -130,63 +130,92 @@ const v2DocumentListWrapper = {
       date_created: '2019-11-06 15:19:51',
     },
     {
-      id: 76321,
-      dataID: 'EN010009-000006',
-      case_reference: 'EN010009',
-      Stage: 4,
-      type: 'Rule 6 letter - notification of the preliminary meeting and matters to be discussed',
-      filter_1: 'Filter 1',
-      filter_2: '',
-      category: '',
-      description: 'a rule 6 letter',
-      size: 0,
-      mime: '',
-      path: null,
-      status: 'Published',
-      date_published: '2015-12-10',
-      deadline_date: null,
-      personal_name: 'David',
-      representative: '',
-      who_from: null,
-      doc_reference: null,
-      author: null,
-      details: null,
-      last_modified: '2019-11-27 12:20:51',
-      date_created: '2019-11-27 12:20:51',
-    },
-    {
-      id: 76322,
-      dataID: 'EN010009-000008',
+      id: 76325,
+      dataID: 'EN010009-000030',
       case_reference: 'EN010009',
       Stage: 1,
-      type: 'Correspondence',
-      filter_1: 'Webfilter1',
-      filter_2: '',
+      type: 'Additional Submissions',
+      filter_1: 'David Webfilter 1',
+      filter_2: 'David Webfilter 2',
       category: '',
-      description: 'stuff',
+      description: 'my doc description English name',
       size: 0,
       mime: '',
       path: null,
       status: 'Published',
-      date_published: '2017-08-15',
+      date_published: '2017-07-05',
       deadline_date: null,
-      personal_name: 'Barry',
+      personal_name: 'Submission from David 1627',
       representative: '',
       who_from: null,
       doc_reference: null,
       author: null,
       details: null,
-      last_modified: '2019-11-27 12:20:52',
-      date_created: '2019-11-27 12:20:52',
+      last_modified: '2019-11-27 12:20:53',
+      date_created: '2019-11-27 12:20:53',
     },
+    // {
+    //   id: 76321,
+    //   dataID: 'EN010009-000006',
+    //   case_reference: 'EN010009',
+    //   Stage: 4,
+    //   type: 'Rule 6 letter - notification of the preliminary meeting and matters to be discussed',
+    //   filter_1: 'Filter 1',
+    //   filter_2: '',
+    //   category: '',
+    //   description: 'a rule 6 letter',
+    //   size: 0,
+    //   mime: '',
+    //   path: null,
+    //   status: 'Published',
+    //   date_published: '2015-12-10',
+    //   deadline_date: null,
+    //   personal_name: 'David',
+    //   representative: '',
+    //   who_from: null,
+    //   doc_reference: null,
+    //   author: null,
+    //   details: null,
+    //   last_modified: '2019-11-27 12:20:51',
+    //   date_created: '2019-11-27 12:20:51',
+    // },
+    // {
+    //   id: 76322,
+    //   dataID: 'EN010009-000008',
+    //   case_reference: 'EN010009',
+    //   Stage: 1,
+    //   type: 'Correspondence',
+    //   filter_1: 'Webfilter1',
+    //   filter_2: '',
+    //   category: '',
+    //   description: 'stuff',
+    //   size: 0,
+    //   mime: '',
+    //   path: null,
+    //   status: 'Published',
+    //   date_published: '2017-08-15',
+    //   deadline_date: null,
+    //   personal_name: 'Barry',
+    //   representative: '',
+    //   who_from: null,
+    //   doc_reference: null,
+    //   author: null,
+    //   details: null,
+    //   last_modified: '2019-11-27 12:20:52',
+    //   date_created: '2019-11-27 12:20:52',
+    // },
   ],
-  totalItems: 7,
+  totalItems: 2,
   itemsPerPage: 3,
-  totalPages: 3,
+  totalPages: 1,
   currentPage: 1,
+  filters: {
+    stageFilters: [],
+    typeFilters: [],
+  },
 };
 
-const mockData = {
+const mockDataV1 = {
   count: 7,
   rows: [
     {
@@ -408,18 +437,28 @@ jest.mock('../../../src/models', () => {
 
   // eslint-disable-next-line consistent-return
   Document.$queryInterface.$useHandler((query, queryOptions) => {
+    // eslint-disable-next-line global-require
+    const { Op } = require('sequelize');
+    const simpleQuery = typeof queryOptions[0].where.case_reference !== 'undefined';
+    const caseRef = simpleQuery
+      ? queryOptions[0].where.case_reference
+      : queryOptions[0].where[Op.and][0].case_reference;
+
     if (query === 'findAndCountAll') {
-      if (queryOptions[0].where.case_reference === 'EN010009') {
-        return Document.build({ ...mockData });
+      if (caseRef === 'EN010009') {
+        if (simpleQuery) {
+          return Document.build({ ...mockDataV1 });
+        }
+        return Document.build({ ...mockDataForSearch });
       }
-      if (queryOptions[0].where.case_reference === 'EN000000') {
+      if (caseRef === 'EN000000') {
         return Document.build({ rows: [] });
       }
-      if (queryOptions[0].where.case_reference === 'ENF0000F') {
+      if (caseRef === 'ENF0000F') {
         return null;
       }
-      return Document.build({ ...mockDataForSearch });
     }
+    throw new Error(`No mock handler defined for ${query} method with specified queryOptions`);
   });
   const db = {
     Document,
@@ -435,6 +474,17 @@ jest.mock('../../../src/lib/config.js', () => ({
   itemsPerPage: 3,
   documentsHost: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/',
 }));
+
+jest.mock('../../../src/services/document.service', () => {
+  const originalModule = jest.requireActual('../../../src/services/document.service');
+
+  // Mock the default export and named export 'foo'
+  return {
+    __esModule: true,
+    ...originalModule,
+    getFilters: jest.fn(() => Promise.resolve([])),
+  };
+});
 
 describe('getDocuments', () => {
   it('should get documents from mock', async () => {
@@ -503,6 +553,19 @@ describe('getDocuments', () => {
 });
 
 describe('getV2Documents', () => {
+  it('should get documents from mock', async () => {
+    const req = httpMocks.createRequest({
+      query: {
+        caseRef: 'EN010009',
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getV2Documents(req, res);
+    const data = res._getData();
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+    expect(data).toEqual(v2DocumentListWrapper);
+  });
   it('should return required query parameter missing', async () => {
     const req = httpMocks.createRequest({
       query: {},

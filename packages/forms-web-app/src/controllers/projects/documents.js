@@ -15,8 +15,6 @@ function renderData(
   stageList = [],
   typeList = []
 ) {
-  const { caseRef } = params;
-
   if (response.resp_code === 404) {
     res.render(VIEW.PROJECTS.DOCUMENTS, {
       projectName,
@@ -37,10 +35,6 @@ function renderData(
     const modifiedStageFilters = [];
     const top5TypeFilters = [];
     let otherTypeFiltersCount = 0;
-    // typeFilters.sort(function (a, b) {
-    //   return b.count - a.count;
-    // });
-    console.log(`Filters: ${JSON.stringify(typeFilters)}`);
 
     stageFilters.forEach(function (stage) {
       modifiedStageFilters.push({

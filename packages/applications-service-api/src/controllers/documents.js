@@ -84,6 +84,7 @@ module.exports = {
         stage && !(stage instanceof Array) ? [stage] : stage,
         typeFilters
       );
+      console.log(documents.rows.length);
       if (!documents.rows.length) {
         throw ApiError.noDocumentsFound();
       }
