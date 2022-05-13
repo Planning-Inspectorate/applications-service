@@ -911,3 +911,14 @@ components:
         currentPage:
           type: number
           example: 1
+        filters:
+          type: object
+          $ref: '#/components/schemas/RepFilters'
+    RepFilters:
+      type: object
+      properties:
+        typeFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
