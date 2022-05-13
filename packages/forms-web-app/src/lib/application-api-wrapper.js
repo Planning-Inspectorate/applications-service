@@ -90,11 +90,11 @@ exports.searchRepresentations = async (case_ref, page = 1) => {
   return handler('searchRepresentations', documentServiceApiUrl, method);
 };
 
-exports.searchDocumentListV2 = async (params, query) => {
+exports.searchDocumentListV2 = async (params) => {
   const queryString = Object.keys(params)
     .map((key) => `${key}=${params[key]}`)
     .join('&');
-  const documentServiceApiUrl = `/api/v2/documents?${queryString}&${query}`;
+  const documentServiceApiUrl = `/api/v2/documents?${queryString}`;
   const method = 'GET';
   return handler('searchDocumentListV2', documentServiceApiUrl, method);
 };

@@ -1,5 +1,4 @@
 const R = require('ramda');
-const { unslugify } = require('unslugify');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
@@ -51,30 +50,40 @@ module.exports = {
   },
 
   async getV2Documents(req, res) {
-    const { caseRef, page, searchTerm, stage, type } = req.query;
+    const { caseRef, page = 1, searchTerm, stage, classification, type } = req.query;
 
     if (!caseRef) {
       throw ApiError.badRequest('Required query parameter caseRef missing');
     }
 
-    const slugified = type && !(type instanceof Array) ? [type] : type;
+    const stageFiltersAvailable = await getFilters('Stage', caseRef, classification);
+    const typeFiltersAvailable = await getFilters('filter_1', caseRef, classification);
 
-    logger.debug(`Retrieving documents by case reference ${caseRef} ...`);
+    let typeFilters = [];
+
+    if (type) {
+      typeFilters = type instanceof Array ? [...type] : type.split(',');
+
+      if (typeFilters.includes('everything_else')) {
+        if (typeFiltersAvailable.length > 5) {
+          const everythingElseFilterValues = typeFiltersAvailable.slice(5).map(function (t) {
+            return t.filter_1;
+          });
+          typeFilters = typeFilters.filter((e) => e !== 'everything_else');
+          typeFilters.push(everythingElseFilterValues);
+        }
+      }
+    }
+
     try {
       const documents = await getOrderedDocuments(
         caseRef,
-        page || 1,
+        classification,
+        page,
         searchTerm,
         stage && !(stage instanceof Array) ? [stage] : stage,
-        slugified && slugified.map((s) => unslugify(s))
+        typeFilters
       );
-
-      if (!documents.rows.length) {
-        throw ApiError.noDocumentsFound();
-      }
-
-      const stageFilters = await getFilters('Stage', caseRef);
-      const typeFilters = await getFilters('filter_1', caseRef);
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
@@ -87,17 +96,17 @@ module.exports = {
         documents: rows,
         totalItems,
         itemsPerPage,
-        totalPages: Math.ceil(totalItems / itemsPerPage),
+        totalPages: Math.ceil(Math.max(1, totalItems) / itemsPerPage),
         currentPage: page,
         filters: {
-          stageFilters: stageFilters
-            ? stageFilters.map((f) => ({
+          stageFilters: stageFiltersAvailable
+            ? stageFiltersAvailable.map((f) => ({
                 name: f.dataValues.Stage,
                 count: f.dataValues.count,
               }))
             : [],
-          typeFilters: typeFilters
-            ? typeFilters.map((f) => ({
+          typeFilters: typeFiltersAvailable
+            ? typeFiltersAvailable.map((f) => ({
                 name: f.dataValues.filter_1,
                 count: f.dataValues.count,
               }))

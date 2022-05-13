@@ -4,23 +4,14 @@
 {% set activeProjectLink = 'representations' %}
 
 {% block contentHeader %}
-  <div class="govuk-grid-row">
-    <h2 class="govuk-heading-l">Registration Comments</h2>
-      <p class="results">
-          {% if representations %}
-            <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.</p>
-          {% else %}
-            <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
-            <p class="govuk-body">
-              <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
-            </p>
-          {% endif %}
-      </p>
-  </div>
+  <h2 class="govuk-heading-l">Registration Comments</h2>
 {% endblock %}
 
 {% block columnTwo %}
-      {% if representations %}
+  <div class="govuk-grid-row">
+      {% if representations.length > 0 %}
+        <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.</p>
+
         <ul class="pins-govuk-result-list">
           {% for representation in representations %}
             <li class="pins-govuk-result-list__item">
@@ -44,11 +35,17 @@
             </li>
           {% endfor %}
         </ul>
+
+        {% set pageLinkTemplate -%}
+          /projects/{{ caseRef }}/representations?page=:page
+        {%- endset %}
+        {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
+
+      {% else %}
+        <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+        <p class="govuk-body">
+          <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+        </p>
       {% endif %}
-      {% if representations %}
-          {% set pageLinkTemplate -%}
-            /projects/{{ caseRef }}/representations?page=:page
-          {%- endset %}
-          {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
-      {% endif %}
+  </div>
 {% endblock %}

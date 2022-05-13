@@ -17,7 +17,7 @@ module.exports = {
     const { applicationId, page, searchTerm, type } = req.query;
 
     const types = type instanceof Array ? [...type] : type ? [type] : [];
-
+    const selectedPage = page || 1;
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
       const representations = await getRepresentationsForApplication(
@@ -40,8 +40,8 @@ module.exports = {
         representations: representations.rows,
         totalItems,
         itemsPerPage,
-        totalPages: Math.ceil(totalItems / itemsPerPage),
-        currentPage: page,
+        totalPages: Math.ceil(Math.max(totalItems, 1) / itemsPerPage),
+        currentPage: selectedPage,
         filters: {
           typeFilters: typeFilters
             ? typeFilters.map((f) => ({

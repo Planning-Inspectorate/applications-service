@@ -3,6 +3,7 @@ const Status = {
   2: 'Acceptance',
   3: 'Pre Examination',
   4: 'Examination',
+  5: 'Recommendation',
   6: 'Decision',
   7: 'Decided',
   8: 'Withdrawn',

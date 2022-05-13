@@ -1,11 +1,14 @@
 class PO_ProjectAppDocs {
 
     enterTextIntoSearchField(inputData) {
-        cy.get('#search').type(inputData);
+        cy.get('#search').clear();
+        if (inputData) {
+            cy.get('#search').type(inputData);
+        }
     }
 
     clickOnSearch() {
-        cy.get('#toggleFilters').click();
+        cy.get('[data-cy="search-button"]').click();
     }
 
     assertResultsPresentOnPage(table) {
@@ -62,7 +65,20 @@ class PO_ProjectAppDocs {
     }
 
     verifyNoDocsFoundText() {
-        cy.get('.results').should('contain.text', "No documents found. Please try with different search text.")
+        cy.get('[data-cy="no-docs-text"]').should('contain.text', "No documents were found matching your search terms.")
+    }
+
+    verifyResultsReturned(table) {
+        const contents = table.hashes();
+        cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
+            const actualText = $e1.text();
+            const expectedText = contents[index].Document;
+            expect(actualText.replace(/\s/g, "").trim()).to.contain(expectedText.replace(/\s/g, "").trim());
+        })
+    }
+
+    clickOnClearSearch() {
+        cy.get('[data-cy="clear-search"]').click();
     }
 
 }
