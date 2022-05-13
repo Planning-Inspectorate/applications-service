@@ -1,14 +1,42 @@
+const { Op } = require('sequelize');
 const db = require('../models');
 const config = require('../lib/config');
 
-const getRepresentationsForApplication = async (applicationId, page) => {
+const getRepresentationsForApplication = async (applicationId, page, searchTerm) => {
   const { itemsPerPage: limit } = config;
   const offset = (page - 1) * limit;
-  const where = { CaseReference: applicationId };
+  let where = { CaseReference: applicationId };
+
+  if (searchTerm) {
+    const orOptions = [
+      {
+        PersonalName: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+      {
+        RepresentationRedacted: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+      {
+        Representative: {
+          [Op.like]: `%${searchTerm}%`,
+        },
+      },
+    ];
+
+    where = { [Op.and]: [{ CaseReference: applicationId }] };
+
+    where[Op.and].push({
+      [Op.or]: orOptions,
+    });
+  }
 
   const representations = await db.Representation.findAndCountAll({
     where,
     offset,
+    order: [['DateRrepReceived', 'DESC']],
     limit,
   });
 

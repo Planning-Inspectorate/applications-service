@@ -19,16 +19,14 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/2.0.0
 
 extends:
   template: stages/wrapper_ci.yml@templates
   parameters:
-    azurecrName: $(azurecrName)
-    authType: acr
     globalVariables:
       - template: azure-pipelines-variables.yml@self
       - template: packages/forms-web-app/pipelines/azure-pipelines-variables.yml@self
-    projectName: $(projectName)
     validateName: Build Test and Push
     validationSteps:
       - script: |
@@ -43,5 +41,4 @@ extends:
           repository: $(repository)
           runTests: true
           testRunTitle: Applications Forms Web App Jest Tests
-          versionNumber: $(versionNumber)
           workingDirectory: $(Build.Repository.LocalPath)

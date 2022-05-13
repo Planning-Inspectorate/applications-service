@@ -5,8 +5,8 @@ const searchDocument = async (case_ref, search_data) => {
   return searchDocumentList(case_ref, search_data);
 };
 
-const searchDocumentsV2 = async (params, query) => {
-  return searchDocumentListV2(params, query);
+const searchDocumentsV2 = async (params) => {
+  return searchDocumentListV2(params);
 };
 
 module.exports = {

@@ -1,9 +1,11 @@
 const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
 const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
+const { getAppData } = require('../../../../src/services/application.service');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
 jest.mock('../../../../src/lib/application-api-wrapper');
+jest.mock('../../../../src/services/application.service');
 
 describe('controllers/documents', () => {
   let req;
@@ -16,14 +18,6 @@ describe('controllers/documents', () => {
       path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
     },
   ];
-  const pageData = {
-    totalItems: 1,
-    itemsPerPage: 20,
-    totalPages: 1,
-    currentPage: 1,
-    toRange: 1,
-    fromRange: 1,
-  };
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -33,9 +27,8 @@ describe('controllers/documents', () => {
         page: '1',
         case_ref: 'ABCD1234',
       },
-      session: {
-        projectName: 'ABC',
-      },
+      url: '/abc?xyz',
+      query: '',
     };
     res = mockRes();
 
@@ -51,6 +44,10 @@ describe('controllers/documents', () => {
               path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC',
             },
           ],
+          filters: {
+            stageFilters: [],
+            typeFilters: [],
+          },
           totalItems: 1,
           itemsPerPage: 20,
           totalPages: 1,
@@ -58,17 +55,37 @@ describe('controllers/documents', () => {
         },
       })
     );
+
+    getAppData.mockImplementation(() =>
+      Promise.resolve({
+        resp_code: 200,
+        data: {
+          ProjectName: 'St James Barton Giant Wind Turbine',
+        },
+      })
+    );
   });
 
   describe('getAboutTheApplication', () => {
     it('should call the correct template', async () => {
-      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         documents: docList,
-        projectName: 'ABC',
+        projectName: 'St James Barton Giant Wind Turbine',
         caseRef: 'ABCD1234',
-        pageData,
-        paginationData: [1],
+        modifiedStageFilters: [],
+        pageOptions: [1],
+        top5TypeFilters: [],
+        queryUrl: '',
+        searchTerm: undefined,
+        paginationData: {
+          currentPage: 1,
+          fromRange: 1,
+          itemsPerPage: 20,
+          toRange: 1,
+          totalItems: 1,
+          totalPages: 1,
+        },
       });
     });
 
@@ -78,9 +95,9 @@ describe('controllers/documents', () => {
           resp_code: 404,
         })
       );
-      await aboutTheApplicationController.getAboutTheApplication(req, res);
+      await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
-        projectName: 'ABC',
+        projectName: 'St James Barton Giant Wind Turbine',
         caseRef: 'ABCD1234',
       });
     });
