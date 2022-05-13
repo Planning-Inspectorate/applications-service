@@ -10,17 +10,14 @@ const ApiError = require('../error/apiError');
 module.exports = {
   async getRepresentationsForApplication(req, res) {
     const { applicationId, page, searchTerm } = req.query;
+    const selectedPage = page || 1;
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
       const representations = await getRepresentationsForApplication(
         applicationId,
-        page || 1,
+        selectedPage,
         searchTerm
       );
-
-      if (!representations.rows.length) {
-        throw ApiError.noRepresentationsFound();
-      }
 
       const { itemsPerPage } = config;
       const totalItems = representations.count;
@@ -29,8 +26,8 @@ module.exports = {
         representations: representations.rows,
         totalItems,
         itemsPerPage,
-        totalPages: Math.ceil(totalItems / itemsPerPage),
-        currentPage: page,
+        totalPages: Math.ceil(Math.max(totalItems, 1) / itemsPerPage),
+        currentPage: selectedPage,
       };
 
       res.status(StatusCodes.OK).send(wrapper);
