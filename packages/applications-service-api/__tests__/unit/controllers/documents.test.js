@@ -379,6 +379,18 @@ const mockDataForSearch = {
   ],
 };
 
+const v2DocumentListWrapperNoResults = {
+  documents: [],
+  totalItems: 0,
+  itemsPerPage: 3,
+  totalPages: 1,
+  currentPage: 1,
+  filters: {
+    stageFilters: [],
+    typeFilters: [],
+  },
+};
+
 jest.mock('../../../src/models', () => {
   // eslint-disable-next-line global-require
   const SequelizeMock = require('sequelize-mock');
@@ -402,7 +414,7 @@ jest.mock('../../../src/models', () => {
         return Document.build({ ...mockDataForSearch });
       }
       if (caseRef === 'EN000000') {
-        return Document.build({ rows: [] });
+        return Document.build({ rows: [], count: 0 });
       }
       if (caseRef === 'ENF0000F') {
         return null;
@@ -516,6 +528,7 @@ describe('getV2Documents', () => {
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(data).toEqual(v2DocumentListWrapper);
   });
+
   it('should return required query parameter missing', async () => {
     const req = httpMocks.createRequest({
       query: {},
@@ -530,7 +543,7 @@ describe('getV2Documents', () => {
     }
   });
 
-  it('should return documents not found', async () => {
+  it('should return an empty list when no documents found', async () => {
     const req = httpMocks.createRequest({
       query: {
         caseRef: 'EN000000',
@@ -539,9 +552,11 @@ describe('getV2Documents', () => {
 
     const res = httpMocks.createResponse();
     await getV2Documents(req, res);
-    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-    expect(res._getData()).toEqual({ code: StatusCodes.NOT_FOUND, errors: ['No documents found'] });
+    const data = res._getData();
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+    expect(data).toEqual(v2DocumentListWrapperNoResults);
   });
+
 
   it('should return internal server error', async () => {
     const req = httpMocks.createRequest({

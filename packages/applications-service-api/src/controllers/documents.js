@@ -84,10 +84,6 @@ module.exports = {
         stage && !(stage instanceof Array) ? [stage] : stage,
         typeFilters
       );
-      console.log(documents.rows.length);
-      if (!documents.rows.length) {
-        throw ApiError.noDocumentsFound();
-      }
 
       const { itemsPerPage, documentsHost } = config;
       const totalItems = documents.count;
@@ -100,7 +96,7 @@ module.exports = {
         documents: rows,
         totalItems,
         itemsPerPage,
-        totalPages: Math.ceil(totalItems / itemsPerPage),
+        totalPages: Math.ceil(Math.max(1, totalItems) / itemsPerPage),
         currentPage: page,
         filters: {
           stageFilters: stageFiltersAvailable

@@ -66,7 +66,7 @@ describe('controllers/documents', () => {
     );
   });
 
-  describe('getAboutTheApplication', () => {
+  describe('getApplicationDocuments', () => {
     it('should call the correct template', async () => {
       await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
@@ -89,16 +89,41 @@ describe('controllers/documents', () => {
       });
     });
 
-    it('should call the correct template if received 404', async () => {
+    it('should handle an empty result list', async () => {
       searchDocumentListV2.mockImplementation(() =>
         Promise.resolve({
-          resp_code: 404,
+          resp_code: 200,
+          data: {
+            documents: [],
+            filters: {
+              stageFilters: [],
+              typeFilters: [],
+            },
+            totalItems: 1,
+            itemsPerPage: 20,
+            totalPages: 1,
+            currentPage: 1,
+          },
         })
       );
       await aboutTheApplicationController.getApplicationDocuments(req, res);
       expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
         projectName: 'St James Barton Giant Wind Turbine',
         caseRef: 'ABCD1234',
+        documents: [],
+        queryUrl: '',
+        searchTerm: undefined,
+        modifiedStageFilters: [],
+        top5TypeFilters: [],
+        pageOptions: [1],
+        paginationData: {
+          currentPage: 1,
+          fromRange: 1,
+          itemsPerPage: 20,
+          toRange: 1,
+          totalItems: 1,
+          totalPages: 1,
+        },
       });
     });
   });
