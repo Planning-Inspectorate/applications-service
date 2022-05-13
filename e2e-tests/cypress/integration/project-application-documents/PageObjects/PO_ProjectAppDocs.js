@@ -81,5 +81,50 @@ class PO_ProjectAppDocs {
         cy.get('[data-cy="clear-search"]').click();
     }
 
+    assertFilterStagesNotPresent(caseCondition) {
+        switch (caseCondition) {
+            case "not be visible": cy.get('.govuk-form-group').should('not.be.visible');
+                break;
+            case "visible": cy.get('.govuk-form-group').should('be.visible');
+                break;
+        }
+    }
+
+    clickSection(caseCondition) {
+        switch (caseCondition) {
+            case "show all": cy.get('.govuk-accordion__show-all-text').click();
+                break;
+            case "hide all": cy.get('.govuk-accordion__show-all-text').click();
+                break;
+            case "project stage": cy.get('[data-cy="project-stage"]').click({ force: true });
+                break;
+            case "project type": cy.get('[data-cy="project-type"]').click({ force: true });
+                break;
+            case "everything else": cy.get('[data-cy="everything else"]').click({ force: true });
+                break;
+        }
+    }
+
+    assertSectionLength(sectionName, sectionLength) {
+        switch (sectionName) {
+            case "project stage": cy.get('[name="stage"]').should('have.length', sectionLength);
+                break;
+            case "project type": cy.get('[name="type"]').should('have.length', sectionLength);
+                break;
+            case "everything else": cy.get('[name="other"]').should('have.length', sectionLength);
+                break;
+        }
+    }
+
+    clickApplyFilterButton() {
+        cy.get('[data-cy="apply-filter-button"]').click()
+    }
+
+    selectCheckBox(checkBoxName) {
+        cy.contains('label', checkBoxName).invoke('attr', 'for').then((id) => {
+            cy.get('#' + id).click();
+        })
+    }
+
 }
 export default PO_ProjectAppDocs;

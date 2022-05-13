@@ -62,3 +62,23 @@ And('I click on {string} link', (pageName) => {
  And('I click on clear search link', () => {
      projectAppDocs.clickOnClearSearch();
  })
+
+ Then('all the filter stages should {string} by default', (caseCondition) => {
+     projectAppDocs.assertFilterStagesNotPresent(caseCondition);
+ })
+
+ And('I click on {string} section', (caseCondition) => {
+     projectAppDocs.clickSection(caseCondition);
+ })
+
+ Then('I verify that the {string} section expanded with {int} filters', (sectionName, sectionLength) => {
+     projectAppDocs.assertSectionLength(sectionName, sectionLength);
+ })
+
+ And('I click on Apply filters button', () => {
+     projectAppDocs.clickApplyFilterButton();
+ })
+
+ And('I select {string} checkbox', (checkBoxName) => {
+     projectAppDocs.selectCheckBox(checkBoxName);
+ })

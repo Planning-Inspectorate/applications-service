@@ -230,3 +230,158 @@ Feature: Project Application documents page
             | 8                     |
         Then I verify text "Showing 141 to 149 of 149 results" is present on the page
         Then I verify that only "9" results present on each page
+
+    Scenario: Option to show filters
+    Given I navigate to "Cleve Hill Solar Park" project Overview page
+    When I click on "Project application documents" link
+    Then all the filter stages should "not be visible" by default
+    And I click on "show all" section
+    Then all the filter stages should "be visible" by default
+    And I click on "hide all" sections
+    Then all the filter stages should "not be visible" by default
+
+    Scenario: Option to show project stage filter
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        Then all the filter stages should "not be visible" by default
+        And I click on "project stage" section
+        Then I verify that the "project stage" section expanded with 7 filters
+        And I click on "project stage" section
+        Then all the filter stages should "not be visible" by default
+
+    Scenario: Option to show project type filter
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        Then all the filter stages should "not be visible" by default
+        And I click on "project type" section
+        Then I verify that the "project type" section expanded with 5 filters
+        And I click on "project type" section
+        Then all the filter stages should "not be visible" by default
+
+    Scenario: Option to show everything else filter
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        Then all the filter stages should "not be visible" by default
+        And I click on "everything else" section
+        Then I verify that the "everything else" section expanded with 38 filters
+        And I click on "everything else" section
+        Then all the filter stages should "not be visible" by default
+
+    Scenario: filter by project stage
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        And I click on "project stage" section
+        And I select "Pre Application (7)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below project documents were returned
+            | Document                                                                                                                                                                                   |
+            | Late scoping consultation response (PDF, 79KB) Published by NULL on behalf of Removed 2018-01-25Pre ApplicationEnvironmental Impact Assessment Scoping                                     |
+            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) Published by NULL on behalf of Scoping Opinion 2018-01-19Pre ApplicationEnvironmental Impact Assessment Scoping            |
+            | Late scoping consultation response (PDF, 191KB) Published by NULL on behalf of Removed 2018-01-11Pre ApplicationEnvironmental Impact Assessment Scoping                                    |
+            | Late scoping consultation response (PDF, 722KB) Published by NULL on behalf of Removed 2018-01-11Pre ApplicationEnvironmental Impact Assessment Scoping                                    |
+            | NULL (PDF, 81KB) Published by NULL on behalf of Acknowledgement of S46 Notification 2018-01-06Pre ApplicationNotice of Proposed application                                                |
+            | NULL (PDF, 1MB) Published by NULL on behalf of S46 Notification 2018-01-06Pre ApplicationNotice of Proposed application                                                                    |
+            | Scoping Report submitted to the Secretary of State on 11 December 2017 (PDF, 38MB) Published by NULL on behalf of Removed 2017-11-12Pre ApplicationEnvironmental Impact Assessment Scoping |
+
+
+    Scenario: search by text and filter by project stage
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        When I enter text "late" into search field
+        And I click on search button
+        And I select "Pre Application (7)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below project documents were returned
+            | Document                                                                                                                                                |
+            | Late scoping consultation response (PDF, 79KB) Published by NULL on behalf of Removed 2018-01-25Pre ApplicationEnvironmental Impact Assessment Scoping  |
+            | Late scoping consultation response (PDF, 191KB) Published by NULL on behalf of Removed 2018-01-11Pre ApplicationEnvironmental Impact Assessment Scoping |
+            | Late scoping consultation response (PDF, 722KB) Published by NULL on behalf of Removed 2018-01-11Pre ApplicationEnvironmental Impact Assessment Scoping |
+
+    # Scenario: filter by project stage and search for text
+
+    Scenario: filter by project type
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        And I click on "project type" section
+        And I select "Deadline 4 (72)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below project documents were returned
+            | Document                                                                                                                                                                                                                                              |
+            | Deadline 4 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Response to the Examining AuthorityÃ¢â‚¬â„¢s Further Written Questions (PDF, 15KB) Published by Removed 2019-09-04ExaminationDeadline 4 |
+            | Deadline 4 Submission - Response to Examining Authority's Further Written Questions and comments on the Development Consent Order (PDF, 439KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                   |
+            | Deadline 4 Submission - 12.5.4 - Deadline 4 Submissions - Schedule of Changes to the DDCO at Deadline 4 (PDF, 317KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                             |
+            | Deadline 4 Submission - 6.4.14.1 - Updates to existing documents outline Construction Traffic Management Plan (Tracked) (PDF, 12MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                              |
+            | Deadline 4 Submission - 6.4.12.10 - Outline Special Protection Area - Construction Noise Management Plan (Tracked) (PDF, 14MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                   |
+            | Deadline 4 Submission - 6.4.5.2 - Updates to existing documents outline Landscape and Biodiversity Management Plan (PDF, 6MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - 6.4.14.1 - Updates to existing documents outline Construction Traffic Management Plan (PDF, 12MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                        |
+            | Deadline 4 Submission - 6.4.5.2 - Updates to existing documents outline Landscape and Biodiversity Management Plan (Tracked) (PDF, 6MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                          |
+            | Deadline 4 Submission - 4.3 - Book of Reference (PDF, 34KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                                                      |
+            | Deadline 4 Submission - 7.1 - Updated to existing documents outline Design Principles (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                 |
+            | Deadline 4 Submission - 7.2 - Updates to Existing Documents - Mitigation Schedule (PDF, 179KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                   |
+            | Deadline 4 Submission - 6.4.5.4 - Updates to existing documents outline Construction Environmental Management Plan (PDF, 8MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - 6.4.11.4 - Updates to existing documents outline Written Scheme of Investigation (Tracked) (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - 6.4.5.4 - Updates to existing documents outline Construction Environmental Management Plan (Tracked) (PDF, 8MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                          |
+            | Deadline 4 Submission - 6.4.11.4 - Updates to existing documents outline Written Scheme of Investigation (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                              |
+            | Deadline 4 Submission - 12.5.3 - Deadline 4 Submissions - Outline Skills , Supply Chain and Employment Plan (PDF, 158KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                         |
+            | Deadline 4 Submission - 12.5.9 - Deadline 4 Submissions - Written Representation by the Applicant - Push/Pull Test Report (PDF, 9MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                             |
+            | Deadline 4 Submission - 12.5.7 - Deadline 4 Submissions - Written Representation by the Applicant - Air Quality Assessment - Battery Fire (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                             |
+            | Deadline 4 Submission - 12.5.2 - Deadline 4 Submissions - Written Representation by the Applicant on Arbitration (PDF, 137KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - Response to Examining Authority's Further Written Questions (PDF, 3MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                   |
+
+
+    Scenario: search by text and filter by project type
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        When I enter text "late" into search field
+        And I click on search button
+        And I select "Deadline 2 (115)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below project documents were returned
+            | Document                                                                                                                                                                                                  |
+            | Deadline 2 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority - Summary of Written Representation (PDF, 40KB) Published by Removed 2019-07-16ExaminationDeadline 2 |
+
+    # Scenario: filter by project type and search for text
+
+    # failing
+    Scenario: filter by everything else
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        And I click on "everything else" section
+        And I select "Unaccompanied Site Inspection (7)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below project documents were returned
+            | Document                                                                                                                                                                                                                                              |
+            | Deadline 4 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Response to the Examining AuthorityÃ¢â‚¬â„¢s Further Written Questions (PDF, 15KB) Published by Removed 2019-09-04ExaminationDeadline 4 |
+            | Deadline 4 Submission - Response to Examining Authority's Further Written Questions and comments on the Development Consent Order (PDF, 439KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                   |
+            | Deadline 4 Submission - 12.5.4 - Deadline 4 Submissions - Schedule of Changes to the DDCO at Deadline 4 (PDF, 317KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                             |
+            | Deadline 4 Submission - 6.4.14.1 - Updates to existing documents outline Construction Traffic Management Plan (Tracked) (PDF, 12MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                              |
+            | Deadline 4 Submission - 6.4.12.10 - Outline Special Protection Area - Construction Noise Management Plan (Tracked) (PDF, 14MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                   |
+            | Deadline 4 Submission - 6.4.5.2 - Updates to existing documents outline Landscape and Biodiversity Management Plan (PDF, 6MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - 6.4.14.1 - Updates to existing documents outline Construction Traffic Management Plan (PDF, 12MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                        |
+            | Deadline 4 Submission - 6.4.5.2 - Updates to existing documents outline Landscape and Biodiversity Management Plan (Tracked) (PDF, 6MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                          |
+            | Deadline 4 Submission - 4.3 - Book of Reference (PDF, 34KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                                                      |
+            | Deadline 4 Submission - 7.1 - Updated to existing documents outline Design Principles (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                 |
+            | Deadline 4 Submission - 7.2 - Updates to Existing Documents - Mitigation Schedule (PDF, 179KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                   |
+            | Deadline 4 Submission - 6.4.5.4 - Updates to existing documents outline Construction Environmental Management Plan (PDF, 8MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - 6.4.11.4 - Updates to existing documents outline Written Scheme of Investigation (Tracked) (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - 6.4.5.4 - Updates to existing documents outline Construction Environmental Management Plan (Tracked) (PDF, 8MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                          |
+            | Deadline 4 Submission - 6.4.11.4 - Updates to existing documents outline Written Scheme of Investigation (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                              |
+            | Deadline 4 Submission - 12.5.3 - Deadline 4 Submissions - Outline Skills , Supply Chain and Employment Plan (PDF, 158KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                         |
+            | Deadline 4 Submission - 12.5.9 - Deadline 4 Submissions - Written Representation by the Applicant - Push/Pull Test Report (PDF, 9MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                             |
+            | Deadline 4 Submission - 12.5.7 - Deadline 4 Submissions - Written Representation by the Applicant - Air Quality Assessment - Battery Fire (PDF, 7MB) Published by Removed 2019-09-03ExaminationDeadline 4                                             |
+            | Deadline 4 Submission - 12.5.2 - Deadline 4 Submissions - Written Representation by the Applicant on Arbitration (PDF, 137KB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                    |
+            | Deadline 4 Submission - Response to Examining Authority's Further Written Questions (PDF, 3MB) Published by Removed 2019-09-03ExaminationDeadline 4                                                                                                   |
+
+    # failing
+    Scenario: search by text and filter by everything else
+        Given I navigate to "Cleve Hill Solar Park" project Overview page
+        When I click on "Project application documents" link
+        When I enter text "late" into search field
+        And I click on search button
+        And I select "Unaccompanied Site Inspection (7)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below project documents were returned
+            | Document                                                                                                                                                                                                  |
+            | Deadline 2 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority - Summary of Written Representation (PDF, 40KB) Published by Removed 2019-07-16ExaminationDeadline 2 |
+
+    # Scenario: filter by everything else and search for text
