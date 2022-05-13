@@ -2,11 +2,16 @@ const { Op } = require('sequelize');
 const db = require('../models');
 const config = require('../lib/config');
 
-const getRepresentationsForApplication = async (applicationId, page, searchTerm, type) => {
+const getRepresentationsForApplication = async (applicationId, page, searchTerm, types) => {
   const { itemsPerPage: limit } = config;
   const offset = (page - 1) * limit;
-  let where = { CaseReference: applicationId };
-  if (type) where = { ...where, RepFrom: { [Op.in]: type } };
+  const where = { [Op.and]: [{ CaseReference: applicationId }] };
+
+  if (types && types.length > 0) {
+    where[Op.and].push({
+      RepFrom: { [Op.in]: types },
+    });
+  }
 
   if (searchTerm) {
     const orOptions = [
@@ -26,14 +31,6 @@ const getRepresentationsForApplication = async (applicationId, page, searchTerm,
         },
       },
     ];
-
-    where = { [Op.and]: [{ CaseReference: applicationId }] };
-
-    if (type) {
-      where[Op.and].push({
-        RepFrom: { [Op.in]: type },
-      });
-    }
 
     where[Op.and].push({
       [Op.or]: orOptions,

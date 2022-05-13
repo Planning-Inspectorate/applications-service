@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 const { StatusCodes } = require('http-status-codes');
 const { unslugify } = require('unslugify');
 
@@ -15,7 +16,7 @@ module.exports = {
   async getRepresentationsForApplication(req, res) {
     const { applicationId, page, searchTerm, type } = req.query;
 
-    const slugified = type && !(type instanceof Array) ? [type] : type;
+    const types = type instanceof Array ? [...type] : type ? [type] : [];
 
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
@@ -23,7 +24,7 @@ module.exports = {
         applicationId,
         page || 1,
         searchTerm,
-        slugified && slugified.map((s) => unslugify(s))
+        types && types.map((t) => unslugify(t))
       );
 
       if (!representations.rows.length) {
