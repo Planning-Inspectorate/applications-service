@@ -95,6 +95,8 @@ describe('controllers/projects/representations', () => {
       representations,
       paginationData,
       pageOptions,
+      searchTerm: undefined,
+      queryUrl: '',
     });
   });
 });
