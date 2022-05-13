@@ -94,7 +94,7 @@ getRepresentationsForApplication.mockImplementation((applicationId) => {
     return Promise.resolve(mockData);
   }
   if (applicationId === 'EN000000') {
-    return Promise.resolve({ rows: [] });
+    return Promise.resolve({ count: 0, rows: [] });
   }
   return Promise.resolve(null);
 });
@@ -123,7 +123,7 @@ describe('getRepresentationsForApplication', () => {
     });
 
     const res = httpMocks.createResponse();
-    await getRepresentationsForApplication(req, res);
+    await getRepresentations(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(res._getData()).toEqual({
       representations: [],
@@ -131,6 +131,9 @@ describe('getRepresentationsForApplication', () => {
       itemsPerPage: 3,
       totalPages: 1,
       currentPage: 1,
+      filters: {
+        typeFilters: [],
+      },
     });
   });
 

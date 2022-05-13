@@ -22,20 +22,14 @@ module.exports = {
     try {
       const representations = await getRepresentationsForApplication(
         applicationId,
-        page || 1,
+        selectedPage,
         searchTerm,
         types && types.map((t) => unslugify(t))
       );
 
-      if (!representations.rows.length) {
-        throw ApiError.noRepresentationsFound();
-      }
-
       const typeFilters = await getFilters('RepFrom', applicationId);
-
       const { itemsPerPage } = config;
       const totalItems = representations.count;
-
       const wrapper = {
         representations: representations.rows,
         totalItems,
