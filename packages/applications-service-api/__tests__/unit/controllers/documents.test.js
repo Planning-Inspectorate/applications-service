@@ -556,7 +556,7 @@ describe('getV2Documents', () => {
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(data).toEqual(v2DocumentListWrapperNoResults);
   });
-  
+
   it('should return internal server error', async () => {
     const req = httpMocks.createRequest({
       query: {
