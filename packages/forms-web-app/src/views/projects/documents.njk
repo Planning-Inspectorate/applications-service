@@ -81,7 +81,7 @@
             {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
             name: "stage", items: modifiedStageFilters }) }}
           {% endset %}
-          {% set top5ProjectTypeFilter %}
+          {% set top5DocumentTypeFilter %}
             {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",
             name: "type", items: top5TypeFilters }) }}
           {% endset %}
@@ -95,7 +95,7 @@
             items: [
                 {
                     heading: {
-                        html: '<span class="filter-heading">Document stage</span>'
+                        html: '<span class="filter-heading">Project stage</span>'
                     },
                     content: {
                         html: projectStageFilter
@@ -103,10 +103,10 @@
                 },
                 {
                     heading: {
-                        html: '<span class="filter-heading">Project type</span>'
+                        html: '<span class="filter-heading">Document type</span>'
                     },
                     content: {
-                        html: top5ProjectTypeFilter
+                        html: top5DocumentTypeFilter
                     }
                 }
             ]
