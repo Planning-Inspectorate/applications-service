@@ -11,6 +11,10 @@ exports.getRepresentations = async (req, res) => {
     page: '1',
     ...req.query,
   };
+  let queryUrl = '';
+  if (params.searchTerm) {
+    queryUrl = `&searchTerm=${params.searchTerm}`;
+  }
   if (applicationResponse.resp_code === 200) {
     const representationsResponse = await searchRepresentations(params);
     const paginationData = getPaginationData(representationsResponse.data);
@@ -22,6 +26,7 @@ exports.getRepresentations = async (req, res) => {
       paginationData,
       pageOptions,
       searchTerm,
+      queryUrl,
     });
   }
 };
