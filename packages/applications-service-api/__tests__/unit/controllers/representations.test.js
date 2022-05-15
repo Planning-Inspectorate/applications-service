@@ -83,7 +83,7 @@ jest.mock('../../../src/models', () => {
       return mockData;
     }
     if (queryOptions[0].where.CaseReference === 'EN000000') {
-      return { rows: [] };
+      return { rows: [], count: 0 };
     }
     const symbolKey = Reflect.ownKeys(queryOptions[0].where).find(
       (key) => key.toString() === 'Symbol(and)'
@@ -122,7 +122,7 @@ describe('getRepresentationsForApplication', () => {
     expect(data).toEqual(returnData);
   });
 
-  it('should return representations not found', async () => {
+  it('should return an empty list if no representations found', async () => {
     const req = httpMocks.createRequest({
       query: {
         applicationId: 'EN000000',
@@ -131,10 +131,13 @@ describe('getRepresentationsForApplication', () => {
 
     const res = httpMocks.createResponse();
     await getRepresentationsForApplication(req, res);
-    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(res._getData()).toEqual({
-      code: StatusCodes.NOT_FOUND,
-      errors: ['No representations found'],
+      representations: [],
+      totalItems: 0,
+      itemsPerPage: 3,
+      totalPages: 1,
+      currentPage: 1,
     });
   });
 
