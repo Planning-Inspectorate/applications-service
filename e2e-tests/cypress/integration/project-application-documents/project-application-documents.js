@@ -55,9 +55,13 @@ And('I click on {string} link', (pageName) => {
      projectAppDocs.verifyResultsReturned(table);
  })
 
- Then('I can verify that no documents were found matching your search terms text', () => {
-     projectAppDocs.verifyNoDocsFoundText();
- })
+ Then('I verify that no project application documents found text displayed on the page', () => {
+    projectAppDocs.verifyNoProjectAppDocsFoundText();
+})
+
+Then('I verify that no search term documents found text displayed on the page', () => {
+    projectAppDocs.verifyNoSearchTermDocsFoundText();
+})
 
  And('I click on clear search link', () => {
      projectAppDocs.clickOnClearSearch();

@@ -64,8 +64,12 @@ class PO_ProjectAppDocs {
         })
     }
 
-    verifyNoDocsFoundText() {
-        cy.get('[data-cy="no-docs-text"]').should('contain.text', "No documents were found matching your search terms.")
+    verifyNoProjectAppDocsFoundText() {
+        cy.get('[data-cy="no-docs-text"]').should('contain.text', "There are no project application documents available to display at the moment.")
+    }
+
+    verifyNoSearchTermDocsFoundText() {
+        cy.get('[data-cy="no-docs-text"]').should('contain.text', "No documents were found matching your search term and filters.")
     }
 
     verifyResultsReturned(table) {
@@ -98,9 +102,7 @@ class PO_ProjectAppDocs {
                 break;
             case "project stage": cy.get('[data-cy="project-stage"]').click({ force: true });
                 break;
-            case "project type": cy.get('[data-cy="project-type"]').click({ force: true });
-                break;
-            case "everything else": cy.get('[data-cy="everything else"]').click({ force: true });
+            case "document type": cy.get('[data-cy="document-type"]').click({ force: true });
                 break;
         }
     }
@@ -109,9 +111,7 @@ class PO_ProjectAppDocs {
         switch (sectionName) {
             case "project stage": cy.get('[name="stage"]').should('have.length', sectionLength);
                 break;
-            case "project type": cy.get('[name="type"]').should('have.length', sectionLength);
-                break;
-            case "everything else": cy.get('[name="other"]').should('have.length', sectionLength);
+            case "document type": cy.get('[name="type"]').should('have.length', sectionLength);
                 break;
         }
     }
