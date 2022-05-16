@@ -42,7 +42,7 @@
         </ul>
 
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/representations?page=:page?{{ queryUrl | safe }}
+          /projects/{{ caseRef }}/representations?page=:page{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
 
