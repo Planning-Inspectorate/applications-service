@@ -1,33 +1,49 @@
+/* eslint-disable no-nested-ternary */
 const { StatusCodes } = require('http-status-codes');
+const { unslugify } = require('unslugify');
 
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 
-const { getRepresentationsForApplication } = require('../services/representation.service');
+const {
+  getRepresentationsForApplication,
+  getFilters,
+} = require('../services/representation.service');
 
 const ApiError = require('../error/apiError');
 
 module.exports = {
   async getRepresentationsForApplication(req, res) {
-    const { applicationId, page, searchTerm } = req.query;
+    const { applicationId, page, searchTerm, type } = req.query;
+
+    const types = type instanceof Array ? [...type] : type ? [type] : [];
     const selectedPage = page || 1;
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
       const representations = await getRepresentationsForApplication(
         applicationId,
         selectedPage,
-        searchTerm
+        searchTerm,
+        types && types.map((t) => unslugify(t))
       );
 
+      const typeFilters = await getFilters('RepFrom', applicationId);
       const { itemsPerPage } = config;
       const totalItems = representations.count;
-
       const wrapper = {
         representations: representations.rows,
         totalItems,
         itemsPerPage,
         totalPages: Math.ceil(Math.max(totalItems, 1) / itemsPerPage),
         currentPage: selectedPage,
+        filters: {
+          typeFilters: typeFilters
+            ? typeFilters.map((f) => ({
+                name: f.dataValues.RepFrom,
+                count: f.dataValues.count,
+              }))
+            : [],
+        },
       };
 
       res.status(StatusCodes.OK).send(wrapper);

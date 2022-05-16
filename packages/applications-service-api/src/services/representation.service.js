@@ -2,10 +2,16 @@ const { Op } = require('sequelize');
 const db = require('../models');
 const config = require('../lib/config');
 
-const getRepresentationsForApplication = async (applicationId, page, searchTerm) => {
+const getRepresentationsForApplication = async (applicationId, page, searchTerm, types) => {
   const { itemsPerPage: limit } = config;
   const offset = (page - 1) * limit;
-  let where = { CaseReference: applicationId };
+  const where = { [Op.and]: [{ CaseReference: applicationId }] };
+
+  if (types && types.length > 0) {
+    where[Op.and].push({
+      RepFrom: { [Op.in]: types },
+    });
+  }
 
   if (searchTerm) {
     const orOptions = [
@@ -26,8 +32,6 @@ const getRepresentationsForApplication = async (applicationId, page, searchTerm)
       },
     ];
 
-    where = { [Op.and]: [{ CaseReference: applicationId }] };
-
     where[Op.and].push({
       [Op.or]: orOptions,
     });
@@ -43,6 +47,23 @@ const getRepresentationsForApplication = async (applicationId, page, searchTerm)
   return representations;
 };
 
+const getFilters = async (filter, applicationId) => {
+  let where = { CaseReference: applicationId };
+
+  if (filter === 'RepFrom') {
+    where = { CaseReference: applicationId, RepFrom: { [Op.ne]: null } };
+  }
+
+  const filters = await db.Representation.findAll({
+    where,
+    attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
+    group: [filter],
+  });
+
+  return filters;
+};
+
 module.exports = {
   getRepresentationsForApplication,
+  getFilters,
 };
