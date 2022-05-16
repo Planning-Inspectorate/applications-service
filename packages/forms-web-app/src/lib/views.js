@@ -10,6 +10,7 @@ const VIEW = {
     TIMETABLE: 'projects/timetable',
     ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
     RECOMMENDATIONS: 'projects/recommendations',
+    REPRESENTATION: 'projects/representation',
   },
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {

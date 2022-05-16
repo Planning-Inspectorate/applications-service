@@ -15,7 +15,7 @@
         <ul class="pins-govuk-result-list">
           {% for representation in representations %}
             <li class="pins-govuk-result-list__item">
-              <a href="#" class="govuk-link pins-govuk-result-list__item-title">
+              <a href="representations/{{ representation.ID  }}" class="govuk-link pins-govuk-result-list__item-title">
                 {{ representation.PersonalName  }}
               </a>
               <p class="pins-govuk-result-list__item-description ">

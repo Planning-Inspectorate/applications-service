@@ -1,7 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
-const { getRepresentationsForApplication } = require('../../../src/controllers/representations');
+const {
+  getRepresentationsForApplication: getRepresentations,
+  getRepresentationById: getRepresentation,
+} = require('../../../src/controllers/representations');
+const {
+  getFilters,
+  getRepresentationsForApplication,
+  getRepresentationById,
+} = require('../../../src/services/representation.service');
 
 const mockData = {
   count: 1,
@@ -70,34 +78,8 @@ const returnData = {
   itemsPerPage: 3,
   totalPages: 1,
   currentPage: 1,
+  filters: { typeFilters: [] },
 };
-
-jest.mock('../../../src/models', () => {
-  // eslint-disable-next-line global-require
-  const SequelizeMock = require('sequelize-mock');
-  const dbMock = new SequelizeMock();
-  const Representation = dbMock.define('Representation');
-
-  Representation.$queryInterface.$useHandler((query, queryOptions) => {
-    if (queryOptions[0].where.CaseReference === 'EN010009') {
-      return mockData;
-    }
-    if (queryOptions[0].where.CaseReference === 'EN000000') {
-      return { rows: [], count: 0 };
-    }
-    const symbolKey = Reflect.ownKeys(queryOptions[0].where).find(
-      (key) => key.toString() === 'Symbol(and)'
-    );
-    if (queryOptions[0].where[symbolKey][0].CaseReference === 'EN010009') {
-      return mockData;
-    }
-    return null;
-  });
-  const db = {
-    Representation,
-  };
-  return db;
-});
 
 jest.mock('../../../src/lib/config.js', () => ({
   logger: {
@@ -105,6 +87,27 @@ jest.mock('../../../src/lib/config.js', () => ({
   },
   itemsPerPage: 3,
 }));
+
+jest.mock('../../../src/services/representation.service');
+
+getFilters.mockImplementation(() => Promise.resolve([]));
+
+getRepresentationsForApplication.mockImplementation((applicationId) => {
+  if (applicationId === 'EN010009') {
+    return Promise.resolve(mockData);
+  }
+  if (applicationId === 'EN000000') {
+    return Promise.resolve({ count: 0, rows: [] });
+  }
+  return Promise.resolve(null);
+});
+
+getRepresentationById.mockImplementation((id) => {
+  if (id === 2) {
+    return Promise.resolve(mockData.rows[0]);
+  }
+  return Promise.resolve(null);
+});
 
 describe('getRepresentationsForApplication', () => {
   it('should get representations for application from mock', async () => {
@@ -116,7 +119,7 @@ describe('getRepresentationsForApplication', () => {
     });
 
     const res = httpMocks.createResponse();
-    await getRepresentationsForApplication(req, res);
+    await getRepresentations(req, res);
     const data = res._getData();
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(data).toEqual(returnData);
@@ -130,7 +133,7 @@ describe('getRepresentationsForApplication', () => {
     });
 
     const res = httpMocks.createResponse();
-    await getRepresentationsForApplication(req, res);
+    await getRepresentations(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(res._getData()).toEqual({
       representations: [],
@@ -138,6 +141,9 @@ describe('getRepresentationsForApplication', () => {
       itemsPerPage: 3,
       totalPages: 1,
       currentPage: 1,
+      filters: {
+        typeFilters: [],
+      },
     });
   });
 
@@ -149,24 +155,40 @@ describe('getRepresentationsForApplication', () => {
     });
 
     const res = httpMocks.createResponse();
-    await getRepresentationsForApplication(req, res);
+    await getRepresentations(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res._getData()).toContain(`Problem getting representations`);
   });
+});
 
-  it('should get representations from mock by search criteria', async () => {
+describe('getRepresentationById', () => {
+  it('should get representation from mock', async () => {
     const req = httpMocks.createRequest({
-      query: {
-        applicationId: 'EN010009',
-        page: 1,
-        searchTerm: 'Frosty',
+      params: {
+        id: 2,
       },
     });
 
     const res = httpMocks.createResponse();
-    await getRepresentationsForApplication(req, res);
+    await getRepresentation(req, res);
     const data = res._getData();
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual(returnData);
+    expect(data).toEqual(returnData.representations[0]);
+  });
+
+  it('should return representation not found', async () => {
+    const req = httpMocks.createRequest({
+      params: {
+        id: 20000,
+      },
+    });
+
+    const res = httpMocks.createResponse();
+    await getRepresentation(req, res);
+    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
+    expect(res._getData()).toEqual({
+      code: 404,
+      errors: ['Representation with ID 20000 not found'],
+    });
   });
 });

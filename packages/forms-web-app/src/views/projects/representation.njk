@@ -1,0 +1,68 @@
+{% extends "layouts/project-3-columns.njk" %}
+{% from "../macros/pagination-bar.njk" import paginationBar %}
+
+{% set activeProjectLink = 'representations' %}
+
+{% block contentHeader %}
+  {# <div class="govuk-grid-row">
+    <h2 class="govuk-heading-l">Registration Comments</h2>
+      <p class="results">
+          {% if representations %}
+            <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.</p>
+          {% else %}
+            <p class="govuk-body">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+            <p class="govuk-body">
+              <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+            </p>
+          {% endif %}
+      </p>
+  </div> #}
+{% endblock %}
+
+{% block columnTwo %}
+
+  <span class="govuk-caption-l">Representation by</span>
+  <h1 class="govuk-heading-l">
+    {# {{ representations[currentIndex].by }} #}
+    Local Authority name
+  </h1>
+  <p class="govuk-body">
+    {# {{ representations[currentIndex].comment }} #}
+    Bring it on. Dewsbury is desperate for this to happen. It will make life easier and travelling much better around this area once the project is completed.
+  </p>
+  <p class="govuk-body-s govuk-!-margin-top-6 govuk-!-margin-bottom-9">
+    {# {{ representations[currentIndex].date }} #}
+    12 February 2022
+  </p>
+  {# {% if representations %}
+        <ul class="pins-govuk-result-list">
+          {% for representation in representations %}
+            <li class="pins-govuk-result-list__item">
+              <a href="#" class="govuk-link pins-govuk-result-list__item-title">
+                {{ representation.PersonalName  }}
+              </a>
+              <p class="pins-govuk-result-list__item-description ">
+                  {{ representation.RepresentationRedacted | truncate(200) }}
+                  {% if representation.RepresentationRedacted.length > 200 %}
+                    <a href="#" class="govuk-link">Read more</a>
+                  {% endif %}
+              </p>
+              <div class="govuk-grid-row document-metadata">
+                <div class="govuk-grid-column-one-third" data-cy="published-date">
+                  {{ representation.DateRrepReceived | date }}
+                </div>
+                <div class="govuk-grid-column-two-thirds" data-cy="published-stage">
+                  {{ representation.RepFrom }}
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %} #}
+  {# {% if representations %}
+          {% set pageLinkTemplate -%}
+            /projects/{{ caseRef }}/representations?page=:page
+          {%- endset %}
+          {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
+      {% endif %} #}
+{% endblock %}
