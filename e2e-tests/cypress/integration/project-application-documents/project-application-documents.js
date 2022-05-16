@@ -55,10 +55,34 @@ And('I click on {string} link', (pageName) => {
      projectAppDocs.verifyResultsReturned(table);
  })
 
- Then('I can verify that no documents were found matching your search terms text', () => {
-     projectAppDocs.verifyNoDocsFoundText();
- })
+ Then('I verify that no project application documents found text displayed on the page', () => {
+    projectAppDocs.verifyNoProjectAppDocsFoundText();
+})
+
+Then('I verify that no search term documents found text displayed on the page', () => {
+    projectAppDocs.verifyNoSearchTermDocsFoundText();
+})
 
  And('I click on clear search link', () => {
      projectAppDocs.clickOnClearSearch();
+ })
+
+ Then('all the filter stages should {string} by default', (caseCondition) => {
+     projectAppDocs.assertFilterStagesNotPresent(caseCondition);
+ })
+
+ And('I click on {string} section', (caseCondition) => {
+     projectAppDocs.clickSection(caseCondition);
+ })
+
+ Then('I verify that the {string} section expanded with {int} filters', (sectionName, sectionLength) => {
+     projectAppDocs.assertSectionLength(sectionName, sectionLength);
+ })
+
+ And('I click on Apply filters button', () => {
+     projectAppDocs.clickApplyFilterButton();
+ })
+
+ And('I select {string} checkbox', (checkBoxName) => {
+     projectAppDocs.selectCheckBox(checkBoxName);
  })

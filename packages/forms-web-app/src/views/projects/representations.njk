@@ -1,3 +1,4 @@
+{% set section = 'representations' %}
 {% extends "layouts/project-3-columns.njk" %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
@@ -5,6 +6,10 @@
 
 {% block contentHeader %}
   <h2 class="govuk-heading-l">Registration Comments</h2>
+  <p>
+    <input class="govuk-input govuk-!-width-one-half" id="apply" name="searchTerm" type="text" value="{{ searchTerm }}">
+    <button class="govuk-button" data-cy="apply-button">Apply</button>
+  </p>
 {% endblock %}
 
 {% block columnTwo %}
@@ -37,7 +42,7 @@
         </ul>
 
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/representations?page=:page
+          /projects/{{ caseRef }}/representations?page=:page?{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
 

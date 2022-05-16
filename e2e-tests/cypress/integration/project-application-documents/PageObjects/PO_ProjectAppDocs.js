@@ -64,8 +64,12 @@ class PO_ProjectAppDocs {
         })
     }
 
-    verifyNoDocsFoundText() {
-        cy.get('[data-cy="no-docs-text"]').should('contain.text', "No documents were found matching your search terms.")
+    verifyNoProjectAppDocsFoundText() {
+        cy.get('[data-cy="no-docs-text"]').should('contain.text', "There are no project application documents available to display at the moment.")
+    }
+
+    verifyNoSearchTermDocsFoundText() {
+        cy.get('[data-cy="no-docs-text"]').should('contain.text', "No documents were found matching your search term and filters.")
     }
 
     verifyResultsReturned(table) {
@@ -79,6 +83,47 @@ class PO_ProjectAppDocs {
 
     clickOnClearSearch() {
         cy.get('[data-cy="clear-search"]').click();
+    }
+
+    assertFilterStagesNotPresent(caseCondition) {
+        switch (caseCondition) {
+            case "not be visible": cy.get('.govuk-form-group').should('not.be.visible');
+                break;
+            case "visible": cy.get('.govuk-form-group').should('be.visible');
+                break;
+        }
+    }
+
+    clickSection(caseCondition) {
+        switch (caseCondition) {
+            case "show all": cy.get('.govuk-accordion__show-all-text').click();
+                break;
+            case "hide all": cy.get('.govuk-accordion__show-all-text').click();
+                break;
+            case "project stage": cy.get('[data-cy="project-stage"]').click({ force: true });
+                break;
+            case "document type": cy.get('[data-cy="document-type"]').click({ force: true });
+                break;
+        }
+    }
+
+    assertSectionLength(sectionName, sectionLength) {
+        switch (sectionName) {
+            case "project stage": cy.get('[name="stage"]').should('have.length', sectionLength);
+                break;
+            case "document type": cy.get('[name="type"]').should('have.length', sectionLength);
+                break;
+        }
+    }
+
+    clickApplyFilterButton() {
+        cy.get('[data-cy="apply-filter-button"]').click()
+    }
+
+    selectCheckBox(checkBoxName) {
+        cy.contains('label', checkBoxName).invoke('attr', 'for').then((id) => {
+            cy.get('#' + id).click();
+        })
     }
 
 }
