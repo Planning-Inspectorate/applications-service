@@ -54,3 +54,24 @@
       {% endif %}
   </div>
 {% endblock %}
+
+{% block columnThree %}
+  {% if representations.length != 0 or queryUrl != '' %}
+    <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+      {{ govukCheckboxes({
+        idPrefix: "type",
+        name: "type",
+        fieldset: {
+          legend: {
+            text: "Filter by",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: commentsTypeFilterItems
+      }) }}
+
+      <button class="govuk-button" data-cy="apply-filter-button">Apply Filters</button>
+    </div>
+  {% endif %}
+{% endblock %}

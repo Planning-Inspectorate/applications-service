@@ -81,6 +81,9 @@ describe('controllers/projects/representations', () => {
         resp_code: 200,
         data: {
           representations,
+          filters: {
+            typeFilters: [],
+          },
           totalItems: 1,
           itemsPerPage: 20,
           totalPages: 1,
@@ -97,6 +100,7 @@ describe('controllers/projects/representations', () => {
       pageOptions,
       searchTerm: undefined,
       queryUrl: '',
+      commentsTypeFilterItems: [],
     });
   });
 });
