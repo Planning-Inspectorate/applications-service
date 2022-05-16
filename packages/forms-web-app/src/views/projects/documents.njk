@@ -2,20 +2,23 @@
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'about-the-application' %}
+
 {% block contentHeader %}
-  <div class="govuk-grid-row">
-    <h2 class="govuk-heading-l">Project application documents</h2>
-        <p>
-          <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
-          <button class="govuk-button">Search</button>
-        </p>
-  </div>
+  <h2 class="govuk-heading-l">Project application documents</h2>
+  {% if documents.length != 0 or queryUrl != '' %}
+    <p>
+      <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
+      <button class="govuk-button" data-cy="search-button">Search</button>
+    </p>
+  {% endif %}
 {% endblock %}
+
 {% block columnTwo %}
   <div class="govuk-grid-row">
-    {% if documents %}
-    <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> documents, newest first.</p>
-      <strong></p>
+    {% if documents.length > 0 %}
+      <p class="hmcts-pagination__results">
+        Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> documents, newest first.
+      </p>
 
       <ul class="pins-govuk-result-list">
         {% for document in documents %}
@@ -44,18 +47,26 @@
           </li>
         {% endfor %}
       </ul>
-    {% else %}
-      <p style="govuk-body">
-        No documents were found matching your search terms.
+   {% elseif documents.length == 0 and queryUrl != '' %}
+      <p style="govuk-body" data-cy="no-docs-text">
+        No documents were found matching your search term and filters.
       </p>
       <p style="govuk-body">
-        Would you like to clear your search and view all documents instead? <a style="govuk-link" href="/projects/{{ caseRef }}/documents/1" >Clear search</a>
+        Would you like to clear your search and filters to view all available documents instead?
+      </p>
+      <p>
+        <a style="govuk-link" href="/projects/{{ caseRef }}/application-documents" data-cy="clear-search">Clear search and filters</a>
+      </p>
+    {% elseif documents.length == 0 %}
+      <p class="govuk-body">There are no project application documents available to display at the moment.</p>
+      <p class="govuk-body">
+        <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
       </p>
     {% endif %}
 
-    {% if documents %}
+    {% if documents.length > 0 %}
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/documents/:page{{ queryUrl }}
+          /projects/{{ caseRef }}/application-documents?page=:page{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
     {% endif %}
@@ -64,55 +75,45 @@
 
 
 {% block columnThree %}
-  <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
-        {% set projectStageFilter %}
-          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
-          name: "stage", items: modifiedStageFilters }) }}
-        {% endset %}
-        {% set top5ProjectTypeFilter %}
-          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",
-          name: "type", items: top5TypeFilters }) }}
-        {% endset %}
-        {% set otherProjectTypeFilter %}
-          {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "otherType",
-          name: "type", items: otherTypeFilters }) }}
-        {% endset %}        
-      <div style="background-color: #f3f2f1; padding: 10px;">
-      <h2 class="govuk-heading-m">Filter by</h2>
+  {% if documents.length != 0 or queryUrl != '' %}
+    <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+          {% set projectStageFilter %}
+            {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "stage",
+            name: "stage", items: modifiedStageFilters }) }}
+          {% endset %}
+          {% set top5ProjectTypeFilter %}
+            {{ govukCheckboxes({ classes: "govuk-checkboxes--small", idPrefix: "top5Type",
+            name: "type", items: top5TypeFilters }) }}
+          {% endset %}
+        <div style="background-color: #f3f2f1; padding: 10px;">
+        <h2 class="govuk-heading-m">Filter by</h2>
 
-      {{ govukAccordion({
-          id: "accordion-default",
-          classes: "filter-accordion",
-          headingLevel: 3,
-          items: [
-              {
-                  heading: {
-                      html: '<span class="filter-heading">Project stage</span>'
-                  },
-                  content: {
-                      html: projectStageFilter
-                  }
-              },
-              {
-                  heading: {
-                      html: '<span class="filter-heading">Project type</span>'
-                  },
-                  content: {
-                      html: top5ProjectTypeFilter
-                  }
-              },
-              {
-                  heading: {
-                      html: '<span class="filter-heading">Everything else</span>'
-                  },
-                  content: {
-                      html: otherProjectTypeFilter
-                  }
-              }              
-          ]
-          })
-      }}
+        {{ govukAccordion({
+            id: "accordion-default",
+            classes: "filter-accordion",
+            headingLevel: 3,
+            items: [
+                {
+                    heading: {
+                        html: '<span class="filter-heading">Document stage</span>'
+                    },
+                    content: {
+                        html: projectStageFilter
+                    }
+                },
+                {
+                    heading: {
+                        html: '<span class="filter-heading">Project type</span>'
+                    },
+                    content: {
+                        html: top5ProjectTypeFilter
+                    }
+                }
+            ]
+            })
+        }}
 
-      <button class="govuk-button">Apply Filters</button>
-  </div>
+        <button class="govuk-button">Apply Filters</button>
+    </div>
+  {% endif %}
 {% endblock %}

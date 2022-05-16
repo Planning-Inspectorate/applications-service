@@ -7,4 +7,4 @@ variables:
 
   dockerfilePath: $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile
   repository: applications-service/forms-web-app
-  webAppNamePrefix: pins-app-applications-service-applications-wfe
+  webAppName: pins-app-applications-service-applications-wfe-$(ENVIRONMENT)-$(REGION_SHORT)-001
