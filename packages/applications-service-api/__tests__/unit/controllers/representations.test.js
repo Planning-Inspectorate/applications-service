@@ -97,7 +97,7 @@ getRepresentationsForApplication.mockImplementation((applicationId) => {
     return Promise.resolve(mockData);
   }
   if (applicationId === 'EN000000') {
-    return Promise.resolve({ rows: [] });
+    return Promise.resolve({ count: 0, rows: [] });
   }
   return Promise.resolve(null);
 });
@@ -125,7 +125,7 @@ describe('getRepresentationsForApplication', () => {
     expect(data).toEqual(returnData);
   });
 
-  it('should return representations not found', async () => {
+  it('should return an empty list if no representations found', async () => {
     const req = httpMocks.createRequest({
       query: {
         applicationId: 'EN000000',
@@ -134,10 +134,16 @@ describe('getRepresentationsForApplication', () => {
 
     const res = httpMocks.createResponse();
     await getRepresentations(req, res);
-    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
+    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(res._getData()).toEqual({
-      code: StatusCodes.NOT_FOUND,
-      errors: ['No representations found'],
+      representations: [],
+      totalItems: 0,
+      itemsPerPage: 3,
+      totalPages: 1,
+      currentPage: 1,
+      filters: {
+        typeFilters: [],
+      },
     });
   });
 

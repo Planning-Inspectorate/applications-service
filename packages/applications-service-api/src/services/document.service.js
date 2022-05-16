@@ -2,6 +2,33 @@ const { Op } = require('sequelize');
 const db = require('../models');
 const config = require('../lib/config');
 
+/**
+ * Adds the required Stage clause to the WHERE statement object based on the classification of documents required
+ * @param where WHERE statement to be updated.  Must already contain a associate key of Op.and at the root level
+ * with an array as it's value so that the necessary Stage clause can be addded on
+ * @param classification the classification of documents requested - these map to a set of document stages
+ */
+const addStageClause = (where, classification) => {
+  if (classification === 'all') {
+    // Include all stages except zero which is reserved for registration comment attachments
+    where[Op.and].push({
+      Stage: { [Op.gt]: 0 },
+    });
+  } else if (classification === 'application') {
+    where[Op.and].push({
+      Stage: [1, 2, 3],
+    });
+  } else if (classification === 'examination') {
+    where[Op.and].push({
+      Stage: 4,
+    });
+  } else if (classification === 'finalisation') {
+    where[Op.and].push({
+      Stage: [5, 6, 7],
+    });
+  }
+};
+
 const getDocuments = async (caseRef, pageNo, searchTerm) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
@@ -47,25 +74,13 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
   return documents;
 };
 
-const getOrderedDocuments = async (
-  isEveryThingSelected,
-  caseRef,
-  pageNo,
-  searchTerm,
-  stage,
-  type
-) => {
+const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, type) => {
   const { itemsPerPage: limit } = config;
   const offset = (pageNo - 1) * limit;
 
-  let where = { case_reference: caseRef, Stage: { [Op.gt]: 0 } };
-  if (stage) where = { ...where, Stage: { [Op.in]: stage } };
+  const where = { [Op.and]: [{ case_reference: caseRef }] };
 
-  if (isEveryThingSelected) {
-    if (type) where = { ...where, filter_1: { [Op.notIn]: type } };
-  } else if (type) {
-    where = { ...where, filter_1: { [Op.in]: type } };
-  }
+  addStageClause(where, classification);
 
   if (searchTerm) {
     const orOptions = [
@@ -91,22 +106,20 @@ const getOrderedDocuments = async (
       },
     ];
 
-    where = { [Op.and]: [{ case_reference: caseRef, Stage: { [Op.gt]: 0 } }] };
-
-    if (stage) {
-      where[Op.and].push({
-        Stage: { [Op.in]: stage },
-      });
-    }
-
-    if (type) {
-      where[Op.and].push({
-        filter_1: { [Op.in]: type },
-      });
-    }
-
     where[Op.and].push({
       [Op.or]: orOptions,
+    });
+  }
+
+  if (stage) {
+    where[Op.and].push({
+      Stage: { [Op.in]: stage },
+    });
+  }
+
+  if (type && type.length > 0) {
+    where[Op.and].push({
+      filter_1: type,
     });
   }
 
@@ -119,12 +132,15 @@ const getOrderedDocuments = async (
   return documents;
 };
 
-const getFilters = async (filter, caseRef) => {
-  let where = { case_reference: caseRef };
+const getFilters = async (filter, caseRef, classification) => {
+  const where = { [Op.and]: [{ case_reference: caseRef }] };
+  addStageClause(where, classification);
+
   let order = [];
   if (filter === 'Stage') {
-    where = { ...where, Stage: { [Op.gt]: 0 } };
     order = [['Stage']];
+  } else if (filter === 'filter_1') {
+    order = [db.sequelize.literal('count DESC')];
   }
   const filters = await db.Document.findAll({
     where,
