@@ -115,6 +115,7 @@ describe('getRepresentationsForApplication', () => {
       query: {
         applicationId: 'EN010009',
         page: 1,
+        type: 'abc',
       },
     });
 

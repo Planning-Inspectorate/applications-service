@@ -1,3 +1,4 @@
+{% set section = 'application-documents' %}
 {% extends "layouts/project-3-columns.njk" %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
@@ -58,7 +59,7 @@
         <a style="govuk-link" href="/projects/{{ caseRef }}/application-documents" data-cy="clear-search">Clear search and filters</a>
       </p>
     {% elseif documents.length == 0 %}
-      <p class="govuk-body">There are no project application documents available to display at the moment.</p>
+      <p class="govuk-body" data-cy="no-docs-text">There are no project application documents available to display at the moment.</p>
       <p class="govuk-body">
         <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
       </p>
@@ -95,7 +96,7 @@
             items: [
                 {
                     heading: {
-                        html: '<span class="filter-heading">Project stage</span>'
+                        html: '<span class="filter-heading" data-cy="project-stage">Project stage</span>'
                     },
                     content: {
                         html: projectStageFilter
@@ -103,7 +104,7 @@
                 },
                 {
                     heading: {
-                        html: '<span class="filter-heading">Document type</span>'
+                        html: '<span class="filter-heading" data-cy="document-type">Document type</span>'
                     },
                     content: {
                         html: top5DocumentTypeFilter
@@ -113,7 +114,7 @@
             })
         }}
 
-        <button class="govuk-button">Apply Filters</button>
+        <button class="govuk-button" data-cy="apply-filter-button">Apply Filters</button>
     </div>
   {% endif %}
 {% endblock %}

@@ -84,10 +84,13 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   });
 };
 
-exports.searchRepresentations = async (case_ref, page = 1) => {
-  const documentServiceApiUrl = `/api/v1/representations?applicationId=${case_ref}&page=${page}`;
+exports.searchRepresentations = async (params) => {
+  const queryString = Object.keys(params)
+    .map((key) => `${key}=${params[key]}`)
+    .join('&');
+  const representationServiceApiUrl = `/api/v1/representations?${queryString}`;
   const method = 'GET';
-  return handler('searchRepresentations', documentServiceApiUrl, method);
+  return handler('searchRepresentations', representationServiceApiUrl, method);
 };
 
 exports.searchDocumentListV2 = async (params) => {

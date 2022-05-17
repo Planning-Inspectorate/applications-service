@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 const { StatusCodes } = require('http-status-codes');
-const { unslugify } = require('unslugify');
 
 const logger = require('../lib/logger');
 const config = require('../lib/config');
@@ -16,8 +15,10 @@ const ApiError = require('../error/apiError');
 module.exports = {
   async getRepresentationsForApplication(req, res) {
     const { applicationId, page, searchTerm, type } = req.query;
-
-    const types = type instanceof Array ? [...type] : type ? [type] : [];
+    let types = [];
+    if (type) {
+      types = type instanceof Array ? [...type] : type.split(',');
+    }
     const selectedPage = page || 1;
     logger.debug(`Retrieving representations for application ref ${applicationId}`);
     try {
@@ -25,7 +26,7 @@ module.exports = {
         applicationId,
         selectedPage,
         searchTerm,
-        types && types.map((t) => unslugify(t))
+        types
       );
 
       const typeFilters = await getFilters('RepFrom', applicationId);

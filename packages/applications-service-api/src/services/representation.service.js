@@ -50,6 +50,7 @@ const getRepresentationsForApplication = async (applicationId, page, searchTerm,
 const getRepresentationById = async (ID) => {
   return db.Representation.findOne({ where: { ID } });
 };
+
 const getFilters = async (filter, applicationId) => {
   let where = { CaseReference: applicationId };
 
