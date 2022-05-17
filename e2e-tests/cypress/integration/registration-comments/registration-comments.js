@@ -71,9 +71,11 @@ Then('the list is sorted by received date, newest first', (searchInput) => {
 });
 
 Then('I am informed that no results were found', () => {
-
+  cy.get('p[data-cy="no-comments-found"]')
+    .should('contain.text', "No comments were found matching your search term and filters.")
 });
 
 Then('I am given the option to clear the search to list all available registration comments', () => {
-
+  cy.get('a[data-cy="clear-search"]')
+    .should('contain.text', "Clear search and filters");
 });

@@ -100,9 +100,9 @@ Feature: Registration comments page
       Then a list of registration comments with metadata containing "joe" is provided
       And the list is sorted by received date, newest first
 
-#    @ASB-289
-#    Scenario: Search find no matching registration comments
-#      Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
-#      When I search for comments containing "xyz"
-#      Then I am informed that no results were found
-#      And I am given the option to clear the search to list all available registration comments
+    @ASB-289 @no-match-scenario
+    Scenario: Search find no matching registration comments
+      Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
+      When I search for comments containing "xyz"
+      Then I am informed that no results were found
+      And I am given the option to clear the search to list all available registration comments
