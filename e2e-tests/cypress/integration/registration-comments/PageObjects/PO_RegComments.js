@@ -1,5 +1,16 @@
 class PO_RegComments {
 
+    enterTextIntoSearchField(inputData) {
+      cy.get('#searchTerm').clear();
+      if (inputData) {
+        cy.get('#searchTerm').type(inputData);
+      }
+    }
+
+    submitSearch() {
+      cy.get('[data-cy="search-button"]').click();
+    }
+
     assertIfPaginationIsPresent(table) {
         const contents = table.hashes();
         cy.get('.moj-pagination__item').each(($e1, index) => {
@@ -28,7 +39,7 @@ class PO_RegComments {
     }
 
     assertNoRegCommentsOnThePage() {
-        cy.get('[data-cy="no-reg-comments"]').should('contain.text', "There are no registration comments to display. Registration comments will be published after the registration period has closed.")
+        cy.get('[data-cy="no-comments-available"]').should('contain.text', "There are no registration comments to display. Registration comments will be published after the registration period has closed.")
     }
 
     verifyCommentsDisplayedinDescendingOrder(table) {

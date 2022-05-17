@@ -115,3 +115,23 @@ Feature: Registration comments page
             | Next set of pages     |
         Then I verify text "Showing 81 to 100 of 204 results" is present on the page
         Then I verify that only "20" results present on each page
+
+#ASB-289
+#Feature: Search registration comments
+#    As a user
+#    I want to be able to search by text
+#    So that I can find relevant registration comments
+
+  @ASB-289
+  Scenario: Search finds matching registration comments
+    Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
+    When I search for comments containing "joe"
+    Then a list of registration comments with metadata containing "joe" is provided
+    And the list is sorted by received date, newest first
+
+  @ASB-289 @no-match-scenario
+  Scenario: Search find no matching registration comments
+    Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
+    When I search for comments containing "xyz"
+    Then I am informed that no results were found
+    And I am given the option to clear the search to list all available registration comments

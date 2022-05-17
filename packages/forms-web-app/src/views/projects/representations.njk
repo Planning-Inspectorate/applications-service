@@ -7,8 +7,8 @@
 {% block contentHeader %}
   <h2 class="govuk-heading-l">Registration Comments</h2>
   <p>
-    <input class="govuk-input govuk-!-width-one-half" id="apply" name="searchTerm" type="text" value="{{ searchTerm }}">
-    <button class="govuk-button" data-cy="apply-button">Apply</button>
+    <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" type="text" value="{{ searchTerm }}">
+    <button class="govuk-button" data-cy="search-button">Search</button>
   </p>
 {% endblock %}
 
@@ -21,7 +21,16 @@
           {% for representation in representations %}
             <li class="pins-govuk-result-list__item">
               <a href="#" class="govuk-link pins-govuk-result-list__item-title">
-                {{ representation.PersonalName  }}
+                {% if representation.Representative %}
+                  {{ representation.Representative  }}
+                  {% if representation.PersonalName %}
+                    on behalf of {{ representation.PersonalName  }}
+                  {% endif %}
+                {% elseif representation.PersonalName %}
+                  {{ representation.PersonalName  }}
+                {% else %}
+                  Unknown
+                {% endif %}
               </a>
               <p class="pins-govuk-result-list__item-description ">
                   {{ representation.RepresentationRedacted | truncate(200) }}
@@ -47,7 +56,7 @@
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
 
     {% elseif representations.length == 0 and queryUrl != '' %}
-      <p style="govuk-body" data-cy="no-docs-text">
+      <p style="govuk-body" data-cy="no-comments-found">
         No comments were found matching your search term and filters.
       </p>
       <p style="govuk-body">
@@ -57,7 +66,7 @@
         <a style="govuk-link" href="/projects/{{ caseRef }}/representations" data-cy="clear-search">Clear search and filters</a>
       </p>
     {% elseif representations.length == 0 %}
-      <p class="govuk-body" data-cy="no-reg-comments">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+      <p class="govuk-body" data-cy="no-comments-available">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
       <p class="govuk-body">
         <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
       </p>
@@ -70,6 +79,7 @@
     <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
       {{ govukCheckboxes({
         idPrefix: "type",
+        classes: "govuk-checkboxes--small",
         name: "type",
         fieldset: {
           legend: {
