@@ -49,6 +49,12 @@ class ApiError {
   static noRepresentationsFound() {
     return new ApiError(StatusCodes.NOT_FOUND, { errors: [`No representations found`] });
   }
+
+  static representationNotFound(id) {
+    return new ApiError(StatusCodes.NOT_FOUND, {
+      errors: [`Representation with ID ${id} not found`],
+    });
+  }
 }
 
 module.exports = ApiError;
