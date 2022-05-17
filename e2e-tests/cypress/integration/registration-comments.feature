@@ -60,23 +60,14 @@ Feature: Registration comments page
             | 1                     |
             | ...                   |
             | 9                     |
-            | 10                     |
-            | 11                     |
+            | 10                    |
+            | 11                    |
         Then I verify text "Showing 201 to 204 of 204 results" is present on the page
         Then I verify that only "4" results present on each page
 
-
-
-        When I navigate to page "11" of the results
-        Then I verify below pagination is present on the page
-            | Data                  |
-            | Previous set of pages |
-            | 1                     |
-            | 2                     |
-            | 3                     |
-            | Next set of pages     |
-        Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-        Then I verify that only "20" results present on each page
+    Scenario: When current page within first three, show only those page links and When current page within last three, show only those page links
+        Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+        When I click on "Registration comments" link
         When I navigate to page "3" of the results
         Then I verify below pagination is present on the page
             | Data                  |
@@ -84,5 +75,43 @@ Feature: Registration comments page
             | 1                     |
             | 2                     |
             | 3                     |
-        Then I verify text "Showing 41 to 46 of 46 results" is present on the page
-        Then I verify that only "6" results present on each page
+            | 4                     |
+            | ...                   |
+            | 11                    |
+            | Next set of pages     |
+        Then I verify text "Showing 41 to 60 of 204 results" is present on the page
+        Then I verify that only "20" results present on each page
+        When I navigate to page "11" of the results
+        When I navigate to page "9" of the results
+        Then I verify below pagination is present on the page
+            | Data                  |
+            | Previous set of pages |
+            | 1                     |
+            | ...                   |
+            | 8                     |
+            | 9                     |
+            | 10                    |
+            | 11                    |
+            | Next set of pages     |
+        Then I verify text "Showing 161 to 180 of 204 results" is present on the page
+        Then I verify that only "20" results present on each page
+
+    Scenario: When current page between first and last, show one page link either side, Always show first and last page links
+        Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+        When I click on "Registration comments" link
+        When I navigate to page "3" of the results
+        When I navigate to page "4" of the results
+        When I navigate to page "5" of the results
+        Then I verify below pagination is present on the page
+            | Data                  |
+            | Previous set of pages |
+            | 1                     |
+            | ...                   |
+            | 4                     |
+            | 5                     |
+            | 6                     |
+            | ...                   |
+            | 11                    |
+            | Next set of pages     |
+        Then I verify text "Showing 81 to 100 of 204 results" is present on the page
+        Then I verify that only "20" results present on each page

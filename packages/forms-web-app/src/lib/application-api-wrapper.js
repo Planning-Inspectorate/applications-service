@@ -88,9 +88,9 @@ exports.searchRepresentations = async (params) => {
   const queryString = Object.keys(params)
     .map((key) => `${key}=${params[key]}`)
     .join('&');
-  const documentServiceApiUrl = `/api/v1/representations?${queryString}`;
+  const representationServiceApiUrl = `/api/v1/representations?${queryString}`;
   const method = 'GET';
-  return handler('searchRepresentations', documentServiceApiUrl, method);
+  return handler('searchRepresentations', representationServiceApiUrl, method);
 };
 
 exports.searchDocumentListV2 = async (params) => {
