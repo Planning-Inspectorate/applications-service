@@ -42,3 +42,38 @@ Then('I can verify that the registration comments displayed in descending order'
 Then('I verify no pagination is present on the page', () => {
     regComments.assertNoPagination();
 })
+
+Given('I have navigated to registration comments for the {string} project', (projectName) => {
+  cy.visit('/project-search', { failOnStatusCode: false });
+  cy.clickProjectLink(projectName);
+  cy.clickContentsLink("Registration comments");
+});
+
+When('I search for comments containing {string}', (searchInput) => {
+  regComments.enterTextIntoSearchField(searchInput);
+  regComments.submitSearch();
+});
+
+Then('a list of registration comments with metadata containing {string} is provided', (searchInput) => {
+  cy.get('.pins-govuk-result-list__item').each((element) => {
+    expect(element.text().toLowerCase()).to.contain(searchInput.toLowerCase());
+  })
+});
+
+Then('the list is sorted by received date, newest first', (searchInput) => {
+  const datesProvided = [];
+  cy.get('[data-cy="published-date"]').each((element) => {
+    datesProvided.push(Date.parse(element.text()));
+  })
+  const sortedDates = [...datesProvided];
+  sortedDates.sort((a, b) => a - b).reverse();
+  expect(datesProvided).to.deep.eq(sortedDates);
+});
+
+Then('I am informed that no results were found', () => {
+
+});
+
+Then('I am given the option to clear the search to list all available registration comments', () => {
+
+});

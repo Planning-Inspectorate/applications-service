@@ -7,8 +7,8 @@
 {% block contentHeader %}
   <h2 class="govuk-heading-l">Registration Comments</h2>
   <p>
-    <input class="govuk-input govuk-!-width-one-half" id="apply" name="searchTerm" type="text" value="{{ searchTerm }}">
-    <button class="govuk-button" data-cy="apply-button">Apply</button>
+    <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" type="text" value="{{ searchTerm }}">
+    <button class="govuk-button" data-cy="search-button">Search</button>
   </p>
 {% endblock %}
 
@@ -21,7 +21,16 @@
           {% for representation in representations %}
             <li class="pins-govuk-result-list__item">
               <a href="#" class="govuk-link pins-govuk-result-list__item-title">
-                {{ representation.PersonalName  }}
+                {% if representation.Representative %}
+                  {{ representation.Representative  }}
+                  {% if representation.PersonalName %}
+                    on behalf of {{ representation.PersonalName  }}
+                  {% endif %}
+                {% elseif representation.PersonalName %}
+                  {{ representation.PersonalName  }}
+                {% else %}
+                  Unknown
+                {% endif %}
               </a>
               <p class="pins-govuk-result-list__item-description ">
                   {{ representation.RepresentationRedacted | truncate(200) }}
@@ -42,7 +51,7 @@
         </ul>
 
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/representations?page=:page?{{ queryUrl | safe }}
+          /projects/{{ caseRef }}/representations?page=:page{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
 

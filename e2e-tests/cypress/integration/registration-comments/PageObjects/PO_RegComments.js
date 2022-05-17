@@ -1,5 +1,16 @@
 class PO_RegComments {
 
+    enterTextIntoSearchField(inputData) {
+      cy.get('#searchTerm').clear();
+      if (inputData) {
+        cy.get('#searchTerm').type(inputData);
+      }
+    }
+
+    submitSearch() {
+      cy.get('[data-cy="search-button"]').click();
+    }
+
     assertIfPaginationIsPresent(table) {
         const contents = table.hashes();
         cy.get('.moj-pagination__item').each(($e1, index) => {
