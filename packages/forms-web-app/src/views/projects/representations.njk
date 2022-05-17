@@ -56,7 +56,7 @@
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
 
     {% elseif representations.length == 0 and queryUrl != '' %}
-      <p style="govuk-body" data-cy="no-docs-text">
+      <p style="govuk-body" data-cy="no-comments-found">
         No comments were found matching your search term and filters.
       </p>
       <p style="govuk-body">
@@ -66,7 +66,7 @@
         <a style="govuk-link" href="/projects/{{ caseRef }}/representations" data-cy="clear-search">Clear search and filters</a>
       </p>
     {% elseif representations.length == 0 %}
-      <p class="govuk-body" data-cy="no-reg-comments">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+      <p class="govuk-body" data-cy="no-comments-available">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
       <p class="govuk-body">
         <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
       </p>
@@ -79,6 +79,7 @@
     <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
       {{ govukCheckboxes({
         idPrefix: "type",
+        classes: "govuk-checkboxes--small",
         name: "type",
         fieldset: {
           legend: {
