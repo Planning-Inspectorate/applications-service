@@ -4,42 +4,36 @@
 {% set activeProjectLink = 'representations' %}
 
 {% block columnTwo %}
+  <div class="govuk-grid-row">
 
-  <span class="govuk-caption-l">Representation by</span>
-  <h1 class="govuk-heading-l">
-    {{ RepFrom }}
-  </h1>
-  <p class="govuk-body">
-    {{ RepresentationRedacted }}
-  </p>
-  <p class="govuk-body-s govuk-grid-column-one-third">
-    {{ DateRrepReceived | date }}
-  </p>
-  <p class="govuk-body-s govuk-grid-column-two-thirds">
-    {{ RepFrom }}
-  </p>
-  <p class="govuk-body-s govuk-grid-column-two-thirds">
-    {% if Attachments %}
-        Contains attachment(s)
-      {% endif %}
-  </p>
-  {# {% if Attachments %}
-    <p class="govuk-body pins-govuk-result-list__item">
-      <h1 class="govuk-heading-m">Attachment(s)</h1>
-    </p>
-  {% endif %} #}
+    <div class="pins-govuk-result-list">
+      <span class="govuk-caption-l">Representation by</span>
+      <h1 class="govuk-heading-l">
+        {{ RepFrom }}
+      </h1>
+      <p class="govuk-body">
+        {{ RepresentationRedacted }}
+      </p>
 
-  {# <div class="govuk-grid-row document-metadata">
-    <div class="govuk-grid-column-one-third">
-      {{ DateRrepReceived | date }}
-    </div>
-    <div class="govuk-grid-column-two-thirds">
-      {{ RepFrom }}
-    </div>
-    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-grid-row document-metadata">
+        <div class="govuk-grid-column-one-third">
+          {{ DateRrepReceived | date }}
+        </div>
+        <div class="govuk-grid-column-one-third">
+          {{ RepFrom }}
+        </div>
+        <div class="govuk-grid-column-one-third">
+          {% if Attachments %} Contains attachment(s) {% endif %}
+        </div>
+      </div>
       {% if Attachments %}
-        Contains attachment(s)
+        <div class="pins-govuk-result-list__item">
+          <h1 class="govuk-heading-m">Attachment(s)</h1>
+          <a class="govuk-link pins-govuk-result-list__item-title" href="{{ Attachments }}" target="_blank">
+            {{ Attachments  }} ( {{ formatMimeType }}, {{ formatBytes }})
+            </a>
+        </div>
       {% endif %}
     </div>
-  </div> #}
+  </div>
 {% endblock %}
