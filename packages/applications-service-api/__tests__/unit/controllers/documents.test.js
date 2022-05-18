@@ -396,7 +396,7 @@ describe('getDocuments', () => {
     await getDocuments(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
     expect(res._getData()).toEqual(
-      `Problem getting documents for project ENF0000F \n TypeError: Cannot read property 'rows' of null`
+      `Problem getting documents for project ENF0000F \n TypeError: Cannot read properties of null (reading 'rows')`
     );
   });
 
