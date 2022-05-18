@@ -79,3 +79,15 @@ Then('I am given the option to clear the search to list all available registrati
   cy.get('a[data-cy="clear-search"]')
     .should('contain.text', "Clear search and filters");
 });
+
+And('I click on Apply filters button', () => {
+    regComments.clickApplyFilterButton();
+})
+
+And('I select {string} checkbox', (checkBoxName) => {
+    regComments.selectCheckBox(checkBoxName);
+})
+
+Then('I can verify that below comments were returned', (table) => {
+    regComments.verifyResultsReturned(table);
+})

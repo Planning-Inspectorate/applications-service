@@ -60,5 +60,24 @@ class PO_RegComments {
         cy.get('.moj-pagination__item').should('not.exist');
     }
 
+    clickApplyFilterButton() {
+        cy.get('[data-cy="apply-filter-button"]').click()
+    }
+
+    selectCheckBox(checkBoxName) {
+        cy.contains('label', checkBoxName).invoke('attr', 'for').then((id) => {
+            cy.get('#' + id).click();
+        })
+    }
+
+    verifyResultsReturned(table) {
+        const contents = table.hashes();
+        cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
+            const actualText = $e1.text();
+            const expectedText = contents[index].Comments;
+            expect(actualText.replace(/\s/g, "").trim()).to.contain(expectedText.replace(/\s/g, "").trim());
+        })
+    }
+
 }
 export default PO_RegComments;
