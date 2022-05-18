@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="24" failures="0" errors="0" time="3.972">
+  <testsuite name="encrypt" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="1.351" tests="2">
+    <testcase classname="encrypt should encrypt a value" name="encrypt should encrypt a value" time="0.004">
+    </testcase>
+    <testcase classname="decrypt should decrypt a value" name="decrypt should decrypt a value" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="sendIPRegistrationConfirmationEmailToIP" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="1.481" tests="2">
+    <testcase classname="sendIPRegistrationConfirmationEmailToIP should send an email" name="sendIPRegistrationConfirmationEmailToIP should send an email" time="0.004">
+    </testcase>
+    <testcase classname="sendMagicLinkToIP should send an email" name="sendMagicLinkToIP should send an email" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="getApplication" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="1.772" tests="3">
+    <testcase classname="getApplication should get application from mock" name="getApplication should get application from mock" time="0.006">
+    </testcase>
+    <testcase classname="getApplication should return application not found" name="getApplication should return application not found" time="0.004">
+    </testcase>
+    <testcase classname="getAllApplications should get all applications from mock" name="getAllApplications should get all applications from mock" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="getInterestedParty" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="2.195" tests="10">
+    <testcase classname="getInterestedParty should get interested party from mock" name="getInterestedParty should get interested party from mock" time="0.006">
+    </testcase>
+    <testcase classname="getInterestedParty should return interested party not found" name="getInterestedParty should return interested party not found" time="0.01">
+    </testcase>
+    <testcase classname="insertInterestedParty should create an interested party on own behalf" name="insertInterestedParty should create an interested party on own behalf" time="0.002">
+    </testcase>
+    <testcase classname="insertInterestedParty should create an interested party on organisation behalf" name="insertInterestedParty should create an interested party on organisation behalf" time="0.002">
+    </testcase>
+    <testcase classname="insertInterestedParty should create an interested party on agent behalf" name="insertInterestedParty should create an interested party on agent behalf" time="0.001">
+    </testcase>
+    <testcase classname="updateComments should update comments for party" name="updateComments should update comments for party" time="0.002">
+    </testcase>
+    <testcase classname="confirmEmailAddress on behalf of individual should retrieve an interested party by token from mock" name="confirmEmailAddress on behalf of individual should retrieve an interested party by token from mock" time="0.005">
+    </testcase>
+    <testcase classname="confirmEmailAddress on behalf of individual should return interested party not found when token has been tampered with" name="confirmEmailAddress on behalf of individual should return interested party not found when token has been tampered with" time="0.001">
+    </testcase>
+    <testcase classname="confirmEmailAddress on behalf of individual should return interested party not found when email does not match" name="confirmEmailAddress on behalf of individual should return interested party not found when email does not match" time="0.002">
+    </testcase>
+    <testcase classname="confirmEmailAddress on behalf of organisation should retrieve an interested party by token from mock" name="confirmEmailAddress on behalf of organisation should retrieve an interested party by token from mock" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="getDocuments" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="2.285" tests="4">
+    <testcase classname="getDocuments should get documents from mock" name="getDocuments should get documents from mock" time="0.007">
+    </testcase>
+    <testcase classname="getDocuments should return documents not found" name="getDocuments should return documents not found" time="0.004">
+    </testcase>
+    <testcase classname="getDocuments should return internal server error" name="getDocuments should return internal server error" time="0.003">
+    </testcase>
+    <testcase classname="getDocuments should get documents from mock by search criteria" name="getDocuments should get documents from mock by search criteria" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="routes/applications" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="2.401" tests="1">
+    <testcase classname="routes/applications should define the expected routes" name="routes/applications should define the expected routes" time="0.019">
+    </testcase>
+  </testsuite>
+  <testsuite name="routes/documents" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="2.397" tests="1">
+    <testcase classname="routes/documents should define the expected routes" name="routes/documents should define the expected routes" time="0.025">
+    </testcase>
+  </testsuite>
+  <testsuite name="routes/interested-party" errors="0" failures="0" skipped="0" timestamp="2022-04-05T14:21:36" time="2.492" tests="1">
+    <testcase classname="routes/interested-party should define the expected routes" name="routes/interested-party should define the expected routes" time="0.017">
+    </testcase>
+  </testsuite>
+</testsuites>

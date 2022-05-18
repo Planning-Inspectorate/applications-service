@@ -395,8 +395,8 @@ describe('getDocuments', () => {
     const res = httpMocks.createResponse();
     await getDocuments(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(res._getData()).toEqual(
-      `Problem getting documents for project ENF0000F \n TypeError: Cannot read property 'rows' of null`
+    expect(res._getData()).toContain(
+      `Problem getting documents for project ENF0000F \n TypeError:`
     );
   });
 

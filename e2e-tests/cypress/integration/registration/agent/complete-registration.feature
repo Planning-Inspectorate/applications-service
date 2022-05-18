@@ -18,7 +18,7 @@ Feature: Complete registration as Agent representing a person journey
             | Address                                     | \nAddress Line 1\n        \n        \n        NE27 0BB\n        United Kingdom\n         | Change your address                                |
             | Email address                               | testpins2@gmail.com                                                                      | Change your email address                          |
             | Telephone number                            | 123456789                                                                                | Change your telephone number                       |
-            | Who are you representing                    | A person                                                                                 | Change Change who are you registering for          |
+            | Who are you representing                    | A person                                                                                 | Change who are you representing for                 |
             | The name of the person you are representing | Representee FirstName Representee LastName                                               | Change the name of the person you are representing |
             | Are they 18 or over?                        | Yes                                                                                      | Change if they are over 18                         |
             | Their address                               | Representee Address Line 1\n        \n        \n        NE27 0BB\n        United Kingdom | Change their address                               |
