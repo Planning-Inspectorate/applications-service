@@ -42,8 +42,11 @@
                 <div class="govuk-grid-column-one-third" data-cy="published-date">
                   {{ representation.DateRrepReceived | date }}
                 </div>
-                <div class="govuk-grid-column-two-thirds" data-cy="published-stage">
+                <div class="govuk-grid-column-one-third" data-cy="published-stage">
                   {{ representation.RepFrom }}
+                </div>
+                <div class="govuk-grid-column-one-third" data-cy="contains-attachments">
+                  {% if representation.Attachments %} Contains attachment(s) {% endif %}
                 </div>
               </div>
             </li>
