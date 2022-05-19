@@ -5,8 +5,10 @@ const {
 } = require('../../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
+const { getRepresentation } = require('../../../../src/services/representation.service');
 
 jest.mock('../../../../src/lib/application-api-wrapper');
+jest.mock('../../../../src/services/representation.service');
 
 describe('controllers/projects/representations', () => {
   let req;
@@ -101,6 +103,29 @@ describe('controllers/projects/representations', () => {
       searchTerm: undefined,
       queryUrl: '',
       commentsTypeFilterItems: [],
+    });
+  });
+
+  it('should getRepresentation and return the correct template', async () => {
+    getProjectData.mockImplementation((applicationCaseRef) =>
+      Promise.resolve({
+        resp_code: 200,
+        data: { CaseReference: applicationCaseRef, ProjectName: 'ABC' },
+      })
+    );
+    getRepresentation.mockImplementation(() =>
+      Promise.resolve({
+        data: { ...representations[0] },
+      })
+    );
+    await controller.getRepresentation(req, res);
+    expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATION, {
+      projectName: 'ABC',
+      caseRef,
+      RepFrom: 'Members of the Public/Businesses',
+      RepresentationRedacted: 'Some comments',
+      DateRrepReceived: '2020-02-19T00:00:00.000Z',
+      Attachments: 'WS010006-000002',
     });
   });
 });
