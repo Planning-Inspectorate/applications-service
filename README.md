@@ -8,6 +8,23 @@ Monorepo for all Applications Service services and infrastructure
 - `make serve`
 - Go to [localhost:9004](http://localhost:9004)
 
+## Architecture
+
+The Applications Service is featured within the ODT Architecture diagram on Confluence here:
+https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/907870332/Current+ODT+Architecture 
+
+The following diagrams provide a more detailed view of the immediate system context 
+and containers within the Applications Service.
+
+### C1: System Context
+
+![PINS Applications Architecture C1 Context!](doc/images/pins-applications-c1-context.drawio.png "PINS Applications Architecture C1 Context")
+
+### C2: Containers
+
+![PINS Applications Architecture C1 Context!](doc/images/pins-applications-c2-context.drawio.png "PINS Applications Architecture C1 Context")
+
+
 ## Pre-requisites
 
 - [NodeJS v14](https://nodejs.org/en/download/)
