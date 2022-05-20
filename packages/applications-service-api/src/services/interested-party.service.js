@@ -23,7 +23,7 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
 
   if (party.therep !== comments) {
     logger.debug(`Update IP comments for party id ${ID} as ${comments}`);
-    await db.InterestedParty.update({ therep: JSON.stringify(comments) }, { where: { ID } });
+    await db.InterestedParty.update({ therep: comments }, { where: { ID } });
   }
 
   const caseRef = party.dataValues.caseref;

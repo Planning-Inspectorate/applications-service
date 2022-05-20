@@ -116,22 +116,64 @@ Feature: Registration comments page
         Then I verify text "Showing 81 to 100 of 204 results" is present on the page
         Then I verify that only "20" results present on each page
 
-#ASB-289
-#Feature: Search registration comments
-#    As a user
-#    I want to be able to search by text
-#    So that I can find relevant registration comments
+    #ASB-289
+    #Feature: Search registration comments
+    #    As a user
+    #    I want to be able to search by text
+    #    So that I can find relevant registration comments
 
-  @ASB-289
-  Scenario: Search finds matching registration comments
-    Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
-    When I search for comments containing "joe"
-    Then a list of registration comments with metadata containing "joe" is provided
-    And the list is sorted by received date, newest first
+    @ASB-289
+    Scenario: Search finds matching registration comments
+        Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
+        When I search for comments containing "joe"
+        Then a list of registration comments with metadata containing "joe" is provided
+        And the list is sorted by received date, newest first
 
-  @ASB-289 @no-match-scenario
-  Scenario: Search find no matching registration comments
-    Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
-    When I search for comments containing "xyz"
-    Then I am informed that no results were found
-    And I am given the option to clear the search to list all available registration comments
+    @ASB-289 @no-match-scenario
+    Scenario: Search find no matching registration comments
+        Given I have navigated to registration comments for the "St James Barton Giant Wind Turbine" project
+        When I search for comments containing "xyz"
+        Then I am informed that no results were found
+        And I am given the option to clear the search to list all available registration comments
+
+    Scenario: Filter by Registration type
+        Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
+        When I click on "Registration comments" link
+        And I select "Parish Councils (3)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below comments were returned
+            | Comments                                                                                                                 |
+            | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application 20 April 2022 Parish Councils |
+            | Frosty Flights (Frosty Flights) Some comments 01 August 2021 Parish Councils                                             |
+            | Frosty Fliers (Frosty Fliers ) Some comments 14 March 2021 Parish Councils                                               |
+
+    Scenario: Search by text and then filter by registration type
+        Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
+        When I click on "Registration comments" link
+        When I search for comments containing "joe"
+        And I select "Local Authorities (1)" checkbox
+        And I click on Apply filters button
+        Then I can verify that below comments were returned
+            | Comments                                                                                                                                                                                                                                                          |
+            | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more 15 May 2022Local Authorities |
+
+    Scenario: Filter by representative and then search by text
+        Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
+        When I click on "Registration comments" link
+        And I select "Members of the Public/Businesses (43)" checkbox
+        And I click on Apply filters button
+        When I search for comments containing "Chris"
+        Then I can verify that below comments were returned
+            | Comments                                                                   |
+            | Chris Cundill Some comments 04 July 2022 Members of the Public/Businesses  |
+            | Chris Some comments 17 March 2021 Members of the Public/Businesses         |
+            | Chris Cundill Some comments 16 March 2021 Members of the Public/Businesses |
+
+    Scenario: No matching registration comments using filter by representative then search by text
+        Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
+        When I click on "Registration comments" link
+        And I select "Members of the Public/Businesses (43)" checkbox
+        And I click on Apply filters button
+        When I search for comments containing "communication"
+        Then I am informed that no results were found
+        And I am given the option to clear the search to list all available registration comments
