@@ -57,6 +57,7 @@ describe('controllers/projects/representations', () => {
       DateRrepReceived: '2020-02-19T00:00:00.000Z',
       DoNotPublish: null,
       Attachments: 'WS010006-000002',
+      attachments: [],
     },
   ];
 
@@ -125,7 +126,7 @@ describe('controllers/projects/representations', () => {
       RepFrom: 'Members of the Public/Businesses',
       RepresentationRedacted: 'Some comments',
       DateRrepReceived: '2020-02-19T00:00:00.000Z',
-      Attachments: 'WS010006-000002',
+      attachments: [],
     });
   });
 });
