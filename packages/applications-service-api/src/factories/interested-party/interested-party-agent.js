@@ -138,12 +138,7 @@ module.exports = class OrgIP extends InterestedParty {
       },
     };
 
-    let comments;
-    try {
-      comments = JSON.parse(therep);
-    } catch (e) {
-      comments = [{ topic: '', comment: therep }];
-    }
+    const comments = therep;
     return {
       personal_data: { ...personalData },
       comments,
