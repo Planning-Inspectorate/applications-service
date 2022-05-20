@@ -62,7 +62,7 @@ exports.getRepresentation = async (req, res) => {
       RepFrom: representation.data.RepFrom,
       RepresentationRedacted: representation.data.RepresentationRedacted,
       DateRrepReceived: representation.data.DateRrepReceived,
-      Attachments: representation.data.Attachments,
+      attachments: representation.data.attachments,
     });
   }
 };

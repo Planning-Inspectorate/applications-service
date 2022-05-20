@@ -23,15 +23,21 @@
           {{ RepFrom }}
         </div>
         <div class="govuk-grid-column-one-third">
-          {% if Attachments %} Contains attachment(s) {% endif %}
+          {% if attachments | length > 0 %} Contains attachment(s) {% endif %}
         </div>
       </div>
-      {% if Attachments %}
+      {% if attachments | length > 0 %}
         <div class="pins-govuk-result-list__item">
           <h1 class="govuk-heading-m">Attachment(s)</h1>
-          <a class="govuk-link pins-govuk-result-list__item-title" href="{{ Attachments }}" target="_blank">
-            {{ Attachments  }} ( {{ formatMimeType }}, {{ formatBytes }})
+
+          {% for attachment in attachments %}
+            <a class="govuk-link pins-govuk-result-list__item-title" href="{{ attachment.path }}" target="_blank">
+              {{ attachment.description or attachment.personal_name  }} ({{ attachment.mime | formatMimeType }}, {{ attachment.size | formatBytes }}) (opens in new window)
             </a>
+          {% endfor %}
+          {# <a class="govuk-link pins-govuk-result-list__item-title" href="{{ Attachments }}" target="_blank">
+            {{ Attachments  }} ( {{ formatMimeType }}, {{ formatBytes }})
+            </a> #}
         </div>
       {% endif %}
     </div>

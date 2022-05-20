@@ -10,6 +10,8 @@ const {
   getFilters,
 } = require('../services/representation.service');
 
+const { getDocumentsByDataId } = require('../services/document.service');
+
 const ApiError = require('../error/apiError');
 
 module.exports = {
@@ -69,6 +71,10 @@ module.exports = {
       if (!representation) {
         throw ApiError.representationNotFound(id);
       }
+
+      const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
+      const attachments = await getDocumentsByDataId(dataIDs);
+      representation.dataValues.attachments = Object.values(attachments);
 
       res.status(StatusCodes.OK).send(representation);
     } catch (e) {
