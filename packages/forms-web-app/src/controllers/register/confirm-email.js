@@ -35,8 +35,7 @@ exports.postConfirmEmail = async (req, res) => {
     } else {
       const type = personal_data.behalf;
       req.session.comments = comments;
-      req.session.comment = comments;
-
+      req.session.comment = comments[0].comment;
       if (type === 'me') {
         req.session.mySelfRegdata = personal_data;
         res.redirect(`/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`);

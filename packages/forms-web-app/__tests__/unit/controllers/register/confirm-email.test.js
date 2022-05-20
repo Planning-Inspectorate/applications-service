@@ -21,7 +21,10 @@ describe('controllers/register/confirm-email', () => {
     jest.resetAllMocks();
 
     authenticateToken.mockImplementation(() =>
-      Promise.resolve({ resp_code: 200, data: { personal_data: { behalf: 'me' }, comments: [] } })
+      Promise.resolve({
+        resp_code: 200,
+        data: { personal_data: { behalf: 'me' }, comments: [{ topic: '', comment: '' }] },
+      })
     );
   });
 
@@ -55,7 +58,7 @@ describe('controllers/register/confirm-email', () => {
       authenticateToken.mockImplementation(() =>
         Promise.resolve({
           resp_code: 200,
-          data: { personal_data: { behalf: 'them' }, comments: [] },
+          data: { personal_data: { behalf: 'them' }, comments: [{ topic: '', comment: '' }] },
         })
       );
       await confirmEmailController.postConfirmEmail(mockRequest, res);
@@ -75,7 +78,7 @@ describe('controllers/register/confirm-email', () => {
       authenticateToken.mockImplementation(() =>
         Promise.resolve({
           resp_code: 200,
-          data: { personal_data: { behalf: 'you' }, comments: [] },
+          data: { personal_data: { behalf: 'you' }, comments: [{ topic: '', comment: '' }] },
         })
       );
       await confirmEmailController.postConfirmEmail(mockRequest, res);
