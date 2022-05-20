@@ -80,12 +80,7 @@ module.exports = class OwnIP extends InterestedParty {
       email,
       telephone,
     };
-    let comments;
-    try {
-      comments = JSON.parse(therep);
-    } catch (e) {
-      comments = [{ topic: '', comment: therep }];
-    }
+    const comments = therep;
     return {
       personal_data: { ...personalData },
       comments,

@@ -52,7 +52,7 @@ const ipDataOwnBehalf = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep: '[{"type":"Noise","comment":"I dont like noise either"}]',
+  therep: 'I dont like noise either',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
@@ -76,12 +76,7 @@ const ipDataOwnBehalfResult = {
     email: 'david.white@planninginspectorate.gov.uk',
     telephone: '0303 111 111',
   },
-  comments: [
-    {
-      type: 'Noise',
-      comment: 'I dont like noise either',
-    },
-  ],
+  comments: 'I dont like noise either',
   submissionPeriodClosed: false,
   projectData: {
     ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
@@ -133,7 +128,7 @@ const ipDataOrgBehalf = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep: '[{"type":"Noise","comment":"I dont like noise either"}]',
+  therep: 'I dont like noise either',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
@@ -159,12 +154,7 @@ const ipDataOrgBehalfResult = {
     email: 'Mr.Bean@MinistryofCoffeeandSocialAffairs.gov.uk',
     telephone: '0132232432',
   },
-  comments: [
-    {
-      type: 'Noise',
-      comment: 'I dont like noise either',
-    },
-  ],
+  comments: 'I dont like noise either',
   submissionPeriodClosed: false,
   projectData: {
     ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
@@ -370,12 +360,7 @@ describe('updateComments', () => {
         ID: '30000120',
       },
       body: {
-        comments: [
-          {
-            type: 'Traffic',
-            comment: "I don't like traffic",
-          },
-        ],
+        comments: "I don't like traffic",
       },
     });
 
