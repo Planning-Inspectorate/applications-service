@@ -11,6 +11,8 @@ const {
   getRepresentationById,
 } = require('../../../src/services/representation.service');
 
+const { getDocumentsByDataId } = require('../../../src/services/document.service');
+
 const mockData = {
   count: 1,
   rows: [
@@ -89,6 +91,7 @@ jest.mock('../../../src/lib/config.js', () => ({
 }));
 
 jest.mock('../../../src/services/representation.service');
+jest.mock('../../../src/services/document.service');
 
 getFilters.mockImplementation(() => Promise.resolve([]));
 
@@ -104,9 +107,13 @@ getRepresentationsForApplication.mockImplementation((applicationId) => {
 
 getRepresentationById.mockImplementation((id) => {
   if (id === 2) {
-    return Promise.resolve(mockData.rows[0]);
+    return Promise.resolve({ dataValues: mockData.rows[0] });
   }
   return Promise.resolve(null);
+});
+
+getDocumentsByDataId.mockImplementation(() => {
+  return Promise.resolve({ 0: {} });
 });
 
 describe('getRepresentationsForApplication', () => {
@@ -118,21 +125,18 @@ describe('getRepresentationsForApplication', () => {
         type: 'abc',
       },
     });
-
     const res = httpMocks.createResponse();
     await getRepresentations(req, res);
     const data = res._getData();
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
     expect(data).toEqual(returnData);
   });
-
   it('should return an empty list if no representations found', async () => {
     const req = httpMocks.createRequest({
       query: {
         applicationId: 'EN000000',
       },
     });
-
     const res = httpMocks.createResponse();
     await getRepresentations(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
@@ -147,14 +151,12 @@ describe('getRepresentationsForApplication', () => {
       },
     });
   });
-
   it('should return internal server error', async () => {
     const req = httpMocks.createRequest({
       query: {
         applicationId: 'ENF0000F',
       },
     });
-
     const res = httpMocks.createResponse();
     await getRepresentations(req, res);
     expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -174,7 +176,7 @@ describe('getRepresentationById', () => {
     await getRepresentation(req, res);
     const data = res._getData();
     expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual(returnData.representations[0]);
+    expect(data.dataValues).toEqual({ ...returnData.representations[0], attachments: [{}] });
   });
 
   it('should return representation not found', async () => {

@@ -20,7 +20,7 @@
         <ul class="pins-govuk-result-list">
           {% for representation in representations %}
             <li class="pins-govuk-result-list__item">
-              <a href="#" class="govuk-link pins-govuk-result-list__item-title">
+              <a href="representations/{{ representation.ID  }}" class="govuk-link pins-govuk-result-list__item-title">
                 {% if representation.Representative %}
                   {{ representation.Representative  }}
                   {% if representation.PersonalName %}
@@ -35,15 +35,18 @@
               <p class="pins-govuk-result-list__item-description ">
                   {{ representation.RepresentationRedacted | truncate(200) }}
                   {% if representation.RepresentationRedacted.length > 200 %}
-                    <a href="#" class="govuk-link">Read more</a>
+                    <a href="representations/{{ representation.ID  }}" class="govuk-link">Read more</a>
                   {% endif %}
               </p>
               <div class="govuk-grid-row document-metadata">
                 <div class="govuk-grid-column-one-third" data-cy="published-date">
                   {{ representation.DateRrepReceived | date }}
                 </div>
-                <div class="govuk-grid-column-two-thirds" data-cy="published-stage">
+                <div class="govuk-grid-column-one-third" data-cy="published-stage">
                   {{ representation.RepFrom }}
+                </div>
+                <div class="govuk-grid-column-one-third" data-cy="contains-attachments">
+                  {% if representation.Attachments %} Contains attachment(s) {% endif %}
                 </div>
               </div>
             </li>

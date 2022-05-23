@@ -13,6 +13,7 @@ router.get('/', projectSearchController.getProjectList);
 router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 router.get('/recommendations', recommendationsController.getRecommendations);
 router.get('/timetable', timetableController.getTimetable);
+router.get('/:case_ref/representations/:id', representationsController.getRepresentation);
 router.get('/:case_ref/representations', representationsController.getRepresentations);
 router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
 

@@ -5,6 +5,7 @@ const {
   getProjectData,
   getAllProjectList,
   searchDocumentList,
+  getRepresentationById,
 } = require('../../../src/lib/application-api-wrapper');
 
 const config = require('../../../src/config');
@@ -77,6 +78,14 @@ describe('lib/application-api-wrapper', () => {
       } catch (e) {
         expect(e.toString()).toEqual('Error: Internal server error');
       }
+    });
+
+    describe('getRepresentationById', () => {
+      it(`should call the expected URL`, async () => {
+        fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
+        await getRepresentationById(9);
+        expect(fetch.mock.calls[0][0]).toEqual('http://fake.url/api/v1/representations/9');
+      });
     });
   });
 });

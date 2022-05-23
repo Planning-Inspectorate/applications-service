@@ -22,6 +22,7 @@ describe('lib/views', () => {
         PROJECTS: 'projects/examination',
         PROJECT_TIMELINE: 'projects/project-timeline',
         DOCUMENTS: 'projects/documents',
+        REPRESENTATION: 'projects/representation',
         REPRESENTATIONS: 'projects/representations',
         TIMETABLE: 'projects/timetable',
         ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',

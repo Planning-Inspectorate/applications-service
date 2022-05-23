@@ -125,3 +125,7 @@ exports.authenticateToken = async (token, email) => {
     body: email,
   });
 };
+
+exports.getRepresentationById = async (id) => {
+  return handler('getRepresentationById', `/api/v1/representations/${id}`);
+};

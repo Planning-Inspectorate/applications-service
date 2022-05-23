@@ -152,8 +152,18 @@ const getFilters = async (filter, caseRef, classification) => {
   return filters;
 };
 
+const getDocumentsByDataId = async (dataIDs) => {
+  const documents = await db.Document.findAll({
+    where: {
+      dataID: { [Op.in]: dataIDs },
+    },
+  });
+  return documents;
+};
+
 module.exports = {
   getDocuments,
   getOrderedDocuments,
   getFilters,
+  getDocumentsByDataId,
 };
