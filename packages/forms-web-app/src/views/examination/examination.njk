@@ -45,7 +45,9 @@
             to have your say. Registration will close at 23:59 on
             <strong>{{ dateOfClosure }}</strong>.
           </p>
-          <a href="/register-have-your-say/{{ appData.CaseReference }}" class="govuk-button">Register to have your say</a>
+          {% if periodOpen %}
+            <a href="/register-have-your-say/{{ appData.CaseReference }}" class="govuk-button">Register to have your say</a>
+          {% endif %}
           <p class="govuk-body">
             <a class="govuk-link" href="/having-your-say-guide"
             >Find out more about registering to have your say</a>.

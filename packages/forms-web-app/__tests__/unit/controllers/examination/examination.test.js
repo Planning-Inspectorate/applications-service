@@ -28,6 +28,9 @@ describe('controllers/examination/examination', () => {
         appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
         stage: undefined,
         dateOfClosure: 'Sunday 02 February 2020',
+        caseRef: undefined,
+        periodOpen: false,
+        projectName: undefined,
       });
     });
   });
