@@ -33,11 +33,13 @@ any authentication):
 
 
 #### Test data
+From the project root folder run `make install` and then `make serve` which will spin up the application against `localhost:9004`
 
+Then navigate to `e2e-tests` folder.
 
-From the `e2e-tests` folder, the tests can be run locally setting the delay period with commands below
+All the features were tagged with `@testSuite` tag.
 
-to run all the tests in headed mode using `@testSuite` tag:
+to run all the tests in headed chrome mode execute below command:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@testSuite"
 ```
@@ -58,8 +60,15 @@ or like this to run all feature files in a specific directory:
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 --spec "cypress/integration/registration/myself/**/*.feature"
 ```
 
-accessibility testing is integrated along with the acceptance tests. It has been commented out atm until the accessibility issues were resolved. To run accessibility testing uncomment below code from assertUserOnThePage.js file. For every page we assert title and heading and along with that axe will be run against that page to find out accessibility violations:
+#### Accessibility Testing
+
+Accessibility testing is integrated into acceptance test suite. It has been commented out atm until the accessibility issues were resolved. 
+
+To run accessibility testing uncomment below code from `assertUserOnThePage.js` file. 
+
 ```
  cy.checkPageA11y({
     });
 ```
+
+Acceptance Tests were written such that we assert page title and heading for every page and along with that assertion we incorporated axe run against that page to find out accessibility violations.
