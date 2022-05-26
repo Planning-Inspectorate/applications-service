@@ -91,3 +91,15 @@ And('I select {string} checkbox', (checkBoxName) => {
 Then('I can verify that below comments were returned', (table) => {
     regComments.verifyResultsReturned(table);
 })
+
+And('I click on {int} read more link', (linkNum) => {
+    regComments.clickOnReadMoreLink(linkNum);
+})
+
+Then('I verify below comment is displayed', (table) => {
+    regComments.verifyCommentIsPresent(table);
+})
+
+Then('I click on back link', () => {
+    cy.clickOnBackLink();
+})

@@ -35,8 +35,9 @@ any authentication):
 #### Test data
 
 
-From the `e2e-tests` folder, the tests can be run locally setting the delay period with commands like this for 
-to run all the tests use `@testSuite` tag:
+From the `e2e-tests` folder, the tests can be run locally setting the delay period with commands below
+
+to run all the tests in headed mode using `@testSuite` tag:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@testSuite"
 ```
@@ -52,7 +53,13 @@ or like this to select a specific feature file:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 --spec cypress/integration/register-type-of-party.feature
 ```
-or like this to run feature files in a specific directory:
+or like this to run all feature files in a specific directory:
 ```
 node_modules/cypress/bin/cypress run --headed -b chrome --env demoDelay=1000 --spec "cypress/integration/registration/myself/**/*.feature"
+```
+
+accessibility testing is integrated along with the acceptance tests. It has been commented out atm until the accessibility issues were resolved. To run accessibility testing uncomment below code from assertUserOnThePage.js file. For every page we assert title and heading and along with that axe will be run against that page to find out accessibility violations:
+```
+ cy.checkPageA11y({
+    });
 ```

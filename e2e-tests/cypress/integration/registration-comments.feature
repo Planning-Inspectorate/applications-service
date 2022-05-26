@@ -177,3 +177,25 @@ Feature: Registration comments page
         When I search for comments containing "communication"
         Then I am informed that no results were found
         And I am given the option to clear the search to list all available registration comments
+
+    Scenario: Option to ‘Read more’ on individual comments, Click ‘Read more’ link, View individual registration comments no attachments, navigate back to registration comments page
+        Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
+        When I click on "Registration comments" link
+        And I click on 1 read more link
+        Then I verify below comment is displayed
+            | Data                                                                                                                                                                                                                                                                                                                                    |
+            | Representation by Members of the Public/Businesses I think Joe Stipliani's should find somewhere else to build their new giant wind turbine. The turbines will be an unsightly addition to the view from the road on which I live. I'm concerned that the turbine could fall onto traffic. 16 May 2022 Members of the Public/Businesses |
+        And I click on back link
+        Then I verify text "Showing 1 to 20 of 48 results" is present on the page
+
+    Scenario: navigate back to registration comments page after applying filters
+        Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
+        When I click on "Registration comments" link
+        And I select "Members of the Public/Businesses (43)" checkbox
+        And I click on Apply filters button
+        And I click on 1 read more link
+        Then I verify below comment is displayed
+            | Data                                                                                                                                                                                                                                                                                                                                    |
+            | Representation by Members of the Public/Businesses I think Joe Stipliani's should find somewhere else to build their new giant wind turbine. The turbines will be an unsightly addition to the view from the road on which I live. I'm concerned that the turbine could fall onto traffic. 16 May 2022 Members of the Public/Businesses |
+        And I click on back link
+
