@@ -1,3 +1,4 @@
+const moment = require('moment');
 const { Status } = require('../../utils/status');
 const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
@@ -9,7 +10,7 @@ exports.getExamination = async (req, res) => {
     const appData = response.data;
     const closureDate = appData.DateOfRelevantRepresentationClose;
     const dateOfClosure = closureDate ? formatDate(closureDate) : '';
-
+    const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closureDate);
     req.session.caseRef = req.params.case_ref;
     req.session.projectName = appData.ProjectName;
     req.session.appData = appData;
@@ -19,6 +20,7 @@ exports.getExamination = async (req, res) => {
       projectName: appData.ProjectName,
       dateOfClosure,
       stage: Status[appData.Stage],
+      periodOpen,
     });
   }
 };
