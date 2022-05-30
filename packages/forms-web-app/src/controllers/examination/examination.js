@@ -11,6 +11,7 @@ exports.getExamination = async (req, res) => {
     const closureDate = appData.DateOfRelevantRepresentationClose;
     const dateOfClosure = closureDate ? formatDate(closureDate) : '';
     const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closureDate);
+    req.session.isPeriodOpen = periodOpen;
     req.session.caseRef = req.params.case_ref;
     req.session.projectName = appData.ProjectName;
     req.session.appData = appData;

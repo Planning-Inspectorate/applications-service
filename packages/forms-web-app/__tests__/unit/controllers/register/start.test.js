@@ -37,6 +37,7 @@ describe('controllers/register/start', () => {
       await startController.getStart(req, res);
       expect(res.render).toHaveBeenCalledWith('register/start', {
         projectName: 'St James Barton Giant Wind Turbine',
+        periodOpen: true,
         closeDate: 'Sunday 01 September 2024',
       });
     });
@@ -66,6 +67,7 @@ describe('controllers/register/start', () => {
       await startController.getStart(req, res);
       expect(res.render).toHaveBeenCalledWith('register/start', {
         projectName: 'St James Barton Giant Wind Turbine',
+        periodOpen: true,
         closeDate: 'Sunday 01 September 2024',
       });
     });
