@@ -36,6 +36,7 @@ describe('lib/views', () => {
         COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully',
       },
       REGISTER: {
+        REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
         START: 'register/start',
         TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
         TYPE_OF_PARTY: 'register/who-registering-for',
