@@ -128,6 +128,20 @@ app.use(
 );
 app.use(fileUpload(config.fileUpload));
 
+function isProjectClosed(req, res, next) {
+  const { isPeriodOpen } = req.session;
+
+  if (
+    typeof isPeriodOpen !== 'undefined' &&
+    isPeriodOpen === false &&
+    req.url.includes('register/')
+  ) {
+    res.redirect('/register-have-your-say/registration-period-closed');
+  } else {
+    next();
+  }
+}
+app.use(isProjectClosed);
 // Routes
 app.use('/', routes);
 
