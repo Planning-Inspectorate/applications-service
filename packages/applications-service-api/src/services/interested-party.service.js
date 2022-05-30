@@ -8,11 +8,6 @@ const logger = require('../lib/logger');
 const MODE_DRAFT = 'DRAFT';
 const MODE_FINAL = 'FINAL';
 
-const getInterestedParty = async (caseRef) => {
-  const party = await db.InterestedParty.findOne({ where: { caseRef } });
-  return party;
-};
-
 const insertInterestedParty = async (interestedParty) => {
   const party = await db.InterestedParty.create(interestedParty);
   return party;
@@ -59,7 +54,6 @@ const getInterestedPartyById = async (ID) => {
 
 module.exports = {
   insertInterestedParty,
-  getInterestedParty,
   updateInterestedPartyComments,
   getInterestedPartyById,
 };

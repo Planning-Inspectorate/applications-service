@@ -3,7 +3,6 @@
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const {
-  getInterestedParty,
   createInterestedParty,
   updateComments,
   confirmEmailAddress,
@@ -278,41 +277,6 @@ jest.mock('../../../src/models', () => {
     Project,
   };
   return db;
-});
-
-describe('getInterestedParty', () => {
-  it('should get interested party from mock', async () => {
-    const req = httpMocks.createRequest({
-      params: {
-        caseRef: 'EN010009',
-      },
-    });
-
-    const res = httpMocks.createResponse();
-    await getInterestedParty(req, res);
-    const data = res._getData();
-    delete data.id;
-    delete data.createdAt;
-    delete data.updatedAt;
-    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual(ipDataOwnBehalf);
-  });
-
-  it('should return interested party not found', async () => {
-    const req = httpMocks.createRequest({
-      params: {
-        caseRef: 'EN000000',
-      },
-    });
-
-    const res = httpMocks.createResponse();
-    await getInterestedParty(req, res);
-    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-    expect(res._getData()).toEqual({
-      code: 404,
-      errors: ['Interested party for project EN000000 not found'],
-    });
-  });
 });
 
 describe('insertInterestedParty', () => {

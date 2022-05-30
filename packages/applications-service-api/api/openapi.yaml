@@ -74,29 +74,6 @@ paths:
           description: Something went wrong.
         default:
           description: Something went wrong.
-  '/api/v1/interested-party/{caseRef}':
-    get:
-      summary: Returns an existing interested party
-      description: Returns an existing interested party by case reference
-      tags:
-        - Interested Party
-      parameters:
-        - in: path
-          name: caseRef
-          example: 'EN010009'
-          required: true
-          schema:
-            type: string
-          description: Case reference
-      responses:
-        '200':
-          description: Returns an interested party
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InterestedParty'
-        '404':
-          description: The application could not be found
   '/api/v1/interested-party':
     post:
       summary: Creates an interested party

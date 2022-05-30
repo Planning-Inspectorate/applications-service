@@ -17,34 +17,6 @@ const {
 const ApiError = require('../error/apiError');
 
 module.exports = {
-  async getInterestedParty(req, res) {
-    const { caseRef } = req.params;
-
-    logger.debug(`Retrieving interested party by case reference ${caseRef} ...`);
-    try {
-      const document = await getInterestedPartyFromInterestedPartyApiService(caseRef);
-
-      if (document === null) {
-        throw ApiError.interestedPartyNotFound(caseRef);
-      }
-
-      logger.debug(`Interested party for projet ${caseRef} retrieved`);
-      res.status(StatusCodes.OK).send(document.dataValues);
-    } catch (e) {
-      if (e instanceof ApiError) {
-        logger.debug(e.message);
-        res.status(e.code).send({ code: e.code, errors: e.message.errors });
-        return;
-      }
-      /* istanbul ignore next */
-      logger.error(e.message);
-      /* istanbul ignore next */
-      res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .send(`Problem getting interested party for project ${caseRef} \n ${e}`);
-    }
-  },
-
   async createInterestedParty(req, res) {
     const { behalf, case_ref: caseref } = req.body;
     const interestedParty = IPFactory.createIP(behalf).get(req.body);
