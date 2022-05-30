@@ -1,4 +1,4 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/register-main.njk" %}
 
 {% block pageTitle %}
   The registration period has closed - Register to have your say about a national infrastructure project - National Infrastructure Planning
@@ -9,6 +9,14 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">The registration period for the {{ projectName }} project has closed</h1>
+      <p class="govuk-body">
+        You have missed the deadline to register have your say about {{ projectName}}.
+      </p>
+      <p class="govuk-body">
+        <a id="project-link" href="/register-have-your-say/{{ caseRef }}" class="govuk-link">
+          Go back to the project page
+        </a>
+      </p>
     </div>
   </div>
 {% endblock %}
