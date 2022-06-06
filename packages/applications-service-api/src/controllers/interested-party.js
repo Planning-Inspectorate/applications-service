@@ -7,7 +7,6 @@ const consts = require('../factories/interested-party/const');
 
 const {
   insertInterestedParty,
-  getInterestedParty: getInterestedPartyFromInterestedPartyApiService,
   updateInterestedPartyComments,
   getInterestedPartyById: getInterestedPartyFromInterestedPartyApiServiceById,
 } = require('../services/interested-party.service');
