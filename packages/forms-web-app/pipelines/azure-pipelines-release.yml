@@ -17,7 +17,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/2.0.2
+      ref: refs/tags/release/2.2.1
   pipelines:
     - pipeline: forms-web-app-ci
       source: forms-web-app CI
@@ -32,7 +32,7 @@ extends:
     deploymentStages:
       - name: Deploy
         deploymentSteps:
-          - template: ../steps/azure_web_app_deploy.yml
+          - template: ../steps/azure_web_app_slot_swap_deploy.yml
             parameters:
               appName: $(webAppName)
               appResourceGroup: $(resourceGroup)
