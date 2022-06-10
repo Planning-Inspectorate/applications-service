@@ -40,6 +40,8 @@ extends:
               azurecrName: $(azurecrName)
               repository: $(repository)
       - name: Deploy
+        dependsOn:
+          - Stage
         deploymentSteps:
           - template: ../steps/azure_web_app_slot_swap.yml
             parameters:
