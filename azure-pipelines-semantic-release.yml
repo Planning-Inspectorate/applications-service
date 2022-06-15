@@ -1,0 +1,16 @@
+trigger: none
+
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: test/semantic-release
+
+extends:
+  template: stages/wrapper_semantic_release.yml@templates
+  parameters:
+    environment: Dev
