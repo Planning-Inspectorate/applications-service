@@ -21,7 +21,6 @@
     "start:dev:client": "webpack --config webpack.dev.js --watch",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "format": "prettier --write './**/*.js'",
     "postinstall": "patch-package",
     "test": "jest --coverage --maxWorkers=4",
     "test:watch": "jest --watchAll --runInBand --coverage",
@@ -65,15 +64,12 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.14.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jest": "^24.4.0",
-    "eslint-plugin-prettier": "^3.4.1",
     "nodemon": "^2.0.12",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
     "pino-pretty": "^4.8.0",
-    "prettier": "^2.3.2",
     "webpack": "^5.52.0",
     "webpack-cli": "^4.8.0",
     "webpack-merge": "^5.8.0"
