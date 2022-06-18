@@ -1,66 +1,66 @@
 {
-    "myself": {
-        "case_ref": null,
-        "behalf": "me",
-        "full-name": null,
-        "over-18": null,
-        "address": {
-            "line1": null,
-            "line2": null,
-            "line3": null,
-            "postcode": null,
-            "country": null
-        },
-        "email": null,
-        "telephone": null
-    },
-    "org":{
-        "case_ref": null,
-        "behalf": "them",
-        "full-name": null,
-        "over-18": null,
-        "organisation-name": null,
-        "role": null,
-        "address": {
-            "line1": null,
-            "line2": null,
-            "line3": null,
-            "postcode": null,
-            "country": null
-        },
-        "email": null,
-        "telephone": null
-    },
-    "behalf":{
-        "case_ref": null,
-        "behalf": "you",
-        "representing": null,
-        "representee": {
-            "full-name": null,
-            "over-18": null,
-            "address": {
-                "line1": null,
-                "line2": null,
-                "line3": null,
-                "postcode": null,
-                "country": null
-            },
-            "email": null,
-            "telephone": null
-        },
-        "representor": {
-            "full-name": null,
-            "over-18": null,
-            "address": {
-                "line1": null,
-                "line2": null,
-                "line3": null,
-                "postcode": null,
-                "country": null
-            },
-            "email": null,
-            "telephone": null,
-            "organisation-name": null
-        }
-    }
+	"myself": {
+		"case_ref": null,
+		"behalf": "me",
+		"full-name": null,
+		"over-18": null,
+		"address": {
+			"line1": null,
+			"line2": null,
+			"line3": null,
+			"postcode": null,
+			"country": null
+		},
+		"email": null,
+		"telephone": null
+	},
+	"org": {
+		"case_ref": null,
+		"behalf": "them",
+		"full-name": null,
+		"over-18": null,
+		"organisation-name": null,
+		"role": null,
+		"address": {
+			"line1": null,
+			"line2": null,
+			"line3": null,
+			"postcode": null,
+			"country": null
+		},
+		"email": null,
+		"telephone": null
+	},
+	"behalf": {
+		"case_ref": null,
+		"behalf": "you",
+		"representing": null,
+		"representee": {
+			"full-name": null,
+			"over-18": null,
+			"address": {
+				"line1": null,
+				"line2": null,
+				"line3": null,
+				"postcode": null,
+				"country": null
+			},
+			"email": null,
+			"telephone": null
+		},
+		"representor": {
+			"full-name": null,
+			"over-18": null,
+			"address": {
+				"line1": null,
+				"line2": null,
+				"line3": null,
+				"postcode": null,
+				"country": null
+			},
+			"email": null,
+			"telephone": null,
+			"organisation-name": null
+		}
+	}
 }

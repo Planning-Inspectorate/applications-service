@@ -11,19 +11,19 @@ const fullNamePage = new PO_FullName();
 const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I have been asked to provide my email address', () => {
-  fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-  cy.clickSaveAndContinue();
-  cy.selectRadioYesOrNo('Yes');
-  cy.clickSaveAndContinue();
-  orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
-  cy.clickSaveAndContinue();
-  cy.assertUserOnThePage('What is your job title or volunteer role?');
-  jobTitlePage.enterTextIntoJobTitleField('Test job title');
-  cy.clickSaveAndContinue();
-  cy.assertUserOnThePage('what is your email address? organisation');
+	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.clickSaveAndContinue();
+	cy.selectRadioYesOrNo('Yes');
+	cy.clickSaveAndContinue();
+	orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
+	cy.clickSaveAndContinue();
+	cy.assertUserOnThePage('What is your job title or volunteer role?');
+	jobTitlePage.enterTextIntoJobTitleField('Test job title');
+	cy.clickSaveAndContinue();
+	cy.assertUserOnThePage('what is your email address? organisation');
 });
 
 When('I continue with the value {string} in the email field', (text) => {
-  emailAddressPage.enterTextIntoEmailField(text);
-  cy.clickSaveAndContinue();
+	emailAddressPage.enterTextIntoEmailField(text);
+	cy.clickSaveAndContinue();
 });

@@ -5,19 +5,19 @@ const fullNamePage = new PO_FullName();
 const orgYouWorkFor = new PO_OrgYouWorkFor();
 
 And('I have been asked what is the name of the organisation you work for', () => {
-  fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-  cy.clickSaveAndContinue();
+	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the organisation name field', (text) => {
-  orgYouWorkFor.enterTextIntoOrgNameField(text);
-  cy.clickSaveAndContinue();
+	orgYouWorkFor.enterTextIntoOrgNameField(text);
+	cy.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-  cy.clickOnBackLink();
+	cy.clickOnBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-  cy.assertUserOnThePage(pageName);
+	cy.assertUserOnThePage(pageName);
 });

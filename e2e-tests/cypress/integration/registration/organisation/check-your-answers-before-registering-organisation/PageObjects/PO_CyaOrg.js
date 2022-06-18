@@ -1,59 +1,64 @@
 class PO_CyaOrg {
+	assertDataOnPage(table) {
+		const data = table.hashes();
+		for (let index = 0; index < data.length; index++) {
+			cy.get('.govuk-summary-list__key')
+				.eq(index)
+				.should(($div) => {
+					const text = $div.text().replace('kr', '').replace('\xa0', '').trim();
+					expect(text).to.include(data[index].Column1);
+				});
+		}
+		for (let index = 0; index < data.length; index++) {
+			cy.get('.govuk-summary-list__value')
+				.eq(index)
+				.should(($div) => {
+					const text = $div.text().replace('kr', '').replace('\xa0', '').trim();
+					expect(text).to.include(data[index].Column2);
+				});
+		}
+		for (let index = 0; index < data.length; index++) {
+			cy.get('.govuk-summary-list__actions')
+				.eq(index)
+				.should(($div) => {
+					const text = $div.text().replace('kr', '').replace('\xa0', '').trim();
+					expect(text).to.include(data[index].Column3);
+				});
+		}
+	}
 
-    assertDataOnPage(table) {
-        const data = table.hashes()
-        for (let index = 0; index < data.length; index++) {
-            cy.get('.govuk-summary-list__key').eq(index).should(($div) => {
-                const text = $div.text().replace('kr', '').replace('\xa0', '').trim()
-                expect(text).to.include(data[index].Column1)
-              })
-        }
-        for (let index = 0; index < data.length; index++) {
-            cy.get('.govuk-summary-list__value').eq(index).should(($div) => {
-                const text = $div.text().replace('kr', '').replace('\xa0', '').trim()
-                expect(text).to.include(data[index].Column2)
-              })
-        }
-        for (let index = 0; index < data.length; index++) {
-            cy.get('.govuk-summary-list__actions').eq(index).should(($div) => {
-                const text = $div.text().replace('kr', '').replace('\xa0', '').trim()
-                expect(text).to.include(data[index].Column3)
-              })
-        }
-    }
-
-    clickOnChangeLink(linkType) {
-        switch(linkType) {
-            case "Who are you registering for?": 
-            cy.get('[data-cy="who-are-you"]').first().click();
-            break;
-            case "Full name": 
-            cy.get('[data-cy="full-name"]').last().click();
-            break;
-            case "Are you 18 or over?": 
-            cy.get('[data-cy="over-18"]').last().click();
-            break;
-            case "What is the name of your organisation or charity?": 
-            cy.get('[data-cy="organisation-name"]').last().click();
-            break;
-            case "What is your job title or volunteer role?": 
-            cy.get('[data-cy="volunteer-role"]').last().click();
-            break;
-            case "Address": 
-            cy.get('[data-cy="address"]').last().click();
-            break;
-            case "Email address": 
-            cy.get('[data-cy="email"]').last().click();
-            break;
-            case "Telephone number": 
-            cy.get('[data-cy="telephone"]').last().click();
-            break;
-            case "Your comments change": 
-            cy.get('[data-cy="comment"]').last().click();
-            break;
-            default: throw new Error('Cannot find change link type');
-        }
-    }
-
+	clickOnChangeLink(linkType) {
+		switch (linkType) {
+			case 'Who are you registering for?':
+				cy.get('[data-cy="who-are-you"]').first().click();
+				break;
+			case 'Full name':
+				cy.get('[data-cy="full-name"]').last().click();
+				break;
+			case 'Are you 18 or over?':
+				cy.get('[data-cy="over-18"]').last().click();
+				break;
+			case 'What is the name of your organisation or charity?':
+				cy.get('[data-cy="organisation-name"]').last().click();
+				break;
+			case 'What is your job title or volunteer role?':
+				cy.get('[data-cy="volunteer-role"]').last().click();
+				break;
+			case 'Address':
+				cy.get('[data-cy="address"]').last().click();
+				break;
+			case 'Email address':
+				cy.get('[data-cy="email"]').last().click();
+				break;
+			case 'Telephone number':
+				cy.get('[data-cy="telephone"]').last().click();
+				break;
+			case 'Your comments change':
+				cy.get('[data-cy="comment"]').last().click();
+				break;
+			default:
+				throw new Error('Cannot find change link type');
+		}
+	}
 }
 export default PO_CyaOrg;

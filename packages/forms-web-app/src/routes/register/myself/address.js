@@ -9,10 +9,10 @@ const router = express.Router();
 router.get('/address', addressController.getAddress);
 
 router.post(
-  '/address',
-  addressValidationRules(),
-  validationErrorHandler,
-  addressController.postAddress
+	'/address',
+	addressValidationRules(),
+	validationErrorHandler,
+	addressController.postAddress
 );
 
 module.exports = router;

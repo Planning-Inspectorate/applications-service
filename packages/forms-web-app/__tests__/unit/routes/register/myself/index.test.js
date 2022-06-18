@@ -1,18 +1,18 @@
 const { use } = require('../../router-mock');
 
 describe('routes/register/myself/index', () => {
-  beforeEach(() => {
-    jest.resetModules();
+	beforeEach(() => {
+		jest.resetModules();
 
-    // eslint-disable-next-line global-require
-    require('../../../../../src/routes/register/myself');
-  });
+		// eslint-disable-next-line global-require
+		require('../../../../../src/routes/register/myself');
+	});
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
 
-  it('should define the expected routes', () => {
-    expect(use.mock.calls.length).toBe(10);
-  });
+	it('should define the expected routes', () => {
+		expect(use.mock.calls.length).toBe(10);
+	});
 });

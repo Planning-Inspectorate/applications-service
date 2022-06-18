@@ -7,22 +7,22 @@ const interestedPartyRouter = require('../../../src/routes/having-your-say-guide
 const footerPagesRouter = require('../../../src/routes/footer-pages');
 
 describe('routes/index', () => {
-  beforeEach(() => {
-    // eslint-disable-next-line global-require
-    require('../../../src/routes');
-  });
+	beforeEach(() => {
+		// eslint-disable-next-line global-require
+		require('../../../src/routes');
+	});
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
 
-  it('should define the expected routes', () => {
-    expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
-    expect(use).toHaveBeenCalledWith('/register', registerRouter);
-    expect(use).toHaveBeenCalledWith('/projects', projectsRouter);
-    expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
-    expect(use).toHaveBeenCalledWith(interestedPartyRouter);
-    expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
-    expect(use.mock.calls.length).toBe(9);
-  });
+	it('should define the expected routes', () => {
+		expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
+		expect(use).toHaveBeenCalledWith('/register', registerRouter);
+		expect(use).toHaveBeenCalledWith('/projects', projectsRouter);
+		expect(use).toHaveBeenCalledWith('/project-search', projectSearchRouter);
+		expect(use).toHaveBeenCalledWith(interestedPartyRouter);
+		expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
+		expect(use.mock.calls.length).toBe(9);
+	});
 });

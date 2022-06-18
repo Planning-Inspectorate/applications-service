@@ -17,37 +17,37 @@ const repName = new PO_RepName();
 const repAddressDetails = new PO_RepAddressDetails();
 
 And('I have been asked to provide representee postal address', () => {
-  fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-  cy.clickSaveAndContinue();
-  orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-  cy.clickSaveAndContinue();
-  emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-  cy.clickSaveAndContinue();
-  telNumber.enterTextIntoTelephoneNumberField('123456789');
-  cy.clickSaveAndContinue();
-  addressDetails.enterTextFromObjectIntoAddressFields({
-    AddressLine1: 'Address Line 1',
-    PostCode: 'NE27 0BB',
-    Country: 'United Kingdom',
-  });
-  cy.clickSaveAndContinue();
-  whoYouRepresenting.selectRadioOption('A person');
-  cy.clickSaveAndContinue();
-  repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-  cy.clickSaveAndContinue();
-  cy.selectRadioYesOrNo('Yes');
-  cy.clickSaveAndContinue();
+	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.clickSaveAndContinue();
+	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
+	cy.clickSaveAndContinue();
+	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
+	cy.clickSaveAndContinue();
+	telNumber.enterTextIntoTelephoneNumberField('123456789');
+	cy.clickSaveAndContinue();
+	addressDetails.enterTextFromObjectIntoAddressFields({
+		AddressLine1: 'Address Line 1',
+		PostCode: 'NE27 0BB',
+		Country: 'United Kingdom'
+	});
+	cy.clickSaveAndContinue();
+	whoYouRepresenting.selectRadioOption('A person');
+	cy.clickSaveAndContinue();
+	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
+	cy.clickSaveAndContinue();
+	cy.selectRadioYesOrNo('Yes');
+	cy.clickSaveAndContinue();
 });
 
 And('I continue with the following values in the representee address fields', function (table) {
-  repAddressDetails.enterTextIntoAddressFields(table);
-  cy.clickSaveAndContinue();
+	repAddressDetails.enterTextIntoAddressFields(table);
+	cy.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-  cy.clickOnBackLink();
+	cy.clickOnBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-  cy.assertUserOnThePage(pageName);
+	cy.assertUserOnThePage(pageName);
 });

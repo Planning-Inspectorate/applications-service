@@ -9,10 +9,10 @@ const router = express.Router();
 router.get('/full-name', fullNameController.getFullName);
 
 router.post(
-  '/full-name',
-  fullNameValidationRules(),
-  validationErrorHandler,
-  fullNameController.postFullName
+	'/full-name',
+	fullNameValidationRules(),
+	validationErrorHandler,
+	fullNameController.postFullName
 );
 
 module.exports = router;

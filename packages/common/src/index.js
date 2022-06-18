@@ -4,8 +4,8 @@ const prometheus = require('./prometheus');
 const utils = require('./utils');
 
 module.exports = {
-  functional,
-  healthcheck,
-  prometheus,
-  utils,
+	functional,
+	healthcheck,
+	prometheus,
+	utils
 };

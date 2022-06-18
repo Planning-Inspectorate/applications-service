@@ -15,10 +15,6 @@ install:
 		(cd $${dir} && npm ci); \
 		echo "-- Installed for $${dir} --"; \
   	done
-
-	# echo "-- Creating large test files for e2e tests --"
-	# (cd e2e-tests && ./create-large-test-files.sh)
-	# echo "-- Complete --"
 .PHONY: install
 
 run:
@@ -32,17 +28,6 @@ run:
 serve:
 	docker-compose up
 .PHONY: serve
-
-tf-doc:
-	# Requires Terraform Docs
-	# @link https://github.com/terraform-docs/terraform-docs
-	for dir in ${STACKS}; do \
-  		terraform-docs \
-  			-c ../.terraform-docs.yml \
-  			./infrastructure/$${dir} \
-  			> ./infrastructure/$${dir}/README.md; \
-  	done
-.PHONY: tf-doc
 
 uninstall:
 	rm -Rf node_modules
