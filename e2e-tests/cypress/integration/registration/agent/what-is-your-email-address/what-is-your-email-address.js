@@ -7,21 +7,21 @@ const orgYouWorkFor = new PO_OrgYouWorkFor();
 const emailAddress = new PO_EmailAddress();
 
 And('I have been asked what is your email address', () => {
-  fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-  cy.clickSaveAndContinue();
-  orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-  cy.clickSaveAndContinue();
+	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.clickSaveAndContinue();
+	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
+	cy.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the email address field', (text) => {
-  emailAddress.enterTextIntoEmailField(text);
-  cy.clickSaveAndContinue();
+	emailAddress.enterTextIntoEmailField(text);
+	cy.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-  cy.clickOnBackLink();
+	cy.clickOnBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-  cy.assertUserOnThePage(pageName);
+	cy.assertUserOnThePage(pageName);
 });

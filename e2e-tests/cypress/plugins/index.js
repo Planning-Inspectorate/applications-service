@@ -16,7 +16,7 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on) => {
-  on('file:preprocessor', cucumber());
+	on('file:preprocessor', cucumber());
 };
 
 // cucumber configuration

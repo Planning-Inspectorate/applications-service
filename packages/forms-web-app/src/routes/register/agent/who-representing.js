@@ -4,7 +4,7 @@ const representingForController = require('../../../controllers/register/agent/w
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {
-  rules: representingForRules,
+	rules: representingForRules
 } = require('../../../validators/register/agent/who-representing');
 
 const router = express.Router();
@@ -12,10 +12,10 @@ const router = express.Router();
 router.get('/who-representing', representingForController.getRepresentingFor);
 
 router.post(
-  '/who-representing',
-  representingForRules(),
-  validationErrorHandler,
-  representingForController.postRepresentingFor
+	'/who-representing',
+	representingForRules(),
+	validationErrorHandler,
+	representingForController.postRepresentingFor
 );
 
 module.exports = router;

@@ -1,4 +1,4 @@
 module.exports = {
-  extends: ['plugin:cypress/recommended', 'prettier'],
-  plugins: ['cypress'],
+	extends: ['plugin:cypress/recommended', 'prettier'],
+	plugins: ['cypress']
 };

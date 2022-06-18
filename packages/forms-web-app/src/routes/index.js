@@ -15,12 +15,12 @@ const projectsRouter = require('./projects');
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-  router.use('/project-search', projectSearchRouter);
+	router.use('/project-search', projectSearchRouter);
 }
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-  router.use('/projects', projectsRouter);
+	router.use('/projects', projectsRouter);
 }
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);

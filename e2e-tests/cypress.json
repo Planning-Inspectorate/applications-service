@@ -1,14 +1,14 @@
 {
-  "baseUrl": "http://localhost:9004",
-  "testFiles": "**/*.feature",
-  "chromeWebSecurity": false,
-  "viewportWidth": 1024,
-  "viewportHeight": 1600,
-  "video": false,
-  "env": {
-    "demoDelay": 0,
-    "APP_APPLICATION_BASE_URL": "http://forms-web-app:9004",
-    "TAGS": "not @wip"
-  },
-  "projectId": "ud8v53"
+	"baseUrl": "http://localhost:9004",
+	"testFiles": "**/*.feature",
+	"chromeWebSecurity": false,
+	"viewportWidth": 1024,
+	"viewportHeight": 1600,
+	"video": false,
+	"env": {
+		"demoDelay": 0,
+		"APP_APPLICATION_BASE_URL": "http://forms-web-app:9004",
+		"TAGS": "not @wip"
+	},
+	"projectId": "ud8v53"
 }

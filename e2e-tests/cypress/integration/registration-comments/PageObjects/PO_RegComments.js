@@ -1,100 +1,109 @@
 class PO_RegComments {
+	enterTextIntoSearchField(inputData) {
+		cy.get('#searchTerm').clear();
+		if (inputData) {
+			cy.get('#searchTerm').type(inputData);
+		}
+	}
 
-    enterTextIntoSearchField(inputData) {
-      cy.get('#searchTerm').clear();
-      if (inputData) {
-        cy.get('#searchTerm').type(inputData);
-      }
-    }
+	submitSearch() {
+		cy.get('[data-cy="search-button"]').click();
+	}
 
-    submitSearch() {
-      cy.get('[data-cy="search-button"]').click();
-    }
+	assertIfPaginationIsPresent(table) {
+		const contents = table.hashes();
+		cy.get('.moj-pagination__item').each(($e1, index) => {
+			const actualText = $e1.text();
+			const expectedText = contents[index].Data;
+			expect(actualText).to.contain(expectedText);
+		});
+	}
 
-    assertIfPaginationIsPresent(table) {
-        const contents = table.hashes();
-        cy.get('.moj-pagination__item').each(($e1, index) => {
-            const actualText = $e1.text();
-            const expectedText = contents[index].Data;
-            expect(actualText).to.contain(expectedText);
-        })
-    }
+	clickOnPaginationLink(paginationLink) {
+		cy.get('.moj-pagination__item').each(($e1, index) => {
+			const text = $e1.text();
 
-    clickOnPaginationLink(paginationLink) {
-        cy.get('.moj-pagination__item').each(($e1, index) => {
-            const text = $e1.text();
+			if (text.includes(paginationLink)) {
+				cy.get('.moj-pagination__item').eq(index).click();
+			}
+		});
+	}
 
-            if (text.includes(paginationLink)) {
-                cy.get('.moj-pagination__item').eq(index).click();
-            }
-        })
-    }
+	assertDocumentResultsText(resultText) {
+		cy.get('.moj-pagination__results').should('contain.text', resultText);
+	}
 
-    assertDocumentResultsText(resultText) {
-        cy.get('.moj-pagination__results').should('contain.text', resultText)
-    }
+	assertResultsPerPage(resultsPerPage) {
+		cy.get('.pins-govuk-result-list__item').should('have.length', resultsPerPage);
+	}
 
-    assertResultsPerPage(resultsPerPage) {
-        cy.get('.pins-govuk-result-list__item').should('have.length', resultsPerPage)
-    }
+	assertNoRegCommentsOnThePage() {
+		cy.get('[data-cy="no-comments-available"]').should(
+			'contain.text',
+			'There are no registration comments to display. Registration comments will be published after the registration period has closed.'
+		);
+	}
 
-    assertNoRegCommentsOnThePage() {
-        cy.get('[data-cy="no-comments-available"]').should('contain.text', "There are no registration comments to display. Registration comments will be published after the registration period has closed.")
-    }
+	verifyCommentsDisplayedinDescendingOrder(table) {
+		const contents = table.hashes();
+		cy.get('[data-cy="published-date"]').each(($e1, index) => {
+			const actualText = $e1.text();
+			const expectedText = contents[index].Date;
+			expect(actualText).to.contain(expectedText);
+		});
+		cy.get('[data-cy="published-stage"]').each(($e1, index) => {
+			const actualText = $e1.text();
+			const expectedText = contents[index].Stage;
+			expect(actualText).to.contain(expectedText);
+		});
+	}
 
-    verifyCommentsDisplayedinDescendingOrder(table) {
-        const contents = table.hashes();
-        cy.get('[data-cy="published-date"]').each(($e1, index) => {
-            const actualText = $e1.text();
-            const expectedText = contents[index].Date;
-            expect(actualText).to.contain(expectedText);
-        })
-        cy.get('[data-cy="published-stage"]').each(($e1, index) => {
-            const actualText = $e1.text();
-            const expectedText = contents[index].Stage;
-            expect(actualText).to.contain(expectedText);
-        })
-    }
+	assertNoPagination() {
+		cy.get('.moj-pagination__item').should('not.exist');
+	}
 
-    assertNoPagination() {
-        cy.get('.moj-pagination__item').should('not.exist');
-    }
+	clickApplyFilterButton() {
+		cy.get('[data-cy="apply-filter-button"]').click();
+	}
 
-    clickApplyFilterButton() {
-        cy.get('[data-cy="apply-filter-button"]').click()
-    }
+	selectCheckBox(checkBoxName) {
+		cy.contains('label', checkBoxName)
+			.invoke('attr', 'for')
+			.then((id) => {
+				cy.get('#' + id).click();
+			});
+	}
 
-    selectCheckBox(checkBoxName) {
-        cy.contains('label', checkBoxName).invoke('attr', 'for').then((id) => {
-            cy.get('#' + id).click();
-        })
-    }
+	verifyResultsReturned(table) {
+		const contents = table.hashes();
+		cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
+			const actualText = $e1.text();
+			const expectedText = contents[index].Comments;
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				expectedText.replace(/\s/g, '').trim()
+			);
+		});
+	}
 
-    verifyResultsReturned(table) {
-        const contents = table.hashes();
-        cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
-            const actualText = $e1.text();
-            const expectedText = contents[index].Comments;
-            expect(actualText.replace(/\s/g, "").trim()).to.contain(expectedText.replace(/\s/g, "").trim());
-        })
-    }
+	clickOnReadMoreLink(linkNum) {
+		cy.get('[data-cy="read-more"]').each(($e1, index) => {
+			if (linkNum === index) {
+				cy.get('[data-cy="read-more"]')
+					.eq(index - 1)
+					.click();
+			}
+		});
+	}
 
-    clickOnReadMoreLink(linkNum) {
-        cy.get('[data-cy="read-more"]').each(($e1, index) => {
-            if (linkNum === index) {
-                cy.get('[data-cy="read-more"]').eq(index - 1).click();
-            }
-        })
-    }
-
-    verifyCommentIsPresent(table) {
-        const contents = table.hashes();
-        cy.get('.pins-govuk-result-list').each(($e1, index) => {
-            const actualText = $e1.text();
-            const expectedText = contents[index].Data;
-            expect(actualText.replace(/\s/g, "").trim()).to.contain(expectedText.replace(/\s/g, "").trim());
-        })
-    }
-
+	verifyCommentIsPresent(table) {
+		const contents = table.hashes();
+		cy.get('.pins-govuk-result-list').each(($e1, index) => {
+			const actualText = $e1.text();
+			const expectedText = contents[index].Data;
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				expectedText.replace(/\s/g, '').trim()
+			);
+		});
+	}
 }
 export default PO_RegComments;

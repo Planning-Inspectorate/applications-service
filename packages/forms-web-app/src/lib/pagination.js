@@ -5,17 +5,17 @@
  * represented by the current page of results
  */
 const getPaginationData = (paginatedResults) => {
-  const paginationData = {};
-  paginationData.totalItems = paginatedResults.totalItems;
-  paginationData.itemsPerPage = paginatedResults.itemsPerPage;
-  paginationData.totalPages = paginatedResults.totalPages;
-  paginationData.currentPage = parseInt(paginatedResults.currentPage, 10);
-  paginationData.fromRange = paginatedResults.itemsPerPage * (paginatedResults.currentPage - 1) + 1;
-  paginationData.toRange =
-    paginationData.currentPage === paginatedResults.totalPages
-      ? paginatedResults.totalItems
-      : paginatedResults.itemsPerPage * paginatedResults.currentPage;
-  return paginationData;
+	const paginationData = {};
+	paginationData.totalItems = paginatedResults.totalItems;
+	paginationData.itemsPerPage = paginatedResults.itemsPerPage;
+	paginationData.totalPages = paginatedResults.totalPages;
+	paginationData.currentPage = parseInt(paginatedResults.currentPage, 10);
+	paginationData.fromRange = paginatedResults.itemsPerPage * (paginatedResults.currentPage - 1) + 1;
+	paginationData.toRange =
+		paginationData.currentPage === paginatedResults.totalPages
+			? paginatedResults.totalItems
+			: paginatedResults.itemsPerPage * paginatedResults.currentPage;
+	return paginationData;
 };
 
 /**
@@ -26,26 +26,26 @@ const getPaginationData = (paginatedResults) => {
  * @returns an array of page options to be displayed
  */
 const calculatePageNumbers = (currentPage, totalPages) => {
-  let delta = 1;
-  if (currentPage === 1 || totalPages === currentPage) {
-    delta = 2;
-  }
-  const range = Array(totalPages)
-    .fill()
-    .map((_, index) => index + 1);
-  return range.reduce((pages, page) => {
-    if (page === 1 || page === totalPages) {
-      return [...pages, page];
-    }
-    if (page - delta <= currentPage && page + delta >= currentPage) {
-      return [...pages, page];
-    }
-    if (pages[pages.length - 1] !== '...') {
-      return [...pages, '...'];
-    }
+	let delta = 1;
+	if (currentPage === 1 || totalPages === currentPage) {
+		delta = 2;
+	}
+	const range = Array(totalPages)
+		.fill()
+		.map((_, index) => index + 1);
+	return range.reduce((pages, page) => {
+		if (page === 1 || page === totalPages) {
+			return [...pages, page];
+		}
+		if (page - delta <= currentPage && page + delta >= currentPage) {
+			return [...pages, page];
+		}
+		if (pages[pages.length - 1] !== '...') {
+			return [...pages, '...'];
+		}
 
-    return pages;
-  }, []);
+		return pages;
+	}, []);
 };
 
 /**
@@ -54,17 +54,17 @@ const calculatePageNumbers = (currentPage, totalPages) => {
  * @returns an array of page options to be displayed
  */
 const calculatePageOptions = (paginationData) => {
-  let pageNumbers = calculatePageNumbers(paginationData.currentPage, paginationData.totalPages);
-  if (paginationData.currentPage !== 1) {
-    pageNumbers = ['prev', ...pageNumbers];
-  }
-  if (paginationData.currentPage !== paginationData.totalPages) {
-    pageNumbers = [...pageNumbers, 'next'];
-  }
-  return pageNumbers;
+	let pageNumbers = calculatePageNumbers(paginationData.currentPage, paginationData.totalPages);
+	if (paginationData.currentPage !== 1) {
+		pageNumbers = ['prev', ...pageNumbers];
+	}
+	if (paginationData.currentPage !== paginationData.totalPages) {
+		pageNumbers = [...pageNumbers, 'next'];
+	}
+	return pageNumbers;
 };
 
 module.exports = {
-  calculatePageOptions,
-  getPaginationData,
+	calculatePageOptions,
+	getPaginationData
 };

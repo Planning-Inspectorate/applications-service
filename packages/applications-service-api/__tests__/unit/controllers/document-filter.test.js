@@ -11,27 +11,27 @@ getFilters.mockImplementation(() => Promise.resolve([]));
 getOrderedDocuments.mockImplementation(() => Promise.resolve({ rows: [], count: 0 }));
 
 describe('getV2Documents', () => {
-  it('should return empty list when type if everything_else no document exist', async () => {
-    const req = httpMocks.createRequest({
-      query: {
-        caseRef: 'EN000000',
-        type: ['everything_else'],
-      },
-    });
+	it('should return empty list when type if everything_else no document exist', async () => {
+		const req = httpMocks.createRequest({
+			query: {
+				caseRef: 'EN000000',
+				type: ['everything_else']
+			}
+		});
 
-    const res = httpMocks.createResponse();
-    await getV2Documents(req, res);
-    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(res._getData()).toEqual({
-      documents: [],
-      totalItems: 0,
-      itemsPerPage: 20,
-      totalPages: 1,
-      currentPage: 1,
-      filters: {
-        stageFilters: [],
-        typeFilters: [],
-      },
-    });
-  });
+		const res = httpMocks.createResponse();
+		await getV2Documents(req, res);
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			documents: [],
+			totalItems: 0,
+			itemsPerPage: 20,
+			totalPages: 1,
+			currentPage: 1,
+			filters: {
+				stageFilters: [],
+				typeFilters: []
+			}
+		});
+	});
 });

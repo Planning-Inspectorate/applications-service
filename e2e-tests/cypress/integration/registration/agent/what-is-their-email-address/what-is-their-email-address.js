@@ -19,43 +19,43 @@ const repAddressDetails = new PO_RepAddressDetails();
 const repEmailAddress = new PO_RepEmailAddress();
 
 And('I have been asked to provide representee email address', () => {
-  fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-  cy.clickSaveAndContinue();
-  orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-  cy.clickSaveAndContinue();
-  emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-  cy.clickSaveAndContinue();
-  telNumber.enterTextIntoTelephoneNumberField('123456789');
-  cy.clickSaveAndContinue();
-  addressDetails.enterTextFromObjectIntoAddressFields({
-    AddressLine1: 'Address Line 1',
-    PostCode: 'NE27 0BB',
-    Country: 'United Kingdom',
-  });
-  cy.clickSaveAndContinue();
-  whoYouRepresenting.selectRadioOption('A person');
-  cy.clickSaveAndContinue();
-  repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-  cy.clickSaveAndContinue();
-  cy.selectRadioYesOrNo('Yes');
-  cy.clickSaveAndContinue();
-  repAddressDetails.enterTextFromObjectIntoAddressFields({
-    AddressLine1: 'Representee Address Line 1',
-    PostCode: 'NE27 0BB',
-    Country: 'United Kingdom',
-  });
-  cy.clickSaveAndContinue();
+	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.clickSaveAndContinue();
+	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
+	cy.clickSaveAndContinue();
+	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
+	cy.clickSaveAndContinue();
+	telNumber.enterTextIntoTelephoneNumberField('123456789');
+	cy.clickSaveAndContinue();
+	addressDetails.enterTextFromObjectIntoAddressFields({
+		AddressLine1: 'Address Line 1',
+		PostCode: 'NE27 0BB',
+		Country: 'United Kingdom'
+	});
+	cy.clickSaveAndContinue();
+	whoYouRepresenting.selectRadioOption('A person');
+	cy.clickSaveAndContinue();
+	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
+	cy.clickSaveAndContinue();
+	cy.selectRadioYesOrNo('Yes');
+	cy.clickSaveAndContinue();
+	repAddressDetails.enterTextFromObjectIntoAddressFields({
+		AddressLine1: 'Representee Address Line 1',
+		PostCode: 'NE27 0BB',
+		Country: 'United Kingdom'
+	});
+	cy.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the representee email address field', (text) => {
-  repEmailAddress.enterTextIntoRepEmailField(text);
-  cy.clickSaveAndContinue();
+	repEmailAddress.enterTextIntoRepEmailField(text);
+	cy.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-  cy.clickOnBackLink();
+	cy.clickOnBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-  cy.assertUserOnThePage(pageName);
+	cy.assertUserOnThePage(pageName);
 });

@@ -9,10 +9,10 @@ const router = express.Router();
 router.get('/', confirmEmailController.getConfirmEmail);
 
 router.post(
-  '/',
-  emailValidationRules(),
-  validationErrorHandler,
-  confirmEmailController.postConfirmEmail
+	'/',
+	emailValidationRules(),
+	validationErrorHandler,
+	confirmEmailController.postConfirmEmail
 );
 
 module.exports = router;

@@ -15,34 +15,34 @@ const whoYouRepresenting = new PO_WhoYouRepresenting();
 const repName = new PO_RepName();
 
 And('I have been asked whether the person I am representing 18 or over', () => {
-  fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-  cy.clickSaveAndContinue();
-  orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-  cy.clickSaveAndContinue();
-  emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-  cy.clickSaveAndContinue();
-  telNumber.enterTextIntoTelephoneNumberField('123456789');
-  cy.clickSaveAndContinue();
-  addressDetails.enterTextFromObjectIntoAddressFields({
-    AddressLine1: 'Address Line 1',
-    PostCode: 'NE27 0BB',
-    Country: 'United Kingdom',
-  });
-  cy.clickSaveAndContinue();
-  whoYouRepresenting.selectRadioOption('A person');
-  cy.clickSaveAndContinue();
-  repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-  cy.clickSaveAndContinue();
+	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.clickSaveAndContinue();
+	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
+	cy.clickSaveAndContinue();
+	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
+	cy.clickSaveAndContinue();
+	telNumber.enterTextIntoTelephoneNumberField('123456789');
+	cy.clickSaveAndContinue();
+	addressDetails.enterTextFromObjectIntoAddressFields({
+		AddressLine1: 'Address Line 1',
+		PostCode: 'NE27 0BB',
+		Country: 'United Kingdom'
+	});
+	cy.clickSaveAndContinue();
+	whoYouRepresenting.selectRadioOption('A person');
+	cy.clickSaveAndContinue();
+	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
+	cy.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-  cy.clickOnBackLink();
+	cy.clickOnBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-  cy.assertUserOnThePage(pageName);
+	cy.assertUserOnThePage(pageName);
 });
 
 When('user selects {string} radio option on are they 18 or over page', (radioChoice) => {
-  cy.selectRadioYesOrNo(radioChoice);
+	cy.selectRadioYesOrNo(radioChoice);
 });

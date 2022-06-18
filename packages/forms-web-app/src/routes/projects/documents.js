@@ -6,8 +6,8 @@ const aboutTheApplicationController = require('../../controllers/projects/docume
 
 router.get('/:case_ref', projectsController.getExamination);
 router.get(
-  '/:case_ref/application-documents',
-  aboutTheApplicationController.getApplicationDocuments
+	'/:case_ref/application-documents',
+	aboutTheApplicationController.getApplicationDocuments
 );
 
 module.exports = router;
