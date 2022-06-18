@@ -1,13 +1,9 @@
-process.env.TZ = 'GMT';
+const sharedConfig = require('../../jest.config.js');
 
 module.exports = {
+	...sharedConfig,
 	clearMocks: true,
-	testEnvironment: 'node',
-	setupFilesAfterEnv: [],
-	collectCoverage: true,
-	collectCoverageFrom: ['src/**/*.js'],
-	coverageReporters: ['json', 'html', 'text', 'text-summary'],
-	coveragePathIgnorePatterns: ['node_modules'],
+	collectCoverageFrom: ['./src/**/*.js'],
 	coverageThreshold: {
 		global: {
 			branches: 96,
@@ -15,6 +11,5 @@ module.exports = {
 			lines: 97,
 			statements: 97
 		}
-	},
-	moduleDirectories: ['node_modules', 'src']
+	}
 };
