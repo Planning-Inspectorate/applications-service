@@ -4,7 +4,7 @@ const {
   sendMagicLinkToIP,
 } = require('../../../src/lib/notify');
 
-const config = require('.../../../src/lib/config');
+const config = require('../../../src/lib/config');
 
 jest.mock('@planning-inspectorate/pins-notify', () => ({
   createNotifyClient: {

@@ -26,10 +26,6 @@
     "test:watch": "jest --watchAll --runInBand --coverage",
     "documentation": "jest --bail --coverage --coverageReporters=cobertura --reporters=default --reporters=jest-junit"
   },
-  "lint-staged": {
-    "./**/*.js": "npm run lint:fix",
-    "./**/*.{js, json}": "npm run format"
-  },
   "dependencies": {
     "@ministryofjustice/frontend": "0.2.0",
     "@pins/common": "file:../common",
@@ -57,19 +53,18 @@
     "nunjucks-date-filter": "^0.1.1",
     "pino": "^6.13.2",
     "redis": "3.1.2",
-    "sass": "^1.39.0",
     "slugify": "^1.6.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint": "^8.17.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^24.4.0",
     "nodemon": "^2.0.12",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
     "pino-pretty": "^4.8.0",
+    "sass": "^1.39.0",
     "webpack": "^5.52.0",
     "webpack-cli": "^4.8.0",
     "webpack-merge": "^5.8.0"
