@@ -1,21 +1,17 @@
-process.env.TZ = 'GMT';
+const sharedConfig = require('../../jest.config.js');
 
 module.exports = {
+	...sharedConfig,
 	clearMocks: true,
-	testEnvironment: 'node',
-	setupFilesAfterEnv: ['./__tests__/setupTests.js'],
-	collectCoverage: true,
 	collectCoverageFrom: ['./src/**/*.js'],
 	coveragePathIgnorePatterns: [
 		'node_modules',
 		'<rootDir>/src/app.js',
 		'<rootDir>/src/server.js',
-		'<rootDir>/src/public/javascripts/main.js',
 		'<rootDir>/src/assets',
 		'<rootDir>/src/public',
 		'<rootDir>/src/views/pins-components'
 	],
-	testMatch: ['**/?(*.)+(spec|test).js'],
 	coverageThreshold: {
 		global: {
 			branches: 80,
@@ -23,5 +19,6 @@ module.exports = {
 			lines: 80,
 			statements: 80
 		}
-	}
+	},
+	setupFilesAfterEnv: ['./__tests__/setupTests.js']
 };

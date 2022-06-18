@@ -13,10 +13,8 @@
 		"start": "node ./",
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"test": "jest",
-		"test:cov": "jest --coverage",
-		"test:watch": "jest --watchAll --runInBand --coverage",
-		"test:tdd": "jest --watchAll --verbose",
-		"documentation": "jest --bail --coverage --coverageReporters=cobertura --reporters=default --reporters=jest-junit"
+		"test:cov": "jest --coverage --verbose",
+		"test:watch": "jest --watchAll --runInBand"
 	},
 	"author": "Foundry4 <www.foundry4.com>",
 	"dependencies": {
@@ -41,7 +39,8 @@
 		"eslint": "^8.17.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-jest": "^24.4.0",
-		"jest": "^26.6.3",
+		"jest": "^28.1.1",
+		"jest-junit": "^13.2.0",
 		"node-mocks-http": "^1.11.0",
 		"nodemon": "^2.0.12",
 		"pino-pretty": "^4.8.0",

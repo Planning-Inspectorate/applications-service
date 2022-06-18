@@ -1,14 +1,9 @@
+const sharedConfig = require('../../jest.config.js');
+
 module.exports = {
-	watchPathIgnorePatterns: ['globalConfig'],
-	collectCoverage: true,
+	...sharedConfig,
 	collectCoverageFrom: ['./src/**/*.js'],
-	coverageReporters: ['json', 'html', 'text', 'text-summary'],
 	coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/app.js', '<rootDir>/src/server.js'],
-	moduleFileExtensions: ['js', 'json'],
-	testMatch: ['**/?(*.)+(spec|test).js'],
-	testEnvironment: 'node',
-	setupFiles: ['<rootDir>/__tests__/setup-jest.js'],
-	coverageDirectory: '<rootDir>/coverage',
 	coverageThreshold: {
 		global: {
 			branches: 60,
@@ -16,5 +11,6 @@ module.exports = {
 			lines: 60,
 			statements: 60
 		}
-	}
+	},
+	setupFiles: ['<rootDir>/__tests__/setup-jest.js']
 };

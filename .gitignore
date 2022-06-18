@@ -108,6 +108,8 @@ dist
 .idea
 *.iml
 
+# Jest
+jest-reports
 junit.xml
 
 # Mac OS generated

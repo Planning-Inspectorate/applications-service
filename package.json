@@ -9,19 +9,22 @@
 	"scripts": {
 		"commit": "cz",
 		"format": "prettier --write \"**/*.{js,ts,json,md}\"",
-		"lint": "npm run lint:api & npm run lint:common & npm run lint:e2e-tests & npm run lint:web",
+		"lint": "run-s --continue-on-error --print-label lint:api lint:common lint:e2e-tests lint:web",
 		"lint:api": "cd packages/applications-service-api; eslint ./",
+		"lint:api:fix": "cd packages/applications-service-api; eslint ./ --fix",
 		"lint:common": "cd packages/common; eslint ./",
+		"lint:common:fix": "cd packages/common; eslint ./ --fix",
 		"lint:e2e-tests": "cd e2e-tests; eslint ./",
-		"lint:fix": "npm run lint:api -- --fix & npm run lint:common -- --fix & npm run lint:e2e-tests -- --fix & npm run lint:web -- --fix",
+		"lint:e2e-tests:fix": "cd e2e-tests; eslint ./ --fix",
+		"lint:fix": "run-s --continue-on-error --print-label lint:api:fix lint:common:fix lint:e2e-tests:fix lint:web:fix",
 		"lint:web": "cd packages/forms-web-app; eslint ./",
+		"lint:web:fix": "cd packages/forms-web-app; eslint ./ --fix",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
-		"semantic-release": "semantic-release",
-		"test:e2e": "cd ./e2e-tests && npm run test:e2e",
-		"test:e2e:demo": "cd ./e2e-tests && npm run test:e2e:demo",
-		"test:e2e:postprocess": "cd ./e2e-tests && npm run test:e2e:postprocess",
-		"test:e2e:smoke": "cd ./e2e-tests && BASEURL=$BASEURL npm run test:e2e:smoke",
-		"document:applications-service-api": "cd ./packages/applications-service-api && npm install && npm run documentation"
+		"test": "run-s --continue-on-error --print-label \"test:*\"",
+		"test:api:": "cd packages/applications-service-api; npm run test:cov",
+		"test:common": "cd packages/common; npm run test:cov",
+		"test:web": "cd packages/forms-web-app; npm run test:cov",
+		"semantic-release": "semantic-release"
 	},
 	"repository": {
 		"type": "git",
@@ -42,13 +45,14 @@
 		"eslint-plugin-jest": "^26.5.3",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.0.0",
+		"npm-run-all": "^4.1.5",
 		"prettier": "^2.7.1",
 		"semantic-release": "^17.2.3",
 		"semantic-release-monorepo": "^7.0.3"
 	},
 	"lint-staged": {
 		"*.js": [
-			"npm run lint:fix"
+			"eslint --fix"
 		],
 		"*.{js,ts,json,md}": [
 			"prettier --write"
