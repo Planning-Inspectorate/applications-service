@@ -37,6 +37,6 @@ extends:
           azurecrName: $(azurecrName)
           dockerfilePath: $(dockerFilePath)
           repository: $(repository)
-          runTests: true
+          runTests: false
           testRunTitle: Applications Service API Jest Tests
           workingDirectory: $(Build.Repository.LocalPath)
