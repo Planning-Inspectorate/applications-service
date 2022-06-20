@@ -2,14 +2,15 @@ const VIEW = {
   APPLICATION_NUMBER: 'application-number',
 
   COOKIES: 'cookies',
-  EXAMINATION: {
-    EXAMINATION: 'examination/examination',
-    PROJECT_TIMELINE: 'examination/project-timeline',
-    ABOUT_THE_APPLICATION: 'examination/about-the-application',
-    REPRESENTATIONS: 'examination/representations',
-    TIMETABLE: 'examination/timetable',
-    ALL_EXAMINATION_DOCUMENTS: 'examination/all-examination-documents',
-    RECOMMENDATIONS: 'examination/recommendations',
+  PROJECTS: {
+    PROJECTS: 'projects/examination',
+    PROJECT_TIMELINE: 'projects/project-timeline',
+    DOCUMENTS: 'projects/documents',
+    REPRESENTATIONS: 'projects/representations',
+    TIMETABLE: 'projects/timetable',
+    ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
+    RECOMMENDATIONS: 'projects/recommendations',
+    REPRESENTATION: 'projects/representation',
   },
   PROJECT_SEARCH: 'project-search',
   GUIDANCE_PAGES: {

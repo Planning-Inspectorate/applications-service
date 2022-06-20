@@ -1,4 +1,0 @@
-variables:
-  azurecrName: pinscrsharedtoolinguks
-  azurecrServiceConnection: applications-service-tooling
-  projectName: applications-service 

@@ -1,0 +1,100 @@
+{% set section = 'representations' %}
+{% extends "layouts/project-3-columns.njk" %}
+{% from "../macros/pagination-bar.njk" import paginationBar %}
+
+{% set activeProjectLink = 'representations' %}
+
+{% block contentHeader %}
+  <h2 class="govuk-heading-l">Registration Comments</h2>
+  <p>
+    <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" type="text" value="{{ searchTerm }}">
+    <button class="govuk-button" data-cy="search-button">Search</button>
+  </p>
+{% endblock %}
+
+{% block columnTwo %}
+  <div class="govuk-grid-row">
+      {% if representations.length > 0 %}
+        <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.</p>
+
+        <ul class="pins-govuk-result-list">
+          {% for representation in representations %}
+            <li class="pins-govuk-result-list__item">
+              <a href="representations/{{ representation.ID  }}" class="govuk-link pins-govuk-result-list__item-title">
+                {% if representation.Representative %}
+                  {{ representation.Representative  }}
+                  {% if representation.PersonalName %}
+                    on behalf of {{ representation.PersonalName  }}
+                  {% endif %}
+                {% elseif representation.PersonalName %}
+                  {{ representation.PersonalName  }}
+                {% else %}
+                  Unknown
+                {% endif %}
+              </a>
+              <p class="pins-govuk-result-list__item-description ">
+                  {{ representation.RepresentationRedacted | truncate(200) }}
+                  {% if representation.RepresentationRedacted.length > 200 %}
+                    <a href="representations/{{ representation.ID  }}" class="govuk-link" data-cy="read-more">Read more</a>
+                  {% endif %}
+              </p>
+              <div class="govuk-grid-row document-metadata">
+                <div class="govuk-grid-column-one-third" data-cy="published-date">
+                  {{ representation.DateRrepReceived | date }}
+                </div>
+                <div class="govuk-grid-column-one-third" data-cy="published-stage">
+                  {{ representation.RepFrom }}
+                </div>
+                <div class="govuk-grid-column-one-third" data-cy="contains-attachments">
+                  {% if representation.Attachments %} Contains attachment(s) {% endif %}
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% set pageLinkTemplate -%}
+          /projects/{{ caseRef }}/representations?page=:page{{ queryUrl | safe }}
+        {%- endset %}
+        {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
+
+    {% elseif representations.length == 0 and queryUrl != '' %}
+      <p style="govuk-body" data-cy="no-comments-found">
+        No comments were found matching your search term and filters.
+      </p>
+      <p style="govuk-body">
+        Would you like to clear your search and filters to view all available comments instead?
+      </p>
+      <p>
+        <a style="govuk-link" href="/projects/{{ caseRef }}/representations" data-cy="clear-search">Clear search and filters</a>
+      </p>
+    {% elseif representations.length == 0 %}
+      <p class="govuk-body" data-cy="no-comments-available">There are no registration comments to display. Registration comments will be published after the registration period has closed.</p>
+      <p class="govuk-body">
+        <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block columnThree %}
+  {% if representations.length != 0 %}
+    <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+      {{ govukCheckboxes({
+        idPrefix: "type",
+        classes: "govuk-checkboxes--small",
+        name: "type",
+        fieldset: {
+          legend: {
+            text: "Filter by",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: commentsTypeFilterItems
+      }) }}
+
+      <button class="govuk-button" data-cy="apply-filter-button">Apply Filters</button>
+    </div>
+  {% endif %}
+{% endblock %}

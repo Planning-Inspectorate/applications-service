@@ -1,0 +1,11 @@
+{% extends "layouts/project-2-columns.njk" %}
+
+{% set activeProjectLink = 'timetable' %}
+
+{% block columnTwo %}
+  <h2 class="govuk-heading-l">Examination timetable</h2>
+  <p class="govuk-body">Currently there are no events to display. The examination timetable will be published at the Examination stage.</p>
+  <p class="govuk-body">
+    <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+  </p>
+{% endblock %}

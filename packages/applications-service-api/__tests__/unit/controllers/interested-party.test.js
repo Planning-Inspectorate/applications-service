@@ -3,7 +3,6 @@
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const {
-  getInterestedParty,
   createInterestedParty,
   updateComments,
   confirmEmailAddress,
@@ -52,7 +51,7 @@ const ipDataOwnBehalf = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep: '[{"type":"Noise","comment":"I dont like noise either"}]',
+  therep: 'I dont like noise either',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
@@ -76,12 +75,7 @@ const ipDataOwnBehalfResult = {
     email: 'david.white@planninginspectorate.gov.uk',
     telephone: '0303 111 111',
   },
-  comments: [
-    {
-      type: 'Noise',
-      comment: 'I dont like noise either',
-    },
-  ],
+  comments: 'I dont like noise either',
   submissionPeriodClosed: false,
   projectData: {
     ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
@@ -133,7 +127,7 @@ const ipDataOrgBehalf = {
   agcountry: '',
   agmail: '',
   agphone: '',
-  therep: '[{"type":"Noise","comment":"I dont like noise either"}]',
+  therep: 'I dont like noise either',
   validated: '2021-06-22T14:45:46.000Z',
   emailed: '2021-06-22T14:45:46.000Z',
   exported: null,
@@ -159,12 +153,7 @@ const ipDataOrgBehalfResult = {
     email: 'Mr.Bean@MinistryofCoffeeandSocialAffairs.gov.uk',
     telephone: '0132232432',
   },
-  comments: [
-    {
-      type: 'Noise',
-      comment: 'I dont like noise either',
-    },
-  ],
+  comments: 'I dont like noise either',
   submissionPeriodClosed: false,
   projectData: {
     ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
@@ -290,41 +279,6 @@ jest.mock('../../../src/models', () => {
   return db;
 });
 
-describe('getInterestedParty', () => {
-  it('should get interested party from mock', async () => {
-    const req = httpMocks.createRequest({
-      params: {
-        caseRef: 'EN010009',
-      },
-    });
-
-    const res = httpMocks.createResponse();
-    await getInterestedParty(req, res);
-    const data = res._getData();
-    delete data.id;
-    delete data.createdAt;
-    delete data.updatedAt;
-    expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-    expect(data).toEqual(ipDataOwnBehalf);
-  });
-
-  it('should return interested party not found', async () => {
-    const req = httpMocks.createRequest({
-      params: {
-        caseRef: 'EN000000',
-      },
-    });
-
-    const res = httpMocks.createResponse();
-    await getInterestedParty(req, res);
-    expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-    expect(res._getData()).toEqual({
-      code: 404,
-      errors: ['Interested party for project EN000000 not found'],
-    });
-  });
-});
-
 describe('insertInterestedParty', () => {
   it('should create an interested party on own behalf', async () => {
     const req = httpMocks.createRequest({
@@ -370,12 +324,7 @@ describe('updateComments', () => {
         ID: '30000120',
       },
       body: {
-        comments: [
-          {
-            type: 'Traffic',
-            comment: "I don't like traffic",
-          },
-        ],
+        comments: "I don't like traffic",
       },
     });
 

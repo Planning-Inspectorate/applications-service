@@ -10,10 +10,9 @@ class PO_OverviewPage {
 
     assertResultsPresentOnPage(table) {
         const contents = table.hashes()
-        cy.confirmTextOnPage(contents[0].Data);
-        cy.confirmTextOnPage(contents[1].Data);
-        cy.confirmTextOnPage(contents[2].Data);
-        cy.confirmTextOnPage(contents[3].Data);
+        for(var i=0;i<contents.length; i++){
+            cy.confirmTextOnPage(contents[i].Data);
+        }
     }
 
     assertResultsSortedByIsPresent() {

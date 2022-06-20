@@ -1,0 +1,11 @@
+{% extends "layouts/project-2-columns.njk" %}
+
+{% set activeProjectLink = 'recommendations' %}
+
+{% block columnTwo %}
+  <h2 class="govuk-heading-l">Recommendation and decision</h2>
+  <p class="govuk-body">There are no documents to display at the moment. These documents will be published at the Recommendation and decision stage.</p>
+  <p class="govuk-body">
+    <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+  </p>
+{% endblock %}

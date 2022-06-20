@@ -84,6 +84,24 @@ exports.searchDocumentList = async (case_ref, search_data) => {
   });
 };
 
+exports.searchRepresentations = async (params) => {
+  const queryString = Object.keys(params)
+    .map((key) => `${key}=${params[key]}`)
+    .join('&');
+  const representationServiceApiUrl = `/api/v1/representations?${queryString}`;
+  const method = 'GET';
+  return handler('searchRepresentations', representationServiceApiUrl, method);
+};
+
+exports.searchDocumentListV2 = async (params) => {
+  const queryString = Object.keys(params)
+    .map((key) => `${key}=${params[key]}`)
+    .join('&');
+  const documentServiceApiUrl = `/api/v2/documents?${queryString}`;
+  const method = 'GET';
+  return handler('searchDocumentListV2', documentServiceApiUrl, method);
+};
+
 exports.postRegistration = async (registeration_data) => {
   const registrationServiceApiUrl = '/api/v1/interested-party';
   const method = 'POST';
@@ -106,4 +124,8 @@ exports.authenticateToken = async (token, email) => {
   return handler('authenticateToken', authTokenServiceApiUrl, method, {
     body: email,
   });
+};
+
+exports.getRepresentationById = async (id) => {
+  return handler('getRepresentationById', `/api/v1/representations/${id}`);
 };

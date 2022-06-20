@@ -103,7 +103,12 @@ dist
 # TernJS port file
 .tern-port
 
+# IntelliJ IDEA stuff
 /.idea
 .idea
+*.iml
 
-packages/forms-web-app/junit.xml
+junit.xml
+
+# Mac OS generated
+.DS_Store

@@ -1,42 +1,42 @@
 <nav>
   <ul class="govuk-list sidenav">
-    <li class="side-menu govuk-body-s {% if 'examination' in current %} active {% endif %}">
-      {% if not 'examination' in current %}
-        <a href="/examination/{{ caseRef }}">{{ projectName }} project information</a>
+    <li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
+      {% if 'examination' != activeProjectLink %}
+        <a href="/projects/{{ caseRef }}">{{ projectName }} project information</a>
       {% else %}
         {{ projectName }} project information
       {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'project-timeline' in current %} active {% endif %}">
-      {% if not 'project-timeline' in current %}
-        <a href="/examination/project-timeline">Project timeline</a>
-      {% else %} 
+    <li class="side-menu govuk-body-s {% if 'project-timeline' == activeProjectLink %} active {% endif %}">
+      {% if 'project-timeline' != activeProjectLink %}
+        <a href="/projects/project-timeline">Project timeline</a>
+      {% else %}
         Project timeline
       {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'about-the-application' in current %} active {% endif %}">
-      {% if not 'about-the-application' in current %}
-        <a href="/examination/{{ caseRef }}/about-the-application/1">Project application documents</a>
+    <li class="side-menu govuk-body-s {% if 'about-the-application' == activeProjectLink %} active {% endif %}">
+      {% if 'about-the-application' != activeProjectLink %}
+        <a href="/projects/{{ caseRef }}/application-documents">Project application documents</a>
       {% else %} Project application documents {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'representations' in current %} active {% endif %}">
-      {% if not 'representations' in current %}
-        <a href="/examination/representations">Registration comments</a>
+    <li class="side-menu govuk-body-s {% if 'representations' == activeProjectLink %} active {% endif %}">
+      {% if 'representations' != activeProjectLink %}
+        <a href="/projects/{{ caseRef }}/representations">Registration comments</a>
       {% else %} Registration comments {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'timetable' in current %} active {% endif %}">
-      {% if not 'timetable' in current %}
-        <a href="/examination/timetable">Examination timetable</a>
+    <li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
+      {% if 'timetable' != activeProjectLink %}
+        <a href="/projects/timetable">Examination timetable</a>
       {% else %} Examination timetable {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'all-examination-documents' in current %} active {% endif %}">
-      {% if not 'all-examination-documents' in current %}
-        <a href="/examination/all-examination-documents">All Examination documents</a>
+    <li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
+      {% if 'all-examination-documents' != activeProjectLink %}
+        <a href="/projects/all-examination-documents">All Examination documents</a>
       {% else %} All Examination documents {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'recommendations' in current %} active {% endif %}">
-      {% if not 'recommendations' in current %}
-        <a href="/examination/recommendations">Recommendation and decision</a>
+    <li class="side-menu govuk-body-s {% if 'recommendations' == activeProjectLink %} active {% endif %}">
+      {% if 'recommendations' != activeProjectLink %}
+        <a href="/projects/recommendations">Recommendation and decision</a>
       {% else %} Recommendation and decision {% endif %}
     </li>
   </ul>

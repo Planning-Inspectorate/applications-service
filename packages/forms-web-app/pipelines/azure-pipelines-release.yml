@@ -21,9 +21,9 @@ resources:
   pipelines:
     - pipeline: forms-web-app-ci
       source: forms-web-app CI
-      trigger: 
+      trigger:
         branches:
-          include: 
+          include:
             - main
 
 extends:

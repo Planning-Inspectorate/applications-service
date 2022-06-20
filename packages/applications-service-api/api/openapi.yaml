@@ -74,112 +74,89 @@ paths:
           description: Something went wrong.
         default:
           description: Something went wrong.
-  '/api/v1/interested-party/{caseRef}':
-    get:
-      summary: Returns an existing interested party
-      description: Returns an existing interested party by case reference
+  '/api/v1/interested-party':
+    post:
+      summary: Creates an interested party
+      description: Creates an interested party for a project
       tags:
         - Interested Party
-      parameters:
-        - in: path
-          name: caseRef
-          example: 'EN010009'
-          required: true
-          schema:
-            type: string
-          description: Case reference
+      requestBody:
+        description: Interested party details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterestedPartyReqBody'
+            examples:
+              me:
+                summary: An example of a request body when submitting on own behalf
+                value:
+                  case_ref: 'EN010009'
+                  behalf: 'me'
+                  full-name: 'Humpty Dumpty'
+                  over-18: 'yes'
+                  address:
+                    line1: 'Queens Building'
+                    line2: 'Queens Wall Street'
+                    line3: 'London'
+                    postcode: 'HE127TY'
+                    country: 'UK'
+                  email: 'test@test.com'
+                  telephone: '0132232432'
+              organisation:
+                summary: An example of a request body when submitting on behalf of an organisation
+                value:
+                  case_ref: 'EN010009'
+                  behalf: 'them'
+                  full-name: 'Mr Bean'
+                  over-18: 'yes'
+                  organisation-name: 'Ministry of Coffee and Social Affairs'
+                  role: 'Coffee connoisseur'
+                  address:
+                    line1: 'Coffee Building'
+                    line2: 'Coffee Wall Street'
+                    line3: 'London'
+                    postcode: 'CO127FE'
+                    country: 'UK'
+                  email: 'test@test.com'
+                  telephone: '0132232432'
+              agent:
+                summary: An example of a request body when submitting on behalf of an agent
+                value:
+                  case_ref: 'EN010009'
+                  behalf: 'you'
+                  representing: 'person|organisation|family'
+                  representee:
+                    full-name: 'Harry Potter'
+                    over-18: 'yes'
+                    address:
+                      line1: '4'
+                      line2: 'Privet Drive'
+                      line3: 'Little Whinging'
+                      postcode: 'RG12 9FG'
+                      country: 'UK'
+                    email: 'harry.potter@hogwarts.org.uk'
+                    telephone: '0132232432'
+                  representor:
+                    full-name: 'Hermione Granger'
+                    over-18: 'yes'
+                    address:
+                      line1: '95'
+                      line2: 'Boar Lane'
+                      line3: 'Sellack'
+                      postcode: 'HR9 6LR'
+                      country: 'UK'
+                    email: 'elvin.ali@planninginspectorate.gov.uk'
+                    telephone: '0137732432'
+                    organisation-name: 'Hogwarts School of Witchcraft and Wizardry'
+        required: true
       responses:
-        '200':
-          description: Returns an interested party
+        '201':
+          description: Returns the ID ( sometimes called web reference, not to be confused with web_ref in db ) of the newly created interested party
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InterestedParty'
-        '404':
-          description: The application could not be found
-  '/api/v1/interested-party':      
-      post:
-        summary: Creates an interested party
-        description: Creates an interested party for a project 
-        tags:
-          - Interested Party
-        requestBody:
-          description: Interested party details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InterestedPartyReqBody'
-              examples:
-                me:
-                  summary: An example of a request body when submitting on own behalf 
-                  value:
-                    case_ref: 'EN010009'
-                    behalf: 'me'
-                    full-name: 'Humpty Dumpty'
-                    over-18: 'yes'
-                    address:
-                      line1: 'Queens Building'
-                      line2: 'Queens Wall Street'
-                      line3: 'London'
-                      postcode: 'HE127TY'
-                      country: 'UK'    
-                    email: 'test@test.com' 
-                    telephone: '0132232432'
-                organisation:
-                  summary: An example of a request body when submitting on behalf of an organisation
-                  value:
-                    case_ref: 'EN010009'
-                    behalf: 'them'
-                    full-name: 'Mr Bean'
-                    over-18: 'yes'
-                    organisation-name: 'Ministry of Coffee and Social Affairs'
-                    role: 'Coffee connoisseur'
-                    address:
-                      line1: 'Coffee Building'
-                      line2: 'Coffee Wall Street'
-                      line3: 'London'
-                      postcode: 'CO127FE'
-                      country: 'UK'    
-                    email: 'test@test.com' 
-                    telephone: '0132232432'
-                agent:
-                  summary: An example of a request body when submitting on behalf of an agent
-                  value: 
-                    case_ref: 'EN010009'
-                    behalf: 'you'
-                    representing: 'person|organisation|family'
-                    representee:
-                        full-name: 'Harry Potter' 
-                        over-18: 'yes'
-                        address:
-                          line1: '4'
-                          line2: 'Privet Drive' 
-                          line3: 'Little Whinging'
-                          postcode: 'RG12 9FG'
-                          country: 'UK'
-                        email: 'harry.potter@hogwarts.org.uk'
-                        telephone: '0132232432'
-                    representor:
-                        full-name: 'Hermione Granger' 
-                        over-18: 'yes'
-                        address:
-                          line1: '95'
-                          line2: 'Boar Lane' 
-                          line3: 'Sellack'
-                          postcode: 'HR9 6LR'
-                          country: 'UK'
-                        email: 'elvin.ali@planninginspectorate.gov.uk'
-                        telephone: '0137732432'
-                        organisation-name: 'Hogwarts School of Witchcraft and Wizardry'    
-          required: true
-        responses:
-          '201':
-            description: Returns the ID ( sometimes called web reference, not to be confused with web_ref in db ) of the newly created interested party
-            content:
-              application/json:
-                schema:
-                  type: string
-                  example: '30000001'
+                type: string
+                example: '30000001'
   '/api/v1/interested-party/{token}':
     post:
       summary: Retrieves an interested party by token
@@ -195,12 +172,12 @@ paths:
             type: string
           description: Encrypted interested party ID
       requestBody:
-          description: Interested party email
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Email'
-          required: true
+        description: Interested party email
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Email'
+        required: true
       responses:
         '200':
           description: Returns an interested party
@@ -210,48 +187,48 @@ paths:
                 $ref: '#/components/schemas/InterestedParty'
         '404':
           description: Interested party could not be found
-  '/api/v1/interested-party/{ID}/comments':      
-      put:
-        summary: Persist interested party's comments
-        description: Persist interested party's comments
-        tags:
-          - Interested Party
-        parameters:
-          - in: path
-            name: ID
-            required: true
+  '/api/v1/interested-party/{ID}/comments':
+    put:
+      summary: Persist interested party's comments
+      description: Persist interested party's comments
+      tags:
+        - Interested Party
+      parameters:
+        - in: path
+          name: ID
+          required: true
+          schema:
+            type: integer
+            example: 30000120
+          description: Unique identifier
+      requestBody:
+        description: Interested party comments
+        content:
+          application/json:
             schema:
-              type: integer
-              example: 30000120
-            description: Unique identifier
-        requestBody:
-          description: Interested party comments
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  mode:
-                    type: string
-                    example: 'draft'
-                  comments:
-                    type: array
-                    items:
-                      type: object
-                      $ref: '#/components/schemas/Comment'
-                    required: true
-        responses:
-          '200':
-            description: Comments updated successfully
-          '400':
-            description: Comments not updated 
-  '/api/v1/documents/{caseRef}':      
-      post:
-        summary: Returns project documents
-        description: Returns project documents
-        tags:
-          - Documents
-        parameters:
+              type: object
+              properties:
+                mode:
+                  type: string
+                  example: 'draft'
+                comments:
+                  type: array
+                  items:
+                    type: object
+                    $ref: '#/components/schemas/Comment'
+                  required: true
+      responses:
+        '200':
+          description: Comments updated successfully
+        '400':
+          description: Comments not updated
+  '/api/v1/documents/{caseRef}':
+    post:
+      summary: Returns project documents
+      description: Returns project documents
+      tags:
+        - Documents
+      parameters:
         - in: path
           name: caseRef
           example: 'TR040009'
@@ -259,23 +236,147 @@ paths:
           schema:
             type: string
           description: Case reference
-        requestBody:
-          description: Search and filtering criteria, required page number
+      requestBody:
+        description: Search and filtering criteria, required page number
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentSearchCriteria'
+        required: true
+      responses:
+        '200':
+          description: Returns list of documents
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentSearchCriteria'
+                type: object
+                $ref: '#/components/schemas/DocumentListWrapper'
+        '404':
+          description: No documents found
+  '/api/v2/documents?caseRef=&page=&searchTerm=&stage=&type=':
+    get:
+      summary: Returns project documents
+      description: Returns project documents
+      tags:
+        - Documents
+      parameters:
+        - in: query
+          name: caseRef
+          example: 'TR040009'
           required: true
-        responses:
-          '200':
-            description: Returns list of documents
-            content:
-              application/json:
-                schema:
+          schema:
+            type: string
+          description: Case reference
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
+        - in: query
+          name: searchTerm
+          example: 'pdf'
+          required: false
+          schema:
+            type: string
+          description: Search term
+        - in: query
+          name: stage
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          description: Stage
+        - in: query
+          name: type
+          required: false
+          schema:
+            type: array
+          description: Type
+      responses:
+        '200':
+          description: Returns list of documents
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/DocumentListWrapper'
+        '404':
+          description: No documents found
+  '/api/v1/representations?applicationId=&page=&searchTerm=&type=':
+    get:
+      summary: Returns project representations
+      description: Returns project representations
+      tags:
+        - Representations
+      parameters:
+        - in: query
+          name: applicationId
+          example: 'EN010009'
+          required: true
+          schema:
+            type: string
+          description: Case reference
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
+        - in: query
+          name: searchTerm
+          example: 'Frosty'
+          required: false
+          schema:
+            type: string
+          description: Search term
+        - in: query
+          name: type
+          required: false
+          schema:
+            type: array
+          description: Type
+      responses:
+        '200':
+          description: Returns list of representations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
                   type: object
-                  $ref: '#/components/schemas/DocumentListWrapper'
-          '404':
-            description: No documents found
+                  $ref: '#/components/schemas/RepresentationListWrapper'
+        '404':
+          description: No representations found
+  '/api/v1/representations/{id}':
+    get:
+      summary: Returns representation by id
+      description: Returns representation by id
+      tags:
+        - Representations
+      parameters:
+        - in: path
+          name: id
+          example: 10
+          required: true
+          schema:
+            type: integer
+          description: Representation id
+      responses:
+        '200':
+          description: Returns a representation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/Representation'
+        '404':
+          description: Representation not found
 components:
   schemas:
     Application:
@@ -290,7 +391,7 @@ components:
         Proposal:
           type: string
           example: 'EN01 - Generating Stations'
-        Summary: 
+        Summary:
           type: string
           example: 'The Project consists of an Energy Recovery Facility (ERF) converting up to 650,000 tonnes per annum ...'
         Stage:
@@ -394,154 +495,154 @@ components:
     InterestedParty:
       type: object
       properties:
-        ID: 
+        ID:
           type: number
           example: 30000120
-        caseref: 
+        caseref:
           type: string
           example: 'EN010009'
-        behalf: 
+        behalf:
           type: string
           example: 'me'
-        mename: 
+        mename:
           type: string
           example: 'David White'
-        mebuild: 
+        mebuild:
           type: string
           example: 'Temple Quay'
-        mestreet: 
+        mestreet:
           type: string
           example: ''
-        metown: 
+        metown:
           type: string
           example: 'BRISTOL'
-        mecounty: 
+        mecounty:
           type: string
           example: ''
-        mecode: 
+        mecode:
           type: string
           example: 'BS1 6PN'
-        mecountry: 
+        mecountry:
           type: string
           example: 'United Kingdom'
-        memail: 
+        memail:
           type: string
           example: 'david.white@planninginspectorate.gov.uk'
-        mephone: 
+        mephone:
           type: string
           example: '0303 111 111'
-        orgname: 
+        orgname:
           type: string
           example: ''
-        contactName: 
+        contactName:
           type: string
           example: ''
-        contactJob: 
+        contactJob:
           type: string
           example: ''
-        orgbuild: 
+        orgbuild:
           type: string
           example: ''
-        orgstreet: 
+        orgstreet:
           type: string
           example: ''
-        orgtown: 
+        orgtown:
           type: string
           example: ''
-        orgcounty: 
+        orgcounty:
           type: string
           example: ''
-        orgcode: 
+        orgcode:
           type: string
           example: ''
-        orgcountry: 
+        orgcountry:
           type: string
           example: ''
-        orgmail: 
+        orgmail:
           type: string
           example: ''
-        orgphone: 
+        orgphone:
           type: string
           example: ''
-        youname: 
+        youname:
           type: string
           example: ''
-        youbuild: 
+        youbuild:
           type: string
           example: ''
-        youstreet: 
+        youstreet:
           type: string
           example: ''
-        youtown: 
+        youtown:
           type: string
           example: ''
-        youcounty: 
+        youcounty:
           type: string
           example: ''
-        youcode: 
+        youcode:
           type: string
           example: ''
-        youcountry: 
+        youcountry:
           type: string
           example: ''
-        youmail: 
+        youmail:
           type: string
           example: ''
-        youphone: 
+        youphone:
           type: string
           example: ''
-        agname: 
+        agname:
           type: string
           example: ''
-        agorgname: 
+        agorgname:
           type: string
           example: ''
-        agbuild: 
+        agbuild:
           type: string
           example: ''
-        agstreet: 
+        agstreet:
           type: string
           example: ''
-        agtown: 
+        agtown:
           type: string
           example: ''
-        agcounty: 
+        agcounty:
           type: string
           example: ''
-        agcode: 
+        agcode:
           type: string
           example: ''
-        agcountry: 
+        agcountry:
           type: string
           example: ''
-        agmail: 
+        agmail:
           type: string
           example: ''
-        agphone: 
+        agphone:
           type: string
           example: ''
-        therep: 
+        therep:
           type: string
           example: 'this is my test that form unchanged for non material change projects after ACR051 developed.  Jun 2021'
-        validated: 
+        validated:
           type: date
           example: '2021-06-22T14:45:46.000Z'
-        emailed: 
+        emailed:
           type: date
           example: '2021-06-22T14:45:46.000Z'
-        exported: 
+        exported:
           type: date
           example: ''
-        web_ref: 
+        web_ref:
           type: number
           example: 1
       description: All of the data and state information for an interested party
     InterestedPartyReqBody:
       type: object
       properties:
-        case_ref: 
+        case_ref:
           type: string
-        behalf: 
+        behalf:
           type: string
         full-name:
           type: string
@@ -557,16 +658,16 @@ components:
     DocumentSearchCriteria:
       type: object
       properties:
-        pageNo: 
+        pageNo:
           type: number
           example: 1
-        searchTerm: 
+        searchTerm:
           type: string
           example: ''
     DocumentListWrapper:
       type: object
       properties:
-        documents: 
+        documents:
           type: array
           items:
             type: object
@@ -577,12 +678,15 @@ components:
         itemsPerPage:
           type: number
           example: 20
-        totalPages: 
+        totalPages:
           type: number
           example: 1
         currentPage:
           type: number
           example: 1
+        filters:
+          type: object
+          $ref: '#/components/schemas/Filters'
     DocumentListGroupByStage:
       type: object
       additionalProperties:
@@ -602,83 +706,83 @@ components:
       properties:
         id:
           type: number
-          example: 12601 
+          example: 12601
         dataID:
           type: string
           example: 'TR040009-000004'
         case_reference:
           type: string
           example: 'TR040009'
-        Stage: 
+        Stage:
           type: number
           example: 1
-        type: 
+        type:
           type: string
           example: 'Transboundary'
-        filter_1: 
+        filter_1:
           type: string
           example: 'Environmental Impact Assessment'
-        filter_2: 
+        filter_2:
           type: string
           example: ''
-        category: 
+        category:
           type: string
           example: ''
-        description: 
+        description:
           type: string
           example: ''
-        size: 
+        size:
           type: number
           example: 50427
-        mime: 
+        mime:
           type: string
           example: 'application/pdf'
-        path: 
+        path:
           type: string
           example: 'TR040009/TR040009-000004-Regulation 24 Transboundary Screening document.pdf'
-        status: 
+        status:
           type: string
           example: 'Published'
-        date_published: 
+        date_published:
           type: string
           example: '2015-06-10'
-        deadline_date: 
+        deadline_date:
           type: string
           example: ''
-        personal_name: 
+        personal_name:
           type: string
           example: ''
-        representative: 
+        representative:
           type: string
           example: ''
-        who_from: 
+        who_from:
           type: number
           example: null
-        doc_reference: 
+        doc_reference:
           type: string
           example: ''
-        author: 
+        author:
           type: string
           example: ''
-        details: 
+        details:
           type: string
           example: ''
-        last_modified: 
+        last_modified:
           type: string
           example: '2016-04-28 08:42:58'
-        date_created: 
+        date_created:
           type: string
           example: '2016-04-28 08:42:58'
     Address:
       type: object
       properties:
-        line1: 
+        line1:
           type: string
-        line2: 
+        line2:
           type: string
-        line3: 
+        line3:
           type: string
-        postcode: 
+        postcode:
           type: string
         country:
           type: string
@@ -686,7 +790,7 @@ components:
     Comment:
       type: object
       properties:
-        type: 
+        type:
           type: string
           example: 'Traffic'
         comment:
@@ -698,3 +802,132 @@ components:
         email:
           type: string
           example: 'elvin.ali@planninginspectorate.gov.uk'
+    Filters:
+      type: object
+      properties:
+        stageFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
+        typeFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
+    Filter:
+      type: object
+      properties:
+        name:
+          type: string
+        count:
+          type: number
+    Representation:
+      type: object
+      properties:
+        ID:
+          type: number
+          example: 2
+        ProjectName:
+          type: string
+          example: 'SPT Feb 2020'
+        CaseReference:
+          type: string
+          example: 'EN010009'
+        DataID:
+          type: number
+          example: null
+        UniqueReference:
+          type: string
+          example: 'WS010006-34601'
+        WebReference:
+          type: number
+          example: null
+        PersonalName:
+          type: string
+          example: 'Test (Test)'
+        Representative:
+          type: string
+          example: null
+        IndvdlOnBhalfName:
+          type: string
+          example: null
+        OrgOnBhalfName:
+          type: string
+          example: null
+        AgentOrgOnBhalfContactName:
+          type: string
+          example: null
+        RepFrom:
+          type: string
+          example: 'Members of the Public/Businesses'
+        InterestInLand:
+          type: string
+          example: null
+        SpecifyOther:
+          type: string
+          example: null
+        CompulsoryAcquisitionHearing:
+          type: string
+          example: null
+        RepresentationOriginal:
+          type: string
+          example: null
+        RepresentationRedacted:
+          type: string
+          example: 'Some comments'
+        RelevantOrNot:
+          type: string
+          example: null
+        SubmitFurtherWrittenReps:
+          type: string
+          example: null
+        PreliminaryMeeting:
+          type: string
+          example: null
+        OpenFloorHearings:
+          type: string
+          example: null
+        IssuesSpecificHearings:
+          type: string
+          example: null
+        DateRrepReceived:
+          type: date
+          example: '2020-02-19T00:00:00.000Z'
+        DoNotPublish:
+          type: string
+          example: null
+        Attachments:
+          type: string
+          example: 'WS010006-000002'
+    RepresentationListWrapper:
+      type: object
+      properties:
+        representations:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Representation'
+        totalItems:
+          type: number
+          example: 3
+        itemsPerPage:
+          type: number
+          example: 20
+        totalPages:
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
+        filters:
+          type: object
+          $ref: '#/components/schemas/RepFilters'
+    RepFilters:
+      type: object
+      properties:
+        typeFilters:
+          type: array
+          items:
+            type: object
+            $ref: '#/components/schemas/Filter'
