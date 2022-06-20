@@ -106,6 +106,7 @@ dist
 # IntelliJ IDEA stuff
 /.idea
 .idea
+*.iml
 
 junit.xml
 

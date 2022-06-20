@@ -17,7 +17,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/2.5.1
+      ref: refs/tags/release/2.5.3
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -37,6 +37,6 @@ extends:
           azurecrName: $(azurecrName)
           dockerfilePath: $(dockerFilePath)
           repository: $(repository)
-          runTests: true
+          runTests: false
           testRunTitle: Applications Service API Jest Tests
           workingDirectory: $(Build.Repository.LocalPath)
