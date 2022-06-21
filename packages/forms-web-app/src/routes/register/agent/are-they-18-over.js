@@ -10,10 +10,10 @@ const router = express.Router();
 router.get('/are-they-18-over', over18Controller.getOver18);
 
 router.post(
-  '/are-they-18-over',
-  over18Rules(),
-  validationErrorHandler,
-  over18Controller.postOver18
+	'/are-they-18-over',
+	over18Rules(),
+	validationErrorHandler,
+	over18Controller.postOver18
 );
 
 module.exports = router;

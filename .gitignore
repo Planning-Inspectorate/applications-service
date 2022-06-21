@@ -106,7 +106,10 @@ dist
 # IntelliJ IDEA stuff
 /.idea
 .idea
+*.iml
 
+# Jest
+jest-reports
 junit.xml
 
 # Mac OS generated

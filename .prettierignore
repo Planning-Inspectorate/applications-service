@@ -1,0 +1,4 @@
+jest-reports
+README.md
+*.njk
+*.bundle.js

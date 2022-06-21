@@ -5,5 +5,5 @@ const ruleOver18 = () => body('over-18').notEmpty().withMessage('Select yes if y
 const rules = () => [ruleOver18()];
 
 module.exports = {
-  rules,
+	rules
 };

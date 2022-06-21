@@ -10,10 +10,10 @@ const router = express.Router();
 router.get('/who-registering-for', typeOfPartyController.getTypeOfParty);
 
 router.post(
-  '/who-registering-for',
-  typeOfPartyRules(),
-  validationErrorHandler,
-  typeOfPartyController.postTypeOfParty
+	'/who-registering-for',
+	typeOfPartyRules(),
+	validationErrorHandler,
+	typeOfPartyController.postTypeOfParty
 );
 
 module.exports = router;

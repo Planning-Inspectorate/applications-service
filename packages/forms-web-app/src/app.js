@@ -33,26 +33,26 @@ const app = express();
 prometheus.init(app);
 
 app.use(
-  pinoExpress({
-    logger,
-    genReqId: () => uuid.v4(),
-  })
+	pinoExpress({
+		logger,
+		genReqId: () => uuid.v4()
+	})
 );
 
 const isDev = app.get('env') === 'development';
 
 const nunjucksConfig = {
-  autoescape: true,
-  noCache: true,
-  watch: isDev,
-  express: app,
+	autoescape: true,
+	noCache: true,
+	watch: isDev,
+	express: app
 };
 
 const viewPaths = [
-  path.join(__dirname, '..', 'node_modules', 'govuk-frontend'),
-  path.join(__dirname, '..', 'node_modules', '@ministryofjustice', 'frontend'),
-  path.join(__dirname, 'views'),
-  path.join(__dirname, '..', 'node_modules', '@planning-inspectorate', 'pins-components'),
+	path.join(__dirname, '..', 'node_modules', 'govuk-frontend'),
+	path.join(__dirname, '..', 'node_modules', '@ministryofjustice', 'frontend'),
+	path.join(__dirname, 'views'),
+	path.join(__dirname, '..', 'node_modules', '@planning-inspectorate', 'pins-components')
 ];
 
 const env = nunjucks.configure(viewPaths, nunjucksConfig);
@@ -61,21 +61,21 @@ dateFilter.setDefaultFormat(config.application.defaultDisplayDateFormat);
 env.addFilter('date', dateFilter);
 
 env.addFilter('getkeys', function (object) {
-  return Object.keys(object);
+	return Object.keys(object);
 });
 
 env.addFilter('tostring', function (object) {
-  return JSON.stringify(object);
+	return JSON.stringify(object);
 });
 
 env.addFilter('docname', function (object) {
-  return (
-    object &&
-    object
-      .replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
-      .split('/')[1]
-      .split('.pdf')[0]
-  );
+	return (
+		object &&
+		object
+			.replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
+			.split('/')[1]
+			.split('.pdf')[0]
+	);
 });
 
 env.addFilter('formatBytes', fileSizeDisplayHelper);
@@ -90,21 +90,21 @@ env.addGlobal('host', config.server.host);
 env.addGlobal('projectStageNames', projectStageNames);
 
 if (config.server.useSecureSessionCookie) {
-  app.set('trust proxy', 1); // trust first proxy
+	app.set('trust proxy', 1); // trust first proxy
 }
 
 let sessionStoreConfig = sessionConfig();
 
 if (config.featureFlag.useRedisSessionStore) {
-  const redisClient = createClient({ url: config.db.session.redisUrl });
-  redisClient.on('error', function (err) {
-    logger.error(`Could not establish a connection with redis. ${err}`);
-  });
-  redisClient.on('connect', () => {
-    logger.info('Connected to redis successfully');
-  });
+	const redisClient = createClient({ url: config.db.session.redisUrl });
+	redisClient.on('error', function (err) {
+		logger.error(`Could not establish a connection with redis. ${err}`);
+	});
+	redisClient.on('connect', () => {
+		logger.info('Connected to redis successfully');
+	});
 
-  sessionStoreConfig = { ...sessionStoreConfig, store: new RedisStore({ client: redisClient }) };
+	sessionStoreConfig = { ...sessionStoreConfig, store: new RedisStore({ client: redisClient }) };
 }
 app.use(compression());
 app.use(lusca.xframe('SAMEORIGIN'));
@@ -118,28 +118,28 @@ app.use(flashMessageToNunjucks(env));
 app.use(removeUnwantedCookiesMiddelware);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(
-  '/assets',
-  express.static(path.join(__dirname, '..', 'node_modules', 'accessible-autocomplete', 'dist')),
-  express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets'))
+	'/assets',
+	express.static(path.join(__dirname, '..', 'node_modules', 'accessible-autocomplete', 'dist')),
+	express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets'))
 );
 app.use(
-  '/assets/govuk/all.js',
-  express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'all.js'))
+	'/assets/govuk/all.js',
+	express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'all.js'))
 );
 app.use(fileUpload(config.fileUpload));
 
 function isProjectClosed(req, res, next) {
-  const { isPeriodOpen } = req.session;
+	const { isPeriodOpen } = req.session;
 
-  if (
-    typeof isPeriodOpen !== 'undefined' &&
-    isPeriodOpen === false &&
-    req.url.includes('register/')
-  ) {
-    res.redirect('/register-have-your-say/registration-period-closed');
-  } else {
-    next();
-  }
+	if (
+		typeof isPeriodOpen !== 'undefined' &&
+		isPeriodOpen === false &&
+		req.url.includes('register/')
+	) {
+		res.redirect('/register-have-your-say/registration-period-closed');
+	} else {
+		next();
+	}
 }
 app.use(isProjectClosed);
 // Routes
@@ -153,15 +153,15 @@ app.set('subdomain offset', config.server.subdomainOffset);
 
 // Error handling
 app
-  .use((req, res, next) => {
-    res.status(404).render('error/not-found');
-    next();
-  })
-  .use((err, req, res, next) => {
-    logger.error({ err }, 'Unhandled exception');
+	.use((req, res, next) => {
+		res.status(404).render('error/not-found');
+		next();
+	})
+	.use((err, req, res, next) => {
+		logger.error({ err }, 'Unhandled exception');
 
-    res.status(500).render('error/unhandled-exception');
-    next();
-  });
+		res.status(500).render('error/unhandled-exception');
+		next();
+	});
 
 module.exports = app;

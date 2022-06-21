@@ -3,7 +3,7 @@ const express = require('express');
 const emailController = require('../../../controllers/register/myself/email-address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
-  rules: emailValidationRules,
+	rules: emailValidationRules
 } = require('../../../validators/register/myself/email-address');
 
 const router = express.Router();
@@ -11,10 +11,10 @@ const router = express.Router();
 router.get('/email-address', emailController.getEmail);
 
 router.post(
-  '/email-address',
-  emailValidationRules(),
-  validationErrorHandler,
-  emailController.postEmail
+	'/email-address',
+	emailValidationRules(),
+	validationErrorHandler,
+	emailController.postEmail
 );
 
 module.exports = router;

@@ -2,8 +2,8 @@ const slugify = require('slugify');
 const config = require('../config');
 
 const slugifyConfig = {
-  remove: /[()']/g,
-  lower: true,
+	remove: /[()']/g,
+	lower: true
 };
 
 /**
@@ -14,7 +14,7 @@ const slugifyConfig = {
  * @returns {string | *}
  */
 const slugifyText = (text) => {
-  return slugify(text.replace(/\//g, '-').replace(/&/g, ''), slugifyConfig);
+	return slugify(text.replace(/\//g, '-').replace(/&/g, ''), slugifyConfig);
 };
 
 /**
@@ -27,11 +27,11 @@ const slugifyText = (text) => {
  * @returns {string} Link to project page on NI site
  */
 const nsipProjectLink = (projectData) => {
-  const region = slugifyText(projectData.Region);
-  const projectName = slugifyText(projectData.ProjectName);
-  return `${config.server.nsipBaseUrl}/projects/${region}/${projectName}`;
+	const region = slugifyText(projectData.Region);
+	const projectName = slugifyText(projectData.ProjectName);
+	return `${config.server.nsipBaseUrl}/projects/${region}/${projectName}`;
 };
 
 module.exports = {
-  nsipProjectLink,
+	nsipProjectLink
 };
