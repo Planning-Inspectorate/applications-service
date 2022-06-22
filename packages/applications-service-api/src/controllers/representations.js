@@ -77,11 +77,19 @@ module.exports = {
 			const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
 			let attachments = await getDocumentsByDataId(dataIDs);
 
-			if (attachments != null && attachments.length != 0)
+			if (
+				attachments &&
+				attachments['0'] &&
+				Object.keys(attachments['0']).length === 0 &&
+				Object.getPrototypeOf(attachments['0']) === Object.prototype
+			) {
+				console.log('has no attachment');
+			} else if (attachments && attachments.length != 0) {
 				attachments = attachments.map((att) => ({
 					...att.dataValues,
 					path: att.dataValues.path != null ? `${documentsHost}${att.dataValues.path}` : null
 				}));
+			}
 
 			representation.dataValues.attachments = Object.values(attachments);
 			res.status(StatusCodes.OK).send(representation);
