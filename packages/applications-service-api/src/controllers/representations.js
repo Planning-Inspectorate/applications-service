@@ -72,10 +72,18 @@ module.exports = {
 				throw ApiError.representationNotFound(id);
 			}
 
-			const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
-			const attachments = await getDocumentsByDataId(dataIDs);
-			representation.dataValues.attachments = Object.values(attachments);
+			const { documentsHost } = config;
 
+			const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
+			let attachments = await getDocumentsByDataId(dataIDs);
+
+			if (attachments != null && attachments.length != 0)
+				attachments = attachments.map((att) => ({
+					...att.dataValues,
+					path: att.dataValues.path != null ? `${documentsHost}${att.dataValues.path}` : null
+				}));
+
+			representation.dataValues.attachments = Object.values(attachments);
 			res.status(StatusCodes.OK).send(representation);
 		} catch (e) {
 			if (e instanceof ApiError) {
