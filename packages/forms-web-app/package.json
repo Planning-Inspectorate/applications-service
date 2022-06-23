@@ -1,6 +1,6 @@
 {
 	"name": "forms-web-app",
-	"version": "1.19.0",
+	"version": "0.0.0",
 	"private": true,
 	"engines": {
 		"node": ">=14.0.0",

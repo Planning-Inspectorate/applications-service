@@ -1,0 +1,59 @@
+parameters:
+  - name: deployAPI
+    displayName: Deploy API
+    type: boolean
+    default: true
+  - name: buildWeb
+    displayName: Deploy Web
+    type: boolean
+    default: true
+  - name: region
+    displayName: Region
+    type: string
+    values:
+      - UK West
+      - UK South
+    default: UK West
+
+pr: none
+trigger: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.0.0
+  pipelines:
+    - pipeline: build
+      source: Applications Service Build
+      trigger:
+        branches:
+          include:
+            - main
+
+extends:
+  template: stages/wrapper_cd.yml@templates
+  parameters:
+    deploymentStages:
+      - name: Deploy Applications
+        deploymentJobs:
+          - name: Deploy API
+            steps:
+              - template: ../steps/azure_web_app_deploy.yml
+                parameters:
+                  appName: pins-app-applications-service-applications-api-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appResourceGroup: $(resourceGroup)
+                  azurecrName: $(azurecrName)
+                  repository: applications-service/applications-service-api
+          - name: Deploy Web
+            steps:
+              - template: ../steps/azure_web_app_deploy.yml
+                parameters:
+                  appName: pins-app-applications-service-applications-wfe-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appResourceGroup: $(resourceGroup)
+                  azurecrName: $(azurecrName)
+                  repository: applications-service/forms-web-app
+    globalVariables:
+      - template: azure-pipelines-variables.yml@self
