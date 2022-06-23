@@ -3,7 +3,7 @@ parameters:
     displayName: Deploy API
     type: boolean
     default: true
-  - name: buildWeb
+  - name: deployWeb
     displayName: Deploy Web
     type: boolean
     default: true
@@ -40,6 +40,7 @@ extends:
       - name: Deploy Applications
         deploymentJobs:
           - name: Deploy API
+            condition: eq(${{ parameters.deployAPI }}, 'true')
             steps:
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
@@ -48,6 +49,7 @@ extends:
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
           - name: Deploy Web
+            condition: eq(${{ parameters.deployWeb }}, 'true')
             steps:
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
