@@ -8,13 +8,19 @@ down:
 .PHONY: down
 
 install:
-	npm ci
+	echo "-- Installing project root dependencies --"; \
+	npm ci; \
+	echo "-- Installed for project root --"; \
+
+	echo "-- Installing e2e-tests --"; \
+	(cd e2e-tests && npm ci); \
+	echo "-- Installed for e2e-test --";
 
 	for dir in ${APPS}; do \
 		echo "-- Installing $${dir} --"; \
 		(cd $${dir} && npm ci); \
 		echo "-- Installed for $${dir} --"; \
-  	done
+	done
 .PHONY: install
 
 run:
