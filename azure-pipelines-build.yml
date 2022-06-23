@@ -24,9 +24,6 @@ extends:
     validationJobs:
       - name: Run Linting & Tests
         steps:
-          - script: |
-              git checkout ${{ replace(variables['Build.SourceBranch'], 'refs/heads/', '') }}
-            displayName: Checkout branch
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 14
