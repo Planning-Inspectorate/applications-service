@@ -83,7 +83,7 @@ module.exports = {
 				Object.keys(attachments['0']).length === 0 &&
 				Object.getPrototypeOf(attachments['0']) === Object.prototype
 			) {
-				console.log('has no attachment');
+				logger.debug('has no attachment');
 			} else if (attachments && attachments.length != 0) {
 				attachments = attachments.map((att) => ({
 					...att.dataValues,
