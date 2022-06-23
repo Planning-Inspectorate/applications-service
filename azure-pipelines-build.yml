@@ -14,7 +14,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.0.0
+      ref: refs/tags/release/3.0.1
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -30,6 +30,7 @@ extends:
               script: make install
           - template: ../steps/node_script.yml
             parameters:
+              condition: ne(variables['Build.SourceBranchName'], 'main')
               nodeVersion: 14
               script: npm run commitlint
           - template: ../steps/node_script.yml
