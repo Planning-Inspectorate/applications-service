@@ -133,6 +133,6 @@ extends:
                 displayName: Display next versions
                 name: versions
     environments:
-      - name: Dev
+      - name: Prod
     globalVariables:
       - template: azure-pipelines-variables.yml@self
