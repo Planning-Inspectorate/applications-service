@@ -12,7 +12,7 @@
 	],
 	"scripts": {
 		"commit": "cz",
-		"commitlint": "commitlint --from=$(git log origin/main..$(git rev-parse --abbrev-ref HEAD) --pretty=format:\"%H\" | tail -n 1)",
+		"commitlint": "commitlint --from=$(git log origin/main..$(git rev-parse HEAD) --pretty=format:\"%H\" | tail -n 1)",
 		"format": "prettier --write \"**/*.{js,ts,json,md}\"",
 		"lint": "run-s --continue-on-error --print-label lint:api lint:common lint:e2e-tests lint:web",
 		"lint:api": "cd packages/applications-service-api; eslint ./",
@@ -70,7 +70,6 @@
 	},
 	"release": {
 		"branches": [
-			"task/release-pipeline",
 			"main"
 		],
 		"plugins": [
