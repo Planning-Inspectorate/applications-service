@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-const rules = () => {
+const validate = () => {
 	return [
 		body('comment')
 			.notEmpty()
@@ -12,5 +12,5 @@ const rules = () => {
 };
 
 module.exports = {
-	rules
+	validate
 };

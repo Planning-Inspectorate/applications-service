@@ -29,7 +29,7 @@
 
       <h2 class="govuk-heading-m">Personal details</h2>
       {{ govukSummaryList({
-        classes: "govuk-summary-list govuk-!-margin-bottom-9",
+        classes: "govuk-!-margin-bottom-9",
         rows: [
           {
             key: {
@@ -120,7 +120,7 @@
                 }
               ]
             }
-          }, 
+          },
           {
             key: {
               text: "Email address"
@@ -138,7 +138,7 @@
                 }
               ]
             }
-          },                   
+          },
           {
             key: {
               text: "Address"
@@ -180,7 +180,7 @@
               text: "Registration comments"
             },
             value: {
-              text: summaryField( data['comment'], { 'data-cy': "comment" })
+              text: summaryField( data['comment'], { "class": "-white-space--pre-line", 'data-cy': "comment" })
             },
             actions: {
               items: [
@@ -192,7 +192,7 @@
                 }
               ]
             }
-          }         
+          }
         ]
       }) }}
 
