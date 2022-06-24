@@ -6,8 +6,13 @@
 	},
 	"name": "applications-service",
 	"description": "Application - these are utility scripts for the whole repo",
+	"workspaces": [
+		"packages/*",
+		"!packages/common"
+	],
 	"scripts": {
 		"commit": "cz",
+		"commitlint": "commitlint --from=$(git log origin/main..$(git rev-parse HEAD) --pretty=format:\"%H\" | tail -n 1)",
 		"format": "prettier --write \"**/*.{js,ts,json,md}\"",
 		"lint": "run-s --continue-on-error --print-label lint:api lint:common lint:e2e-tests lint:web",
 		"lint:api": "cd packages/applications-service-api; eslint ./",
@@ -20,8 +25,9 @@
 		"lint:web": "cd packages/forms-web-app; eslint ./",
 		"lint:web:fix": "cd packages/forms-web-app; eslint ./ --fix",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
+		"release": "multi-semantic-release",
 		"test": "run-s --continue-on-error --print-label \"test:*\"",
-		"test:api:": "cd packages/applications-service-api; npm run test:cov",
+		"test:api": "cd packages/applications-service-api; npm run test:cov",
 		"test:common": "cd packages/common; npm run test:cov",
 		"test:web": "cd packages/forms-web-app; npm run test:cov",
 		"semantic-release": "semantic-release"
@@ -36,8 +42,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.2",
 		"@commitlint/config-conventional": "^17.0.2",
-		"@semantic-release/changelog": "^5.0.1",
-		"@semantic-release/git": "^9.0.0",
+		"@semantic-release/exec": "^6.0.3",
 		"commitizen": "^4.2.4",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.17.0",
@@ -45,10 +50,10 @@
 		"eslint-plugin-jest": "^26.5.3",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.0.0",
+		"multi-semantic-release": "^2.13.0",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^2.7.1",
-		"semantic-release": "^17.2.3",
-		"semantic-release-monorepo": "^7.0.3"
+		"semantic-release": "^19.0.3"
 	},
 	"lint-staged": {
 		"*.js": [
@@ -62,5 +67,21 @@
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
 		}
+	},
+	"release": {
+		"branches": [
+			"main"
+		],
+		"plugins": [
+			"@semantic-release/commit-analyzer",
+			"@semantic-release/github",
+			"@semantic-release/release-notes-generator",
+			[
+				"@semantic-release/exec",
+				{
+					"prepareCmd": "echo \"${nextRelease.version}\" > .release-version"
+				}
+			]
+		]
 	}
 }
