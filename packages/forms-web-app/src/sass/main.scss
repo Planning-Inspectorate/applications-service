@@ -1,8 +1,12 @@
+/* package */
 @import 'node_modules/govuk-frontend/govuk/all';
 @import 'node_modules/accessible-autocomplete/src/autocomplete';
 @import 'node_modules/@ministryofjustice/frontend/moj/components/task-list/task-list';
 @import 'node_modules/@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload';
 @import 'node_modules/@ministryofjustice/frontend/moj/components/pagination/pagination';
-a {
-  @extend .govuk-link;
-}
+
+/* page */
+@import './page/link.scss';
+
+/* helpers */
+@import './helpers/white-space.scss';

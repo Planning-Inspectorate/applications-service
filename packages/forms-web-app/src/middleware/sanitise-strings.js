@@ -14,7 +14,7 @@ const sanitiseStrings = (ref, formFields) => (req, res, next) => {
       if (!field) return;
 
       const stripedHtml = stripHtml(field).result;
-      const collapsedWhitespace = collapse(stripedHtml).result
+      const collapsedWhitespace = collapse(stripedHtml).result;
       const escapedString = htmlEscaper.escape(collapsedWhitespace);
 
       req[ref][formField] = escapedString;
