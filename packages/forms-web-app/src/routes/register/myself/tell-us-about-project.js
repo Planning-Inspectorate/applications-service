@@ -1,21 +1,20 @@
 const express = require('express');
+
+const commentsController = require('../../../controllers/register/myself/tell-us-about-project');
+const { validate } = require('../../../validators/register/tell-us-about-project');
 const sanitiseStrings = require('../../../middleware/sanitise-strings');
-const tellUsAboutProjectController = require('../../../controllers/register/myself/tell-us-about-project');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const {
-	rules: tellUsAboutProjectValidationRules
-} = require('../../../validators/register/myself/tell-us-about-project');
 
 const router = express.Router();
 
-router.get('/tell-us-about-project', tellUsAboutProjectController.getComments);
+router.get('/tell-us-about-project', commentsController.getComments);
 
 router.post(
   '/tell-us-about-project',
-  tellUsAboutProjectValidationRules(),
+  validate(),
   validationErrorHandler,
   sanitiseStrings('body', ['comment']),
-  tellUsAboutProjectController.postComments
+  commentsController.postComments
 );
 
 module.exports = router;
