@@ -2,9 +2,11 @@ const commentsController = require('../../../../../src/controllers/register/agen
 const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
 const { mockReq, mockRes } = require('../../../mocks');
+const config = require('../../../../../src/config');
 
 jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
+jest.mock('../../../../../src/config');
 
 describe('controllers/register/agent/tell-us-about-project', () => {
 	let req;
@@ -23,6 +25,8 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 		);
 
 		putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
+
+		config.featureFlag.allowSaveAndExitOption = true;
 	});
 
 	describe('getComments', () => {
