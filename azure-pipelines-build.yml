@@ -14,7 +14,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.0.1
+      ref: refs/tags/release/3.0.3
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -62,9 +62,13 @@ extends:
                 eq(variables['Build.Reason'], 'Manual'),
                 eq(${{ parameters.buildAPI }}, 'true')
               ),
-              or(
-                eq(dependencies.Run_Linting_And_Tests.outputs['check_files.api'], 'true'),
-                eq(dependencies.Run_Linting_And_Tests.outputs['check_files.common'], 'true')
+              and(
+                ne(variables['Build.Reason'], 'Manual'),
+                or(
+                  eq(variables['Build.SourceBranchName'], 'main'),
+                  eq(dependencies.run_linting_and_tests.outputs['check_files.api'], 'true'),
+                  eq(dependencies.run_linting_and_tests.outputs['check_files.common'], 'true')
+                )
               )
             )
           )
@@ -85,9 +89,13 @@ extends:
                 eq(variables['Build.Reason'], 'Manual'),
                 eq(${{ parameters.buildWeb }}, 'true')
               ),
-              or(
-                eq(dependencies.Run_Linting_And_Tests.outputs['check_files.common'], 'true'),
-                eq(dependencies.Run_Linting_And_Tests.outputs['check_files.web'], 'true')
+              and(
+                ne(variables['Build.Reason'], 'Manual'),
+                or(
+                  eq(variables['Build.SourceBranchName'], 'main'),
+                  eq(dependencies.run_linting_and_tests.outputs['check_files.common'], 'true'),
+                  eq(dependencies.run_linting_and_tests.outputs['check_files.web'], 'true')
+                )
               )
             )
           )

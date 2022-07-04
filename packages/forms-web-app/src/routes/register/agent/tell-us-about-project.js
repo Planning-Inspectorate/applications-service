@@ -1,10 +1,9 @@
 const express = require('express');
 
 const commentsController = require('../../../controllers/register/agent/tell-us-about-project');
+const { validate } = require('../../../validators/register/tell-us-about-project');
+const sanitiseStrings = require('../../../middleware/sanitise-strings');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const {
-	rules: commentsValidationRules
-} = require('../../../validators/register/agent/tell-us-about-project');
 
 const router = express.Router();
 
@@ -12,8 +11,9 @@ router.get('/tell-us-about-project', commentsController.getComments);
 
 router.post(
 	'/tell-us-about-project',
-	commentsValidationRules(),
+	validate(),
 	validationErrorHandler,
+	sanitiseStrings('body', ['comment']),
 	commentsController.postComments
 );
 
