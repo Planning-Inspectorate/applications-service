@@ -8,6 +8,9 @@ Monorepo for all Applications Service services and infrastructure
 - `make serve`
 - Go to [localhost:9004](http://localhost:9004)
 
+#### for MS Windows users:
+- make -f Makefile.windows install
+- make -f Makefile.windows serve
 ## Architecture
 
 The Applications Service is featured within the ODT Architecture diagram on Confluence here:
