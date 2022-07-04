@@ -1,0 +1,23 @@
+{% macro layoutSections(sections) %}
+  {% for section in sections %}
+    {% if section.active %}
+      <section>
+        {% if section.title or section.content %}
+          <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+        {% endif %}
+
+        {% if section.title %}
+          <h2 class="govuk-heading-m">
+            {{ section.title }}
+          </h2>
+        {% endif %}
+
+        {% if section.content %}
+          <div>
+            {{ section.content | safe }}
+          </div>
+        {% endif %}
+      </section>
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

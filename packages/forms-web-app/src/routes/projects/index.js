@@ -8,8 +8,10 @@ const representationsController = require('../../controllers/projects/representa
 const timetableController = require('../../controllers/projects/timetable');
 const recommendationsController = require('../../controllers/projects/recommendations');
 const allExaminationDocsController = require('../../controllers/projects/all-examination-documents');
+// const projectsController = require('../../controllers/projects/examination');
 
 router.get('/', projectSearchController.getProjectList);
+// router.get('/:case_ref', projectsController.getExamination);
 router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 router.get('/recommendations', recommendationsController.getRecommendations);
 router.get('/timetable', timetableController.getTimetable);
