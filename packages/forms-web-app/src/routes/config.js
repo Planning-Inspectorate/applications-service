@@ -1,6 +1,6 @@
 const routes = {
 	external: {
-		emailSignUpURL: 'https://infrastructure.planninginspectorate.gov.uk/email-subscription.php'
+		emailSignUpURL: 'https://nitestaz.planninginspectorate.gov.uk/email-subscription.php'
 	},
 	internal: {}
 };
