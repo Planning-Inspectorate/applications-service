@@ -1,10 +1,12 @@
-const sanitise = (string) => {
-  const removedHTML = string.replace(/<\/?[^>]+(>|$)/gm, '');
-  const removedWhiteSpace = removedHTML.replace(/ {2,}/gm, '').trim();
-  const removedReturns = removedWhiteSpace.replace(/^(\r\n|\n|\r){2,}/gm, '$1');
-  const encodedURI = encodeURIComponent(removedReturns);
+const sanitiseString = (stringToSanitise) => {
+  let sanitisedString = stringToSanitise
+    .replace(/<[^>]*>/gm, '')
+    .replace(/ {2,}/gm, ' ').trim()
+    .replace(/(\r )/gm, '\r')
+    .replace(/(\n )/gm, '\n')
+    .replace(/^(\r\n|\n|\r){2,}/gm, '$1');
 
-  return encodedURI;
+  return encodeURIComponent(sanitisedString);
 }
 
-export default sanitise;
+export default sanitiseString;

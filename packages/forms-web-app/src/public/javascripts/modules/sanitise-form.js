@@ -12,9 +12,10 @@ window.App.Modules = window.App.Modules || {};
 				event.preventDefault();
 
 				try {
-					const formData = new FormData();
+					const formData = new FormData(form);
 
 					fields.forEach((field) => {
+						formData.delete(field.name);
 						formData.append(field.name, sanitiseString(field.value));
 					});
 
@@ -23,7 +24,15 @@ window.App.Modules = window.App.Modules || {};
 						body: formData
 					});
 
+					if (!response.url) {
+						form.submit();
+					}
+
 					if (window.location.href === response.url) {
+						fields.forEach((field) => {
+							field.value = sanitiseString(field.value);
+						});
+
 						form.submit();
 					} else {
 						window.location = response.url;
