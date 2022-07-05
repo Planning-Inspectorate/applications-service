@@ -100,14 +100,12 @@
   </ul>
 '%}
 
-{% set emailSignUpURL = 'https://infrastructure.planninginspectorate.gov.uk/email-subscription.php' %}
-
 {% set contentEmailSignUp = '
   <p>
     You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
   </p>
 
-  <form action="' + emailSignUpURL + '" method="get">
+  <form action="' + routes.external.emailSignUpURL + '" method="get">
     ' + govukInput({
       attributes: { "hidden": true },
       name: "project",
