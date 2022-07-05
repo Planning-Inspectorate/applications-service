@@ -19,6 +19,7 @@ Feature: What do you want to tell us about this proposed project? page
       When I continue with an empty value in the comments field
       Then the following error message should be presented: "Enter what you want to tell us about this proposed project"
 
+    @ignore @asb411
     Scenario: User saves with no comment
       When I save and exit with an empty value in the comments field
       Then the following error message should be presented: "Enter what you want to tell us about this proposed project"
@@ -27,6 +28,7 @@ Feature: What do you want to tell us about this proposed project? page
       When I continue with a comment beyond the maximum characters allowed
       Then the following error message should be presented: "What you want to tell us must be 65234 characters or less"
 
+    @ignore @asb411
     Scenario: User saves with no comment beyond max characters constraint
       When I save and exit with a comment beyond the maximum characters allowed
       Then the following error message should be presented: "What you want to tell us must be 65234 characters or less"
@@ -35,6 +37,7 @@ Feature: What do you want to tell us about this proposed project? page
       When I continue with a comment at the maximum characters allowed
       Then I am on the "Check your answers before registering" page
 
+    @ignore @asb411
     Scenario: User saves with comment at max characters constraint
       When I save and exit with a comment at the maximum characters allowed
       Then I am on the "your comments are saved" page
@@ -44,6 +47,7 @@ Feature: What do you want to tell us about this proposed project? page
       When I continue with a short comment
       Then I am on the "Check your answers before registering" page
 
+    @ignore @asb411
     Scenario: User saves with a short comment
       When I save and exit with a short comment
       Then I am on the "your comments are saved" page
