@@ -18,6 +18,10 @@
           </div>
         {% endif %}
       </section>
+
+      {% if loop.last %}
+        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+      {% endif %}
     {% endif %}
   {% endfor %}
 {% endmacro %}
