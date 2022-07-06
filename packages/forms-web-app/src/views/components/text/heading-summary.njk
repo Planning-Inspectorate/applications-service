@@ -1,17 +1,17 @@
 {% macro textHeadingSummary(heading, summary) %}
   {% if heading or summary %}
-  <div>
-    {% if heading %}
-    <h2 class="govuk-heading-l">
-      {{ heading }}
-    </h2>
-    {% endif %}
+    <div>
+      {% if heading %}
+        <h2 class="govuk-heading-l">
+          {{ heading }}
+        </h2>
+      {% endif %}
 
-    {% if summary %}
-    <p>
-      {{ summary }}
-    </p>
-    {% endif %}
-  </div>
+      {% if summary %}
+        <p>
+          {{ summary }}
+        </p>
+      {% endif %}
+    </div>
   {% endif %}
 {% endmacro %}
