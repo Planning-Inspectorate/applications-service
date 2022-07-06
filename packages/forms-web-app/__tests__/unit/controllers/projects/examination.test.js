@@ -24,7 +24,7 @@ describe('controllers/projects/examination', () => {
 				})
 			);
 			await examinationController.getExamination(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECTS, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT, {
 				appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
 				stage: undefined,
 				dateOfClosure: 'Sunday 02 February 2020',
