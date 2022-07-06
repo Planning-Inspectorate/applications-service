@@ -70,6 +70,7 @@ services:
       REDIS_URL: 'redis://redis:6379'
       PRIVATE_BETA_V1_ROUTES_ONLY: 'false'
       FEATURE_REDIS_SESSION_STORE: 'true'
+      FEATURE_SAVE_AND_EXIT_OPTION: 'false'
     ports:
       - '9004:3000'
       # node debugger
@@ -88,6 +89,7 @@ services:
 
   db:
     image: 'mysql'
+    platform: linux/x86_64
     container_name: ni_db
     cap_add:
       - SYS_NICE # CAP_SYS_NICE

@@ -6,6 +6,8 @@
 @import 'node_modules/@ministryofjustice/frontend/moj/components/pagination/pagination';
 
 /* page */
+@import './page/body.scss';
+@import './page/type.scss';
 @import './page/link.scss';
 
 /* helpers */
