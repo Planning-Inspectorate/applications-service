@@ -84,7 +84,7 @@ function renderData(
 	});
 }
 
-exports.getApplicationDocuments = async (req, res) => {
+const getProjectsApplicationDocuments = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
@@ -96,6 +96,11 @@ exports.getApplicationDocuments = async (req, res) => {
 		};
 		const { searchTerm, stage, type } = req.query;
 		const response = await searchDocumentsV2(params);
+
 		renderData(req, res, searchTerm, params, response, projectName, stage, type);
 	}
+};
+
+module.exports = {
+	getProjectsApplicationDocuments
 };

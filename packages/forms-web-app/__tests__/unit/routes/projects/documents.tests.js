@@ -1,12 +1,12 @@
 const { get, post } = require('../router-mock');
 
 const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
-const examinationController = require('../../../../src/controllers/projects/examination');
+const { getProjectsOverview } = require('../../../../src/controllers/projects/overview');
 
 describe('routes/projects/documents', () => {
 	beforeEach(() => {
 		// eslint-disable-next-line global-require
-		require('../../../../src/routes/projects/documents');
+		require('../../../../src/routes/projects');
 	});
 
 	afterEach(() => {
@@ -25,7 +25,7 @@ describe('routes/projects/documents', () => {
 			'/:case_ref/documents/filter/:page',
 			aboutTheApplicationController.postFilterDocument
 		);
-		expect(get).toHaveBeenCalledWith('/:case_ref', examinationController.getExamination);
+		expect(get).toHaveBeenCalledWith('/:case_ref', getProjectsOverview);
 		expect(post.mock.calls.length).toBe(2);
 		expect(get.mock.calls.length).toBe(2);
 	});

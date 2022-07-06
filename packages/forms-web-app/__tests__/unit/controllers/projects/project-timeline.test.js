@@ -1,4 +1,4 @@
-const controller = require('../../../../src/controllers/projects/project-timeline');
+const { getProjectsTimeLine } = require('../../../../src/controllers/projects/timeline');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
@@ -18,10 +18,10 @@ describe('controllers/projects/project-timeline', () => {
 		res = mockRes();
 	});
 
-	describe('getProjectTimeline', () => {
+	describe('getProjectsTimeLine', () => {
 		it('should call the correct template', async () => {
-			await controller.getProjectTimeLine(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT_TIMELINE, {
+			await getProjectsTimeLine(req, res);
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.TIMELINE, {
 				projectName: 'ABC',
 				caseRef: 'ABCD1234'
 			});

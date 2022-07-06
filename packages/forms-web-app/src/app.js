@@ -23,6 +23,7 @@ const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanu
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const routesConfig = require('./routes/config');
+const { VIEW } = require('./lib/views');
 
 require('express-async-errors');
 
@@ -158,13 +159,13 @@ app.set('subdomain offset', config.server.subdomainOffset);
 // Error handling
 app
 	.use((req, res, next) => {
-		res.status(404).render('error/not-found');
+		res.status(404).render(VIEW.ERROR[404]);
 		next();
 	})
 	.use((err, req, res, next) => {
 		logger.error({ err }, 'Unhandled exception');
 
-		res.status(500).render('error/unhandled-exception');
+		res.status(500).render(VIEW.ERROR[500]);
 		next();
 	});
 

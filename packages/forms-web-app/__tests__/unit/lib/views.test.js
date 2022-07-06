@@ -20,7 +20,7 @@ describe('lib/views', () => {
 			},
 			PROJECTS: {
 				PROJECT: 'projects/index',
-				PROJECT_TIMELINE: 'projects/project-timeline',
+				TIMELINE: 'projects/project-timeline',
 				DOCUMENTS: 'projects/documents',
 				REPRESENTATION: 'projects/representation',
 				REPRESENTATIONS: 'projects/representations',

@@ -1,6 +1,6 @@
 const { get } = require('../router-mock');
 const representationsController = require('../../../../src/controllers/projects/representations');
-const projectTimelineController = require('../../../../src/controllers/projects/project-timeline');
+const { getProjectsTimeLine } = require('../../../../src/controllers/projects/timeline');
 const timetableController = require('../../../../src/controllers/projects/timetable');
 const recommendationsController = require('../../../../src/controllers/projects/recommendations');
 const allExaminationDocumentsController = require('../../../../src/controllers/projects/all-examination-documents');
@@ -20,10 +20,7 @@ describe('routes/examination', () => {
 			'/:case_ref/representations',
 			representationsController.getRepresentations
 		);
-		expect(get).toHaveBeenCalledWith(
-			'/project-timeline',
-			projectTimelineController.getProjectTimeLine
-		);
+		expect(get).toHaveBeenCalledWith('/project-timeline', getProjectsTimeLine);
 		expect(get).toHaveBeenCalledWith(
 			'/recommendations',
 			recommendationsController.getRecommendations

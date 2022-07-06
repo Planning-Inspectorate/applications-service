@@ -1,11 +1,11 @@
-const examinationController = require('../../../../src/controllers/projects/examination');
+const { getProjectsOverview } = require('../../../../src/controllers/projects/overview');
 const { getProjectData } = require('../../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
 jest.mock('../../../../src/lib/application-api-wrapper');
 
-describe('controllers/projects/examination', () => {
+describe('controllers/projects/overview', () => {
 	let req;
 	let res;
 
@@ -23,7 +23,7 @@ describe('controllers/projects/examination', () => {
 					data: { DateOfRelevantRepresentationClose: '2020-02-02' }
 				})
 			);
-			await examinationController.getExamination(req, res);
+			await getProjectsOverview(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT, {
 				appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
 				stage: undefined,

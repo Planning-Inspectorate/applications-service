@@ -1,8 +1,12 @@
 const { VIEW } = require('../../lib/views');
 
-exports.getAllExaminationDocuments = async (req, res) => {
+const getProjectExaminationDocuments = async (req, res) => {
 	res.render(VIEW.PROJECTS.ALL_EXAMINATION_DOCUMENTS, {
 		caseRef: req.session.caseRef,
 		projectName: req.session.projectName
 	});
+};
+
+module.exports = {
+	getProjectExaminationDocuments
 };

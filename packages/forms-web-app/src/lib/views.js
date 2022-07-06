@@ -4,7 +4,7 @@ const VIEW = {
 	COOKIES: 'cookies',
 	PROJECTS: {
 		PROJECT: 'projects/index',
-		PROJECT_TIMELINE: 'projects/project-timeline',
+		TIMELINE: 'projects/project-timeline',
 		DOCUMENTS: 'projects/documents',
 		REPRESENTATIONS: 'projects/representations',
 		TIMETABLE: 'projects/timetable',
@@ -94,6 +94,11 @@ const VIEW = {
 	FOOTER_PAGES: {
 		ACCESSIBILITY: 'footer-pages/accessibility-statement',
 		COOKIES: 'footer-pages/cookies-info'
+	},
+	ERROR: {
+		400: 'error/400',
+		404: 'error/404',
+		500: 'error/500'
 	}
 };
 
