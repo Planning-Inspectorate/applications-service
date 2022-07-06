@@ -128,14 +128,16 @@
           attributes: { "data-cy": "button-save-and-continue"}
         }) }}
 
-        {{ govukButton({
-          text: "Save & Exit",
-          type: "Submit",
-          attributes: { "data-cy": "button-save-and-return"},
-          classes: "govuk-button--secondary",
-          name: "mode",
-          value: "draft"
+        {% if featureFlag.allowSaveAndExitOption %}
+          {{ govukButton({
+            text: "Save & Exit",
+            type: "Submit",
+            attributes: { "data-cy": "button-save-and-return"},
+            classes: "govuk-button--secondary",
+            name: "mode",
+            value: "draft"
         }) }}
+        {% endif %}
       </form>
     </div>
   </div>
