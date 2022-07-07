@@ -1,7 +1,7 @@
 const {
 	getProjectRepresentation,
 	getProjectRepresentations
-} = require('../../../../src/controllers/projects/representations');
+} = require('../../../../src/controllers/projects/project/representations');
 const {
 	getProjectData,
 	searchRepresentations

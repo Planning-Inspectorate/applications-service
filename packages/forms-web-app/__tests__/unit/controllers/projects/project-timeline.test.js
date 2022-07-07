@@ -1,4 +1,4 @@
-const { getProjectTimeLine } = require('../../../../src/controllers/projects/timeline');
+const { getProjectTimeLine } = require('../../../../src/controllers/projects/project/timeline');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 

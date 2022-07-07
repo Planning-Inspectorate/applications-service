@@ -1,6 +1,6 @@
 const {
 	getProjectApplicationDocuments
-} = require('../../../../src/controllers/projects/documents');
+} = require('../../../../src/controllers/projects/project/application-documents');
 const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
 const { getAppData } = require('../../../../src/services/application.service');
 const { mockReq, mockRes } = require('../../mocks');

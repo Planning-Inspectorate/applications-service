@@ -1,6 +1,6 @@
 const {
 	getProjectRecommendations
-} = require('../../../../src/controllers/projects/recommendations');
+} = require('../../../../src/controllers/projects/project/recommendations');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 

@@ -1,4 +1,4 @@
-const { getProjectTimetable } = require('../../../../src/controllers/projects/timetable');
+const { getProjectTimetable } = require('../../../../src/controllers/projects/project/timetable');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 

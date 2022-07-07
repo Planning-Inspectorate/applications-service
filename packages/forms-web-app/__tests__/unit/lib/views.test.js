@@ -101,6 +101,11 @@ describe('lib/views', () => {
 			FOOTER_PAGES: {
 				ACCESSIBILITY: 'footer-pages/accessibility-statement',
 				COOKIES: 'footer-pages/cookies-info'
+			},
+			ERROR: {
+				400: 'error/400',
+				404: 'error/404',
+				500: 'error/500'
 			}
 		});
 	});

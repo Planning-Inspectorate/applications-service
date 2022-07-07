@@ -1,4 +1,4 @@
-const { getProjectOverview } = require('../../../../src/controllers/projects/overview');
+const { getProjectOverview } = require('../../../../src/controllers/projects/project/overview');
 const { getProjectData } = require('../../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');

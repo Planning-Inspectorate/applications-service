@@ -1,6 +1,6 @@
 const {
 	getProjectExaminationDocuments
-} = require('../../../../src/controllers/projects/examination-documents');
+} = require('../../../../src/controllers/projects/project/examination-documents');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
