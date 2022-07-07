@@ -1,4 +1,6 @@
-const controller = require('../../../../src/controllers/projects/recommendations');
+const {
+	getProjectRecommendations
+} = require('../../../../src/controllers/projects/recommendations');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
@@ -18,9 +20,9 @@ describe('controllers/projects/recommendations', () => {
 		res = mockRes();
 	});
 
-	describe('getRecommendations', () => {
+	describe('getProjectRecommendations', () => {
 		it('should call the correct template', async () => {
-			await controller.getRecommendations(req, res);
+			await getProjectRecommendations(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.RECOMMENDATIONS, {
 				projectName: 'ABC',
 				caseRef: 'ABCD1234'

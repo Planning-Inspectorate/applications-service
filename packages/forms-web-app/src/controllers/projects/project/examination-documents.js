@@ -1,4 +1,4 @@
-const { VIEW } = require('../../lib/views');
+const { VIEW } = require('../../../lib/views');
 
 const getProjectExaminationDocuments = async (req, res) => {
 	res.render(VIEW.PROJECTS.ALL_EXAMINATION_DOCUMENTS, {

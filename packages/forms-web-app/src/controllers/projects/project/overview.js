@@ -1,10 +1,10 @@
 const moment = require('moment');
-const { formatDate } = require('../../utils/date-utils');
-const { getAppData } = require('../../services/application.service');
-const { Status } = require('../../utils/status');
-const { VIEW } = require('../../lib/views');
+const { formatDate } = require('../../../utils/date-utils');
+const { getAppData } = require('../../../services/application.service');
+const { status } = require('../../../utils/status');
+const { VIEW } = require('../../../lib/views');
 
-const getProjectsOverview = async (req, res) => {
+const getProjectOverview = async (req, res) => {
 	try {
 		const caseRef = req.params.case_ref;
 
@@ -16,7 +16,7 @@ const getProjectsOverview = async (req, res) => {
 			const dateOfClosure = closureDate ? formatDate(closureDate) : null;
 			const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closureDate);
 			const projectName = appData.ProjectName;
-			const stage = Status[appData.Stage];
+			const stage = status[appData.Stage];
 
 			req.session.appData = appData;
 			req.session.caseRef = caseRef;
@@ -40,5 +40,5 @@ const getProjectsOverview = async (req, res) => {
 };
 
 module.exports = {
-	getProjectsOverview
+	getProjectOverview
 };

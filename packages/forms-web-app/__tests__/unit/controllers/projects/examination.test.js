@@ -1,4 +1,4 @@
-const { getProjectsOverview } = require('../../../../src/controllers/projects/overview');
+const { getProjectOverview } = require('../../../../src/controllers/projects/overview');
 const { getProjectData } = require('../../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
@@ -23,7 +23,7 @@ describe('controllers/projects/overview', () => {
 					data: { DateOfRelevantRepresentationClose: '2020-02-02' }
 				})
 			);
-			await getProjectsOverview(req, res);
+			await getProjectOverview(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT, {
 				appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
 				stage: undefined,

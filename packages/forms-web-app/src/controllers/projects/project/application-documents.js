@@ -1,9 +1,9 @@
-const logger = require('../../lib/logger');
-const { Status: projectStageNames } = require('../../utils/status');
-const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
-const { VIEW } = require('../../lib/views');
-const { getAppData } = require('../../services/application.service');
-const { searchDocumentsV2 } = require('../../services/document.service');
+const logger = require('../../../lib/logger');
+const { status: projectStageNames } = require('../../../utils/status');
+const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
+const { VIEW } = require('../../../lib/views');
+const { getAppData } = require('../../../services/application.service');
+const { searchDocumentsV2 } = require('../../../services/document.service');
 
 function renderData(
 	req,
@@ -84,7 +84,7 @@ function renderData(
 	});
 }
 
-const getProjectsApplicationDocuments = async (req, res) => {
+const getProjectApplicationDocuments = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
@@ -102,5 +102,5 @@ const getProjectsApplicationDocuments = async (req, res) => {
 };
 
 module.exports = {
-	getProjectsApplicationDocuments
+	getProjectApplicationDocuments
 };

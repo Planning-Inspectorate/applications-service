@@ -1,5 +1,5 @@
 const {
-	getProjectsApplicationDocuments
+	getProjectApplicationDocuments
 } = require('../../../../src/controllers/projects/documents');
 const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
 const { getAppData } = require('../../../../src/services/application.service');
@@ -68,9 +68,9 @@ describe('controllers/documents', () => {
 		);
 	});
 
-	describe('getProjectsApplicationDocuments', () => {
+	describe('getProjectApplicationDocuments', () => {
 		it('should call the correct template', async () => {
-			await getProjectsApplicationDocuments(req, res);
+			await getProjectApplicationDocuments(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
 				documents: docList,
 				projectName: 'St James Barton Giant Wind Turbine',
@@ -108,7 +108,7 @@ describe('controllers/documents', () => {
 					}
 				})
 			);
-			await getProjectsApplicationDocuments(req, res);
+			await getProjectApplicationDocuments(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',

@@ -13,7 +13,7 @@ const uuid = require('uuid');
 const fileUpload = require('express-fileupload');
 const { prometheus } = require('@pins/common');
 const sessionConfig = require('./lib/session');
-const { Status: projectStageNames } = require('./utils/status');
+const { status: projectStageNames } = require('./utils/status');
 const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
 const fileTypeDisplayHelper = require('./lib/file-type-display-helper');
 const filterByKey = require('./lib/filter-by-key');
@@ -22,7 +22,7 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
-const routesConfig = require('./routes/config');
+const { routes: routesConfig } = require('./routes/config');
 const { VIEW } = require('./lib/views');
 
 require('express-async-errors');

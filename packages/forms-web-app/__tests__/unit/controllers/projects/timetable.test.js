@@ -1,4 +1,4 @@
-const controller = require('../../../../src/controllers/projects/timetable');
+const { getProjectTimetable } = require('../../../../src/controllers/projects/timetable');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
@@ -18,9 +18,9 @@ describe('controllers/projects/timetable', () => {
 		res = mockRes();
 	});
 
-	describe('getTimetable', () => {
+	describe('getProjectTimetable', () => {
 		it('should call the correct template', async () => {
-			await controller.getTimetable(req, res);
+			await getProjectTimetable(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.TIMETABLE, {
 				projectName: 'ABC',
 				caseRef: 'ABCD1234'

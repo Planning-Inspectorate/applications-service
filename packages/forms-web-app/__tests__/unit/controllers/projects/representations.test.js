@@ -1,4 +1,7 @@
-const controller = require('../../../../src/controllers/projects/representations');
+const {
+	getProjectRepresentation,
+	getProjectRepresentations
+} = require('../../../../src/controllers/projects/representations');
 const {
 	getProjectData,
 	searchRepresentations
@@ -94,7 +97,7 @@ describe('controllers/projects/representations', () => {
 				}
 			})
 		);
-		await controller.getRepresentations(req, res);
+		await getProjectRepresentations(req, res);
 		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATIONS, {
 			projectName: 'ABC',
 			caseRef,
@@ -119,7 +122,7 @@ describe('controllers/projects/representations', () => {
 				data: { ...representations[0] }
 			})
 		);
-		await controller.getRepresentation(req, res);
+		await getProjectRepresentation(req, res);
 		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: 'ABC',
 			caseRef,

@@ -1,7 +1,7 @@
 const { get, post } = require('../router-mock');
 
 const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
-const { getProjectsOverview } = require('../../../../src/controllers/projects/overview');
+const { getProjectOverview } = require('../../../../src/controllers/projects/overview');
 
 describe('routes/projects/documents', () => {
 	beforeEach(() => {
@@ -25,7 +25,7 @@ describe('routes/projects/documents', () => {
 			'/:case_ref/documents/filter/:page',
 			aboutTheApplicationController.postFilterDocument
 		);
-		expect(get).toHaveBeenCalledWith('/:case_ref', getProjectsOverview);
+		expect(get).toHaveBeenCalledWith('/:case_ref', getProjectOverview);
 		expect(post.mock.calls.length).toBe(2);
 		expect(get.mock.calls.length).toBe(2);
 	});

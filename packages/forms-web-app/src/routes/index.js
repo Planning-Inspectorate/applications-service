@@ -1,7 +1,10 @@
 const express = require('express');
-const config = require('../config');
-
 const router = express.Router();
+
+const config = require('../config');
+const {
+	routes: { internal: routesConfig }
+} = require('../routes/config');
 
 const cookieRouter = require('./cookies');
 const projectSearchRouter = require('./project-search');
@@ -20,7 +23,7 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-	router.use('/projects', projectsRouter);
+	router.use(routesConfig.projects.index, projectsRouter);
 }
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);

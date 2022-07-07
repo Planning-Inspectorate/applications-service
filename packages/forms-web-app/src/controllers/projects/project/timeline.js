@@ -1,6 +1,6 @@
-const { VIEW } = require('../../lib/views');
+const { VIEW } = require('../../../lib/views');
 
-const getProjectsTimeLine = async (req, res) => {
+const getProjectTimeLine = async (req, res) => {
 	res.render(VIEW.PROJECTS.TIMELINE, {
 		caseRef: req.session.caseRef,
 		projectName: req.session.projectName
@@ -8,5 +8,5 @@ const getProjectsTimeLine = async (req, res) => {
 };
 
 module.exports = {
-	getProjectsTimeLine
+	getProjectTimeLine
 };
