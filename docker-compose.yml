@@ -56,10 +56,6 @@ services:
     environment:
       APPLICATIONS_SERVICE_API_URL: 'http://applications-service-api:3000'
       DOCUMENTS_SERVICE_API_URL: 'http://document-service-api:3000'
-      FILE_UPLOAD_DEBUG: 'false'
-      FILE_UPLOAD_MAX_FILE_SIZE_BYTES: '15000000'
-      FILE_UPLOAD_USE_TEMP_FILES: 'true'
-      FILE_UPLOAD_TMP_PATH: '/tmp'
       GOOGLE_ANALYTICS_ID: 'G-X21W2S2FN3'
       SESSION_KEY: some_secure_key_goes_here
       # please override this locally if using not using localhost or ip address to browse the site in dev.
