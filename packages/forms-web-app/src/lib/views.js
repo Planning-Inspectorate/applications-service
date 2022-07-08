@@ -3,7 +3,7 @@ const VIEW = {
 
 	COOKIES: 'cookies',
 	PROJECTS: {
-		PROJECT: 'projects/index',
+		PROJECT: 'projects/overview',
 		TIMELINE: 'projects/project-timeline',
 		DOCUMENTS: 'projects/documents',
 		REPRESENTATIONS: 'projects/representations',
