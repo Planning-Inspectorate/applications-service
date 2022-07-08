@@ -10,7 +10,6 @@ const RedisStore = require('connect-redis')(session);
 const { createClient } = require('redis');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
-const fileUpload = require('express-fileupload');
 const { prometheus } = require('@pins/common');
 const sessionConfig = require('./lib/session');
 const { Status: projectStageNames } = require('./utils/status');
@@ -126,7 +125,6 @@ app.use(
 	'/assets/govuk/all.js',
 	express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'all.js'))
 );
-app.use(fileUpload(config.fileUpload));
 
 function isProjectClosed(req, res, next) {
 	const { isPeriodOpen } = req.session;

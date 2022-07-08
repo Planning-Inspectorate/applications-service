@@ -94,7 +94,7 @@ extends:
               - template: ../steps/node_script.yml
                 parameters:
                   nodeVersion: 14
-                  script: npm ci
+                  script: make install
               - template: ../steps/node_script.yml
                 parameters:
                   nodeVersion: 14
