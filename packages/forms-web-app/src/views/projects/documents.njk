@@ -67,7 +67,7 @@
 
     {% if documents.length > 0 %}
         {% set pageLinkTemplate -%}
-          /projects/{{ caseRef }}/application-documents?page=:page{{ queryUrl | safe }}
+          /projects/${case_ref}/application-documents?page=:page{{ queryUrl | safe }}
         {%- endset %}
         {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
     {% endif %}
