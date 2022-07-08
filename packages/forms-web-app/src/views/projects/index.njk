@@ -92,7 +92,7 @@
   <p>
     You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
   </p>
-  <form action="' + externalRoutes.nsipEmailSubscriptionUrl + '" method="get">
+  <form action="' + nsipBaseUrl + '/email-subscription.php" method="get">
     ' + govukInput({
       attributes: { "hidden": true },
       name: "project",

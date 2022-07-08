@@ -84,11 +84,11 @@ env.addFilter('filterByKey', filterByKey);
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('render', renderTemplateFilter(nunjucks));
 
+env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
-env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('host', config.server.host);
-env.addGlobal('externalRoutes', config.routes.external);
+env.addGlobal('nsipBaseUrl', config.server.nsipBaseUrl);
 env.addGlobal('projectStageNames', projectStageNames);
 
 if (config.server.useSecureSessionCookie) {
