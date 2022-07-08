@@ -51,7 +51,7 @@
 
 {% if periodOpen %}
   {% set contentStage = contentStage +
-      '<a href="/register-have-your-say/' + appData.CaseReference + '" class="govuk-button">Register to have your say</a>'
+      '<a href="/register-have-your-say/' + caseRef + '" class="govuk-button">Register to have your say</a>'
   %}
 {% endif %}
 
@@ -60,6 +60,64 @@
       <a class="govuk-link" href="/having-your-say-guide">Find out more about registering to have your say</a>.
     </p>'
 %}
+
+{% set contentAboutProject = '
+  <h5 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Application+Form">
+      Application introduction
+    </a>
+  </h5>
+  <p class="govuk-body">
+    Information about the project and what the developer is proposing
+  </p>
+  <h5 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Environmental+Statement">
+      Environmental information
+    </a>
+  </h5>
+  <p class="govuk-body">
+    Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.
+  </p>
+  <h5 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Plans">
+      Drawings
+    </a>
+  </h5>
+  <p class="govuk-body">
+    How the proposed project will look and the area it will impact.
+  </p>
+'%}
+
+{% set contentEmailSignUp = '
+  <p>
+    You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
+  </p>
+  <form action="' + externalRoutes.nsipEmailSubscriptionUrl + '" method="get">
+    ' + govukInput({
+      attributes: { "hidden": true },
+      name: "project",
+      value: caseRef
+    }) + '
+
+    ' + govukInput({
+      autocomplete: "email",
+      classes: "govuk-!-width-two-thirds",
+      id: "email",
+      label: {
+        text: "Email address"
+      },
+      name: "email",
+      spellcheck: false,
+      type: "email"
+    }) + '
+
+    ' + govukButton({
+      classes: "govuk-body govuk-!-margin-bottom-0",
+      text: "Sign up",
+      type: "Submit"
+    }) + '
+  </form>
+'%}
 
 {% set contentAffected = '
   <p>
@@ -82,38 +140,7 @@
   </div>
 '%}
 
-{% set contentEmailSignUp = '
-  <p>
-    You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
-  </p>
-
-  <form action="' + externalRoutes.nsipEmailSubscriptionUrl + '" method="get">
-    ' + govukInput({
-      attributes: { "hidden": true },
-      name: "project",
-      value: caseRef
-    }) + '
-
-    ' + govukInput({
-      autocomplete: "email",
-      classes: "govuk-!-width-two-thirds",
-      id: "email",
-      label: {
-        text: "Email address"
-      },
-      name: "email",
-      spellcheck: false,
-      type: "email"
-    }) + '
-
-    ' + govukButton({
-      text: "Sign up",
-      type: "Submit"
-    }) + '
-  </form>
-'%}
-
-{% set contentAbout = '
+{% set contentAboutDeveloper = '
   <p>
     The Developer proposing this project is' + appData.PromoterName + '.
   </p>
@@ -141,19 +168,25 @@
     },
     {
       active: true,
+      content: contentAboutProject,
+      hasRule: true,
+      title: "About the project"
+    },
+    {
+      active: true,
+      content: contentEmailSignUp,
+      hasRule: false,
+      title: "Sign up for email updates"
+    },
+    {
+      active: true,
       content: contentAffected,
       hasRule: true,
       title: "Affected area"
     },
     {
       active: true,
-      content: contentEmailSignUp,
-      hasRule: true,
-      title: "Sign up for email updates"
-    },
-    {
-      active: true,
-      content: contentAbout,
+      content: contentAboutDeveloper,
       hasRule: true,
       title: "About the developer"
     },

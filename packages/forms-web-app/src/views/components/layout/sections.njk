@@ -3,6 +3,8 @@
     {% if section.active %}
       {% if section.hasRule %}
         <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+      {% else %}
+        <br />
       {% endif %}
 
       <section>
@@ -13,9 +15,7 @@
         {% endif %}
 
         {% if section.content %}
-          <div>
-            {{ section.content | safe }}
-          </div>
+          {{ section.content | safe }}
         {% endif %}
       </section>
 
