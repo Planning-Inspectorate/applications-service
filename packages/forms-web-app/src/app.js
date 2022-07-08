@@ -22,7 +22,6 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
-const routesConfig = require('./routes/config');
 
 require('express-async-errors');
 
@@ -86,11 +85,11 @@ env.addFilter('filterByKey', filterByKey);
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('render', renderTemplateFilter(nunjucks));
 
-env.addGlobal('routes', routesConfig);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('host', config.server.host);
+env.addGlobal('externalRoutes', config.routes.external);
 env.addGlobal('projectStageNames', projectStageNames);
 
 if (config.server.useSecureSessionCookie) {
