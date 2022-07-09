@@ -3,7 +3,7 @@ const router = express.Router();
 
 const config = require('../config');
 const {
-	routes: { internal: routesConfig }
+	routes: { internal: routes }
 } = require('../routes/config');
 
 const cookieRouter = require('./cookies');
@@ -23,7 +23,7 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-	router.use(routesConfig.projects.index, projectsRouter);
+	router.use(routes.projects.directory, projectsRouter);
 }
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);

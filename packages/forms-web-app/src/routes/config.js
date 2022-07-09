@@ -1,17 +1,22 @@
 const routes = {
 	internal: {
 		projects: {
-			index: '/projects',
-			projects: '/',
+			directory: '/projects',
+			routes: {
+				index: '/'
+			},
 			project: {
-				applicationDocuments: '/:case_ref/application-documents',
-				examinationDocuments: '/all-examination-documents',
-				overview: '/:case_ref',
-				recommendations: '/recommendations',
-				representation: '/:case_ref/representations/:id',
-				representations: '/:case_ref/representations',
-				timeline: '/project-timeline',
-				timetable: '/timetable'
+				directory: '/case_ref',
+				routes: {
+					applicationDocuments: '/:case_ref/application-documents',
+					examinationDocuments: '/all-examination-documents',
+					index: '/:case_ref',
+					recommendations: '/recommendations',
+					representation: '/:case_ref/representations/:id',
+					representations: '/:case_ref/representations',
+					timeline: '/project-timeline',
+					timetable: '/timetable'
+				}
 			}
 		}
 	}

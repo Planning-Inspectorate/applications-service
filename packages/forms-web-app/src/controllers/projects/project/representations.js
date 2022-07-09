@@ -1,8 +1,8 @@
-const { VIEW } = require('../../../lib/views');
 const { getAppData } = require('../../../services/application.service');
-const { searchRepresentations } = require('../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
 const { getRepresentation } = require('../../../services/representation.service');
+const { searchRepresentations } = require('../../../lib/application-api-wrapper');
+const { VIEW } = require('../../../lib/views');
 
 const getProjectRepresentation = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);

@@ -3,35 +3,41 @@ const router = express.Router();
 
 const {
 	routes: {
-		internal: { projects: projectsRoute }
+		internal: {
+			projects: { routes: projectsRoutes }
+		}
 	},
 	routes: {
 		internal: {
-			projects: { project: projectRoute }
+			projects: {
+				project: { routes: projectRoute }
+			}
 		}
 	}
 } = require('../../routes/config');
 
-const { getProjects } = require('../../controllers/projects');
+const { getProjects } = require('../../controllers/projects/index');
 const {
+	getProject,
 	getProjectApplicationDocuments,
 	getProjectExaminationDocuments,
-	getProjectOverview,
 	getProjectRecommendations,
 	getProjectRepresentation,
 	getProjectRepresentations,
 	getProjectTimeLine,
 	getProjectTimetable
-} = require('../../controllers/projects/project');
+} = require('../../controllers/projects/project/_');
 
-router.get(projectsRoute.projects, getProjects);
+router.get(projectsRoutes.index, getProjects);
+
 router.get(projectRoute.examinationDocuments, getProjectExaminationDocuments);
 router.get(projectRoute.recommendations, getProjectRecommendations);
-router.get(projectRoute.timetable, getProjectTimetable);
 router.get(projectRoute.timeline, getProjectTimeLine);
+router.get(projectRoute.timetable, getProjectTimetable);
+
+router.get(projectRoute.index, getProject);
 router.get(projectRoute.applicationDocuments, getProjectApplicationDocuments);
-router.get(projectRoute.representations, getProjectRepresentations);
 router.get(projectRoute.representation, getProjectRepresentation);
-router.get(projectRoute.overview, getProjectOverview);
+router.get(projectRoute.representations, getProjectRepresentations);
 
 module.exports = router;
