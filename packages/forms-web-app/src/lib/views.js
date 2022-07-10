@@ -1,6 +1,5 @@
 const VIEW = {
 	APPLICATION_NUMBER: 'application-number',
-
 	COOKIES: 'cookies',
 	PROJECTS: {
 		INDEX: 'projects/index',

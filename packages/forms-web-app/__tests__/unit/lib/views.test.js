@@ -4,7 +4,6 @@ describe('lib/views', () => {
 	it('should have the expected defined constants', () => {
 		expect(VIEW).toEqual({
 			APPLICATION_NUMBER: 'application-number',
-
 			COOKIES: 'cookies',
 			DCO_PROCESS_GUIDE: {
 				DECISION_MAKINH_PROCESS_GUIDE:
@@ -19,6 +18,7 @@ describe('lib/views', () => {
 					'decision-making-process-guide/what-happens-after-the-decision-is-made'
 			},
 			PROJECTS: {
+				INDEX: 'projects/index',
 				PROJECT: {
 					APPLICATION_DOCUMENTS: 'projects/project/application-documents',
 					EXAMINATION_DOCUMENTS: 'projects/project/examination-documents',
