@@ -23,7 +23,7 @@ describe('controllers/projects/recommendations', () => {
 	describe('getProjectRecommendations', () => {
 		it('should call the correct template', async () => {
 			await getProjectRecommendations(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.RECOMMENDATIONS, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.RECOMMENDATIONS, {
 				projectName: 'ABC',
 				caseRef: 'ABCD1234'
 			});

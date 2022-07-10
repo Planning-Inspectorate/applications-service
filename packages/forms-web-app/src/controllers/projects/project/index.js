@@ -5,6 +5,10 @@ const { status } = require('../../../utils/status');
 const { VIEW } = require('../../../lib/views');
 
 const getProject = async (req, res) => {
+	// res.send({
+	// 	hello: VIEW.PROJECTS.PROJECT.INDEX
+	// })
+
 	try {
 		const caseRef = req.params.case_ref;
 
@@ -23,7 +27,7 @@ const getProject = async (req, res) => {
 			req.session.isPeriodOpen = periodOpen;
 			req.session.projectName = projectName;
 
-			res.render(VIEW.PROJECTS.PROJECT, {
+			res.render(VIEW.PROJECTS.PROJECT.INDEX, {
 				appData,
 				caseRef,
 				dateOfClosure,

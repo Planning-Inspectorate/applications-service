@@ -71,7 +71,7 @@ function renderData(
 			checked: typeList.includes('everything_else')
 		});
 	}
-	res.render(VIEW.PROJECTS.DOCUMENTS, {
+	res.render(VIEW.PROJECTS.PROJECT.APPLICATION_DOCUMENTS, {
 		documents,
 		projectName,
 		caseRef: params.caseRef,

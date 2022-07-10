@@ -98,7 +98,7 @@ describe('controllers/projects/representations', () => {
 			})
 		);
 		await getProjectRepresentations(req, res);
-		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATIONS, {
+		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.REPRESENTATIONS, {
 			projectName: 'ABC',
 			caseRef,
 			representations,
@@ -123,7 +123,7 @@ describe('controllers/projects/representations', () => {
 			})
 		);
 		await getProjectRepresentation(req, res);
-		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATION, {
+		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.REPRESENTATION, {
 			projectName: 'ABC',
 			caseRef,
 			RepFrom: 'Members of the Public/Businesses',

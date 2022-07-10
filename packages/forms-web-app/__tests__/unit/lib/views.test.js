@@ -19,17 +19,17 @@ describe('lib/views', () => {
 					'decision-making-process-guide/what-happens-after-the-decision-is-made'
 			},
 			PROJECTS: {
-				PROJECT: 'projects/index',
-				TIMELINE: 'projects/project-timeline',
-				DOCUMENTS: 'projects/documents',
-				REPRESENTATION: 'projects/representation',
-				REPRESENTATIONS: 'projects/representations',
-				TIMETABLE: 'projects/timetable',
-				ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
-				RECOMMENDATIONS: 'projects/recommendations'
+				PROJECT: {
+					APPLICATION_DOCUMENTS: 'projects/project/application-documents',
+					EXAMINATION_DOCUMENTS: 'projects/project/examination-documents',
+					INDEX: 'projects/project/index',
+					RECOMMENDATIONS: 'projects/project/recommendations',
+					REPRESENTATION: 'projects/project/representation',
+					REPRESENTATIONS: 'projects/project/representations',
+					TIMELINE: 'projects/project/timeline',
+					TIMETABLE: 'projects/project/timetable'
+				}
 			},
-
-			PROJECT_SEARCH: 'project-search',
 			GUIDANCE_PAGES: {
 				BEFORE_APPLY: 'guidance-pages/before-apply'
 			},

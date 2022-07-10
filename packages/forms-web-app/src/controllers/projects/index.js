@@ -25,7 +25,7 @@ const getProjects = async (req, res) => {
 
 			requiredAppdata.push(obj);
 		}
-		res.render(VIEW.PROJECT_SEARCH, { appList: requiredAppdata, noOfProjects });
+		res.render(VIEW.PROJECTS.INDEX, { appList: requiredAppdata, noOfProjects });
 	}
 };
 

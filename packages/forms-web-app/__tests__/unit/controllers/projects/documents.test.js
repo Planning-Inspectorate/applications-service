@@ -71,7 +71,7 @@ describe('controllers/documents', () => {
 	describe('getProjectApplicationDocuments', () => {
 		it('should call the correct template', async () => {
 			await getProjectApplicationDocuments(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.APPLICATION_DOCUMENTS, {
 				documents: docList,
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
@@ -109,7 +109,7 @@ describe('controllers/documents', () => {
 				})
 			);
 			await getProjectApplicationDocuments(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.APPLICATION_DOCUMENTS, {
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
 				documents: [],

@@ -21,7 +21,7 @@ describe('controllers/projects/timetable', () => {
 	describe('getProjectTimetable', () => {
 		it('should call the correct template', async () => {
 			await getProjectTimetable(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.TIMETABLE, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.TIMETABLE, {
 				projectName: 'ABC',
 				caseRef: 'ABCD1234'
 			});

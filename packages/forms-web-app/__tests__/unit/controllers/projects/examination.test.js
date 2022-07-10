@@ -24,7 +24,7 @@ describe('controllers/projects/project/index', () => {
 				})
 			);
 			await getProject(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.INDEX, {
 				appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
 				stage: undefined,
 				dateOfClosure: 'Sunday 02 February 2020',

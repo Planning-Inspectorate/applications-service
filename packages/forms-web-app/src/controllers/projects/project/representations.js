@@ -8,7 +8,7 @@ const getProjectRepresentation = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const representation = await getRepresentation(req.params.id);
-		res.render(VIEW.PROJECTS.REPRESENTATION, {
+		res.render(VIEW.PROJECTS.PROJECT.REPRESENTATION, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
 			RepFrom: representation.data.RepFrom,
@@ -54,7 +54,7 @@ const getProjectRepresentations = async (req, res) => {
 			});
 		}, Object.create(null));
 
-		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
+		res.render(VIEW.PROJECTS.PROJECT.REPRESENTATIONS, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
 			representations,

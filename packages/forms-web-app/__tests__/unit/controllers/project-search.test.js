@@ -31,7 +31,7 @@ describe('controllers/projects', () => {
 				})
 			);
 			await getProjects(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECT_SEARCH, {
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.INDEX, {
 				appList: [
 					{
 						CaseReference: 'test',
