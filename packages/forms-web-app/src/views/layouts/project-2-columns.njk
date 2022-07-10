@@ -2,14 +2,15 @@
 {% extends "layouts/project.njk" %}
 
 {% block content %}
+  {{ super() }}
+
   <div class="govuk-grid-row govuk-!-margin-left-0">
-      <div class="govuk-grid-column-one-quarter">
-        {% include "layouts/vertical-tabs.njk" %}
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        {% block columnTwo %}{% endblock %}
-      </div>
+    <div class="govuk-grid-column-one-quarter">
+      {% include "layouts/vertical-tabs.njk" %}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters">
+      {% block columnTwo %}{% endblock %}
+    </div>
   </div>
 {% endblock %}
-
-
