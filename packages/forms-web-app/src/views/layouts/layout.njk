@@ -24,6 +24,8 @@
 {% from "pins/components/contents-sidebar/macro.njk"            import pinsContentSidebar %}
 {% from "pins/components/step-by-step-navigation/macro.njk"  import pinsStepByStepNavigation %}
 
+{% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
+
 {% block head %}
   {% include "includes/head.njk" %}
   <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
