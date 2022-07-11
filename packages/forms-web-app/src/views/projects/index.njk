@@ -140,12 +140,26 @@
   </div>
 '%}
 
-{% set contentAboutDeveloper = '
+{% set contentSupport = '
   <p>
-    The Developer proposing this project is' + appData.PromoterName + '.
+    <strong>
+      Project case team email:
+    </strong>
+    <br>
+    <a href="mailto:' + appData.ProjectEmailAddress + '">
+      ' + appData.ProjectEmailAddress + '
+    </a>
   </p>
-  <p class="govuk-body govuk-!-margin-top-6">
-    <a class="govuk-link" href="' + appData.WebAddress + '">Visit the project website by' + appData.PromoterName + '</a> for more information.
+  <p>
+    <strong>
+      General enquiries telephone:
+    </strong>
+    <br>
+    <a href="tel:03034445000">
+      0303 444 5000
+    </a>
+    <br>
+    Mon to Fri: 09.00 to 12.00
   </p>
 '%}
 
@@ -186,7 +200,7 @@
     },
     {
       active: true,
-      content: contentAboutDeveloper,
+      content: contentSupport,
       hasRule: true,
       title: "About the developer"
     },
