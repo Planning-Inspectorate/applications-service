@@ -15,7 +15,7 @@ describe('controllers/decision-making-process-guide', () => {
 	describe('getDecisionMakingProcessGuide', () => {
 		it('should call the correct template', async () => {
 			await dcoProcessGuideController.getDecisionMakingProcessGuide(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.DCO_PROCESS_GUIDE.DECISION_MAKINH_PROCESS_GUIDE);
+			expect(res.render).toHaveBeenCalledWith(VIEW.DCO_PROCESS_GUIDE.DECISION_MAKING_PROCESS_GUIDE);
 		});
 	});
 

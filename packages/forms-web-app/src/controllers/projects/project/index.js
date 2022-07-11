@@ -17,7 +17,8 @@ const getProject = async (req, res) => {
 			const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closureDate);
 			const projectName = appData.ProjectName;
 			const stage = status[appData.Stage];
-			const stagePosition = `${appData.Stage} of ${Object.keys(status).length}`;
+			const stagePosition = appData.Stage;
+			const stageTotal = Object.keys(status).length;
 			const projectAcceptsComments = !periodOpen && appData.Stage < 5;
 			const hasContactSupport = appData.ProjectEmailAddress;
 
@@ -37,7 +38,8 @@ const getProject = async (req, res) => {
 				projectName,
 				periodOpen,
 				stage,
-				stagePosition
+				stagePosition,
+				stageTotal
 			});
 		} else {
 			res.status(404).render(VIEW.ERROR[404]);

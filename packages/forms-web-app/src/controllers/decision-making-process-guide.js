@@ -1,7 +1,7 @@
 const { VIEW } = require('../lib/views');
 
 exports.getDecisionMakingProcessGuide = (_, res) => {
-	res.render(VIEW.DCO_PROCESS_GUIDE.DECISION_MAKINH_PROCESS_GUIDE);
+	res.render(VIEW.DCO_PROCESS_GUIDE.DECISION_MAKING_PROCESS_GUIDE);
 };
 
 exports.getPreApplication = (_, res) => {

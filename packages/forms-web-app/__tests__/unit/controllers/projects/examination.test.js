@@ -30,7 +30,11 @@ describe('controllers/projects/project/index', () => {
 				dateOfClosure: 'Sunday 02 February 2020',
 				caseRef: undefined,
 				periodOpen: false,
-				projectName: undefined
+				projectName: undefined,
+				hasContactSupport: undefined,
+				projectAcceptsComments: false,
+				stagePosition: undefined,
+				stageTotal: 8
 			});
 		});
 	});

@@ -20,32 +20,17 @@ describe('routes/decision-making-process-guide', () => {
 	});
 
 	it('should define the expected routes', () => {
+		expect(get).toHaveBeenCalledWith('/', getDecisionMakingProcessGuide);
+		expect(get).toHaveBeenCalledWith('/pre-application', getPreApplication);
 		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide',
-			getDecisionMakingProcessGuide
-		);
-		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide/pre-application',
-			getPreApplication
-		);
-		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide/examination-of-the-application',
+			'/examination-of-the-application',
 			getExaminationOfTheApplication
 		);
+		expect(get).toHaveBeenCalledWith('/review-of-the-application', getReviewOfTheApplication);
+		expect(get).toHaveBeenCalledWith('/pre-examination', getPreExamination);
+		expect(get).toHaveBeenCalledWith('/recommendation-and-decision', getRecommendationAndDecision);
 		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide/review-of-the-application',
-			getReviewOfTheApplication
-		);
-		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide/pre-examination',
-			getPreExamination
-		);
-		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide/recommendation-and-decision',
-			getRecommendationAndDecision
-		);
-		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide/what-happens-after-the-decision-is-made',
+			'/what-happens-after-the-decision-is-made',
 			getWhatHappensAfterTheDecisionIsMade
 		);
 	});
