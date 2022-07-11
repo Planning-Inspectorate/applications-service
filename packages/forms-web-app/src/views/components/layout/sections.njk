@@ -1,13 +1,20 @@
 {% macro layoutSections(sections) %}
   {% for section in sections %}
     {% if section.active %}
-      {% if section.hasRule %}
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
-      {% else %}
-        <br />
+      {% set sectionClasses = "layoutSections__section" %}
+      {% if section.hasRule === false %}
+        {% set sectionClasses = sectionClasses + ' layoutSections__section--no-rule' %}
       {% endif %}
 
-      <section>
+      {% if section.hasRule %}
+        <hr class="layoutSections__hr govuk-section-break govuk-section-break--visible" />
+      {% endif %}
+
+      <section class="{{ sectionClasses }}" {% if section.id %}id="{{ section.id }}"{% endif %}>
+        {% if section.hasRule === false %}
+          <br />
+        {% endif %}
+
         {% if section.title %}
           <h3 class="govuk-heading-m">
             {{ section.title }}
@@ -20,7 +27,7 @@
       </section>
 
       {% if loop.last %}
-        <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+        <hr class="layoutSections__hr govuk-section-break govuk-section-break--visible" />
       {% endif %}
     {% endif %}
   {% endfor %}
