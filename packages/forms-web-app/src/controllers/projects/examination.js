@@ -15,7 +15,8 @@ exports.getExamination = async (req, res) => {
 		req.session.caseRef = req.params.case_ref;
 		req.session.projectName = appData.ProjectName;
 		req.session.appData = appData;
-		res.render(VIEW.PROJECTS.PROJECTS, {
+
+		res.render(VIEW.PROJECTS.PROJECT, {
 			caseRef: req.session.caseRef,
 			appData,
 			projectName: appData.ProjectName,

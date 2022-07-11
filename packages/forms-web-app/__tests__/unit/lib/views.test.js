@@ -19,7 +19,7 @@ describe('lib/views', () => {
 					'decision-making-process-guide/what-happens-after-the-decision-is-made'
 			},
 			PROJECTS: {
-				PROJECTS: 'projects/examination',
+				PROJECT: 'projects/index',
 				PROJECT_TIMELINE: 'projects/project-timeline',
 				DOCUMENTS: 'projects/documents',
 				REPRESENTATION: 'projects/representation',
