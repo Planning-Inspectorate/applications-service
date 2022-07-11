@@ -29,7 +29,7 @@ module.exports = {
 		useSecureSessionCookie: process.env.USE_SECURE_SESSION_COOKIES === 'true',
 		googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
 		googleTagManagerId: process.env.GOOGLE_TAG_MANAGER_ID,
-		nsipBaseUrl: process.env.NSIP_BASE_URL || 'https://infrastructure.planninginspectorate.gov.uk' // Used for project links
+		nsipBaseUrl: process.env.NSIP_BASE_URL || 'https://infrastructure.planninginspectorate.gov.uk' // Used for project links and email subscription
 	},
 	featureFlag: {
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
