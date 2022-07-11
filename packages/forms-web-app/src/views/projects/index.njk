@@ -5,6 +5,7 @@
 
 {% from "../components/layout/sections.njk" import layoutSections %}
 {% from "../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../components/text/link.njk" import textLink %}
 
 {% block pageScripts %}
   <script>
@@ -43,23 +44,50 @@
   <p>
     This project is in the <strong> ' + stage + '</strong> stage
   </p>
-  <p>
-    If you want to comment on this proposed project, you can now register
-    to have your say. Registration will close at 23:59 on <strong>' + dateOfClosure + '</strong>.
-  </p>
 '%}
 
 {% if periodOpen %}
-  {% set contentStage = contentStage +
-      '<a href="/register-have-your-say/' + caseRef + '" class="govuk-button">Register to have your say</a>'
-  %}
-{% endif %}
-
-{% set contentStage = contentStage +
-    '<p>
+  {% set contentStage = contentStage + '
+    <p>
+      If you want to comment on this proposed project, you can now register
+      to have your say. Registration will close at 23:59 on <strong>' + dateOfClosure + '</strong>.
+    </p>
+    <a href="/register-have-your-say/' + caseRef + '" class="govuk-button">
+      Register to have your say
+    </a>
+    <p>
       <a class="govuk-link" href="/having-your-say-guide">Find out more about registering to have your say</a>.
-    </p>'
-%}
+    </p>
+  '%}
+{% elif projectAcceptsComments %}
+  {% set contentStage = contentStage + '
+    <p>
+      The registration period to have your say about this project has closed.
+      You can still get involved and comment on the project during the Examination stage.
+      If you are not registered and you submit information during the Examination stage, this may not be included.
+    </p>
+  '%}
+  {% if hasContactSupport %}
+    {% set contentStage = contentStage + '
+      <p> ' +
+        textLink(
+          "#project-section-contact-support",
+          "Go to the Contact us for support section.",
+          "Contact the project case team"
+        ) + ' to find out more about how to get involved if you are not registered.
+      </p>
+    '%}
+  {% endif %}
+  {% set contentStage = contentStage + '
+    <p> ' +
+      textLink(
+        "/decision-making-process-guide/examination-of-the-application",
+        "Find out more about getting involved during the Examination of the application.",
+        "Find out more about getting involved during the Examination of the application"
+      ) + '
+    </p>
+  '%}
+{% endif %}
 
 {% set contentAboutProject = '
   <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
@@ -202,7 +230,8 @@
       active: true,
       content: contentSupport,
       hasRule: true,
-      title: "About the developer"
+      id: "project-section-contact-support",
+      title: "Contact us for support"
     },
     {
       active: true,
