@@ -1,9 +1,9 @@
-const logger = require('../../lib/logger');
-const { Status: projectStageNames } = require('../../utils/status');
-const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
-const { VIEW } = require('../../lib/views');
-const { getAppData } = require('../../services/application.service');
-const { searchDocumentsV2 } = require('../../services/document.service');
+const logger = require('../../../lib/logger');
+const { status: projectStageNames } = require('../../../utils/status');
+const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
+const { VIEW } = require('../../../lib/views');
+const { getAppData } = require('../../../services/application.service');
+const { searchDocumentsV2 } = require('../../../services/document.service');
 
 function renderData(
 	req,
@@ -71,7 +71,7 @@ function renderData(
 			checked: typeList.includes('everything_else')
 		});
 	}
-	res.render(VIEW.PROJECTS.DOCUMENTS, {
+	res.render(VIEW.PROJECTS.PROJECT.APPLICATION_DOCUMENTS, {
 		documents,
 		projectName,
 		caseRef: params.caseRef,
@@ -84,7 +84,7 @@ function renderData(
 	});
 }
 
-exports.getApplicationDocuments = async (req, res) => {
+const getProjectApplicationDocuments = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
@@ -96,6 +96,11 @@ exports.getApplicationDocuments = async (req, res) => {
 		};
 		const { searchTerm, stage, type } = req.query;
 		const response = await searchDocumentsV2(params);
+
 		renderData(req, res, searchTerm, params, response, projectName, stage, type);
 	}
+};
+
+module.exports = {
+	getProjectApplicationDocuments
 };

@@ -1,212 +1,226 @@
-{% extends "layouts/project-2-columns.njk" %}
+{% extends "../layouts/layout.njk" %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-
-{% from "../components/layout/sections.njk" import layoutSections %}
-{% from "../components/text/heading-summary.njk" import textHeadingSummary %}
-
-{% block pageScripts %}
-  <script>
-    const initScriptsConfig = [
-      {
-        async: true,
-        defer: true,
-        callback: () => {
-          mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
-
-          const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [{{ appData.LongLat }}],
-            zoom: {{ appData.MapZoomLevel }},
-            logoPosition: 'top-left'
-          });
-
-          map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-        },
-        src: 'https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js',
-      }
-    ];
-  </script>
-
-  <script
-    src="/public/javascripts/utils/init-scripts.js"
-    type="text/javascript"
-    defer="true"
-    onload="initScripts(initScriptsConfig)"
-  >
-  </script>
+{% block pageTitle %}
+  Project search
 {% endblock %}
 
-{% set contentStage = '
-  <p>
-    This project is in the <strong> ' + stage + '</strong> stage
-  </p>
-  <p>
-    If you want to comment on this proposed project, you can now register
-    to have your say. Registration will close at 23:59 on <strong>' + dateOfClosure + '</strong>.
-  </p>
-'%}
+{% block beforeContent %}
 
-{% if periodOpen %}
-  {% set contentStage = contentStage +
-      '<a href="/register-have-your-say/' + caseRef + '" class="govuk-button">Register to have your say</a>'
-  %}
-{% endif %}
-
-{% set contentStage = contentStage +
-    '<p>
-      <a class="govuk-link" href="/having-your-say-guide">Find out more about registering to have your say</a>.
-    </p>'
-%}
-
-{% set contentAboutProject = '
-  <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
-    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Application+Form">
-      Application introduction
-    </a>
-  </h4>
-  <p class="govuk-body">
-    Information about the project and what the developer is proposing
-  </p>
-  <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
-    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Environmental+Statement">
-      Environmental information
-    </a>
-  </h4>
-  <p class="govuk-body">
-    Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.
-  </p>
-  <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
-    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Plans">
-      Drawings
-    </a>
-  </h4>
-  <p class="govuk-body">
-    How the proposed project will look and the area it will impact.
-  </p>
-'%}
-
-{% set contentEmailSignUp = '
-  <p>
-    You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
-  </p>
-  <form action="' + nsipBaseUrl + '/email-subscription.php" method="get">
-    ' + govukInput({
-      attributes: { "hidden": true },
-      name: "project",
-      value: caseRef
-    }) + '
-
-    ' + govukInput({
-      autocomplete: "email",
-      classes: "govuk-!-width-two-thirds",
-      id: "email",
-      label: {
-        text: "Email address"
-      },
-      name: "email",
-      spellcheck: false,
-      type: "email"
-    }) + '
-
-    ' + govukButton({
-      classes: "govuk-body govuk-!-margin-bottom-0",
-      text: "Sign up",
-      type: "Submit"
-    }) + '
-  </form>
-'%}
-
-{% set contentAffected = '
-  <p>
-    This proposed road will be a linear route between Amesbury and Berwick
-    Down, Wiltshire.
-  </p>
-  <p>
-    You can:
-  </p>
-  <ul class="govuk-list">
-    <li>
-      <a class="govuk-link" href="#">View a map of the area of the proposed project.</a>
-    </li>
-    <li>
-      <a class="govuk-l ink"href="#">Check if your postcode is within the project area.</a>
-    </li>
-  </ul>
-  <div class="pins-map-enclosure">
-    <div id="map" class="pins-affected-area-map--embed"></div>
-  </div>
-'%}
-
-{% set contentAboutDeveloper = '
-  <p>
-    The Developer proposing this project is' + appData.PromoterName + '.
-  </p>
-  <p class="govuk-body govuk-!-margin-top-6">
-    <a class="govuk-link" href="' + appData.WebAddress + '">Visit the project website by' + appData.PromoterName + '</a> for more information.
-  </p>
-'%}
-
-{% set contentAdvisor = '
-  <p>
-    If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:
-  </p>
-  <ul class="govuk-list">
-    <li>Email: <a class="govuk-link" href="mailto:' + appData.ProjectEmailAddress + '">' + appData.ProjectEmailAddress + '</a></li>
-  </ul>
-'%}
-
-{% set content =
-  [
-    {
-      active: true,
-      content: contentStage,
-      hasRule: true,
-      title: "Project stage"
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+  {{ govukPhaseBanner({
+    tag: {
+      text: "beta"
     },
-    {
-      active: true,
-      content: contentAboutProject,
-      hasRule: true,
-      title: "About the project"
-    },
-    {
-      active: true,
-      content: contentEmailSignUp,
-      hasRule: false,
-      title: "Sign up for email updates"
-    },
-    {
-      active: true,
-      content: contentAffected,
-      hasRule: true,
-      title: "Affected area"
-    },
-    {
-      active: true,
-      content: contentAboutDeveloper,
-      hasRule: true,
-      title: "About the developer"
-    },
-    {
-      active: true,
-      content: contentAdvisor,
-      hasRule: true,
-      title: "Talk to an advisor"
-    }
-  ]
-%}
+    html: 'This is a new service – your <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">feedback</a> will help us to improve it.'
+  }) }}
 
-{% block head %}
-  {{ super() }}
-
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+  <a class="govuk-back-link" href="javascript:history.back()">Back</a>
 {% endblock %}
 
-{% block columnTwo %}
-  {{ textHeadingSummary('Project information', appData.Summary) }}
+<!-- This is a custom block added in the template.njk file.
+  This can be found under:
+  node_modules > govuk-frontend > govuk > template.njk
 
-  {{ layoutSections(content) }}
+  Without it we cannot put HTML outside of the main area.
+-->
+{% set containerClasses = "pins-sidebar--container" %}
+{% set hasContentsAside = true %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">
+    All Projects
+  </h1>
+
+  <div class="govuk-grid-row">
+    <section class="pins-document-library-search govuk-grid-column-one-quarter">
+      <label class="pins-label-small" for="search_documents">
+        Search
+      </label>
+
+      <div class="pins-document-library-search-wrapper">
+        <input class="search-documents-input" type="text" name="search" id="search_documents">
+        <button class="search-documents-submit" type="submit" value="Search">Search</button>
+      </div>
+
+      <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+        <h3 class="govuk-heading-s">Filters</h3>
+        <div class="govuk-accordion__section govuk-checkboxes--small pins-filter-checkboxes">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-content-heading-theme">
+                Location
+              </span>
+            </h2>
+          </div>
+          <div id="accordion-content-theme-noise-traffic-air" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-noise-traffic-air">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-noise-traffic-air">East Midlands (10)</label>
+          </div>
+          <div id="accordion-content-landscape-and-visual" class="govuk-accordion__section-content  govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-landscape-visual">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-landscape-visual">Eastern (39)</label>
+          </div>
+          <div id="accordion-content-heritage" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="heritage">
+            <label class="govuk-label govuk-checkboxes__label" for="heritage">London (7)</label>
+          </div>
+          <div id="accordion-content-theme-wildlife-habitats" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">North East (14)</label>
+          </div>
+          <div id="accordion-content-theme-wildlife-habitats" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">North West (17)</label>
+          </div>
+          <div id="accordion-content-theme-wildlife-habitats" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">South East (29)</label>
+          </div>
+          <div id="accordion-content-theme-wildlife-habitats" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">South West (15)</label>
+          </div>
+          <div id="accordion-content-theme-wildlife-habitats" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-content-heading-theme">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="theme-wildlife-habitats">
+            <label class="govuk-label govuk-checkboxes__label" for="theme-wildlife-habitats">Yorkshire and the Humber (29)</label>
+          </div>
+        </div>
+        <div class="govuk-accordion__section govuk-checkboxes--small pins-filter-checkboxes">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-default-heading-who-submitted">
+              Project type
+              </span>
+            </h2>
+          </div>
+          <div id="accordion-content-examining-panel" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-who-submitted">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-examining-panel">
+            <label class="govuk-label govuk-checkboxes__label" for="who-submitted-examining-panel">Business and commercial (2)</label>
+          </div>
+          <div id="accordion-content-developer" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-who-submitted">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-developer">
+            <label class="govuk-label govuk-checkboxes__label" for="who-submitted-developer">Energy (109)</label>
+          </div>
+          <div id="accordion-content-individual-interested-party" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-who-submitted">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-individual-interested-party">
+            <label class="govuk-label govuk-checkboxes__label" for="who-submitted-individual-interested-party">Transport (67)</label>
+          </div>
+          <div id="accordion-content-organisation-interested-party" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-who-submitted">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-organisation-interested-party">
+            <label class="govuk-label govuk-checkboxes__label" for="who-submitted-organisation-interested-party">Waste (7)</label>
+          </div>
+          <div id="accordion-content-official-body-and-local-authority" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-who-submitted">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="who-submitted-official-body-and-local-authority">
+            <label class="govuk-label govuk-checkboxes__label" for="who-submitted-official-body-and-local-authority">Water (1)</label>
+          </div>
+        </div>
+        <div class="govuk-accordion__section govuk-checkboxes--small pins-filter-checkboxes">
+          <div class="govuk-accordion__section-header">
+            <h2 class="govuk-accordion__section-heading">
+              <span class="govuk-accordion__section-button" id="accordion-default-heading-type-of-information">
+                Status
+              </span>
+            </h2>
+          </div>
+          <div id="accordion-content-plans-and-drawings" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-type-of-information">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="type-plans-and-drawings">
+            <label class="govuk-label govuk-checkboxes__label" for="type-plans-and-drawings">Pre-application (60)</label>
+          </div>
+          <div id="accordion-content-environmental" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-type-of-information">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="type-environmental">
+            <label class="govuk-label govuk-checkboxes__label" for="type-environmental">Acceptance and application (3)</label>
+          </div>
+          <div id="accordion-content-procedure" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-type-of-information">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="type-procedure">
+            <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Pre-examination (6)</label>
+          </div>
+          <div id="accordion-content-consultation-reports" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-type-of-information">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="type-consultation-reports">
+            <label class="govuk-label govuk-checkboxes__label" for="type-consultation-reports">Examination (8)</label>
+          </div>
+          <div id="accordion-content-procedure" class="govuk-accordion__section-content govuk-checkboxes__item govuk-checkboxes__item" aria-labelledby="accordion-default-heading-type-of-information">
+            <input class="govuk-checkboxes__input" type="checkbox" name="theme" id="type-procedure">
+            <label class="govuk-label govuk-checkboxes__label" for="type-procedure">Decision (105)</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <section class="pins-document-library-search govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-s">{{ noOfProjects }} projects</h2>
+
+    <div class="pins-search-results-pagination" id="pins-search-results-pagination">
+      <div class="document-results-sort">
+        <label class="govuk-label" for="document-results-sort">
+          Sort by
+        </label>
+
+        <select id="document-results-sort" class="govuk-select">
+          <option selected>
+            Alphabetical A-Z
+          </option>
+        </select>
+
+        <hr />
+
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">
+                Project name
+              </th>
+
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">
+                Developer name
+              </th>
+
+              <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">
+                Status
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="govuk-table__body">
+            {% for list in appList %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a href="/projects/{{ list.CaseReference }}">
+                    {{ list.ProjectName }}
+                  </a>
+                </td>
+
+                <td class="govuk-table__cell">
+                  {{ list.PromoterName }}
+                </td>
+
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--blue">
+                    {{ list.Stage }}
+                  </strong>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="govuk-body govuk-!-font-weight-bold">
+      Displaying 1-12 of {{ noOfProjects }}
+    </p>
+
+    <div class="pins-search-results-pagination" id="pins-search-results-pagination">
+      <a href="#" class="govuk-link govuk-link--no-underline">
+        1
+      </a>
+
+      <a href="#" class="govuk-link">
+        2
+      </a>
+
+      <a href="#" class="govuk-link">
+        Next
+      </a>
+    </div>
+  </section>
 {% endblock %}

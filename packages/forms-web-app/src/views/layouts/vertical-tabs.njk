@@ -1,12 +1,15 @@
 <nav>
   <ul class="govuk-list sidenav">
-    <li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
-      {% if 'examination' != activeProjectLink %}
-        <a href="/projects/{{ caseRef }}">{{ projectName }} project information</a>
+    <li class="side-menu govuk-body-s {% if 'index' == activeProjectLink %} active {% endif %}">
+      {% if 'index' != activeProjectLink %}
+        <a href="/projects/{{ caseRef }}">
+          {{ projectName }} project information
+        </a>
       {% else %}
         {{ projectName }} project information
       {% endif %}
     </li>
+
     <li class="side-menu govuk-body-s {% if 'project-timeline' == activeProjectLink %} active {% endif %}">
       {% if 'project-timeline' != activeProjectLink %}
         <a href="/projects/project-timeline">Project timeline</a>
@@ -14,42 +17,71 @@
         Project timeline
       {% endif %}
     </li>
+
     <li class="side-menu govuk-body-s {% if 'about-the-application' == activeProjectLink %} active {% endif %}">
       {% if 'about-the-application' != activeProjectLink %}
-        <a href="/projects/{{ caseRef }}/application-documents">Project application documents</a>
-      {% else %} Project application documents {% endif %}
+        <a href="/projects/{{ caseRef }}/application-documents">
+          Project application documents
+        </a>
+      {% else %}
+        Project application documents
+      {% endif %}
     </li>
+
     <li class="side-menu govuk-body-s {% if 'representations' == activeProjectLink %} active {% endif %}">
       {% if 'representations' != activeProjectLink %}
-        <a href="/projects/{{ caseRef }}/representations">Registration comments</a>
-      {% else %} Registration comments {% endif %}
+        <a href="/projects/{{ caseRef }}/representations">
+          Registration comments
+        </a>
+      {% else %}
+        Registration comments
+      {% endif %}
     </li>
+
     <li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
       {% if 'timetable' != activeProjectLink %}
-        <a href="/projects/timetable">Examination timetable</a>
-      {% else %} Examination timetable {% endif %}
+        <a href="/projects/timetable">
+          Examination timetable
+        </a>
+      {% else %}
+        Examination timetable
+      {% endif %}
     </li>
+
     <li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
       {% if 'all-examination-documents' != activeProjectLink %}
-        <a href="/projects/all-examination-documents">All Examination documents</a>
-      {% else %} All Examination documents {% endif %}
+        <a href="/projects/all-examination-documents">
+          All Examination documents
+        </a>
+      {% else %}
+        All Examination documents
+      {% endif %}
     </li>
+
     <li class="side-menu govuk-body-s {% if 'recommendations' == activeProjectLink %} active {% endif %}">
       {% if 'recommendations' != activeProjectLink %}
-        <a href="/projects/recommendations">Recommendation and decision</a>
-      {% else %} Recommendation and decision {% endif %}
+        <a href="/projects/recommendations">
+          Recommendation and decision
+        </a>
+      {% else %}
+        Recommendation and decision
+      {% endif %}
     </li>
   </ul>
-  <hr
 
-  class="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
-  <h3 class="govuk-heading-s">Related guides</h3>
+  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
+
+  <h3 class="govuk-heading-s">
+    Related guides
+  </h3>
+
   <ul class="govuk-list sidenav">
     <li class="side-menu govuk-body-s">
       <a href="../decision-making-process-guide/">
         Find out more about the decision making process for national infrastructure projects
       </a>
     </li>
+
     <li class="side-menu govuk-body-s">
       <a href="../having-your-say-guide/">
         Having your say about a national infrastructure project

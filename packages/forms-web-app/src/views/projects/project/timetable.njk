@@ -1,0 +1,18 @@
+{% extends "../../layouts/project-2-columns.njk" %}
+
+{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+
+{% set activeProjectLink = 'timetable' %}
+
+{% block columnTwo %}
+  {{ textHeadingSummary(
+    'Examination timetable',
+    'Currently there are no events to display. The examination timetable will be published at the Examination stage.'
+  ) }}
+
+  <p>
+    <a href="/projects/{{ caseRef }}">
+      Return to the project overview
+    </a>
+  </p>
+{% endblock %}

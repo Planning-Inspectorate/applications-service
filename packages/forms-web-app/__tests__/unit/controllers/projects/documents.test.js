@@ -1,4 +1,6 @@
-const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
+const {
+	getProjectApplicationDocuments
+} = require('../../../../src/controllers/projects/project/application-documents');
 const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
 const { getAppData } = require('../../../../src/services/application.service');
 const { mockReq, mockRes } = require('../../mocks');
@@ -66,10 +68,10 @@ describe('controllers/documents', () => {
 		);
 	});
 
-	describe('getApplicationDocuments', () => {
+	describe('getProjectApplicationDocuments', () => {
 		it('should call the correct template', async () => {
-			await aboutTheApplicationController.getApplicationDocuments(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
+			await getProjectApplicationDocuments(req, res);
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.APPLICATION_DOCUMENTS, {
 				documents: docList,
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
@@ -106,8 +108,8 @@ describe('controllers/documents', () => {
 					}
 				})
 			);
-			await aboutTheApplicationController.getApplicationDocuments(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
+			await getProjectApplicationDocuments(req, res);
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT.APPLICATION_DOCUMENTS, {
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
 				documents: [],

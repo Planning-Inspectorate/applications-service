@@ -12,7 +12,6 @@ const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const { prometheus } = require('@pins/common');
 const sessionConfig = require('./lib/session');
-const { Status: projectStageNames } = require('./utils/status');
 const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
 const fileTypeDisplayHelper = require('./lib/file-type-display-helper');
 const filterByKey = require('./lib/filter-by-key');
@@ -21,6 +20,8 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
+const { status: projectStageNames } = require('./utils/status');
+const { VIEW } = require('./lib/views');
 
 require('express-async-errors');
 
@@ -155,13 +156,13 @@ app.set('subdomain offset', config.server.subdomainOffset);
 // Error handling
 app
 	.use((req, res, next) => {
-		res.status(404).render('error/not-found');
+		res.status(404).render(VIEW.ERROR[404]);
 		next();
 	})
 	.use((err, req, res, next) => {
 		logger.error({ err }, 'Unhandled exception');
 
-		res.status(500).render('error/unhandled-exception');
+		res.status(500).render(VIEW.ERROR[500]);
 		next();
 	});
 

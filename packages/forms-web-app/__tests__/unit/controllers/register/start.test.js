@@ -85,7 +85,7 @@ describe('controllers/register/start', () => {
 			};
 			await startController.getStart(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);
-			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
+			expect(responseWithStatus.render).toHaveBeenCalledWith('error/404');
 		});
 		it('should redirect to not found route if caseRef not provided', async () => {
 			getAppData.mockImplementation(() =>
@@ -99,7 +99,7 @@ describe('controllers/register/start', () => {
 			};
 			await startController.getStart(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);
-			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
+			expect(responseWithStatus.render).toHaveBeenCalledWith('error/404');
 		});
 	});
 });

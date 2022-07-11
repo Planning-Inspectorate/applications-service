@@ -1,4 +1,4 @@
-const Status = {
+const status = {
 	1: 'Pre Application',
 	2: 'Acceptance',
 	3: 'Pre Examination',
@@ -10,5 +10,5 @@ const Status = {
 };
 
 module.exports = {
-	Status
+	status
 };
