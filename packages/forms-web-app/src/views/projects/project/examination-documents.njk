@@ -1,11 +1,11 @@
 {% extends "../../layouts/project-2-columns.njk" %}
 
-{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../../components/heading/summary.njk" import headingSummary %}
 
 {% set activeProjectLink = 'all-examination-documents' %}
 
 {% block columnTwo %}
-  {{ textHeadingSummary(
+  {{ headingSummary(
     'All examination documents',
     'There are no documents to display at the moment. These documents will be published at the Examination stage.'
   ) }}

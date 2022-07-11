@@ -4,7 +4,8 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% from "../../components/layout/sections.njk" import layoutSections %}
-{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../../components/heading/summary.njk" import headingSummary %}
+{% from "../../components/text/link.njk" import textLink %}
 
 {% block pageScripts %}
   <script>
@@ -41,29 +42,27 @@
 
 {% set activeProjectLink = 'index' %}
 
-{% set contentStage = '
-  <p>
-    This project is in the <strong> ' + stage + '</strong> stage
-  </p>
-  <p>
-    If you want to comment on this proposed project, you can now register
-    to have your say. Registration will close at 23:59 on <strong>' + dateOfClosure + '</strong>.
-  </p>
-'%}
-
-{% if periodOpen %}
-  {% set contentStage = contentStage +
-      '<a href="/register-have-your-say/' + caseRef + '" class="govuk-button">Register to have your say</a>'
-  %}
-{% endif %}
-
-{% set contentStage = contentStage +
-    '<p>
-      <a class="govuk-link" href="/having-your-say-guide">Find out more about registering to have your say</a>.
-    </p>'
+{% set activeContentSections = {
+    advisor: true,
+    about: true,
+    aboutDeveloper: true,
+    affectedArea: true,
+    contactSupport: hasContactSupport,
+    emailSignUp: true,
+    stage: true
+  }
 %}
 
-{% set contentAboutProject = '
+{% set contentAdvisor = '
+  <p>
+    If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:
+  </p>
+  <ul class="govuk-list">
+    <li>Email: <a class="govuk-link" href="mailto:' + appData.ProjectEmailAddress + '">' + appData.ProjectEmailAddress + '</a></li>
+  </ul>
+'%}
+
+{% set contentAbout = '
   <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
     <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Application+Form">
       Application introduction
@@ -90,38 +89,16 @@
   </p>
 '%}
 
-{% set contentEmailSignUp = '
+{% set contentAboutDeveloper = '
   <p>
-    You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
+    The Developer proposing this project is' + appData.PromoterName + '.
   </p>
-  <form action="' + nsipBaseUrl + '/email-subscription.php" method="get">
-    ' + govukInput({
-      attributes: { "hidden": true },
-      name: "project",
-      value: caseRef
-    }) + '
-
-    ' + govukInput({
-      autocomplete: "email",
-      classes: "govuk-!-width-two-thirds",
-      id: "email",
-      label: {
-        text: "Email address"
-      },
-      name: "email",
-      spellcheck: false,
-      type: "email"
-    }) + '
-
-    ' + govukButton({
-      classes: "govuk-body govuk-!-margin-bottom-0",
-      text: "Sign up",
-      type: "Submit"
-    }) + '
-  </form>
+  <p class="govuk-body govuk-!-margin-top-6">
+    <a class="govuk-link" href="' + appData.WebAddress + '">Visit the project website by' + appData.PromoterName + '</a> for more information.
+  </p>
 '%}
 
-{% set contentAffected = '
+{% set contentAffectedArea = '
   <p>
     This proposed road will be a linear route between Amesbury and Berwick
     Down, Wiltshire.
@@ -142,58 +119,149 @@
   </div>
 '%}
 
-{% set contentAboutDeveloper = '
+{% set contentContactSupport = '
   <p>
-    The Developer proposing this project is' + appData.PromoterName + '.
+    If you need help with the project you can contact our case team:
   </p>
-  <p class="govuk-body govuk-!-margin-top-6">
-    <a class="govuk-link" href="' + appData.WebAddress + '">Visit the project website by' + appData.PromoterName + '</a> for more information.
+
+  <p>
+    Email:
+    ' + textLink(
+      "mailto:" + appData.ProjectEmailAddress,
+      "Click to email our case team if you need help with the project.",
+      appData.ProjectEmailAddress
+    ) + '
   </p>
 '%}
 
-{% set contentAdvisor = '
+{% set contentEmailSignUp = '
   <p>
-    If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:
+    You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
   </p>
-  <ul class="govuk-list">
-    <li>Email: <a class="govuk-link" href="mailto:' + appData.ProjectEmailAddress + '">' + appData.ProjectEmailAddress + '</a></li>
-  </ul>
+  <form
+    action="' + nsipBaseUrl + '/email-subscription.php"
+    class="govuk-body govuk-!-width-two-thirds"
+    method="get"
+  >
+    ' + govukInput({
+      attributes: { "hidden": true },
+      formGroup: {
+        classes: "govuk-!-display-none"
+      },
+      name: "project",
+      value: caseRef
+    }) + '
+
+    ' + govukInput({
+      autocomplete: "email",
+      id: "project-input-email",
+      label: {
+        text: "Email address"
+      },
+      name: "email",
+      spellcheck: false,
+      type: "email"
+    }) + '
+
+    ' + govukButton({
+      classes: "govuk-body govuk-!-margin-bottom-0",
+      text: "Sign up",
+      type: "Submit"
+    }) + '
+  </form>
 '%}
+
+{% set contentStage = '
+  <p>
+    This project is in the <strong> ' + stage + '</strong> stage
+  </p>
+'%}
+
+{% if periodOpen %}
+  {% set contentStage = contentStage + '
+    <p>
+      If you want to comment on this proposed project, you can now register
+      to have your say. Registration will close at 23:59 on <strong>' + dateOfClosure + '</strong>.
+    </p>
+    <a href="/register-have-your-say/' + caseRef + '" class="govuk-button">
+      Register to have your say
+    </a>
+    <p>
+      <a class="govuk-link" href="/having-your-say-guide">Find out more about registering to have your say</a>.
+    </p>
+  '%}
+{% elif projectAcceptsComments %}
+  {% set contentStage = contentStage + '
+    <p>
+      The registration period to have your say about this project has closed.
+      You can still get involved and comment on the project during the Examination stage.
+      If you are not registered and you submit information during the Examination stage, this may not be included.
+    </p>
+  '%}
+  {% if hasContactSupport %}
+    {% set contentStage = contentStage + '
+      <p> ' +
+        textLink(
+          "#project-section-contact-support",
+          "Go to the Contact us for support section.",
+          "Contact the project case team"
+        ) + ' to find out more about how to get involved if you are not registered.
+      </p>
+    '%}
+  {% endif %}
+  {% set contentStage = contentStage + '
+    <p> ' +
+      textLink(
+        internalRoutes.decisionMakingProcessGuide.subdirectory +
+        internalRoutes.decisionMakingProcessGuide.routes.applicationExamination,
+        "Find out more about getting involved during the Examination of the application.",
+        "Find out more about getting involved during the Examination of the application"
+      ) + '
+    </p>
+  '%}
+{% endif %}
 
 {% set content =
   [
     {
-      active: true,
+      active: activeContentSections.stage,
       content: contentStage,
       hasRule: true,
-      title: "Project stage"
+      title: "Project stage (" + stagePosition + ")"
     },
     {
-      active: true,
-      content: contentAboutProject,
+      active: activeContentSections.about,
+      content: contentAbout,
       hasRule: true,
       title: "About the project"
     },
     {
-      active: true,
+      active: activeContentSections.emailSignUp,
       content: contentEmailSignUp,
       hasRule: false,
       title: "Sign up for email updates"
     },
     {
-      active: true,
-      content: contentAffected,
+      active: activeContentSections.contactSupport,
+      content: contentContactSupport,
+      hasRule: true,
+      id: "project-section-contact-support",
+      title: "Contact us for support"
+    },
+    {
+      active: activeContentSections.affectedArea,
+      content: contentAffectedArea,
       hasRule: true,
       title: "Affected area"
     },
     {
-      active: true,
+      active: activeContentSections.aboutDeveloper,
       content: contentAboutDeveloper,
       hasRule: true,
       title: "About the developer"
     },
     {
-      active: true,
+      active: activeContentSections.advisor,
       content: contentAdvisor,
       hasRule: true,
       title: "Talk to an advisor"
@@ -208,7 +276,7 @@
 {% endblock %}
 
 {% block columnTwo %}
-  {{ textHeadingSummary('Project information', appData.Summary) }}
+  {{ headingSummary('Project information', appData.Summary) }}
 
   {{ layoutSections(content) }}
 {% endblock %}

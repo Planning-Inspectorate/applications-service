@@ -1,4 +1,6 @@
 const sanitiseString = (stringToSanitise) => {
+  if (typeof stringToSanitise !== "string") return stringToSanitise;
+
   let sanitisedString = stringToSanitise
     .replace(/<[^>]*>/gm, '')
     .replace(/ {2,}/gm, ' ').trim()

@@ -1,11 +1,11 @@
 {% extends "../../layouts/project-2-columns.njk" %}
 
-{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../../components/heading/summary.njk" import headingSummary %}
 
 {% set activeProjectLink = 'project-timeline' %}
 
 {% block columnTwo %}
-	{{ textHeadingSummary(
+	{{ headingSummary(
     'Project timeline',
     'There are no timeline entries to display at the moment. Timelines will be published at the Recommendation and decision stage.'
   ) }}

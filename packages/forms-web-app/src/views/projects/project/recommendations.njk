@@ -1,11 +1,11 @@
 {% extends "../../layouts/project-2-columns.njk" %}
 
-{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../../components/heading/summary.njk" import headingSummary %}
 
 {% set activeProjectLink = 'recommendations' %}
 
 {% block columnTwo %}
-  {{ textHeadingSummary(
+  {{ headingSummary(
     'Recommendation and decision',
     'There are no documents to display at the moment. These documents will be published at the Recommendation and decision stage.'
   ) }}

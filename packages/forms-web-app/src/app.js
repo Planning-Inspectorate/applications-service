@@ -22,6 +22,9 @@ const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanu
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const { VIEW } = require('./lib/views');
+const {
+	routes: { internal: internalRoutes }
+} = require('./routes/config');
 
 require('express-async-errors');
 
@@ -85,6 +88,7 @@ env.addFilter('filterByKey', filterByKey);
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('render', renderTemplateFilter(nunjucks));
 
+env.addGlobal('internalRoutes', internalRoutes);
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);

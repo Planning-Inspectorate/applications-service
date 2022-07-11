@@ -5,10 +5,6 @@ const { status } = require('../../../utils/status');
 const { VIEW } = require('../../../lib/views');
 
 const getProject = async (req, res) => {
-	// res.send({
-	// 	hello: VIEW.PROJECTS.PROJECT.INDEX
-	// })
-
 	try {
 		const caseRef = req.params.case_ref;
 
@@ -21,19 +17,27 @@ const getProject = async (req, res) => {
 			const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closureDate);
 			const projectName = appData.ProjectName;
 			const stage = status[appData.Stage];
+			const stagePosition = `${appData.Stage} of ${Object.keys(status).length}`;
+			const projectAcceptsComments = !periodOpen && appData.Stage < 5;
+			const hasContactSupport = appData.ProjectEmailAddress;
 
 			req.session.appData = appData;
 			req.session.caseRef = caseRef;
 			req.session.isPeriodOpen = periodOpen;
 			req.session.projectName = projectName;
 
+			console.log('appData: ', appData);
+
 			res.render(VIEW.PROJECTS.PROJECT.INDEX, {
 				appData,
 				caseRef,
 				dateOfClosure,
-				periodOpen,
+				hasContactSupport,
+				projectAcceptsComments,
 				projectName,
-				stage
+				periodOpen,
+				stage,
+				stagePosition
 			});
 		} else {
 			res.status(404).render(VIEW.ERROR[404]);

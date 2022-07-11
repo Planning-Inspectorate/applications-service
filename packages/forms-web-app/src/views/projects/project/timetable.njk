@@ -1,11 +1,11 @@
 {% extends "../../layouts/project-2-columns.njk" %}
 
-{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../../components/heading/summary.njk" import headingSummary %}
 
 {% set activeProjectLink = 'timetable' %}
 
 {% block columnTwo %}
-  {{ textHeadingSummary(
+  {{ headingSummary(
     'Examination timetable',
     'Currently there are no events to display. The examination timetable will be published at the Examination stage.'
   ) }}

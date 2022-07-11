@@ -23,10 +23,10 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-	router.use(routes.projects.directory, projectsRouter);
+	router.use(routes.projects.subdirectory, projectsRouter);
 }
 router.use(interestedPartyRouter);
-router.use(decisionMakingProcessGuideRouter);
+router.use(routes.decisionMakingProcessGuide.subdirectory, decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
 
 module.exports = router;

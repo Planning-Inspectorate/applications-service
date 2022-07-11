@@ -1,12 +1,23 @@
 const routes = {
 	internal: {
+		decisionMakingProcessGuide: {
+			routes: {
+				afterDecision: '/what-happens-after-the-decision-is-made',
+				applicationExamination: '/examination-of-the-application',
+				applicationReview: '/review-of-the-application',
+				index: '/',
+				preApplication: '/pre-application',
+				preExamination: '/pre-examination',
+				recommendationAndDecision: '/recommendation-and-decision'
+			},
+			subdirectory: '/decision-making-process-guide'
+		},
 		projects: {
-			directory: '/projects',
 			routes: {
 				index: '/'
 			},
+			subdirectory: '/projects',
 			project: {
-				directory: '/case_ref',
 				routes: {
 					applicationDocuments: '/:case_ref/application-documents',
 					examinationDocuments: '/all-examination-documents',
@@ -16,7 +27,8 @@ const routes = {
 					representations: '/:case_ref/representations',
 					timeline: '/project-timeline',
 					timetable: '/timetable'
-				}
+				},
+				subdirectory: '/case_ref'
 			}
 		}
 	}

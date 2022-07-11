@@ -1,14 +1,14 @@
 {% extends "../../layouts/project-3-columns.njk" %}
 
 {% from "../../macros/pagination-bar.njk" import paginationBar %}
-{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../../components/heading/summary.njk" import headingSummary %}
 
 {% set section = 'application-documents' %}
 
 {% set activeProjectLink = 'about-the-application' %}
 
 {% block contentHeader %}
-  {{ textHeadingSummary('Project application documents') }}
+  {{ headingSummary('Project application documents') }}
 
   {% if documents.length != 0 or queryUrl != '' %}
     <p>

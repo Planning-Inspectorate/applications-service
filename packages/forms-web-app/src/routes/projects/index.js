@@ -29,12 +29,10 @@ const {
 } = require('../../controllers/projects/project/_');
 
 router.get(projectsRoutes.index, getProjects);
-
 router.get(projectRoute.examinationDocuments, getProjectExaminationDocuments);
 router.get(projectRoute.recommendations, getProjectRecommendations);
 router.get(projectRoute.timeline, getProjectTimeLine);
 router.get(projectRoute.timetable, getProjectTimetable);
-
 router.get(projectRoute.index, getProject);
 router.get(projectRoute.applicationDocuments, getProjectApplicationDocuments);
 router.get(projectRoute.representation, getProjectRepresentation);
