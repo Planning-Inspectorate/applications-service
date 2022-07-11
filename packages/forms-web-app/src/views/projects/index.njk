@@ -1,0 +1,212 @@
+{% extends "layouts/project-2-columns.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% from "../components/layout/sections.njk" import layoutSections %}
+{% from "../components/text/heading-summary.njk" import textHeadingSummary %}
+
+{% block pageScripts %}
+  <script>
+    const initScriptsConfig = [
+      {
+        async: true,
+        defer: true,
+        callback: () => {
+          mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
+
+          const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [{{ appData.LongLat }}],
+            zoom: {{ appData.MapZoomLevel }},
+            logoPosition: 'top-left'
+          });
+
+          map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+        },
+        src: 'https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js',
+      }
+    ];
+  </script>
+
+  <script
+    src="/public/javascripts/utils/init-scripts.js"
+    type="text/javascript"
+    defer="true"
+    onload="initScripts(initScriptsConfig)"
+  >
+  </script>
+{% endblock %}
+
+{% set contentStage = '
+  <p>
+    This project is in the <strong> ' + stage + '</strong> stage
+  </p>
+  <p>
+    If you want to comment on this proposed project, you can now register
+    to have your say. Registration will close at 23:59 on <strong>' + dateOfClosure + '</strong>.
+  </p>
+'%}
+
+{% if periodOpen %}
+  {% set contentStage = contentStage +
+      '<a href="/register-have-your-say/' + caseRef + '" class="govuk-button">Register to have your say</a>'
+  %}
+{% endif %}
+
+{% set contentStage = contentStage +
+    '<p>
+      <a class="govuk-link" href="/having-your-say-guide">Find out more about registering to have your say</a>.
+    </p>'
+%}
+
+{% set contentAboutProject = '
+  <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Application+Form">
+      Application introduction
+    </a>
+  </h4>
+  <p class="govuk-body">
+    Information about the project and what the developer is proposing
+  </p>
+  <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Environmental+Statement">
+      Environmental information
+    </a>
+  </h4>
+  <p class="govuk-body">
+    Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.
+  </p>
+  <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
+    <a href="/projects/' + caseRef + '/application-documents?searchTerm=&type=Plans">
+      Drawings
+    </a>
+  </h4>
+  <p class="govuk-body">
+    How the proposed project will look and the area it will impact.
+  </p>
+'%}
+
+{% set contentEmailSignUp = '
+  <p>
+    You can sign up to get updates about this project by email. We will send updates when information becomes available and let you know when the project stages change.
+  </p>
+  <form action="' + nsipBaseUrl + '/email-subscription.php" method="get">
+    ' + govukInput({
+      attributes: { "hidden": true },
+      name: "project",
+      value: caseRef
+    }) + '
+
+    ' + govukInput({
+      autocomplete: "email",
+      classes: "govuk-!-width-two-thirds",
+      id: "email",
+      label: {
+        text: "Email address"
+      },
+      name: "email",
+      spellcheck: false,
+      type: "email"
+    }) + '
+
+    ' + govukButton({
+      classes: "govuk-body govuk-!-margin-bottom-0",
+      text: "Sign up",
+      type: "Submit"
+    }) + '
+  </form>
+'%}
+
+{% set contentAffected = '
+  <p>
+    This proposed road will be a linear route between Amesbury and Berwick
+    Down, Wiltshire.
+  </p>
+  <p>
+    You can:
+  </p>
+  <ul class="govuk-list">
+    <li>
+      <a class="govuk-link" href="#">View a map of the area of the proposed project.</a>
+    </li>
+    <li>
+      <a class="govuk-l ink"href="#">Check if your postcode is within the project area.</a>
+    </li>
+  </ul>
+  <div class="pins-map-enclosure">
+    <div id="map" class="pins-affected-area-map--embed"></div>
+  </div>
+'%}
+
+{% set contentAboutDeveloper = '
+  <p>
+    The Developer proposing this project is' + appData.PromoterName + '.
+  </p>
+  <p class="govuk-body govuk-!-margin-top-6">
+    <a class="govuk-link" href="' + appData.WebAddress + '">Visit the project website by' + appData.PromoterName + '</a> for more information.
+  </p>
+'%}
+
+{% set contentAdvisor = '
+  <p>
+    If you need to speak to someone access information on this website in a different format such as accessible PDFs, large print, easy read, audio recording or braille:
+  </p>
+  <ul class="govuk-list">
+    <li>Email: <a class="govuk-link" href="mailto:' + appData.ProjectEmailAddress + '">' + appData.ProjectEmailAddress + '</a></li>
+  </ul>
+'%}
+
+{% set content =
+  [
+    {
+      active: true,
+      content: contentStage,
+      hasRule: true,
+      title: "Project stage"
+    },
+    {
+      active: true,
+      content: contentAboutProject,
+      hasRule: true,
+      title: "About the project"
+    },
+    {
+      active: true,
+      content: contentEmailSignUp,
+      hasRule: false,
+      title: "Sign up for email updates"
+    },
+    {
+      active: true,
+      content: contentAffected,
+      hasRule: true,
+      title: "Affected area"
+    },
+    {
+      active: true,
+      content: contentAboutDeveloper,
+      hasRule: true,
+      title: "About the developer"
+    },
+    {
+      active: true,
+      content: contentAdvisor,
+      hasRule: true,
+      title: "Talk to an advisor"
+    }
+  ]
+%}
+
+{% block head %}
+  {{ super() }}
+
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet'/>
+{% endblock %}
+
+{% block columnTwo %}
+  {{ textHeadingSummary('Project information', appData.Summary) }}
+
+  {{ layoutSections(content) }}
+{% endblock %}

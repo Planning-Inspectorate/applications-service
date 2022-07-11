@@ -19,9 +19,7 @@ const initScripts = (config) => {
 		script.defer = defer;
 		script.src = src;
 		script.type = type;
-		script.onload = () => {
-			callback();
-		};
+		script.onload = () => callback();
 
 		document.body.appendChild(script);
 	});
