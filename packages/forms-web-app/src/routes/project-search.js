@@ -1,8 +1,8 @@
 const express = require('express');
-const projectSearchController = require('../controllers/project-search');
+const { getProjects } = require('../controllers/projects');
 
 const router = express.Router();
 
-router.get('/', projectSearchController.getProjectList);
+router.get('/', getProjects);
 
 module.exports = router;

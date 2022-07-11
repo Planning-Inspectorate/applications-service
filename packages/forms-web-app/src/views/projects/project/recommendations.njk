@@ -1,0 +1,18 @@
+{% extends "../../layouts/project-2-columns.njk" %}
+
+{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+
+{% set activeProjectLink = 'recommendations' %}
+
+{% block columnTwo %}
+  {{ textHeadingSummary(
+    'Recommendation and decision',
+    'There are no documents to display at the moment. These documents will be published at the Recommendation and decision stage.'
+  ) }}
+
+  <p>
+    <a href="/projects/{{ caseRef }}">
+      Return to the project overview
+    </a>
+  </p>
+{% endblock %}

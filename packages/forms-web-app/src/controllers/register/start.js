@@ -25,6 +25,6 @@ exports.getStart = async (req, res) => {
 		});
 	} else if (response.resp_code === 404) {
 		logger.warn(`No project found with ID ${req.params.case_ref} for registration`);
-		res.status(404).render('error/not-found');
+		res.status(404).render('error/404');
 	}
 };

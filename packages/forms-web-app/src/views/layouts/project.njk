@@ -1,25 +1,22 @@
 {#- Provides a 3-column layout within the project section of the site -#}
 {% extends "layouts/layout.njk" %}
 
-{% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
-
 {% block pageTitle %}
   {{ projectName }} project overview
 {% endblock %}
 
 {% block beforeContent %}
-  <div class="project-header-section">
-    <div>
-      {{ govukPhaseBanner({
-          tag: {
-            text: "beta"
-          },
-          html: 'This is a new service – your <a class="govuk-link " href="#">feedback</a> will help us to improve it.'
-        })
-      }}
-      <h1 class="govuk-heading-xl govuk-!-padding-top-9 govuk-!-padding-bottom-3 govuk-!-margin-bottom-3" >{{ projectName }}</p>
-    </div>
-  </div>
+  {{ govukPhaseBanner({
+      tag: {
+        text: "beta"
+      },
+      html: 'This is a new service – your <a class="govuk-link " href="#">feedback</a> will help us to improve it.'
+    })
+  }}
 {% endblock %}
 
-
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-width-two-thirds govuk-!-margin-top-4 govuk-!-margin-bottom-9" >
+    {{ projectName }}
+  </h1>
+{% endblock %}

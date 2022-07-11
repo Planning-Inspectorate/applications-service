@@ -1,22 +1,43 @@
 const express = require('express');
-
 const router = express.Router();
-const projectSearchController = require('../../controllers/project-search');
-const documentsRouter = require('./documents');
-const projectTimeLineController = require('../../controllers/projects/project-timeline');
-const representationsController = require('../../controllers/projects/representations');
-const timetableController = require('../../controllers/projects/timetable');
-const recommendationsController = require('../../controllers/projects/recommendations');
-const allExaminationDocsController = require('../../controllers/projects/all-examination-documents');
 
-router.get('/', projectSearchController.getProjectList);
-router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
-router.get('/recommendations', recommendationsController.getRecommendations);
-router.get('/timetable', timetableController.getTimetable);
-router.get('/:case_ref/representations/:id', representationsController.getRepresentation);
-router.get('/:case_ref/representations', representationsController.getRepresentations);
-router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
+const {
+	routes: {
+		internal: {
+			projects: { routes: projectsRoutes }
+		}
+	},
+	routes: {
+		internal: {
+			projects: {
+				project: { routes: projectRoute }
+			}
+		}
+	}
+} = require('../../routes/config');
 
-router.use(documentsRouter);
+const { getProjects } = require('../../controllers/projects/index');
+const {
+	getProject,
+	getProjectApplicationDocuments,
+	getProjectExaminationDocuments,
+	getProjectRecommendations,
+	getProjectRepresentation,
+	getProjectRepresentations,
+	getProjectTimeLine,
+	getProjectTimetable
+} = require('../../controllers/projects/project/_');
+
+router.get(projectsRoutes.index, getProjects);
+
+router.get(projectRoute.examinationDocuments, getProjectExaminationDocuments);
+router.get(projectRoute.recommendations, getProjectRecommendations);
+router.get(projectRoute.timeline, getProjectTimeLine);
+router.get(projectRoute.timetable, getProjectTimetable);
+
+router.get(projectRoute.index, getProject);
+router.get(projectRoute.applicationDocuments, getProjectApplicationDocuments);
+router.get(projectRoute.representation, getProjectRepresentation);
+router.get(projectRoute.representations, getProjectRepresentations);
 
 module.exports = router;

@@ -1,11 +1,11 @@
-const projectSearchController = require('../../../src/controllers/project-search');
+const { getProjects } = require('../../../src/controllers/projects');
 const { getAllProjectList } = require('../../../src/lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../mocks');
 const { VIEW } = require('../../../src/lib/views');
 
 jest.mock('../../../src/lib/application-api-wrapper');
 
-describe('controllers/project-search', () => {
+describe('controllers/projects', () => {
 	let req;
 	let res;
 
@@ -15,7 +15,7 @@ describe('controllers/project-search', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getProjectList', () => {
+	describe('getProjects', () => {
 		it('should call the correct template', async () => {
 			getAllProjectList.mockImplementation(() =>
 				Promise.resolve({
@@ -30,8 +30,8 @@ describe('controllers/project-search', () => {
 					]
 				})
 			);
-			await projectSearchController.getProjectList(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECT_SEARCH, {
+			await getProjects(req, res);
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.INDEX, {
 				appList: [
 					{
 						CaseReference: 'test',

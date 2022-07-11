@@ -1,11 +1,15 @@
+{% extends "../../layouts/project-3-columns.njk" %}
+
+{% from "../../macros/pagination-bar.njk" import paginationBar %}
+{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+
 {% set section = 'representations' %}
-{% extends "layouts/project-3-columns.njk" %}
-{% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'representations' %}
 
 {% block contentHeader %}
-  <h2 class="govuk-heading-l">Registration Comments</h2>
+  {{ textHeadingSummary('Registration Comments') }}
+
   <p>
     <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" type="text" value="{{ searchTerm }}">
     <button class="govuk-button" data-cy="search-button">Search</button>

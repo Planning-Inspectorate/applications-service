@@ -1,10 +1,25 @@
-const { VIEW } = require('../../lib/views');
-const { getAppData } = require('../../services/application.service');
-const { searchRepresentations } = require('../../lib/application-api-wrapper');
-const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
-const { getRepresentation } = require('../../services/representation.service');
+const { getAppData } = require('../../../services/application.service');
+const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
+const { getRepresentation } = require('../../../services/representation.service');
+const { searchRepresentations } = require('../../../lib/application-api-wrapper');
+const { VIEW } = require('../../../lib/views');
 
-exports.getRepresentations = async (req, res) => {
+const getProjectRepresentation = async (req, res) => {
+	const applicationResponse = await getAppData(req.params.case_ref);
+	if (applicationResponse.resp_code === 200) {
+		const representation = await getRepresentation(req.params.id);
+		res.render(VIEW.PROJECTS.PROJECT.REPRESENTATION, {
+			projectName: applicationResponse.data.ProjectName,
+			caseRef: applicationResponse.data.CaseReference,
+			RepFrom: representation.data.RepFrom,
+			RepresentationRedacted: representation.data.RepresentationRedacted,
+			DateRrepReceived: representation.data.DateRrepReceived,
+			attachments: representation.data.attachments
+		});
+	}
+};
+
+const getProjectRepresentations = async (req, res) => {
 	const { searchTerm, type } = req.query;
 	const applicationResponse = await getAppData(req.params.case_ref);
 	const commentsTypeFilterItems = [];
@@ -39,7 +54,7 @@ exports.getRepresentations = async (req, res) => {
 			});
 		}, Object.create(null));
 
-		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
+		res.render(VIEW.PROJECTS.PROJECT.REPRESENTATIONS, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
 			representations,
@@ -52,17 +67,7 @@ exports.getRepresentations = async (req, res) => {
 	}
 };
 
-exports.getRepresentation = async (req, res) => {
-	const applicationResponse = await getAppData(req.params.case_ref);
-	if (applicationResponse.resp_code === 200) {
-		const representation = await getRepresentation(req.params.id);
-		res.render(VIEW.PROJECTS.REPRESENTATION, {
-			projectName: applicationResponse.data.ProjectName,
-			caseRef: applicationResponse.data.CaseReference,
-			RepFrom: representation.data.RepFrom,
-			RepresentationRedacted: representation.data.RepresentationRedacted,
-			DateRrepReceived: representation.data.DateRrepReceived,
-			attachments: representation.data.attachments
-		});
-	}
+module.exports = {
+	getProjectRepresentation,
+	getProjectRepresentations
 };

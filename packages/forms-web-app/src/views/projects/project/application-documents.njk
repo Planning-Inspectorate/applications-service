@@ -1,11 +1,15 @@
+{% extends "../../layouts/project-3-columns.njk" %}
+
+{% from "../../macros/pagination-bar.njk" import paginationBar %}
+{% from "../../components/text/heading-summary.njk" import textHeadingSummary %}
+
 {% set section = 'application-documents' %}
-{% extends "layouts/project-3-columns.njk" %}
-{% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set activeProjectLink = 'about-the-application' %}
 
 {% block contentHeader %}
-  <h2 class="govuk-heading-l">Project application documents</h2>
+  {{ textHeadingSummary('Project application documents') }}
+
   {% if documents.length != 0 or queryUrl != '' %}
     <p>
       <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">

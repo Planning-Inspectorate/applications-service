@@ -1,18 +1,19 @@
 const VIEW = {
 	APPLICATION_NUMBER: 'application-number',
-
 	COOKIES: 'cookies',
 	PROJECTS: {
-		PROJECT: 'projects/index',
-		PROJECT_TIMELINE: 'projects/project-timeline',
-		DOCUMENTS: 'projects/documents',
-		REPRESENTATIONS: 'projects/representations',
-		TIMETABLE: 'projects/timetable',
-		ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
-		RECOMMENDATIONS: 'projects/recommendations',
-		REPRESENTATION: 'projects/representation'
+		INDEX: 'projects/index',
+		PROJECT: {
+			APPLICATION_DOCUMENTS: 'projects/project/application-documents',
+			EXAMINATION_DOCUMENTS: 'projects/project/examination-documents',
+			INDEX: 'projects/project/index',
+			RECOMMENDATIONS: 'projects/project/recommendations',
+			REPRESENTATION: 'projects/project/representation',
+			REPRESENTATIONS: 'projects/project/representations',
+			TIMELINE: 'projects/project/timeline',
+			TIMETABLE: 'projects/project/timetable'
+		}
 	},
-	PROJECT_SEARCH: 'project-search',
 	GUIDANCE_PAGES: {
 		BEFORE_APPLY: 'guidance-pages/before-apply'
 	},
@@ -94,6 +95,11 @@ const VIEW = {
 	FOOTER_PAGES: {
 		ACCESSIBILITY: 'footer-pages/accessibility-statement',
 		COOKIES: 'footer-pages/cookies-info'
+	},
+	ERROR: {
+		400: 'error/400',
+		404: 'error/404',
+		500: 'error/500'
 	}
 };
 
