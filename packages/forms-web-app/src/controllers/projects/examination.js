@@ -3,6 +3,7 @@ const { Status } = require('../../utils/status');
 const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
 const { formatDate } = require('../../utils/date-utils');
+const config = require('../../config');
 
 exports.getExamination = async (req, res) => {
 	const caseRef = req.params.case_ref;
@@ -36,7 +37,8 @@ exports.getExamination = async (req, res) => {
 			periodOpen,
 			stage,
 			stagePosition,
-			stageTotal
+			stageTotal,
+			config
 		});
 	}
 };

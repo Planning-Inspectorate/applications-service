@@ -35,6 +35,7 @@ module.exports = {
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
 		usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
-		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true'
+		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
+		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true'
 	}
 };

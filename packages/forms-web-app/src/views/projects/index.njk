@@ -8,36 +8,38 @@
 {% from "../components/text/link.njk" import textLink %}
 
 {% block pageScripts %}
-  <script>
-    const initScriptsConfig = [
-      {
-        async: true,
-        defer: true,
-        callback: () => {
-          mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
+  {% if config.featureFlag.showAffectedAreaSection %}
+    <script>
+      const initScriptsConfig = [
+        {
+          async: true,
+          defer: true,
+          callback: () => {
+            mapboxgl.accessToken = 'pk.eyJ1IjoicGlucy1qb25ubyIsImEiOiJja3Vud2ppdGgwZDFyMndxcm5wa2p5OHJkIn0.BFBdHexswY6gK26v8l6q5A';
 
-          const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [{{ appData.LongLat }}],
-            zoom: {{ appData.MapZoomLevel }},
-            logoPosition: 'top-left'
-          });
+            const map = new mapboxgl.Map({
+              container: 'map',
+              style: 'mapbox://styles/mapbox/streets-v11',
+              center: [{{ appData.LongLat }}],
+              zoom: {{ appData.MapZoomLevel }},
+              logoPosition: 'top-left'
+            });
 
-          map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-        },
-        src: 'https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js',
-      }
-    ];
-  </script>
+            map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+          },
+          src: 'https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js',
+        }
+      ];
+    </script>
 
-  <script
-    src="/public/javascripts/utils/init-scripts.js"
-    type="text/javascript"
-    defer="true"
-    onload="initScripts(initScriptsConfig)"
-  >
-  </script>
+    <script
+      src="/public/javascripts/utils/init-scripts.js"
+      type="text/javascript"
+      defer="true"
+      onload="initScripts(initScriptsConfig)"
+    >
+    </script>
+  {% endif %}
 {% endblock %}
 
 {% set contentStage = '
@@ -221,7 +223,7 @@
       title: "Sign up for email updates"
     },
     {
-      active: true,
+      active: config.featureFlag.showAffectedAreaSection,
       content: contentAffected,
       hasRule: true,
       title: "Affected area"
