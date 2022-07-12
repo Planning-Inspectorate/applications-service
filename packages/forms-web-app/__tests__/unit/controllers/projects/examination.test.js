@@ -4,10 +4,27 @@ const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
 jest.mock('../../../../src/lib/application-api-wrapper');
+jest.mock('../../../../src/config.js', () => ({
+	logger: {
+		level: 'info'
+	},
+	featureFlag: {
+		showAffectedAreaSection: false
+	}
+}));
 
 describe('controllers/projects/examination', () => {
 	let req;
 	let res;
+
+	const mockConfig = {
+		logger: {
+			level: 'info'
+		},
+		featureFlag: {
+			showAffectedAreaSection: false
+		}
+	};
 
 	beforeEach(() => {
 		req = mockReq();
@@ -34,7 +51,8 @@ describe('controllers/projects/examination', () => {
 				projectName: undefined,
 				stage: undefined,
 				stagePosition: undefined,
-				stageTotal: 8
+				stageTotal: 8,
+				config: mockConfig
 			});
 		});
 	});
