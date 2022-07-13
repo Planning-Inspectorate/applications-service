@@ -1,5 +1,11 @@
 const express = require('express');
 
+const config = require('../../config');
+
+const {
+	featureFlag: { hideRoute }
+} = config;
+
 const router = express.Router();
 const projectSearchController = require('../../controllers/project-search');
 const documentsRouter = require('./documents');
@@ -15,7 +21,7 @@ router.get('/recommendations', recommendationsController.getRecommendations);
 router.get('/timetable', timetableController.getTimetable);
 router.get('/:case_ref/representations/:id', representationsController.getRepresentation);
 router.get('/:case_ref/representations', representationsController.getRepresentations);
-router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
+!hideRoute && router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
 
 router.use(documentsRouter);
 

@@ -7,14 +7,15 @@
         {{ projectName }} project information
       {% endif %}
     </li>
-    {# Hidden Accordingly To Ticket ASB-334
+		{% if not featureFlag.hideRoute %}
 		<li class="side-menu govuk-body-s {% if 'project-timeline' == activeProjectLink %} active {% endif %}">
       {% if 'project-timeline' != activeProjectLink %}
         <a href="/projects/project-timeline">Project timeline</a>
       {% else %}
         Project timeline
       {% endif %}
-    </li> #}
+    </li>
+		{% endif %}
     <li class="side-menu govuk-body-s {% if 'about-the-application' == activeProjectLink %} active {% endif %}">
       {% if 'about-the-application' != activeProjectLink %}
         <a href="/projects/{{ caseRef }}/application-documents">Project application documents</a>
