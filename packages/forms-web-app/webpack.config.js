@@ -11,13 +11,16 @@ const path = require('path');
 
 /*
 	What has this achieved.
+	- Provided a defined structure for writing client side JS
 	- Client side JS can now be written as modules
 	- - This means we can use npm packages
 	- - We can use are own modules
 	- - These modules can be tested
 	- Where ES6 modules were used before there will be optimisation as all imported files will be bundled into one file
-	- There is optimisation by utilising and configuring the 'library' option so we only call the functions we need for that page
-	- All files are now compiled for ES5 giving better browser support
+	- There is optimisation by utilising and configuring the webpack 'library' option so we only call the functions we needed for the page
+	- All files are now compiled for ES5 giving wider browser support
+	- Fixed build time issues with webpack compiled functions
+	- Optimised production output by removing source mapping
 */
 
 const outputPath = path.resolve(__dirname, 'src', 'public', 'javascripts');
@@ -43,7 +46,7 @@ const config = {
 const configMethods = {
 	...config,
 	entry: {
-		test: './src/lib/client-side/test.js',
+		test1: './src/lib/client-side/test-1.js',
 		test2: './src/lib/client-side/test-2.js',
 		initScripts: './src/lib/client-side/init-scripts.js'
 	},
