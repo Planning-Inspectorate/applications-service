@@ -40,6 +40,26 @@
     >
     </script>
   {% endif %}
+
+  <script>
+    const initConfig = [
+      {
+        defer: true,
+        callback() {
+          yoyoApp.test2()
+        },
+        src: '/public/javascripts/test2.js',
+      }
+    ];
+  </script>
+
+  <script
+    defer="true"
+    onload="yoyoApp.initScripts(initConfig)"
+    src="/public/javascripts/initScripts.js"
+    type="text/javascript"
+  >
+  </script>
 {% endblock %}
 
 {% set contentStage = '
