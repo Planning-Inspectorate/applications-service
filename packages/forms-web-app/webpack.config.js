@@ -46,7 +46,6 @@ const config = {
 const configMethods = {
 	...config,
 	entry: {
-		test1: './src/lib/client-side/test-1.js',
 		test2: './src/lib/client-side/test-2.js',
 		initScripts: './src/lib/client-side/init-scripts.js'
 	},
