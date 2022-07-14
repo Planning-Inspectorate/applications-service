@@ -7,7 +7,7 @@
         {{ projectName }} project information
       {% endif %}
     </li>
-		{% if not featureFlag.hideRoute %}
+		{% if featureFlag.hideProjectTimelineLink %}
 		<li class="side-menu govuk-body-s {% if 'project-timeline' == activeProjectLink %} active {% endif %}">
       {% if 'project-timeline' != activeProjectLink %}
         <a href="/projects/project-timeline">Project timeline</a>

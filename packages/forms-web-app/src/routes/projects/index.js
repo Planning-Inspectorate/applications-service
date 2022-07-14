@@ -3,7 +3,7 @@ const express = require('express');
 const config = require('../../config');
 
 const {
-	featureFlag: { hideRoute }
+	featureFlag: { hideProjectTimelineLink }
 } = config;
 
 const router = express.Router();
@@ -21,7 +21,8 @@ router.get('/recommendations', recommendationsController.getRecommendations);
 router.get('/timetable', timetableController.getTimetable);
 router.get('/:case_ref/representations/:id', representationsController.getRepresentation);
 router.get('/:case_ref/representations', representationsController.getRepresentations);
-!hideRoute && router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
+hideProjectTimelineLink &&
+	router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
 
 router.use(documentsRouter);
 

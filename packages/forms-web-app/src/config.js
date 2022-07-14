@@ -37,6 +37,6 @@ module.exports = {
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
 		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
-		hideRoute: process.env.FEATURE_HIDE_ROUTE === 'true'
+		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true'
 	}
 };
