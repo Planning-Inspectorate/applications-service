@@ -68,7 +68,7 @@ services:
       FEATURE_REDIS_SESSION_STORE: 'true'
       FEATURE_SAVE_AND_EXIT_OPTION: 'false'
       FEATURE_SHOW_AFFECTED_AREA_SECTION: 'false'
-      FEATURE_HIDE_ROUTE: 'true'
+      FEATURE_PROJECT_TIMELINE_LINK: 'false'
     ports:
       - '9004:3000'
       # node debugger
