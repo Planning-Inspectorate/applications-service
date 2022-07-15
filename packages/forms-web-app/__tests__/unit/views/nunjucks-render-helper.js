@@ -6,9 +6,9 @@ const addKeyValuePair = require('../../../src/lib/add-key-value-pair');
 const render = require('../../../src/lib/render-template-filter');
 
 const viewPaths = [
-	path.join(__dirname, '../../..', 'node_modules', 'govuk-frontend'),
-	path.join(__dirname, '../../..', 'node_modules', '@ministryofjustice', 'frontend'),
-	path.join(__dirname, '../../..', 'node_modules', '@pins', 'common', 'src', 'frontend'),
+	path.resolve(require.resolve('govuk-frontend'), '../..'),
+	path.resolve(require.resolve('@ministryofjustice/frontend'), '../..'),
+	path.join(path.resolve(require.resolve('@pins/common'), '../..'), 'src', 'frontend'),
 	path.join(__dirname, '../../..', 'src', 'views')
 ];
 

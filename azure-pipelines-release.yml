@@ -93,11 +93,9 @@ extends:
                 persistCredentials: true
               - template: ../steps/node_script.yml
                 parameters:
-                  nodeVersion: 14
-                  script: make install
+                  script: npm ci
               - template: ../steps/node_script.yml
                 parameters:
-                  nodeVersion: 14
                   script: npm run release
                   environmentVariables:
                     GH_TOKEN: $(GH_TOKEN)

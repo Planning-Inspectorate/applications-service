@@ -26,23 +26,19 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 14
-              script: make install
+              script: npm ci
           - template: ../steps/node_script.yml
             parameters:
               condition: ne(variables['Build.SourceBranchName'], 'main')
-              nodeVersion: 14
               script: npm run commitlint
           - template: ../steps/node_script.yml
             parameters:
               condition: succeededOrFailed()
-              nodeVersion: 14
               script: npm run lint
           - template: ../steps/node_script.yml
             parameters:
               condition: succeededOrFailed()
-              nodeVersion: 14
-              script: npm run test
+              script: npm run test:cov
           - template: ../steps/check_changed_files.yml
             parameters:
               pathFilters:
