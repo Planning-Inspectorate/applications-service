@@ -1,10 +1,9 @@
 {
-	"name": "applications-service-api",
+	"name": "@pins/applications-service-api",
 	"version": "0.0.0",
 	"private": true,
 	"engines": {
-		"node": ">=14.0.0",
-		"npm": ">=6.0.0"
+		"node": ">=16.14.0"
 	},
 	"main": "src/main.js",
 	"scripts": {

@@ -4,13 +4,10 @@ Monorepo for all Applications Service services and infrastructure
 
 ## TL;DR
 
-- `make install`
-- `make serve`
+- `npm ci`
+- `npm run dev`
 - Go to [localhost:9004](http://localhost:9004)
 
-#### for MS Windows users:
-- make -f Makefile.windows install
-- make -f Makefile.windows serve
 ## Architecture
 
 The Applications Service is featured within the ODT Architecture diagram on Confluence here:
@@ -30,7 +27,7 @@ and containers within the Applications Service.
 
 ## Pre-requisites
 
-- [NodeJS v14](https://nodejs.org/en/download/)
+- [NodeJS v16](https://nodejs.org/en/download/)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -39,18 +36,10 @@ and containers within the Applications Service.
 Install NodeJS using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 ```
-nvm install 14
-nvm use 14
-nvm alias default 14
+nvm install 16
+nvm use 16
+nvm alias default 16
 ```
-
-### Dependencies
-
-You will need to install the dependencies locally, even though we're using
-Docker Compose to run locally.
-
-The easiest way to do that is to run `make install`, which will cycle through
-every folder and install npm dependencies.
 
 ## Running
 
@@ -64,7 +53,7 @@ databases.
 To run the whole stack:
 
 ```
-make serve
+npm run dev
 ```
 
 Then go to [localhost:9004](http://localhost:9004) (forms-web-app) or
@@ -77,13 +66,13 @@ Then go to [localhost:9004](http://localhost:9004) (forms-web-app) or
 > which is running in its own container locally
 > Alternatively, you can use [MySQL Workbench](https://www.mysql.com/products/workbench/)
 
-To run a single service (and it's dependencies):
+To run a single service (and it's dependencies), run the dev command for the relevant service:
 
 ```
-make run SERVICE=applications-service-api
+npm run dev:api
 ```
 
-This will run just the `applications-service-api` app. Change the `SERVICE` for
+This will run just the `applications-service-api` app. Change the npm script for
 different services.
 
 ---
@@ -92,7 +81,7 @@ If you wish to use the shell of the container (useful if you want to install
 new npm dependencies):
 
 ```
-make run SERVICE=applications-service-api CMD=sh
+npm run dev:api -- sh
 ```
 
 ---
@@ -100,12 +89,12 @@ make run SERVICE=applications-service-api CMD=sh
 To stop all services:
 
 ```
-make down
+docker-compose down
 ```
 
 ### Troubleshooting
 
-On (**make serve**), you may get the following error:
+On (**npm run dev**), you may get the following error:
 
 ```
 no matching manifest for linux/arm64/v8 in the manifest list entries:
@@ -188,10 +177,8 @@ TO DO
 
 ## Automatically format and lint code on git commit
 
-We use [pre-commit](https://pre-commit.com/index.html) to format and lint code before committing.
-Follow [these instructions](https://pre-commit.com/index.html#install) to install pre-commit.
-Run `pre-commit install` in the project root directory
-Pre-commit will now run automatically on git commit
+We use [husky](https://typicode.github.io/husky/#/) to format and lint code before committing.
+These are installed automatically when running `npm ci`.
 
 ## Commit Message Format
 
@@ -199,9 +186,9 @@ This repo uses [Semantic Release](https://semantic-release.gitbook.io) to
 generate release version numbers, so it is imperative that all commits are
 done using the [correct format](https://www.conventionalcommits.org/en/v1.0.0/#specification).
 
-Commits to the `develop` branch will create release candidates. These are a release
+Commits to the `main` branch will create release candidates. These are a release
 of software that may or may not be made public. Under normal circumstance, releases
-should be made directly to the `master` branch.
+should be made directly to the `main` branch.
 
 ## Commit Message Rules
 

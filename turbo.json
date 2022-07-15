@@ -1,0 +1,26 @@
+{
+	"$schema": "https://turborepo.org/schema.json",
+	"baseBranch": "origin/main",
+	"pipeline": {
+		"build": {
+			"outputs": ["dist/**"]
+		},
+		"lint": {
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
+		"lint:fix": {
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
+		"test": {
+			"outputs": []
+		},
+		"test:cov": {
+			"outputs": ["jest-reports/**"]
+		},
+		"test:watch": {
+			"outputs": []
+		}
+	}
+}
