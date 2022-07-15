@@ -33,9 +33,9 @@ any authentication):
 
 
 #### Test data
-From the project root folder run `make install` and then `make serve` which will spin up the application against `localhost:9004`
+From the project root folder run `npm run dev` which will spin up the application against `localhost:9004`
 
-Then navigate to `e2e-tests` folder.
+In a separate terminal, navigate to `e2e-tests` folder.
 
 All the features were tagged with `@testSuite` tag.
 

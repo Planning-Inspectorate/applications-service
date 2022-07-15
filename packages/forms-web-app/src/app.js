@@ -49,11 +49,22 @@ const nunjucksConfig = {
 	express: app
 };
 
+const accessibleAutocompleteRoot = path.resolve(
+	require.resolve('accessible-autocomplete'),
+	'../..'
+);
+const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
+const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
+const pinsComponentsRoot = path.resolve(
+	require.resolve('@planning-inspectorate/pins-components'),
+	'../..'
+);
+
 const viewPaths = [
-	path.join(__dirname, '..', 'node_modules', 'govuk-frontend'),
-	path.join(__dirname, '..', 'node_modules', '@ministryofjustice', 'frontend'),
+	govukFrontendRoot,
+	mojFrontendRoot,
 	path.join(__dirname, 'views'),
-	path.join(__dirname, '..', 'node_modules', '@planning-inspectorate', 'pins-components')
+	pinsComponentsRoot
 ];
 
 const env = nunjucks.configure(viewPaths, nunjucksConfig);
@@ -79,18 +90,17 @@ env.addFilter('docname', function (object) {
 	);
 });
 
+env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('formatBytes', fileSizeDisplayHelper);
 env.addFilter('formatMimeType', fileTypeDisplayHelper);
 env.addFilter('filterByKey', filterByKey);
-env.addFilter('addKeyValuePair', addKeyValuePair);
-env.addFilter('render', renderTemplateFilter(nunjucks));
-
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('host', config.server.host);
 env.addGlobal('nsipBaseUrl', config.server.nsipBaseUrl);
 env.addGlobal('projectStageNames', projectStageNames);
+env.addFilter('render', renderTemplateFilter(nunjucks));
 
 if (config.server.useSecureSessionCookie) {
 	app.set('trust proxy', 1); // trust first proxy
@@ -123,13 +133,10 @@ app.use(removeUnwantedCookiesMiddelware);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(
 	'/assets',
-	express.static(path.join(__dirname, '..', 'node_modules', 'accessible-autocomplete', 'dist')),
-	express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets'))
+	express.static(path.join(accessibleAutocompleteRoot, 'dist')),
+	express.static(path.join(govukFrontendRoot, 'govuk', 'assets'))
 );
-app.use(
-	'/assets/govuk/all.js',
-	express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'all.js'))
-);
+app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 
 function isProjectClosed(req, res, next) {
 	const { isPeriodOpen } = req.session;

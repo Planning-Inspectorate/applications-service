@@ -1,10 +1,9 @@
 {
-	"name": "forms-web-app",
+	"name": "@pins/forms-web-app",
 	"version": "0.0.0",
 	"private": true,
 	"engines": {
-		"node": ">=14.0.0",
-		"npm": ">=6.0.0"
+		"node": ">=16.14.0"
 	},
 	"scripts": {
 		"build": "npm run build:client && npm run build:sass && npm run build:app",
@@ -15,9 +14,9 @@
 		"lint:fix": "eslint ./ --fix",
 		"prebuild": "rm -Rf ./dist",
 		"start": "node dist/server.js",
-		"start:dev": "npm-run-all --parallel start:dev:server start:dev:client build:sass watch:sass",
+		"start:dev": "npm run start:dev:server && npm run start:dev:client && npm run build:sass && npm run watch:sass",
 		"start:dev:client": "webpack --config webpack.config.js --watch",
-		"start:dev:debug": "npm-run-all --parallel start:dev:server:debug start:dev:client build:sass watch:sass",
+		"start:dev:debug": "npm run start:dev:server:debug && npm run start:dev:client && npm run build:sass && npm run watch:sass",
 		"start:dev:server": "nodemon src/server.js | pino-pretty -tlc",
 		"start:dev:server:debug": "node --inspect-brk=0.0.0.0 src/server.js",
 		"test": "jest",
@@ -28,7 +27,7 @@
 	"dependencies": {
 		"@ministryofjustice/frontend": "0.2.0",
 		"@pins/common": "file:../common",
-		"@planning-inspectorate/pins-components": "^2.2.0",
+		"@planning-inspectorate/pins-components": "^2.2.1",
 		"@testing-library/dom": "^7.31.2",
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/user-event": "^12.8.3",
@@ -69,9 +68,8 @@
 		"jest-fetch-mock": "^3.0.3",
 		"jest-junit": "^13.2.0",
 		"nodemon": "^2.0.12",
-		"npm-run-all": "^4.1.5",
 		"pino-pretty": "^4.8.0",
-		"sass": "^1.39.0",
+		"sass": "^1.53.0",
 		"webpack": "^5.73.0",
 		"webpack-cli": "^4.8.0",
 		"webpack-merge": "^5.8.0"
