@@ -4,6 +4,13 @@ const projectTimelineController = require('../../../../src/controllers/projects/
 const timetableController = require('../../../../src/controllers/projects/timetable');
 const recommendationsController = require('../../../../src/controllers/projects/recommendations');
 const allExaminationDocumentsController = require('../../../../src/controllers/projects/all-examination-documents');
+const config = require('../../../../src/config');
+
+config.featureFlag.hideProjectTimelineLink = false;
+
+const {
+	featureFlag: { hideProjectTimelineLink }
+} = config;
 
 describe('routes/examination', () => {
 	beforeEach(() => {
@@ -16,14 +23,19 @@ describe('routes/examination', () => {
 	});
 
 	it('should define the expected routes', () => {
+		const mockCallsLength = hideProjectTimelineLink ? 9 : 8;
+
 		expect(get).toHaveBeenCalledWith(
 			'/:case_ref/representations',
 			representationsController.getRepresentations
 		);
-		expect(get).toHaveBeenCalledWith(
-			'/project-timeline',
-			projectTimelineController.getProjectTimeLine
-		);
+
+		if (hideProjectTimelineLink === true) {
+			expect(get).toHaveBeenCalledWith(
+				'/project-timeline',
+				projectTimelineController.getProjectTimeLine
+			);
+		}
 		expect(get).toHaveBeenCalledWith(
 			'/recommendations',
 			recommendationsController.getRecommendations
@@ -33,6 +45,6 @@ describe('routes/examination', () => {
 			allExaminationDocumentsController.getAllExaminationDocuments
 		);
 		expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
-		expect(get.mock.calls.length).toBe(9);
+		expect(get.mock.calls.length).toBe(mockCallsLength);
 	});
 });
