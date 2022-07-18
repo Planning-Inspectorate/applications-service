@@ -1,42 +1,36 @@
 var yoyoApp;
 (() => {
-	var o = {
-			850: (o) => {
-				o.exports = function (o) {
-					o &&
-						Array.isArray(o) &&
-						o.forEach(function (o) {
-							var r = o.async,
-								t = void 0 === r || r,
-								e = o.defer,
-								n = void 0 === e || e,
-								i = o.callback,
-								p = void 0 === i ? function () {} : i,
-								a = o.src,
-								c = void 0 === a ? null : a,
-								d = o.type,
-								y = void 0 === d ? 'text/javascript' : d;
-							if (c) {
-								var v = document.createElement('script');
-								(v.async = t),
-									(v.defer = n),
-									(v.src = c),
-									(v.type = y),
-									(v.onload = function () {
-										return p();
-									}),
-									document.body.appendChild(v);
-							}
+	var r = {
+			627: (r) => {
+				r.exports = (r) => {
+					r &&
+						Array.isArray(r) &&
+						r.forEach((r) => {
+							const {
+								async: o = !0,
+								defer: t = !0,
+								callback: e = () => {},
+								src: p = null,
+								type: a = 'text/javascript'
+							} = r;
+							if (!p) return;
+							const c = document.createElement('script');
+							(c.async = o),
+								(c.defer = t),
+								(c.src = p),
+								(c.type = a),
+								(c.onload = () => e()),
+								document.body.appendChild(c);
 						});
 				};
 			}
 		},
-		r = {},
+		o = {},
 		t = (function t(e) {
-			var n = r[e];
-			if (void 0 !== n) return n.exports;
-			var i = (r[e] = { exports: {} });
-			return o[e](i, i.exports, t), i.exports;
-		})(850);
-	(yoyoApp = void 0 === yoyoApp ? {} : yoyoApp).initScripts = t;
+			var p = o[e];
+			if (void 0 !== p) return p.exports;
+			var a = (o[e] = { exports: {} });
+			return r[e](a, a.exports, t), a.exports;
+		})(627);
+	(yoyoApp = void 0 === yoyoApp ? {} : yoyoApp).initScripts = t.default;
 })();

@@ -1,5 +1,5 @@
 (() => {
-	var n = window.innerHeight,
+	const n = window.innerHeight,
 		i = window.innerWidth;
 	console.log(n + i);
 })();
