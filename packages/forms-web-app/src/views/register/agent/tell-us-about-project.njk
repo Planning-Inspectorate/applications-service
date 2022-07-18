@@ -85,11 +85,10 @@
             classes: "govuk-label--s",
             isPageHeading: true
           },
-          maxwords: 200,
           id: "comment",
           name: "comment",
           value: comment or errors['comment'].value,
-          attributes: {"data-cy": "comment"},
+          attributes: {"data-cy": "comment", maxLength: "65234"},
           errorMessage: errors['comment'] and {
               text: errors['comment'].msg
           }
