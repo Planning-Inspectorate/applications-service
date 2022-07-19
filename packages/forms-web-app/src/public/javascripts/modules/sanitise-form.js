@@ -15,6 +15,12 @@ window.App.Modules = window.App.Modules || {};
 					const formData = new FormData(form);
 
 					fields.forEach((field) => {
+						if (field.value.length > 65234) {
+							form.submit();
+
+							return;
+						}
+
 						formData.delete(field.name);
 						formData.append(field.name, sanitiseString(field.value));
 					});
