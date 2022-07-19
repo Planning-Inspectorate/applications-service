@@ -60,6 +60,7 @@
 		"eslint": "^8.17.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-jest": "^24.4.0",
+		"express-fileupload": "^1.4.0",
 		"jest": "^28.1.1",
 		"jest-environment-jsdom": "^28.1.1",
 		"jest-fetch-mock": "^3.0.3",
