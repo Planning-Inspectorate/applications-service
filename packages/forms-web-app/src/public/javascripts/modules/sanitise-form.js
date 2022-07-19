@@ -31,6 +31,11 @@ window.App.Modules = window.App.Modules || {};
 					console.log('response: ', response);
 					console.log('responseBody: ', responseBody);
 
+					const a = 1;
+					const b = 1;
+
+					if (a === b) return;
+
 					if (!response.url) {
 						form.submit();
 					}
