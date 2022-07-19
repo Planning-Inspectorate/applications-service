@@ -21,6 +21,7 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
+const fileUpload = require('express-fileupload');
 
 require('express-async-errors');
 
@@ -113,6 +114,7 @@ app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(fileUpload());
 app.use(cookieParser());
 app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);
