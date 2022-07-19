@@ -19,7 +19,7 @@ window.App.Modules = window.App.Modules || {};
 						formData.append(field.name, sanitiseString(field.value));
 					});
 
-					formData.append('origin', 'post-request');
+					formData.append('origin', 'sanitise-form-post-request');
 
 					const response = await fetch(window.location.href, {
 						method: 'POST',
@@ -28,11 +28,11 @@ window.App.Modules = window.App.Modules || {};
 
 					const responseBody = await response.json();
 
-					console.log('response: ', response);
-					console.log('responseBody: ', responseBody);
+					console.log({ response });
+					console.log({ responseBody });
 
 					if (!response.url) {
-						form.submit();
+						// form.submit();
 					}
 
 					if (window.location.href === response.url) {
@@ -40,12 +40,13 @@ window.App.Modules = window.App.Modules || {};
 							field.value = sanitiseString(field.value);
 						});
 
-						form.submit();
+						// form.submit();
 					} else {
 						window.location = response.url;
 					}
 				} catch (error) {
-					form.submit();
+					console.log(error);
+					// form.submit();
 				}
 			});
 		};

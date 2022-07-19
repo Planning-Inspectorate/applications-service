@@ -12,9 +12,26 @@ exports.getComments = async (req, res) => {
 
 exports.postComments = async (req, res) => {
 	const { body } = req;
-	const { errors = {}, errorSummary = [], comment } = body;
+	const { errors = {}, errorSummary = [], comment, origin } = body;
 
-	if (errors.comment || Object.keys(errors).length > 0) {
+	const hasErrors = errors.comment || Object.keys(errors).length > 0;
+
+	if (origin === 'sanitise-form-post-request') {
+		if (hasErrors) {
+			res.body.send({
+				url: VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT
+			});
+			return;
+		} else {
+			res.body.send({
+				url: `/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}`
+			});
+
+			return;
+		}
+	}
+
+	if (hasErrors) {
 		res.render(VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT, {
 			errors,
 			errorSummary,
