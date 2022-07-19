@@ -19,12 +19,10 @@ window.App.Modules = window.App.Modules || {};
 						formData.append(field.name, sanitiseString(field.value));
 					});
 
-					const response = await (
-						await fetch(window.location.href, {
-							method: 'POST',
-							body: formData
-						})
-					).json();
+					const response = await fetch(window.location.href, {
+						method: 'POST',
+						body: formData
+					});
 
 					if (!response.url) {
 						form.submit();
