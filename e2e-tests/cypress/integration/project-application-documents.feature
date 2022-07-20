@@ -261,10 +261,10 @@ Feature: Project Application documents page
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
             | 4.3 Book of Reference (PDF, 37KB) Published by Removed 2019-04-24AcceptanceCompulsory Acquisition Information                                           |
-            | Rule 6 letter - Notification of the preliminary meeting and matters to be discussed (PDF, 282KB) 2019-04-18Pre ExaminationProcedural Decisions          |
-            | NULL (PDF, 149KB) Published by NULL on behalf of Rule 4 Appointment of Panel - 15 March 2019 2019-03-18Pre ExaminationProcedural Decisions              |
-            | NULL (PDF, 75KB) Published by NULL on behalf of Regulation 32 - Transboundary Screening 2019-01-28Pre ExaminationTransboundary                          |
-            | Section 56 Notification (PDF, 126KB) Published by NULL on behalf of Removed 2018-12-20Pre ExaminationCertificates and Notices                           |
+            | Rule 6 letter - Notification of the preliminary meeting and matters to be discussed (PDF, 282KB) 2019-04-18Pre-examinationProcedural Decisions          |
+            | NULL (PDF, 149KB) Published by NULL on behalf of Rule 4 Appointment of Panel - 15 March 2019 2019-03-18Pre-examinationProcedural Decisions              |
+            | NULL (PDF, 75KB) Published by NULL on behalf of Regulation 32 - Transboundary Screening 2019-01-28Pre-examinationTransboundary                          |
+            | Section 56 Notification (PDF, 126KB) Published by NULL on behalf of Removed 2018-12-20Pre-examinationCertificates and Notices                           |
             | NULL (PDF, 92KB) Published by NULL on behalf of Notification of Decision to Accept Application 2018-12-14AcceptanceAcceptance letter                    |
             | Adequacy of Consultation Representation (PDF, 107KB) Published by NULL on behalf of Removed 2018-12-14AcceptanceAdequacy of Consultation Representation |
             | Adequacy of Consultation Representation (PDF, 542KB) Published by NULL on behalf of Removed 2018-12-14AcceptanceAdequacy of Consultation Representation |
@@ -367,7 +367,7 @@ Feature: Project Application documents page
         And I click on Apply filters button
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                                                                    |
-            | Late Relevant Representation - Additional Submission - Accepted at the discretion of the Examining Authority - Objection to proposed Cleve Hill Solar Park (PDF, 45KB) Published by Removed 2019-03-26Pre ExaminationAdditional Submissions |
+            | Late Relevant Representation - Additional Submission - Accepted at the discretion of the Examining Authority - Objection to proposed Cleve Hill Solar Park (PDF, 45KB) Published by Removed 2019-03-26Pre-examinationAdditional Submissions |
         And I click on "document type" section
 
     Scenario: filter by document type and search for text
