@@ -257,7 +257,7 @@ Feature: Project Application documents page
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
         And I select "Everything else (29)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
             | 4.3 Book of Reference (PDF, 37KB) Published by Removed 2019-04-24AcceptanceCompulsory Acquisition Information                                           |
@@ -287,7 +287,7 @@ Feature: Project Application documents page
         When I click on "Project application documents" link
         And I click on "project stage" section
         And I select "Pre Application (7)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                   |
             | Late scoping consultation response (PDF, 79KB) Published by NULL on behalf of Removed 2018-01-25Pre ApplicationEnvironmental Impact Assessment Scoping                                     |
@@ -306,7 +306,7 @@ Feature: Project Application documents page
         And I click on search button
         And I click on "project stage" section
         And I select "Pre Application (7)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
             | Late scoping consultation response (PDF, 79KB) Published by NULL on behalf of Removed 2018-01-25Pre ApplicationEnvironmental Impact Assessment Scoping  |
@@ -319,7 +319,7 @@ Feature: Project Application documents page
         When I click on "Project application documents" link
         And I click on "project stage" section
         And I select "Pre Application (7)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         When I enter text "adopt" into search field
         And I click on search button
         Then I can verify that below project documents were returned
@@ -332,7 +332,7 @@ Feature: Project Application documents page
         When I click on "Project application documents" link
         And I click on "document type" section
         And I select "Environmental Statement (221)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                       |
             | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 9 (PDF, 18MB) Published by NULL on behalf of Removed 2018-11-23AcceptanceEnvironmental Statement        |
@@ -364,7 +364,7 @@ Feature: Project Application documents page
         And I click on search button
         And I click on "document type" section
         And I select "Additional Submissions (18)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                                                                    |
             | Late Relevant Representation - Additional Submission - Accepted at the discretion of the Examining Authority - Objection to proposed Cleve Hill Solar Park (PDF, 45KB) Published by Removed 2019-03-26Pre ExaminationAdditional Submissions |
@@ -375,7 +375,7 @@ Feature: Project Application documents page
         When I click on "Project application documents" link
         And I click on "document type" section
         And I select "Plans (11)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         When I enter text "cover" into search field
         And I click on search button
         Then I can verify that below project documents were returned
@@ -390,7 +390,7 @@ Feature: Project Application documents page
         And I select "Acceptance (266)" checkbox
         And I click on "document type" section
         And I select "Reports (8)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                               |
             | 5.1.1b Consultation Report Appendices (PDF, 39MB) Published by NULL on behalf of Removed 2018-11-23AcceptanceReports                   |
@@ -413,7 +413,7 @@ Feature: Project Application documents page
         And I select "Acceptance (266)" checkbox
         And I click on "document type" section
         And I select "Reports (8)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                             |
             | 5.1.1b Consultation Report Appendices (PDF, 39MB) Published by NULL on behalf of Removed 2018-11-23AcceptanceReports |
@@ -430,7 +430,7 @@ Feature: Project Application documents page
         And I select "Acceptance (266)" checkbox
         And I click on "document type" section
         And I select "Reports (8)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         When I enter text "grid" into search field
         And I click on search button
         Then I can verify that below project documents were returned
