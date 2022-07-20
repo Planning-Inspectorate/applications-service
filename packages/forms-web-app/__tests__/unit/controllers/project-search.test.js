@@ -37,7 +37,7 @@ describe('controllers/project-search', () => {
 						CaseReference: 'test',
 						ProjectName: 'test',
 						PromoterName: 'test',
-						Stage: 'Pre Application'
+						Stage: 'Pre-application'
 					}
 				],
 				noOfProjects: 1
