@@ -2,7 +2,8 @@ module.exports = {
 	env: {
 		es2021: true,
 		jest: true,
-		node: true
+		node: true,
+		browser: true
 	},
 	extends: ['eslint:recommended', 'prettier'],
 	ignorePatterns: ['node_modules/**', 'dist/**', 'webpack.**', '*.bundle.js'],
