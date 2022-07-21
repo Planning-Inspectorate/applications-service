@@ -15,6 +15,7 @@ describe('controllers/documents', () => {
 			case_reference: 'ABCD1234',
 			Stage: 1,
 			type: 'test',
+			date_published: '',
 			path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC'
 		}
 	];
