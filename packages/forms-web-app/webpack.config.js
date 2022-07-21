@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+	mode: 'production',
 	entry: {
 		index: './src/lib/client-side/index.js',
 		cookiePreferences: './src/lib/client-side/cookie-preferences-page.js'
@@ -15,5 +16,19 @@ module.exports = {
 			'process.env.googleAnalyticsId': JSON.stringify(process.env.GOOGLE_ANALYTICS_ID),
 			'process.env.googleTagManager': process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true'
 		})
-	]
+	],
+	module: {
+		rules: [
+			{
+				test: /\.m?js$/,
+				exclude: /(node_modules)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
+				}
+			}
+		]
+	}
 };
