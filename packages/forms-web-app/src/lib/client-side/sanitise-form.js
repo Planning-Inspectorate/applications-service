@@ -3,24 +3,18 @@ const { sanitiseString } = require('../sanitise-string');
 
 const submit = (payload) => {
 	let formSubmissionInProgress = false;
-	const formSubmissionTimeLimit = 5000;
-	let formSubmissionTimer;
 
 	const { form, fields } = payload;
 
 	if (!form || !fields) return;
 
-	form.addEventListener('submit', async (event) => {
+	form.addEventListener('submit', async function onSubmit(event) {
 		event.preventDefault();
 
 		if (formSubmissionInProgress) return;
 
 		try {
 			formSubmissionInProgress = true;
-
-			formSubmissionTimer = setTimeout(() => {
-				throw 'Form submission process exceeded time limit';
-			}, formSubmissionTimeLimit);
 
 			const formData = new FormData(form);
 
@@ -50,14 +44,14 @@ const submit = (payload) => {
 
 				return;
 			} else {
-				window.location = responseBody.url;
+				window.location.href = responseBody.url;
 
 				return;
 			}
 		} catch (error) {
+			this.removeEventListener('submit', onSubmit);
 			form.submit();
 		} finally {
-			clearTimeout(formSubmissionTimer);
 			formSubmissionInProgress = false;
 		}
 	});
