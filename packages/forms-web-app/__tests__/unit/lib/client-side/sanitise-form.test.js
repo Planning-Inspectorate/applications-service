@@ -16,7 +16,7 @@ delete window.location;
 window.location = { assign: assignMock };
 window.location.href = '/';
 
-it('lib/client-side/sanitise-form', () => {
+describe('lib/client-side/sanitise-form', () => {
 	document.body.innerHTML = `
 		<form id="form-id">
 			<input name="form-input-name" type="text" value="test" />
@@ -29,5 +29,7 @@ it('lib/client-side/sanitise-form', () => {
 	const submitEvent = new Event('submit');
 	setForm.dispatchEvent(submitEvent);
 
-	expect(global.fetch).toHaveBeenCalledTimes(1);
+	test('expect fetch to be called on form submission', () => {
+		expect(global.fetch).toHaveBeenCalledTimes(1);
+	});
 });
