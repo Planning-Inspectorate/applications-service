@@ -2,6 +2,10 @@ const { encodeString } = require('../encode-string');
 const { sanitiseString } = require('../sanitise-string');
 
 const submit = (payload) => {
+	let formSubmissionInProgress = false;
+	const formSubmissionTimeLimit = 5000;
+	let formSubmissionTimer;
+
 	const { form, fields } = payload;
 
 	if (!form || !fields) return;
@@ -9,7 +13,15 @@ const submit = (payload) => {
 	form.addEventListener('submit', async (event) => {
 		event.preventDefault();
 
+		if (formSubmissionInProgress) return;
+
 		try {
+			formSubmissionInProgress = true;
+
+			formSubmissionTimer = setTimeout(() => {
+				throw 'Form submission process exceeded time limit';
+			}, formSubmissionTimeLimit);
+
 			const formData = new FormData(form);
 
 			fields.forEach((field) => {
@@ -20,18 +32,16 @@ const submit = (payload) => {
 				formData.append(field.name, encodedString);
 			});
 
+			formData.append('origin', 'sanitise-form-post');
+
 			const response = await fetch(window.location.href, {
 				method: 'POST',
 				body: formData
 			});
 
-			if (!response.url) {
-				form.submit();
+			const responseBody = await response.json();
 
-				return;
-			}
-
-			if (window.location.href === response.url) {
+			if (responseBody.error) {
 				fields.forEach((field) => {
 					field.value = sanitiseString(field.value);
 				});
@@ -40,12 +50,15 @@ const submit = (payload) => {
 
 				return;
 			} else {
-				window.location = response.url;
+				window.location = responseBody.url;
 
 				return;
 			}
 		} catch (error) {
 			form.submit();
+		} finally {
+			clearTimeout(formSubmissionTimer);
+			formSubmissionInProgress = false;
 		}
 	});
 };

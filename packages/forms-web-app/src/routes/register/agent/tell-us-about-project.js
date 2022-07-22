@@ -1,6 +1,7 @@
 const express = require('express');
 
 const commentsController = require('../../../controllers/register/agent/tell-us-about-project');
+const decodeUri = require('../../../middleware/decode-uri');
 const { validate } = require('../../../validators/register/tell-us-about-project');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
@@ -10,6 +11,7 @@ router.get('/tell-us-about-project', commentsController.getComments);
 
 router.post(
 	'/tell-us-about-project',
+	decodeUri('body', ['comment']),
 	validate(),
 	validationErrorHandler,
 	commentsController.postComments
