@@ -20,7 +20,6 @@ exports.getExamination = async (req, res) => {
 		const stagePosition = appData.Stage;
 		const stageTotal = Object.keys(Status).length;
 		const projectAcceptsComments = !periodOpen && appData.Stage < 5;
-		const hasContactSupport = appData.ProjectEmailAddress;
 
 		req.session.appData = appData;
 		req.session.caseRef = caseRef;
@@ -31,7 +30,6 @@ exports.getExamination = async (req, res) => {
 			appData,
 			caseRef,
 			dateOfClosure,
-			hasContactSupport,
 			projectAcceptsComments,
 			projectName,
 			periodOpen,

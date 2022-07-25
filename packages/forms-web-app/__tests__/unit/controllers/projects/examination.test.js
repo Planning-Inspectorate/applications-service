@@ -45,7 +45,6 @@ describe('controllers/projects/examination', () => {
 				appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
 				caseRef: undefined,
 				dateOfClosure: 'Sunday 02 February 2020',
-				hasContactSupport: undefined,
 				periodOpen: false,
 				projectAcceptsComments: false,
 				projectName: undefined,
