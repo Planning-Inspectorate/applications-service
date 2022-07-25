@@ -1,6 +1,15 @@
 const { encodeString } = require('../encode-string');
 const { sanitiseString } = require('../sanitise-string');
 
+const sanitiseEncodeString = (string) => {
+	if (!string || typeof string !== 'string') return '';
+
+	const sanitisedString = sanitiseString(string);
+	const encodedString = encodeString(sanitisedString);
+
+	return encodedString;
+};
+
 const submit = (payload) => {
 	let formSubmissionInProgress = false;
 
@@ -19,11 +28,10 @@ const submit = (payload) => {
 			const formData = new FormData(form);
 
 			fields.forEach((field) => {
-				const sanitisedString = sanitiseString(field.value);
-				const encodedString = encodeString(sanitisedString);
+				const sanitisedEncodedString = sanitiseEncodeString(field.value);
 
 				formData.delete(field.name);
-				formData.append(field.name, encodedString);
+				formData.append(field.name, sanitisedEncodedString);
 			});
 
 			formData.append('origin', 'sanitise-form-post');
@@ -37,7 +45,7 @@ const submit = (payload) => {
 
 			if (responseBody.error) {
 				fields.forEach((field) => {
-					field.value = sanitiseString(field.value);
+					field.value = sanitiseEncodeString(field.value);
 				});
 
 				form.submit();
