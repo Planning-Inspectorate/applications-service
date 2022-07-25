@@ -14,11 +14,9 @@
         async: true,
         defer: true,
         callback: () => {
-          const sanitiseForm = new App.Modules.SanitiseForm('form', ['comment']);
-          sanitiseForm.init();
+          appScripts.sanitiseForm('form', ['comment'])
         },
-        src: '/public/javascripts/modules/sanitise-form.js',
-        type: 'module',
+        src: '/public/javascripts/sanitiseForm.bundle.js'
       }
     ];
   </script>
