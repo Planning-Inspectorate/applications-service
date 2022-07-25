@@ -1,7 +1,7 @@
 const Status = {
-	1: 'Pre Application',
+	1: 'Pre-application',
 	2: 'Acceptance',
-	3: 'Pre Examination',
+	3: 'Pre-examination',
 	4: 'Examination',
 	5: 'Recommendation',
 	6: 'Decision',
