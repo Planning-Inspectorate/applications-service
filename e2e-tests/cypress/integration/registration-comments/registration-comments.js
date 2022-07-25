@@ -87,7 +87,7 @@ Then(
 	}
 );
 
-And('I click on Apply filters button', () => {
+And('I click on Apply button to apply filters', () => {
 	regComments.clickApplyFilterButton();
 });
 
