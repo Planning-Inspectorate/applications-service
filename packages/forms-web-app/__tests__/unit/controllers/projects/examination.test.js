@@ -44,7 +44,7 @@ describe('controllers/projects/examination', () => {
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.PROJECT, {
 				appData: { DateOfRelevantRepresentationClose: '2020-02-02' },
 				caseRef: undefined,
-				dateOfClosure: 'Sunday 02 February 2020',
+				dateOfClosure: '2 February 2020',
 				hasContactSupport: undefined,
 				periodOpen: false,
 				projectAcceptsComments: false,

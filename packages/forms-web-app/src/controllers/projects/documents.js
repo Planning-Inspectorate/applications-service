@@ -1,5 +1,5 @@
 const logger = require('../../lib/logger');
-const { formatDayDateWithoutPrefixZero } = require('../../utils/date-utils');
+const { formatDate } = require('../../utils/date-utils');
 const { Status: projectStageNames } = require('../../utils/status');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
@@ -46,7 +46,7 @@ function renderData(
 	}, Object.create(null));
 
 	documents.forEach(function (document) {
-		document.date_published = formatDayDateWithoutPrefixZero(document.date_published);
+		document.date_published = formatDate(document.date_published);
 	}, Object.create(null));
 
 	let otherTypeFiltersCount = 0;

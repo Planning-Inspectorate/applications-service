@@ -1,4 +1,4 @@
-const { formatDayDateWithoutPrefixZero } = require('./date-utils');
+const { formatDate } = require('../../../src/utils/date-utils');
 
 describe('Remove Zero Prefix From Day Date Tests', () => {
 	const inputs = {
@@ -38,7 +38,7 @@ describe('Remove Zero Prefix From Day Date Tests', () => {
 	// assertion result and expectation code gets repeated so this function saves lines
 	// and makes assertions simple to be written
 	const assertionDeclaration = (inputValue, expectedResultValue) => {
-		const result = formatDayDateWithoutPrefixZero(inputValue);
+		const result = formatDate(inputValue);
 		return expect(result).toBe(expectedResultValue);
 	};
 
