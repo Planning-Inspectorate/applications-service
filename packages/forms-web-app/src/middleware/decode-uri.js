@@ -1,3 +1,5 @@
+const { decodeString } = require('../lib/decode-string');
+
 const decodeUri = (ref, formFields) => (req, res, next) => {
 	try {
 		formFields.forEach((formField) => {
@@ -9,7 +11,7 @@ const decodeUri = (ref, formFields) => (req, res, next) => {
 
 			if (!field) return;
 
-			const decodedUri = decodeURIComponent(field);
+			const decodedUri = decodeString(field);
 
 			req[ref][formField] = decodedUri;
 		});

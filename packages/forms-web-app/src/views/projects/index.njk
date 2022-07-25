@@ -64,32 +64,18 @@
 {% elif projectAcceptsComments %}
   {% set contentStage = contentStage + '
     <p>
-      The registration period to have your say about this project has closed.
-      You can still get involved and comment on the project during the Examination stage.
-      If you are not registered and you submit information during the Examination stage, this may not be included.
-    </p>
-  '%}
-  {% if hasContactSupport %}
-    {% set contentStage = contentStage + '
-      <p> ' +
-        textLink(
-          "#project-section-contact-support",
-          "Go to the Contact us for support section.",
-          "Contact the project case team"
-        ) + ' to find out more about how to get involved if you are not registered.
+       We have now published all registration comments.
+        </p>
+        <p>
+        You can
+        <a href="/projects/' + caseRef + '/representations">
+          view comments from other people who registered</a>.
+        </p>
+        <p>
+          <a href="/having-your-say-guide/have-your-say-examination">Find out more about getting involved during the Examination of the application</a>
       </p>
     '%}
   {% endif %}
-  {% set contentStage = contentStage + '
-    <p> ' +
-      textLink(
-        "/decision-making-process-guide/examination-of-the-application",
-        "Find out more about getting involved during the Examination of the application.",
-        "Find out more about getting involved during the Examination of the application"
-      ) + '
-    </p>
-  '%}
-{% endif %}
 
 {% set contentAboutProject = '
   <h4 class="govuk-heading-s govuk-!-margin-bottom-1">

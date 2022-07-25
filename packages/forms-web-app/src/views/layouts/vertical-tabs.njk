@@ -23,8 +23,9 @@
     </li>
     <li class="side-menu govuk-body-s {% if 'representations' == activeProjectLink %} active {% endif %}">
       {% if 'representations' != activeProjectLink %}
-        <a href="/projects/{{ caseRef }}/representations">Registration comments</a>
-      {% else %} Registration comments {% endif %}
+        <a href="/projects/{{ caseRef }}/representations">Registration comments </br> (Relevant representations)
+        </a>
+      {% else %} Registration comments </br> (Relevant representations) {% endif %}
     </li>
     <li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
       {% if 'timetable' != activeProjectLink %}

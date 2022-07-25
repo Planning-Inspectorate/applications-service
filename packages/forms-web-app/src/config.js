@@ -8,7 +8,12 @@ module.exports = {
 	applications: {
 		timeout: Number(process.env.APPLICATIONS_SERVICE_API_TIMEOUT || 10000),
 		url: process.env.APPLICATIONS_SERVICE_API_URL,
-		noOfCommentsAllowed: 16
+		noOfCommentsAllowed: 16,
+		maxCharacters: 65234,
+		urlencoded: {
+			extended: false,
+			limit: '500kb'
+		}
 	},
 	db: {
 		session: {

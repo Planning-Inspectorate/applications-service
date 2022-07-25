@@ -359,7 +359,7 @@ module.exports = (pageName) => {
 			break;
 		case 'what do you want to tell us about this proposed project?':
 			cy.title().should(
-				'eq',
+				'include',
 				'What do you want to tell us about this proposed project? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
@@ -371,7 +371,7 @@ module.exports = (pageName) => {
 			break;
 		case 'check your answers before registering organisation':
 			cy.title().should(
-				'eq',
+				'include',
 				'Check your answers before registering - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
