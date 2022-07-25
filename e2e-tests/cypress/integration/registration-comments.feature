@@ -140,7 +140,7 @@ Feature: Registration comments page
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
         And I select "Parish Councils (3)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below comments were returned
             | Comments                                                                                                                 |
             | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application 20 April 2022 Parish Councils |
@@ -152,7 +152,7 @@ Feature: Registration comments page
         When I click on "Registration comments" link
         When I search for comments containing "joe"
         And I select "Local Authorities (1)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         Then I can verify that below comments were returned
             | Comments                                                                                                                                                                                                                                                          |
             | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more 15 May 2022Local Authorities |
@@ -161,7 +161,7 @@ Feature: Registration comments page
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
         And I select "Members of the Public/Businesses (43)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         When I search for comments containing "Chris"
         Then I can verify that below comments were returned
             | Comments                                                                   |
@@ -173,7 +173,7 @@ Feature: Registration comments page
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
         And I select "Members of the Public/Businesses (43)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         When I search for comments containing "communication"
         Then I am informed that no results were found
         And I am given the option to clear the search to list all available registration comments
@@ -192,7 +192,7 @@ Feature: Registration comments page
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
         And I select "Members of the Public/Businesses (43)" checkbox
-        And I click on Apply filters button
+        And I click on Apply button to apply filters
         And I click on 1 read more link
         Then I verify below comment is displayed
             | Data                                                                                                                                                                                                                                                                                                                                    |
