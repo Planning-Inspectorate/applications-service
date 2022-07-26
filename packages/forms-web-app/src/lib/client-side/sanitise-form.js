@@ -10,10 +10,44 @@ const sanitiseEncodeString = (string) => {
 	return encodedString;
 };
 
-const submit = (payload) => {
+const getForm = (formID, fieldNames) => {
+	const setForm = document.querySelector(formID);
+	const hasSetForm = setForm && setForm.nodeName === 'FORM';
+
+	if (!hasSetForm) return;
+
+	const fieldsToSanitise = [];
+	const hasInputNames = fieldNames.length > 0;
+
+	if (hasInputNames) {
+		fieldNames.forEach((inputName) => {
+			const inputs = [...setForm.querySelectorAll(`[name="${inputName}"]`)];
+			const hasInputs = inputs.length > 0;
+
+			if (!hasInputs) return;
+
+			inputs.forEach((input) => {
+				if (input.nodeName === 'INPUT' || input.nodeName === 'TEXTAREA') {
+					fieldsToSanitise.push(input);
+				}
+			});
+		});
+	}
+
+	const hasFieldsToSanitise = fieldsToSanitise.length > 0;
+
+	if (!hasFieldsToSanitise) return;
+
+	return {
+		form: setForm,
+		fields: fieldsToSanitise
+	};
+};
+
+const sanitiseForm = (formID, fieldNames) => {
 	let formSubmissionInProgress = false;
 
-	const { form, fields } = payload;
+	const { form, fields } = getForm(formID, fieldNames) || {};
 
 	if (!form || !fields) return;
 
@@ -63,48 +97,6 @@ const submit = (payload) => {
 			formSubmissionInProgress = false;
 		}
 	});
-};
-
-const set = (form, inputNames) => {
-	const setForm = document.querySelector(form);
-	const hasSetForm = setForm && setForm.nodeName === 'FORM';
-
-	if (!hasSetForm) return;
-
-	const fieldsToSanitise = [];
-	const hasInputNames = inputNames.length > 0;
-
-	if (hasInputNames) {
-		inputNames.forEach((inputName) => {
-			const inputs = [...setForm.querySelectorAll(`[name="${inputName}"]`)];
-			const hasInputs = inputs.length > 0;
-
-			if (!hasInputs) return;
-
-			inputs.forEach((input) => {
-				if (input.nodeName === 'INPUT' || input.nodeName === 'TEXTAREA') {
-					fieldsToSanitise.push(input);
-				}
-			});
-		});
-	}
-
-	const hasFieldsToSanitise = fieldsToSanitise.length > 0;
-
-	if (!hasFieldsToSanitise) return;
-
-	return {
-		form: setForm,
-		fields: fieldsToSanitise
-	};
-};
-
-const sanitiseForm = (form, inputNames) => {
-	const formFields = set(form, inputNames);
-
-	if (formFields) {
-		submit(formFields);
-	}
 };
 
 module.exports = sanitiseForm;
