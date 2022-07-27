@@ -1,36 +1,30 @@
 {
 	"private": true,
 	"engines": {
-		"node": ">=14.0.0 <15.0.0",
-		"npm": ">=6.0.0 <7.0.0"
+		"node": ">=16.14.0"
 	},
 	"name": "applications-service",
 	"description": "Application - these are utility scripts for the whole repo",
 	"workspaces": [
-		"packages/*",
-		"!packages/common"
+		"packages/forms-web-app",
+		"packages/applications-service-api",
+		"packages/common"
 	],
 	"scripts": {
 		"commit": "cz",
 		"commitlint": "commitlint --from=$(git log origin/main..$(git rev-parse HEAD) --pretty=format:\"%H\" | tail -n 1)",
+		"dev": "docker-compose up",
+		"dev:api": "docker-compose run --rm --service-ports applications-service-api",
+		"dev:web": "docker-compose run --rm --service-ports applications-web-app",
 		"format": "prettier --write \"**/*.{js,ts,json,md}\"",
-		"lint": "run-s --continue-on-error --print-label lint:api lint:common lint:e2e-tests lint:web",
-		"lint:api": "cd packages/applications-service-api; eslint ./",
-		"lint:api:fix": "cd packages/applications-service-api; eslint ./ --fix",
-		"lint:common": "cd packages/common; eslint ./",
-		"lint:common:fix": "cd packages/common; eslint ./ --fix",
-		"lint:e2e-tests": "cd e2e-tests; eslint ./",
-		"lint:e2e-tests:fix": "cd e2e-tests; eslint ./ --fix",
-		"lint:fix": "run-s --continue-on-error --print-label lint:api:fix lint:common:fix lint:e2e-tests:fix lint:web:fix",
-		"lint:web": "cd packages/forms-web-app; eslint ./",
-		"lint:web:fix": "cd packages/forms-web-app; eslint ./ --fix",
+		"build": "turbo run build",
+		"lint": "turbo run lint --parallel --continue",
+		"lint:fix": "turbo run lint --parallel --continue",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
-		"release": "multi-semantic-release",
-		"test": "run-s --continue-on-error --print-label \"test:*\"",
-		"test:api": "cd packages/applications-service-api; npm run test:cov",
-		"test:common": "cd packages/common; npm run test:cov",
-		"test:web": "cd packages/forms-web-app; npm run test:cov",
-		"semantic-release": "semantic-release"
+		"release": "multi-semantic-release --ignore-packages=packages/common",
+		"test": "turbo run test --parallel --continue",
+		"test:cov": "turbo run test:cov --parallel --continue",
+		"test:watch": "turbo run test:watch --parallel --continue"
 	},
 	"repository": {
 		"type": "git",
@@ -51,9 +45,9 @@
 		"husky": "^8.0.0",
 		"lint-staged": "^13.0.0",
 		"multi-semantic-release": "^2.13.0",
-		"npm-run-all": "^4.1.5",
 		"prettier": "^2.7.1",
-		"semantic-release": "^19.0.3"
+		"semantic-release": "^19.0.3",
+		"turbo": "^1.3.1"
 	},
 	"lint-staged": {
 		"*.js": [

@@ -2,9 +2,6 @@
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -114,6 +111,12 @@ junit.xml
 
 # CI
 .release-version
+.turbo
 
 # Mac OS generated
 .DS_Store
+
+# Webpack
+**/public/**/*.bundle.js*
+
+packages/forms-web-app/src/public/stylesheets/main.css
