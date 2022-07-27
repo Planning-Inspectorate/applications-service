@@ -1,4 +1,5 @@
 const logger = require('../../lib/logger');
+const { formatDate } = require('../../utils/date-utils');
 const { Status: projectStageNames } = require('../../utils/status');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
@@ -44,6 +45,10 @@ function renderData(
 		});
 	}, Object.create(null));
 
+	documents.forEach(function (document) {
+		document.date_published = formatDate(document.date_published);
+	}, Object.create(null));
+
 	let otherTypeFiltersCount = 0;
 	typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
 		otherTypeFiltersCount += type.count;
@@ -71,6 +76,7 @@ function renderData(
 			checked: typeList.includes('everything_else')
 		});
 	}
+
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
 		documents,
 		projectName,
