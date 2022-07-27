@@ -38,7 +38,7 @@ describe('controllers/register/start', () => {
 			expect(res.render).toHaveBeenCalledWith('register/start', {
 				projectName: 'St James Barton Giant Wind Turbine',
 				periodOpen: true,
-				closeDate: 'Sunday 01 September 2024'
+				closeDate: '1 September 2024'
 			});
 		});
 		it('should load project data and return register start view even when existing project in session  ', async () => {
@@ -68,7 +68,7 @@ describe('controllers/register/start', () => {
 			expect(res.render).toHaveBeenCalledWith('register/start', {
 				projectName: 'St James Barton Giant Wind Turbine',
 				periodOpen: true,
-				closeDate: 'Sunday 01 September 2024'
+				closeDate: '1 September 2024'
 			});
 		});
 		it('should redirect to not found route if project not found for caseRef provided', async () => {
