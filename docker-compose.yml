@@ -14,10 +14,7 @@ services:
       - 6379:6379
 
   applications-service-api:
-    build:
-      context: .
-      dockerfile: ./packages/applications-service-api/Dockerfile
-      target: build
+    image: node:16-alpine
     container_name: applications-service-api
     environment:
       APP_APPLICATIONS_BASE_URL: http://forms-web-app:9004
@@ -46,14 +43,15 @@ services:
       TRIALIST_DATA_PATH: /opt/app/packages/applications-service-api/data/trialists.json
     ports:
       - 3000:3000
-    working_dir: /opt/app/packages/applications-service-api
-    command: npm run start:dev
+    working_dir: /opt/app
+    volumes:
+      - ./package.json:/opt/app/package.json
+      - ./node_modules:/opt/app/node_modules
+      - ./packages/applications-service-api:/opt/app/packages/applications-service-api
+    command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
-    build:
-      context: .
-      dockerfile: ./packages/forms-web-app/Dockerfile
-      target: build
+    image: node:16-alpine
     container_name: applications-web-app
     environment:
       APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
@@ -75,18 +73,22 @@ services:
       # please override this locally if using not using localhost or ip address to browse the site in dev.
       SUBDOMAIN_OFFSET: 0
       USE_SECURE_SESSION_COOKIES: 'false'
+    working_dir: /opt/app
+    volumes:
+      - ./package.json:/opt/app/package.json
+      - ./node_modules:/opt/app/node_modules
+      - ./packages/common:/opt/app/packages/common
+      - ./packages/forms-web-app:/opt/app/packages/forms-web-app
+    command: npm run start:dev --workspace=packages/forms-web-app
+    # if enabling debug, be sure to uncomment / expose the debug port below.
+    # command: npm run start:dev:debug --workspace=packages/forms-web-app
     ports:
       - 9004:3000
-      # node debugger
-      # - 9229:9229
-    working_dir: /opt/app/packages/forms-web-app
+    #  - 9229:9229
     links:
       - applications-service-api
     depends_on:
       - applications-service-api
-    command: npm run start:dev
-    # if enabling debug, be sure to uncomment / expose the debug port above.
-    # command: npm run start:dev:debug
 
   db:
     image: mysql
