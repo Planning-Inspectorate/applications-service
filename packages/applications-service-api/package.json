@@ -15,7 +15,7 @@
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
-	"author": "Foundry4 <www.foundry4.com>",
+	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
 	"dependencies": {
 		"@planning-inspectorate/pins-notify": "^1.0.2",
 		"body-parser": "^1.19.0",

@@ -13,9 +13,9 @@
 	"scripts": {
 		"commit": "cz",
 		"commitlint": "commitlint --from=$(git log origin/main..$(git rev-parse HEAD) --pretty=format:\"%H\" | tail -n 1)",
-		"dev": "docker-compose up",
-		"dev:api": "docker-compose run --rm --service-ports applications-service-api",
-		"dev:web": "docker-compose run --rm --service-ports applications-web-app",
+		"dev": "docker compose up",
+		"dev:api": "docker compose run --rm --service-ports applications-service-api",
+		"dev:web": "docker compose run --rm --service-ports applications-web-app",
 		"format": "prettier --write \"**/*.{js,ts,json,md}\"",
 		"build": "turbo run build",
 		"lint": "turbo run lint --parallel --continue",
@@ -30,7 +30,7 @@
 		"type": "git",
 		"url": "git+https://github.com/Planning-Inspectorate/applications-service.git"
 	},
-	"author": "Foundry4 <www.foundry4.com>",
+	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
 	"license": "ISC",
 	"homepage": "https://github.com/Planning-Inspectorate/applications-service#readme",
 	"devDependencies": {
