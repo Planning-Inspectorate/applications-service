@@ -81,6 +81,7 @@ function renderData(
 		documents,
 		projectName,
 		caseRef: params.caseRef,
+		hideProjectInformationLink: true,
 		paginationData,
 		pageOptions,
 		searchTerm: params.searchTerm,

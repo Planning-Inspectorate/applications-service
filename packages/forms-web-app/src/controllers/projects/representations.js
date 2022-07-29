@@ -47,6 +47,7 @@ exports.getRepresentations = async (req, res) => {
 		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
+			hideProjectInformationLink: true,
 			representations,
 			paginationData,
 			pageOptions,
@@ -65,6 +66,7 @@ exports.getRepresentation = async (req, res) => {
 		res.render(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
+			hideProjectInformationLink: true,
 			RepFrom: representation.data.RepFrom,
 			RepresentationRedacted: representation.data.RepresentationRedacted,
 			DateRrepReceived: representation.data.DateRrepReceived,
