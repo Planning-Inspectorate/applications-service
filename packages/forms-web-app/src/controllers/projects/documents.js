@@ -86,7 +86,8 @@ function renderData(
 		searchTerm: params.searchTerm,
 		queryUrl,
 		modifiedStageFilters,
-		top5TypeFilters
+		top5TypeFilters,
+		hideAllExaminationDocumentsLink: true
 	});
 }
 

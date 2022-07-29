@@ -47,7 +47,8 @@ exports.getRepresentations = async (req, res) => {
 			pageOptions,
 			searchTerm,
 			queryUrl,
-			commentsTypeFilterItems
+			commentsTypeFilterItems,
+			hideAllExaminationDocumentsLink: true
 		});
 	}
 };
@@ -62,7 +63,8 @@ exports.getRepresentation = async (req, res) => {
 			RepFrom: representation.data.RepFrom,
 			RepresentationRedacted: representation.data.RepresentationRedacted,
 			DateRrepReceived: representation.data.DateRrepReceived,
-			attachments: representation.data.attachments
+			attachments: representation.data.attachments,
+			hideAllExaminationDocumentsLink: true
 		});
 	}
 };

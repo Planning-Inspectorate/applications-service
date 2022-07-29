@@ -103,7 +103,8 @@ describe('controllers/projects/representations', () => {
 			pageOptions,
 			searchTerm: undefined,
 			queryUrl: '',
-			commentsTypeFilterItems: []
+			commentsTypeFilterItems: [],
+			hideAllExaminationDocumentsLink: true
 		});
 	});
 
@@ -123,6 +124,7 @@ describe('controllers/projects/representations', () => {
 		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: 'ABC',
 			caseRef,
+			hideAllExaminationDocumentsLink: true,
 			RepFrom: 'Members of the Public/Businesses',
 			RepresentationRedacted: 'Some comments',
 			DateRrepReceived: '2020-02-19T00:00:00.000Z',
