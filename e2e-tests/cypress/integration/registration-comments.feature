@@ -144,7 +144,7 @@ Feature: Registration comments page
         Then I can verify that below comments were returned
             | Comments                                                                                                                 |
             | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application 20 April 2022 Parish Councils |
-            | Frosty Flights (Frosty Flights) Some comments 01 August 2021 Parish Councils                                             |
+            | Frosty Flights (Frosty Flights) Some comments 1 August 2021 Parish Councils                                             |
             | Frosty Fliers (Frosty Fliers ) Some comments 14 March 2021 Parish Councils                                               |
 
     Scenario: Search by text and then filter by registration type
@@ -165,7 +165,7 @@ Feature: Registration comments page
         When I search for comments containing "Chris"
         Then I can verify that below comments were returned
             | Comments                                                                   |
-            | Chris Cundill Some comments 04 July 2022 Members of the Public/Businesses  |
+            | Chris Cundill Some comments 4 July 2022 Members of the Public/Businesses  |
             | Chris Some comments 17 March 2021 Members of the Public/Businesses         |
             | Chris Cundill Some comments 16 March 2021 Members of the Public/Businesses |
 
