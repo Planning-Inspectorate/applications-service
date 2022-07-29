@@ -1,5 +1,6 @@
 const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
+const { formatDate } = require('../../utils/date-utils');
 const { searchRepresentations } = require('../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { getRepresentation } = require('../../services/representation.service');
@@ -39,6 +40,10 @@ exports.getRepresentations = async (req, res) => {
 			});
 		}, Object.create(null));
 
+		representations.forEach(function (repesentation) {
+			repesentation.DateRrepReceived = formatDate(repesentation.DateRrepReceived.split('T')[0]);
+		}, Object.create(null));
+
 		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
@@ -56,6 +61,7 @@ exports.getRepresentation = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const representation = await getRepresentation(req.params.id);
+
 		res.render(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
