@@ -1,12 +1,14 @@
 <nav>
   <ul class="govuk-list sidenav">
-    <li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
-      {% if 'examination' != activeProjectLink %}
-        <a href="/projects/{{ caseRef }}">{{ projectName }} project information</a>
-      {% else %}
-        {{ projectName }} project information
-      {% endif %}
-    </li>
+		{%if hideProjectInformationLink != true %}
+			<li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
+				{% if 'examination' != activeProjectLink %}
+					<a href="/projects/{{ caseRef }}">{{ projectName}} project information</a>
+				{% else %}
+					{{ projectName }} project information
+				{% endif %}
+			</li>
+		{% endif %}
 		{% if featureFlag.hideProjectTimelineLink %}
 		<li class="side-menu govuk-body-s {% if 'project-timeline' == activeProjectLink %} active {% endif %}">
       {% if 'project-timeline' != activeProjectLink %}

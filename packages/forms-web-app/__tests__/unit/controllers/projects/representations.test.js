@@ -6,6 +6,14 @@ const {
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 const { getRepresentation } = require('../../../../src/services/representation.service');
+const { featureHideLink } = require('../../../../src/config');
+
+const {
+	hideProjectInformationLink,
+	hideAllExaminationDocumentsLink,
+	hideRecommendationAndDecisionLink,
+	hideExaminationTimetableLink
+} = featureHideLink;
 
 jest.mock('../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../src/services/representation.service');
@@ -104,7 +112,10 @@ describe('controllers/projects/representations', () => {
 			searchTerm: undefined,
 			queryUrl: '',
 			commentsTypeFilterItems: [],
-			hideAllExaminationDocumentsLink: true
+			hideProjectInformationLink,
+			hideAllExaminationDocumentsLink,
+			hideRecommendationAndDecisionLink,
+			hideExaminationTimetableLink
 		});
 	});
 
@@ -124,10 +135,13 @@ describe('controllers/projects/representations', () => {
 		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: 'ABC',
 			caseRef,
-			hideAllExaminationDocumentsLink: true,
+			hideProjectInformationLink,
+			hideAllExaminationDocumentsLink,
+			hideRecommendationAndDecisionLink,
+			hideExaminationTimetableLink,
 			RepFrom: 'Members of the Public/Businesses',
 			RepresentationRedacted: 'Some comments',
-			DateRrepReceived: '2020-02-19T00:00:00.000Z',
+			DateRrepReceived: '19 February 2020',
 			attachments: []
 		});
 	});
