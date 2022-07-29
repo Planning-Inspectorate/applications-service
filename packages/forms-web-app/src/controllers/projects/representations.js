@@ -4,6 +4,14 @@ const { formatDate } = require('../../utils/date-utils');
 const { searchRepresentations } = require('../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { getRepresentation } = require('../../services/representation.service');
+const { featureHideLink } = require('../../config');
+
+const {
+	hideProjectInformationLink,
+	hideAllExaminationDocumentsLink,
+	hideRecommendationAndDecisionLink,
+	hideExaminationTimetableLink
+} = featureHideLink;
 
 exports.getRepresentations = async (req, res) => {
 	const { searchTerm, type } = req.query;
@@ -47,7 +55,10 @@ exports.getRepresentations = async (req, res) => {
 		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
-			hideProjectInformationLink: true,
+			hideProjectInformationLink,
+			hideAllExaminationDocumentsLink,
+			hideRecommendationAndDecisionLink,
+			hideExaminationTimetableLink,
 			representations,
 			paginationData,
 			pageOptions,
@@ -66,7 +77,10 @@ exports.getRepresentation = async (req, res) => {
 		res.render(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: applicationResponse.data.ProjectName,
 			caseRef: applicationResponse.data.CaseReference,
-			hideProjectInformationLink: true,
+			hideProjectInformationLink,
+			hideAllExaminationDocumentsLink,
+			hideRecommendationAndDecisionLink,
+			hideExaminationTimetableLink,
 			RepFrom: representation.data.RepFrom,
 			RepresentationRedacted: representation.data.RepresentationRedacted,
 			DateRrepReceived: representation.data.DateRrepReceived,
