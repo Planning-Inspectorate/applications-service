@@ -43,5 +43,11 @@ module.exports = {
 		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
 		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true'
+	},
+	featureHideLink: {
+		hideProjectInformationLink: true,
+		hideAllExaminationDocumentsLink: true,
+		hideRecommendationAndDecisionLink: true,
+		hideExaminationTimetableLink: true
 	}
 };
