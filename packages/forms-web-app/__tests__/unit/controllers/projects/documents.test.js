@@ -3,6 +3,14 @@ const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wr
 const { getAppData } = require('../../../../src/services/application.service');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
+const { featureHideLink } = require('../../../../src/config');
+
+const {
+	hideProjectInformationLink,
+	hideAllExaminationDocumentsLink,
+	hideRecommendationAndDecisionLink,
+	hideExaminationTimetableLink
+} = featureHideLink;
 
 jest.mock('../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../src/services/application.service');
@@ -74,8 +82,10 @@ describe('controllers/documents', () => {
 				documents: docList,
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
-				hideAllExaminationDocumentsLink: true,
-				hideRecommendationAndDecisionLink: true,
+				hideProjectInformationLink,
+				hideAllExaminationDocumentsLink,
+				hideRecommendationAndDecisionLink,
+				hideExaminationTimetableLink,
 				modifiedStageFilters: [],
 				pageOptions: [1],
 				top5TypeFilters: [],
@@ -114,8 +124,10 @@ describe('controllers/documents', () => {
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
 				documents: [],
-				hideAllExaminationDocumentsLink: true,
-				hideRecommendationAndDecisionLink: true,
+				hideProjectInformationLink,
+				hideAllExaminationDocumentsLink,
+				hideRecommendationAndDecisionLink,
+				hideExaminationTimetableLink,
 				queryUrl: '',
 				searchTerm: undefined,
 				modifiedStageFilters: [],

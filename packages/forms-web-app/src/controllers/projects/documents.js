@@ -5,6 +5,14 @@ const { getPaginationData, calculatePageOptions } = require('../../lib/paginatio
 const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
+const { featureHideLink } = require('../../config');
+
+const {
+	hideProjectInformationLink,
+	hideAllExaminationDocumentsLink,
+	hideRecommendationAndDecisionLink,
+	hideExaminationTimetableLink
+} = featureHideLink;
 
 function renderData(
 	req,
@@ -81,14 +89,16 @@ function renderData(
 		documents,
 		projectName,
 		caseRef: params.caseRef,
+		hideProjectInformationLink,
+		hideAllExaminationDocumentsLink,
+		hideRecommendationAndDecisionLink,
+		hideExaminationTimetableLink,
 		paginationData,
 		pageOptions,
 		searchTerm: params.searchTerm,
 		queryUrl,
 		modifiedStageFilters,
-		top5TypeFilters,
-		hideAllExaminationDocumentsLink: true,
-		hideRecommendationAndDecisionLink: true
+		top5TypeFilters
 	});
 }
 
