@@ -11,7 +11,6 @@ WORKDIR /opt/app
 
 COPY package*.json ./
 COPY turbo.json ./
-COPY packages/common ./packages/common
 COPY packages/applications-service-api/api ./packages/applications-service-api/api
 COPY packages/applications-service-api/data ./packages/applications-service-api/data
 COPY packages/applications-service-api/src ./packages/applications-service-api/src

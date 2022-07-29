@@ -127,7 +127,7 @@ describe('controllers/projects/representations', () => {
 			hideProjectInformationLink: true,
 			RepFrom: 'Members of the Public/Businesses',
 			RepresentationRedacted: 'Some comments',
-			DateRrepReceived: '2020-02-19T00:00:00.000Z',
+			DateRrepReceived: '19 February 2020',
 			attachments: []
 		});
 	});

@@ -836,10 +836,6 @@ p + .govuk-heading-s,
   }
 }
 
-.js-enabled .govuk-accordion__controls {
-  text-align: right;
-}
-
 .js-enabled .govuk-accordion__icon {
   position: absolute;
   top: 50%;
