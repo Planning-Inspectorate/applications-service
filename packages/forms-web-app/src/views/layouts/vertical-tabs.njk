@@ -29,21 +29,27 @@
         </a>
       {% else %} Registration comments </br> (Relevant representations) {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
-      {% if 'timetable' != activeProjectLink %}
-        <a href="/projects/timetable">Examination timetable</a>
-      {% else %} Examination timetable {% endif %}
-    </li>
-    <li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
-      {% if 'all-examination-documents' != activeProjectLink %}
-        <a href="/projects/all-examination-documents">All Examination documents</a>
-      {% else %} All Examination documents {% endif %}
-    </li>
-    <li class="side-menu govuk-body-s {% if 'recommendations' == activeProjectLink %} active {% endif %}">
-      {% if 'recommendations' != activeProjectLink %}
-        <a href="/projects/recommendations">Recommendation and decision</a>
-      {% else %} Recommendation and decision {% endif %}
-    </li>
+		{% if hideExaminationTimetableLink != true %}
+			<li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
+				{% if 'timetable' != activeProjectLink %}
+					<a href="/projects/timetable">Examination timetable</a>
+				{% else %} Examination timetable {% endif %}
+			</li>
+		{% endif %}
+		{% if hideAllExaminationDocumentsLink != true %}
+			<li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
+				{% if 'all-examination-documents' != activeProjectLink %}
+					<a href="/projects/all-examination-documents">All Examination documents</a>
+				{% else %} All Examination documents {% endif %}
+			</li>
+		{% endif %}
+		{% if hideRecommendationAndDecisionLink != true %}
+			<li class="side-menu govuk-body-s {% if 'recommendations' == activeProjectLink %} active {% endif %}">
+				{% if 'recommendations' != activeProjectLink %}
+					<a href="/projects/recommendations">Recommendation and decision</a>
+				{% else %} Recommendation and decision {% endif %}
+			</li>
+		{% endif %}
   </ul>
   <hr
 
