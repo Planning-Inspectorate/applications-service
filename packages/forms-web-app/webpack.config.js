@@ -2,10 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const outputPath = path.resolve(__dirname, 'src', 'public', 'javascripts');
+const entryPath = path.resolve(__dirname, 'src', 'lib', 'client-side');
+const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
 
 const config = {
-	mode: 'production',
+	mode: 'development',
 	module: {
 		rules: [
 			{
@@ -33,7 +34,9 @@ const config = {
 const configAppScripts = {
 	...config,
 	entry: {
-		sanitiseForm: './src/lib/client-side/sanitise-form.js'
+		initiate: `${entryPath}/initiate.js`,
+		sanitiseForm: `${entryPath}/sanitise-form.js`,
+		stepByStep: `${entryPath}/step-by-step.js`
 	},
 	output: {
 		filename: '[name].bundle.js',

@@ -53,6 +53,7 @@ const accessibleAutocompleteRoot = path.resolve(
 	require.resolve('accessible-autocomplete'),
 	'../..'
 );
+const jQueryFrontendRoot = path.resolve(require.resolve('jquery'), '../..');
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
 const pinsComponentsRoot = path.resolve(
@@ -135,6 +136,11 @@ app.use(
 	'/assets',
 	express.static(path.join(accessibleAutocompleteRoot, 'dist')),
 	express.static(path.join(govukFrontendRoot, 'govuk', 'assets'))
+);
+
+app.use(
+	'/assets/jquery.js',
+	express.static(path.join(jQueryFrontendRoot, 'dist', 'jquery.min.js'))
 );
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 

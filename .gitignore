@@ -116,7 +116,4 @@ junit.xml
 # Mac OS generated
 .DS_Store
 
-# Webpack
-**/public/**/*.bundle.js*
-
 packages/forms-web-app/src/public/stylesheets/main.css
