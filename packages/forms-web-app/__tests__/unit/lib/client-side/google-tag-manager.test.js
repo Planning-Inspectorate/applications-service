@@ -3,9 +3,9 @@
  */
 /* eslint-env browser */
 
-const googleTagManager = require('../../../../src/lib/client-side/google-tag-manager');
+const googleTagManager = require('../../../../src/scripts/google-tag-manager');
 
-describe('lib/client-side/google-tag-manager', () => {
+describe('scripts/google-tag-manager', () => {
 	beforeEach(() => {
 		jest.resetAllMocks();
 

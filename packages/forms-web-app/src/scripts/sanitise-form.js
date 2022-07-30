@@ -1,5 +1,5 @@
-const { encodeString } = require('../encode-string');
-const { sanitiseString } = require('../sanitise-string');
+const { encodeString } = require('../lib/encode-string');
+const { sanitiseString } = require('../lib/sanitise-string');
 
 const sanitiseEncodeString = (string) => {
 	if (!string || typeof string !== 'string') return '';

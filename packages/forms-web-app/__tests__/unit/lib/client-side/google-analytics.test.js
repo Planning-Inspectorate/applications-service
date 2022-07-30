@@ -3,9 +3,9 @@
  */
 /* eslint-env browser */
 
-const { initialiseGoogleAnalytics } = require('../../../../src/lib/client-side/google-analytics');
+const { initialiseGoogleAnalytics } = require('../../../../src/scripts/google-analytics');
 
-describe('lib/client-side/google-analytics', () => {
+describe('scripts/google-analytics', () => {
 	const FIXED_SYSTEM_TIME = '2020-11-18T00:00:00Z';
 	const fakeGaId = 'some-test-value';
 	const gaIdElement = document.createElement('p');

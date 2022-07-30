@@ -4,7 +4,7 @@
 /* eslint-env browser */
 
 const { getByTestId } = require('@testing-library/dom');
-const domHelpers = require('../../../../../src/lib/client-side/cookie/cookie-dom-helpers');
+const domHelpers = require('../../../../../src/scripts/cookie/cookie-dom-helpers');
 
 const getExampleDom = () => {
 	const div = document.createElement('div');
@@ -17,7 +17,7 @@ const getExampleDom = () => {
 	return div;
 };
 
-describe('lib/client-side/cookie/cookie-dom-helpers', () => {
+describe('scripts/cookie/cookie-dom-helpers', () => {
 	const govUkDisplayNoneCssClass = 'govuk-!-display-none';
 
 	let document;

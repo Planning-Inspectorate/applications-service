@@ -3,19 +3,19 @@
  */
 /* eslint-env browser */
 
-const { cookieConsentHandler } = require('../../../../src/lib/client-side/cookie/cookie-consent');
+const { cookieConsentHandler } = require('../../../../src/scripts/cookie/cookie-consent');
 
 const {
 	initialiseOptionalJavaScripts
-} = require('../../../../src/lib/client-side/javascript-requiring-consent');
+} = require('../../../../src/scripts/javascript-requiring-consent');
 
-jest.mock('../../../../src/lib/client-side/cookie/cookie-consent');
-jest.mock('../../../../src/lib/client-side/javascript-requiring-consent');
+jest.mock('../../../../src/scripts/cookie/cookie-consent');
+jest.mock('../../../../src/scripts/javascript-requiring-consent');
 
-describe('lib/client-side/index', () => {
+describe('scripts/index', () => {
 	test('calls the expected functions', () => {
 		// eslint-disable-next-line global-require
-		require('../../../../src/lib/client-side/index');
+		require('../../../../src/scripts/index');
 
 		expect(cookieConsentHandler).toHaveBeenCalledWith(document);
 		expect(initialiseOptionalJavaScripts).toHaveBeenCalledWith(document);

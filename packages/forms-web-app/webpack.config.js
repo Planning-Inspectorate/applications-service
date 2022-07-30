@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const entryPath = path.resolve(__dirname, 'src', 'lib', 'client-side');
+const entryPath = path.resolve(__dirname, 'src', 'scripts');
 const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
 
 const config = {

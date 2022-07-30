@@ -1,5 +1,5 @@
 const { removeUnwantedCookies } = require('../lib/remove-unwanted-cookies');
-const cookieConfig = require('../lib/client-side/cookie/cookie-config');
+const cookieConfig = require('../scripts/cookie/cookie-config');
 
 /**
  * Middleware to ensure any unwanted third party cookies are removed if the user has chosen not

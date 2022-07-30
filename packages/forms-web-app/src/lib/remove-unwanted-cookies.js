@@ -1,4 +1,5 @@
-const cookieConfig = require('./client-side/cookie/cookie-config');
+const cookieConfig = require('../scripts/cookie/cookie-config');
+
 const {
 	extractRootDomainNameFromHostnameAndSubdomains
 } = require('./extract-root-domain-name-from-full-domain-name');

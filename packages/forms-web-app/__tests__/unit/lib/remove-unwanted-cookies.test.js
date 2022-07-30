@@ -3,7 +3,7 @@ const {
 	removeUnwantedCookies
 } = require('../../../src/lib/remove-unwanted-cookies');
 const { mockReq, mockRes } = require('../mocks');
-const cookieConfig = require('../../../src/lib/client-side/cookie/cookie-config');
+const cookieConfig = require('../../../src/scripts/cookie/cookie-config');
 const {
 	extractRootDomainNameFromHostnameAndSubdomains
 } = require('../../../src/lib/extract-root-domain-name-from-full-domain-name');

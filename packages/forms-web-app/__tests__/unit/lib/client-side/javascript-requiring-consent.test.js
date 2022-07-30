@@ -1,14 +1,14 @@
 const {
 	initialiseOptionalJavaScripts
-} = require('../../../../src/lib/client-side/javascript-requiring-consent');
+} = require('../../../../src/scripts/javascript-requiring-consent');
 
-const { readCookie } = require('../../../../src/lib/client-side/cookie/cookie-jar');
-const { initialiseGoogleAnalytics } = require('../../../../src/lib/client-side/google-analytics');
+const { readCookie } = require('../../../../src/scripts/cookie/cookie-jar');
+const { initialiseGoogleAnalytics } = require('../../../../src/scripts/google-analytics');
 
-jest.mock('../../../../src/lib/client-side/cookie/cookie-jar');
-jest.mock('../../../../src/lib/client-side/google-analytics');
+jest.mock('../../../../src/scripts/cookie/cookie-jar');
+jest.mock('../../../../src/scripts/google-analytics');
 
-describe('lib/client-side/javascript-requiring-consent', () => {
+describe('scripts/javascript-requiring-consent', () => {
 	describe('initialiseOptionalJavaScripts', () => {
 		test('return early if cookie is null', () => {
 			jest.spyOn(console, 'log').mockImplementation();

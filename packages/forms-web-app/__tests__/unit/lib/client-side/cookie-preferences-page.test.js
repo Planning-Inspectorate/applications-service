@@ -3,16 +3,14 @@
  */
 /* eslint-env browser */
 
-const {
-	initialiseCookiePreferencePage
-} = require('../../../../src/lib/client-side/cookie-preferences');
+const { initialiseCookiePreferencePage } = require('../../../../src/scripts/cookie-preferences');
 
-jest.mock('../../../../src/lib/client-side/cookie-preferences');
+jest.mock('../../../../src/scripts/cookie-preferences');
 
-describe('lib/client-side/cookie-preferences-page', () => {
+describe('scripts/cookie-preferences-page', () => {
 	test('calls the expected functions', () => {
 		// eslint-disable-next-line global-require
-		require('../../../../src/lib/client-side/cookie-preferences-page');
+		require('../../../../src/scripts/cookie-preferences-page');
 
 		expect(initialiseCookiePreferencePage).toHaveBeenCalledWith(document);
 	});

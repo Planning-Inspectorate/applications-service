@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-const sanitiseForm = require('../../../../src/lib/client-side/sanitise-form');
+const sanitiseForm = require('../../../../src/scripts/sanitise-form');
 
 global.fetch = jest.fn(() =>
 	Promise.resolve({
@@ -16,7 +16,7 @@ delete window.location;
 window.location = { assign: assignMock };
 window.location.href = '/';
 
-describe('lib/client-side/sanitise-form', () => {
+describe('scripts/sanitise-form', () => {
 	test('expect fetch to be called on form submission', () => {
 		document.body.innerHTML = `
 			<form id="form-id">
