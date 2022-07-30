@@ -1,7 +1,5 @@
 function initiate() {
 	this.scripts = function (config = null) {
-		console.log('config::: ', config);
-
 		if (!Array.isArray(config)) return;
 
 		const configModified = config.map((configItem) => {
