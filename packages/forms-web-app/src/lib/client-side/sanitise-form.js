@@ -44,59 +44,61 @@ const getForm = (formID, fieldNames) => {
 	};
 };
 
-const sanitiseForm = (formID, fieldNames) => {
-	let formSubmissionInProgress = false;
+function sanitiseForm() {
+	this.form = (formID, fieldNames) => {
+		let formSubmissionInProgress = false;
 
-	const { form, fields } = getForm(formID, fieldNames) || {};
+		const { form, fields } = getForm(formID, fieldNames) || {};
 
-	if (!form || !fields) return;
+		if (!form || !fields) return;
 
-	form.addEventListener('submit', async function onSubmit(event) {
-		event.preventDefault();
+		form.addEventListener('submit', async function onSubmit(event) {
+			event.preventDefault();
 
-		if (formSubmissionInProgress) return;
+			if (formSubmissionInProgress) return;
 
-		try {
-			formSubmissionInProgress = true;
+			try {
+				formSubmissionInProgress = true;
 
-			const formData = new FormData(form);
+				const formData = new FormData(form);
 
-			fields.forEach((field) => {
-				const sanitisedEncodedString = sanitiseEncodeString(field.value);
-
-				formData.delete(field.name);
-				formData.append(field.name, sanitisedEncodedString);
-			});
-
-			formData.append('origin', 'sanitise-form-post');
-
-			const response = await fetch(window.location.href, {
-				method: 'POST',
-				body: formData
-			});
-
-			const responseBody = await response.json();
-
-			if (responseBody.error) {
 				fields.forEach((field) => {
-					field.value = sanitiseEncodeString(field.value);
+					const sanitisedEncodedString = sanitiseEncodeString(field.value);
+
+					formData.delete(field.name);
+					formData.append(field.name, sanitisedEncodedString);
 				});
 
+				formData.append('origin', 'sanitise-form-post');
+
+				const response = await fetch(window.location.href, {
+					method: 'POST',
+					body: formData
+				});
+
+				const responseBody = await response.json();
+
+				if (responseBody.error) {
+					fields.forEach((field) => {
+						field.value = sanitiseEncodeString(field.value);
+					});
+
+					form.submit();
+
+					return;
+				} else {
+					window.location.href = responseBody.url;
+
+					return;
+				}
+			} catch (error) {
+				this.removeEventListener('submit', onSubmit);
 				form.submit();
-
-				return;
-			} else {
-				window.location.href = responseBody.url;
-
-				return;
+			} finally {
+				formSubmissionInProgress = false;
 			}
-		} catch (error) {
-			this.removeEventListener('submit', onSubmit);
-			form.submit();
-		} finally {
-			formSubmissionInProgress = false;
-		}
-	});
-};
+		});
+	};
+}
 
 module.exports = sanitiseForm;

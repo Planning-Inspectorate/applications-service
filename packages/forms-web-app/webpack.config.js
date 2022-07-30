@@ -48,8 +48,8 @@ const configAppScripts = {
 const configPageScripts = {
 	...config,
 	entry: {
-		index: './src/lib/client-side/index.js',
-		cookiePreferences: './src/lib/client-side/cookie-preferences-page.js'
+		index: `${entryPath}/index.js`,
+		cookiePreferences: `${entryPath}/cookie-preferences-page.js`
 	},
 	output: {
 		filename: '[name].bundle.js',

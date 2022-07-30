@@ -15,7 +15,7 @@
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
 		callback: "
 			var initiatePage = new appScripts.initiate();
-			initiatePage.scripts(" + initiatePageConfig | dump | safe + ")
+			initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
 		",
 		src: "/assets/jquery.js"
 	}), initiateScriptsConfig) %}

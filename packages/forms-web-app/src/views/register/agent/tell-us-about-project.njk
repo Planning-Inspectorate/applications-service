@@ -10,7 +10,10 @@
 {% block script %}
   {% set initiateScriptsConfig = (initiateScriptsConfig.push(
     {
-      callback: "appScripts.sanitiseForm('form', ['comment'])",
+      callback: "
+        var sanitise = new appScripts.sanitiseForm();
+        sanitise.form('form', ['comment']);
+      ",
       src: "/public/scripts/sanitiseForm.bundle.js"
     }
   ), initiateScriptsConfig) %}

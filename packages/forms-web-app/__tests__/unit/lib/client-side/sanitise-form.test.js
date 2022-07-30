@@ -24,7 +24,8 @@ describe('lib/client-side/sanitise-form', () => {
 			</form>
 		`;
 
-		sanitiseForm('#form-id', ['form-input-name']);
+		const sanitise = new sanitiseForm();
+		sanitise.form('#form-id', ['form-input-name']);
 
 		const setForm = document.querySelector('#form-id');
 		const submitEvent = new Event('submit');
