@@ -69,24 +69,6 @@ const env = nunjucks.configure(viewPaths, nunjucksConfig);
 dateFilter.setDefaultFormat(config.application.defaultDisplayDateFormat);
 env.addFilter('date', dateFilter);
 
-// env.addFilter('getkeys', function (object) {
-// 	return Object.keys(object);
-// });
-
-// env.addFilter('tostring', function (object) {
-// 	return JSON.stringify(object);
-// });
-
-// env.addFilter('docname', function (object) {
-// 	return (
-// 		object &&
-// 		object
-// 			.replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
-// 			.split('/')[1]
-// 			.split('.pdf')[0]
-// 	);
-// });
-
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('formatBytes', fileSizeDisplayHelper);
 env.addFilter('formatMimeType', fileTypeDisplayHelper);
@@ -152,11 +134,11 @@ function isProjectClosed(req, res, next) {
 
 app.use(isProjectClosed);
 
-// Routes
-app.use('/', routes);
-
 // View Engine
 app.set('view engine', 'njk');
+
+// Routes
+app.use('/', routes);
 
 // For working with req.subdomains, primarily for cookie control.
 app.set('subdomain offset', config.server.subdomainOffset);
