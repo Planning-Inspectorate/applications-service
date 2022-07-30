@@ -6,7 +6,7 @@ module.exports = {
 		browser: true
 	},
 	extends: ['eslint:recommended', 'prettier'],
-	ignorePatterns: ['node_modules/**', 'dist/**', 'webpack.**', '*.bundle.js'],
+	ignorePatterns: ['node_modules/**', 'dist/**', 'webpack.**', '*.script.js'],
 	parserOptions: {
 		ecmaVersion: 2020,
 		sourceType: 'module'

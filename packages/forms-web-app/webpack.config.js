@@ -6,7 +6,7 @@ const entryPath = path.resolve(__dirname, 'src', 'lib', 'client-side');
 const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
 
 const config = {
-	mode: 'development',
+	mode: 'production',
 	module: {
 		rules: [
 			{
@@ -39,7 +39,7 @@ const configAppScripts = {
 		stepByStep: `${entryPath}/step-by-step.js`
 	},
 	output: {
-		filename: '[name].bundle.js',
+		filename: '[name].script.js',
 		path: outputPath,
 		library: ['appScripts', '[name]']
 	}
@@ -52,7 +52,7 @@ const configPageScripts = {
 		cookiePreferences: `${entryPath}/cookie-preferences-page.js`
 	},
 	output: {
-		filename: '[name].bundle.js',
+		filename: '[name].script.js',
 		path: outputPath
 	},
 	plugins: [
