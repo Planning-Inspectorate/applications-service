@@ -5,7 +5,7 @@
 
 const { getByTestId } = require('@testing-library/dom');
 const { default: userEvent } = require('@testing-library/user-event');
-const cookieConfig = require('../../../../../src/scripts/cookie/cookie-config');
+const cookieConfig = require('../../../../src/scripts/cookie/cookie-config');
 const {
 	addRejectCookieConsentListener,
 	addAcceptCookieConsentListener,
@@ -14,30 +14,30 @@ const {
 	getConsentButtons,
 	hideConsentBanner,
 	setCookies
-} = require('../../../../../src/scripts/cookie/cookie-consent');
+} = require('../../../../src/scripts/cookie/cookie-consent');
 
 const {
 	createCookie,
 	eraseCookie,
 	readCookie
-} = require('../../../../../src/scripts/cookie/cookie-jar');
+} = require('../../../../src/scripts/cookie/cookie-jar');
 
 const {
 	showCookieConsentAcceptedBanner
-} = require('../../../../../src/scripts/cookie/cookie-consent-accepted');
+} = require('../../../../src/scripts/cookie/cookie-consent-accepted');
 
 const {
 	showCookieConsentRejectedBanner
-} = require('../../../../../src/scripts/cookie/cookie-consent-rejected');
+} = require('../../../../src/scripts/cookie/cookie-consent-rejected');
 
 const {
 	initialiseOptionalJavaScripts
-} = require('../../../../../src/scripts/javascript-requiring-consent');
+} = require('../../../../src/scripts/javascript-requiring-consent');
 
-jest.mock('../../../../../src/scripts/cookie/cookie-jar');
-jest.mock('../../../../../src/scripts/cookie/cookie-consent-accepted');
-jest.mock('../../../../../src/scripts/cookie/cookie-consent-rejected');
-jest.mock('../../../../../src/scripts/javascript-requiring-consent');
+jest.mock('../../../../src/scripts/cookie/cookie-jar');
+jest.mock('../../../../src/scripts/cookie/cookie-consent-accepted');
+jest.mock('../../../../src/scripts/cookie/cookie-consent-rejected');
+jest.mock('../../../../src/scripts/javascript-requiring-consent');
 
 const govUkDisplayNoneCssClass = 'govuk-!-display-none';
 

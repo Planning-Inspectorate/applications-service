@@ -4,7 +4,7 @@
 /* eslint-env browser */
 
 const { getByTestId } = require('@testing-library/dom');
-const { initialiseCookiePreferencePage } = require('../../../../../src/scripts/cookie-preferences');
+const { initialiseCookiePreferencePage } = require('../../../../src/scripts/cookie-preferences');
 
 const getExampleDom = () => {
 	const div = document.createElement('div');

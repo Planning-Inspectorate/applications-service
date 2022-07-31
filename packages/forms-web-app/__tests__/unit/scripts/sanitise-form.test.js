@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-const sanitiseForm = require('../../../../src/scripts/sanitise-form');
+const sanitiseForm = require('../../../src/scripts/sanitise-form');
 
 global.fetch = jest.fn(() =>
 	Promise.resolve({

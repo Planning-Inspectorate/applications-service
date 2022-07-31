@@ -3,7 +3,7 @@
  */
 /* eslint-env browser */
 
-const googleTagManager = require('../../../../src/scripts/google-tag-manager');
+const googleTagManager = require('../../../src/scripts/google-tag-manager');
 
 describe('scripts/google-tag-manager', () => {
 	beforeEach(() => {

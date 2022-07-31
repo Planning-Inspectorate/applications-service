@@ -6,10 +6,10 @@
 const { getByTestId } = require('@testing-library/dom');
 const { default: userEvent } = require('@testing-library/user-event');
 const {
-	addCookieConsentRejectedListener,
-	hideConsentRejectedBanner,
-	showCookieConsentRejectedBanner
-} = require('../../../../../src/scripts/cookie/cookie-consent-rejected');
+	addCookieConsentAcceptedListener,
+	hideConsentAcceptedBanner,
+	showCookieConsentAcceptedBanner
+} = require('../../../../src/scripts/cookie/cookie-consent-accepted');
 
 const govUkDisplayNoneCssClass = 'govuk-!-display-none';
 
@@ -17,20 +17,20 @@ const getExampleDom = (isDisplaying = true) => {
 	const div = document.createElement('div');
 
 	div.innerHTML = `
-<div id="cookie-banner-rejected" data-testid="cookie-banner-rejected" ${
+<div id="cookie-banner-accepted" data-testid="cookie-banner-accepted" ${
 		isDisplaying === false && `class="${govUkDisplayNoneCssClass}"`
 	}>
- <button name="cookie_banner_rejected" data-testid="cookie-banner-rejected-button" type="submit"></button>
+ <button name="cookie_banner_accepted" data-testid="cookie-banner-accepted-button" type="submit"></button>
 </div>
     `;
 
 	return div;
 };
 
-describe('scripts/cookie/cookie-consent-rejected', () => {
+describe('scripts/cookie/cookie-consent-accepted', () => {
 	let document;
 	let elementCookieBanner;
-	let elementAcknowledgeRejectedButton;
+	let elementAcknowledgeAcceptedButton;
 
 	[
 		{
@@ -49,25 +49,25 @@ describe('scripts/cookie/cookie-consent-rejected', () => {
 			beforeEach(() => {
 				document = setupDom();
 
-				elementCookieBanner = getByTestId(document, 'cookie-banner-rejected');
-				elementAcknowledgeRejectedButton = getByTestId(document, 'cookie-banner-rejected-button');
+				elementCookieBanner = getByTestId(document, 'cookie-banner-accepted');
+				elementAcknowledgeAcceptedButton = getByTestId(document, 'cookie-banner-accepted-button');
 
 				beforeEachAssertions();
 			});
 
-			test('hideConsentRejectedBanner', () => {
-				hideConsentRejectedBanner(document);
+			test('hideConsentAcceptedBanner', () => {
+				hideConsentAcceptedBanner(document);
 				expect(elementCookieBanner).toHaveClass(govUkDisplayNoneCssClass);
 			});
 
-			test('showCookieConsentRejectedBanner', () => {
-				showCookieConsentRejectedBanner(document);
+			test('showCookieConsentAcceptedBanner', () => {
+				showCookieConsentAcceptedBanner(document);
 				expect(elementCookieBanner).not.toHaveClass(govUkDisplayNoneCssClass);
 			});
 
-			test('addCookieConsentRejectedListener', () => {
-				addCookieConsentRejectedListener(document);
-				userEvent.click(elementAcknowledgeRejectedButton);
+			test('addCookieConsentAcceptedListener', () => {
+				addCookieConsentAcceptedListener(document);
+				userEvent.click(elementAcknowledgeAcceptedButton);
 				expect(elementCookieBanner).toHaveClass(govUkDisplayNoneCssClass);
 			});
 		});

@@ -7,10 +7,10 @@ const {
 	createCookie,
 	readCookie,
 	eraseCookie
-} = require('../../../../../src/scripts/cookie/cookie-jar');
-const config = require('../../../../../src/config');
+} = require('../../../../src/scripts/cookie/cookie-jar');
+const config = require('../../../../src/config');
 
-jest.mock('../../../../../src/config');
+jest.mock('../../../../src/config');
 
 describe('scripts/cookie/cookie-jar', () => {
 	let document;

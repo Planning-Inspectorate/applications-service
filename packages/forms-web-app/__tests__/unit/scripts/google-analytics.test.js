@@ -3,7 +3,7 @@
  */
 /* eslint-env browser */
 
-const { initialiseGoogleAnalytics } = require('../../../../src/scripts/google-analytics');
+const { initialiseGoogleAnalytics } = require('../../../src/scripts/google-analytics');
 
 describe('scripts/google-analytics', () => {
 	const FIXED_SYSTEM_TIME = '2020-11-18T00:00:00Z';

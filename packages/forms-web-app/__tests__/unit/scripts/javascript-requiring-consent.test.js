@@ -1,12 +1,12 @@
 const {
 	initialiseOptionalJavaScripts
-} = require('../../../../src/scripts/javascript-requiring-consent');
+} = require('../../../src/scripts/javascript-requiring-consent');
 
-const { readCookie } = require('../../../../src/scripts/cookie/cookie-jar');
-const { initialiseGoogleAnalytics } = require('../../../../src/scripts/google-analytics');
+const { readCookie } = require('../../../src/scripts/cookie/cookie-jar');
+const { initialiseGoogleAnalytics } = require('../../../src/scripts/google-analytics');
 
-jest.mock('../../../../src/scripts/cookie/cookie-jar');
-jest.mock('../../../../src/scripts/google-analytics');
+jest.mock('../../../src/scripts/cookie/cookie-jar');
+jest.mock('../../../src/scripts/google-analytics');
 
 describe('scripts/javascript-requiring-consent', () => {
 	describe('initialiseOptionalJavaScripts', () => {
