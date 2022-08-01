@@ -29,11 +29,13 @@
         </a>
       {% else %} Registration comments </br> (Relevant representations) {% endif %}
     </li>
-    <li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
-      {% if 'timetable' != activeProjectLink %}
-        <a href="/projects/timetable">Examination timetable</a>
-      {% else %} Examination timetable {% endif %}
-    </li>
+		{% if hideExaminationTimetableLink != true %}
+			<li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
+				{% if 'timetable' != activeProjectLink %}
+					<a href="/projects/timetable">Examination timetable</a>
+				{% else %} Examination timetable {% endif %}
+			</li>
+		{% endif %}
 		{% if hideAllExaminationDocumentsLink != true %}
 			<li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
 				{% if 'all-examination-documents' != activeProjectLink %}
