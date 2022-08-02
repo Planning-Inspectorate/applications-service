@@ -6,7 +6,7 @@ Feature: Project Application documents page
 
     Scenario: verify pagination functionality on Project application documents page
         Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then I verify below pagination is present on the page
             | Data              |
             | 1                 |
@@ -37,7 +37,7 @@ Feature: Project Application documents page
 
     Scenario: verify Next/Previous pagination links on Project application documents page
         Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I navigate to page "Next set of pages" of the results
         Then I verify below pagination is present on the page
             | Data                  |
@@ -79,7 +79,7 @@ Feature: Project Application documents page
 
     Scenario: verify ellipsis on Project application documents page
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then I verify below pagination is present on the page
             | Data              |
             | 1                 |
@@ -158,7 +158,7 @@ Feature: Project Application documents page
 
     Scenario: verify documents available for project is in descending order by date published
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then I can verify that the project documents displayed in descending order
             | Date       | Stage           | Title                 |
             | 22 April 2019 | Pre-application | Material Change - 9   |
@@ -184,12 +184,12 @@ Feature: Project Application documents page
 
     Scenario: verify no documents displayed for a project
         Given I navigate to "Ho Ho Hooo" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then I verify that no project application documents found text displayed on the page
 
     Scenario: search returns matching documents
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         When I enter text "england" into search field
         And I click on search button
         Then I can verify that below project documents were returned
@@ -203,7 +203,7 @@ Feature: Project Application documents page
 
     Scenario: search returns no matching documents
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         When I enter text "search" into search field
         And I click on search button
         Then I verify that no search term documents found text displayed on the page
@@ -226,7 +226,7 @@ Feature: Project Application documents page
 
     Scenario: Option to show filters
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "show all" section
         Then all the filter stages should "be visible" by default
@@ -235,7 +235,7 @@ Feature: Project Application documents page
 
     Scenario: Option to show project stage filter
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "project stage" section
         Then I verify that the "project stage" section expanded with 3 filters
@@ -244,7 +244,7 @@ Feature: Project Application documents page
 
     Scenario: Option to show document type filter
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
         Then I verify that the "document type" section expanded with 6 filters
@@ -253,7 +253,7 @@ Feature: Project Application documents page
 
     Scenario: Option to show document type filters including everything else checkbox
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
         And I select "Everything else (29)" checkbox
@@ -284,7 +284,7 @@ Feature: Project Application documents page
 
     Scenario: filter by project stage
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I click on "project stage" section
         And I select "Pre-application (7)" checkbox
         And I click on Apply button to apply filters
@@ -301,7 +301,7 @@ Feature: Project Application documents page
 
     Scenario: search by text and filter by project stage
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         When I enter text "late" into search field
         And I click on search button
         And I click on "project stage" section
@@ -316,7 +316,7 @@ Feature: Project Application documents page
 
     Scenario: filter by project stage and search for text
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I click on "project stage" section
         And I select "Pre-application (7)" checkbox
         And I click on Apply button to apply filters
@@ -329,7 +329,7 @@ Feature: Project Application documents page
 
     Scenario: filter by document type
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I click on "document type" section
         And I select "Environmental Statement (221)" checkbox
         And I click on Apply button to apply filters
@@ -359,7 +359,7 @@ Feature: Project Application documents page
 
     Scenario: search by text and filter by document type
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         When I enter text "late" into search field
         And I click on search button
         And I click on "document type" section
@@ -372,7 +372,7 @@ Feature: Project Application documents page
 
     Scenario: filter by document type and search for text
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I click on "document type" section
         And I select "Plans (11)" checkbox
         And I click on Apply button to apply filters
@@ -385,7 +385,7 @@ Feature: Project Application documents page
 
     Scenario: filter by project stage and document type
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I click on "project stage" section
         And I select "Acceptance (Review of the application)" checkbox
         And I click on "document type" section
@@ -406,7 +406,7 @@ Feature: Project Application documents page
 
     Scenario: search by text and filter by project stage and document type
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         When I enter text "consult" into search field
         And I click on search button
         And I click on "project stage" section
@@ -425,7 +425,7 @@ Feature: Project Application documents page
 
     Scenario: filter by project stage and document type and then search by text
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Project application documents" link
+        When I click on "Documents" link
         And I click on "project stage" section
         And I select "Acceptance (Review of the application)" checkbox
         And I click on "document type" section
