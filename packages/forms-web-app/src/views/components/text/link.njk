@@ -1,7 +1,1 @@
-{% macro textLink(href, label, text) %}
-  {% if href and label and text %}
-    <a aria-label="{{ label }}" href="{{ href }}">
-      {{ text }}
-    </a>
-  {% endif %}
-{% endmacro %}
+{% macro textLink(href, label, text) %}{% if href and label and text %}<a aria-label="{{ label }}" href="{{ href }}">{{ text }}</a>{% endif %}{% endmacro %}
