@@ -1,7 +1,7 @@
 @testSuite
-Feature: Registration comments page
+Feature: Relevant Representations (Registration comments) page
     As a Test user
-    I want to navigate to Registration comments page
+    I want to navigate to Relevant Representations (Registration comments) page
     So that I can verify the functionality
 
     Scenario: Registration comments available for project

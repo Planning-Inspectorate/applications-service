@@ -15,8 +15,8 @@ Feature: Overview page
     Scenario: click on Project timeline link
         When I click on "Project timeline" link
 
-    Scenario: click on Registration comments link
-        When I click on "Registration comments" link
+    Scenario: click on Relevant Representations (Registration comments) link
+        When I click on "Relevant Representations (Registration comments)" link
         Then I click on required "Return to the project overview" link
         Then I am on the "North Lincolnshire Green Energy Park project information" page
 
