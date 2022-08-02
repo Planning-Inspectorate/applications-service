@@ -1,11 +1,38 @@
 {% extends "layouts/project-2-columns.njk" %}
 
+{% from "../components/text/heading-summary.njk" import textHeadingSummary %}
+{% from "../components/text/link.njk" import textLink %}
+
 {% set activeProjectLink = 'timetable' %}
 
-{% block columnTwo %}
-  <h2 class="govuk-heading-l">Examination timetable</h2>
-  <p class="govuk-body">Currently there are no events to display. The examination timetable will be published at the Examination stage.</p>
-  <p class="govuk-body">
-    <a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
+{% set projectURL = "/projects/" + caseRef + "" %}
+{% set projectEmailSignUpURL = "/projects/" + caseRef + "#project-section-email-sign-up" %}
+
+{% set contentTimetableNotPublished = '
+  <p>
+    Currently there are no events to display. The examination timetable will be published at the Examination stage.
   </p>
+
+  <p>
+    If you already have ' +
+      textLink(
+        projectEmailSignUpURL,
+        "Go to 'Sign up for email updates' section on the project overview page.",
+        "signed up for project updates"
+      ) + ', we will tell you when this information is published.
+  </p>
+
+  <p> ' +
+    textLink(
+      projectURL,
+      "Go to the project overview page.",
+      "Return to the project overview"
+    ) + '
+  </p>
+'%}
+
+{% block columnTwo %}
+  {{ textHeadingSummary('Examination timetable') }}
+
+  {{ contentTimetableNotPublished | safe }}
 {% endblock %}
