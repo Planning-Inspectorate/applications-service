@@ -7,30 +7,20 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-{% block pageScripts %}
-  <script>
-    const initScriptsConfig = [
-      {
-        async: true,
-        defer: true,
-        callback: () => {
-          appScripts.sanitiseForm('form', ['comment'])
-        },
-        src: '/public/javascripts/sanitiseForm.bundle.js'
-      }
-    ];
-  </script>
-
-  <script
-    src="/public/javascripts/utils/init-scripts.js"
-    type="text/javascript"
-    defer="true"
-    onload="initScripts(initScriptsConfig)"
-  >
-  </script>
+{% block script %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push(
+    {
+      callback: "
+        var sanitise = new appScripts.sanitiseForm();
+        sanitise.form('form', ['comment']);
+      ",
+      src: "/public/scripts/sanitiseForm.script.js"
+    }
+  ), initiateScriptsConfig) %}
 {% endblock %}
 
 {% set title = "What do you want to tell us about this proposed project? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+
 {% if errors %}
   {% set title = "Error: " + title %}
 {% endif %}

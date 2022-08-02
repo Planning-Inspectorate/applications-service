@@ -1,7 +1,7 @@
 const { mockReq, mockRes } = require('../mocks');
 const removeUnwantedCookiesMiddelware = require('../../../src/middleware/remove-unwanted-cookies');
 const { removeUnwantedCookies } = require('../../../src/lib/remove-unwanted-cookies');
-const cookieConfig = require('../../../src/lib/client-side/cookie/cookie-config');
+const cookieConfig = require('../../../src/scripts/cookie/cookie-config');
 
 jest.mock('../../../src/lib/remove-unwanted-cookies');
 

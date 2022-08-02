@@ -1,5 +1,5 @@
 const cookiesController = require('../../../src/controllers/cookies');
-const cookieConfig = require('../../../src/lib/client-side/cookie/cookie-config');
+const cookieConfig = require('../../../src/scripts/cookie/cookie-config');
 const appConfig = require('../../../src/config');
 const getPreviousPagePath = require('../../../src/lib/get-previous-page-path');
 const { VIEW } = require('../../../src/lib/views');

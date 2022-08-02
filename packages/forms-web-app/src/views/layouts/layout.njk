@@ -1,7 +1,3 @@
-{#- We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework. -#}
-{%- set assetPath = '/govuk/assets' -%}
-
-{# {% extends "layouts/pins-govuk-template.njk" %} #}
 {% extends "govuk/template.njk" %}
 
 {% from "govuk/components/back-link/macro.njk"           import govukBackLink %}
@@ -29,10 +25,6 @@
   <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
   <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/>
   <!--<![endif]-->
-
-  {% for stylesheetUrl in extensionConfig.stylesheets %}
-    <link href="{{ stylesheetUrl }}" rel="stylesheet" type="text/css"/>
-  {% endfor %}
 {% endblock %}
 
 {% block pageTitle %}
@@ -57,36 +49,46 @@
 
 {% block footer %}
   {{ pinsFooter({
-        items: [
-              {
-                href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
-                text: "Terms and conditions",
-                attributes: { "data-cy":"Terms and conditions" }
-              },
-              {
-                href: ac_href,
-                text: "Accessibility",
-                attributes: { "data-cy":"Accessibility" }
-              },
-              {
-                href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
-                text: "Privacy Notice (on GOV.UK)",
-                attributes: { "data-cy":"Privacy Notice (on GOV.UK)" }
-              },
-              {
-                href: ck_href,
-                text: "Cookies",
-                attributes: { "data-cy":"Cookies" }
-              }
-            ]
-      })
-    }}
+    items: [
+      {
+        href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
+        text: "Terms and conditions",
+        attributes: { "data-cy":"Terms and conditions" }
+      },
+      {
+        href: ac_href,
+        text: "Accessibility",
+        attributes: { "data-cy":"Accessibility" }
+      },
+      {
+        href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
+        text: "Privacy Notice (on GOV.UK)",
+        attributes: { "data-cy":"Privacy Notice (on GOV.UK)" }
+      },
+      {
+        href: ck_href,
+        text: "Cookies",
+        attributes: { "data-cy":"Cookies" }
+      }
+    ]
+  })
+}}
 {% endblock %}
 
+{%
+  set initiateScriptsConfig = [
+    {
+      callback: "window.GOVUKFrontend.initAll();",
+      src: "/assets/govuk/all.js"
+    },
+    {
+      src: "/public/scripts/index.script.js"
+    }
+  ]
+%}
+
 {% block bodyEnd %}
-  {% block scripts %}
-    {% include "includes/scripts.njk" %}
-    {% block pageScripts %}{% endblock %}
-  {% endblock %}
-  <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
+  {% block script %}{% endblock %}
+
+  {% include "includes/initiate-scripts.njk" %}
 {% endblock %}
