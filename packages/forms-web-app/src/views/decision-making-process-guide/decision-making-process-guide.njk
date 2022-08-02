@@ -1,220 +1,224 @@
 {% extends "layouts/layout.njk" %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
-{% block pageTitle %}
-    The decision-making process for national infrastructure projects - step by step - National Infrastructure Planning
+{% block script %}
+	{%
+		set initiatePageConfig = [{
+			callback: "
+				var initiateStepByStep = new appScripts.stepByStep();
+				initiateStepByStep.start('#step-by-step-navigation');
+			",
+			src: "/public/scripts/stepByStep.script.js"
+		}]
+	%}
+
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
+		callback: "
+			var initiatePage = new appScripts.initiate();
+			initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
+		",
+		src: "/assets/jquery.js"
+	}), initiateScriptsConfig) %}
 {% endblock %}
 
-{% block pageScripts %}
-    <script src="/public/javascripts/step-by-step-nav.js"></script>
-    <script type="text/javascript">
-        var $element = $('#step-by-step-navigation')
-        var stepByStepNavigation = new GOVUK
-            .Modules
-            .AppStepNav()
-        stepByStepNavigation.start($element)
-    </script>
+{% block pageTitle %}
+  The decision-making process for national infrastructure projects - step by step - National Infrastructure Planning
 {% endblock %}
 
 {% block beforeContent %}
-
-    {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-    {{ govukPhaseBanner({
+	{{ govukPhaseBanner({
     tag: {
       text: "beta"
     },
     html: 'This is a new service – your <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">feedback</a> will help us to improve it.'
   }) }}
-
 {% endblock %}
 
 {% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-
-            <h1 class="govuk-heading-xl">
+			<h1 class="govuk-heading-xl">
       The decision-making process for national infrastructure projects
     </h1>
-            <p class="govuk-body">National infrastructure projects are also called Nationally Significant Infrastructure Projects (NSIP). Anyone can get involved in the decision-making process, including:</p>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>developers</li>
-                <li>members of the public</li>
-                <li>statutory bodies</li>
-                <li>charities</li>
-                <li>local authorities</li>
-            </ul>
-            <p class="govuk-body">A developer submits an application for a Development Consent Order (DCO) to the Planning Inspectorate. These can be developments like:</p>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>offshore wind farms</li>
-                <li>power stations and electric lines</li>
-                <li>motorways and other major roads</li>
-                <li>railways</li>
-                <li>gas pipelines</li>
-            </ul>
-            <p class="govuk-body">The Planning Inspectorate is a government agency. Independent inspectors make a recommendation to the Secretary of State about if permission for a development should be granted. The relevant Secretary of State makes the final decision.</p>
-            <p class="govuk-body">There are several stages in the process for DCOs. The whole process can take around 18 months.</p>
+			<p class="govuk-body">National infrastructure projects are also called Nationally Significant Infrastructure Projects (NSIP). Anyone can get involved in the decision-making process, including:</p>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>developers</li>
+				<li>members of the public</li>
+				<li>statutory bodies</li>
+				<li>charities</li>
+				<li>local authorities</li>
+			</ul>
+			<p class="govuk-body">A developer submits an application for a Development Consent Order (DCO) to the Planning Inspectorate. These can be developments like:</p>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>offshore wind farms</li>
+				<li>power stations and electric lines</li>
+				<li>motorways and other major roads</li>
+				<li>railways</li>
+				<li>gas pipelines</li>
+			</ul>
+			<p class="govuk-body">The Planning Inspectorate is a government agency. Independent inspectors make a recommendation to the Secretary of State about if permission for a development should be granted. The relevant Secretary of State makes the final decision.</p>
+			<p class="govuk-body">There are several stages in the process for DCOs. The whole process can take around 18 months.</p>
 
-            <h2 class="govuk-heading-m">Guide for people or organisations who want to have their say</h2>
+			<h2 class="govuk-heading-m">Guide for people or organisations who want to have their say</h2>
 
-            <p class="govuk-body">You can get involved at the Pre-application stage before the developer submits their application to the Planning Inspectorate by contacting them.</p>
-            <p class="govuk-body">If you want to register to have your say about a national infrastructure project, you can register during the Pre-examination stage.</p>
-            <p class="govuk-body">There is a guide with information for <a class="govuk-link" href="../having-your-say-guide/">people or organisations who want to have their say about a national infrastructure project</a>.</p>
+			<p class="govuk-body">You can get involved at the Pre-application stage before the developer submits their application to the Planning Inspectorate by contacting them.</p>
+			<p class="govuk-body">If you want to register to have your say about a national infrastructure project, you can register during the Pre-examination stage.</p>
+			<p class="govuk-body">There is a guide with information for <a class="govuk-link" href="../having-your-say-guide/">people or organisations who want to have their say about a national infrastructure project</a>.</p>
 
-            <div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
-                <ol class="app-step-nav__steps">
-                    <li class="app-step-nav__step js-step" id="pre-application" >
-                        <div class="app-step-nav__header js-toggle-panel" data-position="1">
-                            <h2 class="app-step-nav__title">
-                                <span class="app-step-nav__circle app-step-nav__circle--number">
-                                    <span class="app-step-nav__circle-inner">
-                                        <span class="app-step-nav__circle-background">
-                                            <span class="govuk-visually-hidden">Step</span> 1
+			<div id="step-by-step-navigation" class="app-step-nav app-step-nav--large app-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
+				<ol class="app-step-nav__steps">
+					<li class="app-step-nav__step js-step" id="pre-application" >
+						<div class="app-step-nav__header js-toggle-panel" data-position="1">
+							<h2 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+										<span class="app-step-nav__circle-background">
+											<span class="govuk-visually-hidden">Step</span> 1
                   </span>
-                                    </span>
-                                </span>
+									</span>
+								</span>
 
-                                <span class="js-step-title">
-                Pre-application
-              </span>
-                            </h2>
-                        </div>
+								<span class="js-step-title">
+                	Pre-application
+              	</span>
+							</h2>
+						</div>
 
-                        <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-pre-application-1">
-                            <p class="govuk-body">This is where the developer must consult with people and organisations. The developer must provide information about how people can submit comments to them. It is important to get involved at this stage to influence the application before the developer sends it to the Planning Inspectorate. </p>
-                            <p class="govuk-body">
-                                <a class="govuk-link" href="/decision-making-process-guide/pre-application">Find out what you can do at this stage and check our detailed guides</a>
-                            </p>
-                        </div>
+						<div class="app-step-nav__panel js-panel js-hidden" id="step-panel-pre-application-1">
+							<p class="govuk-body">This is where the developer must consult with people and organisations. The developer must provide information about how people can submit comments to them. It is important to get involved at this stage to influence the application before the developer sends it to the Planning Inspectorate. </p>
+							<p class="govuk-body">
+								<a class="govuk-link" href="/decision-making-process-guide/pre-application">Find out what you can do at this stage and check our detailed guides</a>
+							</p>
+						</div>
 
-                    </li>
-                    <li class="app-step-nav__step js-step" id="review-of-the-application" >
-                        <div class="app-step-nav__header js-toggle-panel" data-position="2">
-                            <h2 class="app-step-nav__title">
-                                <span class="app-step-nav__circle app-step-nav__circle--number">
-                                    <span class="app-step-nav__circle-inner">
-                                        <span class="app-step-nav__circle-background">
-                                            <span class="govuk-visually-hidden">Step</span> 2
+					</li>
+					<li class="app-step-nav__step js-step" id="review-of-the-application" >
+						<div class="app-step-nav__header js-toggle-panel" data-position="2">
+							<h2 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+										<span class="app-step-nav__circle-background">
+											<span class="govuk-visually-hidden">Step</span> 2
                   </span>
-                                    </span>
-                                </span>
+									</span>
+								</span>
 
-                                <span class="js-step-title">
+								<span class="js-step-title">
                 Review of the application
               </span>
-                            </h2>
-                        </div>
+							</h2>
+						</div>
 
-                        <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-review-of-the-application-2">
-                            <p class="govuk-body">This is called the Acceptance stage. This is when the developer sends us all of the information in their application including all of the consultation they have carried out. The Planning Inspectorate looks at the documents to check if we can accept the application for Examination. We have 28 days to make this decision.</p>
-                            <p class="govuk-body">
-                                <a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">How the review works and what happens next</a>
-                            </p>
-                        </div>
+						<div class="app-step-nav__panel js-panel js-hidden" id="step-panel-review-of-the-application-2">
+							<p class="govuk-body">This is called the Acceptance stage. This is when the developer sends us all of the information in their application including all of the consultation they have carried out. The Planning Inspectorate looks at the documents to check if we can accept the application for Examination. We have 28 days to make this decision.</p>
+							<p class="govuk-body">
+								<a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">How the review works and what happens next</a>
+							</p>
+						</div>
 
-                    </li>
-                    <li class="app-step-nav__step js-step" id="pre-examination" >
-                        <div class="app-step-nav__header js-toggle-panel" data-position="3">
-                            <h2 class="app-step-nav__title">
-                                <span class="app-step-nav__circle app-step-nav__circle--number">
-                                    <span class="app-step-nav__circle-inner">
-                                        <span class="app-step-nav__circle-background">
-                                            <span class="govuk-visually-hidden">Step</span> 3
+					</li>
+					<li class="app-step-nav__step js-step" id="pre-examination" >
+						<div class="app-step-nav__header js-toggle-panel" data-position="3">
+							<h2 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+										<span class="app-step-nav__circle-background">
+											<span class="govuk-visually-hidden">Step</span> 3
                   </span>
-                                    </span>
-                                </span>
+									</span>
+								</span>
 
-                                <span class="js-step-title">
+								<span class="js-step-title">
                 Pre-examination
               </span>
-                            </h2>
-                        </div>
+							</h2>
+						</div>
 
-                        <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-pre-examination-3">
-                            <p class="govuk-body">We identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the Examination stage. Anyone who wants to have their say will be able to register at this stage. Registration is open for 30 days. The Pre-examination stage takes about three months.</p>
-                            <p class="govuk-body">
-                                <a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the preparation for the Examination</a>
-                            </p>
-                        </div>
+						<div class="app-step-nav__panel js-panel js-hidden" id="step-panel-pre-examination-3">
+							<p class="govuk-body">We identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the Examination stage. Anyone who wants to have their say will be able to register at this stage. Registration is open for 30 days. The Pre-examination stage takes about three months.</p>
+							<p class="govuk-body">
+								<a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the preparation for the Examination</a>
+							</p>
+						</div>
 
-                    </li>
-                    <li class="app-step-nav__step js-step" id="examination-of-the-project" >
-                        <div class="app-step-nav__header js-toggle-panel" data-position="4">
-                            <h2 class="app-step-nav__title">
-                                <span class="app-step-nav__circle app-step-nav__circle--number">
-                                    <span class="app-step-nav__circle-inner">
-                                        <span class="app-step-nav__circle-background">
-                                            <span class="govuk-visually-hidden">Step</span> 4
+					</li>
+					<li class="app-step-nav__step js-step" id="examination-of-the-project" >
+						<div class="app-step-nav__header js-toggle-panel" data-position="4">
+							<h2 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+										<span class="app-step-nav__circle-background">
+											<span class="govuk-visually-hidden">Step</span> 4
                   </span>
-                                    </span>
-                                </span>
+									</span>
+								</span>
 
-                                <span class="js-step-title">
+								<span class="js-step-title">
                 Examination of the application
               </span>
-                            </h2>
-                        </div>
+							</h2>
+						</div>
 
-                        <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-examination-of-the-project-4">
-                            <p class="govuk-body">The Examination stage is where the Examining Authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit Examination comments at each deadline in the timetable. You can also attend any hearings that may take place. This stage takes six months.</p>
-                            <p class="govuk-body">
-                                <a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application">What happens at the Examination of the application</a>
-                            </p>
-                        </div>
+						<div class="app-step-nav__panel js-panel js-hidden" id="step-panel-examination-of-the-project-4">
+							<p class="govuk-body">The Examination stage is where the Examining Authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit Examination comments at each deadline in the timetable. You can also attend any hearings that may take place. This stage takes six months.</p>
+							<p class="govuk-body">
+								<a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application">What happens at the Examination of the application</a>
+							</p>
+						</div>
 
-                    </li>
-                    <li class="app-step-nav__step js-step" id="recommendation-and-decision" >
-                        <div class="app-step-nav__header js-toggle-panel" data-position="5">
-                            <h2 class="app-step-nav__title">
-                                <span class="app-step-nav__circle app-step-nav__circle--number">
-                                    <span class="app-step-nav__circle-inner">
-                                        <span class="app-step-nav__circle-background">
-                                            <span class="govuk-visually-hidden">Step</span> 5
+					</li>
+					<li class="app-step-nav__step js-step" id="recommendation-and-decision" >
+						<div class="app-step-nav__header js-toggle-panel" data-position="5">
+							<h2 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+										<span class="app-step-nav__circle-background">
+											<span class="govuk-visually-hidden">Step</span> 5
                   </span>
-                                    </span>
-                                </span>
+									</span>
+								</span>
 
-                                <span class="js-step-title">
+								<span class="js-step-title">
                 Recommendation and decision
               </span>
-                            </h2>
-                        </div>
+							</h2>
+						</div>
 
-                        <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-recommendation-and-decision-5">
-                            <p class="govuk-body">The recommendation stage is when the Examining Authority writes its recommendation report. This must be completed and sent to the Secretary of State within three months of the end of Examination.</p>
-                            <p class="govuk-body">The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have three months to make a decision.</p>
-                            <p class="govuk-body">
-                                <a class="govuk-link" href="/decision-making-process-guide/recommendation-and-decision">Making a recommendation and who makes the final decision</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li class="app-step-nav__step js-step" id="after-a-decision-is-made" >
-                        <div class="app-step-nav__header js-toggle-panel" data-position="6">
-                            <h2 class="app-step-nav__title">
-                                <span class="app-step-nav__circle app-step-nav__circle--number">
-                                    <span class="app-step-nav__circle-inner">
-                                        <span class="app-step-nav__circle-background">
-                                            <span class="govuk-visually-hidden">Step</span> 6
+						<div class="app-step-nav__panel js-panel js-hidden" id="step-panel-recommendation-and-decision-5">
+							<p class="govuk-body">The recommendation stage is when the Examining Authority writes its recommendation report. This must be completed and sent to the Secretary of State within three months of the end of Examination.</p>
+							<p class="govuk-body">The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have three months to make a decision.</p>
+							<p class="govuk-body">
+								<a class="govuk-link" href="/decision-making-process-guide/recommendation-and-decision">Making a recommendation and who makes the final decision</a>
+							</p>
+						</div>
+					</li>
+					<li class="app-step-nav__step js-step" id="after-a-decision-is-made" >
+						<div class="app-step-nav__header js-toggle-panel" data-position="6">
+							<h2 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+										<span class="app-step-nav__circle-background">
+											<span class="govuk-visually-hidden">Step</span> 6
                   </span>
-                                    </span>
-                                </span>
+									</span>
+								</span>
 
-                                <span class="js-step-title">
+								<span class="js-step-title">
                 What happens after the decision is made
               </span>
-                            </h2>
-                        </div>
+							</h2>
+						</div>
 
-                        <div class="app-step-nav__panel js-panel js-hidden" id="step-panel-after-a-decision-is-made-6">
-                            <p class="govuk-body">Once a decision is made by the Secretary of State, there is a six week period where people can challenge the decision in the High Court. This is called a Judicial Review.</p>
-                            <p class="govuk-body">
-                                <a class="govuk-link" class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">What you can do after the decision has been made</a>
-                            </p>
-                        </div>
-                    </li>
-                </ol>
-            </div>
-
-        </div>
-    </div>
-
+						<div class="app-step-nav__panel js-panel js-hidden" id="step-panel-after-a-decision-is-made-6">
+							<p class="govuk-body">Once a decision is made by the Secretary of State, there is a six week period where people can challenge the decision in the High Court. This is called a Judicial Review.</p>
+							<p class="govuk-body">
+								<a class="govuk-link" class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">What you can do after the decision has been made</a>
+							</p>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>
 {% endblock %}

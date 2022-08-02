@@ -1,0 +1,10 @@
+<script>
+  var initiateScriptsConfig = {{ initiateScriptsConfig | dump | safe }}
+</script>
+
+<script
+  defer="true"
+  onload="var initiateSite = new appScripts.initiate(); initiateSite.scripts(initiateScriptsConfig);"
+  src="/public/scripts/initiate.script.js"
+  type="text/javascript"
+></script>

@@ -1,23 +1,31 @@
 {% extends "layouts/layout.njk" %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{% block script %}
+	{%
+		set initiatePageConfig = [{
+			callback: "
+				var initiateStepByStep = new appScripts.stepByStep();
+				initiateStepByStep.start('#step-by-step-navigation');
+			",
+			src: "/public/scripts/stepByStep.script.js"
+		}]
+	%}
+
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
+		callback: "
+			var initiatePage = new appScripts.initiate();
+			initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
+		",
+		src: "/assets/jquery.js"
+	}), initiateScriptsConfig) %}
+{% endblock %}
 
 {% block pageTitle %}
   Having your say about a national infrastructure project - step by step - National Infrastructure Planning
 {% endblock %}
 
-{% block pageScripts %}
-  <script src="/public/javascripts/step-by-step-nav.js"></script>
-  <script type="text/javascript">
-    var $element = $('#step-by-step-navigation')
-    var stepByStepNavigation = new GOVUK
-      .Modules
-      .AppStepNav()
-    stepByStepNavigation.start($element)
-  </script>
-{% endblock %}
-
 {% block beforeContent %}
-
-  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
   {{ govukPhaseBanner({
     tag: {
       text: "beta"
@@ -38,7 +46,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
@@ -185,8 +192,6 @@
           </li>
         </ol>
       </div>
-
     </div>
   </div>
-
 {% endblock %}
