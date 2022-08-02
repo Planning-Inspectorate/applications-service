@@ -17,8 +17,15 @@ describe('middleware/decode-uri', () => {
 
 	decodeUri('session', ['inputOne', 'inputTwo'])(req, {}, next);
 
-	test(`decode uri`, () => {
+	test(`try decode uri`, () => {
 		expect(req.session.inputOne).toEqual(expected.inputOne);
 		expect(req.session.inputTwo).toEqual(expected.inputTwo);
+	});
+
+	decodeUri('session', null)(req, {}, next);
+
+	test(`catch decode uri`, () => {
+		expect(req.session.inputOne).toEqual(req.session.inputOne);
+		expect(req.session.inputTwo).toEqual(req.session.inputTwo);
 	});
 });

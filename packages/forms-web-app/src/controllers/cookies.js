@@ -1,6 +1,6 @@
 const { VIEW } = require('../lib/views');
 const appConfig = require('../config');
-const cookieConfig = require('../lib/client-side/cookie/cookie-config');
+const cookieConfig = require('../scripts/cookie/cookie-config');
 const getPreviousPagePath = require('../lib/get-previous-page-path');
 const { addFlashMessage } = require('../lib/flash-message');
 const { removeUnwantedCookies } = require('../lib/remove-unwanted-cookies');

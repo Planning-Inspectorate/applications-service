@@ -3,10 +3,6 @@ class PO_OverviewPage {
 		cy.get('#search').type(inputData);
 	}
 
-	clickOnSearch() {
-		cy.get('#toggleFilters').click();
-	}
-
 	assertResultsPresentOnPage(table) {
 		const contents = table.hashes();
 		for (var i = 0; i < contents.length; i++) {

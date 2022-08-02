@@ -49,10 +49,7 @@ const nunjucksConfig = {
 	express: app
 };
 
-const accessibleAutocompleteRoot = path.resolve(
-	require.resolve('accessible-autocomplete'),
-	'../..'
-);
+const jQueryFrontendRoot = path.resolve(require.resolve('jquery'), '../..');
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
 const pinsComponentsRoot = path.resolve(
@@ -71,24 +68,6 @@ const env = nunjucks.configure(viewPaths, nunjucksConfig);
 
 dateFilter.setDefaultFormat(config.application.defaultDisplayDateFormat);
 env.addFilter('date', dateFilter);
-
-env.addFilter('getkeys', function (object) {
-	return Object.keys(object);
-});
-
-env.addFilter('tostring', function (object) {
-	return JSON.stringify(object);
-});
-
-env.addFilter('docname', function (object) {
-	return (
-		object &&
-		object
-			.replace('https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/', '')
-			.split('/')[1]
-			.split('.pdf')[0]
-	);
-});
 
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('formatBytes', fileSizeDisplayHelper);
@@ -119,6 +98,7 @@ if (config.featureFlag.useRedisSessionStore) {
 
 	sessionStoreConfig = { ...sessionStoreConfig, store: new RedisStore({ client: redisClient }) };
 }
+
 app.use(compression());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
@@ -131,10 +111,10 @@ app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(env));
 app.use(removeUnwantedCookiesMiddelware);
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use(
-	'/assets',
-	express.static(path.join(accessibleAutocompleteRoot, 'dist')),
-	express.static(path.join(govukFrontendRoot, 'govuk', 'assets'))
+	'/assets/jquery.js',
+	express.static(path.join(jQueryFrontendRoot, 'dist', 'jquery.min.js'))
 );
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 
@@ -151,12 +131,14 @@ function isProjectClosed(req, res, next) {
 		next();
 	}
 }
+
 app.use(isProjectClosed);
-// Routes
-app.use('/', routes);
 
 // View Engine
 app.set('view engine', 'njk');
+
+// Routes
+app.use('/', routes);
 
 // For working with req.subdomains, primarily for cookie control.
 app.set('subdomain offset', config.server.subdomainOffset);

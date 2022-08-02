@@ -2,7 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
-const outputPath = path.resolve(__dirname, 'src', 'public', 'javascripts');
+const entryPath = path.resolve(__dirname, 'src', 'scripts');
+const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
+const outputFilenamePrefix = 'script';
 
 const config = {
 	mode: 'production',
@@ -33,10 +35,12 @@ const config = {
 const configAppScripts = {
 	...config,
 	entry: {
-		sanitiseForm: './src/lib/client-side/sanitise-form.js'
+		initiate: `${entryPath}/initiate.js`,
+		sanitiseForm: `${entryPath}/sanitise-form.js`,
+		stepByStep: `${entryPath}/step-by-step.js`
 	},
 	output: {
-		filename: '[name].bundle.js',
+		filename: `[name].${outputFilenamePrefix}.js`,
 		path: outputPath,
 		library: ['appScripts', '[name]']
 	}
@@ -45,11 +49,11 @@ const configAppScripts = {
 const configPageScripts = {
 	...config,
 	entry: {
-		index: './src/lib/client-side/index.js',
-		cookiePreferences: './src/lib/client-side/cookie-preferences-page.js'
+		index: `${entryPath}/index.js`,
+		cookiePreferences: `${entryPath}/cookie-preferences-page.js`
 	},
 	output: {
-		filename: '[name].bundle.js',
+		filename: `[name].${outputFilenamePrefix}.js`,
 		path: outputPath
 	},
 	plugins: [
