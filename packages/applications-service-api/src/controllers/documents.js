@@ -69,6 +69,7 @@ module.exports = {
 					const everythingElseFilterValues = typeFiltersAvailable.slice(5).map(function (t) {
 						return t.filter_1;
 					});
+					everythingElseFilterValues.push('Other Documents');
 					typeFilters = typeFilters.filter((e) => e !== 'everything_else');
 					typeFilters.push(everythingElseFilterValues);
 				}

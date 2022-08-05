@@ -58,12 +58,21 @@ function renderData(
 	}, Object.create(null));
 
 	let otherTypeFiltersCount = 0;
-	typeFilters.slice(-(typeFilters.length - 5)).forEach(function (type) {
+
+	const newTypeFilters = typeFilters.filter((t) => {
+		if (/other documents/i.test(t.name)) {
+			otherTypeFiltersCount += t.count;
+		}
+
+		return t.name !== 'Other Documents';
+	});
+
+	newTypeFilters.slice(-(newTypeFilters.length - 4)).forEach(function (type) {
 		otherTypeFiltersCount += type.count;
 	}, Object.create(null));
 
-	typeFilters
-		.slice(0, 5)
+	newTypeFilters
+		.slice(0, 4)
 		.sort(function (a, b) {
 			if (a.name < b.name) {
 				return -1;
@@ -77,7 +86,8 @@ function renderData(
 				checked: typeList.includes(type.name)
 			});
 		}, Object.create(null));
-	if (typeFilters.length > 5) {
+
+	if (newTypeFilters.length > 4) {
 		top5TypeFilters.push({
 			text: `Everything else (${otherTypeFiltersCount})`,
 			value: 'everything_else',
@@ -106,14 +116,34 @@ exports.getApplicationDocuments = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
+
 		const params = {
 			caseRef: req.params.case_ref,
 			classification: 'application',
 			page: '1',
 			...req.query
 		};
+
+		if (typeof params?.type === 'string' && params?.type === 'Other Documents') {
+			params.type = 'everything_else';
+		}
+
+		if (Array.isArray(params?.type) && params?.type.includes('Other Documents')) {
+			const removeOtherDocuments = params?.type.filter((t) => t !== 'Other Documents');
+
+			if (params.type.includes('everything_else')) {
+				params.type = removeOtherDocuments;
+			}
+
+			removeOtherDocuments.push('everything_else');
+
+			params.type = removeOtherDocuments;
+		}
+
 		const { searchTerm, stage, type } = req.query;
+
 		const response = await searchDocumentsV2(params);
+
 		renderData(req, res, searchTerm, params, response, projectName, stage, type);
 	}
 };
