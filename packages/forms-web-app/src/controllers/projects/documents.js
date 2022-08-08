@@ -6,6 +6,7 @@ const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 const { featureHideLink } = require('../../config');
+const { replaceControllerParamType } = require('../../utils/replace-controller-param-type');
 
 const {
 	hideProjectInformationLink,
@@ -124,20 +125,14 @@ exports.getApplicationDocuments = async (req, res) => {
 			...req.query
 		};
 
-		if (typeof params?.type === 'string' && params?.type === 'Other Documents') {
-			params.type = 'everything_else';
-		}
+		const newParamsType = replaceControllerParamType(
+			params?.type,
+			'Other Documents',
+			'everything_else'
+		);
 
-		if (Array.isArray(params?.type) && params?.type.includes('Other Documents')) {
-			const removeOtherDocuments = params?.type.filter((t) => t !== 'Other Documents');
-
-			if (params.type.includes('everything_else')) {
-				params.type = removeOtherDocuments;
-			}
-
-			removeOtherDocuments.push('everything_else');
-
-			params.type = removeOtherDocuments;
+		if (newParamsType) {
+			params.type = newParamsType;
 		}
 
 		const { searchTerm, stage, type } = req.query;
