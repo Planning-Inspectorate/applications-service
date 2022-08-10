@@ -70,13 +70,27 @@ function renderData(
 	}
 
 	let otherTypeFiltersCount = 0;
+	const otherTypeMatchArray = [];
 
-	const newTypeFilters = typeFilters.filter((t) => {
-		if (/other documents/i.test(t.name)) {
-			otherTypeFiltersCount += t.count;
+	const newTypeFilters = typeFilters.filter(({ name: typeName, count }, index) => {
+		if (/other/i.test(typeName)) {
+			otherTypeMatchArray.push({ [index]: typeName });
+		}
+		let execCurrentArrayItem;
+
+		if (otherTypeMatchArray && otherTypeMatchArray.length > 0) {
+			execCurrentArrayItem = otherTypeMatchArray.find(
+				(otherType) => Object.keys(otherType)[0] === index.toString()
+			);
 		}
 
-		return t.name !== 'Other Documents';
+		if (otherTypeMatchArray && otherTypeMatchArray.length > 0 && execCurrentArrayItem) {
+			const otherDocumentString = execCurrentArrayItem[index];
+			otherTypeFiltersCount += count;
+			return typeName !== otherDocumentString;
+		}
+
+		return typeName;
 	});
 
 	newTypeFilters.slice(-(newTypeFilters.length - 4)).forEach(function (type) {
@@ -136,11 +150,7 @@ exports.getApplicationDocuments = async (req, res) => {
 			...req.query
 		};
 
-		const newParamsType = replaceControllerParamType(
-			params?.type,
-			'Other Documents',
-			'everything_else'
-		);
+		const newParamsType = replaceControllerParamType(params?.type, 'other', 'everything_else');
 
 		if (newParamsType) {
 			params.type = newParamsType;

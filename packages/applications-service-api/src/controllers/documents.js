@@ -65,11 +65,24 @@ module.exports = {
 			typeFilters = type instanceof Array ? [...type] : type.split(',');
 
 			if (typeFilters.includes('everything_else')) {
+				const otherTypesToAdd = [];
+				const result = [];
 				if (typeFiltersAvailable.length > 5) {
-					const everythingElseFilterValues = typeFiltersAvailable.slice(5).map(function (t) {
-						return t.filter_1;
-					});
-					everythingElseFilterValues.push('Other Documents');
+					for (const { filter_1: filterTypeName } of typeFiltersAvailable) {
+						const otherTypeMatch = /other/i.test(filterTypeName);
+
+						if (otherTypeMatch) {
+							otherTypesToAdd.push(filterTypeName);
+						} else {
+							result.push(filterTypeName);
+						}
+					}
+
+					let everythingElseFilterValues = result.slice(4);
+
+					if (otherTypesToAdd.length > 0) {
+						everythingElseFilterValues = everythingElseFilterValues.concat(otherTypesToAdd);
+					}
 					typeFilters = typeFilters.filter((e) => e !== 'everything_else');
 					typeFilters.push(everythingElseFilterValues);
 				}
