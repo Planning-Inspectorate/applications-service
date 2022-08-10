@@ -36,9 +36,9 @@
 
             <p class="pins-govuk-result-list__item-description">
               {% if document.representative %}
-                Published by {{ document.representative }} on behalf of {{ document.personal_name }}
+                From {{ document.representative }} on behalf of {{ document.personal_name }}
               {% elseif document.description and document.personal_name %}
-                Published by {{ document.personal_name }}
+                From {{ document.personal_name }}
               {% endif %}
             </p>
 
