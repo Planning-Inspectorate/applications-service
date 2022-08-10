@@ -1,6 +1,7 @@
 const R = require('ramda');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
+const { mapFilters } = require('../utils/map-filters');
 
 const { getOrderedDocuments, getDocuments, getFilters } = require('../services/document.service');
 
@@ -65,24 +66,16 @@ module.exports = {
 			typeFilters = type instanceof Array ? [...type] : type.split(',');
 
 			if (typeFilters.includes('everything_else')) {
-				const otherTypesToAdd = [];
-				const result = [];
-				if (typeFiltersAvailable.length > 5) {
-					for (const { filter_1: filterTypeName } of typeFiltersAvailable) {
-						const otherTypeMatch = /other/i.test(filterTypeName);
+				if (typeFiltersAvailable && typeFiltersAvailable.length > 4) {
+					const { result, otherTypesToAdd } = mapFilters(typeFiltersAvailable, 'other');
+					const validResult = result && otherTypesToAdd && result.length > 0;
 
-						if (otherTypeMatch) {
-							otherTypesToAdd.push(filterTypeName);
-						} else {
-							result.push(filterTypeName);
-						}
-					}
-
-					let everythingElseFilterValues = result.slice(4);
+					let everythingElseFilterValues = validResult ? result.slice(4) : [];
 
 					if (otherTypesToAdd.length > 0) {
 						everythingElseFilterValues = everythingElseFilterValues.concat(otherTypesToAdd);
 					}
+
 					typeFilters = typeFilters.filter((e) => e !== 'everything_else');
 					typeFilters.push(everythingElseFilterValues);
 				}
