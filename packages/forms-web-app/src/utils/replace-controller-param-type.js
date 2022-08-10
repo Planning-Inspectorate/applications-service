@@ -1,20 +1,40 @@
 const replaceControllerParamType = (paramsType, expectedParam, newParamType) => {
-	if (!paramsType || !expectedParam || !newParamType) return;
+	if (
+		!paramsType ||
+		!paramsType.length > 0 ||
+		!expectedParam ||
+		typeof expectedParam !== 'string' ||
+		!newParamType
+	)
+		return;
 
-	if (typeof paramsType === 'string' && paramsType === expectedParam) {
+	const regex = new RegExp(expectedParam, 'i');
+
+	if (typeof paramsType === 'string' && regex.test(paramsType)) {
 		return newParamType;
 	}
 
-	if (Array.isArray(paramsType) && paramsType.includes(expectedParam)) {
-		const removedParamTypeList = paramsType.filter((t) => t !== expectedParam);
+	const matchResults = [];
+	const result = [];
 
-		if (paramsType.includes(newParamType)) {
-			return removedParamTypeList;
+	if (Array.isArray(paramsType)) {
+		for (const typeName of paramsType) {
+			if (regex.test(typeName)) {
+				matchResults.push(typeName);
+			} else {
+				result.push(typeName);
+			}
 		}
 
-		removedParamTypeList.push(newParamType);
+		if (!result.includes(newParamType)) {
+			result.push(newParamType);
+		}
 
-		return removedParamTypeList;
+		if (matchResults.length > 0) {
+			return result;
+		}
+
+		return result;
 	}
 };
 
