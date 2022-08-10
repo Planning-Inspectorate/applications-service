@@ -45,7 +45,7 @@ function renderData(
 	const pageOptions = calculatePageOptions(paginationData);
 	const modifiedStageFilters = [];
 	const top5TypeFilters = [];
-	const documentExaminationLibraryId = 'Examination Library';
+	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
 
 	stageFilters.forEach(function (stage) {
@@ -57,8 +57,11 @@ function renderData(
 	}, Object.create(null));
 
 	documents.forEach(function (document, index) {
-		if (!documentExaminationLibraryIndex && document.type === documentExaminationLibraryId) {
-			documentExaminationLibraryIndex = index;
+		if (!documentExaminationLibraryIndex) {
+			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
+			if (documentType === documentExaminationLibraryId) {
+				documentExaminationLibraryIndex = index;
+			}
 		}
 
 		document.date_published = formatDate(document.date_published);
