@@ -194,9 +194,9 @@ Feature: Project Application documents page
         And I click on search button
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                                                   |
-            | AdditionalSubmissionacceptedatthediscretionoftheExaminingAuthorityÃ¢â‚¬â€œAgreedStatementofCommonGroundbetweentheApplicantandPublicHealthEngland(PDF,268KB)PublishedbyRemoved23May2019Pre-examinationAdditionalSubmissions |
-            | 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                         |
-            | 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                                                     |
+            | AdditionalSubmissionacceptedatthediscretionoftheExaminingAuthorityÃ¢â‚¬â€œAgreedStatementofCommonGroundbetweentheApplicantandPublicHealthEngland(PDF,268KB)FromRemoved23May2019Pre-examinationAdditionalSubmissions |
+            | 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                         |
+            | 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                                                     |
         When I enter text "" into search field
         And I click on search button
         Then I verify text "Showing 1 to 20 of 297 results" is present on the page
@@ -260,26 +260,26 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
-            | 4.3 Book of Reference (PDF, 37KB) Published by Removed 24 April 2019Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                                           |
+            | 4.3 Book of Reference (PDF, 37KB) From Removed 24 April 2019Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                                           |
             | Rule 6 letter - Notification of the preliminary meeting and matters to be discussed (PDF, 282KB) 18 April 2019Pre-examinationProcedural Decisions          |
-            | NULL (PDF, 149KB) Published by NULL on behalf of Rule 4 Appointment of Panel - 15 March 2019 18 March 2019Pre-examinationProcedural Decisions              |
-            | NULL (PDF, 75KB) Published by NULL on behalf of Regulation 32 - Transboundary Screening 28 January 2019Pre-examinationTransboundary                          |
-            | Section 56 Notification (PDF, 126KB) Published by NULL on behalf of Removed 20 December 2018Pre-examinationCertificates and Notices                           |
-            | NULL (PDF, 92KB) Published by NULL on behalf of Notification of Decision to Accept Application 14 December 2018Acceptance(Reviewoftheapplication)Acceptance letter                    |
-            | Adequacy of Consultation Representation (PDF, 107KB) Published by NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 542KB) Published by NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 185KB) Published by NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 105KB) Published by NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 34KB) Published by NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation  |
-            | NULL (PDF, 242KB) Published by NULL on behalf of Section 55 Checklist 14 December 2018Acceptance(Reviewoftheapplication)Procedural Decisions                                          |
-            | 4.2 Funding Statement (PDF, 864KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                        |
-            | 1.1.1 S55 Checklist (PDF, 429KB) Published by Section 55 Checklist 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                                 |
-            | 3.2 Explanatory Memorandum (PDF, 422KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Draft Development Consent Orders                     |
-            | 1.3 Guide to the Application (PDF, 285KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                   |
-            | 1.1 Application letter for Cleve Hill Solar Park (PDF, 580KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form               |
-            | 3.1.1 The Stationary Office Validation (PDF, 97KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Draft Development Consent Orders          |
-            | 1.2 Application Form (PDF, 148KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                           |
-            | 4.1 Statement of Reasons (PDF, 372KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                     |
+            | NULL (PDF, 149KB) From NULL on behalf of Rule 4 Appointment of Panel - 15 March 2019 18 March 2019Pre-examinationProcedural Decisions              |
+            | NULL (PDF, 75KB) From NULL on behalf of Regulation 32 - Transboundary Screening 28 January 2019Pre-examinationTransboundary                          |
+            | Section 56 Notification (PDF, 126KB) From NULL on behalf of Removed 20 December 2018Pre-examinationCertificates and Notices                           |
+            | NULL (PDF, 92KB) From NULL on behalf of Notification of Decision to Accept Application 14 December 2018Acceptance(Reviewoftheapplication)Acceptance letter                    |
+            | Adequacy of Consultation Representation (PDF, 107KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
+            | Adequacy of Consultation Representation (PDF, 542KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
+            | Adequacy of Consultation Representation (PDF, 185KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
+            | Adequacy of Consultation Representation (PDF, 105KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
+            | Adequacy of Consultation Representation (PDF, 34KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation  |
+            | NULL (PDF, 242KB) From NULL on behalf of Section 55 Checklist 14 December 2018Acceptance(Reviewoftheapplication)Procedural Decisions                                          |
+            | 4.2 Funding Statement (PDF, 864KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                        |
+            | 1.1.1 S55 Checklist (PDF, 429KB) From Section 55 Checklist 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                                 |
+            | 3.2 Explanatory Memorandum (PDF, 422KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Draft Development Consent Orders                     |
+            | 1.3 Guide to the Application (PDF, 285KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                   |
+            | 1.1 Application letter for Cleve Hill Solar Park (PDF, 580KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form               |
+            | 3.1.1 The Stationary Office Validation (PDF, 97KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Draft Development Consent Orders          |
+            | 1.2 Application Form (PDF, 148KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                           |
+            | 4.1 Statement of Reasons (PDF, 372KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                     |
         And I click on "document type" section
 
     Scenario: filter by project stage
@@ -290,13 +290,13 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                   |
-            | Late scoping consultation response (PDF, 79KB) Published by NULL on behalf of Removed 25 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                     |
-            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) Published by NULL on behalf of Scoping Opinion 19 January 2018Pre-applicationEnvironmental Impact Assessment Scoping            |
-            | Late scoping consultation response (PDF, 191KB) Published by NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                    |
-            | Late scoping consultation response (PDF, 722KB) Published by NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                    |
-            | NULL (PDF, 81KB) Published by NULL on behalf of Acknowledgement of S46 Notification 6 January 2018Pre-applicationNotice of Proposed application                                                |
-            | NULL (PDF, 1MB) Published by NULL on behalf of S46 Notification 6 January 2018Pre-applicationNotice of Proposed application                                                                    |
-            | Scoping Report submitted to the Secretary of State on 11 December 2017 (PDF, 38MB) Published by NULL on behalf of Removed 12 November 2017Pre-applicationEnvironmental Impact Assessment Scoping |
+            | Late scoping consultation response (PDF, 79KB) From NULL on behalf of Removed 25 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                     |
+            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) From NULL on behalf of Scoping Opinion 19 January 2018Pre-applicationEnvironmental Impact Assessment Scoping            |
+            | Late scoping consultation response (PDF, 191KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                    |
+            | Late scoping consultation response (PDF, 722KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                    |
+            | NULL (PDF, 81KB) From NULL on behalf of Acknowledgement of S46 Notification 6 January 2018Pre-applicationNotice of Proposed application                                                |
+            | NULL (PDF, 1MB) From NULL on behalf of S46 Notification 6 January 2018Pre-applicationNotice of Proposed application                                                                    |
+            | Scoping Report submitted to the Secretary of State on 11 December 2017 (PDF, 38MB) From NULL on behalf of Removed 12 November 2017Pre-applicationEnvironmental Impact Assessment Scoping |
         And I click on "project stage" section
 
     Scenario: search by text and filter by project stage
@@ -309,9 +309,9 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
-            | Late scoping consultation response (PDF, 79KB) Published by NULL on behalf of Removed 25 January 2018Pre-applicationEnvironmental Impact Assessment Scoping  |
-            | Late scoping consultation response (PDF, 191KB) Published by NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
-            | Late scoping consultation response (PDF, 722KB) Published by NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
+            | Late scoping consultation response (PDF, 79KB) From NULL on behalf of Removed 25 January 2018Pre-applicationEnvironmental Impact Assessment Scoping  |
+            | Late scoping consultation response (PDF, 191KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
+            | Late scoping consultation response (PDF, 722KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
         And I click on "project stage" section
 
     Scenario: filter by project stage and search for text
@@ -324,7 +324,7 @@ Feature: Project Application documents page
         And I click on search button
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                        |
-            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) Published by NULL on behalf of Scoping Opinion 19 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
+            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) From NULL on behalf of Scoping Opinion 19 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
         And I click on "project stage" section
 
     Scenario: filter by document type
@@ -335,26 +335,26 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                       |
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 9 (PDF, 18MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 22 North (PDF, 13MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 12 (PDF, 15MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement      |
-            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 6 (PDF, 29MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
-            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 8 (PDF, 28MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
-            | 6.3.8 Environmental Statement - Photomontage Summer- Year 1 Viewpoint 2 (PDF, 21MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
-            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 9 (PDF, 33MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 22 South (PDF, 15MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
-            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 7 (PDF, 36MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
-            | 6.3.8 Environmental Statement - Photomontage Year 1 Summer Cover and Contents (PDF, 141KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement |
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 1 (PDF, 16MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 8 (PDF, 24MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
-            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 3 (PDF, 9MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
-            | 6.3.9 Environmental Statement - Photomontage Summer- Year 5 Viewpoint 2 (PDF, 11MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
-            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 22 North (PDF, 7MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement |
-            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 7 (PDF, 11MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
-            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 4 (PDF, 8MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
-            | 6.4 Environmental Statement - Volume 4 Cover and Contents (PDF, 182KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                     |
-            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 9 (PDF, 9MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
-            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 22 South (PDF, 7MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement |
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 9 (PDF, 18MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 22 North (PDF, 13MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 12 (PDF, 15MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement      |
+            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 6 (PDF, 29MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
+            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 8 (PDF, 28MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
+            | 6.3.8 Environmental Statement - Photomontage Summer- Year 1 Viewpoint 2 (PDF, 21MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
+            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 9 (PDF, 33MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 22 South (PDF, 15MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
+            | 6.3.7 Environmental Statement - Photomontage Summer - Existing View Viewpoint 7 (PDF, 36MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
+            | 6.3.8 Environmental Statement - Photomontage Year 1 Summer Cover and Contents (PDF, 141KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement |
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 1 (PDF, 16MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 8 (PDF, 24MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
+            | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 3 (PDF, 9MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
+            | 6.3.9 Environmental Statement - Photomontage Summer- Year 5 Viewpoint 2 (PDF, 11MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
+            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 22 North (PDF, 7MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement |
+            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 7 (PDF, 11MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
+            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 4 (PDF, 8MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
+            | 6.4 Environmental Statement - Volume 4 Cover and Contents (PDF, 182KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                     |
+            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 9 (PDF, 9MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement        |
+            | 6.3.9 Environmental Statement - Photomontage Summer - Year 5 Viewpoint 22 South (PDF, 7MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement |
         And I click on "document type" section
 
     Scenario: search by text and filter by document type
@@ -367,7 +367,7 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                                                                    |
-            | Late Relevant Representation - Additional Submission - Accepted at the discretion of the Examining Authority - Objection to proposed Cleve Hill Solar Park (PDF, 45KB) Published by Removed 26 March 2019Pre-examinationAdditional Submissions |
+            | Late Relevant Representation - Additional Submission - Accepted at the discretion of the Examining Authority - Objection to proposed Cleve Hill Solar Park (PDF, 45KB) From Removed 26 March 2019Pre-examinationAdditional Submissions |
         And I click on "document type" section
 
     Scenario: filter by document type and search for text
@@ -380,7 +380,7 @@ Feature: Project Application documents page
         And I click on search button
         Then I can verify that below project documents were returned
             | Document                                                                                           |
-            | 2 Cover and Contents (PDF, 168KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Plans |
+            | 2 Cover and Contents (PDF, 168KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Plans |
         And I click on "document type" section
 
     Scenario: filter by project stage and document type
@@ -393,14 +393,14 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                               |
-            | 5.1.1b Consultation Report Appendices (PDF, 39MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
-            | 5.2 Report to Inform Appropriate Assessment (PDF, 32MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports             |
-            | 5.4 Grid Connection Statement (PDF, 173KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                          |
-            | 5.1 Consultation Report (PDF, 8MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                                  |
-            | 5.3 Statutory Nuisances Statement (PDF, 251KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                      |
-            | 5.1.1a Consultation Report Appendices (PDF, 35MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
-            | 5.2.1 Report to Inform Appropriate Assessment Appendices (PDF, 4MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
-            | 5.1.1c Consultation Report Appendices (PDF, 38MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
+            | 5.1.1b Consultation Report Appendices (PDF, 39MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
+            | 5.2 Report to Inform Appropriate Assessment (PDF, 32MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports             |
+            | 5.4 Grid Connection Statement (PDF, 173KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                          |
+            | 5.1 Consultation Report (PDF, 8MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                                  |
+            | 5.3 Statutory Nuisances Statement (PDF, 251KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                      |
+            | 5.1.1a Consultation Report Appendices (PDF, 35MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
+            | 5.2.1 Report to Inform Appropriate Assessment Appendices (PDF, 4MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | 5.1.1c Consultation Report Appendices (PDF, 38MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
         And I click on "project stage" section
         And I click on "document type" section
 
@@ -416,10 +416,10 @@ Feature: Project Application documents page
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                             |
-            | 5.1.1b Consultation Report Appendices (PDF, 39MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
-            | 5.1 Consultation Report (PDF, 8MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                |
-            | 5.1.1a Consultation Report Appendices (PDF, 35MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
-            | 5.1.1c Consultation Report Appendices (PDF, 38MB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | 5.1.1b Consultation Report Appendices (PDF, 39MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | 5.1 Consultation Report (PDF, 8MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                |
+            | 5.1.1a Consultation Report Appendices (PDF, 35MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | 5.1.1c Consultation Report Appendices (PDF, 38MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
         And I click on "project stage" section
         And I click on "document type" section
 
@@ -435,6 +435,6 @@ Feature: Project Application documents page
         And I click on search button
         Then I can verify that below project documents were returned
             | Document                                                                                                      |
-            | 5.4 Grid Connection Statement (PDF, 173KB) Published by NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | 5.4 Grid Connection Statement (PDF, 173KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
         And I click on "project stage" section
         And I click on "document type" section

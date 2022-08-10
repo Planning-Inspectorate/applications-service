@@ -25,6 +25,13 @@ describe('controllers/documents', () => {
 			type: 'test',
 			date_published: '',
 			path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC'
+		},
+		{
+			case_reference: 'ABCD1234',
+			Stage: 1,
+			type: 'Examination Library',
+			date_published: '',
+			path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/DEF'
 		}
 	];
 
@@ -51,13 +58,19 @@ describe('controllers/documents', () => {
 							Stage: 1,
 							type: 'test',
 							path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/ABC'
+						},
+						{
+							case_reference: 'ABCD1234',
+							Stage: 1,
+							type: 'Examination Library',
+							path: 'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/DEF'
 						}
 					],
 					filters: {
 						stageFilters: [],
 						typeFilters: []
 					},
-					totalItems: 1,
+					totalItems: 2,
 					itemsPerPage: 20,
 					totalPages: 1,
 					currentPage: 1
@@ -79,7 +92,7 @@ describe('controllers/documents', () => {
 		it('should call the correct template', async () => {
 			await aboutTheApplicationController.getApplicationDocuments(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
-				documents: docList,
+				documents: [docList[1], docList[0]],
 				projectName: 'St James Barton Giant Wind Turbine',
 				caseRef: 'ABCD1234',
 				hideProjectInformationLink,
@@ -95,8 +108,8 @@ describe('controllers/documents', () => {
 					currentPage: 1,
 					fromRange: 1,
 					itemsPerPage: 20,
-					toRange: 1,
-					totalItems: 1,
+					toRange: docList.length,
+					totalItems: docList.length,
 					totalPages: 1
 				}
 			});
