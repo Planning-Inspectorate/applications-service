@@ -24,7 +24,10 @@ const mockRes = () => ({
 	status: jest.fn()
 });
 
+const falsyValues = [0, false, [], {}, '', undefined, null];
+
 module.exports = {
 	mockReq,
-	mockRes
+	mockRes,
+	falsyValues
 };

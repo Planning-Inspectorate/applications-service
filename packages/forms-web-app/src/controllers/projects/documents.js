@@ -1,6 +1,7 @@
 const logger = require('../../lib/logger');
 const { formatDate } = require('../../utils/date-utils');
 const { Status: projectStageNames } = require('../../utils/status');
+const { removeFilterTypes } = require('../../utils/remove-filter-types');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
@@ -73,28 +74,13 @@ function renderData(
 	}
 
 	let otherTypeFiltersCount = 0;
-	const otherTypeMatchArray = [];
 
-	const newTypeFilters = typeFilters.filter(({ name: typeName, count }, index) => {
-		if (/other/i.test(typeName)) {
-			otherTypeMatchArray.push({ [index]: typeName });
-		}
-		let execCurrentArrayItem;
+	const { result: newTypeFilters, otherTypeFiltersCount: removedTypesCount } = removeFilterTypes(
+		typeFilters,
+		'other'
+	);
 
-		if (otherTypeMatchArray && otherTypeMatchArray.length > 0) {
-			execCurrentArrayItem = otherTypeMatchArray.find(
-				(otherType) => Object.keys(otherType)[0] === index.toString()
-			);
-		}
-
-		if (otherTypeMatchArray && otherTypeMatchArray.length > 0 && execCurrentArrayItem) {
-			const otherDocumentString = execCurrentArrayItem[index];
-			otherTypeFiltersCount += count;
-			return typeName !== otherDocumentString;
-		}
-
-		return typeName;
-	});
+	otherTypeFiltersCount += removedTypesCount;
 
 	newTypeFilters.slice(-(newTypeFilters.length - 4)).forEach(function (type) {
 		otherTypeFiltersCount += type.count;
