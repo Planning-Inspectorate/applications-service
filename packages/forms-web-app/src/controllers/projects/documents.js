@@ -48,6 +48,7 @@ function renderData(
 	const top5TypeFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
+	const numberOfFiltersToDisplay = 5;
 
 	stageFilters.forEach(function (stage) {
 		modifiedStageFilters.push({
@@ -82,12 +83,14 @@ function renderData(
 
 	otherTypeFiltersCount += removedTypesCount;
 
-	newTypeFilters.slice(-(newTypeFilters.length - 4)).forEach(function (type) {
-		otherTypeFiltersCount += type.count;
-	}, Object.create(null));
+	newTypeFilters
+		.slice(-(newTypeFilters.length - numberOfFiltersToDisplay))
+		.forEach(function (type) {
+			otherTypeFiltersCount += type.count;
+		}, Object.create(null));
 
 	newTypeFilters
-		.slice(0, 4)
+		.slice(0, numberOfFiltersToDisplay)
 		.sort(function (a, b) {
 			if (a.name < b.name) {
 				return -1;

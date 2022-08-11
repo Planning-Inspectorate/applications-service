@@ -2,7 +2,7 @@ const mapFilters = (filterArray, elementNameToFilter) => {
 	if (
 		!filterArray ||
 		!Array.isArray(filterArray) ||
-		filterArray.length <= 0 ||
+		filterArray.length === 0 ||
 		!elementNameToFilter ||
 		typeof elementNameToFilter !== 'string'
 	) {
