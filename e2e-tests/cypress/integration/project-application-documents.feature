@@ -247,7 +247,7 @@ Feature: Project Application documents page
         When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
-        Then I verify that the "document type" section expanded with 6 filters
+        Then I verify that the "document type" section expanded with 5 filters
         And I click on "document type" section
         Then all the filter stages should "not be visible" by default
 
@@ -256,10 +256,12 @@ Feature: Project Application documents page
         When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
-        And I select "Everything else (29)" checkbox
+        And I select "Everything else (39)" checkbox
         And I click on Apply button to apply filters
         Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
+            | Relevant Representation Exam Library (PDF, 410KB) 13 January 2020Pre-examinationOther Documents                                           |
+            | Removed (PDF, 284KB) 28 May 2019Pre-examinationOther Documents                                          |
             | 4.3 Book of Reference (PDF, 37KB) From Removed 24 April 2019Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                                           |
             | Rule 6 letter - Notification of the preliminary meeting and matters to be discussed (PDF, 282KB) 18 April 2019Pre-examinationProcedural Decisions          |
             | NULL (PDF, 149KB) From NULL on behalf of Rule 4 Appointment of Panel - 15 March 2019 18 March 2019Pre-examinationProcedural Decisions              |
@@ -272,14 +274,12 @@ Feature: Project Application documents page
             | Adequacy of Consultation Representation (PDF, 105KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
             | Adequacy of Consultation Representation (PDF, 34KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation  |
             | NULL (PDF, 242KB) From NULL on behalf of Section 55 Checklist 14 December 2018Acceptance(Reviewoftheapplication)Procedural Decisions                                          |
-            | 4.2 Funding Statement (PDF, 864KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                        |
+            | NULL (PDF,130KB) From NULL on behalf of Section 51 advice to the Applicant 14 December 2018Acceptance(Reviewoftheapplication) OtherDocuments                        |
+            | 7.7 Heritage Statement (PDF,249KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication) OtherDocuments                        |
             | 1.1.1 S55 Checklist (PDF, 429KB) From Section 55 Checklist 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                                 |
-            | 3.2 Explanatory Memorandum (PDF, 422KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Draft Development Consent Orders                     |
-            | 1.3 Guide to the Application (PDF, 285KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                   |
-            | 1.1 Application letter for Cleve Hill Solar Park (PDF, 580KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form               |
-            | 3.1.1 The Stationary Office Validation (PDF, 97KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Draft Development Consent Orders          |
-            | 1.2 Application Form (PDF, 148KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                           |
-            | 4.1 Statement of Reasons (PDF, 372KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                     |
+            | 7.3 Needs Statement (PDF,997KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication) OtherDocuments                     |
+            | 7.5 Consents and Licenses Required Under Other Legislation (PDF, 241KB) From NULL on behalf of Removed 23 November 2018Acceptance(Review of the application) Other Documents                                    |
+            | 7.1 Outline Design Principles (PDF, 3MB) From NULL on behalf of Removed 23 November 2018Acceptance(Review of the application) Other Documents               |
         And I click on "document type" section
 
     Scenario: filter by project stage
