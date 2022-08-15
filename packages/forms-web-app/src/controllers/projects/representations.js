@@ -41,10 +41,15 @@ exports.getRepresentations = async (req, res) => {
 		const { typeFilters } = filters;
 
 		typeFilters.forEach(function (typeFilter) {
+			const typeFilterNameLower = typeFilter.name ? typeFilter.name.toLowerCase() : '';
+			const typeFilterName = typeFilterNameLower
+				? typeFilterNameLower.charAt(0).toUpperCase() + typeFilterNameLower.slice(1)
+				: '';
+
 			commentsTypeFilterItems.push({
-				text: `${typeFilter.name} (${typeFilter.count})`,
-				value: typeFilter.name,
-				checked: type && type.includes(typeFilter.name)
+				text: `${typeFilterName} (${typeFilter.count})`,
+				value: typeFilterName,
+				checked: type && type.includes(typeFilterName)
 			});
 		}, Object.create(null));
 
