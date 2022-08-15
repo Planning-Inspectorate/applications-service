@@ -238,7 +238,7 @@ Feature: Project Application documents page
         When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "project stage" section
-        Then I verify that the "project stage" section expanded with 3 filters
+        Then I verify that the "project stage" section expanded with 6 filters
         And I click on "project stage" section
         Then all the filter stages should "not be visible" by default
 
@@ -387,7 +387,7 @@ Feature: Project Application documents page
         Given I navigate to "Cleve Hill Solar Park" project Overview page
         When I click on "Documents" link
         And I click on "project stage" section
-        And I select "Acceptance (Review of the application)" checkbox
+        And I select "Acceptance (review of the application)" checkbox
         And I click on "document type" section
         And I select "Reports (8)" checkbox
         And I click on Apply button to apply filters
@@ -410,7 +410,7 @@ Feature: Project Application documents page
         When I enter text "consult" into search field
         And I click on search button
         And I click on "project stage" section
-        And I select "Acceptance (Review of the application)" checkbox
+        And I select "Acceptance (review of the application)" checkbox
         And I click on "document type" section
         And I select "Reports (8)" checkbox
         And I click on Apply button to apply filters
@@ -427,7 +427,7 @@ Feature: Project Application documents page
         Given I navigate to "Cleve Hill Solar Park" project Overview page
         When I click on "Documents" link
         And I click on "project stage" section
-        And I select "Acceptance (Review of the application)" checkbox
+        And I select "Acceptance (review of the application)" checkbox
         And I click on "document type" section
         And I select "Reports (8)" checkbox
         And I click on Apply button to apply filters
