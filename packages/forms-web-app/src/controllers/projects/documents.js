@@ -1,6 +1,6 @@
 const logger = require('../../lib/logger');
 const { formatDate } = require('../../utils/date-utils');
-const { Status: projectStageNames } = require('../../utils/status');
+const { documentProjectStages } = require('../../utils/project-stages');
 const { removeFilterTypes } = require('../../utils/remove-filter-types');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
@@ -49,13 +49,39 @@ function renderData(
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
 
-	stageFilters.forEach(function (stage) {
-		modifiedStageFilters.push({
-			text: `${projectStageNames[stage.name]} (${stage.count})`,
-			value: stage.name,
-			checked: stageList.includes(stage.name)
+	const getProjectStageCount = (projectStage) => {
+		let projectStageCount = 0;
+		const projectStageNames = [];
+		let projectStageItems = [];
+
+		if (`${projectStage}` === '5') projectStageNames.push('5', '6');
+		else if (`${projectStage}` === '6') projectStageNames.push('7');
+		else projectStageNames.push(`${projectStage}`);
+
+		projectStageItems = stageFilters.filter((stageFilter) => {
+			return projectStageNames.includes(`${stageFilter.name}`);
 		});
-	}, Object.create(null));
+
+		if (projectStageItems.length > 0) {
+			projectStageCount = projectStageItems.reduce((count, projectStageItem) => {
+				return count + projectStageItem.count;
+			}, 0);
+		}
+
+		return projectStageCount;
+	};
+
+	Object.keys(documentProjectStages).forEach((projectStage) => {
+		const projectStageName = documentProjectStages[projectStage];
+		const projectStageCount = getProjectStageCount(projectStage);
+		const projectStageChecked = stageList.includes(projectStage);
+
+		modifiedStageFilters.push({
+			checked: projectStageChecked,
+			text: `${projectStageName} (${projectStageCount})`,
+			value: projectStage
+		});
+	});
 
 	documents.forEach(function (document, index) {
 		if (!documentExaminationLibraryIndex) {
