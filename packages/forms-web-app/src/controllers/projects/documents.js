@@ -1,4 +1,3 @@
-const logger = require('../../lib/logger');
 const { formatDate } = require('../../utils/date-utils');
 const { documentProjectStages } = require('../../utils/project-stages');
 const { removeFilterTypes } = require('../../utils/remove-filter-types');
@@ -16,12 +15,15 @@ const {
 	hideExaminationTimetableLink
 } = featureHideLink;
 
+const documentExaminationLibraryId = 'examination library';
+
 function renderData(
 	req,
 	res,
 	searchTerm,
 	params,
 	response,
+	examinationLibraryResponse,
 	projectName,
 	stageList = [],
 	typeList = []
@@ -41,13 +43,55 @@ function renderData(
 	const respData = response.data;
 	const { documents, filters } = respData;
 	const { stageFilters, typeFilters } = filters;
-	logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
 	const modifiedStageFilters = [];
 	const top5TypeFilters = [];
-	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
+
+	if (documents.length && examinationLibraryResponse) {
+		for (let i = 0; i < documents.length; i++) {
+			const document = documents[i];
+			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
+			if (documentType === documentExaminationLibraryId) {
+				documentExaminationLibraryIndex = i;
+				break;
+			}
+		}
+
+		if (documentExaminationLibraryIndex !== null) {
+			const documentElement = documents.splice(documentExaminationLibraryIndex, 1)[0];
+			documents.splice(0, 0, documentElement);
+		} else {
+			const examinationLibraryDocuments = response?.data?.documents;
+
+			if (
+				examinationLibraryDocuments &&
+				Array.isArray(examinationLibraryDocuments) &&
+				examinationLibraryDocuments.length
+			) {
+				const findExaminationLibraryDocumentType = examinationLibraryDocuments.find(
+					(examinationLibraryDocument) => {
+						const examinationLibraryDocumentType =
+							typeof examinationLibraryDocument.type === 'string'
+								? examinationLibraryDocument.type.toLowerCase()
+								: '';
+						return examinationLibraryDocumentType === documentExaminationLibraryId;
+					}
+				);
+
+				if (findExaminationLibraryDocumentType) {
+					documents.unshift(findExaminationLibraryDocumentType);
+				}
+			}
+		}
+	}
+
+	if (documents.length) {
+		documents.forEach(
+			(document) => (document.date_published = formatDate(document.date_published))
+		);
+	}
 
 	const getProjectStageCount = (projectStage) => {
 		let projectStageCount = 0;
@@ -82,22 +126,6 @@ function renderData(
 			value: projectStage
 		});
 	});
-
-	documents.forEach(function (document, index) {
-		if (!documentExaminationLibraryIndex) {
-			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
-			if (documentType === documentExaminationLibraryId) {
-				documentExaminationLibraryIndex = index;
-			}
-		}
-
-		document.date_published = formatDate(document.date_published);
-	}, Object.create(null));
-
-	if (documentExaminationLibraryIndex) {
-		const documentElement = documents.splice(documentExaminationLibraryIndex, 1)[0];
-		documents.splice(0, 0, documentElement);
-	}
 
 	let otherTypeFiltersCount = 0;
 
@@ -173,8 +201,27 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const { searchTerm, stage, type } = req.query;
 
+		let examinationLibraryResponse = null;
+
+		if (params.page === '1' && !searchTerm) {
+			examinationLibraryResponse = await searchDocumentsV2({
+				...params,
+				searchTerm: documentExaminationLibraryId
+			});
+		}
+
 		const response = await searchDocumentsV2(params);
 
-		renderData(req, res, searchTerm, params, response, projectName, stage, type);
+		renderData(
+			req,
+			res,
+			searchTerm,
+			params,
+			response,
+			examinationLibraryResponse,
+			projectName,
+			stage,
+			type
+		);
 	}
 };
