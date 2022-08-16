@@ -55,7 +55,7 @@
 
         <ul class="govuk-list govuk-list--bullet">
           <li>
-            used by the Examining Authority to decide if they recommend the project goes ahead
+            seen by the Examining Authority
           </li>
 
           <li>
@@ -68,12 +68,12 @@
         </p>
 
         {{ govukTextarea({
-          id: "comment",
           label: {
             text: "Registration comments",
             classes: "govuk-label--s",
             isPageHeading: true
           },
+          id: "comment",
           name: "comment",
           value: comment or errors['comment'].value,
           attributes: {"data-cy": "comment", maxLength: "130468"},
@@ -123,7 +123,7 @@
             classes: "govuk-button--secondary",
             name: "mode",
             value: "draft"
-        }) }}
+          }) }}
         {% endif %}
       </form>
     </div>
