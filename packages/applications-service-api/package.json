@@ -11,6 +11,7 @@
 		"lint:fix": "eslint ./ --fix",
 		"start": "node ./",
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
+		"start:dev:debug": "nodemon -e .js,.json,.yml,.yaml --inspect ./ | pino-pretty -tlc",
 		"test": "jest",
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"

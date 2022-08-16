@@ -51,7 +51,7 @@ module.exports = {
 	},
 
 	async getV2Documents(req, res) {
-		const { caseRef, page = 1, searchTerm, stage, classification, type } = req.query;
+		const { caseRef, page = 1, searchTerm, stage, classification, type, category } = req.query;
 
 		if (!caseRef) {
 			throw ApiError.badRequest('Required query parameter caseRef missing');
@@ -59,27 +59,19 @@ module.exports = {
 
 		const stageFiltersAvailable = await getFilters('Stage', caseRef, classification);
 		const typeFiltersAvailable = await getFilters('filter_1', caseRef, classification);
+		const categoryFiltersAvailable = await getFilters('category', caseRef, classification);
 
 		let typeFilters = [];
-
 		if (type) {
 			typeFilters = type instanceof Array ? [...type] : type.split(',');
 
-			if (typeFilters.includes('everything_else')) {
-				if (typeFiltersAvailable && typeFiltersAvailable.length > 4) {
-					const { result, otherTypesToAdd } = mapFilters(typeFiltersAvailable, 'other');
-					const validResult = result && otherTypesToAdd && result.length > 0;
+			// const numberOfFiltersToDisplay = 5;
+			// everything else
+		}
 
-					let everythingElseFilterValues = validResult ? result.slice(4) : [];
-
-					if (otherTypesToAdd.length > 0) {
-						everythingElseFilterValues = everythingElseFilterValues.concat(otherTypesToAdd);
-					}
-
-					typeFilters = typeFilters.filter((e) => e !== 'everything_else');
-					typeFilters.push(everythingElseFilterValues);
-				}
-			}
+		let categoryFilters = [];
+		if (category) {
+			categoryFilters = category instanceof Array ? [...category] : category.split(',');
 		}
 
 		try {
@@ -89,7 +81,8 @@ module.exports = {
 				page,
 				searchTerm,
 				stage && !(stage instanceof Array) ? [stage] : stage,
-				typeFilters
+				typeFilters,
+				categoryFilters
 			);
 
 			const { itemsPerPage, documentsHost } = config;
@@ -107,16 +100,26 @@ module.exports = {
 				currentPage: page,
 				filters: {
 					stageFilters: stageFiltersAvailable
-						? stageFiltersAvailable.map((f) => ({
-								name: f.dataValues.Stage,
-								count: f.dataValues.count
-						  }))
+						? stageFiltersAvailable
+								.map((f) => ({
+									name: f.dataValues.Stage ?? '',
+									count: f.dataValues.count ?? 0
+								}))
+								.filter(({ name, count }) => name && count)
 						: [],
 					typeFilters: typeFiltersAvailable
-						? typeFiltersAvailable.map((f) => ({
-								name: f.dataValues.filter_1,
-								count: f.dataValues.count
-						  }))
+						? typeFiltersAvailable
+								.map((f) => ({
+									name: f.dataValues.filter_1 ?? '',
+									count: f.dataValues.count ?? 0
+								}))
+								.filter(({ name, count }) => name && count)
+						: [],
+					categoryFilters: categoryFiltersAvailable ?
+						categoryFiltersAvailable.map((f) => ({
+							name: f.dataValues.category ?? '',
+							count: f.dataValues.count ?? 0
+						})).filter(({ name, count }) => name && count)
 						: []
 				}
 			};
@@ -126,9 +129,10 @@ module.exports = {
 		} catch (e) {
 			if (e instanceof ApiError) {
 				logger.debug(e.message);
+				console.error(e);
 				res.status(e.code).send({ code: e.code, errors: e.message.errors });
-				return;
 			}
+			console.error(e);
 			logger.error(e.message);
 			res.status(500).send(`Problem getting documents for project ${caseRef} \n ${e}`);
 		}

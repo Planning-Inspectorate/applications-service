@@ -33,13 +33,19 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 	const { itemsPerPage: limit } = config;
 	const offset = (pageNo - 1) * limit;
 
-	// SELECT * FROM ipclive.wp_ipc_documents_api where case_reference like 'caseRef' AND Stage IN (1, 2, 3)
-	// AND (desc like %searchTerm% OR path like %searchTerm% OR filter_1 like %searchTerm% or filter_2 like %searchTerm%)
-	// AND filter[0] AND filter[1] ... AND filter[n];
-
-	let where = { case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } };
+	let where = {
+		case_reference: caseRef,
+		Stage: { [Op.in]: [1, 2, 3] }
+	};
 	if (searchTerm) {
-		where = { [Op.and]: [{ case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } }] };
+		where = {
+			[Op.and]: [
+				{
+					case_reference: caseRef,
+					Stage: { [Op.in]: [1, 2, 3] }
+				}
+			]
+		};
 		where[Op.and].push({
 			[Op.or]: [
 				{
@@ -61,6 +67,11 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 					filter_2: {
 						[Op.like]: `%${searchTerm}%`
 					}
+				},
+				{
+					category: {
+						[Op.like]: `%${searchTerm}%`
+					}
 				}
 			]
 		});
@@ -74,7 +85,7 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 	return documents;
 };
 
-const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, type) => {
+const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, typeFilters, categoryFilters) => {
 	const { itemsPerPage: limit } = config;
 	const offset = (pageNo - 1) * limit;
 
@@ -117,10 +128,24 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
 		});
 	}
 
-	if (type && type.length > 0) {
-		where[Op.and].push({
-			filter_1: type
+	let filters = [];
+	if (categoryFilters && categoryFilters.length > 0) {
+		categoryFilters.forEach((categoryFilter) => {
+			filters.push({
+				category: categoryFilter
+			});
 		});
+	}
+	if (typeFilters && typeFilters.length > 0) {
+		typeFilters.forEach((typeFilter) => {
+			filters.push({
+				type: typeFilter
+			});
+		});
+	}
+
+	if (filters.length > 0) {
+		where[Op.and].push({[Op.or]: filters});
 	}
 
 	const documents = await db.Document.findAndCountAll({
@@ -129,6 +154,7 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
 		order: [['date_published', 'DESC']],
 		limit
 	});
+
 	return documents;
 };
 
@@ -137,11 +163,27 @@ const getFilters = async (filter, caseRef, classification) => {
 	addStageClause(where, classification);
 
 	let order = [];
+
 	if (filter === 'Stage') {
 		order = [['Stage']];
-	} else if (filter === 'filter_1') {
+	}
+
+	if (filter === 'filter_1') {
 		order = [db.sequelize.literal('count DESC')];
 	}
+
+	if (filter === 'category') {
+		order = [db.sequelize.literal('count DESC')];
+		where[Op.and].push({
+			category: {
+				[Op.and]: [
+					{[Op.ne]: null},
+					{[Op.notIn]: ['', 'NULL']}
+				]
+			}
+		});
+	}
+
 	const filters = await db.Document.findAll({
 		where,
 		order,

@@ -43,12 +43,13 @@ services:
       TRIALIST_DATA_PATH: /opt/app/packages/applications-service-api/data/trialists.json
     ports:
       - 3000:3000
+      - 9229:9229
     working_dir: /opt/app
     volumes:
       - ./package.json:/opt/app/package.json
       - ./node_modules:/opt/app/node_modules
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
-    command: npm run start:dev --workspace=packages/applications-service-api
+    command: npm run start:dev:debug --workspace=packages/applications-service-api
 
   applications-web-app:
     image: node:16-alpine

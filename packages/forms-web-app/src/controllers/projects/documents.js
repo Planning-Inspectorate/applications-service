@@ -7,7 +7,6 @@ const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 const { featureHideLink } = require('../../config');
-const { replaceControllerParamType } = require('../../utils/replace-controller-param-type');
 
 const {
 	hideProjectInformationLink,
@@ -24,7 +23,8 @@ function renderData(
 	response,
 	projectName,
 	stageList = [],
-	typeList = []
+	typeList = [],
+	categoryList = []
 ) {
 	let queryUrl = '';
 	if (params.searchTerm) {
@@ -40,23 +40,37 @@ function renderData(
 	}
 	const respData = response.data;
 	const { documents, filters } = respData;
-	const { stageFilters, typeFilters } = filters;
-	logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
+	const { stageFilters, typeFilters, categoryFilters } = filters;
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
-	const modifiedStageFilters = [];
-	const top5TypeFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
-	const numberOfFiltersToDisplay = 5;
 
-	stageFilters.forEach(function (stage) {
-		modifiedStageFilters.push({
+	const modifiedStageFilters = stageFilters.map((stage) => {
+		return {
 			text: `${projectStageNames[stage.name]} (${stage.count})`,
 			value: stage.name,
 			checked: stageList.includes(stage.name)
-		});
-	}, Object.create(null));
+		};
+	});
+
+	const modifiedCategoryFilters = categoryFilters.map((categoryFilter) => {
+		let text;
+		if (categoryFilter.name === "Developer's Application") {
+			text = `Application Documents (${categoryFilter.count})`;
+		} else {
+			text = `${categoryFilter.name} (${categoryFilter.count})`
+		}
+		return {
+			text: text,
+			value: categoryFilter.name,
+			checked: categoryList.includes(categoryFilter.name)
+		}
+	});
+
+	console.log("categoryFilters", categoryFilters);
+	console.log("categoryList", categoryList);
+	console.log("modifiedCategoryFilters", modifiedCategoryFilters);
 
 	documents.forEach(function (document, index) {
 		if (!documentExaminationLibraryIndex) {
@@ -74,44 +88,13 @@ function renderData(
 		documents.splice(0, 0, documentElement);
 	}
 
-	let otherTypeFiltersCount = 0;
-
-	const { result: newTypeFilters, otherTypeFiltersCount: removedTypesCount } = removeFilterTypes(
-		typeFilters,
-		'other'
-	);
-
-	otherTypeFiltersCount += removedTypesCount;
-
-	newTypeFilters
-		.slice(-(newTypeFilters.length - numberOfFiltersToDisplay))
-		.forEach(function (type) {
-			otherTypeFiltersCount += type.count;
-		}, Object.create(null));
-
-	newTypeFilters
-		.slice(0, numberOfFiltersToDisplay)
-		.sort(function (a, b) {
-			if (a.name < b.name) {
-				return -1;
-			}
-			return 0;
-		})
-		.forEach(function (type) {
-			top5TypeFilters.push({
-				text: `${type.name} (${type.count})`,
-				value: type.name,
-				checked: typeList.includes(type.name)
-			});
-		}, Object.create(null));
-
-	if (newTypeFilters.length > 4) {
-		top5TypeFilters.push({
-			text: `Everything else (${otherTypeFiltersCount})`,
-			value: 'everything_else',
-			checked: typeList.includes('everything_else')
-		});
-	}
+	const modifiedTypeFilters = typeFilters.map((typeFilter) => {
+		return {
+			text: `${typeFilter.name} (${typeFilter.count})`,
+			value: typeFilter.name,
+			checked: typeList.includes(typeFilter.name)
+		};
+	});
 
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
 		documents,
@@ -126,7 +109,8 @@ function renderData(
 		searchTerm: params.searchTerm,
 		queryUrl,
 		modifiedStageFilters,
-		top5TypeFilters
+		modifiedTypeFilters,
+		modifiedCategoryFilters
 	});
 }
 
@@ -142,16 +126,22 @@ exports.getApplicationDocuments = async (req, res) => {
 			...req.query
 		};
 
-		const newParamsType = replaceControllerParamType(params?.type, 'other', 'everything_else');
-
-		if (newParamsType) {
-			params.type = newParamsType;
-		}
-
-		const { searchTerm, stage, type } = req.query;
-
 		const response = await searchDocumentsV2(params);
 
-		renderData(req, res, searchTerm, params, response, projectName, stage, type);
+		const { searchTerm, stage, type, category } = req.query;
+
+		renderData(
+			req,
+			res,
+			searchTerm,
+			params,
+			response,
+			projectName,
+			stage,
+			normaliseQueryParam(type),
+			normaliseQueryParam(category)
+		);
 	}
 };
+
+const normaliseQueryParam = (param) => typeof param === "string" ? [param] : param;
