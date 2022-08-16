@@ -51,7 +51,7 @@ describe('controllers/projects/representations', () => {
 			IndvdlOnBhalfName: null,
 			OrgOnBhalfName: null,
 			AgentOrgOnBhalfContactName: null,
-			RepFrom: 'Members of the Public/Businesses',
+			RepFrom: 'Members of the public/businesses',
 			InterestInLand: null,
 			SpecifyOther: null,
 			CompulsoryAcquisitionHearing: null,
@@ -139,7 +139,7 @@ describe('controllers/projects/representations', () => {
 			hideAllExaminationDocumentsLink,
 			hideRecommendationAndDecisionLink,
 			hideExaminationTimetableLink,
-			RepFrom: 'Members of the Public/Businesses',
+			RepFrom: 'Members of the public/businesses',
 			RepresentationRedacted: 'Some comments',
 			DateRrepReceived: '19 February 2020',
 			attachments: []

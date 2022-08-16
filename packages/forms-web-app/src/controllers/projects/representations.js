@@ -1,6 +1,7 @@
 const { VIEW } = require('../../lib/views');
 const { getAppData } = require('../../services/application.service');
 const { formatDate } = require('../../utils/date-utils');
+const { titleCase } = require('../../utils/string-case');
 const { searchRepresentations } = require('../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { getRepresentation } = require('../../services/representation.service');
@@ -40,17 +41,19 @@ exports.getRepresentations = async (req, res) => {
 		const pageOptions = calculatePageOptions(paginationData);
 		const { typeFilters } = filters;
 
-		typeFilters.forEach(function (typeFilter) {
+		typeFilters.forEach((typeFilter) => {
+			const typeFilterName = titleCase(typeFilter.name);
 			commentsTypeFilterItems.push({
-				text: `${typeFilter.name} (${typeFilter.count})`,
-				value: typeFilter.name,
-				checked: type && type.includes(typeFilter.name)
+				text: `${typeFilterName} (${typeFilter.count})`,
+				value: typeFilterName,
+				checked: type && type.includes(typeFilterName)
 			});
-		}, Object.create(null));
+		});
 
-		representations.forEach(function (repesentation) {
+		representations.forEach((repesentation) => {
 			repesentation.DateRrepReceived = formatDate(repesentation.DateRrepReceived.split('T')[0]);
-		}, Object.create(null));
+			repesentation.RepFrom = titleCase(repesentation.RepFrom);
+		});
 
 		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
 			projectName: applicationResponse.data.ProjectName,
@@ -81,7 +84,7 @@ exports.getRepresentation = async (req, res) => {
 			hideAllExaminationDocumentsLink,
 			hideRecommendationAndDecisionLink,
 			hideExaminationTimetableLink,
-			RepFrom: representation.data.RepFrom,
+			RepFrom: titleCase(representation.data.RepFrom),
 			RepresentationRedacted: representation.data.RepresentationRedacted,
 			DateRrepReceived: representation.data.DateRrepReceived,
 			attachments: representation.data.attachments
