@@ -61,6 +61,11 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 					filter_2: {
 						[Op.like]: `%${searchTerm}%`
 					}
+				},
+				{
+					category: {
+						[Op.like]: `%${searchTerm}%`
+					}
 				}
 			]
 		});
@@ -75,6 +80,7 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 };
 
 const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, type) => {
+	console.log({ typos: type });
 	const { itemsPerPage: limit } = config;
 	const offset = (pageNo - 1) * limit;
 
@@ -117,11 +123,90 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
 		});
 	}
 
-	if (type && type.length > 0) {
+	if (type && type.length > 1) {
+		const typesWithoutApplicationDocument = [];
+		let foundApplicationDocument = false;
+
+		for (const typeName of type) {
+			if (typeName === "Developer's Application") {
+				foundApplicationDocument = true;
+			}
+
+			if (typeName !== "Developer's Application") {
+				typesWithoutApplicationDocument.push(typeName);
+			}
+		}
+
 		where[Op.and].push({
-			filter_1: type
+			filter_1: typesWithoutApplicationDocument
 		});
+
+		// if (foundApplicationDocument && typesWithoutApplicationDocument.length === 0) {
+		// 	const [results, metadata] = await db.sequelize.query(
+		// 		"SELECT `category`, COUNT(`category`) AS `count` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3)) GROUP BY `category` ORDER BY count DESC"
+		// 	);
+
+		// 	console.log({ metadata, results: results.length });
+
+		// 	const [results2, metadata2] = await db.sequelize.query(
+		// 		"SELECT `id`, `dataID`, `case_reference`, `Stage`, `type`, `filter_1`, `filter_2`, `category`, `description`, `size`, `mime`, `path`, `status`, `date_published`, `deadline_date`, `personal_name`, `representative`, `who_from`, `doc_reference`, `author`, `details`, `last_modified`, `date_created` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3)) ORDER BY `Document`.`date_published` DESC LIMIT 0, 20"
+		// 	);
+
+		// 	console.log({ metadata2, results2: results2.length });
+
+		// 	console.warn('foundApplicationDocument && typesWithoutApplicationDocument.length === 0', {
+		// 		typesWithoutApplicationDocument
+		// 	});
+
+		// 	where[Op.and].push({
+		// 		category: { [Op.like]: `%Developer's Application%` }
+		// 	});
+		// }
+
+		// if (!foundApplicationDocument && typesWithoutApplicationDocument.length > 0) {
+		// 	console.warn('!foundApplicationDocument && typesWithoutApplicationDocument.length > 0', {
+		// 		type
+		// 	});
+
+		// 	where[Op.and].push({
+		// 		filter_1: typesWithoutApplicationDocument
+		// 	});
+		// }
+
+		// if (foundApplicationDocument && typesWithoutApplicationDocument.length > 0) {
+		// 	console.warn('foundApplicationDocument && typesWithoutApplicationDocument.length > 0', {
+		// 		type
+		// 	});
+
+		// 	where[Op.and].push({
+		// 		filter_1: typesWithoutApplicationDocument,
+		// 		category: { [Op.like]: `%Developer's Application%` }
+		// 	});
+		// }
+
+		// if (singleItemAndApplicationDocument) {
+		// 	console.warn('singleItemAndApplicationDocument', { type });
+		// 	where[Op.and].push({
+		// 		[Op.or]: [
+		// 			{
+		// 				filter_1: { [Op.like]: `%${typesWithoutApplicationDocument}%` }
+		// 			},
+		// 			{
+		// 				category: { [Op.like]: `%Developer's Application%` }
+		// 			}
+		// 		]
+		// 	});
+		// }
 	}
+
+	const [...getArr] = where[Op.and];
+	getArr.forEach((obj) => {
+		Object.entries(obj).forEach(([key, value]) =>
+			console.warn('Logging filter object', { key: JSON.parse(JSON.stringify(value)) })
+		);
+	});
+
+	console.warn({ theFilterIs: where[Op.and] });
 
 	const documents = await db.Document.findAndCountAll({
 		where,
@@ -129,6 +214,17 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
 		order: [['date_published', 'DESC']],
 		limit
 	});
+
+	const x = Object.entries(documents)
+		.filter((r, i) => i < 5)
+		.map((rows) => rows[1][1]);
+
+	console.log({ documentResult: JSON.parse(JSON.stringify(x)) });
+
+	// const [results, metadata] = await db.sequelize.query(
+	// 	"SELECT `category`, COUNT(`category`) AS `count` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3)) GROUP BY `category` ORDER BY count DESC"
+	// );
+
 	return documents;
 };
 
@@ -137,11 +233,19 @@ const getFilters = async (filter, caseRef, classification) => {
 	addStageClause(where, classification);
 
 	let order = [];
+
 	if (filter === 'Stage') {
 		order = [['Stage']];
-	} else if (filter === 'filter_1') {
+	}
+
+	if (filter === 'filter_1') {
 		order = [db.sequelize.literal('count DESC')];
 	}
+
+	if (filter === 'category') {
+		order = [db.sequelize.literal('count DESC')];
+	}
+
 	const filters = await db.Document.findAll({
 		where,
 		order,
