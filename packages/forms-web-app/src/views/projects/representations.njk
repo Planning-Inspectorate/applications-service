@@ -80,21 +80,23 @@
 {% block columnThree %}
   {% if representations.length != 0 %}
     <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
-      {{ govukCheckboxes({
-        idPrefix: "type",
-        classes: "govuk-checkboxes--small",
-        name: "type",
-        fieldset: {
-          legend: {
-            text: "Filter by",
-            isPageHeading: true,
-            classes: "govuk-fieldset__legend--l"
-          }
-        },
-        items: commentsTypeFilterItems
-      }) }}
+      <div class="StyleCanvasBackground">
+        {{ govukCheckboxes({
+          idPrefix: "type",
+          classes: "govuk-checkboxes--small",
+          name: "type",
+          fieldset: {
+            legend: {
+              text: "Filter by",
+              isPageHeading: false,
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: commentsTypeFilterItems
+        }) }}
 
-      <button class="govuk-button" data-cy="apply-filter-button">Apply</button>
+        <button class="govuk-button" data-cy="apply-filter-button">Apply</button>
+      </div>
     </div>
   {% endif %}
 {% endblock %}
