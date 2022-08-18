@@ -1,10 +1,28 @@
 const documentProjectStages = {
-	1: 'Pre-application',
-	2: 'Acceptance (review of the application)',
-	3: 'Pre-examination',
-	4: 'Examination',
-	5: 'Recommendation and decision',
-	6: 'Decided'
+	1: {
+		name: 'Pre-application',
+		value: '1'
+	},
+	2: {
+		name: 'Acceptance (review of the application)',
+		value: '2'
+	},
+	3: {
+		name: 'Pre-examination',
+		value: '3'
+	},
+	4: {
+		name: 'Examination',
+		value: '4'
+	},
+	5: {
+		name: 'Recommendation and decision',
+		value: '5'
+	},
+	6: {
+		name: 'Decided',
+		value: '7'
+	}
 };
 
 const projectStages = {
