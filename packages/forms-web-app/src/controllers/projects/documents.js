@@ -93,37 +93,24 @@ function renderData(
 		);
 	}
 
-	const getProjectStageCount = (projectStage) => {
-		let projectStageCount = 0;
-		const projectStageNames = [];
-		let projectStageItems = [];
-
-		if (`${projectStage}` === '5') projectStageNames.push('5', '6');
-		else if (`${projectStage}` === '6') projectStageNames.push('7');
-		else projectStageNames.push(`${projectStage}`);
-
-		projectStageItems = stageFilters.filter((stageFilter) => {
-			return projectStageNames.includes(`${stageFilter.name}`);
+	const getProjectStageCount = (projectStageValue) => {
+		const projectStageItem = stageFilters.find((stageFilter) => {
+			return `${stageFilter.name}` === `${projectStageValue}`;
 		});
 
-		if (projectStageItems.length > 0) {
-			projectStageCount = projectStageItems.reduce((count, projectStageItem) => {
-				return count + projectStageItem.count;
-			}, 0);
-		}
-
-		return projectStageCount;
+		return projectStageItem?.count || 0;
 	};
 
 	Object.keys(documentProjectStages).forEach((projectStage) => {
-		const projectStageName = documentProjectStages[projectStage];
-		const projectStageCount = getProjectStageCount(projectStage);
-		const projectStageChecked = stageList.includes(projectStage);
+		const projectStageName = documentProjectStages[projectStage].name;
+		const projectStageValue = documentProjectStages[projectStage].value;
+		const projectStageCount = getProjectStageCount(projectStageValue);
+		const projectStageChecked = stageList.includes(projectStageValue);
 
 		modifiedStageFilters.push({
 			checked: projectStageChecked,
 			text: `${projectStageName} (${projectStageCount})`,
-			value: projectStage
+			value: projectStageValue
 		});
 	});
 
@@ -188,7 +175,7 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const params = {
 			caseRef: req.params.case_ref,
-			classification: 'application',
+			classification: 'all',
 			page: '1',
 			...req.query
 		};

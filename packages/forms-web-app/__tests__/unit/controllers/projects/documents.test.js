@@ -41,7 +41,7 @@ const modifiedStageFilters = [
 	{
 		checked: false,
 		text: 'Decided (0)',
-		value: '6'
+		value: '7'
 	}
 ];
 
