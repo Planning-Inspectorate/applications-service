@@ -159,9 +159,20 @@ exports.getApplicationDocuments = async (req, res) => {
 		const paramsTypeOf = typeof paramsType;
 		const applicationDocument = 'Application Document';
 		const developersApplication = "Developer's Application";
+		const categoryList = [];
 
 		if (paramsType && Array.isArray(paramsType)) {
-			paramsType = paramsType.filter((type) => type !== applicationDocument);
+			const newParamsType = [];
+
+			for (const paramType of paramsType) {
+				if (paramType === applicationDocument) {
+					categoryList.push(developersApplication);
+				} else {
+					newParamsType.push(paramType);
+				}
+			}
+
+			paramsType = newParamsType;
 
 			paramsType.push(developersApplication);
 		}
@@ -169,6 +180,7 @@ exports.getApplicationDocuments = async (req, res) => {
 		if (paramsType && paramsTypeOf === 'string') {
 			if (paramsType === applicationDocument) {
 				paramsType = [developersApplication];
+				categoryList.push(developersApplication);
 			} else {
 				paramsType = [paramsType, developersApplication];
 			}
@@ -186,10 +198,12 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		params.type = paramsType;
 
-		const { searchTerm, stage, type } = req.query;
-
 		const response = await searchDocumentsV2(params);
 
-		renderData(req, res, searchTerm, params, response, projectName, stage, type);
+		const { searchTerm, stage, type } = req.query;
+
+		const typeList = type ? type.filter((t) => t !== applicationDocument) : [];
+
+		renderData(req, res, searchTerm, params, response, projectName, stage, typeList, categoryList);
 	}
 };

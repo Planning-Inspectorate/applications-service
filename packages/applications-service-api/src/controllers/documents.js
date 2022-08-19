@@ -121,7 +121,7 @@ module.exports = {
 		// result && typeFiltersAvailable.unshift(result);
 		// }
 
-		let typeFilters = ["Developer's Application"];
+		let typeFilters = [];
 
 		if (type) {
 			typeFilters = type instanceof Array ? [...type] : type.split(',');
@@ -147,6 +147,8 @@ module.exports = {
 				}
 			}
 		}
+
+		console.log('before it become typos', typeFilters);
 
 		try {
 			const documents = await getOrderedDocuments(
