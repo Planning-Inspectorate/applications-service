@@ -161,6 +161,12 @@ exports.getApplicationDocuments = async (req, res) => {
 		const developersApplication = "Developer's Application";
 		const categoryList = [];
 
+		const newParamsType = replaceControllerParamType(paramsType, 'other', 'everything_else');
+
+		if (newParamsType) {
+			paramsType = newParamsType;
+		}
+
 		if (paramsType && Array.isArray(paramsType)) {
 			const newParamsType = [];
 
@@ -189,11 +195,9 @@ exports.getApplicationDocuments = async (req, res) => {
 			}
 		}
 
-		const newParamsType = replaceControllerParamType(paramsType, 'other', 'everything_else');
+		console.log({ paramsTyps: paramsType });
 
-		if (newParamsType) {
-			paramsType = newParamsType;
-		}
+		console.log({ newParamsTypenewParamsType: newParamsType });
 
 		params.type = paramsType;
 
@@ -218,8 +222,6 @@ exports.getApplicationDocuments = async (req, res) => {
 				}
 			}
 		};
-
-		console.log({ paramsTyps: params?.type, typeListtypeList: typeList() });
 
 		renderData(
 			req,
