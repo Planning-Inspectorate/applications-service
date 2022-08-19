@@ -199,7 +199,7 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		console.log({ newParamsTypenewParamsType: newParamsType });
 
-		params.type = paramsType;
+		params.type = paramsType ? paramsType : [];
 
 		const response = await searchDocumentsV2(params);
 
