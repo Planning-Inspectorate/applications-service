@@ -14,27 +14,15 @@ const replaceControllerParamType = (paramsType, expectedParam, newParamType) => 
 		return newParamType;
 	}
 
-	const matchResults = [];
-	const result = [];
-
 	if (Array.isArray(paramsType)) {
-		for (const typeName of paramsType) {
-			if (regex.test(typeName)) {
-				matchResults.push(typeName);
-			} else {
-				result.push(typeName);
-			}
-		}
+		const result = [];
 
-		if (!result.includes(newParamType)) {
-			result.push(newParamType);
-		}
+		paramsType.forEach((typeName) => {
+			if (regex.test(typeName)) result.push(newParamType);
+			else result.push(typeName);
+		});
 
-		if (matchResults.length > 0) {
-			return result;
-		}
-
-		return result;
+		return [...new Set(result)];
 	}
 };
 
