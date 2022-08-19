@@ -24,7 +24,8 @@ function renderData(
 	response,
 	projectName,
 	stageList = [],
-	typeList = []
+	typeList = [],
+	categoryList = []
 ) {
 	let queryUrl = '';
 	if (params.searchTerm) {
@@ -40,12 +41,13 @@ function renderData(
 	}
 	const respData = response.data;
 	const { documents, filters } = respData;
-	const { stageFilters, typeFilters } = filters;
+	const { stageFilters, typeFilters, categoryFilters } = filters;
 	logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
 	const modifiedStageFilters = [];
-	const top5TypeFilters = [];
+	const modifiedCategoryFilters = [];
+	const top6TypeFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
 	const numberOfFiltersToDisplay = 5;
@@ -55,6 +57,14 @@ function renderData(
 			text: `${projectStageNames[stage.name]} (${stage.count})`,
 			value: stage.name,
 			checked: stageList.includes(stage.name)
+		});
+	}, Object.create(null));
+
+	categoryFilters.forEach(({ category: categoryName, count }) => {
+		modifiedCategoryFilters.push({
+			text: `${categoryName} (${count})`,
+			value: categoryName,
+			checked: categoryList.includes(categoryName)
 		});
 	}, Object.create(null));
 
@@ -98,7 +108,7 @@ function renderData(
 			return 0;
 		})
 		.forEach(function (type) {
-			top5TypeFilters.push({
+			top6TypeFilters.push({
 				text: `${type.name} (${type.count})`,
 				value: type.name,
 				checked: typeList.includes(type.name)
@@ -106,12 +116,14 @@ function renderData(
 		}, Object.create(null));
 
 	if (newTypeFilters.length > 4) {
-		top5TypeFilters.push({
+		top6TypeFilters.push({
 			text: `Everything else (${otherTypeFiltersCount})`,
 			value: 'everything_else',
 			checked: typeList.includes('everything_else')
 		});
 	}
+
+	top6TypeFilters.unshift(modifiedCategoryFilters[0]);
 
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
 		documents,
@@ -126,7 +138,7 @@ function renderData(
 		searchTerm: params.searchTerm,
 		queryUrl,
 		modifiedStageFilters,
-		top5TypeFilters
+		top6TypeFilters
 	});
 }
 
@@ -142,11 +154,37 @@ exports.getApplicationDocuments = async (req, res) => {
 			...req.query
 		};
 
-		const newParamsType = replaceControllerParamType(params?.type, 'other', 'everything_else');
+		let paramsType = params.type;
+
+		const paramsTypeOf = typeof paramsType;
+		const applicationDocument = 'Application Document';
+		const developersApplication = "Developer's Application";
+
+		if (paramsType && Array.isArray(paramsType)) {
+			paramsType = paramsType.filter((type) => type !== applicationDocument);
+
+			paramsType.push(developersApplication);
+		}
+
+		if (paramsType && paramsTypeOf === 'string') {
+			if (paramsType === applicationDocument) {
+				paramsType = [developersApplication];
+			} else {
+				paramsType = [paramsType, developersApplication];
+			}
+		}
+
+		if (!paramsType) {
+			paramsType = [developersApplication];
+		}
+
+		const newParamsType = replaceControllerParamType(paramsType, 'other', 'everything_else');
 
 		if (newParamsType) {
-			params.type = newParamsType;
+			paramsType = newParamsType;
 		}
+
+		params.type = paramsType;
 
 		const { searchTerm, stage, type } = req.query;
 

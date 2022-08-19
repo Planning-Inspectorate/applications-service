@@ -1,63 +1,69 @@
-// const validateParameters = (...args) => {
-// 	if (!args || args.length === 0 || Array.isArray(args)) {
-// 		return false;
-// 	}
+const validateParameters = (...args) => {
+	if (!args || args.length === 0 || !Array.isArray(args)) {
+		return false;
+	}
 
-// 	const invalidParams = {};
+	const invalidParams = {};
 
-// 	for (const [index, { expectedType, paramValue }] of args.entries()) {
-// 		if (Object.keys(invalidParams).length !== 0) {
-// 			return false;
-// 		}
+	for (const [index, value] of args.entries()) {
+		if (Object.keys(invalidParams).length !== 0 || !value) {
+			return false;
+		}
 
-// 		let validateType;
+		const { expectedType, paramValue } = value;
 
-// 		switch (expectedType) {
-// 			case 'array':
-// 				validateType = () => Array.isArray(paramValue);
-// 				break;
+		if (!expectedType) {
+			return false;
+		}
 
-// 			case 'string':
-// 				validateType = () => typeof paramValue === 'string';
-// 				break;
+		let validateType;
 
-// 			case 'boolean':
-// 				validateType = () => typeof paramValue === 'boolean';
-// 				break;
+		switch (expectedType) {
+			case 'array':
+				validateType = () => Array.isArray(paramValue);
+				break;
 
-// 			case 'number':
-// 				validateType = () => typeof paramValue === 'number';
-// 				break;
+			case 'string':
+				validateType = () => typeof paramValue === 'string';
+				break;
 
-// 			case 'object':
-// 				validateType = () => typeof paramValue === 'object' && !Array.isArray(paramValue);
-// 				break;
+			case 'boolean':
+				validateType = () => typeof paramValue === 'boolean';
+				break;
 
-// 			default:
-// 				break;
-// 		}
+			case 'number':
+				validateType = () => typeof paramValue === 'number';
+				break;
 
-// 		if (!paramValue || !validateType()) {
-// 			invalidParams[index] = { paramValue, expectedType };
-// 			const receivedValue = invalidParams[index]['paramValue'];
+			case 'object':
+				validateType = () => typeof paramValue === 'object' && !Array.isArray(paramValue);
+				break;
 
-// 			console.error(
-// 				`validateParameters function error! paramValue: ${JSON.stringify(
-// 					paramValue
-// 				)}, expected to be: ${JSON.stringify(expectedType)} but received: ${JSON.stringify(
-// 					receivedValue
-// 				)} instead.`
-// 			);
-// 			return false;
-// 		}
-// 	}
+			default:
+				break;
+		}
 
-// 	if (Object.keys(invalidParams).length === 0) {
-// 		return true;
-// 	} else {
-// 		return false;
-// 	}
-// };
+		if (!paramValue || !validateType || !validateType()) {
+			invalidParams[index] = { paramValue, expectedType };
+			const receivedValue = invalidParams[index]['paramValue'];
+
+			console.error(
+				`validateParameters function error! paramValue: ${JSON.stringify(
+					paramValue
+				)}, expected to be: ${JSON.stringify(expectedType)} but received: ${JSON.stringify(
+					receivedValue
+				)} instead.`
+			);
+			return false;
+		}
+	}
+
+	if (Object.keys(invalidParams).length === 0) {
+		return true;
+	} else {
+		return false;
+	}
+};
 
 // const validateTypes = (type) => {
 // 	if (!type || typeof type !== 'string') {
@@ -76,4 +82,4 @@
 // 	return;
 // };
 
-// module.exports = { validateParameters, validateTypes };
+module.exports = { validateParameters };
