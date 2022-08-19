@@ -202,8 +202,34 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const { searchTerm, stage, type } = req.query;
 
-		const typeList = type ? type.filter((t) => t !== applicationDocument) : [];
+		const typeList = () => {
+			if (!type) return [];
 
-		renderData(req, res, searchTerm, params, response, projectName, stage, typeList, categoryList);
+			const typeOfType = typeof type;
+
+			if (Array.isArray(type)) {
+				return type.filter((t) => t !== applicationDocument);
+			}
+
+			if (typeOfType === 'string') {
+				if (type !== applicationDocument) {
+					return [type];
+				} else {
+					return [];
+				}
+			}
+		};
+
+		renderData(
+			req,
+			res,
+			searchTerm,
+			params,
+			response,
+			projectName,
+			stage,
+			typeList(),
+			categoryList
+		);
 	}
 };
