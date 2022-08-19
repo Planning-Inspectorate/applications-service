@@ -167,27 +167,26 @@ exports.getApplicationDocuments = async (req, res) => {
 			for (const paramType of paramsType) {
 				if (paramType === applicationDocument) {
 					categoryList.push(developersApplication);
-				} else {
+					newParamsType.push(developersApplication);
+				}
+
+				if (paramType !== applicationDocument) {
 					newParamsType.push(paramType);
 				}
 			}
 
 			paramsType = newParamsType;
-
-			paramsType.push(developersApplication);
 		}
 
 		if (paramsType && paramsTypeOf === 'string') {
-			if (paramsType === applicationDocument) {
+			if (paramsType !== applicationDocument) {
+				paramsType = [paramsType];
+			} else if (paramsType === applicationDocument) {
 				paramsType = [developersApplication];
 				categoryList.push(developersApplication);
 			} else {
 				paramsType = [paramsType, developersApplication];
 			}
-		}
-
-		if (!paramsType) {
-			paramsType = [developersApplication];
 		}
 
 		const newParamsType = replaceControllerParamType(paramsType, 'other', 'everything_else');
@@ -219,6 +218,8 @@ exports.getApplicationDocuments = async (req, res) => {
 				}
 			}
 		};
+
+		console.log({ paramsTyps: params?.type, typeListtypeList: typeList() });
 
 		renderData(
 			req,
