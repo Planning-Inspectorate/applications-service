@@ -65,21 +65,21 @@ const validateParameters = (...args) => {
 	}
 };
 
-// const validateTypes = (type) => {
-// 	if (!type || typeof type !== 'string') {
-// 		return;
-// 	}
+const validateTypes = (type) => {
+	if (!type || typeof type !== 'string') {
+		return;
+	}
 
-// 	const types = ['array', 'string', 'boolean', 'number', 'object'];
+	const types = ['array', 'string', 'boolean', 'number', 'object'];
 
-// 	for (const currentType of types) {
-// 		const regex = new RegExp(currentType, 'i');
-// 		if (regex.test(type)) {
-// 			return currentType;
-// 		}
-// 	}
+	for (const currentType of types) {
+		const regex = new RegExp(currentType, 'i');
+		if (regex.test(type)) {
+			return currentType;
+		}
+	}
 
-// 	return;
-// };
+	return;
+};
 
-module.exports = { validateParameters };
+module.exports = { validateParameters, validateTypes };
