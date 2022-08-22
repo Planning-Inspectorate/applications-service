@@ -32,7 +32,7 @@ const getCategoryFilterType = (categoryTypeFilters, filterTypeItemName) => {
 		}
 
 		if (result) {
-			return [{ category: 'Application Document', count: result.count }];
+			return [{ name: 'Application Document', count: result.count }];
 		}
 
 		return;

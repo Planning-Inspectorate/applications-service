@@ -60,7 +60,7 @@ function renderData(
 		});
 	}, Object.create(null));
 
-	categoryFilters.forEach(({ category: categoryName, count }) => {
+	categoryFilters.forEach(({ name: categoryName, count }) => {
 		modifiedCategoryFilters.push({
 			text: `${categoryName} (${count})`,
 			value: categoryName,
@@ -124,6 +124,8 @@ function renderData(
 	}
 
 	top6TypeFilters.unshift(modifiedCategoryFilters[0]);
+
+	paginationData.totalItems = Number(paginationData.totalItems) + categoryFilters[0].count;
 
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
 		documents,
