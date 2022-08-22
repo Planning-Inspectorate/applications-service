@@ -53,6 +53,7 @@ function renderData(
 		for (let i = 0; i < documents.length; i++) {
 			const document = documents[i];
 			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
+
 			if (documentType === documentExaminationLibraryId) {
 				documentExaminationLibraryIndex = i;
 				break;
@@ -63,7 +64,7 @@ function renderData(
 			const documentElement = documents.splice(documentExaminationLibraryIndex, 1)[0];
 			documents.splice(0, 0, documentElement);
 		} else {
-			const examinationLibraryDocuments = response?.data?.documents;
+			const examinationLibraryDocuments = examinationLibraryResponse?.data?.documents;
 
 			if (
 				examinationLibraryDocuments &&
