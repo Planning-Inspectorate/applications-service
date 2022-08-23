@@ -1,7 +1,6 @@
 const R = require('ramda');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
-const { mapFilters } = require('../utils/map-filters');
 
 const { getOrderedDocuments, getDocuments, getFilters } = require('../services/document.service');
 
