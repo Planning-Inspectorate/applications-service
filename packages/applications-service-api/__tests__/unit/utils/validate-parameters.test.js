@@ -19,7 +19,7 @@ describe('All test cases for validateParameters', () => {
 		});
 	});
 
-	Object.entries(validFunctionParameters).forEach(([key, { expectedType, paramValue }]) => {
+	Object.entries(validFunctionParameters).forEach(([key, { paramValue }]) => {
 		it(`Pass valid ${key} with paramValue: ${JSON.stringify(
 			paramValue
 		)} but no expectedType, expect false as return`, () => {

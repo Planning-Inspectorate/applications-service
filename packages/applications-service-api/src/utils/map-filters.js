@@ -9,8 +9,6 @@ const mapFilters = (filterArray, elementNameToFilter) => {
 		return { ['result']: undefined, ['otherTypesToAdd']: undefined };
 	}
 
-	console.warn({ mapFilters: filterArray });
-
 	const regex = new RegExp(elementNameToFilter, 'i');
 	const otherTypesToAdd = [];
 	const result = [];

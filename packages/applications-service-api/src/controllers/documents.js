@@ -79,41 +79,22 @@ module.exports = {
 
 				const categoryTypeFiltersDBResponse = await getFilters('category', caseRef, classification);
 
-				const stageFiltersAvailable = stageFiltersAvailableDBResponse
-					? deepCopyArray(stageFiltersAvailableDBResponse)
-					: stageFiltersAvailableDBResponse;
-
-				const typeFiltersAvailable = typeFiltersAvailableDBResponse
-					? deepCopyArray(typeFiltersAvailableDBResponse)
-					: typeFiltersAvailableDBResponse;
-
 				const categoryTypeFilters = categoryTypeFiltersDBResponse
 					? deepCopyArray(categoryTypeFiltersDBResponse)
 					: categoryTypeFiltersDBResponse;
 
 				return [
-					[stageFiltersAvailableDBResponse, stageFiltersAvailable],
-					[typeFiltersAvailableDBResponse, typeFiltersAvailable],
-					[categoryTypeFilters]
+					stageFiltersAvailableDBResponse,
+					typeFiltersAvailableDBResponse,
+					categoryTypeFilters
 				];
 			} catch (error) {
 				throw ApiError.noDocumentsFound('getAllFiltersFunc failed!');
 			}
 		};
 
-		const [
-			[stageFiltersAvailableDBResponse, stageFiltersAvailable],
-			[typeFiltersAvailableDBResponse, typeFiltersAvailable],
-			[categoryTypeFilters]
-		] = await getAllFiltersFunc();
-
-		console.error({
-			stageFiltersAvailableDBResponse,
-			stageFiltersAvailable,
-			typeFiltersAvailableDBResponse,
-			typeFiltersAvailable,
-			categoryTypeFilters
-		});
+		const [stageFiltersAvailableDBResponse, typeFiltersAvailableDBResponse, categoryTypeFilters] =
+			await getAllFiltersFunc();
 
 		let typeFilters = [];
 
@@ -153,13 +134,8 @@ module.exports = {
 				categoryFilters
 			);
 
-			console.log({
-				documentsX: documents,
-				typeFiltersAvailableEEE: typeFiltersAvailable
-			});
-
 			const { itemsPerPage, documentsHost } = config;
-			const totalItems = documents.count;
+			const totalItems = documents.count ?? 0;
 			const rows = documents.rows.map((row) => ({
 				...row.dataValues,
 				path: row.dataValues.path ? `${documentsHost}${row.dataValues.path}` : null
@@ -172,25 +148,28 @@ module.exports = {
 				totalPages: Math.ceil(Math.max(1, totalItems) / itemsPerPage),
 				currentPage: page,
 				filters: {
-					stageFilters: stageFiltersAvailableDBResponse
-						? stageFiltersAvailableDBResponse
-								.map((f) => ({
-									name: f.dataValues.Stage ?? '',
-									count: f.dataValues.count ?? 0
-								}))
-								.filter(({ name, count }) => name && count)
-						: [],
-					typeFilters: typeFiltersAvailableDBResponse
-						? typeFiltersAvailableDBResponse
-								.map((f) => ({
-									name: f.dataValues.filter_1 ?? '',
-									count: f.dataValues.count ?? 0
-								}))
-								.filter(({ name, count }) => name && count)
-						: [],
-					categoryFilters: categoryTypeFilters
-						? getCategoryFilterType(categoryTypeFilters, "Developer's Application")
-						: []
+					stageFilters:
+						stageFiltersAvailableDBResponse && stageFiltersAvailableDBResponse.length > 0
+							? stageFiltersAvailableDBResponse
+									.map((f) => ({
+										name: f.dataValues.Stage ?? '',
+										count: f.dataValues.count ?? 0
+									}))
+									.filter(({ name, count }) => name && count)
+							: [],
+					typeFilters:
+						typeFiltersAvailableDBResponse && typeFiltersAvailableDBResponse.length > 0
+							? typeFiltersAvailableDBResponse
+									.map((f) => ({
+										name: f.dataValues.filter_1 ?? '',
+										count: f.dataValues.count ?? 0
+									}))
+									.filter(({ name, count }) => name && count)
+							: [],
+					categoryFilters:
+						categoryTypeFilters && categoryTypeFilters.length > 0
+							? getCategoryFilterType(categoryTypeFilters, "Developer's Application")
+							: []
 				}
 			};
 
@@ -199,12 +178,10 @@ module.exports = {
 		} catch (e) {
 			if (e instanceof ApiError) {
 				logger.debug(e.message);
-				console.error(e);
-				// res.status(e.code).send({ code: e.code, errors: e.message.errors });
+				res.status(e.code).send({ code: e.code, errors: e.message.errors });
 			}
-			console.error(e);
 			logger.error(e.message);
-			// res.status(500).send(`Problem getting documents for project ${caseRef} \n ${e}`);
+			res.status(500).send(`Problem getting documents for project ${caseRef} \n ${e}`);
 		}
 	}
 };

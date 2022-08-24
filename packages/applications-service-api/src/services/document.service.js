@@ -187,7 +187,7 @@ const getOrderedDocuments = async (
 
 		const resultData = await getCategoryItems();
 
-		categoryItems.push(resultData);
+		resultData && categoryItems.push(resultData);
 	}
 
 	if (filters.typeFilters.length > 0) {
@@ -212,7 +212,7 @@ const getOrderedDocuments = async (
 
 		const resultData = await getTypeItems();
 
-		filterOneItems.push(resultData);
+		resultData && filterOneItems.push(resultData);
 	}
 
 	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
@@ -235,7 +235,7 @@ const getOrderedDocuments = async (
 
 		const resultData = await getTypeItems();
 
-		filterOneItems.push(resultData);
+		resultData && filterOneItems.push(resultData);
 	}
 
 	const documents = {
@@ -244,11 +244,18 @@ const getOrderedDocuments = async (
 	};
 
 	categoryItems.forEach(({ count, rows }) => {
+		if (!count || !rows) {
+			return;
+		}
 		documents.count += count ?? 0;
 		documents.rows = rows ? documents.rows.concat(rows) : documents.rows;
 	});
 
 	filterOneItems.forEach(({ count, rows }) => {
+		if (!count || !rows) {
+			return;
+		}
+
 		documents.count += count ?? 0;
 		documents.rows = rows ? documents.rows.concat(rows) : documents.rows;
 	});

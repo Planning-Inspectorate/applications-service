@@ -68,7 +68,8 @@ describe('controllers/documents', () => {
 					],
 					filters: {
 						stageFilters: [],
-						typeFilters: []
+						typeFilters: [],
+						categoryFilters: []
 					},
 					totalItems: 2,
 					itemsPerPage: 20,
@@ -100,9 +101,10 @@ describe('controllers/documents', () => {
 				hideRecommendationAndDecisionLink,
 				hideExaminationTimetableLink,
 				modifiedStageFilters: [],
+				modifiedCategoryFilters: [],
+				modifiedTypeFilters: [],
 				pageOptions: [1],
-				top5TypeFilters: [],
-				queryUrl: '',
+				queryUrl: '&type=&category=',
 				searchTerm: undefined,
 				paginationData: {
 					currentPage: 1,
@@ -123,7 +125,8 @@ describe('controllers/documents', () => {
 						documents: [],
 						filters: {
 							stageFilters: [],
-							typeFilters: []
+							typeFilters: [],
+							categoryFilters: []
 						},
 						totalItems: 1,
 						itemsPerPage: 20,
@@ -141,10 +144,11 @@ describe('controllers/documents', () => {
 				hideAllExaminationDocumentsLink,
 				hideRecommendationAndDecisionLink,
 				hideExaminationTimetableLink,
-				queryUrl: '',
+				queryUrl: '&type=&category=',
 				searchTerm: undefined,
 				modifiedStageFilters: [],
-				top5TypeFilters: [],
+				modifiedCategoryFilters: [],
+				modifiedTypeFilters: [],
 				pageOptions: [1],
 				paginationData: {
 					currentPage: 1,
