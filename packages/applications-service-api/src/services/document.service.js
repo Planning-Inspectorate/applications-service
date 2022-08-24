@@ -103,7 +103,6 @@ const getOrderedDocuments = async (
 	const offset = (pageNo - 1) * limit;
 
 	const where = { [Op.and]: [{ case_reference: caseRef }] };
-	const categoryFiltersWhereClause = { [Op.and]: [{ case_reference: caseRef }] };
 	const filters = { categoryFilters: [], typeFilters: [] };
 	const categoryItems = [];
 	const filterOneItems = [];
@@ -161,38 +160,7 @@ const getOrderedDocuments = async (
 		});
 	}
 
-	if (filters.typeFilters.length === 0 || filters.categoryFilters.length > 0) {
-		categoryFiltersWhereClause[Op.and].push({
-			[Op.and]: [filters['categoryFilters']]
-		});
-
-		const getCategoryItems = async () => {
-			try {
-				const categoryItemsResult = await db.Document.findAndCountAll({
-					where: [
-						{ [Op.and]: [{ case_reference: 'EN010085' }, { category: "Developer's Application" }] }
-					],
-					offset,
-					order: [['date_published', 'DESC']],
-					limit
-				});
-
-				const data = await categoryItemsResult;
-
-				return data;
-			} catch (e) {
-				console.error(e);
-			}
-		};
-
-		const resultData = await getCategoryItems();
-
-		resultData && categoryItems.push(resultData);
-	}
-
-	if (filters.typeFilters.length > 0) {
-		where[Op.and].push({ [Op.or]: filters.typeFilters });
-
+	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
 		const getTypeItems = async () => {
 			try {
 				const typeItemsResult = await db.Document.findAndCountAll({
@@ -215,7 +183,38 @@ const getOrderedDocuments = async (
 		resultData && filterOneItems.push(resultData);
 	}
 
-	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
+	if (filters.typeFilters.length === 0 || filters.categoryFilters.length > 0) {
+		const categoryFiltersWhereClause = { [Op.and]: [] };
+
+		categoryFiltersWhereClause[Op.and].push({
+			[Op.or]: filters.categoryFilters
+		});
+
+		const getCategoryItems = async () => {
+			try {
+				const categoryItemsResult = await db.Document.findAndCountAll({
+					where: categoryFiltersWhereClause,
+					offset,
+					order: [['date_published', 'DESC']],
+					limit
+				});
+
+				const data = await categoryItemsResult;
+
+				return data;
+			} catch (e) {
+				console.error(e);
+			}
+		};
+
+		const resultData = await getCategoryItems();
+
+		resultData && categoryItems.push(resultData);
+	}
+
+	if (filters.typeFilters.length > 0) {
+		where[Op.and].push({ [Op.or]: filters.typeFilters });
+
 		const getTypeItems = async () => {
 			try {
 				const typeItemsResult = await db.Document.findAndCountAll({

@@ -192,6 +192,7 @@ function renderData(
 }
 
 exports.getApplicationDocuments = async (req, res) => {
+	console.log({ requestow: req });
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
@@ -203,51 +204,18 @@ exports.getApplicationDocuments = async (req, res) => {
 			...req.query
 		};
 
-		let paramsType = params.type;
-		let paramsCategory = params.category;
-
-		const paramsCategoryTypeOf = typeof paramsCategory;
-		const applicationDocument = 'Application Document';
-		const developersApplication = "Developer's Application";
-		const categoryList = [];
-
-		const newParamsType = replaceControllerParamType(paramsType, 'other', 'everything_else');
+		const [newParamsType, newCategoryParams] = [
+			replaceControllerParamType(params.type, 'other', 'everything_else'),
+			replaceControllerParamType(params.category, 'Application Document', "Developer's Application")
+		];
 
 		if (newParamsType) {
-			paramsType = newParamsType;
+			params.type = newParamsType ?? [];
 		}
 
-		if (paramsCategory && Array.isArray(paramsCategory)) {
-			const newParamsCategory = [];
-
-			for (const paramCategory of paramsCategory) {
-				if (paramCategory === applicationDocument) {
-					categoryList.push(developersApplication);
-					newParamsCategory.push(developersApplication);
-				}
-
-				if (paramCategory !== applicationDocument) {
-					newParamsCategory.push(paramCategory);
-				}
-			}
-
-			paramsCategory = newParamsCategory;
+		if (newCategoryParams) {
+			params.category = newCategoryParams ?? [];
 		}
-
-		if (paramsCategory && paramsCategoryTypeOf === 'string') {
-			if (paramsCategory !== applicationDocument) {
-				paramsCategory = [paramsCategory];
-			} else if (paramsCategory === applicationDocument) {
-				paramsCategory = [developersApplication];
-				categoryList.push(developersApplication);
-			} else {
-				paramsCategory = [paramsCategory, developersApplication];
-			}
-		}
-
-		params.type = paramsType ? paramsType : [];
-
-		params.category = paramsCategory ? paramsCategory : [];
 
 		const { searchTerm, stage, type, category } = req.query;
 

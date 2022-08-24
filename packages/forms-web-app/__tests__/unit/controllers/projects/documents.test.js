@@ -136,7 +136,7 @@ describe('controllers/documents', () => {
 				modifiedCategoryFilters: [],
 				modifiedTypeFilters: [],
 				pageOptions: [1],
-				queryUrl: '&type=&category=',
+				queryUrl: '',
 				searchTerm: undefined,
 				paginationData: {
 					currentPage: 1,
@@ -176,10 +176,64 @@ describe('controllers/documents', () => {
 				hideAllExaminationDocumentsLink,
 				hideRecommendationAndDecisionLink,
 				hideExaminationTimetableLink,
-				queryUrl: '&type=&category=',
+				queryUrl: '',
 				searchTerm: undefined,
 				modifiedStageFilters: modifiedStageFiltersValue,
 				modifiedCategoryFilters: [],
+				modifiedTypeFilters: [],
+				pageOptions: [1],
+				paginationData: {
+					currentPage: 1,
+					fromRange: 1,
+					itemsPerPage: 20,
+					toRange: 1,
+					totalItems: 1,
+					totalPages: 1
+				}
+			});
+		});
+		it('should handle a category filter and count list', async () => {
+			searchDocumentListV2.mockImplementation(() =>
+				Promise.resolve({
+					resp_code: 200,
+					data: {
+						documents: [],
+						filters: {
+							stageFilters: [],
+							typeFilters: [],
+							categoryFilters: [
+								{
+									name: 'Application Document',
+									count: 258
+								}
+							]
+						},
+						totalItems: 1,
+						itemsPerPage: 20,
+						totalPages: 1,
+						currentPage: 1
+					}
+				})
+			);
+			await aboutTheApplicationController.getApplicationDocuments(req, res);
+			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
+				projectName: 'St James Barton Giant Wind Turbine',
+				caseRef: 'ABCD1234',
+				documents: [],
+				hideProjectInformationLink,
+				hideAllExaminationDocumentsLink,
+				hideRecommendationAndDecisionLink,
+				hideExaminationTimetableLink,
+				queryUrl: '',
+				searchTerm: undefined,
+				modifiedStageFilters: modifiedStageFiltersValue,
+				modifiedCategoryFilters: [
+					{
+						checked: false,
+						text: 'Application Document (258)',
+						value: 'Application Document'
+					}
+				],
 				modifiedTypeFilters: [],
 				pageOptions: [1],
 				paginationData: {
