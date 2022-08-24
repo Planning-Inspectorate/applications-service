@@ -12,6 +12,39 @@ const {
 	hideExaminationTimetableLink
 } = featureHideLink;
 
+const modifiedStageFilters = [
+	{
+		checked: false,
+		text: 'Pre-application (0)',
+		value: '1'
+	},
+	{
+		checked: false,
+		text: 'Acceptance (review of the application) (0)',
+		value: '2'
+	},
+	{
+		checked: false,
+		text: 'Pre-examination (0)',
+		value: '3'
+	},
+	{
+		checked: false,
+		text: 'Examination (0)',
+		value: '4'
+	},
+	{
+		checked: false,
+		text: 'Recommendation and decision (0)',
+		value: '5'
+	},
+	{
+		checked: false,
+		text: 'Decided (0)',
+		value: '7'
+	}
+];
+
 jest.mock('../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../src/services/application.service');
 

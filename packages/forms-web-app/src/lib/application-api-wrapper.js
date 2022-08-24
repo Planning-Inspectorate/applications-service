@@ -2,6 +2,7 @@
 const fetch = require('node-fetch');
 const uuid = require('uuid');
 const { utils } = require('@pins/common');
+const { queryStringBuilder } = require('../utils/query-string-builder');
 
 const config = require('../config');
 const parentLogger = require('./logger');
@@ -94,10 +95,16 @@ exports.searchRepresentations = async (params) => {
 };
 
 exports.searchDocumentListV2 = async (params) => {
-	const queryString = Object.keys(params)
-		.map((key) => `${key}=${params[key]}`)
-		.join('&');
-	const documentServiceApiUrl = `/api/v2/documents?${queryString}`;
+	const queryString = queryStringBuilder(params, [
+		'caseRef',
+		'classification',
+		'page',
+		'searchTerm',
+		'stage',
+		'type',
+		'category'
+	]);
+	const documentServiceApiUrl = `/api/v2/documents${queryString}`;
 	const method = 'GET';
 	return handler('searchDocumentListV2', documentServiceApiUrl, method);
 };

@@ -9,26 +9,26 @@ Feature: Relevant Representations (Registration comments) page
         When I click on "Registration comments" link
         Then I can verify that the registration comments displayed in descending order
             | Date             | Stage                                  |
-            | 22 February 2021 | Members of the Public/Businesses - 22  |
-            | 21 February 2021 | Members of the Public/Businesses - 21  |
-            | 20 February 2021 | Members of the Public/Businesses - 20  |
-            | 19 February 2021 | Members of the Public/Businesses - 141 |
-            | 19 February 2021 | Members of the Public/Businesses - 130 |
-            | 19 February 2021 | Members of the Public/Businesses - 131 |
-            | 19 February 2021 | Members of the Public/Businesses - 132 |
-            | 19 February 2021 | Members of the Public/Businesses - 133 |
-            | 19 February 2021 | Members of the Public/Businesses - 134 |
-            | 19 February 2021 | Members of the Public/Businesses - 135 |
-            | 19 February 2021 | Members of the Public/Businesses - 136 |
-            | 19 February 2021 | Members of the Public/Businesses - 137 |
-            | 19 February 2021 | Members of the Public/Businesses - 138 |
-            | 19 February 2021 | Members of the Public/Businesses - 139 |
-            | 19 February 2021 | Members of the Public/Businesses - 140 |
-            | 19 February 2021 | Members of the Public/Businesses - 152 |
-            | 19 February 2021 | Members of the Public/Businesses - 149 |
-            | 19 February 2021 | Members of the Public/Businesses - 150 |
-            | 19 February 2021 | Members of the Public/Businesses - 151 |
-            | 19 February 2021 | Members of the Public/Businesses - 148 |
+            | 22 February 2021 | Members of the public/businesses - 22  |
+            | 21 February 2021 | Members of the public/businesses - 21  |
+            | 20 February 2021 | Members of the public/businesses - 20  |
+            | 19 February 2021 | Members of the public/businesses - 141 |
+            | 19 February 2021 | Members of the public/businesses - 130 |
+            | 19 February 2021 | Members of the public/businesses - 131 |
+            | 19 February 2021 | Members of the public/businesses - 132 |
+            | 19 February 2021 | Members of the public/businesses - 133 |
+            | 19 February 2021 | Members of the public/businesses - 134 |
+            | 19 February 2021 | Members of the public/businesses - 135 |
+            | 19 February 2021 | Members of the public/businesses - 136 |
+            | 19 February 2021 | Members of the public/businesses - 137 |
+            | 19 February 2021 | Members of the public/businesses - 138 |
+            | 19 February 2021 | Members of the public/businesses - 139 |
+            | 19 February 2021 | Members of the public/businesses - 140 |
+            | 19 February 2021 | Members of the public/businesses - 152 |
+            | 19 February 2021 | Members of the public/businesses - 149 |
+            | 19 February 2021 | Members of the public/businesses - 150 |
+            | 19 February 2021 | Members of the public/businesses - 151 |
+            | 19 February 2021 | Members of the public/businesses - 148 |
 
     Scenario: No Registration comments available for project
         Given I navigate to "Cleve Hill Solar Park" project Overview page
@@ -139,40 +139,40 @@ Feature: Relevant Representations (Registration comments) page
     Scenario: Filter by Registration type
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
-        And I select "Parish Councils (3)" checkbox
+        And I select "Parish councils (3)" checkbox
         And I click on Apply button to apply filters
         Then I can verify that below comments were returned
             | Comments                                                                                                                 |
-            | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application 20 April 2022 Parish Councils |
-            | Frosty Flights (Frosty Flights) Some comments 1 August 2021 Parish Councils                                             |
-            | Frosty Fliers (Frosty Fliers ) Some comments 14 March 2021 Parish Councils                                               |
+            | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application 20 April 2022 Parish councils |
+            | Frosty Flights (Frosty Flights) Some comments 1 August 2021 Parish councils                                             |
+            | Frosty Fliers (Frosty Fliers ) Some comments 14 March 2021 Parish councils                                               |
 
     Scenario: Search by text and then filter by registration type
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
         When I search for comments containing "joe"
-        And I select "Local Authorities (1)" checkbox
+        And I select "Local authorities (1)" checkbox
         And I click on Apply button to apply filters
         Then I can verify that below comments were returned
             | Comments                                                                                                                                                                                                                                                          |
-            | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more 15 May 2022Local Authorities |
+            | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more 15 May 2022Local authorities |
 
     Scenario: Filter by representative and then search by text
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
-        And I select "Members of the Public/Businesses (43)" checkbox
+        And I select "Members of the public/businesses (43)" checkbox
         And I click on Apply button to apply filters
         When I search for comments containing "Chris"
         Then I can verify that below comments were returned
             | Comments                                                                   |
-            | Chris Cundill Some comments 4 July 2022 Members of the Public/Businesses  |
-            | Chris Some comments 17 March 2021 Members of the Public/Businesses         |
-            | Chris Cundill Some comments 16 March 2021 Members of the Public/Businesses |
+            | Chris Cundill Some comments 4 July 2022 Members of the public/businesses  |
+            | Chris Some comments 17 March 2021 Members of the public/businesses         |
+            | Chris Cundill Some comments 16 March 2021 Members of the public/businesses |
 
     Scenario: No matching registration comments using filter by representative then search by text
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
-        And I select "Members of the Public/Businesses (43)" checkbox
+        And I select "Members of the public/businesses (43)" checkbox
         And I click on Apply button to apply filters
         When I search for comments containing "communication"
         Then I am informed that no results were found
@@ -184,18 +184,18 @@ Feature: Relevant Representations (Registration comments) page
         And I click on 1 read more link
         Then I verify below comment is displayed
             | Data                                                                                                                                                                                                                                                                                                                                    |
-            | Representation by Members of the Public/Businesses I think Joe Stipliani's should find somewhere else to build their new giant wind turbine. The turbines will be an unsightly addition to the view from the road on which I live. I'm concerned that the turbine could fall onto traffic. 16 May 2022 Members of the Public/Businesses |
+            | Representation by Members of the public/businesses I think Joe Stipliani's should find somewhere else to build their new giant wind turbine. The turbines will be an unsightly addition to the view from the road on which I live. I'm concerned that the turbine could fall onto traffic. 16 May 2022 Members of the public/businesses |
         And I click on back link
         Then I verify text "Showing 1 to 20 of 48 results" is present on the page
 
     Scenario: navigate back to registration comments page after applying filters
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
         When I click on "Registration comments" link
-        And I select "Members of the Public/Businesses (43)" checkbox
+        And I select "Members of the public/businesses (43)" checkbox
         And I click on Apply button to apply filters
         And I click on 1 read more link
         Then I verify below comment is displayed
             | Data                                                                                                                                                                                                                                                                                                                                    |
-            | Representation by Members of the Public/Businesses I think Joe Stipliani's should find somewhere else to build their new giant wind turbine. The turbines will be an unsightly addition to the view from the road on which I live. I'm concerned that the turbine could fall onto traffic. 16 May 2022 Members of the Public/Businesses |
+            | Representation by Members of the public/businesses I think Joe Stipliani's should find somewhere else to build their new giant wind turbine. The turbines will be an unsightly addition to the view from the road on which I live. I'm concerned that the turbine could fall onto traffic. 16 May 2022 Members of the public/businesses |
         And I click on back link
 

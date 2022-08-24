@@ -1,6 +1,5 @@
-const logger = require('../../lib/logger');
 const { formatDate } = require('../../utils/date-utils');
-const { Status: projectStageNames } = require('../../utils/status');
+const { documentProjectStages } = require('../../utils/project-stages');
 const { removeFilterTypes } = require('../../utils/remove-filter-types');
 const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
 const { VIEW } = require('../../lib/views');
@@ -16,12 +15,15 @@ const {
 	hideExaminationTimetableLink
 } = featureHideLink;
 
+const documentExaminationLibraryId = 'examination library';
+
 function renderData(
 	req,
 	res,
 	searchTerm,
 	params,
 	response,
+	examinationLibraryResponse,
 	projectName,
 	stageList = [],
 	typeList = [],
@@ -52,40 +54,85 @@ function renderData(
 	const respData = response.data;
 	const { documents, filters } = respData;
 	const { stageFilters, typeFilters, categoryFilters } = filters;
-	logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
 	const modifiedTypeFilters = [];
+	const modifiedStageFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
 	const numberOfFiltersToDisplay = 5;
-
-	const modifiedStageFilters = stageFilters.map(({ name: stageName, count }) => ({
-		text: `${projectStageNames[stageName]} (${count})`,
-		value: stageName,
-		checked: stageList.includes(stageName)
-	}));
 
 	const modifiedCategoryFilters = categoryFilters.map(({ name: categoryName, count }) => ({
 		text: `${categoryName} (${count})`,
 		value: categoryName,
 		checked: categoryList.includes(categoryName)
 	}));
-	documents.forEach(function (document, index) {
-		if (!documentExaminationLibraryIndex) {
+
+	if (documents.length && examinationLibraryResponse) {
+		for (let i = 0; i < documents.length; i++) {
+			const document = documents[i];
 			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
+
 			if (documentType === documentExaminationLibraryId) {
-				documentExaminationLibraryIndex = index;
+				documentExaminationLibraryIndex = i;
+				break;
 			}
 		}
 
-		document.date_published = formatDate(document.date_published);
-	}, Object.create(null));
+		if (documentExaminationLibraryIndex !== null) {
+			const documentElement = documents.splice(documentExaminationLibraryIndex, 1)[0];
+			documents.splice(0, 0, documentElement);
+		} else {
+			const examinationLibraryDocuments = examinationLibraryResponse?.data?.documents;
 
-	if (documentExaminationLibraryIndex) {
-		const documentElement = documents.splice(documentExaminationLibraryIndex, 1)[0];
-		documents.splice(0, 0, documentElement);
+			if (
+				examinationLibraryDocuments &&
+				Array.isArray(examinationLibraryDocuments) &&
+				examinationLibraryDocuments.length
+			) {
+				const findExaminationLibraryDocumentType = examinationLibraryDocuments.find(
+					(examinationLibraryDocument) => {
+						const examinationLibraryDocumentType =
+							typeof examinationLibraryDocument.type === 'string'
+								? examinationLibraryDocument.type.toLowerCase()
+								: '';
+						return examinationLibraryDocumentType === documentExaminationLibraryId;
+					}
+				);
+
+				if (findExaminationLibraryDocumentType) {
+					documents.unshift(findExaminationLibraryDocumentType);
+				}
+			}
+		}
 	}
+
+	if (documents.length) {
+		documents.forEach(
+			(document) => (document.date_published = formatDate(document.date_published))
+		);
+	}
+
+	const getProjectStageCount = (projectStageValue) => {
+		const projectStageItem = stageFilters.find((stageFilter) => {
+			return `${stageFilter.name}` === `${projectStageValue}`;
+		});
+
+		return projectStageItem?.count || 0;
+	};
+
+	Object.keys(documentProjectStages).forEach((projectStage) => {
+		const projectStageName = documentProjectStages[projectStage].name;
+		const projectStageValue = documentProjectStages[projectStage].value;
+		const projectStageCount = getProjectStageCount(projectStageValue);
+		const projectStageChecked = stageList.includes(projectStageValue);
+
+		modifiedStageFilters.push({
+			checked: projectStageChecked,
+			text: `${projectStageName} (${projectStageCount})`,
+			value: projectStageValue
+		});
+	});
 
 	let otherTypeFiltersCount = 0;
 
@@ -151,7 +198,7 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const params = {
 			caseRef: req.params.case_ref,
-			classification: 'application',
+			classification: 'all',
 			page: '1',
 			...req.query
 		};
@@ -202,10 +249,30 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		params.category = paramsCategory ? paramsCategory : [];
 
-		const response = await searchDocumentsV2(params);
-
 		const { searchTerm, stage, type, category } = req.query;
 
-		renderData(req, res, searchTerm, params, response, projectName, stage, type, category);
+		let examinationLibraryResponse = null;
+
+		if (params.page === '1' && !searchTerm) {
+			examinationLibraryResponse = await searchDocumentsV2({
+				...params,
+				searchTerm: documentExaminationLibraryId
+			});
+		}
+
+		const response = await searchDocumentsV2(params);
+
+		renderData(
+			req,
+			res,
+			searchTerm,
+			params,
+			response,
+			examinationLibraryResponse,
+			projectName,
+			stage,
+			type,
+			category
+		);
 	}
 };
