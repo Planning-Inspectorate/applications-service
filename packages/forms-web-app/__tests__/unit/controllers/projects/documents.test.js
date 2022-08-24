@@ -12,7 +12,7 @@ const {
 	hideExaminationTimetableLink
 } = featureHideLink;
 
-const modifiedStageFilters = [
+const modifiedStageFiltersValue = [
 	{
 		checked: false,
 		text: 'Pre-application (0)',
@@ -44,7 +44,6 @@ const modifiedStageFilters = [
 		value: '7'
 	}
 ];
-
 jest.mock('../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../src/services/application.service');
 
@@ -133,7 +132,7 @@ describe('controllers/documents', () => {
 				hideAllExaminationDocumentsLink,
 				hideRecommendationAndDecisionLink,
 				hideExaminationTimetableLink,
-				modifiedStageFilters: [],
+				modifiedStageFilters: modifiedStageFiltersValue,
 				modifiedCategoryFilters: [],
 				modifiedTypeFilters: [],
 				pageOptions: [1],
@@ -179,7 +178,7 @@ describe('controllers/documents', () => {
 				hideExaminationTimetableLink,
 				queryUrl: '&type=&category=',
 				searchTerm: undefined,
-				modifiedStageFilters: [],
+				modifiedStageFilters: modifiedStageFiltersValue,
 				modifiedCategoryFilters: [],
 				modifiedTypeFilters: [],
 				pageOptions: [1],

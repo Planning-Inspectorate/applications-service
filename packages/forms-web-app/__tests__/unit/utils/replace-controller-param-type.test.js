@@ -13,18 +13,14 @@ describe('All test cases', () => {
 		},
 		expected: {
 			input1: 'Other Documents',
-			input2: ['Other Documents'],
-			input3: ['Other Documents', 'everything_else'],
-			input4: ['everything_else']
+			input2: ['Other Documents']
 		}
 	};
 
 	const expectedValues = {
 		expectedInputsReturn: {
 			output1: 'everything_else',
-			output2: ['Other Documents'],
-			output3: ['everything_else', 'Other Documents'],
-			output4: ['everything_else']
+			output2: ['everything_else']
 		}
 	};
 
@@ -63,7 +59,7 @@ describe('All test cases', () => {
 	// Correct Input/Output Values
 	Object.entries(inputValues.expected).forEach(([inputName], index) => {
 		const expectedInput = inputValues.expected[inputName];
-		const expectedResult = expectedValues.expectedInputsReturn[`output${index + 1}`];
+		const expectedResult = expectedValues.expectedInputsReturn['output2'];
 		it(`Check function return with expected ${inputName} in both paramsType and expectedParam fields`, () => {
 			const result = replaceControllerParamType(
 				expectedInput, // paramsType
