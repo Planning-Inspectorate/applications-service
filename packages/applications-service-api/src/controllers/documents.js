@@ -52,7 +52,9 @@ module.exports = {
 	},
 
 	async getV2Documents(req, res) {
-		const { caseRef, page = 1, searchTerm, stage, classification, type } = req.query;
+		const { caseRef, page = 1, searchTerm, stage, classification, type, category } = req.query;
+
+		const categoryFilters = category ? ["Developer's Application"] : [];
 
 		const numberOfFiltersToDisplay = 5;
 
@@ -113,14 +115,6 @@ module.exports = {
 			categoryTypeFilters
 		});
 
-		// if (categoryTypeFilters) {
-		// 	const result = getCategoryFilterType(categoryTypeFilters, "Developer's Application");
-
-		// console.error({ result, resultFilter_1: result.filter_1 });
-
-		// result && typeFiltersAvailable.unshift(result);
-		// }
-
 		let typeFilters = [];
 
 		if (type) {
@@ -148,8 +142,6 @@ module.exports = {
 			}
 		}
 
-		console.log('before it become typos', typeFilters);
-
 		try {
 			const documents = await getOrderedDocuments(
 				caseRef,
@@ -157,7 +149,8 @@ module.exports = {
 				page,
 				searchTerm,
 				stage && !(stage instanceof Array) ? [stage] : stage,
-				typeFilters
+				typeFilters,
+				categoryFilters
 			);
 
 			console.log({

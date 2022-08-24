@@ -28,46 +28,49 @@ function renderData(
 	categoryList = []
 ) {
 	let queryUrl = '';
+
 	if (params.searchTerm) {
 		queryUrl = `&searchTerm=${params.searchTerm}`;
 	}
+
 	if (params.stage) {
 		const stageQueryParams = params.type instanceof Array ? [...params.stage] : [params.stage];
 		queryUrl = `${queryUrl}&stage=${stageQueryParams.join('&stage=')}`;
 	}
+
 	if (params.type) {
 		const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
 		queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
 	}
+
+	if (params.category) {
+		const categoryQueryParams =
+			params.category instanceof Array ? [...params.category] : [params.category];
+		queryUrl = `${queryUrl}&category=${categoryQueryParams.join('&category=')}`;
+	}
+
 	const respData = response.data;
 	const { documents, filters } = respData;
 	const { stageFilters, typeFilters, categoryFilters } = filters;
 	logger.debug(`Document data received:  ${JSON.stringify(documents)} `);
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
-	const modifiedStageFilters = [];
-	const modifiedCategoryFilters = [];
-	const top6TypeFilters = [];
+	const modifiedTypeFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
 	const numberOfFiltersToDisplay = 5;
 
-	stageFilters.forEach(function (stage) {
-		modifiedStageFilters.push({
-			text: `${projectStageNames[stage.name]} (${stage.count})`,
-			value: stage.name,
-			checked: stageList.includes(stage.name)
-		});
-	}, Object.create(null));
+	const modifiedStageFilters = stageFilters.map(({ name: stageName, count }) => ({
+		text: `${projectStageNames[stageName]} (${count})`,
+		value: stageName,
+		checked: stageList.includes(stageName)
+	}));
 
-	categoryFilters.forEach(({ name: categoryName, count }) => {
-		modifiedCategoryFilters.push({
-			text: `${categoryName} (${count})`,
-			value: categoryName,
-			checked: categoryList.includes(categoryName)
-		});
-	}, Object.create(null));
-
+	const modifiedCategoryFilters = categoryFilters.map(({ name: categoryName, count }) => ({
+		text: `${categoryName} (${count})`,
+		value: categoryName,
+		checked: categoryList.includes(categoryName)
+	}));
 	documents.forEach(function (document, index) {
 		if (!documentExaminationLibraryIndex) {
 			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
@@ -108,7 +111,7 @@ function renderData(
 			return 0;
 		})
 		.forEach(function (type) {
-			top6TypeFilters.push({
+			modifiedTypeFilters.push({
 				text: `${type.name} (${type.count})`,
 				value: type.name,
 				checked: typeList.includes(type.name)
@@ -116,16 +119,12 @@ function renderData(
 		}, Object.create(null));
 
 	if (newTypeFilters.length > 4) {
-		top6TypeFilters.push({
+		modifiedTypeFilters.push({
 			text: `Everything else (${otherTypeFiltersCount})`,
 			value: 'everything_else',
 			checked: typeList.includes('everything_else')
 		});
 	}
-
-	top6TypeFilters.unshift(modifiedCategoryFilters[0]);
-
-	paginationData.totalItems = Number(paginationData.totalItems) + categoryFilters[0].count;
 
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
 		documents,
@@ -140,7 +139,8 @@ function renderData(
 		searchTerm: params.searchTerm,
 		queryUrl,
 		modifiedStageFilters,
-		top6TypeFilters
+		modifiedTypeFilters,
+		modifiedCategoryFilters
 	});
 }
 
@@ -157,8 +157,9 @@ exports.getApplicationDocuments = async (req, res) => {
 		};
 
 		let paramsType = params.type;
+		let paramsCategory = params.category;
 
-		const paramsTypeOf = typeof paramsType;
+		const paramsCategoryTypeOf = typeof paramsCategory;
 		const applicationDocument = 'Application Document';
 		const developersApplication = "Developer's Application";
 		const categoryList = [];
@@ -169,72 +170,42 @@ exports.getApplicationDocuments = async (req, res) => {
 			paramsType = newParamsType;
 		}
 
-		if (paramsType && Array.isArray(paramsType)) {
-			const newParamsType = [];
+		if (paramsCategory && Array.isArray(paramsCategory)) {
+			const newParamsCategory = [];
 
-			for (const paramType of paramsType) {
-				if (paramType === applicationDocument) {
+			for (const paramCategory of paramsCategory) {
+				if (paramCategory === applicationDocument) {
 					categoryList.push(developersApplication);
-					newParamsType.push(developersApplication);
+					newParamsCategory.push(developersApplication);
 				}
 
-				if (paramType !== applicationDocument) {
-					newParamsType.push(paramType);
+				if (paramCategory !== applicationDocument) {
+					newParamsCategory.push(paramCategory);
 				}
 			}
 
-			paramsType = newParamsType;
+			paramsCategory = newParamsCategory;
 		}
 
-		if (paramsType && paramsTypeOf === 'string') {
-			if (paramsType !== applicationDocument) {
-				paramsType = [paramsType];
-			} else if (paramsType === applicationDocument) {
-				paramsType = [developersApplication];
+		if (paramsCategory && paramsCategoryTypeOf === 'string') {
+			if (paramsCategory !== applicationDocument) {
+				paramsCategory = [paramsCategory];
+			} else if (paramsCategory === applicationDocument) {
+				paramsCategory = [developersApplication];
 				categoryList.push(developersApplication);
 			} else {
-				paramsType = [paramsType, developersApplication];
+				paramsCategory = [paramsCategory, developersApplication];
 			}
 		}
-
-		console.log({ paramsTyps: paramsType });
-
-		console.log({ newParamsTypenewParamsType: newParamsType });
 
 		params.type = paramsType ? paramsType : [];
 
+		params.category = paramsCategory ? paramsCategory : [];
+
 		const response = await searchDocumentsV2(params);
 
-		const { searchTerm, stage, type } = req.query;
+		const { searchTerm, stage, type, category } = req.query;
 
-		const typeList = () => {
-			if (!type) return [];
-
-			const typeOfType = typeof type;
-
-			if (Array.isArray(type)) {
-				return type.filter((t) => t !== applicationDocument);
-			}
-
-			if (typeOfType === 'string') {
-				if (type !== applicationDocument) {
-					return [type];
-				} else {
-					return [];
-				}
-			}
-		};
-
-		renderData(
-			req,
-			res,
-			searchTerm,
-			params,
-			response,
-			projectName,
-			stage,
-			typeList(),
-			categoryList
-		);
+		renderData(req, res, searchTerm, params, response, projectName, stage, type, category);
 	}
 };

@@ -41,6 +41,7 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 		case_reference: caseRef,
 		Stage: { [Op.in]: [1, 2, 3] }
 	};
+
 	if (searchTerm) {
 		where = {
 			[Op.and]: [
@@ -89,12 +90,23 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 	return documents;
 };
 
-const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, type) => {
-	console.log({ typos: type });
+const getOrderedDocuments = async (
+	caseRef,
+	classification,
+	pageNo,
+	searchTerm,
+	stage,
+	typeFilters,
+	categoryFilters
+) => {
 	const { itemsPerPage: limit } = config;
 	const offset = (pageNo - 1) * limit;
 
 	const where = { [Op.and]: [{ case_reference: caseRef }] };
+	const categoryFiltersWhereClause = { [Op.and]: [{ case_reference: caseRef }] };
+	const filters = { categoryFilters: [], typeFilters: [] };
+	const categoryItems = [];
+	const filterOneItems = [];
 
 	addStageClause(where, classification);
 
@@ -133,121 +145,113 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
 		});
 	}
 
-	if (type && type.length > 0) {
-		console.warn({ type });
-
-		const typesWithoutApplicationDocument = [];
-		let foundApplicationDocument = false;
-
-		for (const typeName of type) {
-			console.log({ typeName });
-			if (typeName === "Developer's Application") {
-				foundApplicationDocument = true;
-			}
-
-			if (typeName !== "Developer's Application") {
-				typesWithoutApplicationDocument.push(typeName);
-			}
-		}
-
-		// where[Op.and].push({
-		// 	filter_1: typesWithoutApplicationDocument
-		// });
-
-		// Application Document only
-		if (foundApplicationDocument && typesWithoutApplicationDocument.length === 0) {
-			console.warn('foundApplicationDocument && typesWithoutApplicationDocument.length === 0', {
-				typesWithoutApplicationDocument
+	if (categoryFilters && categoryFilters.length > 0) {
+		categoryFilters.forEach((categoryFilter) => {
+			filters['categoryFilters'].push({
+				category: categoryFilter
 			});
-
-			where[Op.and].push({
-				category: { [Op.like]: `%Developer's Application%` }
-			});
-		}
-
-		// typesWithoutApplicationDocument only
-		if (!foundApplicationDocument && typesWithoutApplicationDocument.length > 0) {
-			console.warn('!foundApplicationDocument && typesWithoutApplicationDocument.length > 0', {
-				type
-			});
-
-			where[Op.and].push({
-				filter_1: typesWithoutApplicationDocument
-			});
-		}
-
-		// Both
-		if (foundApplicationDocument && typesWithoutApplicationDocument.length > 0) {
-			console.warn('foundApplicationDocument && typesWithoutApplicationDocument.length > 0', {
-				type
-			});
-
-			// where[Op.and].push({
-			// 	filter_1: typesWithoutApplicationDocument
-			// });
-
-			where[Op.and].push({
-				[Op.or]: [
-					{ filter_1: typesWithoutApplicationDocument },
-					{ category: `Developer's Application` }
-				]
-			});
-
-			/*
-			SELECT count(*) AS `count` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3) AND `Document`.`filter_1` IN ('Application Form', 'Adequacy of Consultation Representation', 'Draft Development Consent Orders', 'Compulsory Acquisition Information', 'Notice of Proposed application', 'Procedural Decisions', 'Acceptance letter', 'Transboundary', 'Procedural Decisions ', 'Certificates and Notices', 'Other Documents') AND `Document`.`category` = 'Developer\'s Application')
-			*/
-		}
+		});
 	}
 
-	const [...getArr] = where[Op.and];
-	getArr.forEach((obj) => {
-		Object.entries(obj).forEach(([key, value]) =>
-			console.warn('Logging filter object', { [key]: JSON.stringify(value) })
-		);
+	if (typeFilters && typeFilters.length > 0) {
+		typeFilters.forEach((typeFilter) => {
+			filters['typeFilters'].push({
+				type: typeFilter
+			});
+		});
+	}
+
+	if (filters.typeFilters.length === 0 || filters.categoryFilters.length > 0) {
+		categoryFiltersWhereClause[Op.and].push({
+			[Op.and]: [filters['categoryFilters']]
+		});
+
+		const getCategoryItems = async () => {
+			try {
+				const categoryItemsResult = await db.Document.findAndCountAll({
+					where: [
+						{ [Op.and]: [{ case_reference: 'EN010085' }, { category: "Developer's Application" }] }
+					],
+					offset,
+					order: [['date_published', 'DESC']],
+					limit
+				});
+
+				const data = await categoryItemsResult;
+
+				return data;
+			} catch (e) {
+				console.error(e);
+			}
+		};
+
+		const resultData = await getCategoryItems();
+
+		categoryItems.push(resultData);
+	}
+
+	if (filters.typeFilters.length > 0) {
+		where[Op.and].push({ [Op.or]: filters.typeFilters });
+
+		const getTypeItems = async () => {
+			try {
+				const typeItemsResult = await db.Document.findAndCountAll({
+					where,
+					offset,
+					order: [['date_published', 'DESC']],
+					limit
+				});
+
+				const data = await typeItemsResult;
+
+				return data;
+			} catch (e) {
+				console.error(e);
+			}
+		};
+
+		const resultData = await getTypeItems();
+
+		filterOneItems.push(resultData);
+	}
+
+	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
+		const getTypeItems = async () => {
+			try {
+				const typeItemsResult = await db.Document.findAndCountAll({
+					where,
+					offset,
+					order: [['date_published', 'DESC']],
+					limit
+				});
+
+				const data = await typeItemsResult;
+
+				return data;
+			} catch (e) {
+				console.error(e);
+			}
+		};
+
+		const resultData = await getTypeItems();
+
+		filterOneItems.push(resultData);
+	}
+
+	const documents = {
+		count: 0,
+		rows: []
+	};
+
+	categoryItems.forEach(({ count, rows }) => {
+		documents.count += count ?? 0;
+		documents.rows = rows ? documents.rows.concat(rows) : documents.rows;
 	});
 
-	console.warn({ theFilterIs: where[Op.and] });
-
-	// theFilterIs: [ { case_reference: 'EN010085' }, { Stage: [Array] } ] } gets everything 297 as it previously did no type
-
-	/*
-	Logging filter object { filter_1: '["Additional Submissions"]' }
- {
-   theFilterIs: [
-     { case_reference: 'EN010085' },
-     { Stage: [Array] },
-     { filter_1: [Array] }
-   ]
-	*/
-
-	const documents = await db.Document.findAndCountAll({
-		where,
-		offset,
-		order: [['date_published', 'DESC']],
-		limit
+	filterOneItems.forEach(({ count, rows }) => {
+		documents.count += count ?? 0;
+		documents.rows = rows ? documents.rows.concat(rows) : documents.rows;
 	});
-
-	const x = Object.entries(documents)
-		.filter((r, i) => i < 5)
-		.map((rows) => rows[1][1]);
-
-	console.log({ documentResult: JSON.parse(JSON.stringify(x)) });
-
-	// const [results, metadata] = await db.sequelize.query(
-	// 	"SELECT `category`, COUNT(`category`) AS `count` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3)) GROUP BY `category` ORDER BY count DESC"
-	// );
-
-	// const [results, metadata] = await db.sequelize.query(
-	// 	"SELECT `category`, COUNT(`category`) AS `count` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3)) GROUP BY `category` ORDER BY count DESC"
-	// );
-
-	// console.log({ metadata, results: results.length });
-
-	// const [results2, metadata2] = await db.sequelize.query(
-	// 	"SELECT `id`, `dataID`, `case_reference`, `Stage`, `type`, `filter_1`, `filter_2`, `category`, `description`, `size`, `mime`, `path`, `status`, `date_published`, `deadline_date`, `personal_name`, `representative`, `who_from`, `doc_reference`, `author`, `details`, `last_modified`, `date_created` FROM `wp_ipc_documents_api` AS `Document` WHERE (`Document`.`case_reference` = 'EN010085' AND `Document`.`Stage` IN (1, 2, 3)) ORDER BY `Document`.`date_published` DESC LIMIT 0, 20"
-	// );
-
-	// console.log({ metadata2, results2: results2.length });
 
 	return documents;
 };
@@ -268,6 +272,11 @@ const getFilters = async (filter, caseRef, classification) => {
 
 	if (filter === 'category') {
 		order = [db.sequelize.literal('count DESC')];
+		where[Op.and].push({
+			category: {
+				[Op.and]: [{ [Op.ne]: null }, { [Op.notIn]: ['', 'NULL'] }]
+			}
+		});
 	}
 
 	const filters = await db.Document.findAll({
