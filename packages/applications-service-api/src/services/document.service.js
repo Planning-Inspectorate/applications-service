@@ -166,7 +166,7 @@ const getOrderedDocuments = async (
 	if (typeFilters && typeFilters.length > 0) {
 		typeFilters.forEach((typeFilter) => {
 			filters['typeFilters'].push({
-				type: typeFilter
+				filter_1: typeFilter
 			});
 		});
 	}
