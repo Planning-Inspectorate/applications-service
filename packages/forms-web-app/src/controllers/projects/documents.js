@@ -7,6 +7,7 @@ const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 const { featureHideLink } = require('../../config');
 const { replaceControllerParamType } = require('../../utils/replace-controller-param-type');
+const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const {
 	hideProjectInformationLink,
@@ -28,18 +29,11 @@ function renderData(
 	stageList = [],
 	typeList = []
 ) {
-	let queryUrl = '';
-	if (params.searchTerm) {
-		queryUrl = `&searchTerm=${params.searchTerm}`;
-	}
-	if (params.stage) {
-		const stageQueryParams = params.type instanceof Array ? [...params.stage] : [params.stage];
-		queryUrl = `${queryUrl}&stage=${stageQueryParams.join('&stage=')}`;
-	}
-	if (params.type) {
-		const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
-		queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
-	}
+	const baseUrl = `/projects/${params.caseRef}`;
+	const pageUrl = `${baseUrl}/application-documents`;
+	const queryUrl = queryStringBuilder(params, ['searchTerm', 'stage', 'type'], false);
+	const paginationUrl = `${pageUrl}?page=:page${queryUrl}`;
+
 	const respData = response.data;
 	const { documents, filters } = respData;
 	const { stageFilters, typeFilters } = filters;
@@ -153,14 +147,17 @@ function renderData(
 	}
 
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
+		baseUrl,
+		pageUrl,
+		caseRef: params.caseRef,
 		documents,
 		projectName,
-		caseRef: params.caseRef,
 		hideProjectInformationLink,
 		hideAllExaminationDocumentsLink,
 		hideRecommendationAndDecisionLink,
 		hideExaminationTimetableLink,
 		paginationData,
+		paginationUrl,
 		pageOptions,
 		searchTerm: params.searchTerm,
 		queryUrl,
