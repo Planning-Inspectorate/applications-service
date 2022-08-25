@@ -104,12 +104,7 @@ const getOrderedDocuments = async (
 
 	const where = { [Op.and]: [{ case_reference: caseRef }] };
 	const categoryFiltersWhereClause = {
-		[Op.and]: [
-			{
-				Stage: { [Op.in]: [1, 2, 3] }
-			},
-			{ case_reference: caseRef }
-		]
+		[Op.and]: [{ case_reference: caseRef }]
 	};
 	const filters = { categoryFilters: [], typeFilters: [] };
 	const categoryItems = [];
@@ -171,79 +166,67 @@ const getOrderedDocuments = async (
 		});
 	}
 
-	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
-		const getTypeItems = async () => {
-			try {
-				const typeItemsResult = await db.Document.findAndCountAll({
-					where,
-					offset,
-					order: [['date_published', 'DESC']],
-					limit
-				});
-
-				const data = await typeItemsResult;
-
-				return data;
-			} catch (e) {
-				console.error(e);
-			}
+	const queryItems = async (where, options) => {
+		let defaultQueryOptions = {
+			where,
+			offset,
+			order: [['date_published', 'DESC']],
+			limit
 		};
 
-		const resultData = await getTypeItems();
+		if (options && typeof options === 'object' && !Array.isArray(options)) {
+			defaultQueryOptions = { ...defaultQueryOptions, ...options };
+		}
+
+		try {
+			const typeItemsResult = await db.Document.findAndCountAll(defaultQueryOptions);
+
+			const data = await typeItemsResult;
+
+			return data;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
+		const resultData = await queryItems(where);
 
 		resultData && filterOneItems.push(resultData);
 	}
 
-	if (filters.typeFilters.length === 0 || filters.categoryFilters.length > 0) {
+	if (filters.typeFilters.length === 0 && filters.categoryFilters.length > 0) {
 		categoryFiltersWhereClause[Op.and].push({
 			[Op.or]: filters.categoryFilters
 		});
 
-		const getCategoryItems = async () => {
-			try {
-				const categoryItemsResult = await db.Document.findAndCountAll({
-					where: categoryFiltersWhereClause,
-					offset,
-					order: [['date_published', 'DESC']],
-					limit
-				});
-
-				const data = await categoryItemsResult;
-
-				return data;
-			} catch (e) {
-				console.error(e);
-			}
-		};
-
-		const resultData = await getCategoryItems();
+		const resultData = await queryItems(categoryFiltersWhereClause);
 
 		resultData && categoryItems.push(resultData);
 	}
 
-	if (filters.typeFilters.length > 0) {
+	if (filters.categoryFilters.length === 0 && filters.typeFilters.length > 0) {
 		where[Op.and].push({ [Op.or]: filters.typeFilters });
 
-		const getTypeItems = async () => {
-			try {
-				const typeItemsResult = await db.Document.findAndCountAll({
-					where,
-					offset,
-					order: [['date_published', 'DESC']],
-					limit
-				});
-
-				const data = await typeItemsResult;
-
-				return data;
-			} catch (e) {
-				console.error(e);
-			}
-		};
-
-		const resultData = await getTypeItems();
+		const resultData = await queryItems(where);
 
 		resultData && filterOneItems.push(resultData);
+	}
+
+	if (filters.categoryFilters.length > 0 && filters.typeFilters.length > 0) {
+		where[Op.and].push({ [Op.or]: filters.typeFilters });
+		where[Op.and].push({ [Op.or]: filters.categoryFilters });
+
+		const resultData = await queryItems(where, {
+			attributes: [
+				[db.sequelize.fn('DISTINCT', db.sequelize.col('id')), 'id'],
+				'filter_1',
+				'category',
+				'date_published'
+			]
+		});
+
+		resultData && categoryItems.push(resultData);
 	}
 
 	const documents = {
