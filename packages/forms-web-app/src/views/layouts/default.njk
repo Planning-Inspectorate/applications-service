@@ -1,0 +1,47 @@
+{% extends "govuk/template.njk" %}
+
+{% block pageTitle -%}
+  {{ defaultPageTitle }}
+{%- endblock %}
+
+{% block head %}
+  {% include "includes/head.njk" %}
+{% endblock %}
+
+{% block bodyStart %}
+  {% include "includes/gtm-no-script.njk" %}
+
+  {% include "includes/cookie-banner.njk" %}
+{% endblock %}
+
+{% block header %}
+  {% include "components/core/header.njk" %}
+{% endblock %}
+
+{% block main %}
+  {{ super() }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% include "components/core/banner.njk" %}
+
+  {% include "components/core/back-link.njk" %}
+{% endblock %}
+
+{% block footer %}
+  {% include "components/core/footer.njk" %}
+{% endblock %}
+
+{%-
+  set initiateScriptsConfig = [
+    {
+      src: "/public/scripts/index.script.js"
+    }
+  ]
+-%}
+
+{% block bodyEnd %}
+  {% block script %}{% endblock %}
+
+  {% include "includes/initiate-scripts.njk" %}
+{% endblock %}

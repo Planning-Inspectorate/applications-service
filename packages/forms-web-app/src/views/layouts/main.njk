@@ -14,13 +14,11 @@
 
 {% block head %}
   {% include "includes/head.njk" %}
-  <!--[if lte IE 8]><link href="/public/stylesheets/unbranded-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
-  <!--[if gt IE 8]><!--><link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/>
-  <!--<![endif]-->
 {% endblock %}
 
 {% block header %}
   {% include "includes/cookie-banner.njk" %}
+
   {{ pinsHeader({
     serviceName: serviceName,
     containerClasses: "govuk-width-container"

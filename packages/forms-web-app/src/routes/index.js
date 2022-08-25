@@ -11,7 +11,9 @@ const decisionMakingProcessGuideRouter = require('./decision-making-process-guid
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const projectsRouter = require('./projects');
+const examinationRouter = require('./examination');
 
+router.use('/', examinationRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
