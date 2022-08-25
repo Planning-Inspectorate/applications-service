@@ -7,6 +7,7 @@ const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 const { featureHideLink } = require('../../config');
 const { replaceControllerParamType } = require('../../utils/replace-controller-param-type');
+const { buildQueryParams } = require('../../utils/build-query-params');
 
 const {
 	hideProjectInformationLink,
@@ -36,19 +37,15 @@ function renderData(
 	}
 
 	if (params.stage) {
-		const stageQueryParams = params.type instanceof Array ? [...params.stage] : [params.stage];
-		queryUrl = `${queryUrl}&stage=${stageQueryParams.join('&stage=')}`;
+		queryUrl = buildQueryParams(params.stage, 'stage', queryUrl);
 	}
 
 	if (params.type) {
-		const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
-		queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
+		queryUrl = buildQueryParams(params.type, 'type', queryUrl);
 	}
 
 	if (params.category) {
-		const categoryQueryParams =
-			params.category instanceof Array ? [...params.category] : [params.category];
-		queryUrl = `${queryUrl}&category=${categoryQueryParams.join('&category=')}`;
+		queryUrl = buildQueryParams(params.category, 'category', queryUrl);
 	}
 
 	const respData = response.data;
@@ -57,12 +54,11 @@ function renderData(
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
 	const modifiedTypeFilters = [];
-	const modifiedStageFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
 	const numberOfFiltersToDisplay = 5;
 
-	const modifiedCategoryFilters = categoryFilters.map(({ name: categoryName, count }) => ({
+	const modifiedCategoryFilters = categoryFilters.map(({ name: categoryName = '', count = 0 }) => ({
 		text: `${categoryName} (${count})`,
 		value: categoryName,
 		checked: categoryList.includes(categoryName)
@@ -121,17 +117,14 @@ function renderData(
 		return projectStageItem?.count || 0;
 	};
 
-	Object.keys(documentProjectStages).forEach((projectStage) => {
-		const projectStageName = documentProjectStages[projectStage].name;
-		const projectStageValue = documentProjectStages[projectStage].value;
-		const projectStageCount = getProjectStageCount(projectStageValue);
-		const projectStageChecked = stageList.includes(projectStageValue);
+	const modifiedStageFilters = Object.values(documentProjectStages).map(({ name = '', value }) => {
+		const projectStageCount = getProjectStageCount(value);
 
-		modifiedStageFilters.push({
-			checked: projectStageChecked,
-			text: `${projectStageName} (${projectStageCount})`,
-			value: projectStageValue
-		});
+		return {
+			checked: stageList.includes(value),
+			text: `${name} (${projectStageCount ?? 0})`,
+			value: value ?? 0
+		};
 	});
 
 	let otherTypeFiltersCount = 0;
@@ -192,7 +185,6 @@ function renderData(
 }
 
 exports.getApplicationDocuments = async (req, res) => {
-	console.log({ requestow: req });
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
