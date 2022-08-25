@@ -1,15 +1,15 @@
 const getCategoryFilterType = (categoryTypeFilters, filterTypeItemName) => {
-	if (
-		!categoryTypeFilters ||
-		!Array.isArray(categoryTypeFilters) ||
-		categoryTypeFilters.length === 0 ||
-		!filterTypeItemName ||
-		typeof filterTypeItemName !== 'string'
-	) {
-		return;
-	}
-
 	try {
+		if (
+			!categoryTypeFilters ||
+			!Array.isArray(categoryTypeFilters) ||
+			categoryTypeFilters.length === 0 ||
+			!filterTypeItemName ||
+			typeof filterTypeItemName !== 'string'
+		) {
+			return;
+		}
+
 		let i = 0;
 		let result;
 		const regex = new RegExp(filterTypeItemName, 'i');
