@@ -15,7 +15,7 @@ describe('All test cases', () => {
 	while (i < 3) {
 		falsyAndEmptyValues
 			.filter((item) => typeof item !== 'string')
-			.forEach((falsyOrEmptyValue, index) => {
+			.forEach((falsyOrEmptyValue) => {
 				it(`Input ${j}, pass falsy or empty value: ${JSON.stringify(
 					falsyOrEmptyValue
 				)} and expect return of empty string`, () => {
