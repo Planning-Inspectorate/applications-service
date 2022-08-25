@@ -126,7 +126,9 @@ describe('controllers/documents', () => {
 			await aboutTheApplicationController.getApplicationDocuments(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
 				documents: [docList[1], docList[0]],
+				paginationUrl: '/projects/ABCD1234/application-documents?page=:page',
 				projectName: 'St James Barton Giant Wind Turbine',
+				baseUrl: '/projects/ABCD1234',
 				caseRef: 'ABCD1234',
 				hideProjectInformationLink,
 				hideAllExaminationDocumentsLink,
@@ -137,6 +139,7 @@ describe('controllers/documents', () => {
 				top5TypeFilters: [],
 				queryUrl: '',
 				searchTerm: undefined,
+				pageUrl: '/projects/ABCD1234/application-documents',
 				paginationData: {
 					currentPage: 1,
 					fromRange: 1,
@@ -167,7 +170,9 @@ describe('controllers/documents', () => {
 			);
 			await aboutTheApplicationController.getApplicationDocuments(req, res);
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.DOCUMENTS, {
+				paginationUrl: '/projects/ABCD1234/application-documents?page=:page',
 				projectName: 'St James Barton Giant Wind Turbine',
+				baseUrl: '/projects/ABCD1234',
 				caseRef: 'ABCD1234',
 				documents: [],
 				hideProjectInformationLink,
@@ -179,6 +184,7 @@ describe('controllers/documents', () => {
 				modifiedStageFilters,
 				top5TypeFilters: [],
 				pageOptions: [1],
+				pageUrl: '/projects/ABCD1234/application-documents',
 				paginationData: {
 					currentPage: 1,
 					fromRange: 1,
