@@ -5,6 +5,10 @@
 {% from "pins/components/header/macro.njk" import pinsHeader %}
 {% from "pins/components/footer/macro.njk" import pinsFooter %}
 
+{%
+  set bodyClasses = '-extended-max-width'
+%}
+
 {% set a_href = "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice" %}
 
 {% if host %}

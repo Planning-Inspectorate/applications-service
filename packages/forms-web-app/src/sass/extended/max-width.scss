@@ -1,0 +1,5 @@
+.-extended-max-width {
+  .govuk-width-container {
+    @include govuk-width-container(1440px);
+  }
+}
