@@ -207,6 +207,8 @@ const getOrderedDocuments = async (
 	}
 
 	if (filters.categoryFilters.length === 0 && filters.typeFilters.length > 0) {
+		delete where[Op.or];
+
 		where[Op.and].push({ [Op.or]: filters.typeFilters });
 
 		const resultData = await queryItems(where);
