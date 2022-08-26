@@ -1,7 +1,6 @@
 const httpPort = Number(process.env.PORT || 3000);
 
 module.exports = {
-	serviceName: 'Register to have your say',
 	application: {
 		defaultDisplayDateFormat: 'DD MMMM YYYY'
 	},
@@ -20,6 +19,7 @@ module.exports = {
 			redisUrl: process.env.REDIS_URL || 'redis://redis:6379'
 		}
 	},
+	defaultPageTitle: 'The Planning Inspectorate',
 	isProduction: process.env.NODE_ENV === 'production',
 	logger: {
 		level: process.env.LOGGER_LEVEL || 'info',
@@ -49,5 +49,7 @@ module.exports = {
 		hideAllExaminationDocumentsLink: true,
 		hideRecommendationAndDecisionLink: true,
 		hideExaminationTimetableLink: true
-	}
+	},
+	serviceFeedbackUrl:
+		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u'
 };

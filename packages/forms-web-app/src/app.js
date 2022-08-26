@@ -73,13 +73,16 @@ env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('formatBytes', fileSizeDisplayHelper);
 env.addFilter('formatMimeType', fileTypeDisplayHelper);
 env.addFilter('filterByKey', filterByKey);
+env.addFilter('render', renderTemplateFilter(nunjucks));
+
+env.addGlobal('defaultPageTitle', config.defaultPageTitle);
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
+env.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('host', config.server.host);
 env.addGlobal('nsipBaseUrl', config.server.nsipBaseUrl);
 env.addGlobal('projectStageNames', projectStageNames);
-env.addFilter('render', renderTemplateFilter(nunjucks));
 
 if (config.server.useSecureSessionCookie) {
 	app.set('trust proxy', 1); // trust first proxy
