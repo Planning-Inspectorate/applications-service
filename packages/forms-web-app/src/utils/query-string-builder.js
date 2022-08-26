@@ -1,12 +1,25 @@
-const queryStringBuilder = (params, includedParams) => {
-	if (!params || typeof params !== 'object' || !includedParams || !Array.isArray(includedParams))
-		return '';
+const queryStringBuilder = (queryParams, includedParams, append = true) => {
+	const defaultValue = '';
+
+	if (
+		!queryParams ||
+		typeof queryParams !== 'object' ||
+		!includedParams ||
+		!Array.isArray(includedParams)
+	)
+		return defaultValue;
+
+	const params = { ...queryParams };
 
 	Object.keys(params).forEach((param) => {
 		if (!includedParams.includes(param) || !params[param]) delete params[param];
 	});
 
-	if (!Object.keys(params).length) return '';
+	const paramsArray = Object.keys(params);
+
+	if (!paramsArray.length) return defaultValue;
+
+	const queryStart = append ? '?' : '&';
 
 	const queryString = Object.keys(params)
 		.map((param) => {
@@ -23,7 +36,9 @@ const queryStringBuilder = (params, includedParams) => {
 		})
 		.join('&');
 
-	return `?${queryString}`;
+	if (!queryStart || !queryString) return defaultValue;
+
+	return `${queryStart}${queryString}`;
 };
 
 module.exports = { queryStringBuilder };

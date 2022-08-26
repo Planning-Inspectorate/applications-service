@@ -7,7 +7,7 @@ const { getAppData } = require('../../services/application.service');
 const { searchDocumentsV2 } = require('../../services/document.service');
 const { featureHideLink } = require('../../config');
 const { replaceControllerParamType } = require('../../utils/replace-controller-param-type');
-const { buildQueryParams } = require('../../utils/build-query-params');
+const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const {
 	hideProjectInformationLink,
@@ -30,23 +30,10 @@ function renderData(
 	typeList = [],
 	categoryList = []
 ) {
-	let queryUrl = '';
-
-	if (params.searchTerm) {
-		queryUrl = `&searchTerm=${params.searchTerm}`;
-	}
-
-	if (params.stage) {
-		queryUrl = buildQueryParams(params.stage, 'stage', queryUrl);
-	}
-
-	if (params.type) {
-		queryUrl = buildQueryParams(params.type, 'type', queryUrl);
-	}
-
-	if (params.category) {
-		queryUrl = buildQueryParams(params.category, 'category', queryUrl);
-	}
+	const baseUrl = `/projects/${params.caseRef}`;
+	const pageUrl = `${baseUrl}/application-documents`;
+	const queryUrl = queryStringBuilder(params, ['searchTerm', 'stage', 'type'], false);
+	const paginationUrl = `${pageUrl}?page=:page${queryUrl}`;
 
 	const respData = response.data;
 	const { documents, filters } = respData;
@@ -167,14 +154,17 @@ function renderData(
 	}
 
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
+		baseUrl,
+		pageUrl,
+		caseRef: params.caseRef,
 		documents,
 		projectName,
-		caseRef: params.caseRef,
 		hideProjectInformationLink,
 		hideAllExaminationDocumentsLink,
 		hideRecommendationAndDecisionLink,
 		hideExaminationTimetableLink,
 		paginationData,
+		paginationUrl,
 		pageOptions,
 		searchTerm: params.searchTerm,
 		queryUrl,

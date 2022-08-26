@@ -69,7 +69,7 @@
     </p>
 
     <p>
-      <a href="/projects/{{ caseRef }}/application-documents" data-cy="clear-search">
+      <a href="{{ pageUrl }}" data-cy="clear-search">
         Clear search and filters
       </a>
     </p>
@@ -80,18 +80,14 @@
       </p>
 
       <p>
-        <a href="/projects/{{ caseRef }}">
+        <a href="{{ baseUrl }}">
           Return to the project overview
         </a>
       </p>
     {% endif %}
 
     {% if documents.length > 0 %}
-      {% set pageLinkTemplate -%}
-        /projects/{{ caseRef }}/application-documents?page=:page{{ queryUrl | safe }}
-      {%- endset %}
-
-      {{ paginationBar(pageOptions, paginationData, pageLinkTemplate) }}
+      {{ paginationBar(pageOptions, paginationData, paginationUrl) }}
     {% endif %}
   </div>
 {% endblock %}
