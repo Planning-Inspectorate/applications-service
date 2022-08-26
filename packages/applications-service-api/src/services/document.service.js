@@ -102,7 +102,7 @@ const getOrderedDocuments = async (
 	const { itemsPerPage: limit } = config;
 	const offset = (pageNo - 1) * limit;
 
-	const where = { [Op.and]: [{ case_reference: caseRef }] };
+	const where = { [Op.and]: [{ case_reference: caseRef }], [Op.or]: [] };
 	const categoryFiltersWhereClause = {
 		[Op.and]: [{ case_reference: caseRef }]
 	};
@@ -190,6 +190,7 @@ const getOrderedDocuments = async (
 	};
 
 	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
+		delete where[Op.or];
 		const resultData = await queryItems(where);
 
 		resultData && filterOneItems.push(resultData);
@@ -214,8 +215,8 @@ const getOrderedDocuments = async (
 	}
 
 	if (filters.categoryFilters.length > 0 && filters.typeFilters.length > 0) {
-		where[Op.and].push({ [Op.or]: filters.typeFilters });
-		where[Op.and].push({ [Op.or]: filters.categoryFilters });
+		where[Op.or].push({ [Op.or]: filters.typeFilters });
+		where[Op.or].push({ [Op.or]: filters.categoryFilters });
 
 		const resultData = await queryItems(where, {
 			attributes: [
