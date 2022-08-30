@@ -104,12 +104,21 @@
         }) }}
       {% endset %}
 
-      {% set top5DocumentTypeFilter %}
+			{% set modifiedCategoryFilters %}
+        {{ govukCheckboxes({
+          classes: "govuk-checkboxes--small",
+          idPrefix: "categoryFilters",
+          name: "category",
+          items: modifiedCategoryFilters
+        }) }}
+      {% endset %}
+
+      {% set modifiedTypeFilters %}
         {{ govukCheckboxes({
           classes: "govuk-checkboxes--small",
           idPrefix: "top5Type",
           name: "type",
-          items: top5TypeFilters
+          items: modifiedTypeFilters
         }) }}
       {% endset %}
 
@@ -134,7 +143,7 @@
                 html: '<span class="filter-heading" data-cy="document-type">Document type</span>'
               },
               content: {
-                html: top5DocumentTypeFilter
+                html: modifiedCategoryFilters + modifiedTypeFilters
               }
             }
           ]

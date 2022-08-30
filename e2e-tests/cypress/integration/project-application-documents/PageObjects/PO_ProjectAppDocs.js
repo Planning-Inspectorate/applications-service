@@ -92,12 +92,12 @@ class PO_ProjectAppDocs {
 		cy.get('[data-cy="clear-search"]').click();
 	}
 
-	assertFilterStagesNotPresent(caseCondition) {
-		switch (caseCondition) {
-			case 'not be visible':
+	assertFilterStagesNotPresent() {
+		switch (window.sessionStorage['accordion-default-content-1']) {
+			case false:
 				cy.get('.govuk-form-group').should('not.be.visible');
 				break;
-			case 'visible':
+			case true:
 				cy.get('.govuk-form-group').should('be.visible');
 				break;
 		}
@@ -136,6 +136,9 @@ class PO_ProjectAppDocs {
 	}
 
 	selectCheckBox(checkBoxName) {
+		window.sessionStorage['accordion-default-content-1'] = true;
+		window.sessionStorage['accordion-default-content-2'] = true;
+		cy.reload();
 		cy.contains('label', checkBoxName)
 			.invoke('attr', 'for')
 			.then((id) => {

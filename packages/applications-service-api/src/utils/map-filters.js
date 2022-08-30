@@ -2,7 +2,7 @@ const mapFilters = (filterArray, elementNameToFilter) => {
 	if (
 		!filterArray ||
 		!Array.isArray(filterArray) ||
-		filterArray.length <= 0 ||
+		filterArray.length === 0 ||
 		!elementNameToFilter ||
 		typeof elementNameToFilter !== 'string'
 	) {
@@ -13,7 +13,13 @@ const mapFilters = (filterArray, elementNameToFilter) => {
 	const otherTypesToAdd = [];
 	const result = [];
 
-	for (const { filter_1: filterTypeName } of filterArray) {
+	for (const filterItem of filterArray) {
+		const { filter_1: filterTypeName } = filterItem;
+
+		if (!filterTypeName) {
+			return { ['result']: undefined, ['otherTypesToAdd']: undefined };
+		}
+
 		const otherTypeMatch = regex.test(filterTypeName);
 
 		if (otherTypeMatch) {

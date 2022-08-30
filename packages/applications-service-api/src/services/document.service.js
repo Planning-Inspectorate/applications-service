@@ -37,9 +37,20 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 	// AND (desc like %searchTerm% OR path like %searchTerm% OR filter_1 like %searchTerm% or filter_2 like %searchTerm%)
 	// AND filter[0] AND filter[1] ... AND filter[n];
 
-	let where = { case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } };
+	let where = {
+		case_reference: caseRef,
+		Stage: { [Op.in]: [1, 2, 3] }
+	};
+
 	if (searchTerm) {
-		where = { [Op.and]: [{ case_reference: caseRef, Stage: { [Op.in]: [1, 2, 3] } }] };
+		where = {
+			[Op.and]: [
+				{
+					case_reference: caseRef,
+					Stage: { [Op.in]: [1, 2, 3] }
+				}
+			]
+		};
 		where[Op.and].push({
 			[Op.or]: [
 				{
@@ -61,6 +72,11 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 					filter_2: {
 						[Op.like]: `%${searchTerm}%`
 					}
+				},
+				{
+					category: {
+						[Op.like]: `%${searchTerm}%`
+					}
 				}
 			]
 		});
@@ -74,11 +90,25 @@ const getDocuments = async (caseRef, pageNo, searchTerm) => {
 	return documents;
 };
 
-const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, stage, type) => {
+const getOrderedDocuments = async (
+	caseRef,
+	classification,
+	pageNo,
+	searchTerm,
+	stage,
+	typeFilters,
+	categoryFilters
+) => {
 	const { itemsPerPage: limit } = config;
 	const offset = (pageNo - 1) * limit;
 
-	const where = { [Op.and]: [{ case_reference: caseRef }] };
+	const where = { [Op.and]: [{ case_reference: caseRef }], [Op.or]: [] };
+	const categoryFiltersWhereClause = {
+		[Op.and]: [{ case_reference: caseRef }]
+	};
+	const filters = { categoryFilters: [], typeFilters: [] };
+	const categoryItems = [];
+	const filterOneItems = [];
 
 	addStageClause(where, classification);
 
@@ -115,20 +145,115 @@ const getOrderedDocuments = async (caseRef, classification, pageNo, searchTerm, 
 		where[Op.and].push({
 			Stage: { [Op.in]: stage }
 		});
-	}
-
-	if (type && type.length > 0) {
-		where[Op.and].push({
-			filter_1: type
+		categoryFiltersWhereClause[Op.and].push({
+			Stage: { [Op.in]: stage }
 		});
 	}
 
-	const documents = await db.Document.findAndCountAll({
-		where,
-		offset,
-		order: [['date_published', 'DESC']],
-		limit
+	if (categoryFilters && categoryFilters.length > 0) {
+		categoryFilters.forEach((categoryFilter) => {
+			filters['categoryFilters'].push({
+				category: categoryFilter
+			});
+		});
+	}
+
+	if (typeFilters && typeFilters.length > 0) {
+		typeFilters.forEach((typeFilter) => {
+			filters['typeFilters'].push({
+				filter_1: typeFilter
+			});
+		});
+	}
+
+	const queryItems = async (where, options) => {
+		let defaultQueryOptions = {
+			where,
+			offset,
+			order: [['date_published', 'DESC']],
+			limit
+		};
+
+		if (options && typeof options === 'object' && !Array.isArray(options)) {
+			defaultQueryOptions = { ...defaultQueryOptions, ...options };
+		}
+
+		try {
+			const typeItemsResult = await db.Document.findAndCountAll(defaultQueryOptions);
+
+			const data = await typeItemsResult;
+
+			return data;
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	if (filters.typeFilters.length === 0 && filters.categoryFilters.length === 0) {
+		delete where[Op.or];
+		const resultData = await queryItems(where);
+
+		resultData && filterOneItems.push(resultData);
+	}
+
+	if (filters.typeFilters.length === 0 && filters.categoryFilters.length > 0) {
+		categoryFiltersWhereClause[Op.and].push({
+			[Op.or]: filters.categoryFilters
+		});
+
+		const resultData = await queryItems(categoryFiltersWhereClause);
+
+		resultData && categoryItems.push(resultData);
+	}
+
+	if (filters.categoryFilters.length === 0 && filters.typeFilters.length > 0) {
+		delete where[Op.or];
+
+		where[Op.and].push({ [Op.or]: filters.typeFilters });
+
+		const resultData = await queryItems(where);
+
+		resultData && filterOneItems.push(resultData);
+	}
+
+	if (filters.categoryFilters.length > 0 && filters.typeFilters.length > 0) {
+		where[Op.or].push({ [Op.or]: filters.typeFilters });
+		where[Op.or].push({ [Op.or]: filters.categoryFilters });
+
+		const resultData = await queryItems(where, {
+			attributes: [
+				[db.sequelize.fn('DISTINCT', db.sequelize.col('id')), 'id'],
+				'filter_1',
+				'category',
+				'date_published'
+			]
+		});
+
+		resultData && categoryItems.push(resultData);
+	}
+
+	const documents = {
+		count: 0,
+		rows: []
+	};
+
+	categoryItems.forEach(({ count, rows }) => {
+		if (!count || !rows) {
+			return;
+		}
+		documents.count += count ?? 0;
+		documents.rows = rows ? documents.rows.concat(rows) : documents.rows;
 	});
+
+	filterOneItems.forEach(({ count, rows }) => {
+		if (!count || !rows) {
+			return;
+		}
+
+		documents.count += count ?? 0;
+		documents.rows = rows ? documents.rows.concat(rows) : documents.rows;
+	});
+
 	return documents;
 };
 
@@ -137,11 +262,24 @@ const getFilters = async (filter, caseRef, classification) => {
 	addStageClause(where, classification);
 
 	let order = [];
+
 	if (filter === 'Stage') {
 		order = [['Stage']];
-	} else if (filter === 'filter_1') {
+	}
+
+	if (filter === 'filter_1') {
 		order = [db.sequelize.literal('count DESC')];
 	}
+
+	if (filter === 'category') {
+		order = [db.sequelize.literal('count DESC')];
+		where[Op.and].push({
+			category: {
+				[Op.and]: [{ [Op.ne]: null }, { [Op.notIn]: ['', 'NULL'] }]
+			}
+		});
+	}
+
 	const filters = await db.Document.findAll({
 		where,
 		order,

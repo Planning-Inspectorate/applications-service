@@ -30,7 +30,8 @@ describe('getV2Documents', () => {
 			currentPage: 1,
 			filters: {
 				stageFilters: [],
-				typeFilters: []
+				typeFilters: [],
+				categoryFilters: []
 			}
 		});
 	});

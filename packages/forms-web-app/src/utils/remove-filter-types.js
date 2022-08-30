@@ -2,7 +2,7 @@ const removeFilterTypes = (filtersArray, typeFilterToRemove) => {
 	if (
 		!filtersArray ||
 		!Array.isArray(filtersArray) ||
-		filtersArray.length <= 0 ||
+		filtersArray.length === 0 ||
 		!typeFilterToRemove ||
 		typeof typeFilterToRemove !== 'string'
 	) {

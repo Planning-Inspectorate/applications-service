@@ -7,6 +7,8 @@ const mockReq = () => ({
 	body: {}
 });
 
+const falsyAndEmptyValues = [undefined, null, NaN, 0, '', false, [], {}];
+
 const mockRes = () => {
 	const res = {};
 	res.status = jest.fn();
@@ -19,5 +21,6 @@ const mockRes = () => {
 
 module.exports = {
 	mockReq,
-	mockRes
+	mockRes,
+	falsyAndEmptyValues
 };
