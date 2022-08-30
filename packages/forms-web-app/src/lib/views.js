@@ -94,6 +94,11 @@ const VIEW = {
 	FOOTER_PAGES: {
 		ACCESSIBILITY: 'footer-pages/accessibility-statement',
 		COOKIES: 'footer-pages/cookies-info'
+	},
+	EXAMINATION: {
+		YOUR_NAME: 'your-name',
+		YOUR_EMAIL_ADDRESS: 'your-email-address',
+		WHO_ARE_YOU_SUBMITTING_FOR: 'who-are-you-submitting-for'
 	}
 };
 
