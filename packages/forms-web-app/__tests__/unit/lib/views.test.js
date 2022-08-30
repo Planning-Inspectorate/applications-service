@@ -101,6 +101,11 @@ describe('lib/views', () => {
 			FOOTER_PAGES: {
 				ACCESSIBILITY: 'footer-pages/accessibility-statement',
 				COOKIES: 'footer-pages/cookies-info'
+			},
+			EXAMINATION: {
+				WHO_ARE_YOU_SUBMITTING_FOR: 'who-are-you-submitting-for',
+				YOUR_EMAIL_ADDRESS: 'your-email-address',
+				YOUR_NAME: 'your-name'
 			}
 		});
 	});
