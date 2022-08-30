@@ -32,7 +32,7 @@ function renderData(
 ) {
 	const baseUrl = `/projects/${params.caseRef}`;
 	const pageUrl = `${baseUrl}/application-documents`;
-	const queryUrl = queryStringBuilder(params, ['searchTerm', 'stage', 'type', 'category'], false);
+	const queryUrl = queryStringBuilder(params, ['category', 'searchTerm', 'stage', 'type'], false);
 	const paginationUrl = `${pageUrl}?page=:page${queryUrl}`;
 
 	const respData = response.data;
