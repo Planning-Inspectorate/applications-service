@@ -1,7 +1,7 @@
 const { mapFilters } = require('../../../src/utils/map-filters');
+const { falsyAndEmptyValues } = require('../mocks');
 
 describe('All Test Cases', () => {
-	const falsyValues = [0, false, [], {}, '', undefined, null];
 	const mockTypeFiltersAvailable = [
 		{ filter_1: 'Environmental Statement', count: 221 },
 		{ filter_1: 'Additional Submissions', count: 18 },
@@ -24,11 +24,11 @@ describe('All Test Cases', () => {
 	const elementNameToFilter = 'other';
 	const regex = new RegExp(elementNameToFilter, 'i');
 
-	falsyValues.forEach((falsyValue, index) => {
+	falsyAndEmptyValues.forEach((falsyOrEmptyValue, index) => {
 		it(`Test mapFilters return in case of falsy value: ${JSON.stringify(
-			falsyValue
+			falsyOrEmptyValue
 		)} index: ${index} TypeFiltersAvailable array`, () => {
-			const { result, otherTypesToAdd } = mapFilters(falsyValue, elementNameToFilter);
+			const { result, otherTypesToAdd } = mapFilters(falsyOrEmptyValue, elementNameToFilter);
 
 			expect(result).toBe(undefined);
 			expect(otherTypesToAdd).toBe(undefined);

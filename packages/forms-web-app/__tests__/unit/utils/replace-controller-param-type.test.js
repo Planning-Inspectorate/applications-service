@@ -13,9 +13,7 @@ describe('All test cases', () => {
 		},
 		expected: {
 			input1: 'Other Documents',
-			input2: ['Other Documents'],
-			input3: ['Other Documents', 'everything_else'],
-			input4: ['everything_else']
+			input2: ['Other Documents']
 		}
 	};
 
