@@ -161,7 +161,8 @@ const v2DocumentListWrapper = {
 	currentPage: 1,
 	filters: {
 		stageFilters: [],
-		typeFilters: []
+		typeFilters: [],
+		categoryFilters: []
 	}
 };
 
@@ -387,7 +388,8 @@ const v2DocumentListWrapperNoResults = {
 	currentPage: 1,
 	filters: {
 		stageFilters: [],
-		typeFilters: []
+		typeFilters: [],
+		categoryFilters: []
 	}
 };
 
@@ -417,7 +419,10 @@ jest.mock('../../../src/models', () => {
 				return Document.build({ rows: [], count: 0 });
 			}
 			if (caseRef === 'ENF0000F') {
-				return null;
+				return Document.build({
+					rows: [(() => Error('throw error'))()],
+					count: (() => Error('throw error'))()
+				});
 			}
 		}
 		throw new Error(`No mock handler defined for ${query} method with specified queryOptions`);

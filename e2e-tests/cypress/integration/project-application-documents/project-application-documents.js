@@ -67,8 +67,8 @@ And('I click on clear search link', () => {
 	projectAppDocs.clickOnClearSearch();
 });
 
-Then('all the filter stages should {string} by default', (caseCondition) => {
-	projectAppDocs.assertFilterStagesNotPresent(caseCondition);
+Then('all the filter stages should {string} by default', () => {
+	projectAppDocs.assertFilterStagesNotPresent();
 });
 
 And('I click on {string} section', (caseCondition) => {

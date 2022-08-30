@@ -2,6 +2,7 @@ const R = require('ramda');
 const logger = require('../lib/logger');
 const config = require('../lib/config');
 const { mapFilters } = require('../utils/map-filters');
+const { getCategoryFilterType } = require('../utils/get-category-filter-type');
 
 const { getOrderedDocuments, getDocuments, getFilters } = require('../services/document.service');
 
@@ -51,14 +52,49 @@ module.exports = {
 	},
 
 	async getV2Documents(req, res) {
-		const { caseRef, page = 1, searchTerm, stage, classification, type } = req.query;
+		const { caseRef, page = 1, searchTerm, stage, classification, type, category } = req.query;
+
+		const categoryFilters = category ? ["Developer's Application"] : [];
+
+		const numberOfFiltersToDisplay = 5;
+
+		const deepCopyArray = (array) => {
+			if (!array || !Array.isArray(array) || array.length === 0) return;
+			return JSON.parse(JSON.stringify(array));
+		};
 
 		if (!caseRef) {
 			throw ApiError.badRequest('Required query parameter caseRef missing');
 		}
 
-		const stageFiltersAvailable = await getFilters('Stage', caseRef, classification);
-		const typeFiltersAvailable = await getFilters('filter_1', caseRef, classification);
+		const getAllFiltersFunc = async () => {
+			try {
+				const stageFiltersAvailableDBResponse = await getFilters('Stage', caseRef, classification);
+
+				const typeFiltersAvailableDBResponse = await getFilters(
+					'filter_1',
+					caseRef,
+					classification
+				);
+
+				const categoryTypeFiltersDBResponse = await getFilters('category', caseRef, classification);
+
+				const categoryTypeFilters = categoryTypeFiltersDBResponse
+					? deepCopyArray(categoryTypeFiltersDBResponse)
+					: categoryTypeFiltersDBResponse;
+
+				return [
+					stageFiltersAvailableDBResponse,
+					typeFiltersAvailableDBResponse,
+					categoryTypeFilters
+				];
+			} catch (error) {
+				throw ApiError.noDocumentsFound('getAllFiltersFunc failed!');
+			}
+		};
+
+		const [stageFiltersAvailableDBResponse, typeFiltersAvailableDBResponse, categoryTypeFilters] =
+			await getAllFiltersFunc();
 
 		let typeFilters = [];
 
@@ -66,11 +102,16 @@ module.exports = {
 			typeFilters = type instanceof Array ? [...type] : type.split(',');
 
 			if (typeFilters.includes('everything_else')) {
-				if (typeFiltersAvailable && typeFiltersAvailable.length > 4) {
-					const { result, otherTypesToAdd } = mapFilters(typeFiltersAvailable, 'other');
+				if (
+					typeFiltersAvailableDBResponse &&
+					typeFiltersAvailableDBResponse.length > numberOfFiltersToDisplay
+				) {
+					const { result, otherTypesToAdd } = mapFilters(typeFiltersAvailableDBResponse, 'other');
 					const validResult = result && otherTypesToAdd && result.length > 0;
 
-					let everythingElseFilterValues = validResult ? result.slice(4) : [];
+					let everythingElseFilterValues = validResult
+						? result.slice(numberOfFiltersToDisplay)
+						: [];
 
 					if (otherTypesToAdd.length > 0) {
 						everythingElseFilterValues = everythingElseFilterValues.concat(otherTypesToAdd);
@@ -89,11 +130,12 @@ module.exports = {
 				page,
 				searchTerm,
 				stage && !(stage instanceof Array) ? [stage] : stage,
-				typeFilters
+				typeFilters,
+				categoryFilters
 			);
 
 			const { itemsPerPage, documentsHost } = config;
-			const totalItems = documents.count;
+			const totalItems = documents.count ?? 0;
 			const rows = documents.rows.map((row) => ({
 				...row.dataValues,
 				path: row.dataValues.path ? `${documentsHost}${row.dataValues.path}` : null
@@ -106,18 +148,28 @@ module.exports = {
 				totalPages: Math.ceil(Math.max(1, totalItems) / itemsPerPage),
 				currentPage: page,
 				filters: {
-					stageFilters: stageFiltersAvailable
-						? stageFiltersAvailable.map((f) => ({
-								name: f.dataValues.Stage,
-								count: f.dataValues.count
-						  }))
-						: [],
-					typeFilters: typeFiltersAvailable
-						? typeFiltersAvailable.map((f) => ({
-								name: f.dataValues.filter_1,
-								count: f.dataValues.count
-						  }))
-						: []
+					stageFilters:
+						stageFiltersAvailableDBResponse && stageFiltersAvailableDBResponse.length > 0
+							? stageFiltersAvailableDBResponse
+									.map((f) => ({
+										name: f.dataValues.Stage ?? '',
+										count: f.dataValues.count ?? 0
+									}))
+									.filter(({ name, count }) => name && count)
+							: [],
+					typeFilters:
+						typeFiltersAvailableDBResponse && typeFiltersAvailableDBResponse.length > 0
+							? typeFiltersAvailableDBResponse
+									.map((f) => ({
+										name: f.dataValues.filter_1 ?? '',
+										count: f.dataValues.count ?? 0
+									}))
+									.filter(({ name, count }) => name && count)
+							: [],
+					categoryFilters:
+						categoryTypeFilters && categoryTypeFilters.length > 0
+							? getCategoryFilterType(categoryTypeFilters, "Developer's Application")
+							: []
 				}
 			};
 
@@ -127,7 +179,6 @@ module.exports = {
 			if (e instanceof ApiError) {
 				logger.debug(e.message);
 				res.status(e.code).send({ code: e.code, errors: e.message.errors });
-				return;
 			}
 			logger.error(e.message);
 			res.status(500).send(`Problem getting documents for project ${caseRef} \n ${e}`);

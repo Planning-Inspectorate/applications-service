@@ -1,5 +1,5 @@
 const { removeFilterTypes } = require('../../../src/utils/remove-filter-types');
-const { falsyValues } = require('../mocks');
+const { falsyAndEmptyValues } = require('../mocks');
 
 const typeFilters = [
 	{ name: 'Environmental Statement', count: 221 },
@@ -26,11 +26,14 @@ const typeFilterToRemove = 'other';
 const expectedotherTypeFiltersCountReturn = 0;
 
 describe('All test cases', () => {
-	falsyValues.forEach((falsyValue, index) => {
+	falsyAndEmptyValues.forEach((falsyOrEmptyValue, index) => {
 		it(`Test how removeFilterTypes handles falsy value: ${JSON.stringify(
-			falsyValue
+			falsyOrEmptyValue
 		)}, index: ${index}`, () => {
-			const { result, otherTypeFiltersCount } = removeFilterTypes(falsyValue, typeFilterToRemove);
+			const { result, otherTypeFiltersCount } = removeFilterTypes(
+				falsyOrEmptyValue,
+				typeFilterToRemove
+			);
 			const expectedResultReturn = [];
 
 			expect(result).toStrictEqual(expectedResultReturn);
@@ -38,11 +41,11 @@ describe('All test cases', () => {
 		});
 	});
 
-	falsyValues.forEach((falsyValue, index) => {
+	falsyAndEmptyValues.forEach((falsyOrEmptyValue, index) => {
 		it(`Test how removeFilterTypes handles falsy value: ${JSON.stringify(
-			falsyValue
+			falsyOrEmptyValue
 		)}, index: ${index}, but missing second parameter`, () => {
-			const { result, otherTypeFiltersCount } = removeFilterTypes(falsyValue);
+			const { result, otherTypeFiltersCount } = removeFilterTypes(falsyOrEmptyValue);
 			const expectedResultReturn = [];
 
 			expect(result).toStrictEqual(expectedResultReturn);

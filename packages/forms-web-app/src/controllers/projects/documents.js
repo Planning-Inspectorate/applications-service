@@ -27,7 +27,8 @@ function renderData(
 	examinationLibraryResponse,
 	projectName,
 	stageList = [],
-	typeList = []
+	typeList = [],
+	categoryList = []
 ) {
 	const baseUrl = `/projects/${params.caseRef}`;
 	const pageUrl = `${baseUrl}/application-documents`;
@@ -36,12 +37,19 @@ function renderData(
 
 	const respData = response.data;
 	const { documents, filters } = respData;
-	const { stageFilters, typeFilters } = filters;
+	const { stageFilters, typeFilters, categoryFilters } = filters;
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
-	const modifiedStageFilters = [];
-	const top5TypeFilters = [];
+	const modifiedTypeFilters = [];
+	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
+	const numberOfFiltersToDisplay = 5;
+
+	const modifiedCategoryFilters = categoryFilters.map(({ name: categoryName = '', count = 0 }) => ({
+		text: `${categoryName} (${count})`,
+		value: categoryName,
+		checked: categoryList.includes(categoryName)
+	}));
 
 	if (documents.length && examinationLibraryResponse) {
 		for (let i = 0; i < documents.length; i++) {
@@ -96,17 +104,14 @@ function renderData(
 		return projectStageItem?.count || 0;
 	};
 
-	Object.keys(documentProjectStages).forEach((projectStage) => {
-		const projectStageName = documentProjectStages[projectStage].name;
-		const projectStageValue = documentProjectStages[projectStage].value;
-		const projectStageCount = getProjectStageCount(projectStageValue);
-		const projectStageChecked = stageList.includes(projectStageValue);
+	const modifiedStageFilters = Object.values(documentProjectStages).map(({ name = '', value }) => {
+		const projectStageCount = getProjectStageCount(value);
 
-		modifiedStageFilters.push({
-			checked: projectStageChecked,
-			text: `${projectStageName} (${projectStageCount})`,
-			value: projectStageValue
-		});
+		return {
+			checked: stageList.includes(value),
+			text: `${name} (${projectStageCount ?? 0})`,
+			value: value ?? 0
+		};
 	});
 
 	let otherTypeFiltersCount = 0;
@@ -118,12 +123,14 @@ function renderData(
 
 	otherTypeFiltersCount += removedTypesCount;
 
-	newTypeFilters.slice(-(newTypeFilters.length - 4)).forEach(function (type) {
-		otherTypeFiltersCount += type.count;
-	}, Object.create(null));
+	newTypeFilters
+		.slice(-(newTypeFilters.length - numberOfFiltersToDisplay))
+		.forEach(function (type) {
+			otherTypeFiltersCount += type.count;
+		}, Object.create(null));
 
 	newTypeFilters
-		.slice(0, 4)
+		.slice(0, numberOfFiltersToDisplay)
 		.sort(function (a, b) {
 			if (a.name < b.name) {
 				return -1;
@@ -131,7 +138,7 @@ function renderData(
 			return 0;
 		})
 		.forEach(function (type) {
-			top5TypeFilters.push({
+			modifiedTypeFilters.push({
 				text: `${type.name} (${type.count})`,
 				value: type.name,
 				checked: typeList.includes(type.name)
@@ -139,7 +146,7 @@ function renderData(
 		}, Object.create(null));
 
 	if (newTypeFilters.length > 4) {
-		top5TypeFilters.push({
+		modifiedTypeFilters.push({
 			text: `Everything else (${otherTypeFiltersCount})`,
 			value: 'everything_else',
 			checked: typeList.includes('everything_else')
@@ -162,7 +169,8 @@ function renderData(
 		searchTerm: params.searchTerm,
 		queryUrl,
 		modifiedStageFilters,
-		top5TypeFilters
+		modifiedTypeFilters,
+		modifiedCategoryFilters
 	});
 }
 
@@ -178,13 +186,20 @@ exports.getApplicationDocuments = async (req, res) => {
 			...req.query
 		};
 
-		const newParamsType = replaceControllerParamType(params?.type, 'other', 'everything_else');
+		const [newParamsType, newCategoryParams] = [
+			replaceControllerParamType(params.type, 'other', 'everything_else'),
+			replaceControllerParamType(params.category, 'Application Document', "Developer's Application")
+		];
 
 		if (newParamsType) {
-			params.type = newParamsType;
+			params.type = newParamsType ?? [];
 		}
 
-		const { searchTerm, stage, type } = req.query;
+		if (newCategoryParams) {
+			params.category = newCategoryParams ?? [];
+		}
+
+		const { searchTerm, stage, type, category } = req.query;
 
 		let examinationLibraryResponse = null;
 
@@ -206,7 +221,8 @@ exports.getApplicationDocuments = async (req, res) => {
 			examinationLibraryResponse,
 			projectName,
 			stage,
-			type
+			type,
+			category
 		);
 	}
 };

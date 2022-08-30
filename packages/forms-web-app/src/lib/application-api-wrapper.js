@@ -101,7 +101,8 @@ exports.searchDocumentListV2 = async (params) => {
 		'page',
 		'searchTerm',
 		'stage',
-		'type'
+		'type',
+		'category'
 	]);
 	const documentServiceApiUrl = `/api/v2/documents${queryString}`;
 	const method = 'GET';

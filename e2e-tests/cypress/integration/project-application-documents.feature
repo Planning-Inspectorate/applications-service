@@ -192,14 +192,20 @@ Feature: Project Application documents page
         When I click on "Documents" link
         When I enter text "england" into search field
         And I click on search button
-        Then I can verify that below project documents were returned
-            | Document                                                                                                                                                                                                                   |
-            | AdditionalSubmissionacceptedatthediscretionoftheExaminingAuthorityÃ¢â‚¬â€œAgreedStatementofCommonGroundbetweentheApplicantandPublicHealthEngland(PDF,268KB)FromRemoved23May2019Pre-examinationAdditionalSubmissions |
-            | 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                         |
-            | 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement                                                     |
+				Then I can verify that below project documents were returned
+						| Document                                                                                                                                                                                                                   |
+            | AdditionalSubmissionÃ¢â‚¬â€œAcceptedatthediscretionoftheExaminingAuthority-SignedStatementofCommonGroundbetweentheApplicantandNaturalEngland.(PDF,846KB)FromRemoved11December2019ExaminationAdditionalSubmissions |
+            | Deadline 4 Submission - 12.2.4 - Statement of Common Ground between the Applicant and Natural England (PDF, 403KB)                                                     |
+            | Deadline 4 Submission - 12.2.3 - Statement of Common Ground between the Applicant and Historic England (PDF, 197KB)                                                     |
+            | Deadline 2 Submission - 10.3.4 Updated Statement of Common Ground between the Applicant and Historic England (PDF, 283KB)                         |
+            | Additional Submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Agreed Statement of Common Ground between the Applicant and Public Health England (PDF, 268KB)                                                     |
+            | Deadline 3 Submission - 11.4.9 Letters of no Impediment to the Applicant from Natural England (PDF, 470KB)                                                     |
+            | Deadline 3 Submission - A statement on Climate Change and Carbon Sequestration, supported by a partial transcript of evidence given by the Chairman of Natural England to the Environmental Audit Committee on 23rd July (PDF, 580KB)                                                    |
+            | 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB)                                                     |
+            | 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB)                                                     |
         When I enter text "" into search field
         And I click on search button
-        Then I verify text "Showing 1 to 20 of 297 results" is present on the page
+        Then I verify text "Showing 1 to 20 of 987 results" is present on the page
 
     Scenario: search returns no matching documents
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
@@ -247,7 +253,7 @@ Feature: Project Application documents page
         When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
-        Then I verify that the "document type" section expanded with 5 filters
+        Then I verify that the "document type" section expanded with 6 filters
         And I click on "document type" section
         Then all the filter stages should "not be visible" by default
 
@@ -256,47 +262,60 @@ Feature: Project Application documents page
         When I click on "Documents" link
         Then all the filter stages should "not be visible" by default
         And I click on "document type" section
-        And I select "Everything else (39)" checkbox
+        And I select "Everything else (339)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
-            | Relevant Representation Exam Library (PDF, 410KB) 13 January 2020Pre-examinationOther Documents                                           |
-            | Removed (PDF, 284KB) 28 May 2019Pre-examinationOther Documents                                          |
-            | 4.3 Book of Reference (PDF, 37KB) From Removed 24 April 2019Acceptance(Reviewoftheapplication)Compulsory Acquisition Information                                           |
-            | Rule 6 letter - Notification of the preliminary meeting and matters to be discussed (PDF, 282KB) 18 April 2019Pre-examinationProcedural Decisions          |
-            | NULL (PDF, 149KB) From NULL on behalf of Rule 4 Appointment of Panel - 15 March 2019 18 March 2019Pre-examinationProcedural Decisions              |
-            | NULL (PDF, 75KB) From NULL on behalf of Regulation 32 - Transboundary Screening 28 January 2019Pre-examinationTransboundary                          |
-            | Section 56 Notification (PDF, 126KB) From NULL on behalf of Removed 20 December 2018Pre-examinationCertificates and Notices                           |
-            | NULL (PDF, 92KB) From NULL on behalf of Notification of Decision to Accept Application 14 December 2018Acceptance(Reviewoftheapplication)Acceptance letter                    |
-            | Adequacy of Consultation Representation (PDF, 107KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 542KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 185KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 105KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation |
-            | Adequacy of Consultation Representation (PDF, 34KB) From NULL on behalf of Removed 14 December 2018Acceptance(Reviewoftheapplication)Adequacy of Consultation Representation  |
-            | NULL (PDF, 242KB) From NULL on behalf of Section 55 Checklist 14 December 2018Acceptance(Reviewoftheapplication)Procedural Decisions                                          |
-            | NULL (PDF,130KB) From NULL on behalf of Section 51 advice to the Applicant 14 December 2018Acceptance(Reviewoftheapplication) OtherDocuments                        |
-            | 7.7 Heritage Statement (PDF,249KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication) OtherDocuments                        |
-            | 1.1.1 S55 Checklist (PDF, 429KB) From Section 55 Checklist 23 November 2018Acceptance(Reviewoftheapplication)Application Form                                                 |
-            | 7.3 Needs Statement (PDF,997KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication) OtherDocuments                     |
-            | 7.5 Consents and Licenses Required Under Other Legislation (PDF, 241KB) From NULL on behalf of Removed 23 November 2018Acceptance(Review of the application) Other Documents                                    |
-            | 7.1 Outline Design Principles (PDF, 3MB) From NULL on behalf of Removed 23 November 2018Acceptance(Review of the application) Other Documents               |
+            | CorrectionOrderforTheCleveHillSolarParkOrder2020.Thiscameintoforceon11August2021(PDF,82KB)FromRemoved8December2021DecidedDecided                                           |
+            | Details of the corrections made by the Secretary of State to The Cleve Hill Solar Park Order 2020 (PDF, 132KB)                                          |
+            | Recording of Issue Specific Hearing 1 - Action Points - 17 July 2019 (PDF, 32KB)                                           |
+            | Removed (PDF, 1MB)          |
+            | Regulation 31 Notice to Accept Application (PDF, 72KB)              |
+            | Recommendation Report (PDF, 4MB)                          |
+            | Notification of Decision Letter (PDF, 117KB)                           |
+            | Secretary of State's Decision letter and Statement of Reasons (PDF, 450KB)                    |
+            | Removed (PDF, 3MB) |
+            | Response to the Secretary of State consultation. Late submission (PDF, 250KB) |
+            | Book of Reference Revision E (Clean) - Response to the Secretary of State consultation (PDF, 37KB) |
+            | Response to the Secretary of State consultation (PDF, 145KB) |
+            | Response to the Secretary of State consultation (PDF, 141KB)  |
+            | Schedule of Changes to Book of Reference - Response to the Secretary of State consultation (PDF, 34KB)                                          |
+            | Land Plans Revision C - Response to the Secretary of State consultation (PDF, 11MB)                        |
+            | Book of Refence Revision E (Tracked) - Response to the Secretary of State consultation (PDF, 37KB)                        |
+            | Response to the Secretary of State consultation (PDF, 409KB)                                                 |
+            | Response to the Secretary of State consultation (PDF, 179KB)                     |
+            | Response to the Secretary of State consultation (PDF, 209KB)                                    |
+            | Letter from the Secretary of State for Business, Energy and Industrial Strategy seeking comments from the Applicant (PDF, 270KB)               |
         And I click on "document type" section
 
     Scenario: filter by project stage
         Given I navigate to "Cleve Hill Solar Park" project Overview page
         When I click on "Documents" link
         And I click on "project stage" section
-        And I select "Pre-application (7)" checkbox
+        And I select "Deadline 7 (152)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
-            | Document                                                                                                                                                                                   |
-            | Late scoping consultation response (PDF, 79KB) From NULL on behalf of Removed 25 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                     |
-            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) From NULL on behalf of Scoping Opinion 19 January 2018Pre-applicationEnvironmental Impact Assessment Scoping            |
-            | Late scoping consultation response (PDF, 191KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                    |
-            | Late scoping consultation response (PDF, 722KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping                                    |
-            | NULL (PDF, 81KB) From NULL on behalf of Acknowledgement of S46 Notification 6 January 2018Pre-applicationNotice of Proposed application                                                |
-            | NULL (PDF, 1MB) From NULL on behalf of S46 Notification 6 January 2018Pre-applicationNotice of Proposed application                                                                    |
-            | Scoping Report submitted to the Secretary of State on 11 December 2017 (PDF, 38MB) From NULL on behalf of Removed 12 November 2017Pre-applicationEnvironmental Impact Assessment Scoping |
+				Then I can verify that below project documents were returned
+            | Document                                                                                                                                                                      |
+            | Deadline 7 Submission Ã¢â‚¬â€œ Late Non-IP submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Comments on the proposed planning application (PDF, 2MB) |
+						| Able Acoustics - Review of Environmental Statement, Noise and Vibration Chapter (PDF, 5MB) |
+						| Deadline 7 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ DCO Validation Report (PDF, 609KB) |
+						| Deadline 7 Submission Ã¢â‚¬â€œ Final comments on the proposed planning application (PDF, 71KB) |
+						| Deadline 7 Submission Ã¢â‚¬â€œ Final comments on the proposed planning application (PDF, 71KB) |
+						| Non-Interested Party accepted at the discretion of the Examining Authority - Objection to planning application (PDF, 8MB) |
+						| Deadline 7 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Concerns raised about the proposed planning application (PDF, 3MB) |
+						| Comments on responses submitted up to Deadline 6 (PDF, 597KB) |
+						| Objection to planning application (PDF, 43KB) |
+						| Objection to planning application (PDF, 125KB) |
+						| Objection to planning application (PDF, 29KB) |
+						| Objection to planning application (PDF, 17KB) |
+						| Objection to planning application (PDF, 76KB) |
+						| Review of Environmental Statement, Noise and Vibration Chapter (PDF, 87KB) |
+						| Objection to planning application (PDF, 15KB) |
+						| Objection to planning application (PDF, 14KB) |
+						| Objection to planning application (PDF, 94KB) |
+						| Non-Interested Party accepted at the discretion of the Examining Authority - Objection to planning application (PDF, 14KB) |
+						| Late Filing of Wirsol Annual Accounts (PDF, 83KB) |
+						| Rare Bird Sighting (PDF, 83KB) |
         And I click on "project stage" section
 
     Scenario: search by text and filter by project stage
@@ -305,26 +324,28 @@ Feature: Project Application documents page
         When I enter text "late" into search field
         And I click on search button
         And I click on "project stage" section
-        And I select "Pre-application (7)" checkbox
+        And I select "Deadline 7 (152)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                                                                |
-            | Late scoping consultation response (PDF, 79KB) From NULL on behalf of Removed 25 January 2018Pre-applicationEnvironmental Impact Assessment Scoping  |
-            | Late scoping consultation response (PDF, 191KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
-            | Late scoping consultation response (PDF, 722KB) From NULL on behalf of Removed 11 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
+            | Deadline 7 Submission Ã¢â‚¬â€œ Late Non-IP submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Comments on the proposed planning application (PDF, 2MB) |
+						| Deadline 7 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ DCO Validation Report (PDF, 609KB) |
+						| Deadline 7 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Concerns raised about the proposed planning application (PDF, 3MB) |
+						| Deadline 7 Submission - Medway Estuary and Swale Strategy - Stratedgy Appraisal Report Template for a FCRM Template (PDF, 2MB) |
+						| Deadline 7 Submission - Late Filing of Wirsol Annual Accounts (PDF, 83KB) |
         And I click on "project stage" section
 
     Scenario: filter by project stage and search for text
         Given I navigate to "Cleve Hill Solar Park" project Overview page
         When I click on "Documents" link
         And I click on "project stage" section
-        And I select "Pre-application (7)" checkbox
+        And I select "Deadline 7 (152)" checkbox
         And I click on Apply button to apply filters
-        When I enter text "adopt" into search field
+        When I enter text "rare bird" into search field
         And I click on search button
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                                                                                        |
-            | Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB) From NULL on behalf of Scoping Opinion 19 January 2018Pre-applicationEnvironmental Impact Assessment Scoping |
+            | Deadline 7 Submission - Rare Bird Sighting (PDF, 83KB) |
         And I click on "project stage" section
 
     Scenario: filter by document type
@@ -333,7 +354,7 @@ Feature: Project Application documents page
         And I click on "document type" section
         And I select "Environmental Statement (221)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                                                                                       |
             | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 9 (PDF, 18MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement       |
             | 6.3.8 Environmental Statement - Photomontage Summer - Year 1 Viewpoint 22 North (PDF, 13MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Environmental Statement|
@@ -363,24 +384,26 @@ Feature: Project Application documents page
         When I enter text "late" into search field
         And I click on search button
         And I click on "document type" section
-        And I select "Additional Submissions (18)" checkbox
+        And I select "Deadline 2 (115)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
+				 Then I can verify that below project documents were returned
             | Document                                                                                                                                                                                                                                    |
-            | Late Relevant Representation - Additional Submission - Accepted at the discretion of the Examining Authority - Objection to proposed Cleve Hill Solar Park (PDF, 45KB) From Removed 26 March 2019Pre-examinationAdditional Submissions |
+            | Deadline2SubmissionÃ¢â‚¬â€œLatesubmissionacceptedatthediscretionoftheExaminingAuthority-SummaryofWrittenRepresentation(PDF,40KB)FromRemoved16July2019ExaminationDeadline2 |
         And I click on "document type" section
 
     Scenario: filter by document type and search for text
         Given I navigate to "Cleve Hill Solar Park" project Overview page
         When I click on "Documents" link
         And I click on "document type" section
-        And I select "Plans (11)" checkbox
+        And I select "Deadline 3 (88)" checkbox
         And I click on Apply button to apply filters
         When I enter text "cover" into search field
         And I click on search button
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                           |
-            | 2 Cover and Contents (PDF, 168KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Plans |
+            | Deadline 3 Submission - Cover Letter (PDF, 3MB) |
+						| Deadline 3 Submission - A statement on a recent SoS decision on an energy recovery facility, supported by a copy of the SoSÃ¢â‚¬â„¢s letter (PDF, 456KB) |
+						| Deadline 3 Submission - Cover Email (PDF, 15KB) |
         And I click on "document type" section
 
     Scenario: filter by project stage and document type
@@ -389,19 +412,31 @@ Feature: Project Application documents page
         And I click on "project stage" section
         And I select "Acceptance (review of the application)" checkbox
         And I click on "document type" section
-        And I select "Reports (8)" checkbox
+        And I select "Deadline 4 (72)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                                               |
-            | 5.1.1b Consultation Report Appendices (PDF, 39MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
-            | 5.2 Report to Inform Appropriate Assessment (PDF, 32MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports             |
-            | 5.4 Grid Connection Statement (PDF, 173KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                          |
-            | 5.1 Consultation Report (PDF, 8MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                                  |
-            | 5.3 Statutory Nuisances Statement (PDF, 251KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                      |
-            | 5.1.1a Consultation Report Appendices (PDF, 35MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
-            | 5.2.1 Report to Inform Appropriate Assessment Appendices (PDF, 4MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
-            | 5.1.1c Consultation Report Appendices (PDF, 38MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                   |
-        And I click on "project stage" section
+            | Deadline 4 Submission Ã¢â‚¬â€œ Late submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Response to the Examining AuthorityÃ¢â‚¬â„¢s Further Written Questions (PDF, 15KB) |
+						| Deadline 4 Submission - Response to Examining Authority's Further Written Questions and comments on the Development Consent Order (PDF, 439KB) |
+						| Deadline 4 Submission - 12.5.4 - Deadline 4 Submissions - Schedule of Changes to the DDCO at Deadline 4 (PDF, 317KB) |
+						| Deadline 4 Submission - 6.4.14.1 - Updates to existing documents outline Construction Traffic Management Plan (Tracked) (PDF, 12MB) |
+						| Deadline 4 Submission - 6.4.12.10 - Outline Special Protection Area - Construction Noise Management Plan (Tracked) (PDF, 14MB) |
+						| Deadline 4 Submission - 6.4.5.2 - Updates to existing documents outline Landscape and Biodiversity Management Plan (PDF, 6MB) |
+						| Deadline 4 Submission - 6.4.14.1 - Updates to existing documents outline Construction Traffic Management Plan (PDF, 12MB) |
+						| Deadline 4 Submission - 6.4.5.2 - Updates to existing documents outline Landscape and Biodiversity Management Plan (Tracked) (PDF, 6MB) |
+						| Deadline 4 Submission - 4.3 - Book of Reference (PDF, 34KB) |
+						| Deadline 4 Submission - 7.1 - Updated to existing documents outline Design Principles (PDF, 7MB) |
+						| Deadline 4 Submission - 7.2 - Updates to Existing Documents - Mitigation Schedule (PDF, 179KB) |
+						| Deadline 4 Submission - 6.4.5.4 - Updates to existing documents outline Construction Environmental Management Plan (PDF, 8MB) |
+						| Deadline 4 Submission - 6.4.11.4 - Updates to existing documents outline Written Scheme of Investigation (Tracked) (PDF, 7MB) |
+						| Deadline 4 Submission - 6.4.5.4 - Updates to existing documents outline Construction Environmental Management Plan (Tracked) (PDF, 8MB) |
+						| Deadline 4 Submission - 6.4.11.4 - Updates to existing documents outline Written Scheme of Investigation (PDF, 7MB) |
+						| Deadline 4 Submission - 12.5.3 - Deadline 4 Submissions - Outline Skills , Supply Chain and Employment Plan (PDF, 158KB) |
+						| Deadline 4 Submission - 12.5.9 - Deadline 4 Submissions - Written Representation by the Applicant - Push/Pull Test Report (PDF, 9MB) |
+						| Deadline 4 Submission - 12.5.7 - Deadline 4 Submissions - Written Representation by the Applicant - Air Quality Assessment - Battery Fire (PDF, 7MB) |
+						| Deadline 4 Submission - 12.5.2 - Deadline 4 Submissions - Written Representation by the Applicant on Arbitration (PDF, 137KB) |
+						| Deadline 4 Submission - Response to Examining Authority's Further Written Questions (PDF, 3MB) |
+						 And I click on "project stage" section
         And I click on "document type" section
 
     Scenario: search by text and filter by project stage and document type
@@ -412,14 +447,11 @@ Feature: Project Application documents page
         And I click on "project stage" section
         And I select "Acceptance (review of the application)" checkbox
         And I click on "document type" section
-        And I select "Reports (8)" checkbox
+        And I select "Deadline 4 (72)" checkbox
         And I click on Apply button to apply filters
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                             |
-            | 5.1.1b Consultation Report Appendices (PDF, 39MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
-            | 5.1 Consultation Report (PDF, 8MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports                |
-            | 5.1.1a Consultation Report Appendices (PDF, 35MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
-            | 5.1.1c Consultation Report Appendices (PDF, 38MB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | Deadline 4 Submission - 12.1.13 - The Applicant's responses to ExQ2 - Appendices Appendix 12 Ã¢â‚¬â€œ Allianz Risk Consulting - Tech Talk Volume 26: BESS (PDF, 446KB) |
         And I click on "project stage" section
         And I click on "document type" section
 
@@ -429,12 +461,13 @@ Feature: Project Application documents page
         And I click on "project stage" section
         And I select "Acceptance (review of the application)" checkbox
         And I click on "document type" section
-        And I select "Reports (8)" checkbox
+        And I select "Deadline 4 (72)" checkbox
         And I click on Apply button to apply filters
-        When I enter text "grid" into search field
+        When I enter text "specific" into search field
         And I click on search button
-        Then I can verify that below project documents were returned
+				Then I can verify that below project documents were returned
             | Document                                                                                                      |
-            | 5.4 Grid Connection Statement (PDF, 173KB) From NULL on behalf of Removed 23 November 2018Acceptance(Reviewoftheapplication)Reports |
+            | Deadline 4 Submission - Responses to the Examining Authority's Further Written Questions and Notification of wish to speak at Issue Specific Hearing 6 (PDF, 676KB) |
+						| Deadline 4 Submission - Evidence to support Oral Submission at Issue Specific Hearing 5 on 10 September 2019 (PDF, 232KB) |
         And I click on "project stage" section
         And I click on "document type" section

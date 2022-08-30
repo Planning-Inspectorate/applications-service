@@ -1,7 +1,7 @@
 const replaceControllerParamType = (paramsType, expectedParam, newParamType) => {
 	if (
 		!paramsType ||
-		!paramsType.length > 0 ||
+		paramsType.length === 0 ||
 		!expectedParam ||
 		typeof expectedParam !== 'string' ||
 		!newParamType
