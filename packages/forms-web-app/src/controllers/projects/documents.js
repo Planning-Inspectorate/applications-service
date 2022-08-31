@@ -175,7 +175,10 @@ function renderData(
 }
 
 exports.getApplicationDocuments = async (req, res) => {
+	const developersApplication = "Developer's Application";
+
 	const applicationResponse = await getAppData(req.params.case_ref);
+
 	if (applicationResponse.resp_code === 200) {
 		const projectName = applicationResponse.data.ProjectName;
 
@@ -188,7 +191,7 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const [newParamsType, newCategoryParams] = [
 			replaceControllerParamType(params.type, 'other', 'everything_else'),
-			replaceControllerParamType(params.category, 'Application Document', "Developer's Application")
+			replaceControllerParamType(params.category, 'Application Document', developersApplication)
 		];
 
 		if (newParamsType) {
@@ -200,6 +203,8 @@ exports.getApplicationDocuments = async (req, res) => {
 		}
 
 		const { searchTerm, stage, type, category } = req.query;
+
+		const categoryList = category === developersApplication ? 'Application Document' : category;
 
 		let examinationLibraryResponse = null;
 
@@ -222,7 +227,7 @@ exports.getApplicationDocuments = async (req, res) => {
 			projectName,
 			stage,
 			type,
-			category
+			categoryList
 		);
 	}
 };
