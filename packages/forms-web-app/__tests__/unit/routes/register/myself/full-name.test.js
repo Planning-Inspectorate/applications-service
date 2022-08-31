@@ -4,7 +4,7 @@ const {
 	validationErrorHandler
 } = require('../../../../../src/validators/validation-error-handler');
 
-jest.mock('../../../../../src/validators/register/myself/full-name');
+jest.mock('../../../../../src/validators/shared/full-name');
 
 describe('routes/register/myself/full-name', () => {
 	beforeEach(() => {
