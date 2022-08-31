@@ -16,7 +16,7 @@ describe('controllers/examination/your-name', () => {
 		req = {
 			...mockReq(),
 			session: {
-				mySelfRegdata: {
+				examination: {
 					'full-name': 'test'
 				}
 			}
