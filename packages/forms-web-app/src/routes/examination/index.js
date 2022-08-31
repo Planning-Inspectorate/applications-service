@@ -1,15 +1,15 @@
 const express = require('express');
-const { rules: validate } = require('../../validators/full-name');
+const { rules: validate } = require('../../validators/shared/full-name');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
 
 const router = express.Router();
 
-const yourNameController = require('../../controllers/examination/your-name');
-const haveYourSayController = require('../../controllers/examination/have-your-say');
+const { getYourName, postYourName } = require('../../controllers/examination/your-name');
+const { getHaveYourSay, postHaveYourSay } = require('../../controllers/examination/have-your-say');
 
-router.get('/your-name', yourNameController.getYourName);
-router.post('/your-name', validate(), validationErrorHandler, yourNameController.postYourName);
-router.get('/have-your-say-during-examination', haveYourSayController.getHaveYourSay);
-router.post('/have-your-say-during-examination', haveYourSayController.postHaveYourSay);
+router.get('/your-name', getYourName);
+router.post('/your-name', validate(), validationErrorHandler, postYourName);
+router.get('/have-your-say-during-examination', getHaveYourSay);
+router.post('/have-your-say-during-examination', postHaveYourSay);
 
 module.exports = router;
