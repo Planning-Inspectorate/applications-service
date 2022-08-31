@@ -11,18 +11,20 @@ const setData = () => ({
 });
 
 const getYourName = async (req, res) => {
-	const { mySelfRegdata } = req.session;
+	const { session } = req;
+	const examination = session?.examination;
 
-	if (mySelfRegdata && mySelfRegdata['full-name']) {
-		setData().fullName = req.session.mySelfRegdata['full-name'];
+	if (examination && examination['full-name']) {
+		setData().fullName = req.session.examination['full-name'];
 	}
 
 	res.render(`${ROUTE_PREFIX + YOUR_NAME}`, setData());
 };
 
 const postYourName = async (req, res) => {
-	const { errors = {}, errorSummary = [] } = req.body;
-	const { body = {} } = req;
+	const { body = {}, session } = req;
+	const examination = session?.examination;
+	const { errors = {}, errorSummary = [] } = body;
 
 	if (errors['full-name'] || Object.keys(errors).length > 0) {
 		res.render(`${ROUTE_PREFIX + YOUR_NAME}`, {
@@ -32,8 +34,8 @@ const postYourName = async (req, res) => {
 		return;
 	}
 
-	if (req.session && req.session.mySelfRegdata && body['full-name']) {
-		req.session.mySelfRegdata['full-name'] = body['full-name'];
+	if (examination && body['full-name']) {
+		req.session.examination['full-name'] = body['full-name'];
 	}
 
 	if (req.query.mode === 'edit') {
