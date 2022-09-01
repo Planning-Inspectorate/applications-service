@@ -103,6 +103,7 @@ describe('lib/views', () => {
 				COOKIES: 'footer-pages/cookies-info'
 			},
 			EXAMINATION: {
+				HAVE_YOUR_SAY_DURING_EXAMINATION: 'have-your-say',
 				ROUTE_PREFIX: 'pages/examination/',
 				WHO_ARE_YOU_SUBMITTING_FOR: 'who-are-you-submitting-for',
 				YOUR_EMAIL_ADDRESS: 'your-email-address',

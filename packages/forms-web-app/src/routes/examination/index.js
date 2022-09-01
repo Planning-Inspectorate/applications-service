@@ -5,11 +5,10 @@ const { validationErrorHandler } = require('../../validators/validation-error-ha
 const router = express.Router();
 
 const { getYourName, postYourName } = require('../../controllers/examination/your-name');
-const { getHaveYourSay, postHaveYourSay } = require('../../controllers/examination/have-your-say');
+const { getHaveYourSay } = require('../../controllers/examination/have-your-say');
 
 router.get('/your-name', getYourName);
 router.post('/your-name', validate(), validationErrorHandler, postYourName);
-router.get('/have-your-say-during-examination', getHaveYourSay);
-router.post('/have-your-say-during-examination', postHaveYourSay);
+router.get('/have-your-say-during-examination/:case_ref', getHaveYourSay);
 
 module.exports = router;
