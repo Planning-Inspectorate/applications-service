@@ -12,12 +12,7 @@ config.featureFlag.allowRepresentation = false;
 config.featureFlag.usePrivateBetaV1RoutesOnly = false;
 
 const {
-	featureFlag: {
-		hideProjectTimelineLink,
-		allowDocumentLibrary,
-		allowRepresentation,
-		usePrivateBetaV1RoutesOnly
-	}
+	featureFlag: { hideProjectTimelineLink, allowRepresentation, usePrivateBetaV1RoutesOnly }
 } = config;
 
 describe('routes/examination', () => {
