@@ -7,9 +7,17 @@ const allExaminationDocumentsController = require('../../../../src/controllers/p
 const config = require('../../../../src/config');
 
 config.featureFlag.hideProjectTimelineLink = false;
+config.featureFlag.allowDocumentLibrary = false;
+config.featureFlag.allowRepresentation = false;
+config.featureFlag.usePrivateBetaV1RoutesOnly = false;
 
 const {
-	featureFlag: { hideProjectTimelineLink }
+	featureFlag: {
+		hideProjectTimelineLink,
+		allowDocumentLibrary,
+		allowRepresentation,
+		usePrivateBetaV1RoutesOnly
+	}
 } = config;
 
 describe('routes/examination', () => {
@@ -23,12 +31,24 @@ describe('routes/examination', () => {
 	});
 
 	it('should define the expected routes', () => {
-		const mockCallsLength = hideProjectTimelineLink ? 9 : 8;
+		const mockCallsLength = () => {
+			let totalCalls = 9;
+			if (!hideProjectTimelineLink) {
+				totalCalls -= 1;
+			}
+			if (!allowRepresentation) {
+				totalCalls -= 2;
+			}
 
-		expect(get).toHaveBeenCalledWith(
-			'/:case_ref/representations',
-			representationsController.getRepresentations
-		);
+			return totalCalls;
+		};
+
+		if (allowRepresentation === true) {
+			expect(get).toHaveBeenCalledWith(
+				'/:case_ref/representations',
+				representationsController.getRepresentations
+			);
+		}
 
 		if (hideProjectTimelineLink === true) {
 			expect(get).toHaveBeenCalledWith(
@@ -36,15 +56,18 @@ describe('routes/examination', () => {
 				projectTimelineController.getProjectTimeLine
 			);
 		}
-		expect(get).toHaveBeenCalledWith(
-			'/recommendations',
-			recommendationsController.getRecommendations
-		);
-		expect(get).toHaveBeenCalledWith(
-			'/all-examination-documents',
-			allExaminationDocumentsController.getAllExaminationDocuments
-		);
-		expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
-		expect(get.mock.calls.length).toBe(mockCallsLength);
+
+		if (!usePrivateBetaV1RoutesOnly) {
+			expect(get).toHaveBeenCalledWith(
+				'/recommendations',
+				recommendationsController.getRecommendations
+			);
+			expect(get).toHaveBeenCalledWith(
+				'/all-examination-documents',
+				allExaminationDocumentsController.getAllExaminationDocuments
+			);
+			expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
+			expect(get.mock.calls.length).toBe(mockCallsLength());
+		}
 	});
 });
