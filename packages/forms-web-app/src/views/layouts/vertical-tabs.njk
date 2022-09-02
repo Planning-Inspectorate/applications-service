@@ -18,11 +18,13 @@
       {% endif %}
     </li>
 		{% endif %}
+		{% if featureFlag.allowDocumentLibrary %}
     <li class="side-menu govuk-body-s {% if 'about-the-application' == activeProjectLink %} active {% endif %}">
       {% if 'about-the-application' != activeProjectLink %}
         <a href="/projects/{{ caseRef }}/application-documents">Documents</a>
       {% else %} Documents {% endif %}
     </li>
+		{% endif %}
     <li class="side-menu govuk-body-s {% if 'representations' == activeProjectLink %} active {% endif %}">
       {% if 'representations' != activeProjectLink %}
         <a href="/projects/{{ caseRef }}/representations">Relevant Representations </br> (Registration comments)
