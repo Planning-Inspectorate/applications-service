@@ -10,9 +10,15 @@ config.featureFlag.hideProjectTimelineLink = false;
 config.featureFlag.allowDocumentLibrary = false;
 config.featureFlag.allowRepresentation = false;
 config.featureFlag.usePrivateBetaV1RoutesOnly = false;
+config.featureFlag.allowDocumentLibrary = false;
 
 const {
-	featureFlag: { hideProjectTimelineLink, allowRepresentation, usePrivateBetaV1RoutesOnly }
+	featureFlag: {
+		hideProjectTimelineLink,
+		allowRepresentation,
+		usePrivateBetaV1RoutesOnly,
+		allowDocumentLibrary
+	}
 } = config;
 
 describe('routes/examination', () => {
@@ -32,6 +38,10 @@ describe('routes/examination', () => {
 				totalCalls -= 1;
 			}
 			if (!allowRepresentation) {
+				totalCalls -= 2;
+			}
+
+			if (!allowDocumentLibrary) {
 				totalCalls -= 2;
 			}
 
