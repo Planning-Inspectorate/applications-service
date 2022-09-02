@@ -77,6 +77,7 @@ env.addFilter('render', renderTemplateFilter(nunjucks));
 
 env.addGlobal('defaultPageTitle', config.defaultPageTitle);
 env.addGlobal('featureFlag', config.featureFlag);
+env.addGlobal('featureHideLink', config.featureHideLink);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('host', config.server.host);
