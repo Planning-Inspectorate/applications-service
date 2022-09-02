@@ -4,11 +4,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = title %}
+{% set backLinkUrl = backLinkUrl %}
 
-{%
-  set backLinkUrl = backLinkUrl
-%}
+{% set title = title %}
 
 {% block pageTitle %}
   {% if errors %}
@@ -18,7 +16,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
@@ -27,9 +24,9 @@
           errorList: errorSummary
         }) }}
       {% endif %}
+
       <form action="" method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-
           {{ govukInput({
             label: {
                 text: "What is your full name?",
@@ -52,9 +49,7 @@
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
-
       </form>
     </div>
   </div>
-
 {% endblock %}

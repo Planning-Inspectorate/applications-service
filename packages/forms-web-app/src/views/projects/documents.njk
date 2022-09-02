@@ -34,7 +34,7 @@
               {{ document.description or document.personal_name  }} ({{ document.mime | formatMimeType }}, {{ document.size | formatBytes }})
             </a>
 
-            <p class="pins-govuk-result-list__item-description">
+            <p class="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-1">
               {% if document.representative %}
                 From {{ document.representative }} on behalf of {{ document.personal_name }}
               {% elseif document.description and document.personal_name %}

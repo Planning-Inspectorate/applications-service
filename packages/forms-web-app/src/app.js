@@ -22,6 +22,7 @@ const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanu
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const fileUpload = require('express-fileupload');
+const { routesConfig } = require('./routes/config');
 
 require('express-async-errors');
 
@@ -68,7 +69,6 @@ const env = nunjucks.configure(viewPaths, nunjucksConfig);
 
 dateFilter.setDefaultFormat(config.application.defaultDisplayDateFormat);
 env.addFilter('date', dateFilter);
-
 env.addFilter('addKeyValuePair', addKeyValuePair);
 env.addFilter('formatBytes', fileSizeDisplayHelper);
 env.addFilter('formatMimeType', fileTypeDisplayHelper);
@@ -78,11 +78,12 @@ env.addFilter('render', renderTemplateFilter(nunjucks));
 env.addGlobal('defaultPageTitle', config.defaultPageTitle);
 env.addGlobal('featureFlag', config.featureFlag);
 env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
-env.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
 env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
 env.addGlobal('host', config.server.host);
 env.addGlobal('nsipBaseUrl', config.server.nsipBaseUrl);
 env.addGlobal('projectStageNames', projectStageNames);
+env.addGlobal('routes', routesConfig);
+env.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
 
 if (config.server.useSecureSessionCookie) {
 	app.set('trust proxy', 1); // trust first proxy

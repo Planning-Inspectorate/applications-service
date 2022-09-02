@@ -1,0 +1,60 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{%- from "govuk/components/tag/macro.njk" import govukTag -%}
+
+{% macro sectionEvents(events) %}
+  {% for event in events %}
+    {% set tagText = 'Open' %}
+    {% set tagClasses = 'govuk-tag--blue' %}
+
+    {% if event.closed %}
+      {% set tagText = 'Closed' %}
+      {% set tagClasses = '' %}
+    {% endif %}
+
+    <hr class="govuk-section-break govuk-section-break--visible" />
+
+    <section class="govuk-!-padding-top-6 govuk-!-padding-bottom-6" {% if event.elementId -%}id="{{ event.elementId }}"{%- endif %}>
+      <div>
+        <h3 class="govuk-!-display-inline-block govuk-!-margin-right-3 govuk-!-margin-0 govuk-body-s">
+          <strong>{{ event.title }}</strong>
+        </h3>
+
+        {{ govukTag({
+          text: tagText,
+          classes: tagClasses
+        }) }}
+      </div>
+
+      {% if event.description -%}
+        <div class="govuk-!-margin-top-6">
+          <p class="govuk-!-margin-0 govuk-body-s">
+            {{ event.description | safe }}
+          </p>
+        </div>
+      {%- endif %}
+
+      {% if not event.closed -%}
+        <div class="govuk-!-margin-top-6">
+          <form action="" method="POST" novalidate>
+            {{ govukInput({
+              attributes: { "hidden": true },
+              name: event.eventIdFieldName,
+              value: event.id
+            }) }}
+
+            {{ govukButton({
+              classes: "govuk-!-margin-bottom-0",
+              text: "Make a submission",
+              type: "Submit"
+            }) }}
+          </form>
+        </div>
+      {%- endif %}
+    </section>
+
+    {% if loop.last %}
+      <hr class="govuk-section-break govuk-section-break--visible" />
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
