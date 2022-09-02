@@ -32,7 +32,7 @@
                   Unknown
                 {% endif %}
               </a>
-              <p class="pins-govuk-result-list__item-description ">
+              <p class="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-1">
                   {{ representation.RepresentationRedacted | truncate(200) }}
                   {% if representation.RepresentationRedacted.length > 200 %}
                     <a href="representations/{{ representation.ID  }}" class="govuk-link" data-cy="read-more">Read more</a>
