@@ -13,12 +13,13 @@ const {
 
 const router = express.Router();
 const projectSearchController = require('../../controllers/project-search');
-const documentsRouter = require('./documents');
 const projectTimeLineController = require('../../controllers/projects/project-timeline');
 const representationsController = require('../../controllers/projects/representations');
 const timetableController = require('../../controllers/projects/timetable');
 const recommendationsController = require('../../controllers/projects/recommendations');
 const allExaminationDocsController = require('../../controllers/projects/all-examination-documents');
+const projectsController = require('../../controllers/projects/examination');
+const aboutTheApplicationController = require('../../controllers/projects/documents');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -32,7 +33,11 @@ if (hideProjectTimelineLink) {
 }
 
 if (allowDocumentLibrary) {
-	router.use(documentsRouter);
+	router.get('/:case_ref', projectsController.getExamination);
+	router.get(
+		'/:case_ref/application-documents',
+		aboutTheApplicationController.getApplicationDocuments
+	);
 }
 
 if (allowRepresentation) {
