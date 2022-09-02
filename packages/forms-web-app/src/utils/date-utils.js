@@ -1,8 +1,7 @@
 const moment = require('moment');
 
 function formatDate(date) {
-	const notValidDateString =
-		!date || typeof date !== 'string' || /\s/.test(date) || date.length !== 10;
+	const notValidDateString = !date || typeof date !== 'string';
 
 	if (notValidDateString) return '';
 

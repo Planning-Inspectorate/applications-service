@@ -1,8 +1,13 @@
 const {
-	VIEW: {
-		EXAMINATION: { HAVE_YOUR_SAY_DURING_EXAMINATION, ROUTE_PREFIX }
+	routesConfig: {
+		examination: {
+			pages: {
+				haveYourSay: { view: examinationHaveYourSayView }
+			}
+		}
 	}
-} = require('../../lib/views');
+} = require('../../routes/config');
+
 const { getAppData } = require('../../services/application.service');
 const logger = require('../../lib/logger');
 
@@ -23,7 +28,7 @@ const getHaveYourSay = async (req, res) => {
 
 		responsePayload.projectName = req.session.projectName;
 
-		res.render(`${ROUTE_PREFIX + HAVE_YOUR_SAY_DURING_EXAMINATION}`, responsePayload);
+		res.render(examinationHaveYourSayView, responsePayload);
 	} else {
 		logger.warn(`No project found with ID ${req.params.case_ref} for registration`);
 		res.status(404).render('error/not-found');

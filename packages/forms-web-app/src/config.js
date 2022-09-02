@@ -53,5 +53,15 @@ module.exports = {
 		hideExaminationTimetableLink: true
 	},
 	serviceFeedbackUrl:
-		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u'
+		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
+	sessionStorage: {
+		examination: {
+			name: 'examination',
+			property: {
+				description: 'description',
+				id: 'id',
+				title: 'title'
+			}
+		}
+	}
 };

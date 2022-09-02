@@ -7,7 +7,7 @@ const VIEW = {
 		PROJECT_TIMELINE: 'projects/project-timeline',
 		DOCUMENTS: 'projects/documents',
 		REPRESENTATIONS: 'projects/representations',
-		TIMETABLE: 'projects/timetable',
+		TIMETABLE: 'projects/examination-timetable',
 		ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
 		RECOMMENDATIONS: 'projects/recommendations',
 		REPRESENTATION: 'projects/representation'

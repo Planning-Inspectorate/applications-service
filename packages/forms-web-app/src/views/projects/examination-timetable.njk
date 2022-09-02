@@ -1,12 +1,16 @@
 {% extends "layouts/project-2-columns.njk" %}
 
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 {% from "../components/text/heading-summary.njk" import textHeadingSummary %}
 {% from "../components/text/link.njk" import textLink %}
+{% from "../components/section/events.njk" import sectionEvents %}
 
-{% set activeProjectLink = 'timetable' %}
+{% set activeProjectLink = activeProjectLink %}
 
-{% set projectURL = "/projects/" + caseRef + "" %}
-{% set projectEmailSignUpURL = "/projects/" + caseRef + "#project-section-email-sign-up" %}
+{% block pageTitle %}
+  {{ pageTitle }}
+{% endblock %}
 
 {% set contentTimetableNotPublished = '
   <p>
@@ -16,7 +20,7 @@
   <p>
     If you already have ' +
       textLink(
-        projectEmailSignUpURL,
+        projectEmailSignUpUrl,
         "Go to 'Sign up for email updates' section on the project overview page.",
         "signed up for project updates"
       ) + ', we will tell you when this information is published.
@@ -24,7 +28,7 @@
 
   <p> ' +
     textLink(
-      projectURL,
+      projectUrl,
       "Go to the project overview page.",
       "Return to the project overview"
     ) + '
@@ -32,7 +36,19 @@
 '%}
 
 {% block columnTwo %}
-  {{ textHeadingSummary('Examination timetable') }}
+  {{ textHeadingSummary(title) }}
 
-  {{ contentTimetableNotPublished | safe }}
+  {% if events | length %}
+    <p class="govuk-body-s">The examination opened on 19 August 2020.</p>
+
+    {% if nextDeadline %}
+      {{ govukInsetText({
+        html: '<p class="govuk-body-s">Next deadline: <a href="' + nextDeadline.link + '">' + nextDeadline.title + '</a></p>'
+      }) }}
+    {% endif %}
+
+    {{ sectionEvents(events) }}
+  {% else %}
+    {{ contentTimetableNotPublished | safe }}
+  {% endif %}
 {% endblock %}

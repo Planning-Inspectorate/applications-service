@@ -2,6 +2,7 @@ const express = require('express');
 const config = require('../config');
 
 const router = express.Router();
+const { routesConfig } = require('./config');
 
 const cookieRouter = require('./cookies');
 const projectSearchRouter = require('./project-search');
@@ -10,10 +11,11 @@ const interestedPartyRouter = require('./having-your-say-guide');
 const decisionMakingProcessGuideRouter = require('./decision-making-process-guide');
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
-const projectsRouter = require('./projects');
 const examinationRouter = require('./examination');
+const projectsRouter = require('./projects');
 
-router.use('/', examinationRouter);
+router.use(routesConfig.examination.directory, examinationRouter);
+router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
@@ -21,9 +23,6 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 }
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
-
-router.use('/projects', projectsRouter);
-
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
