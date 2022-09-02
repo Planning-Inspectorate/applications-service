@@ -1,6 +1,6 @@
 <nav>
   <ul class="govuk-list">
-		{%if hideProjectInformationLink != true %}
+		{%if featureHideLink.hideProjectInformationLink != true %}
 			<li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
 				{% if 'examination' != activeProjectLink %}
 					<a href="/projects/{{ caseRef }}">{{ projectName}} project information</a>
@@ -32,7 +32,7 @@
       {% else %} Relevant Representations </br> (Registration comments) {% endif %}
     </li>
 
-		{% if hideExaminationTimetableLink != true %}
+		{% if featureHideLink.hideExaminationTimetableLink != true %}
 			<li class="side-menu govuk-body-s {% if routes.project.pages.examinationTimetable.id == activeProjectLink %} active {% endif %}">
 				{% if routes.project.pages.examinationTimetable.id != activeProjectLink %}
           <a href="{{ routes.project.directory + "/" + caseRef + routes.project.pages.examinationTimetable.route }}">
@@ -44,14 +44,14 @@
 			</li>
 		{% endif %}
 
-		{% if hideAllExaminationDocumentsLink != true %}
+		{% if featureHideLink.hideAllExaminationDocumentsLink != true %}
 			<li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
 				{% if 'all-examination-documents' != activeProjectLink %}
 					<a href="/projects/all-examination-documents">All Examination documents</a>
 				{% else %} All Examination documents {% endif %}
 			</li>
 		{% endif %}
-		{% if hideRecommendationAndDecisionLink != true %}
+		{% if featureHideLink.hideRecommendationAndDecisionLink != true %}
 			<li class="side-menu govuk-body-s {% if 'recommendations' == activeProjectLink %} active {% endif %}">
 				{% if 'recommendations' != activeProjectLink %}
 					<a href="/projects/recommendations">Recommendation and decision</a>
@@ -64,11 +64,13 @@
   class="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
   <h3 class="govuk-heading-s">Related guides</h3>
   <ul class="govuk-list">
+		{% if featureHideLink.hideDecisionMakingProcessGuideLink != true %}
     <li class="side-menu govuk-body-s">
       <a href="../decision-making-process-guide/">
         Find out more about the decision making process for national infrastructure projects
       </a>
     </li>
+		{% endif %}
     <li class="side-menu govuk-body-s">
       <a href="../having-your-say-guide/">
         Having your say about a national infrastructure project
