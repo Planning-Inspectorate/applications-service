@@ -1,5 +1,5 @@
 <nav>
-  <ul class="govuk-list sidenav">
+  <ul class="govuk-list">
 		{%if hideProjectInformationLink != true %}
 			<li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
 				{% if 'examination' != activeProjectLink %}
@@ -31,13 +31,19 @@
         </a>
       {% else %} Relevant Representations </br> (Registration comments) {% endif %}
     </li>
+
 		{% if hideExaminationTimetableLink != true %}
-			<li class="side-menu govuk-body-s {% if 'timetable' == activeProjectLink %} active {% endif %}">
-				{% if 'timetable' != activeProjectLink %}
-					<a href="/projects/timetable">Examination timetable</a>
-				{% else %} Examination timetable {% endif %}
+			<li class="side-menu govuk-body-s {% if routes.project.pages.examinationTimetable.id == activeProjectLink %} active {% endif %}">
+				{% if routes.project.pages.examinationTimetable.id != activeProjectLink %}
+          <a href="{{ routes.project.directory + "/" + caseRef + routes.project.pages.examinationTimetable.route }}">
+            {{ routes.project.pages.examinationTimetable.name }}
+          </a>
+				{% else %}
+          {{  routes.project.pages.examinationTimetable.name }}
+        {% endif %}
 			</li>
 		{% endif %}
+
 		{% if hideAllExaminationDocumentsLink != true %}
 			<li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
 				{% if 'all-examination-documents' != activeProjectLink %}
@@ -57,7 +63,7 @@
 
   class="govuk-section-break govuk-section-break--l govuk-section-break--visible"/>
   <h3 class="govuk-heading-s">Related guides</h3>
-  <ul class="govuk-list sidenav">
+  <ul class="govuk-list">
     <li class="side-menu govuk-body-s">
       <a href="../decision-making-process-guide/">
         Find out more about the decision making process for national infrastructure projects

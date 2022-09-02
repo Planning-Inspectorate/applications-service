@@ -1,6 +1,14 @@
 const express = require('express');
 
 const config = require('../../config');
+const {
+	routesConfig: {
+		project: { pages }
+	},
+	routesConfig: {
+		project: { subDirectory }
+	}
+} = require('../../routes/config');
 
 const {
 	featureFlag: {
@@ -13,18 +21,26 @@ const {
 
 const router = express.Router();
 const projectSearchController = require('../../controllers/project-search');
-const documentsRouter = require('./documents');
 const projectTimeLineController = require('../../controllers/projects/project-timeline');
 const representationsController = require('../../controllers/projects/representations');
-const timetableController = require('../../controllers/projects/timetable');
+const examinationTimetable = require('../../controllers/projects/examination-timetable');
 const recommendationsController = require('../../controllers/projects/recommendations');
 const allExaminationDocsController = require('../../controllers/projects/all-examination-documents');
+const projectsController = require('../../controllers/projects/examination');
+const aboutTheApplicationController = require('../../controllers/projects/documents');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
 	router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 	router.get('/recommendations', recommendationsController.getRecommendations);
-	router.get('/timetable', timetableController.getTimetable);
+	router.get(
+		subDirectory + pages.examinationTimetable.route,
+		examinationTimetable.getExaminationTimetable
+	);
+	router.post(
+		subDirectory + pages.examinationTimetable.route,
+		examinationTimetable.postExaminationTimetable
+	);
 }
 
 if (hideProjectTimelineLink) {
@@ -32,7 +48,11 @@ if (hideProjectTimelineLink) {
 }
 
 if (allowDocumentLibrary) {
-	router.use(documentsRouter);
+	router.get('/:case_ref', projectsController.getExamination);
+	router.get(
+		'/:case_ref/application-documents',
+		aboutTheApplicationController.getApplicationDocuments
+	);
 }
 
 if (allowRepresentation) {

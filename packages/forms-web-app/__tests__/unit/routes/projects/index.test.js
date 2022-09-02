@@ -1,7 +1,7 @@
 const { get } = require('../router-mock');
 const representationsController = require('../../../../src/controllers/projects/representations');
 const projectTimelineController = require('../../../../src/controllers/projects/project-timeline');
-const timetableController = require('../../../../src/controllers/projects/timetable');
+const timetableController = require('../../../../src/controllers/projects/examination-timetable');
 const recommendationsController = require('../../../../src/controllers/projects/recommendations');
 const allExaminationDocumentsController = require('../../../../src/controllers/projects/all-examination-documents');
 const config = require('../../../../src/config');
@@ -10,9 +10,15 @@ config.featureFlag.hideProjectTimelineLink = false;
 config.featureFlag.allowDocumentLibrary = false;
 config.featureFlag.allowRepresentation = false;
 config.featureFlag.usePrivateBetaV1RoutesOnly = false;
+config.featureFlag.allowDocumentLibrary = false;
 
 const {
-	featureFlag: { hideProjectTimelineLink, allowRepresentation, usePrivateBetaV1RoutesOnly }
+	featureFlag: {
+		hideProjectTimelineLink,
+		allowRepresentation,
+		usePrivateBetaV1RoutesOnly,
+		allowDocumentLibrary
+	}
 } = config;
 
 describe('routes/examination', () => {
@@ -32,6 +38,10 @@ describe('routes/examination', () => {
 				totalCalls -= 1;
 			}
 			if (!allowRepresentation) {
+				totalCalls -= 2;
+			}
+
+			if (!allowDocumentLibrary) {
 				totalCalls -= 2;
 			}
 
@@ -61,7 +71,10 @@ describe('routes/examination', () => {
 				'/all-examination-documents',
 				allExaminationDocumentsController.getAllExaminationDocuments
 			);
-			expect(get).toHaveBeenCalledWith('/timetable', timetableController.getTimetable);
+			expect(get).toHaveBeenCalledWith(
+				'/:case_ref/examination-timetable',
+				timetableController.getExaminationTimetable
+			);
 			expect(get.mock.calls.length).toBe(mockCallsLength());
 		}
 	});

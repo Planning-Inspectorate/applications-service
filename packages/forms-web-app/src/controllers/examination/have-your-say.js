@@ -1,3 +1,13 @@
+const {
+	routesConfig: {
+		examination: {
+			pages: {
+				haveYourSay: { view: examinationHaveYourSayView }
+			}
+		}
+	}
+} = require('../../routes/config');
+
 const setData = () => {
 	return {
 		backLinkUrl: '#main-content'
@@ -5,11 +15,11 @@ const setData = () => {
 };
 
 const getHaveYourSay = (req, res) => {
-	res.render('pages/examination/have-your-say', setData());
+	res.render(examinationHaveYourSayView, setData());
 };
 
 const postHaveYourSay = (req, res) => {
-	res.render('pages/examination/have-your-say', setData());
+	res.render(examinationHaveYourSayView, setData());
 };
 
 module.exports = {

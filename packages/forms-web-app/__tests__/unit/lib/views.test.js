@@ -4,7 +4,6 @@ describe('lib/views', () => {
 	it('should have the expected defined constants', () => {
 		expect(VIEW).toEqual({
 			APPLICATION_NUMBER: 'application-number',
-
 			COOKIES: 'cookies',
 			DCO_PROCESS_GUIDE: {
 				DECISION_MAKINH_PROCESS_GUIDE:
@@ -24,11 +23,10 @@ describe('lib/views', () => {
 				DOCUMENTS: 'projects/documents',
 				REPRESENTATION: 'projects/representation',
 				REPRESENTATIONS: 'projects/representations',
-				TIMETABLE: 'projects/timetable',
+				TIMETABLE: 'projects/examination-timetable',
 				ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
 				RECOMMENDATIONS: 'projects/recommendations'
 			},
-
 			PROJECT_SEARCH: 'project-search',
 			GUIDANCE_PAGES: {
 				BEFORE_APPLY: 'guidance-pages/before-apply'

@@ -91,6 +91,7 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
 
 			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);
 		});
+
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {
 				...req,
@@ -106,6 +107,84 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
 				errors: { a: 'b' },
 				errorSummary: [{ href: '#', text: 'There were errors here' }],
 				comment: undefined
+			});
+		});
+	});
+
+	describe('postComments api response', () => {
+		test('on success', async () => {
+			const mockRequest = {
+				...req,
+				body: {
+					comments: 'test',
+					origin: 'sanitise-form-post'
+				}
+			};
+
+			let resValue = '';
+			const mockResult = {
+				send: (value) => {
+					resValue = value;
+				}
+			};
+
+			await commentsController.postComments(mockRequest, mockResult);
+
+			expect(resValue).toEqual({
+				error: false,
+				url: `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
+			});
+		});
+
+		test('on success edit mode', async () => {
+			const mockRequest = {
+				...req,
+				body: {
+					comments: 'test',
+					origin: 'sanitise-form-post'
+				},
+				query: {
+					mode: 'edit'
+				}
+			};
+
+			let resValue = '';
+			const mockResult = {
+				send: (value) => {
+					resValue = value;
+				}
+			};
+
+			await commentsController.postComments(mockRequest, mockResult);
+
+			expect(resValue).toEqual({
+				error: false,
+				url: `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
+			});
+		});
+
+		test('on error', async () => {
+			const mockRequest = {
+				...req,
+				body: {
+					errorSummary: [{ text: 'There were errors here', href: '#' }],
+					errors: { a: 'b' },
+					origin: 'sanitise-form-post'
+				}
+			};
+
+			let resValue = '';
+			const mockResult = {
+				send: (value) => {
+					resValue = value;
+				}
+			};
+
+			await commentsController.postComments(mockRequest, mockResult);
+
+			expect(resValue).toEqual({
+				error: true,
+				url: VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT
 			});
 		});
 	});
