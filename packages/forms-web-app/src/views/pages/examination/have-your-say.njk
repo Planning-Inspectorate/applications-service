@@ -1,13 +1,9 @@
 {% extends "layouts/default.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{%
-  set backLinkUrl = backLinkUrl
-%}
+{% set backLinkUrl = backLinkUrl %}
 
-{%
-  set title = title
-%}
+{% set title = title %}
 
 {% block pageTitle %}
   {{title}}

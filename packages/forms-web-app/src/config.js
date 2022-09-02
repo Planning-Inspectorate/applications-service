@@ -58,6 +58,7 @@ module.exports = {
 		examination: {
 			name: 'examination',
 			property: {
+				caseRef: 'caseRef',
 				description: 'description',
 				id: 'id',
 				title: 'title'

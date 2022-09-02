@@ -4,7 +4,7 @@ const { validationErrorHandler } = require('../../validators/validation-error-ha
 const {
 	routesConfig: {
 		examination: {
-			pages: { haveYourSay, yourName, submittingFor }
+			pages: { haveYourSay, submittingFor, yourName }
 		}
 	}
 } = require('../../routes/config');
@@ -18,7 +18,7 @@ const { getYourName, postYourName } = require('../../controllers/examination/you
 
 const router = express.Router();
 
-router.get(`${haveYourSay.route + '/:case_ref'}`, getHaveYourSay);
+router.get(haveYourSay.route, getHaveYourSay);
 router.get(submittingFor.route, getSubmittingFor);
 router.post(submittingFor.route, postSubmittingFor);
 router.get(yourName.route, getYourName);

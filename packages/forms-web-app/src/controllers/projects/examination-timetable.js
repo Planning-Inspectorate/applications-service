@@ -123,6 +123,8 @@ exports.getExaminationTimetable = async (req, res) => {
 };
 
 exports.postExaminationTimetable = (req, res) => {
+	const { caseRef } = req.session;
+
 	if (req.session[examinationSession.name]) delete req.session[examinationSession.name];
 
 	req.session[examinationSession.name] = {};
@@ -137,6 +139,7 @@ exports.postExaminationTimetable = (req, res) => {
 
 	if (!setEvent) return res.status(404).render('error/not-found');
 
+	reqExaminationSession[examinationSession.property.caseRef] = caseRef;
 	reqExaminationSession[examinationSession.property.description] = setEvent.description;
 	reqExaminationSession[examinationSession.property.id] = setEvent.id;
 	reqExaminationSession[examinationSession.property.title] = setEvent.title;
