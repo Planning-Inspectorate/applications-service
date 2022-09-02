@@ -60,6 +60,7 @@ module.exports = {
 			property: {
 				description: 'description',
 				id: 'id',
+				caseRef: 'caseRef',
 				title: 'title'
 			}
 		}

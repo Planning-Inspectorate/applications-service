@@ -8,6 +8,14 @@ const {
 	}
 } = require('../../routes/config');
 
+const {
+	sessionStorage: {
+		examination: {
+			property: { caseRef }
+		}
+	}
+} = require('../../config');
+
 const { getAppData } = require('../../services/application.service');
 const logger = require('../../lib/logger');
 
@@ -18,11 +26,11 @@ const responsePayload = {
 };
 
 const getHaveYourSay = async (req, res) => {
-	const response = await getAppData(req.params.case_ref);
+	// const response = await getAppData(req.params.case_ref);
 
 	if (response && response.resp_code === 200) {
 		const appData = response?.data;
-		req.session.caseRef = req?.params?.case_ref;
+		req.session.caseRef = caseRef;
 		req.session.projectName = appData?.ProjectName;
 		req.session.appData = appData;
 
