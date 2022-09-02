@@ -5,8 +5,10 @@
 
 {% set title = title %}
 
+{% set pageTitle = pageTitle %}
+
 {% block pageTitle %}
-  {{title}}
+  {{ pageTitle }}
 {% endblock %}
 
 {% block content %}
@@ -14,7 +16,7 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-l">
-        Have your say during the Examination of the application
+        {{ title }}
       </h1>
 
       <p>

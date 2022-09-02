@@ -1,38 +1,39 @@
+const config = require('../../config');
+const examinationSession = config.sessionStorage.examination;
+
 const {
 	routesConfig: {
 		examination: {
+			directory: examinationDirectory,
 			pages: {
-				haveYourSay: { view: examinationHaveYourSayView }
+				haveYourSay: { view: examinationHaveYourSayView },
+				tbc: { route: examinationTbcRoute }
 			}
 		}
-	}
+	},
+	routesConfig: { project }
 } = require('../../routes/config');
 
-const responsePayload = {
-	backLinkUrl: `/projects/timetable`,
-	title: 'Have your say during the Examination of the application',
-	startNowUrl: '#'
-};
-
 const getHaveYourSay = async (req, res) => {
-	// const { caseRef }
-	// const backLinkUrl = ``
+	const reqExaminationSession = req.session[examinationSession.name];
 
-	console.log('examinationHaveYourSayView: ', examinationHaveYourSayView);
-	res.render(examinationHaveYourSayView, responsePayload);
-	// if (response && response.resp_code === 200) {
-	// 	const appData = response?.data;
-	// 	req.session.caseRef = req?.params?.case_ref;
-	// 	req.session.projectName = appData?.ProjectName;
-	// 	req.session.appData = appData;
+	if (!reqExaminationSession) return res.status(404).render('error/not-found');
 
-	// 	responsePayload.projectName = req.session.projectName;
+	const { caseRef } = reqExaminationSession;
 
-	// 	res.render(examinationHaveYourSayView, responsePayload);
-	// } else {
-	// 	logger.warn(`No project found with ID ${req.params.case_ref} for registration`);
-	// 	res.status(404).render('error/not-found');
-	// }
+	if (!caseRef) return res.status(404).render('error/not-found');
+
+	const backLinkUrl = `${project.directory}/${caseRef}${project.pages.examinationTimetable.route}`;
+	const pageTitle = 'Have your say during the Examination of the application';
+	const startNowUrl = `${examinationDirectory}${examinationTbcRoute}`;
+	const title = 'Have your say during the Examination of the application';
+
+	res.render(examinationHaveYourSayView, {
+		backLinkUrl,
+		pageTitle,
+		startNowUrl,
+		title
+	});
 };
 
 module.exports = {

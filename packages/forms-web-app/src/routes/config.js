@@ -14,6 +14,12 @@ const routesConfig = {
 				route: '/who-are-you-submitting-for',
 				view: 'pages/examination/submitting-for'
 			},
+			tbc: {
+				id: 'examination-tbc',
+				name: 'Page to be confirmed',
+				route: '/tbc',
+				view: 'pages/examination/tbc'
+			},
 			yourName: {
 				id: 'examination-your-name',
 				name: 'What is your full name?',

@@ -125,6 +125,8 @@ exports.getExaminationTimetable = async (req, res) => {
 exports.postExaminationTimetable = (req, res) => {
 	const { caseRef } = req.session;
 
+	if (!caseRef) return res.status(404).render('error/not-found');
+
 	if (req.session[examinationSession.name]) delete req.session[examinationSession.name];
 
 	req.session[examinationSession.name] = {};
