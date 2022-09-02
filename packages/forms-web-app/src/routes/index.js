@@ -21,9 +21,9 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 }
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
-if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-	router.use('/projects', projectsRouter);
-}
+
+router.use('/projects', projectsRouter);
+
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
