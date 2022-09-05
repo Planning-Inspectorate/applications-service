@@ -47,10 +47,10 @@ module.exports = {
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true'
 	},
 	featureHideLink: {
-		hideAllExaminationDocumentsLink: true,
+		hideAllExaminationDocumentsLink: false,
 		hideDecisionMakingProcessGuideLink: true,
 		hideExaminationTimetableLink: false,
-		hideProjectInformationLink: true,
+		hideProjectInformationLink: false,
 		hideRecommendationAndDecisionLink: false
 	},
 	serviceFeedbackUrl:
