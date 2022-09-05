@@ -49,9 +49,9 @@ module.exports = {
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
 		hideDecisionMakingProcessGuideLink: true,
-		hideExaminationTimetableLink: true,
+		hideExaminationTimetableLink: false,
 		hideProjectInformationLink: true,
-		hideRecommendationAndDecisionLink: true
+		hideRecommendationAndDecisionLink: false
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
@@ -59,6 +59,7 @@ module.exports = {
 		examination: {
 			name: 'examination',
 			property: {
+				caseRef: 'caseRef',
 				description: 'description',
 				id: 'id',
 				title: 'title'
