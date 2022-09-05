@@ -54,26 +54,9 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
                   $ref: '#/components/schemas/Application'
         '404':
           description: No applications found
-  '/test':
-    get:
-      summary: Returns a list of log messages relating to database connectivity.
-      responses:
-        '200': # status code
-          description: A JSON array of log messages
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-        '500': # status code
-          description: Something went wrong.
-        default:
-          description: Something went wrong.
   '/api/v1/interested-party':
     post:
       summary: Creates an interested party
@@ -214,9 +197,7 @@ paths:
                 comments:
                   type: array
                   items:
-                    type: object
                     $ref: '#/components/schemas/Comment'
-                  required: true
       responses:
         '200':
           description: Comments updated successfully
@@ -249,11 +230,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v2/documents?caseRef=&page=&searchTerm=&stage=&type=':
+  '/api/v2/documents':
     get:
       summary: Returns project documents
       description: Returns project documents
@@ -294,6 +274,8 @@ paths:
           required: false
           schema:
             type: array
+            items:
+              type: string
           description: Type
       responses:
         '200':
@@ -301,11 +283,10 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
-  '/api/v1/representations?applicationId=&page=&searchTerm=&type=':
+  '/api/v1/representations':
     get:
       summary: Returns project representations
       description: Returns project representations
@@ -338,6 +319,8 @@ paths:
           required: false
           schema:
             type: array
+            items:
+              type: string
           description: Type
       responses:
         '200':
@@ -347,7 +330,6 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
                   $ref: '#/components/schemas/RepresentationListWrapper'
         '404':
           description: No representations found
@@ -371,12 +353,53 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: '#/components/schemas/Representation'
+                $ref: '#/components/schemas/Representation'
         '404':
           description: Representation not found
+  '/api/v1/timetables/{caseRef}':
+    get:
+      summary: Returns timetable data for a case
+      tags:
+        - Timetables
+      parameters:
+        - in: path
+          name: caseRef
+          example: EN020021
+          required: true
+          schema:
+            type: string
+          description: Case / Project unique identifier
+      responses:
+        '200':
+          description: List of timetables for a case
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timetables'
+        '400':
+          description: Bad Request error
+        '404':
+          description: Not found error
+        '500':
+          description: Internal server error
+  '/test':
+    get:
+      summary: Returns a list of log messages relating to database connectivity.
+      tags:
+        - Misc
+      responses:
+        '200': # status code
+          description: A JSON array of log messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500': # status code
+          description: Something went wrong.
+        default:
+          description: Something went wrong.
 components:
   schemas:
     Application:
@@ -625,14 +648,16 @@ components:
           type: string
           example: 'this is my test that form unchanged for non material change projects after ACR051 developed.  Jun 2021'
         validated:
-          type: date
+          type: string
+          format: date
           example: '2021-06-22T14:45:46.000Z'
         emailed:
-          type: date
+          type: string
+          format: date
           example: '2021-06-22T14:45:46.000Z'
         exported:
-          type: date
-          example: ''
+          type: string
+          format: date
         web_ref:
           type: number
           example: 1
@@ -649,7 +674,6 @@ components:
         over-18:
           type: string
         address:
-          type: object
           $ref: '#/components/schemas/Address'
         email:
           type: string
@@ -670,7 +694,6 @@ components:
         documents:
           type: array
           items:
-            type: object
             $ref: '#/components/schemas/DocumentListGroupByStage'
         totalItems:
           type: number
@@ -685,13 +708,11 @@ components:
           type: number
           example: 1
         filters:
-          type: object
           $ref: '#/components/schemas/Filters'
     DocumentListGroupByStage:
       type: object
       additionalProperties:
         # x-additionalPropertiesName: group
-        type: object
         $ref: '#/components/schemas/DocumentListGroupByType'
     DocumentListGroupByType:
       type: object
@@ -699,7 +720,6 @@ components:
         # x-additionalPropertiesName: group
         type: array
         items:
-          type: object
           $ref: '#/components/schemas/Document'
     Document:
       type: object
@@ -808,12 +828,10 @@ components:
         stageFilters:
           type: array
           items:
-            type: object
             $ref: '#/components/schemas/Filter'
         typeFilters:
           type: array
           items:
-            type: object
             $ref: '#/components/schemas/Filter'
     Filter:
       type: object
@@ -892,7 +910,8 @@ components:
           type: string
           example: null
         DateRrepReceived:
-          type: date
+          type: string
+          format: date
           example: '2020-02-19T00:00:00.000Z'
         DoNotPublish:
           type: string
@@ -906,7 +925,6 @@ components:
         representations:
           type: array
           items:
-            type: object
             $ref: '#/components/schemas/Representation'
         totalItems:
           type: number
@@ -921,7 +939,6 @@ components:
           type: number
           example: 1
         filters:
-          type: object
           $ref: '#/components/schemas/RepFilters'
     RepFilters:
       type: object
@@ -929,5 +946,64 @@ components:
         typeFilters:
           type: array
           items:
-            type: object
             $ref: '#/components/schemas/Filter'
+    Timetable:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        uniqueId:
+          type: string
+          example: "WS010006-34601"
+        caseReference:
+          type: string
+          example: "EN010009"
+        title:
+          type: string
+          example: "Deadline 1A"
+        description:
+          type: string
+          example: "The ExA is under a duty to complete the Examination of the application by the end of the period of six months"
+        dateOfEvent:
+          type: string
+          example: "2020-02-19 11:21:42"
+        timetableType:
+          type: string
+          example: "Exams"
+        typeOfEvent:
+          type: string
+          example: "Deadline"
+        location:
+          type: string
+        dateCreated:
+          type: string
+          example: "2020-02-16 11:21:42"
+        dateLastModified:
+          type: string
+          example: "2020-04-16 15:44:52"
+        dateTimeDeadlineStart:
+          type: string
+          example: "2020-05-16 15:44:52"
+        sourceSystem:
+          type: string
+          example: "Horizon"
+    Timetables:
+      type: object
+      properties:
+        timetables:
+          type: array
+          items:
+            $ref: '#/components/schemas/Timetable'
+        totalItems:
+          type: number
+          example: 100
+        itemsPerPage:
+          type: number
+          example: 100
+        totalPages:
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
