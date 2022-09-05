@@ -64,7 +64,7 @@ describe('controllers/projects/examination-timetable', () => {
 
 		it('should set the session storage values', async () => {
 			const req = {};
-			req.session = {};
+			req.session = { caseRef: '123ABC' };
 			req.body = {};
 			req.body['event-id'] = 'WS010006-34602';
 			res.redirect = () => {};
@@ -72,6 +72,7 @@ describe('controllers/projects/examination-timetable', () => {
 			await controller.postExaminationTimetable(req, res);
 
 			expect(req.session.examination).toEqual({
+				caseRef: '123ABC',
 				description:
 					'The ExA is under a duty to complete the Examination of the application by the end of the period of six months',
 				id: 2,

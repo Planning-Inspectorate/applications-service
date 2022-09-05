@@ -14,6 +14,12 @@ const routesConfig = {
 				route: '/who-are-you-submitting-for',
 				view: 'pages/examination/submitting-for'
 			},
+			haveAnInterestedPartyNumber: {
+				id: 'examination-have-an-interested-party-number',
+				name: "What's your interested party number?",
+				route: '/have-an-interested-party-number',
+				view: 'pages/examination/have-an-interested-party-number'
+			},
 			yourName: {
 				id: 'examination-your-name',
 				name: 'What is your full name?',
