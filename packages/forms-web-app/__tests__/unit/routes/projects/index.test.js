@@ -42,7 +42,7 @@ describe('routes/examination', () => {
 			}
 
 			if (!allowDocumentLibrary) {
-				totalCalls -= 2;
+				totalCalls -= 1;
 			}
 
 			return totalCalls;
