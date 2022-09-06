@@ -47,11 +47,11 @@ module.exports = {
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true'
 	},
 	featureHideLink: {
-		hideAllExaminationDocumentsLink: false,
+		hideAllExaminationDocumentsLink: true,
 		hideDecisionMakingProcessGuideLink: true,
-		hideExaminationTimetableLink: false,
-		hideProjectInformationLink: false,
-		hideRecommendationAndDecisionLink: false
+		hideExaminationTimetableLink: true,
+		hideProjectInformationLink: true,
+		hideRecommendationAndDecisionLink: true
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
@@ -62,8 +62,9 @@ module.exports = {
 				caseRef: 'caseRef',
 				description: 'description',
 				id: 'id',
-				title: 'title',
-				interestedPartyNumber: 'interestedPartyNumber'
+				interestedPartyNumber: 'interestedPartyNumber',
+				submitter: 'submitter',
+				title: 'title'
 			}
 		}
 	}
