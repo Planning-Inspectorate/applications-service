@@ -1,5 +1,9 @@
 {% extends "layouts/default.njk" %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
 {% set backLinkUrl = backLinkUrl %}
 
 {% set pageTitle = pageTitle %}
@@ -13,5 +17,37 @@
 {% endblock %}
 
 {% block content %}
-  <h1>{{ title }}</h1>
+  {% if errorSummary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errorSummary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="POST" novalidate>
+        {{ govukRadios({
+          idPrefix: id,
+          name: id,
+          errorMessage: errors[id] and {
+            text: errors[id].msg
+          },
+          fieldset: {
+            legend: {
+              text: title,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: options
+        }) }}
+
+        {{ govukButton({
+          text: "Continue",
+          type: "Submit"
+        }) }}
+      </form>
+    </div>
+  </div>
 {% endblock %}

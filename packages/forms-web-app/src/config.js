@@ -62,6 +62,7 @@ module.exports = {
 				caseRef: 'caseRef',
 				description: 'description',
 				id: 'id',
+				submitter: 'submitter',
 				title: 'title'
 			}
 		}

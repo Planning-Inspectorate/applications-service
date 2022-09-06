@@ -97,7 +97,7 @@ const VIEW = {
 	},
 	EXAMINATION: {
 		ROUTE_PREFIX: 'pages/examination/',
-		YOUR_NAME: 'your-name',
+		YOUR_NAME: 'name',
 		YOUR_EMAIL_ADDRESS: 'your-email-address',
 		WHO_ARE_YOU_SUBMITTING_FOR: 'who-are-you-submitting-for',
 		HAVE_YOUR_SAY_DURING_EXAMINATION: 'have-your-say'
