@@ -105,7 +105,7 @@ describe('lib/views', () => {
 				ROUTE_PREFIX: 'pages/examination/',
 				WHO_ARE_YOU_SUBMITTING_FOR: 'who-are-you-submitting-for',
 				YOUR_EMAIL_ADDRESS: 'your-email-address',
-				YOUR_NAME: 'your-name'
+				YOUR_NAME: 'name'
 			}
 		});
 	});

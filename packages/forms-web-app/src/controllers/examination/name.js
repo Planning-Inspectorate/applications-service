@@ -10,7 +10,7 @@ const setData = () => ({
 	title: 'What is your full name?'
 });
 
-const getYourName = async (req, res) => {
+const getName = async (req, res) => {
 	const { session } = req;
 	const examination = session?.examination;
 
@@ -21,7 +21,7 @@ const getYourName = async (req, res) => {
 	res.render(`${ROUTE_PREFIX + YOUR_NAME}`, setData());
 };
 
-const postYourName = async (req, res) => {
+const postName = async (req, res) => {
 	const { body = {}, session } = req;
 	const examination = session?.examination;
 	const { errors = {}, errorSummary = [] } = body;
@@ -46,6 +46,6 @@ const postYourName = async (req, res) => {
 };
 
 module.exports = {
-	getYourName,
-	postYourName
+	getName,
+	postName
 };

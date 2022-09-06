@@ -1,4 +1,4 @@
-const { getYourName, postYourName } = require('../../../../src/controllers/examination/your-name');
+const { getName, postName } = require('../../../../src/controllers/examination/name');
 const {
 	VIEW: {
 		EXAMINATION: { YOUR_EMAIL_ADDRESS, YOUR_NAME, ROUTE_PREFIX }
@@ -8,7 +8,7 @@ const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');
 
-describe('controllers/examination/your-name', () => {
+describe('controllers/examination/name', () => {
 	let req;
 	let res;
 
@@ -27,10 +27,10 @@ describe('controllers/examination/your-name', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getYourName', () => {
+	describe('getName', () => {
 		it('should call the correct template', () => {
-			getYourName(req, res);
-			expect(res.render).toHaveBeenCalledWith('pages/examination/your-name', {
+			getName(req, res);
+			expect(res.render).toHaveBeenCalledWith('pages/examination/name', {
 				backLinkUrl: 'who-are-you-submitting-for',
 				fullName: '',
 				title: 'What is your full name?'
@@ -52,7 +52,7 @@ describe('controllers/examination/your-name', () => {
 					mode: ''
 				}
 			};
-			await postYourName(mockRequest, res);
+			await postName(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(`${ROUTE_PREFIX + YOUR_EMAIL_ADDRESS}`);
 		});
@@ -64,7 +64,7 @@ describe('controllers/examination/your-name', () => {
 					errors: { a: 'b' }
 				}
 			};
-			await postYourName(mockRequest, res);
+			await postName(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
 			expect(res.render).toHaveBeenCalledWith(`${ROUTE_PREFIX + YOUR_NAME}`, {
@@ -94,7 +94,7 @@ describe('controllers/examination/your-name', () => {
 						}
 					};
 
-					await postYourName(mockRequest, res);
+					await postName(mockRequest, res);
 					expect(res.redirect).not.toHaveBeenCalled();
 
 					expect(res.render).toHaveBeenCalledWith(`${ROUTE_PREFIX + YOUR_NAME}`, {
