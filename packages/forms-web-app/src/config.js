@@ -49,7 +49,7 @@ module.exports = {
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
 		hideDecisionMakingProcessGuideLink: true,
-		hideExaminationTimetableLink: false,
+		hideExaminationTimetableLink: true,
 		hideProjectInformationLink: true,
 		hideRecommendationAndDecisionLink: true
 	},
