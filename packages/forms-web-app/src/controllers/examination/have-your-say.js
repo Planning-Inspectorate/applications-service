@@ -4,13 +4,14 @@ const examinationSession = config.sessionStorage.examination;
 const {
 	routesConfig: {
 		examination: {
+			directory: examinationDirectory,
 			pages: {
 				haveYourSay: { view: examinationHaveYourSayView },
-				haveAnInterestedPartyNumber: { route: haveAnInterestedPartyNumberRoute }
+				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute }
 			}
 		}
 	},
-	routesConfig: { project, examination }
+	routesConfig: { project }
 } = require('../../routes/config');
 
 const getHaveYourSay = async (req, res) => {
@@ -23,7 +24,7 @@ const getHaveYourSay = async (req, res) => {
 
 	const backLinkUrl = `${project.directory}/${caseRef}${project.pages.examinationTimetable.route}`;
 	const pageTitle = 'Have your say during the Examination of the application';
-	const startNowUrl = `${examination.directory + haveAnInterestedPartyNumberRoute}`;
+	const startNowUrl = `${examinationDirectory}${hasInterestedPartyNumberRoute}`;
 	const title = 'Have your say during the Examination of the application';
 
 	res.render(examinationHaveYourSayView, {

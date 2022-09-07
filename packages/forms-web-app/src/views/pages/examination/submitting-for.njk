@@ -28,6 +28,7 @@
     <div class="govuk-grid-column-two-thirds">
       <form action="" method="POST" novalidate>
         {{ govukRadios({
+          attributes: { "data-cy": id },
           idPrefix: id,
           name: id,
           errorMessage: errors[id] and {
@@ -44,6 +45,7 @@
         }) }}
 
         {{ govukButton({
+          attributes: { "data-cy": "button-submit-and-continue" },
           text: "Continue",
           type: "Submit"
         }) }}

@@ -19,8 +19,8 @@ const submittingForOptions = {
 	}
 };
 
-const submittingForData = {
-	backLinkUrl: `/examination/are-you-applicant`,
+const pageData = {
+	backLinkUrl: '/examination/are-you-applicant',
 	id: 'examination-submitting-for',
 	options: [submittingForOptions[1], submittingForOptions[2], submittingForOptions[3]],
 	pageTitle: 'Who are you making the submission for?',
@@ -41,14 +41,16 @@ describe('controllers/examination/submitting-for', () => {
 	describe('getSubmittingFor', () => {
 		it('should call the correct template: no session', () => {
 			const mockRequest = {
-				...req
+				...req,
+				session: {
+					examination: {
+						hasInterestedPartyNo: 'yes'
+					}
+				}
 			};
 
 			getSubmittingFor(mockRequest, res);
-			expect(res.render).toHaveBeenCalledWith(
-				'pages/examination/submitting-for',
-				submittingForData
-			);
+			expect(res.render).toHaveBeenCalledWith('pages/examination/submitting-for', pageData);
 		});
 
 		it('should call the correct template: with session', () => {
@@ -56,17 +58,18 @@ describe('controllers/examination/submitting-for', () => {
 				...req,
 				session: {
 					examination: {
-						submitter: 'organisation'
+						hasInterestedPartyNo: 'yes',
+						submittingFor: 'organisation'
 					}
 				}
 			};
 
-			const setSubmittingForData = { ...submittingForData };
+			const setSubmittingForData = { ...pageData };
 			const submittingForValues = { ...submittingForOptions };
 
 			const updatedSubmittingForValues = Object.keys(submittingForValues).map((option) => {
 				const optionChecked =
-					submittingForValues[option].value === mockRequest.session.examination.submitter;
+					submittingForValues[option].value === mockRequest.session.examination.submittingFor;
 
 				if (!optionChecked) return submittingForValues[option];
 
@@ -93,12 +96,17 @@ describe('controllers/examination/submitting-for', () => {
 				body: {
 					errors: { a: 'b' },
 					errorSummary: [{ text: 'There were errors here', href: '#' }]
+				},
+				session: {
+					examination: {
+						hasInterestedPartyNo: 'yes'
+					}
 				}
 			};
 
 			postSubmittingFor(mockRequest, res);
 			expect(res.render).toHaveBeenCalledWith('pages/examination/submitting-for', {
-				...submittingForData,
+				...pageData,
 				errors: mockRequest.body.errors,
 				errorSummary: mockRequest.body.errorSummary
 			});
@@ -115,7 +123,8 @@ describe('controllers/examination/submitting-for', () => {
 				},
 				session: {
 					examination: {
-						submitter: 'myself'
+						hasInterestedPartyNo: 'yes',
+						submittingFor: 'myself'
 					}
 				}
 			};
@@ -128,7 +137,12 @@ describe('controllers/examination/submitting-for', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					['examination-submitting-for']: 'myself'
+					'examination-submitting-for': 'myself'
+				},
+				session: {
+					examination: {
+						hasInterestedPartyNo: 'yes'
+					}
 				}
 			};
 
@@ -140,7 +154,12 @@ describe('controllers/examination/submitting-for', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					['examination-submitting-for']: 'organisation'
+					'examination-submitting-for': 'organisation'
+				},
+				session: {
+					examination: {
+						hasInterestedPartyNo: 'yes'
+					}
 				}
 			};
 
@@ -152,7 +171,12 @@ describe('controllers/examination/submitting-for', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					['examination-submitting-for']: 'agent'
+					'examination-submitting-for': 'agent'
+				},
+				session: {
+					examination: {
+						hasInterestedPartyNo: 'yes'
+					}
 				}
 			};
 

@@ -61,9 +61,11 @@ module.exports = {
 			property: {
 				caseRef: 'caseRef',
 				description: 'description',
+				hasInterestedPartyNo: 'hasInterestedPartyNo',
 				id: 'id',
 				interestedPartyNumber: 'interestedPartyNumber',
-				submitter: 'submitter',
+				name: 'name',
+				submittingFor: 'submittingFor',
 				title: 'title'
 			}
 		}
