@@ -22,47 +22,58 @@ const backLinkUrl = `${examination.directory + haveAnInterestedPartyNumberRoute}
 const pageTitle = "What's your interested party number?";
 const title = pageTitle;
 
+const unhandledException = (res) => res.status(500).render('error/unhandled-exception');
+
 const getYourInterestedPartyNumber = (req, res) => {
-	const { session = { examination: { name: null } } } = req;
-	const reqExaminationSession = session[examinationSession?.name] ?? '';
+	try {
+		const { session = { examination: { name: null } } } = req;
+		const reqExaminationSession = session[examinationSession?.name] ?? '';
 
-	if (!reqExaminationSession) return res.status(404).render('error/not-found');
+		if (!reqExaminationSession) return res.status(404).render('error/not-found');
 
-	const { interestedPartyNumber = '' } = reqExaminationSession;
+		const { interestedPartyNumber = '' } = reqExaminationSession;
 
-	res.render(yourInterestedPartyNumberView, {
-		id: yourInterestedPartyNumberId,
-		backLinkUrl,
-		interestedPartyNumber,
-		pageTitle,
-		title
-	});
-};
-
-const postYourInterestedPartyNumber = (req, res) => {
-	const { body = { yourInterestedPartyNumberId: '' } } = req;
-	const { errors = {}, errorSummary = [] } = body;
-
-	if (errors[yourInterestedPartyNumberId] || Object.keys(errors).length > 0) {
 		res.render(yourInterestedPartyNumberView, {
 			id: yourInterestedPartyNumberId,
 			backLinkUrl,
-			errors,
-			errorSummary,
+			interestedPartyNumber,
 			pageTitle,
 			title
 		});
-		return;
+	} catch (error) {
+		console.error('getYourInterestedPartyNumber error', error.message);
+		unhandledException(res);
 	}
+};
 
-	req.session[examinationSession.name][examinationSession.property.interestedPartyNumber] =
-		body[yourInterestedPartyNumberId];
+const postYourInterestedPartyNumber = (req, res) => {
+	try {
+		const { body = { yourInterestedPartyNumberId: '' } } = req;
+		const { errors = {}, errorSummary = [] } = body;
 
-	if (req.query.mode === 'edit') {
-		res.redirect(`${examination.directory + yourInterestedPartyNumberRoute}`);
-	} else {
-		console.error('shouldEndHere');
-		res.redirect(`${examination.directory + submittingForRoute}`);
+		if (errors[yourInterestedPartyNumberId] || Object.keys(errors).length > 0) {
+			res.render(yourInterestedPartyNumberView, {
+				id: yourInterestedPartyNumberId,
+				backLinkUrl,
+				errors,
+				errorSummary,
+				pageTitle,
+				title
+			});
+			return;
+		}
+
+		req.session[examinationSession.name][examinationSession.property.interestedPartyNumber] =
+			body[yourInterestedPartyNumberId];
+
+		if (req.query.mode === 'edit') {
+			res.redirect(`${examination.directory + yourInterestedPartyNumberRoute}`);
+		} else {
+			res.redirect(`${examination.directory + submittingForRoute}`);
+		}
+	} catch (error) {
+		console.error('postYourInterestedPartyNumber error', error.message);
+		unhandledException(res);
 	}
 };
 
