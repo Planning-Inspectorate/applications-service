@@ -1,9 +1,9 @@
 const { body } = require('express-validator');
 
-const validateNotEmptyAndLength = ({ notEmpty, checkLength, id, options }) => {
+const validateNotEmptyAndLength = ({ id, onError }) => {
 	return [
-		body(id).notEmpty().withMessage(notEmpty),
-		body(id).isLength(options).withMessage(checkLength)
+		body(id).notEmpty().withMessage(onError?.message?.notEmpty),
+		body(id).isLength(onError?.minMaxOptions).withMessage(onError?.message?.checkLength)
 	];
 };
 

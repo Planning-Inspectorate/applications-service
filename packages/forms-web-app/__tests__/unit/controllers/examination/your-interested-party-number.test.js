@@ -12,7 +12,7 @@ const {
 					route: yourInterestedPartyNumberRoute,
 					id: yourInterestedPartyNumberId
 				},
-				haveAnInterestedPartyNumber: { route: haveAnInterestedPartyNumberRoute },
+				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute },
 				submittingFor: { route: submittingForRoute }
 			}
 		}
@@ -21,7 +21,7 @@ const {
 } = require('../../../../src/routes/config');
 
 const responseObject = {
-	backLinkUrl: `${examination.directory + haveAnInterestedPartyNumberRoute}`,
+	backLinkUrl: `${examination.directory + hasInterestedPartyNumberRoute}`,
 	pageTitle: "What's your interested party number?",
 	title: "What's your interested party number?",
 	id: yourInterestedPartyNumberId

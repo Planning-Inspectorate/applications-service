@@ -2,7 +2,7 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% set backLinkUrl = backLinkUrl %}
 
@@ -27,20 +27,25 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form action="" method="POST" novalidate>
-        {{ govukInput({
+        {{ govukRadios({
           attributes: { "data-cy": id },
-          label: {
-            text: title,
-            classes: "govuk-label--l",
-            isPageHeading: true
-          },
-          id: id,
+          classes: "govuk-radios--inline",
+          idPrefix: id,
           name: id,
-          autocomplete: 'name',
-          value: name or errors[id].value,
           errorMessage: errors[id] and {
             text: errors[id].msg
-          }
+          },
+          fieldset: {
+            legend: {
+              text: title,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            html: hintHtml
+          },
+          items: options
         }) }}
 
         {{ govukButton({

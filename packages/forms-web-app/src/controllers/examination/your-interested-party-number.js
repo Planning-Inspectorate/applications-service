@@ -3,11 +3,12 @@ const {
 		examination: {
 			pages: {
 				yourInterestedPartyNumber: {
-					view: yourInterestedPartyNumberView,
+					id: yourInterestedPartyNumberId,
+					name: yourInterestedPartyNumberName,
 					route: yourInterestedPartyNumberRoute,
-					id: yourInterestedPartyNumberId
+					view: yourInterestedPartyNumberView
 				},
-				haveAnInterestedPartyNumber: { route: haveAnInterestedPartyNumberRoute },
+				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute },
 				submittingFor: { route: submittingForRoute }
 			}
 		}
@@ -18,9 +19,9 @@ const {
 const config = require('../../config');
 
 const examinationSession = config.sessionStorage.examination;
-const backLinkUrl = `${examination.directory + haveAnInterestedPartyNumberRoute}`;
-const pageTitle = "What's your interested party number?";
-const title = pageTitle;
+const backLinkUrl = `${examination.directory + hasInterestedPartyNumberRoute}`;
+const pageTitle = yourInterestedPartyNumberName;
+const title = yourInterestedPartyNumberName;
 
 const unhandledException = (res) => res.status(500).render('error/unhandled-exception');
 
@@ -40,8 +41,7 @@ const getYourInterestedPartyNumber = (req, res) => {
 			pageTitle,
 			title
 		});
-	} catch (error) {
-		console.error('getYourInterestedPartyNumber error', error.message);
+	} catch {
 		unhandledException(res);
 	}
 };
@@ -71,8 +71,7 @@ const postYourInterestedPartyNumber = (req, res) => {
 		} else {
 			res.redirect(`${examination.directory + submittingForRoute}`);
 		}
-	} catch (error) {
-		console.error('postYourInterestedPartyNumber error', error.message);
+	} catch {
 		unhandledException(res);
 	}
 };

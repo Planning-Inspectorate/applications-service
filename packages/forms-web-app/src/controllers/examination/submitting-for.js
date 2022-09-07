@@ -1,5 +1,5 @@
 const config = require('../../config');
-const examinationSessionStorage = config.sessionStorage.examination;
+const examinationSessionStorage = config?.sessionStorage?.examination;
 
 const {
 	routesConfig: {
@@ -8,10 +8,12 @@ const {
 			pages: {
 				applicant: { route: examinationApplicantRoute },
 				checkYourAnswers: { route: checkYourAnswersRoute },
+				hasInterestedPartyNumber,
 				nameAgent: { route: examinationNameAgentRoute },
 				nameMyself: { route: examinationNameMyselfRoute },
 				nameOrganisation: { route: examinationNameOrganisationRoute },
-				submittingFor
+				submittingFor,
+				yourInterestedPartyNumber: { route: yourInterestedPartyNumberRoute }
 			}
 		}
 	}
@@ -33,29 +35,48 @@ const submittingForOptions = {
 };
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${examinationApplicantRoute}`,
+	backLinkUrl: '',
 	id: submittingFor.id,
 	options: [submittingForOptions[1], submittingForOptions[2], submittingForOptions[3]],
 	pageTitle: submittingFor.name,
 	title: submittingFor.name
 };
 
+const setBackLinkUrl = (interestedPartyNo) => {
+	if (interestedPartyNo === hasInterestedPartyNumber.options[1].value) {
+		pageData.backLinkUrl = `${examinationDirectory}${examinationApplicantRoute}`;
+	} else if (interestedPartyNo === hasInterestedPartyNumber.options[2].value) {
+		pageData.backLinkUrl = `${examinationDirectory}${yourInterestedPartyNumberRoute}`;
+	}
+};
+
 const getSubmittingFor = (req, res) => {
+	const examinationSession = req?.session?.[examinationSessionStorage.name];
+
+	if (!examinationSession) return res.status(404).render('error/not-found');
+
+	const examinationSessionHasInterestedPartyNo =
+		examinationSession?.[examinationSessionStorage.property.hasInterestedPartyNo];
+
+	if (!examinationSessionHasInterestedPartyNo) return res.status(404).render('error/not-found');
+
+	setBackLinkUrl(examinationSessionHasInterestedPartyNo);
+
 	const setPageData = { ...pageData };
 
 	const examinationSessionSubmitter =
-		req?.session?.[examinationSessionStorage.name]?.[examinationSessionStorage.property.submitter];
+		examinationSession?.[examinationSessionStorage.property.submittingFor];
 
 	if (examinationSessionSubmitter) {
 		const submittingForValues = { ...submittingForOptions };
 
-		const updatedSubmittingForValues = Object.keys(submittingForValues).map((option) => {
-			const optionChecked = submittingForValues[option].value === examinationSessionSubmitter;
+		const updatedSubmittingForValues = Object.keys(submittingForValues).map((value) => {
+			const valueChecked = submittingForValues[value].value === examinationSessionSubmitter;
 
-			if (!optionChecked) return submittingForValues[option];
+			if (!valueChecked) return submittingForValues[value];
 
 			return {
-				...submittingForValues[option],
+				...submittingForValues[value],
 				checked: 'checked'
 			};
 		});
@@ -70,8 +91,18 @@ const postSubmittingFor = (req, res) => {
 	try {
 		const { body = {}, session = {} } = req;
 		const { errors = {}, errorSummary = [] } = body;
+		const examinationSession = session?.[examinationSessionStorage.name];
+
+		if (!examinationSession) return res.status(404).render('error/not-found');
+
+		const examinationSessionHasInterestedPartyNo =
+			examinationSession?.[examinationSessionStorage.property.hasInterestedPartyNo];
+
+		if (!examinationSessionHasInterestedPartyNo) return res.status(404).render('error/not-found');
 
 		if (errors[submittingFor.id] || Object.keys(errors).length > 0) {
+			setBackLinkUrl(examinationSessionHasInterestedPartyNo);
+
 			res.render(submittingFor.view, {
 				...pageData,
 				errors,
@@ -81,24 +112,23 @@ const postSubmittingFor = (req, res) => {
 			return;
 		}
 
-		const submitter = body?.[submittingFor.id];
+		const setSubmittingFor = body?.[submittingFor.id];
 
-		if (!submitter) return res.status(404).render('error/not-found');
+		if (!setSubmittingFor) return res.status(404).render('error/not-found');
 
-		const examinationSession = session?.[examinationSessionStorage.name] || {};
+		const previousSessionValue =
+			examinationSession[examinationSessionStorage.property.submittingFor];
 
-		const previousSessionValue = examinationSession[examinationSessionStorage.property.submitter];
+		examinationSession[examinationSessionStorage.property.submittingFor] = setSubmittingFor;
 
-		examinationSession[examinationSessionStorage.property.submitter] = submitter;
-
-		if (req?.query?.mode === 'edit' && previousSessionValue === submitter)
-			res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
-		else if (submittingForOptions[1].value === submitter)
-			res.redirect(`${examinationDirectory}${examinationNameMyselfRoute}`);
-		else if (submittingForOptions[2].value === submitter)
-			res.redirect(`${examinationDirectory}${examinationNameOrganisationRoute}`);
-		else if (submittingForOptions[3].value === submitter)
-			res.redirect(`${examinationDirectory}${examinationNameAgentRoute}`);
+		if (req?.query?.mode === 'edit' && previousSessionValue === setSubmittingFor)
+			res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
+		else if (submittingForOptions[1].value === setSubmittingFor)
+			res.redirect(`${examinationDirectory + examinationNameMyselfRoute}`);
+		else if (submittingForOptions[2].value === setSubmittingFor)
+			res.redirect(`${examinationDirectory + examinationNameOrganisationRoute}`);
+		else if (submittingForOptions[3].value === setSubmittingFor)
+			res.redirect(`${examinationDirectory + examinationNameAgentRoute}`);
 		else res.status(500).render('error/unhandled-exception');
 	} catch {
 		res.status(500).render('error/unhandled-exception');

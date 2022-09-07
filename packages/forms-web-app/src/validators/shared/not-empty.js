@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
-const validateNotEmpty = (id, message) => {
-	return [body(id).notEmpty().withMessage(message)];
+const validateNotEmpty = ({ id, onError }) => {
+	return [body(id).notEmpty().withMessage(onError?.message?.isEmpty)];
 };
 
 module.exports = {

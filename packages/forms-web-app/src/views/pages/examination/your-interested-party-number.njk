@@ -1,4 +1,5 @@
 {% extends "layouts/default.njk" %}
+
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -9,22 +10,25 @@
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title = "Error: " + title %}
+    {% set pageTitle = "Error: " + pageTitle %}
   {% endif %}
-  {{ title }}
+
+  {{ pageTitle }}
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }} govuk-!-width-two-thirds">
-		{% if errorSummary %}
-			{{ govukErrorSummary({
-				titleText: "There is a problem",
-				errorList: errorSummary
-			}) }}
-		{% endif %}
+	{% if errorSummary %}
+		{{ govukErrorSummary({
+			titleText: "There is a problem",
+			errorList: errorSummary
+		}) }}
+	{% endif %}
 
-		<form action="" method="POST" novalidate>
+	<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="POST" novalidate>
 				{{ govukInput({
+					attributes: { "data-cy": id },
 					label: {
 							text: title,
 							classes: "govuk-label--l",
@@ -34,19 +38,17 @@
 					name: id,
 					autocomplete: 'name',
 					value: interestedPartyNumber or errors[id].value,
-					attributes: {"data-cy": id},
 					errorMessage: errors[id] and {
 						text: errors[id].msg
 					}
 				}) }}
-			</div>
 
-			{{ govukButton({
-				text: "Continue",
-				type: "Submit",
-				attributes: { "data-cy":"button-submit-and-continue"}
-			}) }}
-
-		</form>
-	</div>
+				{{ govukButton({
+					attributes: { "data-cy": "button-submit-and-continue"},
+					text: "Continue",
+					type: "Submit"
+				}) }}
+			</form>
+    </div>
+  </div>
 {% endblock %}
