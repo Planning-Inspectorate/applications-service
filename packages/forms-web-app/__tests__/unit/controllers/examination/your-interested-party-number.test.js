@@ -9,7 +9,8 @@ const {
 			pages: {
 				yourInterestedPartyNumber: {
 					view: yourInterestedPartyNumberView,
-					route: yourInterestedPartyNumberRoute
+					route: yourInterestedPartyNumberRoute,
+					id: yourInterestedPartyNumberId
 				},
 				haveAnInterestedPartyNumber: { route: haveAnInterestedPartyNumberRoute },
 				submittingFor: { route: submittingForRoute }
@@ -19,12 +20,11 @@ const {
 	routesConfig: { examination }
 } = require('../../../../src/routes/config');
 
-const interestedPartyNumberString = 'interested-party-number';
-
 const responseObject = {
 	backLinkUrl: `${examination.directory + haveAnInterestedPartyNumberRoute}`,
 	pageTitle: "What's your interested party number?",
-	title: "What's your interested party number?"
+	title: "What's your interested party number?",
+	id: yourInterestedPartyNumberId
 };
 
 const { mockReq, mockRes } = require('../../mocks');
@@ -69,7 +69,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					interestedPartyNumber: interestedPartyNumberString
+					interestedPartyNumber: yourInterestedPartyNumberId
 				},
 				query: {
 					mode: ''
@@ -86,7 +86,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					interestedPartyNumber: interestedPartyNumberString
+					interestedPartyNumber: yourInterestedPartyNumberId
 				},
 				query: {
 					mode: 'edit'
@@ -105,7 +105,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					interestedPartyNumber: interestedPartyNumberString
+					interestedPartyNumber: yourInterestedPartyNumberId
 				},
 				query: {
 					mode: 'test'
@@ -141,10 +141,10 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				body: {
 					errors: {
-						interestedPartyNumberString: {
+						yourInterestedPartyNumberId: {
 							value: emptyStringValue,
 							msg: 'Enter your interested party number',
-							param: interestedPartyNumberString,
+							param: yourInterestedPartyNumberId,
 							location: 'body'
 						}
 					}
@@ -160,10 +160,10 @@ describe('controllers/examination/your-interested-party-number', () => {
 					...{
 						errorSummary: [],
 						errors: {
-							interestedPartyNumberString: {
+							yourInterestedPartyNumberId: {
 								value: emptyStringValue,
 								msg: 'Enter your interested party number',
-								param: interestedPartyNumberString,
+								param: yourInterestedPartyNumberId,
 								location: 'body'
 							}
 						}
@@ -187,10 +187,10 @@ describe('controllers/examination/your-interested-party-number', () => {
 				const mockRequest = {
 					body: {
 						errors: {
-							interestedPartyNumberString: {
+							yourInterestedPartyNumberId: {
 								value: fullNameValue,
 								msg: 'Your interested party number must be between 3 and 20 characters',
-								param: interestedPartyNumberString,
+								param: yourInterestedPartyNumberId,
 								location: 'body'
 							}
 						}
@@ -206,10 +206,10 @@ describe('controllers/examination/your-interested-party-number', () => {
 						...{
 							errorSummary: [],
 							errors: {
-								interestedPartyNumberString: {
+								yourInterestedPartyNumberId: {
 									value: fullNameValue,
 									msg: 'Your interested party number must be between 3 and 20 characters',
-									param: interestedPartyNumberString,
+									param: yourInterestedPartyNumberId,
 									location: 'body'
 								}
 							}

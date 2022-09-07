@@ -29,6 +29,10 @@ const routesConfig = {
 			},
 			yourInterestedPartyNumber: {
 				id: 'examination-your-interested-party-number',
+				errorMessage: {
+					notEmpty: 'Enter your interested party number',
+					checkLength: 'Your interested party number must be between 3 and 20 characters'
+				},
 				name: "What's your interested party number?",
 				route: '/your-interested-party-number',
 				view: 'pages/examination/your-interested-party-number'

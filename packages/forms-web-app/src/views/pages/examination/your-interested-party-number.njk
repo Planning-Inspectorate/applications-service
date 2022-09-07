@@ -30,13 +30,13 @@
 							classes: "govuk-label--l",
 							isPageHeading: true
 					},
-					id: "interested-party-number",
-					name: "interested-party-number",
+					id: id,
+					name: id,
 					autocomplete: 'name',
-					value: interestedPartyNumber or errors['interested-party-number'].value,
-					attributes: {"data-cy": "interested-party-number"},
-					errorMessage: errors['interested-party-number'] and {
-						text: errors['interested-party-number'].msg
+					value: interestedPartyNumber or errors[id].value,
+					attributes: {"data-cy": id},
+					errorMessage: errors[id] and {
+						text: errors[id].msg
 					}
 				}) }}
 			</div>

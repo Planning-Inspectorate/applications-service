@@ -1,11 +1,7 @@
 const express = require('express');
 
-const {
-	validateInterestedPartyNumber
-} = require('../../validators/shared/interested-party-number');
+const { validateNotEmpty, validateNotEmptyAndLength } = require('../../validators/shared/index');
 
-const { rules: validateFullName } = require('../../validators/shared/full-name');
-const { rules: validateNotEmpty } = require('../../validators/shared/not-empty');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
 
 const {
@@ -52,9 +48,19 @@ router.get(nameAgent.route, getName);
 router.get(nameOrganisation.route, getName);
 router.get(nameMyself.route, getName);
 
+const {
+	errorMessage: { notEmpty, checkLength },
+	id: yourInterestedPartyNumberId
+} = yourInterestedPartyNumber;
+
 router.post(
 	yourInterestedPartyNumber.route,
-	validateInterestedPartyNumber(),
+	validateNotEmptyAndLength({
+		notEmpty,
+		checkLength,
+		id: yourInterestedPartyNumberId,
+		options: { min: 3, max: 20 }
+	}),
 	validationErrorHandler,
 	postYourInterestedPartyNumber
 );
@@ -66,8 +72,23 @@ router.post(
 	postSubmittingFor
 );
 
+const nameValidationObject = {
+	notEmpty: 'Enter your full name',
+	checkLength: 'Full name must be between 3 and 64 characters',
+	options: {
+		min: 3,
+		max: 64
+	},
+	id: 'full-name'
+};
+
 router.post(nameAgent.route, postName);
-router.post(nameMyself.route, validateFullName(), validationErrorHandler, postName);
+router.post(
+	nameMyself.route,
+	validateNotEmptyAndLength(nameValidationObject),
+	validationErrorHandler,
+	postName
+);
 router.post(nameOrganisation.route, postName);
 
 module.exports = router;

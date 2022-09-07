@@ -4,7 +4,8 @@ const {
 			pages: {
 				yourInterestedPartyNumber: {
 					view: yourInterestedPartyNumberView,
-					route: yourInterestedPartyNumberRoute
+					route: yourInterestedPartyNumberRoute,
+					id: yourInterestedPartyNumberId
 				},
 				haveAnInterestedPartyNumber: { route: haveAnInterestedPartyNumberRoute },
 				submittingFor: { route: submittingForRoute }
@@ -15,8 +16,6 @@ const {
 } = require('../../routes/config');
 
 const config = require('../../config');
-
-const interestedPartyNumberString = 'interested-party-number';
 
 const examinationSession = config.sessionStorage.examination;
 const backLinkUrl = `${examination.directory + haveAnInterestedPartyNumberRoute}`;
@@ -32,6 +31,7 @@ const getYourInterestedPartyNumber = (req, res) => {
 	const { interestedPartyNumber = '' } = reqExaminationSession;
 
 	res.render(yourInterestedPartyNumberView, {
+		id: yourInterestedPartyNumberId,
 		backLinkUrl,
 		interestedPartyNumber,
 		pageTitle,
@@ -40,11 +40,12 @@ const getYourInterestedPartyNumber = (req, res) => {
 };
 
 const postYourInterestedPartyNumber = (req, res) => {
-	const { body = { interestedPartyNumberString: '' } } = req;
+	const { body = { yourInterestedPartyNumberId: '' } } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
-	if (errors[interestedPartyNumberString] || Object.keys(errors).length > 0) {
+	if (errors[yourInterestedPartyNumberId] || Object.keys(errors).length > 0) {
 		res.render(yourInterestedPartyNumberView, {
+			id: yourInterestedPartyNumberId,
 			backLinkUrl,
 			errors,
 			errorSummary,
@@ -54,13 +55,13 @@ const postYourInterestedPartyNumber = (req, res) => {
 		return;
 	}
 
-	req.session[examinationSession.name].property = {
-		interestedPartyNumber: body[interestedPartyNumberString]
-	};
+	req.session[examinationSession.name][examinationSession.property.interestedPartyNumber] =
+		body[yourInterestedPartyNumberId];
 
 	if (req.query.mode === 'edit') {
 		res.redirect(`${examination.directory + yourInterestedPartyNumberRoute}`);
 	} else {
+		console.error('shouldEndHere');
 		res.redirect(`${examination.directory + submittingForRoute}`);
 	}
 };
