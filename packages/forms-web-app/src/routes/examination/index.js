@@ -1,7 +1,9 @@
 const express = require('express');
-const { rules: validateFullName } = require('../../validators/shared/full-name');
-const { rules: validateNotEmpty } = require('../../validators/shared/not-empty');
+
+const { validateNotEmpty, validateNotEmptyAndLength } = require('../../validators/shared/index');
+
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
+
 const {
 	routesConfig: {
 		examination: {
@@ -10,10 +12,10 @@ const {
 				checkYourAnswers,
 				haveYourSay,
 				submittingFor,
-				haveAnInterestedPartyNumber,
 				nameMyself,
 				nameOrganisation,
-				nameAgent
+				nameAgent,
+				yourInterestedPartyNumber
 			}
 		}
 	}
@@ -22,33 +24,71 @@ const {
 const { getApplicant } = require('../../controllers/examination/applicant');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getHaveYourSay } = require('../../controllers/examination/have-your-say');
+
 const {
 	getSubmittingFor,
 	postSubmittingFor
 } = require('../../controllers/examination/submitting-for');
+
 const {
-	getHaveAnInterestedPartyNumber
-} = require('../../controllers/examination/have-an-interested-party-number');
+	getYourInterestedPartyNumber,
+	postYourInterestedPartyNumber
+} = require('../../controllers/examination/your-interested-party-number');
+
 const { getName, postName } = require('../../controllers/examination/name');
 
 const router = express.Router();
 
 router.get(applicant.route, getApplicant);
 router.get(checkYourAnswers.route, getCheckYourAnswers);
-router.get(haveAnInterestedPartyNumber.route, getHaveAnInterestedPartyNumber);
 router.get(haveYourSay.route, getHaveYourSay);
 router.get(submittingFor.route, getSubmittingFor);
+router.get(yourInterestedPartyNumber.route, getYourInterestedPartyNumber);
+router.get(nameAgent.route, getName);
+router.get(nameOrganisation.route, getName);
+router.get(nameMyself.route, getName);
+
+const {
+	errorMessage: { notEmpty, checkLength },
+	id: yourInterestedPartyNumberId
+} = yourInterestedPartyNumber;
+
+router.post(
+	yourInterestedPartyNumber.route,
+	validateNotEmptyAndLength({
+		notEmpty,
+		checkLength,
+		id: yourInterestedPartyNumberId,
+		options: { min: 3, max: 20 }
+	}),
+	validationErrorHandler,
+	postYourInterestedPartyNumber
+);
+
 router.post(
 	submittingFor.route,
 	validateNotEmpty(submittingFor.id, submittingFor.errorMessage),
 	validationErrorHandler,
 	postSubmittingFor
 );
-router.get(nameAgent.route, getName);
+
+const nameValidationObject = {
+	notEmpty: 'Enter your full name',
+	checkLength: 'Full name must be between 3 and 64 characters',
+	options: {
+		min: 3,
+		max: 64
+	},
+	id: 'full-name'
+};
+
 router.post(nameAgent.route, postName);
-router.get(nameMyself.route, getName);
-router.post(nameMyself.route, validateFullName(), validationErrorHandler, postName);
-router.get(nameOrganisation.route, getName);
+router.post(
+	nameMyself.route,
+	validateNotEmptyAndLength(nameValidationObject),
+	validationErrorHandler,
+	postName
+);
 router.post(nameOrganisation.route, postName);
 
 module.exports = router;

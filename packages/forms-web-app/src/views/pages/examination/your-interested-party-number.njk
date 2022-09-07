@@ -1,0 +1,52 @@
+{% extends "layouts/default.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% set backLinkUrl = backLinkUrl %}
+
+{% set pageTitle = pageTitle %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title = "Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }} govuk-!-width-two-thirds">
+		{% if errorSummary %}
+			{{ govukErrorSummary({
+				titleText: "There is a problem",
+				errorList: errorSummary
+			}) }}
+		{% endif %}
+
+		<form action="" method="POST" novalidate>
+				{{ govukInput({
+					label: {
+							text: title,
+							classes: "govuk-label--l",
+							isPageHeading: true
+					},
+					id: id,
+					name: id,
+					autocomplete: 'name',
+					value: interestedPartyNumber or errors[id].value,
+					attributes: {"data-cy": id},
+					errorMessage: errors[id] and {
+						text: errors[id].msg
+					}
+				}) }}
+			</div>
+
+			{{ govukButton({
+				text: "Continue",
+				type: "Submit",
+				attributes: { "data-cy":"button-submit-and-continue"}
+			}) }}
+
+		</form>
+	</div>
+{% endblock %}
