@@ -1,4 +1,7 @@
-const controller = require('../../../../src/controllers/projects/examination-timetable');
+const {
+	getExaminationTimetable,
+	postExaminationTimetable
+} = require('../../../../src/controllers/projects/examination-timetable');
 const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
@@ -7,7 +10,6 @@ describe('controllers/projects/examination-timetable', () => {
 	let res;
 
 	beforeEach(() => {
-		jest.resetAllMocks();
 		req = {
 			...mockReq(),
 			session: {
@@ -16,11 +18,21 @@ describe('controllers/projects/examination-timetable', () => {
 			}
 		};
 		res = mockRes();
+
+		jest.resetAllMocks();
 	});
+
+	const mockResponse = () => {
+		const res = {};
+		res.status = jest.fn().mockReturnValue(res);
+		res.json = jest.fn().mockReturnValue(res);
+		res.render = jest.fn().mockReturnValue(res);
+		return res;
+	};
 
 	describe('examination-timetable controllers', () => {
 		it('should call the correct template', async () => {
-			await controller.getExaminationTimetable(req, res);
+			await getExaminationTimetable(req, res);
 
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.TIMETABLE, {
 				activeProjectLink: 'project-examination-timetable',
@@ -62,6 +74,27 @@ describe('controllers/projects/examination-timetable', () => {
 			});
 		});
 
+		it('should return not found without a session and param caseRef', async () => {
+			req.session = {};
+
+			res = mockResponse();
+
+			await getExaminationTimetable(req, res);
+
+			expect(res.render).toHaveBeenCalledWith('error/not-found');
+		});
+
+		it('should return unhandled exception in case of missing session but wrong param caseRef', async () => {
+			req.session = {};
+			req.params = { case_ref: 'aa' };
+
+			res = mockResponse();
+
+			await getExaminationTimetable(req, res);
+
+			expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+		});
+
 		it('should set the session storage values', async () => {
 			const req = {};
 			req.session = { caseRef: '123ABC' };
@@ -69,7 +102,7 @@ describe('controllers/projects/examination-timetable', () => {
 			req.body['event-id'] = 'WS010006-34602';
 			res.redirect = () => {};
 
-			await controller.postExaminationTimetable(req, res);
+			await postExaminationTimetable(req, res);
 
 			expect(req.session.examination).toEqual({
 				caseRef: '123ABC',

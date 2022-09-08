@@ -85,15 +85,44 @@ const getEvents = () => {
 	return timetables;
 };
 
-exports.getExaminationTimetable = async (req, res) => {
-	const { caseRef, projectName } = req.session;
+const getExaminationTimetable = async (req, res) => {
+	const paramCaseRef = req.params?.case_ref;
+	const sessionCaseRef = req.session?.caseRef;
+
+	const projectValues = {
+		caseRef: paramCaseRef ? paramCaseRef : sessionCaseRef,
+		projectName: req.session?.projectName
+	};
+
+	if (paramCaseRef && !sessionCaseRef) {
+		try {
+			const { getAppData } = require('../../services/application.service');
+			const response = await getAppData(projectValues.caseRef);
+			if (response.resp_code === 200) {
+				const appData = response.data;
+				const { CaseReference, ProjectName } = appData;
+				req.session.appData = appData;
+				req.session.caseRef = CaseReference;
+				req.session.projectName = ProjectName;
+				projectValues.projectName = ProjectName;
+			}
+		} catch (error) {
+			console.error(
+				'Error when running getAppData inside getExaminationTimetable. ',
+				error.message
+			);
+			return res.status(500).render('error/unhandled-exception');
+		}
+	}
+
+	const { caseRef, projectName } = projectValues;
 
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
 	const activeProjectLink = project.pages.examinationTimetable.id;
 	const events = getEvents();
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;
-	const projectUrl = `${project.directory}/${req.session.caseRef}`;
+	const projectUrl = `${project.directory}/${caseRef}`;
 	const projectEmailSignUpUrl = `${projectUrl}#project-section-email-sign-up`;
 	const title = project.pages.examinationTimetable.name;
 
@@ -122,8 +151,8 @@ exports.getExaminationTimetable = async (req, res) => {
 	});
 };
 
-exports.postExaminationTimetable = (req, res) => {
-	const { caseRef } = req.session;
+const postExaminationTimetable = (req, res) => {
+	const caseRef = req.session?.caseRef;
 
 	if (!caseRef) return res.status(404).render('error/not-found');
 
@@ -148,3 +177,5 @@ exports.postExaminationTimetable = (req, res) => {
 
 	res.redirect(`${examinationDirectory}${examinationHaveYourSayRoute}`);
 };
+
+module.exports = { getExaminationTimetable, postExaminationTimetable };
