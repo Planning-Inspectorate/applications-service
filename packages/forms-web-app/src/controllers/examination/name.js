@@ -8,7 +8,6 @@ const {
 			pages: {
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				email: { route: emailRoute },
-				nameMyself,
 				submittingFor
 			}
 		}
@@ -20,48 +19,44 @@ const pageData = {
 };
 
 const getName = async (req, res) => {
-	try {
-		const examinationSession = req?.session?.[examinationSessionStorage.name];
+	const examinationSession = req?.session?.[examinationSessionStorage.name];
 
-		if (!examinationSession || !req.currentView) return res.status(404).render('error/not-found');
+	if (!examinationSession || !req.currentView) return res.status(404).render('error/not-found');
 
-		const { id, pageTitle, title, view } = req.currentView;
+	const { id, pageTitle, title, view } = req.currentView;
 
-		req.currentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
+	req.currentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
 
-		res.render(view, pageData.values);
-	} catch {
-		res.status(500).render('error/unhandled-exception');
-	}
+	res.render(view, pageData.values);
 };
 
 const postName = async (req, res) => {
-	try {
-		const { body = {}, session } = req;
-		const { errors = {}, errorSummary = [] } = body;
-		const examinationSession = session?.[examinationSessionStorage.name];
+	const { body = {}, session } = req;
+	const { errors = {}, errorSummary = [] } = body;
+	const examinationSession = session?.[examinationSessionStorage.name];
 
-		if (!examinationSession) return res.status(404).render('error/not-found');
+	if (!examinationSession || !req.currentView?.id) return res.status(404).render('error/not-found');
 
-		if (errors[nameMyself.id] || Object.keys(errors).length > 0) {
-			res.render(nameMyself.view, {
-				...pageData.values,
-				errors,
-				errorSummary
-			});
-			return;
-		}
+	const { id, view } = req.currentView;
 
-		const setName = body?.[nameMyself.id];
+	if (errors[id] || Object.keys(errors).length > 0) {
+		return res.render(view, {
+			...pageData.values,
+			errors,
+			errorSummary
+		});
+	}
 
-		if (!setName) return res.status(404).render('error/not-found');
+	const setName = body[id];
 
-		examinationSession[examinationSessionStorage.property.name] = setName;
+	if (!setName) return res.status(404).render('error/not-found');
 
-		if (req.query.mode === 'edit') res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
-		else res.redirect(`${examinationDirectory + emailRoute}`);
-	} catch {
-		res.status(500).render('error/unhandled-exception');
+	examinationSession[examinationSessionStorage.property.name] = setName;
+
+	if (req.query?.mode === 'edit') {
+		res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
+	} else {
+		res.redirect(`${examinationDirectory + emailRoute}`);
 	}
 };
 
