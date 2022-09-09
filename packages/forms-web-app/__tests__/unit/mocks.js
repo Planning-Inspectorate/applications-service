@@ -24,10 +24,21 @@ const mockRes = () => ({
 	status: jest.fn()
 });
 
+// Handles undefined res.render function error
+const mockResponse = () => {
+	const res = {};
+	res.status = jest.fn().mockReturnValue(res);
+	res.json = jest.fn().mockReturnValue(res);
+	res.render = jest.fn().mockReturnValue(res);
+	res.redirect = jest.fn().mockReturnValue(res);
+	return res;
+};
+
 const falsyAndEmptyValues = [undefined, null, NaN, 0, '', false, [], {}];
 
 module.exports = {
+	falsyAndEmptyValues,
 	mockReq,
 	mockRes,
-	falsyAndEmptyValues
+	mockResponse
 };

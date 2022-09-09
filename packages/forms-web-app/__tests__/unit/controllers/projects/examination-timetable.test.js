@@ -2,7 +2,7 @@ const {
 	getExaminationTimetable,
 	postExaminationTimetable
 } = require('../../../../src/controllers/projects/examination-timetable');
-const { mockReq, mockRes } = require('../../mocks');
+const { mockReq, mockRes, mockResponse } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
 describe('controllers/projects/examination-timetable', () => {
@@ -21,14 +21,6 @@ describe('controllers/projects/examination-timetable', () => {
 
 		jest.resetAllMocks();
 	});
-
-	const mockResponse = () => {
-		const res = {};
-		res.status = jest.fn().mockReturnValue(res);
-		res.json = jest.fn().mockReturnValue(res);
-		res.render = jest.fn().mockReturnValue(res);
-		return res;
-	};
 
 	describe('examination-timetable controllers', () => {
 		it('should call the correct template', async () => {
