@@ -16,25 +16,20 @@ const {
 } = require('../../routes/config');
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory + submittingFor.route}`,
-	id: nameMyself.id,
-	pageTitle: nameMyself.name,
-	title: nameMyself.name
+	values: { backLinkUrl: `${examinationDirectory + submittingFor.route}` }
 };
 
 const getName = async (req, res) => {
 	try {
-		const setPageData = { ...pageData };
-
 		const examinationSession = req?.session?.[examinationSessionStorage.name];
 
-		if (!examinationSession) return res.status(404).render('error/not-found');
+		if (!examinationSession || !req.currentView) return res.status(404).render('error/not-found');
 
-		const examinationSessionName = examinationSession[examinationSessionStorage.property.name];
+		const { id, pageTitle, title, view } = req.currentView;
 
-		if (examinationSessionName) setPageData.name = examinationSessionName;
+		req.currentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
 
-		res.render(nameMyself.view, setPageData);
+		res.render(view, pageData.values);
 	} catch {
 		res.status(500).render('error/unhandled-exception');
 	}
@@ -50,7 +45,7 @@ const postName = async (req, res) => {
 
 		if (errors[nameMyself.id] || Object.keys(errors).length > 0) {
 			res.render(nameMyself.view, {
-				...pageData,
+				...pageData.values,
 				errors,
 				errorSummary
 			});
