@@ -23,6 +23,8 @@ const {
 	}
 } = require('../../routes/config');
 
+const { forwardView } = require('../../middleware/forward-view');
+
 const { getApplicant } = require('../../controllers/examination/applicant');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
@@ -45,8 +47,11 @@ const router = express.Router();
 
 router.get(applicant.route, getApplicant);
 router.get(checkYourAnswers.route, getCheckYourAnswers);
+router.get(haveYourSay.route, getHaveYourSay);
+
 router.get(email.route, getEmail);
 router.post(email.route, postEmail);
+
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
 router.post(
 	hasInterestedPartyNumber.route,
@@ -54,29 +59,31 @@ router.post(
 	validationErrorHandler,
 	postHasInterestedPartyNumber
 );
-router.get(haveYourSay.route, getHaveYourSay);
 
-router.get(nameAgent.route, getName);
+router.get(nameAgent.route, forwardView(nameAgent), getName);
 router.post(
 	nameAgent.route,
 	validateNotEmptyAndLength(nameAgent),
 	validationErrorHandler,
 	postName
 );
-router.get(nameMyself.route, getName);
+
+router.get(nameMyself.route, forwardView(nameMyself), getName);
 router.post(
 	nameMyself.route,
 	validateNotEmptyAndLength(nameMyself),
 	validationErrorHandler,
 	postName
 );
-router.get(nameOrganisation.route, getName);
+
+router.get(nameOrganisation.route, forwardView(nameOrganisation), getName);
 router.post(
 	nameOrganisation.route,
 	validateNotEmptyAndLength(nameOrganisation),
 	validationErrorHandler,
 	postName
 );
+
 router.get(submittingFor.route, getSubmittingFor);
 router.post(
 	submittingFor.route,
@@ -84,6 +91,7 @@ router.post(
 	validationErrorHandler,
 	postSubmittingFor
 );
+
 router.get(yourInterestedPartyNumber.route, getYourInterestedPartyNumber);
 router.post(
 	yourInterestedPartyNumber.route,

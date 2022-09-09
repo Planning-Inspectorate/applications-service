@@ -50,14 +50,17 @@ const routesConfig = {
 			nameAgent: {
 				id: 'examination-name',
 				name: 'Name of person or group',
+				title: "What's the full name of the person, family group or organisation?",
+				pageTitle: "What's the full name of the person, family group or organisation?",
 				onError: {
 					message: {
-						checkLength: 'Name of person or group must be between 3 and 64 characters',
-						notEmpty: 'Enter name of person or group'
+						checkLength:
+							"The full name of the person, family group or organisation organisation's name must be between 1 and 255 characters",
+						notEmpty: 'Enter the full name of the person, family group or organisation'
 					},
 					minMaxOptions: {
-						min: 3,
-						max: 64
+						min: 1,
+						max: 255
 					}
 				},
 				route: '/name-of-person-or-group',
@@ -66,6 +69,8 @@ const routesConfig = {
 			nameMyself: {
 				id: 'examination-name',
 				name: 'What is your full name?',
+				title: 'What is your full name?',
+				pageTitle: 'What is your full name?',
 				onError: {
 					message: {
 						checkLength: 'Full name must be between 3 and 64 characters',
@@ -82,14 +87,16 @@ const routesConfig = {
 			nameOrganisation: {
 				id: 'examination-name',
 				name: 'Name of organisation',
+				title: "What's the name of your organisation?",
+				pageTitle: "What's the name of your organisation?",
 				onError: {
 					message: {
-						checkLength: 'Name of organisation must be between 3 and 64 characters',
-						notEmpty: 'Enter name of organisation'
+						checkLength: "Your organisation's name must be between 1 and 255 characters",
+						notEmpty: "Enter your organisation's name"
 					},
 					minMaxOptions: {
-						min: 3,
-						max: 64
+						min: 1,
+						max: 255
 					}
 				},
 				route: '/your-organisation-name',
