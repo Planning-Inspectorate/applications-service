@@ -4,6 +4,17 @@ const {
 } = require('../../../../src/controllers/examination/submitting-for');
 const { mockReq, mockRes } = require('../../mocks');
 
+const {
+	routesConfig: {
+		examination: {
+			directory: examinationDirectory,
+			pages: {
+				applicant: { route: applicantRoute }
+			}
+		}
+	}
+} = require('../../../../src/routes/config');
+
 const submittingForOptions = {
 	1: {
 		value: 'myself',
@@ -20,7 +31,7 @@ const submittingForOptions = {
 };
 
 const pageData = {
-	backLinkUrl: '/examination/are-you-applicant',
+	backLinkUrl: `${examinationDirectory + applicantRoute}`,
 	id: 'examination-submitting-for',
 	options: [submittingForOptions[1], submittingForOptions[2], submittingForOptions[3]],
 	pageTitle: 'Who are you making the submission for?',

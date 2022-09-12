@@ -8,12 +8,15 @@ const {
 			pages: {
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				hasInterestedPartyNumber,
-				haveYourSay: { route: examinationHaveYourSayRoute },
-				yourInterestedPartyNumber: { route: yourInterestedPartyNumberRoute }
+				haveYourSay: { route: examinationHaveYourSayRoute }
 			}
 		}
 	}
 } = require('../../routes/config');
+
+const {
+	options: { 1: yesOption, 2: noOption }
+} = hasInterestedPartyNumber;
 
 const pageData = {
 	backLinkUrl: `${examinationDirectory}${examinationHaveYourSayRoute}`,
@@ -85,10 +88,10 @@ const postHasInterestedPartyNumber = (req, res) => {
 
 		if (req?.query?.mode === 'edit' && previousSessionValue === hasInterestedPartyNo)
 			res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
-		else if (hasInterestedPartyNumber.options[1].value === hasInterestedPartyNo)
-			res.redirect(`${examinationDirectory}${yourInterestedPartyNumberRoute}`);
-		else if (hasInterestedPartyNumber.options[2].value === hasInterestedPartyNo)
-			res.redirect(`${examinationDirectory}${yourInterestedPartyNumberRoute}`);
+		else if (yesOption.value === hasInterestedPartyNo)
+			res.redirect(`${examinationDirectory}${yesOption.nextPage}`);
+		else if (noOption.value === hasInterestedPartyNo)
+			res.redirect(`${examinationDirectory}${noOption.nextPage}`);
 		else res.status(500).render('error/unhandled-exception');
 	} catch {
 		res.status(500).render('error/unhandled-exception');

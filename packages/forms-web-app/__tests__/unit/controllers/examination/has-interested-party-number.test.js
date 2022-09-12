@@ -4,14 +4,27 @@ const {
 } = require('../../../../src/controllers/examination/has-interested-party-number');
 const { mockReq, mockRes } = require('../../mocks');
 
+const {
+	routesConfig: {
+		examination: {
+			directory: examinationDirectory,
+			pages: {
+				applicant: { route: applicantRoute }
+			}
+		}
+	}
+} = require('../../../../src/routes/config');
+
 const hasInterestedPartyNumberOptions = {
 	1: {
 		value: 'yes',
-		text: 'Yes'
+		text: 'Yes',
+		nextPage: '/your-interested-party-number'
 	},
 	2: {
 		value: 'no',
-		text: 'No'
+		text: 'No',
+		nextPage: '/applicant'
 	}
 };
 
@@ -146,7 +159,7 @@ describe('controllers/examination/has-interested-party-number', () => {
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/your-interested-party-number');
+			expect(res.redirect).toHaveBeenCalledWith(`${examinationDirectory + applicantRoute}`);
 		});
 	});
 });
