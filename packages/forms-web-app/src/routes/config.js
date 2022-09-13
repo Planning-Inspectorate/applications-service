@@ -22,7 +22,7 @@ const routesConfig = {
 						nextPage: '/who-are-you-submitting-for'
 					}
 				},
-				route: '/applicant',
+				route: '/are-you-applicant',
 				view: 'pages/examination/applicant'
 			},
 			checkYourAnswers: {
@@ -60,7 +60,7 @@ const routesConfig = {
 					2: {
 						value: 'no',
 						text: 'No',
-						nextPage: '/applicant'
+						nextPage: '/are-you-applicant'
 					}
 				},
 				route: '/have-an-interested-party-number',
