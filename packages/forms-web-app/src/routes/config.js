@@ -106,8 +106,8 @@ const routesConfig = {
 			nameOrganisation: {
 				id: 'examination-name',
 				name: 'Name of organisation',
-				title: `What’s your organisations name?`,
-				pageTitle: `What’s your organisations name?`,
+				title: `What’s your organisation's name?`,
+				pageTitle: `What’s your organisation's name?`,
 				onError: {
 					message: {
 						checkLength: "Your organisation's name must be between 1 and 255 characters",
