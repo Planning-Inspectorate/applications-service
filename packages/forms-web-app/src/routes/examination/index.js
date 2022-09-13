@@ -65,6 +65,7 @@ router.post(
 	nameAgent.route,
 	validateNotEmptyAndLength(nameAgent),
 	validationErrorHandler,
+	forwardView(nameAgent),
 	postName
 );
 
@@ -73,6 +74,7 @@ router.post(
 	nameMyself.route,
 	validateNotEmptyAndLength(nameMyself),
 	validationErrorHandler,
+	forwardView(nameMyself),
 	postName
 );
 
@@ -81,6 +83,7 @@ router.post(
 	nameOrganisation.route,
 	validateNotEmptyAndLength(nameOrganisation),
 	validationErrorHandler,
+	forwardView(nameOrganisation),
 	postName
 );
 
