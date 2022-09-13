@@ -9,7 +9,13 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
-				applicant: { route: applicantRoute }
+				applicant: { route: applicantRoute },
+				hasInterestedPartyNumber: {
+					options: {
+						1: { nextPage: yesOptionNextPage },
+						2: { nextPage: noOptionNextPage }
+					}
+				}
 			}
 		}
 	}
@@ -19,12 +25,12 @@ const hasInterestedPartyNumberOptions = {
 	1: {
 		value: 'yes',
 		text: 'Yes',
-		nextPage: '/your-interested-party-number'
+		nextPage: yesOptionNextPage
 	},
 	2: {
 		value: 'no',
 		text: 'No',
-		nextPage: '/applicant'
+		nextPage: noOptionNextPage
 	}
 };
 
