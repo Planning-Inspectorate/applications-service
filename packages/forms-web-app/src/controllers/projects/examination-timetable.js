@@ -1,5 +1,5 @@
 const { formatDate } = require('../../utils/date-utils');
-const { getTimetables } = require('../../services/timetable.service');
+const { isBeforeOrAfterDate } = require('../../utils/is-before-or-after-date');
 const config = require('../../config');
 const {
 	routesConfig: { project },
@@ -59,63 +59,31 @@ const data = {
 	currentPage: 1
 };
 
-const getEvents = async (caseRef) => {
-	const { data, resp_code } = await getTimetables(caseRef);
-	const dataTimetables = data?.timetables;
+const getEvents = () => {
 	const defaultValue = [];
 
-	if (
-		!caseRef ||
-		typeof caseRef !== 'string' ||
-		!dataTimetables ||
-		!Array.isArray(dataTimetables) ||
-		!dataTimetables.length ||
-		resp_code !== 200
-	)
+	if (!data?.timetable || !Array.isArray(data.timetable) || !data.timetable.length)
 		return defaultValue;
 
-	const timetables = data.timetables.map((timetable) => {
-		const { id, uniqueId, dateOfEvent: eventDate, title: timetableTitle, description } = timetable;
-
-		const closed = new Date() > new Date(eventDate);
-		const dateOfEvent = formatDate(eventDate);
-		const eventTitle = timetableTitle;
-		const title = `${eventDate} - ${eventTitle}`;
+	const timetables = data.timetable.map((timetable) => {
+		const closed = new Date() > new Date(timetable.dateOfEvent);
+		const dateOfEvent = formatDate(timetable.dateOfEvent);
+		const eventTitle = timetable.title;
+		const title = `${dateOfEvent} - ${eventTitle}`;
 
 		return {
 			closed,
 			dateOfEvent,
-			description,
+			description: timetable.description,
 			eventTitle,
 			id: timetable.uniqueId,
 			eventIdFieldName,
-			elementId: `${id + uniqueId}`,
+			elementId: `${eventElementId}${timetable.uniqueId}`,
 			title
 		};
 	});
 
 	return timetables;
-};
-
-const isExaminationOpened = (date, field) => {
-	if (!date || typeof date !== 'string' || !field || typeof field !== 'string') return;
-	const formattedDate = formatDate(date);
-	const returnValues = {
-		DateTimeExaminationEnds: {
-			closes: `The examination is expected to close on ${formattedDate}`,
-			closed: `The examination closed on ${formattedDate}`
-		},
-		ConfirmedStartOfExamination: {
-			opens: `The examination opens on ${formattedDate}`,
-			opened: `The examination opened on ${formattedDate}`
-		}
-	};
-
-	const [toHappen, happened] = Object.values(returnValues[field]);
-
-	return new Date(new Date().toUTCString()) < new Date(new Date().toUTCString(date))
-		? toHappen
-		: happened;
 };
 
 const getExaminationTimetable = async (req, res) => {
@@ -147,22 +115,22 @@ const getExaminationTimetable = async (req, res) => {
 
 	const appData = req.session?.appData;
 
-	const confirmedStartOfExamination = isExaminationOpened(
-		appData?.ConfirmedStartOfExamination,
-		'ConfirmedStartOfExamination'
-	);
+	const confirmedStartOfExamination = isBeforeOrAfterDate(appData?.ConfirmedStartOfExamination, [
+		`The examination opens on`,
+		`The examination opened on`
+	]);
 
-	const dateTimeExaminationEnds = isExaminationOpened(
-		appData?.DateTimeExaminationEnds,
-		'DateTimeExaminationEnds'
-	);
+	const dateTimeExaminationEnds = isBeforeOrAfterDate(appData?.DateTimeExaminationEnds, [
+		`The examination is expected to close on`,
+		`The examination closed on`
+	]);
 
 	const { caseRef, projectName } = projectValues;
 
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
 	const activeProjectLink = project.pages.examinationTimetable.id;
-	const events = await getEvents(sessionCaseRef);
+	const events = getEvents();
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;
 	const projectUrl = `${project.directory}/${caseRef}`;
 	const projectEmailSignUpUrl = `${projectUrl}#project-section-email-sign-up`;
