@@ -39,7 +39,9 @@
   {{ textHeadingSummary(title) }}
 
   {% if events | length %}
-    <p class="govuk-body-s">The examination opened on 19 August 2020.</p>
+		{% if confirmedStartOfExamination %}
+    	<p class="govuk-body-s">{{confirmedStartOfExamination}}</p>
+		{% endif %}
 
     {% if nextDeadline %}
       {{ govukInsetText({
@@ -51,4 +53,7 @@
   {% else %}
     {{ contentTimetableNotPublished | safe }}
   {% endif %}
+	{% if dateTimeExaminationEnds %}
+    	<p class="govuk-body-s govuk-!-margin-top-2">{{dateTimeExaminationEnds}}</p>
+	{% endif %}
 {% endblock %}

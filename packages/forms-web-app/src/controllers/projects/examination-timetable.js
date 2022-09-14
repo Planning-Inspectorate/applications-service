@@ -1,4 +1,5 @@
 const { formatDate } = require('../../utils/date-utils');
+const { getTimetables } = require('../../services/timetable.service');
 const config = require('../../config');
 const {
 	routesConfig: { project },
@@ -58,31 +59,63 @@ const data = {
 	currentPage: 1
 };
 
-const getEvents = () => {
+const getEvents = async (caseRef) => {
+	const { data, resp_code } = await getTimetables(caseRef);
+	const dataTimetables = data?.timetables;
 	const defaultValue = [];
 
-	if (!data?.timetable || !Array.isArray(data.timetable) || !data.timetable.length)
+	if (
+		!caseRef ||
+		typeof caseRef !== 'string' ||
+		!dataTimetables ||
+		!Array.isArray(dataTimetables) ||
+		!dataTimetables.length ||
+		resp_code !== 200
+	)
 		return defaultValue;
 
-	const timetables = data.timetable.map((timetable) => {
-		const closed = new Date() > new Date(timetable.dateOfEvent);
-		const dateOfEvent = formatDate(timetable.dateOfEvent);
-		const eventTitle = timetable.title;
-		const title = `${dateOfEvent} - ${eventTitle}`;
+	const timetables = data.timetables.map((timetable) => {
+		const { id, uniqueId, dateOfEvent: eventDate, title: timetableTitle, description } = timetable;
+
+		const closed = new Date() > new Date(eventDate);
+		const dateOfEvent = formatDate(eventDate);
+		const eventTitle = timetableTitle;
+		const title = `${eventDate} - ${eventTitle}`;
 
 		return {
 			closed,
 			dateOfEvent,
-			description: timetable.description,
+			description,
 			eventTitle,
 			id: timetable.uniqueId,
 			eventIdFieldName,
-			elementId: `${eventElementId}${timetable.uniqueId}`,
+			elementId: `${id + uniqueId}`,
 			title
 		};
 	});
 
 	return timetables;
+};
+
+const isExaminationOpened = (date, field) => {
+	if (!date || typeof date !== 'string' || !field || typeof field !== 'string') return;
+	const formattedDate = formatDate(date);
+	const returnValues = {
+		DateTimeExaminationEnds: {
+			closes: `The examination is expected to close on ${formattedDate}`,
+			closed: `The examination closed on ${formattedDate}`
+		},
+		ConfirmedStartOfExamination: {
+			opens: `The examination opens on ${formattedDate}`,
+			opened: `The examination opened on ${formattedDate}`
+		}
+	};
+
+	const [toHappen, happened] = Object.values(returnValues[field]);
+
+	return new Date(new Date().toUTCString()) < new Date(new Date().toUTCString(date))
+		? toHappen
+		: happened;
 };
 
 const getExaminationTimetable = async (req, res) => {
@@ -106,21 +139,30 @@ const getExaminationTimetable = async (req, res) => {
 				req.session.projectName = ProjectName;
 				projectValues.projectName = ProjectName;
 			}
-		} catch (error) {
-			console.error(
-				'Error when running getAppData inside getExaminationTimetable. ',
-				error.message
-			);
+		} catch (err) {
+			console.error('Error when running getAppData inside getExaminationTimetable. ', err?.message);
 			return res.status(500).render('error/unhandled-exception');
 		}
 	}
+
+	const appData = req.session?.appData;
+
+	const confirmedStartOfExamination = isExaminationOpened(
+		appData?.ConfirmedStartOfExamination,
+		'ConfirmedStartOfExamination'
+	);
+
+	const dateTimeExaminationEnds = isExaminationOpened(
+		appData?.DateTimeExaminationEnds,
+		'DateTimeExaminationEnds'
+	);
 
 	const { caseRef, projectName } = projectValues;
 
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
 	const activeProjectLink = project.pages.examinationTimetable.id;
-	const events = getEvents();
+	const events = await getEvents(sessionCaseRef);
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;
 	const projectUrl = `${project.directory}/${caseRef}`;
 	const projectEmailSignUpUrl = `${projectUrl}#project-section-email-sign-up`;
@@ -140,13 +182,15 @@ const getExaminationTimetable = async (req, res) => {
 	res.render(project.pages.examinationTimetable.view, {
 		activeProjectLink,
 		caseRef,
+		confirmedStartOfExamination,
+		dateTimeExaminationEnds,
 		eventElementId,
 		events,
 		nextDeadline,
-		projectName,
 		pageTitle,
-		projectUrl,
 		projectEmailSignUpUrl,
+		projectName,
+		projectUrl,
 		title
 	});
 };
