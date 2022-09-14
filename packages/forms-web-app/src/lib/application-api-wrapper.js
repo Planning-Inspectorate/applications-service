@@ -136,3 +136,6 @@ exports.authenticateToken = async (token, email) => {
 exports.getRepresentationById = async (id) => {
 	return handler('getRepresentationById', `/api/v1/representations/${id}`);
 };
+
+exports.getTimetables = async (caseRef) =>
+	handler('getTimetables', `/api/v1/timetables/${caseRef}`);
