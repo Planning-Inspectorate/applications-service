@@ -5,7 +5,7 @@ const sayAtPreApplication = new PO_SayAtPreApplication();
 Given('I navigate to Having your say at the pre-application stage page', () => {
 	cy.visit('/having-your-say-guide');
 	cy.get(
-		'button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button'
+		'button.ui-step-nav__button.ui-step-nav__button--controls.js-step-controls-button'
 	).click();
 	cy.clickLinkTonavigateToPage('Taking part in the pre-application stage');
 });

@@ -5,7 +5,7 @@ const sayDuringExaminationOfProject = new PO_SayDuringExaminationOfProject();
 Given('I navigate to Have your say during the examination of the project page', () => {
 	cy.visit('/having-your-say-guide');
 	cy.get(
-		'button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button'
+		'button.ui-step-nav__button.ui-step-nav__button--controls.js-step-controls-button'
 	).click();
 	cy.clickLinkTonavigateToPage('Have your say during the examination of the project');
 });

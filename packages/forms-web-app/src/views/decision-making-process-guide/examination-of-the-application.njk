@@ -1,13 +1,16 @@
 {% extends "layouts/layout.njk" %}
 
+{% from "../components/ui/next-step.njk" import uiNextStep %}
+
 {% block pageTitle %}
   Examination of the application - National Infrastructure Planning
 {% endblock %}
 
 {% block beforeContent %}
 
-    {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-    {{ govukPhaseBanner({
+  {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+  {{ govukPhaseBanner({
     tag: {
       text: "alpha"
     },
@@ -15,83 +18,92 @@
   }) }}
 
 {% endblock %}
+
 {% block content %}
+  <h1 class="govuk-heading-xl">
+    Examination of the application
+  </h1>
 
-    <h1 class="govuk-heading-xl">
-  Examination of the application
-</h1>
-    <h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
-    <ol class="govuk-list pins-contents-list">
-        <li>
-            <a class="govuk-link" href="#about-the-examination-of-the-project">About the Examination of the application</a>
-        </li>
-        <li>
-            <a class="govuk-link" href="#what-happens-at-the-examination-stage">What happens at the Examination stage</a>
-        </li>
-        <li>
-            <a class="govuk-link" href="#what-you-can-do-if-you-have-registered-to-have-your-say">What you can do if you have registered to have your say</a>
-        </li>
-        <li>
-            <a class="govuk-link" href="#if-you-have-missed-the-deadline-to-register">If you have missed the deadline to register</a>
-        </li>
-        <li>
-            <a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
-        </li>
-    </ol>
+  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
 
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="pins-step-by-step-section-main">
-                <h2 class="govuk-heading-m" id="about-the-examination-of-the-project">About the Examination of the application</h2>
-                <p class="govuk-body">The Examination stage is where the Examining Authority will look at the proposed project and ask questions.</p>
-                <p class="govuk-body">The developer, anyone who is registered to have their say, and anyone else involved in the project can comment on the proposed development or answer any of the questions at each deadline.</p>
-                <p class="govuk-body">This is usually done in writing. The Examining Authority will create and publish a document of their questions. The Examination may also involve hearings if there are issues that need to be discussed in more detail.</p>
-                <p class="govuk-body">This stage takes six months.</p>
+  <ol class="govuk-list style-contents-list">
+    <li>
+      <a class="govuk-link" href="#about-the-examination-of-the-project">About the Examination of the application</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#what-happens-at-the-examination-stage">What happens at the Examination stage</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#what-you-can-do-if-you-have-registered-to-have-your-say">What you can do if you have registered to have your say</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#if-you-have-missed-the-deadline-to-register">If you have missed the deadline to register</a>
+    </li>
+    <li>
+      <a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
+    </li>
+  </ol>
 
-                <h2 class="govuk-heading-m" id="what-happens-at-the-examination-stage">What happens at the Examination stage</h2>
-                <p class="govuk-body">The Examination stage is where the Examining Authority will look at the proposed development and ask questions.</p>
-                <p class="govuk-body">The developer, anyone who is registered to have their say, and anyone else involved in the project can comment on the documents or answer any of the questions at each deadline.</p>
-                <p class="govuk-body">You can send your comments by filling in the online form in the project section of this website.</p>
-                <p class="govuk-body">If you have difficulty using online services, you can also send us information by email or post. You can check the project information in the project section of this website to find contact details for the Planning Inspectorate's case team.</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+        <h2 class="govuk-heading-m" id="about-the-examination-of-the-project">
+          About the Examination of the application
+        </h2>
 
-                <h2 class="govuk-heading-m" id="what-you-can-do-if-you-have-registered-to-have-your-say">What you can do if you have registered to have your say</h2>
-                <p class="govuk-body">Once you have registered to have your say, you must use your interested party reference when submitting comments.If you are registered, your comments must be taken into account by the Examining Authority. </p>
-                <p class="govuk-body">You can:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>comment on the proposed development at each deadline</li>
-                    <li>attend any hearings</li>
-                </ul>
-                <p class="govuk-body">All project documents, comments from others who have registered and Examination questions will be published in the specific project section of this website.</p>
-                <p class="govuk-body">To find out more about what you can do if you are registered to have your say, <a class="govuk-link"href="../having-your-say-guide">check our guide for having your say about a national infrastructure project</a>.</p>
+        <p class="govuk-body">The Examination stage is where the Examining Authority will look at the proposed project and ask questions.</p>
+        <p class="govuk-body">The developer, anyone who is registered to have their say, and anyone else involved in the project can comment on the proposed development or answer any of the questions at each deadline.</p>
+        <p class="govuk-body">This is usually done in writing. The Examining Authority will create and publish a document of their questions. The Examination may also involve hearings if there are issues that need to be discussed in more detail.</p>
+        <p class="govuk-body">This stage takes six months.</p>
 
-                <h2 class="govuk-heading-m" id="if-you-have-missed-the-deadline-to-register">If you have missed the deadline to register</h2>
-                <p class="govuk-body">You can still look at all of the project information and comment using the form, but there is no guarantee that your comments will be included in the Examination of the application.</p>
-                <p class="govuk-body">You can contact the case team and ask to be registered late and given an interested party reference. If you choose to submit comments without being registered, the Examining Authority will decide if your comments can be taken into account.</p>
+        <h2 class="govuk-heading-m" id="what-happens-at-the-examination-stage">
+          What happens at the Examination stage
+        </h2>
 
-                <h2 class="govuk-heading-m" id="more-detailed-advice">More detailed advice</h2>
-                <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
-                <p class="govuk-body">
-                    <a class="govuk-link"href="#">Read the full set of advice notes</a>
-                </p>
-                <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
-                    <a class="govuk-link"href="/decision-making-process-guide/recommendation-and-decision">
-                        <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
-                            <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
-                          </svg> -->
-                        <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
-                            <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
-                        </svg>
-                        <strong>Next</strong>
-                        <span>Recommendation and decision</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="govuk-grid-column-one-third">
-            {% set currentDefaultStep = 4 %}
-            {% include "../includes/dco-step-by-step-navigation.njk" %}
-        </div>
+        <p class="govuk-body">The Examination stage is where the Examining Authority will look at the proposed development and ask questions.</p>
+        <p class="govuk-body">The developer, anyone who is registered to have their say, and anyone else involved in the project can comment on the documents or answer any of the questions at each deadline.</p>
+        <p class="govuk-body">You can send your comments by filling in the online form in the project section of this website.</p>
+        <p class="govuk-body">If you have difficulty using online services, you can also send us information by email or post. You can check the project information in the project section of this website to find contact details for the Planning Inspectorate's case team.</p>
 
+        <h2 class="govuk-heading-m" id="what-you-can-do-if-you-have-registered-to-have-your-say">
+          What you can do if you have registered to have your say
+        </h2>
+
+        <p class="govuk-body">Once you have registered to have your say, you must use your interested party reference when submitting comments.If you are registered, your comments must be taken into account by the Examining Authority.</p>
+        <p class="govuk-body">You can:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>comment on the proposed development at each deadline</li>
+          <li>attend any hearings</li>
+        </ul>
+
+        <p class="govuk-body">All project documents, comments from others who have registered and Examination questions will be published in the specific project section of this website.</p>
+        <p class="govuk-body">To find out more about what you can do if you are registered to have your say, <a class="govuk-link"href="../having-your-say-guide">check our guide for having your say about a national infrastructure project</a>.</p>
+
+        <h2 class="govuk-heading-m" id="if-you-have-missed-the-deadline-to-register">
+          If you have missed the deadline to register
+        </h2>
+
+        <p class="govuk-body">You can still look at all of the project information and comment using the form, but there is no guarantee that your comments will be included in the Examination of the application.</p>
+        <p class="govuk-body">You can contact the case team and ask to be registered late and given an interested party reference. If you choose to submit comments without being registered, the Examining Authority will decide if your comments can be taken into account.</p>
+
+        <h2 class="govuk-heading-m" id="more-detailed-advice">
+          More detailed advice
+        </h2>
+
+        <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
+        <p class="govuk-body">
+          <a class="govuk-link"href="#">Read the full set of advice notes</a>
+        </p>
+
+        {{ uiNextStep("/decision-making-process-guide/recommendation-and-decision", "Recommendation and decision") }}
+      </div>
     </div>
 
+    <div class="govuk-grid-column-one-third">
+      {% set currentDefaultStep = 4 %}
+
+      {% include "../includes/dco-step-by-step-navigation.njk" %}
+    </div>
+  </div>
 {% endblock %}

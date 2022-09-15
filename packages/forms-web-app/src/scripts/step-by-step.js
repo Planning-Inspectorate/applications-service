@@ -13,25 +13,25 @@ function stepByStep() {
 	let rememberShownStep = false;
 	let stepNavSize;
 	let sessionStoreLink = 'govuk-step-nav-active-link';
-	const activeLinkClass = 'app-step-nav__list-item--active';
-	const activeStepClass = 'app-step-nav__step--active';
+	const activeLinkClass = 'ui-step-nav__list-item--active';
+	const activeStepClass = 'ui-step-nav__step--active';
 	const activeLinkHref = '#content';
 	let uniqueId;
 
 	this.start = function (elementID) {
 		const $element = $(elementID);
 		// Indicate that js has worked
-		$element.addClass('app-step-nav--active');
+		$element.addClass('ui-step-nav--active');
 
 		// Prevent FOUC, remove class hiding content
 		$element.removeClass('js-hidden');
 
-		stepNavSize = $element.hasClass('app-step-nav--large') ? 'Big' : 'Small';
+		stepNavSize = $element.hasClass('ui-step-nav--large') ? 'Big' : 'Small';
 		rememberShownStep = !!$element.filter('[data-remember]').length && stepNavSize === 'Big';
 		const $steps = $element.find('.js-step');
 		const $stepHeaders = $element.find('.js-toggle-panel');
 		const totalSteps = $element.find('.js-panel').length;
-		const totalLinks = $element.find('app-step-nav__link').length;
+		const totalLinks = $element.find('ui-step-nav__link').length;
 		let $showOrHideAllButton;
 
 		uniqueId = $element.data('id') || false;
@@ -61,7 +61,7 @@ function stepByStep() {
 
 		function addShowHideAllButton() {
 			$element.prepend(
-				`<div class="app-step-nav__controls"><button aria-expanded="false" class="app-step-nav__button app-step-nav__button--controls js-step-controls-button">${actions.showAllText}</button></div>`
+				`<div class="ui-step-nav__controls"><button aria-expanded="false" class="ui-step-nav__button ui-step-nav__button--controls js-step-controls-button">${actions.showAllText}</button></div>`
 			);
 		}
 
@@ -77,7 +77,7 @@ function stepByStep() {
 					$(this)
 						.find('.js-step-title-button')
 						.append(
-							'<span class="app-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden></span>'
+							'<span class="ui-step-nav__toggle-link js-toggle-link" aria-hidden="true" hidden></span>'
 						);
 				}
 			});
@@ -125,7 +125,7 @@ function stepByStep() {
 				$title.wrapInner(
 					`${
 						'<button ' +
-						'class="app-step-nav__button app-step-nav__button--title js-step-title-button" ' +
+						'class="ui-step-nav__button ui-step-nav__button--title js-step-title-button" ' +
 						'aria-expanded="false" aria-controls="'
 					}${contentId}">` + `</button>`
 				);
@@ -217,7 +217,7 @@ function stepByStep() {
 			$element.find(`.${activeStepClass}`).removeClass(activeStepClass).removeAttr('data-show');
 			$element
 				.find(`.${activeLinkClass}`)
-				.closest('.app-step-nav__step')
+				.closest('.ui-step-nav__step')
 				.addClass(activeStepClass)
 				.attr('data-show', '');
 		}
@@ -371,7 +371,7 @@ function stepByStep() {
 
 		function trackClick() {
 			const trackingOptions = { label: `${$(event.target).attr('href')} : ${stepNavSize}` };
-			const dimension28 = $(event.target).closest('.app-step-nav__list').attr('data-length');
+			const dimension28 = $(event.target).closest('.ui-step-nav__list').attr('data-length');
 
 			if (dimension28) {
 				trackingOptions.dimension28 = dimension28;

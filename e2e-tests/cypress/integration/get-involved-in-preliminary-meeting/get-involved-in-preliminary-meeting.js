@@ -4,7 +4,7 @@ const getInvolvedInPreliminaryMeeting = new PO_GetInvolvedInPreliminaryMeeting()
 
 Given('I navigate to Get involved in the preliminary meeting page', () => {
 	cy.visit('/having-your-say-guide');
-	// cy.get('button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button').click();
+	// cy.get('button.ui-step-nav__button.ui-step-nav__button--controls.js-step-controls-button').click();
 	cy.get('#get-involved-in-the-preliminary-meeting').click();
 	cy.clickLinkTonavigateToPage('get involved in the preliminary meeting');
 });

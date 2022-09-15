@@ -1,7 +1,5 @@
 /* package */
 @import '../../../../node_modules/govuk-frontend/govuk/all';
-@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/task-list/task-list';
-@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload';
 @import '../../../../node_modules/@ministryofjustice/frontend/moj/components/pagination/pagination';
 
 /* extended */
@@ -13,8 +11,15 @@
 @import './page/link.scss';
 
 /* components */
-@import './components/layout/sections.scss';
+@import './components/core/pins-header.scss';
+@import './components/style/contents-list.scss';
 @import './components/style/canvas-background.scss';
+@import './components/style/vertical-tabs.scss';
+@import './components/ui/map.scss';
+@import './components/ui/next-step.scss';
+@import './components/ui/results-list.scss';
+@import './components/ui/side-search.scss';
+@import './components/ui/step-nav.scss';
 
 /* helpers */
 @import './helpers/white-space.scss';

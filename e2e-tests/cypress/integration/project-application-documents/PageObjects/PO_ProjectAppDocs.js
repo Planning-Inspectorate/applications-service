@@ -41,7 +41,7 @@ class PO_ProjectAppDocs {
 	}
 
 	assertResultsPerPage(resultsPerPage) {
-		cy.get('.pins-govuk-result-list__item').should('have.length', resultsPerPage);
+		cy.get('.ui-results-list__item').should('have.length', resultsPerPage);
 	}
 
 	verifyDocumentsDisplayedinDescendingOrder(table) {
@@ -79,7 +79,7 @@ class PO_ProjectAppDocs {
 
 	verifyResultsReturned(table) {
 		const contents = table.hashes();
-		cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
+		cy.get('.ui-results-list__item').each(($e1, index) => {
 			const actualText = $e1.text();
 			const expectedText = contents[index].Document;
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(

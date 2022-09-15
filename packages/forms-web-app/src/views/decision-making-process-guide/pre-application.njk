@@ -1,5 +1,7 @@
 {% extends "layouts/layout.njk" %}
 
+{% from "../components/ui/next-step.njk" import uiNextStep %}
+
 {% block pageTitle %}
   Pre-application - National Infrastructure Planning
 {% endblock %}
@@ -20,8 +22,8 @@
   <h1 class="govuk-heading-xl">
   Pre-application
 </h1>
-  <h2 class="pins-contents-list-title govuk-heading-s">Contents</h2>
-  <ol class="govuk-list pins-contents-list">
+  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+  <ol class="govuk-list style-contents-list">
     <li>
       <a class="govuk-link" href="#the-pre-application-stage">The Pre-application stage</a>
     </li>
@@ -41,7 +43,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <div class="pins-step-by-step-section-main">
+      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
         <h2 class="govuk-heading-m" id="the-pre-application-stage">The Pre-application stage</h2>
         <p class="govuk-body">Before a developer sends their application for a proposed development to the Planning Inspectorate, they must carry out public consultation. This happens at the Pre-application stage.</p>
         <p class="govuk-body">The developer must consult:</p>
@@ -81,18 +83,7 @@
           <a class="govuk-link" href="#">Read the full set of detailed advice notes</a>
         </p>
 
-        <div class="pins-step-by-step-navigation pins-step-by-step-navigation-next">
-          <a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">
-            <!-- <svg role="presentation" focusable="false" class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17">
-                        <path fill="currentColor" d="M6.5 0L0 6.5 1.4 8l4-4v12.7h2V4l4.3 4L13 6.4z"></path>
-                      </svg> -->
-            <svg class="pins-step-by-step-navigation-icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
-              <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)" class=""></path>
-            </svg>
-            <strong>Next</strong>
-            <span>Review of the application</span>
-          </a>
-        </div>
+        {{ uiNextStep("/decision-making-process-guide/review-of-the-application", "Review of the application") }}
       </div>
     </div>
 

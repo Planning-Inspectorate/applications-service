@@ -1,0 +1,13 @@
+.style-vertical-tabs {
+  .style-vertical-tabs__tab {
+    margin-bottom: 20px;
+
+    &--active {
+      background: #f0f0f0;
+      padding: 0.7em;
+      margin-left: calc(-0.7em - 6px);
+      border-left: 6px solid #13a19b;
+      font-weight: 700;
+    }
+  }
+}
