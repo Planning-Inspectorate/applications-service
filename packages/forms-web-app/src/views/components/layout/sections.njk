@@ -1,16 +1,11 @@
 {% macro layoutSections(sections) %}
   {% for section in sections %}
     {% if section.active %}
-      {% set sectionClasses = "layoutSections__section" %}
-      {% if section.hasRule === false %}
-        {% set sectionClasses = sectionClasses + ' layoutSections__section--no-rule' %}
-      {% endif %}
-
       {% if section.hasRule %}
-        <hr class="layoutSections__hr govuk-section-break govuk-section-break--visible" />
+        <hr class="govuk-!-margin-top-8 govuk-section-break govuk-section-break--visible" />
       {% endif %}
 
-      <section class="{{ sectionClasses }}" {% if section.id %}id="{{ section.id }}"{% endif %}>
+      <section {% if section.hasRule %}class="govuk-!-padding-top-8"{% endif %} {% if section.id %}id="{{ section.id }}"{% endif %}>
         {% if section.hasRule === false %}
           <br />
         {% endif %}
@@ -27,7 +22,7 @@
       </section>
 
       {% if loop.last %}
-        <hr class="layoutSections__hr govuk-section-break govuk-section-break--visible" />
+        <hr class="govuk-!-margin-top-8 govuk-section-break govuk-section-break--visible" />
       {% endif %}
     {% endif %}
   {% endfor %}

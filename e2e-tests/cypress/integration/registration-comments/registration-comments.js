@@ -57,7 +57,7 @@ When('I search for comments containing {string}', (searchInput) => {
 Then(
 	'a list of registration comments with metadata containing {string} is provided',
 	(searchInput) => {
-		cy.get('.pins-govuk-result-list__item').each((element) => {
+		cy.get('.ui-results-list__item').each((element) => {
 			expect(element.text().toLowerCase()).to.contain(searchInput.toLowerCase());
 		});
 	}
