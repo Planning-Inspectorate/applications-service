@@ -46,9 +46,9 @@ describe('All Test Cases', () => {
 	const valuesObject = {
 		expectedInput: {
 			input1: '2019-01-01T01:00:00.000Z', // 1 year before 2020-01-01
-			input2: '2019-12-31T23:59:59.999Z', // 1 second before 2020-01-01
+			input2: '2019-12-31T23:59:59.999Z', // 1 millisecond before 2020-01-01
 			input3: '2020-01-01T00:00:00.000Z', // exact time as 2020-01-01
-			input4: '2020-01-01T00:00:00.001Z', // 1 second after 2020-01-01
+			input4: '2020-01-01T00:00:00.001Z', // 1 millisecond after 2020-01-01
 			input5: '2030-01-01T00:00:00.000Z', // 10 years after 2020-01-01
 			input6: '2019-01-01', // 1 year before 2020-01-01
 			input7: '2019-12-31', // 1 day before 2020-01-01
