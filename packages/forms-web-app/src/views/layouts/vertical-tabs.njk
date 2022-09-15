@@ -1,7 +1,7 @@
 <nav>
-  <ul class="govuk-list">
+  <ul class="style-vertical-tabs govuk-list">
 		{%if featureHideLink.hideProjectInformationLink != true %}
-			<li class="side-menu govuk-body-s {% if 'examination' == activeProjectLink %} active {% endif %}">
+			<li class="style-vertical-tabs__tab govuk-body-s {% if 'examination' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
 				{% if 'examination' != activeProjectLink %}
 					<a href="/projects/{{ caseRef }}">{{ projectName}} project information</a>
 				{% else %}
@@ -10,7 +10,7 @@
 			</li>
 		{% endif %}
 		{% if featureFlag.hideProjectTimelineLink %}
-		<li class="side-menu govuk-body-s {% if 'project-timeline' == activeProjectLink %} active {% endif %}">
+		<li class="style-vertical-tabs__tab govuk-body-s {% if 'project-timeline' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
       {% if 'project-timeline' != activeProjectLink %}
         <a href="/projects/project-timeline">Project timeline</a>
       {% else %}
@@ -19,13 +19,13 @@
     </li>
 		{% endif %}
 		{% if featureFlag.allowDocumentLibrary %}
-    <li class="side-menu govuk-body-s {% if 'about-the-application' == activeProjectLink %} active {% endif %}">
+    <li class="style-vertical-tabs__tab govuk-body-s {% if 'about-the-application' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
       {% if 'about-the-application' != activeProjectLink %}
         <a href="/projects/{{ caseRef }}/application-documents">Documents</a>
       {% else %} Documents {% endif %}
     </li>
 		{% endif %}
-    <li class="side-menu govuk-body-s {% if 'representations' == activeProjectLink %} active {% endif %}">
+    <li class="style-vertical-tabs__tab govuk-body-s {% if 'representations' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
       {% if 'representations' != activeProjectLink %}
         <a href="/projects/{{ caseRef }}/representations">Relevant Representations </br> (Registration comments)
         </a>
@@ -33,7 +33,7 @@
     </li>
 
 		{% if featureHideLink.hideExaminationTimetableLink != true %}
-			<li class="side-menu govuk-body-s {% if routes.project.pages.examinationTimetable.id == activeProjectLink %} active {% endif %}">
+			<li class="style-vertical-tabs__tab govuk-body-s {% if routes.project.pages.examinationTimetable.id == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
 				{% if routes.project.pages.examinationTimetable.id != activeProjectLink %}
           <a href="{{ routes.project.directory + "/" + caseRef + routes.project.pages.examinationTimetable.route }}">
             {{ routes.project.pages.examinationTimetable.name }}
@@ -45,14 +45,14 @@
 		{% endif %}
 
 		{% if featureHideLink.hideAllExaminationDocumentsLink != true %}
-			<li class="side-menu govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} active {% endif %}">
+			<li class="style-vertical-tabs__tab govuk-body-s {% if 'all-examination-documents' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
 				{% if 'all-examination-documents' != activeProjectLink %}
 					<a href="/projects/all-examination-documents">All Examination documents</a>
 				{% else %} All Examination documents {% endif %}
 			</li>
 		{% endif %}
 		{% if featureHideLink.hideRecommendationAndDecisionLink != true %}
-			<li class="side-menu govuk-body-s {% if 'recommendations' == activeProjectLink %} active {% endif %}">
+			<li class="style-vertical-tabs__tab govuk-body-s {% if 'recommendations' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
 				{% if 'recommendations' != activeProjectLink %}
 					<a href="/projects/recommendations">Recommendation and decision</a>
 				{% else %} Recommendation and decision {% endif %}
@@ -65,13 +65,13 @@
   <h3 class="govuk-heading-s">Related guides</h3>
   <ul class="govuk-list">
 		{% if featureHideLink.hideDecisionMakingProcessGuideLink != true %}
-    <li class="side-menu govuk-body-s">
+    <li class="style-vertical-tabs__tab govuk-body-s">
       <a href="../decision-making-process-guide/">
         Find out more about the decision making process for national infrastructure projects
       </a>
     </li>
 		{% endif %}
-    <li class="side-menu govuk-body-s">
+    <li class="style-vertical-tabs__tab govuk-body-s">
       <a href="../../having-your-say-guide/">
         Having your say about a national infrastructure project
       </a>

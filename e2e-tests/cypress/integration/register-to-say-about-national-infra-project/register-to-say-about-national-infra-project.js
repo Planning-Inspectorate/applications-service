@@ -17,7 +17,7 @@ Given('I have viewed the overview page for a project', () => {
 
 When('I select the "How to register link"', () => {
 	cy.get(
-		'button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button'
+		'button.ui-step-nav__button.ui-step-nav__button--controls.js-step-controls-button'
 	).click();
 	cy.clickLinkTonavigateToPage(
 		'registering to have your say about a national infrastructure project'

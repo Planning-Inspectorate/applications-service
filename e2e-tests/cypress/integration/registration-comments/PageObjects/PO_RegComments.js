@@ -34,7 +34,7 @@ class PO_RegComments {
 	}
 
 	assertResultsPerPage(resultsPerPage) {
-		cy.get('.pins-govuk-result-list__item').should('have.length', resultsPerPage);
+		cy.get('.ui-results-list__item').should('have.length', resultsPerPage);
 	}
 
 	assertNoRegCommentsOnThePage() {
@@ -76,7 +76,7 @@ class PO_RegComments {
 
 	verifyResultsReturned(table) {
 		const contents = table.hashes();
-		cy.get('.pins-govuk-result-list__item').each(($e1, index) => {
+		cy.get('.ui-results-list__item').each(($e1, index) => {
 			const actualText = $e1.text();
 			const expectedText = contents[index].Comments;
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(
@@ -97,7 +97,7 @@ class PO_RegComments {
 
 	verifyCommentIsPresent(table) {
 		const contents = table.hashes();
-		cy.get('.pins-govuk-result-list').each(($e1, index) => {
+		cy.get('.ui-results-list').each(($e1, index) => {
 			const actualText = $e1.text();
 			const expectedText = contents[index].Data;
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(

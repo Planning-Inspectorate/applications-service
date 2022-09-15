@@ -14,7 +14,7 @@ Then('I am on the {string} page', (pageName) => {
 
 And('I click on show all link', () => {
 	cy.get(
-		'*[class^="app-step-nav__button app-step-nav__button--controls js-step-controls-button"]'
+		'*[class^="ui-step-nav__button ui-step-nav__button--controls js-step-controls-button"]'
 	).click();
 });
 

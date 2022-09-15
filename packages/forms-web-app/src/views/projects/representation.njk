@@ -6,7 +6,7 @@
 {% block columnTwo %}
   <div class="govuk-grid-row">
     <a class="govuk-back-link" href="/projects/{{ caseRef }}/representations" data-cy="back">Back to list</a>
-    <div class="pins-govuk-result-list">
+    <div class="ui-results-list">
       <span class="govuk-caption-l">Representation by</span>
       <h1 class="govuk-heading-l">
         {{ RepFrom }}
@@ -15,7 +15,7 @@
         {{ RepresentationRedacted }}
       </p>
 
-      <div class="govuk-grid-row document-metadata">
+      <div class="govuk-grid-row document-metadata" style="margin-top: 10px; color: #505a5f; font-size: 1rem;">
         <div class="govuk-grid-column-one-third">
           {{ DateRrepReceived | date }}
         </div>
@@ -27,15 +27,15 @@
         </div>
       </div>
       {% if attachments | length > 0 %}
-        <div class="pins-govuk-result-list__item">
+        <div class="ui-results-list__item">
           <h1 class="govuk-heading-m">Attachment(s)</h1>
 
           {% for attachment in attachments %}
-            <a class="govuk-link pins-govuk-result-list__item-title" href="{{ attachment.path }}" target="_blank">
+            <a class="govuk-link ui-results-list__item-title" href="{{ attachment.path }}" target="_blank">
               {{ attachment.description or attachment.personal_name  }} ({{ attachment.mime | formatMimeType }}, {{ attachment.size | formatBytes }}) (opens in new window)
             </a>
           {% endfor %}
-          {# <a class="govuk-link pins-govuk-result-list__item-title" href="{{ Attachments }}" target="_blank">
+          {# <a class="govuk-link ui-results-list__item-title" href="{{ Attachments }}" target="_blank">
             {{ Attachments  }} ( {{ formatMimeType }}, {{ formatBytes }})
             </a> #}
         </div>

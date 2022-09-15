@@ -17,10 +17,10 @@
       {% if representations.length > 0 %}
         <p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.</p>
 
-        <ul class="pins-govuk-result-list">
+        <ul class="ui-results-list">
           {% for representation in representations %}
-            <li class="pins-govuk-result-list__item">
-              <a href="representations/{{ representation.ID  }}" class="govuk-link pins-govuk-result-list__item-title">
+            <li class="ui-results-list__item">
+              <a href="representations/{{ representation.ID  }}" class="govuk-link ui-results-list__item-title">
                 {% if representation.Representative %}
                   {{ representation.Representative  }}
                   {% if representation.PersonalName %}
@@ -38,7 +38,7 @@
                     <a href="representations/{{ representation.ID  }}" class="govuk-link" data-cy="read-more">Read more</a>
                   {% endif %}
               </p>
-              <div class="govuk-grid-row document-metadata">
+              <div class="govuk-grid-row document-metadata" style="margin-top: 10px; color: #505a5f; font-size: 1rem;">
                 <div class="govuk-grid-column-one-third" data-cy="published-date">
                   {{ representation.DateRrepReceived }}
                 </div>

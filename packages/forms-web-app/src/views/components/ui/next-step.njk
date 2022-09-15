@@ -1,0 +1,17 @@
+{% macro uiNextStep(href, text) %}
+  {% if href %}
+    <div class="ui-next-step">
+      <a class="govuk-link" href="{{ href }}">
+        <svg class="ui-next-step__icon" xmlns="http://www.w3.org/2000/svg" viewBox="174.787 16.921 16.7 13" width="17" height="13">
+          <path d="M 6.5 0 L 0 6.5 L 1.4 8 L 5.4 4 L 5.4 16.7 L 7.4 16.7 L 7.4 4 L 11.7 8 L 13 6.4 Z" fill="currentColor" transform="matrix(0.000001, 1, -1, 0.000001, 191.486923, 16.921318)"></path>
+        </svg>
+
+        <strong>Next</strong>
+
+        {% if text %}
+          <span>{{ text }}</span>
+        {% endif %}
+      </a>
+    </div>
+  {% endif %}
+{% endmacro %}

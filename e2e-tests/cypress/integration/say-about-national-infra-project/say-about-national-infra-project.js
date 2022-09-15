@@ -10,7 +10,7 @@ Then('I am on the {string} page', (pageName) => {
 
 And('I click on {string} link', (pageName) => {
 	cy.get(
-		'button.app-step-nav__button.app-step-nav__button--controls.js-step-controls-button'
+		'button.ui-step-nav__button.ui-step-nav__button--controls.js-step-controls-button'
 	).click();
 	cy.clickLinkTonavigateToPage(pageName);
 });

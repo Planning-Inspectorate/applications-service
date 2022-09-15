@@ -1,0 +1,40 @@
+.pins-header {
+  background-color: #074745;
+  border-bottom-color: #13A19B;
+}
+
+.pins-header .govuk-header__container {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  border-bottom: none;
+}
+
+@media (min-width: 48.0625em) {
+  .pins-header .govuk-header__content {
+    float: right;
+    width: auto;
+    margin-top: 17px;
+  }
+  .pins-header .govuk-header__navigation {
+    background-color: #0A625F;
+    border-radius: 25px;
+    padding: 0 2rem;
+    font-weight: 400;
+  }
+}
+
+.pins-header .govuk-header__navigation-item--active a:link,
+.pins-header .govuk-header__navigation-item--active a:hover,
+.pins-header .govuk-header__navigation-item--active a:visited {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.pins-header .govuk-header__link:hover {
+  border-bottom: none;
+}
+
+.pins-header .pins-header__logotype svg.pins-header__logotype-crest {
+  height: 60px;
+  fill: currentColor;
+}
