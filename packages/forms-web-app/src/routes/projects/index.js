@@ -31,7 +31,6 @@ const aboutTheApplicationController = require('../../controllers/projects/docume
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
-	router.get('/:case_ref', projectsController.getExamination);
 	router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 	router.get('/recommendations', recommendationsController.getRecommendations);
 	router.get(
@@ -42,6 +41,7 @@ if (!usePrivateBetaV1RoutesOnly) {
 		subDirectory + pages.examinationTimetable.route,
 		examinationTimetable.postExaminationTimetable
 	);
+	router.get('/:case_ref', projectsController.getExamination);
 }
 
 if (hideProjectTimelineLink) {

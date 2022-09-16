@@ -1,5 +1,7 @@
 const { formatDate } = require('../../utils/date-utils');
 const { isBeforeOrAfterDate } = require('../../utils/is-before-or-after-date');
+const { getNow: getDate } = require('../../utils/get-now');
+const { getTimetables } = require('../../services/timetable.service');
 const config = require('../../config');
 const {
 	routesConfig: { project },
@@ -19,68 +21,53 @@ const examinationSession = config.sessionStorage.examination;
 const eventIdFieldName = 'event-id';
 const eventElementId = 'examination-timetable-event-';
 
-const data = {
-	timetable: [
-		{
-			id: 1,
-			uniqueId: 'WS010006-34601',
-			caseReference: 'EN010009',
-			title: 'Deadline 2',
-			description: 'Pre examination for the application by the end of the period of six months',
-			dateOfEvent: '2020-08-19 11:21:42',
-			timetableType: 'Exams',
-			typeOfEvent: 'Deadline',
-			location: null,
-			dateCreated: '2020-02-16 11:21:42',
-			dateLastModified: '2020-04-16 15:44:52',
-			dateTimeDeadlineStart: '2020-05-16 15:44:52',
-			sourceSystem: 'Horizon'
-		},
-		{
-			id: 2,
-			uniqueId: 'WS010006-34602',
-			caseReference: 'EN010009',
-			title: 'Deadline 1A',
-			description:
-				'The ExA is under a duty to complete the Examination of the application by the end of the period of six months',
-			dateOfEvent: '2023-01-11 11:21:42',
-			timetableType: 'Exams',
-			typeOfEvent: 'Deadline',
-			location: null,
-			dateCreated: '2020-02-16 11:21:42',
-			dateLastModified: '2020-04-16 15:44:52',
-			dateTimeDeadlineStart: '2020-05-16 15:44:52',
-			sourceSystem: 'Horizon'
-		}
-	],
-	totalItems: 2,
-	itemsPerPage: 100,
-	totalPages: 1,
-	currentPage: 1
-};
-
-const getEvents = () => {
+const getEvents = async (caseRef) => {
 	const defaultValue = [];
+	if (!caseRef || typeof caseRef !== 'string') return defaultValue;
+	const response = await getTimetables(caseRef);
+	const responseCode = response?.resp_code;
+	const dataTimetables = response?.data?.timetables;
 
-	if (!data?.timetable || !Array.isArray(data.timetable) || !data.timetable.length)
+	if (
+		!response ||
+		!dataTimetables ||
+		!Array.isArray(dataTimetables) ||
+		!dataTimetables.length ||
+		responseCode !== 200
+	)
 		return defaultValue;
 
-	const timetables = data.timetable.map((timetable) => {
-		const closed = new Date() > new Date(timetable.dateOfEvent);
-		const dateOfEvent = formatDate(timetable.dateOfEvent);
-		const eventTitle = timetable.title;
+	const timetables = [];
+
+	response.data.timetables.forEach((timetable) => {
+		const {
+			id,
+			uniqueId,
+			dateOfEvent: eventDate,
+			title: timetableTitle,
+			description,
+			typeOfEvent
+		} = timetable;
+
+		const isDeadlineAndNotFromPast = new Date(eventDate) >= getDate() && typeOfEvent === 'Deadline';
+
+		const closed = getDate() > new Date(eventDate);
+		const dateOfEvent = formatDate(eventDate);
+		const eventTitle = timetableTitle;
 		const title = `${dateOfEvent} - ${eventTitle}`;
 
-		return {
+		const item = {
 			closed,
 			dateOfEvent,
-			description: timetable.description,
+			description,
 			eventTitle,
-			id: timetable.uniqueId,
+			id: uniqueId,
 			eventIdFieldName,
-			elementId: `${eventElementId}${timetable.uniqueId}`,
+			elementId: `${id + uniqueId}`,
 			title
 		};
+
+		isDeadlineAndNotFromPast ? timetables.unshift(item) : timetables.push(item);
 	});
 
 	return timetables;
@@ -96,20 +83,16 @@ const getExaminationTimetable = async (req, res) => {
 	};
 
 	if (paramCaseRef && !sessionCaseRef) {
-		try {
-			const { getAppData } = require('../../services/application.service');
-			const response = await getAppData(projectValues.caseRef);
-			if (response.resp_code === 200) {
-				const appData = response.data;
-				const { CaseReference, ProjectName } = appData;
-				req.session.appData = appData;
-				req.session.caseRef = CaseReference;
-				req.session.projectName = ProjectName;
-				projectValues.projectName = ProjectName;
-			}
-		} catch (err) {
-			console.error('Error when running getAppData inside getExaminationTimetable. ', err?.message);
-			return res.status(500).render('error/unhandled-exception');
+		const { getAppData } = require('../../services/application.service');
+		const response = await getAppData(projectValues.caseRef);
+		const responseCode = response?.resp_code;
+		if (response && responseCode && response.resp_code === 200) {
+			const appData = response.data;
+			const { CaseReference, ProjectName } = appData;
+			req.session.appData = appData;
+			req.session.caseRef = CaseReference;
+			req.session.projectName = ProjectName;
+			projectValues.projectName = ProjectName;
 		}
 	}
 
@@ -130,7 +113,8 @@ const getExaminationTimetable = async (req, res) => {
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
 	const activeProjectLink = project.pages.examinationTimetable.id;
-	const events = getEvents();
+	const events = await getEvents(req.session.caseRef);
+	if (events.length > 0) req.session.allEvents = events;
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;
 	const projectUrl = `${project.directory}/${caseRef}`;
 	const projectEmailSignUpUrl = `${projectUrl}#project-section-email-sign-up`;
@@ -164,9 +148,12 @@ const getExaminationTimetable = async (req, res) => {
 };
 
 const postExaminationTimetable = (req, res) => {
+	const allEvents = req.session?.allEvents;
 	const caseRef = req.session?.caseRef;
+	const id = req.body[eventIdFieldName];
 
-	if (!caseRef) return res.status(404).render('error/not-found');
+	if (!caseRef || !id || !allEvents || !Array.isArray(allEvents) || !allEvents.length)
+		return res.status(404).render('error/not-found');
 
 	if (req.session[examinationSession.name]) delete req.session[examinationSession.name];
 
@@ -174,11 +161,7 @@ const postExaminationTimetable = (req, res) => {
 
 	const reqExaminationSession = req.session[examinationSession.name];
 
-	const id = req.body[eventIdFieldName];
-
-	if (!id) return res.status(404).render('error/not-found');
-
-	const setEvent = data.timetable.find((event) => `${event.uniqueId}` === `${id}`);
+	const setEvent = allEvents.find(({ id: uniqueId }) => `${uniqueId}` === `${id}`);
 
 	if (!setEvent) return res.status(404).render('error/not-found');
 
