@@ -59,6 +59,7 @@ module.exports = {
 		examination: {
 			name: 'examination',
 			property: {
+				applicant: 'isApplicant',
 				caseRef: 'caseRef',
 				description: 'description',
 				hasInterestedPartyNo: 'hasInterestedPartyNo',

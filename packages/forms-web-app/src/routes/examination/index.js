@@ -25,7 +25,7 @@ const {
 
 const { forwardView } = require('../../middleware/forward-view');
 
-const { getApplicant } = require('../../controllers/examination/applicant');
+const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
 const {
@@ -46,6 +46,8 @@ const {
 const router = express.Router();
 
 router.get(applicant.route, getApplicant);
+router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
+
 router.get(checkYourAnswers.route, getCheckYourAnswers);
 router.get(haveYourSay.route, getHaveYourSay);
 
