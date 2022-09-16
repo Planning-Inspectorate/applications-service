@@ -30,11 +30,18 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
 					},
 					...opts
 				});
+
+				const notFoundResponseCode = { resp_code: 404 };
+
+				if (!apiResponse) {
+					logger.debug('apiResponse is undefined', 'API Response not OK');
+					return notFoundResponseCode;
+				}
+
 				if (!apiResponse.ok) {
 					logger.debug(apiResponse, 'API Response not OK');
 					if (apiResponse.status === 404) {
-						const respData = { resp_code: 404 };
-						return respData;
+						return notFoundResponseCode;
 					}
 					try {
 						const errorResponse = await apiResponse.json();
