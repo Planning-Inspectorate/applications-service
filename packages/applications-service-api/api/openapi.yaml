@@ -382,6 +382,37 @@ paths:
           description: Not found error
         '500':
           description: Internal server error
+  '/api/v1/submissions/{caseRef}':
+    post:
+      summary: Create a submission for a case
+      tags:
+        - Submissions
+      parameters:
+        - in: path
+          name: caseRef
+          example: EN020021
+          required: true
+          schema:
+            type: string
+          description: Case / Project unique identifier
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubmissionCreateRequestBody'
+      responses:
+        '200':
+          description: Submission data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        '400':
+          description: Request body validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
   '/test':
     get:
       summary: Returns a list of log messages relating to database connectivity.
@@ -1007,3 +1038,22 @@ components:
         currentPage:
           type: number
           example: 1
+    SubmissionCreateRequestBody:
+      type: object
+    Submission:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 123
+    ValidationError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        errors:
+          type: array
+          items:
+            type: string
+            example: Missing property 'x'
