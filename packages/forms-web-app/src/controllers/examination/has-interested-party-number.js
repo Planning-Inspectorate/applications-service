@@ -6,9 +6,11 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
+				applicant: { route: applicantRoute },
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				hasInterestedPartyNumber,
-				haveYourSay: { route: examinationHaveYourSayRoute }
+				haveYourSay: { route: examinationHaveYourSayRoute },
+				yourInterestedPartyNumber: { route: yourInterestedPartyNumberRoute }
 			}
 		}
 	}
@@ -60,42 +62,38 @@ const getHasInterestedPartyNumber = (req, res) => {
 };
 
 const postHasInterestedPartyNumber = (req, res) => {
-	try {
-		const { body = {}, session = {} } = req;
-		const { errors = {}, errorSummary = [] } = body;
+	const { session = {} } = req;
 
-		if (errors[hasInterestedPartyNumber.id] || Object.keys(errors).length > 0) {
-			res.render(hasInterestedPartyNumber.view, {
-				...pageData,
-				errors,
-				errorSummary
-			});
+	const examinationSession = session?.[examinationSessionStorage.name];
 
-			return;
-		}
+	if (!examinationSession) return res.status(404).render('error/not-found');
 
-		const hasInterestedPartyNo = body?.[hasInterestedPartyNumber.id];
+	const { body = {} } = req;
+	const { errors = {}, errorSummary = [] } = body;
 
-		if (!hasInterestedPartyNo) return res.status(404).render('error/not-found');
+	if (errors[hasInterestedPartyNumber.id] || Object.keys(errors).length > 0) {
+		res.render(hasInterestedPartyNumber.view, {
+			...pageData,
+			errors,
+			errorSummary
+		});
 
-		const examinationSession = session?.[examinationSessionStorage.name] || {};
-
-		const previousSessionValue =
-			examinationSession[examinationSessionStorage.property.hasInterestedPartyNo];
-
-		examinationSession[examinationSessionStorage.property.hasInterestedPartyNo] =
-			hasInterestedPartyNo;
-
-		if (req?.query?.mode === 'edit' && previousSessionValue === hasInterestedPartyNo)
-			res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
-		else if (yesOption.value === hasInterestedPartyNo)
-			res.redirect(`${examinationDirectory}${yesOption.nextPage}`);
-		else if (noOption.value === hasInterestedPartyNo)
-			res.redirect(`${examinationDirectory}${noOption.nextPage}`);
-		else res.status(500).render('error/unhandled-exception');
-	} catch {
-		res.status(500).render('error/unhandled-exception');
+		return;
 	}
+
+	const hasInterestedPartyNoValue = body?.[hasInterestedPartyNumber.id];
+
+	if (!hasInterestedPartyNoValue) return res.status(404).render('error/not-found');
+
+	examinationSession[examinationSessionStorage.property.hasInterestedPartyNo] =
+		hasInterestedPartyNoValue;
+
+	if (req?.query?.mode === 'edit') res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
+	else if (yesOption.value === hasInterestedPartyNoValue)
+		res.redirect(`${examinationDirectory}${yourInterestedPartyNumberRoute}`);
+	else if (noOption.value === hasInterestedPartyNoValue)
+		res.redirect(`${examinationDirectory}${applicantRoute}`);
+	else res.status(500).render('error/unhandled-exception');
 };
 
 module.exports = {

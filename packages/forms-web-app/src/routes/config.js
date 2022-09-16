@@ -4,25 +4,23 @@ const routesConfig = {
 		pages: {
 			applicant: {
 				id: 'examination-applicant',
-				name: (projectName) => `Are you ${projectName}?`,
 				onError: {
 					message: {
-						isEmpty: (projectName) => `Select yes if you are ${projectName}`
+						isEmpty: 'Select yes if you are #'
 					}
 				},
 				options: {
 					1: {
 						value: 'yes',
-						text: 'Yes',
-						nextPage: '/your-email-address'
+						text: 'Yes'
 					},
 					2: {
 						value: 'no',
-						text: 'No',
-						nextPage: '/who-are-you-submitting-for'
+						text: 'No'
 					}
 				},
 				route: '/are-you-applicant',
+				title: 'Are you #?',
 				view: 'pages/examination/applicant'
 			},
 			checkYourAnswers: {
@@ -54,13 +52,11 @@ const routesConfig = {
 				options: {
 					1: {
 						value: 'yes',
-						text: 'Yes',
-						nextPage: '/your-interested-party-number'
+						text: 'Yes'
 					},
 					2: {
 						value: 'no',
-						text: 'No',
-						nextPage: '/are-you-applicant'
+						text: 'No'
 					}
 				},
 				route: '/have-an-interested-party-number',

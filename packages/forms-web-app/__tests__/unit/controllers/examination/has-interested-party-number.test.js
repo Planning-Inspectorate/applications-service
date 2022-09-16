@@ -4,33 +4,14 @@ const {
 } = require('../../../../src/controllers/examination/has-interested-party-number');
 const { mockReq, mockRes } = require('../../mocks');
 
-const {
-	routesConfig: {
-		examination: {
-			directory: examinationDirectory,
-			pages: {
-				applicant: { route: applicantRoute },
-				hasInterestedPartyNumber: {
-					options: {
-						1: { nextPage: yesOptionNextPage },
-						2: { nextPage: noOptionNextPage }
-					}
-				}
-			}
-		}
-	}
-} = require('../../../../src/routes/config');
-
 const hasInterestedPartyNumberOptions = {
 	1: {
 		value: 'yes',
-		text: 'Yes',
-		nextPage: yesOptionNextPage
+		text: 'Yes'
 	},
 	2: {
 		value: 'no',
-		text: 'No',
-		nextPage: noOptionNextPage
+		text: 'No'
 	}
 };
 
@@ -49,7 +30,12 @@ describe('controllers/examination/has-interested-party-number', () => {
 	let res;
 
 	beforeEach(() => {
-		req = mockReq();
+		req = {
+			...mockReq(),
+			session: {
+				examination: {}
+			}
+		};
 		res = mockRes();
 
 		jest.resetAllMocks();
@@ -156,16 +142,16 @@ describe('controllers/examination/has-interested-party-number', () => {
 			expect(res.redirect).toHaveBeenCalledWith('/examination/your-interested-party-number');
 		});
 
-		it('should redirect to /examination/your-interested-party-number', () => {
+		it('should redirect to /examination/are-you-applicant', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					['examination-has-interested-party-number']: 'no'
+					'examination-has-interested-party-number': 'no'
 				}
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith(`${examinationDirectory + applicantRoute}`);
+			expect(res.redirect).toHaveBeenCalledWith('/examination/are-you-applicant');
 		});
 	});
 });
