@@ -406,7 +406,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Submission'
+                $ref: '#/components/schemas/SubmissionResponseBody'
         '400':
           description: Request body validation error
           content:
@@ -1039,13 +1039,87 @@ components:
           type: number
           example: 1
     SubmissionCreateRequestBody:
-      type: object
-    Submission:
+      properties:
+        file:
+          type: string
+          description: File to be uploaded
+          format: binary
+      allOf:
+        - $ref: '#/components/schemas/SubmissionProperties'
+      required:
+        - file
+        - name
+        - email
+        - interestedParty
+        - deadline
+        - submissionType
+    SubmissionResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/SubmissionProperties'
+      properties:
+        caseReference:
+          type: string
+          example: EN010118
+        dateSubmitted:
+          type: string
+          format: date
+          example: 2022-08-02 08:24:05
+        file:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Modified version of the original file name with submissionId appended
+              example: My-Submission-Document-10809.pdf
+            originalName:
+              type: string
+              example: My Submission Document.pdf
+            size:
+              type: integer
+              description: File size in bytes
+              example: 226022
+            md5:
+              type: string
+              example: b1946ac92492d2347c6235b4d2611184
+    SubmissionProperties:
       type: object
       properties:
-        id:
+        name:
+          type: string
+          example: Joe Bloggs
+        email:
+          type: string
+          example: joe@example.org
+        interestedParty:
+          type: boolean
+          description: Is submission on behalf of an interested party
+          example: true
+        ipReference:
+          type: string
+          description: Interested party reference number
+          example: 3287498209
+        deadline:
+          type: string
+          description: Name/title of Deadline
+          example: Deadline 1A
+        submissionType:
+          type: string
+          example: "Other: Biodiversity Ecology and natural Environment"
+        representation:
+          type: string
+          description: Comment text, if submission is a comment
+        sensitiveData:
+          type: boolean
+          description: Does submission contain sensitive data
+          example: true
+        lateSubmission:
+          type: boolean
+          description: Is this a late submission
+          example: false
+        submissionId:
           type: integer
-          example: 123
+          description: Unique ID for the submission
+          example: 10809
     ValidationError:
       type: object
       properties:
