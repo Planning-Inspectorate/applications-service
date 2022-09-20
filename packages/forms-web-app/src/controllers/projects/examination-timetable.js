@@ -16,6 +16,7 @@ const {
 		}
 	}
 } = require('../../routes/config');
+const { marked } = require('marked');
 
 const examinationSession = config.sessionStorage.examination;
 const eventIdFieldName = 'event-id';
@@ -59,7 +60,7 @@ const getEvents = async (caseRef) => {
 		const item = {
 			closed,
 			dateOfEvent,
-			description,
+			description: marked.parse(description),
 			eventTitle,
 			id: uniqueId,
 			eventIdFieldName,
