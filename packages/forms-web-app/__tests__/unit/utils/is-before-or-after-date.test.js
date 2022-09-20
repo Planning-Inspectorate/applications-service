@@ -95,6 +95,15 @@ describe('All Test Cases', () => {
 			);
 		});
 
+		describe('Pass malformed dates to', () => {
+			iterateCallAndExpectResult(
+				['  ', '2002020200202'],
+				isBeforeOrAfterDate,
+				undefined,
+				'isBeforeOrAfterDate'
+			);
+		});
+
 		describe('Pass expected values to isBeforeOrAfterDate', () => {
 			const expectedResult = {
 				close: {
