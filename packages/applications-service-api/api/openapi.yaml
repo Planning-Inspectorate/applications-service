@@ -413,6 +413,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Internal server error
   '/test':
     get:
       summary: Returns a list of log messages relating to database connectivity.
