@@ -19,6 +19,8 @@ const isBeforeOrAfterDate = (date, optionsArray) => {
 
 	const formattedDate = formatDate(date);
 
+	if (!formattedDate || formattedDate === 'NaNvalid date') return;
+
 	const [toHappen, happened] = optionsArray.map((str) => `${str} ${formattedDate}`);
 
 	return isBeforeNowUTC(date) ? toHappen : happened;
