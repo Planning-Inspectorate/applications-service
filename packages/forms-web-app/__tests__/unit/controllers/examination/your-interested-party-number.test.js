@@ -69,12 +69,13 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					interestedPartyNumber: yourInterestedPartyNumberId
+					[yourInterestedPartyNumberId]: '123abc'
 				},
 				query: {
 					mode: ''
 				}
 			};
+
 			await postYourInterestedPartyNumber(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(`${examination.directory + submittingForRoute}`);
@@ -86,7 +87,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					interestedPartyNumber: yourInterestedPartyNumberId
+					[yourInterestedPartyNumberId]: '123abc'
 				},
 				query: {
 					mode: 'edit'
@@ -105,16 +106,18 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					interestedPartyNumber: yourInterestedPartyNumberId
+					[yourInterestedPartyNumberId]: '123abc'
 				},
 				query: {
 					mode: 'test'
 				}
 			};
+
 			await postYourInterestedPartyNumber(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(`${examination.directory + submittingForRoute}`);
 		});
+
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {
 				...req,
@@ -123,15 +126,15 @@ describe('controllers/examination/your-interested-party-number', () => {
 					errors: { a: 'b' }
 				}
 			};
+
 			await postYourInterestedPartyNumber(mockRequest, res);
+
 			expect(res.redirect).not.toHaveBeenCalled();
 
 			expect(res.render).toHaveBeenCalledWith(yourInterestedPartyNumberView, {
-				...{
-					errorSummary: [{ text: 'There were errors here', href: '#' }],
-					errors: { a: 'b' }
-				},
-				...responseObject
+				...responseObject,
+				errorSummary: [{ text: 'There were errors here', href: '#' }],
+				errors: { a: 'b' }
 			});
 		});
 
@@ -139,6 +142,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const emptyStringValue = '';
 
 			const mockRequest = {
+				...req,
 				body: {
 					errors: {
 						yourInterestedPartyNumberId: {
@@ -157,21 +161,20 @@ describe('controllers/examination/your-interested-party-number', () => {
 			const expectedResult = JSON.parse(
 				JSON.stringify({
 					...responseObject,
-					...{
-						errorSummary: [],
-						errors: {
-							yourInterestedPartyNumberId: {
-								value: emptyStringValue,
-								msg: 'Enter your interested party number',
-								param: yourInterestedPartyNumberId,
-								location: 'body'
-							}
+					errorSummary: [],
+					errors: {
+						yourInterestedPartyNumberId: {
+							value: emptyStringValue,
+							msg: 'Enter your interested party number',
+							param: yourInterestedPartyNumberId,
+							location: 'body'
 						}
 					}
 				})
 			);
 
 			await postYourInterestedPartyNumber(mockRequest, res);
+
 			expect(res.redirect).not.toHaveBeenCalled();
 
 			expect(res.render).toHaveBeenCalledWith(yourInterestedPartyNumberView, expectedResult);
@@ -185,6 +188,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 				index === 0 ? 'less than 3' : 'greater than 64'
 			} characters`, async () => {
 				const mockRequest = {
+					...req,
 					body: {
 						errors: {
 							yourInterestedPartyNumberId: {
@@ -218,6 +222,7 @@ describe('controllers/examination/your-interested-party-number', () => {
 				);
 
 				await postYourInterestedPartyNumber(mockRequest, res);
+
 				expect(res.redirect).not.toHaveBeenCalled();
 
 				expect(res.render).toHaveBeenCalledWith(yourInterestedPartyNumberView, expectedResult);
