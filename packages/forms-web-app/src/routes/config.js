@@ -126,6 +126,20 @@ const routesConfig = {
 						isEmpty: 'Select who you are submitting for'
 					}
 				},
+				options: {
+					1: {
+						value: 'myself',
+						text: 'Myself'
+					},
+					2: {
+						value: 'organisation',
+						text: 'An organisation I work for'
+					},
+					3: {
+						value: 'agent',
+						text: 'On behalf of another person, a family group or another organisation I do not work for'
+					}
+				},
 				route: '/who-are-you-submitting-for',
 				view: 'pages/examination/submitting-for'
 			},

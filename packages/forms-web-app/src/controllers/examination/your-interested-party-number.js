@@ -1,13 +1,11 @@
+const config = require('../../config');
+const examinationSessionStorage = config.sessionStorage.examination;
+
 const {
 	routesConfig: {
 		examination: {
 			pages: {
-				yourInterestedPartyNumber: {
-					id: yourInterestedPartyNumberId,
-					name: yourInterestedPartyNumberName,
-					route: yourInterestedPartyNumberRoute,
-					view: yourInterestedPartyNumberView
-				},
+				yourInterestedPartyNumber,
 				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute },
 				submittingFor: { route: submittingForRoute }
 			}
@@ -16,26 +14,23 @@ const {
 	routesConfig: { examination }
 } = require('../../routes/config');
 
-const config = require('../../config');
-
-const examinationSession = config.sessionStorage.examination;
 const backLinkUrl = `${examination.directory + hasInterestedPartyNumberRoute}`;
-const pageTitle = yourInterestedPartyNumberName;
-const title = yourInterestedPartyNumberName;
+const pageTitle = yourInterestedPartyNumber.name;
+const title = yourInterestedPartyNumber.name;
 
 const unhandledException = (res) => res.status(500).render('error/unhandled-exception');
 
 const getYourInterestedPartyNumber = (req, res) => {
 	try {
 		const { session = { examination: { name: null } } } = req;
-		const reqExaminationSession = session[examinationSession?.name] ?? '';
+		const reqExaminationSession = session[examinationSessionStorage?.name] ?? '';
 
 		if (!reqExaminationSession) return res.status(404).render('error/not-found');
 
 		const { interestedPartyNumber = '' } = reqExaminationSession;
 
-		res.render(yourInterestedPartyNumberView, {
-			id: yourInterestedPartyNumberId,
+		res.render(yourInterestedPartyNumber.view, {
+			id: yourInterestedPartyNumber.id,
 			backLinkUrl,
 			interestedPartyNumber,
 			pageTitle,
@@ -47,32 +42,39 @@ const getYourInterestedPartyNumber = (req, res) => {
 };
 
 const postYourInterestedPartyNumber = (req, res) => {
-	try {
-		const { body = { yourInterestedPartyNumberId: '' } } = req;
-		const { errors = {}, errorSummary = [] } = body;
+	const { session = {} } = req;
 
-		if (errors[yourInterestedPartyNumberId] || Object.keys(errors).length > 0) {
-			res.render(yourInterestedPartyNumberView, {
-				id: yourInterestedPartyNumberId,
-				backLinkUrl,
-				errors,
-				errorSummary,
-				pageTitle,
-				title
-			});
-			return;
-		}
+	const examinationSession = session?.[examinationSessionStorage.name];
 
-		req.session[examinationSession.name][examinationSession.property.interestedPartyNumber] =
-			body[yourInterestedPartyNumberId];
+	if (!examinationSession) return res.status(404).render('error/not-found');
 
-		if (req.query.mode === 'edit') {
-			res.redirect(`${examination.directory + yourInterestedPartyNumberRoute}`);
-		} else {
-			res.redirect(`${examination.directory + submittingForRoute}`);
-		}
-	} catch {
-		unhandledException(res);
+	const { body = {} } = req;
+	const { errors = {}, errorSummary = [] } = body;
+
+	if (errors[yourInterestedPartyNumber.id] || Object.keys(errors).length > 0) {
+		res.render(yourInterestedPartyNumber.view, {
+			id: yourInterestedPartyNumber.id,
+			backLinkUrl,
+			errors,
+			errorSummary,
+			pageTitle,
+			title
+		});
+		return;
+	}
+
+	const yourInterestedPartyNumberValue = body?.[yourInterestedPartyNumber.id];
+
+	if (!yourInterestedPartyNumberValue) return res.status(404).render('error/not-found');
+
+	examinationSession[examinationSessionStorage.property.interestedPartyNumber] =
+		yourInterestedPartyNumberValue;
+	examinationSession[examinationSessionStorage.property.applicant] = '';
+
+	if (req.query.mode === 'edit') {
+		res.redirect(`${examination.directory + yourInterestedPartyNumber.route}`);
+	} else {
+		res.redirect(`${examination.directory + submittingForRoute}`);
 	}
 };
 
