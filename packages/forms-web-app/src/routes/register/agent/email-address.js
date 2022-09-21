@@ -2,7 +2,7 @@ const express = require('express');
 
 const emailController = require('../../../controllers/register/agent/email-address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const { rules: emailValidationRules } = require('../../../validators/register/agent/email-address');
+const { emailValidationRules } = require('../../../validators/shared/email-address');
 
 const router = express.Router();
 

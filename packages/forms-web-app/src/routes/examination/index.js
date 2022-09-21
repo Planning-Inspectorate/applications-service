@@ -1,7 +1,10 @@
 const express = require('express');
 
-const { validateNotEmpty, validateNotEmptyAndLength } = require('../../validators/shared/index');
-
+const {
+	validateNotEmpty,
+	validateNotEmptyAndLength,
+	emailValidationRules
+} = require('../../validators/shared/index');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
 
 const {
@@ -52,7 +55,7 @@ router.get(checkYourAnswers.route, getCheckYourAnswers);
 router.get(haveYourSay.route, getHaveYourSay);
 
 router.get(email.route, getEmail);
-router.post(email.route, postEmail);
+router.post(email.route, emailValidationRules(email), validationErrorHandler, postEmail);
 
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
 router.post(

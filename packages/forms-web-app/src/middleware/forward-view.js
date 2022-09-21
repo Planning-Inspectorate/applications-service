@@ -1,6 +1,6 @@
 const forwardView = (viewObject) => (req, res, next) => {
 	if (viewObject) {
-		req.currentView = viewObject;
+		req.session.currentView = viewObject;
 	}
 
 	return next();

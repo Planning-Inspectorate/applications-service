@@ -21,11 +21,18 @@ const pageData = {
 const getName = async (req, res) => {
 	const examinationSession = req?.session?.[examinationSessionStorage.name];
 
-	if (!examinationSession || !req.currentView) return res.status(404).render('error/not-found');
+	const sessionCurrentView = req.session?.currentView;
+	const sessionName = examinationSessionStorage.property.name;
 
-	const { id, pageTitle, title, view } = req.currentView;
+	if (sessionName && sessionName !== 'name') {
+		pageData.values.name = sessionName;
+	}
 
-	req.currentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
+	if (!examinationSession || !sessionCurrentView) return res.status(404).render('error/not-found');
+
+	const { id, pageTitle, title, view } = sessionCurrentView;
+
+	sessionCurrentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
 
 	res.render(view, pageData.values);
 };
@@ -34,10 +41,13 @@ const postName = async (req, res) => {
 	const { body = {}, session } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	const examinationSession = session?.[examinationSessionStorage.name];
+	const sessionCurrentView = req.session?.currentView;
 
-	if (!examinationSession || !req.currentView?.id) return res.status(404).render('error/not-found');
+	if (!examinationSession || !sessionCurrentView?.id)
+		return res.status(404).render('error/not-found');
 
-	const { id, view } = req.currentView;
+	const { id, view } = sessionCurrentView;
+	examinationSessionStorage.property.name = req.body[id] ?? '';
 
 	if (errors[id] || Object.keys(errors).length > 0) {
 		return res.render(view, {

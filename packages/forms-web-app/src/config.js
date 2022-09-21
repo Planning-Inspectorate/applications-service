@@ -67,7 +67,8 @@ module.exports = {
 				interestedPartyNumber: 'interestedPartyNumber',
 				name: 'name',
 				submittingFor: 'submittingFor',
-				title: 'title'
+				title: 'title',
+				currentView: 'currentView'
 			}
 		}
 	}

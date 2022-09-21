@@ -33,7 +33,17 @@ const routesConfig = {
 				id: 'examination-email',
 				name: `What's your email address?`,
 				route: '/your-email-address',
-				view: 'pages/examination/email'
+				view: 'pages/examination/email',
+				onError: {
+					message: {
+						checkLength: 'Your email address must be between 3 and 255 characters',
+						notEmpty: 'Enter your email address'
+					},
+					minMaxOptions: {
+						min: 3,
+						max: 255
+					}
+				}
 			},
 			haveYourSay: {
 				id: 'examination-have-your-say',
