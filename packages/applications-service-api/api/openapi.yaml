@@ -1044,12 +1044,11 @@ components:
       properties:
         file:
           type: string
-          description: File to be uploaded
+          description: File object to be uploaded. **Required unless submission is a comment**
           format: binary
       allOf:
         - $ref: '#/components/schemas/SubmissionProperties'
       required:
-        - file
         - name
         - email
         - interestedParty
@@ -1059,13 +1058,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/SubmissionProperties'
       properties:
-        caseReference:
-          type: string
-          example: EN010118
-        dateSubmitted:
-          type: string
-          format: date
-          example: 2022-08-02 08:24:05
         file:
           type: object
           properties:
@@ -1083,6 +1075,13 @@ components:
             md5:
               type: string
               example: b1946ac92492d2347c6235b4d2611184
+        caseReference:
+          type: string
+          example: EN010118
+        dateSubmitted:
+          type: string
+          format: date
+          example: 2022-08-02 08:24:05
     SubmissionProperties:
       type: object
       properties:
@@ -1103,13 +1102,10 @@ components:
         deadline:
           type: string
           description: Name/title of Deadline
-          example: Deadline 1A
+          example: Deadline 3
         submissionType:
           type: string
-          example: "Other: Biodiversity Ecology and natural Environment"
-        representation:
-          type: string
-          description: Comment text, if submission is a comment
+          example: Navigation Document/Guide to the application
         sensitiveData:
           type: boolean
           description: Does submission contain sensitive data
@@ -1122,6 +1118,10 @@ components:
           type: integer
           description: Unique ID for the submission
           example: 10809
+        representation:
+          type: string
+          description: Comment text. **Required if submission is a comment**
+          example: This is my representation
     ValidationError:
       type: object
       properties:
