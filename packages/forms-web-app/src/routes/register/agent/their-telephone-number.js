@@ -2,9 +2,7 @@ const express = require('express');
 
 const telephoneController = require('../../../controllers/register/agent/their-telephone-number');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const {
-	rules: telephoneValidationRules
-} = require('../../../validators/register/agent/their-telephone-number');
+const { telephoneValidationRules } = require('../../../validators/shared');
 
 const router = express.Router();
 
