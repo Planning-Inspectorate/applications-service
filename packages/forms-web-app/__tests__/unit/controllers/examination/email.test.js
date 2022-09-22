@@ -123,6 +123,8 @@ describe('controllers/examination/name', () => {
 						}
 					};
 
+					mockRequest.session.currentView = currentView;
+
 					await postEmail(mockRequest, res);
 					expect(res.redirect).not.toHaveBeenCalled();
 
@@ -177,8 +179,8 @@ describe('controllers/examination/name', () => {
 			mockRequest.query.mode = 'edit';
 
 			await postEmail(mockRequest, res);
-			expect(res.redirect).not.toHaveBeenCalled();
-			expect(res.render).toHaveBeenCalledWith(emailView, pageData);
+			expect(res.render).not.toHaveBeenCalled();
+			expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
 		});
 	});
 
