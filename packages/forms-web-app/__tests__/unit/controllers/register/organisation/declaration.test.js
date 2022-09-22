@@ -1,7 +1,7 @@
 const declarationController = require('../../../../../src/controllers/register/organisation/declaration');
 const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
 const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
+const { mockReq, mockRes, mockResponse } = require('../../../mocks');
 
 jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/lib/logger');
@@ -43,7 +43,6 @@ describe('controllers/register/organisation/declaration', () => {
 				}
 			};
 			await declarationController.postDeclaration(mockRequest, res);
-
 			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);
 		});
 
@@ -61,8 +60,28 @@ describe('controllers/register/organisation/declaration', () => {
 				}
 			};
 			await declarationController.postDeclaration(mockRequest, res);
-
 			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);
+		});
+
+		it('handle exception thrown by API when writing representations', async () => {
+			res = mockResponse();
+			const mockRequest = {
+				...req,
+				session: {
+					orgRegdata: {
+						email: 'anc@test.com'
+					},
+					projectName: 'ABC',
+					caseRef: 'ABC123',
+					mode: 'final',
+					comment: 'comment'
+				}
+			};
+			putComments.mockImplementation(() => {
+				throw new Error();
+			});
+			await declarationController.postDeclaration(mockRequest, res);
+			expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 		});
 	});
 });

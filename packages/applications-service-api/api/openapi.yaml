@@ -382,6 +382,39 @@ paths:
           description: Not found error
         '500':
           description: Internal server error
+  '/api/v1/submissions/{caseRef}':
+    post:
+      summary: Create a submission for a case
+      tags:
+        - Submissions
+      parameters:
+        - in: path
+          name: caseRef
+          example: EN020021
+          required: true
+          schema:
+            type: string
+          description: Case / Project unique identifier
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubmissionCreateRequestBody'
+      responses:
+        '200':
+          description: Submission data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionResponseBody'
+        '400':
+          description: Request body validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Internal server error
   '/test':
     get:
       summary: Returns a list of log messages relating to database connectivity.
@@ -1007,3 +1040,96 @@ components:
         currentPage:
           type: number
           example: 1
+    SubmissionCreateRequestBody:
+      properties:
+        file:
+          type: string
+          description: File object to be uploaded. **Required unless submission is a comment**
+          format: binary
+      allOf:
+        - $ref: '#/components/schemas/SubmissionProperties'
+      required:
+        - name
+        - email
+        - interestedParty
+        - deadline
+        - submissionType
+    SubmissionResponseBody:
+      allOf:
+        - $ref: '#/components/schemas/SubmissionProperties'
+      properties:
+        file:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Modified version of the original file name with submissionId appended
+              example: My-Submission-Document-10809.pdf
+            originalName:
+              type: string
+              example: My Submission Document.pdf
+            size:
+              type: integer
+              description: File size in bytes
+              example: 226022
+            md5:
+              type: string
+              example: b1946ac92492d2347c6235b4d2611184
+        caseReference:
+          type: string
+          example: EN010118
+        dateSubmitted:
+          type: string
+          format: date
+          example: 2022-08-02 08:24:05
+    SubmissionProperties:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Joe Bloggs
+        email:
+          type: string
+          example: joe@example.org
+        interestedParty:
+          type: boolean
+          description: Is submission on behalf of an interested party
+          example: true
+        ipReference:
+          type: string
+          description: Interested party reference number
+          example: 3287498209
+        deadline:
+          type: string
+          description: Name/title of Deadline
+          example: Deadline 3
+        submissionType:
+          type: string
+          example: Navigation Document/Guide to the application
+        sensitiveData:
+          type: boolean
+          description: Does submission contain sensitive data
+          example: true
+        lateSubmission:
+          type: boolean
+          description: Is this a late submission
+          example: false
+        submissionId:
+          type: integer
+          description: Unique ID for the submission
+          example: 10809
+        representation:
+          type: string
+          description: Comment text. **Required if submission is a comment**
+          example: This is my representation
+    ValidationError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        errors:
+          type: array
+          items:
+            type: string
+            example: Missing property 'x'
