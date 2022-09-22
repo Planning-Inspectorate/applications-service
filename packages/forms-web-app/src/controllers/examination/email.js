@@ -19,7 +19,7 @@ const pageData = {
 
 const getEmail = async (req, res) => {
 	const requestSession = req.session;
-	const userEmail = requestSession?.userEmail;
+	const userEmail = requestSession?.[examinationSessionStorage.name]?.userEmail;
 	const currentView = requestSession?.currentView;
 	userEmail && (pageData.email = userEmail);
 
@@ -35,7 +35,9 @@ const postEmail = async (req, res) => {
 	const { errors = {}, errorSummary = [] } = body;
 	const requestSession = req?.session;
 	const currentView = requestSession?.currentView;
-	requestSession?.userEmail && (pageData.email = requestSession?.userEmail);
+	const examinationStorage = requestSession?.[examinationSessionStorage.name];
+
+	examinationStorage?.userEmail && (pageData.email = examinationStorage?.userEmail);
 
 	if (errors[email.id] || Object.keys(errors).length > 0) {
 		return res.render(email.view, {
@@ -47,7 +49,7 @@ const postEmail = async (req, res) => {
 
 	if (!requestSession || !currentView) return res.status(404).render('error/not-found');
 
-	requestSession.userEmail = examinationSessionStorage.property.email = body[email.id];
+	examinationStorage.userEmail = examinationSessionStorage.property.email = body[email.id];
 	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
 
 	if (req.query?.mode === 'edit') {
