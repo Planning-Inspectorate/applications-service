@@ -9,25 +9,11 @@ jest.mock('../../../../../src/lib/logger');
 describe('controllers/register/myself/declaration', () => {
 	let req;
 	let res;
-	let mockRequest;
 
 	beforeEach(() => {
 		req = mockReq();
 		res = mockRes();
 		jest.resetAllMocks();
-
-		mockRequest = {
-			...req,
-			session: {
-				mySelfRegdata: {
-					email: 'anc@test.com'
-				},
-				projectName: 'ABC',
-				caseRef: 'ABC123',
-				mode: 'final',
-				comment: 'comment'
-			}
-		};
 
 		postRegistration.mockImplementation(() =>
 			Promise.resolve({ resp_code: 200, data: '30020010' })
@@ -45,17 +31,52 @@ describe('controllers/register/myself/declaration', () => {
 
 	describe('postDeclaration', () => {
 		it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}'`, async () => {
+			const mockRequest = {
+				...req,
+				session: {
+					mySelfRegdata: {
+						email: 'anc@test.com',
+						ipRefNo: 'ABC123'
+					},
+					projectName: 'ABC',
+					caseRef: 'ABC123'
+				}
+			};
 			await declarationController.postDeclaration(mockRequest, res);
 			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}`);
 		});
 
 		it(`'should create session data and post, redirect to '/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}' if no ipRef exists in session`, async () => {
+			const mockRequest = {
+				...req,
+				session: {
+					mySelfRegdata: {
+						email: 'anc@test.com'
+					},
+					projectName: 'ABC',
+					caseRef: 'ABC123',
+					mode: 'final',
+					comment: 'comment'
+				}
+			};
 			await declarationController.postDeclaration(mockRequest, res);
 			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}`);
 		});
 
 		it('handle exception thrown by API when writing representations', async () => {
 			res = mockResponse();
+			const mockRequest = {
+				...req,
+				session: {
+					mySelfRegdata: {
+						email: 'anc@test.com'
+					},
+					projectName: 'ABC',
+					caseRef: 'ABC123',
+					mode: 'final',
+					comment: 'comment'
+				}
+			};
 			putComments.mockImplementation(() => {
 				throw new Error();
 			});
