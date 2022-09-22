@@ -4,17 +4,6 @@ const {
 } = require('../../../../src/controllers/examination/submitting-for');
 const { mockReq, mockRes } = require('../../mocks');
 
-const {
-	routesConfig: {
-		examination: {
-			directory: examinationDirectory,
-			pages: {
-				applicant: { route: applicantRoute }
-			}
-		}
-	}
-} = require('../../../../src/routes/config');
-
 const submittingForOptions = {
 	1: {
 		value: 'myself',
@@ -31,11 +20,24 @@ const submittingForOptions = {
 };
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory + applicantRoute}`,
 	id: 'examination-submitting-for',
 	options: [submittingForOptions[1], submittingForOptions[2], submittingForOptions[3]],
 	pageTitle: 'Who are you making the submission for?',
 	title: 'Who are you making the submission for?'
+};
+
+const setBackLinkUrl = (examinationSession) => {
+	const isApplicant = examinationSession.isApplicant;
+
+	if (isApplicant === 'no') {
+		return (pageData.backLinkUrl = '/examination/are-you-applicant');
+	}
+
+	const interestedPartyNumber = examinationSession.interestedPartyNumber;
+
+	if (interestedPartyNumber) {
+		return (pageData.backLinkUrl = '/examination/your-interested-party-number');
+	}
 };
 
 describe('controllers/examination/submitting-for', () => {
@@ -43,37 +45,64 @@ describe('controllers/examination/submitting-for', () => {
 	let res;
 
 	beforeEach(() => {
-		req = mockReq();
+		req = {
+			...mockReq(),
+			session: {
+				examination: {}
+			}
+		};
 		res = mockRes();
 
 		jest.resetAllMocks();
 	});
 
 	describe('getSubmittingFor', () => {
-		it('should call the correct template: no session', () => {
+		it('should call the correct template: no session: back link: /examination/are-you-applicant', () => {
 			const mockRequest = {
 				...req,
 				session: {
 					examination: {
-						hasInterestedPartyNo: 'yes'
+						isApplicant: 'no'
 					}
 				}
 			};
 
+			setBackLinkUrl(mockRequest.session.examination);
+
 			getSubmittingFor(mockRequest, res);
+
 			expect(res.render).toHaveBeenCalledWith('pages/examination/submitting-for', pageData);
 		});
 
-		it('should call the correct template: with session', () => {
+		it('should call the correct template: no session: back link: /examination/your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				session: {
 					examination: {
-						hasInterestedPartyNo: 'yes',
-						submittingFor: 'organisation'
+						interestedPartyNumber: '123'
 					}
 				}
 			};
+
+			setBackLinkUrl(mockRequest.session.examination);
+
+			getSubmittingFor(mockRequest, res);
+
+			expect(res.render).toHaveBeenCalledWith('pages/examination/submitting-for', pageData);
+		});
+
+		it('should call the correct template: with session with back link: /examination/are-you-applicant', () => {
+			const mockRequest = {
+				...req,
+				session: {
+					examination: {
+						isApplicant: 'no',
+						submittingFor: 'myself'
+					}
+				}
+			};
+
+			setBackLinkUrl(mockRequest.session.examination);
 
 			const setSubmittingForData = { ...pageData };
 			const submittingForValues = { ...submittingForOptions };
@@ -93,6 +122,7 @@ describe('controllers/examination/submitting-for', () => {
 			setSubmittingForData.options = updatedSubmittingForValues;
 
 			getSubmittingFor(mockRequest, res);
+
 			expect(res.render).toHaveBeenCalledWith(
 				'pages/examination/submitting-for',
 				setSubmittingForData
@@ -110,12 +140,13 @@ describe('controllers/examination/submitting-for', () => {
 				},
 				session: {
 					examination: {
-						hasInterestedPartyNo: 'yes'
+						isApplicant: 'no'
 					}
 				}
 			};
 
 			postSubmittingFor(mockRequest, res);
+
 			expect(res.render).toHaveBeenCalledWith('pages/examination/submitting-for', {
 				...pageData,
 				errors: mockRequest.body.errors,
@@ -131,16 +162,11 @@ describe('controllers/examination/submitting-for', () => {
 				},
 				query: {
 					mode: 'edit'
-				},
-				session: {
-					examination: {
-						hasInterestedPartyNo: 'yes',
-						submittingFor: 'myself'
-					}
 				}
 			};
 
 			postSubmittingFor(mockRequest, res);
+
 			expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
 		});
 
@@ -149,15 +175,11 @@ describe('controllers/examination/submitting-for', () => {
 				...req,
 				body: {
 					'examination-submitting-for': 'myself'
-				},
-				session: {
-					examination: {
-						hasInterestedPartyNo: 'yes'
-					}
 				}
 			};
 
 			postSubmittingFor(mockRequest, res);
+
 			expect(res.redirect).toHaveBeenCalledWith('/examination/your-name');
 		});
 
@@ -166,15 +188,11 @@ describe('controllers/examination/submitting-for', () => {
 				...req,
 				body: {
 					'examination-submitting-for': 'organisation'
-				},
-				session: {
-					examination: {
-						hasInterestedPartyNo: 'yes'
-					}
 				}
 			};
 
 			postSubmittingFor(mockRequest, res);
+
 			expect(res.redirect).toHaveBeenCalledWith('/examination/your-organisation-name');
 		});
 
@@ -183,15 +201,11 @@ describe('controllers/examination/submitting-for', () => {
 				...req,
 				body: {
 					'examination-submitting-for': 'agent'
-				},
-				session: {
-					examination: {
-						hasInterestedPartyNo: 'yes'
-					}
 				}
 			};
 
 			postSubmittingFor(mockRequest, res);
+
 			expect(res.redirect).toHaveBeenCalledWith('/examination/name-of-person-or-group');
 		});
 	});
