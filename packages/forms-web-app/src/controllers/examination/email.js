@@ -13,7 +13,8 @@ const examinationSessionStorage = config?.sessionStorage?.examination;
 const pageData = {
 	id: email.id,
 	pageTitle: email.name,
-	title: email.name
+	title: email.name,
+	hint: "We'll use your email address to confirm we've received your submission. We will not publish your email address."
 };
 
 const getEmail = async (req, res) => {
@@ -22,9 +23,8 @@ const getEmail = async (req, res) => {
 	const currentView = requestSession?.currentView;
 	userEmail && (pageData.email = userEmail);
 
-	console.log({ requestSession });
-
-	if (!requestSession || !currentView) return res.status(404).render('error/not-found');
+	if (!requestSession || !currentView || !currentView?.route)
+		return res.status(404).render('error/not-found');
 
 	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
 	res.render(email.view, pageData);
@@ -33,7 +33,7 @@ const getEmail = async (req, res) => {
 const postEmail = async (req, res) => {
 	const { body = {} } = req;
 	const { errors = {}, errorSummary = [] } = body;
-	const requestSession = req.session;
+	const requestSession = req?.session;
 	const currentView = requestSession?.currentView;
 	requestSession?.userEmail && (pageData.email = requestSession?.userEmail);
 

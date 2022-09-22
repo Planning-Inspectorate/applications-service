@@ -34,9 +34,14 @@
             classes: "govuk-label--l",
             isPageHeading: true
           },
+					hint: {
+    			text: hint
+  				},
           id: id,
           name: id,
+					type: "email",
           autocomplete: 'email',
+					spellcheck: false,
           value: email or errors[id].value,
           errorMessage: errors[id] and {
             text: errors[id].msg
