@@ -1,12 +1,5 @@
 const { getEmail, postEmail } = require('../../../../src/controllers/examination/email');
 const { mockReq, mockRes, mockResponse } = require('../../mocks');
-const {
-	routesConfig: {
-		examination: {
-			pages: { email }
-		}
-	}
-} = require('../../../../src/routes/config.js');
 
 jest.mock('../../../../src/lib/logger');
 
@@ -38,11 +31,6 @@ const minMaxInputObject = {
 		'Enter an email address in the correct format, like name@example.com'
 	],
 	betweenMinMax: ['abc@example.com', null]
-};
-
-const viewsObjectsList = {
-	email,
-	minMaxInputObject
 };
 
 describe('controllers/examination/name', () => {

@@ -22,7 +22,7 @@ const getName = async (req, res) => {
 	const examinationSession = req?.session?.[examinationSessionStorage.name];
 
 	const sessionCurrentView = req.session?.currentView;
-	const sessionName = examinationSessionStorage.property.name;
+	const sessionName = examinationSessionStorage?.property?.name;
 
 	if (sessionName && sessionName !== 'name') {
 		pageData.values.name = sessionName;
@@ -32,7 +32,9 @@ const getName = async (req, res) => {
 
 	const { id, pageTitle, title, view } = sessionCurrentView;
 
-	sessionCurrentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
+	if (sessionCurrentView) {
+		pageData.values = { ...pageData.values, id, pageTitle, title, view };
+	}
 
 	res.render(view, pageData.values);
 };
