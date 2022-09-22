@@ -2,7 +2,10 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { email }
+			pages: {
+				email,
+				checkYourAnswers: { route: checkYourAnswersRoute }
+			}
 		}
 	}
 } = require('../../routes/config');
@@ -19,12 +22,14 @@ const pageData = {
 
 const getEmail = async (req, res) => {
 	const requestSession = req.session;
-	const userEmail = requestSession?.[examinationSessionStorage.name]?.userEmail;
+	const examinationSession = requestSession?.[examinationSessionStorage.name];
 	const currentView = requestSession?.currentView;
-	userEmail && (pageData.email = userEmail);
 
-	if (!requestSession || !currentView || !currentView?.route)
+	if (!examinationSession || !currentView || !currentView?.route)
 		return res.status(404).render('error/not-found');
+
+	const userEmail = examinationSession?.userEmail;
+	userEmail && (pageData.email = userEmail);
 
 	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
 	res.render(email.view, pageData);
@@ -37,7 +42,13 @@ const postEmail = async (req, res) => {
 	const currentView = requestSession?.currentView;
 	const examinationStorage = requestSession?.[examinationSessionStorage.name];
 
+	if (!requestSession || !currentView || !examinationStorage)
+		return res.status(404).render('error/not-found');
+
 	examinationStorage?.userEmail && (pageData.email = examinationStorage?.userEmail);
+
+	examinationStorage.userEmail = examinationSessionStorage.property.email = body[email.id];
+	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
 
 	if (errors[email.id] || Object.keys(errors).length > 0) {
 		return res.render(email.view, {
@@ -47,13 +58,8 @@ const postEmail = async (req, res) => {
 		});
 	}
 
-	if (!requestSession || !currentView) return res.status(404).render('error/not-found');
-
-	examinationStorage.userEmail = examinationSessionStorage.property.email = body[email.id];
-	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
-
 	if (req.query?.mode === 'edit') {
-		res.render(email.view, pageData);
+		res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
 	} else {
 		res.redirect(`${examinationDirectory}/select-deadline-item`);
 	}

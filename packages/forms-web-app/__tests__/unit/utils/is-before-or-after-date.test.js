@@ -166,5 +166,3 @@ describe('All Test Cases', () => {
 		});
 	});
 });
-
-module.exports = { iterateCallAndExpectResult, callAndExpectedResult };
