@@ -69,9 +69,11 @@ describe('controllers/examination/name', () => {
 					},
 					query: {
 						mode: ''
-					},
-					currentView: viewObject
+					}
 				};
+
+				mockRequest.session.currentView = viewObject;
+
 				await postName(mockRequest, res);
 
 				expect(res.redirect).toHaveBeenCalledWith('/examination/your-email-address');
@@ -86,9 +88,10 @@ describe('controllers/examination/name', () => {
 						'examination-name': 'test',
 						errorSummary: [{ text: 'There are errors here', href: '#' }],
 						errors: { a: 'b' }
-					},
-					currentView: viewObject
+					}
 				};
+
+				mockRequest.session.currentView = viewObject;
 
 				res = mockResponse();
 
@@ -125,9 +128,10 @@ describe('controllers/examination/name', () => {
 						},
 						query: {
 							mode: ''
-						},
-						currentView: viewObject
+						}
 					};
+
+					mockRequest.session.currentView = viewObject;
 
 					await postName(mockRequest, res);
 					expect(res.redirect).not.toHaveBeenCalled();
@@ -147,20 +151,55 @@ describe('controllers/examination/name', () => {
 				});
 			});
 		});
+	});
 
-		viewsObjectsList.forEach(([viewObjName, viewObject]) => {
-			const mockRequest = {
-				body: {
-					'examination-name': 'test'
-				},
-				session: {
-					examination: {}
-				},
-				query: {
-					mode: ''
-				},
-				currentView: viewObject
-			};
+	describe('getName', () => {
+		it('Calls the correct template without the examinationSession', () => {
+			req.session = {};
+			res = mockResponse();
+			getName(req, res);
+			expect(res.render).toHaveBeenCalledWith('error/not-found');
+		});
+
+		it('Calls the correct template without the current view object values', () => {
+			delete req.session.currentView;
+			res = mockResponse();
+			getName(req, res);
+			expect(res.render).toHaveBeenCalledWith('error/not-found');
+		});
+	});
+
+	viewsObjectsList.forEach(([viewObjName, viewObject]) => {
+		it(`should call the correct template using viewObject: ${viewObjName}`, () => {
+			req.session.currentView = viewObject;
+			const { id, pageTitle, title, view } = req.session.currentView;
+
+			getName(req, res);
+			expect(res.render).toHaveBeenCalledWith('pages/examination/name', {
+				...pageData,
+				id,
+				pageTitle,
+				title,
+				view
+			});
+		});
+	});
+
+	viewsObjectsList.forEach(([viewObjName, viewObject]) => {
+		const mockRequest = {
+			body: {
+				'examination-name': 'test'
+			},
+			session: {
+				examination: {}
+			},
+			query: {
+				mode: ''
+			}
+		};
+
+		describe('postName redirect', () => {
+			mockRequest.session.currentView = viewObject;
 			it(`should redirect user to /examination/your-email-address on template ${viewObjName}`, async () => {
 				await postName(mockRequest, res);
 				expect(res.redirect).toHaveBeenCalledWith('/examination/your-email-address');
@@ -175,38 +214,6 @@ describe('controllers/examination/name', () => {
 
 				await postName(mockRequest, res);
 				expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
-			});
-		});
-	});
-
-	describe('getName', () => {
-		it('Calls the correct template without the examinationSession', () => {
-			req.session = {};
-			res = mockResponse();
-			getName(req, res);
-			expect(res.render).toHaveBeenCalledWith('error/not-found');
-		});
-
-		it('Calls the correct template without the current view object values', () => {
-			delete req.currentView;
-			res = mockResponse();
-			getName(req, res);
-			expect(res.render).toHaveBeenCalledWith('error/not-found');
-		});
-	});
-
-	viewsObjectsList.forEach(([viewObjName, viewObject]) => {
-		it(`should call the correct template using viewObject: ${viewObjName}`, () => {
-			req.currentView = viewObject;
-			const { id, pageTitle, title, view } = req.currentView;
-
-			getName(req, res);
-			expect(res.render).toHaveBeenCalledWith('pages/examination/name', {
-				...pageData,
-				id,
-				pageTitle,
-				title,
-				view
 			});
 		});
 	});
