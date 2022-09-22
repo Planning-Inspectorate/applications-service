@@ -11,6 +11,7 @@ const dbConnectionTestRouter = require('./db-connection-test');
 const documentRouter = require('./documents');
 const representationsRouter = require('./representations');
 const timetablesRouter = require('./timetables');
+const submissionRouter = require('./submission');
 
 router.use('/api/v1/applications', applicationsRouter);
 router.use('/api/v1/interested-party', interestedPartyRouter);
@@ -20,5 +21,6 @@ router.use('/api/v1/documents', documentRouter);
 router.use('/api/v2/documents', documentRouter);
 router.use('/api/v1/representations', representationsRouter);
 router.use('/api/v1/timetables', timetablesRouter);
+router.use('/api/v1/submission', submissionRouter);
 
 module.exports = router;
