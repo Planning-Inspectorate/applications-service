@@ -207,7 +207,7 @@ describe('controllers/examination/name', () => {
 		it(`should call the correct template with pageData email value`, () => {
 			req.session.currentView = currentView;
 
-			req.session.userEmail = 'email@example.com';
+			req.session.examination.userEmail = 'email@example.com';
 
 			getEmail(req, res);
 			expect(res.render).toHaveBeenCalledWith(emailView, {
