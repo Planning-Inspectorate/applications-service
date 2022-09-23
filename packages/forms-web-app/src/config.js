@@ -61,7 +61,9 @@ module.exports = {
 			property: {
 				applicant: 'isApplicant',
 				caseRef: 'caseRef',
+				currentView: 'currentView',
 				description: 'description',
+				email: 'email',
 				hasInterestedPartyNo: 'hasInterestedPartyNo',
 				id: 'id',
 				interestedPartyNumber: 'interestedPartyNumber',
