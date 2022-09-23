@@ -1,10 +1,10 @@
 const { post } = require('./router-mock');
-const submissionController = require('../../../src/controllers/submission');
+const submissionsController = require('../../../src/controllers/submissions');
 
-describe('routes/submission', () => {
+describe('routes/submissions', () => {
 	beforeEach(() => {
 		// eslint-disable-next-line global-require
-		require('../../../src/routes/submission');
+		require('../../../src/routes/submissions');
 	});
 
 	afterEach(() => {
@@ -15,7 +15,7 @@ describe('routes/submission', () => {
 		expect(post).toHaveBeenCalledWith(
 			'/:caseRef',
 			expect.anything(),
-			submissionController.createSubmission
+			submissionsController.createSubmission
 		);
 	});
 });
