@@ -62,6 +62,7 @@ module.exports = {
 				applicant: 'isApplicant',
 				caseRef: 'caseRef',
 				currentView: 'currentView',
+				deadlineItems: 'deadlineItems',
 				description: 'description',
 				email: 'email',
 				hasInterestedPartyNo: 'hasInterestedPartyNo',

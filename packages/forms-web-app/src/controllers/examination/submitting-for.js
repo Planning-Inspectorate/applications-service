@@ -55,16 +55,19 @@ const getSubmittingFor = (req, res) => {
 	if (examinationSessionSubmitter) {
 		const submittingForValues = { ...submittingFor.options };
 
-		const updatedSubmittingForValues = Object.keys(submittingForValues).map((value) => {
-			const valueChecked = submittingForValues[value].value === examinationSessionSubmitter;
+		const updatedSubmittingForValues = Object.keys(submittingForValues).map(
+			(submittingForValue) => {
+				const valueChecked =
+					submittingForValues[submittingForValue].value === examinationSessionSubmitter;
 
-			if (!valueChecked) return submittingForValues[value];
+				if (!valueChecked) return submittingForValues[submittingForValue];
 
-			return {
-				...submittingForValues[value],
-				checked: 'checked'
-			};
-		});
+				return {
+					...submittingForValues[submittingForValue],
+					checked: 'checked'
+				};
+			}
+		);
 
 		setPageData.options = updatedSubmittingForValues;
 	}
@@ -98,11 +101,11 @@ const postSubmittingFor = (req, res) => {
 
 	if (!setSubmittingFor) return res.status(404).render('error/not-found');
 
-	const hasValidValue = Object.keys(submittingFor.options).find((submittingForOption) => {
+	const isValidValue = Object.keys(submittingFor.options).find((submittingForOption) => {
 		return submittingFor.options[submittingForOption].value === setSubmittingFor;
 	});
 
-	if (!hasValidValue) return res.status(404).render('error/not-found');
+	if (!isValidValue) return res.status(404).render('error/not-found');
 
 	examinationSession[examinationSessionStorage.property.submittingFor] = setSubmittingFor;
 

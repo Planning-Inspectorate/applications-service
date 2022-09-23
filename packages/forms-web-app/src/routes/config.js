@@ -1,6 +1,7 @@
 const routesConfig = {
 	examination: {
 		directory: '/examination',
+		sessionId: 'examination',
 		pages: {
 			applicant: {
 				id: 'examination-applicant',
@@ -44,6 +45,12 @@ const routesConfig = {
 						max: 255
 					}
 				}
+			},
+			evidenceOrComment: {
+				id: 'examination-evidence-or-comment',
+				name: 'Upload evidence or comment',
+				route: '/select-upload-evidence-or-comment',
+				view: 'pages/examination/evidence-or-comment'
 			},
 			haveYourSay: {
 				id: 'examination-have-your-say',
@@ -126,6 +133,20 @@ const routesConfig = {
 				},
 				route: '/your-organisation-name',
 				view: 'pages/examination/name'
+			},
+			selectDeadline: {
+				id: 'examination-select-deadline',
+				name: 'Which item would you like to submit against for this deadline?',
+				onError: {
+					message: {
+						isEmpty: 'Select an item'
+					}
+				},
+				route: '/select-deadline-item',
+				sessionIdPrimary: 'selectedDeadlineItems',
+				sessionIdSecondary: 'active',
+				sessionIdTertiary: 'items',
+				view: 'pages/examination/select-deadline'
 			},
 			submittingFor: {
 				id: 'examination-submitting-for',

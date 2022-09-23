@@ -96,7 +96,8 @@ describe('controllers/projects/examination-timetable', () => {
 					{
 						closed: false,
 						dateOfEvent: '18 January 2023',
-						description: 'Test',
+						description:
+							'<ul><li>Comments on submissions received for Deadline 2</li><li>Written summaries of oral submissions made at Hearings held during the w/c 26 September</li><li>Updated SoCG requested by the ExA</li></ul>',
 						eventTitle: 'Test',
 						id: 'EN010011-0001',
 						eventIdFieldName: 'event-id',
@@ -118,7 +119,20 @@ describe('controllers/projects/examination-timetable', () => {
 
 			expect(req.session.examination).toEqual({
 				caseRef: '123ABC',
-				description: 'Test',
+				deadlineItems: [
+					{
+						text: 'Comments on submissions received for Deadline 2',
+						value: '0'
+					},
+					{
+						text: 'Written summaries of oral submissions made at Hearings held during the w/c 26 September',
+						value: '1'
+					},
+					{
+						text: 'Updated SoCG requested by the ExA',
+						value: '2'
+					}
+				],
 				id: 'EN010011-0001',
 				title: '18 January 2023 - Test'
 			});
