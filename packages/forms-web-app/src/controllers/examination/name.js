@@ -1,5 +1,7 @@
 const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
+const examinationSessionStorageName = examinationSessionStorage?.name;
+const examinationSessionStoragePropertyName = examinationSessionStorage?.property?.name;
 
 const {
 	routesConfig: {
@@ -19,13 +21,20 @@ const pageData = {
 };
 
 const getName = async (req, res) => {
-	const examinationSession = req?.session?.[examinationSessionStorage.name];
+	const examinationSession = req?.session?.[examinationSessionStorageName];
 
-	if (!examinationSession || !req.currentView) return res.status(404).render('error/not-found');
+	const sessionCurrentView = req.session?.currentView;
+	const examinationName = examinationSession?.[examinationSessionStoragePropertyName];
 
-	const { id, pageTitle, title, view } = req.currentView;
+	pageData.values.name = examinationName;
 
-	req.currentView && (pageData.values = { ...pageData.values, id, pageTitle, title, view });
+	if (!examinationSession || !sessionCurrentView) return res.status(404).render('error/not-found');
+
+	const { id, pageTitle, title, view } = sessionCurrentView;
+
+	if (sessionCurrentView) {
+		pageData.values = { ...pageData.values, id, pageTitle, title, view };
+	}
 
 	res.render(view, pageData.values);
 };
@@ -33,11 +42,14 @@ const getName = async (req, res) => {
 const postName = async (req, res) => {
 	const { body = {}, session } = req;
 	const { errors = {}, errorSummary = [] } = body;
-	const examinationSession = session?.[examinationSessionStorage.name];
+	const examinationSession = session?.[examinationSessionStorageName];
+	const sessionCurrentView = req.session?.currentView;
 
-	if (!examinationSession || !req.currentView?.id) return res.status(404).render('error/not-found');
+	if (!examinationSession || !sessionCurrentView?.id)
+		return res.status(404).render('error/not-found');
 
-	const { id, view } = req.currentView;
+	const { id, view } = sessionCurrentView;
+	examinationSession[examinationSessionStoragePropertyName] = req.body[id] ?? '';
 
 	if (errors[id] || Object.keys(errors).length > 0) {
 		return res.render(view, {
@@ -51,7 +63,7 @@ const postName = async (req, res) => {
 
 	if (!setName) return res.status(404).render('error/not-found');
 
-	examinationSession[examinationSessionStorage.property.name] = setName;
+	examinationSession.name = setName;
 
 	if (req.query?.mode === 'edit') {
 		res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
