@@ -12,6 +12,8 @@ const {
 
 const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
+const examinationSessionStorageName = examinationSessionStorage?.name;
+const examinationSessionStorageEmail = examinationSessionStorage?.property?.email;
 
 const pageData = {
 	id: email.id,
@@ -22,14 +24,14 @@ const pageData = {
 
 const getEmail = async (req, res) => {
 	const requestSession = req.session;
-	const examinationSession = requestSession?.[examinationSessionStorage.name];
+	const examinationStorage = requestSession?.[examinationSessionStorageName];
 	const currentView = requestSession?.currentView;
 
-	if (!examinationSession || !currentView || !currentView?.route)
+	if (!examinationStorage || !currentView || !currentView?.route)
 		return res.status(404).render('error/not-found');
 
-	const userEmail = examinationSession?.userEmail;
-	userEmail && (pageData.email = userEmail);
+	const examinationEmail = examinationStorage?.[examinationSessionStorageEmail];
+	examinationEmail && (pageData.email = examinationEmail);
 
 	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
 	res.render(email.view, pageData);
@@ -40,14 +42,16 @@ const postEmail = async (req, res) => {
 	const { errors = {}, errorSummary = [] } = body;
 	const requestSession = req?.session;
 	const currentView = requestSession?.currentView;
-	const examinationStorage = requestSession?.[examinationSessionStorage.name];
+	const examinationStorage = requestSession?.[examinationSessionStorageName];
 
-	if (!requestSession || !currentView || !examinationStorage)
-		return res.status(404).render('error/not-found');
+	if (!currentView || !examinationStorage) return res.status(404).render('error/not-found');
 
-	examinationStorage?.userEmail && (pageData.email = examinationStorage?.userEmail);
+	const examinationEmail = examinationStorage?.property?.email;
 
-	examinationStorage.userEmail = examinationSessionStorage.property.email = body[email.id];
+	pageData.email = examinationEmail !== 'email' && examinationEmail;
+
+	examinationStorage[examinationSessionStorageEmail] = body[email.id];
+
 	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
 
 	if (errors[email.id] || Object.keys(errors).length > 0) {

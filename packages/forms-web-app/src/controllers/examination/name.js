@@ -1,5 +1,7 @@
 const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
+const examinationSessionStorageName = examinationSessionStorage?.name;
+const examinationSessionStoragePropertyName = examinationSessionStorage?.property?.name;
 
 const {
 	routesConfig: {
@@ -19,14 +21,12 @@ const pageData = {
 };
 
 const getName = async (req, res) => {
-	const examinationSession = req?.session?.[examinationSessionStorage.name];
+	const examinationSession = req?.session?.[examinationSessionStorageName];
 
 	const sessionCurrentView = req.session?.currentView;
-	const sessionName = examinationSessionStorage?.property?.name;
+	const examinationName = examinationSession?.[examinationSessionStoragePropertyName];
 
-	if (sessionName && sessionName !== 'name') {
-		pageData.values.name = sessionName;
-	}
+	pageData.values.name = examinationName;
 
 	if (!examinationSession || !sessionCurrentView) return res.status(404).render('error/not-found');
 
@@ -42,14 +42,14 @@ const getName = async (req, res) => {
 const postName = async (req, res) => {
 	const { body = {}, session } = req;
 	const { errors = {}, errorSummary = [] } = body;
-	const examinationSession = session?.[examinationSessionStorage.name];
+	const examinationSession = session?.[examinationSessionStorageName];
 	const sessionCurrentView = req.session?.currentView;
 
 	if (!examinationSession || !sessionCurrentView?.id)
 		return res.status(404).render('error/not-found');
 
 	const { id, view } = sessionCurrentView;
-	examinationSessionStorage.property.name = req.body[id] ?? '';
+	examinationSession[examinationSessionStoragePropertyName] = req.body[id] ?? '';
 
 	if (errors[id] || Object.keys(errors).length > 0) {
 		return res.render(view, {
@@ -63,7 +63,7 @@ const postName = async (req, res) => {
 
 	if (!setName) return res.status(404).render('error/not-found');
 
-	examinationSession[examinationSessionStorage.property.name] = setName;
+	examinationSession.name = setName;
 
 	if (req.query?.mode === 'edit') {
 		res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
