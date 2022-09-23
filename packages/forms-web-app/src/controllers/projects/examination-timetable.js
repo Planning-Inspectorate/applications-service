@@ -38,11 +38,8 @@ const getEvents = async (caseRef) => {
 	)
 		return defaultValue;
 
-	const timetables = [];
-
-	response.data.timetables.forEach((timetable) => {
+	return dataTimetables.map((timetable) => {
 		const {
-			id,
 			uniqueId,
 			dateOfEvent: eventDate,
 			title: timetableTitle,
@@ -50,9 +47,7 @@ const getEvents = async (caseRef) => {
 			typeOfEvent
 		} = timetable;
 
-		const isDeadlineAndNotFromPast = new Date(eventDate) >= getDate() && typeOfEvent === 'Deadline';
-
-		const closed = getDate() > new Date(eventDate);
+		const closed = getDate() >= new Date(eventDate);
 		const dateOfEvent = formatDate(eventDate);
 		const eventTitle = timetableTitle;
 		const title = `${dateOfEvent} - ${eventTitle}`;
@@ -64,14 +59,13 @@ const getEvents = async (caseRef) => {
 			eventTitle,
 			id: uniqueId,
 			eventIdFieldName,
-			elementId: `${id + uniqueId}`,
-			title
+			elementId: `${eventElementId + uniqueId}`,
+			title,
+			typeOfEvent
 		};
 
-		isDeadlineAndNotFromPast ? timetables.unshift(item) : timetables.push(item);
+		return item;
 	});
-
-	return timetables;
 };
 
 const getExaminationTimetable = async (req, res) => {
@@ -123,7 +117,7 @@ const getExaminationTimetable = async (req, res) => {
 
 	let nextDeadline = null;
 	const nextDeadlineEvent = events.find((event) => {
-		return !event.closed;
+		return !event.closed && event.typeOfEvent === 'Deadline';
 	});
 
 	if (nextDeadlineEvent) {
