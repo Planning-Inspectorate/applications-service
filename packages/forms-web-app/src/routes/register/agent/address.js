@@ -2,7 +2,7 @@ const express = require('express');
 
 const addressController = require('../../../controllers/register/agent/address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const { rules: addressValidationRules } = require('../../../validators/register/agent/address');
+const { addressValidationRules } = require('../../../validators/shared');
 
 const router = express.Router();
 

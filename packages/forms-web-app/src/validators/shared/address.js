@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-const rules = () => {
+const addressValidationRules = () => {
 	return [
 		body('line1').notEmpty().withMessage('Enter address line 1'),
 		body('line1')
@@ -28,5 +28,5 @@ const rules = () => {
 };
 
 module.exports = {
-	rules
+	addressValidationRules
 };
