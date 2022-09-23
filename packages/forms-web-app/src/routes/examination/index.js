@@ -14,12 +14,14 @@ const {
 				applicant,
 				checkYourAnswers,
 				email,
+				evidenceOrComment,
 				haveYourSay,
 				hasInterestedPartyNumber,
-				submittingFor,
 				nameMyself,
 				nameOrganisation,
 				nameAgent,
+				selectDeadline,
+				submittingFor,
 				yourInterestedPartyNumber
 			}
 		}
@@ -32,11 +34,19 @@ const { getApplicant, postApplicant } = require('../../controllers/examination/a
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
 const {
+	getEvidenceOrComment,
+	postEvidenceOrComment
+} = require('../../controllers/examination/evidence-or-comment');
+const {
 	getHasInterestedPartyNumber,
 	postHasInterestedPartyNumber
 } = require('../../controllers/examination/has-interested-party-number');
 const { getHaveYourSay } = require('../../controllers/examination/have-your-say');
 const { getName, postName } = require('../../controllers/examination/name');
+const {
+	getSelectDeadline,
+	postSelectDeadline
+} = require('../../controllers/examination/select-deadline');
 const {
 	getSubmittingFor,
 	postSubmittingFor
@@ -52,10 +62,14 @@ router.get(applicant.route, getApplicant);
 router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
 
 router.get(checkYourAnswers.route, getCheckYourAnswers);
+
 router.get(haveYourSay.route, getHaveYourSay);
 
 router.get(email.route, getEmail);
 router.post(email.route, emailValidationRules(email), validationErrorHandler, postEmail);
+
+router.get(evidenceOrComment.route, getEvidenceOrComment);
+router.post(evidenceOrComment.route, postEvidenceOrComment);
 
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
 router.post(
@@ -90,6 +104,14 @@ router.post(
 	validationErrorHandler,
 	forwardView(nameOrganisation),
 	postName
+);
+
+router.get(selectDeadline.route, getSelectDeadline);
+router.post(
+	selectDeadline.route,
+	validateNotEmpty(selectDeadline),
+	validationErrorHandler,
+	postSelectDeadline
 );
 
 router.get(submittingFor.route, getSubmittingFor);

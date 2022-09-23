@@ -1,0 +1,59 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set backLinkUrl = backLinkUrl %}
+
+{% set pageTitle = pageTitle %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set pageTitle = "Error: " + pageTitle %}
+  {% endif %}
+
+  {{ pageTitle }}
+{% endblock %}
+
+{% block content %}
+  {% if errorSummary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errorSummary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action="" method="POST" novalidate>
+        {{ govukRadios({
+          attributes: { "data-cy": id },
+          classes: "govuk-radios--inline",
+          idPrefix: id,
+          name: id,
+          errorMessage: errors[id] and {
+            text: errors[id].msg
+          },
+          fieldset: {
+            legend: {
+              text: title,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: hintText
+          },
+          items: options
+        }) }}
+
+        {{ govukButton({
+          attributes: { "data-cy": "button-submit-and-continue" },
+          text: "Continue",
+          type: "Submit"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

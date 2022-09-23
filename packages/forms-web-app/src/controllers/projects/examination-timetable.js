@@ -160,8 +160,19 @@ const postExaminationTimetable = (req, res) => {
 
 	if (!setEvent) return res.status(404).render('error/not-found');
 
+	const deadlineItemsList = setEvent.description.match(/<li>(.|\n)*?<\/li>/gm);
+
+	if (!deadlineItemsList) return res.status(500).render('error/unhandled-exception');
+
+	const deadlineItems = deadlineItemsList.map((deadlineItem, index) => {
+		return {
+			value: `${index}`,
+			text: deadlineItem.replace(/<\/?li>/g, '')
+		};
+	});
+
 	reqExaminationSession[examinationSession.property.caseRef] = caseRef;
-	reqExaminationSession[examinationSession.property.description] = setEvent.description;
+	reqExaminationSession[examinationSession.property.deadlineItems] = deadlineItems;
 	reqExaminationSession[examinationSession.property.id] = setEvent.id;
 	reqExaminationSession[examinationSession.property.title] = setEvent.title;
 
