@@ -40,7 +40,6 @@ const getEvents = async (caseRef) => {
 
 	return dataTimetables.map((timetable) => {
 		const {
-			id,
 			uniqueId,
 			dateOfEvent: eventDate,
 			title: timetableTitle,
@@ -60,7 +59,7 @@ const getEvents = async (caseRef) => {
 			eventTitle,
 			id: uniqueId,
 			eventIdFieldName,
-			elementId: `${id + uniqueId}`,
+			elementId: `${eventElementId + uniqueId}`,
 			title,
 			typeOfEvent
 		};
