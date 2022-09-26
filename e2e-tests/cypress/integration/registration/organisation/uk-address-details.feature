@@ -24,7 +24,7 @@ Feature: UK Address details page
       | ErrorMsg                                      |
       | Address line 1 must be 255 characters or less |
       | Address line 2 must be 96 characters or less  |
-      | Address line 3 must be 64 characters or less  |
+      | Town or city must be 64 characters or less  |
       | Postcode must be 16 characters or less        |
       | Country must be 64 characters or less         |
 
@@ -45,7 +45,7 @@ Feature: UK Address details page
     Then the following error messages should be presented
       | ErrorMsg                                     |
       | Address line 2 must be 96 characters or less |
-      | Address line 3 must be 64 characters or less |
+      | Town or city must be 64 characters or less |
 
   Scenario: User continues with valid data
     When I continue with the following values in the address fields
