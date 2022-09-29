@@ -29,7 +29,6 @@
       <form action="" method="POST" novalidate>
         {{ govukRadios({
           attributes: { "data-cy": id },
-          classes: "govuk-radios--inline",
           idPrefix: id,
           name: id,
           errorMessage: errors[id] and {
