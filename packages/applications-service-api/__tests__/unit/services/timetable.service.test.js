@@ -18,7 +18,7 @@ describe('timetable service', () => {
 				case_reference: 'SOMECASE'
 			},
 			limit: 100,
-			order: [['date_of_event', 'DESC']]
+			order: [['date_of_event', 'ASC']]
 		});
 	});
 });
