@@ -30,7 +30,7 @@ describe('submissions controller', () => {
 
 		const response = res._getData();
 
-		expect(res._getStatusCode()).toEqual(200);
+		expect(res._getStatusCode()).toEqual(201);
 		expect(response['name']).toEqual('Joe Bloggs');
 	});
 
@@ -41,7 +41,7 @@ describe('submissions controller', () => {
 
 		const response = res._getData();
 
-		expect(res._getStatusCode()).toEqual(200);
+		expect(res._getStatusCode()).toEqual(201);
 		expect(response['file']['name']).toEqual('Test-123-1.pdf');
 	});
 
@@ -62,7 +62,7 @@ describe('submissions controller', () => {
 
 		const response = res._getData();
 
-		expect(res._getStatusCode()).toEqual(200);
+		expect(res._getStatusCode()).toEqual(201);
 		expect(response['representation']).toEqual('My representation');
 	});
 

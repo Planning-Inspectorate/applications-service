@@ -1,4 +1,5 @@
 const Path = require('path');
+const { StatusCodes } = require('http-status-codes');
 
 module.exports = {
 	async createSubmission(req, res) {
@@ -31,13 +32,13 @@ module.exports = {
 				md5: 'dummymd5'
 			};
 		} else {
-			return res.status(400).send({
-				code: 400,
+			return res.status(StatusCodes.BAD_REQUEST).send({
+				code: StatusCodes.BAD_REQUEST,
 				errors: ["Missing property 'representation' or 'file'"]
 			});
 		}
 
-		return res.status(200).send(responseBody);
+		return res.status(StatusCodes.CREATED).send(responseBody);
 	}
 };
 
