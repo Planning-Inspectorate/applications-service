@@ -13,6 +13,14 @@ function formatDate(date) {
 	return `${dayWithoutZeroPrefix}${formattedMonthAndYear}`;
 }
 
+const isNullSQLDate = (testDate) => {
+	if (testDate instanceof Date && !isNaN(testDate)) {
+		return testDate.getTime() === new Date('0001-01-01 00:00:00').getTime();
+	}
+	return false;
+};
+
 module.exports = {
-	formatDate
+	formatDate,
+	isNullSQLDate
 };

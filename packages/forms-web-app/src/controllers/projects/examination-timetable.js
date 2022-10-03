@@ -1,4 +1,4 @@
-const { formatDate } = require('../../utils/date-utils');
+const { formatDate, isNullSQLDate } = require('../../utils/date-utils');
 const { isBeforeOrAfterDate } = require('../../utils/is-before-or-after-date');
 const { getNow: getDate } = require('../../utils/get-now');
 const { getTimetables } = require('../../services/timetable.service');
@@ -21,6 +21,18 @@ const { marked } = require('marked');
 const examinationSession = config.sessionStorage.examination;
 const eventIdFieldName = 'event-id';
 const eventElementId = 'examination-timetable-event-';
+
+const eventSubmitButtonActive = (timetable) => {
+	const tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+
+	return (
+		timetable.typeOfEvent === 'Deadline' &&
+		tomorrow < new Date(timetable.dateOfEvent) &&
+		(new Date(timetable.dateTimeDeadlineStart) < getDate() ||
+			isNullSQLDate(new Date(timetable.dateTimeDeadlineStart)))
+	);
+};
 
 const getEvents = async (caseRef) => {
 	const defaultValue = [];
@@ -51,6 +63,7 @@ const getEvents = async (caseRef) => {
 		const dateOfEvent = formatDate(eventDate);
 		const eventTitle = timetableTitle;
 		const title = `${dateOfEvent} - ${eventTitle}`;
+		const submitButton = eventSubmitButtonActive(timetable);
 
 		const item = {
 			closed,
@@ -61,7 +74,8 @@ const getEvents = async (caseRef) => {
 			eventIdFieldName,
 			elementId: `${eventElementId + uniqueId}`,
 			title,
-			typeOfEvent
+			typeOfEvent,
+			submitButton
 		};
 
 		return item;
