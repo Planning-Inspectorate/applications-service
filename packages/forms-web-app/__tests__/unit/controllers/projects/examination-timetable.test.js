@@ -127,7 +127,7 @@ describe('controllers/projects/examination-timetable', () => {
 								caseReference: 'EN010009',
 								title: 'Deadline 4',
 								description: 'Deadline 4 description',
-								dateOfEvent: '2023-01-18TT00:00:00.000Z',
+								dateOfEvent: futureDate.toISOString(),
 								timetableType: 'Exams',
 								typeOfEvent: 'Deadline',
 								dateTimeDeadlineStart: '2023-01-12TT00:00:00.000Z',
@@ -186,7 +186,7 @@ describe('controllers/projects/examination-timetable', () => {
 						typeOfEvent: 'Deadline'
 					},
 					{
-						dateOfEvent: '18 January 2023',
+						dateOfEvent: formattedDate,
 						description: marked('Deadline 4 description'),
 						elementId: 'examination-timetable-event-EN010009-4089',
 						eventIdFieldName: 'event-id',
@@ -194,7 +194,7 @@ describe('controllers/projects/examination-timetable', () => {
 						id: 'EN010009-4089',
 						submitButton: false,
 						eventState: { value: 'null', text: '', classes: '' },
-						title: '18 January 2023 - Deadline 4',
+						title: formattedDate + ' - Deadline 4',
 						typeOfEvent: 'Deadline'
 					}
 				],
