@@ -78,6 +78,12 @@ const routesConfig = {
 				sessionId: 'submissionType',
 				view: 'pages/examination/evidence-or-comment'
 			},
+			enterAComment: {
+				id: 'examination-enter-a-comment',
+				name: 'Make a comment',
+				route: '/enter-a-comment',
+				view: 'pages/examination/enter-a-comment'
+			},
 			haveYourSay: {
 				id: 'examination-have-your-say',
 				name: 'Have your say during the Examination of the application',
