@@ -7,7 +7,7 @@ const getTimetables = async (caseRef) => {
 			case_reference: caseRef
 		},
 		limit: config.timetableItemsPerPage,
-		order: [['date_of_event', 'DESC']]
+		order: [['date_of_event', 'ASC']]
 	});
 };
 

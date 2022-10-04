@@ -117,3 +117,4 @@ junit.xml
 .DS_Store
 
 packages/forms-web-app/src/public/stylesheets/main.css
+uploads/

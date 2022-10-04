@@ -17,6 +17,9 @@ COPY packages/applications-service-api/src ./packages/applications-service-api/s
 COPY packages/applications-service-api/package.json ./packages/applications-service-api/package.json
 COPY packages/applications-service-api/.sequelizerc ./packages/applications-service-api/.sequelizerc
 
+RUN mkdir uploads && \
+    chown node:node uploads
+
 RUN npm ci
 
 # Stage 2/2: Run app

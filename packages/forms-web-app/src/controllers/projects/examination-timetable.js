@@ -1,4 +1,4 @@
-const { formatDate } = require('../../utils/date-utils');
+const { formatDate, isNullSQLDate } = require('../../utils/date-utils');
 const { isBeforeOrAfterDate } = require('../../utils/is-before-or-after-date');
 const { getNow: getDate } = require('../../utils/get-now');
 const { getTimetables } = require('../../services/timetable.service');
@@ -22,6 +22,18 @@ const examinationSession = config.sessionStorage.examination;
 const eventIdFieldName = 'event-id';
 const eventElementId = 'examination-timetable-event-';
 
+const eventSubmitButtonActive = (timetable) => {
+	const tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+
+	return (
+		timetable.typeOfEvent === 'Deadline' &&
+		tomorrow < new Date(timetable.dateOfEvent) &&
+		(new Date(timetable.dateTimeDeadlineStart) < getDate() ||
+			isNullSQLDate(new Date(timetable.dateTimeDeadlineStart)))
+	);
+};
+
 const getEvents = async (caseRef) => {
 	const defaultValue = [];
 	if (!caseRef || typeof caseRef !== 'string') return defaultValue;
@@ -38,11 +50,8 @@ const getEvents = async (caseRef) => {
 	)
 		return defaultValue;
 
-	const timetables = [];
-
-	response.data.timetables.forEach((timetable) => {
+	return dataTimetables.map((timetable) => {
 		const {
-			id,
 			uniqueId,
 			dateOfEvent: eventDate,
 			title: timetableTitle,
@@ -50,12 +59,11 @@ const getEvents = async (caseRef) => {
 			typeOfEvent
 		} = timetable;
 
-		const isDeadlineAndNotFromPast = new Date(eventDate) >= getDate() && typeOfEvent === 'Deadline';
-
-		const closed = getDate() > new Date(eventDate);
+		const closed = getDate() >= new Date(eventDate);
 		const dateOfEvent = formatDate(eventDate);
 		const eventTitle = timetableTitle;
 		const title = `${dateOfEvent} - ${eventTitle}`;
+		const submitButton = eventSubmitButtonActive(timetable);
 
 		const item = {
 			closed,
@@ -64,14 +72,14 @@ const getEvents = async (caseRef) => {
 			eventTitle,
 			id: uniqueId,
 			eventIdFieldName,
-			elementId: `${id + uniqueId}`,
-			title
+			elementId: `${eventElementId + uniqueId}`,
+			title,
+			typeOfEvent,
+			submitButton
 		};
 
-		isDeadlineAndNotFromPast ? timetables.unshift(item) : timetables.push(item);
+		return item;
 	});
-
-	return timetables;
 };
 
 const getExaminationTimetable = async (req, res) => {
@@ -123,7 +131,7 @@ const getExaminationTimetable = async (req, res) => {
 
 	let nextDeadline = null;
 	const nextDeadlineEvent = events.find((event) => {
-		return !event.closed;
+		return !event.closed && event.typeOfEvent === 'Deadline';
 	});
 
 	if (nextDeadlineEvent) {
@@ -166,8 +174,19 @@ const postExaminationTimetable = (req, res) => {
 
 	if (!setEvent) return res.status(404).render('error/not-found');
 
+	const deadlineItemsList = setEvent.description.match(/<li>(.|\n)*?<\/li>/gm);
+
+	if (!deadlineItemsList) return res.status(500).render('error/unhandled-exception');
+
+	const deadlineItems = deadlineItemsList.map((deadlineItem, index) => {
+		return {
+			value: `${index}`,
+			text: deadlineItem.replace(/<\/?li>/g, '')
+		};
+	});
+
 	reqExaminationSession[examinationSession.property.caseRef] = caseRef;
-	reqExaminationSession[examinationSession.property.description] = setEvent.description;
+	reqExaminationSession[examinationSession.property.deadlineItems] = deadlineItems;
 	reqExaminationSession[examinationSession.property.id] = setEvent.id;
 	reqExaminationSession[examinationSession.property.title] = setEvent.title;
 

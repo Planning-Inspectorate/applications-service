@@ -1,0 +1,17 @@
+{% extends "layouts/default.njk" %}
+
+{% set backLinkUrl = backLinkUrl %}
+
+{% set pageTitle = pageTitle %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set pageTitle = "Error: " + pageTitle %}
+  {% endif %}
+
+  {{ pageTitle }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+{% endblock %}

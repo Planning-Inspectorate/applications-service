@@ -19,6 +19,9 @@ module.exports = {
 		level: process.env.LOGGER_LEVEL || 'info',
 		redact: ['config.services.notify.apiKey']
 	},
+	uploads: {
+		path: process.env.FILE_UPLOADS_PATH || path.join(__dirname, '..', '..', '..', '..', 'uploads')
+	},
 	server: {
 		port: Number(process.env.SERVER_PORT || 3000),
 		showErrors: process.env.SERVER_SHOW_ERRORS === 'true',

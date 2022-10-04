@@ -13,7 +13,7 @@ const addressValidationRules = () => {
 
 		body('line3')
 			.isLength({ min: 0, max: 64 })
-			.withMessage('Address line 3 must be 64 characters or less'),
+			.withMessage('Town or city must be 64 characters or less'),
 
 		body('postcode').notEmpty().withMessage('Enter a postcode'),
 		body('postcode')

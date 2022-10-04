@@ -47,7 +47,7 @@ const {
 	options: { 1: yesOption, 2: noOption }
 } = applicant;
 
-const getApplicant = async (req, res) => {
+const getApplicant = (req, res) => {
 	const { session } = req;
 
 	const examinationSession = session?.[examinationSessionStorage.name];
@@ -83,7 +83,7 @@ const getApplicant = async (req, res) => {
 	res.render(applicant.view, setPageData);
 };
 
-const postApplicant = async (req, res) => {
+const postApplicant = (req, res) => {
 	const { session = {} } = req;
 
 	const examinationSession = session?.[examinationSessionStorage.name];
