@@ -14,6 +14,7 @@ const {
 				applicant,
 				checkYourAnswers,
 				email,
+				enterComment,
 				evidenceOrComment,
 				haveYourSay,
 				hasInterestedPartyNumber,
@@ -21,6 +22,7 @@ const {
 				nameOrganisation,
 				nameAgent,
 				selectDeadline,
+				selectFile,
 				submittingFor,
 				yourInterestedPartyNumber
 			}
@@ -33,6 +35,10 @@ const { forwardView } = require('../../middleware/forward-view');
 const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
+const {
+	getEnterComment,
+	postEnterComment
+} = require('../../controllers/examination/enter-comment');
 const {
 	getEvidenceOrComment,
 	postEvidenceOrComment
@@ -47,6 +53,7 @@ const {
 	getSelectDeadline,
 	postSelectDeadline
 } = require('../../controllers/examination/select-deadline');
+const { getSelectFile, postSelectFile } = require('../../controllers/examination/select-file');
 const {
 	getSubmittingFor,
 	postSubmittingFor
@@ -68,8 +75,16 @@ router.get(haveYourSay.route, getHaveYourSay);
 router.get(email.route, getEmail);
 router.post(email.route, emailValidationRules(email), validationErrorHandler, postEmail);
 
+router.get(enterComment.route, getEnterComment);
+router.post(enterComment.route, postEnterComment);
+
 router.get(evidenceOrComment.route, getEvidenceOrComment);
-router.post(evidenceOrComment.route, postEvidenceOrComment);
+router.post(
+	evidenceOrComment.route,
+	validateNotEmpty(evidenceOrComment),
+	validationErrorHandler,
+	postEvidenceOrComment
+);
 
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
 router.post(
@@ -113,6 +128,9 @@ router.post(
 	validationErrorHandler,
 	postSelectDeadline
 );
+
+router.get(selectFile.route, getSelectFile);
+router.post(selectFile.route, postSelectFile);
 
 router.get(submittingFor.route, getSubmittingFor);
 router.post(
