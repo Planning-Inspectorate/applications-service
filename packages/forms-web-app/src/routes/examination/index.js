@@ -15,6 +15,7 @@ const {
 				checkYourAnswers,
 				email,
 				evidenceOrComment,
+				enterAComment,
 				haveYourSay,
 				hasInterestedPartyNumber,
 				nameMyself,
@@ -37,6 +38,7 @@ const {
 	getEvidenceOrComment,
 	postEvidenceOrComment
 } = require('../../controllers/examination/evidence-or-comment');
+
 const {
 	getHasInterestedPartyNumber,
 	postHasInterestedPartyNumber
@@ -55,6 +57,10 @@ const {
 	getYourInterestedPartyNumber,
 	postYourInterestedPartyNumber
 } = require('../../controllers/examination/your-interested-party-number');
+const {
+	getEnterAComment,
+	postEnterAComment
+} = require('../../controllers/examination/enter-a-comment');
 
 const router = express.Router();
 
@@ -70,6 +76,9 @@ router.post(email.route, emailValidationRules(email), validationErrorHandler, po
 
 router.get(evidenceOrComment.route, getEvidenceOrComment);
 router.post(evidenceOrComment.route, postEvidenceOrComment);
+
+router.get(enterAComment.route, getEnterAComment);
+router.post(enterAComment.route, postEnterAComment);
 
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
 router.post(
