@@ -71,13 +71,16 @@ const getEvents = async (caseRef) => {
 		const getEventState = (timetable) => {
 			if (new Date(timetable.dateOfEvent) < getDate()) {
 				return eventStates[1]; // closed button
-			} else if (
+			}
+
+			if (
 				timetable.typeOfEvent === 'Deadline' &&
 				(new Date(timetable.dateTimeDeadlineStart) < getDate() ||
 					isNullSQLDate(new Date(timetable.dateTimeDeadlineStart)))
 			) {
 				return eventStates[0]; // open button
 			}
+
 			return eventStates[2]; // no button
 		};
 
