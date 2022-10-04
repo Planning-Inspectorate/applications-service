@@ -21,6 +21,11 @@ const { marked } = require('marked');
 const examinationSession = config.sessionStorage.examination;
 const eventIdFieldName = 'event-id';
 const eventElementId = 'examination-timetable-event-';
+const eventStates = [
+	{ value: 'open', text: 'Open', classes: 'govuk-tag--blue' },
+	{ value: 'closed', text: 'Closed', classes: 'govuk-tag' },
+	{ value: 'null', text: '', classes: '' }
+];
 
 const eventSubmitButtonActive = (timetable) => {
 	const tomorrow = new Date();
@@ -59,14 +64,24 @@ const getEvents = async (caseRef) => {
 			typeOfEvent
 		} = timetable;
 
-		const closed = getDate() >= new Date(eventDate);
 		const dateOfEvent = formatDate(eventDate);
 		const eventTitle = timetableTitle;
 		const title = `${dateOfEvent} - ${eventTitle}`;
 		const submitButton = eventSubmitButtonActive(timetable);
+		const getEventState = (timetable) => {
+			if (new Date(timetable.dateOfEvent) < getDate()) {
+				return eventStates[1]; // closed button
+			} else if (
+				timetable.typeOfEvent === 'Deadline' &&
+				(new Date(timetable.dateTimeDeadlineStart) < getDate() ||
+					isNullSQLDate(new Date(timetable.dateTimeDeadlineStart)))
+			) {
+				return eventStates[0]; // open button
+			}
+			return eventStates[2]; // no button
+		};
 
 		const item = {
-			closed,
 			dateOfEvent,
 			description: marked.parse(description),
 			eventTitle,
@@ -75,7 +90,8 @@ const getEvents = async (caseRef) => {
 			elementId: `${eventElementId + uniqueId}`,
 			title,
 			typeOfEvent,
-			submitButton
+			submitButton,
+			eventState: getEventState(timetable)
 		};
 
 		return item;
@@ -131,7 +147,7 @@ const getExaminationTimetable = async (req, res) => {
 
 	let nextDeadline = null;
 	const nextDeadlineEvent = events.find((event) => {
-		return !event.closed && event.typeOfEvent === 'Deadline';
+		return event.eventState.value === 'open' && event.typeOfEvent === 'Deadline';
 	});
 
 	if (nextDeadlineEvent) {
