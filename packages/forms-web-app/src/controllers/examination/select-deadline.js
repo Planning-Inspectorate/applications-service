@@ -81,7 +81,7 @@ const postSelectDeadline = (req, res) => {
 
 	const examinationSession = session?.[examinationSessionId];
 
-	if (!examinationSession) return false;
+	if (!examinationSession) return res.status(404).render('error/not-found');
 
 	const hasOptions = setSelectDeadlineOptions(examinationSession);
 
@@ -124,9 +124,17 @@ const postSelectDeadline = (req, res) => {
 			selectedDeadline
 		]
 	) {
+		const selectedDeadlineOption = pageData.options.find((option) => {
+			return option.value === selectedDeadline;
+		});
+
 		examinationSession[selectDeadline.sessionIdPrimary][selectDeadline.sessionIdTertiary][
 			selectedDeadline
-		] = {};
+		] = {
+			complete: false,
+			itemId: selectedDeadlineOption.value,
+			submissionItem: selectedDeadlineOption.text
+		};
 	}
 
 	res.redirect(examinationDirectory + evidenceOrCommentRoute);
