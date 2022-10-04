@@ -4,13 +4,9 @@
 
 {% macro sectionEvents(events) %}
   {% for event in events %}
-    {% set tagText = 'Open' %}
-    {% set tagClasses = 'govuk-tag--blue' %}
 
-    {% if event.closed %}
-      {% set tagText = 'Closed' %}
-      {% set tagClasses = '' %}
-    {% endif %}
+		{% set tagText = event.eventState.text %}
+		{% set tagClasses = event.eventState.classes %}
 
     <hr class="govuk-section-break govuk-section-break--visible" />
 
@@ -20,10 +16,12 @@
           <strong>{{ event.title }}</strong>
         </h3>
 
-        {{ govukTag({
-          text: tagText,
-          classes: tagClasses
-        }) }}
+				{% if event.eventState.text -%}
+					{{ govukTag({
+						text: tagText,
+						classes: tagClasses
+					}) }}
+				{%- endif %}
       </div>
 
       {% if event.description -%}
