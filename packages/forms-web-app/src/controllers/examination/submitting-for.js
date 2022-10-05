@@ -116,7 +116,6 @@ const postSubmittingFor = (req, res) => {
 		res.redirect(`${examinationDirectory + examinationNameOrganisationRoute}`);
 	else if (submittingFor.options[3].value === setSubmittingFor)
 		res.redirect(`${examinationDirectory + examinationNameAgentRoute}`);
-	else res.status(500).render('error/unhandled-exception');
 };
 
 module.exports = {

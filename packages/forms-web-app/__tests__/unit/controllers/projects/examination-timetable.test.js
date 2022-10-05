@@ -120,6 +120,18 @@ describe('controllers/projects/examination-timetable', () => {
 								typeOfEvent: 'Deadline',
 								dateTimeDeadlineStart: '0001-01-01 00:00:00',
 								sourceSystem: 'HORIZON'
+							},
+							{
+								id: 4,
+								uniqueId: 'EN010009-4089',
+								caseReference: 'EN010009',
+								title: 'Deadline 4',
+								description: 'Deadline 4 description',
+								dateOfEvent: futureDate.toISOString(),
+								timetableType: 'Exams',
+								typeOfEvent: 'Deadline',
+								dateTimeDeadlineStart: '2023-01-12TT00:00:00.000Z',
+								sourceSystem: 'HORIZON'
 							}
 						]
 					}
@@ -138,7 +150,6 @@ describe('controllers/projects/examination-timetable', () => {
 				dateTimeExaminationEnds: 'The examination closed on 8 September 2022',
 				events: [
 					{
-						closed: true,
 						dateOfEvent: '4 August 2022',
 						description: marked('Deadline 1 description'),
 						elementId: 'examination-timetable-event-EN010009-4079',
@@ -146,11 +157,11 @@ describe('controllers/projects/examination-timetable', () => {
 						eventTitle: 'Deadline 1',
 						id: 'EN010009-4079',
 						submitButton: false,
+						eventState: { value: 'closed', text: 'Closed', classes: 'govuk-tag' },
 						title: '4 August 2022 - Deadline 1',
 						typeOfEvent: 'Deadline'
 					},
 					{
-						closed: false,
 						dateOfEvent: formattedDate,
 						description: marked('Deadline 2 description'),
 						elementId: 'examination-timetable-event-EN010009-4069',
@@ -158,11 +169,11 @@ describe('controllers/projects/examination-timetable', () => {
 						eventTitle: 'Deadline 2',
 						id: 'EN010009-4069',
 						submitButton: true,
+						eventState: { value: 'open', text: 'Open', classes: 'govuk-tag--blue' },
 						title: formattedDate + ' - Deadline 2',
 						typeOfEvent: 'Deadline'
 					},
 					{
-						closed: false,
 						dateOfEvent: formattedDate,
 						description: marked('Deadline 3 description'),
 						elementId: 'examination-timetable-event-EN010009-4089',
@@ -170,7 +181,20 @@ describe('controllers/projects/examination-timetable', () => {
 						eventTitle: 'Deadline 3',
 						id: 'EN010009-4089',
 						submitButton: true,
+						eventState: { value: 'open', text: 'Open', classes: 'govuk-tag--blue' },
 						title: formattedDate + ' - Deadline 3',
+						typeOfEvent: 'Deadline'
+					},
+					{
+						dateOfEvent: formattedDate,
+						description: marked('Deadline 4 description'),
+						elementId: 'examination-timetable-event-EN010009-4089',
+						eventIdFieldName: 'event-id',
+						eventTitle: 'Deadline 4',
+						id: 'EN010009-4089',
+						submitButton: false,
+						eventState: { value: 'null', text: '', classes: '' },
+						title: formattedDate + ' - Deadline 4',
 						typeOfEvent: 'Deadline'
 					}
 				],

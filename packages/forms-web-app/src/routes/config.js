@@ -46,10 +46,36 @@ const routesConfig = {
 					}
 				}
 			},
+			enterComment: {
+				id: 'examination-enter-comment',
+				name: 'Enter comment',
+				route: '/enter-a-comment',
+				view: 'pages/examination/enter-comment'
+			},
 			evidenceOrComment: {
 				id: 'examination-evidence-or-comment',
-				name: 'Upload evidence or comment',
+				name: 'How would you like to submit comments ("written representation")?',
+				onError: {
+					message: {
+						isEmpty: 'Select if you want to upload supporting evidence or write a comment'
+					}
+				},
+				options: {
+					1: {
+						value: 'comment',
+						text: 'Write a comment'
+					},
+					2: {
+						value: 'upload',
+						text: 'Upload files'
+					},
+					3: {
+						value: 'both',
+						text: 'Both'
+					}
+				},
 				route: '/select-upload-evidence-or-comment',
+				sessionId: 'submissionType',
 				view: 'pages/examination/evidence-or-comment'
 			},
 			enterAComment: {
@@ -160,9 +186,15 @@ const routesConfig = {
 				},
 				route: '/select-deadline-item',
 				sessionIdPrimary: 'selectedDeadlineItems',
-				sessionIdSecondary: 'active',
+				sessionIdSecondary: 'activeId',
 				sessionIdTertiary: 'items',
 				view: 'pages/examination/select-deadline'
+			},
+			selectFile: {
+				id: 'examination-select-file',
+				name: 'Select a file',
+				route: '/select-a-file',
+				view: 'pages/examination/select-file'
 			},
 			submittingFor: {
 				id: 'examination-submitting-for',

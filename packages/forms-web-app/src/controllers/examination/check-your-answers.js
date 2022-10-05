@@ -6,13 +6,13 @@ const {
 	}
 } = require('../../routes/config');
 
-const setData = {
+const pageData = {
 	pageTitle: checkYourAnswers.name,
 	title: checkYourAnswers.name
 };
 
 const getCheckYourAnswers = (req, res) => {
-	res.render(checkYourAnswers.view, setData);
+	res.render(checkYourAnswers.view, pageData);
 };
 
 module.exports = {

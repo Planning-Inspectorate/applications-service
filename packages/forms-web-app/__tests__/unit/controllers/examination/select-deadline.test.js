@@ -77,7 +77,7 @@ describe('controllers/examination/select-deadline', () => {
 			const updatedSelectDeadlineValues = selectDeadlineValues.map((selectDeadlineValue) => {
 				const valueChecked =
 					selectDeadlineValue.value ===
-					mockRequest.session.examination.selectedDeadlineItems.active;
+					mockRequest.session.examination.selectedDeadlineItems.activeId;
 
 				if (!valueChecked) return selectDeadlineValue;
 
