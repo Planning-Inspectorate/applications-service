@@ -16,7 +16,6 @@ const {
 				email,
 				enterComment,
 				evidenceOrComment,
-				enterAComment,
 				haveYourSay,
 				hasInterestedPartyNumber,
 				nameMyself,
@@ -64,10 +63,6 @@ const {
 	getYourInterestedPartyNumber,
 	postYourInterestedPartyNumber
 } = require('../../controllers/examination/your-interested-party-number');
-const {
-	getEnterAComment,
-	postEnterAComment
-} = require('../../controllers/examination/enter-a-comment');
 
 const router = express.Router();
 
@@ -81,9 +76,6 @@ router.get(haveYourSay.route, getHaveYourSay);
 router.get(email.route, getEmail);
 router.post(email.route, emailValidationRules(email), validationErrorHandler, postEmail);
 
-router.get(enterComment.route, getEnterComment);
-router.post(enterComment.route, postEnterComment);
-
 router.get(evidenceOrComment.route, getEvidenceOrComment);
 router.post(
 	evidenceOrComment.route,
@@ -92,12 +84,12 @@ router.post(
 	postEvidenceOrComment
 );
 
-router.get(enterAComment.route, getEnterAComment);
+router.get(enterComment.route, getEnterComment);
 router.post(
-	enterAComment.route,
-	validateNotEmptyAndLength(enterAComment),
+	enterComment.route,
+	validateNotEmptyAndLength(enterComment),
 	validationErrorHandler,
-	postEnterAComment
+	postEnterComment
 );
 
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
