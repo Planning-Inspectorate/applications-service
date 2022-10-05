@@ -4,6 +4,14 @@ const {
 } = require('../../../../src/controllers/examination/enter-comment');
 const { mockReq, mockRes, mockResponse } = require('../../mocks');
 
+const minMaxInputObject = {
+	overMax: 'abcdefghjklmnopqrstvwxyzabcdefghjklmnopqrstvwxyzabcdefghjklmnopqr', // over 65,234 characters
+	betweenMinMax: 'abc'
+};
+
+const pathShortner = (obj, path) => path.split('.').reduce((value, el) => value && value[el], obj);
+const itemsPath = 'session.examination.selectedDeadlineItems.items';
+
 const pageData = {
 	backLinkUrl: '/examination/select-upload-evidence-or-comment',
 	id: 'examination-enter-a-comment',
@@ -13,13 +21,30 @@ const pageData = {
 	optionTitle: 'CHANGE ME'
 };
 
-describe('controllers/examination/submitting-for', () => {
+describe('controllers/examination/enter-comment', () => {
 	let req;
 	let res;
 
 	beforeEach(() => {
-		req = mockReq();
 		res = mockRes();
+		req = {
+			...mockReq(),
+			session: {
+				examination: {
+					selectedDeadlineItems: {
+						activeId: '0',
+						items: {
+							0: {
+								complete: false,
+								itemId: '3',
+								submissionItem: 'Statement of Commonality of SoCG ',
+								submissionType: 'comment'
+							}
+						}
+					}
+				}
+			}
+		};
 
 		jest.resetAllMocks();
 	});
@@ -34,14 +59,39 @@ describe('controllers/examination/submitting-for', () => {
 		});
 	});
 
-	describe('postSubmittingFor', () => {
-		it('should call the correct template', () => {
+	describe('postEnterComment', () => {
+		it('should redirect user to /examination/comment-has-personal-information-or-not', () => {
 			res = mockResponse();
 			const mockRequest = { ...req };
-
 			postEnterComment(mockRequest, res);
 
-			expect(res.render).toHaveBeenCalledWith('error/not-found');
+			expect(res.render).not.toHaveBeenCalled();
+			expect(pathShortner(mockRequest, itemsPath)[0].submissionType);
+			expect(res.redirect).toHaveBeenCalledWith(
+				'/examination/comment-has-personal-information-or-not'
+			);
+		});
+
+		it('should redirect user to /examination/select-a-file', () => {
+			res = mockResponse();
+			const mockRequest = { ...req };
+			mockRequest.session.examination.selectedDeadlineItems.items['0'].submissionType = 'both';
+			postEnterComment(mockRequest, res);
+
+			expect(res.render).not.toHaveBeenCalled();
+			expect(pathShortner(mockRequest, itemsPath)[0].submissionType);
+			expect(res.redirect).toHaveBeenCalledWith('/examination/select-a-file');
+		});
+
+		it('should render error/unhandled-exception', () => {
+			res = mockResponse();
+			const mockRequest = { ...req };
+			mockRequest.session.examination.selectedDeadlineItems.items['0'].submissionType = 'else';
+			postEnterComment(mockRequest, res);
+
+			expect(res.redirect).not.toHaveBeenCalled();
+			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe('else');
+			expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 		});
 	});
 });

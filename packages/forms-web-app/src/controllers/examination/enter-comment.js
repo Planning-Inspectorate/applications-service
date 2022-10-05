@@ -5,7 +5,7 @@ const {
 			directory: examinationDirectory,
 			pages: {
 				enterComment,
-				selectDeadline,
+				selectDeadline: { sessionIdPrimary, sessionIdSecondary, sessionIdTertiary },
 				selectFile: { route: selectFileRoute },
 				evidenceOrComment: { route: evidenceOrCommentRoute }
 			}
@@ -35,22 +35,19 @@ const postEnterComment = async (req, res) => {
 
 	const examinationSession = session?.[examinationSessionStorage.name];
 
-	const selectedActiveDeadlineItem =
-		examinationSession[selectDeadline?.sessionIdPrimary]?.[selectDeadline?.sessionIdTertiary]?.[
-			examinationSession[selectDeadline?.sessionIdPrimary]?.[selectDeadline?.sessionIdSecondary]
-		];
-
-	if (!examinationSession || !selectedActiveDeadlineItem)
+	if (!examinationSession || !examinationSession[sessionIdPrimary])
 		return res.status(404).render('error/not-found');
+
+	const selectedActiveDeadlineItem =
+		examinationSession[sessionIdPrimary]?.[sessionIdTertiary]?.[
+			examinationSession[sessionIdPrimary]?.[sessionIdSecondary]
+		];
 
 	const { body = {} } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
-	const sessionCurrentView = req.session?.currentView;
-	const { id, view } = sessionCurrentView;
-
-	if (errors[id] || Object.keys(errors).length > 0) {
-		res.render(view, {
+	if (errors[enterComment.id] || Object.keys(errors).length > 0) {
+		res.render(enterComment.view, {
 			...pageData,
 			errors,
 			errorSummary
