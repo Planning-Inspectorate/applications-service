@@ -13,7 +13,7 @@ describe('routes/submissions', () => {
 
 	it('should define the expected routes', () => {
 		expect(post).toHaveBeenCalledWith(
-			'/:caseRef',
+			'/:caseReference',
 			expect.anything(),
 			submissionsController.createSubmission
 		);

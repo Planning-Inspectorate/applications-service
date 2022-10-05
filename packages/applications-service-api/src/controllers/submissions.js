@@ -1,45 +1,74 @@
+const md5 = require('md5');
 const Path = require('path');
 const { StatusCodes } = require('http-status-codes');
+const { createSubmission, updateSubmission } = require('../services/submission.service');
+const { uploadFile } = require('../services/ni.api.service');
 
 module.exports = {
 	async createSubmission(req, res) {
-		const { caseRef } = req.params;
-
-		const submissionId = parseInteger(req.body.submissionId) || Math.floor(Math.random() * 100);
-		const sequenceNumber = 1;
-
-		const responseBody = {
-			name: req.body.name,
-			email: req.body.email,
-			interestedParty: parseBoolean(req.body.interestedParty),
-			ipReference: req.body.ipReference,
-			deadline: req.body.deadline,
-			submissionType: req.body.submissionType,
-			sensitiveData: parseBoolean(req.body.sensitiveData),
-			lateSubmission: parseBoolean(req.body.lateSubmission),
-			submissionId: submissionId,
-			caseReference: caseRef,
-			dateSubmitted: new Date()
-		};
-
-		if (req.body.representation) {
-			responseBody.representation = req.body.representation;
-		} else if (req.file) {
-			responseBody.file = {
-				name: buildFileName(req.file.originalname, submissionId, sequenceNumber),
-				originalName: req.file.originalname,
-				size: req.file.size,
-				md5: 'dummymd5'
-			};
-		} else {
+		if (!req.body.representation && !req.file) {
 			return res.status(StatusCodes.BAD_REQUEST).send({
 				code: StatusCodes.BAD_REQUEST,
 				errors: ["Missing property 'representation' or 'file'"]
 			});
 		}
 
-		return res.status(StatusCodes.CREATED).send(responseBody);
+		const { caseReference } = req.params;
+
+		const submissionRequestData = buildSubmissionData(req.body, caseReference);
+		let submission = await createSubmission(submissionRequestData);
+
+		if (req.file) {
+			submission = await submitFile(submission, req.file);
+		}
+
+		return res.status(StatusCodes.CREATED).send(submission);
 	}
+};
+
+const submitFile = async (submission, file) => {
+	const fileSequenceNumber = submission.id - submission.submissionId + 1;
+	const fileName = buildFileName(file.originalname, submission.submissionId, fileSequenceNumber);
+	const fileData = {
+		name: fileName,
+		originalName: file.originalname,
+		size: file.size,
+		md5: md5(file.buffer)
+	};
+
+	await uploadFile({
+		buffer: file.buffer,
+		fileName: fileName,
+		mimeType: file.mimetype,
+		size: file.size
+	});
+
+	await updateSubmission({
+		id: submission.id,
+		file: fileData
+	});
+
+	return {
+		...submission,
+		file: fileData
+	};
+};
+
+const buildSubmissionData = (requestBody, caseReference) => {
+	return {
+		name: requestBody.name,
+		email: requestBody.email,
+		interestedParty: parseBoolean(requestBody.interestedParty),
+		ipReference: requestBody.ipReference,
+		deadline: requestBody.deadline,
+		submissionType: requestBody.submissionType,
+		sensitiveData: parseBoolean(requestBody.sensitiveData),
+		lateSubmission: parseBoolean(requestBody.lateSubmission),
+		submissionId: parseInteger(requestBody.submissionId),
+		caseReference: caseReference,
+		dateSubmitted: new Date(),
+		representation: requestBody.representation
+	};
 };
 
 const buildFileName = (fileName, submissionId, sequenceNumber) => {

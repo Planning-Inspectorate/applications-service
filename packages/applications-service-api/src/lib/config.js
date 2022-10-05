@@ -41,6 +41,15 @@ module.exports = {
 	documentsHost:
 		process.env.DOCUMENTS_HOST ||
 		'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/',
+	ni: {
+		host: process.env.NI_API_HOST,
+		oauth: {
+			clientId: process.env.NI_OAUTH_CLIENT_ID,
+			clientSecret: process.env.NI_OAUTH_CLIENT_SECRET,
+			username: process.env.NI_OAUTH_USERNAME,
+			password: process.env.NI_OAUTH_PASSWORD
+		}
+	},
 	services: {
 		notify: {
 			baseUrl: process.env.SRV_NOTIFY_BASE_URL,
