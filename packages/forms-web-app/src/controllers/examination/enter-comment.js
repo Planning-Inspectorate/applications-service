@@ -5,6 +5,8 @@ const {
 			directory: examinationDirectory,
 			pages: {
 				enterComment,
+				selectDeadline,
+				selectFile: { route: selectFileRoute },
 				evidenceOrComment: { route: evidenceOrCommentRoute }
 			}
 		}
@@ -33,7 +35,13 @@ const postEnterComment = async (req, res) => {
 
 	const examinationSession = session?.[examinationSessionStorage.name];
 
-	if (!examinationSession) return res.status(404).render('error/not-found');
+	const selectedActiveDeadlineItem =
+		examinationSession[selectDeadline?.sessionIdPrimary]?.[selectDeadline?.sessionIdTertiary]?.[
+			examinationSession[selectDeadline?.sessionIdPrimary]?.[selectDeadline?.sessionIdSecondary]
+		];
+
+	if (!examinationSession || !selectedActiveDeadlineItem)
+		return res.status(404).render('error/not-found');
 
 	const { body = {} } = req;
 	const { errors = {}, errorSummary = [] } = body;
@@ -51,12 +59,14 @@ const postEnterComment = async (req, res) => {
 		return;
 	}
 
-	if ('comments only' === false) {
+	const submissionType = selectedActiveDeadlineItem?.submissionType;
+
+	if (submissionType === 'comment') {
 		res.redirect('/examination/comment-has-personal-information-or-not');
-	} else if ('both' === false) {
-		res.redirect('/examination/select-a-file');
+	} else if (submissionType === 'both') {
+		res.redirect(`${examinationDirectory}${selectFileRoute}`);
 	} else {
-		res.status(500).send('error');
+		res.status(500).render('error/unhandled-exception');
 	}
 };
 
