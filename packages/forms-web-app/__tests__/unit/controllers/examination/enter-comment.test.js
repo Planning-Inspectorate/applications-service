@@ -12,10 +12,12 @@ const pageData = {
 	id: 'examination-enter-a-comment',
 	pageTitle: 'Make a comment',
 	title: 'Make a comment',
-	hint: 'Comments on any submissions received by FIND ME',
-	optionTitle: 'CHANGE ME',
+	hint: 'Any further information requested by',
+	captionTitle: 'Deadline item:',
 	comment: ''
 };
+
+const hintValue = '`${pageData.hint} ${pathShortner(mockRequest, itemsPath)[0].submissionItem}`';
 
 describe('controllers/examination/enter-comment', () => {
 	let req;
@@ -51,7 +53,10 @@ describe('controllers/examination/enter-comment', () => {
 
 			getEnterComment(mockRequest, res);
 
-			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', pageData);
+			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
+				...pageData,
+				hint: eval(hintValue)
+			});
 		});
 
 		it('should render the view with default and session pageData', function () {
@@ -64,14 +69,26 @@ describe('controllers/examination/enter-comment', () => {
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 				...pageData,
-				comment
+				comment,
+				hint: eval(hintValue)
 			});
+		});
+
+		it('should render not found view', function () {
+			const mockRequest = { ...req };
+			delete mockRequest.session;
+
+			res = mockResponse();
+
+			getEnterComment(mockRequest, res);
+
+			expect(res.render).toHaveBeenCalledWith('error/not-found');
+			expect(res.redirect).not.toHaveBeenCalled();
 		});
 	});
 
 	describe('postEnterComment', () => {
 		it('should redirect user to /examination/comment-has-personal-information-or-not', () => {
-			res = mockResponse();
 			const mockRequest = { ...req };
 			postEnterComment(mockRequest, res);
 
@@ -83,7 +100,6 @@ describe('controllers/examination/enter-comment', () => {
 		});
 
 		it('should redirect user to /examination/select-a-file', () => {
-			res = mockResponse();
 			const mockRequest = { ...req };
 			mockRequest.session.examination.selectedDeadlineItems.items['0'].submissionType = 'both';
 			postEnterComment(mockRequest, res);
@@ -106,10 +122,18 @@ describe('controllers/examination/enter-comment', () => {
 			expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 		});
 
+		it('should render error/not-found', () => {
+			res = mockResponse();
+			const mockRequest = { ...req };
+			delete mockRequest.session;
+			postEnterComment(mockRequest, res);
+
+			expect(res.redirect).not.toHaveBeenCalled();
+			expect(res.render).toHaveBeenCalledWith('error/not-found');
+		});
+
 		describe('Given the user is submitting comments only for a deadline', () => {
 			it('should not allow characters > 65,234', function () {
-				res = mockResponse();
-
 				const errors = {
 					errorSummary: [{ text: 'Your comment must be 65,234 characters or less', href: '#' }],
 					errors: { error: 'error' }
@@ -126,12 +150,11 @@ describe('controllers/examination/enter-comment', () => {
 
 				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 					...errors,
-					...pageData
+					...pageData,
+					hint: eval(hintValue)
 				});
 			});
 			it('should not be empty', function () {
-				res = mockResponse();
-
 				const errors = {
 					errorSummary: [{ text: 'Enter a comment', href: '#' }],
 					errors: { error: 'error' }
@@ -148,7 +171,8 @@ describe('controllers/examination/enter-comment', () => {
 
 				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 					...errors,
-					...pageData
+					...pageData,
+					hint: eval(hintValue)
 				});
 			});
 		});
