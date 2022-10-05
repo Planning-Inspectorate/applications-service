@@ -4,11 +4,6 @@ const {
 } = require('../../../../src/controllers/examination/enter-comment');
 const { mockReq, mockRes, mockResponse } = require('../../mocks');
 
-const minMaxInputObject = {
-	overMax: 'abcdefghjklmnopqrstvwxyzabcdefghjklmnopqrstvwxyzabcdefghjklmnopqr', // over 65,234 characters
-	betweenMinMax: 'abc'
-};
-
 const pathShortner = (obj, path) => path.split('.').reduce((value, el) => value && value[el], obj);
 const itemsPath = 'session.examination.selectedDeadlineItems.items';
 
@@ -18,7 +13,8 @@ const pageData = {
 	pageTitle: 'Make a comment',
 	title: 'Make a comment',
 	hint: 'Comments on any submissions received by FIND ME',
-	optionTitle: 'CHANGE ME'
+	optionTitle: 'CHANGE ME',
+	comment: ''
 };
 
 describe('controllers/examination/enter-comment', () => {
@@ -50,12 +46,26 @@ describe('controllers/examination/enter-comment', () => {
 	});
 
 	describe('getEnterComment', () => {
-		it('should call the correct template', () => {
+		it('should render the view with default pageData', () => {
 			const mockRequest = { ...req };
 
 			getEnterComment(mockRequest, res);
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', pageData);
+		});
+
+		it('should render the view with default and session pageData', function () {
+			const mockRequest = { ...req };
+
+			const comment = 'I am a comment';
+			mockRequest.session.examination.comment = comment;
+
+			getEnterComment(mockRequest, res);
+
+			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
+				...pageData,
+				comment
+			});
 		});
 	});
 
@@ -86,12 +96,61 @@ describe('controllers/examination/enter-comment', () => {
 		it('should render error/unhandled-exception', () => {
 			res = mockResponse();
 			const mockRequest = { ...req };
-			mockRequest.session.examination.selectedDeadlineItems.items['0'].submissionType = 'else';
+			const mockSubmissionType = 'wrong submission type';
+			mockRequest.session.examination.selectedDeadlineItems.items['0'].submissionType =
+				mockSubmissionType;
 			postEnterComment(mockRequest, res);
 
 			expect(res.redirect).not.toHaveBeenCalled();
-			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe('else');
+			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe(mockSubmissionType);
 			expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+		});
+
+		describe('Given the user is submitting comments only for a deadline', () => {
+			it('should not allow characters > 65,234', function () {
+				res = mockResponse();
+
+				const errors = {
+					errorSummary: [{ text: 'Your comment must be 65,234 characters or less', href: '#' }],
+					errors: { error: 'error' }
+				};
+				const mockRequest = {
+					...req,
+					body: {
+						'examination-enter-a-comment': 'I am a test comment',
+						...errors
+					}
+				};
+
+				postEnterComment(mockRequest, res);
+
+				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
+					...errors,
+					...pageData
+				});
+			});
+			it('should not be empty', function () {
+				res = mockResponse();
+
+				const errors = {
+					errorSummary: [{ text: 'Enter a comment', href: '#' }],
+					errors: { error: 'error' }
+				};
+				const mockRequest = {
+					...req,
+					body: {
+						'examination-enter-a-comment': '',
+						...errors
+					}
+				};
+
+				postEnterComment(mockRequest, res);
+
+				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
+					...errors,
+					...pageData
+				});
+			});
 		});
 	});
 });
