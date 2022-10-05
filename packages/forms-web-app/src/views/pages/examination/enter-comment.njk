@@ -19,23 +19,26 @@
       <form action="" method="POST" novalidate>
         <span class="govuk-caption-l">{{ optionTitle }}</span>
 
-  {{ govukTextarea({
-    name: "make-a-comment",
-    id: "make-a-comment",
-    label: {
-      text: title,
-      classes: "govuk-label--l",
-      isPageHeading: true
-    },
-      hint: {
-    text: hint
-  }
-  }) }}
-        {{ govukButton({
-          attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
-          type: "Submit"
-        }) }}
+				{{ govukTextarea({
+					name: id,
+					id: id,
+					label: {
+						text: title,
+						classes: "govuk-label--l",
+						isPageHeading: true
+					},
+					errorMessage: errors[id] and {
+            text: errors[id].msg
+          },
+					hint: {
+						text: hint
+					}
+				}) }}
+							{{ govukButton({
+								attributes: { "data-cy": "button-submit-and-continue" },
+								text: "Continue",
+								type: "Submit"
+							}) }}
       </form>
     </div>
   </div>
