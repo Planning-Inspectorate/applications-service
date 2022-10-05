@@ -93,7 +93,12 @@ router.post(
 );
 
 router.get(enterAComment.route, getEnterAComment);
-router.post(enterAComment.route, postEnterAComment);
+router.post(
+	enterAComment.route,
+	validateNotEmptyAndLength(enterAComment),
+	validationErrorHandler,
+	postEnterAComment
+);
 
 router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
 router.post(
