@@ -1,23 +1,32 @@
 {% extends "layouts/default.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
   {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% set backLinkUrl = backLinkUrl %}
 
 {% set pageTitle = pageTitle %}
 
 {% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
-  {{ pageTitle }}
+	{% if errors %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <form action="" method="POST" novalidate>
-        <span class="govuk-caption-l">{{ optionTitle }}</span>
+
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{% if errorSummary %}
+				{{ govukErrorSummary({
+					titleText: "There is a problem",
+					errorList: errorSummary
+				}) }}
+			{% endif %}
+			<form action="" method="POST" novalidate>
+				<span class="govuk-caption-l">{{ optionTitle }}</span>
 
 				{{ govukTextarea({
 					name: id,
@@ -27,20 +36,21 @@
 						classes: "govuk-label--l",
 						isPageHeading: true
 					},
+					value: comment or errors[id].value,
 					errorMessage: errors[id] and {
-            text: errors[id].msg
-          },
+						text: errors[id].msg
+					},
 					hint: {
 						text: hint
 					}
 				}) }}
-							{{ govukButton({
-								attributes: { "data-cy": "button-submit-and-continue" },
-								text: "Continue",
-								type: "Submit"
-							}) }}
-      </form>
-    </div>
-  </div>
+				{{ govukButton({
+					attributes: { "data-cy": "button-submit-and-continue" },
+					text: "Continue",
+					type: "Submit"
+				}) }}
+			</form>
+		</div>
+	</div>
 
 {% endblock %}

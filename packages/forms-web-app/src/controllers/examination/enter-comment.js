@@ -21,13 +21,18 @@ const pageData = {
 	title: enterComment.name
 };
 
+const populatePageData = (hintText, comment = '') => ({
+	...pageData,
+	hint: 'Comments on any submissions received by ' + hintText,
+	optionTitle: 'CHANGE ME',
+	comment
+});
+
 const getEnterComment = async (req, res) => {
-	const hintText = 'FIND ME';
-
-	pageData.hint = 'Comments on any submissions received by ' + hintText;
-	pageData.optionTitle = 'CHANGE ME';
-
-	res.render(enterComment.view, pageData);
+	const { session = {} } = req;
+	const existingComment = session?.[examinationSessionStorage.name].comment || '';
+	const localPageData = populatePageData('FIND ME', existingComment);
+	res.render(enterComment.view, localPageData);
 };
 
 const postEnterComment = async (req, res) => {
@@ -47,14 +52,17 @@ const postEnterComment = async (req, res) => {
 	const { errors = {}, errorSummary = [] } = body;
 
 	if (errors[enterComment.id] || Object.keys(errors).length > 0) {
+		const localPageData = populatePageData('FIND ME');
 		res.render(enterComment.view, {
-			...pageData,
+			...localPageData,
 			errors,
 			errorSummary
 		});
 
 		return;
 	}
+
+	examinationSession.comment = body[enterComment.id];
 
 	const submissionType = selectedActiveDeadlineItem?.submissionType;
 
