@@ -46,12 +46,6 @@ const routesConfig = {
 					}
 				}
 			},
-			enterComment: {
-				id: 'examination-enter-comment',
-				name: 'Enter comment',
-				route: '/enter-a-comment',
-				view: 'pages/examination/enter-comment'
-			},
 			evidenceOrComment: {
 				id: 'examination-evidence-or-comment',
 				name: 'How would you like to submit comments ("written representation")?',
@@ -78,11 +72,11 @@ const routesConfig = {
 				sessionId: 'submissionType',
 				view: 'pages/examination/evidence-or-comment'
 			},
-			enterAComment: {
+			enterComment: {
 				id: 'examination-enter-a-comment',
 				name: 'Make a comment',
 				route: '/enter-a-comment',
-				view: 'pages/examination/enter-a-comment',
+				view: 'pages/examination/enter-comment',
 				onError: {
 					message: {
 						checkLength: 'Your comment must be 65,234 characters or less',
