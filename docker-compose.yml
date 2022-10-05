@@ -35,6 +35,11 @@ services:
       MYSQL_PORT: 3306
       MYSQL_DIALECT: mysql
       NODE_ENV: local
+      NI_API_HOST: ni-api-host.example.com
+      NI_OAUTH_CLIENT_ID: some-client-id
+      NI_OAUTH_CLIENT_SECRET: some-client-secret
+      NI_OAUTH_USERNAME: some-username
+      NI_OAUTH_PASSWORD: some-password
       PRELIMINARY_MEETING_URL: https://applications-service-web-app.azurewebsites.net/
       SERVER_SHOW_ERRORS: 'true'
       SRV_NOTIFY_API_KEY: applicationsservice-9b89eb93-3071-432c-9c6b-4e07dbda9071-101fa83a-8d08-40af-92b6-246b95074e5a
@@ -45,12 +50,14 @@ services:
       TRIALIST_DATA_PATH: /opt/app/packages/applications-service-api/data/trialists.json
     ports:
       - 3000:3000
+      - 9229:9229
     working_dir: /opt/app
     volumes:
       - ./package.json:/opt/app/package.json
       - ./node_modules:/opt/app/node_modules
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
       - ./uploads:/opt/app/uploads
+    # command: npm run start:dev:debug --workspace=packages/applications-service-api
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
