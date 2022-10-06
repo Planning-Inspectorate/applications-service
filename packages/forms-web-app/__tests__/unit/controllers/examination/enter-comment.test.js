@@ -4,7 +4,10 @@ const {
 } = require('../../../../src/controllers/examination/enter-comment');
 const { mockReq, mockRes, mockResponse } = require('../../mocks');
 
-const pathShortner = (obj, path) => path.split('.').reduce((value, el) => value && value[el], obj);
+const pathShortner = (obj, path) =>
+	path
+		.split('.')
+		.reduce((previousValue, currentValue) => previousValue && previousValue[currentValue], obj);
 const itemsPath = 'session.examination.selectedDeadlineItems.items';
 
 const pageData = {
@@ -12,12 +15,10 @@ const pageData = {
 	id: 'examination-enter-a-comment',
 	pageTitle: 'Make a comment',
 	title: 'Make a comment',
-	hint: 'Any further information requested by',
+	hint: 'Any further information requested by Statement of Commonality of SoCG ',
 	captionTitle: 'Deadline item:',
 	comment: ''
 };
-
-const hintValue = '`${pageData.hint} ${pathShortner(mockRequest, itemsPath)[0].submissionItem}`';
 
 describe('controllers/examination/enter-comment', () => {
 	let req;
@@ -54,12 +55,11 @@ describe('controllers/examination/enter-comment', () => {
 			getEnterComment(mockRequest, res);
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
-				...pageData,
-				hint: eval(hintValue)
+				...pageData
 			});
 		});
 
-		it('should render the view with default and session pageData', function () {
+		it('should render the view with default and session pageData', () => {
 			const mockRequest = { ...req };
 
 			const comment = 'I am a comment';
@@ -69,12 +69,11 @@ describe('controllers/examination/enter-comment', () => {
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 				...pageData,
-				comment,
-				hint: eval(hintValue)
+				comment
 			});
 		});
 
-		it('should render not found view', function () {
+		it('should render not found view', () => {
 			const mockRequest = { ...req };
 			delete mockRequest.session;
 
@@ -93,7 +92,7 @@ describe('controllers/examination/enter-comment', () => {
 			postEnterComment(mockRequest, res);
 
 			expect(res.render).not.toHaveBeenCalled();
-			expect(pathShortner(mockRequest, itemsPath)[0].submissionType);
+			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe('comment');
 			expect(res.redirect).toHaveBeenCalledWith(
 				'/examination/comment-has-personal-information-or-not'
 			);
@@ -105,7 +104,7 @@ describe('controllers/examination/enter-comment', () => {
 			postEnterComment(mockRequest, res);
 
 			expect(res.render).not.toHaveBeenCalled();
-			expect(pathShortner(mockRequest, itemsPath)[0].submissionType);
+			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe('both');
 			expect(res.redirect).toHaveBeenCalledWith('/examination/select-a-file');
 		});
 
@@ -133,7 +132,7 @@ describe('controllers/examination/enter-comment', () => {
 		});
 
 		describe('Given the user is submitting comments only for a deadline', () => {
-			it('should not allow characters > 65,234', function () {
+			it('should not allow characters > 65,234', () => {
 				const errors = {
 					errorSummary: [{ text: 'Your comment must be 65,234 characters or less', href: '#' }],
 					errors: { error: 'error' }
@@ -150,11 +149,10 @@ describe('controllers/examination/enter-comment', () => {
 
 				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 					...errors,
-					...pageData,
-					hint: eval(hintValue)
+					...pageData
 				});
 			});
-			it('should not be empty', function () {
+			it('should not be empty', () => {
 				const errors = {
 					errorSummary: [{ text: 'Enter a comment', href: '#' }],
 					errors: { error: 'error' }
@@ -171,8 +169,7 @@ describe('controllers/examination/enter-comment', () => {
 
 				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 					...errors,
-					...pageData,
-					hint: eval(hintValue)
+					...pageData
 				});
 			});
 		});
