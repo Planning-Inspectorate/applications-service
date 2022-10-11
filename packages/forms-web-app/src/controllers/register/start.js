@@ -6,7 +6,6 @@ const logger = require('../../lib/logger');
 
 exports.getStart = async (req, res) => {
 	delete req.session.comment;
-	delete req.session.mySelfRegdata;
 	delete req.session.typeOfParty;
 
 	const response = await getAppData(req.params.case_ref);
