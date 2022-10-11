@@ -8,14 +8,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
-      tag: {
-        text: "beta"
-      },
-      html: 'This is a new service – your <a class="govuk-link " href="#">feedback</a> will help us to improve it.'
-    })
-  }}
-
+	{% include "../components/core/banner.njk" %}
   <h1 class="govuk-heading-xl govuk-!-padding-top-9 govuk-!-padding-bottom-3 govuk-!-margin-bottom-3" >
     {{ projectName }}
   </h1>

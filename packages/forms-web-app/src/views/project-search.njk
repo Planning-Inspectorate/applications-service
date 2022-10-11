@@ -1,20 +1,13 @@
 {% extends "layouts/layout.njk" %}
 
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% block pageTitle %}
   Project search
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: {
-      text: "beta"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">feedback</a> will help us to improve it.'
-  }) }}
-
+  {% include "components/core/banner.njk" %}
   <a class="govuk-back-link" href="javascript:history.back()">Back</a>
 {% endblock %}
 
