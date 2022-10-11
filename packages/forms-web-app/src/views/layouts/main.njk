@@ -1,6 +1,5 @@
 {% extends "govuk/template.njk" %}
 
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "pins/components/header/macro.njk" import pinsHeader %}
 {% from "pins/components/footer/macro.njk" import pinsFooter %}
@@ -39,14 +38,8 @@
   <div class="govuk-width-container govuk-body {{ containerClasses }}">
 
     <main id="main-content" role="main"{% if mainLang %} lang="{{ mainLang }}"{% endif %}>
-      {% block phaseBanner %}
-        {{ govukPhaseBanner({
-          tag: {
-            text: "beta"
-          },
-          html: 'This is a beta service – your <a class="govuk-link" data-cy="Feedback" href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">feedback</a> will help us to improve it.'
-        }) }}
-      {% endblock %}
+
+			{% include "components/core/banner.njk" %}
 
       {% block backButton %}
         {% if not hideBackLink %}
