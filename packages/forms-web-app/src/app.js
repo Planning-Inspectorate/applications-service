@@ -107,7 +107,7 @@ if (config.featureFlag.useRedisSessionStore) {
 app.use(compression());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
-app.use(express.json({ limit: '150kb' }));
+app.use(express.json({ limit: '200kb' }));
 app.use(express.urlencoded(config.applications.urlencoded));
 app.use(fileUpload());
 app.use(cookieParser());
