@@ -85,6 +85,7 @@ exports.getRepresentation = async (req, res) => {
 			hideRecommendationAndDecisionLink,
 			hideExaminationTimetableLink,
 			RepFrom: titleCase(representation.data.RepFrom),
+			PersonalName: representation.data.PersonalName,
 			RepresentationRedacted: representation.data.RepresentationRedacted,
 			DateRrepReceived: representation.data.DateRrepReceived,
 			attachments: representation.data.attachments
