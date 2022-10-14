@@ -132,9 +132,9 @@ describe('controllers/examination/enter-comment', () => {
 		});
 
 		describe('Given the user is submitting comments only for a deadline', () => {
-			it('should not allow characters > 65,000', () => {
+			it('should not allow characters > 65,234', () => {
 				const errors = {
-					errorSummary: [{ text: 'Your comment must be 65,000 characters or less', href: '#' }],
+					errorSummary: [{ text: 'Your comment must be 65,234 characters or less', href: '#' }],
 					errors: { error: 'error' }
 				};
 				const mockRequest = {

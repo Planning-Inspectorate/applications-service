@@ -60,12 +60,12 @@ const routesConfig = {
 				view: 'pages/examination/enter-comment',
 				onError: {
 					message: {
-						checkLength: 'Your comment must be 65,000 characters or less',
+						checkLength: 'Your comment must be 65,234 characters or less',
 						notEmpty: 'Enter a comment'
 					},
 					minMaxOptions: {
 						min: 1,
-						max: 65000
+						max: 65234
 					}
 				}
 			},
