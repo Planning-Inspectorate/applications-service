@@ -24,6 +24,12 @@ const routesConfig = {
 				title: 'Are you #?',
 				view: 'pages/examination/applicant'
 			},
+			checkDeadlineItem: {
+				id: 'examination-check-deadline-item',
+				name: 'Check deadline item',
+				route: '/check-your-deadline-item',
+				view: 'pages/examination/check-deadline-item'
+			},
 			checkYourAnswers: {
 				id: 'examination-check-your-answers',
 				name: 'Check your answers',
@@ -43,6 +49,23 @@ const routesConfig = {
 					minMaxOptions: {
 						min: 3,
 						max: 255
+					}
+				}
+			},
+			enterComment: {
+				id: 'examination-enter-a-comment',
+				name: 'Make a comment',
+				route: '/enter-a-comment',
+				sessionId: 'comment',
+				view: 'pages/examination/enter-comment',
+				onError: {
+					message: {
+						checkLength: 'Your comment must be 65,234 characters or less',
+						notEmpty: 'Enter a comment'
+					},
+					minMaxOptions: {
+						min: 1,
+						max: 65234
 					}
 				}
 			},
@@ -71,22 +94,6 @@ const routesConfig = {
 				route: '/select-upload-evidence-or-comment',
 				sessionId: 'submissionType',
 				view: 'pages/examination/evidence-or-comment'
-			},
-			enterComment: {
-				id: 'examination-enter-a-comment',
-				name: 'Make a comment',
-				route: '/enter-a-comment',
-				view: 'pages/examination/enter-comment',
-				onError: {
-					message: {
-						checkLength: 'Your comment must be 65,000 characters or less',
-						notEmpty: 'Enter a comment'
-					},
-					minMaxOptions: {
-						min: 1,
-						max: 65000
-					}
-				}
 			},
 			haveYourSay: {
 				id: 'examination-have-your-say',
@@ -170,6 +177,66 @@ const routesConfig = {
 				route: '/your-organisation-name',
 				view: 'pages/examination/name'
 			},
+			personalInformation: {
+				options: {
+					1: {
+						value: 'yes',
+						text: 'Yes'
+					},
+					2: {
+						value: 'no',
+						text: 'No'
+					}
+				},
+				sessionId: 'personalInformation',
+				view: 'pages/examination/personal-information'
+			},
+			personalInformationComment: {
+				id: 'examination-personal-information-comment',
+				onError: {
+					message: {
+						isEmpty: 'Select yes if your comment contain personal information'
+					}
+				},
+				pageTitle: 'Comment has personal information or not',
+				route: '/comment-has-personal-information-or-not',
+				title: 'Does your comment contain personal information?'
+			},
+			personalInformationCommentFiles: {
+				id: 'examination-personal-information-comment-files',
+				onError: {
+					message: {
+						isEmpty: 'Select yes if your comment and files contain personal information'
+					}
+				},
+				pageTitle: 'Comment or files has personal information or not',
+				route: '/comment-file-has-personal-information-or-not',
+				title: 'Do your comment and files contain personal information?'
+			},
+			personalInformationFiles: {
+				id: 'examination-personal-information-files',
+				onError: {
+					message: {
+						isEmpty: 'Select yes if your files contain personal information'
+					}
+				},
+				pageTitle: 'Files have personal information or not',
+				route: '/files-have-personal-information-or-not',
+				title: 'Do your files contain personal information?'
+			},
+			personalInformationWhich: {
+				view: 'pages/examination/personal-information-which'
+			},
+			personalInformationWhichCommentFiles: {
+				id: 'examination-personal-information-which-comment-files',
+				name: 'Which comment or files have personal information or not?',
+				route: '/select-which-files-comments-have-personal-information'
+			},
+			personalInformationWhichFiles: {
+				id: 'examination-personal-information-which-files',
+				name: 'Which files have personal information or not?',
+				route: '/which-files-have-personal-information-or-not'
+			},
 			selectDeadline: {
 				id: 'examination-select-deadline',
 				name: 'Which item would you like to submit against for this deadline?',
@@ -188,6 +255,7 @@ const routesConfig = {
 				id: 'examination-select-file',
 				name: 'Select a file',
 				route: '/select-a-file',
+				sessionId: 'files',
 				view: 'pages/examination/select-file'
 			},
 			submittingFor: {
