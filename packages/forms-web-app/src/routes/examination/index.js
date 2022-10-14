@@ -12,6 +12,7 @@ const {
 		examination: {
 			pages: {
 				applicant,
+				checkDeadlineItem,
 				checkYourAnswers,
 				email,
 				enterComment,
@@ -21,6 +22,11 @@ const {
 				nameMyself,
 				nameOrganisation,
 				nameAgent,
+				personalInformationComment,
+				personalInformationCommentFiles,
+				personalInformationFiles,
+				personalInformationWhichCommentFiles,
+				personalInformationWhichFiles,
 				selectDeadline,
 				selectFile,
 				submittingFor,
@@ -33,6 +39,10 @@ const {
 const { forwardView } = require('../../middleware/forward-view');
 
 const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
+const {
+	getCheckDeadlineItem,
+	postCheckDeadlineItem
+} = require('../../controllers/examination/check-deadline-item');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
 const {
@@ -51,6 +61,14 @@ const {
 const { getHaveYourSay } = require('../../controllers/examination/have-your-say');
 const { getName, postName } = require('../../controllers/examination/name');
 const {
+	getPersonalInformation,
+	postPersonalInformation
+} = require('../../controllers/examination/personal-information');
+const {
+	getPersonalInformationWhich,
+	postPersonalInformationWhich
+} = require('../../controllers/examination/personal-information-which');
+const {
 	getSelectDeadline,
 	postSelectDeadline
 } = require('../../controllers/examination/select-deadline');
@@ -68,6 +86,9 @@ const router = express.Router();
 
 router.get(applicant.route, getApplicant);
 router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
+
+router.get(checkDeadlineItem.route, getCheckDeadlineItem);
+router.post(checkDeadlineItem.route, postCheckDeadlineItem);
 
 router.get(checkYourAnswers.route, getCheckYourAnswers);
 
@@ -125,6 +146,67 @@ router.post(
 	validationErrorHandler,
 	forwardView(nameOrganisation),
 	postName
+);
+
+router.get(
+	personalInformationComment.route,
+	forwardView(personalInformationComment),
+	getPersonalInformation
+);
+router.post(
+	personalInformationComment.route,
+	validateNotEmpty(personalInformationComment),
+	validationErrorHandler,
+	forwardView(personalInformationComment),
+	postPersonalInformation
+);
+
+router.get(
+	personalInformationCommentFiles.route,
+	forwardView(personalInformationCommentFiles),
+	getPersonalInformation
+);
+router.post(
+	personalInformationCommentFiles.route,
+	validateNotEmpty(personalInformationCommentFiles),
+	validationErrorHandler,
+	forwardView(personalInformationCommentFiles),
+	postPersonalInformation
+);
+
+router.get(
+	personalInformationFiles.route,
+	forwardView(personalInformationFiles),
+	getPersonalInformation
+);
+router.post(
+	personalInformationFiles.route,
+	validateNotEmpty(personalInformationFiles),
+	validationErrorHandler,
+	forwardView(personalInformationFiles),
+	postPersonalInformation
+);
+
+router.get(
+	personalInformationWhichCommentFiles.route,
+	forwardView(personalInformationWhichCommentFiles),
+	getPersonalInformationWhich
+);
+router.post(
+	personalInformationWhichCommentFiles.route,
+	forwardView(personalInformationWhichCommentFiles),
+	postPersonalInformationWhich
+);
+
+router.get(
+	personalInformationWhichFiles.route,
+	forwardView(personalInformationWhichFiles),
+	getPersonalInformationWhich
+);
+router.post(
+	personalInformationWhichFiles.route,
+	forwardView(personalInformationWhichFiles),
+	postPersonalInformationWhich
 );
 
 router.get(selectDeadline.route, getSelectDeadline);

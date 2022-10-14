@@ -5,9 +5,10 @@ const {
 			directory: examinationDirectory,
 			pages: {
 				enterComment,
+				evidenceOrComment: { route: evidenceOrCommentRoute },
+				personalInformationComment: { route: personalInformationCommentRoute },
 				selectDeadline: { sessionIdPrimary, sessionIdSecondary, sessionIdTertiary },
-				selectFile: { route: selectFileRoute },
-				evidenceOrComment: { route: evidenceOrCommentRoute }
+				selectFile: { route: selectFileRoute }
 			}
 		}
 	}
@@ -41,7 +42,7 @@ const getEnterComment = async (req, res) => {
 		return res.status(404).render('error/not-found');
 
 	const selectedActiveDeadlineItem = getActiveDeadlineItem(examinationSession);
-	const existingComment = session?.[examinationSessionStorage.name].comment || '';
+	const existingComment = session?.[examinationSessionStorage.name][enterComment.sessionId] || '';
 	const setPageData = populatePageData(
 		`${selectedActiveDeadlineItem?.submissionItem}`,
 		existingComment
@@ -73,12 +74,12 @@ const postEnterComment = async (req, res) => {
 		return;
 	}
 
-	examinationSession.comment = body[enterComment.id];
+	examinationSession[enterComment.sessionId] = body[enterComment.id];
 
 	const submissionType = selectedActiveDeadlineItem?.submissionType;
 
 	if (submissionType === 'comment') {
-		res.redirect('/examination/comment-has-personal-information-or-not');
+		res.redirect(`${examinationDirectory}${personalInformationCommentRoute}`);
 	} else if (submissionType === 'both') {
 		res.redirect(`${examinationDirectory}${selectFileRoute}`);
 	} else {
