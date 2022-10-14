@@ -140,6 +140,7 @@ describe('controllers/projects/representations', () => {
 			hideRecommendationAndDecisionLink,
 			hideExaminationTimetableLink,
 			RepFrom: 'Members of the public/businesses',
+			PersonalName: 'Test (Test)',
 			RepresentationRedacted: 'Some comments',
 			DateRrepReceived: '19 February 2020',
 			attachments: []
