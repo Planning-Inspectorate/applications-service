@@ -4,6 +4,7 @@ const commentsController = require('../../../controllers/register/myself/tell-us
 const decodeUri = require('../../../middleware/decode-uri');
 const { validate } = require('../../../validators/register/tell-us-about-project');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
+const { asyncRoute } = require("../../../utils/async-route");
 
 const router = express.Router();
 
@@ -14,7 +15,7 @@ router.post(
 	decodeUri('body', ['comment']),
 	validate(),
 	validationErrorHandler,
-	commentsController.postComments
+	asyncRoute(commentsController.postComments)
 );
 
 module.exports = router;
