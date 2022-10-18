@@ -4,7 +4,7 @@ const {
 	postCommentsData
 } = require('../../../services/registration.service');
 
-exports.getDeclaration = async (req, res) => {
+exports.getDeclaration = (req, res) => {
 	res.render(VIEW.REGISTER.ORGANISATION.DECLARATION);
 };
 

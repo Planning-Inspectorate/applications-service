@@ -1,7 +1,7 @@
 const { VIEW } = require('../../../lib/views');
 const { nsipProjectLink } = require('../../../lib/nsip-project-link');
 
-exports.getConfirmation = async (req, res) => {
+exports.getConfirmation = (req, res) => {
 	const { ipRefNo, email } = req.session.mySelfRegdata;
 	if (req.session.mode === 'draft') {
 		req.session.ipRefNo = ipRefNo;

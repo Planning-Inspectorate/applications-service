@@ -1,6 +1,6 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getFullName = async (req, res) => {
+exports.getFullName = (req, res) => {
 	let view = VIEW.REGISTER.AGENT.REPRESENTEE_NAME;
 	const { representing } = req.session.behalfRegdata;
 	if (representing === 'person') {
@@ -17,7 +17,7 @@ exports.getFullName = async (req, res) => {
 	});
 };
 
-exports.postFullName = async (req, res) => {
+exports.postFullName = (req, res) => {
 	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
