@@ -195,7 +195,7 @@ const routesConfig = {
 				id: 'examination-personal-information-comment',
 				onError: {
 					message: {
-						isEmpty: 'Select yes if your comment contain personal information'
+						isEmpty: 'Select yes if your comment contains personal information'
 					}
 				},
 				pageTitle: 'Comment has personal information or not',
