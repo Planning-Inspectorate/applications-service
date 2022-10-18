@@ -3,7 +3,7 @@ const registrationData = require('../../lib/registration-data.json');
 const { validTypeOfPartyOptions } = require('../../validators/register/type-of-party');
 const { REGISTER } = require('../../constants');
 
-exports.getTypeOfParty = async (req, res) => {
+exports.getTypeOfParty = (req, res) => {
 	res.render(VIEW.REGISTER.TYPE_OF_PARTY, { type: req.session.typeOfParty });
 };
 
@@ -19,7 +19,7 @@ const forwardPage = (partyType) => {
 
 exports.forwardPage = forwardPage;
 
-exports.postTypeOfParty = async (req, res) => {
+exports.postTypeOfParty = (req, res) => {
 	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
 

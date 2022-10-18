@@ -1,12 +1,12 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getAddress = async (req, res) => {
+exports.getAddress = (req, res) => {
 	res.render(VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS, {
 		address: req.session.behalfRegdata.representee.address
 	});
 };
 
-exports.postAddress = async (req, res) => {
+exports.postAddress = (req, res) => {
 	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	if (Object.keys(errors).length > 0) {

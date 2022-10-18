@@ -1,10 +1,10 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getOver18 = async (req, res) => {
+exports.getOver18 = (req, res) => {
 	res.render(VIEW.REGISTER.ORGANISATION.OVER_18, { over18: req.session.orgRegdata['over-18'] });
 };
 
-exports.postOver18 = async (req, res) => {
+exports.postOver18 = (req, res) => {
 	const { body } = req;
 	const over18 = body['over-18'];
 	const { errors = {}, errorSummary = [] } = body;

@@ -1,12 +1,12 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getOrganisationName = async (req, res) => {
+exports.getOrganisationName = (req, res) => {
 	res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {
 		organisationName: req.session.orgRegdata['organisation-name']
 	});
 };
 
-exports.postOrganisationName = async (req, res) => {
+exports.postOrganisationName = (req, res) => {
 	const { body } = req;
 
 	const { errors = {}, errorSummary = [] } = body;

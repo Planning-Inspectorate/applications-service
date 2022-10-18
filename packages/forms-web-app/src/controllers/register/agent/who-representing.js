@@ -1,13 +1,13 @@
 const { VIEW } = require('../../../lib/views');
 const registrationData = require('../../../lib/registration-data.json');
 
-exports.getRepresentingFor = async (req, res) => {
+exports.getRepresentingFor = (req, res) => {
 	res.render(VIEW.REGISTER.AGENT.REPRESENTING_FOR, {
 		representing: req.session.behalfRegdata.representing
 	});
 };
 
-exports.postRepresentingFor = async (req, res) => {
+exports.postRepresentingFor = (req, res) => {
 	const { body } = req;
 	const { representing } = body;
 	const { errors = {}, errorSummary = [] } = body;

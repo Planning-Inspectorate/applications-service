@@ -1,12 +1,12 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getTelephone = async (req, res) => {
+exports.getTelephone = (req, res) => {
 	res.render(VIEW.REGISTER.AGENT.TELEPHONE, {
 		telephone: req.session.behalfRegdata.representor.telephone
 	});
 };
 
-exports.postTelephone = async (req, res) => {
+exports.postTelephone = (req, res) => {
 	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	if (errors.telephone || Object.keys(errors).length > 0) {

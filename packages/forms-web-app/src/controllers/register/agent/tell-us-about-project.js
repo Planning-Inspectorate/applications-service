@@ -10,7 +10,7 @@ function sanitiseFormPostResponse(error, url) {
 	this.url = url;
 }
 
-exports.getComments = async (req, res) => {
+exports.getComments = (req, res) => {
 	const { comment } = req.session;
 	res.render(VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT, { comment });
 };

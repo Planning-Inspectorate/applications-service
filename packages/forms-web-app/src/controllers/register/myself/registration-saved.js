@@ -1,6 +1,6 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getRegistrationSaved = async (req, res) => {
+exports.getRegistrationSaved = (req, res) => {
 	const { email } = req.session.mySelfRegdata;
 	const { ipRefNo } = req.session;
 

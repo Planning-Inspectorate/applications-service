@@ -1,9 +1,8 @@
-/* eslint-disable camelcase */
 const { VIEW } = require('../../lib/views');
 const { postAuthToken } = require('../../services/registration.service');
 const { nsipProjectLink } = require('../../lib/nsip-project-link');
 
-exports.getConfirmEmail = async (req, res) => {
+exports.getConfirmEmail = (req, res) => {
 	res.render(VIEW.REGISTER.CONFIRM_EMAIL);
 };
 

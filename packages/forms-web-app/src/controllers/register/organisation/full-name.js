@@ -1,12 +1,12 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getFullName = async (req, res) => {
+exports.getFullName = (req, res) => {
 	res.render(VIEW.REGISTER.ORGANISATION.FULL_NAME, {
 		fullName: req.session.orgRegdata['full-name']
 	});
 };
 
-exports.postFullName = async (req, res) => {
+exports.postFullName = (req, res) => {
 	const { body } = req;
 
 	const { errors = {}, errorSummary = [] } = body;

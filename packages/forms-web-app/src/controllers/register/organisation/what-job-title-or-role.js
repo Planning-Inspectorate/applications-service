@@ -1,10 +1,10 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getRole = async (req, res) => {
+exports.getRole = (req, res) => {
 	res.render(VIEW.REGISTER.ORGANISATION.ROLE, { role: req.session.orgRegdata.role });
 };
 
-exports.postRole = async (req, res) => {
+exports.postRole = (req, res) => {
 	const { body } = req;
 
 	const { errors = {}, errorSummary = [] } = body;

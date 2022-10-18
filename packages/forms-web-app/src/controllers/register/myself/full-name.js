@@ -1,10 +1,10 @@
 const { VIEW } = require('../../../lib/views');
 
-exports.getFullName = async (req, res) => {
+exports.getFullName = (req, res) => {
 	res.render(VIEW.REGISTER.MYSELF.FULL_NAME, { fullName: req.session.mySelfRegdata['full-name'] });
 };
 
-exports.postFullName = async (req, res) => {
+exports.postFullName = (req, res) => {
 	const { body } = req;
 
 	const { errors = {}, errorSummary = [] } = body;
