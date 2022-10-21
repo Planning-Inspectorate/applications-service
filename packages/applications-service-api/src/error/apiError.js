@@ -6,8 +6,8 @@ class ApiError {
 		this.message = message;
 	}
 
-	static badRequest(msg) {
-		return new ApiError(StatusCodes.BAD_REQUEST, msg);
+	static badRequest(...messages) {
+		return new ApiError(StatusCodes.BAD_REQUEST, { errors: messages.flat() });
 	}
 
 	static applicationNotFound(id) {

@@ -20,7 +20,21 @@ module.exports = {
 		redact: ['config.services.notify.apiKey']
 	},
 	uploads: {
-		path: process.env.FILE_UPLOADS_PATH || path.join(__dirname, '..', '..', '..', '..', 'uploads')
+		path: process.env.FILE_UPLOADS_PATH || path.join(__dirname, '..', '..', '..', '..', 'uploads'),
+		// 50MB + 1 byte to mitigate off-by-one error with express-fileupload - https://github.com/mscdex/busboy/issues/297
+		fileSizeLimit: 52428801,
+		allowedFileTypes: {
+			pdf: 'application/pdf',
+			doc: 'application/msword',
+			docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+			jpg: 'image/jpeg',
+			jpeg: 'image/jpeg',
+			png: 'image/png',
+			tif: 'image/tiff',
+			tiff: 'image/tiff',
+			xls: 'application/vnd.ms-excel',
+			xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		}
 	},
 	server: {
 		port: Number(process.env.SERVER_PORT || 3000),

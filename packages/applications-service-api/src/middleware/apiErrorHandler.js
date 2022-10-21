@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 const logger = require('../lib/logger');
 
-const ApiError = require('./apiError');
+const ApiError = require('../error/apiError');
 
 // eslint-disable-next-line no-unused-vars
 function apiErrorHandler(err, req, res, next) {

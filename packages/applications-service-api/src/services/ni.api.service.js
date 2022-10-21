@@ -36,7 +36,7 @@ const uploadFile = async (file) => {
 
 	const formData = new FormData();
 	formData.append('file', file.buffer, {
-		filename: file.fileName,
+		filename: file.name,
 		contentType: file.mimeType,
 		knownLength: file.size
 	});

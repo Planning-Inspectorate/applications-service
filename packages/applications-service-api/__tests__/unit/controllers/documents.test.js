@@ -544,7 +544,7 @@ describe('getV2Documents', () => {
 			await getV2Documents(req, res);
 		} catch (e) {
 			expect(e.code).toEqual(StatusCodes.BAD_REQUEST);
-			expect(e.message).toEqual('Required query parameter caseRef missing');
+			expect(e.message.errors[0]).toEqual('Required query parameter caseRef missing');
 		}
 	});
 
