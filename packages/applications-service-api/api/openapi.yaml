@@ -284,6 +284,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DocumentListWrapper'
+        '400':
+          description: Request body validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
         '404':
           description: No documents found
   '/api/v1/representations':
@@ -382,14 +388,14 @@ paths:
           description: Not found error
         '500':
           description: Internal server error
-  '/api/v1/submissions/{caseRef}':
+  '/api/v1/submissions/{caseReference}':
     post:
       summary: Create a submission for a case
       tags:
         - Submissions
       parameters:
         - in: path
-          name: caseRef
+          name: caseReference
           example: EN020021
           required: true
           schema:
