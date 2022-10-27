@@ -1,6 +1,7 @@
 /* package */
 @import '../../../../node_modules/govuk-frontend/govuk/all';
 @import '../../../../node_modules/@ministryofjustice/frontend/moj/components/pagination/pagination';
+@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload';
 
 /* extended */
 @import './extended/max-width.scss';
@@ -23,6 +24,7 @@
 @import './components/ui/results-list.scss';
 @import './components/ui/side-search.scss';
 @import './components/ui/step-nav.scss';
+@import './components/ui/link-button.scss';
 
 /* helpers */
 @import './helpers/white-space.scss';

@@ -1,0 +1,6 @@
+.ui-link-button {
+	all: unset;
+	cursor: pointer;
+	@extend .govuk-link;
+	color: govuk-colour("blue");
+}

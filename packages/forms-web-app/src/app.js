@@ -29,6 +29,7 @@ require('express-async-errors');
 const config = require('./config');
 const logger = require('./lib/logger');
 const routes = require('./routes');
+const { calcMaxFileSizeLimit } = require('./controllers/examination/file-upload/utils');
 
 const app = express();
 
@@ -109,7 +110,12 @@ app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use(express.json());
 app.use(express.urlencoded(config.applications.urlencoded));
-app.use(fileUpload());
+app.use(
+	fileUpload({
+		...config.fileUpload.expressFileUpload,
+		limits: calcMaxFileSizeLimit()
+	})
+);
 app.use(cookieParser());
 app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);

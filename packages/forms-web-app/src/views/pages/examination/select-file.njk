@@ -1,51 +1,200 @@
 {% extends "layouts/default.njk" %}
-
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+
+ {% block script %}
+	 <style>
+		 .dropZone.dragging::before {
+			 pointer-events: none;
+		 }
+	 </style>
+ {% endblock %}
 
 {% set backLinkUrl = backLinkUrl %}
 
 {% set pageTitle = pageTitle %}
 
 {% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
-
-  {{ pageTitle }}
+	{% if errorSummary.length > 0 %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block content %}
-  <form action="" method="POST" novalidate>
-    {{ govukRadios({
-      idPrefix: id,
-      name: id,
-      errorMessage: errors[id] and {
-        text: errors[id].msg
-      },
-      fieldset: {
-        legend: {
-          text: title,
-          isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
-        }
-      },
-      items: [
-        {
-          value: "one-file",
-          text: "One file"
-        },
-        {
-          value: "more-than-one-file",
-          text: "More than one file"
-        }
-      ]
-    }) }}
+	{% if errorSummary.length > 0 %}
+		{{ govukErrorSummary({
+			titleText: "There is a problem",
+			errorList: errorSummary
+		}) }}
+	{% endif %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<span class="govuk-caption-l">{{ captionTitle }}
+				  <br/>
+				{{ selectedDeadlineItemTitle }}
+			</span>
+			<h1 class="govuk-heading-l">Upload files</h1>
+			<p class="govuk-body">Your file must be PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS or XSLX. </p>
+			<p class="govuk-body">All files must be:</p>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>a single document</li>
+				<li>smaller than {{ maxFileSizeInMb }}mb</li>
+			</ul>
 
-    {{ govukButton({
-      text: "Continue",
-      type: "Submit"
-    }) }}
-  </form>
+			<form name="fileUploadForm"
+						action="/examination/select-a-file"
+						method="post" enctype="multipart/form-data">
+				<h2 class="govuk-heading-m">Files added</h2>
+				<dl class="govuk-summary-list">
+					{% for item in uploadedFiles %}
+						<div class="govuk-summary-list__row">
+							<dd class="govuk-summary-list__value">
+								{{ item.originalFileName }}
+							</dd>
+							<dd class="govuk-summary-list__actions">
+								<button name="delete" type="submit"
+												class="ui-link-button"
+												value="{{ item.fileName }}">
+									<span class="govuk-visually-hidden">{{ item.originalFileName }}</span>
+									<span class="govuk-link"> {{ item.deleteButton.text }}  </span>
+								</button>
+							</dd>
+						</div>
+					{% endfor %}
+					{% if isJsEnabled === 'true' %}
+						{% for item in errorSummary %}
+							<div class="govuk-summary-list__row">
+								<dd class="govuk-summary-list__value">
+									<div class="govuk-form-group govuk-form-group--error">
+										<p id="{{ item.uniqueID }}" class="govuk-error-message">
+											<span class="govuk-visually-hidden">Error:</span> {{ item.text }}
+										</p>
+									</div>
+								</dd>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</dl>
+
+				<noscript>
+					{{ govukFileUpload({
+						id: id,
+						name: "documents",
+						label: {
+							text: "Upload a file",
+							classes: 'govuk-label--m'
+						},
+						attributes: { multiple: 'multiple', accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png,.tif,.tiff,.xls,.xlsx", type: "file" },
+						errorMessage: errorMessage
+					}) }}
+
+					{{ govukButton({
+						text: 'Upload file',
+						classes: 'govuk-button--secondary moj-multi-file-upload__button',
+						name: 'upload'
+					}) }}
+
+					<br>
+					{{ govukButton({
+						text: 'Continue',
+						classes: 'govuk-button',
+						name: 'continue',
+						value: 'continue'
+					}) }}
+
+					<style type="text/css">
+						#file-upload-js-content {
+							display: none;
+						}
+					</style>
+				</noscript>
+
+				<div id="file-upload-js-content">
+					<div class="moj-multi-file-upload__dropzone">
+						<input type="hidden" id="upload" name="upload" value="true">
+						<input class="dropZone govuk-file-upload moj-multi-file-upload__input"
+									 id="file-upload"
+									 type="file"
+									 multiple
+									 accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
+									 name="documents"
+									 onchange="handleManualUpload()"
+						>
+						<p class="govuk-body">Drag and drop files here or</p>
+						<label for="file-upload"
+									 class="govuk-button govuk-button--secondary">Choose files</label>
+					</div>
+
+					<br>
+					<button class="govuk-button" name="continue" value="continue"
+									onclick="handleManualUpload()"
+									data-module="govuk-button">
+						Continue
+					</button>
+			</form>
+
+			<script>
+				const target = document.documentElement;
+				const dropZone = document.querySelector('.dropZone');
+				const fileInput = document.getElementById('file-upload')
+
+				const input = document.createElement("input");
+				input.setAttribute("type", "hidden");
+				input.setAttribute("name", "isJsEnabled");
+				input.setAttribute("value", "true");
+
+				const handleChange = (e) => {
+					e.preventDefault();
+					fileInput.files = e.target?.files;
+					document.forms["fileUploadForm"].submit();
+				};
+
+				const handleDragOver = (e) => {
+					e.preventDefault();
+					dropZone.classList.add('dragging');
+				}
+
+				const handleDragLeave = () => {
+					dropZone.classList.remove('dragging');
+				}
+
+				const handleManualUpload = () => {
+					document.forms["fileUploadForm"].appendChild(input);
+					document.forms["fileUploadForm"].submit();
+				}
+
+				const handleDrop = (e) => {
+					e.preventDefault();
+					dropZone.classList.remove('dragging');
+					fileInput.files = e.dataTransfer.files;
+					document.forms["fileUploadForm"].appendChild(input);
+					document.forms["fileUploadForm"].submit();
+				}
+
+				const handleRemoveEventListener = () => {
+					document.body.removeEventListener('change', handleChange);
+					document.body.removeEventListener('dragover', handleDragOver);
+					document.body.removeEventListener('dragleave', handleDragLeave);
+					document.body.removeEventListener('drop', handleDrop);
+					handleRemoveUnload();
+					return
+				}
+
+				function handleRemoveUnload() {
+					window.removeEventListener('unload', handleRemoveEventListener);
+				}
+
+				target.addEventListener('change', handleChange);
+				target.addEventListener('dragover', handleDragOver);
+				target.addEventListener('dragleave', handleDragLeave);
+				target.addEventListener('drop', handleDrop);
+				window.addEventListener('unload', handleRemoveEventListener);
+			</script>
+		</div>
+	</div>
 {% endblock %}

@@ -70,8 +70,18 @@ module.exports = {
 				interestedPartyNumber: 'interestedPartyNumber',
 				name: 'name',
 				submittingFor: 'submittingFor',
-				title: 'title'
+				title: 'title',
+				file: 'file'
 			}
+		}
+	},
+	fileUpload: {
+		amountOfFileslimit: process.env.MAX_NUMBER_OF_UPLOAD_FILES || 20,
+		maxFileSizeInMb: process.env.MAX_SIZE_OF_SINLGE_UPLOAD_FILE || 50,
+		expressFileUpload: {
+			useTempFiles: true,
+			tempFileDir: './uploads/',
+			abortOnLimit: true
 		}
 	}
 };

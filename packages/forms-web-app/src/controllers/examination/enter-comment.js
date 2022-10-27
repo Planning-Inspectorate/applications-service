@@ -13,6 +13,7 @@ const {
 		}
 	}
 } = require('../../routes/config');
+const { getSelectedDeadlineItem } = require('./utils/sessionHelpers');
 const examinationSessionStorage = config?.sessionStorage?.examination;
 
 const pageData = {
@@ -48,41 +49,47 @@ const getEnterComment = async (req, res) => {
 		existingComment
 	);
 
-	res.render(enterComment.view, setPageData);
+	res.render(enterComment.view, {
+		...setPageData,
+		selectedDeadlineItemTitle: getSelectedDeadlineItem(session)
+	});
 };
 
 const postEnterComment = async (req, res) => {
-	const { session = {} } = req;
-	const examinationSession = session?.[examinationSessionStorage.name];
+	try {
+		const { session = {} } = req;
+		const examinationSession = session?.[examinationSessionStorage.name];
 
-	if (!examinationSession || !examinationSession[sessionIdPrimary])
-		return res.status(404).render('error/not-found');
+		if (!examinationSession || !examinationSession[sessionIdPrimary])
+			return res.status(404).render('error/not-found');
 
-	const selectedActiveDeadlineItem = getActiveDeadlineItem(examinationSession);
+		const selectedActiveDeadlineItem = getActiveDeadlineItem(examinationSession);
 
-	const { body = {} } = req;
-	const { errors = {}, errorSummary = [] } = body;
+		const { body = {} } = req;
+		const { errors = {}, errorSummary = [] } = body;
 
-	if (errors[enterComment.id] || Object.keys(errors).length > 0) {
-		const setPageData = populatePageData(`${selectedActiveDeadlineItem?.submissionItem}`);
-		res.render(enterComment.view, {
-			...setPageData,
-			errors,
-			errorSummary
-		});
+		if (errors[enterComment.id] || Object.keys(errors).length > 0) {
+			const setPageData = populatePageData(`${selectedActiveDeadlineItem?.submissionItem}`);
+			return res.render(enterComment.view, {
+				...setPageData,
+				errors,
+				errorSummary,
+				selectedDeadlineItemTitle: getSelectedDeadlineItem(session)
+			});
+		}
 
-		return;
-	}
+		examinationSession[enterComment.sessionId] = body[enterComment.id];
+		const submissionType = session.examination.submissionType;
 
-	examinationSession[enterComment.sessionId] = body[enterComment.id];
-
-	const submissionType = selectedActiveDeadlineItem?.submissionType;
-
-	if (submissionType === 'comment') {
-		res.redirect(`${examinationDirectory}${personalInformationCommentRoute}`);
-	} else if (submissionType === 'both') {
-		res.redirect(`${examinationDirectory}${selectFileRoute}`);
-	} else {
+		if (submissionType === 'comment') {
+			res.redirect(`${examinationDirectory}${personalInformationCommentRoute}`);
+		} else if (submissionType === 'both') {
+			res.redirect(`${examinationDirectory}${selectFileRoute}`);
+		} else {
+			res.status(500).render('error/unhandled-exception');
+		}
+	} catch (error) {
+		console.log('Error: ', error);
 		res.status(500).render('error/unhandled-exception');
 	}
 };

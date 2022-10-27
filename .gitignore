@@ -117,4 +117,7 @@ junit.xml
 .DS_Store
 
 packages/forms-web-app/src/public/stylesheets/main.css
-uploads/
+
+packages/forms-web-app/uploads
+packages/forms-web-app/src/controllers/examination/file-upload/uploads/*
+!packages/forms-web-app/src/controllers/examination/file-upload/uploads/.gitkeep
