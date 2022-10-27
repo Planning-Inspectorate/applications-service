@@ -2,71 +2,85 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			sessionId: examinationSessionId,
 			pages: {
-				evidenceOrComment,
-				personalInformationCommentFiles: { route: personalInformationCommentFilesRoute },
-				personalInformationFiles: { route: personalInformationFilesRoute },
-				selectDeadline,
+				evidenceOrComment: { route: evidenceOrCommentRoute },
 				selectFile
 			}
 		}
 	}
 } = require('../../routes/config');
 
-const getSelectedDeadlineItem = (req) => {
-	const { session = {} } = req;
+const {
+	fileUpload: { maxFileSizeInMb }
+} = require('../../config');
 
-	const examinationSession = session?.[examinationSessionId];
+const { getUploadedFilesFromSession } = require('./file-upload/fileSessionManagement');
+const { noFileSelected } = require('./file-upload/fileValidation');
+const { deleteHandler, uploadHandler } = require('./file-upload/handlers');
+const {
+	mapUploadedFilesToSummaryList,
+	addHrefToErrorSummary,
+	mapErrorMessage
+} = require('./file-upload/utils');
+const { getSelectedDeadlineItem } = require('./utils/sessionHelpers');
 
-	if (!examinationSession) return false;
-
-	const selectedDeadlineItemActiveId =
-		examinationSession[selectDeadline?.sessionIdPrimary]?.[selectDeadline?.sessionIdSecondary];
-	const selectedDeadlineItems =
-		examinationSession[selectDeadline?.sessionIdPrimary]?.[selectDeadline?.sessionIdTertiary];
-
-	if (!selectedDeadlineItemActiveId || !selectedDeadlineItems) return false;
-
-	const selectedDeadlineItem = selectedDeadlineItems[selectedDeadlineItemActiveId];
-
-	if (!selectedDeadlineItem) return false;
-
-	pageData.selectedDeadlineItemTitle = selectedDeadlineItem.submissionItem;
-
-	return selectedDeadlineItem;
-};
-
-const pageData = {
-	backLinkUrl: `${examinationDirectory}${evidenceOrComment.route}`,
+const setData = {
+	backLinkUrl: `${examinationDirectory}${evidenceOrCommentRoute}`,
 	id: selectFile.id,
 	pageTitle: selectFile.name,
-	title: selectFile.name
+	title: selectFile.name,
+	captionTitle: 'Deadline item:',
+	maxFileSizeInMb
 };
 
-const getSelectFile = (req, res) => {
-	res.render(selectFile.view, pageData);
+const renderView = (req, res, session, { errorMessage, errorSummary }) => {
+	const isJsEnabled = req.body.isJsEnabled || false;
+	const href = isJsEnabled ? '#file-upload' : `#${selectFile.id}`;
+
+	return res.render(selectFile.view, {
+		...setData,
+		isJsEnabled,
+		selectedDeadlineItemTitle: getSelectedDeadlineItem(session),
+		errorMessage,
+		errorSummary: addHrefToErrorSummary(errorSummary, href),
+		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(session))
+	});
 };
 
-const postSelectFile = (req, res) => {
-	const selectedDeadlineItem = getSelectedDeadlineItem(req);
+const continueHandler = (req, res) => {
+	const { session } = req;
+	const uploadedFiles = getUploadedFilesFromSession(req.session);
 
-	const { body } = req;
+	const noFileError = noFileSelected(uploadedFiles);
+	if (noFileError) return renderView(req, res, session, mapErrorMessage(noFileError));
 
-	const selectFileValue = body[selectFile.id];
+	res.redirect('/examination/files-have-personal-information-or-not');
+};
 
-	if (selectFileValue === 'one-file') {
-		selectedDeadlineItem[selectFile.sessionId] = [{}];
-	} else if (selectFileValue === 'more-than-one-file') {
-		selectedDeadlineItem[selectFile.sessionId] = [{}, {}];
-	}
+const getSelectFile = (req, res) =>
+	res.render(selectFile.view, {
+		...setData,
+		selectedDeadlineItemTitle: getSelectedDeadlineItem(req.session),
+		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(req.session))
+	});
 
-	if (selectedDeadlineItem[evidenceOrComment.sessionId] === evidenceOrComment.options[2].value) {
-		return res.redirect(`${examinationDirectory}${personalInformationFilesRoute}`);
-	} else if (
-		selectedDeadlineItem[evidenceOrComment.sessionId] === evidenceOrComment.options[3].value
-	) {
-		return res.redirect(`${examinationDirectory}${personalInformationCommentFilesRoute}`);
+const postSelectFile = async (req, res) => {
+	try {
+		const { body, session, files } = req;
+		if ('delete' in body) {
+			await deleteHandler(session, body.delete);
+			return res.redirect(`/examination${selectFile.route}`);
+		}
+
+		if ('continue' in body) return continueHandler(req, res);
+
+		if ('upload' in body) {
+			const errors = await uploadHandler(session, files);
+			return renderView(req, res, session, errors);
+		}
+	} catch (err) {
+		console.log('Error: ', err);
+		res.status(500).render('error/unhandled-exception');
 	}
 };
 

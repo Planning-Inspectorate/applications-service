@@ -100,8 +100,7 @@ describe('controllers/examination/submitting-for', () => {
 					if (!valueChecked) return evidenceOrCommentValues[evidenceOrCommentValue];
 
 					return {
-						...evidenceOrCommentValues[evidenceOrCommentValue],
-						checked: 'checked'
+						...evidenceOrCommentValues[evidenceOrCommentValue]
 					};
 				}
 			);

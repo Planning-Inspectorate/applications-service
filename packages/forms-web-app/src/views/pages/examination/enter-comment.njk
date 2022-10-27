@@ -16,16 +16,18 @@
 
 {% block content %}
 	{% if errorSummary %}
-			{{ govukErrorSummary({
-					titleText: "There is a problem",
-					errorList: errorSummary
-				})
-			}}
+		{{ govukErrorSummary({
+			titleText: "There is a problem",
+			errorList: errorSummary
+		}) }}
 	{% endif %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<form action="" method="POST" novalidate>
-				<span class="govuk-caption-l">{{ captionTitle }}</span>
+				<span class="govuk-caption-l">{{ captionTitle }}
+					  <br/>
+				{{ selectedDeadlineItemTitle }}
+				</span>
 
 				{{ govukTextarea({
 					name: id,

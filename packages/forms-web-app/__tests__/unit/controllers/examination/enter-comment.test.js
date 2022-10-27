@@ -20,6 +20,11 @@ const pageData = {
 	comment: ''
 };
 
+const selectedDeadlineItemTitle = 'mock deadline title';
+jest.mock('../../../../src/controllers/examination/utils/sessionHelpers', () => ({
+	getSelectedDeadlineItem: () => selectedDeadlineItemTitle
+}));
+
 describe('controllers/examination/enter-comment', () => {
 	let req;
 	let res;
@@ -48,14 +53,15 @@ describe('controllers/examination/enter-comment', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getEnterComment', () => {
+	describe('#getEnterComment', () => {
 		it('should render the view with default pageData', () => {
 			const mockRequest = { ...req };
 
 			getEnterComment(mockRequest, res);
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
-				...pageData
+				...pageData,
+				selectedDeadlineItemTitle
 			});
 		});
 
@@ -69,6 +75,7 @@ describe('controllers/examination/enter-comment', () => {
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 				...pageData,
+				selectedDeadlineItemTitle,
 				comment
 			});
 		});
@@ -89,10 +96,10 @@ describe('controllers/examination/enter-comment', () => {
 	describe('postEnterComment', () => {
 		it('should redirect user to /examination/comment-has-personal-information-or-not', () => {
 			const mockRequest = { ...req };
+			mockRequest.session.examination.submissionType = 'comment';
 			postEnterComment(mockRequest, res);
 
 			expect(res.render).not.toHaveBeenCalled();
-			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe('comment');
 			expect(res.redirect).toHaveBeenCalledWith(
 				'/examination/comment-has-personal-information-or-not'
 			);
@@ -100,11 +107,10 @@ describe('controllers/examination/enter-comment', () => {
 
 		it('should redirect user to /examination/select-a-file', () => {
 			const mockRequest = { ...req };
-			mockRequest.session.examination.selectedDeadlineItems.items['0'].submissionType = 'both';
+			mockRequest.session.examination.submissionType = 'both';
 			postEnterComment(mockRequest, res);
 
 			expect(res.render).not.toHaveBeenCalled();
-			expect(pathShortner(mockRequest, itemsPath)[0].submissionType).toBe('both');
 			expect(res.redirect).toHaveBeenCalledWith('/examination/select-a-file');
 		});
 
@@ -149,7 +155,8 @@ describe('controllers/examination/enter-comment', () => {
 
 				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 					...errors,
-					...pageData
+					...pageData,
+					selectedDeadlineItemTitle
 				});
 			});
 			it('should not be empty', () => {
@@ -169,7 +176,8 @@ describe('controllers/examination/enter-comment', () => {
 
 				expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {
 					...errors,
-					...pageData
+					...pageData,
+					selectedDeadlineItemTitle
 				});
 			});
 		});

@@ -255,8 +255,20 @@ const routesConfig = {
 				id: 'examination-select-file',
 				name: 'Select a file',
 				route: '/select-a-file',
+				view: 'pages/examination/select-file',
 				sessionId: 'files',
-				view: 'pages/examination/select-file'
+				onError: {
+					message: {
+						isEmpty: (fileToUploadName = '') => `${fileToUploadName} is empty`,
+						noFileSelected: 'Select a File',
+						checkMimeType: (fileToUploadName = '') =>
+							`${fileToUploadName} must be a JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX or PDF.`,
+						maxSize: (fileToUploadName = '', size) =>
+							`${fileToUploadName} must be smaller than ${size}mb.`,
+						moreThanXFiles: (limit) =>
+							`You can only select a total of ${limit}  files per submission`
+					}
+				}
 			},
 			submittingFor: {
 				id: 'examination-submitting-for',
