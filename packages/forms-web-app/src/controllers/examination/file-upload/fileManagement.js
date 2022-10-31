@@ -1,7 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 
-const fileUploadPath = (fileName) => path.join(__dirname + '/uploads/' + fileName);
+const fileUploadPath = (fileName) =>
+	path.join(__dirname + '/../../../../../../uploads/' + fileName);
 
 const saveFileToDisk = async (file) => {
 	const uniqueFileName = Date.now() + `-${file.name}`;

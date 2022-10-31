@@ -79,8 +79,7 @@ module.exports = {
 		amountOfFileslimit: process.env.MAX_NUMBER_OF_UPLOAD_FILES || 20,
 		maxFileSizeInMb: process.env.MAX_SIZE_OF_SINLGE_UPLOAD_FILE || 50,
 		expressFileUpload: {
-			useTempFiles: true,
-			tempFileDir: './uploads/',
+			tempFileDir: `../../../uploads`,
 			abortOnLimit: true
 		}
 	}
