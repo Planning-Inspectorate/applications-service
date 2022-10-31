@@ -16,6 +16,12 @@ COPY packages/forms-web-app/src ./packages/forms-web-app/src
 COPY packages/forms-web-app/webpack*.js ./packages/forms-web-app/
 COPY packages/forms-web-app/package.json ./packages/forms-web-app/package.json
 
+RUN mkdir /opt/app/packages/forms-web-app/uploads && \
+    chown node:node /opt/app/packages/forms-web-app/uploads
+
+RUN mkdir /opt/app/packages/forms-web-app/src/controllers/examination/file-upload/uploads && \
+    chown node:node /opt/app/packages/forms-web-app/src/controllers/examination/file-upload/uploads
+
 RUN npm ci
 RUN npm run build
 
