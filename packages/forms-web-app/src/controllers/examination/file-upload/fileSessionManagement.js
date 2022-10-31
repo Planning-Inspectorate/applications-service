@@ -1,36 +1,31 @@
-const { getSelectedDeadlineItemFromSession } = require('../utils/sessionHelpers');
+const { getActiveSubmissionItem } = require('../session/submission-items-session');
 
 const addFileToSession = (session, file) => {
-	const examinationSession = session?.examination;
+	const activeSubmissionItem = getActiveSubmissionItem(session);
 
-	const selectedDeadline = getSelectedDeadlineItemFromSession(examinationSession);
-
-	if (!selectedDeadline.files) {
-		selectedDeadline.files = [];
+	if (!activeSubmissionItem.files) {
+		activeSubmissionItem.files = [];
 	}
 
-	selectedDeadline.files.push(file);
+	activeSubmissionItem.files.push(file);
 };
 
 const deleteFileInSession = (session, fileName) => {
-	const examinationSession = session?.examination;
-	const selectedDeadline = getSelectedDeadlineItemFromSession(examinationSession);
+	const activeSubmissionItem = getActiveSubmissionItem(session);
 
-	selectedDeadline.files = selectedDeadline.files.filter(
+	activeSubmissionItem.files = activeSubmissionItem.files.filter(
 		(file) => file.uniqueFileName !== fileName
 	);
 };
 
 const getUploadedFilesFromSession = (session) => {
-	const examinationSession = session?.examination;
+	const activeSubmissionItem = getActiveSubmissionItem(session);
 
-	const selectedDeadline = getSelectedDeadlineItemFromSession(examinationSession);
-
-	if (!selectedDeadline.files) {
-		selectedDeadline.files = [];
+	if (!activeSubmissionItem.files) {
+		activeSubmissionItem.files = [];
 	}
 
-	return selectedDeadline.files;
+	return activeSubmissionItem.files;
 };
 
 module.exports = {

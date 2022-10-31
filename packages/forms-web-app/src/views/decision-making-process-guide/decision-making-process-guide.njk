@@ -13,10 +13,10 @@
 
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
 		callback: "
-			var initiatePage = new appScripts.initiate();
-			initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
+ var initiatePage = new appScripts.initiate();
+		initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
 		",
-		src: "/assets/jquery.js"
+ src: "/assets/jquery.js"
 	}), initiateScriptsConfig) %}
 {% endblock %}
 
@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block beforeContent %}
-  {% include "../components/core/banner.njk" %}
+	{% include "../components/core/banner.njk" %}
 {% endblock %}
 
 {% block content %}

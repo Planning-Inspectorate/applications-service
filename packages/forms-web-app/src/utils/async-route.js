@@ -6,7 +6,7 @@
  * @returns {function(Request, Response, NextFunction)}
  */
 const asyncRoute = (route) => {
-    return (req, res, next) => route(req, res, next).catch(next);
-}
+	return (req, res, next) => route(req, res, next).catch(next);
+};
 
 module.exports = { asyncRoute };

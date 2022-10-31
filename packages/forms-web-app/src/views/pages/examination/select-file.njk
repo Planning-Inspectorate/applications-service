@@ -5,14 +5,13 @@
 {% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-
- {% block script %}
-	 <style>
-		 .dropZone.dragging::before {
-			 pointer-events: none;
-		 }
-	 </style>
- {% endblock %}
+{% block script %}
+	<style>
+		.dropZone.dragging::before {
+			pointer-events: none;
+		}
+	</style>
+{% endblock %}
 
 {% set backLinkUrl = backLinkUrl %}
 
@@ -34,9 +33,8 @@
 	{% endif %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-			<span class="govuk-caption-l">{{ captionTitle }}
-				  <br/>
-				{{ selectedDeadlineItemTitle }}
+			<span class="govuk-caption-l">
+				{{ activeSubmissionItemTitle }}
 			</span>
 			<h1 class="govuk-heading-l">Upload files</h1>
 			<p class="govuk-body">Your file must be PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS or XSLX. </p>
@@ -46,10 +44,16 @@
 				<li>smaller than {{ maxFileSizeInMb }}mb</li>
 			</ul>
 
-			<form name="fileUploadForm"
-						action="/examination/select-a-file"
-						method="post" enctype="multipart/form-data">
-				<h2 class="govuk-heading-m">Files added</h2>
+			<form
+				name="fileUploadForm"
+				action="/examination/select-a-file"
+				method="post"
+				enctype="multipart/form-data"
+			>
+				<h2 class="govuk-heading-m">
+					Files added
+				</h2>
+
 				<dl class="govuk-summary-list">
 					{% for item in uploadedFiles %}
 						<div class="govuk-summary-list__row">
@@ -57,11 +61,18 @@
 								{{ item.originalFileName }}
 							</dd>
 							<dd class="govuk-summary-list__actions">
-								<button name="delete" type="submit"
-												class="ui-link-button"
-												value="{{ item.fileName }}">
-									<span class="govuk-visually-hidden">{{ item.originalFileName }}</span>
-									<span class="govuk-link"> {{ item.deleteButton.text }}  </span>
+								<button
+									name="delete"
+									type="submit"
+									class="ui-link-button"
+									value="{{ item.fileName }}"
+								>
+									<span class="govuk-visually-hidden">
+										{{ item.originalFileName }}
+									</span>
+									<span class="govuk-link">
+										{{ item.deleteButton.text }}
+									</span>
 								</button>
 							</dd>
 						</div>
@@ -72,7 +83,8 @@
 								<dd class="govuk-summary-list__value">
 									<div class="govuk-form-group govuk-form-group--error">
 										<p id="{{ item.uniqueID }}" class="govuk-error-message">
-											<span class="govuk-visually-hidden">Error:</span> {{ item.text }}
+											<span class="govuk-visually-hidden">Error:</span>
+											{{ item.text }}
 										</p>
 									</div>
 								</dd>
@@ -117,84 +129,118 @@
 				<div id="file-upload-js-content">
 					<div class="moj-multi-file-upload__dropzone">
 						<input type="hidden" id="upload" name="upload" value="true">
-						<input class="dropZone govuk-file-upload moj-multi-file-upload__input"
-									 id="file-upload"
-									 type="file"
-									 multiple
-									 accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
-									 name="documents"
-									 onchange="handleManualUpload()"
+						<input
+							class="dropZone govuk-file-upload moj-multi-file-upload__input"
+							id="file-upload"
+							type="file"
+							multiple
+							accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
+							name="documents"
+							onchange="handleManualUpload()"
 						>
-						<p class="govuk-body">Drag and drop files here or</p>
-						<label for="file-upload"
-									 class="govuk-button govuk-button--secondary">Choose files</label>
+						<p>Drag and drop files here or</p>
+						<label
+							for="file-upload"
+							class="govuk-button govuk-button--secondary"
+						>
+							Choose files
+						</label>
 					</div>
 
 					<br>
-					<button class="govuk-button" name="continue" value="continue"
-									onclick="handleManualUpload()"
-									data-module="govuk-button">
+					<button
+						class="govuk-button"
+						name="continue"
+						value="continue"
+						onclick="handleManualUpload()"
+						data-module="govuk-button"
+					>
 						Continue
 					</button>
-			</form>
+				</form>
 
-			<script>
-				const target = document.documentElement;
-				const dropZone = document.querySelector('.dropZone');
-				const fileInput = document.getElementById('file-upload')
+				<script>
+					const target = document.documentElement;
+					const dropZone = document.querySelector('.dropZone');
+					const fileInput = document.getElementById('file-upload')
 
-				const input = document.createElement("input");
-				input.setAttribute("type", "hidden");
-				input.setAttribute("name", "isJsEnabled");
-				input.setAttribute("value", "true");
+					const input = document.createElement("input");
+					input.setAttribute("type", "hidden");
+					input.setAttribute("name", "isJsEnabled");
+					input.setAttribute("value", "true");
 
-				const handleChange = (e) => {
-					e.preventDefault();
-					fileInput.files = e.target?.files;
-					document.forms["fileUploadForm"].submit();
-				};
+					const handleChange = (e) => {
+						e.preventDefault();
+						fileInput.files = e.target
+							?.files;
+						document
+							.forms["fileUploadForm"]
+							.submit();
+					};
 
-				const handleDragOver = (e) => {
-					e.preventDefault();
-					dropZone.classList.add('dragging');
-				}
+					const handleDragOver = (e) => {
+						e.preventDefault();
+						dropZone
+							.classList
+							.add('dragging');
+					}
 
-				const handleDragLeave = () => {
-					dropZone.classList.remove('dragging');
-				}
+					const handleDragLeave = () => {
+						dropZone
+							.classList
+							.remove('dragging');
+					}
 
-				const handleManualUpload = () => {
-					document.forms["fileUploadForm"].appendChild(input);
-					document.forms["fileUploadForm"].submit();
-				}
+					const handleManualUpload = () => {
+						document
+							.forms["fileUploadForm"]
+							.appendChild(input);
+						document
+							.forms["fileUploadForm"]
+							.submit();
+					}
 
-				const handleDrop = (e) => {
-					e.preventDefault();
-					dropZone.classList.remove('dragging');
-					fileInput.files = e.dataTransfer.files;
-					document.forms["fileUploadForm"].appendChild(input);
-					document.forms["fileUploadForm"].submit();
-				}
+					const handleDrop = (e) => {
+						e.preventDefault();
+						dropZone
+							.classList
+							.remove('dragging');
+						fileInput.files = e.dataTransfer.files;
+						document
+							.forms["fileUploadForm"]
+							.appendChild(input);
+						document
+							.forms["fileUploadForm"]
+							.submit();
+					}
 
-				const handleRemoveEventListener = () => {
-					document.body.removeEventListener('change', handleChange);
-					document.body.removeEventListener('dragover', handleDragOver);
-					document.body.removeEventListener('dragleave', handleDragLeave);
-					document.body.removeEventListener('drop', handleDrop);
-					handleRemoveUnload();
-					return
-				}
+					const handleRemoveEventListener = () => {
+						document
+							.body
+							.removeEventListener('change', handleChange);
+						document
+							.body
+							.removeEventListener('dragover', handleDragOver);
+						document
+							.body
+							.removeEventListener('dragleave', handleDragLeave);
+						document
+							.body
+							.removeEventListener('drop', handleDrop);
+						handleRemoveUnload();
+						return
+					}
 
-				function handleRemoveUnload() {
-					window.removeEventListener('unload', handleRemoveEventListener);
-				}
+					function handleRemoveUnload() {
+						window.removeEventListener('unload', handleRemoveEventListener);
+					}
 
-				target.addEventListener('change', handleChange);
-				target.addEventListener('dragover', handleDragOver);
-				target.addEventListener('dragleave', handleDragLeave);
-				target.addEventListener('drop', handleDrop);
-				window.addEventListener('unload', handleRemoveEventListener);
-			</script>
+					target.addEventListener('change', handleChange);
+					target.addEventListener('dragover', handleDragOver);
+					target.addEventListener('dragleave', handleDragLeave);
+					target.addEventListener('drop', handleDrop);
+					window.addEventListener('unload', handleRemoveEventListener);
+				</script>
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

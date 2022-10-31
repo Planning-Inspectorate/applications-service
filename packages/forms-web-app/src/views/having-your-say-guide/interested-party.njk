@@ -1,7 +1,7 @@
 {% extends "layouts/layout.njk" %}
 
 {% block script %}
-	{%
+  {%
 		set initiatePageConfig = [{
 			callback: "
 				var initiateStepByStep = new appScripts.stepByStep();
@@ -11,13 +11,13 @@
 		}]
 	%}
 
-	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
-		callback: "
-			var initiatePage = new appScripts.initiate();
-			initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
-		",
-		src: "/assets/jquery.js"
-	}), initiateScriptsConfig) %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push({
+    callback: "
+ var initiatePage = new appScripts.initiate();
+    initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
+    ",
+ src: "/assets/jquery.js"
+  }), initiateScriptsConfig) %}
 {% endblock %}
 
 {% block pageTitle %}

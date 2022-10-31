@@ -3,7 +3,7 @@ const {
 } = require('../../../../../src/controllers/examination/file-upload/fileManagement');
 const {
 	handleMultipleFileUploadsWithErrors
-} = require('../../../../../src/controllers/examination/file-upload/handleMultipleFileUploadsWithErrors');
+} = require('../../../../../src/controllers/examination/select-file/utils/errors/handleMultipleFileUploadsWithErrors');
 const {
 	addFileToSession
 } = require('../../../../../src/controllers/examination/file-upload/fileSessionManagement');
