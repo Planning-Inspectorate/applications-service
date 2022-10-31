@@ -3,6 +3,12 @@ const routesConfig = {
 		directory: '/examination',
 		sessionId: 'examination',
 		pages: {
+			addDeadline: {
+				id: 'examination-add-deadline',
+				name: 'Add another deadline?',
+				route: '/add-another-deadline-item',
+				view: 'pages/examination/add-deadline'
+			},
 			applicant: {
 				id: 'examination-applicant',
 				onError: {
@@ -26,7 +32,7 @@ const routesConfig = {
 			},
 			checkDeadlineItem: {
 				id: 'examination-check-deadline-item',
-				name: 'Check deadline item',
+				name: 'Check your answers',
 				route: '/check-your-deadline-item',
 				view: 'pages/examination/check-deadline-item'
 			},
@@ -53,8 +59,8 @@ const routesConfig = {
 				}
 			},
 			enterComment: {
-				id: 'examination-enter-a-comment',
-				name: 'Make a comment',
+				id: 'examination-enter-comment',
+				name: 'Your comment',
 				route: '/enter-a-comment',
 				sessionId: 'comment',
 				view: 'pages/examination/enter-comment',
@@ -67,11 +73,12 @@ const routesConfig = {
 						min: 1,
 						max: 65234
 					}
-				}
+				},
+				title: 'Make a comment'
 			},
 			evidenceOrComment: {
 				id: 'examination-evidence-or-comment',
-				name: 'How would you like to submit comments ("written representation")?',
+				name: `How you've submitted your representation`,
 				onError: {
 					message: {
 						isEmpty: 'Select if you want to upload supporting evidence or write a comment'
@@ -93,6 +100,7 @@ const routesConfig = {
 				},
 				route: '/select-upload-evidence-or-comment',
 				sessionId: 'submissionType',
+				title: 'How would you like to submit comments ("written representation")?',
 				view: 'pages/examination/evidence-or-comment'
 			},
 			haveYourSay: {
@@ -178,6 +186,7 @@ const routesConfig = {
 				view: 'pages/examination/name'
 			},
 			personalInformation: {
+				name: 'Personal information',
 				options: {
 					1: {
 						value: 'yes',
@@ -193,6 +202,7 @@ const routesConfig = {
 			},
 			personalInformationComment: {
 				id: 'examination-personal-information-comment',
+				name: '',
 				onError: {
 					message: {
 						isEmpty: 'Select yes if your comment contains personal information'
@@ -239,16 +249,19 @@ const routesConfig = {
 			},
 			selectDeadline: {
 				id: 'examination-select-deadline',
-				name: 'Which item would you like to submit against for this deadline?',
+				name: 'Deadline item',
 				onError: {
 					message: {
 						isEmpty: 'Select an item'
 					}
 				},
 				route: '/select-deadline-item',
-				sessionIdPrimary: 'selectedDeadlineItems',
-				sessionIdSecondary: 'activeId',
-				sessionIdTertiary: 'items',
+				sessionId: {
+					1: 'submissionId',
+					2: 'submissionItem',
+					3: 'submissionChecked'
+				},
+				title: 'Which item would you like to submit against for this deadline?',
 				view: 'pages/examination/select-deadline'
 			},
 			selectFile: {

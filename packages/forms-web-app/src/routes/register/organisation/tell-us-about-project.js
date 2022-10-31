@@ -4,7 +4,7 @@ const commentsController = require('../../../controllers/register/organisation/t
 const decodeUri = require('../../../middleware/decode-uri');
 const { validate } = require('../../../validators/register/tell-us-about-project');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const { asyncRoute } = require("../../../utils/async-route");
+const { asyncRoute } = require('../../../utils/async-route');
 
 const router = express.Router();
 

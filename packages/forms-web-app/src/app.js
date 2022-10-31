@@ -29,7 +29,7 @@ require('express-async-errors');
 const config = require('./config');
 const logger = require('./lib/logger');
 const routes = require('./routes');
-const { calcMaxFileSizeLimit } = require('./controllers/examination/file-upload/utils');
+const { calcMaxFileSizeLimit } = require('./controllers/examination/select-file/utils/helpers');
 
 const app = express();
 

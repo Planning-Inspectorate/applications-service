@@ -9,53 +9,51 @@
 {% set pageTitle = pageTitle %}
 
 {% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
+	{% if errors %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
 
-  {{ pageTitle }}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block content %}
-  {% if errorSummary %}
-    {{ govukErrorSummary({
-      titleText: "There is a problem",
-      errorList: errorSummary
-    }) }}
-  {% endif %}
+	{% if errorSummary %}
+		{{ govukErrorSummary({
+			titleText: "There is a problem",
+			errorList: errorSummary
+		}) }}
+	{% endif %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">
-        Deadline item:
-        <br />
-        {{ selectedDeadlineItemTitle }}
+        {{ activeSubmissionItemTitle }}
       </span>
 
-      <form action="" method="POST" novalidate>
-        {{ govukRadios({
-          attributes: { "data-cy": id },
-          idPrefix: id,
-          name: id,
-          errorMessage: errors[id] and {
-            text: errors[id].msg
-          },
-          fieldset: {
-            legend: {
-              text: title,
-              isPageHeading: true,
-              classes: "govuk-fieldset__legend--l"
-            }
-          },
-          items: options
-        }) }}
+			<form action="" method="POST" novalidate>
+				{{ govukRadios({
+					attributes: { "data-cy": id },
+					idPrefix: id,
+					name: id,
+					errorMessage: errors[id] and {
+						text: errors[id].msg
+					},
+					fieldset: {
+						legend: {
+							text: title,
+							isPageHeading: true,
+							classes: "govuk-fieldset__legend--l"
+						}
+					},
+					items: options
+				}) }}
 
-        {{ govukButton({
-          attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
-          type: "Submit"
-        }) }}
-      </form>
-    </div>
-  </div>
+				{{ govukButton({
+					attributes: { "data-cy": "button-submit-and-continue" },
+					text: "Continue",
+					type: "Submit"
+				}) }}
+			</form>
+		</div>
+	</div>
 {% endblock %}

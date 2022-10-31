@@ -48,12 +48,11 @@ const { getEmail, postEmail } = require('../../controllers/examination/email');
 const {
 	getEnterComment,
 	postEnterComment
-} = require('../../controllers/examination/enter-comment');
+} = require('../../controllers/examination/enter-comment/controller');
 const {
 	getEvidenceOrComment,
 	postEvidenceOrComment
-} = require('../../controllers/examination/evidence-or-comment');
-
+} = require('../../controllers/examination/evidence-or-comment/controller');
 const {
 	getHasInterestedPartyNumber,
 	postHasInterestedPartyNumber
@@ -63,7 +62,7 @@ const { getName, postName } = require('../../controllers/examination/name');
 const {
 	getPersonalInformation,
 	postPersonalInformation
-} = require('../../controllers/examination/personal-information');
+} = require('../../controllers/examination/personal-information/controller');
 const {
 	getPersonalInformationWhich,
 	postPersonalInformationWhich
@@ -71,8 +70,11 @@ const {
 const {
 	getSelectDeadline,
 	postSelectDeadline
-} = require('../../controllers/examination/select-deadline');
-const { getSelectFile, postSelectFile } = require('../../controllers/examination/select-file');
+} = require('../../controllers/examination/select-deadline/controller');
+const {
+	getSelectFile,
+	postSelectFile
+} = require('../../controllers/examination/select-file/controller');
 const {
 	getSubmittingFor,
 	postSubmittingFor

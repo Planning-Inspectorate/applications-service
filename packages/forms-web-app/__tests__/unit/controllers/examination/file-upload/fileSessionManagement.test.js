@@ -1,15 +1,14 @@
-let {
-	getSelectedDeadlineItemFromSession
-} = require('../../../../../src/controllers/examination/utils/sessionHelpers');
-
 const {
 	addFileToSession,
 	deleteFileInSession,
 	getUploadedFilesFromSession
 } = require('../../../../../src/controllers/examination/file-upload/fileSessionManagement');
+const {
+	getActiveSubmissionItem
+} = require('../../../../../src/controllers/examination/session/submission-items-session');
 
-jest.mock('../../../../../src/controllers/examination/utils/sessionHelpers', () => ({
-	getSelectedDeadlineItemFromSession: jest.fn()
+jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
+	getActiveSubmissionItem: jest.fn()
 }));
 
 describe('controllers/examination/file-upload/fileSessionManagement', () => {
@@ -21,7 +20,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 			const selectedDeadline = {};
 			const singleFile = { name: 'mock file name' };
 			beforeEach(() => {
-				getSelectedDeadlineItemFromSession.mockReturnValue(selectedDeadline);
+				getActiveSubmissionItem.mockReturnValue(selectedDeadline);
 				addFileToSession(session, singleFile);
 			});
 
@@ -37,7 +36,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 			};
 			const selectedDeadline = { files: [singleFile] };
 			beforeEach(() => {
-				getSelectedDeadlineItemFromSession.mockReturnValue(selectedDeadline);
+				getActiveSubmissionItem.mockReturnValue(selectedDeadline);
 				addFileToSession(session, file2);
 			});
 
@@ -54,7 +53,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 			const arrayOfFiles = [{ name: 'mock file name two' }, { name: 'mock file name three' }];
 
 			beforeEach(() => {
-				getSelectedDeadlineItemFromSession.mockReturnValue(selectedDeadline);
+				getActiveSubmissionItem.mockReturnValue(selectedDeadline);
 				addFileToSession(session, arrayOfFiles);
 			});
 
@@ -74,7 +73,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 				files: [...expectedArray, itemToDelete]
 			};
 			beforeEach(() => {
-				getSelectedDeadlineItemFromSession.mockReturnValue(selectedDeadline);
+				getActiveSubmissionItem.mockReturnValue(selectedDeadline);
 				deleteFileInSession(session, 'two');
 			});
 
@@ -88,7 +87,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 			describe('and there are no files in session', () => {
 				let result;
 				beforeEach(() => {
-					getSelectedDeadlineItemFromSession.mockReturnValue({});
+					getActiveSubmissionItem.mockReturnValue({});
 					result = getUploadedFilesFromSession();
 				});
 
@@ -103,7 +102,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 				};
 				let result;
 				beforeEach(() => {
-					getSelectedDeadlineItemFromSession.mockReturnValue(selectedDeadline);
+					getActiveSubmissionItem.mockReturnValue(selectedDeadline);
 					result = getUploadedFilesFromSession(mockSession);
 				});
 				it('should return an array of files', function () {

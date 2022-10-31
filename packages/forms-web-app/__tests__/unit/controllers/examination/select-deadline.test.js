@@ -1,7 +1,7 @@
 const {
 	getSelectDeadline,
 	postSelectDeadline
-} = require('../../../../src/controllers/examination/select-deadline');
+} = require('../../../../src/controllers/examination/select-deadline/controller');
 const { mockReq, mockRes } = require('../../mocks');
 
 const selectDeadlineOptions = [

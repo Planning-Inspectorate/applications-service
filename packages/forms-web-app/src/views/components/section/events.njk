@@ -32,7 +32,7 @@
         </div>
       {%- endif %}
 
-      {% if event.submitButton -%}
+      {# {% if event.submitButton -%} #}
         <div class="govuk-!-margin-top-6">
           <form action="" method="POST" novalidate>
             {{ govukInput({
@@ -48,7 +48,7 @@
             }) }}
           </form>
         </div>
-      {%- endif %}
+      {# {%- endif %} #}
     </section>
 
     {% if loop.last %}

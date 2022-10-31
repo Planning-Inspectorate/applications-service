@@ -2,7 +2,7 @@ const {
 	noFileSelected,
 	moreThanXAmountFiles,
 	multipleFileValidations
-} = require('../../../../../src/controllers/examination/file-upload/fileValidation');
+} = require('../../../../../src/controllers/examination/select-file/utils/errors/fileValidation');
 
 jest.mock('../../../../../src/controllers/examination/file-upload/fileManagement', () => ({
 	saveFileToDisk: jest.fn()
