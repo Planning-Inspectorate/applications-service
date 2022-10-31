@@ -7,10 +7,7 @@ const {
 	deleteFileOnDisk
 } = require('../../../../../src/controllers/examination/file-upload/fileManagement');
 
-const pathToController = path.join(
-	__dirname,
-	'../../../../../src/controllers/examination/file-upload/uploads/'
-);
+const pathToController = path.join(__dirname, '../../../../../../../uploads/');
 
 jest.mock('fs');
 describe('controllers/examination/file-upload/fileManagement', () => {

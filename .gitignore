@@ -118,5 +118,5 @@ junit.xml
 
 packages/forms-web-app/src/public/stylesheets/main.css
 
-packages/forms-web-app/uploads
-packages/forms-web-app/src/controllers/examination/file-upload/uploads/
+uploads/*
+!uploads/.gitkeep
