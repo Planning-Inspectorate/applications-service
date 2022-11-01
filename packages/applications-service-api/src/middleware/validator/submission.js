@@ -8,7 +8,14 @@ const validateRequest = (req, res, next) => {
 	const errors = validator.validateRequest(req);
 
 	if (errors) {
-		throw ApiError.badRequest(errors.errors.map((e) => e.message));
+		throw ApiError.badRequest(
+			errors.errors.map((e) => {
+				if (e.errorCode.includes('maxLength')) {
+					return `'${e.path}' ${e.message.toLowerCase()}`;
+				}
+				return e.message;
+			})
+		);
 	}
 
 	if (!req.body.representation && !req.file) {

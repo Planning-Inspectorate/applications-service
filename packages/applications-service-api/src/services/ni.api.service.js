@@ -5,7 +5,7 @@ const config = require('../lib/config');
 const { createAxiosInstance } = require('../lib/axios');
 
 const API_HOST = `https://${config.ni.host}`;
-const axiosInstance = createAxiosInstance(false);
+const axiosInstance = createAxiosInstance(false, config.ni.verboseRequestLogging);
 
 const fetchToken = async () => {
 	const formData = new FormData();
