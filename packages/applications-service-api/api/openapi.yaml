@@ -1127,6 +1127,7 @@ components:
         representation:
           type: string
           description: Comment text. **Required if submission is a comment**
+          maxLength: 65234
           example: This is my representation
     ValidationError:
       type: object

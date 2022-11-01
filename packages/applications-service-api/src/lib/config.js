@@ -62,7 +62,8 @@ module.exports = {
 			clientSecret: process.env.NI_OAUTH_CLIENT_SECRET,
 			username: process.env.NI_OAUTH_USERNAME,
 			password: process.env.NI_OAUTH_PASSWORD
-		}
+		},
+		verboseRequestLogging: process.env.NI_VERBOSE_REQUEST_LOGGING === 'true'
 	},
 	services: {
 		notify: {

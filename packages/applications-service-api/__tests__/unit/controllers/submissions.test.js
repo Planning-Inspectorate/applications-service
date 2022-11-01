@@ -8,7 +8,10 @@ jest.mock('../../../src/services/ni.file.service');
 
 const createSubmissionService =
 	require('../../../src/services/submission.service').createSubmission;
-const submitFileService = require('../../../src/services/ni.file.service').submitFile;
+const submitUserUploadedFileService =
+	require('../../../src/services/ni.file.service').submitUserUploadedFile;
+const submitRepresentationFileService =
+	require('../../../src/services/ni.file.service').submitRepresentationFile;
 
 describe('submissions controller', () => {
 	describe('createSubmission', () => {
@@ -50,39 +53,43 @@ describe('submissions controller', () => {
 
 		it('should return file name including submissionId and sequence number if file uploaded', async () => {
 			const res = httpMocks.createResponse();
-			createSubmissionService.mockResolvedValueOnce(SUBMISSION_DATA);
-			submitFileService.mockResolvedValueOnce({
+			const submissionDataWithFile = {
 				...SUBMISSION_DATA,
 				file: FILE_DATA
-			});
+			};
+
+			createSubmissionService.mockResolvedValueOnce(SUBMISSION_DATA);
+			submitUserUploadedFileService.mockResolvedValueOnce(submissionDataWithFile);
 
 			await createSubmission(requestWithFile, res);
 
-			expect(submitFileService).toBeCalledWith(SUBMISSION_DATA, ORIGINAL_REQUEST_FILE_DATA);
+			expect(submitUserUploadedFileService).toBeCalledWith(
+				SUBMISSION_DATA,
+				ORIGINAL_REQUEST_FILE_DATA
+			);
+			expect(submitRepresentationFileService).not.toBeCalled();
 
 			expect(res._getStatusCode()).toEqual(201);
-			expect(res._getData()).toEqual({
-				...SUBMISSION_DATA,
-				file: FILE_DATA
-			});
+			expect(res._getData()).toEqual(submissionDataWithFile);
 		});
 
-		it('should return representation if comment submitted', async () => {
+		it('should return representation and generated pdf file if comment submitted', async () => {
 			const res = httpMocks.createResponse();
-			createSubmissionService.mockResolvedValueOnce({
+			const submissionDataWithRepresentation = {
 				...SUBMISSION_DATA,
 				representation: 'Some comment'
-			});
+			};
+
+			createSubmissionService.mockResolvedValueOnce(submissionDataWithRepresentation);
+			submitRepresentationFileService.mockResolvedValueOnce(Promise.resolve());
 
 			await createSubmission(requestWithComment, res);
 
-			expect(submitFileService).not.toBeCalled();
+			expect(submitUserUploadedFileService).not.toBeCalled();
+			expect(submitRepresentationFileService).toBeCalledWith(submissionDataWithRepresentation);
 
 			expect(res._getStatusCode()).toEqual(201);
-			expect(res._getData()).toEqual({
-				...SUBMISSION_DATA,
-				representation: 'Some comment'
-			});
+			expect(res._getData()).toEqual(submissionDataWithRepresentation);
 		});
 	});
 });

@@ -104,5 +104,29 @@ describe('submission request validator', () => {
 				})
 			);
 		});
+
+		it('returns error if request contains representation larger than max limit', async () => {
+			const generateLongRepresentation = () => [...Array(65235)].map(() => 'a').join('');
+			expect(() =>
+				validateRequest({
+					...request,
+					body: {
+						name: 'x',
+						email: 'x@example.com',
+						interestedParty: false,
+						deadline: 'dl',
+						submissionType: 'something',
+						representation: generateLongRepresentation()
+					}
+				})
+			).toThrowError(
+				expect.objectContaining({
+					code: 400,
+					message: {
+						errors: ["'representation' must not have more than 65234 characters"]
+					}
+				})
+			);
+		});
 	});
 });
