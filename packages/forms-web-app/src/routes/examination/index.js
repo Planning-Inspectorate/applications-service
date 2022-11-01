@@ -66,7 +66,7 @@ const {
 const {
 	getPersonalInformationWhich,
 	postPersonalInformationWhich
-} = require('../../controllers/examination/personal-information-which');
+} = require('../../controllers/examination/personal-information-which/controller');
 const {
 	getSelectDeadline,
 	postSelectDeadline
@@ -196,6 +196,8 @@ router.get(
 );
 router.post(
 	personalInformationWhichCommentFiles.route,
+	validateNotEmpty(personalInformationWhichCommentFiles),
+	validationErrorHandler,
 	forwardView(personalInformationWhichCommentFiles),
 	postPersonalInformationWhich
 );
@@ -207,6 +209,8 @@ router.get(
 );
 router.post(
 	personalInformationWhichFiles.route,
+	validateNotEmpty(personalInformationWhichFiles),
+	validationErrorHandler,
 	forwardView(personalInformationWhichFiles),
 	postPersonalInformationWhich
 );
