@@ -239,13 +239,23 @@ const routesConfig = {
 			},
 			personalInformationWhichCommentFiles: {
 				id: 'examination-personal-information-which-comment-files',
-				name: 'Which comment or files have personal information or not?',
-				route: '/select-which-files-comments-have-personal-information'
+				name: 'Which files and comments contain personal information?',
+				route: '/select-which-files-comments-have-personal-information',
+				onError: {
+					message: {
+						isEmpty: 'Select files and comments that contain personal information'
+					}
+				}
 			},
 			personalInformationWhichFiles: {
 				id: 'examination-personal-information-which-files',
-				name: 'Which files have personal information or not?',
-				route: '/which-files-have-personal-information-or-not'
+				name: 'Which files contain personal information?',
+				route: '/which-files-have-personal-information-or-not',
+				onError: {
+					message: {
+						isEmpty: 'Select files that contain personal information'
+					}
+				}
 			},
 			selectDeadline: {
 				id: 'examination-select-deadline',
