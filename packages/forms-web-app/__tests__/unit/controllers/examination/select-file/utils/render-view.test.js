@@ -33,20 +33,43 @@ describe('Rendering Views for ', () => {
 		const req = {};
 		const res = { render: jest.fn() };
 		describe('When rendering a view for a get select file', () => {
-			beforeEach(() => {
-				getActiveSubmissionItem.mockReturnValue({ submissionItem: 'mock submission item' });
-				mapUploadedFilesToSummaryList.mockReturnValue('mapped list');
-				getRenderView(req, res);
+			describe('and the use is only uploading files', () => {
+				beforeEach(() => {
+					getActiveSubmissionItem.mockReturnValue({ submissionItem: 'mock submission item' });
+					mapUploadedFilesToSummaryList.mockReturnValue('mapped list');
+					getRenderView(req, res);
+				});
+				it('should render the page', () => {
+					expect(res.render).toHaveBeenCalledWith('pages/examination/select-file', {
+						activeSubmissionItemTitle: 'mock submission item',
+						backLinkUrl: '/examination/select-upload-evidence-or-comment',
+						id: 'examination-select-file',
+						maxFileSizeInMb: 50,
+						pageTitle: 'Select a file',
+						title: 'Select a file',
+						uploadedFiles: 'mapped list'
+					});
+				});
 			});
-			it('should render the page', () => {
-				expect(res.render).toHaveBeenCalledWith('pages/examination/select-file', {
-					activeSubmissionItemTitle: 'mock submission item',
-					backLinkUrl: '/examination/select-upload-evidence-or-comment',
-					id: 'examination-select-file',
-					maxFileSizeInMb: 50,
-					pageTitle: 'Select a file',
-					title: 'Select a file',
-					uploadedFiles: 'mapped list'
+			describe('and the user has made a comment and is uploading files', () => {
+				beforeEach(() => {
+					getActiveSubmissionItem.mockReturnValue({
+						submissionItem: 'mock submission item',
+						submissionType: 'both'
+					});
+					mapUploadedFilesToSummaryList.mockReturnValue('mapped list');
+					getRenderView(req, res);
+				});
+				it('should render the page', () => {
+					expect(res.render).toHaveBeenCalledWith('pages/examination/select-file', {
+						activeSubmissionItemTitle: 'mock submission item',
+						backLinkUrl: '/examination/enter-a-comment',
+						id: 'examination-select-file',
+						maxFileSizeInMb: 50,
+						pageTitle: 'Select a file',
+						title: 'Select a file',
+						uploadedFiles: 'mapped list'
+					});
 				});
 			});
 		});
