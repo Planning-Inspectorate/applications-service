@@ -5,7 +5,7 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { evidenceOrComment, selectFile }
+			pages: { evidenceOrComment, selectFile, enterComment }
 		}
 	}
 } = require('../../../../routes/config');
@@ -15,18 +15,26 @@ const {
 } = require('../../../../config');
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${evidenceOrComment.route}`,
 	id: selectFile.id,
 	pageTitle: selectFile.name,
 	title: selectFile.name,
 	maxFileSizeInMb
 };
 
+const getBackLinkUrl = (submissionType) => {
+	let backLinkUrl = `${examinationDirectory}${evidenceOrComment.route}`;
+
+	if (submissionType === 'both') backLinkUrl = `${examinationDirectory}${enterComment.route}`;
+
+	return backLinkUrl;
+};
+
 const getRenderView = (req, res) => {
 	const { session } = req;
-	const { submissionItem } = getActiveSubmissionItem(session);
+	const { submissionItem, submissionType } = getActiveSubmissionItem(session);
 	res.render(selectFile.view, {
 		...pageData,
+		backLinkUrl: getBackLinkUrl(submissionType),
 		activeSubmissionItemTitle: submissionItem,
 		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(session))
 	});
@@ -35,9 +43,10 @@ const getRenderView = (req, res) => {
 const postRenderView = (req, res, session, { errorMessage, errorSummary }) => {
 	const isJsEnabled = req.body.isJsEnabled || false;
 	const href = isJsEnabled ? '#file-upload' : `#${selectFile.id}`;
-	const { submissionItem } = getActiveSubmissionItem(session);
+	const { submissionItem, submissionType } = getActiveSubmissionItem(session);
 	return res.render(selectFile.view, {
 		...pageData,
+		backLinkUrl: getBackLinkUrl(submissionType),
 		isJsEnabled,
 		activeSubmissionItemTitle: submissionItem,
 		errorMessage,
