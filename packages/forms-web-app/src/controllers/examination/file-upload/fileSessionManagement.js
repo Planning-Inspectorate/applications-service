@@ -7,6 +7,7 @@ const addFileToSession = (session, file) => {
 		activeSubmissionItem.files = [];
 	}
 
+	delete file.raw.data;
 	activeSubmissionItem.files.push(file);
 };
 
