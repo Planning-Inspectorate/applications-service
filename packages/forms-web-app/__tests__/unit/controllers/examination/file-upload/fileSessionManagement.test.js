@@ -18,7 +18,7 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 				examination: {}
 			};
 			const selectedDeadline = {};
-			const singleFile = { name: 'mock file name' };
+			const singleFile = { name: 'mock file name', raw: { data: '' } };
 			beforeEach(() => {
 				getActiveSubmissionItem.mockReturnValue(selectedDeadline);
 				addFileToSession(session, singleFile);
@@ -29,8 +29,8 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 			});
 		});
 		describe('when adding a single file to session that has items', () => {
-			const singleFile = { name: 'mock file name' };
-			const file2 = { name: 'mock file name two' };
+			const singleFile = { name: 'mock file name', raw: { data: '' } };
+			const file2 = { name: 'mock file name two', raw: { data: '' } };
 			const session = {
 				examination: {}
 			};
@@ -42,23 +42,6 @@ describe('controllers/examination/file-upload/fileSessionManagement', () => {
 
 			it('should add the file into the array', () => {
 				expect(selectedDeadline.files).toEqual([singleFile, file2]);
-			});
-		});
-		describe('when adding an array of files to session that has items', () => {
-			const singleFile = { name: 'mock file name' };
-			const session = {
-				examination: {}
-			};
-			const selectedDeadline = { files: [singleFile] };
-			const arrayOfFiles = [{ name: 'mock file name two' }, { name: 'mock file name three' }];
-
-			beforeEach(() => {
-				getActiveSubmissionItem.mockReturnValue(selectedDeadline);
-				addFileToSession(session, arrayOfFiles);
-			});
-
-			it('should add the file into the array', () => {
-				expect(selectedDeadline.files).toEqual([singleFile, arrayOfFiles]);
 			});
 		});
 	});
