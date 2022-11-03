@@ -4,6 +4,13 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
+{% block script %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push({
+		callback: "var sanitise = new appScripts.sanitiseForm(); sanitise.form('form', ['full-name']);",
+		src: "/public/scripts/sanitiseForm.script.js"
+	}), initiateScriptsConfig) %}
+{% endblock %}
+
 {% set title = "What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
@@ -14,7 +21,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
@@ -56,5 +62,4 @@
       </form>
     </div>
   </div>
-
 {% endblock %}

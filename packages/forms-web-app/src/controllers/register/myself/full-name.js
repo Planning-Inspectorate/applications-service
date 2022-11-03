@@ -1,5 +1,10 @@
 const { VIEW } = require('../../../lib/views');
 
+function sanitiseFormPostResponse(error, url) {
+	this.error = error;
+	this.url = url;
+}
+
 exports.getFullName = (req, res) => {
 	res.render(VIEW.REGISTER.MYSELF.FULL_NAME, { fullName: req.session.mySelfRegdata['full-name'] });
 };
@@ -7,19 +12,35 @@ exports.getFullName = (req, res) => {
 exports.postFullName = (req, res) => {
 	const { body } = req;
 
-	const { errors = {}, errorSummary = [] } = body;
+	const { errors = {}, errorSummary = [], origin } = body;
+	const originIsSanitiseFormPost = origin === 'sanitise-form-post';
+
 	if (errors['full-name'] || Object.keys(errors).length > 0) {
-		res.render(VIEW.REGISTER.MYSELF.FULL_NAME, {
+		if (originIsSanitiseFormPost) {
+			return res.send(new sanitiseFormPostResponse(true, `/${VIEW.REGISTER.MYSELF.FULL_NAME}`));
+		}
+
+		return res.render(VIEW.REGISTER.MYSELF.FULL_NAME, {
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	req.session.mySelfRegdata['full-name'] = body['full-name'];
+
 	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+		if (originIsSanitiseFormPost) {
+			return res.send(
+				new sanitiseFormPostResponse(false, `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`)
+			);
+		}
+
+		return res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
 	} else {
-		res.redirect(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
+		if (originIsSanitiseFormPost) {
+			return res.send(new sanitiseFormPostResponse(false, `/${VIEW.REGISTER.MYSELF.OVER_18}`));
+		}
+
+		return res.redirect(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
 	}
 };
