@@ -11,6 +11,9 @@ const {
 } = require('../../../routes/config');
 
 const { getRedirectUrl } = require('./utils/get-redirect-url');
+const {
+	clearAllPersonalInformationFlags
+} = require('../personal-information-which/utils/savePersonalInformationFlags');
 
 const getPersonalInformation = (req, res) => {
 	try {
@@ -39,6 +42,8 @@ const postPersonalInformation = (req, res) => {
 		const personalInformationValue = body[setPageData.id];
 
 		addKeyValueToActiveSubmissionItem(session, 'personalInformation', personalInformationValue);
+
+		if (personalInformationValue === 'no') clearAllPersonalInformationFlags(session);
 
 		const redirectUrl = getRedirectUrl(session, setPageData.id, personalInformationValue);
 		return res.redirect(redirectUrl);
