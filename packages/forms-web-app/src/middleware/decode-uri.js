@@ -22,4 +22,8 @@ const decodeUri = (ref, formFields) => (req, res, next) => {
 	}
 };
 
-module.exports = decodeUri;
+// module.exports = decodeUri;
+
+module.exports = {
+	decodeUri
+};
