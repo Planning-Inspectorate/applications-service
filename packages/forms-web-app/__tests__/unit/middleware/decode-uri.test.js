@@ -1,4 +1,4 @@
-const decodeUri = require('../../../src/middleware/decode-uri');
+const { decodeUri } = require('../../../src/middleware/decode-uri');
 
 describe('middleware/decode-uri', () => {
 	const req = {

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const decodeUri = require('../../../middleware/decode-uri');
+const { decodeUri } = require('../../../middleware/decode-uri');
 const fullNameController = require('../../../controllers/register/myself/full-name');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const { rules: fullNameValidationRules } = require('../../../validators/shared/full-name');

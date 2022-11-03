@@ -1,7 +1,7 @@
 const express = require('express');
 
 const commentsController = require('../../../controllers/register/organisation/tell-us-about-project');
-const decodeUri = require('../../../middleware/decode-uri');
+const { decodeUri } = require('../../../middleware/decode-uri');
 const { validate } = require('../../../validators/register/tell-us-about-project');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const { asyncRoute } = require('../../../utils/async-route');
