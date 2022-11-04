@@ -30,7 +30,8 @@ const {
 				selectDeadline,
 				selectFile,
 				submittingFor,
-				yourInterestedPartyNumber
+				yourInterestedPartyNumber,
+				addAnotherDeadlineItem
 			}
 		}
 	}
@@ -83,6 +84,10 @@ const {
 	getYourInterestedPartyNumber,
 	postYourInterestedPartyNumber
 } = require('../../controllers/examination/your-interested-party-number');
+const {
+	getAddAnotherDeadlineItem,
+	postAddAnotherDeadlineItem
+} = require('../../controllers/examination/add-another-deadline-item/controller');
 
 const router = express.Router();
 
@@ -240,6 +245,14 @@ router.post(
 	validateNotEmptyAndLength(yourInterestedPartyNumber),
 	validationErrorHandler,
 	postYourInterestedPartyNumber
+);
+
+router.get(addAnotherDeadlineItem.route, getAddAnotherDeadlineItem);
+router.post(
+	addAnotherDeadlineItem.route,
+	validateNotEmpty(addAnotherDeadlineItem),
+	validationErrorHandler,
+	postAddAnotherDeadlineItem
 );
 
 module.exports = router;

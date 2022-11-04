@@ -5,7 +5,10 @@ const {
 
 const logger = require('../../../lib/logger');
 
-const { findDeadlineItemByValue, getDeadlineItems } = require('../session/deadlineItems-session');
+const {
+	findDeadlineItemByValue,
+	getDeadlineItemStillToSubmit
+} = require('../session/deadlineItems-session');
 const { markActiveDeadlineItemAsChecked } = require('./utils/markActiveDeadlineItemAsChecked');
 
 const {
@@ -35,12 +38,15 @@ const getSelectDeadline = (req, res) => {
 		const { session } = req;
 		const setPageData = { ...pageData };
 
-		const deadlineItems = getDeadlineItems(session);
-		setPageData.options = deadlineItems;
+		const deadlineItemsToSubmit = getDeadlineItemStillToSubmit(session);
+		setPageData.options = deadlineItemsToSubmit;
 
 		const activeDeadlineId = getActiveSubmissionItemKey(session);
 		if (activeDeadlineId)
-			setPageData.options = markActiveDeadlineItemAsChecked(deadlineItems, activeDeadlineId);
+			setPageData.options = markActiveDeadlineItemAsChecked(
+				deadlineItemsToSubmit,
+				activeDeadlineId
+			);
 
 		return res.render(selectDeadline.view, setPageData);
 	} catch (error) {
@@ -57,7 +63,7 @@ const postSelectDeadline = (req, res) => {
 		if (errors[selectDeadline.id] || Object.keys(errors).length > 0) {
 			return res.render(selectDeadline.view, {
 				...pageData,
-				options: getDeadlineItems(session),
+				options: getDeadlineItemStillToSubmit(session),
 				errors,
 				errorSummary
 			});
