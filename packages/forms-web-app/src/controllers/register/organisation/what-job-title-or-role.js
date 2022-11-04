@@ -1,9 +1,5 @@
 const { VIEW } = require('../../../lib/views');
-
-function sanitiseFormPostResponse(error, url) {
-	this.error = error;
-	this.url = url;
-}
+const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post.js');
 
 exports.getRole = (req, res) => {
 	res.render(VIEW.REGISTER.ORGANISATION.ROLE, { role: req.session.orgRegdata.role });
