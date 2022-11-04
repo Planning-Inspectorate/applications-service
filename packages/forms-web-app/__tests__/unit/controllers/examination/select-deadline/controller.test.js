@@ -4,7 +4,7 @@ let {
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 let {
-	getDeadlineItems,
+	getDeadlineItemStillToSubmit,
 	findDeadlineItemByValue
 } = require('../../../../../src/controllers/examination/session/deadlineItems-session');
 let {
@@ -22,7 +22,7 @@ jest.mock('../../../../../src/controllers/examination/session/submission-items-s
 }));
 
 jest.mock('../../../../../src/controllers/examination/session/deadlineItems-session', () => ({
-	getDeadlineItems: jest.fn(),
+	getDeadlineItemStillToSubmit: jest.fn(),
 	findDeadlineItemByValue: jest.fn()
 }));
 
@@ -51,12 +51,12 @@ describe('controllers/examination/select-deadline/controller', () => {
 				describe('and there is an active deadline selected', () => {
 					beforeEach(() => {
 						getActiveSubmissionItemKey.mockReturnValue(mockActiveSubmissionKey);
-						getDeadlineItems.mockReturnValue(mockDeadlineItems);
+						getDeadlineItemStillToSubmit.mockReturnValue(mockDeadlineItems);
 						markActiveDeadlineItemAsChecked.mockReturnValue(mockDeadlineItemsWithChecked);
 						getSelectDeadline(req, res);
 					});
 					it('should call the functions', () => {
-						expect(getDeadlineItems).toHaveBeenCalledWith(mockSession);
+						expect(getDeadlineItemStillToSubmit).toHaveBeenCalledWith(mockSession);
 						expect(getActiveSubmissionItemKey).toHaveBeenCalledWith(mockSession);
 						expect(markActiveDeadlineItemAsChecked).toHaveBeenCalledWith(
 							mockDeadlineItems,
@@ -78,13 +78,13 @@ describe('controllers/examination/select-deadline/controller', () => {
 				describe('and there is no deadline selected already', () => {
 					beforeEach(() => {
 						getActiveSubmissionItemKey.mockReturnValue();
-						getDeadlineItems.mockReturnValue(mockDeadlineItems);
+						getDeadlineItemStillToSubmit.mockReturnValue(mockDeadlineItems);
 						markActiveDeadlineItemAsChecked.mockReturnValue(mockDeadlineItemsWithChecked);
 						getSelectDeadline(req, res);
 					});
 					it('should call the functions', () => {
 						expect(getActiveSubmissionItemKey).toHaveBeenCalledWith(mockSession);
-						expect(getDeadlineItems).toHaveBeenCalledWith(mockSession);
+						expect(getDeadlineItemStillToSubmit).toHaveBeenCalledWith(mockSession);
 						expect(markActiveDeadlineItemAsChecked).not.toHaveBeenCalled();
 					});
 					it('should render the page without any checked deadlines', () => {

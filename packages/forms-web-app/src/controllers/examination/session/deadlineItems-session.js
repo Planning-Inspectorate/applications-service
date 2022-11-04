@@ -17,7 +17,21 @@ const getDeadlineItems = (session) => {
 	return examinationSession.deadlineItems;
 };
 
+const getDeadlineItemStillToSubmit = (session) => {
+	const examinationSession = getExaminationSession(session);
+	const deadlineItemsStillToSubmit = [];
+	examinationSession.deadlineItems.forEach((item) => {
+		if (
+			!examinationSession.submissionItems.find((subItem) => subItem.submissionItem === item.text)
+		) {
+			deadlineItemsStillToSubmit.push(item);
+		}
+	});
+	return deadlineItemsStillToSubmit;
+};
+
 module.exports = {
 	findDeadlineItemByValue,
-	getDeadlineItems
+	getDeadlineItems,
+	getDeadlineItemStillToSubmit
 };

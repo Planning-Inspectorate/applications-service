@@ -4,7 +4,8 @@ let {
 
 const {
 	getDeadlineItems,
-	findDeadlineItemByValue
+	findDeadlineItemByValue,
+	getDeadlineItemStillToSubmit
 } = require('../../../../../src/controllers/examination/session/deadlineItems-session');
 
 jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
@@ -73,6 +74,47 @@ describe('controllers/examination/session/deadlineItems-session', () => {
 					expect(() => findDeadlineItemByValue(mockSession, mockValue)).toThrow(
 						'No deadline items in session'
 					);
+				});
+			});
+		});
+	});
+	describe('#getDeadlineItemStillToSubmit', () => {
+		describe('When getting the remaining deadline items to submit', () => {
+			describe('and there are deadline items remaining to submit', () => {
+				const mockSession = 'mock session';
+				const mockExaminationSession = {
+					deadlineItems: [{ text: 'should be removed' }, { text: 'keep me' }],
+					submissionItems: [{ submissionItem: 'should be removed' }]
+				};
+				let result;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					result = getDeadlineItemStillToSubmit(mockSession);
+				});
+				it('should return a list of remaining deadline items', () => {
+					expect(result).toEqual([
+						{
+							text: 'keep me'
+						}
+					]);
+				});
+			});
+			describe('and there are NO deadline items remaining to submit', () => {
+				const mockSession = 'mock session';
+				const mockExaminationSession = {
+					deadlineItems: [{ text: 'should be removed' }, { text: 'should be removed as well' }],
+					submissionItems: [
+						{ submissionItem: 'should be removed' },
+						{ submissionItem: 'should be removed as well' }
+					]
+				};
+				let result;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					result = getDeadlineItemStillToSubmit(mockSession);
+				});
+				it('should return an empty array', () => {
+					expect(result).toEqual([]);
 				});
 			});
 		});

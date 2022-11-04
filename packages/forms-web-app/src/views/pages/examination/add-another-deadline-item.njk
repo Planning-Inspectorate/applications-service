@@ -1,0 +1,110 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set backLinkUrl = backLinkUrl %}
+{% set pageTitle = pageTitle %}
+{% set hintHtml = '<legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">' + hintHtml + '</legend>' %}
+
+{% block pageTitle %}
+	{% if errors %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
+	{{ pageTitle }}
+{% endblock %}
+
+{% block content %}
+	{% if errorSummary %}
+		{{ govukErrorSummary({
+			titleText: "There is a problem",
+			errorList: errorSummary
+		}) }}
+	{% endif %}
+
+	<main class="govuk-main-wrapper govuk-main-wrapper--auto-spacing" id="main-content" role="main">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-two-thirds">
+				<h1 class="govuk-heading-l">{{ title }}</h1>
+				<div class="govuk-form-group">
+					<dl class="govuk-summary-list hmrc-list-with-actions hmrc-list-with-actions--long">
+						{% for item in submissionItems %}
+							<div class="govuk-summary-list__row">
+								<div class="govuk-grid-column-two-thirds">
+									<dd class="govuk-summary-list__value">
+										<ul class="govuk-list">
+											{{ item.submissionItem }}
+										</ul>
+									</dd>
+								</div>
+								<div class="govuk-grid-column-one-third">
+									<dd class="govuk-summary-list__actions hmrc-summary-list__actions">
+										<ul class="govuk-summary-list__actions-list">
+											<li class="govuk-summary-list__actions-list-item">
+												<a class="change-item" href="{{ item.changeUrl }}" data-loop-position="0">
+													<span aria-hidden="true">Change</span><span
+														class="govuk-visually-hidden">Change deadline data for </span>
+												</a>
+											</li>
+											<li class="govuk-summary-list__actions-list-item">
+												<a class="govuk-link" href="{{ item.removeUrl }}">
+													<span aria-hidden="true">Remove</span><span class="govuk-visually-hidden">Remove item</span>
+												</a>
+											</li>
+										</ul>
+									</dd>
+								</div>
+							</div>
+						{% endfor %}
+					</dl>
+				</div>
+				{% if moreDeadlineItems.hasMoreDeadlineItemsToSubmit %}
+				<form action="" method="POST" novalidate>
+					{{ govukRadios({
+						attributes: { "data-cy": id },
+						classes: "govuk-radios--inline",
+						idPrefix: id,
+						name: id,
+						errorMessage: errors[id] and {
+							text: errors[id].msg
+						},
+						fieldset: {
+							legend: {
+								text: '',
+								isPageHeading: true,
+								classes: "govuk-fieldset__legend--m"
+							}
+						},
+						hint: {
+							html: hintHtml
+						},
+						items: options
+					}) }}
+					{{ govukButton({
+						attributes: { "data-cy": "button-submit-and-continue" },
+						text: "Continue",
+						type: "Submit"
+					}) }}
+				</form>
+				{% else %}
+				<div class="govuk-warning-text">
+					<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+					<strong class="govuk-warning-text__text">
+						<span class="govuk-warning-text__assistive">Warning</span>
+						{{ moreDeadlineItems.message }}
+					</strong>
+				</div>
+				<form action="{{ moreDeadlineItems.continueLink }}" method="GET" novalidate>
+					{{ govukButton({
+						attributes: { "data-cy": "button-submit-and-continue" },
+						text: "Continue",
+						type: "Submit"
+					}) }}
+					{% endif %}
+					<form>
+			</div>
+		</div>
+	</main>
+
+{% endblock %}
