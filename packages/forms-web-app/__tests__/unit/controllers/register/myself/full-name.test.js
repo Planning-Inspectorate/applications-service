@@ -44,6 +44,56 @@ describe('controllers/register/myself/full-name', () => {
 
 			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.OVER_18}`);
 		});
+		it(`'should send sanitized full name response if origin is sanitized`, async () => {
+			const fullName = 'test';
+			const mockRequest = {
+				...req,
+				body: {
+					'full-name': fullName,
+					origin: 'sanitise-form-post'
+				},
+				query: {
+					mode: ''
+				}
+			};
+
+			let resValue = '';
+			const mockResult = {
+				send: (value) => {
+					resValue = value;
+				}
+			};
+			await fullNameController.postFullName(mockRequest, mockResult);
+
+			expect(resValue).toEqual({
+				error: false,
+				url: `/${VIEW.REGISTER.MYSELF.OVER_18}`
+			});
+		});
+		it('should send sanitized full name response with errors', async () => {
+			const mockRequest = {
+				...req,
+				body: {
+					errorSummary: [{ text: 'There were errors here', href: '#' }],
+					errors: { a: 'b' },
+					origin: 'sanitise-form-post'
+				}
+			};
+
+			let resValue = '';
+			const mockResult = {
+				send: (value) => {
+					resValue = value;
+				}
+			};
+			await fullNameController.postFullName(mockRequest, mockResult);
+
+			expect(resValue).toEqual({
+				error: true,
+				url: `/${VIEW.REGISTER.MYSELF.FULL_NAME}`
+			});
+		});
+
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {
 				...req,
