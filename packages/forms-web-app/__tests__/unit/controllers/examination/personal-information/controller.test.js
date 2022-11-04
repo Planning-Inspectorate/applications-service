@@ -14,7 +14,16 @@ let {
 let {
 	addKeyValueToActiveSubmissionItem
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
+const {
+	clearAllPersonalInformationFlags
+} = require('../../../../../src/controllers/examination/personal-information-which/utils/savePersonalInformationFlags');
 
+jest.mock(
+	'../../../../../src/controllers/examination/personal-information-which/utils/savePersonalInformationFlags',
+	() => ({
+		clearAllPersonalInformationFlags: jest.fn()
+	})
+);
 jest.mock(
 	'../../../../../src/controllers/examination/personal-information/utils/page-data',
 	() => ({
@@ -101,6 +110,7 @@ describe('controllers/examination/personal-information/controller', () => {
 					};
 					getPageData.mockReturnValue(mockPageDataValue);
 					getRedirectUrl.mockReturnValue(mockRedirectUrl);
+					clearAllPersonalInformationFlags.mockReturnValue();
 					postPersonalInformation(req, res);
 				});
 				it('should call the functions', () => {
@@ -115,6 +125,25 @@ describe('controllers/examination/personal-information/controller', () => {
 						mockPageDataValue.id,
 						mockPageDataIdValue
 					);
+				});
+				it('should redirect to the next page', () => {
+					expect(res.redirect).toHaveBeenCalledWith(mockRedirectUrl);
+				});
+			});
+			describe('and the response is NO', () => {
+				const mockPageDataIdValue = 'no';
+				const mockRedirectUrl = 'redirect url';
+				beforeEach(() => {
+					req.body = {
+						[mockPageDataValue.id]: mockPageDataIdValue
+					};
+					getPageData.mockReturnValue(mockPageDataValue);
+					getRedirectUrl.mockReturnValue(mockRedirectUrl);
+					clearAllPersonalInformationFlags.mockReturnValue();
+					postPersonalInformation(req, res);
+				});
+				it('should clear all the personal information stored', () => {
+					expect(clearAllPersonalInformationFlags).toHaveBeenCalledWith(mockSession);
 				});
 				it('should redirect to the next page', () => {
 					expect(res.redirect).toHaveBeenCalledWith(mockRedirectUrl);
