@@ -1,9 +1,5 @@
 const { VIEW } = require('../../../lib/views');
-
-function sanitiseFormPostResponse(error, url) {
-	this.error = error;
-	this.url = url;
-}
+const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post.js');
 
 exports.getFullName = (req, res) => {
 	res.render(VIEW.REGISTER.MYSELF.FULL_NAME, { fullName: req.session.mySelfRegdata['full-name'] });

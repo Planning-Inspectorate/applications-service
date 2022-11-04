@@ -1,14 +1,10 @@
 const { VIEW } = require('../../../lib/views');
+const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post.js');
 const {
 	postRegistrationData,
 	postCommentsData
 } = require('../../../services/registration.service');
 const config = require('../../../config');
-
-function sanitiseFormPostResponse(error, url) {
-	this.error = error;
-	this.url = url;
-}
 
 exports.getComments = (req, res) => {
 	const { comment } = req.session;
