@@ -20,12 +20,12 @@ const getDeadlineItems = (session) => {
 const getDeadlineItemStillToSubmit = (session) => {
 	const examinationSession = getExaminationSession(session);
 	const deadlineItemsStillToSubmit = [];
-	examinationSession.deadlineItems.forEach((item) => {
-		if (
-			!examinationSession.submissionItems.find((subItem) => subItem.submissionItem === item.text)
-		) {
+	const localDeadlineItems = [...examinationSession.deadlineItems];
+	const localSubmissionItems = examinationSession.submissionItems || [];
+
+	localDeadlineItems.forEach((item) => {
+		if (!localSubmissionItems.find((subItem) => subItem.submissionItem === item.text))
 			deadlineItemsStillToSubmit.push(item);
-		}
 	});
 	return deadlineItemsStillToSubmit;
 };
