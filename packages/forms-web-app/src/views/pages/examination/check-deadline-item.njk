@@ -7,25 +7,25 @@
 {% set pageTitle = pageTitle %}
 
 {% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
+	{% if errors %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
 
-  {{ pageTitle }}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1>{{ title }}</h1>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1>{{ title }}</h1>
 
-      {{ govukSummaryList({
-        rows: summaryList
-      }) }}
+			{{ govukSummaryList({
+				rows: summaryList
+			}) }}
 
-      <a href="/" class="govuk-button">
-        Continue
-      </a>
-    </div>
-  </div>
+			<a href="add-another-deadline-item" class="govuk-button">
+				Continue
+			</a>
+		</div>
+	</div>
 {% endblock %}

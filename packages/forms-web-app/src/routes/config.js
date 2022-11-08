@@ -262,7 +262,7 @@ const routesConfig = {
 				name: 'Deadline item',
 				onError: {
 					message: {
-						isEmpty: 'Select an item'
+						isEmpty: 'Select yes if you want to add another deadline item'
 					}
 				},
 				route: '/select-deadline-item',
@@ -334,6 +334,20 @@ const routesConfig = {
 				},
 				route: '/your-interested-party-number',
 				view: 'pages/examination/your-interested-party-number'
+			},
+			addAnotherDeadlineItem: {
+				id: 'examination-add-another-deadline-item',
+				name: 'You added one deadline item',
+				title: 'You added one deadline item',
+				pageTitle: 'You added one deadline item',
+				route: '/add-another-deadline-item',
+				view: 'pages/examination/add-another-deadline-item',
+				comment: '',
+				onError: {
+					message: {
+						isEmpty: 'Select yes if you want to add another deadline item'
+					}
+				}
 			}
 		}
 	},
