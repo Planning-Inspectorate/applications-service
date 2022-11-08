@@ -117,6 +117,43 @@ describe('controllers/examination/session/deadlineItems-session', () => {
 					expect(result).toEqual([]);
 				});
 			});
+			describe('and submission items is empty', () => {
+				const mockSession = 'mock session';
+				const deadlineItems = [
+					{ text: 'should be removed' },
+					{ text: 'should be removed as well' }
+				];
+				const mockExaminationSession = {
+					deadlineItems,
+					submissionItems: []
+				};
+				let result;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					result = getDeadlineItemStillToSubmit(mockSession);
+				});
+				it('should return the deadline items', () => {
+					expect(result).toEqual(deadlineItems);
+				});
+			});
+			describe('and there are No submission items', () => {
+				const mockSession = 'mock session';
+				const deadlineItems = [
+					{ text: 'should be removed' },
+					{ text: 'should be removed as well' }
+				];
+				const mockExaminationSession = {
+					deadlineItems
+				};
+				let result;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					result = getDeadlineItemStillToSubmit(mockSession);
+				});
+				it('should return the deadline items', () => {
+					expect(result).toEqual(deadlineItems);
+				});
+			});
 		});
 	});
 });
