@@ -24,7 +24,7 @@ CREATE TABLE ipclive.wp_ipc_advice (
   KEY `CaseReference` (`CaseReference`),
   KEY `AdviceID` (`AdviceID`),
   KEY `Section51Enquiry` (`Section51Enquiry`)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 INSERT INTO ipclive.wp_ipc_advice (`AdviceID`,`FolderName`,`EnquiryDate`,`EnquiryMethod`,`IndustrySector`,`CaseReference`,`EnqFirstName`,`EnqLastName`,`EnquiryOrganisation`,`EnquiryDetail`,`AdviceGiven`,`RespondedBy`,`Section51Enquiry`,`InitiatedDate`,`DateEnquiryReceived`,`DateAdviceGiven`,`Attachments`,`DateCreated`,`DateLastModified`) VALUES ('WA033004-Advice-00001',NULL,NULL,'Email',NULL,'EN010120','Vijaya','Vasantha','Test General Advice','This is a general advice test republish again and again to test the general advie under register of advices and not under the case as the case is not yet published to the NI Website.','This is a general advice test republish again and again to test the general advie under register of advices and not under the case as the case is not yet published to the NI Website.',NULL,'Yes',NULL,NULL,'2020-03-20',NULL,'2020-03-20 08:00:26','2022-08-05 08:24:31');

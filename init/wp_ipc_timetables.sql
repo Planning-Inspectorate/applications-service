@@ -17,7 +17,7 @@ CREATE TABLE `wp_ipc_timetables` (
   KEY `unique_id` (`unique_id`),
   KEY `type_of_event` (`type_of_event`),
   KEY `timetable_type` (`timetable_type`)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO ipclive.wp_ipc_timetables (`unique_id`,`case_reference`,`title`,`description`,`date_of_event`,`timetable_type`,`type_of_event`,`location`,`date_created`,`date_last_modified`,`dateTimeDeadlineStart`,`sourceSystem`) VALUES ('EN010009-4069','EN010009','Deadline 1A','Deadline 1A\r\n\r\nDeadline for receipt by the ExA of:\r\n* Applicant’s comments on Relevant Representations (RRs)','2022-08-04 23:59:00','Exams','Deadline','','2022-07-26 15:00:26','2022-07-26 15:00:26','2022-07-26 00:00:00','HORIZON');
 INSERT INTO ipclive.wp_ipc_timetables (`unique_id`,`case_reference`,`title`,`description`,`date_of_event`,`timetable_type`,`type_of_event`,`location`,`date_created`,`date_last_modified`,`dateTimeDeadlineStart`,`sourceSystem`) VALUES ('EN010009-4068','EN010009','Issue by ExA','Issue by ExA\r\n\r\n• Examination Timetable\r\n• ExA’s Written Questions (ExQ1)','2022-07-26 00:00:00','Events','Procedural Decision','','2022-07-26 15:00:25','2022-07-26 15:00:25','0001-01-01 00:00:00','HORIZON');
