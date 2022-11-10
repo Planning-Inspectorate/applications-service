@@ -48,9 +48,25 @@
 												</a>
 											</li>
 											<li class="govuk-summary-list__actions-list-item">
-												<a class="govuk-link" href="{{ item.removeUrl }}">
-													<span aria-hidden="true">Remove</span><span class="govuk-visually-hidden">Remove item</span>
-												</a>
+												<form
+													name="removeDeadlineItem"
+													action="{{ item.remove.url }}"
+													method="post"
+												>
+													<button
+														name="itemIdToDelete"
+														type="submit"
+														class="ui-link-button"
+														value="{{ item.remove.itemId }}"
+													>
+									<span class="govuk-visually-hidden">
+										Remove
+									</span>
+														<span class="govuk-link">
+										Remove
+									</span>
+													</button>
+												</form>
 											</li>
 										</ul>
 									</dd>

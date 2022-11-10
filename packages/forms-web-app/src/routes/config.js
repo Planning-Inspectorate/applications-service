@@ -348,6 +348,20 @@ const routesConfig = {
 						isEmpty: 'Select yes if you want to add another deadline item'
 					}
 				}
+			},
+			selectIfYouWantToDeleteData: {
+				id: 'examination-select-if-want-to-delete-data',
+				pageTitle: 'Are you sure you want to delete data for this item?',
+				route: '/select-if-want-to-delete-data',
+				markDeadlineItemForDelete: {
+					route: '/mark-deadline-item-to-delete'
+				},
+				view: 'pages/examination/select-if-want-to-delete-data',
+				onError: {
+					message: {
+						isEmpty: 'Select yes if you need to delete data for this item'
+					}
+				}
 			}
 		}
 	},

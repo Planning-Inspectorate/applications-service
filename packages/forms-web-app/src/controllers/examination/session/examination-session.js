@@ -4,4 +4,6 @@ const getExaminationSession = (session) => {
 	return examinationSession;
 };
 
-module.exports = { getExaminationSession };
+module.exports = {
+	getExaminationSession
+};

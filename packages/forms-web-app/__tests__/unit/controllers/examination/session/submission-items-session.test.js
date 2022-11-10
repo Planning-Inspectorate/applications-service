@@ -3,7 +3,8 @@ const {
 	getActiveSubmissionItemFiles,
 	getActiveSubmissionItem,
 	setSubmissionItem,
-	getSubmissionFilesLength
+	getSubmissionFilesLength,
+	deleteSubmissionItem
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 const {
@@ -222,6 +223,45 @@ describe('controllers/examination/session/examination-session)', () => {
 				});
 				it('should calc the length of the deadline files that do have files', () => {
 					expect(result).toEqual(2);
+				});
+			});
+		});
+	});
+
+	describe('#deleteSubmissionItem', () => {
+		describe('When deleting a submission item', () => {
+			const mockSession = {};
+			const mockItemIdToDelete = 0;
+			const mockSubmissionItems = [{ itemId: 0 }];
+			const mockExaminationSession = {
+				submissionItems: mockSubmissionItems
+			};
+			describe('and the item is on the array', () => {
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					deleteSubmissionItem(mockSession, mockItemIdToDelete);
+				});
+				it('should remove the item from the array', () => {
+					expect(mockExaminationSession.submissionItems).toEqual([]);
+				});
+			});
+			describe('and the item is on the array with other items', () => {
+				beforeEach(() => {
+					mockExaminationSession.submissionItems.push({ itemId: 1 });
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					deleteSubmissionItem(mockSession, mockItemIdToDelete);
+				});
+				it('should remove the item from the array', () => {
+					expect(mockExaminationSession.submissionItems).toEqual([{ itemId: 1 }]);
+				});
+			});
+			describe('and the item is not in the array', () => {
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					deleteSubmissionItem(mockSession, mockItemIdToDelete);
+				});
+				it('should remain the same', () => {
+					expect(mockSubmissionItems).toEqual(mockSubmissionItems);
 				});
 			});
 		});
