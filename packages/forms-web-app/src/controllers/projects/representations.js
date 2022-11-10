@@ -50,6 +50,8 @@ exports.getRepresentations = async (req, res) => {
 			});
 		});
 
+		if (!representations) return res.status(500).render('error/unhandled-exception');
+
 		representations.forEach((repesentation) => {
 			repesentation.DateRrepReceived = formatDate(repesentation.DateRrepReceived.split('T')[0]);
 			repesentation.RepFrom = titleCase(repesentation.RepFrom);
@@ -75,7 +77,9 @@ exports.getRepresentations = async (req, res) => {
 exports.getRepresentation = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
 	if (applicationResponse.resp_code === 200) {
-		const representation = await getRepresentation(req.params.id);
+		let representation = await getRepresentation(req.params.id);
+
+		if (!representation) return res.status(500).render('error/unhandled-exception');
 
 		res.render(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: applicationResponse.data.ProjectName,
