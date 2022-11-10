@@ -17,6 +17,11 @@ const {
 exports.getRepresentations = async (req, res) => {
 	const { searchTerm, type } = req.query;
 	const applicationResponse = await getAppData(req.params.case_ref);
+
+	if (applicationResponse.resp_code === 404) {
+		return res.status(404).render('error/not-found');
+	}
+
 	const commentsTypeFilterItems = [];
 
 	const params = {
@@ -32,65 +37,66 @@ exports.getRepresentations = async (req, res) => {
 		const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
 		queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
 	}
-
-	if (applicationResponse.resp_code === 200) {
-		const representationsResponse = await searchRepresentations(params);
-		const respData = representationsResponse.data;
-		const { representations, filters } = respData;
-		const paginationData = getPaginationData(respData);
-		const pageOptions = calculatePageOptions(paginationData);
-		const { typeFilters } = filters;
-
-		typeFilters.forEach((typeFilter) => {
-			const typeFilterName = titleCase(typeFilter.name);
-			commentsTypeFilterItems.push({
-				text: `${typeFilterName} (${typeFilter.count})`,
-				value: typeFilterName,
-				checked: type && type.includes(typeFilterName)
-			});
-		});
-
-		if (!representations) return res.status(500).render('error/unhandled-exception');
-		representations.forEach((repesentation) => {
-			repesentation.DateRrepReceived = formatDate(repesentation.DateRrepReceived.split('T')[0]);
-			repesentation.RepFrom = titleCase(repesentation.RepFrom);
-		});
-
-		res.render(VIEW.PROJECTS.REPRESENTATIONS, {
-			projectName: applicationResponse.data.ProjectName,
-			caseRef: applicationResponse.data.CaseReference,
-			hideProjectInformationLink,
-			hideAllExaminationDocumentsLink,
-			hideRecommendationAndDecisionLink,
-			hideExaminationTimetableLink,
-			representations,
-			paginationData,
-			pageOptions,
-			searchTerm,
-			queryUrl,
-			commentsTypeFilterItems
-		});
+	const representationsResponse = await searchRepresentations(params);
+	if (representationsResponse.resp_code === 404) {
+		return res.status(404).render('error/not-found');
 	}
+
+	const respData = representationsResponse.data;
+	const { representations, filters } = respData;
+	const paginationData = getPaginationData(respData);
+	const pageOptions = calculatePageOptions(paginationData);
+	const { typeFilters } = filters;
+
+	typeFilters.forEach((typeFilter) => {
+		const typeFilterName = titleCase(typeFilter.name);
+		commentsTypeFilterItems.push({
+			text: `${typeFilterName} (${typeFilter.count})`,
+			value: typeFilterName,
+			checked: type && type.includes(typeFilterName)
+		});
+	});
+
+	representations.forEach((repesentation) => {
+		repesentation.DateRrepReceived = formatDate(repesentation.DateRrepReceived.split('T')[0]);
+		repesentation.RepFrom = titleCase(repesentation.RepFrom);
+	});
+
+	res.render(VIEW.PROJECTS.REPRESENTATIONS, {
+		projectName: applicationResponse.data.ProjectName,
+		caseRef: applicationResponse.data.CaseReference,
+		hideProjectInformationLink,
+		hideAllExaminationDocumentsLink,
+		hideRecommendationAndDecisionLink,
+		hideExaminationTimetableLink,
+		representations,
+		paginationData,
+		pageOptions,
+		searchTerm,
+		queryUrl,
+		commentsTypeFilterItems
+	});
 };
 
 exports.getRepresentation = async (req, res) => {
 	const applicationResponse = await getAppData(req.params.case_ref);
-	if (applicationResponse.resp_code === 200) {
-		const representation = await getRepresentation(req.params.id);
-		if (!representation) return res.status(500).render('error/unhandled-exception');
+	const representationResponse = await getRepresentation(req.params.id);
 
-		res.render(VIEW.PROJECTS.REPRESENTATION, {
-			projectName: applicationResponse.data.ProjectName,
-			caseRef: applicationResponse.data.CaseReference,
-			hideProjectInformationLink,
-			hideAllExaminationDocumentsLink,
-			hideRecommendationAndDecisionLink,
-			hideExaminationTimetableLink,
-			RepFrom: titleCase(representation.data.RepFrom),
-			PersonalName: representation.data.PersonalName,
-			RepresentationRedacted: representation.data.RepresentationRedacted,
-			DateRrepReceived: representation.data.DateRrepReceived,
-			attachments: representation.data.attachments
-		});
+	if (applicationResponse.resp_code === 404 || representationResponse.resp_code === 404) {
+		return res.status(404).render('error/not-found');
 	}
+
+	res.render(VIEW.PROJECTS.REPRESENTATION, {
+		projectName: applicationResponse.data.ProjectName,
+		caseRef: applicationResponse.data.CaseReference,
+		hideProjectInformationLink,
+		hideAllExaminationDocumentsLink,
+		hideRecommendationAndDecisionLink,
+		hideExaminationTimetableLink,
+		RepFrom: titleCase(representationResponse.data.RepFrom),
+		PersonalName: representationResponse.data.PersonalName,
+		RepresentationRedacted: representationResponse.data.RepresentationRedacted,
+		DateRrepReceived: representationResponse.data.DateRrepReceived,
+		attachments: representationResponse.data.attachments
+	});
 };
