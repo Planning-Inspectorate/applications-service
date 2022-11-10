@@ -31,7 +31,8 @@ const {
 				selectFile,
 				submittingFor,
 				yourInterestedPartyNumber,
-				addAnotherDeadlineItem
+				addAnotherDeadlineItem,
+				selectIfYouWantToDeleteData
 			}
 		}
 	}
@@ -88,6 +89,12 @@ const {
 	getAddAnotherDeadlineItem,
 	postAddAnotherDeadlineItem
 } = require('../../controllers/examination/add-another-deadline-item/controller');
+
+const {
+	getSelectIfYouWantToDeleteData,
+	postSelectIfYouWantToDeleteData,
+	postMarkDeadlineItemForDelete
+} = require('../../controllers/examination/select-if-want-to-delete-data/controller');
 
 const router = express.Router();
 
@@ -253,6 +260,27 @@ router.post(
 	validateNotEmpty(addAnotherDeadlineItem),
 	validationErrorHandler,
 	postAddAnotherDeadlineItem
+);
+
+router.get(addAnotherDeadlineItem.route, getAddAnotherDeadlineItem);
+router.post(
+	addAnotherDeadlineItem.route,
+	validateNotEmpty(addAnotherDeadlineItem),
+	validationErrorHandler,
+	postAddAnotherDeadlineItem
+);
+
+router.get(selectIfYouWantToDeleteData.route, getSelectIfYouWantToDeleteData);
+router.post(
+	selectIfYouWantToDeleteData.route,
+	validateNotEmpty(selectIfYouWantToDeleteData),
+	validationErrorHandler,
+	postSelectIfYouWantToDeleteData
+);
+
+router.post(
+	selectIfYouWantToDeleteData.markDeadlineItemForDelete.route,
+	postMarkDeadlineItemForDelete
 );
 
 module.exports = router;
