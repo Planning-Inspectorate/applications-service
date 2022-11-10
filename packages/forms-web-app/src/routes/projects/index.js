@@ -1,6 +1,7 @@
 const express = require('express');
 
 const config = require('../../config');
+const { asyncRoute } = require('../../utils/async-route');
 const {
 	routesConfig: {
 		project: { pages }
@@ -56,8 +57,14 @@ if (allowDocumentLibrary) {
 }
 
 if (allowRepresentation) {
-	router.get('/:case_ref/representations', representationsController.getRepresentations);
-	router.get('/:case_ref/representations/:id', representationsController.getRepresentation);
+	router.get(
+		'/:case_ref/representations',
+		asyncRoute(representationsController.getRepresentations)
+	);
+	router.get(
+		'/:case_ref/representations/:id',
+		asyncRoute(representationsController.getRepresentation)
+	);
 }
 
 module.exports = router;
