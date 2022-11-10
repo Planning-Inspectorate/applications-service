@@ -30,7 +30,6 @@ const postAddAnotherDeadlineItem = (req, res) => {
 
 		if (errors[addAnotherDeadlineItem.id] || Object.keys(errors).length > 0) {
 			const setPageData = getPageData(session);
-			console.log('Errors: ', errors, errorSummary);
 			return res.render(addAnotherDeadlineItem.view, {
 				...setPageData,
 				errors,

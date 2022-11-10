@@ -32,7 +32,9 @@ describe('#mapSubmissionItems', () => {
 					submissionItems: [
 						{
 							changeUrl: '/examination/check-your-deadline-item',
-							removeUrl: '/examination/select-if-want-to-delete-data',
+							remove: {
+								url: '/examination/mark-deadline-item-to-delete'
+							},
 							submissionItem: 'mock submission item'
 						}
 					],
@@ -56,12 +58,16 @@ describe('#mapSubmissionItems', () => {
 					submissionItems: [
 						{
 							changeUrl: '/examination/check-your-deadline-item',
-							removeUrl: '/examination/select-if-want-to-delete-data',
+							remove: {
+								url: '/examination/mark-deadline-item-to-delete'
+							},
 							submissionItem: 'mock submission item'
 						},
 						{
 							changeUrl: '/examination/check-your-deadline-item',
-							removeUrl: '/examination/select-if-want-to-delete-data',
+							remove: {
+								url: '/examination/mark-deadline-item-to-delete'
+							},
 							submissionItem: 'mock another submission item'
 						}
 					],

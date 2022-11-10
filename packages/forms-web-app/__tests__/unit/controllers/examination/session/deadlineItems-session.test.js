@@ -5,7 +5,9 @@ let {
 const {
 	getDeadlineItems,
 	findDeadlineItemByValue,
-	getDeadlineItemStillToSubmit
+	getDeadlineItemStillToSubmit,
+	setDeadlineItemToDelete,
+	getDeadlineItemToDelete
 } = require('../../../../../src/controllers/examination/session/deadlineItems-session');
 
 jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
@@ -152,6 +154,66 @@ describe('controllers/examination/session/deadlineItems-session', () => {
 				});
 				it('should return the deadline items', () => {
 					expect(result).toEqual(deadlineItems);
+				});
+			});
+		});
+	});
+
+	describe('#setDeadlineItemToDelete', () => {
+		describe('When setting the deadline item to delete', () => {
+			describe('and the item id is provided', () => {
+				let mockExaminationSession = {};
+				const mockSession = {};
+				let deleteItemId = 0;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					setDeadlineItemToDelete(mockSession, deleteItemId);
+				});
+				it('should set the deadline item to delete on the examination session', () => {
+					expect(mockExaminationSession).toEqual({
+						deadlineItemToDelete: 0
+					});
+				});
+			});
+			describe('and the item id is NOT provided', () => {
+				const mockExaminationSession = {};
+				const mockSession = {};
+				let deleteItemId;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+				});
+				it('should set the deadline item to delete on the examination session', () => {
+					expect(() => setDeadlineItemToDelete(mockSession, deleteItemId)).toThrow(
+						'No item id to delete'
+					);
+				});
+			});
+		});
+	});
+	describe('#getDeadlineItemToDelete', () => {
+		describe('When getting the deadline item to delete from session', () => {
+			describe('and the deadline itemId to delete exists', () => {
+				const mockSession = {};
+				const mockExaminationSession = { deadlineItemToDelete: 0 };
+				let result;
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+					result = getDeadlineItemToDelete(mockSession);
+				});
+				it('should return the deadline item', () => {
+					expect(result).toEqual(0);
+				});
+			});
+			describe('and the deadline itemId to delete does NOT exists', () => {
+				const mockSession = {};
+				const mockExaminationSession = {};
+				beforeEach(() => {
+					getExaminationSession.mockReturnValue(mockExaminationSession);
+				});
+				it('should return the deadline item', () => {
+					expect(() => getDeadlineItemToDelete(mockSession)).toThrow(
+						'No deadline itemID to delete'
+					);
 				});
 			});
 		});

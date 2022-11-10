@@ -17,6 +17,20 @@ const getDeadlineItems = (session) => {
 	return examinationSession.deadlineItems;
 };
 
+const setDeadlineItemToDelete = (session, itemId) => {
+	if (itemId === undefined) throw new Error('No item id to delete');
+
+	const examinationSession = getExaminationSession(session);
+	examinationSession.deadlineItemToDelete = itemId;
+};
+
+const getDeadlineItemToDelete = (session) => {
+	const examinationSession = getExaminationSession(session);
+	if (examinationSession.deadlineItemToDelete === undefined)
+		throw new Error('No deadline itemID to delete');
+	return examinationSession.deadlineItemToDelete;
+};
+
 const getDeadlineItemStillToSubmit = (session) => {
 	const examinationSession = getExaminationSession(session);
 	const deadlineItemsStillToSubmit = [];
@@ -33,5 +47,7 @@ const getDeadlineItemStillToSubmit = (session) => {
 module.exports = {
 	findDeadlineItemByValue,
 	getDeadlineItems,
-	getDeadlineItemStillToSubmit
+	getDeadlineItemStillToSubmit,
+	getDeadlineItemToDelete,
+	setDeadlineItemToDelete
 };
