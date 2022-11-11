@@ -3,7 +3,7 @@
 const logger = require('./lib/logger');
 const server = require('./server');
 
-async function main() {
+function main() {
 	server();
 }
 

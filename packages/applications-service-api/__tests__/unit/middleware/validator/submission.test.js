@@ -16,7 +16,7 @@ describe('submission request validator', () => {
 			query: {}
 		};
 
-		it('returns error if request does not contain required properties', async () => {
+		it('returns error if request does not contain required properties', () => {
 			expect(() => validateRequest(request)).toThrowError(
 				expect.objectContaining({
 					code: 400,
@@ -33,7 +33,7 @@ describe('submission request validator', () => {
 			);
 		});
 
-		it('returns error if request does not representation or file', async () => {
+		it('returns error if request does not representation or file', () => {
 			expect(() =>
 				validateRequest({
 					...request,
@@ -55,7 +55,7 @@ describe('submission request validator', () => {
 			);
 		});
 
-		it('returns error if request has both representation and file', async () => {
+		it('returns error if request has both representation and file', () => {
 			expect(() =>
 				validateRequest({
 					...request,
@@ -79,7 +79,7 @@ describe('submission request validator', () => {
 			);
 		});
 
-		it('returns error if request contains file of unsupported type', async () => {
+		it('returns error if request contains file of unsupported type', () => {
 			expect(() =>
 				validateRequest({
 					...request,
@@ -105,7 +105,7 @@ describe('submission request validator', () => {
 			);
 		});
 
-		it('returns error if request contains representation larger than max limit', async () => {
+		it('returns error if request contains representation larger than max limit', () => {
 			const generateLongRepresentation = () => [...Array(65235)].map(() => 'a').join('');
 			expect(() =>
 				validateRequest({

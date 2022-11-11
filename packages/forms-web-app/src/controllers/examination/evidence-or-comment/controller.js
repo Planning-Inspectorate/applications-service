@@ -26,7 +26,7 @@ const pageData = {
 	title: evidenceOrComment.title
 };
 
-const getEvidenceOrComment = async (req, res) => {
+const getEvidenceOrComment = (req, res) => {
 	try {
 		const setPageData = { ...pageData };
 
@@ -47,7 +47,7 @@ const getEvidenceOrComment = async (req, res) => {
 	}
 };
 
-const postEvidenceOrComment = async (req, res) => {
+const postEvidenceOrComment = (req, res) => {
 	try {
 		const { body, session } = req;
 

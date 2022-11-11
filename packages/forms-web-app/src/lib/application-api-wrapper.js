@@ -76,15 +76,15 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
 	}
 }
 
-exports.getProjectData = async (case_ref) => {
+exports.getProjectData = (case_ref) => {
 	return handler('getProjectData', `/api/v1/applications/${case_ref}`);
 };
 
-exports.getAllProjectList = async () => {
+exports.getAllProjectList = () => {
 	return handler('getAllProjectList', '/api/v1/applications');
 };
 
-exports.searchDocumentList = async (case_ref, search_data) => {
+exports.searchDocumentList = (case_ref, search_data) => {
 	const documentServiceApiUrl = `/api/v1/documents/${case_ref}`;
 	const method = 'POST';
 	return handler('searchDocumentList', documentServiceApiUrl, method, {
@@ -92,7 +92,7 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 	});
 };
 
-exports.searchRepresentations = async (params) => {
+exports.searchRepresentations = (params) => {
 	const queryString = Object.keys(params)
 		.map((key) => `${key}=${params[key]}`)
 		.join('&');
@@ -101,7 +101,7 @@ exports.searchRepresentations = async (params) => {
 	return handler('searchRepresentations', representationServiceApiUrl, method);
 };
 
-exports.searchDocumentListV2 = async (params) => {
+exports.searchDocumentListV2 = (params) => {
 	const queryString = queryStringBuilder(params, [
 		'caseRef',
 		'classification',
@@ -116,7 +116,7 @@ exports.searchDocumentListV2 = async (params) => {
 	return handler('searchDocumentListV2', documentServiceApiUrl, method);
 };
 
-exports.postRegistration = async (registeration_data) => {
+exports.postRegistration = (registeration_data) => {
 	const registrationServiceApiUrl = '/api/v1/interested-party';
 	const method = 'POST';
 	return handler('postRegistration', registrationServiceApiUrl, method, {
@@ -124,7 +124,7 @@ exports.postRegistration = async (registeration_data) => {
 	});
 };
 
-exports.putComments = async (ipRefNo, comments_data) => {
+exports.putComments = (ipRefNo, comments_data) => {
 	const commentsServiceApiUrl = `/api/v1/interested-party/${ipRefNo}/comments`;
 	const method = 'PUT';
 	return handler('putComments', commentsServiceApiUrl, method, {
@@ -132,7 +132,7 @@ exports.putComments = async (ipRefNo, comments_data) => {
 	});
 };
 
-exports.authenticateToken = async (token, email) => {
+exports.authenticateToken = (token, email) => {
 	const authTokenServiceApiUrl = `/api/v1/interested-party/${token}`;
 	const method = 'POST';
 	return handler('authenticateToken', authTokenServiceApiUrl, method, {
@@ -140,9 +140,8 @@ exports.authenticateToken = async (token, email) => {
 	});
 };
 
-exports.getRepresentationById = async (id) => {
+exports.getRepresentationById = (id) => {
 	return handler('getRepresentationById', `/api/v1/representations/${id}`);
 };
 
-exports.getTimetables = async (caseRef) =>
-	handler('getTimetables', `/api/v1/timetables/${caseRef}`);
+exports.getTimetables = (caseRef) => handler('getTimetables', `/api/v1/timetables/${caseRef}`);

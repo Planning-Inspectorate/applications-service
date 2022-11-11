@@ -22,7 +22,7 @@ const pageData = {
 	hint: "We'll use your email address to confirm we've received your submission. We will not publish your email address."
 };
 
-const getEmail = async (req, res) => {
+const getEmail = (req, res) => {
 	const requestSession = req.session;
 	const examinationStorage = requestSession?.[examinationSessionStorageName];
 	const currentView = requestSession?.currentView;
@@ -37,7 +37,7 @@ const getEmail = async (req, res) => {
 	res.render(email.view, pageData);
 };
 
-const postEmail = async (req, res) => {
+const postEmail = (req, res) => {
 	const { body = {} } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	const requestSession = req?.session;

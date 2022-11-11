@@ -1,7 +1,7 @@
 const config = require('../lib/config');
 const db = require('../models');
 
-const getTimetables = async (caseRef) => {
+const getTimetables = (caseRef) => {
 	return db.Timetable.findAndCountAll({
 		where: {
 			case_reference: caseRef

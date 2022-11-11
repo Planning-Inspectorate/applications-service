@@ -75,7 +75,7 @@ describe('scripts/sanitise-form', () => {
 		fetch(fetchConfig.valid);
 		formOne.submit();
 
-		test('redirect url', async () => {
+		test('redirect url', () => {
 			expect(window.location.href).toEqual(fetchConfig.valid.url);
 		});
 	});

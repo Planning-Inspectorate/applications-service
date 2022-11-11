@@ -4,7 +4,7 @@ const { updateSubmission } = require('./submission.service');
 const { md5 } = require('../utils/md5');
 const { textToPdf } = require('../utils/pdf');
 
-const submitUserUploadedFile = async (submission, file) => {
+const submitUserUploadedFile = (submission, file) => {
 	const fileName = buildFileName(file.originalName, submission);
 	const fileData = {
 		name: fileName,
@@ -14,7 +14,7 @@ const submitUserUploadedFile = async (submission, file) => {
 	return submitFile(submission, fileData);
 };
 
-const submitRepresentationFile = async (submission) => {
+const submitRepresentationFile = (submission) => {
 	const fileName = buildRepresentationFileName(submission);
 	const fileData = generateRepresentationPDF(submission.submissionId, submission.representation, fileName);
 

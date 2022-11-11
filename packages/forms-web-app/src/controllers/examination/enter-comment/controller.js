@@ -23,7 +23,7 @@ const pageData = {
 	title: enterComment.name
 };
 
-const getEnterComment = async (req, res) => {
+const getEnterComment = (req, res) => {
 	try {
 		const { session } = req;
 		const setPageData = { ...pageData };
@@ -39,7 +39,7 @@ const getEnterComment = async (req, res) => {
 	}
 };
 
-const postEnterComment = async (req, res) => {
+const postEnterComment = (req, res) => {
 	try {
 		const { body, session } = req;
 		const { errors = {}, errorSummary = [] } = body;

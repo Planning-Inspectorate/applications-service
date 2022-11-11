@@ -20,7 +20,7 @@ const pageData = {
 	values: { backLinkUrl: `${examinationDirectory + submittingFor.route}` }
 };
 
-const getName = async (req, res) => {
+const getName = (req, res) => {
 	const examinationSession = req?.session?.[examinationSessionStorageName];
 
 	const sessionCurrentView = req.session?.currentView;
@@ -39,7 +39,7 @@ const getName = async (req, res) => {
 	res.render(view, pageData.values);
 };
 
-const postName = async (req, res) => {
+const postName = (req, res) => {
 	const { body = {}, session } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	const examinationSession = session?.[examinationSessionStorageName];

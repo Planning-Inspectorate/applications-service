@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 const { searchDocumentList, searchDocumentListV2 } = require('../lib/application-api-wrapper');
 
-const searchDocument = async (case_ref, search_data) => {
+const searchDocument = (case_ref, search_data) => {
 	return searchDocumentList(case_ref, search_data);
 };
 
-const searchDocumentsV2 = async (params) => {
+const searchDocumentsV2 = (params) => {
 	return searchDocumentListV2(params);
 };
 

@@ -31,25 +31,25 @@ describe('controllers/register/type-of-party', () => {
 	});
 
 	describe('forwardPage', () => {
-		it(`should return '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option selected`, async () => {
+		it(`should return '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option selected`, () => {
 			const pageRedirect = typeOfPartyController.forwardPage('myself');
 
 			expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.FULL_NAME);
 		});
 
-		it(`should return '/${VIEW.REGISTER.ORGANISATION.FULL_NAME}' if 2nd option selected`, async () => {
+		it(`should return '/${VIEW.REGISTER.ORGANISATION.FULL_NAME}' if 2nd option selected`, () => {
 			const pageRedirect = typeOfPartyController.forwardPage('organisation');
 
 			expect(pageRedirect).toEqual(VIEW.REGISTER.ORGANISATION.FULL_NAME);
 		});
 
-		it(`should return '/${VIEW.REGISTER.AGENT.FULL_NAME}' if 3rd option selected`, async () => {
+		it(`should return '/${VIEW.REGISTER.AGENT.FULL_NAME}' if 3rd option selected`, () => {
 			const pageRedirect = typeOfPartyController.forwardPage('behalf');
 
 			expect(pageRedirect).toEqual(VIEW.REGISTER.AGENT.FULL_NAME);
 		});
 
-		it(`should return '/${VIEW.REGISTER.TYPE_OF_PARTY}' if it is 'default'`, async () => {
+		it(`should return '/${VIEW.REGISTER.TYPE_OF_PARTY}' if it is 'default'`, () => {
 			const pageRedirect = typeOfPartyController.forwardPage('default');
 
 			expect(pageRedirect).toEqual(VIEW.REGISTER.TYPE_OF_PARTY);

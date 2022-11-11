@@ -14,7 +14,7 @@ const {
 	routesConfig: { project }
 } = require('../../routes/config');
 
-const getHaveYourSay = async (req, res) => {
+const getHaveYourSay = (req, res) => {
 	const { session = { examination: { caseRef: null, name: null } } } = req;
 	const reqExaminationSession = session[examinationSession.name] ?? { caseRef: null };
 

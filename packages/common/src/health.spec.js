@@ -75,7 +75,7 @@ describe('health check configuration', () => {
 			const tasks = [
 				{
 					name: 'passing test',
-					test: async () => true
+					test: () => true
 				}
 			];
 
@@ -95,11 +95,11 @@ describe('health check configuration', () => {
 			const tasks = [
 				{
 					name: 'passing test',
-					test: async () => true
+					test: () => true
 				},
 				{
 					name: 'failing test',
-					test: async () => false
+					test: () => false
 				}
 			];
 
@@ -126,11 +126,11 @@ describe('health check configuration', () => {
 			const tasks = [
 				{
 					name: 'passing test',
-					test: async () => true
+					test: () => true
 				},
 				{
 					name: 'thrown test',
-					test: async () => {
+					test: () => {
 						throw new Error('some-error');
 					}
 				}
@@ -160,7 +160,7 @@ describe('health check configuration', () => {
 			const tasks = [
 				{
 					name: 'passing test',
-					test: async () => true
+					test: () => true
 				},
 				{
 					name: 'timedout test',

@@ -6,7 +6,7 @@ describe('Utils test', () => {
 			const response = 'yay';
 			const timeout = 10;
 
-			const promise = async () => response;
+			const promise = () => Promise.resolve(response);
 
 			await expect(util.promiseTimeout(timeout, promise())).resolves.toEqual(response);
 		});
@@ -15,6 +15,7 @@ describe('Utils test', () => {
 			const err = new Error('some-error');
 			const timeout = 10;
 
+			// eslint-disable-next-line require-await
 			const promise = async () => {
 				throw err;
 			};
