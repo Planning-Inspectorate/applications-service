@@ -7,6 +7,13 @@ const addKeyValueToActiveSubmissionItem = (session, key, value) => {
 	activeSubmissionItem[key] = value;
 };
 
+const deleteSubmissionItem = (session, itemIdToDelete) => {
+	const examinationSession = getExaminationSession(session);
+	examinationSession.submissionItems = examinationSession.submissionItems.filter(
+		(item) => item.itemId !== itemIdToDelete
+	);
+};
+
 const getActiveSubmissionItemFiles = (session) => {
 	const submissionItem = getActiveSubmissionItem(session);
 	if (!submissionItem.files) throw new Error('No files for submission item');
@@ -86,5 +93,6 @@ module.exports = {
 	setSubmissionItem,
 	getSubmissionItemSubmissionType,
 	getActiveSubmissionItemFiles,
-	getSubmissionFilesLength
+	getSubmissionFilesLength,
+	deleteSubmissionItem
 };

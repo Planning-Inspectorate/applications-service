@@ -21,7 +21,7 @@ CREATE TABLE `wp_ipc_submissions` (
   `validated` datetime DEFAULT NULL,
   `formData` text COMMENT 'Should be JSON field, but this MySQL version is unsupported',
   PRIMARY KEY (`id`)
-);
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO ipclive.wp_ipc_submissions (`name`,`email`,`interestedParty`,`iPReference`,`deadline`,`submissionType`,`representation`,`sensitiveData`,`lateSubmission`,`caseReference`,`dateSubmitted`,`exported`,`submissionId`,`submissionIdHash`,`filenameOriginal`,`filename`,`fileSize`,`fileMD5`,`validated`,`formData`) VALUES ('Web Team','webteam@planninginspectorate.gov.uk',1,'AA-12322233','Deadline Two','',NULL,0,0,'BC010033','2022-08-05 15:47:17',NULL,523,NULL,NULL,'Web-Team-Header-Document-523.pdf',NULL,'e7814b876bd7722f4c10ec2058a8d4a8','2022-08-05 15:48:14','{\"submission_content_qu\":\"both\",\"latest_form_stage\":4}');
 INSERT INTO ipclive.wp_ipc_submissions (`name`,`email`,`interestedParty`,`iPReference`,`deadline`,`submissionType`,`representation`,`sensitiveData`,`lateSubmission`,`caseReference`,`dateSubmitted`,`exported`,`submissionId`,`submissionIdHash`,`filenameOriginal`,`filename`,`fileSize`,`fileMD5`,`validated`,`formData`) VALUES ('Web Team','webteam@planninginspectorate.gov.uk',1,'AA-12322233','Deadline Two','Test 1',NULL,0,0,'BC010033','2022-08-05 15:47:43',NULL,523,NULL,'Smalll Test document for Doc upload.docx','Smalll-Test-document-for-Doc-upload-523-1.docx',55688,'b81ab907ee54cb3f7cec5be2e7b00bf6','2022-08-05 15:48:14',NULL);

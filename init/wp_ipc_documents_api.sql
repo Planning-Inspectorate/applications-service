@@ -22,7 +22,7 @@ CREATE TABLE ipclive.wp_ipc_documents_api (
   details VARCHAR(45) NULL,
   last_modified VARCHAR(45) NULL,
   date_created VARCHAR(45) NULL,
-  PRIMARY KEY (id));
+  PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 INSERT INTO ipclive.wp_ipc_documents_api (dataID,personal_name,representative,who_from,case_reference,doc_reference,Stage,filter_1,filter_2,category,type,description,author,size,mime,path,details,status,date_published,deadline_date,last_modified,date_created) VALUES ('TR0100012','122','',NULL,'EN010009',NULL,1,'CR-1234-A','','','Dave','',NULL,412846,'application/pdf','EN010009/TR0100012-Advice-note-6-Annex-PINS.pdf',NULL,'Published','2019-10-10',NULL,'2019-11-27 12:25:41','2019-11-06 15:19:51');
