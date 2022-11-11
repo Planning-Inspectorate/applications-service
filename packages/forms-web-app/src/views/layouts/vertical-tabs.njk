@@ -9,7 +9,7 @@
 				{% endif %}
 			</li>
 		{% endif %}
-		{% if featureFlag.hideProjectTimelineLink %}
+		{% if featureFlag.showProjectTimelineLink %}
 		<li class="style-vertical-tabs__tab govuk-body-s {% if 'project-timeline' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
       {% if 'project-timeline' != activeProjectLink %}
         <a href="/projects/project-timeline">Project timeline</a>

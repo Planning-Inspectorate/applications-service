@@ -13,7 +13,7 @@ const {
 
 const {
 	featureFlag: {
-		hideProjectTimelineLink,
+		showProjectTimelineLink,
 		allowDocumentLibrary,
 		allowRepresentation,
 		usePrivateBetaV1RoutesOnly
@@ -45,7 +45,7 @@ if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/:case_ref', asyncRoute(projectsController.getExamination));
 }
 
-if (hideProjectTimelineLink) {
+if (showProjectTimelineLink) {
 	router.get('/project-timeline', projectTimeLineController.getProjectTimeLine);
 }
 

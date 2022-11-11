@@ -42,7 +42,7 @@ module.exports = {
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
 		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
-		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true',
+		showProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true',
 		allowDocumentLibrary: process.env.FEATURE_ALLOW_DOCUMENT_LIBRARY === 'true',
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true'
 	},
