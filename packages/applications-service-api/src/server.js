@@ -17,4 +17,6 @@ module.exports = () => {
 	server.listen(config.server.port, () => {
 		logger.info({ config }, 'Listening');
 	});
+
+	return server;
 };

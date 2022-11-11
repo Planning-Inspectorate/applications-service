@@ -31,18 +31,18 @@ const projectsController = require('../../controllers/projects/examination');
 const aboutTheApplicationController = require('../../controllers/projects/documents');
 
 if (!usePrivateBetaV1RoutesOnly) {
-	router.get('/', projectSearchController.getProjectList);
+	router.get('/', asyncRoute(projectSearchController.getProjectList));
 	router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 	router.get('/recommendations', recommendationsController.getRecommendations);
 	router.get(
 		subDirectory + pages.examinationTimetable.route,
-		examinationTimetable.getExaminationTimetable
+		asyncRoute(examinationTimetable.getExaminationTimetable)
 	);
 	router.post(
 		subDirectory + pages.examinationTimetable.route,
 		examinationTimetable.postExaminationTimetable
 	);
-	router.get('/:case_ref', projectsController.getExamination);
+	router.get('/:case_ref', asyncRoute(projectsController.getExamination));
 }
 
 if (hideProjectTimelineLink) {
@@ -52,7 +52,7 @@ if (hideProjectTimelineLink) {
 if (allowDocumentLibrary) {
 	router.get(
 		'/:case_ref/application-documents',
-		aboutTheApplicationController.getApplicationDocuments
+		asyncRoute(aboutTheApplicationController.getApplicationDocuments)
 	);
 }
 

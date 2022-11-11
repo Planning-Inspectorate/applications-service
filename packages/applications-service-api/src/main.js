@@ -3,7 +3,8 @@
 const logger = require('./lib/logger');
 const server = require('./server');
 
-function main() {
+// eslint-disable-next-line require-await
+async function main() {
 	server();
 }
 
