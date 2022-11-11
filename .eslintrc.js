@@ -7,6 +7,9 @@ module.exports = {
 	},
 	extends: ['eslint:recommended', 'prettier'],
 	ignorePatterns: ['node_modules/**', 'dist/**', 'webpack.**', '*.script.js'],
+	rules: {
+		'require-await': 'error'
+	},
 	parserOptions: {
 		ecmaVersion: 2020,
 		sourceType: 'module'
