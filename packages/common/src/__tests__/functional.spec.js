@@ -1,4 +1,4 @@
-const functional = require('./functional');
+const functional = require('../functional');
 
 describe('functional', () => {
 	describe('#flow', () => {

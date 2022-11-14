@@ -1,8 +1,8 @@
 jest.mock('@godaddy/terminus/lib/terminus');
-jest.mock('./prometheus');
+jest.mock('../prometheus');
 
 const { createTerminus, HealthCheckError } = require('@godaddy/terminus');
-const health = require('./health');
+const health = require('../health');
 
 function mocks(config = {}) {
 	const opts = {
