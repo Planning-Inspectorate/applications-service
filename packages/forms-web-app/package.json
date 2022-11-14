@@ -5,6 +5,7 @@
 	"engines": {
 		"node": ">=16.14.0"
 	},
+	"main": "src/main.js",
 	"scripts": {
 		"build": "npm run build:client && npm run build:sass && npm run build:app",
 		"build:app": "cp -Rf ./src ./dist",
@@ -13,12 +14,12 @@
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"prebuild": "rm -Rf ./dist",
-		"start": "node dist/server.js",
+		"start": "node dist/",
 		"start:dev": "npm run start:dev:server && npm run start:dev:client && npm run build:sass && npm run watch:sass",
 		"start:dev:client": "webpack --config webpack.config.js --watch",
 		"start:dev:debug": "npm run start:dev:server:debug && npm run start:dev:client && npm run build:sass && npm run watch:sass",
-		"start:dev:server": "nodemon src/server.js | pino-pretty -tlc",
-		"start:dev:server:debug": "node --inspect-brk=0.0.0.0 src/server.js",
+		"start:dev:server": "nodemon | pino-pretty -tlc",
+		"start:dev:server:debug": "node --inspect-brk=0.0.0.0",
 		"test": "jest",
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand",

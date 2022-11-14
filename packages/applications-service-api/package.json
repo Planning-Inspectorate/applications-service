@@ -9,15 +9,16 @@
 	"scripts": {
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
-		"start": "node ./",
-		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
-		"start:dev:debug": "nodemon --inspect-brk=0.0.0.0 -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
+		"start": "node",
+		"start:dev": "nodemon -e .js,.json,.yml,.yaml | pino-pretty -tlc",
+		"start:dev:debug": "nodemon --inspect-brk=0.0.0.0 -e .js,.json,.yml,.yaml | pino-pretty -tlc",
 		"test": "jest",
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
 	"dependencies": {
+		"@pins/common": "file:../common",
 		"@planning-inspectorate/pins-notify": "^1.0.2",
 		"axios": "^1.0.0",
 		"axios-logger": "^2.6.1",

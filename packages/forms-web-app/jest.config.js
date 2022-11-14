@@ -7,7 +7,7 @@ module.exports = {
 	coveragePathIgnorePatterns: [
 		'node_modules',
 		'<rootDir>/src/app.js',
-		'<rootDir>/src/server.js',
+		'<rootDir>/src/main.js',
 		'<rootDir>/src/assets',
 		'<rootDir>/src/public',
 		'<rootDir>/src/views/pins-components'
