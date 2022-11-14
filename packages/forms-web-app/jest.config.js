@@ -7,6 +7,8 @@ module.exports = {
 	coveragePathIgnorePatterns: [
 		'node_modules',
 		'<rootDir>/src/app.js',
+		'<rootDir>/src/config.js',
+		'<rootDir>/src/constants.js',
 		'<rootDir>/src/main.js',
 		'<rootDir>/src/assets',
 		'<rootDir>/src/public',
