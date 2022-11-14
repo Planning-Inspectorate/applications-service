@@ -1,29 +1,36 @@
-let {
-	getActiveSubmissionItem,
-	addKeyValueToActiveSubmissionItem
-} = require('../../../../../src/controllers/examination/session/submission-items-session');
-let {
-	markActiveChecked
-} = require('../../../../../src/controllers/examination/utils/mark-active-checked');
-
-let {
-	getRedirectUrl
-} = require('../../../../../src/controllers/examination/evidence-or-comment/utils/get-redirect-url');
-
 const {
 	getEvidenceOrComment,
 	postEvidenceOrComment
 } = require('../../../../../src/controllers/examination/evidence-or-comment/controller');
 
+let {
+	addKeyValueToActiveSubmissionItem
+} = require('../../../../../src/controllers/examination/session/submission-items-session');
+let {
+	deleteSubmissionType
+} = require('../../../../../src/controllers/examination/evidence-or-comment/utils/delete-submission-type');
+let {
+	getPageData
+} = require('../../../../../src/controllers/examination/evidence-or-comment/utils/get-page-data');
+let {
+	getRedirectUrl
+} = require('../../../../../src/controllers/examination/evidence-or-comment/utils/get-redirect-url');
+
 jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
-	getActiveSubmissionItem: jest.fn(),
 	addKeyValueToActiveSubmissionItem: jest.fn()
 }));
-
-jest.mock('../../../../../src/controllers/examination/utils/mark-active-checked', () => ({
-	markActiveChecked: jest.fn()
-}));
-
+jest.mock(
+	'../../../../../src/controllers/examination/evidence-or-comment/utils/delete-submission-type',
+	() => ({
+		deleteSubmissionType: jest.fn()
+	})
+);
+jest.mock(
+	'../../../../../src/controllers/examination/evidence-or-comment/utils/get-page-data',
+	() => ({
+		getPageData: jest.fn()
+	})
+);
 jest.mock(
 	'../../../../../src/controllers/examination/evidence-or-comment/utils/get-redirect-url',
 	() => ({
@@ -31,83 +38,41 @@ jest.mock(
 	})
 );
 
-const expectedOptions = [
-	{
-		text: 'Write a comment',
-		value: 'comment'
-	},
-	{
-		text: 'Upload files',
-		value: 'upload'
-	},
-	{
-		text: 'Both',
-		value: 'both'
-	}
-];
 describe('controllers/examination/evidence-or-comment/controller', () => {
+	const mockPageDataValue = { pageData: 'mock page data value' };
+
 	describe('#getEvidenceOrComment', () => {
 		describe('When rendering the evidence or comment page', () => {
-			const mockSession = 'mock session';
-			const res = {
-				render: jest.fn(),
-				redirect: jest.fn(),
-				status: jest.fn(() => res)
-			};
-			const req = {
-				session: mockSession
-			};
-			describe('and there is a submission type already selected', () => {
-				const mockActiveSubmissionItem = {
-					submissionItem: ' mock submission item',
-					submissionType: 'mock submission type'
+			describe('and the render is successful', () => {
+				const req = {
+					session: {},
+					query: {}
 				};
-				const mockCheckedOptions = 'options would have been checked';
+				const res = {
+					render: jest.fn()
+				};
 				beforeEach(() => {
-					getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
-					markActiveChecked.mockReturnValue(mockCheckedOptions);
+					getPageData.mockReturnValue(mockPageDataValue);
 					getEvidenceOrComment(req, res);
 				});
-				it('should call functions', () => {
-					expect(getActiveSubmissionItem).toHaveBeenCalledWith(mockSession);
-				});
-				it('should render the page with the options and an option checked', () => {
-					expect(res.render).toHaveBeenCalledWith('pages/examination/evidence-or-comment', {
-						activeSubmissionItemTitle: ' mock submission item',
-						backLinkUrl: '/examination/select-deadline-item',
-						id: 'examination-evidence-or-comment',
-						options: mockCheckedOptions,
-						pageTitle: 'How would you like to submit comments ("written representation")?',
-						title: 'How would you like to submit comments ("written representation")?'
-					});
+				it('should render the page', () => {
+					expect(res.render).toHaveBeenCalledWith(
+						'pages/examination/evidence-or-comment',
+						mockPageDataValue
+					);
 				});
 			});
-			describe('and there is no submission type already selected', () => {
-				const mockActiveSubmissionItem = {
-					submissionItem: ' mock submission item'
+			describe('and an error is thrown', () => {
+				const req = {
+					session: {},
+					query: {}
 				};
-
-				const mockCheckedOptions = 'options would have been checked';
-
+				const res = {
+					render: jest.fn(),
+					status: jest.fn(() => res)
+				};
 				beforeEach(() => {
-					getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
-					markActiveChecked.mockReturnValue(mockCheckedOptions);
-					getEvidenceOrComment(req, res);
-				});
-				it('should render the page with the options', () => {
-					expect(res.render).toHaveBeenCalledWith('pages/examination/evidence-or-comment', {
-						activeSubmissionItemTitle: ' mock submission item',
-						backLinkUrl: '/examination/select-deadline-item',
-						id: 'examination-evidence-or-comment',
-						options: expectedOptions,
-						pageTitle: 'How would you like to submit comments ("written representation")?',
-						title: 'How would you like to submit comments ("written representation")?'
-					});
-				});
-			});
-			describe('and the there is an error', () => {
-				beforeEach(() => {
-					getActiveSubmissionItem.mockImplementation(() => {
+					getPageData.mockImplementation(() => {
 						throw new Error('something went wrong');
 					});
 					getEvidenceOrComment(req, res);
@@ -119,100 +84,83 @@ describe('controllers/examination/evidence-or-comment/controller', () => {
 			});
 		});
 	});
-
 	describe('#postEvidenceOrComment', () => {
-		describe('When handling a evidence or comment post', () => {
-			const mockSession = 'mock session';
-			const res = {
-				render: jest.fn(),
-				redirect: jest.fn(),
-				status: jest.fn(() => res)
-			};
-			const req = {
-				session: mockSession
-			};
-			const mockActiveSubmissionItem = {
-				submissionItem: 'mock submission item',
-				submissionType: 'mock submission type'
-			};
-
-			describe('and the body contains the correct key', () => {
-				const mockEvidenceAndCommentValue = 'mock value';
-				const mockRedirectURL = 'mock redirect url';
+		describe('When handling an evidence or comment post', () => {
+			describe('and there is an error', () => {
+				const error = {
+					errors: { a: 'b' },
+					errorSummary: [{ text: 'Error summary', href: '#' }]
+				};
+				const req = {
+					body: error,
+					session: {},
+					query: {}
+				};
+				const res = {
+					render: jest.fn()
+				};
 				beforeEach(() => {
-					req.body = {
-						'examination-evidence-or-comment': mockEvidenceAndCommentValue
-					};
-					getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
-					getRedirectUrl.mockReturnValue(mockRedirectURL);
-
-					postEvidenceOrComment(req, res);
-				});
-				it('should call the functions', () => {
-					expect(getActiveSubmissionItem).toHaveBeenCalledWith(mockSession);
-					expect(addKeyValueToActiveSubmissionItem).toHaveBeenCalledWith(
-						mockSession,
-						'submissionType',
-						mockEvidenceAndCommentValue
-					);
-					expect(getRedirectUrl).toHaveBeenCalledWith(
-						{
-							1: { text: 'Write a comment', value: 'comment' },
-							2: { text: 'Upload files', value: 'upload' },
-							3: { text: 'Both', value: 'both' }
-						},
-						mockEvidenceAndCommentValue
-					);
-				});
-				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith(mockRedirectURL);
-				});
-			});
-
-			describe('and the key is no in the body', () => {
-				beforeEach(() => {
-					req.body = {};
-					getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
-					postEvidenceOrComment(req, res);
-				});
-				it('should render the error page', () => {
-					expect(res.status).toHaveBeenCalledWith(500);
-					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
-				});
-			});
-
-			describe('and there are errors', () => {
-				beforeEach(() => {
-					req.body = {
-						errors: 'mock error',
-						errorSummary: 'mock error summary'
-					};
-					getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
+					getPageData.mockReturnValue(mockPageDataValue);
 					postEvidenceOrComment(req, res);
 				});
 				it('should render the page with errors', () => {
 					expect(res.render).toHaveBeenCalledWith('pages/examination/evidence-or-comment', {
-						backLinkUrl: '/examination/select-deadline-item',
-						activeSubmissionItemTitle: mockActiveSubmissionItem.submissionItem,
-						errorSummary: 'mock error summary',
-						errors: 'mock error',
-						id: 'examination-evidence-or-comment',
-						options: expectedOptions,
-						pageTitle: 'How would you like to submit comments ("written representation")?',
-						title: 'How would you like to submit comments ("written representation")?'
+						...mockPageDataValue,
+						...error
 					});
 				});
 			});
-			describe('and there is an unhandled exception', () => {
+			describe('and there is NOT a valid value in the body', () => {
+				const req = {
+					body: {},
+					session: {},
+					query: {}
+				};
+				const res = {
+					render: jest.fn(),
+					status: jest.fn(() => res)
+				};
 				beforeEach(() => {
-					getActiveSubmissionItem.mockImplementation(() => {
-						throw new Error('something went wrong');
-					});
 					postEvidenceOrComment(req, res);
 				});
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+				});
+			});
+			describe('and there is a valid value in the body', () => {
+				const mockRedirectUrlValue = 'mock redirect url';
+				const bodyValueKey = 'examination-evidence-or-comment';
+				const req = {
+					body: {
+						[bodyValueKey]: 'mock body value'
+					},
+					session: 'mock session value',
+					query: 'mock query value'
+				};
+				const res = {
+					redirect: jest.fn()
+				};
+				beforeEach(() => {
+					getRedirectUrl.mockReturnValue(mockRedirectUrlValue);
+					postEvidenceOrComment(req, res);
+				});
+
+				it('should call the functions', () => {
+					expect(getRedirectUrl).toHaveBeenCalledWith(
+						req.query,
+						req.session,
+						req.body[bodyValueKey]
+					);
+					expect(deleteSubmissionType).toHaveBeenCalledWith(req.session, req.body[bodyValueKey]);
+					expect(addKeyValueToActiveSubmissionItem).toHaveBeenCalledWith(
+						req.session,
+						'submissionType',
+						req.body[bodyValueKey]
+					);
+				});
+				it('should redirect to', () => {
+					expect(res.redirect).toHaveBeenCalledWith(mockRedirectUrlValue);
 				});
 			});
 		});

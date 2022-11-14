@@ -54,6 +54,7 @@ describe('controllers/examination/personal-information/controller', () => {
 		session: mockSession
 	};
 	const mockPageDataValue = { id: 'examination-personal-information' };
+
 	describe('#getPersonalInformation', () => {
 		describe('When rendering the personal information page', () => {
 			describe('and the render is successful', () => {
@@ -68,7 +69,7 @@ describe('controllers/examination/personal-information/controller', () => {
 					);
 				});
 			});
-			describe('and there is an unhandled exception', () => {
+			describe('and an error is thrown', () => {
 				beforeEach(() => {
 					getPageData.mockImplementation(() => {
 						throw new Error('something went wrong');
@@ -149,7 +150,7 @@ describe('controllers/examination/personal-information/controller', () => {
 					expect(res.redirect).toHaveBeenCalledWith(mockRedirectUrl);
 				});
 			});
-			describe('and there is an unhandled exception', () => {
+			describe('and an error is thrown', () => {
 				beforeEach(() => {
 					getPageData.mockImplementation(() => {
 						throw new Error('something went wrong');

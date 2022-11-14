@@ -4,18 +4,6 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set backLinkUrl = backLinkUrl %}
-
-{% set pageTitle = pageTitle %}
-
-{% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
-
-  {{ pageTitle }}
-{% endblock %}
-
 {% block content %}
   {% if errorSummary %}
     {{ govukErrorSummary({

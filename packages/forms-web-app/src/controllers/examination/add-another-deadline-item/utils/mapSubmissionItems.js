@@ -4,7 +4,7 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { checkDeadlineItem, selectIfYouWantToDeleteData }
+			pages: { checkSubmissionItem, selectIfYouWantToDeleteData }
 		}
 	}
 } = require('../../../../routes/config');
@@ -21,7 +21,7 @@ const mapSubmissionItems = (session) => {
 			`You added ${submissionItems.length} deadline item` + (submissionItems.length > 1 ? 's' : ''),
 		submissionItems: submissionItems.map((item) => ({
 			submissionItem: item.submissionItem,
-			changeUrl: `${examinationDirectory}${checkDeadlineItem.route}`,
+			changeUrl: `${examinationDirectory}${checkSubmissionItem.route}`,
 			remove: {
 				url: `${examinationDirectory}${selectIfYouWantToDeleteData.markDeadlineItemForDelete.route}`,
 				itemId: item.itemId

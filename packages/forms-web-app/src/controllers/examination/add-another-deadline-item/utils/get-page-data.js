@@ -2,7 +2,7 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { addAnotherDeadlineItem, checkDeadlineItem }
+			pages: { addAnotherDeadlineItem, checkSubmissionItem }
 		}
 	}
 } = require('../../../../routes/config');
@@ -10,7 +10,7 @@ const { mapSubmissionItems } = require('./mapSubmissionItems');
 const { hasMoreDeadlineItemsToSubmit } = require('./hasMoreDeadlineItemsToSubmit');
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${checkDeadlineItem.route}`,
+	backLinkUrl: `${examinationDirectory}${checkSubmissionItem.route}`,
 	hintHtml: 'Do you need to add another deadline item?',
 	id: addAnotherDeadlineItem.id,
 	options: [

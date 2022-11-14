@@ -1,6 +1,6 @@
 const config = require('../../config');
+const { isQueryModeEdit } = require('../utils/is-query-mode-edit');
 const examinationSessionStorage = config?.sessionStorage?.examination;
-
 const {
 	routesConfig: {
 		examination: {
@@ -90,7 +90,7 @@ const postApplicant = (req, res) => {
 
 	if (!examinationSession) return res.status(404).render('error/not-found');
 
-	const { body = {} } = req;
+	const { body = {}, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
 	if (errors[applicant.id] || Object.keys(errors).length > 0) {
@@ -127,7 +127,7 @@ const postApplicant = (req, res) => {
 
 	examinationSession[examinationSessionStorage.property.applicant] = applicantValue;
 
-	if (req?.query?.mode === 'edit') res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
+	if (isQueryModeEdit(query)) res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
 	else if (yesOption.value === applicantValue) res.redirect(`${examinationDirectory}${emailRoute}`);
 	else if (noOption.value === applicantValue)
 		res.redirect(`${examinationDirectory}${submittingForRoute}`);

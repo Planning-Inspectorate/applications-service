@@ -4,18 +4,6 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-{% set backLinkUrl = backLinkUrl %}
-
-{% set pageTitle = pageTitle %}
-
-{% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
-
-  {{ pageTitle }}
-{% endblock %}
-
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
@@ -25,8 +13,8 @@
 	{% endif %}
 
 	<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <form action="" method="POST" novalidate>
+		<div class="govuk-grid-column-two-thirds">
+			<form action="" method="POST" novalidate>
 				{{ govukInput({
 					attributes: { "data-cy": id },
 					label: {
@@ -49,6 +37,6 @@
 					type: "Submit"
 				}) }}
 			</form>
-    </div>
-  </div>
+		</div>
+	</div>
 {% endblock %}

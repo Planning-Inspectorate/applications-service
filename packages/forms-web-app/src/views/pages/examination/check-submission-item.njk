@@ -1,0 +1,24 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-!-margin-top-0">
+        {{ title }}
+      </h1>
+
+      {{ govukSummaryList({
+        rows: summaryList
+      }) }}
+
+      <a
+        href="{{ nextPageUrl }}"
+        class="govuk-button"
+      >
+        Continue
+      </a>
+    </div>
+  </div>
+{% endblock %}

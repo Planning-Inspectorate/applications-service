@@ -1,3 +1,4 @@
+const { isQueryModeEdit } = require('../utils/is-query-mode-edit');
 const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
 
@@ -82,7 +83,7 @@ const postSubmittingFor = (req, res) => {
 
 	if (!examinationSession) return res.status(404).render('error/not-found');
 
-	const { body = {} } = req;
+	const { body = {}, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
 	if (errors[submittingFor.id] || Object.keys(errors).length > 0) {
@@ -109,7 +110,7 @@ const postSubmittingFor = (req, res) => {
 
 	examinationSession[examinationSessionStorage.property.submittingFor] = setSubmittingFor;
 
-	if (req?.query?.mode === 'edit') res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
+	if (isQueryModeEdit(query)) res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
 	else if (submittingFor.options[1].value === setSubmittingFor)
 		res.redirect(`${examinationDirectory + examinationNameMyselfRoute}`);
 	else if (submittingFor.options[2].value === setSubmittingFor)

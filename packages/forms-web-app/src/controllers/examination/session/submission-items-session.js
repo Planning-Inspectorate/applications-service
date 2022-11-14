@@ -7,6 +7,14 @@ const addKeyValueToActiveSubmissionItem = (session, key, value) => {
 	activeSubmissionItem[key] = value;
 };
 
+const deleteKeyFromActiveSubmissionItem = (session, key) => {
+	if (session === 'undefined' || key === 'undefined')
+		throw new Error('Session or key is undefined');
+
+	const activeSubmissionItem = getActiveSubmissionItem(session);
+	delete activeSubmissionItem[key];
+};
+
 const deleteSubmissionItem = (session, itemIdToDelete) => {
 	const examinationSession = getExaminationSession(session);
 	examinationSession.submissionItems = examinationSession.submissionItems.filter(
@@ -15,10 +23,15 @@ const deleteSubmissionItem = (session, itemIdToDelete) => {
 };
 
 const getActiveSubmissionItemFiles = (session) => {
-	const submissionItem = getActiveSubmissionItem(session);
+	const activeSubmissionItem = getActiveSubmissionItem(session);
+	return getSubmissionItemFiles(activeSubmissionItem);
+};
+
+const getSubmissionItemFiles = (submissionItem) => {
 	if (!submissionItem.files) throw new Error('No files for submission item');
-	if (!Array.isArray(submissionItem.files)) throw new Error('Files is not an array');
-	if (submissionItem.files.length === 0) throw new Error('Files length is 0');
+	if (!Array.isArray(submissionItem.files))
+		throw new Error('Submission item files is not an array');
+	if (submissionItem.files.length === 0) throw new Error('Submission item files length is 0');
 	return submissionItem.files;
 };
 
@@ -33,12 +46,20 @@ const getActiveSubmissionItem = (session) => {
 	return activeSubmissionItem;
 };
 
-const getSubmissionItemSubmissionType = (activeSubmissionItem) => {
-	const submissionType = activeSubmissionItem.submissionType;
+const getSubmissionItemType = (submissionItem) => {
+	if (!submissionItem.submissionType)
+		throw new Error('Submission item submission type is not defined');
+	return submissionItem.submissionType;
+};
 
-	if (!submissionType) throw new Error('No submission type');
+const getSubmissionItemPersonalInformation = (submissionItem) => {
+	if (!submissionItem.personalInformation)
+		throw new Error('Submission item personal information is not defined');
+	return submissionItem.personalInformation;
+};
 
-	return submissionType;
+const getSubmissionItemComment = (submissionItem) => {
+	return submissionItem.comment;
 };
 
 const getActiveSubmissionItemKey = (session) => {
@@ -88,11 +109,15 @@ const getSubmissionFilesLength = (session) => {
 
 module.exports = {
 	addKeyValueToActiveSubmissionItem,
+	deleteKeyFromActiveSubmissionItem,
 	getActiveSubmissionItemKey,
 	getActiveSubmissionItem,
 	setSubmissionItem,
-	getSubmissionItemSubmissionType,
+	getSubmissionItemType,
 	getActiveSubmissionItemFiles,
+	getSubmissionItemFiles,
 	getSubmissionFilesLength,
+	getSubmissionItemComment,
+	getSubmissionItemPersonalInformation,
 	deleteSubmissionItem
 };

@@ -3,26 +3,6 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-{% set backLinkUrl = backLinkUrl %}
-
-{% set pageTitle = pageTitle %}
-
-{% block pageTitle %}
-	{% if errors %}
-		{% set pageTitle = "Error: " + pageTitle %}
-	{% endif %}
-	{{ pageTitle }}
-{% endblock %}
-
-{% block script %}
-	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
-		callback: "var sanitise = new appScripts.sanitiseForm();
- sanitise.form('form', ['" + id + "']);
-		",
- src: "/public/scripts/sanitiseForm.script.js"
-	}), initiateScriptsConfig) %}
-{% endblock %}
-
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
@@ -51,6 +31,7 @@
 						text: 'Any further information requested by ' + activeSubmissionItemTitle
 					}
 				}) }}
+
 				{{ govukButton({
 					attributes: { "data-cy": "button-submit-and-continue" },
 					text: "Continue",

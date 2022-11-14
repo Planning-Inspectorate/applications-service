@@ -4,18 +4,6 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-{% set backLinkUrl = backLinkUrl %}
-
-{% set pageTitle = pageTitle %}
-
-{% block pageTitle %}
-	{% if errors %}
-		{% set pageTitle = "Error: " + pageTitle %}
-	{% endif %}
-
-	{{ pageTitle }}
-{% endblock %}
-
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
@@ -26,9 +14,9 @@
 
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">
-        {{ activeSubmissionItemTitle }}
-      </span>
+			<span class="govuk-caption-l">
+				{{ activeSubmissionItemTitle }}
+			</span>
 
 			<form action="" method="POST" novalidate>
 				{{ govukRadios({

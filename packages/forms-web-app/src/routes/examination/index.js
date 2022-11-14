@@ -12,7 +12,7 @@ const {
 		examination: {
 			pages: {
 				applicant,
-				checkDeadlineItem,
+				checkSubmissionItem,
 				checkYourAnswers,
 				email,
 				enterComment,
@@ -42,9 +42,8 @@ const { forwardView } = require('../../middleware/forward-view');
 
 const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
 const {
-	getCheckDeadlineItem,
-	postCheckDeadlineItem
-} = require('../../controllers/examination/check-deadline-item');
+	getCheckSubmissionItem
+} = require('../../controllers/examination/check-submission-item/controller');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
 const {
@@ -101,8 +100,7 @@ const router = express.Router();
 router.get(applicant.route, getApplicant);
 router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
 
-router.get(checkDeadlineItem.route, getCheckDeadlineItem);
-router.post(checkDeadlineItem.route, postCheckDeadlineItem);
+router.get(checkSubmissionItem.route, getCheckSubmissionItem);
 
 router.get(checkYourAnswers.route, getCheckYourAnswers);
 

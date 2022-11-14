@@ -2,14 +2,6 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set backLinkUrl = backLinkUrl %}
-
-{% set pageTitle = pageTitle %}
-
-{% block pageTitle %}
-  {{ pageTitle }}
-{% endblock %}
-
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -25,15 +17,17 @@
         We&#39;ll ask for your personal details and your examination comments (“written representation”) about this project.
       </p>
 
-			{{ govukButton({
+      {{ govukButton({
 				text: "Start now",
 				href: startNowUrl,
 				isStartButton: true
 			}) }}
 
-			<h2 class="govuk-heading-m">Before you start</h2>
+      <h2 class="govuk-heading-m">Before you start</h2>
 
-      <p><b>If you&#39;re an individual and have registered as an interested party</b></p>
+      <p>
+        <b>If you&#39;re an individual and have registered as an interested party</b>
+      </p>
 
       <p>You&#39;ll need your:</p>
 

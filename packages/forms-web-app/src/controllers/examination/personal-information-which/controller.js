@@ -2,7 +2,7 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { personalInformationWhich, checkDeadlineItem }
+			pages: { personalInformationWhich, checkSubmissionItem }
 		}
 	}
 } = require('../../../routes/config');
@@ -45,7 +45,7 @@ const postPersonalInformationWhich = (req, res) => {
 		}
 
 		savePersonalInformationFlags(session, body[pageData.id]);
-		return res.redirect(`${examinationDirectory}${checkDeadlineItem.route}`);
+		return res.redirect(`${examinationDirectory}${checkSubmissionItem.route}`);
 	} catch (error) {
 		logger.error(`Error: ${error}`);
 		return res.status(500).render('error/unhandled-exception');

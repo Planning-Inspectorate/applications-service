@@ -13,17 +13,6 @@
 	</style>
 {% endblock %}
 
-{% set backLinkUrl = backLinkUrl %}
-
-{% set pageTitle = pageTitle %}
-
-{% block pageTitle %}
-	{% if errorSummary.length > 0 %}
-		{% set pageTitle = "Error: " + pageTitle %}
-	{% endif %}
-	{{ pageTitle }}
-{% endblock %}
-
 {% block content %}
 	{% if errorSummary.length > 0 %}
 		{{ govukErrorSummary({
