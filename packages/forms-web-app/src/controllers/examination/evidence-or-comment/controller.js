@@ -1,82 +1,48 @@
-const {
-	addKeyValueToActiveSubmissionItem,
-	getActiveSubmissionItem
-} = require('./../session/submission-items-session');
-const { markActiveChecked } = require('../utils/mark-active-checked');
-
+const logger = require('../../../lib/logger');
+const { deleteSubmissionType } = require('./utils/delete-submission-type');
+const { addKeyValueToActiveSubmissionItem } = require('../session/submission-items-session');
+const { getRedirectUrl } = require('./utils/get-redirect-url');
+const { getPageData } = require('./utils/get-page-data');
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
-			pages: { evidenceOrComment, selectDeadline }
+			pages: { evidenceOrComment }
 		}
 	}
 } = require('../../../routes/config');
-const { getRedirectUrl } = require('./utils/get-redirect-url');
-
-const pageData = {
-	backLinkUrl: `${examinationDirectory}${selectDeadline.route}`,
-	id: evidenceOrComment.id,
-	options: [
-		evidenceOrComment.options[1],
-		evidenceOrComment.options[2],
-		evidenceOrComment.options[3]
-	],
-	pageTitle: evidenceOrComment.title,
-	title: evidenceOrComment.title
-};
 
 const getEvidenceOrComment = async (req, res) => {
 	try {
-		const setPageData = { ...pageData };
-
-		const activeSubmissionItem = getActiveSubmissionItem(req.session);
-
-		setPageData.activeSubmissionItemTitle = activeSubmissionItem.submissionItem;
-
-		if (activeSubmissionItem.submissionType)
-			setPageData.options = markActiveChecked(
-				setPageData.options,
-				activeSubmissionItem.submissionType
-			);
-
-		return res.render(evidenceOrComment.view, setPageData);
+		const { query, session } = req;
+		return res.render(evidenceOrComment.view, getPageData(query, session));
 	} catch (error) {
-		console.log('Error: ', error);
+		logger.error('Error: ', error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
 
 const postEvidenceOrComment = async (req, res) => {
 	try {
-		const { body, session } = req;
-
-		const setPageData = { ...pageData };
-
-		const activeSubmissionItem = getActiveSubmissionItem(session);
-
-		setPageData.activeSubmissionItemTitle = activeSubmissionItem.submissionItem;
-
+		const { body, query, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[evidenceOrComment.id] || Object.keys(errors).length > 0) {
 			return res.render(evidenceOrComment.view, {
-				...setPageData,
+				...getPageData(query, session),
 				errors,
 				errorSummary
 			});
 		}
 
-		const selectedEvidenceOrComment = body[evidenceOrComment.id];
-		if (!selectedEvidenceOrComment) throw new Error('No selected evidence or comment');
+		const selectedSubmissionType = body[evidenceOrComment.id];
+		if (!selectedSubmissionType) throw new Error('No submission type selected');
 
-		addKeyValueToActiveSubmissionItem(session, 'submissionType', selectedEvidenceOrComment);
-
-		const redirectUrl = getRedirectUrl(evidenceOrComment.options, selectedEvidenceOrComment);
-
+		const redirectUrl = getRedirectUrl(query, session, selectedSubmissionType);
+		deleteSubmissionType(session, selectedSubmissionType);
+		addKeyValueToActiveSubmissionItem(session, 'submissionType', selectedSubmissionType);
 		return res.redirect(redirectUrl);
 	} catch (error) {
-		console.log('Error: ', error);
+		logger.error('Error: ', error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };

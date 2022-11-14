@@ -1,31 +1,25 @@
+const logger = require('../../../lib/logger');
+const { isQueryModeEdit } = require('../../utils/is-query-mode-edit');
 const {
 	getActiveSubmissionItemKey,
 	setSubmissionItem
 } = require('../session/submission-items-session');
-
-const logger = require('../../../lib/logger');
-
 const {
 	findDeadlineItemByValue,
 	getDeadlineItemStillToSubmit
 } = require('../session/deadlineItems-session');
 const { markActiveDeadlineItemAsChecked } = require('./utils/markActiveDeadlineItemAsChecked');
-
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
-			pages: {
-				email: { route: emailRoute },
-				evidenceOrComment: { route: evidenceOrCommentRoute },
-				selectDeadline
-			}
+			directory,
+			pages: { checkSubmissionItem, email, evidenceOrComment, selectDeadline }
 		}
 	}
 } = require('../../../routes/config');
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${emailRoute}`,
+	backLinkUrl: `${directory}${email.route}`,
 	hintText:
 		'Select the item you want to submit against. You can submit against another item later.',
 	id: selectDeadline.id,
@@ -57,7 +51,7 @@ const getSelectDeadline = (req, res) => {
 
 const postSelectDeadline = (req, res) => {
 	try {
-		const { body, session } = req;
+		const { body, query, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[selectDeadline.id] || Object.keys(errors).length > 0) {
@@ -74,8 +68,19 @@ const postSelectDeadline = (req, res) => {
 
 		const selectedDeadlineOption = findDeadlineItemByValue(session, selectedDeadline);
 
-		setSubmissionItem(session, selectedDeadlineOption);
-		return res.redirect(examinationDirectory + evidenceOrCommentRoute);
+		let redirectUrl;
+
+		if (
+			isQueryModeEdit(query) &&
+			selectedDeadlineOption.value === getActiveSubmissionItemKey(session)
+		)
+			redirectUrl = `${directory}${checkSubmissionItem.route}`;
+		else {
+			setSubmissionItem(session, selectedDeadlineOption);
+			redirectUrl = `${directory}${evidenceOrComment.route}`;
+		}
+
+		return res.redirect(redirectUrl);
 	} catch (error) {
 		logger.error(`Error: ${error}`);
 		return res.status(500).render('error/unhandled-exception');

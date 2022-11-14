@@ -1,20 +1,25 @@
 const {
-	getUploadedFilesFromSession
-} = require('../../../../../../src/controllers/examination/file-upload/fileSessionManagement');
-
-const {
-	postRenderView
-} = require('../../../../../../src/controllers/examination/select-file/utils/render-view');
-
-const {
 	continueHandler
 } = require('../../../../../../src/controllers/examination/select-file/utils/continue-handler');
-const {
+
+let {
+	getUploadedFilesFromSession
+} = require('../../../../../../src/controllers/examination/file-upload/fileSessionManagement');
+let {
+	postRenderView
+} = require('../../../../../../src/controllers/examination/select-file/utils/render-view');
+let {
 	mapErrorMessage
 } = require('../../../../../../src/controllers/examination/select-file/utils/helpers');
-const {
+let {
 	noFileSelected
 } = require('../../../../../../src/controllers/examination/select-file/utils/errors/fileValidation');
+let {
+	getRedirectRoute
+} = require('../../../../../../src/controllers/examination/select-file/utils/get-redirect-route');
+let {
+	getSubmissionItemPageUrl
+} = require('../../../../../../src/controllers/examination/utils/get-submission-item-page-url');
 
 jest.mock(
 	'../../../../../../src/controllers/examination/file-upload/fileSessionManagement',
@@ -34,6 +39,19 @@ jest.mock('../../../../../../src/controllers/examination/select-file/utils/rende
 jest.mock('../../../../../../src/controllers/examination/select-file/utils/helpers', () => ({
 	mapErrorMessage: jest.fn()
 }));
+jest.mock(
+	'../../../../../../src/controllers/examination/select-file/utils/get-redirect-route',
+	() => ({
+		getRedirectRoute: jest.fn()
+	})
+);
+jest.mock(
+	'../../../../../../src/controllers/examination/utils/get-submission-item-page-url',
+	() => ({
+		getSubmissionItemPageUrl: jest.fn()
+	})
+);
+
 describe('#continueHandler', () => {
 	const res = { redirect: jest.fn() };
 	const req = { session: 'session' };
@@ -50,15 +68,17 @@ describe('#continueHandler', () => {
 			});
 		});
 		describe('And there is is at least one file uploaded', () => {
+			const mockedirectRoute = '/mock-url';
 			beforeEach(() => {
+				getRedirectRoute.mockReturnValue(mockedirectRoute);
 				getUploadedFilesFromSession.mockReturnValue('uploaded files');
 				noFileSelected.mockReturnValue('');
+				getRedirectRoute.mockReturnValue();
+				getSubmissionItemPageUrl.mockReturnValue(mockedirectRoute);
 				continueHandler(req, res);
 			});
 			it('should then redirect to the next page', () => {
-				expect(res.redirect).toHaveBeenCalledWith(
-					'/examination/files-have-personal-information-or-not'
-				);
+				expect(res.redirect).toHaveBeenCalledWith(mockedirectRoute);
 			});
 		});
 	});

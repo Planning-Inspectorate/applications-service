@@ -1,0 +1,80 @@
+const {
+	getPageData
+} = require('../../../../../../src/controllers/examination/evidence-or-comment/utils/get-page-data');
+
+let {
+	getActiveSubmissionItem
+} = require('../../../../../../src/controllers/examination/session/submission-items-session');
+let {
+	markActiveChecked
+} = require('../../../../../../src/controllers/examination/utils/mark-active-checked');
+
+jest.mock('../../../../../../src/controllers/examination/session/submission-items-session', () => ({
+	getActiveSubmissionItem: jest.fn()
+}));
+jest.mock('../../../../../../src/controllers/examination/utils/mark-active-checked', () => ({
+	markActiveChecked: jest.fn()
+}));
+
+const req = {
+	query: {},
+	session: {}
+};
+
+const mockActiveSubmissionItemValue = {
+	submissionItem: 'mock submission item value'
+};
+const mockMarkActiveAsCheckedValue = 'mock mark active as checked value';
+
+const pageData = {
+	backLinkUrl: '/examination/select-deadline-item',
+	activeSubmissionItemTitle: mockActiveSubmissionItemValue.submissionItem,
+	id: 'examination-evidence-or-comment',
+	options: [
+		{
+			text: 'Write a comment',
+			value: 'comment'
+		},
+		{
+			text: 'Upload files',
+			value: 'upload'
+		},
+		{
+			text: 'Both',
+			value: 'both'
+		}
+	],
+	pageTitle: 'How would you like to submit comments ("written representation")?',
+	title: 'How would you like to submit comments ("written representation")?'
+};
+
+describe('controllers/examination/evidence-or-comment/utils/get-page-data', () => {
+	describe('#getPageData', () => {
+		describe('When getting page data for the evidence or comment page', () => {
+			describe('and the session does not contain a submission type value', () => {
+				let result;
+				beforeEach(() => {
+					getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItemValue);
+					result = getPageData(req.query, req.session);
+				});
+				it('should return the page data', () => {
+					expect(result).toEqual(pageData);
+				});
+			});
+			describe('and the session does contain a submission type value', () => {
+				let result;
+				beforeEach(() => {
+					getActiveSubmissionItem.mockReturnValue({
+						...mockActiveSubmissionItemValue,
+						submissionType: 'comment'
+					});
+					markActiveChecked.mockReturnValue(mockMarkActiveAsCheckedValue);
+					result = getPageData(req.query, req.session);
+				});
+				it('should return the page data', () => {
+					expect(result).toEqual({ ...pageData, options: mockMarkActiveAsCheckedValue });
+				});
+			});
+		});
+	});
+});

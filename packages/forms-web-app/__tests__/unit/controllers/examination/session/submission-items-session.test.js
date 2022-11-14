@@ -74,7 +74,7 @@ describe('controllers/examination/session/examination-session)', () => {
 						});
 						it('should throw an error', () => {
 							expect(() => getActiveSubmissionItemFiles(mockSession)).toThrow(
-								'Files is not an array'
+								'Submission item files is not an array'
 							);
 						});
 					});
@@ -84,7 +84,9 @@ describe('controllers/examination/session/examination-session)', () => {
 							getExaminationSession.mockReturnValue(examinationSession);
 						});
 						it('should throw an error', () => {
-							expect(() => getActiveSubmissionItemFiles(mockSession)).toThrow('Files length is 0');
+							expect(() => getActiveSubmissionItemFiles(mockSession)).toThrow(
+								'Submission item files length is 0'
+							);
 						});
 					});
 				});

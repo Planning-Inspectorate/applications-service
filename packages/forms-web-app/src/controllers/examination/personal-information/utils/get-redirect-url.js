@@ -3,7 +3,7 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
-				checkDeadlineItem,
+				checkSubmissionItem,
 				personalInformationComment,
 				personalInformationCommentFiles,
 				personalInformationFiles,
@@ -16,7 +16,7 @@ const {
 
 const { getActiveSubmissionItemFiles } = require('../../session/submission-items-session');
 const getRedirectUrl = (session, setPageDataId, personalInformationValue) => {
-	let redirectUrl = `${examinationDirectory}${checkDeadlineItem.route}`;
+	let redirectUrl = `${examinationDirectory}${checkSubmissionItem.route}`;
 
 	if (setPageDataId !== personalInformationComment.id && personalInformationValue === 'yes') {
 		if (setPageDataId === personalInformationCommentFiles.id) {

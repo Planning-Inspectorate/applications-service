@@ -1,6 +1,6 @@
+const { isQueryModeEdit } = require('../utils/is-query-mode-edit');
 const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
-
 const {
 	routesConfig: {
 		examination: {
@@ -68,7 +68,7 @@ const postHasInterestedPartyNumber = (req, res) => {
 
 	if (!examinationSession) return res.status(404).render('error/not-found');
 
-	const { body = {} } = req;
+	const { body = {}, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
 	if (errors[hasInterestedPartyNumber.id] || Object.keys(errors).length > 0) {
@@ -107,7 +107,7 @@ const postHasInterestedPartyNumber = (req, res) => {
 		examinationSession[examinationSessionStorage.property.interestedPartyNumber] = '';
 	}
 
-	if (req?.query?.mode === 'edit') res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
+	if (isQueryModeEdit(query)) res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
 	else if (yesOption.value === hasInterestedPartyNoValue)
 		res.redirect(`${examinationDirectory}${yourInterestedPartyNumberRoute}`);
 	else if (noOption.value === hasInterestedPartyNoValue)

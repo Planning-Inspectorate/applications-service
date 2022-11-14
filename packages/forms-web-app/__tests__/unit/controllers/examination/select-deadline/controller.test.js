@@ -33,13 +33,24 @@ jest.mock(
 	})
 );
 
+const pageData = {
+	backLinkUrl: '/examination/your-email-address',
+	hintText:
+		'Select the item you want to submit against. You can submit against another item later.',
+	id: 'examination-select-deadline',
+	options: 'mock deadline items array',
+	pageTitle: 'Which item would you like to submit against for this deadline?',
+	title: 'Which item would you like to submit against for this deadline?'
+};
+
+const mockActiveSubmissionKey = 'mock submission key';
+const mockDeadlineItems = 'mock deadline items array';
+const mockDeadlineItemsWithChecked = 'mock deadline items array with a checked value';
+
 describe('controllers/examination/select-deadline/controller', () => {
 	describe('#getSelectDeadline', () => {
 		describe('When rendering the select a deadline page', () => {
 			const mockSession = 'mock session';
-			const mockActiveSubmissionKey = 'mock submission key';
-			const mockDeadlineItems = 'mock deadline items array';
-			const mockDeadlineItemsWithChecked = 'mock deadline items array with a checked value';
 			const res = {
 				render: jest.fn(),
 				status: jest.fn(() => res)
@@ -47,6 +58,7 @@ describe('controllers/examination/select-deadline/controller', () => {
 			const req = {
 				session: mockSession
 			};
+
 			describe('and the render is successful', () => {
 				describe('and there is an active deadline selected', () => {
 					beforeEach(() => {
@@ -116,53 +128,98 @@ describe('controllers/examination/select-deadline/controller', () => {
 	});
 	describe('#postSelectDeadline', () => {
 		describe('When handling a selected deadline post', () => {
-			const mockSession = 'mock session';
 			const res = {
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			const req = {
-				session: mockSession
+				body: {},
+				query: {},
+				session: {}
 			};
+
 			describe('and there is an error', () => {
+				const error = {
+					errors: { a: 'b' },
+					errorSummary: [{ text: 'Error summary', href: '#' }]
+				};
+				const mockReq = {
+					...req,
+					body: error
+				};
+
+				beforeEach(() => {
+					postSelectDeadline(mockReq, res);
+				});
+
+				it('should render the page with errors', () => {
+					expect(res.render).toHaveBeenCalledWith('pages/examination/select-deadline', {
+						...pageData,
+						...error
+					});
+				});
+			});
+
+			describe('and there is no selected deadline in the body', () => {
 				beforeEach(() => {
 					postSelectDeadline(req, res);
 				});
-				it('should render the selected deadline page with errors', () => {
+				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 				});
 			});
-			describe('and there is no selected deadline in the body', () => {
-				beforeEach(() => {
-					req.body = {};
-					postSelectDeadline(req, res);
-				});
-				it('should render the error page', () => {
-					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
-				});
-			});
-			describe('and there is no issues', () => {
+
+			describe('and there are no issues', () => {
 				const mockFoundDeadlineItem = { value: 'mock value', text: 'mock text' };
 				const mockBodyDeadlineItem = 'mock selected deadline item';
-				beforeEach(() => {
-					req.body = {
+				const mockReq = {
+					...req,
+					body: {
 						'examination-select-deadline': mockBodyDeadlineItem
-					};
-
+					}
+				};
+				beforeEach(() => {
 					findDeadlineItemByValue.mockReturnValue(mockFoundDeadlineItem);
+					getActiveSubmissionItemKey.mockReturnValue();
 					setSubmissionItem.mockReturnValue();
-					postSelectDeadline(req, res);
 				});
-				it('should call the functions', () => {
-					expect(findDeadlineItemByValue).toHaveBeenCalledWith(mockSession, mockBodyDeadlineItem);
-					expect(setSubmissionItem).toHaveBeenCalledWith(mockSession, mockFoundDeadlineItem);
+
+				describe('and the query mode is NOT equal to "edit"', () => {
+					beforeEach(() => {
+						postSelectDeadline(mockReq, res);
+					});
+					it('should call the functions', () => {
+						expect(findDeadlineItemByValue).toHaveBeenCalledWith(
+							mockReq.session,
+							mockBodyDeadlineItem
+						);
+						expect(setSubmissionItem).toHaveBeenCalledWith(mockReq.session, mockFoundDeadlineItem);
+					});
+					it('should redirect to the next page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/examination/select-upload-evidence-or-comment'
+						);
+					});
 				});
-				it('should redirect to the next page', () => {
-					expect(res.redirect).toHaveBeenCalledWith(
-						'/examination/select-upload-evidence-or-comment'
-					);
+				describe('and the query mode is equal to "edit"', () => {
+					beforeEach(() => {
+						mockReq.query.mode = 'edit';
+					});
+					describe('and the same selected deadline item is already in the session', () => {
+						beforeEach(() => {
+							getActiveSubmissionItemKey.mockReturnValue(mockFoundDeadlineItem.value);
+							postSelectDeadline(mockReq, res);
+						});
+						it('should call the functions', () => {
+							expect(findDeadlineItemByValue).toHaveBeenCalledWith(
+								mockReq.session,
+								mockBodyDeadlineItem
+							);
+							expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-deadline-item');
+						});
+					});
 				});
 			});
 		});

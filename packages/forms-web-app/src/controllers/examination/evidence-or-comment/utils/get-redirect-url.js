@@ -1,20 +1,20 @@
+const { getRedirectRoute } = require('./get-redirect-route');
+const { getSubmissionItemPageUrl } = require('../../utils/get-submission-item-page-url');
+const { isSubmissionTypePrevious } = require('./is-submission-type-previous');
 const {
 	routesConfig: {
-		examination: {
-			directory: examinationDirectory,
-			pages: { enterComment, selectFile }
-		}
+		examination: { directory }
 	}
 } = require('../../../../routes/config');
 
-const getRedirectUrl = (options, value) => {
+const getRedirectUrl = (query, session, value) => {
 	let redirectUrl;
 
-	if (options[1].value === value) redirectUrl = `${examinationDirectory + enterComment.route}`;
-	else if (options[2].value === value) redirectUrl = `${examinationDirectory + selectFile.route}`;
-	else if (options[3].value === value) redirectUrl = `${examinationDirectory + enterComment.route}`;
+	const redirectRoute = getRedirectRoute(value);
 
-	if (!redirectUrl) throw new Error('No redirect url found');
+	if (isSubmissionTypePrevious(session, value))
+		redirectUrl = getSubmissionItemPageUrl(query, redirectRoute);
+	else redirectUrl = `${directory}${redirectRoute}`;
 
 	return redirectUrl;
 };

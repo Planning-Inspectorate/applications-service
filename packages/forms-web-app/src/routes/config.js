@@ -30,11 +30,11 @@ const routesConfig = {
 				title: 'Are you #?',
 				view: 'pages/examination/applicant'
 			},
-			checkDeadlineItem: {
-				id: 'examination-check-deadline-item',
+			checkSubmissionItem: {
+				id: 'examination-check-submission-item',
 				name: 'Check your answers',
 				route: '/check-your-deadline-item',
-				view: 'pages/examination/check-deadline-item'
+				view: 'pages/examination/check-submission-item'
 			},
 			checkYourAnswers: {
 				id: 'examination-check-your-answers',
@@ -60,10 +60,6 @@ const routesConfig = {
 			},
 			enterComment: {
 				id: 'examination-enter-comment',
-				name: 'Your comment',
-				route: '/enter-a-comment',
-				sessionId: 'comment',
-				view: 'pages/examination/enter-comment',
 				onError: {
 					message: {
 						checkLength: 'Your comment must be 65,234 characters or less',
@@ -74,11 +70,13 @@ const routesConfig = {
 						max: 65234
 					}
 				},
-				title: 'Make a comment'
+				route: '/enter-a-comment',
+				sessionId: 'comment',
+				title: 'Your comment',
+				view: 'pages/examination/enter-comment'
 			},
 			evidenceOrComment: {
 				id: 'examination-evidence-or-comment',
-				name: `How you've submitted your representation`,
 				onError: {
 					message: {
 						isEmpty: 'Select if you want to upload supporting evidence or write a comment'

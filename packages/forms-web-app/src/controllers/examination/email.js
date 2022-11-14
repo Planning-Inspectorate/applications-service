@@ -1,3 +1,5 @@
+const config = require('../../config');
+const { isQueryModeEdit } = require('../utils/is-query-mode-edit');
 const {
 	routesConfig: {
 		examination: {
@@ -10,7 +12,6 @@ const {
 	}
 } = require('../../routes/config');
 
-const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
 const examinationSessionStorageName = examinationSessionStorage?.name;
 const examinationSessionStorageEmail = examinationSessionStorage?.property?.email;
@@ -38,7 +39,7 @@ const getEmail = async (req, res) => {
 };
 
 const postEmail = async (req, res) => {
-	const { body = {} } = req;
+	const { body = {}, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	const requestSession = req?.session;
 	const currentView = requestSession?.currentView;
@@ -62,7 +63,7 @@ const postEmail = async (req, res) => {
 		});
 	}
 
-	if (req.query?.mode === 'edit') {
+	if (isQueryModeEdit(query)) {
 		res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
 	} else {
 		res.redirect(`${examinationDirectory}/select-deadline-item`);

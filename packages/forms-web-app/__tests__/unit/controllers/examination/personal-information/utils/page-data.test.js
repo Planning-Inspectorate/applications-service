@@ -58,7 +58,7 @@ describe('#getPageData', () => {
 				getBackLinkUrl.mockReturnValue(mockBackLinkUrl.backLinkUrl);
 				result = getPageData({});
 			});
-			it('should return an object', () => {
+			it('should return the page data', () => {
 				expect(result).toEqual({
 					...mockBackLinkUrl,
 					...mockPageData,
@@ -74,7 +74,7 @@ describe('#getPageData', () => {
 				getBackLinkUrl.mockReturnValue(mockBackLinkUrl.backLinkUrl);
 				result = getPageData({});
 			});
-			it('should return an object', () => {
+			it('should return the page data', () => {
 				expect(result).toEqual({
 					...mockBackLinkUrl,
 					...mockPageData,

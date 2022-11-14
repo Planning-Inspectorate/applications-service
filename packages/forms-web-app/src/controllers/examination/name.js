@@ -1,3 +1,4 @@
+const { isQueryModeEdit } = require('../utils/is-query-mode-edit');
 const config = require('../../config');
 const examinationSessionStorage = config?.sessionStorage?.examination;
 const examinationSessionStorageName = examinationSessionStorage?.name;
@@ -40,7 +41,7 @@ const getName = async (req, res) => {
 };
 
 const postName = async (req, res) => {
-	const { body = {}, session } = req;
+	const { body = {}, query, session } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	const examinationSession = session?.[examinationSessionStorageName];
 	const sessionCurrentView = req.session?.currentView;
@@ -65,7 +66,7 @@ const postName = async (req, res) => {
 
 	examinationSession.name = setName;
 
-	if (req.query?.mode === 'edit') {
+	if (isQueryModeEdit(query)) {
 		res.redirect(`${examinationDirectory + checkYourAnswersRoute}`);
 	} else {
 		res.redirect(`${examinationDirectory + emailRoute}`);

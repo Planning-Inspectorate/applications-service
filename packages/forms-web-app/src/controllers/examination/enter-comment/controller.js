@@ -1,38 +1,20 @@
-const {
-	getActiveSubmissionItem,
-	getSubmissionItemSubmissionType,
-	addKeyValueToActiveSubmissionItem
-} = require('../session/submission-items-session');
-
 const logger = require('../../../lib/logger');
-
+const { addKeyValueToActiveSubmissionItem } = require('../session/submission-items-session');
+const { getPageData } = require('./utils/get-page-data');
+const { getRedirectRoute } = require('./utils/get-redirect-route');
+const { getSubmissionItemPageUrl } = require('../utils/get-submission-item-page-url');
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
-			pages: { enterComment, evidenceOrComment }
+			pages: { enterComment }
 		}
 	}
 } = require('../../../routes/config');
-const { getRedirectUrl } = require('./utils/get-redirect-url');
-
-const pageData = {
-	backLinkUrl: `${examinationDirectory}${evidenceOrComment.route}`,
-	id: enterComment.id,
-	pageTitle: enterComment.name,
-	title: enterComment.name
-};
 
 const getEnterComment = async (req, res) => {
 	try {
-		const { session } = req;
-		const setPageData = { ...pageData };
-
-		const activeSubmissionItem = getActiveSubmissionItem(session);
-		setPageData.activeSubmissionItemTitle = activeSubmissionItem.submissionItem;
-		setPageData.comment = activeSubmissionItem.comment || '';
-
-		return res.render(enterComment.view, setPageData);
+		const { query, session } = req;
+		return res.render(enterComment.view, getPageData(query, session));
 	} catch (error) {
 		logger.error(`Error: ${error}`);
 		return res.status(500).render('error/unhandled-exception');
@@ -41,30 +23,22 @@ const getEnterComment = async (req, res) => {
 
 const postEnterComment = async (req, res) => {
 	try {
-		const { body, session } = req;
+		const { body, query, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
-
-		const activeSubmissionItem = getActiveSubmissionItem(session);
-
 		if (errors[enterComment.id] || Object.keys(errors).length > 0) {
-			const setPageData = { ...pageData };
-
-			setPageData.activeSubmissionItemTitle = activeSubmissionItem.submissionItem;
-			setPageData.comment = activeSubmissionItem.comment || '';
 			return res.render(enterComment.view, {
-				...setPageData,
+				...getPageData(query, session),
 				errors,
 				errorSummary
 			});
 		}
 
-		const submissionType = getSubmissionItemSubmissionType(activeSubmissionItem);
+		const enterCommentValue = body[enterComment.id];
+		if (!enterCommentValue) throw new Error('Enter comment does not have a value');
 
-		addKeyValueToActiveSubmissionItem(session, 'comment', body[enterComment.id]);
+		addKeyValueToActiveSubmissionItem(session, enterComment.sessionId, enterCommentValue);
 
-		const redirectUrl = getRedirectUrl(submissionType);
-
-		return res.redirect(redirectUrl);
+		return res.redirect(getSubmissionItemPageUrl(query, getRedirectRoute(session)));
 	} catch (error) {
 		logger.error(`Error: ${error}`);
 		return res.status(500).render('error/unhandled-exception');
