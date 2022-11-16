@@ -31,8 +31,14 @@ const pageData = {
 const getPageData = (session) => {
 	const mappedSubmissionItems = mapSubmissionItems(session);
 	const moreDeadlineItems = hasMoreDeadlineItemsToSubmit(session);
+
+	const backLinkUrl = mappedSubmissionItems.hasNoSubmissionItems
+		? ''
+		: `${examinationDirectory}${checkSubmissionItem.route}`;
+
 	return {
 		...pageData,
+		backLinkUrl,
 		...mappedSubmissionItems,
 		moreDeadlineItems
 	};
