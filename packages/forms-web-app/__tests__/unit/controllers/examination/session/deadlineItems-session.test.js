@@ -85,8 +85,8 @@ describe('controllers/examination/session/deadlineItems-session', () => {
 			describe('and there are deadline items remaining to submit', () => {
 				const mockSession = 'mock session';
 				const mockExaminationSession = {
-					deadlineItems: [{ text: 'should be removed' }, { text: 'keep me' }],
-					submissionItems: [{ submissionItem: 'should be removed' }]
+					deadlineItems: [{ value: 1 }, { value: 2 }],
+					submissionItems: [{ itemId: 1, submitted: true }]
 				};
 				let result;
 				beforeEach(() => {
@@ -94,20 +94,16 @@ describe('controllers/examination/session/deadlineItems-session', () => {
 					result = getDeadlineItemStillToSubmit(mockSession);
 				});
 				it('should return a list of remaining deadline items', () => {
-					expect(result).toEqual([
-						{
-							text: 'keep me'
-						}
-					]);
+					expect(result).toEqual([{ value: 2 }]);
 				});
 			});
 			describe('and there are NO deadline items remaining to submit', () => {
 				const mockSession = 'mock session';
 				const mockExaminationSession = {
-					deadlineItems: [{ text: 'should be removed' }, { text: 'should be removed as well' }],
+					deadlineItems: [{ value: 1 }, { value: 2 }],
 					submissionItems: [
-						{ submissionItem: 'should be removed' },
-						{ submissionItem: 'should be removed as well' }
+						{ itemId: 1, submitted: true },
+						{ itemId: 2, submitted: true }
 					]
 				};
 				let result;
@@ -119,15 +115,15 @@ describe('controllers/examination/session/deadlineItems-session', () => {
 					expect(result).toEqual([]);
 				});
 			});
-			describe('and submission items is empty', () => {
+			describe('and there are no submitted submission items', () => {
 				const mockSession = 'mock session';
-				const deadlineItems = [
-					{ text: 'should be removed' },
-					{ text: 'should be removed as well' }
-				];
+				const deadlineItems = [{ value: 1 }, { value: 2 }];
 				const mockExaminationSession = {
 					deadlineItems,
-					submissionItems: []
+					submissionItems: [
+						{ itemId: 1, submitted: false },
+						{ itemId: 2, submitted: false }
+					]
 				};
 				let result;
 				beforeEach(() => {
