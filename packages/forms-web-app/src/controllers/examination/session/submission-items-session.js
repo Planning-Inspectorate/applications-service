@@ -69,8 +69,15 @@ const getActiveSubmissionItemKey = (session) => {
 	return activeDeadlineItem;
 };
 
-const setActiveSubmissionItem = (examinationSession, activeItem) =>
-	(examinationSession.activeItem = activeItem);
+const setActiveSubmissionItem = (session, activeItem) => {
+	const examinationSession = getExaminationSession(session);
+	examinationSession.activeItem = activeItem;
+};
+
+const deleteActiveItem = (session) => {
+	const examinationSession = getExaminationSession(session);
+	delete examinationSession.activeItem;
+};
 
 const checkIfSubmissionItemExists = (examinationSession, submissionItemId) =>
 	examinationSession.submissionItems.find((item) => item.itemId === submissionItemId);
@@ -88,11 +95,22 @@ const setSubmissionItem = (session, submissionItem) => {
 		examinationSession.submissionItems.push({
 			itemId: submissionItem.value,
 			submissionItem: submissionItem.text,
-			completed: false
+			submitted: false
 		});
 	}
 
-	setActiveSubmissionItem(examinationSession, submissionItem.value);
+	setActiveSubmissionItem(session, submissionItem.value);
+};
+
+const setActiveSubmissionItemSubmitted = (session, submitted) => {
+	const activeSubmissionItem = getActiveSubmissionItem(session);
+	setSubmissionItemSubmitted(activeSubmissionItem, submitted);
+};
+
+const setSubmissionItemSubmitted = (submissionItem, submitted) => {
+	if (!submissionItem?.submitted && typeof submissionItem?.submitted !== 'boolean')
+		throw new Error('Submission item submitted is not defined');
+	submissionItem.submitted = submitted;
 };
 
 const getSubmissionFilesLength = (session) => {
@@ -113,11 +131,14 @@ module.exports = {
 	getActiveSubmissionItemKey,
 	getActiveSubmissionItem,
 	setSubmissionItem,
+	setActiveSubmissionItemSubmitted,
+	setSubmissionItemSubmitted,
 	getSubmissionItemType,
 	getActiveSubmissionItemFiles,
 	getSubmissionItemFiles,
 	getSubmissionFilesLength,
 	getSubmissionItemComment,
 	getSubmissionItemPersonalInformation,
-	deleteSubmissionItem
+	deleteSubmissionItem,
+	deleteActiveItem
 };

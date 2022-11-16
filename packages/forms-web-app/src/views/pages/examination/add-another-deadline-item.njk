@@ -26,110 +26,114 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			{% if hasNoSubmissionItems %}
-			<h1 class="govuk-heading-l"> {{ noDeadlineItems.title }}</h1>
-			<a
-				href="{{ noDeadlineItems.selectDeadlineURL }}"
-				class="govuk-button"
-			>
-				Add a deadline item
-			</a>
+				<h1 class="govuk-heading-l">
+					{{ noDeadlineItems.title }}
+				</h1>
 
+				<a
+					href="{{ noDeadlineItems.selectDeadlineURL }}"
+					class="govuk-button"
+				>
+					Add a deadline item
+				</a>
 			{% else %}
-			<h1 class="govuk-heading-l">{{ title }}</h1>
-			<div class="govuk-form-group">
-				<dl class="govuk-summary-list hmrc-list-with-actions hmrc-list-with-actions--long">
-					{% for item in submissionItems %}
-						<div class="govuk-summary-list__row">
-							<div class="govuk-grid-column-two-thirds">
-								<dd class="govuk-summary-list__value">
-									<ul class="govuk-list">
-										{{ item.submissionItem }}
-									</ul>
-								</dd>
-							</div>
-							<div class="govuk-grid-column-one-third">
-								<dd class="govuk-summary-list__actions hmrc-summary-list__actions">
-									<ul class="govuk-summary-list__actions-list">
-										<li class="govuk-summary-list__actions-list-item">
-											<a class="change-item" href="{{ item.changeUrl }}" data-loop-position="0">
-												<span aria-hidden="true">Change</span><span
-													class="govuk-visually-hidden">Change deadline data for </span>
-											</a>
-										</li>
-										<li class="govuk-summary-list__actions-list-item">
-											<form
-												name="removeDeadlineItem"
-												action="{{ item.remove.url }}"
-												method="post"
-											>
-												<button
-													name="itemIdToDelete"
-													type="submit"
-													class="ui-link-button"
-													value="{{ item.remove.itemId }}"
+				<h1 class="govuk-heading-l">
+					{{ title }}
+				</h1>
+
+				<div class="govuk-form-group">
+					<dl class="govuk-summary-list hmrc-list-with-actions hmrc-list-with-actions--long">
+						{% for item in submissionItems %}
+							<div class="govuk-summary-list__row">
+								<div class="govuk-grid-column-two-thirds">
+									<dd class="govuk-summary-list__value">
+										<ul class="govuk-list">
+											{{ item.submissionItem }}
+										</ul>
+									</dd>
+								</div>
+								<div class="govuk-grid-column-one-third">
+									<dd class="govuk-summary-list__actions hmrc-summary-list__actions">
+										<ul class="govuk-summary-list__actions-list">
+											<li class="govuk-summary-list__actions-list-item">
+												<a class="change-item" href="{{ item.changeUrl }}" data-loop-position="0">
+													<span aria-hidden="true">Change</span><span
+														class="govuk-visually-hidden">Change deadline data for </span>
+												</a>
+											</li>
+											<li class="govuk-summary-list__actions-list-item">
+												<form
+													name="removeDeadlineItem"
+													action="{{ item.remove.url }}"
+													method="post"
 												>
-									<span class="govuk-visually-hidden">
-										Remove
-									</span>
-													<span class="govuk-link">
-										Remove
-									</span>
-												</button>
-											</form>
-										</li>
-									</ul>
-								</dd>
+													<button
+														name="itemIdToDelete"
+														type="submit"
+														class="ui-link-button"
+														value="{{ item.remove.itemId }}"
+													>
+														<span class="govuk-visually-hidden">
+															Remove
+														</span>
+														<span class="govuk-link">
+															Remove
+														</span>
+													</button>
+												</form>
+											</li>
+										</ul>
+									</dd>
+								</div>
 							</div>
-						</div>
-					{% endfor %}
-				</dl>
-			</div>
+						{% endfor %}
+					</dl>
+				</div>
 			{% if moreDeadlineItems.hasMoreDeadlineItemsToSubmit %}
-			<form action="" method="POST" novalidate>
-				{{ govukRadios({
-					attributes: { "data-cy": id },
-					classes: "govuk-radios--inline",
-					idPrefix: id,
-					name: id,
-					errorMessage: errors[id] and {
-						text: errors[id].msg
-					},
-					fieldset: {
-						legend: {
-							text: '',
-							isPageHeading: true,
-							classes: "govuk-fieldset__legend--m"
-						}
-					},
-					hint: {
-						html: hintHtml
-					},
-					items: options
-				}) }}
-				{{ govukButton({
-					attributes: { "data-cy": "button-submit-and-continue" },
-					text: "Continue",
-					type: "Submit"
-				}) }}
-			</form>
+				<form action="" method="POST" novalidate>
+					{{ govukRadios({
+						attributes: { "data-cy": id },
+						classes: "govuk-radios--inline",
+						idPrefix: id,
+						name: id,
+						errorMessage: errors[id] and {
+							text: errors[id].msg
+						},
+						fieldset: {
+							legend: {
+								text: '',
+								isPageHeading: true,
+								classes: "govuk-fieldset__legend--m"
+							}
+						},
+						hint: {
+							html: hintHtml
+						},
+						items: options
+					}) }}
+					{{ govukButton({
+						attributes: { "data-cy": "button-submit-and-continue" },
+						text: "Continue",
+						type: "Submit"
+					}) }}
+				</form>
 			{% else %}
-			<div class="govuk-warning-text">
-				<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-				<strong class="govuk-warning-text__text">
-					<span class="govuk-warning-text__assistive">Warning</span>
-					{{ moreDeadlineItems.message }}
-				</strong>
-			</div>
-			<form action="{{ moreDeadlineItems.continueLink }}" method="GET" novalidate>
-				{{ govukButton({
-					attributes: { "data-cy": "button-submit-and-continue" },
-					text: "Continue",
-					type: "Submit"
-				}) }}
+				<div class="govuk-warning-text">
+					<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+					<strong class="govuk-warning-text__text">
+						<span class="govuk-warning-text__assistive">Warning</span>
+						{{ moreDeadlineItems.message }}
+					</strong>
+				</div>
+				<form action="{{ moreDeadlineItems.continueLink }}" method="GET" novalidate>
+					{{ govukButton({
+						attributes: { "data-cy": "button-submit-and-continue" },
+						text: "Continue",
+						type: "Submit"
+					}) }}
 				<form>
-					{% endif %}
-					{% endif %}
+			{% endif %}
+		{% endif %}
 		</div>
 	</div>
-
 {% endblock %}

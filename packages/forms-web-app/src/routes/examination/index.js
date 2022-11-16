@@ -42,7 +42,8 @@ const { forwardView } = require('../../middleware/forward-view');
 
 const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
 const {
-	getCheckSubmissionItem
+	getCheckSubmissionItem,
+	postCheckSubmissionItem
 } = require('../../controllers/examination/check-submission-item/controller');
 const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
@@ -101,6 +102,7 @@ router.get(applicant.route, getApplicant);
 router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
 
 router.get(checkSubmissionItem.route, getCheckSubmissionItem);
+router.post(checkSubmissionItem.route, postCheckSubmissionItem);
 
 router.get(checkYourAnswers.route, getCheckYourAnswers);
 

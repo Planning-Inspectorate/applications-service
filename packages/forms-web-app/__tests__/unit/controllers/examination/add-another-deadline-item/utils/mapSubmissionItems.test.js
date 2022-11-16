@@ -1,13 +1,23 @@
 const {
 	mapSubmissionItems
 } = require('../../../../../../src/controllers/examination/add-another-deadline-item/utils/mapSubmissionItems');
+
 const {
 	getExaminationSession
 } = require('../../../../../../src/controllers/examination/session/examination-session');
+const {
+	filterSubmissionItems
+} = require('../../../../../../src/controllers/examination/add-another-deadline-item/utils/filter-submission-items');
 
 jest.mock('../../../../../../src/controllers/examination/session/examination-session', () => ({
 	getExaminationSession: jest.fn()
 }));
+jest.mock(
+	'../../../../../../src/controllers/examination/add-another-deadline-item/utils/filter-submission-items',
+	() => ({
+		filterSubmissionItems: jest.fn()
+	})
+);
 
 describe('#mapSubmissionItems', () => {
 	describe('When mapping the submission items', () => {
@@ -19,32 +29,13 @@ describe('#mapSubmissionItems', () => {
 				expect(() => mapSubmissionItems()).toThrow('No submission items in session');
 			});
 		});
-		describe('and there is 0 submission item', () => {
-			let result;
-			const mockSession = {};
-			const mockSubmissionItems = [];
-			beforeEach(() => {
-				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
-				result = mapSubmissionItems(mockSession);
-			});
-			it('should return the mapped data', () => {
-				expect(result).toEqual({
-					hasNoSubmissionItems: true,
-					noDeadlineItems: {
-						selectDeadlineURL: '/examination/select-deadline-item',
-						title: 'You have not added a deadline item'
-					},
-					submissionItems: [],
-					title: 'You added 0 deadline item'
-				});
-			});
-		});
-		describe('and there is 1 submission item', () => {
+		describe('and there is 1 non submitted submission item', () => {
 			let result;
 			const mockSession = {};
 			const mockSubmissionItems = [{ submissionItem: 'mock submission item' }];
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
+				filterSubmissionItems.mockReturnValue(mockSubmissionItems);
 				result = mapSubmissionItems(mockSession);
 			});
 			it('should return the mapped data', () => {
@@ -67,7 +58,7 @@ describe('#mapSubmissionItems', () => {
 				});
 			});
 		});
-		describe('and there is submission items', () => {
+		describe('and there is non submitted submission items', () => {
 			let result;
 			const mockSession = {};
 			const mockSubmissionItems = [
@@ -76,6 +67,7 @@ describe('#mapSubmissionItems', () => {
 			];
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
+				filterSubmissionItems.mockReturnValue(mockSubmissionItems);
 				result = mapSubmissionItems(mockSession);
 			});
 			it('should return the mapped data', () => {
