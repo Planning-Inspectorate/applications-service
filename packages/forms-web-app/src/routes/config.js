@@ -341,6 +341,9 @@ const routesConfig = {
 				route: '/add-another-deadline-item',
 				view: 'pages/examination/add-another-deadline-item',
 				comment: '',
+				changeADeadlineItem: {
+					route: '/change-a-deadline-item'
+				},
 				onError: {
 					message: {
 						isEmpty: 'Select yes if you want to add another deadline item'

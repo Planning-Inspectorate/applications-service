@@ -1,6 +1,7 @@
 const {
 	getAddAnotherDeadlineItem,
-	postAddAnotherDeadlineItem
+	postAddAnotherDeadlineItem,
+	postChangeADeadlineItem
 } = require('../../../../../src/controllers/examination/add-another-deadline-item/controller');
 const {
 	getPageData
@@ -92,6 +93,33 @@ describe('controllers/examination/add-another-deadline-item/controller', () => {
 				});
 				it('should render the error page', () => {
 					expect(res.redirect).toHaveBeenCalledWith('/examination/select-deadline-item');
+				});
+			});
+		});
+	});
+	describe('#postChangeADeadlineItem', () => {
+		describe('When changing a deadline item', () => {
+			const res = {
+				render: jest.fn(),
+				redirect: jest.fn(),
+				status: jest.fn(() => res)
+			};
+			const req = { body: {}, session: { examination: {} } };
+			describe('and there is no item id ', () => {
+				beforeEach(() => {
+					postChangeADeadlineItem(req, res);
+				});
+				it('should render the error page', () => {
+					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+				});
+			});
+			describe('and the item id is present', () => {
+				beforeEach(() => {
+					req.body.itemIdToChange = 1;
+					postChangeADeadlineItem(req, res);
+				});
+				it('should redirect', () => {
+					expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-deadline-item');
 				});
 			});
 		});

@@ -1,7 +1,8 @@
 const {
 	routesConfig: {
 		examination: {
-			pages: { addAnotherDeadlineItem }
+			directory,
+			pages: { addAnotherDeadlineItem, checkSubmissionItem }
 		}
 	}
 } = require('../../../routes/config');
@@ -19,6 +20,24 @@ const getAddAnotherDeadlineItem = (req, res) => {
 		});
 	} catch (error) {
 		logger.error(error);
+		return res.status(500).render('error/unhandled-exception');
+	}
+};
+
+const postChangeADeadlineItem = (req, res) => {
+	try {
+		const {
+			session,
+			body: { itemIdToChange }
+		} = req;
+
+		if (!itemIdToChange) throw new Error('No item id for change');
+
+		session.examination.activeItem = itemIdToChange;
+
+		return res.redirect(`${directory}${checkSubmissionItem.route}`);
+	} catch (error) {
+		logger.error('Error: ', error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
@@ -51,5 +70,6 @@ const postAddAnotherDeadlineItem = (req, res) => {
 
 module.exports = {
 	getAddAnotherDeadlineItem,
-	postAddAnotherDeadlineItem
+	postAddAnotherDeadlineItem,
+	postChangeADeadlineItem
 };

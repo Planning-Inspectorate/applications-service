@@ -86,7 +86,8 @@ const {
 } = require('../../controllers/examination/your-interested-party-number');
 const {
 	getAddAnotherDeadlineItem,
-	postAddAnotherDeadlineItem
+	postAddAnotherDeadlineItem,
+	postChangeADeadlineItem
 } = require('../../controllers/examination/add-another-deadline-item/controller');
 
 const {
@@ -253,6 +254,7 @@ router.post(
 );
 
 router.get(addAnotherDeadlineItem.route, getAddAnotherDeadlineItem);
+router.post(addAnotherDeadlineItem.changeADeadlineItem.route, postChangeADeadlineItem);
 router.post(
 	addAnotherDeadlineItem.route,
 	validateNotEmpty(addAnotherDeadlineItem),
