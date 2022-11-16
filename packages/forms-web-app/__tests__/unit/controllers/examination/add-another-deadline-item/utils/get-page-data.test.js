@@ -27,7 +27,7 @@ describe('#getPageData', () => {
 		describe('and there are no issues', () => {
 			let result;
 			const mockSession = 'mock session';
-			const mockedSubmissionItems = { mockSubmissionItems: 'mock items' };
+			const mockedSubmissionItems = { submissionItems: 'mock items' };
 			const mockedDeadlineItemsToSubmit = 'mocked deadline items to submit';
 			beforeEach(() => {
 				mapSubmissionItems.mockReturnValue(mockedSubmissionItems);
@@ -52,7 +52,40 @@ describe('#getPageData', () => {
 					],
 					moreDeadlineItems: 'mocked deadline items to submit',
 					pageTitle: 'You added one deadline item',
-					mockSubmissionItems: 'mock items',
+					submissionItems: 'mock items',
+					title: 'You added one deadline item'
+				});
+			});
+		});
+		describe('and there there are no submission items', () => {
+			let result;
+			const mockSession = 'mock session';
+			const mockedSubmissionItems = { hasNoSubmissionItems: true };
+			const mockedDeadlineItemsToSubmit = 'mocked deadline items to submit';
+			beforeEach(() => {
+				mapSubmissionItems.mockReturnValue(mockedSubmissionItems);
+				hasMoreDeadlineItemsToSubmit.mockReturnValue(mockedDeadlineItemsToSubmit);
+				result = getPageData(mockSession);
+			});
+			it('should return the page data', () => {
+				expect(result).toEqual({
+					backLinkUrl: '',
+					hintHtml: 'Do you need to add another deadline item?',
+					id: 'examination-add-another-deadline-item',
+					name: 'You added one deadline item',
+					options: [
+						{
+							text: 'Yes',
+							value: 'yes'
+						},
+						{
+							text: 'no',
+							value: 'no'
+						}
+					],
+					moreDeadlineItems: 'mocked deadline items to submit',
+					pageTitle: 'You added one deadline item',
+					hasNoSubmissionItems: true,
 					title: 'You added one deadline item'
 				});
 			});

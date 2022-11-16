@@ -4,7 +4,7 @@ const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { checkSubmissionItem, selectIfYouWantToDeleteData }
+			pages: { checkSubmissionItem, selectIfYouWantToDeleteData, selectDeadline }
 		}
 	}
 } = require('../../../../routes/config');
@@ -17,6 +17,11 @@ const mapSubmissionItems = (session) => {
 	if (!submissionItems) throw new Error('No submission items in session');
 
 	return {
+		hasNoSubmissionItems: submissionItems.length === 0,
+		noDeadlineItems: {
+			title: 'You have not added a deadline item',
+			selectDeadlineURL: `${examinationDirectory}${selectDeadline.route}`
+		},
 		title:
 			`You added ${submissionItems.length} deadline item` + (submissionItems.length > 1 ? 's' : ''),
 		submissionItems: submissionItems.map((item) => ({

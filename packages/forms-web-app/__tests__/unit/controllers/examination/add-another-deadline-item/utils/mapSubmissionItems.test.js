@@ -19,6 +19,26 @@ describe('#mapSubmissionItems', () => {
 				expect(() => mapSubmissionItems()).toThrow('No submission items in session');
 			});
 		});
+		describe('and there is 0 submission item', () => {
+			let result;
+			const mockSession = {};
+			const mockSubmissionItems = [];
+			beforeEach(() => {
+				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
+				result = mapSubmissionItems(mockSession);
+			});
+			it('should return the mapped data', () => {
+				expect(result).toEqual({
+					hasNoSubmissionItems: true,
+					noDeadlineItems: {
+						selectDeadlineURL: '/examination/select-deadline-item',
+						title: 'You have not added a deadline item'
+					},
+					submissionItems: [],
+					title: 'You added 0 deadline item'
+				});
+			});
+		});
 		describe('and there is 1 submission item', () => {
 			let result;
 			const mockSession = {};
@@ -29,6 +49,11 @@ describe('#mapSubmissionItems', () => {
 			});
 			it('should return the mapped data', () => {
 				expect(result).toEqual({
+					hasNoSubmissionItems: false,
+					noDeadlineItems: {
+						selectDeadlineURL: '/examination/select-deadline-item',
+						title: 'You have not added a deadline item'
+					},
 					submissionItems: [
 						{
 							changeUrl: '/examination/check-your-deadline-item',
@@ -55,6 +80,11 @@ describe('#mapSubmissionItems', () => {
 			});
 			it('should return the mapped data', () => {
 				expect(result).toEqual({
+					hasNoSubmissionItems: false,
+					noDeadlineItems: {
+						selectDeadlineURL: '/examination/select-deadline-item',
+						title: 'You have not added a deadline item'
+					},
 					submissionItems: [
 						{
 							changeUrl: '/examination/check-your-deadline-item',
