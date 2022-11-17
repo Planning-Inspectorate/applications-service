@@ -362,18 +362,20 @@ paths:
                 $ref: '#/components/schemas/Representation'
         '404':
           description: Representation not found
-  '/api/v1/timetables/{caseRef}':
+  '/api/v1/timetables/{caseReference}':
     get:
       summary: Returns timetable data for a case
       tags:
         - Timetables
       parameters:
         - in: path
-          name: caseRef
+          name: caseReference
           example: EN020021
           required: true
           schema:
             type: string
+            minLength: 2
+            maxLength: 12
           description: Case / Project unique identifier
       responses:
         '200':
@@ -394,13 +396,7 @@ paths:
       tags:
         - Submissions
       parameters:
-        - in: path
-          name: caseReference
-          example: EN020021
-          required: true
-          schema:
-            type: string
-          description: Case / Project unique identifier
+        - $ref: '#/components/parameters/caseReference'
       requestBody:
         content:
           multipart/form-data:
@@ -419,6 +415,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Internal server error
+  '/api/v1/submissions/{submissionId}/complete':
+    post:
+      summary: Mark a submission as complete
+      tags:
+        - Submissions
+      parameters:
+        - in: path
+          name: submissionId
+          example: 1234
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Request was successful
+        '400':
+          description: Request body validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Submission with given ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
         '500':
           description: Internal server error
   '/test':
@@ -1140,3 +1165,14 @@ components:
           items:
             type: string
             example: Missing property 'x'
+    NotFoundError:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 404
+        errors:
+          type: array
+          items:
+            type: string
+            example: Submission not found

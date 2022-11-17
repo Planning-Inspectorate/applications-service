@@ -1,22 +1,9 @@
 const config = require('../../lib/config');
 const ApiError = require('../../error/apiError');
-const { createRequestValidator } = require('../../utils/openapi');
+const { validateRequestWithOpenAPI } = require('./openapi');
 
-const validator = createRequestValidator('POST', '/api/v1/submissions/{caseReference}');
-
-const validateRequest = (req, res, next) => {
-	const errors = validator.validateRequest(req);
-
-	if (errors) {
-		throw ApiError.badRequest(
-			errors.errors.map((e) => {
-				if (e.errorCode.includes('maxLength')) {
-					return `'${e.path}' ${e.message.toLowerCase()}`;
-				}
-				return e.message;
-			})
-		);
-	}
+const validateCreateSubmissionRequest = (req, res, next) => {
+	validateRequestWithOpenAPI(req, res, next);
 
 	if (!req.body.representation && !req.file) {
 		throw ApiError.badRequest("must have required property 'representation' or 'file'");
@@ -38,5 +25,5 @@ const validateRequest = (req, res, next) => {
 };
 
 module.exports = {
-	validateRequest
+	validateCreateSubmissionRequest
 };

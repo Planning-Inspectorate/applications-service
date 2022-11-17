@@ -3,10 +3,14 @@ const fileUpload = require('express-fileupload');
 
 const submissionsController = require('../controllers/submissions');
 const config = require('../lib/config');
-const { parseFormDataProperties } = require('../middleware/parseFormDataProperties');
+const {
+	parseFormDataProperties,
+	parseIntegerParam
+} = require('../middleware/parseFormDataProperties');
 const { fileUploadLimitHandler } = require('../middleware/fileUploadLimitHandler');
-const { validateRequest } = require('../middleware/validator/submission');
+const { validateCreateSubmissionRequest } = require('../middleware/validator/submission');
 const { normaliseRequestFileData } = require('../middleware/normaliseRequestFileData');
+const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
 
 const router = express.Router();
 
@@ -19,8 +23,15 @@ router.post(
 	}),
 	normaliseRequestFileData,
 	parseFormDataProperties(['interestedParty', 'sensitiveData', 'lateSubmission'], ['submissionId']),
-	validateRequest,
+	validateCreateSubmissionRequest,
 	submissionsController.createSubmission
+);
+
+router.post(
+	'/:submissionId/complete',
+	parseIntegerParam('submissionId'),
+	validateRequestWithOpenAPI,
+	submissionsController.completeSubmission
 );
 
 module.exports = router;

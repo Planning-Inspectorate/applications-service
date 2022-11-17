@@ -61,7 +61,13 @@ async function sendMagicLinkToIP(details) {
 	}
 }
 
+const sendSubmissionNotification = (data) => {
+	// TODO in ASB-901
+	console.log(data);
+}
+
 module.exports = {
 	sendIPRegistrationConfirmationEmailToIP,
-	sendMagicLinkToIP
+	sendMagicLinkToIP,
+	sendSubmissionNotification
 };
