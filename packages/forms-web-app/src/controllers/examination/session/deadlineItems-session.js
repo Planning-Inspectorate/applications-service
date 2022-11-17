@@ -33,15 +33,15 @@ const getDeadlineItemToDelete = (session) => {
 
 const getDeadlineItemStillToSubmit = (session) => {
 	const examinationSession = getExaminationSession(session);
-	const deadlineItemsStillToSubmit = [];
-	const localDeadlineItems = [...examinationSession.deadlineItems];
-	const localSubmissionItems = examinationSession.submissionItems || [];
+	const deadlineItems = [...examinationSession.deadlineItems];
+	const submissionItems = examinationSession.submissionItems || [];
 
-	localDeadlineItems.forEach((item) => {
-		if (!localSubmissionItems.find((subItem) => subItem.submissionItem === item.text))
-			deadlineItemsStillToSubmit.push(item);
+	return deadlineItems.filter((deadlineItem) => {
+		const submissionItemAdded = submissionItems.find(
+			(submissionItem) => submissionItem.itemId === deadlineItem.value
+		);
+		if (!submissionItemAdded || !submissionItemAdded.submitted) return deadlineItem;
 	});
-	return deadlineItemsStillToSubmit;
 };
 
 module.exports = {

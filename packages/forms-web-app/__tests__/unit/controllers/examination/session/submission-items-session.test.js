@@ -4,7 +4,8 @@ const {
 	getActiveSubmissionItem,
 	setSubmissionItem,
 	getSubmissionFilesLength,
-	deleteSubmissionItem
+	deleteSubmissionItem,
+	deleteActiveItem
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 const {
@@ -154,7 +155,7 @@ describe('controllers/examination/session/examination-session)', () => {
 				});
 				it('should add the submission item to session and mark it as the active submission item', () => {
 					expect(mockSubmissionItems[1]).toEqual({
-						completed: false,
+						submitted: false,
 						itemId: 1,
 						submissionItem: 'I am an mock submission item'
 					});
@@ -265,6 +266,20 @@ describe('controllers/examination/session/examination-session)', () => {
 				it('should remain the same', () => {
 					expect(mockSubmissionItems).toEqual(mockSubmissionItems);
 				});
+			});
+		});
+	});
+	describe('#deleteActiveItem', () => {
+		describe('When deleting the active item', () => {
+			const mockExaminationSession = {
+				activeItem: 'mock active item'
+			};
+			beforeEach(() => {
+				getExaminationSession.mockReturnValue(mockExaminationSession);
+				deleteActiveItem();
+			});
+			it('should delete the active item key from the examination session', () => {
+				expect(mockExaminationSession).toEqual({});
 			});
 		});
 	});

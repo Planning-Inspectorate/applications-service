@@ -1,10 +1,10 @@
 const { getExaminationSession } = require('../../session/examination-session');
-
+const { filterSubmissionItems } = require('./filter-submission-items');
 const {
 	routesConfig: {
 		examination: {
 			directory: examinationDirectory,
-			pages: { addAnotherDeadlineItem, selectIfYouWantToDeleteData }
+			pages: { addAnotherDeadlineItem, selectIfYouWantToDeleteData, selectDeadline }
 		}
 	}
 } = require('../../../../routes/config');
@@ -16,10 +16,18 @@ const mapSubmissionItems = (session) => {
 
 	if (!submissionItems) throw new Error('No submission items in session');
 
+	const filterdSubmissionItems = filterSubmissionItems(submissionItems);
+
 	return {
+		hasNoSubmissionItems: filterdSubmissionItems.length === 0,
+		noDeadlineItems: {
+			title: 'You have not added a deadline item',
+			selectDeadlineURL: `${examinationDirectory}${selectDeadline.route}`
+		},
 		title:
-			`You added ${submissionItems.length} deadline item` + (submissionItems.length > 1 ? 's' : ''),
-		submissionItems: submissionItems.map((item) => ({
+			`You added ${filterdSubmissionItems.length} deadline item` +
+			(filterdSubmissionItems.length > 1 ? 's' : ''),
+		submissionItems: filterdSubmissionItems.map((item) => ({
 			submissionItem: item.submissionItem,
 			change: {
 				url: `${examinationDirectory}${addAnotherDeadlineItem.changeADeadlineItem.route}`,

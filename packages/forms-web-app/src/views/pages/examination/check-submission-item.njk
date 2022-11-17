@@ -1,5 +1,6 @@
 {% extends "layouts/default.njk" %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block content %}
@@ -13,12 +14,13 @@
         rows: summaryList
       }) }}
 
-      <a
-        href="{{ nextPageUrl }}"
-        class="govuk-button"
-      >
-        Continue
-      </a>
+      <form action="" method="POST" novalidate>
+        {{ govukButton({
+          attributes: { "data-cy": "button-submit-and-continue" },
+          text: "Continue",
+          type: "Submit"
+        }) }}
+      </form>
     </div>
   </div>
 {% endblock %}

@@ -1,16 +1,20 @@
 const {
-	getCheckSubmissionItem
+	getCheckSubmissionItem,
+	postCheckSubmissionItem
 } = require('../../../../../src/controllers/examination/check-submission-item/controller');
 
-let {
+const {
 	getBackLinkUrl
 } = require('../../../../../src/controllers/examination/check-submission-item/utils/get-back-link-url');
-let {
+const {
 	getPageData
 } = require('../../../../../src/controllers/examination/check-submission-item/utils/get-page-data');
-let {
+const {
 	getSummaryList
 } = require('../../../../../src/controllers/examination/check-submission-item/utils/get-summary-list');
+const {
+	setActiveSubmissionItemSubmitted
+} = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 jest.mock(
 	'../../../../../src/controllers/examination/check-submission-item/utils/get-back-link-url',
@@ -30,10 +34,15 @@ jest.mock(
 		getSummaryList: jest.fn()
 	})
 );
+jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
+	setActiveSubmissionItemSubmitted: jest.fn(),
+	deleteActiveItem: jest.fn()
+}));
 
 describe('/controllers/examination/check-submission-item/controller', () => {
 	const mockSession = 'mock session';
 	const res = {
+		redirect: jest.fn(),
 		render: jest.fn(),
 		status: jest.fn(() => res)
 	};
@@ -68,6 +77,31 @@ describe('/controllers/examination/check-submission-item/controller', () => {
 						throw new Error('something went wrong');
 					});
 					getCheckSubmissionItem(req, res);
+				});
+				it('should render the error page', () => {
+					expect(res.status).toHaveBeenCalledWith(500);
+					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+				});
+			});
+		});
+	});
+
+	describe('#postCheckSubmissionItem', () => {
+		describe('When handling the check submission item post request', () => {
+			describe('and the post is successful', () => {
+				beforeEach(() => {
+					postCheckSubmissionItem(req, res);
+				});
+				it('should redirct to the next page', () => {
+					expect(res.redirect).toHaveBeenCalledWith('/examination/add-another-deadline-item');
+				});
+			});
+			describe('and there is an error', () => {
+				beforeEach(() => {
+					setActiveSubmissionItemSubmitted.mockImplementation(() => {
+						throw new Error('something went wrong');
+					});
+					postCheckSubmissionItem(req, res);
 				});
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
