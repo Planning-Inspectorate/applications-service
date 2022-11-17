@@ -19,7 +19,7 @@ const mapSubmissionItems = (session) => {
 	const filterdSubmissionItems = filterSubmissionItems(submissionItems);
 
 	return {
-		hasNoSubmissionItems: submissionItems.length === 0,
+		hasNoSubmissionItems: filterdSubmissionItems.length === 0,
 		noDeadlineItems: {
 			title: 'You have not added a deadline item',
 			selectDeadlineURL: `${examinationDirectory}${selectDeadline.route}`
