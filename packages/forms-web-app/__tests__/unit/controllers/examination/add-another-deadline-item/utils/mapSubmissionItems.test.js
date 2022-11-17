@@ -32,7 +32,7 @@ describe('#mapSubmissionItems', () => {
 		describe('and there is 1 non submitted submission item', () => {
 			let result;
 			const mockSession = {};
-			const mockSubmissionItems = [{ submissionItem: 'mock submission item' }];
+			const mockSubmissionItems = [{ submissionItem: 'mock submission item', itemId: 1 }];
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
 				filterSubmissionItems.mockReturnValue(mockSubmissionItems);
@@ -47,8 +47,12 @@ describe('#mapSubmissionItems', () => {
 					},
 					submissionItems: [
 						{
-							changeUrl: '/examination/check-your-deadline-item',
+							change: {
+								itemId: 1,
+								url: '/examination/change-a-deadline-item'
+							},
 							remove: {
+								itemId: 1,
 								url: '/examination/mark-deadline-item-to-delete'
 							},
 							submissionItem: 'mock submission item'
@@ -62,8 +66,8 @@ describe('#mapSubmissionItems', () => {
 			let result;
 			const mockSession = {};
 			const mockSubmissionItems = [
-				{ submissionItem: 'mock submission item' },
-				{ submissionItem: 'mock another submission item' }
+				{ submissionItem: 'mock submission item', itemId: 1 },
+				{ submissionItem: 'mock another submission item', itemId: 2 }
 			];
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
@@ -79,15 +83,23 @@ describe('#mapSubmissionItems', () => {
 					},
 					submissionItems: [
 						{
-							changeUrl: '/examination/check-your-deadline-item',
+							change: {
+								itemId: 1,
+								url: '/examination/change-a-deadline-item'
+							},
 							remove: {
+								itemId: 1,
 								url: '/examination/mark-deadline-item-to-delete'
 							},
 							submissionItem: 'mock submission item'
 						},
 						{
-							changeUrl: '/examination/check-your-deadline-item',
+							change: {
+								itemId: 2,
+								url: '/examination/change-a-deadline-item'
+							},
 							remove: {
+								itemId: 2,
 								url: '/examination/mark-deadline-item-to-delete'
 							},
 							submissionItem: 'mock another submission item'
