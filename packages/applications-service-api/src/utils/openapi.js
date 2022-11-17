@@ -22,7 +22,7 @@ const loadOpenAPISpec = memoizeWith(Object, _ => {
 const createRequestValidator = (verb, path) => {
     try {
         const openAPISpec = loadOpenAPISpec();
-        const requestSpec = openAPISpec.paths[path][verb.toLowerCase()];
+        const requestSpec = openAPISpec.paths[path.replace(/(:(\w+))/g, "{$2}")][verb.toLowerCase()];
 
         return new OpenAPIRequestValidator({
             ...requestSpec,

@@ -1,13 +1,15 @@
 const httpMocks = require('node-mocks-http');
 
 const { ORIGINAL_REQUEST_FILE_DATA, SUBMISSION_DATA, FILE_DATA } = require('../../__data__/file');
-const { createSubmission } = require('../../../src/controllers/submissions');
+const { createSubmission, completeSubmission } = require('../../../src/controllers/submissions');
 
 jest.mock('../../../src/services/submission.service');
 jest.mock('../../../src/services/ni.file.service');
 
 const createSubmissionService =
 	require('../../../src/services/submission.service').createSubmission;
+const completeSubmissionService =
+	require('../../../src/services/submission.service').completeSubmission;
 const submitUserUploadedFileService =
 	require('../../../src/services/ni.file.service').submitUserUploadedFile;
 const submitRepresentationFileService =
@@ -90,6 +92,29 @@ describe('submissions controller', () => {
 
 			expect(res._getStatusCode()).toEqual(201);
 			expect(res._getData()).toEqual(submissionDataWithRepresentation);
+		});
+	});
+
+	describe('completeSubmission', () => {
+		const req = {
+			params: {
+				submissionId: 1
+			}
+		};
+		const res = httpMocks.createResponse();
+
+		it('returns successful response when service completes without throwing', async () => {
+			completeSubmissionService.mockResolvedValueOnce();
+
+			await completeSubmission(req, res);
+
+			expect(res._getStatusCode()).toEqual(204);
+		});
+
+		it('throws if service throws', async () => {
+			completeSubmissionService.mockRejectedValueOnce('some error');
+
+			await expect(completeSubmission(req, res)).rejects.toEqual('some error');
 		});
 	});
 });

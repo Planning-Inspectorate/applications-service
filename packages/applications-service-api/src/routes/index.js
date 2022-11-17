@@ -21,6 +21,6 @@ router.use('/api/v1/documents', documentRouter);
 router.use('/api/v2/documents', documentRouter);
 router.use('/api/v1/representations', representationsRouter);
 router.use('/api/v1/timetables', timetablesRouter);
-router.use('/api/v1/submission', submissionRouter);
+router.use('/api/v1/submissions', submissionRouter);
 
 module.exports = router;

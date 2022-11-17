@@ -1,18 +1,26 @@
-const { createSubmission, updateSubmission } = require('../../../src/services/submission.service');
+const { createSubmission, updateSubmission, completeSubmission } = require('../../../src/services/submission.service');
+
+jest.mock('../../../src/lib/notify');
+const sendSubmissionNotificationMock =
+	require('../../../src/lib/notify').sendSubmissionNotification;
 
 const mockCreate = jest.fn();
 const mockUpdate = jest.fn();
+const mockFindOne = jest.fn();
 
 jest.mock('../../../src/models', () => {
 	return {
 		Submission: {
 			create: (attributes) => mockCreate(attributes),
-			update: (attributes, conditions) => mockUpdate(attributes, conditions)
+			update: (attributes, conditions) => mockUpdate(attributes, conditions),
+			findOne: (attributes) => mockFindOne(attributes)
 		}
 	};
 });
 
 describe('submission service', () => {
+	beforeEach(() => jest.resetAllMocks());
+
 	describe('createSubmission', () => {
 		it('calls create with submissionId if one is provided', async () => {
 			const attributes = {
@@ -139,6 +147,37 @@ describe('submission service', () => {
 					}
 				}
 			);
+		});
+	});
+
+	describe('completeSubmission', () => {
+		const submissionId = 1;
+
+		it('invokes notify service if submission with given id is found', async () => {
+			const submissionData = {
+				id: submissionId,
+				submissionId: submissionId,
+				email: 'someone@example.com'
+			};
+
+			mockFindOne.mockResolvedValueOnce(submissionData);
+
+			await completeSubmission(submissionId);
+
+			expect(sendSubmissionNotificationMock).toBeCalledWith(submissionData);
+		});
+
+		it('throws not found error if no submission with given id is found', async () => {
+			mockFindOne.mockResolvedValueOnce(null);
+
+			await expect(completeSubmission(123456789)).rejects.toEqual({
+				code: 404,
+				message: {
+					errors: ['Submission with ID 123456789 not found']
+				}
+			});
+
+			expect(sendSubmissionNotificationMock).not.toBeCalled();
 		});
 	});
 });

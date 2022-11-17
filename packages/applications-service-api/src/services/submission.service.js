@@ -1,5 +1,6 @@
 const db = require('../models');
 const ApiError = require('../error/apiError');
+const { sendSubmissionNotification } = require('../lib/notify');
 
 const PLACEHOLDER_SUBMISSION_ID = 0;
 
@@ -66,7 +67,22 @@ const updateSubmission = async (submission) => {
 	});
 };
 
+const getSubmission = (submissionId) => db.Submission.findOne({ where: { id: submissionId } });
+
+const completeSubmission = async (submissionId) => {
+	const submission = await getSubmission(submissionId);
+
+	if (!submission) {
+		throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
+	}
+
+	console.log(`Found submission with ID ${submission.id}, email: ${submission.email}`);
+
+	sendSubmissionNotification(submission);
+};
+
 module.exports = {
 	createSubmission,
-	updateSubmission
+	updateSubmission,
+	completeSubmission
 };
