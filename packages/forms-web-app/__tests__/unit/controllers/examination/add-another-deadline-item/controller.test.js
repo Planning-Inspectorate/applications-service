@@ -6,6 +6,9 @@ const {
 const {
 	getPageData
 } = require('../../../../../src/controllers/examination/add-another-deadline-item/utils/get-page-data');
+const {
+	setActiveSubmissionItem
+} = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 jest.mock(
 	'../../../../../src/controllers/examination/add-another-deadline-item/utils/get-page-data',
@@ -13,6 +16,10 @@ jest.mock(
 		getPageData: jest.fn()
 	})
 );
+
+jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
+	setActiveSubmissionItem: jest.fn()
+}));
 
 describe('controllers/examination/add-another-deadline-item/controller', () => {
 	describe('#getAddAnotherDeadlineItem', () => {
@@ -117,6 +124,9 @@ describe('controllers/examination/add-another-deadline-item/controller', () => {
 				beforeEach(() => {
 					req.body.itemIdToChange = 1;
 					postChangeADeadlineItem(req, res);
+				});
+				it('should set the active submission item', () => {
+					expect(setActiveSubmissionItem).toHaveBeenCalledWith(req.session, 1);
 				});
 				it('should redirect', () => {
 					expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-deadline-item');

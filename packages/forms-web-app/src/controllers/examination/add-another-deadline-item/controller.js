@@ -9,6 +9,7 @@ const {
 const logger = require('../../../lib/logger');
 const { getRedirectUrl } = require('./utils/get-redirect-url');
 const { getPageData } = require('./utils/get-page-data');
+const { setActiveSubmissionItem } = require('../session/submission-items-session');
 
 const getAddAnotherDeadlineItem = (req, res) => {
 	try {
@@ -33,7 +34,7 @@ const postChangeADeadlineItem = (req, res) => {
 
 		if (!itemIdToChange) throw new Error('No item id for change');
 
-		session.examination.activeItem = itemIdToChange;
+		setActiveSubmissionItem(session, itemIdToChange);
 
 		return res.redirect(`${directory}${checkSubmissionItem.route}`);
 	} catch (error) {

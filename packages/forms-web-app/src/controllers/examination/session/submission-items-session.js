@@ -131,6 +131,7 @@ module.exports = {
 	getActiveSubmissionItemKey,
 	getActiveSubmissionItem,
 	setSubmissionItem,
+	setActiveSubmissionItem,
 	setActiveSubmissionItemSubmitted,
 	setSubmissionItemSubmitted,
 	getSubmissionItemType,
