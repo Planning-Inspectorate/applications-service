@@ -36,7 +36,9 @@ const {
 				submittingFor,
 				yourInterestedPartyNumber,
 				addAnotherDeadlineItem,
-				selectIfYouWantToDeleteData
+				selectIfYouWantToDeleteData,
+				processSubmission,
+				submissionComplete
 			}
 		}
 	}
@@ -98,6 +100,13 @@ const {
 	postSelectIfYouWantToDeleteData,
 	postMarkDeadlineItemForDelete
 } = require('../../controllers/examination/select-if-want-to-delete-data/controller');
+const {
+	getProcessSubmission,
+	postProcessSubmission
+} = require('../../controllers/examination/process-submission/controller');
+const {
+	getSubmissionComplete
+} = require('../../controllers/examination/submission-complete/controller');
 
 const router = express.Router();
 
@@ -290,5 +299,10 @@ router.post(
 	selectIfYouWantToDeleteData.markDeadlineItemForDelete.route,
 	postMarkDeadlineItemForDelete
 );
+
+router.get(processSubmission.route, getProcessSubmission);
+router.post(processSubmission.route, postProcessSubmission);
+
+router.get(submissionComplete.route, getSubmissionComplete);
 
 module.exports = router;

@@ -13,12 +13,15 @@ const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('./examination');
 const projectsRouter = require('./projects');
+const {
+	isProcessingSubmission
+} = require('../controllers/examination/middleware/submission.middleware');
 
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-	router.use(routesConfig.examination.directory, examinationRouter);
+	router.use(routesConfig.examination.directory, isProcessingSubmission, examinationRouter);
 	router.use('/project-search', projectSearchRouter);
 }
 router.use('/register', registerRouter);
