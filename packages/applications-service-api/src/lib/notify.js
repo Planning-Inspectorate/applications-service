@@ -2,17 +2,19 @@ const { createNotifyClient, notifyBuilder } = require('@planning-inspectorate/pi
 const config = require('./config');
 const logger = require('./logger');
 
-async function sendIPRegistrationConfirmationEmailToIP(details) {
-	try {
-		const notifyClient = createNotifyClient.createNotifyClient({
-			baseUrl: config.services.notify.baseUrl,
-			serviceId: config.services.notify.serviceId,
-			apiKey: config.services.notify.apiKey
-		});
+const buildNotifyClient = () => {
+	const notifyClient = createNotifyClient.createNotifyClient({
+		baseUrl: config.services.notify.baseUrl,
+		serviceId: config.services.notify.serviceId,
+		apiKey: config.services.notify.apiKey
+	});
 
-		await notifyBuilder
-			.reset()
-			.setNotifyClient(notifyClient)
+	return notifyBuilder.reset().setNotifyClient(notifyClient);
+};
+
+const sendIPRegistrationConfirmationEmailToIP = async (details) => {
+	try {
+		await buildNotifyClient()
 			.setTemplateId(config.services.notify.templates.IPRegistrationConfirmationEmailToIP)
 			.setDestinationEmailAddress(details.email)
 			.setTemplateVariablesFromObject({
@@ -31,19 +33,11 @@ async function sendIPRegistrationConfirmationEmailToIP(details) {
 			'Unable to send IP registration confirmation email to interested party.'
 		);
 	}
-}
+};
 
-async function sendMagicLinkToIP(details) {
+const sendMagicLinkToIP = async (details) => {
 	try {
-		const notifyClient = createNotifyClient.createNotifyClient({
-			baseUrl: config.services.notify.baseUrl,
-			serviceId: config.services.notify.serviceId,
-			apiKey: config.services.notify.apiKey
-		});
-
-		await notifyBuilder
-			.reset()
-			.setNotifyClient(notifyClient)
+		await buildNotifyClient()
 			.setTemplateId(config.services.notify.templates.MagicLinkEmail)
 			.setDestinationEmailAddress(details.email)
 			.setTemplateVariablesFromObject({
@@ -59,11 +53,20 @@ async function sendMagicLinkToIP(details) {
 	} catch (e) {
 		logger.error({ err: e }, 'Unable to send magic link email to interested party.');
 	}
-}
+};
 
-const sendSubmissionNotification = (data) => {
-	// TODO in ASB-901
-	console.log(data);
+const sendSubmissionNotification = async (details) => {
+	await buildNotifyClient()
+		.setTemplateId(config.services.notify.templates.submissionCompleteEmail)
+		.setDestinationEmailAddress(details.email)
+		.setTemplateVariablesFromObject({
+			'email address': details.email,
+			submission_id: details.submissionId,
+			project_name: details.project.name,
+			project_email: details.project.email
+		})
+		.setReference(`Submission ${details.submissionId}`)
+		.sendEmail();
 }
 
 module.exports = {

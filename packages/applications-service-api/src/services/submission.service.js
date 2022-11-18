@@ -1,6 +1,7 @@
 const db = require('../models');
 const ApiError = require('../error/apiError');
 const { sendSubmissionNotification } = require('../lib/notify');
+const { getApplication } = require('./application.service');
 
 const PLACEHOLDER_SUBMISSION_ID = 0;
 
@@ -71,12 +72,19 @@ const getSubmission = (submissionId) => db.Submission.findOne({ where: { id: sub
 
 const completeSubmission = async (submissionId) => {
 	const submission = await getSubmission(submissionId);
+	if (!submission) throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
 
-	if (!submission) {
-		throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
-	}
+	const project = await getApplication(submission.caseReference);
+	if (!project) throw ApiError.notFound(`Project with case reference ${submission.caseReference} not found`);
 
-	sendSubmissionNotification(submission);
+	await sendSubmissionNotification({
+		submissionId: submission.id,
+		email: submission.email,
+		project: {
+			name: project.ProjectName,
+			email: project.ProjectEmailAddress
+		}
+	});
 };
 
 module.exports = {
