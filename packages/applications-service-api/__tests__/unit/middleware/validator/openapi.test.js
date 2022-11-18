@@ -38,5 +38,35 @@ describe('openapi validator', () => {
 				validateRequestWithOpenAPI(requestWithTooLongCaseReference, res, next)
 			).toThrowError(expect.objectContaining(expectedError));
 		});
+
+		it('given request with data of wrong datatype, throws apierror with error messages', () => {
+			const validProperties = {
+				name: 'x',
+				email: 'x@example.com',
+				interestedParty: false,
+				deadline: 'dl',
+				submissionType: 'something'
+			};
+
+			const request = {
+				...req,
+				params: {
+					caseReference: '1234567890987654321'
+				},
+				body: {
+					...validProperties,
+					sensitiveData: 'true', // should be boolean
+					submissionId: '123' // should be integer
+				}
+			};
+
+			const expectedError = new ApiError(400, {
+				errors: ["'sensitiveData' must be boolean", "'submissionId' must be integer"]
+			});
+
+			expect(() => validateRequestWithOpenAPI(request, res, next)).toThrowError(
+				expect.objectContaining(expectedError)
+			);
+		});
 	});
 });
