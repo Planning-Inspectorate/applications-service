@@ -76,8 +76,6 @@ const completeSubmission = async (submissionId) => {
 		throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
 	}
 
-	console.log(`Found submission with ID ${submission.id}, email: ${submission.email}`);
-
 	sendSubmissionNotification(submission);
 };
 
