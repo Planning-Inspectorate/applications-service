@@ -73,7 +73,8 @@ module.exports = {
 			templates: {
 				IPRegistrationConfirmationEmailToIP:
 					process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
-				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL
+				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
+				submissionCompleteEmail: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL
 			},
 			preliminaryMeetingUrl:
 				process.env.PRELIMINARY_MEETING_URL ||

@@ -14,6 +14,10 @@ class ApiError {
 		return new ApiError(StatusCodes.NOT_FOUND, { errors: [message] });
 	}
 
+	static internalServerError(message) {
+		return new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, { errors: [message] });
+	}
+
 	static applicationNotFound(id) {
 		return this.notFound(`Application ${id} was not found`);
 	}

@@ -6,14 +6,18 @@ const sendSubmissionNotificationMock =
 
 const mockCreate = jest.fn();
 const mockUpdate = jest.fn();
-const mockFindOne = jest.fn();
+const mockSubmissionFindOne = jest.fn();
+const mockProjectFindOne = jest.fn();
 
 jest.mock('../../../src/models', () => {
 	return {
 		Submission: {
 			create: (attributes) => mockCreate(attributes),
 			update: (attributes, conditions) => mockUpdate(attributes, conditions),
-			findOne: (attributes) => mockFindOne(attributes)
+			findOne: (attributes) => mockSubmissionFindOne(attributes)
+		},
+		Project: {
+			findOne: (attributes) => mockProjectFindOne(attributes)
 		}
 	};
 });
@@ -157,23 +161,57 @@ describe('submission service', () => {
 			const submissionData = {
 				id: submissionId,
 				submissionId: submissionId,
-				email: 'someone@example.com'
+				email: 'someone@example.com',
+				caseReference: 'EN010116'
+			};
+			const projectData = {
+				ProjectName: 'some project',
+				ProjectEmailAddress: 'project@example.com'
 			};
 
-			mockFindOne.mockResolvedValueOnce(submissionData);
+			mockSubmissionFindOne.mockResolvedValueOnce(submissionData);
+			mockProjectFindOne.mockResolvedValueOnce(projectData);
 
 			await completeSubmission(submissionId);
 
-			expect(sendSubmissionNotificationMock).toBeCalledWith(submissionData);
+			expect(sendSubmissionNotificationMock).toBeCalledWith({
+				submissionId: submissionId,
+				email: 'someone@example.com',
+				project: {
+					name: 'some project',
+					email: 'project@example.com'
+				}
+			});
 		});
 
 		it('throws not found error if no submission with given id is found', async () => {
-			mockFindOne.mockResolvedValueOnce(null);
+			mockSubmissionFindOne.mockResolvedValueOnce(null);
 
 			await expect(completeSubmission(123456789)).rejects.toEqual({
 				code: 404,
 				message: {
 					errors: ['Submission with ID 123456789 not found']
+				}
+			});
+
+			expect(sendSubmissionNotificationMock).not.toBeCalled();
+		});
+
+		it('throws not found error if no project with given id is found', async () => {
+			const submissionData = {
+				id: submissionId,
+				submissionId: submissionId,
+				email: 'someone@example.com',
+				caseReference: 'EN010116'
+			};
+
+			mockSubmissionFindOne.mockResolvedValueOnce(submissionData);
+			mockProjectFindOne.mockResolvedValueOnce(null);
+
+			await expect(completeSubmission(123456789)).rejects.toEqual({
+				code: 404,
+				message: {
+					errors: ['Project with case reference EN010116 not found']
 				}
 			});
 
