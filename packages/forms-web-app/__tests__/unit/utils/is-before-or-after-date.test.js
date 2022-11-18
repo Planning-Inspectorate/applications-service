@@ -117,6 +117,17 @@ describe('#utils/is-before-or-after-date', () => {
 					);
 				});
 			});
+			describe('and DateTimeExaminationEnds is null and extension close is 0000-00-00', () => {
+				let result;
+				const nullDate = '0000-00-00';
+				beforeEach(() => {
+					jest.useFakeTimers().setSystemTime(new Date('2022-09-22'));
+					result = getDateTimeExaminationEnds(null, nullDate, '2022-09-14');
+				});
+				it('should return the correct before date sentence with 6 months added to the date.', () => {
+					expect(result).toEqual('The examination is expected to close on 14 March 2023');
+				});
+			});
 			describe('and the date is before today', () => {
 				let result;
 				const date = '2019-01-01';

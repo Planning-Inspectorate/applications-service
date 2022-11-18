@@ -29,17 +29,17 @@ const handleNoDatesExtensionAddSixMonthsToStart = (startDate) =>
 	)}`;
 
 const getDateTimeExaminationEnds = (date, extensionCloseData, startDate) => {
-	if (!date && !extensionCloseData) return handleNoDatesExtensionAddSixMonthsToStart(startDate);
-
-	if (!date && extensionCloseData) return handleGrantedExtension(extensionCloseData);
-
 	if (
-		date &&
-		!isNullSQLDate(new Date(date)) &&
-		extensionCloseData &&
-		!isNullSQLDate(new Date(extensionCloseData))
+		(!date && !extensionCloseData) ||
+		(date === null && !isNullSQLDate(new Date(extensionCloseData))) ||
+		(date &&
+			!isNullSQLDate(new Date(date)) &&
+			extensionCloseData &&
+			!isNullSQLDate(new Date(extensionCloseData)))
 	)
 		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
+
+	if (!date && extensionCloseData) return handleGrantedExtension(extensionCloseData);
 
 	const formattedDate = formatDate(date);
 	if (!formattedDate || formattedDate === 'NaNvalid date')
