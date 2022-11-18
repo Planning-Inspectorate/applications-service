@@ -24,7 +24,6 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
 				const apiResponse = await fetch(url, {
 					method,
 					headers: {
-						'Content-Type': 'application/json',
 						'X-Correlation-ID': correlationId,
 						...headers
 					},
@@ -146,3 +145,11 @@ exports.getRepresentationById = async (id) => {
 
 exports.getTimetables = async (caseRef) =>
 	handler('getTimetables', `/api/v1/timetables/${caseRef}`);
+
+exports.wrappedPostSubmission = async (caseRef, body) => {
+	const URL = `/api/v1/submissions/${caseRef}`;
+	const method = 'POST';
+	return handler('postSubmission', URL, method, {
+		body
+	});
+};

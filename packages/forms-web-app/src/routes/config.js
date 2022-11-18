@@ -363,6 +363,16 @@ const routesConfig = {
 						isEmpty: 'Select yes if you need to delete data for this item'
 					}
 				}
+			},
+			processSubmission: {
+				id: 'examination-process-submission',
+				pageTitle: 'Process submission',
+				route: '/process-submission',
+				view: 'pages/examination/process-submission'
+			},
+			submissionComplete: {
+				route: '/submission-complete',
+				view: 'pages/examination/submission-complete'
 			}
 		}
 	},

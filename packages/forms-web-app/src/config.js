@@ -6,7 +6,7 @@ module.exports = {
 	},
 	applications: {
 		timeout: Number(process.env.APPLICATIONS_SERVICE_API_TIMEOUT || 10000),
-		url: process.env.APPLICATIONS_SERVICE_API_URL,
+		url: process.env.APPLICATIONS_SERVICE_API_URL || 'http://applications-service-api:3000',
 		noOfCommentsAllowed: 16,
 		maxCharacters: 65234,
 		urlencoded: {
