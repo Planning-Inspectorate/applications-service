@@ -7,7 +7,7 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const { sendData } = require('./utils/service');
+const { handleProcessSubmission } = require('./utils/process');
 
 const getProcessSubmission = async (req, res) => {
 	try {
@@ -27,7 +27,7 @@ const postProcessSubmission = async (req, res) => {
 	try {
 		const { session } = req;
 
-		await sendData(session);
+		await handleProcessSubmission(session);
 		return res.json("that's worked");
 	} catch (error) {
 		logger.error(`Error: ${error}`);
