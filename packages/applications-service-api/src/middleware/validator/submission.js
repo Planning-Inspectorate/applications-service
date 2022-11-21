@@ -3,8 +3,6 @@ const ApiError = require('../../error/apiError');
 const { validateRequestWithOpenAPI } = require('./openapi');
 
 const validateCreateSubmissionRequest = (req, res, next) => {
-	validateRequestWithOpenAPI(req, res, next);
-
 	if (!req.body.representation && !req.file) {
 		throw ApiError.badRequest("must have required property 'representation' or 'file'");
 	}
@@ -21,7 +19,7 @@ const validateCreateSubmissionRequest = (req, res, next) => {
 		}
 	}
 
-	next();
+	validateRequestWithOpenAPI(req, res, next);
 };
 
 module.exports = {
