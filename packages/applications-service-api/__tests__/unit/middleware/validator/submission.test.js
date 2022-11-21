@@ -2,17 +2,18 @@ const {
 	validateCreateSubmissionRequest
 } = require('../../../../src/middleware/validator/submission');
 const { REQUEST_FILE_DATA } = require('../../../__data__/file');
-const {SUBMISSION_CREATE_REQUEST} = require("../../../__data__/submission");
+const { SUBMISSION_CREATE_REQUEST } = require('../../../__data__/submission');
 
-jest.mock("../../../../src/middleware/validator/openapi");
-const validateRequestWithOpenAPIMock = require("../../../../src/middleware/validator/openapi").validateRequestWithOpenAPI;
+jest.mock('../../../../src/middleware/validator/openapi');
+const validateRequestWithOpenAPIMock =
+	require('../../../../src/middleware/validator/openapi').validateRequestWithOpenAPI;
 
 describe('submission request validator', () => {
 	describe('validateCreateSubmissionRequest', () => {
 		const res = jest.fn();
 		const next = jest.fn();
 
-		it('returns error if request does not contain required properties', async () => {
+		it('returns error if request has representation/file but not other required properties defined in openapi spec', async () => {
 			const openAPIValidationError = {
 				code: 400,
 				message: {
@@ -26,11 +27,20 @@ describe('submission request validator', () => {
 				}
 			};
 
-			validateRequestWithOpenAPIMock.mockImplementationOnce(() => { throw openAPIValidationError });
+			validateRequestWithOpenAPIMock.mockImplementationOnce(() => {
+				throw openAPIValidationError;
+			});
 
-			expect(() => validateCreateSubmissionRequest(SUBMISSION_CREATE_REQUEST, res, next)).toThrowError(
-				expect.objectContaining(openAPIValidationError)
-			);
+			expect(() =>
+				validateCreateSubmissionRequest(
+					{
+						...SUBMISSION_CREATE_REQUEST,
+						body: { representation: 'something' }
+					},
+					res,
+					next
+				)
+			).toThrowError(expect.objectContaining(openAPIValidationError));
 		});
 
 		it('returns error if request does not representation or file', async () => {
