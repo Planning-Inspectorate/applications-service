@@ -2,10 +2,10 @@ const {
 	addKeyValueToActiveSubmissionItem,
 	getActiveSubmissionItemFiles,
 	getActiveSubmissionItem,
-	setSubmissionItem,
 	getSubmissionFilesLength,
 	deleteSubmissionItem,
-	deleteActiveItem
+	deleteActiveSubmissionItemId,
+	setActiveSubmissionItem
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 const {
@@ -21,7 +21,7 @@ describe('controllers/examination/session/examination-session)', () => {
 		const itemToAssert = { itemId: 'active item' };
 		const mockSubmissionItems = [itemToAssert];
 		const examinationSession = {
-			activeItem: 'active item',
+			activeSubmissionItemId: 'active item',
 			submissionItems: mockSubmissionItems
 		};
 		const mockSession = {};
@@ -39,6 +39,81 @@ describe('controllers/examination/session/examination-session)', () => {
 							item: 'item value',
 							itemId: 'active item'
 						});
+					});
+				});
+			});
+		});
+		describe('#setActiveSubmissionItem', () => {
+			describe('When setting an active submission item', () => {
+				describe('and there is no submission item', () => {
+					const mockSession = {
+						examination: {}
+					};
+					beforeEach(() => {
+						getExaminationSession.mockReturnValue(mockSession.examination);
+					});
+
+					it('should throw an error', () => {
+						expect(() => setActiveSubmissionItem(mockSession)).toThrowError('No submission item');
+					});
+				});
+				describe('and there is not an active submission item', () => {
+					const mockSession = {
+						examination: {}
+					};
+					const mockSubmissionItem = {
+						value: 'mock item id 1',
+						text: 'mock submission item 1'
+					};
+					beforeEach(() => {
+						getExaminationSession.mockReturnValue(mockSession.examination);
+						setActiveSubmissionItem(mockSession, mockSubmissionItem);
+					});
+					it('should add the submission item to the examination submission items array', () => {
+						expect(mockSession.examination.submissionItems).toEqual([
+							{
+								itemId: 'mock item id 1',
+								submissionItem: 'mock submission item 1',
+								submitted: false
+							}
+						]);
+					});
+					it('should update the active submission item id', () => {
+						expect(mockSession.examination.activeSubmissionItemId).toEqual('mock item id 1');
+					});
+				});
+				describe('and there is an active submission item', () => {
+					const mockSession = {
+						examination: {
+							activeSubmissionItemId: 'mock item id 1',
+							submissionItems: [
+								{
+									itemId: 'mock item id 1',
+									submissionItem: 'mock submission item 1',
+									submitted: false
+								}
+							]
+						}
+					};
+					const mockSubmissionItem = {
+						value: 'mock item id 2',
+						text: 'mock submission item 2'
+					};
+					beforeEach(() => {
+						getExaminationSession.mockReturnValue(mockSession.examination);
+						setActiveSubmissionItem(mockSession, mockSubmissionItem);
+					});
+					it('should replace the active submission item in the submission items array', () => {
+						expect(mockSession.examination.submissionItems).toEqual([
+							{
+								itemId: 'mock item id 2',
+								submissionItem: 'mock submission item 2',
+								submitted: false
+							}
+						]);
+					});
+					it('should update the active submission item id', () => {
+						expect(mockSession.examination.activeSubmissionItemId).toEqual('mock item id 2');
 					});
 				});
 			});
@@ -99,7 +174,7 @@ describe('controllers/examination/session/examination-session)', () => {
 		const itemToFind = { itemId: 'active item' };
 		const mockSubmissionItems = [itemToFind];
 		const mockExaminationSession = {
-			activeItem: 'active item',
+			activeSubmissionItemId: 'active item',
 			submissionItems: mockSubmissionItems
 		};
 		describe('When getting the active submission item', () => {
@@ -115,86 +190,13 @@ describe('controllers/examination/session/examination-session)', () => {
 			});
 			describe('and the submission item can NOT be found', () => {
 				beforeEach(() => {
-					mockExaminationSession.activeItem = 'i do not exist';
+					mockExaminationSession.activeSubmissionItemId = 'i do not exist';
 					getExaminationSession.mockReturnValue(mockExaminationSession);
 				});
 				it('should throw an error', () => {
 					expect(() => getActiveSubmissionItem(mockSession)).toThrow(
 						'Can not find active submission item'
 					);
-				});
-			});
-		});
-	});
-	describe('#setSubmissionItem', () => {
-		describe('When setting a new submission item', () => {
-			const mockSession = {};
-			const mockSubmissionItem = {
-				text: 'I am an mock submission item',
-				value: 1
-			};
-			const existingSubmissionItems = [
-				{
-					text: 'I am an mock submission item',
-					itemId: 2
-				}
-			];
-			const mockExaminationSession = {
-				activeItem: 'active item',
-				submissionItems: existingSubmissionItems
-			};
-			describe('and the submission item does not already exists', () => {
-				const mockSubmissionItems = [existingSubmissionItems];
-				const mockExaminationSession = {
-					activeItem: 'active item',
-					submissionItems: mockSubmissionItems
-				};
-				beforeEach(() => {
-					getExaminationSession.mockReturnValue(mockExaminationSession);
-					setSubmissionItem(mockSession, mockSubmissionItem);
-				});
-				it('should add the submission item to session and mark it as the active submission item', () => {
-					expect(mockSubmissionItems[1]).toEqual({
-						submitted: false,
-						itemId: 1,
-						submissionItem: 'I am an mock submission item'
-					});
-				});
-				it('should set the active item to the added submission item id', () => {
-					expect(mockExaminationSession.activeItem).toEqual(1);
-				});
-			});
-			describe('and the submission item does already exists', () => {
-				beforeEach(() => {
-					mockSubmissionItem.value = 2;
-					getExaminationSession.mockReturnValue(mockExaminationSession);
-					setSubmissionItem(mockSession, mockSubmissionItem);
-				});
-				it('should not add the submission item and mark the provided item as active', () => {
-					expect(existingSubmissionItems).toEqual([
-						{ itemId: 2, text: 'I am an mock submission item' }
-					]);
-					expect(mockExaminationSession.activeItem).toEqual(2);
-				});
-			});
-			describe('and an error occurs', () => {
-				describe('and there is no session', () => {
-					beforeEach(() => {
-						getExaminationSession.mockReturnValue();
-					});
-					it('should throw an error', () => {
-						expect(() => setSubmissionItem(mockSession, mockSubmissionItem)).toThrow(
-							'Session issue'
-						);
-					});
-				});
-				describe('and there is no submission item to add', () => {
-					beforeEach(() => {
-						getExaminationSession.mockReturnValue('mock session');
-					});
-					it('should throw an error', () => {
-						expect(() => setSubmissionItem(mockSession, undefined)).toThrow('Session issue');
-					});
 				});
 			});
 		});
@@ -269,14 +271,14 @@ describe('controllers/examination/session/examination-session)', () => {
 			});
 		});
 	});
-	describe('#deleteActiveItem', () => {
+	describe('#deleteActiveSubmissionItemId', () => {
 		describe('When deleting the active item', () => {
 			const mockExaminationSession = {
-				activeItem: 'mock active item'
+				activeSubmissionItemId: 'mock active item'
 			};
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue(mockExaminationSession);
-				deleteActiveItem();
+				deleteActiveSubmissionItemId();
 			});
 			it('should delete the active item key from the examination session', () => {
 				expect(mockExaminationSession).toEqual({});
