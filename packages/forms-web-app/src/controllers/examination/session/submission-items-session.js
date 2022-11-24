@@ -36,14 +36,26 @@ const getSubmissionItemFiles = (submissionItem) => {
 };
 
 const getActiveSubmissionItem = (session) => {
-	const examinationSession = getExaminationSession(session);
-	const activeSubmissionItem = examinationSession.submissionItems.find(
-		(item) => item.itemId === examinationSession.activeItem
-	);
+	const activeSubmissionItemId = getActiveSubmissionItemId(session);
+	const activeSubmissionItem = getSubmissionItemById(session, activeSubmissionItemId);
 
 	if (!activeSubmissionItem) throw new Error('Can not find active submission item');
 
 	return activeSubmissionItem;
+};
+
+const getSubmissionItemById = (session, itemId) => {
+	const examinationSession = getExaminationSession(session);
+
+	const submissionItems = examinationSession.submissionItems;
+
+	if (submissionItems) {
+		const submissionItem = examinationSession.submissionItems.find(
+			(item) => item.itemId === itemId
+		);
+
+		return submissionItem;
+	}
 };
 
 const getSubmissionItemType = (submissionItem) => {
@@ -62,44 +74,60 @@ const getSubmissionItemComment = (submissionItem) => {
 	return submissionItem.comment;
 };
 
-const getActiveSubmissionItemKey = (session) => {
+const getActiveSubmissionItemId = (session) => {
 	const examinationSession = getExaminationSession(session);
-	const activeDeadlineItem = examinationSession.activeItem;
-	if (!activeDeadlineItem) return false;
-	return activeDeadlineItem;
+	return examinationSession.activeSubmissionItemId;
 };
 
-const setActiveSubmissionItem = (session, activeItem) => {
+const setActiveSubmissionItemId = (session, activeItemId) => {
 	const examinationSession = getExaminationSession(session);
-	examinationSession.activeItem = activeItem;
+	examinationSession.activeSubmissionItemId = activeItemId;
 };
 
-const deleteActiveItem = (session) => {
+const deleteActiveSubmissionItemId = (session) => {
 	const examinationSession = getExaminationSession(session);
-	delete examinationSession.activeItem;
+	delete examinationSession.activeSubmissionItemId;
 };
 
-const checkIfSubmissionItemExists = (examinationSession, submissionItemId) =>
-	examinationSession.submissionItems.find((item) => item.itemId === submissionItemId);
+const updateActiveSubmissionItem = (session, selectedDeadlineOption) => {
+	const activeSubmissionItem = getActiveSubmissionItem(session);
+	activeSubmissionItem.itemId = selectedDeadlineOption.value;
+	activeSubmissionItem.submissionItem = selectedDeadlineOption.text;
 
-const setSubmissionItem = (session, submissionItem) => {
+	setActiveSubmissionItemId(session, selectedDeadlineOption.value);
+};
+
+const setActiveSubmissionItem = (session, submissionItem) => {
 	const examinationSession = getExaminationSession(session);
 
-	if (!examinationSession || !submissionItem) throw new Error('Session issue');
+	if (!submissionItem) throw new Error('No submission item');
 
-	if (!examinationSession.submissionItems) {
-		examinationSession.submissionItems = [];
-	}
+	if (!examinationSession.submissionItems) examinationSession.submissionItems = [];
 
-	if (!checkIfSubmissionItemExists(examinationSession, submissionItem.value)) {
+	if (!getActiveSubmissionItemId(session)) {
 		examinationSession.submissionItems.push({
 			itemId: submissionItem.value,
 			submissionItem: submissionItem.text,
 			submitted: false
 		});
-	}
 
-	setActiveSubmissionItem(session, submissionItem.value);
+		setActiveSubmissionItemId(session, submissionItem.value);
+	} else updateActiveSubmissionItem(session, submissionItem);
+};
+
+const setEditModeSubmissionItemId = (session, itemId) => {
+	const examinationSession = getExaminationSession(session);
+	examinationSession.editModeSubmissionItemId = itemId;
+};
+
+const getEditModeSubmissionItemId = (session) => {
+	const examinationSession = getExaminationSession(session);
+	return examinationSession.editModeSubmissionItemId;
+};
+
+const deleteEditModeSubmissionItemId = (session) => {
+	const examinationSession = getExaminationSession(session);
+	delete examinationSession.editModeSubmissionItemId;
 };
 
 const setActiveSubmissionItemSubmitted = (session, submitted) => {
@@ -128,10 +156,10 @@ const getSubmissionFilesLength = (session) => {
 module.exports = {
 	addKeyValueToActiveSubmissionItem,
 	deleteKeyFromActiveSubmissionItem,
-	getActiveSubmissionItemKey,
+	getActiveSubmissionItemId,
 	getActiveSubmissionItem,
-	setSubmissionItem,
 	setActiveSubmissionItem,
+	setActiveSubmissionItemId,
 	setActiveSubmissionItemSubmitted,
 	setSubmissionItemSubmitted,
 	getSubmissionItemType,
@@ -141,5 +169,9 @@ module.exports = {
 	getSubmissionItemComment,
 	getSubmissionItemPersonalInformation,
 	deleteSubmissionItem,
-	deleteActiveItem
+	deleteActiveSubmissionItemId,
+	setEditModeSubmissionItemId,
+	getEditModeSubmissionItemId,
+	deleteEditModeSubmissionItemId,
+	updateActiveSubmissionItem
 };

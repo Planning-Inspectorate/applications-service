@@ -2,12 +2,13 @@ const {
 	getBackLinkUrl
 } = require('../../../../../../src/controllers/examination/check-submission-item/utils/get-back-link-url');
 
-let {
+const {
 	getActiveSubmissionItem,
 	getActiveSubmissionItemFiles,
 	getSubmissionItemPersonalInformation,
 	getSubmissionItemType
 } = require('../../../../../../src/controllers/examination/session/submission-items-session');
+const { isQueryModeEdit } = require('../../../../../../src/controllers/utils/is-query-mode-edit');
 
 jest.mock('../../../../../../src/controllers/examination/session/submission-items-session', () => ({
 	getActiveSubmissionItem: jest.fn(),
@@ -15,12 +16,28 @@ jest.mock('../../../../../../src/controllers/examination/session/submission-item
 	getSubmissionItemPersonalInformation: jest.fn(),
 	getSubmissionItemType: jest.fn()
 }));
+jest.mock('../../../../../../src/controllers/utils/is-query-mode-edit', () => ({
+	isQueryModeEdit: jest.fn()
+}));
 
 describe('controllers/examination/check-submission-item/utils/get-back-link-url', () => {
 	describe('#getBackLinkUrl', () => {
 		describe('When getting the back link for check submission item page', () => {
 			beforeEach(() => {
 				getActiveSubmissionItem.mockReturnValue(true);
+				isQueryModeEdit.mockReturnValue(false);
+			});
+			describe('and has mode = edit in the query', () => {
+				let result;
+				beforeEach(() => {
+					isQueryModeEdit.mockReturnValue(true);
+					result = getBackLinkUrl();
+				});
+				it('Should return the back link url', () => {
+					expect(result).toEqual({
+						backLinkUrl: '/examination/add-another-deadline-item'
+					});
+				});
 			});
 			describe('and the submission type value is equal to "comment"', () => {
 				let result;

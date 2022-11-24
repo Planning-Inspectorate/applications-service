@@ -1,3 +1,10 @@
+const logger = require('../../../lib/logger');
+const { getRedirectUrl } = require('./utils/get-redirect-url');
+const { getPageData } = require('./utils/get-page-data');
+const {
+	setActiveSubmissionItemId,
+	setEditModeSubmissionItemId
+} = require('../session/submission-items-session');
 const {
 	routesConfig: {
 		examination: {
@@ -6,19 +13,12 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const logger = require('../../../lib/logger');
-const { getRedirectUrl } = require('./utils/get-redirect-url');
-const { getPageData } = require('./utils/get-page-data');
-const { setActiveSubmissionItem } = require('../session/submission-items-session');
+const { editQuery } = require('../check-submission-item/utils/summary-list-item/config');
 
 const getAddAnotherDeadlineItem = (req, res) => {
 	try {
 		const { session } = req;
-		const setPageData = getPageData(session);
-
-		return res.render(addAnotherDeadlineItem.view, {
-			...setPageData
-		});
+		return res.render(addAnotherDeadlineItem.view, getPageData(session));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -34,11 +34,11 @@ const postChangeADeadlineItem = (req, res) => {
 
 		if (!itemIdToChange) throw new Error('No item id for change');
 
-		setActiveSubmissionItem(session, itemIdToChange);
-
-		return res.redirect(`${directory}${checkSubmissionItem.route}`);
+		setActiveSubmissionItemId(session, itemIdToChange);
+		setEditModeSubmissionItemId(session, itemIdToChange);
+		return res.redirect(`${directory}${checkSubmissionItem.route}${editQuery}`);
 	} catch (error) {
-		logger.error('Error: ', error);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };

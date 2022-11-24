@@ -16,7 +16,7 @@ const getEnterComment = async (req, res) => {
 		const { query, session } = req;
 		return res.render(enterComment.view, getPageData(query, session));
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
@@ -40,7 +40,7 @@ const postEnterComment = async (req, res) => {
 
 		return res.redirect(getSubmissionItemPageUrl(query, getRedirectRoute(session)));
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };

@@ -73,7 +73,7 @@ const postSelectIfYouWantToDeleteData = (req, res) => {
 
 		return res.redirect(`${examinationDirectory}${addAnotherDeadlineItem.route}`);
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };

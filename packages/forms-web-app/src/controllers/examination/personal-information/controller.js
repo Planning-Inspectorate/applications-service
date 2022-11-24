@@ -20,7 +20,7 @@ const getPersonalInformation = (req, res) => {
 		const { session } = req;
 		return res.render(personalInformation.view, getPageData(session));
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
@@ -48,7 +48,7 @@ const postPersonalInformation = (req, res) => {
 		const redirectUrl = getRedirectUrl(session, setPageData.id, personalInformationValue);
 		return res.redirect(redirectUrl);
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
