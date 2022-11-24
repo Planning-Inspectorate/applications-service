@@ -5,7 +5,7 @@ const getExaminationSession = (session) => {
 };
 
 const setExaminationSession = (session) => {
-	if (!session?.examination) session.examination = {};
+	if (!session?.examination) session.examination = { details: {}, editDetails: {} };
 };
 
 const deleteExaminationSession = (session) => {

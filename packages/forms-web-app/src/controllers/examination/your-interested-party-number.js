@@ -13,6 +13,7 @@ const {
 	},
 	routesConfig: { examination }
 } = require('../../routes/config');
+const { setDeadlineInterestedPartyNumber } = require('../session/deadline-session');
 
 const backLinkUrl = `${examination.directory + hasInterestedPartyNumberRoute}`;
 const pageTitle = yourInterestedPartyNumber.name;
@@ -67,9 +68,10 @@ const postYourInterestedPartyNumber = (req, res) => {
 
 	if (!yourInterestedPartyNumberValue) return res.status(404).render('error/not-found');
 
-	examinationSession[examinationSessionStorage.property.interestedPartyNumber] =
-		yourInterestedPartyNumberValue;
-	examinationSession[examinationSessionStorage.property.applicant] = '';
+	setDeadlineInterestedPartyNumber(session, yourInterestedPartyNumberValue);
+	// examinationSession[examinationSessionStorage.property.interestedPartyNumber] =
+	// 	yourInterestedPartyNumberValue;
+	// examinationSession[examinationSessionStorage.property.applicant] = '';
 
 	if (req.query.mode === 'edit') {
 		res.redirect(`${examination.directory + yourInterestedPartyNumber.route}`);

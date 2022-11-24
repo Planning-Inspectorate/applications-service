@@ -15,6 +15,7 @@ const {
 		}
 	}
 } = require('../../routes/config');
+const { setDeadlineHasInterestedPartyNumber } = require('../session/deadline-session');
 
 const {
 	options: { 1: yesOption, 2: noOption }
@@ -85,27 +86,29 @@ const postHasInterestedPartyNumber = (req, res) => {
 
 	if (!hasInterestedPartyNoValue) return res.status(404).render('error/not-found');
 
-	const hasValidValue = Object.keys(hasInterestedPartyNumber.options).find(
-		(hasInterestedPartyNumberOption) => {
-			return (
-				hasInterestedPartyNumber.options[hasInterestedPartyNumberOption].value ===
-				hasInterestedPartyNoValue
-			);
-		}
-	);
+	// const hasValidValue = Object.keys(hasInterestedPartyNumber.options).find(
+	// 	(hasInterestedPartyNumberOption) => {
+	// 		return (
+	// 			hasInterestedPartyNumber.options[hasInterestedPartyNumberOption].value ===
+	// 			hasInterestedPartyNoValue
+	// 		);
+	// 	}
+	// );
 
-	if (!hasValidValue) return res.status(404).render('error/not-found');
+	// if (!hasValidValue) return res.status(404).render('error/not-found');
 
-	examinationSession[examinationSessionStorage.property.hasInterestedPartyNumber] =
-		hasInterestedPartyNoValue;
+	// examinationSession[examinationSessionStorage.property.hasInterestedPartyNumber] =
+	// 	hasInterestedPartyNoValue;
 
-	if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[1].value) {
-		examinationSession[examinationSessionStorage.property.applicant] = '';
-	}
+	// if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[1].value) {
+	// 	examinationSession[examinationSessionStorage.property.applicant] = '';
+	// }
 
-	if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[2].value) {
-		examinationSession[examinationSessionStorage.property.interestedPartyNumber] = '';
-	}
+	// if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[2].value) {
+	// 	examinationSession[examinationSessionStorage.property.interestedPartyNumber] = '';
+	// }
+
+	setDeadlineHasInterestedPartyNumber(session, hasInterestedPartyNoValue);
 
 	if (isQueryModeEdit(query)) res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
 	else if (yesOption.value === hasInterestedPartyNoValue)

@@ -8,6 +8,7 @@ const {
 	setDeadlineId,
 	setDeadlineTitle
 } = require('../session/deadline-session');
+const { setDetailsMode } = require('../session/deadline-session/utils/get-details-mode');
 const {
 	deleteExaminationSession,
 	setExaminationSession
@@ -212,6 +213,7 @@ const postExaminationTimetable = (req, res) => {
 	setDeadlineId(session, deadline.id);
 	setDeadlineItems(session, items);
 	setDeadlineTitle(session, deadline.title);
+	setDetailsMode(session, true);
 
 	return res.redirect(`${examinationDirectory}${examinationHaveYourSayRoute}`);
 };

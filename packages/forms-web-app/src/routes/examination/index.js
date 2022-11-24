@@ -46,7 +46,8 @@ const {
 	postCheckSubmissionItem
 } = require('../../controllers/examination/check-submission-item/controller');
 const {
-	getCheckYourAnswers
+	getCheckYourAnswers,
+	postCheckYourAnswers
 } = require('../../controllers/examination/check-your-answers/controller');
 const { getEmail, postEmail } = require('../../controllers/examination/email');
 const {
@@ -108,6 +109,7 @@ router.get(checkSubmissionItem.route, getCheckSubmissionItem);
 router.post(checkSubmissionItem.route, postCheckSubmissionItem);
 
 router.get(checkYourAnswers.route, getCheckYourAnswers);
+router.post(checkYourAnswers.route, postCheckYourAnswers);
 
 router.get(haveYourSay.route, getHaveYourSay);
 
