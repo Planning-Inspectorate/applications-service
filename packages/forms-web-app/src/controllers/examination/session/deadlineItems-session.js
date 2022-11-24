@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('./examination-session');
+const { getExaminationSession } = require('../../session/examination-session');
 
 const findDeadlineItemByValue = (session, value) => {
 	const examinationSession = getExaminationSession(session);

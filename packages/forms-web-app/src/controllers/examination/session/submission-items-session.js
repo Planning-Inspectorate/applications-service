@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('./examination-session');
+const { getExaminationSession } = require('../../session/examination-session');
 
 const addKeyValueToActiveSubmissionItem = (session, key, value) => {
 	if (key === 'undefined' || value === 'undefined') throw new Error('Key or value is undefined');

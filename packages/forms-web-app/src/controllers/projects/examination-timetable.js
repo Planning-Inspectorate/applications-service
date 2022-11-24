@@ -2,7 +2,16 @@ const { formatDate, isNullSQLDate } = require('../../utils/date-utils');
 const { isBeforeOrAfterDate } = require('../../utils/is-before-or-after-date');
 const { getNow: getDate } = require('../../utils/get-now');
 const { getTimetables } = require('../../services/timetable.service');
-const config = require('../../config');
+const {
+	setDeadlineCaseRef,
+	setDeadlineItems,
+	setDeadlineId,
+	setDeadlineTitle
+} = require('../session/deadline-session');
+const {
+	deleteExaminationSession,
+	setExaminationSession
+} = require('../session/examination-session');
 const {
 	routesConfig: { project },
 	routesConfig: {
@@ -18,7 +27,6 @@ const {
 } = require('../../routes/config');
 const { marked } = require('marked');
 
-const examinationSession = config.sessionStorage.examination;
 const eventIdFieldName = 'event-id';
 const eventElementId = 'examination-timetable-event-';
 const eventStates = [
@@ -176,40 +184,36 @@ const getExaminationTimetable = async (req, res) => {
 };
 
 const postExaminationTimetable = (req, res) => {
-	const allEvents = req.session?.allEvents;
-	const caseRef = req.session?.caseRef;
+	const { session } = req;
+
+	const allEvents = session?.allEvents;
+	const caseRef = session?.caseRef;
 	const id = req.body[eventIdFieldName];
 
 	if (!caseRef || !id || !allEvents || !Array.isArray(allEvents) || !allEvents.length)
 		return res.status(404).render('error/not-found');
 
-	if (req.session[examinationSession.name]) delete req.session[examinationSession.name];
+	const deadline = allEvents.find(({ id: uniqueId }) => `${uniqueId}` === `${id}`);
+	if (!deadline) return res.status(404).render('error/not-found');
 
-	req.session[examinationSession.name] = {};
+	const itemsList = deadline.description.match(/<li>(.|\n)*?<\/li>/gm);
+	if (!itemsList) return res.status(500).render('error/unhandled-exception');
 
-	const reqExaminationSession = req.session[examinationSession.name];
-
-	const setEvent = allEvents.find(({ id: uniqueId }) => `${uniqueId}` === `${id}`);
-
-	if (!setEvent) return res.status(404).render('error/not-found');
-
-	const deadlineItemsList = setEvent.description.match(/<li>(.|\n)*?<\/li>/gm);
-
-	if (!deadlineItemsList) return res.status(500).render('error/unhandled-exception');
-
-	const deadlineItems = deadlineItemsList.map((deadlineItem, index) => {
+	const items = itemsList.map((deadlineItem, index) => {
 		return {
 			value: `${index}`,
 			text: deadlineItem.replace(/<\/?li>/g, '')
 		};
 	});
 
-	reqExaminationSession[examinationSession.property.caseRef] = caseRef;
-	reqExaminationSession[examinationSession.property.deadlineItems] = deadlineItems;
-	reqExaminationSession[examinationSession.property.id] = setEvent.id;
-	reqExaminationSession[examinationSession.property.title] = setEvent.title;
+	deleteExaminationSession(session);
+	setExaminationSession(session);
+	setDeadlineCaseRef(session, caseRef);
+	setDeadlineId(session, deadline.id);
+	setDeadlineItems(session, items);
+	setDeadlineTitle(session, deadline.title);
 
-	res.redirect(`${examinationDirectory}${examinationHaveYourSayRoute}`);
+	return res.redirect(`${examinationDirectory}${examinationHaveYourSayRoute}`);
 };
 
 module.exports = { getExaminationTimetable, postExaminationTimetable };
