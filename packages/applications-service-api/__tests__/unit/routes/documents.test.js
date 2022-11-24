@@ -1,4 +1,4 @@
-const { post } = require('./router-mock');
+const { get } = require('./router-mock');
 const documentsController = require('../../../src/controllers/documents');
 
 describe('routes/documents', () => {
@@ -12,6 +12,6 @@ describe('routes/documents', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(post).toHaveBeenCalledWith('/:caseRef', documentsController.getDocuments);
+		expect(get).toHaveBeenCalledWith('/', documentsController.getV2Documents);
 	});
 });
