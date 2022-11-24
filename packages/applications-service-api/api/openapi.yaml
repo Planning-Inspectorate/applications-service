@@ -847,7 +847,6 @@ components:
           example: stage
           description: Name of property to filter by
         value:
-          type: string
           example: 1
           description: Value of property to filter by
         type:
