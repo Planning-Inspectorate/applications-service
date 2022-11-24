@@ -65,7 +65,7 @@ module.exports = {
 				deadlineItems: 'deadlineItems',
 				description: 'description',
 				email: 'email',
-				hasInterestedPartyNo: 'hasInterestedPartyNo',
+				hasInterestedPartyNumber: 'hasInterestedPartyNumber',
 				comment: 'comment',
 				id: 'id',
 				interestedPartyNumber: 'interestedPartyNumber',

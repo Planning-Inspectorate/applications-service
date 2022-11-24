@@ -1,4 +1,8 @@
 const { getDeadlineCaseRef, setDeadlineCaseRef } = require('./deadline-case-ref');
+const {
+	getDeadlineHasInterestedPartyNumber,
+	setDeadlineHasInterestedPartyNumber
+} = require('./deadline-has-interested-party-number');
 const { getDeadlineId, setDeadlineId } = require('./deadline-id');
 const {
 	getDeadlineInterestedPartyNumber,
@@ -10,6 +14,8 @@ const { getDeadlineTitle, setDeadlineTitle } = require('./deadline-title');
 module.exports = {
 	getDeadlineCaseRef,
 	setDeadlineCaseRef,
+	getDeadlineHasInterestedPartyNumber,
+	setDeadlineHasInterestedPartyNumber,
 	getDeadlineId,
 	setDeadlineId,
 	getDeadlineInterestedPartyNumber,

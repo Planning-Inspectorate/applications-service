@@ -35,7 +35,7 @@ const getHasInterestedPartyNumber = (req, res) => {
 
 	const examinationSessionInterestedPartyNumber =
 		req?.session?.[examinationSessionStorage.name]?.[
-			examinationSessionStorage.property.hasInterestedPartyNo
+			examinationSessionStorage.property.hasInterestedPartyNumber
 		];
 
 	if (examinationSessionInterestedPartyNumber) {
@@ -96,7 +96,7 @@ const postHasInterestedPartyNumber = (req, res) => {
 
 	if (!hasValidValue) return res.status(404).render('error/not-found');
 
-	examinationSession[examinationSessionStorage.property.hasInterestedPartyNo] =
+	examinationSession[examinationSessionStorage.property.hasInterestedPartyNumber] =
 		hasInterestedPartyNoValue;
 
 	if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[1].value) {

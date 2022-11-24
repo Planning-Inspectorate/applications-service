@@ -59,7 +59,7 @@ describe('controllers/examination/has-interested-party-number', () => {
 				...req,
 				session: {
 					examination: {
-						hasInterestedPartyNo: 'yes'
+						hasInterestedPartyNumber: 'yes'
 					}
 				}
 			};
@@ -71,7 +71,7 @@ describe('controllers/examination/has-interested-party-number', () => {
 				(option) => {
 					const optionChecked =
 						hasInterestedPartyNumberValues[option].value ===
-						mockRequest.session.examination.hasInterestedPartyNo;
+						mockRequest.session.examination.hasInterestedPartyNumber;
 
 					if (!optionChecked) return hasInterestedPartyNumberValues[option];
 
@@ -121,7 +121,7 @@ describe('controllers/examination/has-interested-party-number', () => {
 				},
 				session: {
 					examination: {
-						hasInterestedPartyNo: 'yes'
+						hasInterestedPartyNumber: 'yes'
 					}
 				}
 			};
