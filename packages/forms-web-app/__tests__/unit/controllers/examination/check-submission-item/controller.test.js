@@ -13,7 +13,8 @@ const {
 	getSummaryList
 } = require('../../../../../src/controllers/examination/check-submission-item/utils/get-summary-list');
 const {
-	setActiveSubmissionItemSubmitted
+	setActiveSubmissionItemSubmitted,
+	deleteActiveSubmissionItemId
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 jest.mock(
@@ -36,7 +37,7 @@ jest.mock(
 );
 jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
 	setActiveSubmissionItemSubmitted: jest.fn(),
-	deleteActiveItem: jest.fn()
+	deleteActiveSubmissionItemId: jest.fn()
 }));
 
 describe('/controllers/examination/check-submission-item/controller', () => {
@@ -85,12 +86,17 @@ describe('/controllers/examination/check-submission-item/controller', () => {
 			});
 		});
 	});
-
 	describe('#postCheckSubmissionItem', () => {
 		describe('When handling the check submission item post request', () => {
 			describe('and the post is successful', () => {
 				beforeEach(() => {
 					postCheckSubmissionItem(req, res);
+				});
+				it('should should submit the submission item', () => {
+					expect(setActiveSubmissionItemSubmitted).toHaveBeenCalledWith(req.session, true);
+				});
+				it('should delete the active submission item id', () => {
+					expect(deleteActiveSubmissionItemId).toHaveBeenCalledWith(req.session);
 				});
 				it('should redirct to the next page', () => {
 					expect(res.redirect).toHaveBeenCalledWith('/examination/add-another-deadline-item');

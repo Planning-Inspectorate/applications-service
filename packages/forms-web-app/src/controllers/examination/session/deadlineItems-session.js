@@ -1,4 +1,5 @@
 const { getExaminationSession } = require('../../session/examination-session');
+const { getEditModeSubmissionItemId } = require('./submission-items-session');
 
 const findDeadlineItemByValue = (session, value) => {
 	const examinationSession = getExaminationSession(session);
@@ -35,12 +36,18 @@ const getDeadlineItemStillToSubmit = (session) => {
 	const examinationSession = getExaminationSession(session);
 	const deadlineItems = [...examinationSession.deadlineItems];
 	const submissionItems = examinationSession.submissionItems || [];
+	const editModeSubmissionItemId = getEditModeSubmissionItemId(session);
 
 	return deadlineItems.filter((deadlineItem) => {
 		const submissionItemAdded = submissionItems.find(
 			(submissionItem) => submissionItem.itemId === deadlineItem.value
 		);
-		if (!submissionItemAdded || !submissionItemAdded.submitted) return deadlineItem;
+		if (
+			!submissionItemAdded ||
+			!submissionItemAdded.submitted ||
+			submissionItemAdded.itemId === editModeSubmissionItemId
+		)
+			return deadlineItem;
 	});
 };
 

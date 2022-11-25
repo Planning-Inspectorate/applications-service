@@ -6,6 +6,10 @@ const {
 	emailValidationRules
 } = require('../../validators/shared/index');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const { forwardView } = require('../../middleware/forward-view');
+const {
+	unsetEditModeSubmissionItemId
+} = require('../../middleware/unset-edit-mode-submission-item-id');
 
 const {
 	routesConfig: {
@@ -37,8 +41,6 @@ const {
 		}
 	}
 } = require('../../routes/config');
-
-const { forwardView } = require('../../middleware/forward-view');
 
 const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
 const {
@@ -257,7 +259,11 @@ router.post(
 	postYourInterestedPartyNumber
 );
 
-router.get(addAnotherDeadlineItem.route, getAddAnotherDeadlineItem);
+router.get(
+	addAnotherDeadlineItem.route,
+	unsetEditModeSubmissionItemId(),
+	getAddAnotherDeadlineItem
+);
 router.post(addAnotherDeadlineItem.changeADeadlineItem.route, postChangeADeadlineItem);
 router.post(
 	addAnotherDeadlineItem.route,

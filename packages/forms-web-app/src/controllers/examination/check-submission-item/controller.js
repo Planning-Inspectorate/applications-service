@@ -1,8 +1,11 @@
 const logger = require('../../../lib/logger');
+const {
+	setActiveSubmissionItemSubmitted,
+	deleteActiveSubmissionItemId
+} = require('../session/submission-items-session');
 const { getPageData } = require('./utils/get-page-data');
 const { getBackLinkUrl } = require('./utils/get-back-link-url');
 const { getSummaryList } = require('./utils/get-summary-list');
-
 const {
 	routesConfig: {
 		examination: {
@@ -11,21 +14,17 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const {
-	setActiveSubmissionItemSubmitted,
-	deleteActiveItem
-} = require('../session/submission-items-session');
 
 const getCheckSubmissionItem = (req, res) => {
 	try {
-		const { session } = req;
+		const { query, session } = req;
 		res.render(checkSubmissionItem.view, {
 			...getPageData(),
-			...getBackLinkUrl(session),
+			...getBackLinkUrl(query, session),
 			...getSummaryList(session)
 		});
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
@@ -34,10 +33,10 @@ const postCheckSubmissionItem = (req, res) => {
 	try {
 		const { session } = req;
 		setActiveSubmissionItemSubmitted(session, true);
-		deleteActiveItem(session);
+		deleteActiveSubmissionItemId(session);
 		res.redirect(`${directory}${addDeadline.route}`);
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };

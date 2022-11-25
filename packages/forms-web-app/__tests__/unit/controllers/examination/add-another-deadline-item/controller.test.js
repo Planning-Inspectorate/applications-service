@@ -7,7 +7,8 @@ const {
 	getPageData
 } = require('../../../../../src/controllers/examination/add-another-deadline-item/utils/get-page-data');
 const {
-	setActiveSubmissionItem
+	setActiveSubmissionItemId,
+	setEditModeSubmissionItemId
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 jest.mock(
@@ -18,7 +19,8 @@ jest.mock(
 );
 
 jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
-	setActiveSubmissionItem: jest.fn()
+	setActiveSubmissionItemId: jest.fn(),
+	setEditModeSubmissionItemId: jest.fn()
 }));
 
 describe('controllers/examination/add-another-deadline-item/controller', () => {
@@ -125,11 +127,16 @@ describe('controllers/examination/add-another-deadline-item/controller', () => {
 					req.body.itemIdToChange = 1;
 					postChangeADeadlineItem(req, res);
 				});
-				it('should set the active submission item', () => {
-					expect(setActiveSubmissionItem).toHaveBeenCalledWith(req.session, 1);
+				it('should set the active submission item id', () => {
+					expect(setActiveSubmissionItemId).toHaveBeenCalledWith(req.session, 1);
+				});
+				it('should set the active submission item id in edit mode', () => {
+					expect(setEditModeSubmissionItemId).toHaveBeenCalledWith(req.session, 1);
 				});
 				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-deadline-item');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/examination/check-your-deadline-item?mode=edit'
+					);
 				});
 			});
 		});

@@ -17,7 +17,7 @@ const getSelectFile = (req, res) => {
 	try {
 		getRenderView(req, res);
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };
@@ -37,7 +37,7 @@ const postSelectFile = async (req, res) => {
 			return postRenderView(req, res, session, errors);
 		}
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		res.status(500).render('error/unhandled-exception');
 	}
 };
