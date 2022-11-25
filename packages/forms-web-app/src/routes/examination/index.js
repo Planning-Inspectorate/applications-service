@@ -15,7 +15,7 @@ const {
 	routesConfig: {
 		examination: {
 			pages: {
-				applicant,
+				isApplicant,
 				checkSubmissionItem,
 				checkYourAnswers,
 				email,
@@ -42,7 +42,7 @@ const {
 	}
 } = require('../../routes/config');
 
-const { getApplicant, postApplicant } = require('../../controllers/examination/applicant');
+const { getIsApplicant, postIsApplicant } = require('../../controllers/examination/is-applicant');
 const {
 	getCheckSubmissionItem,
 	postCheckSubmissionItem
@@ -103,8 +103,13 @@ const {
 
 const router = express.Router();
 
-router.get(applicant.route, getApplicant);
-router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
+router.get(isApplicant.route, getIsApplicant);
+router.post(
+	isApplicant.route,
+	validateNotEmpty(isApplicant),
+	validationErrorHandler,
+	postIsApplicant
+);
 
 router.get(checkSubmissionItem.route, getCheckSubmissionItem);
 router.post(checkSubmissionItem.route, postCheckSubmissionItem);

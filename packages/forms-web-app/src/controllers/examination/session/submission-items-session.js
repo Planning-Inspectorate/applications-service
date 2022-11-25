@@ -97,6 +97,15 @@ const updateActiveSubmissionItem = (session, selectedDeadlineOption) => {
 	setActiveSubmissionItemId(session, selectedDeadlineOption.value);
 };
 
+const getSubmissionItems = (session) => {
+	const examinationSession = getExaminationSession(session);
+
+	if (!examinationSession?.submissionItems || !examinationSession.submissionItems?.length)
+		throw new Error('No submission items');
+
+	return examinationSession.submissionItems;
+};
+
 const setActiveSubmissionItem = (session, submissionItem) => {
 	const examinationSession = getExaminationSession(session);
 
@@ -159,6 +168,7 @@ module.exports = {
 	getActiveSubmissionItemId,
 	getActiveSubmissionItem,
 	setActiveSubmissionItem,
+	getSubmissionItems,
 	setActiveSubmissionItemId,
 	setActiveSubmissionItemSubmitted,
 	setSubmissionItemSubmitted,

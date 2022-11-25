@@ -1,6 +1,7 @@
 const logger = require('../../../lib/logger');
 const { getPageData } = require('./utils/get-page-data');
-const { getSummaryList } = require('./utils/get-summary-list');
+const { getSummaryListDetails } = require('./utils/get-summary-list-details');
+const { getSummaryListSubmissionItems } = require('./utils/get-summary-list-submission-items');
 const {
 	routesConfig: {
 		examination: {
@@ -12,9 +13,13 @@ const {
 const getCheckYourAnswers = (req, res) => {
 	try {
 		const { session } = req;
-		res.render(checkYourAnswers.view, { ...getPageData(session), ...getSummaryList(session) });
+		res.render(checkYourAnswers.view, {
+			...getPageData(session),
+			...getSummaryListDetails(session),
+			...getSummaryListSubmissionItems(session)
+		});
 	} catch (error) {
-		logger.error(`Error: ${error}`);
+		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
 	}
 };

@@ -7,7 +7,7 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
-				applicant,
+				isApplicant,
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				nameAgent: { route: examinationNameAgentRoute },
 				nameMyself: { route: examinationNameMyselfRoute },
@@ -27,10 +27,10 @@ const pageData = {
 };
 
 const setBackLinkUrl = (examinationSession) => {
-	const isApplicant = examinationSession[examinationSessionStorage.property.applicant];
+	const isApplicantValue = examinationSession[examinationSessionStorage.property.applicant];
 
-	if (isApplicant === applicant.options[2].value) {
-		return (pageData.backLinkUrl = `${examinationDirectory}${applicant.route}`);
+	if (isApplicantValue === isApplicant.options[2].value) {
+		return (pageData.backLinkUrl = `${examinationDirectory}${isApplicant.route}`);
 	}
 
 	const interestedPartyNumber =

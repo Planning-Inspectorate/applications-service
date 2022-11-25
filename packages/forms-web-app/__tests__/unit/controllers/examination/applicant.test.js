@@ -48,7 +48,7 @@ describe('controllers/examination/applicant', () => {
 
 			getApplicant(mockRequest, res);
 
-			expect(res.render).toHaveBeenCalledWith('pages/examination/applicant', pageData);
+			expect(res.render).toHaveBeenCalledWith('pages/examination/is-applicant', pageData);
 		});
 
 		it('should call the correct template: with examination isApplicant session', () => {
@@ -83,12 +83,12 @@ describe('controllers/examination/applicant', () => {
 
 			getApplicant(mockRequest, res);
 
-			expect(res.render).toHaveBeenCalledWith('pages/examination/applicant', setPageData);
+			expect(res.render).toHaveBeenCalledWith('pages/examination/is-applicant', setPageData);
 		});
 	});
 
 	describe('postApplicant', () => {
-		it('should render pages/examination/applicant with errors', () => {
+		it('should render pages/examination/is-applicant with errors', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -103,7 +103,7 @@ describe('controllers/examination/applicant', () => {
 
 			postApplicant(mockRequest, res);
 
-			expect(res.render).toHaveBeenCalledWith('pages/examination/applicant', {
+			expect(res.render).toHaveBeenCalledWith('pages/examination/is-applicant', {
 				...pageData,
 				errors: mockRequest.body.errors,
 				errorSummary: mockRequest.body.errorSummary

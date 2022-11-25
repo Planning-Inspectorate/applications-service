@@ -1,4 +1,4 @@
-const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
+const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
 const { editQuery } = require('./config');
 const {
 	routesConfig: {
@@ -15,7 +15,7 @@ const getSummaryListItemSubmissionItem = (submissionItem) => {
 	if (!submissionItemValueText)
 		throw new Error('Submission item does not have a submission item value');
 
-	return getSummaryListItem(
+	return getSummaryListItemWithLink(
 		'Deadline item',
 		submissionItemValueText,
 		`${directory}${selectDeadline.route}${editQuery}`

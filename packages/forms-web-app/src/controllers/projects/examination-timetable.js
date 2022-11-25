@@ -7,7 +7,7 @@ const {
 	setDeadlineItems,
 	setDeadlineId,
 	setDeadlineTitle
-} = require('../session/deadline-session');
+} = require('../session/deadline');
 const {
 	deleteExaminationSession,
 	setExaminationSession

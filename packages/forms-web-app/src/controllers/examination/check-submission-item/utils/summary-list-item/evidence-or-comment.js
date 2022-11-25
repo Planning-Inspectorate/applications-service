@@ -1,4 +1,4 @@
-const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
+const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
 const { editQuery } = require('./config');
 const {
 	routesConfig: {
@@ -28,7 +28,7 @@ const getSummaryListItemEvidenceOrComment = (submissionItem) => {
 			throw new Error('Submission item submission type value is not a required option');
 	}
 
-	return getSummaryListItem(
+	return getSummaryListItemWithLink(
 		`How you've submitted your representation`,
 		evidenceOrCommentValueText,
 		`${directory}${evidenceOrComment.route}${editQuery}`

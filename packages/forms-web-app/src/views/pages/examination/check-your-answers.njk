@@ -1,23 +1,40 @@
 {% extends "layouts/default.njk" %}
 
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% block content %}
  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">
-        {{ deadlineTitle }}
-      </span>
+      <span class="govuk-caption-l">{{ deadlineTitle }}</span>
 
-      <h1 class="govuk-heading-l">
-        {{ title }}
-      </h1>
+      <h1 class="govuk-heading-l">{{ title }}</h1>
 
-      <h2 class="govuk-heading-m">{{ subtitle }}</h2>
+      <h2 class="govuk-heading-m">{{ summaryListDetailsTitle }}</h2>
 
       {{ govukSummaryList({
-        rows: summaryList
+        classes: 'govuk-!-margin-bottom-9',
+        rows: summaryListDetails
       }) }}
+
+      <h2 class="govuk-heading-m">{{ summaryListSubmissionItemsTitle }}</h2>
+
+      {{ govukSummaryList({
+        classes: 'govuk-!-margin-bottom-9',
+        rows: summaryListSubmissionItems
+      }) }}
+
+      {{ govukInsetText({
+        html: "You cannot make any further changes after you submit.<br><br>Check your answers again before you submit."
+      }) }}
+
+      <form>
+        {{ govukButton({
+          text: "Submit",
+          type: "Submit"
+        }) }}
+      </form>
     </div>
   </div>
 {% endblock %}

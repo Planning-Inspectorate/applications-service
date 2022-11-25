@@ -1,17 +1,20 @@
-const { getDeadlineTitle } = require('../../../session/deadline-session');
+const { getDeadlineTitle } = require('../../../session/deadline');
 const {
 	routesConfig: {
 		examination: {
-			pages: { checkYourAnswers }
+			directory,
+			pages: { addAnotherDeadlineItem, checkYourAnswers }
 		}
 	}
 } = require('../../../../routes/config');
 
 const getPageData = (session) => {
 	return {
+		backLinkUrl: `${directory}${addAnotherDeadlineItem.route}`,
 		deadlineTitle: getDeadlineTitle(session),
 		pageTitle: checkYourAnswers.name,
-		subtitle: 'Your details',
+		summaryListDetailsTitle: 'Your details',
+		summaryListSubmissionItemsTitle: 'Your submissions',
 		title: checkYourAnswers.name
 	};
 };

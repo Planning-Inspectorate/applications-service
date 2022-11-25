@@ -6,7 +6,7 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
-				applicant: { route: applicantRoute },
+				isApplicant: { route: applicantRoute },
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				hasInterestedPartyNumber,
 				haveYourSay: { route: examinationHaveYourSayRoute },

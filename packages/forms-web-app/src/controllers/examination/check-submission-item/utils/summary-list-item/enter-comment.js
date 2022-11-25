@@ -1,4 +1,4 @@
-const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
+const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
 const { editQuery } = require('./config');
 const {
 	routesConfig: {
@@ -14,7 +14,7 @@ const getSummaryListItemEnterComment = (submissionItem) => {
 
 	if (!submissionItemComment) throw new Error('Submission item does not have a comment');
 
-	return getSummaryListItem(
+	return getSummaryListItemWithLink(
 		'Your comment',
 		submissionItemComment,
 		`${directory}${enterComment.route}${editQuery}`

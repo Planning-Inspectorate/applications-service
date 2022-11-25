@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('../examination-session');
+const { getExaminationSession } = require('../../examination-session');
 
 const getDeadlineHasInterestedPartyNumber = (session) => {
 	const examinationSession = getExaminationSession(session);
@@ -15,4 +15,7 @@ const setDeadlineHasInterestedPartyNumber = (session, hasInterestedPartyNumber) 
 	examinationSession.hasInterestedPartyNumber = hasInterestedPartyNumber;
 };
 
-module.exports = { getDeadlineHasInterestedPartyNumber, setDeadlineHasInterestedPartyNumber };
+module.exports = {
+	getDeadlineHasInterestedPartyNumber,
+	setDeadlineHasInterestedPartyNumber
+};

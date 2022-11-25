@@ -1,4 +1,4 @@
-const getSummaryListItem = (keyText, valueText, actionItemHref) => {
+const getSummaryListItemWithLink = (keyText, valueText, actionItemHref) => {
 	const summaryListItem = {
 		key: {
 			text: keyText
@@ -23,4 +23,4 @@ const getSummaryListItem = (keyText, valueText, actionItemHref) => {
 	return summaryListItem;
 };
 
-module.exports = { getSummaryListItem };
+module.exports = { getSummaryListItemWithLink };

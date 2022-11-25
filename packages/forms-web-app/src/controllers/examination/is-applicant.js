@@ -6,7 +6,7 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
-				applicant,
+				isApplicant,
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				email: { route: emailRoute },
 				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute },
@@ -18,8 +18,8 @@ const {
 
 const pageData = {
 	backLinkUrl: `${examinationDirectory + hasInterestedPartyNumberRoute}`,
-	id: applicant.id,
-	options: [applicant.options[1], applicant.options[2]]
+	id: isApplicant.id,
+	options: [isApplicant.options[1], isApplicant.options[2]]
 };
 
 const getProjectName = (req) => {
@@ -35,7 +35,7 @@ const addProjectName = (copy, projectName) => {
 const getTitle = (req) => {
 	const projectName = getProjectName(req);
 
-	return addProjectName(applicant.title, projectName);
+	return addProjectName(isApplicant.title, projectName);
 };
 
 const setTitle = (data, title) => {
@@ -45,9 +45,9 @@ const setTitle = (data, title) => {
 
 const {
 	options: { 1: yesOption, 2: noOption }
-} = applicant;
+} = isApplicant;
 
-const getApplicant = (req, res) => {
+const getIsApplicant = (req, res) => {
 	const { session } = req;
 
 	const examinationSession = session?.[examinationSessionStorage.name];
@@ -64,7 +64,7 @@ const getApplicant = (req, res) => {
 		session?.[examinationSessionStorage.name]?.[examinationSessionStorage.property.applicant];
 
 	if (examinationSessionApplicant) {
-		const applicantValues = { ...applicant.options };
+		const applicantValues = { ...isApplicant.options };
 
 		const updatedApplicantValues = Object.keys(applicantValues).map((value) => {
 			const valueChecked = applicantValues[value].value === examinationSessionApplicant;
@@ -80,10 +80,10 @@ const getApplicant = (req, res) => {
 		setPageData.options = updatedApplicantValues;
 	}
 
-	res.render(applicant.view, setPageData);
+	res.render(isApplicant.view, setPageData);
 };
 
-const postApplicant = (req, res) => {
+const postIsApplicant = (req, res) => {
 	const { session = {} } = req;
 
 	const examinationSession = session?.[examinationSessionStorage.name];
@@ -93,26 +93,26 @@ const postApplicant = (req, res) => {
 	const { body = {}, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
-	if (errors[applicant.id] || Object.keys(errors).length > 0) {
+	if (errors[isApplicant.id] || Object.keys(errors).length > 0) {
 		const title = getTitle(req, res);
 
 		const setPageData = { ...pageData };
 
 		setTitle(setPageData, title);
 
-		const updatedErrorMessage = addProjectName(errors[applicant.id].msg, getProjectName(req));
+		const updatedErrorMessage = addProjectName(errors[isApplicant.id].msg, getProjectName(req));
 
-		if (errors?.[applicant.id]?.msg) errors[applicant.id].msg = updatedErrorMessage;
+		if (errors?.[isApplicant.id]?.msg) errors[isApplicant.id].msg = updatedErrorMessage;
 
 		const updatedErrorSummary = errorSummary.map((errorSummaryItem) => {
-			if (errorSummaryItem.href === `#${applicant.id}`) {
+			if (errorSummaryItem.href === `#${isApplicant.id}`) {
 				errorSummaryItem.text = updatedErrorMessage;
 			}
 
 			return errorSummaryItem;
 		});
 
-		res.render(applicant.view, {
+		res.render(isApplicant.view, {
 			...setPageData,
 			errors,
 			errorSummary: updatedErrorSummary
@@ -121,7 +121,7 @@ const postApplicant = (req, res) => {
 		return;
 	}
 
-	const applicantValue = body?.[applicant.id];
+	const applicantValue = body?.[isApplicant.id];
 
 	if (!applicantValue) return res.status(404).render('error/not-found');
 
@@ -135,6 +135,6 @@ const postApplicant = (req, res) => {
 };
 
 module.exports = {
-	getApplicant,
-	postApplicant
+	getIsApplicant,
+	postIsApplicant
 };

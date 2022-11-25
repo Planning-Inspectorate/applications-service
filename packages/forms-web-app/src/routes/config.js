@@ -9,27 +9,6 @@ const routesConfig = {
 				route: '/add-another-deadline-item',
 				view: 'pages/examination/add-deadline'
 			},
-			applicant: {
-				id: 'examination-applicant',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you are #'
-					}
-				},
-				options: {
-					1: {
-						value: 'yes',
-						text: 'Yes'
-					},
-					2: {
-						value: 'no',
-						text: 'No'
-					}
-				},
-				route: '/are-you-applicant',
-				title: 'Are you #?',
-				view: 'pages/examination/applicant'
-			},
 			checkSubmissionItem: {
 				id: 'examination-check-submission-item',
 				name: 'Check your answers',
@@ -127,6 +106,27 @@ const routesConfig = {
 				},
 				route: '/have-an-interested-party-number',
 				view: 'pages/examination/has-interested-party-number'
+			},
+			isApplicant: {
+				id: 'examination-is-applicant',
+				onError: {
+					message: {
+						isEmpty: 'Select yes if you are #'
+					}
+				},
+				options: {
+					1: {
+						value: 'yes',
+						text: 'Yes'
+					},
+					2: {
+						value: 'no',
+						text: 'No'
+					}
+				},
+				route: '/are-you-applicant',
+				title: 'Are you #?',
+				view: 'pages/examination/is-applicant'
 			},
 			nameAgent: {
 				id: 'examination-name',

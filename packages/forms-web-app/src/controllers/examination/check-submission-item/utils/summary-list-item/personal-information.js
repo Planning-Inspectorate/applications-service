@@ -1,4 +1,4 @@
-const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
+const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
 const {
 	routesConfig: {
 		examination: {
@@ -58,7 +58,11 @@ const getChangeUrl = (submissionItem) => {
 const getSummaryListItemPersonalInformation = (submissionItem) => {
 	const personalInformationValueText = getPersonalInformationValueText(submissionItem);
 	const changeUrl = getChangeUrl(submissionItem);
-	return getSummaryListItem(personalInformation.name, personalInformationValueText, `${changeUrl}`);
+	return getSummaryListItemWithLink(
+		personalInformation.name,
+		personalInformationValueText,
+		`${changeUrl}`
+	);
 };
 
 module.exports = { getSummaryListItemPersonalInformation };

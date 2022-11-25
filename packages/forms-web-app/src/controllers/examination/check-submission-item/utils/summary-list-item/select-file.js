@@ -1,4 +1,4 @@
-const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
+const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
 const { getSubmissionItemFiles } = require('../../../session/submission-items-session');
 const { editQuery } = require('./config');
 const {
@@ -23,7 +23,7 @@ const formatSubmissionItemFiles = (submissionItemFiles) => {
 const getSummaryListItemSelectFile = (submissionItem) => {
 	const submissionItemFiles = getSubmissionItemFiles(submissionItem);
 
-	return getSummaryListItem(
+	return getSummaryListItemWithLink(
 		'Documents uploaded',
 		formatSubmissionItemFiles(submissionItemFiles),
 		`${directory}${selectFile.route}${editQuery}`
