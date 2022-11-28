@@ -13,6 +13,7 @@ const { getDeadlineTitle, setDeadlineTitle } = require('./title');
 const { getDeadlineSubmittingFor, setDeadlineSubmittingFor } = require('./details/submitting-for');
 const { getDeadlineName, setDeadlineName } = require('./details/name');
 const { getDeadlineEmail, setDeadlineEmail } = require('./details/email');
+const { getDeadlineItems, setDeadlineItems } = require('./items');
 
 module.exports = {
 	getDeadlineCaseRef,
@@ -32,5 +33,7 @@ module.exports = {
 	getDeadlineName,
 	setDeadlineName,
 	getDeadlineEmail,
-	setDeadlineEmail
+	setDeadlineEmail,
+	getDeadlineItems,
+	setDeadlineItems
 };

@@ -1,7 +1,7 @@
 const {
-	getApplicant,
-	postApplicant
-} = require('../../../../src/controllers/examination/applicant');
+	getIsApplicant,
+	postIsApplicant
+} = require('../../../../src/controllers/examination/is-applicant');
 const { mockReq, mockRes } = require('../../mocks');
 
 const applicantOptions = {
@@ -17,13 +17,13 @@ const applicantOptions = {
 
 const pageData = {
 	backLinkUrl: '/examination/have-an-interested-party-number',
-	id: 'examination-applicant',
+	id: 'examination-is-applicant',
 	options: [applicantOptions[1], applicantOptions[2]],
 	pageTitle: 'Are you Test Project Name?',
 	title: 'Are you Test Project Name?'
 };
 
-describe('controllers/examination/applicant', () => {
+describe('controllers/examination/is-applicant', () => {
 	let req;
 	let res;
 
@@ -42,11 +42,11 @@ describe('controllers/examination/applicant', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getApplicant', () => {
+	describe('getIsApplicant', () => {
 		it('should call the correct template: no examination isApplicant session', () => {
 			const mockRequest = req;
 
-			getApplicant(mockRequest, res);
+			getIsApplicant(mockRequest, res);
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/is-applicant', pageData);
 		});
@@ -81,19 +81,19 @@ describe('controllers/examination/applicant', () => {
 
 			setPageData.options = updatedApplicantValues;
 
-			getApplicant(mockRequest, res);
+			getIsApplicant(mockRequest, res);
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/is-applicant', setPageData);
 		});
 	});
 
-	describe('postApplicant', () => {
+	describe('postIsApplicant', () => {
 		it('should render pages/examination/is-applicant with errors', () => {
 			const mockRequest = {
 				...req,
 				body: {
 					errors: {
-						'examination-applicant': {
+						'examination-is-applicant': {
 							msg: 'Select yes if you are #'
 						}
 					},
@@ -101,7 +101,7 @@ describe('controllers/examination/applicant', () => {
 				}
 			};
 
-			postApplicant(mockRequest, res);
+			postIsApplicant(mockRequest, res);
 
 			expect(res.render).toHaveBeenCalledWith('pages/examination/is-applicant', {
 				...pageData,
@@ -114,14 +114,14 @@ describe('controllers/examination/applicant', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					'examination-applicant': 'yes'
+					'examination-is-applicant': 'yes'
 				},
 				query: {
 					mode: 'edit'
 				}
 			};
 
-			postApplicant(mockRequest, res);
+			postIsApplicant(mockRequest, res);
 			expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
 		});
 
@@ -129,11 +129,11 @@ describe('controllers/examination/applicant', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					'examination-applicant': 'yes'
+					'examination-is-applicant': 'yes'
 				}
 			};
 
-			postApplicant(mockRequest, res);
+			postIsApplicant(mockRequest, res);
 			expect(res.redirect).toHaveBeenCalledWith('/examination/your-email-address');
 		});
 
@@ -141,11 +141,11 @@ describe('controllers/examination/applicant', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					'examination-applicant': 'no'
+					'examination-is-applicant': 'no'
 				}
 			};
 
-			postApplicant(mockRequest, res);
+			postIsApplicant(mockRequest, res);
 			expect(res.redirect).toHaveBeenCalledWith('/examination/who-are-you-submitting-for');
 		});
 	});

@@ -10,13 +10,13 @@ const {
 
 const {
 	getExaminationSession
-} = require('../../../../../src/controllers/examination/session/examination-session');
+} = require('../../../../../src/controllers/session/examination-session');
 
-jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
+jest.mock('../../../../../src/controllers/session/examination-session', () => ({
 	getExaminationSession: jest.fn()
 }));
 
-describe('controllers/examination/session/examination-session)', () => {
+describe('controllers/examination/session/submission-items-session)', () => {
 	describe('Functions rely in internal function but exported', () => {
 		const itemToAssert = { itemId: 'active item' };
 		const mockSubmissionItems = [itemToAssert];

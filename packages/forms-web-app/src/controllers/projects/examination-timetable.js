@@ -193,13 +193,13 @@ const postExaminationTimetable = (req, res) => {
 	if (!caseRef || !id || !allEvents || !Array.isArray(allEvents) || !allEvents.length)
 		return res.status(404).render('error/not-found');
 
-	const deadline = allEvents.find(({ id: uniqueId }) => `${uniqueId}` === `${id}`);
-	if (!deadline) return res.status(404).render('error/not-found');
+	const deadlineItem = allEvents.find(({ id: uniqueId }) => `${uniqueId}` === `${id}`);
+	if (!deadlineItem) return res.status(404).render('error/not-found');
 
-	const itemsList = deadline.description.match(/<li>(.|\n)*?<\/li>/gm);
-	if (!itemsList) return res.status(500).render('error/unhandled-exception');
+	const deadlineItemsList = deadlineItem.description.match(/<li>(.|\n)*?<\/li>/gm);
+	if (!deadlineItemsList) return res.status(500).render('error/unhandled-exception');
 
-	const items = itemsList.map((deadlineItem, index) => {
+	const deadlineItems = deadlineItemsList.map((deadlineItem, index) => {
 		return {
 			value: `${index}`,
 			text: deadlineItem.replace(/<\/?li>/g, '')
@@ -209,9 +209,9 @@ const postExaminationTimetable = (req, res) => {
 	deleteExaminationSession(session);
 	setExaminationSession(session);
 	setDeadlineCaseRef(session, caseRef);
-	setDeadlineId(session, deadline.id);
-	setDeadlineItems(session, items);
-	setDeadlineTitle(session, deadline.title);
+	setDeadlineId(session, deadlineItem.id);
+	setDeadlineItems(session, deadlineItems);
+	setDeadlineTitle(session, deadlineItem.title);
 
 	return res.redirect(`${examinationDirectory}${examinationHaveYourSayRoute}`);
 };

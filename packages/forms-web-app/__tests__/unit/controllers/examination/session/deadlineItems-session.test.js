@@ -1,6 +1,6 @@
 let {
 	getExaminationSession
-} = require('../../../../../src/controllers/examination/session/examination-session');
+} = require('../../../../../src/controllers/session/examination-session');
 
 const {
 	getDeadlineItems,
@@ -10,7 +10,7 @@ const {
 	getDeadlineItemToDelete
 } = require('../../../../../src/controllers/examination/session/deadlineItems-session');
 
-jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
+jest.mock('../../../../../src/controllers/session/examination-session', () => ({
 	getExaminationSession: jest.fn()
 }));
 
