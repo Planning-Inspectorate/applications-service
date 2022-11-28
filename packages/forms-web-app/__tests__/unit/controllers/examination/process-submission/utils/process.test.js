@@ -60,17 +60,17 @@ describe('#process', () => {
 				expectFormDataToBeUndefined(form, 4);
 			});
 
-			it('should submit the second submission item without a submission id', () => {
+			it('should submit the second submission item with a submission id', () => {
 				expect(postSubmission).toHaveBeenNthCalledWith(2, expectedUrl, form2);
 				expectFormDataKeyValue(form2, 'submissionId', '1234', 3);
 			});
 
-			it('should submit the third submission item without a submission id', () => {
+			it('should submit the third submission item with a submission id', () => {
 				expect(postSubmission).toHaveBeenNthCalledWith(3, expectedUrl, form3);
 				expectFormDataKeyValue(form3, 'submissionId', '1234', 3);
 			});
 
-			it('should submit the forth submission item without a submission id', () => {
+			it('should submit the forth submission item with a submission id', () => {
 				expect(postSubmission).toHaveBeenNthCalledWith(4, expectedUrl, form4);
 				expectFormDataKeyValue(form4, 'submissionId', '1234', 3);
 			});
