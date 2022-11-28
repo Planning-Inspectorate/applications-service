@@ -1,7 +1,10 @@
 const {
 	handleProcessSubmission
 } = require('../../../../../../src/controllers/examination/process-submission/utils/process');
-const { postSubmission } = require('../../../../../../src/services/submission.service');
+const {
+	postSubmission,
+	postSubmissionComplete
+} = require('../../../../../../src/services/submission.service');
 const {
 	getListOfFormData
 } = require('../../../../../../src/controllers/examination/process-submission/utils/fromDataMappers');
@@ -9,16 +12,19 @@ const FormData = require('form-data');
 const { expectFormDataKeyValue, expectFormDataToBeUndefined } = require('./testHelper');
 const {
 	getExaminationSession,
-	setExaminationSubmissionComplete
+	setExaminationSubmissionComplete,
+	setExaminationSubmissionId
 } = require('../../../../../../src/controllers/examination/session/examination-session');
 
 jest.mock('../../../../../../src/services/submission.service', () => ({
-	postSubmission: jest.fn()
+	postSubmission: jest.fn(),
+	postSubmissionComplete: jest.fn()
 }));
 
 jest.mock('../../../../../../src/controllers/examination/session/examination-session', () => ({
 	getExaminationSession: jest.fn(),
-	setExaminationSubmissionComplete: jest.fn()
+	setExaminationSubmissionComplete: jest.fn(),
+	setExaminationSubmissionId: jest.fn()
 }));
 
 jest.mock(
@@ -50,7 +56,9 @@ describe('#process', () => {
 				getExaminationSession.mockReturnValue(session.examination);
 				getListOfFormData.mockReturnValueOnce([form, form2]).mockReturnValueOnce([form3, form4]);
 				postSubmission.mockReturnValue({ data: { submissionId: '1234' } });
+				postSubmissionComplete.mockReturnValue({ resp_code: '204' });
 				setExaminationSubmissionComplete.mockReturnValue('ok');
+				setExaminationSubmissionId();
 				await handleProcessSubmission(session);
 			});
 
@@ -78,11 +86,30 @@ describe('#process', () => {
 			it('should call send data for every submission item ', () => {
 				expect(postSubmission).toHaveBeenCalledTimes(4);
 			});
+
+			it('should call submission complete with submission Id ', () => {
+				expect(postSubmissionComplete).toHaveBeenNthCalledWith(1, '1234');
+			});
 		});
 		describe('and there is an error', () => {
 			beforeEach(async () => {
 				getExaminationSession.mockImplementation(() => {
 					throw new Error('an error');
+				});
+			});
+
+			it('should throw an error', async () => {
+				await expect(handleProcessSubmission(session)).rejects.toThrow('Process Submission failed');
+			});
+		});
+
+		describe('and there is an error with submission complete', () => {
+			beforeEach(async () => {
+				getExaminationSession.mockReturnValue(session.examination);
+				getListOfFormData.mockReturnValueOnce([form, form2]).mockReturnValueOnce([form3, form4]);
+				postSubmission.mockReturnValue({ data: { submissionId: '1234' } });
+				postSubmissionComplete.mockImplementation(() => {
+					throw new Error('Submission Complete request failed');
 				});
 			});
 

@@ -61,6 +61,10 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
 				if (callingMethod === 'putComments') {
 					return apiResponse;
 				}
+
+				if (apiResponse.status === 204) {
+					return { resp_code: apiResponse.status };
+				}
 				const data = await apiResponse.json();
 				logger.debug(`Response received: ${JSON.stringify(data)}`);
 				const wrappedResp = { data, resp_code: apiResponse.status };
@@ -152,4 +156,10 @@ exports.wrappedPostSubmission = async (caseRef, body) => {
 	return handler('postSubmission', URL, method, {
 		body
 	});
+};
+
+exports.wrappedPostSubmissionComplete = async (submissionId) => {
+	const URL = `/api/v1/submissions/${submissionId}/complete`;
+	const method = 'POST';
+	return handler('postSubmissionComplete', URL, method, {});
 };

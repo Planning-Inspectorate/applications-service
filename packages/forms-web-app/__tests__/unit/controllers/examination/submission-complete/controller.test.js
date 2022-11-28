@@ -27,7 +27,7 @@ describe('examination/submission-complete/controller', () => {
 			status: jest.fn(() => res)
 		};
 		describe('When getting the submission complete page', () => {
-			beforeEach(async () => {
+			beforeEach(() => {
 				getExaminationSession.mockReturnValue(session.examination);
 			});
 			describe('and the page is rendered with submissionId and project email', () => {

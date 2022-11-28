@@ -1,8 +1,13 @@
 const logger = require('../../../../lib/logger');
-const { postSubmission } = require('../../../../services/submission.service');
+const {
+	postSubmission,
+	postSubmissionComplete
+} = require('../../../../services/submission.service');
+
 const { getListOfFormData } = require('./fromDataMappers');
 const {
 	setExaminationSubmissionComplete,
+	setExaminationSubmissionId,
 	getExaminationSession
 } = require('../../session/examination-session');
 
@@ -20,12 +25,22 @@ const handleProcessSubmission = async (session) => {
 			}
 		}
 		logger.info('Processing files complete');
-		examinationSession.submissionId = submissionId;
-
 		setExaminationSubmissionComplete(session, true);
+		setExaminationSubmissionId(session, submissionId);
+
+		await submissionComplete(submissionId);
 	} catch (error) {
 		logger.error(error);
 		throw new Error('Process Submission failed');
+	}
+};
+
+const submissionComplete = async (submissionId) => {
+	try {
+		await postSubmissionComplete(submissionId);
+	} catch (error) {
+		logger.error(error);
+		throw new Error('Submission Complete request failed');
 	}
 };
 
