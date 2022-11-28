@@ -32,6 +32,12 @@ const setExaminationSubmissionComplete = (session, state) => {
 	});
 };
 
+const setExaminationSubmissionId = (session, submissionId) => {
+	const examinationSession = getExaminationSession(session);
+
+	examinationSession.submissionId = submissionId;
+};
+
 const getExaminationSubmissionComplete = (session) => {
 	const examinationSession = getExaminationSession(session);
 	return examinationSession.submissionComplete;
@@ -41,6 +47,7 @@ module.exports = {
 	getExaminationSession,
 	setExaminationUploadingState,
 	setExaminationSubmissionComplete,
+	setExaminationSubmissionId,
 	getExaminationSubmissionComplete,
 	getExaminationUploadingState
 };

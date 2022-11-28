@@ -2,6 +2,7 @@ const {
 	getExaminationSession,
 	setExaminationUploadingState,
 	setExaminationSubmissionComplete,
+	setExaminationSubmissionId,
 	getExaminationUploadingState,
 	getExaminationSubmissionComplete
 } = require('../../../../../src/controllers/examination/session/examination-session');
@@ -113,6 +114,20 @@ describe('controllers/examination/session/examination-session', () => {
 					expect(() => setExaminationSubmissionComplete(mockSession)).toThrow(
 						'Examination submission complete state is not a boolean'
 					);
+				});
+			});
+		});
+	});
+	describe('#setExaminationSubmissionId', () => {
+		describe('When setting the submission Id', () => {
+			describe('and the submission Id 1234', () => {
+				const mockSession = { examination: {} };
+				beforeEach(() => {
+					mockSession.save = jest.fn();
+					setExaminationSubmissionId(mockSession, '1234');
+				});
+				it('should set submission complete to true', () => {
+					expect(mockSession.examination.submissionId).toEqual('1234');
 				});
 			});
 		});
