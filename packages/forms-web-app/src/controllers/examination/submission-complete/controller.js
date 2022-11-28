@@ -1,3 +1,5 @@
+const { getExaminationSession } = require('../session/examination-session');
+
 const {
 	routesConfig: {
 		examination: {
@@ -5,9 +7,23 @@ const {
 		}
 	}
 } = require('../../../routes/config');
+const logger = require('../../../lib/logger');
 
 const getSubmissionComplete = (req, res) => {
-	return res.render(submissionComplete.view);
+	try {
+		const { session } = req;
+		const examinationSession = getExaminationSession(session);
+
+		const pageData = {
+			submissionId: examinationSession.submissionId,
+			projectEmail: session.appData.ProjectEmailAddress
+		};
+
+		return res.render(submissionComplete.view, pageData);
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).render('error/unhandled-exception');
+	}
 };
 
 module.exports = {

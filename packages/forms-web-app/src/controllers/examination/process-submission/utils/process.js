@@ -20,6 +20,8 @@ const handleProcessSubmission = async (session) => {
 			}
 		}
 		logger.info('Processing files complete');
+		examinationSession.submissionId = submissionId;
+
 		setExaminationSubmissionComplete(session, true);
 	} catch (error) {
 		logger.error(error);
