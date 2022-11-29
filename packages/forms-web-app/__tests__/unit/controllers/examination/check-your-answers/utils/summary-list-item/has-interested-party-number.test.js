@@ -31,16 +31,16 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/has
 			session: { mockSession: 'mock session' }
 		};
 		describe('When getting the has interested party number summary list item for the check your answers page', () => {
-			describe('and the has interested party number retrived from the session does NOT match yes or no', () => {
+			describe('and the has interested party number retrived from the session is NOT yes or no', () => {
 				it('should throw an error', () => {
 					expect(() => getSummaryListItemHasInterestedPartyNumber(req.session)).toThrowError(
 						'Has interested party number text is undefined'
 					);
 				});
 			});
-			describe('and the has interested party number retrived from the session does match yes or no', () => {
+			describe('and the has interested party number retrived from the session is yes or no', () => {
 				let result;
-				const mockHasInterestedPartyNumber = 'mock has interested party number';
+				const mockHasInterestedPartyNumber = 'yes or no';
 				const mockHasInterestedPartyNumberText = 'mock has interested party number text';
 				const mockSummaryListItemWithHtml = {
 					mockSummaryListItemWithHtml: 'mock summary list item with html'

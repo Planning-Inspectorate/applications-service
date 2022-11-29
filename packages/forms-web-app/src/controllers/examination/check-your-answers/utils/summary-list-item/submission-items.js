@@ -1,4 +1,4 @@
-const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
+const { getSummaryListItemWithHtml } = require('../../../../utils/get-summary-list-item-with-html');
 const { getSubmissionItems } = require('../../../session/submission-items-session');
 
 const getSubmissionItemsValue = (submissionItems) => {
@@ -12,7 +12,7 @@ const getSubmissionItemsValue = (submissionItems) => {
 };
 
 const getSummaryListItemSubmissionItems = (session) => {
-	return getSummaryListItemWithLink(
+	return getSummaryListItemWithHtml(
 		'Deadline items added',
 		getSubmissionItemsValue(getSubmissionItems(session))
 	);

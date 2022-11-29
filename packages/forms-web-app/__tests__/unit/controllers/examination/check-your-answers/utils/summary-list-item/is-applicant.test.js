@@ -29,16 +29,16 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/is-
 			session: { mockSession: 'mock session' }
 		};
 		describe('When getting the is applicant summary list item for the check your answers page', () => {
-			describe('and the is applicant value retrived from the session does NOT match yes or no', () => {
+			describe('and the is applicant value retrived from the session is NOT yes or no', () => {
 				it('should throw an error', () => {
 					expect(() => getSummaryListIsApplicant(req.session)).toThrowError(
 						'Applicant text is undefined'
 					);
 				});
 			});
-			describe('and the is applicant value retrived from the session does match yes or no', () => {
+			describe('and the is applicant value retrived from the session is yes or no', () => {
 				let result;
-				const mockIsApplicant = 'mock is applicant';
+				const mockIsApplicant = 'yes or no';
 				const mockIsApplicantText = 'mock is applicant text';
 				const mockSummaryListItemWithHtml = {
 					mockSummaryListItemWithHtml: 'mock summary list item with html'

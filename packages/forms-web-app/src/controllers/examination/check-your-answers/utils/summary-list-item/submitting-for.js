@@ -1,5 +1,5 @@
 const { getDeadlineSubmittingFor } = require('../../../../session/deadline');
-const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
+const { getSummaryListItemWithHtml } = require('../../../../utils/get-summary-list-item-with-html');
 const { getSelectedOptionText } = require('./helpers');
 const {
 	routesConfig: {
@@ -16,7 +16,7 @@ const getSummaryListItemSubmittingFor = (session) => {
 	);
 	if (!submittingForText) throw new Error('Submitting for text is undefined');
 
-	return getSummaryListItemWithLink('Making submission for', submittingForText);
+	return getSummaryListItemWithHtml('Making submission for', submittingForText);
 };
 
 module.exports = { getSummaryListItemSubmittingFor };
