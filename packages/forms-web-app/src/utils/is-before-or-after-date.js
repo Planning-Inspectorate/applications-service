@@ -31,10 +31,15 @@ const handleNoDatesExtensionAddSixMonthsToStart = (startDate) =>
 const getDateTimeExaminationEnds = (date, extensionCloseData, startDate) => {
 	if (!date && !extensionCloseData) return handleNoDatesExtensionAddSixMonthsToStart(startDate);
 
-	if (!isNullSQLDate(new Date(date)) && !isNullSQLDate(new Date(extensionCloseData)))
-		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
-
 	if (!date && extensionCloseData) return handleGrantedExtension(extensionCloseData);
+
+	if (
+		date &&
+		!isNullSQLDate(new Date(date)) &&
+		extensionCloseData &&
+		!isNullSQLDate(new Date(extensionCloseData))
+	)
+		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
 
 	const formattedDate = formatDate(date);
 
