@@ -28,19 +28,10 @@ const handleProcessSubmission = async (session) => {
 		setExaminationSubmissionComplete(session, true);
 		setExaminationSubmissionId(session, submissionId);
 
-		await submissionComplete(submissionId);
-	} catch (error) {
-		logger.error(error);
-		throw new Error('Process Submission failed');
-	}
-};
-
-const submissionComplete = async (submissionId) => {
-	try {
 		await postSubmissionComplete(submissionId);
 	} catch (error) {
 		logger.error(error);
-		throw new Error('Submission Complete request failed');
+		throw new Error('Process Submission failed');
 	}
 };
 
