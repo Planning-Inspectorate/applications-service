@@ -62,6 +62,16 @@ describe('#utils/is-before-or-after-date', () => {
 					expect(result).toEqual('The examination is expected to close on 22 March 2023');
 				});
 			});
+			describe('and there both date and extension date are null dates', () => {
+				let result;
+				beforeEach(() => {
+					jest.useFakeTimers().setSystemTime(new Date('2022-09-22'));
+					result = getDateTimeExaminationEnds('0000-00-00', '0000-00-00', '2022-09-22');
+				});
+				it('should return the correct before date sentence. ', () => {
+					expect(result).toEqual('The examination is expected to close on 22 March 2023');
+				});
+			});
 			describe('and an extension has been granted', () => {
 				let result;
 				const extensionDate = '2023-04-22';

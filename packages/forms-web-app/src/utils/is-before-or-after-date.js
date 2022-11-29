@@ -1,4 +1,4 @@
-const { formatDate } = require('./date-utils');
+const { formatDate, isNullSQLDate } = require('./date-utils');
 const moment = require('moment');
 
 const isBeforeNowUTC = (date) => {
@@ -30,6 +30,9 @@ const handleNoDatesExtensionAddSixMonthsToStart = (startDate) =>
 
 const getDateTimeExaminationEnds = (date, extensionCloseData, startDate) => {
 	if (!date && !extensionCloseData) return handleNoDatesExtensionAddSixMonthsToStart(startDate);
+
+	if (!isNullSQLDate(new Date(date)) && !isNullSQLDate(new Date(extensionCloseData)))
+		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
 
 	if (!date && extensionCloseData) return handleGrantedExtension(extensionCloseData);
 
