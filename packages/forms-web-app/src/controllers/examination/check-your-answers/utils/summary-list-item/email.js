@@ -1,7 +1,7 @@
 const { getDeadlineEmail } = require('../../../../session/deadline');
-const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
+const { getSummaryListItemWithHtml } = require('../../../../utils/get-summary-list-item-with-html');
 
 const getSummaryListItemEmail = (session) =>
-	getSummaryListItemWithLink('Email Address', getDeadlineEmail(session), '');
+	getSummaryListItemWithHtml('Email Address', getDeadlineEmail(session));
 
 module.exports = { getSummaryListItemEmail };

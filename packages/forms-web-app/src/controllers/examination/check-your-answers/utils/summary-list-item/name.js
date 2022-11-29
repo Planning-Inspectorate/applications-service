@@ -1,5 +1,5 @@
 const { getDeadlineSubmittingFor, getDeadlineName } = require('../../../../session/deadline');
-const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
+const { getSummaryListItemWithHtml } = require('../../../../utils/get-summary-list-item-with-html');
 const {
 	routesConfig: {
 		examination: {
@@ -8,7 +8,7 @@ const {
 	}
 } = require('../../../../../routes/config');
 
-const getName = (session) => {
+const getSummaryListItemName = (session) => {
 	switch (getDeadlineSubmittingFor(session)) {
 		case submittingFor.options[1].value:
 			return 'Full name';
@@ -17,11 +17,11 @@ const getName = (session) => {
 		case submittingFor.options[3].value:
 			return 'Submitting on behalf of';
 		default:
-			throw new Error('Get name can not be returned');
+			throw new Error('Summary list item name can not be assigned');
 	}
 };
 
 const getSummaryListName = (session) =>
-	getSummaryListItemWithLink(getName(session), getDeadlineName(session), '');
+	getSummaryListItemWithHtml(getSummaryListItemName(session), getDeadlineName(session));
 
 module.exports = { getSummaryListName };

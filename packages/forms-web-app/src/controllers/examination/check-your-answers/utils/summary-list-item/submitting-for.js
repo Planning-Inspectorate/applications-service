@@ -16,7 +16,7 @@ const getSummaryListItemSubmittingFor = (session) => {
 	);
 	if (!submittingForText) throw new Error('Submitting for text is undefined');
 
-	return getSummaryListItemWithLink('Making submission for', submittingForText, '');
+	return getSummaryListItemWithLink('Making submission for', submittingForText);
 };
 
 module.exports = { getSummaryListItemSubmittingFor };

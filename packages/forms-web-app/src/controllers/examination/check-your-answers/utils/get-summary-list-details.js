@@ -20,7 +20,7 @@ const getSummaryListDetails = (session) => {
 	if (userHasInterestedPartyNumber)
 		summaryListDetails.push(getSummaryListItemInterestedPartyNumber(session));
 	if (!userIsApplicant) summaryListDetails.push(getSummaryListItemSubmittingFor(session));
-	if (!userHasInterestedPartyNumber) summaryListDetails.push(getSummaryListIsApplicant(session));
+	if (userIsApplicant) summaryListDetails.push(getSummaryListIsApplicant(session));
 	if (!userIsApplicant) summaryListDetails.push(getSummaryListName(session));
 	summaryListDetails.push(getSummaryListItemEmail(session));
 

@@ -1,18 +1,20 @@
-const { getExaminationSession } = require('../../examination-session');
+const { getExaminationSession } = require('../examination-session');
+
+const deadlineInterestedPartyNumberKey = 'interestedPartyNumber';
 
 const getDeadlineInterestedPartyNumber = (session) => {
 	const examinationSession = getExaminationSession(session);
 
-	if (!examinationSession.interestedPartyNumber)
+	if (!examinationSession?.[deadlineInterestedPartyNumberKey])
 		throw new Error('Deadline interested party number not found');
 
-	return examinationSession.interestedPartyNumber;
+	return examinationSession[deadlineInterestedPartyNumberKey];
 };
 
 const setDeadlineInterestedPartyNumber = (session, interestedPartyNumber) => {
 	const examinationSession = getExaminationSession(session);
 
-	examinationSession.interestedPartyNumber = interestedPartyNumber;
+	examinationSession[deadlineInterestedPartyNumberKey] = interestedPartyNumber;
 };
 
 module.exports = { getDeadlineInterestedPartyNumber, setDeadlineInterestedPartyNumber };

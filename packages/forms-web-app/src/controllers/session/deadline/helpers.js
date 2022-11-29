@@ -1,13 +1,15 @@
 const { getExaminationSession } = require('../examination-session');
+const { deadlineHasInterestedPartyNumberKey } = require('./has-interested-party-number');
+const { deadlineIsApplicantKey } = require('./is-applicant');
 
 const getUserHasInterestedPartyNumber = (session) => {
 	const examinationSession = getExaminationSession(session);
-	return examinationSession.hasInterestedPartyNumber === 'yes';
+	return examinationSession[deadlineHasInterestedPartyNumberKey] === 'yes';
 };
 
 const getUserIsApplicant = (session) => {
 	const examinationSession = getExaminationSession(session);
-	return examinationSession.isApplicant === 'yes';
+	return examinationSession[deadlineIsApplicantKey] === 'yes';
 };
 
 module.exports = { getUserHasInterestedPartyNumber, getUserIsApplicant };

@@ -1,17 +1,19 @@
 const { getExaminationSession } = require('../examination-session');
 
+const deadlineIdKey = 'id';
+
 const getDeadlineId = (session) => {
 	const examinationSession = getExaminationSession(session);
 
-	if (!examinationSession.id) throw new Error('Deadline id not found');
+	if (!examinationSession?.[deadlineIdKey]) throw new Error('Deadline id not found');
 
-	return examinationSession.id;
+	return examinationSession[deadlineIdKey];
 };
 
 const setDeadlineId = (session, id) => {
 	const examinationSession = getExaminationSession(session);
 
-	examinationSession.id = id;
+	examinationSession[deadlineIdKey] = id;
 };
 
 module.exports = { getDeadlineId, setDeadlineId };

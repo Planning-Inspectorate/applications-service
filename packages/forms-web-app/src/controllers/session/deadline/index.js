@@ -3,16 +3,16 @@ const { getDeadlineId, setDeadlineId } = require('./id');
 const {
 	getDeadlineHasInterestedPartyNumber,
 	setDeadlineHasInterestedPartyNumber
-} = require('./details/has-interested-party-number');
+} = require('./has-interested-party-number');
 const {
 	getDeadlineInterestedPartyNumber,
 	setDeadlineInterestedPartyNumber
-} = require('./details/interested-party-number');
-const { getDeadlineIsApplicant, setDeadlineIsApplicant } = require('./details/is-applicant');
+} = require('./interested-party-number');
+const { getDeadlineIsApplicant, setDeadlineIsApplicant } = require('./is-applicant');
 const { getDeadlineTitle, setDeadlineTitle } = require('./title');
-const { getDeadlineSubmittingFor, setDeadlineSubmittingFor } = require('./details/submitting-for');
-const { getDeadlineName, setDeadlineName } = require('./details/name');
-const { getDeadlineEmail, setDeadlineEmail } = require('./details/email');
+const { getDeadlineSubmittingFor, setDeadlineSubmittingFor } = require('./submitting-for');
+const { getDeadlineName, setDeadlineName } = require('./name');
+const { getDeadlineEmail, setDeadlineEmail } = require('./email');
 const { getDeadlineItems, setDeadlineItems } = require('./items');
 
 module.exports = {

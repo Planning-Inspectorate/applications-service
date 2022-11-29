@@ -1,5 +1,5 @@
 const { getDeadlineIsApplicant } = require('../../../../session/deadline');
-const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-list-item-with-link');
+const { getSummaryListItemWithHtml } = require('../../../../utils/get-summary-list-item-with-html');
 const { getSelectedOptionText } = require('./helpers');
 const {
 	routesConfig: {
@@ -10,10 +10,13 @@ const {
 } = require('../../../../../routes/config');
 
 const getSummaryListIsApplicant = (session) => {
-	const applicantText = getSelectedOptionText(isApplicant.options, getDeadlineIsApplicant(session));
-	if (!applicantText) throw new Error('Applicant text is undefined');
+	const isApplicantText = getSelectedOptionText(
+		isApplicant.options,
+		getDeadlineIsApplicant(session)
+	);
+	if (!isApplicantText) throw new Error('Applicant text is undefined');
 
-	return getSummaryListItemWithLink('Applicant or not', applicantText, '');
+	return getSummaryListItemWithHtml('Applicant or not', isApplicantText);
 };
 
 module.exports = { getSummaryListIsApplicant };

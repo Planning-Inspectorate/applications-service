@@ -2,19 +2,19 @@ const { getSummaryListItemWithLink } = require('../../../../utils/get-summary-li
 const { getSubmissionItems } = require('../../../session/submission-items-session');
 
 const getSubmissionItemsValue = (submissionItems) => {
-	const submissionItemsValue = submissionItems.reduce(
-		(acc, submissionItem) => `${acc}<li>${submissionItem.submissionItem}</li>`,
+	const submissionItemsList = submissionItems.reduce(
+		(submissionItemList, submissionItem) =>
+			`${submissionItemList}<li>${submissionItem.submissionItem}</li>`,
 		''
 	);
 
-	return `<ul class="govuk-list">${submissionItemsValue}</ul>`;
+	return `<ul class="govuk-list">${submissionItemsList}</ul>`;
 };
 
 const getSummaryListItemSubmissionItems = (session) => {
 	return getSummaryListItemWithLink(
 		'Deadline items added',
-		getSubmissionItemsValue(getSubmissionItems(session)),
-		''
+		getSubmissionItemsValue(getSubmissionItems(session))
 	);
 };
 
