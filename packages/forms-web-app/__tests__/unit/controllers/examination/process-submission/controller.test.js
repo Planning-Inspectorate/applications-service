@@ -8,12 +8,19 @@ const {
 const {
 	handleProcessSubmission
 } = require('../../../../../src/controllers/examination/process-submission/utils/process');
+const {
+	deleteExaminationSession
+} = require('../../../../../src/controllers/examination/session/delete-examination-session');
 
 jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
 	setExaminationUploadingState: jest.fn()
 }));
 jest.mock('../../../../../src/controllers/examination/process-submission/utils/process', () => ({
 	handleProcessSubmission: jest.fn()
+}));
+
+jest.mock('../../../../../src/controllers/examination/session/delete-examination-session', () => ({
+	deleteExaminationSession: jest.fn()
 }));
 describe('examination/process-submission/controller', () => {
 	describe('#getProcessSubmission', () => {
@@ -70,6 +77,9 @@ describe('examination/process-submission/controller', () => {
 				});
 				it('should handle the submission', () => {
 					expect(handleProcessSubmission).toHaveBeenCalledWith(req.session);
+				});
+				it('should delete the examination journey from session', () => {
+					expect(deleteExaminationSession).toHaveBeenCalledWith(req.session);
 				});
 				it('should redirect', () => {
 					expect(res.redirect).toHaveBeenCalledWith('/examination/submission-complete');

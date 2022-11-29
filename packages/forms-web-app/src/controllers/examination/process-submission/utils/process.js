@@ -27,7 +27,6 @@ const handleProcessSubmission = async (session) => {
 		logger.info('Processing files complete');
 		setExaminationSubmissionComplete(session, true);
 		setExaminationSubmissionId(session, submissionId);
-
 		await postSubmissionComplete(submissionId);
 	} catch (error) {
 		logger.error(error);

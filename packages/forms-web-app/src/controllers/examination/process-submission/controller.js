@@ -10,6 +10,7 @@ const {
 } = require('../../../routes/config');
 const { handleProcessSubmission } = require('./utils/process');
 const { setExaminationUploadingState } = require('../session/examination-session');
+const { deleteExaminationSession } = require('../session/delete-examination-session');
 
 const getProcessSubmission = (req, res) => {
 	try {
@@ -30,6 +31,7 @@ const postProcessSubmission = async (req, res) => {
 		const { session } = req;
 		setExaminationUploadingState(session, true);
 		await handleProcessSubmission(session);
+		deleteExaminationSession(session);
 		return res.redirect(`${directory}${submissionComplete.route}`);
 	} catch (error) {
 		logger.error(error);
