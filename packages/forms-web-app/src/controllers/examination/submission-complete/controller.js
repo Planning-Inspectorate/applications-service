@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('../session/examination-session');
+const { getExaminationSubmissionId } = require('../session/examination-session');
 
 const {
 	routesConfig: {
@@ -8,15 +8,15 @@ const {
 	}
 } = require('../../../routes/config');
 const logger = require('../../../lib/logger');
+const { getProjectEmailAddress } = require('../../session/app-data-session');
 
 const getSubmissionComplete = (req, res) => {
 	try {
 		const { session } = req;
-		const examinationSession = getExaminationSession(session);
 
 		const pageData = {
-			submissionId: examinationSession.submissionId,
-			projectEmail: session.appData.ProjectEmailAddress
+			submissionId: getExaminationSubmissionId(session),
+			projectEmail: getProjectEmailAddress(session)
 		};
 
 		return res.render(submissionComplete.view, pageData);

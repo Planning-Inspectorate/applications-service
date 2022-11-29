@@ -3,32 +3,34 @@ const {
 } = require('../../../../../src/controllers/examination/submission-complete/controller');
 
 const {
-	getExaminationSession
+	getExaminationSubmissionId
 } = require('../../../../../src/controllers/examination/session/examination-session');
+const {
+	getProjectEmailAddress
+} = require('../../../../../src/controllers/session/app-data-session');
 
 jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
-	getExaminationSession: jest.fn()
+	getExaminationSubmissionId: jest.fn()
+}));
+
+jest.mock('../../../../../src/controllers/session/app-data-session', () => ({
+	getProjectEmailAddress: jest.fn()
 }));
 
 describe('examination/submission-complete/controller', () => {
 	describe('#getSubmissionComplete', () => {
-		const session = {
-			appData: {
-				ProjectEmailAddress: 'dummy.email@testing.gov.uk'
-			},
-			examination: {
-				submissionId: '1234'
-			}
-		};
+		const session = {};
 		const req = { session };
 		const res = {
 			redirect: jest.fn(),
 			render: jest.fn(),
 			status: jest.fn(() => res)
 		};
+		const mockProjectEmail = 'dummy.email@testing.gov.uk';
 		describe('When getting the submission complete page', () => {
 			beforeEach(() => {
-				getExaminationSession.mockReturnValue(session.examination);
+				getExaminationSubmissionId.mockReturnValue('1234');
+				getProjectEmailAddress.mockReturnValue(mockProjectEmail);
 			});
 			describe('and the page is rendered with submissionId and project email', () => {
 				beforeEach(() => {

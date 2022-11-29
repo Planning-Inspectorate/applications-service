@@ -43,11 +43,17 @@ const getExaminationSubmissionComplete = (session) => {
 	return examinationSession.submissionComplete;
 };
 
+const getExaminationSubmissionId = (session) => {
+	const examinationSession = getExaminationSession(session);
+	return examinationSession.submissionId;
+};
+
 module.exports = {
 	getExaminationSession,
 	setExaminationUploadingState,
 	setExaminationSubmissionComplete,
 	setExaminationSubmissionId,
 	getExaminationSubmissionComplete,
-	getExaminationUploadingState
+	getExaminationUploadingState,
+	getExaminationSubmissionId
 };

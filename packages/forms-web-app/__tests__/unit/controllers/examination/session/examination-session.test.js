@@ -4,7 +4,8 @@ const {
 	setExaminationSubmissionComplete,
 	setExaminationSubmissionId,
 	getExaminationUploadingState,
-	getExaminationSubmissionComplete
+	getExaminationSubmissionComplete,
+	getExaminationSubmissionId
 } = require('../../../../../src/controllers/examination/session/examination-session');
 describe('controllers/examination/session/examination-session', () => {
 	describe('#getExaminationSession', () => {
@@ -129,6 +130,15 @@ describe('controllers/examination/session/examination-session', () => {
 				it('should set submission complete to true', () => {
 					expect(mockSession.examination.submissionId).toEqual('1234');
 				});
+			});
+		});
+	});
+	describe('#getExaminationSubmissionId', () => {
+		describe('When getting the submission id', () => {
+			const mockSession = { examination: { submissionId: '1234' } };
+			const result = getExaminationSubmissionId(mockSession);
+			it('should return the value of submission id', () => {
+				expect(result).toEqual('1234');
 			});
 		});
 	});
