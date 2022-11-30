@@ -42,8 +42,8 @@ const getDateTimeExaminationEnds = (date, extensionCloseData, startDate) => {
 		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
 
 	const formattedDate = formatDate(date);
-
-	if (!formattedDate || formattedDate === 'NaNvalid date') return;
+	if (!formattedDate || formattedDate === 'NaNvalid date')
+		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
 
 	const toHappen = `The examination is expected to close on ${formattedDate}`;
 	const happened = `The examination closed on ${formattedDate}`;
