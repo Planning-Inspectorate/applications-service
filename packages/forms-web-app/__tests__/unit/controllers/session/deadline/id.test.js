@@ -5,9 +5,9 @@ const {
 
 const {
 	getExaminationSession
-} = require('../../../../../src/controllers/session/examination-session');
+} = require('../../../../../src/controllers/examination/session/examination-session');
 
-jest.mock('../../../../../src/controllers/session/examination-session', () => ({
+jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
 	getExaminationSession: jest.fn()
 }));
 

@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('../examination-session');
+const { getExaminationSession } = require('../../examination/session/examination-session');
 
 const deadlineSubmittingForKey = 'submittingFor';
 

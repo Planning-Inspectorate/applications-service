@@ -1,6 +1,8 @@
 const { formatDate, isNullSQLDate } = require('../../utils/date-utils');
-const { isBeforeOrAfterDate } = require('../../utils/is-before-or-after-date');
-const { getNow: getDate } = require('../../utils/get-now');
+const {
+	getConfirmedStartOfExamination,
+	getDateTimeExaminationEnds
+} = require('../../utils/is-before-or-after-date');
 const { getTimetables } = require('../../services/timetable.service');
 const {
 	setDeadlineCaseRef,
@@ -11,14 +13,12 @@ const {
 const {
 	deleteExaminationSession,
 	setExaminationSession
-} = require('../session/examination-session');
+} = require('../examination/session/examination-session');
 const {
-	routesConfig: { project },
 	routesConfig: {
-		examination: { directory: examinationDirectory }
-	},
-	routesConfig: {
+		project,
 		examination: {
+			directory: examinationDirectory,
 			pages: {
 				haveYourSay: { route: examinationHaveYourSayRoute }
 			}
@@ -26,6 +26,8 @@ const {
 	}
 } = require('../../routes/config');
 const { marked } = require('marked');
+
+const getDate = () => new Date();
 
 const eventIdFieldName = 'event-id';
 const eventElementId = 'examination-timetable-event-';
@@ -134,15 +136,15 @@ const getExaminationTimetable = async (req, res) => {
 
 	const appData = req.session?.appData;
 
-	const confirmedStartOfExamination = isBeforeOrAfterDate(appData?.ConfirmedStartOfExamination, [
-		`The examination opens on`,
-		`The examination opened on`
-	]);
+	const confirmedStartOfExamination = getConfirmedStartOfExamination(
+		appData?.ConfirmedStartOfExamination
+	);
 
-	const dateTimeExaminationEnds = isBeforeOrAfterDate(appData?.DateTimeExaminationEnds, [
-		`The examination is expected to close on`,
-		`The examination closed on`
-	]);
+	const dateTimeExaminationEnds = getDateTimeExaminationEnds(
+		appData?.DateTimeExaminationEnds,
+		appData?.Stage4ExtensiontoExamCloseDate,
+		appData?.ConfirmedStartOfExamination
+	);
 
 	const { caseRef, projectName } = projectValues;
 

@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('../../../session/examination-session');
+const { getExaminationSession } = require('../../../examination/session/examination-session');
 const { filterSubmissionItems } = require('./filter-submission-items');
 const {
 	routesConfig: {

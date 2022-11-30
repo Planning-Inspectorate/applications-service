@@ -4,12 +4,12 @@ const {
 
 const {
 	getExaminationSession
-} = require('../../../../../../src/controllers/session/examination-session');
+} = require('../../../../../../src/controllers/examination/session/examination-session');
 const {
 	filterSubmissionItems
 } = require('../../../../../../src/controllers/examination/add-another-deadline-item/utils/filter-submission-items');
 
-jest.mock('../../../../../../src/controllers/session/examination-session', () => ({
+jest.mock('../../../../../../src/controllers/examination/session/examination-session', () => ({
 	getExaminationSession: jest.fn()
 }));
 jest.mock(

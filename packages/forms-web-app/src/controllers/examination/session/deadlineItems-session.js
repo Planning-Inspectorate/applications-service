@@ -1,4 +1,4 @@
-const { getExaminationSession } = require('../../session/examination-session');
+const { getExaminationSession } = require('../../examination/session/examination-session');
 const { getEditModeSubmissionItemId } = require('./submission-items-session');
 
 const findDeadlineItemByValue = (session, value) => {

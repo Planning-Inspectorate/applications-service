@@ -29,12 +29,7 @@
         html: "You cannot make any further changes after you submit.<br><br>Check your answers again before you submit."
       }) }}
 
-      <form>
-        {{ govukButton({
-          text: "Submit",
-          type: "Submit"
-        }) }}
-      </form>
+      <a href="/process-submission" class="govuk-button">Continue</a>
     </div>
   </div>
 {% endblock %}

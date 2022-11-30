@@ -1,0 +1,53 @@
+{% extends "layouts/default.njk" %}
+
+{% block pageTitle %}
+	Submission Complete
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Submission Complete</h1>
+        <div class="govuk-panel__body">
+          Your reference number<br>
+          <strong>{{ submissionId }}</strong>
+        </div>
+      </div>
+
+      <p class="govuk-body">We've sent a confirmation email to confirm we have received your submission.</p>
+
+			<h3 class="govuk-heading-m">Contact us</h3>
+      <h4 class="govuk-heading-s">Telephone </h4>
+      <p>If you have an interested party number, have it with you when you call.</p>
+
+			<p class="govuk-body">Telephone: 0303 444 5000
+				<br>
+				Monday to Friday, 9am to 12pm (except public holidays)
+			</p>
+
+			<h4 class="govuk-heading-s">Email </h4>
+			<p class="govuk-body">
+				<a id="project-email-link" href="{{ projectEmail }}" class="govuk-link"> {{ projectEmail }} </a>
+			</p>
+			<p class="govuk-body">
+				When you're writing an email, quote the name of the project in the subject line.
+			</p>
+			<p class="govuk-body">
+				We aim to respond within 10 working days.
+			</p>
+
+			<h4 class="govuk-heading-s">Alternative formats </h4>
+			<p class="govuk-body">
+				Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.
+			</p>
+			<p class="govuk-body">
+				<a href="{{ serviceFeedbackUrl }}" class="govuk-link">What did you think of this service?</a> (takes 3 seconds)
+			</p>
+
+    </div>
+  </div>
+
+{% endblock %}

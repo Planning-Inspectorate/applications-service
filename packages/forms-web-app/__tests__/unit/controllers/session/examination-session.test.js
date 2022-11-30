@@ -1,9 +1,9 @@
 const {
 	getExaminationSession
-} = require('../../../../src/controllers/session/examination-session');
+} = require('../../../../src/controllers/examination/session/examination-session');
 getExaminationSession;
 
-describe('controllers/session/examination-session', () => {
+describe('controllers/examination/session/examination-session', () => {
 	describe('#getExaminationSession', () => {
 		describe('When getting the examination key from session', () => {
 			describe('and the examination key exists', () => {
