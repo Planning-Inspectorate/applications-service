@@ -5,7 +5,8 @@ const {
 	getSubmissionFilesLength,
 	deleteSubmissionItem,
 	deleteActiveSubmissionItemId,
-	setActiveSubmissionItem
+	setActiveSubmissionItem,
+	findSubmissionItemToDelete
 } = require('../../../../../src/controllers/examination/session/submission-items-session');
 
 const {
@@ -232,7 +233,6 @@ describe('controllers/examination/session/examination-session)', () => {
 			});
 		});
 	});
-
 	describe('#deleteSubmissionItem', () => {
 		describe('When deleting a submission item', () => {
 			const mockSession = {};
@@ -268,6 +268,27 @@ describe('controllers/examination/session/examination-session)', () => {
 				it('should remain the same', () => {
 					expect(mockSubmissionItems).toEqual(mockSubmissionItems);
 				});
+			});
+		});
+	});
+	describe('#findSubmissionItemToDelete', () => {
+		describe('When getting the submission item to delete ', () => {
+			const mockSession = { mockSession: 'mock session' };
+			const itemToDelete = 1;
+			const mockItem = {
+				files: ['files'],
+				text: 'value',
+				itemId: 1
+			};
+			let result;
+			beforeEach(() => {
+				getExaminationSession.mockReturnValue({
+					submissionItems: [mockItem]
+				});
+				result = findSubmissionItemToDelete(mockSession, itemToDelete);
+			});
+			it('should return the found item', () => {
+				expect(result).toEqual(mockItem);
 			});
 		});
 	});

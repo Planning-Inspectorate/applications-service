@@ -38,7 +38,7 @@ const postEvidenceOrComment = async (req, res) => {
 		if (!selectedSubmissionType) throw new Error('No submission type selected');
 
 		const redirectUrl = getRedirectUrl(query, session, selectedSubmissionType);
-		deleteSubmissionType(session, selectedSubmissionType);
+		await deleteSubmissionType(session, selectedSubmissionType);
 		addKeyValueToActiveSubmissionItem(session, 'submissionType', selectedSubmissionType);
 		return res.redirect(redirectUrl);
 	} catch (error) {

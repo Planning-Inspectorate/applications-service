@@ -31,6 +31,11 @@ const deleteSubmissionItem = (session, itemIdToDelete) => {
 	);
 };
 
+const findSubmissionItemToDelete = (session, itemIdToDelete) => {
+	const examinationSession = getExaminationSession(session);
+	return examinationSession.submissionItems.find((item) => item.itemId === itemIdToDelete);
+};
+
 const getActiveSubmissionItemFiles = (session) => {
 	const activeSubmissionItem = getActiveSubmissionItem(session);
 	return getSubmissionItemFiles(activeSubmissionItem);
@@ -183,5 +188,6 @@ module.exports = {
 	setEditModeSubmissionItemId,
 	getEditModeSubmissionItemId,
 	deleteEditModeSubmissionItemId,
-	updateActiveSubmissionItem
+	updateActiveSubmissionItem,
+	findSubmissionItemToDelete
 };
