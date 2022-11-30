@@ -62,13 +62,45 @@ describe('#utils/is-before-or-after-date', () => {
 					expect(result).toEqual('The examination is expected to close on 22 March 2023');
 				});
 			});
-			describe('and there both date and extension date are null dates', () => {
+			describe('and both date and extension date are null dates 0000-00-00', () => {
+				let result;
+				const nullDate = '0000-00-00';
+				beforeEach(() => {
+					jest.useFakeTimers().setSystemTime(new Date('2022-09-22'));
+					result = getDateTimeExaminationEnds(nullDate, nullDate, '2022-09-22');
+				});
+				it('should return the correct before date sentence with 6 months added to the date.', () => {
+					expect(result).toEqual('The examination is expected to close on 22 March 2023');
+				});
+			});
+			describe('and both date and extension date are null dates 0000-00-00 00:00:00', () => {
+				let result;
+				const nullDate = '0000-00-00 00:00:00';
+				beforeEach(() => {
+					jest.useFakeTimers().setSystemTime(new Date('2022-09-22'));
+					result = getDateTimeExaminationEnds(nullDate, nullDate, '2022-09-22');
+				});
+				it('should return the correct before date sentence with 6 months added to the date.', () => {
+					expect(result).toEqual('The examination is expected to close on 22 March 2023');
+				});
+			});
+			describe('and the date is null 0000-00-00', () => {
 				let result;
 				beforeEach(() => {
 					jest.useFakeTimers().setSystemTime(new Date('2022-09-22'));
-					result = getDateTimeExaminationEnds('0000-00-00', '0000-00-00', '2022-09-22');
+					result = getDateTimeExaminationEnds('0000-00-00', undefined, '2022-09-22');
 				});
-				it('should return the correct before date sentence. ', () => {
+				it('should return the correct before date sentence with 6 months added to the date.', () => {
+					expect(result).toEqual('The examination is expected to close on 22 March 2023');
+				});
+			});
+			describe('and the date is null 0000-00-00 00:00:00', () => {
+				let result;
+				beforeEach(() => {
+					jest.useFakeTimers().setSystemTime(new Date('2022-09-22'));
+					result = getDateTimeExaminationEnds('0000-00-00 00:00:00', undefined, '2022-09-22');
+				});
+				it('should return the correct before date sentence with 6 months added to the date.', () => {
 					expect(result).toEqual('The examination is expected to close on 22 March 2023');
 				});
 			});
