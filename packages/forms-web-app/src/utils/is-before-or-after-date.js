@@ -18,37 +18,29 @@ const getConfirmedStartOfExamination = (date) => {
 	return isBeforeNowUTC(date) ? toHappen : happened;
 };
 
-const handleGrantedExtension = (extensionCloseData) =>
+const handleGrantedExtension = (date) =>
 	`The deadline for the close of the Examination has been extended to ${formatDate(
-		extensionCloseData
+		moment(date).add(6, 'M').toISOString()
 	)}`;
+const isAInvalidDate = (date) =>
+	date === '0000-00-00 00:00:00' || date === '0000-00-00' || date === null;
 
-const handleNoDatesExtensionAddSixMonthsToStart = (startDate) =>
-	`The examination is expected to close on ${formatDate(
-		moment(startDate).add(6, 'M').toISOString()
-	)}`;
+const isBeforeOrAfterSentence = (date) =>
+	isBeforeNowUTC(date)
+		? `The examination is expected to close on ${formatDate(date)}`
+		: `The examination closed on ${formatDate(date)}`;
 
 const getDateTimeExaminationEnds = (date, extensionCloseData, startDate) => {
-	if (
-		(!date && !extensionCloseData) ||
-		(date === null && !isNullSQLDate(new Date(extensionCloseData))) ||
-		(date &&
-			!isNullSQLDate(new Date(date)) &&
-			extensionCloseData &&
-			!isNullSQLDate(new Date(extensionCloseData)))
-	)
-		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
+	if (isAInvalidDate(date) && isAInvalidDate(extensionCloseData))
+		return handleGrantedExtension(startDate);
 
-	if (!date && extensionCloseData) return handleGrantedExtension(extensionCloseData);
+	if (isAInvalidDate(date) && !isNullSQLDate(new Date(extensionCloseData)))
+		return isBeforeOrAfterSentence(extensionCloseData);
 
-	const formattedDate = formatDate(date);
-	if (!formattedDate || formattedDate === 'NaNvalid date')
-		return handleNoDatesExtensionAddSixMonthsToStart(startDate);
+	if (isAInvalidDate(extensionCloseData) && !isNullSQLDate(new Date(date)))
+		return isBeforeOrAfterSentence(date);
 
-	const toHappen = `The examination is expected to close on ${formattedDate}`;
-	const happened = `The examination closed on ${formattedDate}`;
-
-	return isBeforeNowUTC(date) ? toHappen : happened;
+	return isBeforeOrAfterSentence(date);
 };
 
 module.exports = {
