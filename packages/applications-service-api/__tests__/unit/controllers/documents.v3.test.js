@@ -38,7 +38,7 @@ describe('documentsV3 controller', () => {
 		};
 
 		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
-		expect(getAvailableFiltersMock).toBeCalledWith(expectedFilters);
+		expect(getAvailableFiltersMock).toBeCalledWith('EN000001');
 
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 		expect(res._getData()).toEqual({
