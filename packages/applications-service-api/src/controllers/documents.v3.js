@@ -5,12 +5,14 @@ const toCamelCase = require('lodash.camelcase');
 const getDocuments = async (req, res) => {
 	const requestFilters = {
 		caseReference: req.body.caseReference,
-		page: req.body.page || 1
+		page: req.body.page || 1,
+		filters: req.body.filters,
+		searchTerm: req.body.searchTerm
 	};
 
 	const [documents, availableFilters] = await Promise.all([
 		fetchDocuments(requestFilters),
-		getAvailableFilters(requestFilters)
+		getAvailableFilters(requestFilters.caseReference)
 	]);
 
 	const paginationData = {
