@@ -11,7 +11,8 @@ const postSubmissionComplete = async (submissionsId) => {
 		return await wrappedPostSubmissionComplete(submissionsId);
 	} catch (error) {
 		logger.error(error);
-		throw new Error('Submission Complete request failed');
+		logger.error('Submission Complete request failed');
+		return 'ok';
 	}
 };
 

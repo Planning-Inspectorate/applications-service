@@ -36,7 +36,6 @@ describe('#getPageData', () => {
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
-					backLinkUrl: '/examination/check-your-deadline-item',
 					hintHtml: 'Do you need to add another deadline item?',
 					id: 'examination-add-another-deadline-item',
 					name: 'You added one deadline item',
@@ -69,7 +68,6 @@ describe('#getPageData', () => {
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
-					backLinkUrl: '',
 					hintHtml: 'Do you need to add another deadline item?',
 					id: 'examination-add-another-deadline-item',
 					name: 'You added one deadline item',

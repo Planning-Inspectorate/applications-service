@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Applications Service API Documentation
-  description: API to <ul><li>create, retrieve and modify planning applications</li></ul>
+  description: API to create, retrieve and modify planning applications
   version: 1.0.5
   license:
     name: MIT
@@ -205,6 +205,7 @@ paths:
           description: Comments not updated
   '/api/v1/documents/{caseRef}':
     post:
+      deprecated: true
       summary: Returns project documents
       description: Returns project documents
       tags:
@@ -235,6 +236,7 @@ paths:
           description: No documents found
   '/api/v2/documents':
     get:
+      deprecated: true
       summary: Returns project documents
       description: Returns project documents
       tags:
@@ -292,6 +294,31 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
         '404':
           description: No documents found
+  '/api/v3/documents':
+    post:
+      summary: Returns project documents
+      description: Returns project documents
+      tags:
+        - Documents
+      requestBody:
+        description: Search and filtering criteria, required page number
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocumentV3RequestBody'
+      responses:
+        '200':
+          description: Returns list of documents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentV3ResponseBody'
+        '400':
+          description: Request body validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
   '/api/v1/representations':
     get:
       summary: Returns project representations
@@ -396,7 +423,15 @@ paths:
       tags:
         - Submissions
       parameters:
-        - $ref: '#/components/parameters/caseReference'
+        - in: path
+          name: caseReference
+          example: EN020021
+          required: true
+          schema:
+            type: string
+            minLength: 2
+            maxLength: 12
+          description: Case / Project unique identifier
       requestBody:
         content:
           multipart/form-data:
@@ -452,7 +487,7 @@ paths:
       tags:
         - Misc
       responses:
-        '200': # status code
+        '200':
           description: A JSON array of log messages
           content:
             application/json:
@@ -460,7 +495,7 @@ paths:
                 type: array
                 items:
                   type: string
-        '500': # status code
+        '500':
           description: Something went wrong.
         default:
           description: Something went wrong.
@@ -785,6 +820,166 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Document'
+    DocumentV3RequestBody:
+      type: object
+      required:
+        - caseReference
+      properties:
+        caseReference:
+          type: string
+          example: TR040009
+        searchTerm:
+          type: string
+          description: Free text search term
+        page:
+          type: integer
+          description: Page number
+          example: 1
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentV3RequestFilter'
+    DocumentV3RequestFilter:
+      properties:
+        name:
+          type: string
+          enum: [stage, category]
+          example: stage
+          description: Name of property to filter by
+        value:
+          example: 1
+          description: Value of property to filter by
+        type:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                example: Plans
+    DocumentV3ResponseBody:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentV3'
+        totalItems:
+          type: number
+          example: 3
+        itemsPerPage:
+          type: number
+          example: 20
+        totalPages:
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentV3ResponseFilter'
+    DocumentV3ResponseFilter:
+      type: object
+      properties:
+        name:
+          type: string
+          enum: [stage, category]
+          example: stage
+          description: Name of property to filter by
+        value:
+          type: string
+          example: 1
+          description: Value of property to filter by
+        count:
+          type: number
+          example: 5
+          description: Number of documents matching the filter
+        type:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                example: Plans
+              count:
+                type: number
+                example: 5
+                description: Number of documents matching the type
+    DocumentV3:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 12601
+        dataId:
+          type: string
+          example: 'TR040009-000004'
+        caseReference:
+          type: string
+          example: 'TR040009'
+        stage:
+          type: number
+          example: 1
+        type:
+          type: string
+          example: 'Transboundary'
+        filter1:
+          type: string
+          example: 'Environmental Impact Assessment'
+        filter2:
+          type: string
+          example: ''
+        category:
+          type: string
+          example: ''
+        description:
+          type: string
+          example: ''
+        size:
+          type: number
+          example: 50427
+        mime:
+          type: string
+          example: 'application/pdf'
+        path:
+          type: string
+          example: 'TR040009/TR040009-000004-Regulation 24 Transboundary Screening document.pdf'
+        status:
+          type: string
+          example: 'Published'
+        datePublished:
+          type: string
+          example: '2015-06-10'
+        deadlineDate:
+          type: string
+          example: ''
+        personalName:
+          type: string
+          example: ''
+        representative:
+          type: string
+          example: ''
+        whoFrom:
+          type: number
+          example: null
+        docReference:
+          type: string
+          example: ''
+        author:
+          type: string
+          example: ''
+        details:
+          type: string
+          example: ''
+        lastModified:
+          type: string
+          example: '2016-04-28 08:42:58'
+        dateCreated:
+          type: string
+          example: '2016-04-28 08:42:58'
     Document:
       type: object
       properties:
