@@ -380,6 +380,12 @@ const routesConfig = {
 		directory: '/projects',
 		subDirectory: '/:case_ref',
 		pages: {
+			documents: {
+				id: 'project-documents',
+				name: 'Documents',
+				route: '/documents',
+				view: 'projects/documents'
+			},
 			examinationTimetable: {
 				id: 'project-examination-timetable',
 				name: 'Examination timetable',

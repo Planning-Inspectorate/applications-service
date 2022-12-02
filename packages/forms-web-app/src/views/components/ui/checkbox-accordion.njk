@@ -1,0 +1,76 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% macro uiCheckboxAccordion(sections) %}
+  <form class="ui-checkbox-accordion">
+    <h3 class="govuk-heading-m">
+      Filter
+    </h3>
+
+    <div class="ui-checkbox-accordion__sections govuk-!-margin-bottom-7">
+      {% for section in sections %}
+        <div class="ui-checkbox-accordion__section">
+          <input class="ui-checkbox-accordion__switch" id="checkbox-accordion-switch-{{ loop.index }}" type="checkbox">
+
+          <label class="ui-checkbox-accordion__control" for="checkbox-accordion-switch-{{ loop.index }}">
+            <svg
+              class="ui-checkbox-accordion__control-indicator"
+              height="10"
+              width="18"
+            >
+              <path
+                d="M17.623 7.866 9.91.366a1.31 1.31 0 0 0-1.818 0l-7.714 7.5a1.224 1.224 0 0 0 0 1.767 1.312 1.312 0 0 0 1.818 0L9 3.017l6.806 6.616a1.31 1.31 0 0 0 1.818 0 1.225 1.225 0 0 0 0-1.767Z"
+                fill="#000"
+              />
+            </svg>
+
+            <span class="ui-checkbox-accordion__control-heading">
+              <span class="govuk-visually-hidden">Select to</span>
+              <span class="ui-checkbox-accordion__control-heading-state"></span>
+              <span class="govuk-visually-hidden">the</span>
+              {{ section.title }}
+              <span class="govuk-visually-hidden">filters section.</span>
+            </span>
+          </label>
+
+          <div class="ui-checkbox-accordion__content">
+            {{ govukCheckboxes({
+              name: "nationality",
+              classes: "govuk-checkboxes--small",
+              fieldset: {
+                legend: {
+                  html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>',
+                  isPageHeading: false
+                }
+              },
+              items: [
+                {
+                  value: "british",
+                  text: "British"
+                },
+                {
+                  value: "irish",
+                  text: "Irish"
+                },
+                {
+                  value: "other",
+                  text: "Citizen of another country"
+                }
+              ]
+            }) }}
+          </div>
+        </div>
+
+        {% if not loop.last %}
+          <hr class="ui-checkbox-accordion__section-break">
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {{ govukButton({
+      classes: "govuk-!-margin-0",
+      text: "Apply filters",
+      type: "Submit"
+    }) }}
+  </form>
+{% endmacro %}
