@@ -3,14 +3,16 @@ const {
 } = require('../../../../../src/controllers/examination/submission-complete/controller');
 
 const {
-	getExaminationSubmissionId
+	getExaminationSubmissionId,
+	getExaminationEmailAddress
 } = require('../../../../../src/controllers/examination/session/examination-session');
 const {
 	getProjectEmailAddress
 } = require('../../../../../src/controllers/session/app-data-session');
 
 jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
-	getExaminationSubmissionId: jest.fn()
+	getExaminationSubmissionId: jest.fn(),
+	getExaminationEmailAddress: jest.fn()
 }));
 
 jest.mock('../../../../../src/controllers/session/app-data-session', () => ({
@@ -30,6 +32,7 @@ describe('examination/submission-complete/controller', () => {
 		describe('When getting the submission complete page', () => {
 			beforeEach(() => {
 				getExaminationSubmissionId.mockReturnValue('1234');
+				getExaminationEmailAddress.mockReturnValue('mock email');
 				getProjectEmailAddress.mockReturnValue(mockProjectEmail);
 			});
 			describe('and the page is rendered with submissionId and project email', () => {
@@ -39,7 +42,8 @@ describe('examination/submission-complete/controller', () => {
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('pages/examination/submission-complete', {
 						submissionId: '1234',
-						projectEmail: 'dummy.email@testing.gov.uk'
+						projectEmail: 'dummy.email@testing.gov.uk',
+						emailAddress: 'mock email'
 					});
 				});
 			});
