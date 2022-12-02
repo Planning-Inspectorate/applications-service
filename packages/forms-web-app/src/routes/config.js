@@ -260,7 +260,7 @@ const routesConfig = {
 				name: 'Deadline item',
 				onError: {
 					message: {
-						isEmpty: 'Select yes if you want to add another deadline item'
+						isEmpty: 'Select an item'
 					}
 				},
 				route: '/select-deadline-item',
