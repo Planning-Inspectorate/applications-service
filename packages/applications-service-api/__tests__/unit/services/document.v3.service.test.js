@@ -54,7 +54,7 @@ describe('documentV3 service', () => {
 			});
 
 			const mockFindAllCall = mockFindAll.mock.calls[0][0];
-			expect(mockFindAllCall.where[Op.and][0].case_reference).toEqual('EN010085')
+			expect(mockFindAllCall.where[Op.and][0].case_reference).toEqual('EN010085');
 
 			expect(result).toEqual(DB_FILTERS);
 		});

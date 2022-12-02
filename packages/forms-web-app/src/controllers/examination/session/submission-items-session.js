@@ -1,5 +1,14 @@
 const { getExaminationSession } = require('./examination-session');
 
+const getSubmissionItems = (session) => {
+	const examinationSession = getExaminationSession(session);
+
+	if (!examinationSession?.submissionItems || !examinationSession.submissionItems?.length)
+		throw new Error('No submission items');
+
+	return examinationSession.submissionItems;
+};
+
 const addKeyValueToActiveSubmissionItem = (session, key, value) => {
 	if (key === 'undefined' || value === 'undefined') throw new Error('Key or value is undefined');
 
@@ -154,6 +163,7 @@ const getSubmissionFilesLength = (session) => {
 };
 
 module.exports = {
+	getSubmissionItems,
 	addKeyValueToActiveSubmissionItem,
 	deleteKeyFromActiveSubmissionItem,
 	getActiveSubmissionItemId,

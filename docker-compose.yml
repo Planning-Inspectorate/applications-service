@@ -99,7 +99,7 @@ services:
 #    command: npm run start:dev:debug --workspace=packages/forms-web-app
     ports:
       - 9004:3000
-      - 9229:9229
+      # - 9229:9229
     links:
       - applications-service-api
     depends_on:

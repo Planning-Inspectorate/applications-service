@@ -20,8 +20,8 @@ const fetchDocuments = async (filters) => {
 
 	return {
 		count: queryResult.count,
-		rows: queryResult.rows.map(row => row.dataValues)
-	}
+		rows: queryResult.rows.map((row) => row.dataValues)
+	};
 };
 
 const getAvailableFilters = async (filters) => {
@@ -42,7 +42,7 @@ const getAvailableFilters = async (filters) => {
 		group: [literal('stage, filter_1, category')]
 	};
 
-	const queryResult = await db.Document.findAll(query)
+	const queryResult = await db.Document.findAll(query);
 
 	return queryResult.map((row) => {
 		const category = row.dataValues.category;
