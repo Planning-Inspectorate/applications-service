@@ -30,7 +30,8 @@ describe('openapi validator', () => {
 					"must have required property 'email'",
 					"must have required property 'interestedParty'",
 					"must have required property 'deadline'",
-					"must have required property 'submissionType'"
+					"must have required property 'submissionType'",
+					"'caseReference' must not have more than 12 characters"
 				]
 			});
 
@@ -51,7 +52,7 @@ describe('openapi validator', () => {
 			const request = {
 				...req,
 				params: {
-					caseReference: '1234567890987654321'
+					caseReference: 'EN000001'
 				},
 				body: {
 					...validProperties,
