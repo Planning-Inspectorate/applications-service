@@ -1,12 +1,11 @@
-const { formatDate } = require('../../../utils/date-utils');
-const { documentProjectStages } = require('../../../utils/project-stages');
-const { removeFilterTypes } = require('../../../utils/remove-filter-types');
 const { VIEW } = require('../../../lib/views');
 const { getAppData } = require('../../../services/application.service');
 const { searchDocumentsV2 } = require('../../../services/document.service');
-const { replaceControllerParamType } = require('../../../utils/replace-controller-param-type');
 const { pageData } = require('./utils/pageData');
 const { featureToggles } = require('./utils/featureToggles');
+const { replaceControllerParamType } = require('../../../utils/replace-controller-param-type');
+const { handleDocuments } = require('./utils/documents');
+const { handleFilters } = require('./utils/filters');
 
 const documentExaminationLibraryId = 'examination library';
 
@@ -23,134 +22,20 @@ function renderData(
 	categoryList = [],
 	applicationResponse
 ) {
-	const respData = response.data;
-	const { documents, filters } = respData;
-	const { stageFilters, typeFilters, categoryFilters } = filters;
-	const modifiedTypeFilters = [];
-	const documentExaminationLibraryId = 'examination library';
-	let documentExaminationLibraryIndex = null;
-	const numberOfFiltersToDisplay = 5;
+	const pageDocuments = handleDocuments(response, examinationLibraryResponse);
 
-	const modifiedCategoryFilters = categoryFilters.map(({ name: categoryName = '', count = 0 }) => ({
-		text: `${categoryName} (${count})`,
-		value: categoryName,
-		checked: categoryList.includes(categoryName)
-	}));
-
-	if (documents.length && examinationLibraryResponse) {
-		for (let i = 0; i < documents.length; i++) {
-			const document = documents[i];
-			const documentType = typeof document.type === 'string' ? document.type.toLowerCase() : '';
-
-			if (documentType === documentExaminationLibraryId) {
-				documentExaminationLibraryIndex = i;
-				break;
-			}
-		}
-
-		if (documentExaminationLibraryIndex !== null) {
-			const documentElement = documents.splice(documentExaminationLibraryIndex, 1)[0];
-			documents.splice(0, 0, documentElement);
-		} else {
-			const examinationLibraryDocuments = examinationLibraryResponse?.data?.documents;
-
-			if (
-				examinationLibraryDocuments &&
-				Array.isArray(examinationLibraryDocuments) &&
-				examinationLibraryDocuments.length
-			) {
-				const findExaminationLibraryDocumentType = examinationLibraryDocuments.find(
-					(examinationLibraryDocument) => {
-						const examinationLibraryDocumentType =
-							typeof examinationLibraryDocument.type === 'string'
-								? examinationLibraryDocument.type.toLowerCase()
-								: '';
-						return examinationLibraryDocumentType === documentExaminationLibraryId;
-					}
-				);
-
-				if (findExaminationLibraryDocumentType) {
-					documents.unshift(findExaminationLibraryDocumentType);
-				}
-			}
-		}
-	}
-
-	if (documents.length) {
-		documents.forEach(
-			(document) => (document.date_published = formatDate(document.date_published))
-		);
-	}
-
-	const getProjectStageCount = (projectStageValue) => {
-		const projectStageItem = stageFilters.find((stageFilter) => {
-			return `${stageFilter.name}` === `${projectStageValue}`;
-		});
-
-		return projectStageItem?.count || 0;
-	};
-
-	const modifiedStageFilters = Object.values(documentProjectStages).map(({ name = '', value }) => {
-		const projectStageCount = getProjectStageCount(value);
-
-		return {
-			checked: stageList.includes(value),
-			text: `${name} (${projectStageCount ?? 0})`,
-			value: value ?? 0
-		};
-	});
-
-	let otherTypeFiltersCount = 0;
-
-	const { result: newTypeFilters, otherTypeFiltersCount: removedTypesCount } = removeFilterTypes(
-		typeFilters,
-		'other'
-	);
-
-	otherTypeFiltersCount += removedTypesCount;
-
-	newTypeFilters
-		.slice(-(newTypeFilters.length - numberOfFiltersToDisplay))
-		.forEach(function (type) {
-			otherTypeFiltersCount += type.count;
-		}, Object.create(null));
-
-	newTypeFilters
-		.slice(0, numberOfFiltersToDisplay)
-		.sort(function (a, b) {
-			if (a.name < b.name) {
-				return -1;
-			}
-			return 0;
-		})
-		.forEach(function (type) {
-			modifiedTypeFilters.push({
-				text: `${type.name} (${type.count})`,
-				value: type.name,
-				checked: typeList.includes(type.name)
-			});
-		}, Object.create(null));
-
-	if (newTypeFilters.length > 4) {
-		modifiedTypeFilters.push({
-			text: `Everything else (${otherTypeFiltersCount})`,
-			value: 'everything_else',
-			checked: typeList.includes('everything_else')
-		});
-	}
+	const pageObjectFilters = handleFilters(response, stageList, typeList, categoryList);
 
 	const pageDataObj = pageData(params, response, applicationResponse);
 	const pageFeatureToggles = featureToggles();
-	res.render(VIEW.PROJECTS.DOCUMENTS, {
+	return {
 		...pageDataObj,
-		documents,
+		...pageDocuments,
 		projectName,
 		...pageFeatureToggles,
 		searchTerm: params.searchTerm,
-		modifiedStageFilters,
-		modifiedTypeFilters,
-		modifiedCategoryFilters
-	});
+		...pageObjectFilters
+	};
 }
 
 exports.getApplicationDocuments = async (req, res) => {
@@ -196,7 +81,7 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const response = await searchDocumentsV2(params);
 
-		renderData(
+		const pageObj = renderData(
 			req,
 			res,
 			searchTerm,
@@ -209,5 +94,7 @@ exports.getApplicationDocuments = async (req, res) => {
 			categoryList,
 			applicationResponse
 		);
+
+		res.render(VIEW.PROJECTS.DOCUMENTS, pageObj);
 	}
 };
