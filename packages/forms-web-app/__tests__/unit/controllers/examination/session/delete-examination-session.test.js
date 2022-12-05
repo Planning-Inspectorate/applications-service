@@ -18,6 +18,7 @@ describe('#deleteExaminationSession', () => {
 			const mockExam = {
 				submissionId: '1234',
 				submissionComplete: true,
+				email: 'mock email',
 				extra: 'i should be ignored'
 			};
 
@@ -32,7 +33,8 @@ describe('#deleteExaminationSession', () => {
 				expect(mockSession).toEqual({
 					examination: {
 						submissionId: '1234',
-						submissionComplete: true
+						submissionComplete: true,
+						email: 'mock email'
 					},
 					save: mockSession.save
 				});
