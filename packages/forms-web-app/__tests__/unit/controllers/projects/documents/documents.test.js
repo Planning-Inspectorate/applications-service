@@ -1,9 +1,9 @@
-const aboutTheApplicationController = require('../../../../src/controllers/projects/documents');
-const { searchDocumentListV2 } = require('../../../../src/lib/application-api-wrapper');
-const { getAppData } = require('../../../../src/services/application.service');
-const { mockReq, mockRes } = require('../../mocks');
-const { VIEW } = require('../../../../src/lib/views');
-const { featureHideLink } = require('../../../../src/config');
+const aboutTheApplicationController = require('../../../../../src/controllers/projects/documents/documents');
+const { searchDocumentListV2 } = require('../../../../../src/lib/application-api-wrapper');
+const { getAppData } = require('../../../../../src/services/application.service');
+const { mockReq, mockRes } = require('../../../mocks');
+const { VIEW } = require('../../../../../src/lib/views');
+const { featureHideLink } = require('../../../../../src/config');
 
 const {
 	hideProjectInformationLink,
@@ -44,8 +44,8 @@ const modifiedStageFiltersValue = [
 		value: '7'
 	}
 ];
-jest.mock('../../../../src/lib/application-api-wrapper');
-jest.mock('../../../../src/services/application.service');
+jest.mock('../../../../../src/lib/application-api-wrapper');
+jest.mock('../../../../../src/services/application.service');
 
 describe('controllers/documents', () => {
 	let req;
