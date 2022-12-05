@@ -1,20 +1,12 @@
-const { formatDate } = require('../../utils/date-utils');
-const { documentProjectStages } = require('../../utils/project-stages');
-const { removeFilterTypes } = require('../../utils/remove-filter-types');
-const { getPaginationData, calculatePageOptions } = require('../../lib/pagination');
-const { VIEW } = require('../../lib/views');
-const { getAppData } = require('../../services/application.service');
-const { searchDocumentsV2 } = require('../../services/document.service');
-const { featureHideLink } = require('../../config');
-const { replaceControllerParamType } = require('../../utils/replace-controller-param-type');
-const { queryStringBuilder } = require('../../utils/query-string-builder');
-
-const {
-	hideProjectInformationLink,
-	hideAllExaminationDocumentsLink,
-	hideRecommendationAndDecisionLink,
-	hideExaminationTimetableLink
-} = featureHideLink;
+const { formatDate } = require('../../../utils/date-utils');
+const { documentProjectStages } = require('../../../utils/project-stages');
+const { removeFilterTypes } = require('../../../utils/remove-filter-types');
+const { VIEW } = require('../../../lib/views');
+const { getAppData } = require('../../../services/application.service');
+const { searchDocumentsV2 } = require('../../../services/document.service');
+const { replaceControllerParamType } = require('../../../utils/replace-controller-param-type');
+const { pageData } = require('./utils/pageData');
+const { featureToggles } = require('./utils/featureToggles');
 
 const documentExaminationLibraryId = 'examination library';
 
@@ -28,18 +20,12 @@ function renderData(
 	projectName,
 	stageList = [],
 	typeList = [],
-	categoryList = []
+	categoryList = [],
+	applicationResponse
 ) {
-	const baseUrl = `/projects/${params.caseRef}`;
-	const pageUrl = `${baseUrl}/application-documents`;
-	const queryUrl = queryStringBuilder(params, ['category', 'searchTerm', 'stage', 'type'], false);
-	const paginationUrl = `${pageUrl}?page=:page${queryUrl}`;
-
 	const respData = response.data;
 	const { documents, filters } = respData;
 	const { stageFilters, typeFilters, categoryFilters } = filters;
-	const paginationData = getPaginationData(respData);
-	const pageOptions = calculatePageOptions(paginationData);
 	const modifiedTypeFilters = [];
 	const documentExaminationLibraryId = 'examination library';
 	let documentExaminationLibraryIndex = null;
@@ -153,21 +139,14 @@ function renderData(
 		});
 	}
 
+	const pageDataObj = pageData(params, response, applicationResponse);
+	const pageFeatureToggles = featureToggles();
 	res.render(VIEW.PROJECTS.DOCUMENTS, {
-		baseUrl,
-		pageUrl,
-		caseRef: params.caseRef,
+		...pageDataObj,
 		documents,
 		projectName,
-		hideProjectInformationLink,
-		hideAllExaminationDocumentsLink,
-		hideRecommendationAndDecisionLink,
-		hideExaminationTimetableLink,
-		paginationData,
-		paginationUrl,
-		pageOptions,
+		...pageFeatureToggles,
 		searchTerm: params.searchTerm,
-		queryUrl,
 		modifiedStageFilters,
 		modifiedTypeFilters,
 		modifiedCategoryFilters
@@ -227,7 +206,8 @@ exports.getApplicationDocuments = async (req, res) => {
 			projectName,
 			stage,
 			type,
-			categoryList
+			categoryList,
+			applicationResponse
 		);
 	}
 };
