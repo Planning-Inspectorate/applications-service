@@ -8,36 +8,6 @@ const { handleDocuments } = require('./utils/documents');
 const { handleFilters } = require('./utils/filters');
 
 const documentExaminationLibraryId = 'examination library';
-
-function renderData(
-	req,
-	res,
-	searchTerm,
-	params,
-	response,
-	examinationLibraryResponse,
-	projectName,
-	stageList = [],
-	typeList = [],
-	categoryList = [],
-	applicationResponse
-) {
-	const pageDocuments = handleDocuments(response, examinationLibraryResponse);
-
-	const pageObjectFilters = handleFilters(response, stageList, typeList, categoryList);
-
-	const pageDataObj = pageData(params, response, applicationResponse);
-	const pageFeatureToggles = featureToggles();
-	return {
-		...pageDataObj,
-		...pageDocuments,
-		projectName,
-		...pageFeatureToggles,
-		searchTerm: params.searchTerm,
-		...pageObjectFilters
-	};
-}
-
 exports.getApplicationDocuments = async (req, res) => {
 	const developersApplication = "Developer's Application";
 
@@ -81,20 +51,18 @@ exports.getApplicationDocuments = async (req, res) => {
 
 		const response = await searchDocumentsV2(params);
 
-		const pageObj = renderData(
-			req,
-			res,
-			searchTerm,
-			params,
-			response,
-			examinationLibraryResponse,
-			projectName,
-			stage,
-			type,
-			categoryList,
-			applicationResponse
-		);
+		const pageDataObj = pageData(params, response, applicationResponse);
+		const pageFeatureToggles = featureToggles();
+		const pageDocuments = handleDocuments(response, examinationLibraryResponse);
+		const pageObjectFilters = handleFilters(response, stage, type, categoryList);
 
-		res.render(VIEW.PROJECTS.DOCUMENTS, pageObj);
+		res.render(VIEW.PROJECTS.DOCUMENTS, {
+			...pageDocuments,
+			...pageFeatureToggles,
+			...pageDataObj,
+			...pageObjectFilters,
+			projectName,
+			searchTerm: params.searchTerm
+		});
 	}
 };
