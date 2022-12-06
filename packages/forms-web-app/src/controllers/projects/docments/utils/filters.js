@@ -1,6 +1,8 @@
 const { documentProjectStages } = require('../../../../utils/project-stages');
 const { removeFilterTypes } = require('../../../../utils/remove-filter-types');
-const handleFilters = (response, stageList = [], typeList = [], categoryList = []) => {
+const { developersApplication } = require('./config');
+const handleFilters = (response, stageList = [], typeList = [], category = []) => {
+	const categoryList = category === developersApplication ? 'Application Document' : category;
 	const respData = response.data;
 	const { filters } = respData;
 	const { stageFilters, typeFilters, categoryFilters } = filters;
