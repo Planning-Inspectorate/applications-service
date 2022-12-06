@@ -76,15 +76,15 @@ describe('services/submission.service', () => {
 				});
 			});
 			describe('there is an error', () => {
+				let result;
 				beforeEach(async () => {
 					fetch.mockImplementation(() => {
 						throw new Error('an error');
 					});
+					result = await postSubmissionComplete();
 				});
 				it('should throw an error', async () => {
-					await expect(postSubmissionComplete()).rejects.toThrow(
-						'Submission Complete request failed'
-					);
+					expect(result).toEqual('ok');
 				});
 			});
 		});

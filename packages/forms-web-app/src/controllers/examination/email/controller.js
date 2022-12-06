@@ -1,5 +1,5 @@
-const config = require('../../config');
-const { isQueryModeEdit } = require('../utils/is-query-mode-edit');
+const config = require('../../../config');
+const { isQueryModeEdit } = require('../../utils/is-query-mode-edit');
 const {
 	routesConfig: {
 		examination: {
@@ -10,7 +10,8 @@ const {
 			}
 		}
 	}
-} = require('../../routes/config');
+} = require('../../../routes/config');
+const { getBackLink } = require('./utils/get-back-link');
 
 const examinationSessionStorage = config?.sessionStorage?.examination;
 const examinationSessionStorageName = examinationSessionStorage?.name;
@@ -26,15 +27,14 @@ const pageData = {
 const getEmail = async (req, res) => {
 	const requestSession = req.session;
 	const examinationStorage = requestSession?.[examinationSessionStorageName];
-	const currentView = requestSession?.currentView;
 
-	if (!examinationStorage || !currentView || !currentView?.route)
-		return res.status(404).render('error/not-found');
+	if (!examinationStorage) return res.status(404).render('error/not-found');
 
 	const examinationEmail = examinationStorage?.[examinationSessionStorageEmail];
 	examinationEmail && (pageData.email = examinationEmail);
 
-	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
+	pageData.backLinkUrl = getBackLink(req.session);
+
 	res.render(email.view, pageData);
 };
 
@@ -42,10 +42,9 @@ const postEmail = async (req, res) => {
 	const { body = {}, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 	const requestSession = req?.session;
-	const currentView = requestSession?.currentView;
 	const examinationStorage = requestSession?.[examinationSessionStorageName];
 
-	if (!currentView || !examinationStorage) return res.status(404).render('error/not-found');
+	if (!examinationStorage) return res.status(404).render('error/not-found');
 
 	const examinationEmail = examinationStorage?.property?.email;
 
@@ -53,7 +52,7 @@ const postEmail = async (req, res) => {
 
 	examinationStorage[examinationSessionStorageEmail] = body[email.id];
 
-	pageData.backLinkUrl = `${examinationDirectory + currentView.route}`;
+	pageData.backLinkUrl = getBackLink(req.session);
 
 	if (errors[email.id] || Object.keys(errors).length > 0) {
 		return res.render(email.view, {

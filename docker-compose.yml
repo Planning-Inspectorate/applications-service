@@ -51,14 +51,14 @@ services:
       TRIALIST_DATA_PATH: /opt/app/packages/applications-service-api/data/trialists.json
     ports:
       - 3000:3000
-    #      - 9229:9229
+      - 9230:9229
     working_dir: /opt/app
     volumes:
       - ./package.json:/opt/app/package.json
       - ./node_modules:/opt/app/node_modules
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
       - ./uploads:/opt/app/uploads
-    #    command: npm run start:dev:debug --workspace=packages/applications-service-api
+#    command: npm run start:dev:debug --workspace=packages/applications-service-api
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
@@ -94,12 +94,12 @@ services:
       - ./packages/common:/opt/app/packages/common
       - ./packages/forms-web-app:/opt/app/packages/forms-web-app
       - ./uploads:/opt/app/uploads
-    #    command: npm run start:dev --workspace=packages/forms-web-app
     # if enabling debug, be sure to uncomment / expose the debug port below.
-    command: npm run start:dev:debug --workspace=packages/forms-web-app
+    command: npm run start:dev --workspace=packages/forms-web-app
+#    command: npm run start:dev:debug --workspace=packages/forms-web-app
     ports:
       - 9004:3000
-      - 9229:9229
+      # - 9229:9229
     links:
       - applications-service-api
     depends_on:

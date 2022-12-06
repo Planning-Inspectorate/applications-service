@@ -1,10 +1,13 @@
-const { getEmail, postEmail } = require('../../../../src/controllers/examination/email');
-const { mockReq, mockRes, mockResponse } = require('../../mocks');
+const {
+	getEmail,
+	postEmail
+} = require('../../../../../src/controllers/examination/email/controller');
+const { mockReq, mockRes, mockResponse } = require('../../../mocks');
 
-jest.mock('../../../../src/lib/logger');
+jest.mock('../../../../../src/lib/logger');
 
 const pageData = {
-	backLinkUrl: '/examination/your-name',
+	backLinkUrl: '/examination/are-you-applicant',
 	hint: "We'll use your email address to confirm we've received your submission. We will not publish your email address.",
 	pageTitle: "What's your email address?",
 	title: "What's your email address?",
@@ -12,11 +15,6 @@ const pageData = {
 };
 
 const emailView = 'pages/examination/email';
-const currentView = {
-	id: 'examination-email',
-	view: 'pages/examination/email',
-	route: '/your-name'
-};
 
 const deadLineItemRoute = '/examination/select-deadline-item';
 
@@ -33,6 +31,7 @@ const minMaxInputObject = {
 	betweenMinMax: ['abc@example.com', null]
 };
 
+//TODO: refactor these tests
 describe('controllers/examination/name', () => {
 	let req;
 	let res;
@@ -42,7 +41,8 @@ describe('controllers/examination/name', () => {
 			...mockReq(),
 			session: {
 				examination: {
-					'examination-email': 'test'
+					'examination-email': 'test',
+					isApplicant: 'yes'
 				}
 			},
 			currentView: {}
@@ -65,7 +65,6 @@ describe('controllers/examination/name', () => {
 				}
 			};
 
-			mockRequest.session.currentView = currentView;
 			await postEmail(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(deadLineItemRoute);
@@ -82,8 +81,6 @@ describe('controllers/examination/name', () => {
 					errors: { error: 'error' }
 				}
 			};
-
-			mockRequest.session.currentView = currentView;
 
 			res = mockResponse();
 
@@ -116,14 +113,14 @@ describe('controllers/examination/name', () => {
 							}
 						},
 						session: {
-							examination: {}
+							examination: {
+								isApplicant: 'yes'
+							}
 						},
 						query: {
 							mode: ''
 						}
 					};
-
-					mockRequest.session.currentView = currentView;
 
 					await postEmail(mockRequest, res);
 					expect(res.redirect).not.toHaveBeenCalled();
@@ -156,8 +153,6 @@ describe('controllers/examination/name', () => {
 				}
 			};
 
-			mockRequest.session.currentView = currentView;
-
 			await postEmail(mockRequest, res);
 			expect(res.redirect).toHaveBeenCalledWith(deadLineItemRoute);
 		});
@@ -175,7 +170,6 @@ describe('controllers/examination/name', () => {
 				}
 			};
 
-			mockRequest.session.currentView = currentView;
 			mockRequest.query.mode = 'edit';
 
 			await postEmail(mockRequest, res);
@@ -192,23 +186,12 @@ describe('controllers/examination/name', () => {
 			expect(res.render).toHaveBeenCalledWith('error/not-found');
 		});
 
-		it('Calls the correct template without the current view object values', () => {
-			delete req.currentView;
-			res = mockResponse();
-			getEmail(req, res);
-			expect(res.render).toHaveBeenCalledWith('error/not-found');
-		});
-
 		it(`should call the correct template`, () => {
-			req.session.currentView = currentView;
-
 			getEmail(req, res);
 			expect(res.render).toHaveBeenCalledWith(emailView, pageData);
 		});
 
 		it(`should call the correct template with pageData email value`, () => {
-			req.session.currentView = currentView;
-
 			req.session.examination.email = 'email@example.com';
 
 			getEmail(req, res);

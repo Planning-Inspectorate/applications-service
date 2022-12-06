@@ -22,8 +22,16 @@ const deleteFileOnDisk = async (file) => {
 	await fs.unlinkSync(fileToDeletePath);
 };
 
+const iterateDeleteFileOnDisk = async (files) => {
+	for (const filesKey of files) {
+		const fileToDeletePath = fileUploadPath(filesKey.uniqueFileName);
+		await fs.unlinkSync(fileToDeletePath);
+	}
+};
+
 module.exports = {
 	fileUploadPath,
 	saveFileToDisk,
-	deleteFileOnDisk
+	deleteFileOnDisk,
+	iterateDeleteFileOnDisk
 };

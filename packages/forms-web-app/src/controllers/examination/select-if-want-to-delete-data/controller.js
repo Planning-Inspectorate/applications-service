@@ -8,11 +8,9 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const { deleteSubmissionItem } = require('../session/submission-items-session');
-const {
-	setDeadlineItemToDelete,
-	getDeadlineItemToDelete
-} = require('../session/deadlineItems-session');
+
+const { setDeadlineItemToDelete } = require('../session/deadlineItems-session');
+const { yesDeleteSubmissionItem } = require('./utils/yes-delete-submission-item');
 
 const pageData = {
 	backLinkUrl: `${examinationDirectory}${addAnotherDeadlineItem.route}`,
@@ -51,7 +49,7 @@ const postMarkDeadlineItemForDelete = (req, res) => {
 	}
 };
 
-const postSelectIfYouWantToDeleteData = (req, res) => {
+const postSelectIfYouWantToDeleteData = async (req, res) => {
 	try {
 		const { body, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
@@ -67,8 +65,7 @@ const postSelectIfYouWantToDeleteData = (req, res) => {
 		const answer = body[selectIfYouWantToDeleteData.id];
 		if (!answer) throw new Error('No selected deadline');
 
-		const deadlineItemToDelete = getDeadlineItemToDelete(session);
-		if (answer === 'yes') deleteSubmissionItem(session, deadlineItemToDelete);
+		if (answer === 'yes') await yesDeleteSubmissionItem(session);
 		setDeadlineItemToDelete(session, -1);
 
 		return res.redirect(`${examinationDirectory}${addAnotherDeadlineItem.route}`);

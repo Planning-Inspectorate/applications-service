@@ -99,9 +99,9 @@ describe('controllers/examination/evidence-or-comment/controller', () => {
 				const res = {
 					render: jest.fn()
 				};
-				beforeEach(() => {
+				beforeEach(async () => {
 					getPageData.mockReturnValue(mockPageDataValue);
-					postEvidenceOrComment(req, res);
+					await postEvidenceOrComment(req, res);
 				});
 				it('should render the page with errors', () => {
 					expect(res.render).toHaveBeenCalledWith('pages/examination/evidence-or-comment', {
@@ -120,8 +120,8 @@ describe('controllers/examination/evidence-or-comment/controller', () => {
 					render: jest.fn(),
 					status: jest.fn(() => res)
 				};
-				beforeEach(() => {
-					postEvidenceOrComment(req, res);
+				beforeEach(async () => {
+					await postEvidenceOrComment(req, res);
 				});
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
@@ -141,9 +141,9 @@ describe('controllers/examination/evidence-or-comment/controller', () => {
 				const res = {
 					redirect: jest.fn()
 				};
-				beforeEach(() => {
+				beforeEach(async () => {
 					getRedirectUrl.mockReturnValue(mockRedirectUrlValue);
-					postEvidenceOrComment(req, res);
+					await postEvidenceOrComment(req, res);
 				});
 
 				it('should call the functions', () => {

@@ -49,8 +49,10 @@ const {
 	getCheckSubmissionItem,
 	postCheckSubmissionItem
 } = require('../../controllers/examination/check-submission-item/controller');
-const { getCheckYourAnswers } = require('../../controllers/examination/check-your-answers');
-const { getEmail, postEmail } = require('../../controllers/examination/email');
+const {
+	getCheckYourAnswers
+} = require('../../controllers/examination/check-your-answers/controller');
+const { getEmail, postEmail } = require('../../controllers/examination/email/controller');
 const {
 	getEnterComment,
 	postEnterComment
