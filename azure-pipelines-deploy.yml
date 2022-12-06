@@ -57,5 +57,6 @@ extends:
                   appResourceGroup: pins-rg-applications-service-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
+    region: ${{ parameters.Region }}
     globalVariables:
       - template: azure-pipelines-variables.yml@self
