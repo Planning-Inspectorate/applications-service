@@ -17,7 +17,7 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
 	});
 
 	try {
-		logger.debug({ url, method, opts, headers }, 'New call');
+		logger.info({ url, method, opts, headers }, 'New call');
 		return await utils.promiseTimeout(
 			config.applications.timeout,
 			Promise.resolve().then(async () => {
@@ -156,6 +156,22 @@ exports.wrappedPostSubmission = async (caseRef, body) => {
 	return handler('postSubmission', URL, method, {
 		body
 	});
+};
+
+exports.wrappedSearchDocumentsV3 = async (body) => {
+	const URL = `/api/v3/documents`;
+
+	const url = `${config.applications.url}${URL}`;
+	const response = await fetch(url, {
+		method: 'post',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' }
+	});
+
+	return {
+		data: await response.json(),
+		resp_code: response.status
+	};
 };
 
 exports.wrappedPostSubmissionComplete = async (submissionId) => {

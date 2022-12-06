@@ -1,5 +1,5 @@
-const { formatDate } = require('../../../../../utils/date-utils');
-const { documentExaminationLibraryId } = require('../config');
+const { formatDate } = require('../../../../../../utils/date-utils');
+const { documentExaminationLibraryId } = require('../../config');
 
 const formatDatesForDocuments = (documents) => {
 	const formattedDocuments = [...documents];

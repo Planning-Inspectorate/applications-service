@@ -2,13 +2,15 @@ const { VIEW } = require('../../../lib/views');
 const { searchDocumentsV2 } = require('../../../services/document.service');
 const { pageData } = require('./utils/page-data');
 const { featureToggles } = require('./utils/feature-toggles');
-const { handleDocuments } = require('./utils/documents/handle-documents');
-const { handleFilters } = require('./utils/filters/filters');
+const { handleDocuments } = require('./utils/v2/documents/handle-documents');
+const { handleFilters } = require('./utils/v2/filters/filters');
 const { handleParams, getExaminationLibraryDocuments } = require('./utils/handle-params');
 const { developersApplication } = require('./utils/config');
 const { pagination } = require('./utils/pagination');
 const logger = require('../../../lib/logger');
 const { applicationData } = require('./utils/application-data');
+const { getDocuments } = require('./utils/documents/getDocuments');
+const { getFilters } = require('./utils/filters/getFilters');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
@@ -38,14 +40,21 @@ const getApplicationDocuments = async (req, res) => {
 		const pageObjectFilters = handleFilters(searchDocuments, stage, type, category);
 		const paginationStuff = pagination(searchDocuments);
 
+		const { documents, filters } = await getDocuments(case_ref);
+		const filteredView = getFilters(filters);
+
+		console.log('Filtered view', filteredView);
+
 		res.render(VIEW.PROJECTS.DOCUMENTS, {
-			...pageDocuments,
+			pageDocuments: { hide: pageDocuments },
+			documents,
 			...pageFeatureToggles,
 			...pageDataObj,
 			...pageObjectFilters,
 			...paginationStuff,
 			projectName,
-			searchTerm
+			searchTerm,
+			filters: filteredView
 		});
 	} catch (e) {
 		logger.error(e);
