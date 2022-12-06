@@ -1,4 +1,4 @@
-const { removeFilterTypes } = require('../../../../../../utils/remove-filter-types');
+const { removeFilterTypes } = require('../../../../../../../utils/remove-filter-types');
 const { getDocumentTypeFilters, handleEverythingElse } = require('./helpers');
 const modifyDocumentTypeFilters = (typeFilters, typeList) => {
 	let otherDocumentTypeFiltersCount = 0;

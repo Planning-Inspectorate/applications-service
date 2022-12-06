@@ -1,5 +1,5 @@
-const { documentProjectStages } = require('../../../../../utils/project-stages');
-const { developersApplication } = require('../config');
+const { documentProjectStages } = require('../../../../../../utils/project-stages');
+const { developersApplication } = require('../../config');
 const { modifyDocumentTypeFilters } = require('./document-type/modifier');
 const { modifyStageFilters } = require('./project-stage/modifier');
 const { modifyCategoryFilters } = require('./category/modifier');

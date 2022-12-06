@@ -5,154 +5,183 @@
 {% set activeProjectLink = 'about-the-application' %}
 
 {% block contentHeader %}
-  <h2 class="govuk-heading-l">
-    Documents
-  </h2>
+	<h2 class="govuk-heading-l">
+		Documents
+	</h2>
 
-  {% if documents.length != 0 or queryUrl != '' %}
-    <p>
-      <input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text" value="{{ searchTerm }}">
+	{% if documents.length != 0 or queryUrl != '' %}
+		<p>
+			<input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text"
+						 value="{{ searchTerm }}">
 
-      <button class="govuk-button" data-cy="search-button">
-        Search
-      </button>
-    </p>
-  {% endif %}
+			<button class="govuk-button" data-cy="search-button">
+				Search
+			</button>
+		</p>
+	{% endif %}
 {% endblock %}
 
 {% block columnTwo %}
-  <div class="govuk-grid-row">
-    {% if documents.length > 0 %}
-      <p class="hmcts-pagination__results">
-        Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> documents, newest first.
-      </p>
+	<div class="govuk-grid-row">
+		{% if documents.length > 0 %}
+			<p class="hmcts-pagination__results">
+				Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of
+				<b>{{ paginationData.totalItems }}</b> documents, newest first.
+			</p>
 
-      <ul class="ui-results-list">
-        {% for document in documents %}
-          <li class="ui-results-list__item">
-            <a class="ui-results-list__item-title" href="{{ document.path }}" target="_blank">
-              {{ document.description or document.personal_name  }} ({{ document.mime | formatMimeType }}, {{ document.size | formatBytes }})
-            </a>
+			<ul class="ui-results-list">
+				{% for document in documents %}
+					<li class="ui-results-list__item">
+						<a class="ui-results-list__item-title" href="{{ document.path }}" target="_blank">
+							{{ document.description or document.personal_name }} ({{ document.mime | formatMimeType }}
+							, {{ document.size | formatBytes }})
+						</a>
 
-            <p class="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-1">
-              {% if document.representative %}
-                From {{ document.representative }} on behalf of {{ document.personal_name }}
-              {% elseif document.description and document.personal_name %}
-                From {{ document.personal_name }}
-              {% endif %}
-            </p>
+						<p class="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-1">
+							{% if document.representative %}
+								From {{ document.representative }} on behalf of {{ document.personal_name }}
+							{% elseif document.description and document.personal_name %}
+								From {{ document.personal_name }}
+							{% endif %}
+						</p>
 
-            <div class="govuk-grid-row document-metadata" style="margin-top: 10px; color: #505a5f; font-size: 1rem;">
-              <div class="govuk-grid-column-one-third" data-cy="published-date">
-                {{ document.date_published }}
-              </div>
+						<div class="govuk-grid-row document-metadata" style="margin-top: 10px; color: #505a5f; font-size: 1rem;">
+							<div class="govuk-grid-column-one-third" data-cy="published-date">
+								{{ document.date_published }}
+							</div>
 
-              <div class="govuk-grid-column-one-third" data-cy="published-stage">
-                {{ projectStageNames[document.Stage] }}
-              </div>
+							<div class="govuk-grid-column-one-third" data-cy="published-stage">
+								{{ projectStageNames[document.Stage] }}
+							</div>
 
-              <div class="govuk-grid-column-one-third" data-cy="published-title">
-                {{ document.filter_1 }}
-              </div>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
+							<div class="govuk-grid-column-one-third" data-cy="published-title">
+								{{ document.filter_1 }}
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
 
-   {% elseif documents.length == 0 and queryUrl != '' %}
-    <p data-cy="no-docs-text">
-      No documents were found matching your search term and filters.
-    </p>
+		{% elseif documents.length == 0 and queryUrl != '' %}
+			<p data-cy="no-docs-text">
+				No documents were found matching your search term and filters.
+			</p>
 
-    <p>
-      Would you like to clear your search and filters to view all available documents instead?
-    </p>
+			<p>
+				Would you like to clear your search and filters to view all available documents instead?
+			</p>
 
-    <p>
-      <a href="{{ pageUrl }}" data-cy="clear-search">
-        Clear search and filters
-      </a>
-    </p>
+			<p>
+				<a href="{{ pageUrl }}" data-cy="clear-search">
+					Clear search and filters
+				</a>
+			</p>
 
-    {% elseif documents.length == 0 %}
-      <p data-cy="no-docs-text">
-        There are no project application documents available to display at the moment.
-      </p>
+		{% elseif documents.length == 0 %}
+			<p data-cy="no-docs-text">
+				There are no project application documents available to display at the moment.
+			</p>
 
-      <p>
-        <a href="{{ baseUrl }}">
-          Return to the project overview
-        </a>
-      </p>
-    {% endif %}
+			<p>
+				<a href="{{ baseUrl }}">
+					Return to the project overview
+				</a>
+			</p>
+		{% endif %}
 
-    {% if documents.length > 0 %}
-      {{ paginationBar(pageOptions, paginationData, paginationUrl) }}
-    {% endif %}
-  </div>
+		{% if documents.length > 0 %}
+			{{ paginationBar(pageOptions, paginationData, paginationUrl) }}
+		{% endif %}
+	</div>
 {% endblock %}
 
 {% block columnThree %}
-  {% if documents.length != 0 or queryUrl != '' %}
-    <div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
-      {% set projectStageFilter %}
-        {{ govukCheckboxes({
-          classes: "govuk-checkboxes--small",
-          idPrefix: "stage",
-          name: "stage",
-          items: modifiedStageFilters
-        }) }}
-      {% endset %}
+	{% if documents.length != 0 or queryUrl != '' %}
+		<div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
+			{% set projectStageFilter %}
+				{{ govukCheckboxes({
+					classes: "govuk-checkboxes--small",
+					idPrefix: "stage",
+					name: "stage",
+					items: modifiedStageFilters
+				}) }}
+			{% endset %}
 
 			{% set modifiedCategoryFilters %}
-        {{ govukCheckboxes({
-          classes: "govuk-checkboxes--small",
-          idPrefix: "categoryFilters",
-          name: "category",
-          items: modifiedCategoryFilters
-        }) }}
-      {% endset %}
+				{{ govukCheckboxes({
+					classes: "govuk-checkboxes--small",
+					idPrefix: "categoryFilters",
+					name: "category",
+					items: modifiedCategoryFilters
+				}) }}
+			{% endset %}
 
-      {% set modifiedTypeFilters %}
-        {{ govukCheckboxes({
-          classes: "govuk-checkboxes--small",
-          idPrefix: "top5Type",
-          name: "type",
-          items: modifiedTypeFilters
-        }) }}
-      {% endset %}
+			{% set modifiedTypeFilters %}
+				{{ govukCheckboxes({
+					classes: "govuk-checkboxes--small",
+					idPrefix: "top5Type",
+					name: "type",
+					items: modifiedTypeFilters
+				}) }}
+			{% endset %}
 
-      <div class="StyleCanvasBackground">
-        <h2 class="govuk-heading-m">Filter by</h2>
+			<div class="StyleCanvasBackground">
+				<h2 class="govuk-heading-m">Filter by</h2>
 
-        {{ govukAccordion({
-          id: "accordion-default",
-          classes: "filter-accordion",
-          headingLevel: 3,
-          items: [
-            {
-              heading: {
-                html: '<span class="filter-heading" data-cy="project-stage">Project stage</span>'
-              },
-              content: {
-                html: projectStageFilter
-              }
-            },
-            {
-              heading: {
-                html: '<span class="filter-heading" data-cy="document-type">Document type</span>'
-              },
-              content: {
-                html: modifiedCategoryFilters + modifiedTypeFilters
-              }
-            }
-          ]
-        }) }}
+				{% set filtersList %}
+					{{ govukCheckboxes({
+						classes: "govuk-checkboxes--small",
+						idPrefix: "stage",
+						name: "stage",
+						items: filters
+					}) }}
+				{% endset %}
 
-        <button class="govuk-button" data-cy="apply-filter-button">
-          Apply
-        </button>
-      </div>
-    </div>
-  {% endif %}
+				{{ govukAccordion({
+					id: "accordion-default",
+					classes: "filter-accordion",
+					headingLevel: 3,
+					items: [
+						{
+							heading: {
+							html: '<span class="filter-heading" data-cy="project-stage"> Stage 1</span>'
+						},
+							content: {
+							html: filtersList
+						}
+						}]
+				}) }}
+
+				<hr>
+
+				{{ govukAccordion({
+					id: "accordion-default",
+					classes: "filter-accordion",
+					headingLevel: 3,
+					items: [
+						{
+							heading: {
+							html: '<span class="filter-heading" data-cy="project-stage">Project stage</span>'
+						},
+							content: {
+							html: projectStageFilter
+						}
+						},
+						{
+							heading: {
+							html: '<span class="filter-heading" data-cy="document-type">Document type</span>'
+						},
+							content: {
+							html: modifiedCategoryFilters + modifiedTypeFilters
+						}
+						}
+					]
+				}) }}
+
+				<button class="govuk-button" data-cy="apply-filter-button">
+					Apply
+				</button>
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}
