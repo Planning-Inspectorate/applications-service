@@ -1,14 +1,14 @@
 const { VIEW } = require('../../../lib/views');
 const { searchDocumentsV2 } = require('../../../services/document.service');
-const { pageData } = require('./utils/pageData');
-const { featureToggles } = require('./utils/featureToggles');
+const { pageData } = require('./utils/page-data');
+const { featureToggles } = require('./utils/feature-toggles');
 const { handleDocuments } = require('./utils/documents/handle-documents');
 const { handleFilters } = require('./utils/filters/filters');
-const { handleParams, getExaminationLibraryDocuments } = require('./utils/handleParams');
+const { handleParams, getExaminationLibraryDocuments } = require('./utils/handle-params');
 const { developersApplication } = require('./utils/config');
 const { pagination } = require('./utils/pagination');
 const logger = require('../../../lib/logger');
-const { applicationData } = require('./utils/applicationData');
+const { applicationData } = require('./utils/application-data');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
