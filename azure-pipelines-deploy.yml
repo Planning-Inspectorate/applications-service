@@ -45,7 +45,7 @@ extends:
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-applications-service-applications-api-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  appResourceGroup: pins-rg-applications-service-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
           - name: Deploy Web
@@ -54,7 +54,7 @@ extends:
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-applications-service-applications-wfe-$(ENVIRONMENT)-$(REGION_SHORT)-001
-                  appResourceGroup: pins-rg-applications-service-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
     region: ${{ parameters.Region }}
