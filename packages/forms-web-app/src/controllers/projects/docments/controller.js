@@ -1,68 +1,57 @@
 const { VIEW } = require('../../../lib/views');
-const { getAppData } = require('../../../services/application.service');
 const { searchDocumentsV2 } = require('../../../services/document.service');
 const { pageData } = require('./utils/pageData');
 const { featureToggles } = require('./utils/featureToggles');
-const { replaceControllerParamType } = require('../../../utils/replace-controller-param-type');
 const { handleDocuments } = require('./utils/documents');
 const { handleFilters } = require('./utils/filters');
+const { handleParams, getExaminationLibraryDocuments } = require('./utils/handleParams');
+const { developersApplication } = require('./utils/config');
+const { pagination } = require('./utils/pagination');
+const logger = require('../../../lib/logger');
+const { applicationData } = require('./utils/applicationData');
 
-const documentExaminationLibraryId = 'examination library';
-exports.getApplicationDocuments = async (req, res) => {
-	const developersApplication = "Developer's Application";
-
-	const applicationResponse = await getAppData(req.params.case_ref);
-
-	if (applicationResponse.resp_code === 200) {
-		const projectName = applicationResponse.data.ProjectName;
-
-		const params = {
-			caseRef: req.params.case_ref,
-			classification: 'all',
-			page: '1',
-			...req.query
-		};
-
-		const [newParamsType, newCategoryParams] = [
-			replaceControllerParamType(params.type, 'other', 'everything_else'),
-			replaceControllerParamType(params.category, 'Application Document', developersApplication)
-		];
-
-		if (newParamsType) {
-			params.type = newParamsType ?? [];
-		}
-
-		if (newCategoryParams) {
-			params.category = newCategoryParams ?? [];
-		}
-
+const getApplicationDocuments = async (req, res) => {
+	try {
+		const { case_ref } = req.params;
 		const { searchTerm, stage, type, category } = req.query;
 
-		const categoryList = category === developersApplication ? 'Application Document' : category;
+		const queryObject = {
+			caseRef: case_ref,
+			classification: 'all',
+			page: '1',
+			type: handleParams(type, 'other', 'everything_else'),
+			category: handleParams(category, 'Application Document', developersApplication)
+		};
 
-		let examinationLibraryResponse = null;
+		const { projectName } = await applicationData(case_ref);
 
-		if (params.page === '1' && !searchTerm) {
-			examinationLibraryResponse = await searchDocumentsV2({
-				...params,
-				searchTerm: documentExaminationLibraryId
-			});
-		}
+		const buildQueryObject = { ...queryObject, searchTerm, stage, type, category };
 
-		const response = await searchDocumentsV2(params);
-
-		const pageDataObj = pageData(params, response, applicationResponse);
 		const pageFeatureToggles = featureToggles();
-		const pageDocuments = handleDocuments(response, examinationLibraryResponse);
-		const pageObjectFilters = handleFilters(response, stage, type, categoryList);
+		const examinationLibraryResponse = await getExaminationLibraryDocuments(
+			buildQueryObject,
+			searchTerm
+		);
+		const searchDocuments = await searchDocumentsV2(buildQueryObject);
+		const pageDataObj = pageData(buildQueryObject);
+		const pageDocuments = handleDocuments(searchDocuments, examinationLibraryResponse);
+		const pageObjectFilters = handleFilters(searchDocuments, stage, type, category);
+		const paginationStuff = pagination(searchDocuments);
 
 		res.render(VIEW.PROJECTS.DOCUMENTS, {
 			...pageDocuments,
 			...pageFeatureToggles,
 			...pageDataObj,
 			...pageObjectFilters,
+			...paginationStuff,
 			projectName,
-			searchTerm: params.searchTerm
+			searchTerm
 		});
+	} catch (e) {
+		logger.error(e);
 	}
+};
+
+module.exports = {
+	getApplicationDocuments
 };
