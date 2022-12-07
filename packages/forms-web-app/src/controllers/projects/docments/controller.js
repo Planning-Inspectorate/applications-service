@@ -47,34 +47,6 @@ const getApplicationDocuments = async (req, res) => {
 
 		const filtersViewModel = viewModel(filteredView, query);
 
-		console.log('View Model', filtersViewModel);
-
-		const buggerMe = [
-			...filteredView,
-			{
-				idPrefix: 'stage',
-				items: pageObjectFilters.modifiedStageFilters,
-				name: 'stage',
-				title: 'Project Stages'
-			},
-			{
-				idPrefix: 'category',
-				items: pageObjectFilters.modifiedCategoryFilters,
-				name: 'category',
-				title: 'Category'
-			},
-			{
-				idPrefix: 'type',
-				items: pageObjectFilters.modifiedTypeFilters,
-				name: 'type',
-				title: 'Type'
-			}
-		];
-
-		buggerMe.forEach((filter) => {
-			console.log('Item: ', filter);
-		});
-
 		res.render(VIEW.PROJECTS.DOCUMENTS, {
 			pageDocuments: { hide: pageDocuments },
 			documents,
@@ -84,8 +56,7 @@ const getApplicationDocuments = async (req, res) => {
 			...paginationStuff,
 			projectName,
 			searchTerm,
-			filters: filteredView,
-			buggerMe
+			filters: filtersViewModel
 		});
 	} catch (e) {
 		logger.error(e);
