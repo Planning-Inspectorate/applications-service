@@ -1,0 +1,9 @@
+{% macro layoutSlots(slots, spacing) %}
+  {% for slot in slots %}
+    {{ slot }}
+
+    {% if not loop.last %}
+      <hr class="govuk-section-break govuk-section-break--{{ spacing }} govuk-section-break--visible">
+    {% endif %}
+  {% endfor %}
+{% endmacro %}

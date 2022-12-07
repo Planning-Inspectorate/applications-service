@@ -7,84 +7,99 @@
 }
 
 .ui-checkbox-accordion {
-  display: block;
-
-  &__sections {
-    margin-bottom: 40px;
+  &__title {
+    @extend .govuk-heading-m;
   }
 
-  &__control {
-    display: block;
+  &__switch {
+    @extend
+      .ui-link-button,
+      .govuk-\!-margin-bottom-4;
+  }
+
+  &__sections {
+    @extend .govuk-\!-margin-bottom-7;
+  }
+
+  &__section-control {
+    @extend .govuk-\!-display-block;
+
     font-size: 0;
     line-height: 1;
     cursor: pointer;
 
     &:active {
-      .ui-checkbox-accordion__control-heading {
+      .ui-checkbox-accordion__section-control-title {
         @extend .govuk-link--focus;
       }
     }
   }
 
-  &__control-indicator,
-  &__control-heading {
-    display: inline-block;
+  &__section-control-indicator,
+  &__section-control-title {
+    @extend
+      .govuk-\!-display-inline,
+      .govuk-\!-margin-0;
+
     vertical-align: middle;
-    margin: 0;
   }
 
-  &__control-indicator {
-    margin-right: 10px;
+  &__section-control-indicator {
+    @extend .govuk-\!-margin-right-2;
   }
 
-  &__control-heading {
+  &__section-control-title {
     @extend .govuk-body;
   }
 
-  &__control-heading-state {
+  &__section-state-text {
     &::before {
       content: 'show';
     }
   }
 
-  &__content {
-    display: none;
+  &__section-content {
+    @extend .govuk-\!-display-none;
 
     .govuk-form-group {
-      margin-bottom: 0;
+      @extend .govuk-\!-margin-0;
     }
   }
 
   &__section-break {
-    margin: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    @extend
+      .govuk-\!-margin-0,
+      .govuk-\!-margin-top-2,
+      .govuk-\!-margin-bottom-2;
+
     border: 0;
-    border-bottom: 1px solid #b1b4b6;
+    border-bottom: 1px solid $govuk-border-colour;
   }
 
-  &__switch {
+  &__section-switch {
+    @extend .govuk-visually-hidden;
+
     &:focus {
-      & + .ui-checkbox-accordion__control {
-        .ui-checkbox-accordion__control-heading {
+      & + .ui-checkbox-accordion__section-control {
+        .ui-checkbox-accordion__section-control-title {
           @extend .govuk-link--focus;
         }
       }
     }
     &:checked {
-      & + .ui-checkbox-accordion__control {
-        .ui-checkbox-accordion__control-indicator {
+      & + .ui-checkbox-accordion__section-control {
+        .ui-checkbox-accordion__section-control-indicator {
           transform: rotate(180deg);
         }
 
-        .ui-checkbox-accordion__control-heading-state {
+        .ui-checkbox-accordion__section-state-text {
           &::before {
             content: 'hide';
           }
         }
 
-        & + .ui-checkbox-accordion__content {
-          display: block;
+        & + .ui-checkbox-accordion__section-content {
+          @extend .govuk-\!-display-block;
         }
       }
     }
