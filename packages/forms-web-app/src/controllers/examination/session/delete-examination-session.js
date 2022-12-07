@@ -4,10 +4,11 @@ const { getExaminationSession } = require('./examination-session');
 const examinationKey = 'examination';
 
 const deleteExaminationSession = (session) => {
-	const { submissionId, submissionComplete } = getExaminationSession(session);
+	const { submissionId, submissionComplete, email } = getExaminationSession(session);
 	const keep = {
 		submissionId,
-		submissionComplete
+		submissionComplete,
+		email
 	};
 
 	delete session[examinationKey];

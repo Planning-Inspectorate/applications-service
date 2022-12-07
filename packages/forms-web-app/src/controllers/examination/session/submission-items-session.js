@@ -1,5 +1,14 @@
 const { getExaminationSession } = require('./examination-session');
 
+const getSubmissionItems = (session) => {
+	const examinationSession = getExaminationSession(session);
+
+	if (!examinationSession?.submissionItems || !examinationSession.submissionItems?.length)
+		throw new Error('No submission items');
+
+	return examinationSession.submissionItems;
+};
+
 const addKeyValueToActiveSubmissionItem = (session, key, value) => {
 	if (key === 'undefined' || value === 'undefined') throw new Error('Key or value is undefined');
 
@@ -20,6 +29,11 @@ const deleteSubmissionItem = (session, itemIdToDelete) => {
 	examinationSession.submissionItems = examinationSession.submissionItems.filter(
 		(item) => item.itemId !== itemIdToDelete
 	);
+};
+
+const findSubmissionItemToDelete = (session, itemIdToDelete) => {
+	const examinationSession = getExaminationSession(session);
+	return examinationSession.submissionItems.find((item) => item.itemId === itemIdToDelete);
 };
 
 const getActiveSubmissionItemFiles = (session) => {
@@ -154,6 +168,7 @@ const getSubmissionFilesLength = (session) => {
 };
 
 module.exports = {
+	getSubmissionItems,
 	addKeyValueToActiveSubmissionItem,
 	deleteKeyFromActiveSubmissionItem,
 	getActiveSubmissionItemId,
@@ -173,5 +188,6 @@ module.exports = {
 	setEditModeSubmissionItemId,
 	getEditModeSubmissionItemId,
 	deleteEditModeSubmissionItemId,
-	updateActiveSubmissionItem
+	updateActiveSubmissionItem,
+	findSubmissionItemToDelete
 };

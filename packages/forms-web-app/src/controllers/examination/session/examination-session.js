@@ -48,6 +48,8 @@ const getExaminationSubmissionId = (session) => {
 	return examinationSession.submissionId;
 };
 
+const getExaminationEmailAddress = (session) => getExaminationSession(session).email;
+
 module.exports = {
 	getExaminationSession,
 	setExaminationUploadingState,
@@ -55,5 +57,6 @@ module.exports = {
 	setExaminationSubmissionId,
 	getExaminationSubmissionComplete,
 	getExaminationUploadingState,
-	getExaminationSubmissionId
+	getExaminationSubmissionId,
+	getExaminationEmailAddress
 };

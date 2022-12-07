@@ -6,22 +6,23 @@
 
 {% block content %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
 
-      <div class="govuk-panel govuk-panel--confirmation">
-        <h1 class="govuk-panel__title">Submission Complete</h1>
-        <div class="govuk-panel__body">
-          Your reference number<br>
-          <strong>{{ submissionId }}</strong>
-        </div>
-      </div>
+			<div class="govuk-panel govuk-panel--confirmation">
+				<h1 class="govuk-panel__title">Submission Complete</h1>
+				<div class="govuk-panel__body">
+					Your reference number<br>
+					<strong>{{ submissionId }}</strong>
+				</div>
+			</div>
 
-      <p class="govuk-body">We've sent a confirmation email to confirm we have received your submission.</p>
+			<p class="govuk-body">We've sent a confirmation email to {{ emailAddress }} to confirm we have received your
+				submission.</p>
 
 			<h3 class="govuk-heading-m">Contact us</h3>
-      <h4 class="govuk-heading-s">Telephone </h4>
-      <p>If you have an interested party number, have it with you when you call.</p>
+			<h4 class="govuk-heading-s">Telephone </h4>
+			<p>If you have an interested party number, have it with you when you call.</p>
 
 			<p class="govuk-body">Telephone: 0303 444 5000
 				<br>
@@ -41,13 +42,14 @@
 
 			<h4 class="govuk-heading-s">Alternative formats </h4>
 			<p class="govuk-body">
-				Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.
+				Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio
+				recording or braille.
 			</p>
 			<p class="govuk-body">
 				<a href="{{ serviceFeedbackUrl }}" class="govuk-link">What did you think of this service?</a> (takes 3 seconds)
 			</p>
 
-    </div>
-  </div>
+		</div>
+	</div>
 
 {% endblock %}

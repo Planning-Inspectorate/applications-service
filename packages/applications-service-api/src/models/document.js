@@ -2,6 +2,7 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
 	class Document extends Model {}
+
 	Document.init(
 		{
 			id: {
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			dataID: DataTypes.STRING,
 			case_reference: DataTypes.STRING,
-			Stage: DataTypes.INTEGER,
+			stage: { type: DataTypes.INTEGER, field: 'Stage' },
 			type: DataTypes.STRING,
 			filter_1: DataTypes.STRING,
 			filter_2: DataTypes.STRING,

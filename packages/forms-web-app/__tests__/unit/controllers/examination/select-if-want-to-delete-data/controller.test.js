@@ -4,21 +4,23 @@ const {
 	postSelectIfYouWantToDeleteData
 } = require('../../../../../src/controllers/examination/select-if-want-to-delete-data/controller');
 const {
-	setDeadlineItemToDelete,
-	getDeadlineItemToDelete
+	setDeadlineItemToDelete
 } = require('../../../../../src/controllers/examination/session/deadlineItems-session');
+
 const {
-	deleteSubmissionItem
-} = require('../../../../../src/controllers/examination/session/submission-items-session');
+	yesDeleteSubmissionItem
+} = require('../../../../../src/controllers/examination/select-if-want-to-delete-data/utils/yes-delete-submission-item');
 
 jest.mock('../../../../../src/controllers/examination/session/deadlineItems-session', () => ({
-	setDeadlineItemToDelete: jest.fn(),
-	getDeadlineItemToDelete: jest.fn()
+	setDeadlineItemToDelete: jest.fn()
 }));
 
-jest.mock('../../../../../src/controllers/examination/session/submission-items-session', () => ({
-	deleteSubmissionItem: jest.fn()
-}));
+jest.mock(
+	'../../../../../src/controllers/examination/select-if-want-to-delete-data/utils/yes-delete-submission-item',
+	() => ({
+		yesDeleteSubmissionItem: jest.fn()
+	})
+);
 
 describe("controllers/examination/select-if-want-to-delete-data/controller'", () => {
 	describe('#getSelectIfYouWantToDeleteData', () => {
@@ -154,16 +156,13 @@ describe("controllers/examination/select-if-want-to-delete-data/controller'", ()
 					session: mockSession,
 					body: { 'examination-select-if-want-to-delete-data': 'yes' }
 				};
-				const mockItemToDelete = 'item to delete';
 				beforeEach(() => {
-					getDeadlineItemToDelete.mockReturnValue(mockItemToDelete);
-					deleteSubmissionItem.mockReturnValue();
 					setDeadlineItemToDelete.mockReturnValue();
+					yesDeleteSubmissionItem.mockReturnValue();
 					postSelectIfYouWantToDeleteData(req, res);
 				});
 				it('should call the function', () => {
-					expect(getDeadlineItemToDelete).toHaveBeenCalledWith(mockSession);
-					expect(deleteSubmissionItem).toHaveBeenCalledWith(mockSession, mockItemToDelete);
+					expect(yesDeleteSubmissionItem).toHaveBeenCalledWith(mockSession);
 					expect(setDeadlineItemToDelete).toHaveBeenCalledWith(mockSession, -1);
 				});
 				it('should redirect', () => {
@@ -176,16 +175,13 @@ describe("controllers/examination/select-if-want-to-delete-data/controller'", ()
 					session: mockSession,
 					body: { 'examination-select-if-want-to-delete-data': 'no' }
 				};
-				const mockItemToDelete = 'item to delete';
 				beforeEach(() => {
-					getDeadlineItemToDelete.mockReturnValue(mockItemToDelete);
-					deleteSubmissionItem.mockReturnValue();
+					yesDeleteSubmissionItem.mockReturnValue();
 					setDeadlineItemToDelete.mockReturnValue();
 					postSelectIfYouWantToDeleteData(req, res);
 				});
 				it('should call the function', () => {
-					expect(getDeadlineItemToDelete).toHaveBeenCalledWith(mockSession);
-					expect(deleteSubmissionItem).not.toHaveBeenCalledWith(mockSession, mockItemToDelete);
+					expect(yesDeleteSubmissionItem).not.toHaveBeenCalled();
 					expect(setDeadlineItemToDelete).toHaveBeenCalledWith(mockSession, -1);
 				});
 				it('should redirect', () => {

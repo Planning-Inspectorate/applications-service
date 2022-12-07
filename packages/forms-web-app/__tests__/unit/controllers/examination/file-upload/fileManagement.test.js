@@ -4,7 +4,8 @@ const fs = require('fs');
 const {
 	fileUploadPath,
 	saveFileToDisk,
-	deleteFileOnDisk
+	deleteFileOnDisk,
+	iterateDeleteFileOnDisk
 } = require('../../../../../src/controllers/examination/file-upload/fileManagement');
 
 const pathToController = path.join(__dirname, '../../../../../../../uploads/');
@@ -70,6 +71,28 @@ describe('controllers/examination/file-upload/fileManagement', () => {
 			});
 			it('should save the file to disk and return a file object', async () => {
 				await expect(deleteFileOnDisk(fileName)).rejects.toThrow(error);
+			});
+		});
+	});
+	describe('#iterateDeleteFileOnDisk', () => {
+		describe('when deleting all files from the disk for a submission item', () => {
+			const files = [{ uniqueFileName: 'file-1' }, { uniqueFileName: 'file-2' }];
+
+			beforeEach(async () => {
+				fs.unlinkSync = jest.fn().mockResolvedValue();
+				await iterateDeleteFileOnDisk(files);
+			});
+			it('should remove the first file on disk', () => {
+				expect(fs.unlinkSync).toHaveBeenNthCalledWith(
+					1,
+					`${pathToController}${files[0].uniqueFileName}`
+				);
+			});
+			it('should remove the second file  on disk', () => {
+				expect(fs.unlinkSync).toHaveBeenNthCalledWith(
+					2,
+					`${pathToController}${files[1].uniqueFileName}`
+				);
 			});
 		});
 	});
