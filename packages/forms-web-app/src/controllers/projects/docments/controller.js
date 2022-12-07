@@ -7,6 +7,7 @@ const { applicationData } = require('./utils/application-data');
 const { getDocuments } = require('./utils/documents/getDocuments');
 const { getFilters } = require('./utils/filters/getFilters');
 const { viewModel } = require('./utils/filters/view-model');
+const { getPagination } = require('./utils/pagination/pagination');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
@@ -14,7 +15,6 @@ const getApplicationDocuments = async (req, res) => {
 		const { case_ref } = params;
 		const { searchTerm, stage, type, category } = query;
 
-		console.log('QUERY: ', query);
 		const queryObject = {
 			caseRef: case_ref,
 			classification: 'all',
@@ -28,15 +28,17 @@ const getApplicationDocuments = async (req, res) => {
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = pageData(buildQueryObject);
 
-		const { documents, filters } = await getDocuments(case_ref, query);
+		const { documents, filters, pagination } = await getDocuments(case_ref, query);
 		const filteredView = getFilters(filters);
 
 		const filtersViewModel = viewModel(filteredView, query);
+		const pagiy = getPagination(pagination);
 
 		res.render(VIEW.PROJECTS.DOCUMENTS, {
 			documents,
 			...pageFeatureToggles,
 			...pageDataObj,
+			...pagiy,
 			projectName,
 			searchTerm,
 			filters: filtersViewModel
