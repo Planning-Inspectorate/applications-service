@@ -2,7 +2,6 @@ const {
 	viewModel
 } = require('../../../../../../src/controllers/projects/docments/utils/filters/view-model');
 const { mockQueryFixture, mockFilterFixture, filterOne } = require('./fixtures');
-// const {mockFilter, mockQuery} = require('./fixtures');
 describe('When markings filters as checked for the view model based on the query values', () => {
 	describe('and there is one filter', () => {
 		describe('and there is a single filter item selected', () => {

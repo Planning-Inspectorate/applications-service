@@ -1,9 +1,13 @@
 const { searchDocumentsV3 } = require('../../../../../services/document.service');
 const { mapDocumentsToViewModel } = require('./documents-view-model');
+const { mapQueryToFilterBody } = require('./mapQueryToFilterBody');
 
-const getDocuments = async (case_ref) => {
+const getDocuments = async (case_ref, query) => {
+	const localQuery = JSON.parse(JSON.stringify(query));
+	const filterBody = mapQueryToFilterBody(localQuery);
 	const body = {
-		caseReference: case_ref
+		caseReference: case_ref,
+		filters: filterBody
 	};
 
 	const { data } = await searchDocumentsV3(body);
