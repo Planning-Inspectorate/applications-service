@@ -1,23 +1,26 @@
 const { checkBoxMapper } = require('../v2/filters/utils/ui-mappers');
 const mapFilterTypeToCheckBox = (types) =>
-	types.map((type) => checkBoxMapper(`${type.value} (${type.count})`, 0, false));
+	types.map((type) => checkBoxMapper(`${type.value} (${type.count})`, type.value, false));
+const formatName = (filter) => {
+	return `${filter.name} ${filter.value}`;
+};
 
-const viewModel = (filters) => {
-	let temp = [];
-	filters.forEach((filter) => {
-		temp.push(filter.type);
-	});
-	return temp[0];
+const formatNameWithCount = (filter) => {
+	return `${formatName(filter)}  (${filter.count})`;
 };
 const getFilters = (filters) => {
 	const convertFiltersToPageView = filters.map((filter) => ({
-		name: filter.name,
-		value: filter.value,
-		count: filter.count,
-		type: mapFilterTypeToCheckBox(filter.type)
+		name: formatName(filter),
+		idPrefix: formatName(filter),
+		title: formatNameWithCount(filter),
+		items: mapFilterTypeToCheckBox(filter.type)
 	}));
 
-	return viewModel(convertFiltersToPageView);
+	convertFiltersToPageView.forEach((filter) => {
+		console.log('Filter: ', filter);
+	});
+
+	return convertFiltersToPageView;
 };
 
 module.exports = {

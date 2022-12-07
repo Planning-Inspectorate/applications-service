@@ -11,11 +11,13 @@ const logger = require('../../../lib/logger');
 const { applicationData } = require('./utils/application-data');
 const { getDocuments } = require('./utils/documents/getDocuments');
 const { getFilters } = require('./utils/filters/getFilters');
+const { viewModel } = require('./utils/filters/view-model');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
-		const { case_ref } = req.params;
-		const { searchTerm, stage, type, category } = req.query;
+		const { query, params } = req;
+		const { case_ref } = params;
+		const { searchTerm, stage, type, category } = query;
 
 		const queryObject = {
 			caseRef: case_ref,
@@ -43,7 +45,35 @@ const getApplicationDocuments = async (req, res) => {
 		const { documents, filters } = await getDocuments(case_ref);
 		const filteredView = getFilters(filters);
 
-		console.log('Filtered view', filteredView);
+		const filtersViewModel = viewModel(filteredView, query);
+
+		console.log('View Model', filtersViewModel);
+
+		const buggerMe = [
+			...filteredView,
+			{
+				idPrefix: 'stage',
+				items: pageObjectFilters.modifiedStageFilters,
+				name: 'stage',
+				title: 'Project Stages'
+			},
+			{
+				idPrefix: 'category',
+				items: pageObjectFilters.modifiedCategoryFilters,
+				name: 'category',
+				title: 'Category'
+			},
+			{
+				idPrefix: 'type',
+				items: pageObjectFilters.modifiedTypeFilters,
+				name: 'type',
+				title: 'Type'
+			}
+		];
+
+		buggerMe.forEach((filter) => {
+			console.log('Item: ', filter);
+		});
 
 		res.render(VIEW.PROJECTS.DOCUMENTS, {
 			pageDocuments: { hide: pageDocuments },
@@ -54,7 +84,8 @@ const getApplicationDocuments = async (req, res) => {
 			...paginationStuff,
 			projectName,
 			searchTerm,
-			filters: filteredView
+			filters: filteredView,
+			buggerMe
 		});
 	} catch (e) {
 		logger.error(e);

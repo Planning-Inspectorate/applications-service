@@ -8,7 +8,7 @@ const getDocuments = async (case_ref) => {
 
 	const { data } = await searchDocumentsV3(body);
 
-	// console.log('Data:', data);
+	console.log('Data:', data);
 	return {
 		documents: mapDocumentsToViewModel(data.documents),
 		filters: data.filters

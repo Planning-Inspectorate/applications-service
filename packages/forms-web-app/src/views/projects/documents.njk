@@ -8,149 +8,128 @@
 {% set section = 'application-documents' %}
 
 {% block script %}
-  {% set initiateScriptsConfig = (initiateScriptsConfig.push({
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
 		src: "/public/scripts/checkboxAccordion.script.js"
 	}), initiateScriptsConfig) %}
 {% endblock %}
 
 {% block content %}
-  <form>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third">
-        {{ layoutSlots(
-          [
-            verticalTabs(
-              null,
-              "project-documents",
-              [
-                {
-                  hidden: false,
-                  id: "examination",
-                  name: "" + projectName + " project information",
-                  url: "/projects/" + caseRef + ""
-                },
-                {
-                  hidden: false,
-                  id: "project-timeline",
-                  name: "Project timeline",
-                  url: "/projects/project-timeline"
-                },
-                {
-                  hidden: false,
-                  id: "project-documents",
-                  name: "Documents",
-                  url: "/projects/" + caseRef + "/documents"
-                },
-                {
-                  hidden: false,
-                  id: "representations",
-                  name: "Relevant Representations (Registration comments)",
-                  url: "/projects/" + caseRef + "/representations"
-                },
-                {
-                  hidden: false,
-                  id: "project-examination-timetable",
-                  name: "Examination timetable",
-                  url: "/projects/" + caseRef + "/examination-timetable"
-                },
-                {
-                  hidden: false,
-                  id: "all-examination-documents",
-                  name: "All Examination documents",
-                  url: "/projects/all-examination-documents"
-                },
-                {
-                  hidden: false,
-                  id: "recommendations",
-                  name: "Recommendation and decision",
-                  url: "/projects/recommendations"
-                }
-              ]
-            ),
-            uiCheckboxAccordion(
-              "Filter",
-              [
-                {
-                  idPrefix: "stage",
-                  items: modifiedStageFilters,
-                  name: "stage",
-                  title: "Project Stages"
-                },
-                {
-                  idPrefix: "category",
-                  items: modifiedCategoryFilters,
-                  name: "category",
-                  title: "Category"
-                },
-                {
-                  idPrefix: "type",
-                  items: modifiedTypeFilters,
-                  name: "type",
-                  title: "Type"
-                }
-              ]
-            ),
-            verticalTabs(
-              "Related guides",
-              null,
-              [
-                {
-                  name: "Find out more about the decision making process for national infrastructure projects",
-                  url:"/decision-making-process-guide"
-                },
-                {
-                  name: "Having your say about a national infrastructure project",
-                  url:"/having-your-say-guide"
-                }
-              ]
-            )
-          ])
-        }}
-      </div>
-      <div class="govuk-grid-column-two-thirds">
+	<form>
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-one-third">
+				{{ layoutSlots(
+					[
+						verticalTabs(
+							null,
+							"project-documents",
+							[
+								{
+									hidden: false,
+									id: "examination",
+									name: "" + projectName + " project information",
+									url: "/projects/" + caseRef + ""
+								},
+								{
+									hidden: false,
+									id: "project-timeline",
+									name: "Project timeline",
+									url: "/projects/project-timeline"
+								},
+								{
+									hidden: false,
+									id: "project-documents",
+									name: "Documents",
+									url: "/projects/" + caseRef + "/documents"
+								},
+								{
+									hidden: false,
+									id: "representations",
+									name: "Relevant Representations (Registration comments)",
+									url: "/projects/" + caseRef + "/representations"
+								},
+								{
+									hidden: false,
+									id: "project-examination-timetable",
+									name: "Examination timetable",
+									url: "/projects/" + caseRef + "/examination-timetable"
+								},
+								{
+									hidden: false,
+									id: "all-examination-documents",
+									name: "All Examination documents",
+									url: "/projects/all-examination-documents"
+								},
+								{
+									hidden: false,
+									id: "recommendations",
+									name: "Recommendation and decision",
+									url: "/projects/recommendations"
+								}
+							]
+						),
+						uiCheckboxAccordion(
+							"Filter",
+							buggerMe
+						),
+						verticalTabs(
+							"Related guides",
+							null,
+							[
+								{
+									name: "Find out more about the decision making process for national infrastructure projects",
+									url:"/decision-making-process-guide"
+								},
+								{
+									name: "Having your say about a national infrastructure project",
+									url:"/having-your-say-guide"
+								}
+							]
+						)
+					]) }}
+			</div>
+			<div class="govuk-grid-column-two-thirds">
         <span class="govuk-caption-l">
           {{ projectName }}
         </span>
 
-        <h1 class="govuk-heading-xl">
-          Documents
-        </h1>
+				<h1 class="govuk-heading-xl">
+					Documents
+				</h1>
 
-        {% if documents.length != 0 or queryUrl != '' %}
-          <div>
-            <input class="govuk-input govuk-!-width-one-half" name="searchTerm" type="text" value="{{ searchTerm }}">
+				{% if documents.length != 0 or queryUrl != '' %}
+					<div>
+						<input class="govuk-input govuk-!-width-one-half" name="searchTerm" type="text" value="{{ searchTerm }}">
 
-            <button class="govuk-button">
-              Search
-            </button>
-          </div>
-        {% endif %}
+						<button class="govuk-button">
+							Search
+						</button>
+					</div>
+				{% endif %}
 
-        {% if documents.length > 0 %}
-          <p>
-            Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> documents, newest first.
-          </p>
+				{% if documents.length > 0 %}
+					<p>
+						Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of
+						<b>{{ paginationData.totalItems }}</b> documents, newest first.
+					</p>
 
-          {{ sectionResults(documents) }}
+					{{ sectionResults(documents) }}
 
-          {{
-            paginationBar(
-              pageOptions,
-              paginationData,
-              paginationUrl
-            )
-          }}
+					{{ paginationBar(
+						pageOptions,
+						paginationData,
+						paginationUrl
+					) }}
 
-        {% elseif documents.length == 0 and queryUrl != '' %}
-          <p>No documents were found matching your search term and filters.</p>
-          <p>Would you like to clear your search and filters to view all available documents instead?</p>
-          <p><a href="{{ pageUrl }}">Clear search and filters</a></p>
+				{% elseif documents.length == 0 and queryUrl != '' %}
+					<p>No documents were found matching your search term and filters.</p>
+					<p>Would you like to clear your search and filters to view all available documents instead?</p>
+					<p><a href="{{ pageUrl }}">Clear search and filters</a></p>
 
-        {% elseif documents.length == 0 %}
-          <p>There are no project application documents available to display at the moment.</p>
-          <p><a href="{{ baseUrl }}">Return to the project overview</a></p>
-        {% endif %}
-      </div>
-    <div>
-  </form>
+				{% elseif documents.length == 0 %}
+					<p>There are no project application documents available to display at the moment.</p>
+					<p><a href="{{ baseUrl }}">Return to the project overview</a></p>
+				{% endif %}
+			</div>
+			<div>
+	</form>
 {% endblock %}
