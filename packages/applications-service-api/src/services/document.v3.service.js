@@ -69,7 +69,8 @@ const mapFiltersToQuery = (filters) => {
 	if (filters) {
 		const filtersQuery = filters.map((filter) => {
 			let filterStatement = { [filter.name]: filter.value };
-			if (filter.type) filterStatement['filter_1'] = filter.type.map((type) => type.value);
+			if (filter.type && filter.type.length > 0)
+				filterStatement['filter_1'] = filter.type.map((type) => type.value);
 			return filterStatement;
 		});
 		if (filtersQuery.length > 0) return { [Op.or]: filtersQuery };
