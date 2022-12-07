@@ -840,6 +840,9 @@ components:
           items:
             $ref: '#/components/schemas/DocumentV3RequestFilter'
     DocumentV3RequestFilter:
+      required:
+        - name
+        - value
       properties:
         name:
           type: string
