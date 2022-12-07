@@ -1,0 +1,6 @@
+{
+	"default": {
+		"paths": ["cucumber/features/**/*.feature"],
+		"publishQuiet": true
+	}
+}
