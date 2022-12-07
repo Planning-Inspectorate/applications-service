@@ -49,6 +49,7 @@ const configAppScripts = {
 const configPageScripts = {
 	...config,
 	entry: {
+		checkboxAccordion: `${entryPath}/checkbox-accordion`,
 		index: `${entryPath}/index.js`,
 		cookiePreferences: `${entryPath}/cookie-preferences-page.js`
 	},

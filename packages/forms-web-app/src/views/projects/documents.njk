@@ -1,187 +1,156 @@
-{% set section = 'application-documents' %}
-{% extends "layouts/project-3-columns.njk" %}
+{% extends "layouts/default.njk" %}
+{% from "../components/layout/slots.njk" import layoutSlots %}
+{% from "../components/section/results.njk" import sectionResults %}
+{% from "../components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
+{% from "../components/ui/vertical-tabs.njk" import verticalTabs %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
-{% set activeProjectLink = 'about-the-application' %}
+{% set section = 'application-documents' %}
 
-{% block contentHeader %}
-	<h2 class="govuk-heading-l">
-		Documents
-	</h2>
-
-	{% if documents.length != 0 or queryUrl != '' %}
-		<p>
-			<input class="govuk-input govuk-!-width-one-half" id="search" name="searchTerm" type="text"
-						 value="{{ searchTerm }}">
-
-			<button class="govuk-button" data-cy="search-button">
-				Search
-			</button>
-		</p>
-	{% endif %}
+{% block script %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push({
+		src: "/public/scripts/checkboxAccordion.script.js"
+	}), initiateScriptsConfig) %}
 {% endblock %}
 
-{% block columnTwo %}
-	<div class="govuk-grid-row">
-		{% if documents.length > 0 %}
-			<p class="hmcts-pagination__results">
-				Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of
-				<b>{{ paginationData.totalItems }}</b> documents, newest first.
-			</p>
+{% block content %}
+  <form>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        {{ layoutSlots(
+          [
+            verticalTabs(
+              null,
+              "project-documents",
+              [
+                {
+                  hidden: false,
+                  id: "examination",
+                  name: "" + projectName + " project information",
+                  url: "/projects/" + caseRef + ""
+                },
+                {
+                  hidden: false,
+                  id: "project-timeline",
+                  name: "Project timeline",
+                  url: "/projects/project-timeline"
+                },
+                {
+                  hidden: false,
+                  id: "project-documents",
+                  name: "Documents",
+                  url: "/projects/" + caseRef + "/documents"
+                },
+                {
+                  hidden: false,
+                  id: "representations",
+                  name: "Relevant Representations (Registration comments)",
+                  url: "/projects/" + caseRef + "/representations"
+                },
+                {
+                  hidden: false,
+                  id: "project-examination-timetable",
+                  name: "Examination timetable",
+                  url: "/projects/" + caseRef + "/examination-timetable"
+                },
+                {
+                  hidden: false,
+                  id: "all-examination-documents",
+                  name: "All Examination documents",
+                  url: "/projects/all-examination-documents"
+                },
+                {
+                  hidden: false,
+                  id: "recommendations",
+                  name: "Recommendation and decision",
+                  url: "/projects/recommendations"
+                }
+              ]
+            ),
+            uiCheckboxAccordion(
+              "Filter",
+              [
+                {
+                  idPrefix: "stage",
+                  items: modifiedStageFilters,
+                  name: "stage",
+                  title: "Project Stages"
+                },
+                {
+                  idPrefix: "category",
+                  items: modifiedCategoryFilters,
+                  name: "category",
+                  title: "Category"
+                },
+                {
+                  idPrefix: "type",
+                  items: modifiedTypeFilters,
+                  name: "type",
+                  title: "Type"
+                }
+              ]
+            ),
+            verticalTabs(
+              "Related guides",
+              null,
+              [
+                {
+                  name: "Find out more about the decision making process for national infrastructure projects",
+                  url:"/decision-making-process-guide"
+                },
+                {
+                  name: "Having your say about a national infrastructure project",
+                  url:"/having-your-say-guide"
+                }
+              ]
+            )
+          ])
+        }}
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">
+          {{ projectName }}
+        </span>
 
-			<ul class="ui-results-list">
-				{% for document in documents %}
-					<li class="ui-results-list__item">
-						<a class="ui-results-list__item-title" href="{{ document.path }}" target="_blank">
-							{{ document.description or document.personal_name }} ({{ document.mime | formatMimeType }}
-							, {{ document.size | formatBytes }})
-						</a>
+        <h1 class="govuk-heading-xl">
+          Documents
+        </h1>
 
-						<p class="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-1">
-							{% if document.representative %}
-								From {{ document.representative }} on behalf of {{ document.personal_name }}
-							{% elseif document.description and document.personal_name %}
-								From {{ document.personal_name }}
-							{% endif %}
-						</p>
+        {% if documents.length != 0 or queryUrl != '' %}
+          <div>
+            <input class="govuk-input govuk-!-width-one-half" name="searchTerm" type="text" value="{{ searchTerm }}">
 
-						<div class="govuk-grid-row document-metadata" style="margin-top: 10px; color: #505a5f; font-size: 1rem;">
-							<div class="govuk-grid-column-one-third" data-cy="published-date">
-								{{ document.date_published }}
-							</div>
+            <button class="govuk-button">
+              Search
+            </button>
+          </div>
+        {% endif %}
 
-							<div class="govuk-grid-column-one-third" data-cy="published-stage">
-								{{ projectStageNames[document.Stage] }}
-							</div>
+        {% if documents.length > 0 %}
+          <p>
+            Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> documents, newest first.
+          </p>
 
-							<div class="govuk-grid-column-one-third" data-cy="published-title">
-								{{ document.filter_1 }}
-							</div>
-						</div>
-					</li>
-				{% endfor %}
-			</ul>
+          {{ sectionResults(documents) }}
 
-		{% elseif documents.length == 0 and queryUrl != '' %}
-			<p data-cy="no-docs-text">
-				No documents were found matching your search term and filters.
-			</p>
+          {{
+            paginationBar(
+              pageOptions,
+              paginationData,
+              paginationUrl
+            )
+          }}
 
-			<p>
-				Would you like to clear your search and filters to view all available documents instead?
-			</p>
+        {% elseif documents.length == 0 and queryUrl != '' %}
+          <p>No documents were found matching your search term and filters.</p>
+          <p>Would you like to clear your search and filters to view all available documents instead?</p>
+          <p><a href="{{ pageUrl }}">Clear search and filters</a></p>
 
-			<p>
-				<a href="{{ pageUrl }}" data-cy="clear-search">
-					Clear search and filters
-				</a>
-			</p>
-
-		{% elseif documents.length == 0 %}
-			<p data-cy="no-docs-text">
-				There are no project application documents available to display at the moment.
-			</p>
-
-			<p>
-				<a href="{{ baseUrl }}">
-					Return to the project overview
-				</a>
-			</p>
-		{% endif %}
-
-		{% if documents.length > 0 %}
-			{{ paginationBar(pageOptions, paginationData, paginationUrl) }}
-		{% endif %}
-	</div>
-{% endblock %}
-
-{% block columnThree %}
-	{% if documents.length != 0 or queryUrl != '' %}
-		<div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
-			{% set projectStageFilter %}
-				{{ govukCheckboxes({
-					classes: "govuk-checkboxes--small",
-					idPrefix: "stage",
-					name: "stage",
-					items: modifiedStageFilters
-				}) }}
-			{% endset %}
-
-			{% set modifiedCategoryFilters %}
-				{{ govukCheckboxes({
-					classes: "govuk-checkboxes--small",
-					idPrefix: "categoryFilters",
-					name: "category",
-					items: modifiedCategoryFilters
-				}) }}
-			{% endset %}
-
-			{% set modifiedTypeFilters %}
-				{{ govukCheckboxes({
-					classes: "govuk-checkboxes--small",
-					idPrefix: "top5Type",
-					name: "type",
-					items: modifiedTypeFilters
-				}) }}
-			{% endset %}
-
-			<div class="StyleCanvasBackground">
-				<h2 class="govuk-heading-m">Filter by</h2>
-
-				{% set filtersList %}
-					{{ govukCheckboxes({
-						classes: "govuk-checkboxes--small",
-						idPrefix: "stage",
-						name: "stage",
-						items: filters
-					}) }}
-				{% endset %}
-
-				{{ govukAccordion({
-					id: "accordion-default",
-					classes: "filter-accordion",
-					headingLevel: 3,
-					items: [
-						{
-							heading: {
-							html: '<span class="filter-heading" data-cy="project-stage"> Stage 1</span>'
-						},
-							content: {
-							html: filtersList
-						}
-						}]
-				}) }}
-
-				<hr>
-
-				{{ govukAccordion({
-					id: "accordion-default",
-					classes: "filter-accordion",
-					headingLevel: 3,
-					items: [
-						{
-							heading: {
-							html: '<span class="filter-heading" data-cy="project-stage">Project stage</span>'
-						},
-							content: {
-							html: projectStageFilter
-						}
-						},
-						{
-							heading: {
-							html: '<span class="filter-heading" data-cy="document-type">Document type</span>'
-						},
-							content: {
-							html: modifiedCategoryFilters + modifiedTypeFilters
-						}
-						}
-					]
-				}) }}
-
-				<button class="govuk-button" data-cy="apply-filter-button">
-					Apply
-				</button>
-			</div>
-		</div>
-	{% endif %}
+        {% elseif documents.length == 0 %}
+          <p>There are no project application documents available to display at the moment.</p>
+          <p><a href="{{ baseUrl }}">Return to the project overview</a></p>
+        {% endif %}
+      </div>
+    <div>
+  </form>
 {% endblock %}
