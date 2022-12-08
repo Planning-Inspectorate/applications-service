@@ -220,18 +220,21 @@ const RESPONSE_FILTERS = [
 		name: 'stage',
 		value: 0,
 		count: 1,
+		label: undefined,
 		type: [{ value: 'Application Form', count: 1 }]
 	},
 	{
 		name: 'stage',
 		value: 4,
 		count: 1,
+		label: 'Examination',
 		type: [{ value: 'Recording of hearing', count: 1 }]
 	},
 	{
 		name: 'stage',
 		value: 7,
 		count: 2,
+		label: 'Post-decision',
 		type: [
 			{ value: 'Plans', count: 1 },
 			{ value: 'Decided', count: 1 }
@@ -240,6 +243,7 @@ const RESPONSE_FILTERS = [
 	{
 		name: 'category',
 		value: "Developer's Application",
+		label: "Developer's Application",
 		count: 1,
 		type: [{ value: 'Application Form', count: 1 }]
 	}

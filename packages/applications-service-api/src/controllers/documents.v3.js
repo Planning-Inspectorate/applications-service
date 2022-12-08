@@ -1,6 +1,7 @@
 const { fetchDocuments, getAvailableFilters } = require('../services/document.v3.service');
 const config = require('../lib/config');
 const toCamelCase = require('lodash.camelcase');
+const { mapDocumentFilterLabel } = require('../utils/documentFilterLabelMapper');
 
 const getDocuments = async (req, res) => {
 	const requestFilters = {
@@ -46,6 +47,7 @@ const mapFilters = (input) => {
 			filterGroup[filterValue] = {
 				name: filterName,
 				value: filterValue,
+				label: mapDocumentFilterLabel(filterName, filterValue),
 				count: 0,
 				type: []
 			};
@@ -69,18 +71,8 @@ const mapFilters = (input) => {
 		{ stages: {}, categories: {} }
 	);
 
-	const formatFiltersForResponse = (filters, filterName) =>
-		Object.values(filters).map((filter) => {
-			return {
-				name: filterName,
-				value: filter.value,
-				count: filter.count,
-				type: filter.type
-			};
-		});
-
-	const stageFilters = formatFiltersForResponse(groupedFilters.stages, 'stage');
-	const categoryFilters = formatFiltersForResponse(groupedFilters.categories, 'category');
+	const stageFilters = Object.values(groupedFilters.stages);
+	const categoryFilters = Object.values(groupedFilters.categories);
 
 	return stageFilters.concat(categoryFilters);
 };
