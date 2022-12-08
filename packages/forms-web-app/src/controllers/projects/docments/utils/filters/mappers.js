@@ -9,6 +9,8 @@ const mapTitleToStringValue = (name, value) => {
 		response = names[value] || `${name} ${value}`;
 	}
 
+	if (name === 'category') response = 'Cat';
+
 	return response;
 };
 
