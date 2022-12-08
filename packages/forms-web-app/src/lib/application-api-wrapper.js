@@ -7,7 +7,13 @@ const { queryStringBuilder } = require('../utils/query-string-builder');
 const config = require('../config');
 const parentLogger = require('./logger');
 
-async function handler(callingMethod, path, method = 'GET', opts = {}, headers = {}) {
+async function handler(
+	callingMethod,
+	path,
+	method = 'GET',
+	opts = {},
+	headers = { 'Content-Type': 'application/json' }
+) {
 	const correlationId = uuid.v4();
 	const url = `${config.applications.url}${path}`;
 
@@ -153,9 +159,15 @@ exports.getTimetables = async (caseRef) =>
 exports.wrappedPostSubmission = async (caseRef, body) => {
 	const URL = `/api/v1/submissions/${caseRef}`;
 	const method = 'POST';
-	return handler('postSubmission', URL, method, {
-		body
-	});
+	return handler(
+		'postSubmission',
+		URL,
+		method,
+		{
+			body
+		},
+		{}
+	);
 };
 
 exports.wrappedPostSubmissionComplete = async (submissionId) => {
