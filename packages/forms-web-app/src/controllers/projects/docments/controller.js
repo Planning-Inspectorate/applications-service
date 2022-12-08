@@ -5,8 +5,8 @@ const logger = require('../../../lib/logger');
 const { applicationData } = require('./utils/application-data');
 const { getDocuments } = require('./utils/documents/getDocuments');
 const { getFilters } = require('./utils/filters/getFilters');
-const { viewModel } = require('./utils/filters/view-model');
 const { getPagination, getPaginationUrl } = require('./utils/pagination/pagination');
+const { searchDocuments } = require('./utils/documents/searchDocuments');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
@@ -20,22 +20,21 @@ const getApplicationDocuments = async (req, res) => {
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = pageData(case_ref);
 
-		const { documents, filters, pagination } = await getDocuments(case_ref, query);
-		const filteredView = getFilters(filters);
+		const { documents, filters, pagination } = await searchDocuments(case_ref, query);
+		const documentsView = getDocuments(documents);
+		const filteredView = getFilters(filters, query);
+		const paginationView = getPagination(pagination);
 
-		const filtersViewModel = viewModel(filteredView, query);
-		const paginationMap = getPagination(pagination);
-
-		res.render(VIEW.PROJECTS.DOCUMENTS, {
-			documents,
+		return res.render(VIEW.PROJECTS.DOCUMENTS, {
+			documents: documentsView,
 			...pageFeatureToggles,
 			...pageDataObj,
-			...paginationMap,
+			...paginationView,
 			projectName,
 			searchTerm,
 			paginationUrl,
 			queryUrl,
-			filters: filtersViewModel
+			filters: filteredView
 		});
 	} catch (e) {
 		logger.error(e);
