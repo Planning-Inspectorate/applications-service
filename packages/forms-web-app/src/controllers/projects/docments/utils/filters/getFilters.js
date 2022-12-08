@@ -1,23 +1,11 @@
-const { checkBoxMapper } = require('../v2/filters/utils/ui-mappers');
-const mapFilterTypeToCheckBox = (types) =>
-	types.map((type) => checkBoxMapper(`${type.value} (${type.count})`, type.value, false));
-const formatTitle = (filter) => {
-	return `${filter.name} ${filter.value}`;
-};
-
-const formatName = (filter) => {
-	return `${filter.name}-${filter.value}`;
-};
-
-const formatNameWithCount = (filter) => {
-	return `${formatTitle(filter)}  (${filter.count})`;
-};
+const { formatName, formatNameWithCount } = require('./formatters');
+const { mapFilterTypeToCheckBox, mapTitleToStringValue } = require('./mappers');
 
 const getFilters = (filters) => {
 	const convertFiltersToPageView = filters.map((filter) => ({
 		name: formatName(filter),
 		idPrefix: formatName(filter),
-		title: formatNameWithCount(filter),
+		title: formatNameWithCount(mapTitleToStringValue(filter.name, filter.value), filter.count),
 		items: mapFilterTypeToCheckBox(filter.type)
 	}));
 
