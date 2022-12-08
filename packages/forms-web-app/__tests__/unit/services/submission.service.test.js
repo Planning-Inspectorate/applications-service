@@ -20,7 +20,7 @@ describe('services/submission.service', () => {
 					});
 					response = await postSubmission(caseRef, body);
 				});
-				it('should call fecth ', () => {
+				it('should call fetch ', () => {
 					expect(fetch).toHaveBeenCalledWith(
 						'http://applications-service-api:3000/api/v1/submissions/1234',
 						{
@@ -65,6 +65,7 @@ describe('services/submission.service', () => {
 						'http://applications-service-api:3000/api/v1/submissions/1234/complete',
 						{
 							headers: {
+								'Content-Type': 'application/json',
 								'X-Correlation-ID': expect.any(String)
 							},
 							method: 'POST'
