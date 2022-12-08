@@ -1,10 +1,10 @@
 const { formatName, formatNameWithCount } = require('./formatters');
-const { mapTitleToStringValue, mapFilterTypeToCheckBox } = require('./mappers');
+const { mapFilterTypeToCheckBox } = require('./mappers');
 const convertFiltersToPageView = (filters) =>
 	filters.map((filter) => ({
 		name: formatName(filter),
 		idPrefix: formatName(filter),
-		title: formatNameWithCount(mapTitleToStringValue(filter.name, filter.value), filter.count),
+		title: formatNameWithCount(formatName(filter), filter.count),
 		items: mapFilterTypeToCheckBox(filter.type)
 	}));
 
