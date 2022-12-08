@@ -1,0 +1,52 @@
+const {
+	convertFiltersToPageView
+} = require('../../../../../../src/controllers/projects/docments/utils/filters/convertFiltersToPageView');
+describe('#convertFiltersToPageView', () => {
+	describe('When given a filter list from the API', () => {
+		describe('and there are filters to map', () => {
+			const filters = [
+				{
+					name: 'mock name',
+					value: 'mock value',
+					count: '1',
+					type: [{ value: 'mock type value', count: '1' }]
+				},
+				{
+					name: 'second mock name',
+					value: 'second mock value',
+					count: '2',
+					type: [{ value: 'second mock type value', count: '2' }]
+				}
+			];
+			const response = convertFiltersToPageView(filters);
+			it('should map the filter to correct structure', () => {
+				expect(response).toEqual([
+					{
+						idPrefix: 'mock name-mock value',
+						items: [
+							{
+								checked: false,
+								text: 'mock type value (1)',
+								value: 'mock type value'
+							}
+						],
+						name: 'mock name-mock value',
+						title: 'mock name-mock value (1)'
+					},
+					{
+						idPrefix: 'second mock name-second mock value',
+						items: [
+							{
+								checked: false,
+								text: 'second mock type value (2)',
+								value: 'second mock type value'
+							}
+						],
+						name: 'second mock name-second mock value',
+						title: 'second mock name-second mock value (2)'
+					}
+				]);
+			});
+		});
+	});
+});
