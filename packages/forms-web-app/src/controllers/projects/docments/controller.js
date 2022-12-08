@@ -2,7 +2,7 @@ const { VIEW } = require('../../../lib/views');
 const { pageData } = require('./utils/page-data');
 const { featureToggles } = require('./utils/feature-toggles');
 const logger = require('../../../lib/logger');
-const { applicationData } = require('./utils/application-data');
+const { getApplicationData } = require('./utils/get-application-data');
 const { getDocuments } = require('./utils/documents/getDocuments');
 const { getFilters } = require('./utils/filters/getFilters');
 const { getPagination, getPaginationUrl } = require('./utils/pagination/pagination');
@@ -15,7 +15,7 @@ const getApplicationDocuments = async (req, res) => {
 		const { searchTerm } = query;
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
-		const { projectName } = await applicationData(case_ref);
+		const { projectName } = await getApplicationData(case_ref);
 
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = pageData(case_ref);

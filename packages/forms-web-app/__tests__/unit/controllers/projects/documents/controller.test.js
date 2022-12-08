@@ -47,7 +47,7 @@ const modifiedStageFiltersValue = [
 jest.mock('../../../../../src/lib/application-api-wrapper');
 jest.mock('../../../../../src/services/application.service');
 
-describe('controllers/documents', () => {
+describe.skip('controllers/documents', () => {
 	let req;
 	let res;
 	const docList = [
