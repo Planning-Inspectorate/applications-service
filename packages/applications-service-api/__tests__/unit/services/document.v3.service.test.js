@@ -193,8 +193,15 @@ describe('documentV3 service', () => {
 
 			const result = await getAvailableFilters('EN010085');
 
-			const mockFindAllCall = mockFindAll.mock.calls[0][0];
-			expect(mockFindAllCall.where[Op.and][0].case_reference).toEqual('EN010085');
+			const mockInvocation = mockFindAll.mock.calls[0][0];
+
+			expect(mockInvocation.where).toEqual({
+				[Op.and]: [
+					{ case_reference: 'EN010085' },
+					{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } },
+					{ filter_1: { [Op.ne]: null } }
+				]
+			});
 
 			expect(result).toEqual(DB_FILTERS);
 		});

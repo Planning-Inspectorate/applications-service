@@ -33,7 +33,7 @@ const getAvailableFilters = async (caseReference) => {
 		where: {
 			[Op.and]: [
 				{ case_reference: caseReference },
-				{ stage: { [Op.ne]: null } },
+				{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } },
 				{ filter_1: { [Op.ne]: null } }
 			]
 		},
