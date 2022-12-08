@@ -1,46 +1,47 @@
 {% macro sectionResults(results) %}
-  <ul class="section-results">
-    {% for result in results %}
-      <li class="section-results__result">
-        <a
-          href="{{ result.path }}"
-          target="_blank"
-        >
-          <strong>
-            {{ result.description or result.personal_name  }} ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
-          </strong>
-        </a>
+	<ul class="section-results">
+		{% for result in results %}
+			<li class="section-results__result">
+				<a
+					href="{{ result.path }}"
+					target="_blank"
+				>
+					<strong>
+						{{ result.description or result.personal_name }} ({{ result.mime | formatMimeType }}
+						, {{ result.size | formatBytes }})
+					</strong>
+				</a>
 
-        {% if result.representative %}
-          <p class="section-results__result-copy">
-            From {{ result.representative }} on behalf of {{ result.personal_name }}
-          </p>
-        {% elseif result.description and result.personal_name %}
-          <p class="section-results__result-copy">
-            From {{ result.personal_name }}
-          </p>
-        {% endif %}
+				{% if result.representative %}
+					<p class="section-results__result-copy">
+						From {{ result.representative }} on behalf of {{ result.personal_name }}
+					</p>
+				{% elseif result.description and result.personal_name %}
+					<p class="section-results__result-copy">
+						From {{ result.personal_name }}
+					</p>
+				{% endif %}
 
-        <div class="section-results__result-meta-data govuk-grid-row">
-          <div class="govuk-grid-column-one-third">
+				<div class="section-results__result-meta-data govuk-grid-row">
+					<div class="govuk-grid-column-one-third">
             <span class="text-secondary text-secondary--small">
               {{ result.date_published }}
             </span>
-          </div>
+					</div>
 
-          <div class="govuk-grid-column-one-third">
+					<div class="govuk-grid-column-one-third">
             <span class="text-secondary text-secondary--small">
               {{ projectStageNames[result.Stage] }}
             </span>
-          </div>
+					</div>
 
-          <div class="govuk-grid-column-one-third">
+					<div class="govuk-grid-column-one-third">
             <span class="text-secondary text-secondary--small">
               {{ result.filter_1 }}
             </span>
-          </div>
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
+					</div>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
 {% endmacro %}
