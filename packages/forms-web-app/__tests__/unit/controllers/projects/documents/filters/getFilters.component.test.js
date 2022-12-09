@@ -9,6 +9,7 @@ describe('component', () => {
 					name: 'stage',
 					value: '1',
 					count: '1',
+					label: 'i am a label 1',
 					type: [
 						{ value: 'first', count: '1' },
 						{ value: 'should not be checked', count: '5' }
@@ -18,6 +19,7 @@ describe('component', () => {
 					name: 'stage',
 					value: '2',
 					count: '7',
+					label: 'i am a label 2',
 					type: [
 						{ value: 'second', count: '2' },
 						{ value: 'third', count: '1' }
@@ -43,7 +45,7 @@ describe('component', () => {
 							}
 						],
 						name: 'stage-1',
-						title: 'stage-1 (1)'
+						title: 'i am a label 1 (1)'
 					},
 					{
 						idPrefix: 'stage-2',
@@ -60,7 +62,7 @@ describe('component', () => {
 							}
 						],
 						name: 'stage-2',
-						title: 'stage-2 (7)'
+						title: 'i am a label 2 (7)'
 					}
 				]);
 			});
