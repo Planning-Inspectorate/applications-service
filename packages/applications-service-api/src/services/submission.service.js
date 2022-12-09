@@ -68,24 +68,35 @@ const updateSubmission = async (submission) => {
 	});
 };
 
-const getSubmission = (submissionId) => db.Submission.findOne({ where: { id: submissionId } });
-
 const completeSubmission = async (submissionId) => {
 	const submission = await getSubmission(submissionId);
 	if (!submission) throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
 
 	const project = await getApplication(submission.caseReference);
-	if (!project) throw ApiError.notFound(`Project with case reference ${submission.caseReference} not found`);
+	if (!project)
+		throw ApiError.notFound(`Project with case reference ${submission.caseReference} not found`);
 
-	await sendSubmissionNotification({
-		submissionId: submission.id,
-		email: submission.email,
-		project: {
-			name: project.ProjectName,
-			email: project.ProjectEmailAddress
+	await Promise.all([
+		updateSubmissionsBySubmissionId(submissionId, { validated: new Date() }),
+		sendSubmissionNotification({
+			submissionId: submission.id,
+			email: submission.email,
+			project: {
+				name: project.ProjectName,
+				email: project.ProjectEmailAddress
+			}
+		})
+	]);
+};
+
+const updateSubmissionsBySubmissionId = async (submissionId, updateData) =>
+	db.Submission.update(updateData, {
+		where: {
+			submissionId: submissionId
 		}
 	});
-};
+
+const getSubmission = (submissionId) => db.Submission.findOne({ where: { id: submissionId } });
 
 module.exports = {
 	createSubmission,

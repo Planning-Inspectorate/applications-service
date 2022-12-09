@@ -1,4 +1,8 @@
-const { createSubmission, updateSubmission, completeSubmission } = require('../../../src/services/submission.service');
+const {
+	createSubmission,
+	updateSubmission,
+	completeSubmission
+} = require('../../../src/services/submission.service');
 
 jest.mock('../../../src/lib/notify');
 const sendSubmissionNotificationMock =
@@ -157,7 +161,7 @@ describe('submission service', () => {
 	describe('completeSubmission', () => {
 		const submissionId = 1;
 
-		it('invokes notify service if submission with given id is found', async () => {
+		it('invokes notify service and mark as validated if submission with given id is found', async () => {
 			const submissionData = {
 				id: submissionId,
 				submissionId: submissionId,
@@ -172,8 +176,18 @@ describe('submission service', () => {
 			mockSubmissionFindOne.mockResolvedValueOnce(submissionData);
 			mockProjectFindOne.mockResolvedValueOnce(projectData);
 
+			const mockTime = new Date('2022-12-09 13:30:00');
+
+			jest.useFakeTimers().setSystemTime(mockTime);
+
 			await completeSubmission(submissionId);
 
+			expect(mockUpdate).toBeCalledWith(
+				{ validated: mockTime },
+				{
+					where: { submissionId: submissionId }
+				}
+			);
 			expect(sendSubmissionNotificationMock).toBeCalledWith({
 				submissionId: submissionId,
 				email: 'someone@example.com',
