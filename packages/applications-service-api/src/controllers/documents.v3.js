@@ -33,7 +33,12 @@ const getDocuments = async (req, res) => {
 const mapDocuments = (documents) => {
 	const attributesToLowerCase = (document) =>
 		Object.keys(document).reduce((memo, key) => {
-			memo[toCamelCase(key)] = document[key];
+			let value = document[key];
+
+			if (key === 'path') value = config.documentsHost.concat(value);
+
+			memo[toCamelCase(key)] = value;
+
 			return memo;
 		}, {});
 
