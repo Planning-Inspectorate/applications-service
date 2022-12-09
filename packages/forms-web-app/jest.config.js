@@ -10,6 +10,7 @@ module.exports = {
 		'<rootDir>/src/server.js',
 		'<rootDir>/src/assets',
 		'<rootDir>/src/public',
+		'<rootDir>/src/scripts',
 		'<rootDir>/src/views/pins-components'
 	],
 	coverageThreshold: {

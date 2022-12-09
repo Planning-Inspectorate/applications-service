@@ -1,0 +1,107 @@
+.govuk-link--focus {
+  outline: 3px solid rgba(0,0,0,0);
+  color: #0b0c0c;
+  background-color: #fd0;
+  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  text-decoration: none;
+}
+
+.ui-checkbox-accordion {
+  &__title {
+    @extend .govuk-heading-m;
+  }
+
+  &__switch {
+    @extend
+      .ui-link-button,
+      .govuk-\!-margin-bottom-4;
+  }
+
+  &__sections {
+    @extend .govuk-\!-margin-bottom-7;
+  }
+
+  &__section-control {
+    @extend .govuk-\!-display-block;
+
+    font-size: 0;
+    line-height: 1;
+    cursor: pointer;
+
+    &:active {
+      .ui-checkbox-accordion__section-control-title {
+        @extend .govuk-link--focus;
+      }
+    }
+  }
+
+  &__section-control-indicator,
+  &__section-control-title {
+    @extend
+      .govuk-\!-display-inline,
+      .govuk-\!-margin-0;
+
+    vertical-align: middle;
+  }
+
+  &__section-control-indicator {
+    @extend .govuk-\!-margin-right-2;
+  }
+
+  &__section-control-title {
+    @extend .govuk-body;
+  }
+
+  &__section-state-text {
+    &::before {
+      content: 'show';
+    }
+  }
+
+  &__checkboxes-section {
+    @extend .govuk-\!-display-none;
+
+    .govuk-form-group {
+      @extend .govuk-\!-margin-0;
+    }
+  }
+
+  &__section-break {
+    @extend
+      .govuk-\!-margin-0,
+      .govuk-\!-margin-top-2,
+      .govuk-\!-margin-bottom-2;
+
+    border: 0;
+    border-bottom: 1px solid $govuk-border-colour;
+  }
+
+  &__section-switch {
+    @extend .govuk-visually-hidden;
+
+    &:focus {
+      & + .ui-checkbox-accordion__section-control {
+        .ui-checkbox-accordion__section-control-title {
+          @extend .govuk-link--focus;
+        }
+      }
+    }
+    &:checked {
+      & + .ui-checkbox-accordion__section-control {
+        .ui-checkbox-accordion__section-control-indicator {
+          transform: rotate(180deg);
+        }
+
+        .ui-checkbox-accordion__section-state-text {
+          &::before {
+            content: 'hide';
+          }
+        }
+
+        & + .ui-checkbox-accordion__checkboxes-section {
+          @extend .govuk-\!-display-block;
+        }
+      }
+    }
+  }
+}
