@@ -15,7 +15,7 @@ describe('#getApplicationDocuments', () => {
 		describe('and there are no errors', () => {
 			const req = {
 				get: () => 'localhost',
-				query: {},
+				query: { page: 2 },
 				params: { case_ref: 'mock-case-ref' }
 			};
 			const res = { render: jest.fn(), status: jest.fn(() => res) };
