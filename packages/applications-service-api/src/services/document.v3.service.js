@@ -33,7 +33,7 @@ const getAvailableFilters = async (caseReference) => {
 		where: {
 			[Op.and]: [
 				{ case_reference: caseReference },
-				{ stage: { [Op.ne]: null } },
+				{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } },
 				{ filter_1: { [Op.ne]: null } }
 			]
 		},
@@ -69,7 +69,8 @@ const mapFiltersToQuery = (filters) => {
 	if (filters) {
 		const filtersQuery = filters.map((filter) => {
 			let filterStatement = { [filter.name]: filter.value };
-			if (filter.type) filterStatement['filter_1'] = filter.type.map((type) => type.value);
+			if (filter.type && filter.type.length > 0)
+				filterStatement['filter_1'] = filter.type.map((type) => type.value);
 			return filterStatement;
 		});
 		if (filtersQuery.length > 0) return { [Op.or]: filtersQuery };

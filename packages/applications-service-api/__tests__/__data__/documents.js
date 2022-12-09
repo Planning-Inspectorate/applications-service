@@ -3,7 +3,7 @@ const DB_DOCUMENTS = [
 		id: 1052,
 		dataID: 'EN010085-002134',
 		case_reference: 'EN010085',
-		Stage: 7,
+		stage: 7,
 		type: 'Correction Order',
 		filter_1: 'Plans',
 		filter_2: 'Correction Order',
@@ -29,7 +29,7 @@ const DB_DOCUMENTS = [
 		id: 1053,
 		dataID: 'EN010085-002133',
 		case_reference: 'EN010085',
-		Stage: 7,
+		stage: 7,
 		type: 'Correction Notice',
 		filter_1: 'Decided',
 		filter_2: 'Correction Notice',
@@ -55,7 +55,7 @@ const DB_DOCUMENTS = [
 		id: 365,
 		dataID: 'EN010085-000925',
 		case_reference: 'EN010085',
-		Stage: 4,
+		stage: 4,
 		type: 'Recording of hearing',
 		filter_1: 'Recording of hearing',
 		filter_2: null,
@@ -80,7 +80,7 @@ const DB_DOCUMENTS = [
 		id: 329,
 		dataID: 'EN010085-001882',
 		case_reference: 'EN010085',
-		Stage: 0,
+		stage: 1,
 		type: 'Application Form',
 		filter_1: null,
 		filter_2: null,
@@ -185,7 +185,7 @@ const RESPONSE_DOCUMENTS = [
 		id: 329,
 		dataId: 'EN010085-001882',
 		caseReference: 'EN010085',
-		stage: 0,
+		stage: 1,
 		type: 'Application Form',
 		filter1: null,
 		filter2: null,
@@ -209,7 +209,7 @@ const RESPONSE_DOCUMENTS = [
 ];
 
 const DB_FILTERS = [
-	{ stage: 0, filter_1: 'Application Form', category: "Developer's Application", count: 1 },
+	{ stage: 1, filter_1: 'Application Form', category: "Developer's Application", count: 1 },
 	{ stage: 4, filter_1: 'Recording of hearing', category: null, count: 1 },
 	{ stage: 7, filter_1: 'Plans', category: null, count: 1 },
 	{ stage: 7, filter_1: 'Decided', category: null, count: 1 }
@@ -218,20 +218,23 @@ const DB_FILTERS = [
 const RESPONSE_FILTERS = [
 	{
 		name: 'stage',
-		value: 0,
+		value: 1,
 		count: 1,
+		label: 'Pre-application',
 		type: [{ value: 'Application Form', count: 1 }]
 	},
 	{
 		name: 'stage',
 		value: 4,
 		count: 1,
+		label: 'Examination',
 		type: [{ value: 'Recording of hearing', count: 1 }]
 	},
 	{
 		name: 'stage',
 		value: 7,
 		count: 2,
+		label: 'Post-decision',
 		type: [
 			{ value: 'Plans', count: 1 },
 			{ value: 'Decided', count: 1 }
@@ -240,6 +243,7 @@ const RESPONSE_FILTERS = [
 	{
 		name: 'category',
 		value: "Developer's Application",
+		label: "Developer's Application",
 		count: 1,
 		type: [{ value: 'Application Form', count: 1 }]
 	}
