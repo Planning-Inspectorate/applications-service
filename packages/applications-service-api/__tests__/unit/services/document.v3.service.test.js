@@ -146,6 +146,33 @@ describe('documentV3 service', () => {
 			});
 		});
 
+		it('calls query api without filter_1 if filter does not include type', async () => {
+			await fetchDocuments({
+				caseReference: 'EN010085',
+				page: 1,
+				filters: [
+					{
+						name: 'stage',
+						value: 1
+					}
+				]
+			});
+
+			expect(mockFindAndCountAll).toBeCalledWith({
+				limit: 20,
+				offset: 0,
+				order: [['date_published', 'DESC']],
+				where: {
+					[Op.and]: [
+						{ case_reference: 'EN010085' },
+						{
+							[Op.or]: [{ stage: 1 }]
+						}
+					]
+				}
+			});
+		});
+
 		it('sets correct offset when page number >1 is requested', async () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
@@ -166,8 +193,15 @@ describe('documentV3 service', () => {
 
 			const result = await getAvailableFilters('EN010085');
 
-			const mockFindAllCall = mockFindAll.mock.calls[0][0];
-			expect(mockFindAllCall.where[Op.and][0].case_reference).toEqual('EN010085');
+			const mockInvocation = mockFindAll.mock.calls[0][0];
+
+			expect(mockInvocation.where).toEqual({
+				[Op.and]: [
+					{ case_reference: 'EN010085' },
+					{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } },
+					{ filter_1: { [Op.ne]: null } }
+				]
+			});
 
 			expect(result).toEqual(DB_FILTERS);
 		});

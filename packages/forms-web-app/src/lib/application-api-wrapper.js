@@ -7,7 +7,13 @@ const { queryStringBuilder } = require('../utils/query-string-builder');
 const config = require('../config');
 const parentLogger = require('./logger');
 
-async function handler(callingMethod, path, method = 'GET', opts = {}, headers = {}) {
+async function handler(
+	callingMethod,
+	path,
+	method = 'GET',
+	opts = {},
+	headers = { 'Content-Type': 'application/json' }
+) {
 	const correlationId = uuid.v4();
 	const url = `${config.applications.url}${path}`;
 
@@ -17,7 +23,7 @@ async function handler(callingMethod, path, method = 'GET', opts = {}, headers =
 	});
 
 	try {
-		logger.debug({ url, method, opts, headers }, 'New call');
+		logger.info({ url, method, opts, headers }, 'New call');
 		return await utils.promiseTimeout(
 			config.applications.timeout,
 			Promise.resolve().then(async () => {
@@ -153,9 +159,47 @@ exports.getTimetables = async (caseRef) =>
 exports.wrappedPostSubmission = async (caseRef, body) => {
 	const URL = `/api/v1/submissions/${caseRef}`;
 	const method = 'POST';
-	return handler('postSubmission', URL, method, {
-		body
+	return handler(
+		'postSubmission',
+		URL,
+		method,
+		{
+			body
+		},
+		{}
+	);
+};
+
+exports.wrappedSearchDocumentsV3 = async (body) => {
+	const URL = `/api/v3/documents`;
+
+	const url = `${config.applications.url}${URL}`;
+	const response = await fetch(url, {
+		method: 'post',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' }
 	});
+
+	return {
+		data: await response.json(),
+		resp_code: response.status
+	};
+};
+
+exports.wrappedSearchDocumentsV3 = async (body) => {
+	const URL = `/api/v3/documents`;
+
+	const url = `${config.applications.url}${URL}`;
+	const response = await fetch(url, {
+		method: 'post',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' }
+	});
+
+	return {
+		data: await response.json(),
+		resp_code: response.status
+	};
 };
 
 exports.wrappedPostSubmissionComplete = async (submissionId) => {
