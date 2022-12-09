@@ -186,22 +186,6 @@ exports.wrappedSearchDocumentsV3 = async (body) => {
 	};
 };
 
-exports.wrappedSearchDocumentsV3 = async (body) => {
-	const URL = `/api/v3/documents`;
-
-	const url = `${config.applications.url}${URL}`;
-	const response = await fetch(url, {
-		method: 'post',
-		body: JSON.stringify(body),
-		headers: { 'Content-Type': 'application/json' }
-	});
-
-	return {
-		data: await response.json(),
-		resp_code: response.status
-	};
-};
-
 exports.wrappedPostSubmissionComplete = async (submissionId) => {
 	const URL = `/api/v1/submissions/${submissionId}/complete`;
 	const method = 'POST';
