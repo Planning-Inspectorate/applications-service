@@ -10,6 +10,10 @@ describe('mapDocumentFilterLabel', () => {
 		['stage', 6, 'Decision'],
 		['stage', 7, 'Post-decision'],
 		['category', "Developer's Application", "Developer's Application"],
+		['category', "Developer's application", "Developer's Application"],
+		['category', 'developers_application', "Developer's Application"],
+		['category', 'other', 'other'],
+		['category', 'None', 'None'],
 		['non-existent-filter', 'someValue', 'someValue'],
 		['stage', 99999, undefined]
 	])(
