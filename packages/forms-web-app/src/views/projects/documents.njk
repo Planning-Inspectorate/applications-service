@@ -2,7 +2,7 @@
 {% from "../components/layout/slots.njk" import layoutSlots %}
 {% from "../components/section/results.njk" import sectionResults %}
 {% from "../components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
-{% from "../components/ui/vertical-tabs.njk" import verticalTabs %}
+{% from "../components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
 {% set section = 'application-documents' %}
@@ -19,24 +19,24 @@
 			<div class="govuk-grid-column-one-third">
 				{{ layoutSlots(
 					[
-						verticalTabs(
+						uiVerticalTabs(
 							null,
 							"project-documents",
 							[
 								{
-									hidden: false,
+									hidden: featureHideLink.hideProjectInformationLink,
 									id: "examination",
 									name: "" + projectName + " project information",
 									url: "/projects/" + caseRef + ""
 								},
 								{
-									hidden: false,
+									hidden: featureFlag.hideProjectTimelineLink != true,
 									id: "project-timeline",
 									name: "Project timeline",
 									url: "/projects/project-timeline"
 								},
 								{
-									hidden: false,
+									hidden: featureFlag.allowDocumentLibrary != true,
 									id: "project-documents",
 									name: "Documents",
 									url: "/projects/" + caseRef + "/documents"
@@ -48,19 +48,19 @@
 									url: "/projects/" + caseRef + "/representations"
 								},
 								{
-									hidden: false,
+									hidden: featureHideLink.hideExaminationTimetableLink,
 									id: "project-examination-timetable",
 									name: "Examination timetable",
 									url: "/projects/" + caseRef + "/examination-timetable"
 								},
 								{
-									hidden: false,
+									hidden: featureHideLink.hideAllExaminationDocumentsLink,
 									id: "all-examination-documents",
 									name: "All Examination documents",
 									url: "/projects/all-examination-documents"
 								},
 								{
-									hidden: false,
+									hidden: featureHideLink.hideRecommendationAndDecisionLink,
 									id: "recommendations",
 									name: "Recommendation and decision",
 									url: "/projects/recommendations"
@@ -71,11 +71,12 @@
 							"Filter",
 							filters
 						),
-						verticalTabs(
+						uiVerticalTabs(
 							"Related guides",
 							null,
 							[
 								{
+									hidden: featureHideLink.hideDecisionMakingProcessGuideLink,
 									name: "Find out more about the decision making process for national infrastructure projects",
 									url:"/decision-making-process-guide"
 								},
@@ -108,9 +109,17 @@
 
 				{% if documents.length > 0 %}
 					<p>
-						Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of
-						<b>{{ paginationData.totalItems }}</b> documents, newest first.
+						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
+						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
 					</p>
+
+					{% if queryUrl != '' and queryUrl != '?searchTerm=' %}
+						<p>
+							<a href="{{ baseUrl }}/{{ pageUrl }}">
+								Clear all filters
+							</a>
+						</p>
+					{% endif %}
 
 					{{ sectionResults(documents) }}
 
@@ -123,7 +132,7 @@
 				{% elseif documents.length == 0 and queryUrl != '' %}
 					<p>No documents were found matching your search term and filters.</p>
 					<p>Would you like to clear your search and filters to view all available documents instead?</p>
-					<p><a href="{{ pageUrl }}">Clear search and filters</a></p>
+					<p><a href="{{ baseUrl }}/{{ pageUrl }}">Clear search and filters</a></p>
 
 				{% elseif documents.length == 0 %}
 					<p>There are no project application documents available to display at the moment.</p>

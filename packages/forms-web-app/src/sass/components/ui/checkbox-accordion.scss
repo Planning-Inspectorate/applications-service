@@ -1,4 +1,4 @@
-.govuk-link--focus {
+.-state--focus {
   outline: 3px solid rgba(0,0,0,0);
   color: #0b0c0c;
   background-color: #fd0;
@@ -7,13 +7,19 @@
 }
 
 .ui-checkbox-accordion {
+  &__section {
+    @extend
+      .govuk-\!-padding-right-3,
+      .govuk-\!-padding-left-3;
+  }
+
   &__title {
     @extend .govuk-heading-m;
   }
 
   &__switch {
     @extend
-      .ui-link-button,
+      .govuk-link,
       .govuk-\!-margin-bottom-4;
   }
 
@@ -30,7 +36,7 @@
 
     &:active {
       .ui-checkbox-accordion__section-control-title {
-        @extend .govuk-link--focus;
+        @extend .-state--focus;
       }
     }
   }
@@ -50,6 +56,8 @@
 
   &__section-control-title {
     @extend .govuk-body;
+
+    color: $govuk-link-colour;
   }
 
   &__section-state-text {
@@ -66,6 +74,16 @@
     }
   }
 
+  &__checkboxes-section-switch {
+    @extend
+      .govuk-link,
+      .govuk-body-s,
+      .govuk-\!-margin-0,
+      .govuk-\!-margin-top-3;
+
+    color: $govuk-link-colour;
+  }
+
   &__section-break {
     @extend
       .govuk-\!-margin-0,
@@ -76,19 +94,25 @@
     border-bottom: 1px solid $govuk-border-colour;
   }
 
+  &__submit {
+    @extend .govuk-\!-margin-0;
+  }
+
   &__section-switch {
     @extend .govuk-visually-hidden;
 
     &:focus {
       & + .ui-checkbox-accordion__section-control {
         .ui-checkbox-accordion__section-control-title {
-          @extend .govuk-link--focus;
+          @extend .-state--focus;
         }
       }
     }
     &:checked {
       & + .ui-checkbox-accordion__section-control {
         .ui-checkbox-accordion__section-control-indicator {
+          -webkit-transform: rotate(180deg);
+          -ms-transform: rotate(180deg);
           transform: rotate(180deg);
         }
 

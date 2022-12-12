@@ -7,7 +7,7 @@
       {{ title }}
     </h3>
 
-    <div class="ui-checkbox-accordion__sections govuk-!-margin-bottom-7">
+    <div class="ui-checkbox-accordion__sections">
       {% for section in sections %}
         <div class="ui-checkbox-accordion__section">
           <input
@@ -34,7 +34,7 @@
 
             <h4 class="ui-checkbox-accordion__section-control-title">
               <span class="govuk-visually-hidden">Select to</span>
-              <span class="govuk-visually-hidden ui-checkbox-accordion__section-state-text"></span>
+              <span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
               <span class="govuk-visually-hidden">the</span>
               {{ section.title }}
               <span class="govuk-visually-hidden">checkbox section.</span>
@@ -65,7 +65,7 @@
     </div>
 
     {{ govukButton({
-      classes: "govuk-!-margin-0",
+      classes: "ui-checkbox-accordion__submit",
       text: "Apply filters",
       type: "Submit"
     }) }}

@@ -3,7 +3,9 @@
     {% for result in results %}
       <li class="section-results__result">
         <a
+          class="section-results__result-link"
           href="{{ result.path }}"
+          rel="noreferrer noopener"
           target="_blank"
         >
           <strong>
@@ -21,21 +23,21 @@
           </p>
         {% endif %}
 
-        <div class="section-results__result-meta-data govuk-grid-row">
-          <div class="govuk-grid-column-one-third">
-            <span class="text-secondary text-secondary--small">
+        <div class="section-results__result-meta-data">
+          <div class="section-results__result-meta-data-item">
+            <span class="section-results__result-meta-data-item-text">
               {{ result.date_published }}
             </span>
           </div>
 
-          <div class="govuk-grid-column-one-third">
-            <span class="text-secondary text-secondary--small">
+          <div class="section-results__result-meta-data-item">
+            <span class="section-results__result-meta-data-item-text">
               {{ projectStageNames[result.Stage] }}
             </span>
           </div>
 
-          <div class="govuk-grid-column-one-third">
-            <span class="text-secondary text-secondary--small">
+          <div class="section-results__result-meta-data-item">
+            <span class="section-results__result-meta-data-item-text">
               {{ result.filter_1 }}
             </span>
           </div>
