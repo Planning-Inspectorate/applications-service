@@ -40,7 +40,7 @@ const getRepresentationsForApplication = async (applicationId, page, searchTerm,
 	const representations = await db.Representation.findAndCountAll({
 		where,
 		offset,
-		order: [['DateRrepReceived', 'DESC']],
+		order: [['DateRrepReceived', 'ASC'], ['PersonalName']],
 		limit
 	});
 
