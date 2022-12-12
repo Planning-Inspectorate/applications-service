@@ -1,0 +1,35 @@
+.ui-vertical-tabs {
+  &__title {
+    @extend .govuk-heading-s;
+  }
+
+  &__list {
+    @extend
+      .govuk-list,
+      .govuk-\!-margin-0;
+  }
+
+  &__list-item {
+    @extend .govuk-\!-margin-bottom-4;
+
+    &:last-child {
+      @extend .govuk-\!-margin-0;
+    }
+  }
+
+  &__list-item-text {
+    @extend .govuk-body-s;
+
+    &--active {
+      display: block;
+      background-color: govuk-colour("light-grey");
+      padding: 0.7em;
+      margin-left: calc(-0.7em - 6px);
+      border-left: 6px solid govuk-colour("turquoise");
+    }
+
+    &--link {
+      @extend .govuk-link;
+    }
+  }
+}

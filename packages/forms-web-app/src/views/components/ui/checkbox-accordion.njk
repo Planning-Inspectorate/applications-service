@@ -1,0 +1,73 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% macro uiCheckboxAccordion(title, sections) %}
+  <div class="ui-checkbox-accordion">
+    <h3 class="ui-checkbox-accordion__title">
+      {{ title }}
+    </h3>
+
+    <div class="ui-checkbox-accordion__sections">
+      {% for section in sections %}
+        <div class="ui-checkbox-accordion__section">
+          <input
+            aria-controls="ui-checkbox-accordion__checkboxes-section--{{ section.name }}"
+            class="ui-checkbox-accordion__section-switch"
+            id="ui-checkbox-accordion__section-switch--{{ section.name }}"
+            type="checkbox"
+          >
+
+          <label
+            class="ui-checkbox-accordion__section-control"
+            for="ui-checkbox-accordion__section-switch--{{ section.name }}"
+          >
+            <svg
+              class="ui-checkbox-accordion__section-control-indicator"
+              height="10"
+              width="18"
+            >
+              <path
+                d="M17.623 7.866 9.91.366a1.31 1.31 0 0 0-1.818 0l-7.714 7.5a1.224 1.224 0 0 0 0 1.767 1.312 1.312 0 0 0 1.818 0L9 3.017l6.806 6.616a1.31 1.31 0 0 0 1.818 0 1.225 1.225 0 0 0 0-1.767Z"
+                fill="#000"
+              />
+            </svg>
+
+            <h4 class="ui-checkbox-accordion__section-control-title">
+              <span class="govuk-visually-hidden">Select to</span>
+              <span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
+              <span class="govuk-visually-hidden">the</span>
+              {{ section.title }}
+              <span class="govuk-visually-hidden">checkbox section.</span>
+            </h4>
+          </label>
+
+          <div
+            id="ui-checkbox-accordion__checkboxes-section--{{ section.name }}"
+            class="ui-checkbox-accordion__checkboxes-section"
+          >
+            {{ govukCheckboxes({
+              name: section.name,
+              classes: "govuk-checkboxes--small",
+              fieldset: {
+                legend: {
+                  html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
+                }
+              },
+              items: section.items
+            }) }}
+          </div>
+        </div>
+
+        {% if not loop.last %}
+          <hr class="ui-checkbox-accordion__section-break">
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {{ govukButton({
+      classes: "ui-checkbox-accordion__submit",
+      text: "Apply filters",
+      type: "Submit"
+    }) }}
+  </div>
+{% endmacro %}
