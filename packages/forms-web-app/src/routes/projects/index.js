@@ -51,7 +51,7 @@ if (hideProjectTimelineLink) {
 
 if (allowDocumentLibrary) {
 	router.get(
-		'/:case_ref/application-documents',
+		`${subDirectory}${pages.documents.route}`,
 		aboutTheApplicationController.getApplicationDocuments
 	);
 }

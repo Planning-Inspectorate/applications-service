@@ -1,0 +1,31 @@
+{% macro uiVerticalTabs(title, activeId, tabs) %}
+  <nav class="ui-vertical-tabs">
+    {% if title %}
+      <h5 class="ui-vertical-tabs__title">
+        {{ title }}
+      </h5>
+    {% endif %}
+    <ul class="ui-vertical-tabs__list">
+      {% for tab in tabs %}
+        {% if not tab.hidden %}
+          <li class="ui-vertical-tabs__list-item">
+            {% if tab.id === activeId %}
+              <span class="ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--active">
+                <strong>
+                  {{ tab.name }}
+                </strong>
+              </span>
+            {% else %}
+              <a
+                class="ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link"
+                href="{{ tab.url }}"
+              >
+                {{ tab.name }}
+              </a>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endmacro %}

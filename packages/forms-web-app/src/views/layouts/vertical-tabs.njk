@@ -19,9 +19,9 @@
     </li>
 		{% endif %}
 		{% if featureFlag.allowDocumentLibrary %}
-    <li class="style-vertical-tabs__tab govuk-body-s {% if 'about-the-application' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
-      {% if 'about-the-application' != activeProjectLink %}
-        <a href="/projects/{{ caseRef }}/application-documents">Documents</a>
+    <li class="style-vertical-tabs__tab govuk-body-s {% if 'project-documents' == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
+      {% if 'project-documents' != activeProjectLink %}
+        <a href="/projects/{{ caseRef }}/documents">Documents</a>
       {% else %} Documents {% endif %}
     </li>
 		{% endif %}

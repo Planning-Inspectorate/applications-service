@@ -1,16 +1,11 @@
-const { queryStringBuilder } = require('../../../../utils/query-string-builder');
-const pageData = (params) => {
-	const baseUrl = `/projects/${params.caseRef}`;
-	const pageUrl = `${baseUrl}/application-documents`;
-	const queryUrl = queryStringBuilder(params, ['category', 'searchTerm', 'stage', 'type'], false);
-	const paginationUrl = `${pageUrl}?page=:page${queryUrl}`;
+const pageData = (case_ref) => {
+	const baseUrl = `/projects/${case_ref}`;
+	const pageUrl = `documents`;
 
 	return {
-		caseRef: params.caseRef,
+		caseRef: case_ref,
 		baseUrl,
-		pageUrl,
-		queryUrl,
-		paginationUrl
+		pageUrl
 	};
 };
 

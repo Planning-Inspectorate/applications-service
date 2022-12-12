@@ -3,10 +3,10 @@
     margin-bottom: 20px;
 
     &--active {
-      background: #f0f0f0;
+      background-color: govuk-colour("light-grey");
       padding: 0.7em;
       margin-left: calc(-0.7em - 6px);
-      border-left: 6px solid #13a19b;
+      border-left: 6px solid govuk-colour("turquoise");
       font-weight: 700;
     }
   }
