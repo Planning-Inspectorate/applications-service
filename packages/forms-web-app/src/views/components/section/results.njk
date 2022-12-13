@@ -1,0 +1,48 @@
+{% macro sectionResults(results) %}
+  <ul class="section-results">
+    {% for result in results %}
+      <li class="section-results__result">
+        <a
+          class="section-results__result-link"
+          href="{{ result.path }}"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          <strong>
+            {{ result.description or result.personal_name  }} ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
+          </strong>
+        </a>
+
+        {% if result.representative %}
+          <p class="section-results__result-copy">
+            From {{ result.representative }} on behalf of {{ result.personal_name }}
+          </p>
+        {% elseif result.description and result.personal_name %}
+          <p class="section-results__result-copy">
+            From {{ result.personal_name }}
+          </p>
+        {% endif %}
+
+        <div class="section-results__result-meta-data">
+          <div class="section-results__result-meta-data-item">
+            <span class="section-results__result-meta-data-item-text">
+              {{ result.date_published }}
+            </span>
+          </div>
+
+          <div class="section-results__result-meta-data-item">
+            <span class="section-results__result-meta-data-item-text">
+              {{ projectStageNames[result.Stage] }}
+            </span>
+          </div>
+
+          <div class="section-results__result-meta-data-item">
+            <span class="section-results__result-meta-data-item-text">
+              {{ result.filter_1 }}
+            </span>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}

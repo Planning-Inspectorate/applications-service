@@ -3,7 +3,6 @@ const fetch = require('node-fetch');
 const uuid = require('uuid');
 const { utils } = require('@pins/common');
 const { queryStringBuilder } = require('../utils/query-string-builder');
-
 const config = require('../config');
 const parentLogger = require('./logger');
 
@@ -168,6 +167,14 @@ exports.wrappedPostSubmission = async (caseRef, body) => {
 		},
 		{}
 	);
+};
+
+exports.wrappedSearchDocumentsV3 = async (body) => {
+	const URL = `/api/v3/documents`;
+	const method = 'POST';
+	return handler('searchDocumentsV3', URL, method, {
+		body: JSON.stringify(body)
+	});
 };
 
 exports.wrappedPostSubmissionComplete = async (submissionId) => {

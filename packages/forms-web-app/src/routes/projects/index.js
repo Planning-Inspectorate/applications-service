@@ -28,7 +28,7 @@ const examinationTimetable = require('../../controllers/projects/examination-tim
 const recommendationsController = require('../../controllers/projects/recommendations');
 const allExaminationDocsController = require('../../controllers/projects/all-examination-documents');
 const projectsController = require('../../controllers/projects/examination');
-const aboutTheApplicationController = require('../../controllers/projects/docments/controller');
+const aboutTheApplicationController = require('../../controllers/projects/documents/controller');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -51,7 +51,7 @@ if (hideProjectTimelineLink) {
 
 if (allowDocumentLibrary) {
 	router.get(
-		'/:case_ref/application-documents',
+		`${subDirectory}${pages.documents.route}`,
 		aboutTheApplicationController.getApplicationDocuments
 	);
 }
