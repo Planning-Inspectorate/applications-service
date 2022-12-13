@@ -18,6 +18,12 @@ describe('documentV3 service', () => {
 	beforeEach(() => jest.resetAllMocks());
 
 	describe('fetchDocuments', () => {
+		const expectedQuery = {
+			limit: 20,
+			offset: 0,
+			order: [['date_published', 'DESC'], ['id']]
+		};
+
 		beforeEach(() => {
 			mockFindAndCountAll.mockResolvedValueOnce({
 				count: 4,
@@ -32,9 +38,7 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [{ case_reference: 'EN010085' }]
 				}
@@ -65,9 +69,7 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
@@ -90,9 +92,7 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
@@ -124,9 +124,7 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
@@ -159,9 +157,7 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
