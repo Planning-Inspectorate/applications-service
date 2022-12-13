@@ -22,7 +22,7 @@ async function handler(
 	});
 
 	try {
-		logger.info({ url, method, opts, headers }, 'New call');
+		logger.debug({ url, method, opts, headers }, 'New call');
 		return await utils.promiseTimeout(
 			config.applications.timeout,
 			Promise.resolve().then(async () => {
