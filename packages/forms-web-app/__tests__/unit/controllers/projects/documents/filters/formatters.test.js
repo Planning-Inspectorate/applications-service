@@ -2,7 +2,7 @@ const {
 	formatTitle,
 	formatName,
 	formatNameWithCount
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/formatters');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/formatters');
 describe('Formatters', () => {
 	describe('#formatTitle', () => {
 		describe('When formatting the title', () => {

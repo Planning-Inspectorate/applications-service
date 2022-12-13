@@ -1,6 +1,6 @@
 const { get, post } = require('../router-mock');
 
-const aboutTheApplicationController = require('../../../../src/controllers/projects/docments/controller');
+const aboutTheApplicationController = require('../../../../src/controllers/projects/documents/controller');
 const examinationController = require('../../../../src/controllers/projects/examination');
 
 describe('routes/projects/documents', () => {

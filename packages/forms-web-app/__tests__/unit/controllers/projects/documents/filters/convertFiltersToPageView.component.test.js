@@ -1,6 +1,6 @@
 const {
 	convertFiltersToPageView
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/convertFiltersToPageView');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/convertFiltersToPageView');
 describe('#convertFiltersToPageView', () => {
 	describe('When given a filter list from the API', () => {
 		describe('and there are filters to map', () => {

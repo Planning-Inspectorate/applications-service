@@ -1,6 +1,6 @@
 const {
 	mapFilterTypeToCheckBox
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/mappers');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/mappers');
 describe('#mapFilterTypeToCheckBox', () => {
 	describe('When mapping a list of filters to a list of checkboxes', () => {
 		const items = [

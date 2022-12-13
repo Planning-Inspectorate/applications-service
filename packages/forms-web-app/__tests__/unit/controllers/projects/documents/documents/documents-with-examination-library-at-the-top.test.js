@@ -1,7 +1,7 @@
 const { searchDocumentsV3 } = require('../../../../../../src/services/document.service');
 const {
 	documentsWithExaminationLibraryAtTheTop
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/documents-with-examination-library-at-the-top');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/documents-with-examination-library-at-the-top');
 
 jest.mock('../../../../../../src/services/document.service', () => ({
 	searchDocumentsV3: jest.fn()

@@ -1,30 +1,30 @@
 const {
 	getFilters
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/getFilters');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/getFilters');
 
 const {
 	orderFilters
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/order-filters');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/order-filters');
 const {
 	convertFiltersToPageView
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/convertFiltersToPageView');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/convertFiltersToPageView');
 const {
 	viewModel
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/view-model');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/view-model');
 
 jest.mock(
-	'../../../../../../src/controllers/projects/docments/utils/filters/order-filters',
+	'../../../../../../src/controllers/projects/documents/utils/filters/order-filters',
 	() => ({
 		orderFilters: jest.fn()
 	})
 );
 jest.mock(
-	'../../../../../../src/controllers/projects/docments/utils/filters/convertFiltersToPageView',
+	'../../../../../../src/controllers/projects/documents/utils/filters/convertFiltersToPageView',
 	() => ({
 		convertFiltersToPageView: jest.fn()
 	})
 );
-jest.mock('../../../../../../src/controllers/projects/docments/utils/filters/view-model', () => ({
+jest.mock('../../../../../../src/controllers/projects/documents/utils/filters/view-model', () => ({
 	viewModel: jest.fn()
 }));
 describe('#getFilters', () => {

@@ -1,6 +1,6 @@
 const {
 	mapQueryToFilterBody
-} = require('../../../../../../../src/controllers/projects/docments/utils/documents/body/mapQueryToFilterBody');
+} = require('../../../../../../../src/controllers/projects/documents/utils/documents/body/mapQueryToFilterBody');
 describe('When mapping the query params to a filter body for v3 api request', () => {
 	describe('and there are values', () => {
 		const mockQuery = { 'stage-1': 'Fella', 'stage-2': ['fella 1', 'fella 2'] };

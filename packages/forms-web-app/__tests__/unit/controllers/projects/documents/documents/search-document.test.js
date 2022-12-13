@@ -1,25 +1,25 @@
 const {
 	searchDocuments
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/searchDocuments');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/searchDocuments');
 const { searchDocumentsV3 } = require('../../../../../../src/services/document.service');
 const {
 	getBody
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/body/getBody');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/body/getBody');
 const {
 	documentsWithExaminationLibraryAtTheTop
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/documents-with-examination-library-at-the-top');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/documents-with-examination-library-at-the-top');
 
 jest.mock('../../../../../../src/services/document.service', () => ({
 	searchDocumentsV3: jest.fn()
 }));
 jest.mock(
-	'../../../../../../src/controllers/projects/docments/utils/documents/documents-with-examination-library-at-the-top',
+	'../../../../../../src/controllers/projects/documents/utils/documents/documents-with-examination-library-at-the-top',
 	() => ({
 		documentsWithExaminationLibraryAtTheTop: jest.fn()
 	})
 );
 jest.mock(
-	'../../../../../../src/controllers/projects/docments/utils/documents/body/getBody',
+	'../../../../../../src/controllers/projects/documents/utils/documents/body/getBody',
 	() => ({
 		getBody: jest.fn()
 	})

@@ -1,6 +1,6 @@
 const {
 	getApplicationDocuments
-} = require('../../../../../src/controllers/projects/docments/controller');
+} = require('../../../../../src/controllers/projects/documents/controller');
 const { searchDocumentsV3 } = require('../../../../../src/services/document.service');
 const { getAppData } = require('../../../../../src/services/application.service');
 
