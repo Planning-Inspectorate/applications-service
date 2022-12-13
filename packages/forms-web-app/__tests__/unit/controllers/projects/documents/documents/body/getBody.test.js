@@ -1,6 +1,6 @@
 const {
 	getBody
-} = require('../../../../../../../src/controllers/projects/docments/utils/documents/body/getBody');
+} = require('../../../../../../../src/controllers/projects/documents/utils/documents/body/getBody');
 describe('#getBody', () => {
 	describe('When getting the body for search document ', () => {
 		describe('and there is no search term or filters', () => {

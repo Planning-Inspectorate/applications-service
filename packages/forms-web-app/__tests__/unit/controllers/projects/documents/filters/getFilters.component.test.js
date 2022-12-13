@@ -1,6 +1,6 @@
 const {
 	getFilters
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/getFilters');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/getFilters');
 describe('component', () => {
 	describe('#getFilters', () => {
 		describe('When getting the filters for the UI', () => {

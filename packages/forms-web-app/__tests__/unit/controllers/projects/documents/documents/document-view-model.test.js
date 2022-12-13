@@ -1,6 +1,6 @@
 const {
 	mapDocumentsToViewModel
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/documents-view-model');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/documents-view-model');
 
 describe('#mapDocumentsToViewModel', () => {
 	describe('When mapping the documents data to the view model', () => {

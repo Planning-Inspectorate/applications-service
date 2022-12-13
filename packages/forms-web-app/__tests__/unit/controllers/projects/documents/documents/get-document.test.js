@@ -1,12 +1,12 @@
 const {
 	getDocuments
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/getDocuments');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/getDocuments');
 const {
 	mapDocumentsToViewModel
-} = require('../../../../../../src/controllers/projects/docments/utils/documents/documents-view-model');
+} = require('../../../../../../src/controllers/projects/documents/utils/documents/documents-view-model');
 
 jest.mock(
-	'../../../../../../src/controllers/projects/docments/utils/documents/documents-view-model',
+	'../../../../../../src/controllers/projects/documents/utils/documents/documents-view-model',
 	() => ({
 		mapDocumentsToViewModel: jest.fn()
 	})

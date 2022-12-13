@@ -1,6 +1,6 @@
 const {
 	orderFilters
-} = require('../../../../../../src/controllers/projects/docments/utils/filters/order-filters');
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/order-filters');
 
 describe('controllers/projects/docments/utils/filters/order-filters', () => {
 	describe('#orderFilters', () => {

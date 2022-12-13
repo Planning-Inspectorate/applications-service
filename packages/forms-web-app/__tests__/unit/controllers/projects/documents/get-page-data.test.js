@@ -1,4 +1,4 @@
-const { pageData } = require('../../../../../src/controllers/projects/docments/utils/page-data');
+const { pageData } = require('../../../../../src/controllers/projects/documents/utils/page-data');
 describe('#pageData', () => {
 	describe('When getting the page data', () => {
 		const response = pageData('mock-case-ref');

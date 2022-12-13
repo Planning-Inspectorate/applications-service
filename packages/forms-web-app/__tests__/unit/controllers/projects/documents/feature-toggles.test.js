@@ -1,6 +1,6 @@
 const {
 	featureToggles
-} = require('../../../../../src/controllers/projects/docments/utils/feature-toggles');
+} = require('../../../../../src/controllers/projects/documents/utils/feature-toggles');
 describe('#featureToggles', () => {
 	describe('When getting the feature toggle for the document view', () => {
 		const response = featureToggles();
