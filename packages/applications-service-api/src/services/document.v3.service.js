@@ -9,7 +9,7 @@ const fetchDocuments = async (requestQuery) => {
 
 	const dbQuery = {
 		where,
-		order: [['date_published', 'DESC']],
+		order: [['date_published', 'DESC'], ['id']],
 		offset,
 		limit: config.itemsPerPage
 	};
