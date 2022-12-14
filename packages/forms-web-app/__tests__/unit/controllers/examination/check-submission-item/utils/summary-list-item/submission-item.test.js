@@ -9,7 +9,30 @@ describe('controllers/examination/check-submission-item/utils/summary-list-item/
 				const mockSubmissionItem = {
 					submissionItem: 'submission item'
 				};
-				const result = getSummaryListItemSubmissionItem(mockSubmissionItem);
+
+				const req = {
+					session: {
+						examination: {
+							caseRef: 'TEST001',
+							deadlineItems: [
+								{ value: '0', text: 'Deadline 1' },
+								{ value: '1', text: 'Deadline 2' },
+								{ value: '2', text: 'Deadline 3' }
+							],
+							submissionItems: [
+								{
+									itemId: '0',
+									submissionItem: 'Deadline 1',
+									submitted: true,
+									submissionType: 'comment',
+									comment: 'Comments on deadline 1'
+								}
+							]
+						}
+					}
+				};
+
+				const result = getSummaryListItemSubmissionItem(mockSubmissionItem, req.session);
 				it('should return the object', () => {
 					expect(result).toEqual({
 						actions: {
