@@ -1,15 +1,38 @@
 {% set section = 'representations' %}
 {% extends "layouts/project-3-columns.njk" %}
+
 {% from "../macros/pagination-bar.njk" import paginationBar %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set activeProjectLink = 'representations' %}
 
 {% block contentHeader %}
   <h2 class="govuk-heading-l">Relevant Representations (Registration comments)</h2>
-  <p>
-    <input class="govuk-input govuk-!-width-one-half" id="searchTerm" name="searchTerm" type="text" value="{{ searchTerm }}">
-    <button class="govuk-button" data-cy="search-button">Search</button>
-  </p>
+
+  <div class="govuk-!-margin-bottom-6">
+    <div
+      class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-0 govuk-!-width-one-half"
+    >
+      <label class="govuk-label govuk-visually-hidden" for="searchTerm">
+        Search comments
+      </label>
+
+      <input
+        class="govuk-input"
+        id="searchTerm"
+        name="searchTerm"
+        type="search"
+        value="{{ searchTerm }}"
+      >
+    </div>
+
+    {{ govukButton({
+      attributes: { "data-cy": "search-button", "enterkeyhint": "search" },
+      classes: "govuk-!-margin-0",
+      text: "Search",
+      type: "Submit"
+    }) }}
+  </div>
 {% endblock %}
 
 {% block columnTwo %}
