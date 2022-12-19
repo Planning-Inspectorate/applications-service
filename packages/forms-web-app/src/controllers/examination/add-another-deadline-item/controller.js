@@ -13,7 +13,7 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const { editQuery } = require('../check-submission-item/utils/summary-list-item/config');
+const { editQuery } = require('../../utils/queryMode');
 
 const getAddAnotherDeadlineItem = (req, res) => {
 	try {

@@ -11,6 +11,12 @@ const getDeadlineDetailsInterestedPartyNumber = (session) => {
 	return examinationSession[deadlineInterestedPartyNumberKey];
 };
 
+const getDeadlineDetailsInterestedPartyNumberOrDefault = (session) => {
+	const examinationSession = getExaminationSession(session);
+
+	return examinationSession[deadlineInterestedPartyNumberKey] || '';
+};
+
 const setDeadlineDetailsInterestedPartyNumber = (session, interestedPartyNumber) => {
 	const examinationSession = getExaminationSession(session);
 
@@ -19,5 +25,6 @@ const setDeadlineDetailsInterestedPartyNumber = (session, interestedPartyNumber)
 
 module.exports = {
 	getDeadlineDetailsInterestedPartyNumber,
-	setDeadlineDetailsInterestedPartyNumber
+	setDeadlineDetailsInterestedPartyNumber,
+	getDeadlineDetailsInterestedPartyNumberOrDefault
 };

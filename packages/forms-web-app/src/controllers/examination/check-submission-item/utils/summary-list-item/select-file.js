@@ -1,6 +1,6 @@
 const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
 const { getSubmissionItemFiles } = require('../../../session/submission-items-session');
-const { editQuery } = require('./config');
+const { editQuery } = require('../../../../utils/queryMode');
 const {
 	routesConfig: {
 		examination: {
