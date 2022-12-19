@@ -95,7 +95,7 @@ describe('controllers/examination/your-interested-party-number/controller', () =
 					getPageData.mockReturnValue({ text: 'mock page data' });
 					postYourInterestedPartyNumber(req, res);
 				});
-				it('should render the personal information page with errors', () => {
+				it('Should render the interested party number page with errors', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'pages/examination/your-interested-party-number',
 						{
