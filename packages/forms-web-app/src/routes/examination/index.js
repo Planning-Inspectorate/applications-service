@@ -90,7 +90,7 @@ const {
 const {
 	getYourInterestedPartyNumber,
 	postYourInterestedPartyNumber
-} = require('../../controllers/examination/your-interested-party-number');
+} = require('../../controllers/examination/your-interested-party-number/controller');
 const {
 	getAddAnotherDeadlineItem,
 	postAddAnotherDeadlineItem,
