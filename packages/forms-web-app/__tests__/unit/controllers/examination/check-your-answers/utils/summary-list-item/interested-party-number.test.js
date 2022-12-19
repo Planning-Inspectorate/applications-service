@@ -37,7 +37,8 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/int
 			it('should get the summary list item with the interested party number title and value', () => {
 				expect(getSummaryListItem).toHaveBeenCalledWith(
 					'Interested party number',
-					mockDeadlineInterestedPartyNumberValue
+					mockDeadlineInterestedPartyNumberValue,
+					'/examination/your-interested-party-number?mode=edit'
 				);
 			});
 			it('should return a summary list item', () => {
