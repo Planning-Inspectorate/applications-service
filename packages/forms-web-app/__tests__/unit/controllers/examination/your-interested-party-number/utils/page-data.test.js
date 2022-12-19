@@ -24,7 +24,7 @@ jest.mock(
 
 describe('#getPageData', () => {
 	describe('when setting the page data', () => {
-		describe('and there is not a personalInformation value', () => {
+		describe('and there is not a interested party number value value', () => {
 			let result;
 			beforeEach(() => {
 				getDeadlineDetailsInterestedPartyNumberOrDefault.mockReturnValue('mock party number');

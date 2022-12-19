@@ -10,7 +10,7 @@ describe('#getBackLinkUrl', () => {
 				expect(result).toEqual('/examination/check-your-answers');
 			});
 		});
-		describe('and there the mode is NOT edit', () => {
+		describe('and the mode is NOT edit', () => {
 			const query = {};
 			const result = getBackLinkUrl(query);
 			it('should return the correct back link', () => {
