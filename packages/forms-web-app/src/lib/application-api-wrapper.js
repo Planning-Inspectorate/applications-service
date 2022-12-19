@@ -22,7 +22,7 @@ async function handler(
 	});
 
 	try {
-		logger.debug({ url, method, opts, headers }, 'New call');
+		logger.info({ url, method, opts, headers }, 'New call');
 		return await utils.promiseTimeout(
 			config.applications.timeout,
 			Promise.resolve().then(async () => {
@@ -175,6 +175,22 @@ exports.wrappedSearchDocumentsV3 = async (body) => {
 	return handler('searchDocumentsV3', URL, method, {
 		body: JSON.stringify(body)
 	});
+};
+
+exports.wrappedSearchDocumentsV3 = async (body) => {
+	const URL = `/api/v3/documents`;
+
+	const url = `${config.applications.url}${URL}`;
+	const response = await fetch(url, {
+		method: 'post',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' }
+	});
+
+	return {
+		data: await response.json(),
+		resp_code: response.status
+	};
 };
 
 exports.wrappedPostSubmissionComplete = async (submissionId) => {

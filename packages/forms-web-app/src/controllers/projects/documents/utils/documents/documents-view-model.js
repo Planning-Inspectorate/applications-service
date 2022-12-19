@@ -8,8 +8,7 @@ const mapDocumentsToViewModel = (documents) =>
 		size: document.size,
 		representative: document.representative,
 		Stage: document.stage,
-		path: document.path,
-		filter_1: document.filter1
+		filter_1: document.filter_1
 	}));
 
 module.exports = {

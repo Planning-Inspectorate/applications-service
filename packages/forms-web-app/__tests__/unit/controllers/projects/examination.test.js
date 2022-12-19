@@ -4,7 +4,7 @@ const { mockReq, mockRes } = require('../../mocks');
 const { VIEW } = require('../../../../src/lib/views');
 
 jest.mock('../../../../src/lib/application-api-wrapper');
-jest.mock('../../../../src/config.js', () => ({
+jest.mock('../../../../src/queryMode.js', () => ({
 	logger: {
 		level: 'info'
 	},
