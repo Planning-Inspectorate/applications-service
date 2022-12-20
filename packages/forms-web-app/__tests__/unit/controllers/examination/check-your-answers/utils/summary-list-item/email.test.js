@@ -33,7 +33,11 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/ema
 				result = getSummaryListItemEmail(req.session);
 			});
 			it('should get the summary list item with the email address title and value', () => {
-				expect(getSummaryListItem).toHaveBeenCalledWith('Email Address', mockDeadlineEmailValue);
+				expect(getSummaryListItem).toHaveBeenCalledWith(
+					'Email Address',
+					mockDeadlineEmailValue,
+					'/examination/your-email-address?mode=edit'
+				);
 			});
 			it('should return the summary list', () => {
 				expect(result).toEqual(mockSummaryListItem);
