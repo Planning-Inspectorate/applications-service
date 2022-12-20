@@ -10,6 +10,16 @@ jest.mock('../../../../../../src/controllers/examination/session/examination-ses
 }));
 describe('#getBackLink', () => {
 	describe('When getting the back link for the email controller', () => {
+		describe('and if is query mode', () => {
+			let result;
+			beforeEach(() => {
+				getExaminationSession.mockReturnValue({ isApplicant: 'yes' });
+				result = getBackLink({}, { mode: 'edit' });
+			});
+			it('should return the previous page', () => {
+				expect(result).toEqual('/examination/check-your-answers');
+			});
+		});
 		describe('and the user is the applicant', () => {
 			let result;
 

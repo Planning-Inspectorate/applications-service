@@ -3,7 +3,11 @@ const { getDeadlineId, setDeadlineId } = require('./id');
 const { getDeadlineItems, setDeadlineItems } = require('./items');
 const { getDeadlineTitle, setDeadlineTitle } = require('./title');
 const { getDeadlineDetailsApplicant, setDeadlineDetailsApplicant } = require('./details/applicant');
-const { getDeadlineDetailsEmail, setDeadlineDetailsEmail } = require('./details/email');
+const {
+	getDeadlineDetailsEmail,
+	setDeadlineDetailsEmail,
+	getDeadlineDetailsEmailOrDefault
+} = require('./details/email');
 const {
 	getDeadlineDetailsHasInterestedPartyNumber,
 	setDeadlineDetailsHasInterestedPartyNumber
@@ -31,6 +35,7 @@ module.exports = {
 	setDeadlineDetailsApplicant,
 	getDeadlineDetailsEmail,
 	setDeadlineDetailsEmail,
+	getDeadlineDetailsEmailOrDefault,
 	getDeadlineDetailsHasInterestedPartyNumber,
 	setDeadlineDetailsHasInterestedPartyNumber,
 	getDeadlineDetailsInterestedPartyNumber,

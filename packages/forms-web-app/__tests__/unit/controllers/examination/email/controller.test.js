@@ -2,202 +2,125 @@ const {
 	getEmail,
 	postEmail
 } = require('../../../../../src/controllers/examination/email/controller');
-const { mockReq, mockRes, mockResponse } = require('../../../mocks');
+const {
+	getPageData
+} = require('../../../../../src/controllers/examination/email/utils/get-page-data');
+const {
+	getDeadlineDetailsEmailOrDefault,
+	setDeadlineDetailsEmail
+} = require('../../../../../src/controllers/examination/session/deadline');
 
-jest.mock('../../../../../src/lib/logger');
+const {
+	getRedirectUrl
+} = require('../../../../../src/controllers/examination/email/utils/get-redirect-url');
 
-const pageData = {
-	backLinkUrl: '/examination/are-you-applicant',
-	hint: "We'll use your email address to confirm we've received your submission. We will not publish your email address.",
-	pageTitle: "What's your email address?",
-	title: "What's your email address?",
-	id: 'examination-email'
-};
+jest.mock('../../../../../src/controllers/examination/email/utils/get-page-data', () => ({
+	getPageData: jest.fn()
+}));
 
-const emailView = 'pages/examination/email';
+jest.mock('../../../../../src/controllers/examination/email/utils/get-redirect-url', () => ({
+	getRedirectUrl: jest.fn()
+}));
 
-const deadLineItemRoute = '/examination/select-deadline-item';
-
-const minMaxInputObject = {
-	underMin: ['a', 'Your email address must be between 3 and 255 characters'],
-	overMax: [
-		'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz',
-		'Your email address must be between 3 and 255 characters'
-	],
-	invalidEmail: [
-		'abcexample.com',
-		'Enter an email address in the correct format, like name@example.com'
-	],
-	betweenMinMax: ['abc@example.com', null]
-};
-
-//TODO: refactor these tests
-describe('controllers/examination/name', () => {
-	let req;
-	let res;
-
-	beforeEach(() => {
-		req = {
-			...mockReq(),
-			session: {
-				examination: {
-					'examination-email': 'test',
-					isApplicant: 'yes'
-				}
-			},
-			currentView: {}
-		};
-
-		res = mockRes();
-
-		jest.resetAllMocks();
-	});
-
-	describe('postEmail', () => {
-		it(`should post data on email template and redirect to ${deadLineItemRoute} if currentView and requestSession are provided`, async () => {
-			const mockRequest = {
-				...req,
-				body: {
-					'examination-email': 'test'
-				},
-				query: {
-					mode: ''
-				}
+jest.mock('../../../../../src/controllers/examination/session/deadline', () => ({
+	getDeadlineDetailsEmailOrDefault: jest.fn(),
+	setDeadlineDetailsEmail: jest.fn()
+}));
+describe('controllers/examination/email/controller', () => {
+	describe('#getEmail', () => {
+		describe('When getting the email page', () => {
+			const req = {
+				body: {},
+				session: { text: 'mock session' },
+				query: { text: 'mock query' }
 			};
-
-			await postEmail(mockRequest, res);
-
-			expect(res.redirect).toHaveBeenCalledWith(deadLineItemRoute);
-		});
-
-		it(`should re-render the email address template with errors if there is any validation error`, async () => {
-			const mockRequest = {
-				...req,
-				body: {
-					'examination-name': 'test',
-					errorSummary: [
-						{ text: 'Your email address must be between 3 and 255 characters', href: '#' }
-					],
-					errors: { error: 'error' }
-				}
+			const res = {
+				redirect: jest.fn(),
+				render: jest.fn(),
+				status: jest.fn(() => res)
 			};
-
-			res = mockResponse();
-
-			await postEmail(mockRequest, res);
-
-			expect(res.redirect).not.toHaveBeenCalled();
-
-			expect(res.render).toHaveBeenCalledWith(emailView, {
-				...pageData,
-				errorSummary: [
-					{ text: 'Your email address must be between 3 and 255 characters', href: '#' }
-				],
-				errors: { error: 'error' }
+			describe('and there are no errors', () => {
+				beforeEach(() => {
+					getPageData.mockReturnValue({ text: 'mock page data' });
+					getDeadlineDetailsEmailOrDefault.mockReturnValue('mock email');
+					getEmail(req, res);
+				});
+				it('should return the page template and page data', () => {
+					expect(res.render).toHaveBeenCalledWith('pages/examination/email', {
+						email: 'mock email',
+						text: 'mock page data'
+					});
+				});
+			});
+			describe('and there are errors', () => {
+				beforeEach(() => {
+					getPageData.mockImplementation(() => {
+						throw new Error('something went wrong');
+					});
+					getEmail(req, res);
+				});
+				it('should render the Error page', () => {
+					expect(res.status).toHaveBeenCalledWith(500);
+					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+				});
 			});
 		});
+	});
 
-		Object.entries(minMaxInputObject)
-			.slice(0, 3)
-			.forEach(([operationName, [operationValue, errorMessage]]) => {
-				it(`should re-render the email address template with errors if input text is ${operationName} characters`, async () => {
-					const mockRequest = {
-						body: {
-							errors: {
-								'examination-email': {
-									value: operationValue,
-									msg: errorMessage,
-									param: 'examination-email',
-									location: 'body'
-								}
-							}
-						},
-						session: {
-							examination: {
-								isApplicant: 'yes'
-							}
-						},
-						query: {
-							mode: ''
-						}
-					};
-
-					await postEmail(mockRequest, res);
-					expect(res.redirect).not.toHaveBeenCalled();
-
-					expect(res.render).toHaveBeenCalledWith(emailView, {
-						...pageData,
-						errorSummary: [],
-						errors: {
-							'examination-email': {
-								value: operationValue,
-								msg: errorMessage,
-								param: 'examination-email',
-								location: 'body'
-							}
-						}
+	describe('#postEmail', () => {
+		describe('When handling an email', () => {
+			const req = {
+				body: {},
+				session: { text: 'mock session' },
+				query: { text: 'mock query' }
+			};
+			const res = {
+				redirect: jest.fn(),
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
+			describe('and there is an error', () => {
+				const mockErrorValue = {
+					errors: { a: 'b' },
+					errorSummary: [{ text: 'Error summary', href: '#' }]
+				};
+				beforeEach(() => {
+					req.body = mockErrorValue;
+					getPageData.mockReturnValue({ text: 'mock page data' });
+					postEmail(req, res);
+				});
+				it('Should render the interested party number page with errors', () => {
+					expect(res.render).toHaveBeenCalledWith('pages/examination/email', {
+						...mockErrorValue,
+						text: 'mock page data'
 					});
 				});
 			});
 
-		it(`should redirect user to /examination/select-deadline-item`, async () => {
-			const mockRequest = {
-				body: {
-					'examination-name': 'test'
-				},
-				session: {
-					examination: {}
-				},
-				query: {
-					mode: ''
-				}
-			};
-
-			await postEmail(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith(deadLineItemRoute);
-		});
-
-		it(`should redirect user to /examination/select-deadline-item`, async () => {
-			const mockRequest = {
-				body: {
-					'examination-name': 'test'
-				},
-				session: {
-					examination: {}
-				},
-				query: {
-					mode: ''
-				}
-			};
-
-			mockRequest.query.mode = 'edit';
-
-			await postEmail(mockRequest, res);
-			expect(res.render).not.toHaveBeenCalled();
-			expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
-		});
-	});
-
-	describe('getEmail', () => {
-		it('Calls the correct template without the examinationSession', () => {
-			req.session = {};
-			res = mockResponse();
-			getEmail(req, res);
-			expect(res.render).toHaveBeenCalledWith('error/not-found');
-		});
-
-		it(`should call the correct template`, () => {
-			getEmail(req, res);
-			expect(res.render).toHaveBeenCalledWith(emailView, pageData);
-		});
-
-		it(`should call the correct template with pageData email value`, () => {
-			req.session.examination.email = 'email@example.com';
-
-			getEmail(req, res);
-			expect(res.render).toHaveBeenCalledWith(emailView, {
-				...pageData,
-				email: 'email@example.com'
+			describe('and there are no issues', () => {
+				const mockPageDataValue = { id: 'examination-email' };
+				const mockPageDataIdValue = 'email value';
+				const mockRedirectUrl = 'redirect url';
+				beforeEach(() => {
+					req.body = {
+						[mockPageDataValue.id]: mockPageDataIdValue
+					};
+					setDeadlineDetailsEmail.mockReturnValue();
+					getRedirectUrl.mockReturnValue(mockRedirectUrl);
+					postEmail(req, res);
+				});
+				it('should call session funcs', () => {
+					expect(setDeadlineDetailsEmail).toHaveBeenCalledWith(
+						{ text: 'mock session' },
+						'email value'
+					);
+				});
+				it('should call the functions', () => {
+					expect(getRedirectUrl).toHaveBeenCalledWith({ text: 'mock query' });
+				});
+				it('should redirect to the next page', () => {
+					expect(res.redirect).toHaveBeenCalledWith(mockRedirectUrl);
+				});
 			});
 		});
 	});
