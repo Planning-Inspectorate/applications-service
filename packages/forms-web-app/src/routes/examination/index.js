@@ -66,7 +66,7 @@ const {
 	postHasInterestedPartyNumber
 } = require('../../controllers/examination/has-interested-party-number');
 const { getHaveYourSay } = require('../../controllers/examination/have-your-say');
-const { getName, postName } = require('../../controllers/examination/name');
+const { getName, postName } = require('../../controllers/examination/name/controller');
 const {
 	getPersonalInformation,
 	postPersonalInformation

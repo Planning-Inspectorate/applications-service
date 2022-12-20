@@ -16,7 +16,11 @@ const {
 	getDeadlineDetailsInterestedPartyNumber,
 	setDeadlineDetailsInterestedPartyNumber
 } = require('./details/interested-party-number');
-const { getDeadlineDetailsName, setDeadlineDetailsName } = require('./details/name');
+const {
+	getDeadlineDetailsName,
+	setDeadlineDetailsName,
+	getDeadlineDetailsNameOrDefault
+} = require('./details/name');
 const {
 	getDeadlineDetailsSubmittingFor,
 	setDeadlineDetailsSubmittingFor
@@ -43,5 +47,6 @@ module.exports = {
 	getDeadlineDetailsSubmittingFor,
 	setDeadlineDetailsSubmittingFor,
 	getDeadlineDetailsName,
-	setDeadlineDetailsName
+	setDeadlineDetailsName,
+	getDeadlineDetailsNameOrDefault
 };

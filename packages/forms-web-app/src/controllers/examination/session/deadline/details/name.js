@@ -10,10 +10,17 @@ const getDeadlineDetailsName = (session) => {
 	return examinationSession[deadlineNameKey];
 };
 
+const getDeadlineDetailsNameOrDefault = (session) =>
+	getExaminationSession(session)[deadlineNameKey];
+
 const setDeadlineDetailsName = (session, name) => {
 	const examinationSession = getExaminationSession(session);
 
 	examinationSession[deadlineNameKey] = name;
 };
 
-module.exports = { getDeadlineDetailsName, setDeadlineDetailsName };
+module.exports = {
+	getDeadlineDetailsName,
+	setDeadlineDetailsName,
+	getDeadlineDetailsNameOrDefault
+};
