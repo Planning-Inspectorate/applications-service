@@ -1,4 +1,7 @@
 {% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% from "../components/layout/slots.njk" import layoutSlots %}
 {% from "../components/section/results.njk" import sectionResults %}
 {% from "../components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
@@ -98,12 +101,37 @@
 				</h1>
 
 				{% if documents.length != 0 or queryUrl != '' %}
-					<div>
-						<input class="govuk-input govuk-!-width-one-half" name="searchTerm" type="text" value="{{ searchTerm }}">
+					<h2 class="govuk-heading-m">
+						Search documents
+					</h2>
 
-						<button class="govuk-button">
-							Search
-						</button>
+					<p class="govuk-body">
+						Search by author, description or document type.
+					</p>
+
+					<div class="govuk-!-margin-bottom-6">
+						<div
+							class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-0 govuk-!-width-one-half"
+						>
+							<label class="govuk-label govuk-visually-hidden" for="searchTerm">
+								Search documents
+							</label>
+
+							<input
+								class="govuk-input"
+								id="searchTerm"
+								name="searchTerm"
+								type="search"
+								value="{{ searchTerm }}"
+							>
+						</div>
+
+						{{ govukButton({
+							attributes: { "enterkeyhint": "search" },
+							classes: "govuk-!-margin-0",
+							text: "Search",
+							type: "Submit"
+						}) }}
 					</div>
 				{% endif %}
 

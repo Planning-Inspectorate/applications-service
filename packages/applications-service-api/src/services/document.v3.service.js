@@ -5,11 +5,17 @@ const config = require('../lib/config');
 const fetchDocuments = async (requestQuery) => {
 	const offset = (requestQuery.page - 1) * config.itemsPerPage;
 
-	const where = buildWhereClause(requestQuery);
+	const where = {
+		[Op.and]: buildWhereStatements(
+			requestQuery.caseReference,
+			requestQuery.searchTerm,
+			requestQuery.filters
+		)
+	};
 
 	const dbQuery = {
 		where,
-		order: [['date_published', 'DESC']],
+		order: [['date_published', 'DESC'], ['id']],
 		offset,
 		limit: config.itemsPerPage
 	};
@@ -23,20 +29,18 @@ const fetchDocuments = async (requestQuery) => {
 };
 
 const getAvailableFilters = async (caseReference) => {
-	let query = {
+	const where = {
+		[Op.and]: buildWhereStatements(caseReference).concat([{ filter_1: { [Op.ne]: null } }])
+	};
+
+	const query = {
 		attributes: [
 			[fn('DISTINCT', col('stage')), 'stage'],
 			'filter_1',
 			'category',
 			[fn('COUNT', col('id')), 'count']
 		],
-		where: {
-			[Op.and]: [
-				{ case_reference: caseReference },
-				{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } },
-				{ filter_1: { [Op.ne]: null } }
-			]
-		},
+		where,
 		group: [literal('stage, filter_1, category')]
 	};
 
@@ -51,18 +55,23 @@ const getAvailableFilters = async (caseReference) => {
 	});
 };
 
-const buildWhereClause = (requestQuery) => {
-	let statements = [{ case_reference: requestQuery.caseReference }];
+const buildWhereStatements = (caseReference, searchTerm, filters) => {
+	let statements = [
+		{ case_reference: caseReference },
+		{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } }
+	];
 
-	const searchTermStatement = mapSearchTermToQuery(requestQuery.searchTerm);
-	const filtersStatements = mapFiltersToQuery(requestQuery.filters);
+	if (searchTerm) {
+		const searchTermStatement = mapSearchTermToQuery(searchTerm);
+		if (searchTermStatement) statements.push(searchTermStatement);
+	}
 
-	if (searchTermStatement) statements.push(searchTermStatement);
-	if (filtersStatements) statements.push(filtersStatements);
+	if (filters) {
+		const filtersStatements = mapFiltersToQuery(filters);
+		if (filtersStatements) statements.push(filtersStatements);
+	}
 
-	return {
-		[Op.and]: statements
-	};
+	return statements;
 };
 
 const mapFiltersToQuery = (filters) => {

@@ -14,10 +14,19 @@ jest.mock('../../../src/models', () => ({
 	}
 }));
 
+const FILTER_1_NOT_EMPTY_STATEMENT = { filter_1: { [Op.ne]: null } };
+const STAGE_NOT_EMPTY_OR_0_STATEMENT = { stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } };
+
 describe('documentV3 service', () => {
 	beforeEach(() => jest.resetAllMocks());
 
 	describe('fetchDocuments', () => {
+		const expectedQuery = {
+			limit: 20,
+			offset: 0,
+			order: [['date_published', 'DESC'], ['id']]
+		};
+
 		beforeEach(() => {
 			mockFindAndCountAll.mockResolvedValueOnce({
 				count: 4,
@@ -32,11 +41,9 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
-					[Op.and]: [{ case_reference: 'EN010085' }]
+					[Op.and]: [{ case_reference: 'EN010085' }, STAGE_NOT_EMPTY_OR_0_STATEMENT]
 				}
 			});
 
@@ -65,12 +72,11 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
 								{ category: "Developer's Application", filter_1: ['Plans', 'Reports'] },
@@ -90,12 +96,11 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
 								{ description: { [Op.like]: '%foo%' } },
@@ -124,12 +129,11 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
 								{ description: { [Op.like]: '%foo%' } },
@@ -159,12 +163,11 @@ describe('documentV3 service', () => {
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
-				limit: 20,
-				offset: 0,
-				order: [['date_published', 'DESC']],
+				...expectedQuery,
 				where: {
 					[Op.and]: [
 						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [{ stage: 1 }]
 						}
@@ -198,8 +201,8 @@ describe('documentV3 service', () => {
 			expect(mockInvocation.where).toEqual({
 				[Op.and]: [
 					{ case_reference: 'EN010085' },
-					{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } },
-					{ filter_1: { [Op.ne]: null } }
+					STAGE_NOT_EMPTY_OR_0_STATEMENT,
+					FILTER_1_NOT_EMPTY_STATEMENT
 				]
 			});
 
