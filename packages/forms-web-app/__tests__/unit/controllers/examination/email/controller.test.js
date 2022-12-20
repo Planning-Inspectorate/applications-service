@@ -89,7 +89,7 @@ describe('controllers/examination/email/controller', () => {
 					getPageData.mockReturnValue({ text: 'mock page data' });
 					postEmail(req, res);
 				});
-				it('Should render the interested party number page with errors', () => {
+				it('Should render the email page with errors', () => {
 					expect(res.render).toHaveBeenCalledWith('pages/examination/email', {
 						...mockErrorValue,
 						text: 'mock page data'
