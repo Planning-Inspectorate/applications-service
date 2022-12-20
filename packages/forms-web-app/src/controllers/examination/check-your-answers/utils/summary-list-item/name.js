@@ -6,7 +6,8 @@ const { getSummaryListItem } = require('../../../../utils/get-summary-list-item'
 const {
 	routesConfig: {
 		examination: {
-			pages: { submittingFor }
+			directory,
+			pages: { submittingFor, nameMyself, nameAgent, nameOrganisation }
 		}
 	}
 } = require('../../../../../routes/config');
@@ -14,17 +15,19 @@ const {
 const getSummaryListItemName = (session) => {
 	switch (getDeadlineDetailsSubmittingFor(session)) {
 		case submittingFor.options[1].value:
-			return 'Full name';
+			return { name: 'Full name', url: `${directory}${nameMyself.route}` };
 		case submittingFor.options[2].value:
-			return `Organisation's name`;
+			return { name: `Organisation's name`, url: `${directory}${nameOrganisation.route}` };
 		case submittingFor.options[3].value:
-			return 'Submitting on behalf of';
+			return { name: 'Submitting on behalf of', url: `${directory}${nameAgent.route}` };
 		default:
 			throw new Error('Summary list item name can not be assigned');
 	}
 };
 
-const getSummaryListName = (session) =>
-	getSummaryListItem(getSummaryListItemName(session), getDeadlineDetailsName(session));
+const getSummaryListName = (session) => {
+	const { name, url } = getSummaryListItemName(session);
+	return getSummaryListItem(name, getDeadlineDetailsName(session), url);
+};
 
 module.exports = { getSummaryListName };
