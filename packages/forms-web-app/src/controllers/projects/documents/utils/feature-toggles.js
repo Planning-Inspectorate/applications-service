@@ -3,15 +3,13 @@ const featureToggles = () => {
 	const {
 		hideProjectInformationLink,
 		hideAllExaminationDocumentsLink,
-		hideRecommendationAndDecisionLink,
-		hideExaminationTimetableLink
+		hideRecommendationAndDecisionLink
 	} = featureHideLink;
 
 	return {
 		hideProjectInformationLink,
 		hideAllExaminationDocumentsLink,
-		hideRecommendationAndDecisionLink,
-		hideExaminationTimetableLink
+		hideRecommendationAndDecisionLink
 	};
 };
 

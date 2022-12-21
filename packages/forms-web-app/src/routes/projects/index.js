@@ -15,6 +15,7 @@ const {
 	featureFlag: {
 		hideProjectTimelineLink,
 		allowDocumentLibrary,
+		allowExaminationTimetable,
 		allowRepresentation,
 		usePrivateBetaV1RoutesOnly
 	}
@@ -34,10 +35,6 @@ if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
 	router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 	router.get('/recommendations', recommendationsController.getRecommendations);
-	router.get(
-		subDirectory + pages.examinationTimetable.route,
-		examinationTimetable.getExaminationTimetable
-	);
 	router.post(
 		subDirectory + pages.examinationTimetable.route,
 		examinationTimetable.postExaminationTimetable
@@ -53,6 +50,13 @@ if (allowDocumentLibrary) {
 	router.get(
 		`${subDirectory}${pages.documents.route}`,
 		aboutTheApplicationController.getApplicationDocuments
+	);
+}
+
+if (allowExaminationTimetable) {
+	router.get(
+		`${subDirectory}${pages.examinationTimetable.route}`,
+		examinationTimetable.getExaminationTimetable
 	);
 }
 

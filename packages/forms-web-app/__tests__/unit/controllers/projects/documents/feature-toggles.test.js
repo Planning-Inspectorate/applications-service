@@ -7,7 +7,6 @@ describe('#featureToggles', () => {
 		it('should return the config variables', () => {
 			expect(response).toEqual({
 				hideAllExaminationDocumentsLink: true,
-				hideExaminationTimetableLink: true,
 				hideProjectInformationLink: true,
 				hideRecommendationAndDecisionLink: true
 			});
