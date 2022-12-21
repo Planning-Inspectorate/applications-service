@@ -14,7 +14,8 @@ const {
 } = require('./details/has-interested-party-number');
 const {
 	getDeadlineDetailsInterestedPartyNumber,
-	setDeadlineDetailsInterestedPartyNumber
+	setDeadlineDetailsInterestedPartyNumber,
+	getDeadlineDetailsInterestedPartyNumberOrDefault
 } = require('./details/interested-party-number');
 const {
 	getDeadlineDetailsName,
@@ -42,6 +43,7 @@ module.exports = {
 	getDeadlineDetailsEmailOrDefault,
 	getDeadlineDetailsHasInterestedPartyNumber,
 	setDeadlineDetailsHasInterestedPartyNumber,
+	getDeadlineDetailsInterestedPartyNumberOrDefault,
 	getDeadlineDetailsInterestedPartyNumber,
 	setDeadlineDetailsInterestedPartyNumber,
 	getDeadlineDetailsSubmittingFor,
