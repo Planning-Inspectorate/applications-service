@@ -32,7 +32,7 @@
       {% else %} Relevant Representations </br> (Registration comments) {% endif %}
     </li>
 
-		{% if featureHideLink.hideExaminationTimetableLink != true %}
+		{% if featureFlag.allowExaminationTimetable %}
 			<li class="style-vertical-tabs__tab govuk-body-s {% if routes.project.pages.examinationTimetable.id == activeProjectLink %} style-vertical-tabs__tab--active {% endif %}">
 				{% if routes.project.pages.examinationTimetable.id != activeProjectLink %}
           <a href="{{ routes.project.directory + "/" + caseRef + routes.project.pages.examinationTimetable.route }}">

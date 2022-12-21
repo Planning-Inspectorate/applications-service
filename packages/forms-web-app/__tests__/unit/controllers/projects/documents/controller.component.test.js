@@ -117,7 +117,6 @@ describe('#getApplicationDocuments', () => {
 						}
 					],
 					hideAllExaminationDocumentsLink: true,
-					hideExaminationTimetableLink: true,
 					hideProjectInformationLink: true,
 					hideRecommendationAndDecisionLink: true,
 					pageOptions: [1, 2, 3, '...', 5, 'next'],

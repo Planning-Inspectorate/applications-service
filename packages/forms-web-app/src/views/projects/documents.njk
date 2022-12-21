@@ -51,7 +51,7 @@
 									url: "/projects/" + caseRef + "/representations"
 								},
 								{
-									hidden: featureHideLink.hideExaminationTimetableLink,
+									hidden: featureFlag.allowExaminationTimetable != true,
 									id: "project-examination-timetable",
 									name: "Examination timetable",
 									url: "/projects/" + caseRef + "/examination-timetable"
