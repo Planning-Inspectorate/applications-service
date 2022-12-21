@@ -11,7 +11,8 @@ const {
 
 const {
 	setDeadlineDetailsApplicant,
-	setDeadlineDetailsInterestedPartyNumber
+	setDeadlineDetailsInterestedPartyNumber,
+	getDeadlineDetailsInterestedPartyNumberOrDefault
 } = require('../../../../../src/controllers/examination/session/deadline');
 
 jest.mock(
@@ -30,7 +31,8 @@ jest.mock(
 
 jest.mock('../../../../../src/controllers/examination/session/deadline', () => ({
 	setDeadlineDetailsInterestedPartyNumber: jest.fn(),
-	setDeadlineDetailsApplicant: jest.fn()
+	setDeadlineDetailsApplicant: jest.fn(),
+	getDeadlineDetailsInterestedPartyNumberOrDefault: jest.fn()
 }));
 describe('controllers/examination/your-interested-party-number/controller', () => {
 	describe('#getYourInterestedPartyNumber', () => {
@@ -48,13 +50,24 @@ describe('controllers/examination/your-interested-party-number/controller', () =
 			describe('and there are no errors', () => {
 				beforeEach(() => {
 					getPageData.mockReturnValue({ text: 'mock page data' });
+					getDeadlineDetailsInterestedPartyNumberOrDefault.mockReturnValue('mock party number');
 					getYourInterestedPartyNumber(req, res);
 				});
-				it('should render the page', () => {
+				it('should get the page data', () => {
+					expect(getPageData).toHaveBeenCalledWith(req.session, req.query);
+				});
+				it('should get the interested party number', () => {
+					expect(getDeadlineDetailsInterestedPartyNumberOrDefault).toHaveBeenCalledWith(
+						req.session
+					);
+				});
+
+				it('should render the page with the page data and interested party number from session', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'pages/examination/your-interested-party-number',
 						{
-							text: 'mock page data'
+							text: 'mock page data',
+							interestedPartyNumber: 'mock party number'
 						}
 					);
 				});

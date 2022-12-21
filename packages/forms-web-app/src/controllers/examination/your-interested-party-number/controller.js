@@ -11,11 +11,15 @@ const {
 	setDeadlineDetailsInterestedPartyNumber,
 	setDeadlineDetailsApplicant
 } = require('../session/deadline');
+const { getDeadlineDetailsInterestedPartyNumberOrDefault } = require('../session/deadline/');
 
 const getYourInterestedPartyNumber = (req, res) => {
 	try {
 		const { session, query } = req;
 		const pageData = getPageData(session, query);
+
+		pageData.interestedPartyNumber = getDeadlineDetailsInterestedPartyNumberOrDefault(session);
+
 		return res.render(yourInterestedPartyNumber.view, pageData);
 	} catch {
 		return res.status(500).render('error/unhandled-exception');
