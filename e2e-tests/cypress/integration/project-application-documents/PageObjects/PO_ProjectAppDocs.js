@@ -1,3 +1,14 @@
+const filterKeys = {
+	'pre-application': {
+		accordionId: 'ui-checkbox-accordion__section-switch--stage-1',
+		checkboxId: 'ui-checkbox-accordion__checkboxes-section--stage-1'
+	},
+	'developers-application': {
+		accordionId: "ui-checkbox-accordion__checkboxes-section--category-Developer's Application",
+		checkboxId: "ui-checkbox-accordion__checkboxes-section--category-Developer's Application"
+	}
+};
+
 class PO_ProjectAppDocs {
 	enterTextIntoSearchField(inputData) {
 		cy.get('#searchTerm').clear();
@@ -113,24 +124,21 @@ class PO_ProjectAppDocs {
 			case 'hide all':
 				cy.get('#show-hide-all-filters').click();
 				break;
-			case 'project stage':
-				cy.get('[data-cy="project-stage"]').click({ force: true });
+			case Object.keys(filterKeys)[0]:
+				cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
 				break;
-			case 'document type':
-				cy.get('[data-cy="document-type"]').click({ force: true });
+			case Object.keys(filterKeys)[1]:
+				cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
 				break;
 		}
 	}
 
 	assertSectionLength(sectionName, sectionLength) {
-		switch (sectionName) {
-			case 'project stage':
-				cy.get('[name="stage"]').should('have.length', sectionLength);
-				break;
-			case 'document type':
-				cy.get('[name="type"]').should('have.length', sectionLength);
-				break;
-		}
+		if (Object.hasOwn(filterKeys, sectionName))
+			cy.get(`[id="${filterKeys[sectionName].checkboxId}"]`)
+				.find('.govuk-checkboxes__item')
+				.should('have.length', sectionLength);
+		else throw new Error('Test failed: is the filter name in filterKeys ');
 	}
 
 	clickApplyFilterButton() {

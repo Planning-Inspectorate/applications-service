@@ -4,233 +4,233 @@ Feature: Project Application documents page
 	I want to navigate to Project Application documents page
 	So that I can verify the functionality
 
-	Scenario: verify pagination functionality on Project application documents page
-		Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
-		When I click on "Documents" link
-		Then I verify below pagination is present on the page
-			| Data              |
-			| 1                 |
-			| 2                 |
-			| 3                 |
-			| Next set of pages |
-		Then I verify text "Showing 1 to 20 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "2" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-			| Next set of pages     |
-		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "3" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-		Then I verify text "Showing 41 to 46 of 46 results" is present on the page
-		Then I verify that only "6" results present on each page
+	# Scenario: verify pagination functionality on Project application documents page
+	# 	Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then I verify below pagination is present on the page
+	# 		| Data              |
+	# 		| 1                 |
+	# 		| 2                 |
+	# 		| 3                 |
+	# 		| Next set of pages |
+	# 	Then I verify text "Showing 1 to 20 of 46 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "2" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 21 to 40 of 46 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "3" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 	Then I verify text "Showing 41 to 46 of 46 results" is present on the page
+	# 	Then I verify that only "6" results present on each page
 
-	Scenario: verify Next/Previous pagination links on Project application documents page
-		Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
-		When I click on "Documents" link
-		And I navigate to page "Next set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-			| Next set of pages     |
-		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "Next set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-		Then I verify text "Showing 41 to 46 of 46 results" is present on the page
-		Then I verify that only "6" results present on each page
-		When I navigate to page "Previous set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-			| Next set of pages     |
-		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "Previous set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data              |
-			| 1                 |
-			| 2                 |
-			| 3                 |
-			| Next set of pages |
-		Then I verify text "Showing 1 to 20 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
+	# Scenario: verify Next/Previous pagination links on Project application documents page
+	# 	Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
+	# 	When I click on "Documents" link
+	# 	And I navigate to page "Next set of pages" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 21 to 40 of 46 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "Next set of pages" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 	Then I verify text "Showing 41 to 46 of 46 results" is present on the page
+	# 	Then I verify that only "6" results present on each page
+	# 	When I navigate to page "Previous set of pages" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 21 to 40 of 46 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "Previous set of pages" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data              |
+	# 		| 1                 |
+	# 		| 2                 |
+	# 		| 3                 |
+	# 		| Next set of pages |
+	# 	Then I verify text "Showing 1 to 20 of 46 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
 
-	Scenario: verify ellipsis on Project application documents page
-		Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-		When I click on "Documents" link
-		Then I verify below pagination is present on the page
-			| Data              |
-			| 1                 |
-			| 2                 |
-			| 3                 |
-			| ...               |
-			| 8                 |
-			| Next set of pages |
-		Then I verify text "Showing 1 to 20 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "3" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-			| 4                     |
-			| ...                   |
-			| 8                     |
-			| Next set of pages     |
-		Then I verify text "Showing 41 to 60 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "4" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| ...                   |
-			| 3                     |
-			| 4                     |
-			| 5                     |
-			| ...                   |
-			| 8                     |
-			| Next set of pages     |
-		Then I verify text "Showing 61 to 80 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "Previous set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-			| 4                     |
-			| ...                   |
-			| 8                     |
-			| Next set of pages     |
-		Then I verify text "Showing 41 to 60 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "Next set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| ...                   |
-			| 3                     |
-			| 4                     |
-			| 5                     |
-			| ...                   |
-			| 8                     |
-			| Next set of pages     |
-		Then I verify text "Showing 61 to 80 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "8" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| ...                   |
-			| 6                     |
-			| 7                     |
-			| 8                     |
-		Then I verify text "Showing 141 to 152 of 152 results" is present on the page
-		Then I verify that only "12" results present on each page
+	# Scenario: verify ellipsis on Project application documents page
+	# 	Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then I verify below pagination is present on the page
+	# 		| Data              |
+	# 		| 1                 |
+	# 		| 2                 |
+	# 		| 3                 |
+	# 		| ...               |
+	# 		| 8                 |
+	# 		| Next set of pages |
+	# 	Then I verify text "Showing 1 to 20 of 152 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "3" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 		| 4                     |
+	# 		| ...                   |
+	# 		| 8                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 41 to 60 of 152 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "4" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| ...                   |
+	# 		| 3                     |
+	# 		| 4                     |
+	# 		| 5                     |
+	# 		| ...                   |
+	# 		| 8                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 61 to 80 of 152 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "Previous set of pages" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| 2                     |
+	# 		| 3                     |
+	# 		| 4                     |
+	# 		| ...                   |
+	# 		| 8                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 41 to 60 of 152 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "Next set of pages" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| ...                   |
+	# 		| 3                     |
+	# 		| 4                     |
+	# 		| 5                     |
+	# 		| ...                   |
+	# 		| 8                     |
+	# 		| Next set of pages     |
+	# 	Then I verify text "Showing 61 to 80 of 152 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "8" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| ...                   |
+	# 		| 6                     |
+	# 		| 7                     |
+	# 		| 8                     |
+	# 	Then I verify text "Showing 141 to 152 of 152 results" is present on the page
+	# 	Then I verify that only "12" results present on each page
 
-	Scenario: verify documents available for project is in descending order by date published
-		Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-		When I click on "Documents" link
-		Then I can verify that the project documents displayed in descending order
-			| Date          | Stage           | Title                |
-			| 22 April 2019 | Pre-application | Material Change - 9  |
-			| 21 April 2019 | Pre-application | Material Change - 8  |
-			| 20 April 2019 | Pre-application | Material Change - 7  |
-			| 19 April 2019 | Pre-application | Material Change - 6  |
-			| 18 April 2019 | Pre-application | Material Change - 5  |
-			| 17 April 2019 | Pre-application | Material Change - 4  |
-			| 16 April 2019 | Pre-application | Material Change      |
-			| 16 April 2019 | Pre-application | Material Change      |
-			| 16 April 2019 | Pre-application | Material Change - 3  |
-			| 16 April 2019 | Pre-application | Material Change - 10 |
-			| 16 April 2019 | Pre-application | Material Change - 11 |
-			| 16 April 2019 | Pre-application | Material Change - 12 |
-			| 16 April 2019 | Pre-application | Material Change - 13 |
-			| 16 April 2019 | Pre-application | Material Change - 14 |
-			| 16 April 2019 | Pre-application | Material Change - 15 |
-			| 16 April 2019 | Pre-application | Material Change - 16 |
-			| 16 April 2019 | Pre-application | Material Change - 17 |
-			| 16 April 2019 | Pre-application | Material Change - 18 |
-			| 16 April 2019 | Pre-application | Material Change - 19 |
-			| 16 April 2019 | Pre-application | Material Change - 20 |
-
-
-	Scenario: verify no documents displayed for a project
-		Given I navigate to "Ho Ho Hooo" project Overview page
-		When I click on "Documents" link
-		Then I verify that no project application documents found text displayed on the page
+	# Scenario: verify documents available for project is in descending order by date published
+	# 	Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then I can verify that the project documents displayed in descending order
+	# 		| Date          | Stage           | Title                |
+	# 		| 22 April 2019 | Pre-application | Material Change - 9  |
+	# 		| 21 April 2019 | Pre-application | Material Change - 8  |
+	# 		| 20 April 2019 | Pre-application | Material Change - 7  |
+	# 		| 19 April 2019 | Pre-application | Material Change - 6  |
+	# 		| 18 April 2019 | Pre-application | Material Change - 5  |
+	# 		| 17 April 2019 | Pre-application | Material Change - 4  |
+	# 		| 16 April 2019 | Pre-application | Material Change      |
+	# 		| 16 April 2019 | Pre-application | Material Change      |
+	# 		| 16 April 2019 | Pre-application | Material Change - 3  |
+	# 		| 16 April 2019 | Pre-application | Material Change - 10 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 11 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 12 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 13 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 14 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 15 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 16 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 17 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 18 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 19 |
+	# 		| 16 April 2019 | Pre-application | Material Change - 20 |
 
 
-	Scenario: search returns matching documents
-		Given I navigate to "Cleve Hill Solar Park" project Overview page
-		When I click on "Documents" link
-		When I enter text "england" into search field
-		And I click on search button
-		Then I can verify that below project documents were returned
-			| Document                                                                                                                                                                                                                              |
-			| AdditionalSubmissionÃ¢â‚¬â€œAcceptedatthediscretionoftheExaminingAuthority-SignedStatementofCommonGroundbetweentheApplicantandNaturalEngland.(PDF,846KB)FromRemoved11December2019ExaminationAdditionalSubmissions                     |
-			| Deadline 4 Submission - 12.2.4 - Statement of Common Ground between the Applicant and Natural England (PDF, 403KB)                                                                                                                    |
-			| Deadline 4 Submission - 12.2.3 - Statement of Common Ground between the Applicant and Historic England (PDF, 197KB)                                                                                                                   |
-			| Deadline 2 Submission - 10.3.4 Updated Statement of Common Ground between the Applicant and Historic England (PDF, 283KB)                                                                                                             |
-			| Additional Submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Agreed Statement of Common Ground between the Applicant and Public Health England (PDF, 268KB)                                                   |
-			| Deadline 3 Submission - 11.4.9 Letters of no Impediment to the Applicant from Natural England (PDF, 470KB)                                                                                                                            |
-			| Deadline 3 Submission - A statement on Climate Change and Carbon Sequestration, supported by a partial transcript of evidence given by the Chairman of Natural England to the Environmental Audit Committee on 23rd July (PDF, 580KB) |
-			| 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB)                                                                                                                        |
-			| 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB)                                                                                                                                                     |
-		When I enter text "" into search field
-		And I click on search button
-		Then I verify text "Showing 1 to 20 of 987 results" is present on the page
+	# Scenario: verify no documents displayed for a project
+	# 	Given I navigate to "Ho Ho Hooo" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then I verify that no project application documents found text displayed on the page
 
-	Scenario: search returns no matching documents
-		Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-		When I click on "Documents" link
-		When I enter text "search" into search field
-		And I click on search button
-		Then I verify that no search term documents found text displayed on the page
-		And I click on clear search link
-		When I enter text "attachment" into search field
-		And I click on search button
-		Then I verify text "Showing 1 to 20 of 149 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "8" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| ...                   |
-			| 6                     |
-			| 7                     |
-			| 8                     |
-		Then I verify text "Showing 141 to 149 of 149 results" is present on the page
-		Then I verify that only "9" results present on each page
+
+	# Scenario: search returns matching documents
+	# 	Given I navigate to "Cleve Hill Solar Park" project Overview page
+	# 	When I click on "Documents" link
+	# 	When I enter text "england" into search field
+	# 	And I click on search button
+	# 	Then I can verify that below project documents were returned
+	# 		| Document                                                                                                                                                                                                                              |
+	# 		| AdditionalSubmissionÃ¢â‚¬â€œAcceptedatthediscretionoftheExaminingAuthority-SignedStatementofCommonGroundbetweentheApplicantandNaturalEngland.(PDF,846KB)FromRemoved11December2019ExaminationAdditionalSubmissions                     |
+	# 		| Deadline 4 Submission - 12.2.4 - Statement of Common Ground between the Applicant and Natural England (PDF, 403KB)                                                                                                                    |
+	# 		| Deadline 4 Submission - 12.2.3 - Statement of Common Ground between the Applicant and Historic England (PDF, 197KB)                                                                                                                   |
+	# 		| Deadline 2 Submission - 10.3.4 Updated Statement of Common Ground between the Applicant and Historic England (PDF, 283KB)                                                                                                             |
+	# 		| Additional Submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Agreed Statement of Common Ground between the Applicant and Public Health England (PDF, 268KB)                                                   |
+	# 		| Deadline 3 Submission - 11.4.9 Letters of no Impediment to the Applicant from Natural England (PDF, 470KB)                                                                                                                            |
+	# 		| Deadline 3 Submission - A statement on Climate Change and Carbon Sequestration, supported by a partial transcript of evidence given by the Chairman of Natural England to the Environmental Audit Committee on 23rd July (PDF, 580KB) |
+	# 		| 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB)                                                                                                                        |
+	# 		| 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB)                                                                                                                                                     |
+	# 	When I enter text "" into search field
+	# 	And I click on search button
+	# 	Then I verify text "Showing 1 to 20 of 987 results" is present on the page
+
+	# Scenario: search returns no matching documents
+	# 	Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
+	# 	When I click on "Documents" link
+	# 	When I enter text "search" into search field
+	# 	And I click on search button
+	# 	Then I verify that no search term documents found text displayed on the page
+	# 	And I click on clear search link
+	# 	When I enter text "attachment" into search field
+	# 	And I click on search button
+	# 	Then I verify text "Showing 1 to 20 of 149 results" is present on the page
+	# 	Then I verify that only "20" results present on each page
+	# 	When I navigate to page "8" of the results
+	# 	Then I verify below pagination is present on the page
+	# 		| Data                  |
+	# 		| Previous set of pages |
+	# 		| 1                     |
+	# 		| ...                   |
+	# 		| 6                     |
+	# 		| 7                     |
+	# 		| 8                     |
+	# 	Then I verify text "Showing 141 to 149 of 149 results" is present on the page
+	# 	Then I verify that only "9" results present on each page
 
 	Scenario: Option to show filters
 		Given I navigate to "Cleve Hill Solar Park" project Overview page
@@ -241,23 +241,32 @@ Feature: Project Application documents page
 		And I click on "hide all" section
 		Then all the filter stages should "not be visible" by default
 
-# Scenario: Option to show project stage filter
-#     Given I navigate to "Cleve Hill Solar Park" project Overview page
-#     When I click on "Documents" link
-#     Then all the filter stages should "not be visible" by default
-#     And I click on "project stage" section
-#     Then I verify that the "project stage" section expanded with 6 filters
-#     And I click on "project stage" section
-#     Then all the filter stages should "not be visible" by default
+	Scenario: Option to show pre-application filter
+		Given I navigate to "Cleve Hill Solar Park" project Overview page
+		When I click on "Documents" link
+		Then all the filter stages should "not be visible" by default
+		And I click on "pre-application" section
+		Then I verify that the "pre-application" section expanded with 2 filters
+		And I click on "pre-application" section
+		Then all the filter stages should "not be visible" by default
 
-# Scenario: Option to show document type filter
-#     Given I navigate to "Cleve Hill Solar Park" project Overview page
-#     When I click on "Documents" link
-#     Then all the filter stages should "not be visible" by default
-#     And I click on "document type" section
-#     Then I verify that the "document type" section expanded with 6 filters
-#     And I click on "document type" section
-#     Then all the filter stages should "not be visible" by default
+	Scenario: Option to show developers-application type filter
+		Given I navigate to "Cleve Hill Solar Park" project Overview page
+		When I click on "Documents" link
+		Then all the filter stages should "not be visible" by default
+		And I click on "developers-application" section
+		Then I verify that the "developers-application" section expanded with 7 filters
+		And I click on "developers-application" section
+		Then all the filter stages should "not be visible" by default
+
+	Scenario: Option to show acceptance type filter
+		Given I navigate to "Cleve Hill Solar Park" project Overview page
+		When I click on "Documents" link
+		Then all the filter stages should "not be visible" by default
+		And I click on "acceptance" section
+		Then I verify that the "acceptance" section expanded with 7 filters
+		And I click on "acceptance" section
+		Then all the filter stages should "not be visible" by default
 
 # Scenario: Option to show document type filters including everything else checkbox
 #     Given I navigate to "Cleve Hill Solar Park" project Overview page
