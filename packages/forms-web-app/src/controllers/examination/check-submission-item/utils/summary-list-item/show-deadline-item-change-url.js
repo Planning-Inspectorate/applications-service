@@ -1,12 +1,11 @@
 const { getDeadlineItems } = require('../../../session/deadline/items');
 const { getSubmissionItems } = require('../../../session/submission-items-session');
 
-const getDeadlineItemChangeUrl = (session, deadlineItemChangeUrl) => {
+const showDeadlineItemChangeUrl = (session) => {
 	const dealineItems = getDeadlineItems(session);
 	const submissionItems = getSubmissionItems(session);
-	if (submissionItems.length === dealineItems.length) deadlineItemChangeUrl = '';
 
-	return deadlineItemChangeUrl;
+	return submissionItems.length !== dealineItems.length;
 };
 
-module.exports = { getDeadlineItemChangeUrl };
+module.exports = { showDeadlineItemChangeUrl };

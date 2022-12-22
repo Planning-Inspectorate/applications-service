@@ -1,5 +1,5 @@
 const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
-const { getDeadlineItemChangeUrl } = require('./get-deadline-item-change-url');
+const { showDeadlineItemChangeUrl } = require('./show-deadline-item-change-url');
 const { editQuery } = require('./config');
 const {
 	routesConfig: {
@@ -16,10 +16,11 @@ const getSummaryListItemSubmissionItem = (submissionItem, session) => {
 	if (!submissionItemValueText)
 		throw new Error('Submission item does not have a submission item value');
 
-	const deadlineItemChangeUrl = getDeadlineItemChangeUrl(
-		session,
-		`${directory}${selectDeadline.route}${editQuery}`
-	);
+	let deadlineItemChangeUrl = `${directory}${selectDeadline.route}${editQuery}`;
+
+	if (showDeadlineItemChangeUrl(session) === false) {
+		deadlineItemChangeUrl = '';
+	}
 
 	return getSummaryListItem('Deadline item', submissionItemValueText, deadlineItemChangeUrl);
 };
