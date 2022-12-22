@@ -12,8 +12,8 @@
 
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
-    { src: "/public/scripts/checkbox-accordion.script.js" }
-  ), initiateScriptsConfig) %}
+		{ src: "/public/scripts/checkbox-accordion.script.js" }
+	), initiateScriptsConfig) %}
 {% endblock %}
 
 {% block content %}
@@ -127,7 +127,7 @@
 						</div>
 
 						{{ govukButton({
-							attributes: { "enterkeyhint": "search" },
+							attributes: { "enterkeyhint": "search", "id": "search-button" },
 							classes: "govuk-!-margin-0",
 							text: "Search",
 							type: "Submit"
@@ -158,12 +158,13 @@
 					) }}
 
 				{% elseif documents.length == 0 and queryUrl != '' %}
-					<p>No documents were found matching your search term and filters.</p>
+					<p data-cy="no-docs-text">No documents were found matching your search term and filters.</p>
 					<p>Would you like to clear your search and filters to view all available documents instead?</p>
-					<p><a href="{{ baseUrl }}/{{ pageUrl }}">Clear search and filters</a></p>
+					<p><a href="{{ baseUrl }}/{{ pageUrl }}"
+								data-cy="clear-search">Clear search and filters</a></p>
 
 				{% elseif documents.length == 0 %}
-					<p>There are no project application documents available to display at the moment.</p>
+					<p data-cy="no-docs-text">There are no project application documents available to display at the moment.</p>
 					<p><a href="{{ baseUrl }}">Return to the project overview</a></p>
 				{% endif %}
 			</div>

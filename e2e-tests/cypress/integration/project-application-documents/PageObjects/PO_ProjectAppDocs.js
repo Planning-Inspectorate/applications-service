@@ -1,13 +1,13 @@
 class PO_ProjectAppDocs {
 	enterTextIntoSearchField(inputData) {
-		cy.get('#search').clear();
+		cy.get('#searchTerm').clear();
 		if (inputData) {
-			cy.get('#search').type(inputData);
+			cy.get('#searchTerm').type(inputData);
 		}
 	}
 
 	clickOnSearch() {
-		cy.get('[data-cy="search-button"]').click();
+		cy.get('#search-button').click();
 	}
 
 	assertResultsPresentOnPage(table) {
@@ -41,7 +41,7 @@ class PO_ProjectAppDocs {
 	}
 
 	assertResultsPerPage(resultsPerPage) {
-		cy.get('.ui-results-list__item').should('have.length', resultsPerPage);
+		cy.get('.section-results').find('li').should('have.length', resultsPerPage);
 	}
 
 	verifyDocumentsDisplayedinDescendingOrder(table) {
@@ -79,13 +79,15 @@ class PO_ProjectAppDocs {
 
 	verifyResultsReturned(table) {
 		const contents = table.hashes();
-		cy.get('.ui-results-list__item').each(($e1, index) => {
-			const actualText = $e1.text();
-			const expectedText = contents[index].Document;
-			expect(actualText.replace(/\s/g, '').trim()).to.contain(
-				expectedText.replace(/\s/g, '').trim()
-			);
-		});
+		cy.get('.section-results')
+			.find('li')
+			.each(($e1, index) => {
+				const actualText = $e1.text();
+				const expectedText = contents[index].Document;
+				expect(actualText.replace(/\s/g, '').trim()).to.contain(
+					expectedText.replace(/\s/g, '').trim()
+				);
+			});
 	}
 
 	clickOnClearSearch() {
@@ -106,10 +108,10 @@ class PO_ProjectAppDocs {
 	clickSection(caseCondition) {
 		switch (caseCondition) {
 			case 'show all':
-				cy.get('.govuk-accordion__show-all-text').click();
+				cy.get('#show-hide-all-filters').click();
 				break;
 			case 'hide all':
-				cy.get('.govuk-accordion__show-all-text').click();
+				cy.get('#show-hide-all-filters').click();
 				break;
 			case 'project stage':
 				cy.get('[data-cy="project-stage"]').click({ force: true });
@@ -146,4 +148,5 @@ class PO_ProjectAppDocs {
 			});
 	}
 }
+
 export default PO_ProjectAppDocs;
