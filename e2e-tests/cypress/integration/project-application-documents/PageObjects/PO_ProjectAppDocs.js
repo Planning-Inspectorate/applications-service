@@ -1,11 +1,38 @@
+const accordionId = 'ui-checkbox-accordion__section-switch--';
+const checkboxId = 'ui-checkbox-accordion__checkboxes-section--';
+
 const filterKeys = {
 	'pre-application': {
-		accordionId: 'ui-checkbox-accordion__section-switch--stage-1',
-		checkboxId: 'ui-checkbox-accordion__checkboxes-section--stage-1'
+		accordionId: accordionId + 'stage-1',
+		checkboxId: checkboxId + 'stage-1'
 	},
 	'developers-application': {
-		accordionId: "ui-checkbox-accordion__checkboxes-section--category-Developer's Application",
-		checkboxId: "ui-checkbox-accordion__checkboxes-section--category-Developer's Application"
+		accordionId: accordionId + "category-Developer's Application",
+		checkboxId: checkboxId + "category-Developer's Application"
+	},
+	acceptance: {
+		accordionId: accordionId + 'stage-2',
+		checkboxId: checkboxId + 'stage-2'
+	},
+	'pre-examination': {
+		accordionId: accordionId + 'stage-3',
+		checkboxId: checkboxId + 'stage-3'
+	},
+	examination: {
+		accordionId: accordionId + 'stage-4',
+		checkboxId: checkboxId + 'stage-4'
+	},
+	recommendation: {
+		accordionId: accordionId + 'stage-5',
+		checkboxId: checkboxId + 'stage-5'
+	},
+	decision: {
+		accordionId: accordionId + 'stage-6',
+		checkboxId: checkboxId + 'stage-6'
+	},
+	'post-decision': {
+		accordionId: accordionId + 'stage-7',
+		checkboxId: checkboxId + 'stage-7'
 	}
 };
 
@@ -117,20 +144,11 @@ class PO_ProjectAppDocs {
 	}
 
 	clickSection(caseCondition) {
-		switch (caseCondition) {
-			case 'show all':
-				cy.get('#show-hide-all-filters').click();
-				break;
-			case 'hide all':
-				cy.get('#show-hide-all-filters').click();
-				break;
-			case Object.keys(filterKeys)[0]:
-				cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
-				break;
-			case Object.keys(filterKeys)[1]:
-				cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
-				break;
-		}
+		if (caseCondition === 'show all' || caseCondition === 'hide all')
+			cy.get('#show-hide-all-filters').click();
+		else if (Object.hasOwn(filterKeys, caseCondition))
+			cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
+		else throw new Error(`Test failed: is the filter ${caseCondition} in filterKeys`);
 	}
 
 	assertSectionLength(sectionName, sectionLength) {
@@ -138,7 +156,7 @@ class PO_ProjectAppDocs {
 			cy.get(`[id="${filterKeys[sectionName].checkboxId}"]`)
 				.find('.govuk-checkboxes__item')
 				.should('have.length', sectionLength);
-		else throw new Error('Test failed: is the filter name in filterKeys ');
+		else throw new Error(`Test failed: is the filter ${sectionName} in filterKeys`);
 	}
 
 	clickApplyFilterButton() {
@@ -154,6 +172,10 @@ class PO_ProjectAppDocs {
 			.then((id) => {
 				cy.get('#' + id).click();
 			});
+	}
+
+	filterNameWithSumOfItems(sectionName, label, sum) {
+		cy.get(`[for="${filterKeys[sectionName].accordionId}"]`).contains(`${label} (${sum})`);
 	}
 }
 

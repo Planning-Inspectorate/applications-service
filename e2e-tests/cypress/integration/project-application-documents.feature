@@ -232,6 +232,8 @@ Feature: Project Application documents page
 	# 	Then I verify text "Showing 141 to 149 of 149 results" is present on the page
 	# 	Then I verify that only "9" results present on each page
 
+
+
 	Scenario: Option to show filters
 		Given I navigate to "Cleve Hill Solar Park" project Overview page
 		When I click on "Documents" link
@@ -241,32 +243,26 @@ Feature: Project Application documents page
 		And I click on "hide all" section
 		Then all the filter stages should "not be visible" by default
 
-	Scenario: Option to show pre-application filter
-		Given I navigate to "Cleve Hill Solar Park" project Overview page
-		When I click on "Documents" link
-		Then all the filter stages should "not be visible" by default
-		And I click on "pre-application" section
-		Then I verify that the "pre-application" section expanded with 2 filters
-		And I click on "pre-application" section
-		Then all the filter stages should "not be visible" by default
 
-	Scenario: Option to show developers-application type filter
+	Scenario Outline: Check <name> flter exist
 		Given I navigate to "Cleve Hill Solar Park" project Overview page
 		When I click on "Documents" link
+		Then I verify that the "<name>" section expanded with <filterAmount> filters
+		And I verify the filter "<name>" name is "<expectedLabel>" <sum>
+		And I click on "<name>" section
 		Then all the filter stages should "not be visible" by default
-		And I click on "developers-application" section
-		Then I verify that the "developers-application" section expanded with 7 filters
-		And I click on "developers-application" section
-		Then all the filter stages should "not be visible" by default
+		Examples:
+			| name                   | filterAmount | expectedLabel           | sum |
+			| pre-application        | 2            | Pre-application         | 7   |
+			| developers-application | 7            | Developer's Application | 258 |
+			| acceptance             | 11           | Acceptance              | 266 |
+			| pre-examination        | 6            | Pre-examination         | 24  |
+			| examination            | 20           | Examination             | 671 |
+			| recommendation         | 1            | Recommendation          | 1   |
+			| decision               | 5            | Decision                | 16  |
+			| post-decision          | 1            | Post-decision           | 2   |
 
-	Scenario: Option to show acceptance type filter
-		Given I navigate to "Cleve Hill Solar Park" project Overview page
-		When I click on "Documents" link
-		Then all the filter stages should "not be visible" by default
-		And I click on "acceptance" section
-		Then I verify that the "acceptance" section expanded with 7 filters
-		And I click on "acceptance" section
-		Then all the filter stages should "not be visible" by default
+
 
 # Scenario: Option to show document type filters including everything else checkbox
 #     Given I navigate to "Cleve Hill Solar Park" project Overview page
