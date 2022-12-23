@@ -117,15 +117,26 @@ class PO_ProjectAppDocs {
 
 	verifyResultsReturned(table) {
 		const contents = table.hashes();
-		cy.get('.section-results')
-			.find('li')
-			.each(($e1, index) => {
-				const actualText = $e1.text();
-				const expectedText = contents[index].Document;
-				expect(actualText.replace(/\s/g, '').trim()).to.contain(
-					expectedText.replace(/\s/g, '').trim()
-				);
-			});
+
+		cy.get('.section-results > li').each(($e1, index) => {
+			const actualText = $e1.text();
+			//  Document
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Document.replace(/\s/g, '').trim()
+			);
+			//  Date
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Date.replace(/\s/g, '').trim()
+			);
+			//  Stage
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Stage.replace(/\s/g, '').trim()
+			);
+			//  Title
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Title.replace(/\s/g, '').trim()
+			);
+		});
 	}
 
 	clickOnClearSearch() {
@@ -164,14 +175,7 @@ class PO_ProjectAppDocs {
 	}
 
 	selectCheckBox(checkBoxName) {
-		window.sessionStorage['accordion-default-content-1'] = true;
-		window.sessionStorage['accordion-default-content-2'] = true;
-		cy.reload();
-		cy.contains('label', checkBoxName)
-			.invoke('attr', 'for')
-			.then((id) => {
-				cy.get('#' + id).click();
-			});
+		cy.get(`[id="${checkBoxName}"]`).check();
 	}
 
 	filterNameWithSumOfItems(sectionName, label, sum) {

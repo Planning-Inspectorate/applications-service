@@ -234,66 +234,49 @@ Feature: Project Application documents page
 
 
 
-	Scenario: Option to show filters
+	# Scenario: Option to show filters
+	# 	Given I navigate to "Cleve Hill Solar Park" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then all the filter stages should "not be visible" by default
+	# 	And I click on "show all" section
+	# 	Then all the filter stages should "be visible" by default
+	# 	And I click on "hide all" section
+	# 	Then all the filter stages should "not be visible" by default
+
+
+	# Scenario Outline: Check <name> flter exist
+	# 	Given I navigate to "Cleve Hill Solar Park" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then I verify that the "<name>" section expanded with <filterAmount> filters
+	# 	And I verify the filter "<name>" name is "<expectedLabel>" <sum>
+	# 	And I click on "<name>" section
+	# 	Then all the filter stages should "not be visible" by default
+	# 	Examples:
+	# 		| name                   | filterAmount | expectedLabel           | sum |
+	# 		| pre-application        | 2            | Pre-application         | 7   |
+	# 		| developers-application | 7            | Developer's Application | 258 |
+	# 		| acceptance             | 11           | Acceptance              | 266 |
+	# 		| pre-examination        | 6            | Pre-examination         | 24  |
+	# 		| examination            | 20           | Examination             | 671 |
+	# 		| recommendation         | 1            | Recommendation          | 1   |
+	# 		| decision               | 5            | Decision                | 16  |
+	# 		| post-decision          | 1            | Post-decision           | 2   |
+
+
+	Scenario: Option to show pre-application filters including everything else checkbox
 		Given I navigate to "Cleve Hill Solar Park" project Overview page
 		When I click on "Documents" link
 		Then all the filter stages should "not be visible" by default
-		And I click on "show all" section
-		Then all the filter stages should "be visible" by default
-		And I click on "hide all" section
-		Then all the filter stages should "not be visible" by default
-
-
-	Scenario Outline: Check <name> flter exist
-		Given I navigate to "Cleve Hill Solar Park" project Overview page
-		When I click on "Documents" link
-		Then I verify that the "<name>" section expanded with <filterAmount> filters
-		And I verify the filter "<name>" name is "<expectedLabel>" <sum>
-		And I click on "<name>" section
-		Then all the filter stages should "not be visible" by default
-		Examples:
-			| name                   | filterAmount | expectedLabel           | sum |
-			| pre-application        | 2            | Pre-application         | 7   |
-			| developers-application | 7            | Developer's Application | 258 |
-			| acceptance             | 11           | Acceptance              | 266 |
-			| pre-examination        | 6            | Pre-examination         | 24  |
-			| examination            | 20           | Examination             | 671 |
-			| recommendation         | 1            | Recommendation          | 1   |
-			| decision               | 5            | Decision                | 16  |
-			| post-decision          | 1            | Post-decision           | 2   |
-
-
-
-# Scenario: Option to show document type filters including everything else checkbox
-#     Given I navigate to "Cleve Hill Solar Park" project Overview page
-#     When I click on "Documents" link
-#     Then all the filter stages should "not be visible" by default
-#     And I click on "document type" section
-#     And I select "Everything else (339)" checkbox
-#     And I click on Apply button to apply filters
-#     Then I can verify that below project documents were returned
-#         | Document                                                                                                                         |
-#         | CorrectionOrderforTheCleveHillSolarParkOrder2020.Thiscameintoforceon11August2021(PDF,82KB)FromRemoved8December2021DecidedDecided |
-#         | Details of the corrections made by the Secretary of State to The Cleve Hill Solar Park Order 2020 (PDF, 132KB)                   |
-#         | Recording of Issue Specific Hearing 1 - Action Points - 17 July 2019 (PDF, 32KB)                                                 |
-#         | Removed (PDF, 1MB)                                                                                                               |
-#         | Regulation 31 Notice to Accept Application (PDF, 72KB)                                                                           |
-#         | Recommendation Report (PDF, 4MB)                                                                                                 |
-#         | Notification of Decision Letter (PDF, 117KB)                                                                                     |
-#         | Secretary of State's Decision letter and Statement of Reasons (PDF, 450KB)                                                       |
-#         | Removed (PDF, 3MB)                                                                                                               |
-#         | Response to the Secretary of State consultation. Late submission (PDF, 250KB)                                                    |
-#         | Book of Reference Revision E (Clean) - Response to the Secretary of State consultation (PDF, 37KB)                               |
-#         | Response to the Secretary of State consultation (PDF, 145KB)                                                                     |
-#         | Response to the Secretary of State consultation (PDF, 141KB)                                                                     |
-#         | Schedule of Changes to Book of Reference - Response to the Secretary of State consultation (PDF, 34KB)                           |
-#         | Land Plans Revision C - Response to the Secretary of State consultation (PDF, 11MB)                                              |
-#         | Book of Refence Revision E (Tracked) - Response to the Secretary of State consultation (PDF, 37KB)                               |
-#         | Response to the Secretary of State consultation (PDF, 409KB)                                                                     |
-#         | Response to the Secretary of State consultation (PDF, 179KB)                                                                     |
-#         | Response to the Secretary of State consultation (PDF, 209KB)                                                                     |
-#         | Letter from the Secretary of State for Business, Energy and Industrial Strategy seeking comments from the Applicant (PDF, 270KB) |
-#     And I click on "document type" section
+		And I click on "pre-application" section
+		And I select "stage-1" checkbox
+		And I click on Apply button to apply filters
+		Then I can verify that below project documents were returned
+			| Document                                                                           | Date             | Stage           | Title                                   |
+			| Late scoping consultation response (PDF, 79KB)                                     | 25 January 2018  | Pre-application | Environmental Impact Assessment Scoping |
+			| Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB)                    | 19 January 2018  | Pre-application | Environmental Impact Assessment Scoping |
+			| Late scoping consultation response (PDF, 191KB)                                    | 11 January 2018  | Pre-application | Environmental Impact Assessment Scoping |
+			| Late scoping consultation response (PDF, 722KB)                                    | 11 January 2018  | Pre-application | Environmental Impact Assessment Scoping |
+			| Scoping Report submitted to the Secretary of State on 11 December 2017 (PDF, 38MB) | 12 November 2017 | Pre-application | Environmental Impact Assessment Scoping |
 
 # Scenario: filter by project stage
 #     Given I navigate to "Cleve Hill Solar Park" project Overview page
