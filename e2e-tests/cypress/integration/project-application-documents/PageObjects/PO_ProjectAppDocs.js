@@ -120,6 +120,14 @@ class PO_ProjectAppDocs {
 
 		cy.get('.section-results > li').each(($e1, index) => {
 			const actualText = $e1.text();
+
+			if (!contents[index].Document) throw new Error(`No Document supplied`);
+			if (!contents[index].Date)
+				throw new Error(`No Date (Index - ${index}, Document - ${contents[index].Document})`);
+			if (!contents[index].Stage)
+				throw new Error(`No Stage (Index - ${index}, Document - ${contents[index].Document})`);
+			if (!contents[index].Title)
+				throw new Error(`No Title (Index - ${index}, Document - ${contents[index].Document})`);
 			//  Document
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(
 				contents[index].Document.replace(/\s/g, '').trim()
@@ -157,13 +165,13 @@ class PO_ProjectAppDocs {
 	clickSection(caseCondition) {
 		if (caseCondition === 'show all' || caseCondition === 'hide all')
 			cy.get('#show-hide-all-filters').click();
-		else if (Object.hasOwn(filterKeys, caseCondition))
+		else if (Object.hasOwnProperty.call(filterKeys, caseCondition))
 			cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
 		else throw new Error(`Test failed: is the filter ${caseCondition} in filterKeys`);
 	}
 
 	assertSectionLength(sectionName, sectionLength) {
-		if (Object.hasOwn(filterKeys, sectionName))
+		if (Object.hasOwnProperty.call(filterKeys, sectionName))
 			cy.get(`[id="${filterKeys[sectionName].checkboxId}"]`)
 				.find('.govuk-checkboxes__item')
 				.should('have.length', sectionLength);
