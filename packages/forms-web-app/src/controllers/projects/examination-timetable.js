@@ -41,6 +41,9 @@ const eventSubmitButtonActive = (timetable) => {
 	);
 };
 
+const displayEvents = (dateOfNonAcceptance) =>
+	dateOfNonAcceptance && getDate() >= new Date(dateOfNonAcceptance);
+
 const getEvents = async (caseRef) => {
 	const defaultValue = [];
 	if (!caseRef || typeof caseRef !== 'string') return defaultValue;
@@ -142,9 +145,11 @@ const getExaminationTimetable = async (req, res) => {
 
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
-	const activeProjectLink = project.pages.examinationTimetable.id;
-	const events = await getEvents(req.session.caseRef);
+	const events = displayEvents(appData.dateOfNonAcceptance)
+		? await getEvents(req.session.caseRef)
+		: [];
 	if (events.length > 0) req.session.allEvents = events;
+	const activeProjectLink = project.pages.examinationTimetable.id;
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;
 	const projectUrl = `${project.directory}/${caseRef}`;
 	const projectEmailSignUpUrl = `${projectUrl}#project-section-email-sign-up`;
