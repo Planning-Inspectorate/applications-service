@@ -17,8 +17,8 @@ const { editQuery } = require('../../utils/queryMode');
 
 const getAddAnotherDeadlineItem = (req, res) => {
 	try {
-		const { session } = req;
-		return res.render(addAnotherDeadlineItem.view, getPageData(session));
+		const { query, session } = req;
+		return res.render(addAnotherDeadlineItem.view, getPageData(session, query));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -45,11 +45,11 @@ const postChangeADeadlineItem = (req, res) => {
 
 const postAddAnotherDeadlineItem = (req, res) => {
 	try {
-		const { body, session } = req;
+		const { body, session, query } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[addAnotherDeadlineItem.id] || Object.keys(errors).length > 0) {
-			const setPageData = getPageData(session);
+			const setPageData = getPageData(session, query);
 			return res.render(addAnotherDeadlineItem.view, {
 				...setPageData,
 				errors,

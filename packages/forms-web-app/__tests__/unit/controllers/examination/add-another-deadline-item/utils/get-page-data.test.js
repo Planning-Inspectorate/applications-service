@@ -8,6 +8,9 @@ const {
 const {
 	hasMoreDeadlineItemsToSubmit
 } = require('../../../../../../src/controllers/examination/add-another-deadline-item/utils/hasMoreDeadlineItemsToSubmit');
+const {
+	getBackLinkUrl
+} = require('../../../../../../src/controllers/examination/add-another-deadline-item/utils/get-back-link-url');
 
 jest.mock(
 	'../../../../../../src/controllers/examination/add-another-deadline-item/utils/mapSubmissionItems',
@@ -22,6 +25,13 @@ jest.mock(
 		hasMoreDeadlineItemsToSubmit: jest.fn()
 	})
 );
+
+jest.mock(
+	'../../../../../../src/controllers/examination/add-another-deadline-item/utils/get-back-link-url',
+	() => ({
+		getBackLinkUrl: jest.fn()
+	})
+);
 describe('#getPageData', () => {
 	describe('When getting the page data for add another deadline item', () => {
 		describe('and there are no issues', () => {
@@ -32,6 +42,7 @@ describe('#getPageData', () => {
 			beforeEach(() => {
 				mapSubmissionItems.mockReturnValue(mockedSubmissionItems);
 				hasMoreDeadlineItemsToSubmit.mockReturnValue(mockedDeadlineItemsToSubmit);
+				getBackLinkUrl.mockReturnValue('mock back link');
 				result = getPageData(mockSession);
 			});
 			it('should return the page data', () => {
@@ -52,7 +63,8 @@ describe('#getPageData', () => {
 					moreDeadlineItems: 'mocked deadline items to submit',
 					pageTitle: 'You added one deadline item',
 					submissionItems: 'mock items',
-					title: 'You added one deadline item'
+					title: 'You added one deadline item',
+					backLinkUrl: 'mock back link'
 				});
 			});
 		});
@@ -64,6 +76,7 @@ describe('#getPageData', () => {
 			beforeEach(() => {
 				mapSubmissionItems.mockReturnValue(mockedSubmissionItems);
 				hasMoreDeadlineItemsToSubmit.mockReturnValue(mockedDeadlineItemsToSubmit);
+				getBackLinkUrl.mockReturnValue('mock back link');
 				result = getPageData(mockSession);
 			});
 			it('should return the page data', () => {
@@ -84,7 +97,8 @@ describe('#getPageData', () => {
 					moreDeadlineItems: 'mocked deadline items to submit',
 					pageTitle: 'You added one deadline item',
 					hasNoSubmissionItems: true,
-					title: 'You added one deadline item'
+					title: 'You added one deadline item',
+					backLinkUrl: 'mock back link'
 				});
 			});
 		});

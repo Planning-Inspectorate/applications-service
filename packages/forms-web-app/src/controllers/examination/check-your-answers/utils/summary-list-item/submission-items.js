@@ -1,6 +1,15 @@
 const { getSubmissionItems } = require('../../../session/submission-items-session');
 const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
 
+const {
+	routesConfig: {
+		examination: {
+			directory,
+			pages: { addAnotherDeadlineItem }
+		}
+	}
+} = require('../../../../../routes/config');
+const { editQuery } = require('../../../../utils/queryMode');
 const getSubmissionItemsValue = (submissionItems) => {
 	const submissionItemsList = submissionItems.reduce(
 		(submissionItemList, submissionItem) =>
@@ -14,7 +23,8 @@ const getSubmissionItemsValue = (submissionItems) => {
 const getSummaryListItemSubmissionItems = (session) => {
 	return getSummaryListItem(
 		'Deadline items added',
-		getSubmissionItemsValue(getSubmissionItems(session))
+		getSubmissionItemsValue(getSubmissionItems(session)),
+		`${directory}${addAnotherDeadlineItem.route}${editQuery}`
 	);
 };
 
