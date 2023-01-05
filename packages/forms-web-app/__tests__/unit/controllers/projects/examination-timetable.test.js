@@ -1,3 +1,4 @@
+const moment = require('moment');
 const {
 	getExaminationTimetable,
 	postExaminationTimetable
@@ -28,7 +29,8 @@ describe('controllers/projects/examination-timetable', () => {
 				projectName: 'ABC',
 				appData: {
 					ConfirmedStartOfExamination: '2022-09-08',
-					DateTimeExaminationEnds: '2022-09-08T00:00:00.000Z'
+					DateTimeExaminationEnds: '2022-09-08T00:00:00.000Z',
+					dateOfNonAcceptance: moment()
 				}
 			}
 		};
