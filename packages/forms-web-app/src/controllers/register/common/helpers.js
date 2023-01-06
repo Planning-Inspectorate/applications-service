@@ -4,14 +4,20 @@ const keyMap = (key) => {
 	if (key === 'myself') {
 		response = {
 			upperCaseKey: key.toUpperCase(),
-			sessionKey: 'mySelfRegdata'
+			sessionKey: 'mySelfRegdata',
+			viewKey: {
+				email: 'EMAIL_ADDRESS'
+			}
 		};
 	}
 
 	if (key === 'organisation') {
 		response = {
 			upperCaseKey: key.toUpperCase(),
-			sessionKey: 'orgRegdata'
+			sessionKey: 'orgRegdata',
+			viewKey: {
+				email: 'EMAIL'
+			}
 		};
 	}
 

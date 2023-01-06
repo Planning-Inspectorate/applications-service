@@ -1,6 +1,6 @@
-const { VIEW } = require('../../../lib/views');
-const { getKeyFromUrl, keyMap } = require('./helpers');
-const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post');
+const { VIEW } = require('../../../../lib/views');
+const { getKeyFromUrl, keyMap } = require('../helpers');
+const { sanitiseFormPostResponse } = require('../../../../utils/sanitise-form-post');
 
 const get = (req, res) => {
 	try {
