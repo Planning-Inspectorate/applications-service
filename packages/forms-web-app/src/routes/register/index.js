@@ -21,5 +21,6 @@ router.use('/', startRouter);
 
 router.use('/myself', commonRouter);
 router.use('/organisation', commonRouter);
+router.use('/agent', commonRouter);
 
 module.exports = router;

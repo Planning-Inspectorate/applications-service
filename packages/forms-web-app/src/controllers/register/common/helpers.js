@@ -1,4 +1,5 @@
 const getKeyFromUrl = (url) => url.split('/')[2];
+
 const keyMap = (key) => {
 	let response;
 	if (key === 'myself') {
@@ -15,6 +16,7 @@ const keyMap = (key) => {
 		response = {
 			upperCaseKey: key.toUpperCase(),
 			sessionKey: 'orgRegdata',
+			extra: '',
 			viewKey: {
 				email: 'EMAIL'
 			}
