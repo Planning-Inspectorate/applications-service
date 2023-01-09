@@ -20,7 +20,7 @@ const getSummaryList = (session) => {
 	const activeSubmissionItem = getActiveSubmissionItem(session);
 	const summaryList = [];
 
-	summaryList.push(getSummaryListItemSubmissionItem(activeSubmissionItem));
+	summaryList.push(getSummaryListItemSubmissionItem(activeSubmissionItem, session));
 	summaryList.push(getSummaryListItemEvidenceOrComment(activeSubmissionItem));
 
 	if (submissionItemHasFiles(activeSubmissionItem))
