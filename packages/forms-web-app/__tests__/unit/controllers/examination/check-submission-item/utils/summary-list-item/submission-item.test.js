@@ -1,41 +1,60 @@
 const {
 	getSummaryListItemSubmissionItem
 } = require('../../../../../../../src/controllers/examination/check-submission-item/utils/summary-list-item');
+const {
+	showDeadlineItemChangeUrl
+} = require('../../../../../../../src/controllers/examination/check-submission-item/utils/summary-list-item/show-deadline-item-change-url');
+
+jest.mock(
+	'../../../../../../../src/controllers/examination/check-submission-item/utils/summary-list-item/show-deadline-item-change-url',
+	() => ({
+		showDeadlineItemChangeUrl: jest.fn()
+	})
+);
 
 describe('controllers/examination/check-submission-item/utils/summary-list-item/submission-item', () => {
 	describe('#getSummaryListItemSubmissionItem', () => {
 		describe('When invoking the getSummaryListItemSubmissionItem function', () => {
 			describe('and the session has a submission item value', () => {
-				const mockSubmissionItem = {
-					submissionItem: 'submission item'
-				};
-
-				const session = {
-					examination: {
-						caseRef: 'TEST001',
-						deadlineItems: [
-							{ value: '0', text: 'Deadline 1' },
-							{ value: '1', text: 'Deadline 2' },
-							{ value: '2', text: 'Deadline 3' }
-						],
-						submissionItems: [{ itemId: '0', submissionItem: 'Deadline 1' }]
-					}
-				};
-
-				const result = getSummaryListItemSubmissionItem(mockSubmissionItem, session);
-				it('should return the object', () => {
-					expect(result).toEqual({
-						actions: {
-							items: [
-								{
-									href: '/examination/select-deadline-item?mode=edit',
-									text: 'Change',
-									visuallyHiddenText: 'Deadline item'
-								}
-							]
-						},
-						key: { text: 'Deadline item' },
-						value: { html: 'submission item' }
+				describe('and submission items has less than the number of items in deadline items', () => {
+					const mockSubmissionItem = {
+						submissionItem: 'submission item'
+					};
+					let result;
+					beforeEach(() => {
+						showDeadlineItemChangeUrl.mockReturnValue(true);
+						result = getSummaryListItemSubmissionItem(mockSubmissionItem, {});
+					});
+					it('should return the object', () => {
+						expect(result).toEqual({
+							actions: {
+								items: [
+									{
+										href: '/examination/select-deadline-item?mode=edit',
+										text: 'Change',
+										visuallyHiddenText: 'Deadline item'
+									}
+								]
+							},
+							key: { text: 'Deadline item' },
+							value: { html: 'submission item' }
+						});
+					});
+				});
+				describe('and submission items has the same number of items as deadline items', () => {
+					const mockSubmissionItem = {
+						submissionItem: 'submission item'
+					};
+					let result;
+					beforeEach(() => {
+						showDeadlineItemChangeUrl.mockReturnValue(false);
+						result = getSummaryListItemSubmissionItem(mockSubmissionItem, {});
+					});
+					it('should return the object', () => {
+						expect(result).toEqual({
+							key: { text: 'Deadline item' },
+							value: { html: 'submission item' }
+						});
 					});
 				});
 			});
