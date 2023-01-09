@@ -5,16 +5,11 @@ const { getRedirectUrl } = require('./get-redirect-url');
 
 const get = (req, res) => {
 	try {
+		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
 		const mappy = keyMap(key);
 
-		console.log('HERE', key, mappy);
-		const fullName =
-			key === 'agent'
-				? req.session[mappy.sessionKey].representor['full-name']
-				: req.session[mappy.sessionKey]['full-name'];
-
-		console.log('Name = ', fullName);
+		const fullName = mappy.getSession(session)['full-name'];
 
 		return res.render(VIEW.REGISTER[mappy.upperCaseKey].FULL_NAME, {
 			fullName
@@ -25,6 +20,7 @@ const get = (req, res) => {
 	}
 };
 const post = (req, res) => {
+	const { session } = req;
 	const key = getKeyFromUrl(req.originalUrl);
 	const mappy = keyMap(key);
 
@@ -46,12 +42,10 @@ const post = (req, res) => {
 		});
 	}
 
-	if (key === 'agent') req.session[mappy.sessionKey].representor['full-name'] = body['full-name'];
-	else req.session[mappy.sessionKey]['full-name'] = body['full-name'];
+	mappy.setSession(session, 'full-name', body['full-name']);
 
 	const redirectUrl = getRedirectUrl(query, key, mappy);
 
-	console.log('Redit', redirectUrl);
 	if (originIsSanitiseFormPost) return res.send(new sanitiseFormPostResponse(false, redirectUrl));
 	else return res.redirect(redirectUrl);
 };

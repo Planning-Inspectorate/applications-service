@@ -1,34 +1,11 @@
+const { myselfObj, organisationObj, agentObj, keys } = require('./keys');
 const getKeyFromUrl = (url) => url.split('/')[2];
 
 const keyMap = (key) => {
 	let response;
-	if (key === 'myself') {
-		response = {
-			upperCaseKey: key.toUpperCase(),
-			sessionKey: 'mySelfRegdata',
-			viewKey: {
-				email: 'EMAIL_ADDRESS'
-			}
-		};
-	}
-
-	if (key === 'organisation') {
-		response = {
-			upperCaseKey: key.toUpperCase(),
-			sessionKey: 'orgRegdata',
-			extra: '',
-			viewKey: {
-				email: 'EMAIL'
-			}
-		};
-	}
-
-	if (key === 'agent') {
-		response = {
-			upperCaseKey: key.toUpperCase(),
-			sessionKey: 'behalfRegdata'
-		};
-	}
+	if (key === keys.myself) response = myselfObj;
+	if (key === keys.organisation) response = organisationObj;
+	if (key === keys.agent) response = agentObj;
 
 	return response;
 };
