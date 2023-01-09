@@ -8,16 +8,17 @@ const config = require('../../../../src/config');
 
 config.featureFlag.hideProjectTimelineLink = false;
 config.featureFlag.allowDocumentLibrary = false;
+config.featureFlag.allowExaminationTimetable = false;
 config.featureFlag.allowRepresentation = false;
 config.featureFlag.usePrivateBetaV1RoutesOnly = false;
-config.featureFlag.allowDocumentLibrary = false;
 
 const {
 	featureFlag: {
 		hideProjectTimelineLink,
 		allowRepresentation,
 		usePrivateBetaV1RoutesOnly,
-		allowDocumentLibrary
+		allowDocumentLibrary,
+		allowExaminationTimetable
 	}
 } = config;
 
@@ -45,6 +46,10 @@ describe('routes/examination', () => {
 				totalCalls -= 1;
 			}
 
+			if (!allowExaminationTimetable) {
+				totalCalls -= 1;
+			}
+
 			return totalCalls;
 		};
 
@@ -52,6 +57,13 @@ describe('routes/examination', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/:case_ref/representations',
 				representationsController.getRepresentations
+			);
+		}
+
+		if (allowExaminationTimetable === true) {
+			expect(get).toHaveBeenCalledWith(
+				'/:case_ref/examination-timetable',
+				timetableController.getExaminationTimetable
 			);
 		}
 
@@ -70,10 +82,6 @@ describe('routes/examination', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/all-examination-documents',
 				allExaminationDocumentsController.getAllExaminationDocuments
-			);
-			expect(get).toHaveBeenCalledWith(
-				'/:case_ref/examination-timetable',
-				timetableController.getExaminationTimetable
 			);
 			expect(get.mock.calls.length).toBe(mockCallsLength());
 		}

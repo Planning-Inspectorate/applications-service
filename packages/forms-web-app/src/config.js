@@ -44,12 +44,12 @@ module.exports = {
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
 		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true',
 		allowDocumentLibrary: process.env.FEATURE_ALLOW_DOCUMENT_LIBRARY === 'true',
+		allowExaminationTimetable: process.env.FEATURE_ALLOW_EXAMINATION_TIMETABLE === 'true',
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
 		hideDecisionMakingProcessGuideLink: true,
-		hideExaminationTimetableLink: true,
 		hideProjectInformationLink: true,
 		hideRecommendationAndDecisionLink: true
 	},

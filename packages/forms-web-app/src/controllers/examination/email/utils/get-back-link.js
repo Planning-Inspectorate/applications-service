@@ -1,26 +1,27 @@
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
-			pages: { applicant, nameMyself, nameAgent, nameOrganisation }
+			directory,
+			pages: { applicant, nameMyself, nameAgent, nameOrganisation, checkYourAnswers }
 		}
 	}
 } = require('../../../../routes/config');
 
 const { getExaminationSession } = require('../../session/examination-session');
-const getBackLink = (session) => {
+const { isQueryModeEdit } = require('../../../utils/is-query-mode-edit');
+const getBackLink = (session, query) => {
 	const examinationSession = getExaminationSession(session);
 
 	let backLink;
 
-	if (examinationSession.isApplicant === 'yes')
-		backLink = `${examinationDirectory}${applicant.route}`;
+	if (isQueryModeEdit(query)) backLink = `${directory + checkYourAnswers.route}`;
+	else if (examinationSession.isApplicant === 'yes') backLink = `${directory}${applicant.route}`;
 	else if (examinationSession.submittingFor === 'organisation')
-		backLink = `${examinationDirectory}${nameOrganisation.route}`;
+		backLink = `${directory}${nameOrganisation.route}`;
 	else if (examinationSession.submittingFor === 'agent')
-		backLink = `${examinationDirectory}${nameAgent.route}`;
+		backLink = `${directory}${nameAgent.route}`;
 	else if (examinationSession.submittingFor === 'myself')
-		backLink = `${examinationDirectory}${nameMyself.route}`;
+		backLink = `${directory}${nameMyself.route}`;
 
 	return backLink;
 };

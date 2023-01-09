@@ -46,7 +46,11 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 					result = getSummaryListName(req.session);
 				});
 				it('should get the summary list item with the myself title and value', () => {
-					expect(getSummaryListItem).toHaveBeenCalledWith('Full name', mockDeadlineNameValue);
+					expect(getSummaryListItem).toHaveBeenCalledWith(
+						'Full name',
+						mockDeadlineNameValue,
+						'/examination/your-name?mode=edit'
+					);
 				});
 				it('should return a summary list item', () => {
 					expect(result).toEqual(mockSummaryListItem);
@@ -61,7 +65,8 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 				it('should get the summary list item with the organisation title and value', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						`Organisation's name`,
-						mockDeadlineNameValue
+						mockDeadlineNameValue,
+						'/examination/your-organisation-name?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {
@@ -77,7 +82,8 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 				it('should get the summary list item with the agent title and value', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						'Submitting on behalf of',
-						mockDeadlineNameValue
+						mockDeadlineNameValue,
+						'/examination/name-of-person-or-group?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {

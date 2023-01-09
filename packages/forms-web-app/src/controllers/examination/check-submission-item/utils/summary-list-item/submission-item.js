@@ -1,6 +1,6 @@
 const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
 const { showDeadlineItemChangeUrl } = require('./show-deadline-item-change-url');
-const { editQuery } = require('./config');
+const { editQuery } = require('../../../../utils/queryMode');
 const {
 	routesConfig: {
 		examination: {

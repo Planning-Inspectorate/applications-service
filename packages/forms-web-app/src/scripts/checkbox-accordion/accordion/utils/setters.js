@@ -7,6 +7,7 @@ const setAccordionSectionSwitchesChecked = (accordionSectionSwitches, isChecked)
 
 const setAccordionSwitchState = (accordionSwitch, isExpanded) => {
 	accordionSwitch.ariaExpanded = isExpanded;
+	accordionSwitch.setAttribute('id', 'show-hide-all-filters');
 	if (isAccordionSwitchStateExpanded(accordionSwitch))
 		accordionSwitch.innerHTML = 'Hide all sections';
 	else accordionSwitch.innerHTML = 'Show all sections';

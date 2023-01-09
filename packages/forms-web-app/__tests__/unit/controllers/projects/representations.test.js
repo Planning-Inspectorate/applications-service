@@ -11,8 +11,7 @@ const { featureHideLink } = require('../../../../src/config');
 const {
 	hideProjectInformationLink,
 	hideAllExaminationDocumentsLink,
-	hideRecommendationAndDecisionLink,
-	hideExaminationTimetableLink
+	hideRecommendationAndDecisionLink
 } = featureHideLink;
 
 jest.mock('../../../../src/lib/application-api-wrapper');
@@ -114,8 +113,7 @@ describe('controllers/projects/representations', () => {
 			commentsTypeFilterItems: [],
 			hideProjectInformationLink,
 			hideAllExaminationDocumentsLink,
-			hideRecommendationAndDecisionLink,
-			hideExaminationTimetableLink
+			hideRecommendationAndDecisionLink
 		});
 	});
 
@@ -138,7 +136,6 @@ describe('controllers/projects/representations', () => {
 			hideProjectInformationLink,
 			hideAllExaminationDocumentsLink,
 			hideRecommendationAndDecisionLink,
-			hideExaminationTimetableLink,
 			RepFrom: 'Members of the public/businesses',
 			PersonalName: 'Test (Test)',
 			RepresentationRedacted: 'Some comments',

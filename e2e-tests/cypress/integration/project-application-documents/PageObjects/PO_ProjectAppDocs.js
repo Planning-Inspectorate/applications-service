@@ -1,13 +1,51 @@
+const accordionId = 'ui-checkbox-accordion__section-switch--';
+const checkboxId = 'ui-checkbox-accordion__checkboxes-section--';
+
+const filterKeys = {
+	'pre-application': {
+		accordionId: accordionId + 'stage-1',
+		checkboxId: checkboxId + 'stage-1'
+	},
+	'developers-application': {
+		accordionId: accordionId + "category-Developer's Application",
+		checkboxId: checkboxId + "category-Developer's Application"
+	},
+	acceptance: {
+		accordionId: accordionId + 'stage-2',
+		checkboxId: checkboxId + 'stage-2'
+	},
+	'pre-examination': {
+		accordionId: accordionId + 'stage-3',
+		checkboxId: checkboxId + 'stage-3'
+	},
+	examination: {
+		accordionId: accordionId + 'stage-4',
+		checkboxId: checkboxId + 'stage-4'
+	},
+	recommendation: {
+		accordionId: accordionId + 'stage-5',
+		checkboxId: checkboxId + 'stage-5'
+	},
+	decision: {
+		accordionId: accordionId + 'stage-6',
+		checkboxId: checkboxId + 'stage-6'
+	},
+	'post-decision': {
+		accordionId: accordionId + 'stage-7',
+		checkboxId: checkboxId + 'stage-7'
+	}
+};
+
 class PO_ProjectAppDocs {
 	enterTextIntoSearchField(inputData) {
-		cy.get('#search').clear();
+		cy.get('#searchTerm').clear();
 		if (inputData) {
-			cy.get('#search').type(inputData);
+			cy.get('#searchTerm').type(inputData);
 		}
 	}
 
 	clickOnSearch() {
-		cy.get('[data-cy="search-button"]').click();
+		cy.get('#search-button').click();
 	}
 
 	assertResultsPresentOnPage(table) {
@@ -41,7 +79,7 @@ class PO_ProjectAppDocs {
 	}
 
 	assertResultsPerPage(resultsPerPage) {
-		cy.get('.ui-results-list__item').should('have.length', resultsPerPage);
+		cy.get('.section-results').find('li').should('have.length', resultsPerPage);
 	}
 
 	verifyDocumentsDisplayedinDescendingOrder(table) {
@@ -79,11 +117,32 @@ class PO_ProjectAppDocs {
 
 	verifyResultsReturned(table) {
 		const contents = table.hashes();
-		cy.get('.ui-results-list__item').each(($e1, index) => {
+
+		cy.get('.section-results > li').each(($e1, index) => {
 			const actualText = $e1.text();
-			const expectedText = contents[index].Document;
+
+			if (!contents[index].Document) throw new Error(`No Document supplied`);
+			if (!contents[index].Date)
+				throw new Error(`No Date (Index - ${index}, Document - ${contents[index].Document})`);
+			if (!contents[index].Stage)
+				throw new Error(`No Stage (Index - ${index}, Document - ${contents[index].Document})`);
+			if (!contents[index].Title)
+				throw new Error(`No Title (Index - ${index}, Document - ${contents[index].Document})`);
+			//  Document
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(
-				expectedText.replace(/\s/g, '').trim()
+				contents[index].Document.replace(/\s/g, '').trim()
+			);
+			//  Date
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Date.replace(/\s/g, '').trim()
+			);
+			//  Stage
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Stage.replace(/\s/g, '').trim()
+			);
+			//  Title
+			expect(actualText.replace(/\s/g, '').trim()).to.contain(
+				contents[index].Title.replace(/\s/g, '').trim()
 			);
 		});
 	}
@@ -104,31 +163,19 @@ class PO_ProjectAppDocs {
 	}
 
 	clickSection(caseCondition) {
-		switch (caseCondition) {
-			case 'show all':
-				cy.get('.govuk-accordion__show-all-text').click();
-				break;
-			case 'hide all':
-				cy.get('.govuk-accordion__show-all-text').click();
-				break;
-			case 'project stage':
-				cy.get('[data-cy="project-stage"]').click({ force: true });
-				break;
-			case 'document type':
-				cy.get('[data-cy="document-type"]').click({ force: true });
-				break;
-		}
+		if (caseCondition === 'show all' || caseCondition === 'hide all')
+			cy.get('#show-hide-all-filters').click();
+		else if (Object.hasOwnProperty.call(filterKeys, caseCondition))
+			cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
+		else throw new Error(`Test failed: is the filter ${caseCondition} in filterKeys`);
 	}
 
 	assertSectionLength(sectionName, sectionLength) {
-		switch (sectionName) {
-			case 'project stage':
-				cy.get('[name="stage"]').should('have.length', sectionLength);
-				break;
-			case 'document type':
-				cy.get('[name="type"]').should('have.length', sectionLength);
-				break;
-		}
+		if (Object.hasOwnProperty.call(filterKeys, sectionName))
+			cy.get(`[id="${filterKeys[sectionName].checkboxId}"]`)
+				.find('.govuk-checkboxes__item')
+				.should('have.length', sectionLength);
+		else throw new Error(`Test failed: is the filter ${sectionName} in filterKeys`);
 	}
 
 	clickApplyFilterButton() {
@@ -136,14 +183,12 @@ class PO_ProjectAppDocs {
 	}
 
 	selectCheckBox(checkBoxName) {
-		window.sessionStorage['accordion-default-content-1'] = true;
-		window.sessionStorage['accordion-default-content-2'] = true;
-		cy.reload();
-		cy.contains('label', checkBoxName)
-			.invoke('attr', 'for')
-			.then((id) => {
-				cy.get('#' + id).click();
-			});
+		cy.get(`[id="${checkBoxName}"]`).check();
+	}
+
+	filterNameWithSumOfItems(sectionName, label, sum) {
+		cy.get(`[for="${filterKeys[sectionName].accordionId}"]`).contains(`${label} (${sum})`);
 	}
 }
+
 export default PO_ProjectAppDocs;

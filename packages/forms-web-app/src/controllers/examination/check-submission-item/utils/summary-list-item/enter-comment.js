@@ -1,5 +1,5 @@
 const { getSummaryListItem } = require('../../../../utils/get-summary-list-item');
-const { editQuery } = require('./config');
+const { editQuery } = require('../../../../utils/queryMode');
 const {
 	routesConfig: {
 		examination: {

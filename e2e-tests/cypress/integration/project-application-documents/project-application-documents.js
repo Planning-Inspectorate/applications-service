@@ -89,3 +89,7 @@ And('I click on Apply button to apply filters', () => {
 And('I select {string} checkbox', (checkBoxName) => {
 	projectAppDocs.selectCheckBox(checkBoxName);
 });
+
+And('I verify the filter {string} name is {string} {int}', (sectionName, label, sum) => {
+	projectAppDocs.filterNameWithSumOfItems(sectionName, label, sum);
+});

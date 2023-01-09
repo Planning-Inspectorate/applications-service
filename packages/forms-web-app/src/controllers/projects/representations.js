@@ -10,8 +10,7 @@ const { featureHideLink } = require('../../config');
 const {
 	hideProjectInformationLink,
 	hideAllExaminationDocumentsLink,
-	hideRecommendationAndDecisionLink,
-	hideExaminationTimetableLink
+	hideRecommendationAndDecisionLink
 } = featureHideLink;
 
 exports.getRepresentations = async (req, res) => {
@@ -68,7 +67,6 @@ exports.getRepresentations = async (req, res) => {
 		hideProjectInformationLink,
 		hideAllExaminationDocumentsLink,
 		hideRecommendationAndDecisionLink,
-		hideExaminationTimetableLink,
 		representations,
 		paginationData,
 		pageOptions,
@@ -92,7 +90,6 @@ exports.getRepresentation = async (req, res) => {
 		hideProjectInformationLink,
 		hideAllExaminationDocumentsLink,
 		hideRecommendationAndDecisionLink,
-		hideExaminationTimetableLink,
 		RepFrom: titleCase(representationResponse.data.RepFrom),
 		PersonalName: representationResponse.data.PersonalName,
 		RepresentationRedacted: representationResponse.data.RepresentationRedacted,

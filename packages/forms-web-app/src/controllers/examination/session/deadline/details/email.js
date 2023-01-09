@@ -10,10 +10,17 @@ const getDeadlineDetailsEmail = (session) => {
 	return examinationSession[deadlineEmailKey];
 };
 
+const getDeadlineDetailsEmailOrDefault = (session) =>
+	getExaminationSession(session)[deadlineEmailKey];
+
 const setDeadlineDetailsEmail = (session, email) => {
 	const examinationSession = getExaminationSession(session);
 
 	examinationSession[deadlineEmailKey] = email;
 };
 
-module.exports = { getDeadlineDetailsEmail, setDeadlineDetailsEmail };
+module.exports = {
+	getDeadlineDetailsEmail,
+	setDeadlineDetailsEmail,
+	getDeadlineDetailsEmailOrDefault
+};
