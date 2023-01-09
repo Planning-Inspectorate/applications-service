@@ -26,3 +26,4 @@ const getSummaryListItemSubmissionItem = (submissionItem, session) => {
 };
 
 module.exports = { getSummaryListItemSubmissionItem };
+
