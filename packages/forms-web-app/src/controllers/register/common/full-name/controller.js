@@ -5,17 +5,16 @@ const {
 		}
 	}
 } = require('../../../../lib/views');
-const { getKeyFromUrl } = require('../helpers');
+const { getKeyFromUrl, getObjectHandler } = require('../helpers');
 const { sanitiseFormPostResponse } = require('../../../../utils/sanitise-form-post');
 const { getRedirectUrl } = require('./get-redirect-url');
 const { viewModel } = require('./viewModel');
-const { objectHandler } = require('../keys');
 
 const get = (req, res) => {
 	try {
 		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
-		const refObject = objectHandler[key];
+		const refObject = getObjectHandler(key);
 
 		const fullName = refObject.getSession(session)['full-name'];
 		return res.render(EMAIL_VIEW, {
@@ -47,7 +46,7 @@ const post = (req, res) => {
 		});
 	}
 
-	const refObject = objectHandler[key];
+	const refObject = getObjectHandler(key);
 	refObject.setSession(session, 'full-name', body['full-name']);
 	const redirectUrl = getRedirectUrl(query, key, refObject);
 
