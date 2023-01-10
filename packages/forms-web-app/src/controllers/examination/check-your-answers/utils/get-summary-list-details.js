@@ -1,6 +1,6 @@
 const {
 	getUserHasInterestedPartyNumber,
-	getUserApplicant
+	isUserApplicant
 } = require('../../session/deadline/helpers');
 const {
 	getSummaryListItemHasInterestedPartyNumber,
@@ -14,14 +14,14 @@ const {
 const getSummaryListDetails = (session) => {
 	const summaryListDetails = [];
 	const userHasInterestedPartyNumber = getUserHasInterestedPartyNumber(session);
-	const isUserApplicant = getUserApplicant(session);
+	const userApplicant = isUserApplicant(session);
 
 	summaryListDetails.push(getSummaryListItemHasInterestedPartyNumber(session));
 	if (userHasInterestedPartyNumber)
 		summaryListDetails.push(getSummaryListItemInterestedPartyNumber(session));
-	if (!isUserApplicant) summaryListDetails.push(getSummaryListItemSubmittingFor(session));
-	if (isUserApplicant) summaryListDetails.push(getSummaryListApplicant(session));
-	if (!isUserApplicant) summaryListDetails.push(getSummaryListName(session));
+	if (!userApplicant) summaryListDetails.push(getSummaryListItemSubmittingFor(session));
+	if (userApplicant) summaryListDetails.push(getSummaryListApplicant(session));
+	if (!userApplicant) summaryListDetails.push(getSummaryListName(session));
 	summaryListDetails.push(getSummaryListItemEmail(session));
 
 	return summaryListDetails;
