@@ -35,6 +35,9 @@ describe('lib/views', () => {
 				COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully'
 			},
 			REGISTER: {
+				COMMON: {
+					FULL_NAME_VIEW: 'register/common/full-name'
+				},
 				REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 				START: 'register/start',
 				TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
