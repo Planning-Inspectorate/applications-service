@@ -12,7 +12,7 @@ const {
 } = require('../../../../../../src/controllers/examination/check-your-answers/utils/summary-list-item');
 const {
 	getUserHasInterestedPartyNumber,
-	getUserApplicant
+	isUserApplicant
 } = require('../../../../../../src/controllers/examination/session/deadline/helpers');
 
 jest.mock(
@@ -28,7 +28,7 @@ jest.mock(
 );
 jest.mock('../../../../../../src/controllers/examination/session/deadline/helpers', () => ({
 	getUserHasInterestedPartyNumber: jest.fn(),
-	getUserApplicant: jest.fn()
+	isUserApplicant: jest.fn()
 }));
 
 describe('controllers/examination/check-your-answers/utils/get-summary-list-details', () => {
@@ -64,7 +64,7 @@ describe('controllers/examination/check-your-answers/utils/get-summary-list-deta
 				let result;
 				beforeEach(() => {
 					getUserHasInterestedPartyNumber.mockReturnValue(true);
-					getUserApplicant.mockReturnValue(false);
+					isUserApplicant.mockReturnValue(false);
 					result = getSummaryListDetails(req.session);
 				});
 				it('should call the functions', () => {
@@ -88,7 +88,7 @@ describe('controllers/examination/check-your-answers/utils/get-summary-list-deta
 				let result;
 				beforeEach(() => {
 					getUserHasInterestedPartyNumber.mockReturnValue(false);
-					getUserApplicant.mockReturnValue(true);
+					isUserApplicant.mockReturnValue(true);
 					result = getSummaryListDetails(req.session);
 				});
 				it('should call the functions', () => {
