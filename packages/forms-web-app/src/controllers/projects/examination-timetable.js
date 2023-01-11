@@ -4,6 +4,7 @@ const {
 	getDateTimeExaminationEnds
 } = require('../../utils/is-before-or-after-date');
 const { getTimetables } = require('../../services/timetable.service');
+const { setProjectPromoterName } = require('./session');
 const config = require('../../config');
 const {
 	routesConfig: {
@@ -109,7 +110,6 @@ const getEvents = async (caseRef) => {
 const getExaminationTimetable = async (req, res) => {
 	const paramCaseRef = req.params?.case_ref;
 	const sessionCaseRef = req.session?.caseRef;
-
 	const projectValues = {
 		caseRef: paramCaseRef ? paramCaseRef : sessionCaseRef,
 		projectName: req.session?.projectName
@@ -121,10 +121,11 @@ const getExaminationTimetable = async (req, res) => {
 		const responseCode = response?.resp_code;
 		if (response && responseCode && response.resp_code === 200) {
 			const appData = response.data;
-			const { CaseReference, ProjectName } = appData;
+			const { CaseReference, ProjectName, PromoterName } = appData;
 			req.session.appData = appData;
 			req.session.caseRef = CaseReference;
 			req.session.projectName = ProjectName;
+			setProjectPromoterName(req.session, PromoterName);
 			projectValues.projectName = ProjectName;
 		}
 	}

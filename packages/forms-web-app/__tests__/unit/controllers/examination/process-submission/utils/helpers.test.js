@@ -3,27 +3,71 @@ const {
 	markFormAsPersonalInfo
 } = require('../../../../../../src/controllers/examination/process-submission/utils/helpers');
 
+const {
+	getDeadlineDetailsName
+} = require('../../../../../../src/controllers/examination/session/deadline/details/name');
+const {
+	getExaminationSession
+} = require('../../../../../../src/controllers/examination/session/examination-session');
+const { getProjectPromoterName } = require('../../../../../../src/controllers/projects/session');
+const {
+	isUserApplicant
+} = require('../../../../../../src/controllers/examination/session/deadline/helpers');
+
+jest.mock('../../../../../../src/controllers/examination/session/deadline/details/name', () => ({
+	getDeadlineDetailsName: jest.fn()
+}));
+jest.mock('../../../../../../src/controllers/examination/session/examination-session', () => ({
+	getExaminationSession: jest.fn()
+}));
+jest.mock('../../../../../../src/controllers/projects/session', () => ({
+	getProjectPromoterName: jest.fn()
+}));
+jest.mock('../../../../../../src/controllers/examination/session/deadline/helpers', () => ({
+	isUserApplicant: jest.fn()
+}));
+
 const FormData = require('form-data');
 const { expectFormDataKeyValue, expectFormDataToBeUndefined } = require('./testHelper');
 
 describe('#mapSessionToCommonFormData', () => {
 	describe('When creating the common form data', () => {
-		describe('and all the key values are available', () => {
-			const examination = {
+		const mockSession = {};
+		const mockSubmissionItem = { submissionItem: 'mock deadline item' };
+		beforeEach(() => {
+			getExaminationSession.mockReturnValue({
 				hasInterestedPartyNo: 'yes',
-				name: 'mock name',
 				email: 'mock email',
 				title: 'remove me - mock title',
 				interestedPartyNumber: '1234'
-			};
-			const item = { submissionItem: 'mock deadline item' };
+			});
+		});
+		describe('and the user is the applicant', () => {
 			let result;
 			beforeEach(() => {
-				result = mapSessionToCommonFormData(examination, item);
+				isUserApplicant.mockReturnValue(true);
+				getProjectPromoterName.mockReturnValue('mock promoter name');
+				result = mapSessionToCommonFormData(mockSession, mockSubmissionItem);
 			});
-
-			it('should add name to the form', () => {
+			it('should add the promoter name to the name field', () => {
+				expectFormDataKeyValue(result, 'name', 'mock promoter name', 0);
+			});
+		});
+		describe('and the user is not the applicant', () => {
+			let result;
+			beforeEach(() => {
+				isUserApplicant.mockReturnValue(false);
+				getDeadlineDetailsName.mockReturnValue('mock name');
+				result = mapSessionToCommonFormData(mockSession, mockSubmissionItem);
+			});
+			it('should add the name to the name field', () => {
 				expectFormDataKeyValue(result, 'name', 'mock name', 0);
+			});
+		});
+		describe('and all the key values are available', () => {
+			let result;
+			beforeEach(() => {
+				result = mapSessionToCommonFormData(mockSession, mockSubmissionItem);
 			});
 
 			it('should add email to the form', () => {
@@ -47,16 +91,15 @@ describe('#mapSessionToCommonFormData', () => {
 			});
 		});
 		describe('and the interest party number is no', () => {
-			const examination = {
-				hasInterestedPartyNo: 'no',
-				name: 'mock name',
-				email: 'mock email',
-				title: 'remove me - mock title'
-			};
-			const item = { submissionItem: 'mock deadline item' };
 			let result;
 			beforeEach(() => {
-				result = mapSessionToCommonFormData(examination, item);
+				getExaminationSession.mockReturnValue({
+					hasInterestedPartyNo: 'no',
+					email: 'mock email',
+					title: 'remove me - mock title',
+					interestedPartyNumber: '1234'
+				});
+				result = mapSessionToCommonFormData(mockSession, mockSubmissionItem);
 			});
 			it('should add interestedParty to the form', () => {
 				expectFormDataKeyValue(result, 'interestedParty', 'false', 6);
