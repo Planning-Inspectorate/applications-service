@@ -1,20 +1,29 @@
 const FormData = require('form-data');
+const { getExaminationSession } = require('../../session/examination-session');
+const { getProjectPromoterName } = require('../../../projects/session');
+const { getDeadlineDetailsName } = require('../../session/deadline/details/name');
+const { isUserApplicant } = require('../../session/deadline/helpers');
 const getDeadlineTitle = (title) => {
 	const titleSplit = title.split('-');
 	return titleSplit[1].trim();
 };
+const getName = (session) => {
+	return isUserApplicant(session)
+		? getProjectPromoterName(session)
+		: getDeadlineDetailsName(session);
+};
 
-const mapSessionToCommonFormData = (examination, item) => {
-	const { hasInterestedPartyNo, email, title, name } = examination;
+const mapSessionToCommonFormData = (session, item) => {
+	const { hasInterestedPartyNo, email, interestedPartyNumber, title } =
+		getExaminationSession(session);
 	const formData = new FormData();
-	formData.append('name', name);
+	formData.append('name', getName(session));
 	formData.append('email', email);
 	formData.append('interestedParty', `${hasInterestedPartyNo === 'yes'}`);
 	formData.append('deadline', getDeadlineTitle(title));
 	formData.append('submissionType', item.submissionItem);
 
-	if (examination.interestedPartyNumber)
-		formData.append('ipReference', examination.interestedPartyNumber);
+	if (interestedPartyNumber) formData.append('ipReference', interestedPartyNumber);
 	return formData;
 };
 
