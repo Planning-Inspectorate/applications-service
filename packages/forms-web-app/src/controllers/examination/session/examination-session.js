@@ -50,6 +50,16 @@ const getExaminationSubmissionId = (session) => {
 
 const getExaminationEmailAddress = (session) => getExaminationSession(session).email;
 
+const getExaminationSubmissionRetryErrorCount = (session) => {
+	const examinationSession = getExaminationSession(session);
+	return examinationSession.retryErrorCount;
+};
+const setExaminationSubmissionRetryErrorCount = (session) => {
+	const examinationSession = getExaminationSession(session);
+	if (!examinationSession.retryErrorCount) examinationSession.retryErrorCount = 1;
+	else examinationSession.retryErrorCount++;
+};
+
 module.exports = {
 	getExaminationSession,
 	setExaminationUploadingState,
@@ -58,5 +68,7 @@ module.exports = {
 	getExaminationSubmissionComplete,
 	getExaminationUploadingState,
 	getExaminationSubmissionId,
-	getExaminationEmailAddress
+	getExaminationEmailAddress,
+	getExaminationSubmissionRetryErrorCount,
+	setExaminationSubmissionRetryErrorCount
 };
