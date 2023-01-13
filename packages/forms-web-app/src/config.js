@@ -1,3 +1,5 @@
+const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
+
 const httpPort = Number(process.env.PORT || 3000);
 
 module.exports = {
@@ -16,7 +18,7 @@ module.exports = {
 	},
 	db: {
 		session: {
-			redisUrl: process.env.REDIS_URL || 'redis://redis:6379'
+			redis: parseRedisConnectionString(process.env.REDIS_CONNECTION_STRING)
 		}
 	},
 	defaultPageTitle: 'The Planning Inspectorate',
@@ -29,6 +31,7 @@ module.exports = {
 		host: process.env.HOST_URL || `http://localhost:${httpPort}`, // This is used for the HTML generator
 		port: httpPort,
 		sessionSecret: process.env.SESSION_KEY,
+		sessionLengthInHours: 4,
 		// https://expressjs.com/en/5x/api.html#app.set - to account for .gov.uk
 		subdomainOffset: parseInt(process.env.SUBDOMAIN_OFFSET, 10) || 3,
 		useSecureSessionCookie: process.env.USE_SECURE_SESSION_COOKIES === 'true',
