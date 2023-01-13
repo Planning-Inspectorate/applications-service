@@ -30,7 +30,7 @@ const eventStates = [
 	{ value: 'null', text: '', classes: '' }
 ];
 
-const setTimeToEndOfDay = (date) => new Date(date).setHours(24, 0, 0, 0);
+const setTimeToEndOfDay = (date) => date.setHours(24, 0, 0, 0);
 
 const eventSubmitButtonActive = (timetable) => {
 	const currentDate = new Date();
