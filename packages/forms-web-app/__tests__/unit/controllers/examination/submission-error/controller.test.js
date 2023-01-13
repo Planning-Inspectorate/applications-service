@@ -13,13 +13,10 @@ jest.mock(
 	})
 );
 
-const mockPageDataValue = { text: 'mock page data' };
-
 describe('controllers/examination/submission-error/controller', () => {
 	describe('#getSubmissionError', () => {
 		describe('When getting the submission error page', () => {
 			const req = {
-				body: {},
 				session: { text: 'mock session' },
 				query: { text: 'mock query' }
 			};
@@ -28,6 +25,7 @@ describe('controllers/examination/submission-error/controller', () => {
 				status: jest.fn(() => res)
 			};
 			describe('and there are no errors', () => {
+				const mockPageDataValue = { text: 'mock page data' };
 				beforeEach(() => {
 					getPageData.mockReturnValue(mockPageDataValue);
 					getSubmissionError(req, res);
@@ -52,27 +50,26 @@ describe('controllers/examination/submission-error/controller', () => {
 				});
 			});
 		});
-	});
-});
-
-describe('and there are errors', () => {
-	const req = {
-		body: {},
-		session: { text: 'mock session' },
-		query: { text: 'mock query' }
-	};
-	const res = {
-		render: jest.fn(),
-		status: jest.fn(() => res)
-	};
-	beforeEach(() => {
-		getPageData.mockImplementation(() => {
-			throw new Error('something went wrong');
+		describe('and there are errors', () => {
+			const req = {
+				body: {},
+				session: { text: 'mock session' },
+				query: { text: 'mock query' }
+			};
+			const res = {
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
+			beforeEach(() => {
+				getPageData.mockImplementation(() => {
+					throw new Error('something went wrong');
+				});
+				getSubmissionError(req, res);
+			});
+			it('should render the Error page', () => {
+				expect(res.status).toHaveBeenCalledWith(500);
+				expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+			});
 		});
-		getSubmissionError(req, res);
-	});
-	it('should render the Error page', () => {
-		expect(res.status).toHaveBeenCalledWith(500);
-		expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 	});
 });

@@ -22,7 +22,7 @@ jest.mock(
 describe('controllers/examination/submission-error/utils/get-page-data', () => {
 	describe('#getPageData', () => {
 		describe('When getting the page data for the submission error page', () => {
-			const mockProjectEmailAddress = 'projectemail@planninginspectorate.gov.uk';
+			const mockProjectEmailAddress = 'mock email';
 			const mockSubmitCommentsURL = 'examination/have-your-say';
 			const mockSession = { mockSession: 'mock session' };
 
