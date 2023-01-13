@@ -30,14 +30,14 @@ const eventStates = [
 	{ value: 'null', text: '', classes: '' }
 ];
 
-const setTimeToEndOfDay = (date) => date.setHours(24, 0, 0, 0);
+const setTimeToEndOfDay = (date) => new Date(date).setHours(24, 0, 0, 0);
 
 const eventSubmitButtonActive = (timetable) => {
 	const currentDate = new Date();
 
 	return (
 		timetable.typeOfEvent === 'Deadline' &&
-		currentDate < setTimeToEndOfDay(new Date(timetable.dateOfEvent)) &&
+		currentDate < setTimeToEndOfDay(timetable.dateOfEvent) &&
 		(new Date(timetable.dateTimeDeadlineStart) < currentDate ||
 			isNullSQLDate(new Date(timetable.dateTimeDeadlineStart)))
 	);
@@ -76,7 +76,7 @@ const getEvents = async (caseRef) => {
 		const title = `${dateOfEvent} - ${eventTitle}`;
 		const submitButton = eventSubmitButtonActive(timetable);
 		const getEventState = (timetable) => {
-			if (setTimeToEndOfDay(new Date(timetable.dateOfEvent)) < getDate()) {
+			if (setTimeToEndOfDay(timetable.dateOfEvent) < getDate()) {
 				return eventStates[1]; // closed button
 			}
 
