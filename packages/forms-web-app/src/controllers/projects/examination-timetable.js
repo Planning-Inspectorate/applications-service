@@ -116,19 +116,17 @@ const getExaminationTimetable = async (req, res) => {
 		projectName: req.session?.projectName
 	};
 
-	if (paramCaseRef && !sessionCaseRef) {
-		const { getAppData } = require('../../services/application.service');
-		const response = await getAppData(projectValues.caseRef);
-		const responseCode = response?.resp_code;
-		if (response && responseCode && response.resp_code === 200) {
-			const appData = response.data;
-			const { CaseReference, ProjectName, PromoterName } = appData;
-			req.session.appData = appData;
-			req.session.caseRef = CaseReference;
-			req.session.projectName = ProjectName;
-			setProjectPromoterName(req.session, PromoterName);
-			projectValues.projectName = ProjectName;
-		}
+	const { getAppData } = require('../../services/application.service');
+	const response = await getAppData(projectValues.caseRef);
+	const responseCode = response?.resp_code;
+	if (response && responseCode && response.resp_code === 200) {
+		const appData = response.data;
+		const { CaseReference, ProjectName, PromoterName } = appData;
+		req.session.appData = appData;
+		req.session.caseRef = CaseReference;
+		req.session.projectName = ProjectName;
+		setProjectPromoterName(req.session, PromoterName);
+		projectValues.projectName = ProjectName;
 	}
 
 	const appData = req.session?.appData;
