@@ -109,16 +109,17 @@ const getEvents = async (caseRef) => {
 };
 
 const getExaminationTimetable = async (req, res) => {
-	const paramCaseRef = req.params?.case_ref;
-	const sessionCaseRef = req.session?.caseRef;
+	const { case_ref: paramCaseRef } = req.params;
 	const projectValues = {
-		caseRef: paramCaseRef ? paramCaseRef : sessionCaseRef,
+		caseRef: paramCaseRef,
 		projectName: req.session?.projectName
 	};
 
 	const { getAppData } = require('../../services/application.service');
 	const response = await getAppData(projectValues.caseRef);
 	const responseCode = response?.resp_code;
+	if (responseCode && response.resp_code !== 200) return res.status(404).render('error/not-found');
+
 	if (response && responseCode && response.resp_code === 200) {
 		const appData = response.data;
 		const { CaseReference, ProjectName, PromoterName } = appData;
@@ -145,9 +146,7 @@ const getExaminationTimetable = async (req, res) => {
 
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
-	const events = displayEvents(appData.dateOfNonAcceptance)
-		? await getEvents(req.session.caseRef)
-		: [];
+	const events = displayEvents(appData.dateOfNonAcceptance) ? await getEvents(paramCaseRef) : [];
 	if (events.length > 0) req.session.allEvents = events;
 	const activeProjectLink = project.pages.examinationTimetable.id;
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;
