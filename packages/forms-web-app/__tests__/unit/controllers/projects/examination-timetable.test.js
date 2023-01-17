@@ -24,8 +24,10 @@ describe('controllers/projects/examination-timetable', () => {
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			params: {
+				case_ref: 'ABCD1234'
+			},
 			session: {
-				caseRef: 'ABCD1234',
 				projectName: 'ABC',
 				appData: {
 					ConfirmedStartOfExamination: '2022-09-08',
