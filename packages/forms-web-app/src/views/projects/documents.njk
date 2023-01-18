@@ -1,6 +1,7 @@
 {% extends "layouts/default.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% from "../components/layout/slots.njk" import layoutSlots %}
 {% from "../components/section/results.njk" import sectionResults %}
@@ -101,6 +102,10 @@
 				</h1>
 
 				{% if documents.length != 0 or queryUrl != '' %}
+					{% if examinationLibraryDocumentHtml %}
+						{{ govukInsetText({ html: examinationLibraryDocumentHtml }) }}
+					{% endif %}
+
 					<h2 class="govuk-heading-m">
 						Search documents
 					</h2>

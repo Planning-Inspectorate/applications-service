@@ -3,6 +3,9 @@ const {
 } = require('../../../../../src/controllers/projects/documents/controller');
 const { searchDocumentsV3 } = require('../../../../../src/services/document.service');
 const { getAppData } = require('../../../../../src/services/application.service');
+const {
+	searchExaminationLibraryDocument
+} = require('../../../../../src/controllers/projects/documents/utils/documents/search-examination-library-document');
 
 jest.mock('../../../../../src/services/application.service', () => ({
 	getAppData: jest.fn()
@@ -10,6 +13,13 @@ jest.mock('../../../../../src/services/application.service', () => ({
 jest.mock('../../../../../src/services/document.service', () => ({
 	searchDocumentsV3: jest.fn()
 }));
+jest.mock(
+	'../../../../../src/controllers/projects/documents/utils/documents/search-examination-library-document',
+	() => ({
+		searchExaminationLibraryDocument: jest.fn()
+	})
+);
+
 describe('#getApplicationDocuments', () => {
 	describe('When getting the documents for the document library', () => {
 		describe('and there are no errors', () => {
@@ -51,6 +61,11 @@ describe('#getApplicationDocuments', () => {
 						totalPages: 5,
 						currentPage: 1
 					}
+				});
+				searchExaminationLibraryDocument.mockReturnValue({
+					mime: 'application/pdf',
+					path: 'mock/path',
+					size: '224630'
 				});
 				await getApplicationDocuments(req, res);
 			});
@@ -106,6 +121,8 @@ describe('#getApplicationDocuments', () => {
 							filter_1: 'mock filter'
 						}
 					],
+					examinationLibraryDocumentHtml:
+						'<p><a href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers</p>',
 					filters: [
 						{
 							idPrefix: 'mock filter-1',
