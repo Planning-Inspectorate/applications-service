@@ -33,7 +33,8 @@ describe('#getPageData', () => {
 					id: 'mock id',
 					pageTitle: 'mock page title',
 					title: 'mock page title',
-					view: 'mock view'
+					view: 'mock view',
+					url: '/examination/your-name'
 				});
 			});
 		});
