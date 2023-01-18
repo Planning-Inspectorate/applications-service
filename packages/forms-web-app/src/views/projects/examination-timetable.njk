@@ -13,26 +13,9 @@
 {% endblock %}
 
 {% set contentTimetableNotPublished = '
-  <p>
-    Currently there are no events to display. The examination timetable will be published at the Examination stage.
-  </p>
+  <p> Currently there are no events to display. </p>
+  <p> The examination timetable will be published at the examination stage. </p>
 
-  <p>
-    If you already have ' +
-      textLink(
-        projectEmailSignUpUrl,
-        "Go to 'Sign up for email updates' section on the project overview page.",
-        "signed up for project updates"
-      ) + ', we will tell you when this information is published.
-  </p>
-
-  <p> ' +
-    textLink(
-      projectUrl,
-      "Go to the project overview page.",
-      "Return to the project overview"
-    ) + '
-  </p>
 '%}
 
 {% block columnTwo %}
@@ -50,10 +33,13 @@
     {% endif %}
 
     {{ sectionEvents(events) }}
+
+		{% if dateTimeExaminationEnds %}
+			<p class="govuk-body-s govuk-!-margin-top-2">{{dateTimeExaminationEnds}}</p>
+		{% endif %}
+
   {% else %}
     {{ contentTimetableNotPublished | safe }}
   {% endif %}
-	{% if dateTimeExaminationEnds %}
-    	<p class="govuk-body-s govuk-!-margin-top-2">{{dateTimeExaminationEnds}}</p>
-	{% endif %}
+
 {% endblock %}

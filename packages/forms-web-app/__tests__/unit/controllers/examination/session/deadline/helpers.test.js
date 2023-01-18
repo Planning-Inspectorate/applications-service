@@ -1,6 +1,6 @@
 const {
 	getUserHasInterestedPartyNumber,
-	getUserApplicant
+	isUserApplicant
 } = require('../../../../../../src/controllers/examination/session/deadline/helpers');
 
 const {
@@ -45,13 +45,13 @@ describe('controllers/session/deadline/helpers', () => {
 			});
 		});
 	});
-	describe('#getUserApplicant', () => {
+	describe('#isUserApplicant', () => {
 		describe('When determining if a user is the applicant', () => {
 			describe('and the user has selected yes', () => {
 				let result;
 				beforeEach(() => {
 					getExaminationSession.mockReturnValue({ isApplicant: 'yes' });
-					result = getUserApplicant(req.session);
+					result = isUserApplicant(req.session);
 				});
 				it('should call the function', () => {
 					expect(getExaminationSession).toHaveBeenCalledWith(req.session);
@@ -64,7 +64,7 @@ describe('controllers/session/deadline/helpers', () => {
 				let result;
 				beforeEach(() => {
 					getExaminationSession.mockReturnValue({ isApplicant: 'no' });
-					result = getUserApplicant(req.session);
+					result = isUserApplicant(req.session);
 				});
 				it('should call the function', () => {
 					expect(getExaminationSession).toHaveBeenCalledWith(req.session);

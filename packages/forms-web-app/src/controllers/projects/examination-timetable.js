@@ -4,6 +4,7 @@ const {
 	getDateTimeExaminationEnds
 } = require('../../utils/is-before-or-after-date');
 const { getTimetables } = require('../../services/timetable.service');
+const { setProjectPromoterName } = require('./session');
 const config = require('../../config');
 const {
 	routesConfig: {
@@ -29,14 +30,15 @@ const eventStates = [
 	{ value: 'null', text: '', classes: '' }
 ];
 
+const setTimeToEndOfDay = (date) => new Date(date).setHours(24, 0, 0, 0);
+
 const eventSubmitButtonActive = (timetable) => {
-	const tomorrow = new Date();
-	tomorrow.setDate(tomorrow.getDate() + 1);
+	const currentDate = new Date();
 
 	return (
 		timetable.typeOfEvent === 'Deadline' &&
-		tomorrow < new Date(timetable.dateOfEvent) &&
-		(new Date(timetable.dateTimeDeadlineStart) < getDate() ||
+		currentDate < setTimeToEndOfDay(timetable.dateOfEvent) &&
+		(new Date(timetable.dateTimeDeadlineStart) < currentDate ||
 			isNullSQLDate(new Date(timetable.dateTimeDeadlineStart)))
 	);
 };
@@ -74,7 +76,7 @@ const getEvents = async (caseRef) => {
 		const title = `${dateOfEvent} - ${eventTitle}`;
 		const submitButton = eventSubmitButtonActive(timetable);
 		const getEventState = (timetable) => {
-			if (new Date(timetable.dateOfEvent) < getDate()) {
+			if (setTimeToEndOfDay(timetable.dateOfEvent) < getDate()) {
 				return eventStates[1]; // closed button
 			}
 
@@ -107,26 +109,25 @@ const getEvents = async (caseRef) => {
 };
 
 const getExaminationTimetable = async (req, res) => {
-	const paramCaseRef = req.params?.case_ref;
-	const sessionCaseRef = req.session?.caseRef;
-
+	const { case_ref: paramCaseRef } = req.params;
 	const projectValues = {
-		caseRef: paramCaseRef ? paramCaseRef : sessionCaseRef,
+		caseRef: paramCaseRef,
 		projectName: req.session?.projectName
 	};
 
-	if (paramCaseRef && !sessionCaseRef) {
-		const { getAppData } = require('../../services/application.service');
-		const response = await getAppData(projectValues.caseRef);
-		const responseCode = response?.resp_code;
-		if (response && responseCode && response.resp_code === 200) {
-			const appData = response.data;
-			const { CaseReference, ProjectName } = appData;
-			req.session.appData = appData;
-			req.session.caseRef = CaseReference;
-			req.session.projectName = ProjectName;
-			projectValues.projectName = ProjectName;
-		}
+	const { getAppData } = require('../../services/application.service');
+	const response = await getAppData(projectValues.caseRef);
+	const responseCode = response?.resp_code;
+	if (responseCode && response.resp_code !== 200) return res.status(404).render('error/not-found');
+
+	if (response && responseCode && response.resp_code === 200) {
+		const appData = response.data;
+		const { CaseReference, ProjectName, PromoterName } = appData;
+		req.session.appData = appData;
+		req.session.caseRef = CaseReference;
+		req.session.projectName = ProjectName;
+		setProjectPromoterName(req.session, PromoterName);
+		projectValues.projectName = ProjectName;
 	}
 
 	const appData = req.session?.appData;
@@ -145,9 +146,7 @@ const getExaminationTimetable = async (req, res) => {
 
 	if (!caseRef || !projectName) return res.status(404).render('error/not-found');
 
-	const events = displayEvents(appData.dateOfNonAcceptance)
-		? await getEvents(req.session.caseRef)
-		: [];
+	const events = displayEvents(appData.dateOfNonAcceptance) ? await getEvents(paramCaseRef) : [];
 	if (events.length > 0) req.session.allEvents = events;
 	const activeProjectLink = project.pages.examinationTimetable.id;
 	const pageTitle = `Examination timetable - ${projectName} - National Infrastructure Planning`;

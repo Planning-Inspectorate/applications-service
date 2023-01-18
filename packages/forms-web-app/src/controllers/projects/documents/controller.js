@@ -21,13 +21,17 @@ const getApplicationDocuments = async (req, res) => {
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = await pageData(case_ref);
 
-		const { documents, filters, pagination } = await searchDocuments(case_ref, query);
-		const documentsView = getDocuments(documents);
+		const { documents, examinationLibraryDocument, filters, pagination } = await searchDocuments(
+			case_ref,
+			query
+		);
+
+		const documentsView = getDocuments(documents, examinationLibraryDocument);
 		const filteredView = getFilters(filters, query);
 		const paginationView = getPagination(pagination);
 
 		return res.render(VIEW.PROJECTS.DOCUMENTS, {
-			documents: documentsView,
+			...documentsView,
 			...pageFeatureToggles,
 			...pageDataObj,
 			...paginationView,

@@ -17,4 +17,8 @@ const setDeadlineDetailsSubmittingFor = (session, submittingFor) => {
 	examinationSession[deadlineSubmittingForKey] = submittingFor;
 };
 
-module.exports = { getDeadlineDetailsSubmittingFor, setDeadlineDetailsSubmittingFor };
+module.exports = {
+	deadlineSubmittingForKey,
+	getDeadlineDetailsSubmittingFor,
+	setDeadlineDetailsSubmittingFor
+};

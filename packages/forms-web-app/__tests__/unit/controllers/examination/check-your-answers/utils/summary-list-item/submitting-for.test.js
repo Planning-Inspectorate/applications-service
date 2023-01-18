@@ -67,7 +67,8 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/sub
 				it('should get the summary list item with the submitting for title and selected option text', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						'Making submission for',
-						mockSubmittingForText
+						mockSubmittingForText,
+						'/examination/who-are-you-submitting-for?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {

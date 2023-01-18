@@ -1,10 +1,10 @@
 const fs = require('fs');
 const { mapSessionToCommonFormData, markFormAsPersonalInfo } = require('./helpers');
 
-const getListOfFormData = (examination, item) => {
+const getListOfFormData = (session, item) => {
 	let result = [];
 	if (item.comment) {
-		const form = mapSessionToCommonFormData(examination, item);
+		const form = mapSessionToCommonFormData(session, item);
 		form.append('representation', item.comment);
 		markFormAsPersonalInfo(form, item);
 		result.push(form);
@@ -12,7 +12,7 @@ const getListOfFormData = (examination, item) => {
 
 	if (item.files) {
 		for (const file of item.files) {
-			const form = mapSessionToCommonFormData(examination, item);
+			const form = mapSessionToCommonFormData(session, item);
 			markFormAsPersonalInfo(form, file);
 			form.append('file', fs.createReadStream(file.uploadPath), {
 				filename: file.fileName,

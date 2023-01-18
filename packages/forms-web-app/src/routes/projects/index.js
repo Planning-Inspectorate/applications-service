@@ -35,10 +35,6 @@ if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
 	router.get('/all-examination-documents', allExaminationDocsController.getAllExaminationDocuments);
 	router.get('/recommendations', recommendationsController.getRecommendations);
-	router.post(
-		subDirectory + pages.examinationTimetable.route,
-		examinationTimetable.postExaminationTimetable
-	);
 	router.get('/:case_ref', projectsController.getExamination);
 }
 
@@ -57,6 +53,10 @@ if (allowExaminationTimetable) {
 	router.get(
 		`${subDirectory}${pages.examinationTimetable.route}`,
 		examinationTimetable.getExaminationTimetable
+	);
+	router.post(
+		`${subDirectory}${pages.examinationTimetable.route}`,
+		examinationTimetable.postExaminationTimetable
 	);
 }
 

@@ -87,7 +87,7 @@ const {
 const {
 	getSubmittingFor,
 	postSubmittingFor
-} = require('../../controllers/examination/submitting-for');
+} = require('../../controllers/examination/submitting-for/controller');
 const {
 	getYourInterestedPartyNumber,
 	postYourInterestedPartyNumber

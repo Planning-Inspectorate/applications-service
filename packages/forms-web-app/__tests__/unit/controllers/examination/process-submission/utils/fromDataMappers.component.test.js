@@ -6,11 +6,13 @@ const { expectFormDataKeyValue, expectFormDataFile } = require('./testHelper');
 describe('examination/process-submission/utils/fromDataMappers', () => {
 	describe('#getListOfFormData', () => {
 		describe('When getting a list of form data', () => {
-			const examination = {
-				hasInterestedPartyNo: 'yes',
-				name: 'mock name',
-				email: 'mock email',
-				title: 'remove me - mock title'
+			const mockSession = {
+				examination: {
+					hasInterestedPartyNo: 'yes',
+					name: 'mock name',
+					email: 'mock email',
+					title: 'remove me - mock title'
+				}
 			};
 			describe('and the submission items only has a comment', () => {
 				const item = {
@@ -20,7 +22,7 @@ describe('examination/process-submission/utils/fromDataMappers', () => {
 				};
 				let result;
 				beforeEach(() => {
-					result = getListOfFormData(examination, item);
+					result = getListOfFormData(mockSession, item);
 				});
 				it('should add the comment (representation) value and form data as an item on the array', () => {
 					const expectedFrom = result[0];
@@ -41,7 +43,7 @@ describe('examination/process-submission/utils/fromDataMappers', () => {
 				};
 				let result;
 				beforeEach(() => {
-					result = getListOfFormData(examination, item);
+					result = getListOfFormData(mockSession, item);
 				});
 				it('should add the comment (representation) value and form data as an item on the array', () => {
 					const expectedFrom = result[0];
@@ -68,7 +70,7 @@ describe('examination/process-submission/utils/fromDataMappers', () => {
 				};
 				let result;
 				beforeEach(() => {
-					result = getListOfFormData(examination, item);
+					result = getListOfFormData(mockSession, item);
 				});
 				it('should add the comment (representation) value and form data as an item on the array', () => {
 					const expectedFrom = result[0];
