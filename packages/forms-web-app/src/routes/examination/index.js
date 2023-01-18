@@ -11,6 +11,8 @@ const {
 	unsetEditModeSubmissionItemId
 } = require('../../middleware/unset-edit-mode-submission-item-id');
 
+const { decodeUri } = require('../../middleware/decode-uri');
+
 const {
 	routesConfig: {
 		examination: {
@@ -163,6 +165,7 @@ router.post(
 router.get(nameMyself.route, forwardView(nameMyself), getName);
 router.post(
 	nameMyself.route,
+	decodeUri('body', [nameMyself.id]),
 	validateNotEmptyAndLength(nameMyself),
 	validationErrorHandler,
 	forwardView(nameMyself),
