@@ -140,6 +140,7 @@ router.post(
 router.get(enterComment.route, getEnterComment);
 router.post(
 	enterComment.route,
+	decodeUri('body', [enterComment.id]),
 	validateNotEmptyAndLength(enterComment),
 	validationErrorHandler,
 	postEnterComment
