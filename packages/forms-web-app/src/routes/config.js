@@ -373,6 +373,11 @@ const routesConfig = {
 			submissionComplete: {
 				route: '/submission-complete',
 				view: 'pages/examination/submission-complete'
+			},
+			submissionError: {
+				id: 'examination-submission-error',
+				route: '/submission-error',
+				view: 'error/examination-submission-error'
 			}
 		}
 	},

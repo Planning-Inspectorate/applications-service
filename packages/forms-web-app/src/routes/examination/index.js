@@ -38,7 +38,8 @@ const {
 				addAnotherDeadlineItem,
 				selectIfYouWantToDeleteData,
 				processSubmission,
-				submissionComplete
+				submissionComplete,
+				submissionError
 			}
 		}
 	}
@@ -109,6 +110,7 @@ const {
 const {
 	getSubmissionComplete
 } = require('../../controllers/examination/submission-complete/controller');
+const { getSubmissionError } = require('../../controllers/examination/submission-error/controller');
 
 const router = express.Router();
 
@@ -306,5 +308,7 @@ router.get(processSubmission.route, getProcessSubmission);
 router.post(processSubmission.route, postProcessSubmission);
 
 router.get(submissionComplete.route, getSubmissionComplete);
+
+router.get(submissionError.route, getSubmissionError);
 
 module.exports = router;

@@ -6,7 +6,9 @@ const {
 	getExaminationUploadingState,
 	getExaminationSubmissionComplete,
 	getExaminationSubmissionId,
-	getExaminationEmailAddress
+	getExaminationEmailAddress,
+	getExaminationSubmissionRetryErrorCount,
+	setExaminationSubmissionRetryErrorCount
 } = require('../../../../../src/controllers/examination/session/examination-session');
 describe('controllers/examination/session/examination-session', () => {
 	describe('#getExaminationSession', () => {
@@ -149,6 +151,35 @@ describe('controllers/examination/session/examination-session', () => {
 			const result = getExaminationEmailAddress(mockSession);
 			it('should return the value of submission id', () => {
 				expect(result).toEqual('mock email');
+			});
+		});
+	});
+	describe('When managing the submission error retry count', () => {
+		describe('#getExaminationSubmissionRetryErrorCount', () => {
+			describe('When getting the retry error count', () => {
+				const mockSession = { examination: { retryErrorCount: '1' } };
+				const result = getExaminationSubmissionRetryErrorCount(mockSession);
+				it('should return the value of submission id', () => {
+					expect(result).toEqual('1');
+				});
+			});
+		});
+		describe('#setExaminationSubmissionRetryErrorCount', () => {
+			describe('When setting the submission retry error count', () => {
+				describe('and the count is not initialised', () => {
+					const mockSession = { examination: {} };
+					setExaminationSubmissionRetryErrorCount(mockSession);
+					it('should initialise the value ', () => {
+						expect(mockSession.examination.retryErrorCount).toEqual(1);
+					});
+				});
+				describe('and the count is initialised', () => {
+					const mockSession = { examination: { retryErrorCount: 1 } };
+					setExaminationSubmissionRetryErrorCount(mockSession);
+					it('should increment the value by 1', () => {
+						expect(mockSession.examination.retryErrorCount).toEqual(2);
+					});
+				});
 			});
 		});
 	});

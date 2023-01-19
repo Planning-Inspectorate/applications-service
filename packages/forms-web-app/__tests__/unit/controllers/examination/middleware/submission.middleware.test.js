@@ -20,21 +20,24 @@ describe('#isProcessingSubmission', () => {
 			status: jest.fn(() => res)
 		};
 		const next = jest.fn();
-		describe('and a submission has complete and the user is on the complete submission route', () => {
-			beforeEach(() => {
-				const url = '/submission-complete';
-				isProcessingSubmission({ ...req, url }, res, next);
-			});
-			it('should go to the next middleware', () => {
-				expect(next).toHaveBeenCalled();
+		describe('and a route is an allowable route', () => {
+			describe('and a submission has complete and the user is on the complete submission route', () => {
+				beforeEach(() => {
+					const url = '/submission-complete';
+					isProcessingSubmission({ ...req, url }, res, next);
+				});
+				it('should go to the next middleware', () => {
+					expect(next).toHaveBeenCalled();
+				});
 			});
 		});
+
 		describe('and the uploading process is completed', () => {
 			beforeEach(() => {
 				getExaminationSubmissionComplete.mockReturnValue(true);
 				isProcessingSubmission(req, res, next);
 			});
-			it('should redirect to the submission	 complete page', () => {
+			it('should redirect to the submission	complete page', () => {
 				expect(res.redirect).toHaveBeenCalledWith('/examination/submission-complete');
 			});
 		});

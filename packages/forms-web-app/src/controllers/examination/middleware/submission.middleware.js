@@ -7,15 +7,17 @@ const {
 	routesConfig: {
 		examination: {
 			directory,
-			pages: { submissionComplete }
+			pages: { submissionComplete, submissionError }
 		}
 	}
 } = require('../../../routes/config');
 
+const allowableRoutes = [submissionComplete.route, submissionError.route];
+
 const isProcessingSubmission = (req, res, next) => {
 	const { url, session } = req;
 
-	if (url === submissionComplete.route) return next();
+	if (allowableRoutes.includes(url)) return next();
 
 	if (getExaminationSubmissionComplete(session))
 		return res.redirect(`${directory}${submissionComplete.route}`);
