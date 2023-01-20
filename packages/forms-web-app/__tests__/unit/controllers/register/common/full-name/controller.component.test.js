@@ -21,7 +21,7 @@ describe('controllers/register/common/full-name/controller', () => {
 				});
 				it('should render the registration full name page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
-						title:
+						titleTag:
 							'What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						hint: `<p>We will publish this on the website along with your comments about the project.</p>
                 <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`,
@@ -39,7 +39,7 @@ describe('controllers/register/common/full-name/controller', () => {
 				});
 				it('should render the registration full name page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
-						title:
+						titleTag:
 							'What is your full name? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						fullName: 'mock full name'
 					});
@@ -55,7 +55,7 @@ describe('controllers/register/common/full-name/controller', () => {
 				});
 				it('should render the registration full name page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
-						title:
+						titleTag:
 							'What is your full name? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						fullName: 'mock full name'
 					});
@@ -105,7 +105,7 @@ describe('controllers/register/common/full-name/controller', () => {
 						errors: {
 							'full-name': 'an error'
 						},
-						title:
+						titleTag:
 							'What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						hint: `<p>We will publish this on the website along with your comments about the project.</p>
                 <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
