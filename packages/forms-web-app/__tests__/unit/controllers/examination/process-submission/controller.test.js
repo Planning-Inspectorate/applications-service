@@ -92,9 +92,8 @@ describe('examination/process-submission/controller', () => {
 					});
 					postProcessSubmission(req, res);
 				});
-				it('should render the error page', () => {
-					expect(res.status).toHaveBeenCalledWith(500);
-					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+				it('should redirect to the process submission failure error page', () => {
+					expect(res.redirect).toHaveBeenCalledWith('/examination/submission-error');
 				});
 			});
 		});

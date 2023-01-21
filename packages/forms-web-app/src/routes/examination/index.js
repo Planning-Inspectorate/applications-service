@@ -11,6 +11,8 @@ const {
 	unsetEditModeSubmissionItemId
 } = require('../../middleware/unset-edit-mode-submission-item-id');
 
+const { decodeUri } = require('../../middleware/decode-uri');
+
 const {
 	routesConfig: {
 		examination: {
@@ -38,7 +40,8 @@ const {
 				addAnotherDeadlineItem,
 				selectIfYouWantToDeleteData,
 				processSubmission,
-				submissionComplete
+				submissionComplete,
+				submissionError
 			}
 		}
 	}
@@ -109,6 +112,7 @@ const {
 const {
 	getSubmissionComplete
 } = require('../../controllers/examination/submission-complete/controller');
+const { getSubmissionError } = require('../../controllers/examination/submission-error/controller');
 
 const router = express.Router();
 
@@ -136,6 +140,7 @@ router.post(
 router.get(enterComment.route, getEnterComment);
 router.post(
 	enterComment.route,
+	decodeUri('body', [enterComment.id]),
 	validateNotEmptyAndLength(enterComment),
 	validationErrorHandler,
 	postEnterComment
@@ -161,6 +166,7 @@ router.post(
 router.get(nameMyself.route, forwardView(nameMyself), getName);
 router.post(
 	nameMyself.route,
+	decodeUri('body', [nameMyself.id]),
 	validateNotEmptyAndLength(nameMyself),
 	validationErrorHandler,
 	forwardView(nameMyself),
@@ -306,5 +312,7 @@ router.get(processSubmission.route, getProcessSubmission);
 router.post(processSubmission.route, postProcessSubmission);
 
 router.get(submissionComplete.route, getSubmissionComplete);
+
+router.get(submissionError.route, getSubmissionError);
 
 module.exports = router;

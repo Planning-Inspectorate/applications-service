@@ -24,8 +24,10 @@ describe('controllers/projects/examination-timetable', () => {
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			params: {
+				case_ref: 'ABCD1234'
+			},
 			session: {
-				caseRef: 'ABCD1234',
 				projectName: 'ABC',
 				appData: {
 					ConfirmedStartOfExamination: '2022-09-08',
@@ -79,8 +81,7 @@ describe('controllers/projects/examination-timetable', () => {
 		});
 
 		it('should set event data and eventSubmit button based on timetable data', async () => {
-			const futureDate = new Date();
-			futureDate.setDate(futureDate.getDate() + 4);
+			const currentDate = new Date();
 
 			getTimetables.mockImplementation(() =>
 				Promise.resolve({
@@ -105,7 +106,7 @@ describe('controllers/projects/examination-timetable', () => {
 								caseReference: 'EN010009',
 								title: 'Deadline 2',
 								description: 'Deadline 2 description',
-								dateOfEvent: futureDate.toISOString(),
+								dateOfEvent: currentDate.toISOString(),
 								timetableType: 'Exams',
 								typeOfEvent: 'Deadline',
 								dateTimeDeadlineStart: '2022-09-26T00:00:00.000Z',
@@ -117,7 +118,7 @@ describe('controllers/projects/examination-timetable', () => {
 								caseReference: 'EN010009',
 								title: 'Deadline 3',
 								description: 'Deadline 3 description',
-								dateOfEvent: futureDate.toISOString(),
+								dateOfEvent: currentDate.toISOString(),
 								timetableType: 'Exams',
 								typeOfEvent: 'Deadline',
 								dateTimeDeadlineStart: '0001-01-01 00:00:00',
@@ -129,7 +130,7 @@ describe('controllers/projects/examination-timetable', () => {
 								caseReference: 'EN010009',
 								title: 'Deadline 4',
 								description: 'Deadline 4 description',
-								dateOfEvent: futureDate.toISOString(),
+								dateOfEvent: currentDate.toISOString(),
 								timetableType: 'Exams',
 								typeOfEvent: 'Deadline',
 								dateTimeDeadlineStart: '2023-01-12TT00:00:00.000Z',
@@ -142,7 +143,7 @@ describe('controllers/projects/examination-timetable', () => {
 
 			await getExaminationTimetable(req, res);
 
-			const formattedDate = formatDate(futureDate.toISOString());
+			const formattedDate = formatDate(currentDate.toISOString());
 
 			expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.TIMETABLE, {
 				activeProjectLink: 'project-examination-timetable',

@@ -75,24 +75,76 @@ describe('controllers/examination/name/controller', () => {
 			const res = {
 				redirect: jest.fn(),
 				render: jest.fn(),
+				send: jest.fn(),
 				status: jest.fn(() => res)
 			};
+
 			describe('and there is an error', () => {
 				const mockErrorValue = {
 					errors: { a: 'b' },
 					errorSummary: [{ text: 'Error summary', href: '#' }]
 				};
-				beforeEach(() => {
+
+				it('Should render the name page with errors', () => {
 					req.body = mockErrorValue;
 					getPageData.mockReturnValue({ id: 'a', text: 'mock page data', view: 'mock name view' });
 					postName(req, res);
-				});
-				it('Should render the name page with errors', () => {
+
 					expect(res.render).toHaveBeenCalledWith('mock name view', {
 						...mockErrorValue,
 						id: 'a',
 						text: 'mock page data',
 						view: 'mock name view'
+					});
+				});
+
+				it('Should send the sanitized response with errors', () => {
+					req.body = {
+						...mockErrorValue,
+						origin: 'sanitise-form-post'
+					};
+					getPageData.mockReturnValue({
+						id: 'a',
+						text: 'mock page data',
+						view: 'mock name view',
+						url: '/mock-url'
+					});
+					postName(req, res);
+
+					expect(res.send).toHaveBeenCalledWith({
+						error: true,
+						url: '/mock-url'
+					});
+				});
+			});
+
+			describe('and there is a sanitised request', () => {
+				const mockPageDataValue = { id: 'examination-name' };
+				const mockPageDataIdValue = 'name value';
+				const mockRedirectUrl = 'redirect url';
+				beforeEach(() => {
+					req.body = {
+						[mockPageDataValue.id]: mockPageDataIdValue,
+						origin: 'sanitise-form-post'
+					};
+					getPageData.mockReturnValue({ id: 'examination-name' });
+					setDeadlineDetailsName.mockReturnValue();
+					getRedirectUrl.mockReturnValue(mockRedirectUrl);
+					postName(req, res);
+				});
+				it('should call session funcs', () => {
+					expect(setDeadlineDetailsName).toHaveBeenCalledWith(
+						{ text: 'mock session' },
+						'name value'
+					);
+				});
+				it('should call the functions', () => {
+					expect(getRedirectUrl).toHaveBeenCalledWith({ text: 'mock query' });
+				});
+				it('should sanitised response to redirect to the next page to be sent', () => {
+					expect(res.send).toHaveBeenCalledWith({
+						error: false,
+						url: 'redirect url'
 					});
 				});
 			});

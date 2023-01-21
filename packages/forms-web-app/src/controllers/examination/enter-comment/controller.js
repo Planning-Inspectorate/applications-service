@@ -3,18 +3,13 @@ const { addKeyValueToActiveSubmissionItem } = require('../session/submission-ite
 const { getPageData } = require('./utils/get-page-data');
 const { getRedirectRoute } = require('./utils/get-redirect-route');
 const { getSubmissionItemPageUrl } = require('../utils/get-submission-item-page-url');
-const {
-	routesConfig: {
-		examination: {
-			pages: { enterComment }
-		}
-	}
-} = require('../../../routes/config');
+const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post.js');
 
 const getEnterComment = async (req, res) => {
 	try {
 		const { query, session } = req;
-		return res.render(enterComment.view, getPageData(query, session));
+		const pageData = getPageData(query, session);
+		return res.render(pageData.view, pageData);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -24,21 +19,33 @@ const getEnterComment = async (req, res) => {
 const postEnterComment = async (req, res) => {
 	try {
 		const { body, query, session } = req;
-		const { errors = {}, errorSummary = [] } = body;
-		if (errors[enterComment.id] || Object.keys(errors).length > 0) {
-			return res.render(enterComment.view, {
-				...getPageData(query, session),
+		const { errors = {}, errorSummary = [], origin } = body;
+		const originIsSanitiseFormPost = origin === 'sanitise-form-post';
+		const pageData = getPageData(query, session);
+		if (errors[pageData.id] || Object.keys(errors).length > 0) {
+			if (originIsSanitiseFormPost) {
+				return res.send(new sanitiseFormPostResponse(true, pageData.url));
+			}
+
+			return res.render(pageData.view, {
+				...pageData,
 				errors,
 				errorSummary
 			});
 		}
 
-		const enterCommentValue = body[enterComment.id];
+		const enterCommentValue = body[pageData.id];
 		if (!enterCommentValue) throw new Error('Enter comment does not have a value');
 
-		addKeyValueToActiveSubmissionItem(session, enterComment.sessionId, enterCommentValue);
+		addKeyValueToActiveSubmissionItem(session, pageData.sessionId, enterCommentValue);
 
-		return res.redirect(getSubmissionItemPageUrl(query, getRedirectRoute(session)));
+		const redirectUrl = getSubmissionItemPageUrl(query, getRedirectRoute(session));
+
+		if (originIsSanitiseFormPost) {
+			return res.send(new sanitiseFormPostResponse(false, redirectUrl));
+		}
+
+		return res.redirect(redirectUrl);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

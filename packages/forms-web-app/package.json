@@ -52,7 +52,7 @@
 		"nunjucks": "^3.2.3",
 		"nunjucks-date-filter": "^0.1.1",
 		"pino": "^6.13.2",
-		"redis": "3.1.2",
+		"redis": "^4.5.1",
 		"slugify": "^1.6.5",
 		"string-collapse-white-space": "^9.1.0",
 		"string-strip-html": "^8.3.0",
