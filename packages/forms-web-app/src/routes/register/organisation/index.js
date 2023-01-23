@@ -2,7 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 
-const over18Router = require('./are-you-18-over');
 const organisationNameRouter = require('./name-of-organisation-or-charity');
 const roleRouter = require('./what-job-title-or-role');
 
@@ -13,7 +12,6 @@ const declarationRouter = require('./declaration');
 const registrationSavedRouter = require('./registration-saved');
 const confirmationRouter = require('./registration-complete');
 
-router.use('/', over18Router);
 router.use('/', organisationNameRouter);
 router.use('/', roleRouter);
 router.use('/', telephoneRouter);
