@@ -36,7 +36,8 @@ describe('lib/views', () => {
 			},
 			REGISTER: {
 				COMMON: {
-					FULL_NAME_VIEW: 'register/common/full-name'
+					FULL_NAME_VIEW: 'register/common/full-name',
+					ADDRESS_VIEW: 'register/common/address'
 				},
 				REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 				START: 'register/start',

@@ -4,6 +4,8 @@ const { decodeUri } = require('../../middleware/decode-uri');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
 const { rules: fullNameValidationRules } = require('../../validators/shared/full-name');
 const fullNameController = require('../../controllers/register/common/full-name/controller');
+const { rules: addressValidationRules } = require('../../validators/register/myself/address');
+const addressController = require('../../controllers/register/common/address/controller');
 
 const router = express.Router();
 
@@ -14,6 +16,15 @@ router.post(
 	fullNameValidationRules(),
 	validationErrorHandler,
 	fullNameController.postFullName
+);
+
+router.get('/address', addressController.getAddress);
+
+router.post(
+	'/address',
+	addressValidationRules(),
+	validationErrorHandler,
+	addressController.postAddress
 );
 
 module.exports = router;

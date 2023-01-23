@@ -24,7 +24,8 @@ const VIEW = {
 		REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 		TYPE_OF_PARTY: 'register/who-registering-for',
 		COMMON: {
-			FULL_NAME_VIEW: 'register/common/full-name'
+			FULL_NAME_VIEW: 'register/common/full-name',
+			ADDRESS_VIEW: 'register/common/address'
 		},
 		MYSELF: {
 			FULL_NAME: 'register/myself/full-name',
