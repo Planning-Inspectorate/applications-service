@@ -4,7 +4,7 @@ const {
 	routesConfig: {
 		examination: {
 			directory,
-			pages: { processSubmission, submissionComplete }
+			pages: { processSubmission, submissionComplete, submissionError }
 		}
 	}
 } = require('../../../routes/config');
@@ -35,7 +35,7 @@ const postProcessSubmission = async (req, res) => {
 		return res.redirect(`${directory}${submissionComplete.route}`);
 	} catch (error) {
 		logger.error(error);
-		return res.status(500).render('error/unhandled-exception');
+		return res.redirect(`${directory}${submissionError.route}`);
 	}
 };
 

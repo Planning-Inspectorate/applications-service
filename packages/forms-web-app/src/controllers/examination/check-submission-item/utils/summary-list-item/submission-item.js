@@ -17,6 +17,7 @@ const getSummaryListItemSubmissionItem = (submissionItem, session) => {
 		throw new Error('Submission item does not have a submission item value');
 
 	let deadlineItemChangeUrl = `${directory}${selectDeadline.route}${editQuery}`;
+
 	if (showDeadlineItemChangeUrl(session) === false) {
 		deadlineItemChangeUrl = '';
 	}

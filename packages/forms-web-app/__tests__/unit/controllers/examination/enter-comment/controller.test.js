@@ -41,20 +41,29 @@ describe('controllers/examination/enter-comment/controller', () => {
 	const res = {
 		redirect: jest.fn(),
 		render: jest.fn(),
-		status: jest.fn(() => res)
+		status: jest.fn(() => res),
+		send: jest.fn()
 	};
+	const pageData = {
+		id: 'examination-enter-comment',
+		text: 'mock page data',
+		view: 'mock view',
+		sessionId: 'comment',
+		url: '/mock-url'
+	};
+
 	describe('#getEnterComment', () => {
 		describe('When rendering the enter comment page', () => {
 			describe('and the render is successful', () => {
 				beforeEach(() => {
-					getPageData.mockReturnValue({});
+					getPageData.mockReturnValue(pageData);
 					getEnterComment(req, res);
 				});
 				it('should call the functions', () => {
 					expect(getPageData).toHaveBeenCalledWith(req.session, req.query);
 				});
 				it('should render the page', () => {
-					expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', {});
+					expect(res.render).toHaveBeenCalledWith(pageData.view, pageData);
 				});
 			});
 			describe('and an error is thrown', () => {
@@ -71,6 +80,7 @@ describe('controllers/examination/enter-comment/controller', () => {
 			});
 		});
 	});
+
 	describe('#postEnterComment', () => {
 		describe('When handling the enter comment post request', () => {
 			describe('and there is an error', () => {
@@ -78,18 +88,39 @@ describe('controllers/examination/enter-comment/controller', () => {
 					errors: { a: 'b' },
 					errorSummary: [{ text: 'Error summary', href: '#' }]
 				};
-				beforeEach(() => {
+
+				it('should render the page with errors', () => {
 					const mockReq = {
 						...req,
 						body: error
 					};
-					getPageData.mockReturnValue({});
+					getPageData.mockReturnValue(pageData);
 					postEnterComment(mockReq, res);
+
+					expect(res.render).toHaveBeenCalledWith(pageData.view, {
+						...pageData,
+						...error
+					});
 				});
-				it('should render the page with errors', () => {
-					expect(res.render).toHaveBeenCalledWith('pages/examination/enter-comment', error);
+
+				it('Should send the sanitized response with errors', () => {
+					const mockReq = {
+						...req,
+						body: {
+							...error,
+							origin: 'sanitise-form-post'
+						}
+					};
+					getPageData.mockReturnValue(pageData);
+					postEnterComment(mockReq, res);
+
+					expect(res.send).toHaveBeenCalledWith({
+						error: true,
+						url: '/mock-url'
+					});
 				});
 			});
+
 			describe('and there is not an "examination-enter-comment" value in the body', () => {
 				beforeEach(() => {
 					postEnterComment(req, res);
@@ -99,6 +130,7 @@ describe('controllers/examination/enter-comment/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 				});
 			});
+
 			describe('and there is a "examination-enter-comment" value in the body', () => {
 				const mockReq = {
 					...req,
@@ -123,6 +155,37 @@ describe('controllers/examination/enter-comment/controller', () => {
 				});
 				it('should redirect to', () => {
 					expect(res.redirect).toHaveBeenCalledWith('/directory/route');
+				});
+
+				describe('and there is a sanitised request with a "examination-enter-comment" value in the body', () => {
+					const mockReq = {
+						...req,
+						body: {
+							'examination-enter-comment': 'mock comment value',
+							origin: 'sanitise-form-post'
+						}
+					};
+					beforeEach(() => {
+						addKeyValueToActiveSubmissionItem.mockReturnValue(true);
+						getRedirectRoute.mockReturnValue('/route');
+						getSubmissionItemPageUrl.mockReturnValue('/directory/route');
+						postEnterComment(mockReq, res);
+					});
+					it('should call the functions', () => {
+						expect(addKeyValueToActiveSubmissionItem).toHaveBeenCalledWith(
+							req.session,
+							'comment',
+							'mock comment value'
+						);
+						expect(getRedirectRoute).toHaveBeenCalledWith(req.session);
+						expect(getSubmissionItemPageUrl).toHaveBeenCalledWith(req.query, '/route');
+					});
+					it('should send sanitised response to redirect to the next page to be sent', () => {
+						expect(res.send).toHaveBeenCalledWith({
+							error: false,
+							url: '/directory/route'
+						});
+					});
 				});
 			});
 		});

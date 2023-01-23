@@ -3,6 +3,7 @@ const { getSubmissionItemPageUrl } = require('../../utils/get-submission-item-pa
 const {
 	routesConfig: {
 		examination: {
+			directory,
 			pages: { enterComment, evidenceOrComment }
 		}
 	}
@@ -11,7 +12,10 @@ const {
 const pageData = {
 	id: enterComment.id,
 	pageTitle: enterComment.title,
-	title: enterComment.title
+	title: enterComment.title,
+	url: directory + enterComment.route,
+	view: enterComment.view,
+	sessionId: enterComment.sessionId
 };
 
 const getPageData = (query, session) => {

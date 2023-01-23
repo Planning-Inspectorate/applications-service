@@ -33,7 +33,10 @@ describe('controllers/examination/enter-comment/utils/get-page-data', () => {
 			comment: '',
 			id: 'examination-enter-comment',
 			pageTitle: 'Your comment',
-			title: 'Your comment'
+			title: 'Your comment',
+			url: '/examination/enter-a-comment',
+			sessionId: 'comment',
+			view: 'pages/examination/enter-comment'
 		};
 		describe('When getting the page data for the enter comment page', () => {
 			describe('and there is no comment value in the session', () => {
