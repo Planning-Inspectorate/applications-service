@@ -14,6 +14,19 @@ services:
     ports:
       - 6379:6379
 
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      REDIS_HOSTS: redis
+      REDIS_HOST: redis
+      REDIS_PORT: redis:6379
+      REDIS_PASSWORD: some_redis_password
+    ports:
+      - "8081:8081"
+
   applications-service-api:
     image: node:16-alpine
     user: node
@@ -59,7 +72,7 @@ services:
       - ./node_modules:/opt/app/node_modules
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
       - ./uploads:/opt/app/uploads
-#    command: npm run start:dev:debug --workspace=packages/applications-service-api
+    #    command: npm run start:dev:debug --workspace=packages/applications-service-api
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
@@ -98,7 +111,7 @@ services:
       - ./uploads:/opt/app/uploads
     # if enabling debug, be sure to uncomment / expose the debug port below.
     command: npm run start:dev --workspace=packages/forms-web-app
-#    command: npm run start:dev:debug --workspace=packages/forms-web-app
+    #    command: npm run start:dev:debug --workspace=packages/forms-web-app
     ports:
       - 9004:3000
       # - 9229:9229
