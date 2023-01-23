@@ -1,7 +1,7 @@
 const {
 	VIEW: {
 		REGISTER: {
-			COMMON: { ADDRESS_VIEW }
+			COMMON: { EMAIL_ADDRESS_VIEW }
 		}
 	}
 } = require('../../../../lib/views');
@@ -9,21 +9,17 @@ const { getKeyFromUrl } = require('../get-key-from-url');
 const { getSession, setSession } = require('../session');
 const { viewModel } = require('./viewModel');
 const { getRedirectUrl } = require('./get-redirect-url');
-const { addressToObj } = require('./addressHandler');
 const logger = require('../../../../lib/logger');
 
-const addressKey = 'address';
-
-const getAddress = (req, res) => {
+const emailAddressKey = 'email';
+const getEmailAddress = (req, res) => {
 	try {
-		const { session } = req;
-		const key = getKeyFromUrl(req.originalUrl);
-
-		const address = getSession(session, key)[addressKey];
-
-		return res.render(ADDRESS_VIEW, {
+		const { session, originalUrl } = req;
+		const key = getKeyFromUrl(originalUrl);
+		const email = getSession(session, key)[emailAddressKey];
+		return res.render(EMAIL_ADDRESS_VIEW, {
 			...viewModel[key],
-			address
+			email
 		});
 	} catch (e) {
 		console.log(e);
@@ -31,22 +27,21 @@ const getAddress = (req, res) => {
 	}
 };
 
-const postAddress = (req, res) => {
+const postEmailAddress = (req, res) => {
 	try {
-		const { body, query, originalUrl, session } = req;
+		const { body, originalUrl, query, session } = req;
 		const key = getKeyFromUrl(originalUrl);
 
 		const { errors = {}, errorSummary = [] } = body;
-		if (Object.keys(errors).length > 0) {
-			return res.render(ADDRESS_VIEW, {
+		if (errors[emailAddressKey] || Object.keys(errors).length > 0) {
+			return res.render(EMAIL_ADDRESS_VIEW, {
 				errors,
 				errorSummary,
-				...viewModel[key],
-				address: addressToObj(body)
+				...viewModel[key]
 			});
 		}
 
-		setSession(session, key, addressKey, addressToObj(body));
+		setSession(session, key, emailAddressKey, body[emailAddressKey]);
 
 		return res.redirect(getRedirectUrl(query, key));
 	} catch (error) {
@@ -56,6 +51,6 @@ const postAddress = (req, res) => {
 };
 
 module.exports = {
-	getAddress,
-	postAddress
+	getEmailAddress,
+	postEmailAddress
 };

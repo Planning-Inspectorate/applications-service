@@ -5,7 +5,7 @@ const router = express.Router();
 const over18Router = require('./are-you-18-over');
 const organisationNameRouter = require('./name-of-organisation-or-charity');
 const roleRouter = require('./what-job-title-or-role');
-const emailRouter = require('./email-address');
+
 const telephoneRouter = require('./telephone-number');
 const commentsRouter = require('./tell-us-about-project');
 const checkYourAnswersRouter = require('./check-answers');
@@ -16,7 +16,6 @@ const confirmationRouter = require('./registration-complete');
 router.use('/', over18Router);
 router.use('/', organisationNameRouter);
 router.use('/', roleRouter);
-router.use('/', emailRouter);
 router.use('/', telephoneRouter);
 router.use('/', commentsRouter);
 router.use('/', checkYourAnswersRouter);

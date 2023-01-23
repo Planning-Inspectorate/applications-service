@@ -6,6 +6,8 @@ const { rules: fullNameValidationRules } = require('../../validators/shared/full
 const fullNameController = require('../../controllers/register/common/full-name/controller');
 const { rules: addressValidationRules } = require('../../validators/register/myself/address');
 const addressController = require('../../controllers/register/common/address/controller');
+const { emailValidationRules } = require('../../validators/shared/email-address');
+const emailController = require('../../controllers/register/common/email-address/controller');
 
 const router = express.Router();
 
@@ -25,6 +27,15 @@ router.post(
 	addressValidationRules(),
 	validationErrorHandler,
 	addressController.postAddress
+);
+
+router.get('/email-address', emailController.getEmailAddress);
+
+router.post(
+	'/email-address',
+	emailValidationRules(),
+	validationErrorHandler,
+	emailController.postEmailAddress
 );
 
 module.exports = router;

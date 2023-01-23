@@ -25,7 +25,8 @@ const VIEW = {
 		TYPE_OF_PARTY: 'register/who-registering-for',
 		COMMON: {
 			FULL_NAME_VIEW: 'register/common/full-name',
-			ADDRESS_VIEW: 'register/common/address'
+			ADDRESS_VIEW: 'register/common/address',
+			EMAIL_ADDRESS_VIEW: 'register/common/email-address'
 		},
 		MYSELF: {
 			FULL_NAME: 'register/myself/full-name',
