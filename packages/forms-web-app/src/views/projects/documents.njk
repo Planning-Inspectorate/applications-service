@@ -101,11 +101,11 @@
 					{{ title }}
 				</h1>
 
-				{% if documents.length != 0 or queryUrl != '' %}
-					{% if examinationLibraryDocumentHtml %}
-						{{ govukInsetText({ html: examinationLibraryDocumentHtml }) }}
-					{% endif %}
+				{% if examinationLibraryDocumentHtml %}
+					{{ govukInsetText({ html: examinationLibraryDocumentHtml }) }}
+				{% endif %}
 
+				{% if documents.length != 0 or queryUrl != '' %}
 					<h2 class="govuk-heading-m">
 						Search documents
 					</h2>
