@@ -6,10 +6,10 @@
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"test:open": "cypress open",
-		"test:e2e": "cypress run --env tags='not (@wip or @ignore)'",
+		"test:e2e": "cypress run -b chrome --env tags='not (@wip or @ignore)'",
 		"test:e2e:demo": "cypress run --headed -b chrome --env tags='not (@wip or @ignore)',demoDelay=1000",
 		"test:e2e:postprocess": "node ./reporter.js",
-		"test:e2e:smoke": "cypress run --env tags='not (@wip or @ignore) and @smoketest' --config video=false,baseUrl=$BASEURL"
+		"test:e2e:smoke": "cypress -b chrome run --env tags='not (@wip or @ignore) and @smoketest' --config video=false,baseUrl=$BASEURL"
 	},
 	"author": "",
 	"license": "ISC",
