@@ -9,7 +9,8 @@ const fetchDocuments = async (requestQuery) => {
 		[Op.and]: buildWhereStatements(
 			requestQuery.caseReference,
 			requestQuery.searchTerm,
-			requestQuery.filters
+			requestQuery.filters,
+			{ from: requestQuery.datePublishedFrom, to: requestQuery.datePublishedTo }
 		)
 	};
 
@@ -55,7 +56,7 @@ const getAvailableFilters = async (caseReference) => {
 	});
 };
 
-const buildWhereStatements = (caseReference, searchTerm, filters) => {
+const buildWhereStatements = (caseReference, searchTerm, filters, datePublished) => {
 	const statements = [
 		{ case_reference: caseReference },
 		{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } }
@@ -69,6 +70,11 @@ const buildWhereStatements = (caseReference, searchTerm, filters) => {
 	if (filters) {
 		const filtersStatements = mapFiltersToQuery(filters);
 		if (filtersStatements) statements.push(filtersStatements);
+	}
+
+	if (datePublished) {
+		const datePublishedStatements = buildDateQuery(datePublished);
+		if (datePublishedStatements) statements.push(datePublishedStatements);
 	}
 
 	return statements;
@@ -96,6 +102,20 @@ const mapSearchTermToQuery = (searchTerm) => {
 		return { [Op.or]: searchStatements };
 	}
 };
+
+function buildDateQuery({ from, to } = {}) {
+	if (from && to) {
+		return { ['date_published']: { [Op.between]: [from, to] } };
+	}
+
+	if (to) {
+		return { ['date_published']: { [Op.lte]: to } };
+	}
+
+	if (from) {
+		return { ['date_published']: { [Op.gte]: from } };
+	}
+}
 
 module.exports = {
 	fetchDocuments,

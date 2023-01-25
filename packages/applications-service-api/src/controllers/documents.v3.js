@@ -8,7 +8,9 @@ const getDocuments = async (req, res) => {
 		caseReference: req.body.caseReference,
 		page: req.body.page || 1,
 		filters: req.body.filters,
-		searchTerm: req.body.searchTerm
+		searchTerm: req.body.searchTerm,
+		datePublishedFrom: req.body.datePublishedFrom,
+		datePublishedTo: req.body.datePublishedTo
 	};
 
 	const [documents, availableFilters] = await Promise.all([
