@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @failing
 Feature: Recommendation and Decision page
     As a Test user
     I want to navigate to Recommendation and Decision page

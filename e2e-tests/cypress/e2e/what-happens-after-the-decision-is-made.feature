@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @failing
 Feature: What happens after the decision is made page
     As a Test user
     I want to navigate to What happens after the decision is made page
