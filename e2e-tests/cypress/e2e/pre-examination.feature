@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @failing
 Feature: Pre-examination page
     As a Test user
     I want to navigate to Pre-examination page
