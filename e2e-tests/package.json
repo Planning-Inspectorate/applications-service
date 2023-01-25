@@ -3,13 +3,14 @@
 	"version": "1.0.0",
 	"description": "",
 	"scripts": {
+		"postinstall": "patch-package",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"test:open": "cypress open",
-		"test:e2e": "cypress run -b chrome --env tags='not (@wip or @ignore)'",
-		"test:e2e:demo": "cypress run --headed -b chrome --env tags='not (@wip or @ignore)',demoDelay=1000",
+		"test:e2e": "cypress-tags run -b chrome --env tags='not (@wip or @ignore)'",
+		"test:e2e:demo": "cypress-tags run --headed -b chrome --env tags='not (@wip or @ignore)',demoDelay=1000",
 		"test:e2e:postprocess": "node ./reporter.js",
-		"test:e2e:smoke": "cypress -b chrome run --env tags='not (@wip or @ignore) and @smoketest' --config video=false,baseUrl=$BASEURL"
+		"test:e2e:smoke": "cypress-tags -b chrome run --env tags='not (@wip or @ignore) and @smoketest' --config video=false,baseUrl=$BASEURL"
 	},
 	"author": "",
 	"license": "ISC",
@@ -31,6 +32,7 @@
 		"eslint": "^8.17.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-cypress": "^2.12.1",
-		"multiple-cucumber-html-reporter": "^1.18.0"
+		"multiple-cucumber-html-reporter": "^1.18.0",
+		"patch-package": "^6.5.1"
 	}
 }
