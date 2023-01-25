@@ -839,6 +839,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentV3RequestFilter'
+        datePublishedFrom:
+          type: string
+          format: date
+          description: Filter for documents published on or after {value}
+          example: '2000-01-01'
+        datePublishedTo:
+          type: string
+          format: date
+          description: Filter for documents published on or before {value}
+          example: '2023-12-31'
     DocumentV3RequestFilter:
       required:
         - name

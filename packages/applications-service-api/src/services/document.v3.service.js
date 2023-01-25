@@ -56,7 +56,7 @@ const getAvailableFilters = async (caseReference) => {
 };
 
 const buildWhereStatements = (caseReference, searchTerm, filters) => {
-	let statements = [
+	const statements = [
 		{ case_reference: caseReference },
 		{ stage: { [Op.and]: [{ [Op.ne]: null }, { [Op.ne]: 0 }] } }
 	];
