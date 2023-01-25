@@ -10,6 +10,8 @@ const { emailValidationRules } = require('../../validators/shared/email-address'
 const emailController = require('../../controllers/register/common/email-address/controller');
 const { rules: over18Rules } = require('../../validators/register/myself/are-you-18-over');
 const areYouOver18Controller = require('../../controllers/register/common/are-you-18/controller');
+const { rules: telephoneValidationRules } = require('../../validators/register/myself/telephone');
+const telephoneNumberController = require('../../controllers/register/common/telephone-number/controller');
 
 const router = express.Router();
 
@@ -47,6 +49,15 @@ router.post(
 	over18Rules(),
 	validationErrorHandler,
 	areYouOver18Controller.postAreYouOver18
+);
+
+router.get('/telephone-number', telephoneNumberController.getTelephoneNumber);
+
+router.post(
+	'/telephone-number',
+	telephoneValidationRules(),
+	validationErrorHandler,
+	telephoneNumberController.postTelephoneNumber
 );
 
 module.exports = router;
