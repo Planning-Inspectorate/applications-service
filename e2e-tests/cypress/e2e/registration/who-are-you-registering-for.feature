@@ -1,4 +1,4 @@
-@testSuite @registration @myself @organisation @failing
+@testSuite @registration @myself @organisation @existingFailing
 Feature: who are you registering for? page
     As a Test user
     I want to navigate to who are you registering for? page
