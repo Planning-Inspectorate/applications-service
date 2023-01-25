@@ -39,7 +39,8 @@ describe('lib/views', () => {
 					FULL_NAME_VIEW: 'register/common/full-name',
 					ADDRESS_VIEW: 'register/common/address',
 					EMAIL_ADDRESS_VIEW: 'register/common/email-address',
-					ARE_YOU_OVER_18: 'register/common/are-you-18-over'
+					ARE_YOU_OVER_18: 'register/common/are-you-18-over',
+					TELEPHONE_NUMBER_VIEW: 'register/common/telephone'
 				},
 				REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 				START: 'register/start',
@@ -52,7 +53,7 @@ describe('lib/views', () => {
 					OVER_18: 'register/myself/are-you-18-over',
 					ADDRESS: 'register/myself/address',
 					EMAIL_ADDRESS: 'register/myself/email-address',
-					TELEPHONE: 'register/myself/telephone',
+					TELEPHONE: 'register/myself/telephone-number',
 					TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
 					CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
 					DECLARATION: 'register/myself/declaration',

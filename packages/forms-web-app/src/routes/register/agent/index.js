@@ -9,7 +9,6 @@ const representeeAddressRouter = require('./their-postal-address');
 const representeeEmailRouter = require('./their-email-address');
 const representeeTelephoneRouter = require('./their-telephone-number');
 
-const telephoneRouter = require('./telephone-number');
 const organisationNameRouter = require('./name-of-organisation');
 
 const commentsRouter = require('./tell-us-about-project');
@@ -25,7 +24,6 @@ router.use('/', representeeAddressRouter);
 router.use('/', representeeEmailRouter);
 router.use('/', representeeTelephoneRouter);
 
-router.use('/', telephoneRouter);
 router.use('/', organisationNameRouter);
 
 router.use('/', commentsRouter);

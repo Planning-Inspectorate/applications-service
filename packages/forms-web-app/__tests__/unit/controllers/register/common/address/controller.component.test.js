@@ -139,7 +139,7 @@ describe('controllers/register/common/address/controller', () => {
 					postAddress(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/telephone');
+					expect(res.redirect).toHaveBeenCalledWith('/register/myself/telephone-number');
 				});
 			});
 			describe('and the user has submitted a address for selected organisation', () => {
