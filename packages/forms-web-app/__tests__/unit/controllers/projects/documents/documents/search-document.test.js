@@ -65,7 +65,7 @@ describe('#searchDocuments', () => {
 				expect(searchDocumentsV3).toHaveBeenCalledWith({ text: 'mock body' });
 			});
 			it('should call the examination library document', () => {
-				expect(searchExaminationLibraryDocument).toHaveBeenCalledWith({ text: 'mock body' });
+				expect(searchExaminationLibraryDocument).toHaveBeenCalledWith(mockCaseRef);
 			});
 			it('should return the response mapped to documents, filters and pagination', () => {
 				expect(response).toEqual({
