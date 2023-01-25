@@ -114,6 +114,76 @@ describe('documentV3 service', () => {
 			});
 		});
 
+		it('calls query api with datePublishedFrom if it is specified', async () => {
+			await fetchDocuments({
+				caseReference: 'EN010085',
+				page: 1,
+				datePublishedFrom: '2000-01-01'
+			});
+
+			expect(mockFindAndCountAll).toBeCalledWith({
+				...expectedQuery,
+				where: {
+					[Op.and]: [
+						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
+						{
+							date_published: {
+								[Op.gte]: '2000-01-01'
+							}
+						}
+					]
+				}
+			});
+		});
+
+		it('calls query api with datePublishedTo if it is specified', async () => {
+			await fetchDocuments({
+				caseReference: 'EN010085',
+				page: 1,
+				datePublishedTo: '2023-12-31'
+			});
+
+			expect(mockFindAndCountAll).toBeCalledWith({
+				...expectedQuery,
+				where: {
+					[Op.and]: [
+						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
+						{
+							date_published: {
+								[Op.lte]: '2023-12-31'
+							}
+						}
+					]
+				}
+			});
+		});
+
+		it('calls query api with datePublishedFrom and datePublishedTo if they are specified', async () => {
+			await fetchDocuments({
+				caseReference: 'EN010085',
+				page: 1,
+				datePublishedFrom: '2000-01-01',
+				datePublishedTo: '2023-12-31'
+			});
+
+			expect(mockFindAndCountAll).toBeCalledWith({
+				...expectedQuery,
+				where: {
+					[Op.and]: [
+						{ case_reference: 'EN010085' },
+						STAGE_NOT_EMPTY_OR_0_STATEMENT,
+						{
+							date_published: {
+								[Op.between]: ['2000-01-01', '2023-12-31']
+							}
+						}
+					]
+				}
+			});
+		});
+
 		it('calls query api with searchTerm and stage filter when they are specified', async () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
