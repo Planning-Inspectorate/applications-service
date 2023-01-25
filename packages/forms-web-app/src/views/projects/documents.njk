@@ -101,6 +101,17 @@
 					{{ title }}
 				</h1>
 
+				<h1> Active filters </h1>
+				{% for obj in activeFilters %}
+					<h2> {{ obj.label }}</h2>
+					{% for thing in obj.tags %}
+						<a href="?{{ thing.params }}"> {{ thing.text }} {{ thing.params }} </a>
+						<br>
+						<br>
+					{% endfor %}
+					<hr>
+				{% endfor %}
+
 				{% if examinationLibraryDocumentHtml %}
 					{{ govukInsetText({ html: examinationLibraryDocumentHtml }) }}
 				{% endif %}

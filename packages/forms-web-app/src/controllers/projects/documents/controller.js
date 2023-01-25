@@ -30,12 +30,15 @@ const getApplicationDocuments = async (req, res) => {
 		const filteredView = getFilters(filters, query);
 		const paginationView = getPagination(pagination);
 
+		console.log('filters', filteredView);
+
 		return res.render(VIEW.PROJECTS.DOCUMENTS, {
 			...documentsView,
 			...pageFeatureToggles,
 			...pageDataObj,
 			...paginationView,
-			filters: filteredView,
+			filters: filteredView.filters,
+			activeFilters: filteredView.activeFilters,
 			projectName,
 			pageTitle: `Documents | ${projectName}`,
 			paginationUrl,

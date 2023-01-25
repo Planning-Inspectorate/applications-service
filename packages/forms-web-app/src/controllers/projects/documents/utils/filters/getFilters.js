@@ -5,7 +5,12 @@ const { viewModel } = require('./view-model');
 const getFilters = (filters, query) => {
 	const orderedFilters = orderFilters(filters);
 	const mappedFilters = convertFiltersToPageView(orderedFilters);
-	return viewModel(mappedFilters, query);
+
+	const { filterVM, activeFilters } = viewModel(mappedFilters, query);
+	return {
+		filters: filterVM,
+		activeFilters
+	};
 };
 
 module.exports = {
