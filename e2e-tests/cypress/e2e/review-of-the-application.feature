@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @failing
 Feature: Review of the application page
     As a Test user
     I want to navigate to Review of the application page

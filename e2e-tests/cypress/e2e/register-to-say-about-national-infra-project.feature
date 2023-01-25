@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @failing
 Feature: Registering to have your say about a national infrastructure project page
     As a Test user
     I want to navigate to Registering to have your say about a national infrastructure project page

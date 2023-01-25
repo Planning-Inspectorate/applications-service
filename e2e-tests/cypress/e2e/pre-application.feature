@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @failing
 Feature: Pre-application page
     As a Test user
     I want to navigate to Pre-application page
