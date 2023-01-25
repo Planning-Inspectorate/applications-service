@@ -23,7 +23,7 @@ const getTelephoneNumber = (req, res) => {
 			telephone
 		});
 	} catch (e) {
-		console.log(e);
+		logger.error(e);
 		throw e;
 	}
 };

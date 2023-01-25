@@ -1,13 +1,13 @@
 const { keys } = require('../keys');
+const { pageTitle } = require('../common-veiw-model');
 
+const pageTitlePrefix = 'Are you 18 or over?';
 const viewModel = {
 	[keys.myself]: {
-		titleTag:
-			'Are you 18 or over? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+		pageTitle: pageTitlePrefix + pageTitle[keys.myself]
 	},
 	[keys.organisation]: {
-		titleTag:
-			'Are you 18 or over? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+		pageTitle: pageTitlePrefix + pageTitle[keys.organisation]
 	}
 };
 

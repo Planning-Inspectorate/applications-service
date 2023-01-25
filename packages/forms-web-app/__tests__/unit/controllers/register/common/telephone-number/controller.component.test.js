@@ -21,7 +21,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 				});
 				it('should render the registration telephone number page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
-						titleTag:
+						pageTitle:
 							'What is your telephone number? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						telephone: 'mock telephone number'
 					});
@@ -37,7 +37,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 				});
 				it('should render the registration telephone number page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
-						titleTag:
+						pageTitle:
 							'What is your telephone number? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						telephone: 'mock telephone number'
 					});
@@ -55,11 +55,20 @@ describe('controllers/register/common/telephone-number/controller', () => {
 				});
 				it('should render the registration telephone number page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
-						titleTag:
+						pageTitle:
 							'What is your telephone number? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						telephone: 'mock telephone number'
 					});
 				});
+			});
+		});
+		describe('and there is an error', () => {
+			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const req = { session: 'mock session' };
+			it('should throw an error', () => {
+				expect(() => getTelephoneNumber(req, res)).toThrowError(
+					"Cannot read properties of undefined (reading 'split')"
+				);
 			});
 		});
 	});
@@ -105,9 +114,25 @@ describe('controllers/register/common/telephone-number/controller', () => {
 						errors: {
 							telephone: 'an error'
 						},
-						titleTag:
+						pageTitle:
 							'What is your telephone number? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
+				});
+			});
+			describe('and the user has submitted a telephone number for selected myself and is in edit mode', () => {
+				const req = {
+					originalUrl: '/register/myself/telephone-number',
+					session: { mySelfRegdata: { ['telephone']: 'mock telephone number' } },
+					body: {
+						['telephone']: 'mock telephone number'
+					},
+					query: { mode: 'edit' }
+				};
+				beforeEach(() => {
+					postTelephoneNumber(req, res);
+				});
+				it('should redirect to the next page for myself', () => {
+					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
 				});
 			});
 			describe('and the user has submitted a telephone number for selected myself', () => {

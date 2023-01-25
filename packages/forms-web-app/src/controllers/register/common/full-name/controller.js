@@ -24,7 +24,7 @@ const getFullName = (req, res) => {
 			fullName
 		});
 	} catch (e) {
-		console.log(e);
+		logger.error(e);
 		throw e;
 	}
 };
