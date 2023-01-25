@@ -21,7 +21,7 @@ describe('controllers/register/common/address/controller', () => {
 				});
 				it('should render the registration address page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
-						titleTag:
+						pageTitle:
 							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						address: {
 							text: 'mock address body'
@@ -39,8 +39,8 @@ describe('controllers/register/common/address/controller', () => {
 				});
 				it('should render the registration address page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
-						titleTag:
-							'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						pageTitle:
+							'What is your address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						address: {
 							text: 'mock address body'
 						}
@@ -59,13 +59,22 @@ describe('controllers/register/common/address/controller', () => {
 				});
 				it('should render the registration address page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
-						titleTag:
+						pageTitle:
 							'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						address: {
 							text: 'mock address body'
 						}
 					});
 				});
+			});
+		});
+		describe('and there is an error', () => {
+			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const req = { session: 'mock session' };
+			it('should throw an error', () => {
+				expect(() => getAddress(req, res)).toThrowError(
+					"Cannot read properties of undefined (reading 'split')"
+				);
 			});
 		});
 	});
@@ -121,9 +130,25 @@ describe('controllers/register/common/address/controller', () => {
 						errors: {
 							address: 'an error'
 						},
-						titleTag:
+						pageTitle:
 							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
+				});
+			});
+			describe('and the user has submitted a address for selected myself and is in edit mode', () => {
+				const req = {
+					originalUrl: '/register/myself/address',
+					session: { mySelfRegdata: { ['address']: { text: 'mock address' } } },
+					body: {
+						address: { ...mockAddress }
+					},
+					query: { mode: 'edit' }
+				};
+				beforeEach(() => {
+					postAddress(req, res);
+				});
+				it('should redirect to the next page for myself', () => {
+					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
 				});
 			});
 			describe('and the user has submitted a address for selected myself', () => {

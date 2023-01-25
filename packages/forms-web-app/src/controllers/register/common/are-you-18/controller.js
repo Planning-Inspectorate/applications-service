@@ -22,7 +22,7 @@ const getAreYouOver18 = (req, res) => {
 			over18
 		});
 	} catch (e) {
-		console.log(e);
+		logger.error(e);
 		throw e;
 	}
 };

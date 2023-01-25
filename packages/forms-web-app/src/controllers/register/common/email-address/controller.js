@@ -22,7 +22,7 @@ const getEmailAddress = (req, res) => {
 			email
 		});
 	} catch (e) {
-		console.log(e);
+		logger.error(e);
 		throw e;
 	}
 };

@@ -21,7 +21,7 @@ describe('controllers/register/common/email-address/controller', () => {
 				});
 				it('should render the registration email page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
-						titleTag:
+						pageTitle:
 							'What is your email address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						email: 'mock email'
 					});
@@ -37,7 +37,7 @@ describe('controllers/register/common/email-address/controller', () => {
 				});
 				it('should render the registration email page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
-						titleTag:
+						pageTitle:
 							'What is your email address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						email: 'mock email'
 					});
@@ -53,11 +53,20 @@ describe('controllers/register/common/email-address/controller', () => {
 				});
 				it('should render the registration email page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
-						titleTag:
+						pageTitle:
 							'What is your email address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						email: 'mock email'
 					});
 				});
+			});
+		});
+		describe('and there is an error', () => {
+			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const req = { session: 'mock session' };
+			it('should throw an error', () => {
+				expect(() => getEmailAddress(req, res)).toThrowError(
+					"Cannot read properties of undefined (reading 'split')"
+				);
 			});
 		});
 	});
@@ -103,9 +112,25 @@ describe('controllers/register/common/email-address/controller', () => {
 						errors: {
 							email: 'an error'
 						},
-						titleTag:
+						pageTitle:
 							'What is your email address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
+				});
+			});
+			describe('and the user has submitted a email address for selected myself and is in edit mode', () => {
+				const req = {
+					originalUrl: '/register/myself/email',
+					session: { mySelfRegdata: { ['email']: 'mock email address' } },
+					body: {
+						['email']: 'mock email address'
+					},
+					query: { mode: 'edit' }
+				};
+				beforeEach(() => {
+					postEmailAddress(req, res);
+				});
+				it('should redirect to the next page for myself', () => {
+					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
 				});
 			});
 			describe('and the user has submitted a email address for selected myself', () => {
