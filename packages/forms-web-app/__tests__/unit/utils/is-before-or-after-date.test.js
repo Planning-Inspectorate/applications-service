@@ -225,10 +225,21 @@ describe('#utils/is-before-or-after-date', () => {
 						);
 					});
 				});
+				describe('and all dates are bad', () => {
+					let result;
+					beforeEach(() => {
+						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
+						result = getDateTimeExaminationEnds(null, null, null);
+					});
+					it('should return empty string.', () => {
+						expect(result).toEqual('');
+					});
+				});
 			});
 		});
 	});
 });
+
 describe('#getConfirmedStartOfExamination', () => {
 	describe('When getting the correct sentence if a date is before or after today`s date', () => {
 		describe('and the date is before today', () => {

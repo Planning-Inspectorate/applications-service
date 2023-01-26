@@ -34,6 +34,8 @@ const getDateTimeExaminationEnds = (closeDate, extensionCloseDate, startDate) =>
 
 	if (!isInvalidDate(extensionCloseDate)) return handleGrantedExtension(extensionCloseDate);
 
+	if (isInvalidDate(startDate)) return '';
+
 	return isBeforeOrAfterSentence(moment(startDate).add(6, 'M').toISOString());
 };
 
