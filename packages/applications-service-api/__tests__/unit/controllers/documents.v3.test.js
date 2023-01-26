@@ -50,4 +50,39 @@ describe('documentsV3 controller', () => {
 			currentPage: 1
 		});
 	});
+
+	it('passes all request filters down to the service', async () => {
+		fetchDocumentsMock.mockResolvedValueOnce({
+			count: 4,
+			rows: DB_DOCUMENTS
+		});
+		getAvailableFiltersMock.mockResolvedValueOnce(DB_FILTERS);
+
+		await getDocuments(
+			{
+				body: {
+					caseReference: 'EN000001',
+					page: 2,
+					filters: [
+						{
+							name: 'category',
+							value: "Developer's Application",
+							type: [{ value: 'Plans' }, { value: 'Reports' }]
+						}
+					],
+					searchTerm: 'search',
+					datePublishedFrom: '',
+					datePublishedTo: ''
+				}
+			},
+			res
+		);
+
+		const expectedFilters = {
+			caseReference: 'EN000001',
+			page: 1
+		};
+
+		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
+	});
 });
