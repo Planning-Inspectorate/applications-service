@@ -41,15 +41,15 @@ All the features were tagged with `@testSuite` tag.
 
 to run all the tests in headed chrome mode execute below command:
 ```
- npx cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@testSuite"
+ npx cypress run --headed -b chrome --env demoDelay=1000 --env TAGS="@testSuite"
 ```
 selection of tests by tags i.e. only those with `@wip` tag:
 ```
- npx cypress run --headed -b chrome --env demoDelay=1000 -e TAGS="@wip"
+ npx cypress run --headed -b chrome --env demoDelay=1000 --env TAGS="@wip"
 ```
 A much more efficient way of running a selection of tests by tag which avoids firing up a browser for skipped feature files:
 ```
-npx cypress-tags run --headed -b chrome --env demoDelay=1000 -e TAGS="@registration and @myself"
+npx cypress-tags run --headed -b chrome --env demoDelay=1000 --env TAGS="@registration and @myself"
 ```
 or like this to select a specific feature file:
 ```
