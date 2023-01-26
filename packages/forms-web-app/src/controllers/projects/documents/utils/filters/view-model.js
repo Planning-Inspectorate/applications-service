@@ -1,5 +1,7 @@
 const { makeIntoArray } = require('../../../../examination/select-file/utils/helpers');
-const { filterParams } = require('./filter-params');
+const {
+	getActiveFilterQueryParamsWithRemovedFilter
+} = require('./get-active-filter-query-params-with-removed-filter');
 const viewModel = (filters, query) => {
 	const localQuery = JSON.parse(JSON.stringify(query));
 	const filterCopy = JSON.parse(JSON.stringify(filters));
@@ -19,7 +21,10 @@ const viewModel = (filters, query) => {
 
 						active.tags.push({
 							text: item.value,
-							params: filterParams(localQuery, { key: filterObj.name, value: item.value })
+							params: getActiveFilterQueryParamsWithRemovedFilter(localQuery, {
+								key: filterObj.name,
+								value: item.value
+							})
 						});
 					}
 				});
@@ -29,7 +34,7 @@ const viewModel = (filters, query) => {
 	});
 
 	return {
-		filterVM: filterCopy,
+		filters: filterCopy,
 		activeFilters
 	};
 };

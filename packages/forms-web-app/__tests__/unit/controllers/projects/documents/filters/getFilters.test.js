@@ -38,7 +38,7 @@ describe('#getFilters', () => {
 			orderFilters.mockReturnValue(mockOrderedFilters);
 			convertFiltersToPageView.mockReturnValue(mockMappedFilters);
 			viewModel.mockReturnValue({
-				filterVM: 'mock filter view model',
+				filters: 'mock filter view model',
 				activeFilters: 'active filters'
 			});
 			result = getFilters(mockFilters, mockQuery);

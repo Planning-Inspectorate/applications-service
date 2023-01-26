@@ -4,7 +4,7 @@ const mockQueryFixture = {
 	searchTerm: ''
 };
 
-const filterOne = {
+const filterGroup1 = {
 	name: 'filter group 1',
 	idPrefix: 'filter group 1',
 	title: 'filter group 1  (4)',
@@ -19,7 +19,7 @@ const filterOne = {
 	]
 };
 
-const filterTwo = {
+const filterGroup2 = {
 	name: 'filter group 2',
 	idPrefix: 'filter group 2',
 	title: 'filter group 2  (7)',
@@ -33,11 +33,12 @@ const filterTwo = {
 		}
 	]
 };
-const mockFilterFixture = [filterOne, filterTwo];
+
+const mockFilterFixture = [filterGroup1, filterGroup2];
 
 module.exports = {
 	mockFilterFixture,
 	mockQueryFixture,
-	filterOne,
-	filterTwo
+	filterGroup1,
+	filterGroup2
 };

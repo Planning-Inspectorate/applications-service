@@ -1,11 +1,11 @@
 const {
 	viewModel
 } = require('../../../../../../src/controllers/projects/documents/utils/filters/view-model');
-const { mockQueryFixture, mockFilterFixture, filterOne } = require('./fixtures');
+const { mockQueryFixture, mockFilterFixture, filterGroup1 } = require('./fixtures');
 describe('When markings filters as checked for the view model based on the query values', () => {
 	describe('and there is one filter', () => {
 		describe('and there is a single filter item selected', () => {
-			const filters = [filterOne];
+			const filters = [filterGroup1];
 			const mockQuery = {
 				'filter group 1': 'filter-group-1-item-1',
 				searchTerm: ''
@@ -15,7 +15,7 @@ describe('When markings filters as checked for the view model based on the query
 				response = viewModel(filters, mockQuery);
 			});
 			it('should return the filter list with one item checked', () => {
-				expect(response.filterVM).toEqual([
+				expect(response.filters).toEqual([
 					{
 						name: 'filter group 1',
 						idPrefix: 'filter group 1',
@@ -47,7 +47,7 @@ describe('When markings filters as checked for the view model based on the query
 			});
 		});
 		describe('and there are multiple filter items selected', () => {
-			const filters = [filterOne];
+			const filters = [filterGroup1];
 			const mockQuery = {
 				'filter group 1': ['filter-group-1-item-1', 'filter-group-1-item-2']
 			};
@@ -57,7 +57,7 @@ describe('When markings filters as checked for the view model based on the query
 			});
 
 			it('should return the filter list with both item checked', () => {
-				expect(response.filterVM).toEqual([
+				expect(response.filters).toEqual([
 					{
 						name: 'filter group 1',
 						idPrefix: 'filter group 1',
@@ -101,7 +101,7 @@ describe('When markings filters as checked for the view model based on the query
 			});
 
 			it('should return the filter list with filter group 1 (one item as checked) and filter group 2 (both marked as checked)', () => {
-				expect(response.filterVM).toEqual([
+				expect(response.filters).toEqual([
 					{
 						idPrefix: 'filter group 1',
 						label: 'label 1',

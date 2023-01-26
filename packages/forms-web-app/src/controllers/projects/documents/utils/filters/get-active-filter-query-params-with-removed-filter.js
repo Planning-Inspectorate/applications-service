@@ -1,6 +1,6 @@
 const removeIt = (key, value, removeKey, removeValue) => key === removeKey && value === removeValue;
 const isNotPaginationQuery = (key) => key !== 'page';
-const filterParams = (queryObj, removeMe) => {
+const getActiveFilterQueryParamsWithRemovedFilter = (queryObj, removeMe) => {
 	const URL = new URLSearchParams();
 
 	for (const [key, value] of Object.entries(queryObj)) {
@@ -18,5 +18,5 @@ const filterParams = (queryObj, removeMe) => {
 };
 
 module.exports = {
-	filterParams
+	getActiveFilterQueryParamsWithRemovedFilter
 };
