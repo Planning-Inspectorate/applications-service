@@ -1,4 +1,4 @@
-const { formatDate, isNullSQLDate } = require('./date-utils');
+const { formatDate } = require('./date-utils');
 const moment = require('moment');
 
 const isBeforeNowUTC = (date) => {
@@ -19,10 +19,9 @@ const getConfirmedStartOfExamination = (date) => {
 };
 
 const handleGrantedExtension = (date) =>
-	`The deadline for the close of the Examination has been extended to ${formatDate(
-		moment(date).add(6, 'M').toISOString()
-	)}`;
-const isAInvalidDate = (date) =>
+	`The deadline for the close of the Examination has been extended to ${formatDate(date)}`;
+
+const isInvalidDate = (date) =>
 	date === '0000-00-00 00:00:00' || date === '0000-00-00' || date === null;
 
 const isBeforeOrAfterSentence = (date) =>
@@ -30,17 +29,12 @@ const isBeforeOrAfterSentence = (date) =>
 		? `The examination is expected to close on ${formatDate(date)}`
 		: `The examination closed on ${formatDate(date)}`;
 
-const getDateTimeExaminationEnds = (date, extensionCloseData, startDate) => {
-	if (isAInvalidDate(date) && isAInvalidDate(extensionCloseData))
-		return handleGrantedExtension(startDate);
+const getDateTimeExaminationEnds = (closeDate, extensionCloseDate, startDate) => {
+	if (!isInvalidDate(closeDate)) return isBeforeOrAfterSentence(closeDate);
 
-	if (isAInvalidDate(date) && !isNullSQLDate(new Date(extensionCloseData)))
-		return isBeforeOrAfterSentence(extensionCloseData);
+	if (!isInvalidDate(extensionCloseDate)) return handleGrantedExtension(extensionCloseDate);
 
-	if (isAInvalidDate(extensionCloseData) && !isNullSQLDate(new Date(date)))
-		return isBeforeOrAfterSentence(date);
-
-	return isBeforeOrAfterSentence(date);
+	return isBeforeOrAfterSentence(moment(startDate).add(6, 'M').toISOString());
 };
 
 module.exports = {
