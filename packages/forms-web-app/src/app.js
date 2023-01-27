@@ -3,24 +3,15 @@ const compression = require('compression');
 const lusca = require('lusca');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const nunjucks = require('nunjucks');
-const dateFilter = require('nunjucks-date-filter');
 const session = require('express-session');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const { prometheus } = require('@pins/common');
 const { configureSessionStore } = require('./lib/session');
-const { Status: projectStageNames } = require('./utils/status');
-const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
-const fileTypeDisplayHelper = require('./lib/file-type-display-helper');
-const filterByKey = require('./lib/filter-by-key');
-const addKeyValuePair = require('./lib/add-key-value-pair');
-const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const fileUpload = require('express-fileupload');
-const { routesConfig } = require('./routes/config');
 
 require('express-async-errors');
 
@@ -28,6 +19,7 @@ const config = require('./config');
 const logger = require('./lib/logger');
 const routes = require('./routes');
 const { calcMaxFileSizeLimit } = require('./controllers/examination/select-file/utils/helpers');
+const { configureNunjcuks } = require('./nunjucks');
 
 const app = express();
 
@@ -40,50 +32,10 @@ app.use(
 	})
 );
 
-const isDev = app.get('env') === 'development';
-
-const nunjucksConfig = {
-	autoescape: true,
-	noCache: true,
-	watch: isDev,
-	express: app
-};
-
 const jQueryFrontendRoot = path.resolve(require.resolve('jquery'), '../..');
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
-const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
-const pinsComponentsRoot = path.resolve(
-	require.resolve('@planning-inspectorate/pins-components'),
-	'../..'
-);
 
-const viewPaths = [
-	govukFrontendRoot,
-	mojFrontendRoot,
-	path.join(__dirname, 'views'),
-	pinsComponentsRoot
-];
-
-const env = nunjucks.configure(viewPaths, nunjucksConfig);
-
-dateFilter.setDefaultFormat(config.application.defaultDisplayDateFormat);
-env.addFilter('date', dateFilter);
-env.addFilter('addKeyValuePair', addKeyValuePair);
-env.addFilter('formatBytes', fileSizeDisplayHelper);
-env.addFilter('formatMimeType', fileTypeDisplayHelper);
-env.addFilter('filterByKey', filterByKey);
-env.addFilter('render', renderTemplateFilter(nunjucks));
-
-env.addGlobal('defaultPageTitle', config.defaultPageTitle);
-env.addGlobal('featureFlag', config.featureFlag);
-env.addGlobal('featureHideLink', config.featureHideLink);
-env.addGlobal('googleAnalyticsId', config.server.googleAnalyticsId);
-env.addGlobal('googleTagManagerId', config.server.googleTagManagerId);
-env.addGlobal('host', config.server.host);
-env.addGlobal('nsipBaseUrl', config.server.nsipBaseUrl);
-env.addGlobal('projectStageNames', projectStageNames);
-env.addGlobal('routes', routesConfig);
-env.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
+const env = configureNunjcuks(app);
 
 if (config.server.useSecureSessionCookie) {
 	app.set('trust proxy', 1); // trust first proxy

@@ -9,37 +9,41 @@
 {% set activeProjectLink = activeProjectLink %}
 
 {% block pageTitle %}
-  {{ pageTitle }}
+	{{ pageTitle }}
 {% endblock %}
 
 {% set contentTimetableNotPublished = '
   <p> Currently there are no events to display. </p>
   <p> The examination timetable will be published at the examination stage. </p>
 
-'%}
+' %}
 
 {% block columnTwo %}
-  {{ textHeadingSummary(title) }}
+	{{ textHeadingSummary(title) }}
 
-  {% if events | length %}
+	{% if events | length %}
 		{% if confirmedStartOfExamination %}
-    	<p>{{confirmedStartOfExamination}}</p>
+			<p>{{ confirmedStartOfExamination }}</p>
 		{% endif %}
 
-    {% if nextDeadline %}
-      {{ govukInsetText({
-        html: '<p class="govuk-body-s">Next deadline: <a href="' + nextDeadline.link + '">' + nextDeadline.title + '</a></p>'
-      }) }}
-    {% endif %}
+		<h1 class="govuk-heading-xl">
+			{{ __("examinationTimetable.title") }}
+		</h1>
 
-    {{ sectionEvents(events) }}
+		{% if nextDeadline %}
+			{{ govukInsetText({
+				html: '<p class="govuk-body-s">Next deadline: <a href="' + nextDeadline.link + '">' + nextDeadline.title + '</a></p>'
+			}) }}
+		{% endif %}
+
+		{{ sectionEvents(events) }}
 
 		{% if dateTimeExaminationEnds %}
-			<p class="govuk-body-s govuk-!-margin-top-2">{{dateTimeExaminationEnds}}</p>
+			<p class="govuk-body-s govuk-!-margin-top-2">{{ dateTimeExaminationEnds }}</p>
 		{% endif %}
 
-  {% else %}
-    {{ contentTimetableNotPublished | safe }}
-  {% endif %}
+	{% else %}
+		{{ contentTimetableNotPublished | safe }}
+	{% endif %}
 
 {% endblock %}
