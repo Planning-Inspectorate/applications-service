@@ -1,4 +1,4 @@
-# Applications Service
+# Applications Service 
 
 Monorepo for all Applications Service services and infrastructure
 
