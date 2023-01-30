@@ -1,5 +1,9 @@
 const moment = require('moment');
 
+const getDate = (date) => new Date(date);
+
+const getDateNow = () => new Date();
+
 function formatDate(date) {
 	const notValidDateString = !date || typeof date !== 'string';
 
@@ -20,7 +24,15 @@ const isNullSQLDate = (testDate) => {
 	return false;
 };
 
+const setTimeToStartOfDay = (date) => new Date(date).setHours(0, 0, 0, 0);
+
+const setTimeToEndOfDay = (date) => new Date(date).setHours(23, 59, 59, 999);
+
 module.exports = {
+	getDate,
+	getDateNow,
 	formatDate,
-	isNullSQLDate
+	isNullSQLDate,
+	setTimeToStartOfDay,
+	setTimeToEndOfDay
 };
