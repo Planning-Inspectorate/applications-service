@@ -1,8 +1,3 @@
-const getProjectDateOfNonAcceptance = (appData) => {
-	const projectDateOfNonAcceptance = appData.dateOfNonAcceptance;
-	if (!projectDateOfNonAcceptance) throw new Error('Project date of non acceptance not found');
-
-	return projectDateOfNonAcceptance;
-};
+const getProjectDateOfNonAcceptance = (appData) => appData.dateOfNonAcceptance;
 
 module.exports = { getProjectDateOfNonAcceptance };

@@ -1,8 +1,3 @@
-const getProjectCaseRef = (appData) => {
-	const projectCaseRef = appData.CaseReference;
-	if (!projectCaseRef) throw new Error('Project case ref not found');
-
-	return projectCaseRef;
-};
+const getProjectCaseRef = (appData) => appData.CaseReference;
 
 module.exports = { getProjectCaseRef };
