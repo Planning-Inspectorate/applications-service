@@ -1,0 +1,30 @@
+{
+	"name": "e2e-happypath-scenario-tests",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"e2e-open": "npx cypress open",
+		"cy:e2e": "npx cypress run -b chrome",
+		"e2e-chrome-run": "npx cypress run --headed -b chrome",
+		"cy:run": "npx cypress run --env allure=true",
+		"report:allure": "allure generate allure-results --clean -o allure-report && allure open  allure-report",
+		"test:result": "npm run cy:run && npm run report:allure"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@shelex/cypress-allure-plugin": "^2.34.0",
+		"allure-commandline": "^2.20.1",
+		"cypress": "^12.3.0",
+		"cypress-cucumber-preprocessor": "^4.3.1",
+		"cypress-file-upload": "^5.0.8",
+		"cypress-slow-down": "^1.2.1",
+		"mocha-allure-reporter": "^1.4.0"
+	},
+	"cypress-cucumber-preprocessor": {
+		"nonGlobalStepDefinitions": false,
+		"stepDefinitions": "cypress/e2e/step_definitions"
+	}
+}
