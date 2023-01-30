@@ -1,7 +1,7 @@
 const { get } = require('../router-mock');
 const representationsController = require('../../../../src/controllers/projects/representations');
 const projectTimelineController = require('../../../../src/controllers/projects/project-timeline');
-const timetableController = require('../../../../src/controllers/projects/examination-timetable');
+const timetableController = require('../../../../src/controllers/projects/examination-timetable/controller');
 const recommendationsController = require('../../../../src/controllers/projects/recommendations');
 const allExaminationDocumentsController = require('../../../../src/controllers/projects/all-examination-documents');
 const config = require('../../../../src/config');

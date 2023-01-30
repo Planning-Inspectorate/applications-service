@@ -1,45 +1,70 @@
-{% extends "layouts/project-2-columns.njk" %}
+{% extends "components/template/content-sidebar.njk" %}
 
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
 
-{% from "../components/text/heading-summary.njk" import textHeadingSummary %}
-{% from "../components/text/link.njk" import textLink %}
-{% from "../components/section/events.njk" import sectionEvents %}
+{% from "components/section/events.njk" import sectionEvents %}
+{% from "components/text/heading-summary.njk" import textHeadingSummary %}
 
-{% set activeProjectLink = activeProjectLink %}
-
-{% block pageTitle %}
-  {{ pageTitle }}
+{% block script %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push(
+    {
+      callback: "window.GOVUKFrontend.initAll();",
+      src: "/assets/govuk/all.js"
+    }
+  ), initiateScriptsConfig) %}
 {% endblock %}
 
-{% set contentTimetableNotPublished = '
-  <p> Currently there are no events to display. </p>
-  <p> The examination timetable will be published at the examination stage. </p>
+{% if events.upcoming.displayEvents %}
+  {% set upcomingEventsHtml = sectionEvents(events.upcoming.events) %}
+{% else %}
+  {% set upcomingEventsHtml = events.upcoming.noEventsHtml %}
+{% endif %}
 
-'%}
+{% if events.past.displayEvents %}
+  {% set pastEventsHtml = sectionEvents(events.past.events) %}
+{% else %}
+  {% set pastEventsHtml = events.past.noEventsHtml %}
+{% endif %}
 
-{% block columnTwo %}
-  {{ textHeadingSummary(title) }}
+{% block templateHeader  %}
+  <h1 class="govuk-heading-xl">
+    {{ title }}
+  </h1>
+{% endblock %}
 
-  {% if events | length %}
-		{% if confirmedStartOfExamination %}
-    	<p>{{confirmedStartOfExamination}}</p>
-		{% endif %}
+{% block templateSidebar %}
+  {% include "layouts/vertical-tabs.njk" %}
+{% endblock %}
 
-    {% if nextDeadline %}
-      {{ govukInsetText({
-        html: '<p class="govuk-body-s">Next deadline: <a href="' + nextDeadline.link + '">' + nextDeadline.title + '</a></p>'
-      }) }}
-    {% endif %}
+{% block templateContent %}
+  {{ textHeadingSummary(subtitle) }}
 
-    {{ sectionEvents(events) }}
-
-		{% if dateTimeExaminationEnds %}
-			<p class="govuk-body-s govuk-!-margin-top-2">{{dateTimeExaminationEnds}}</p>
-		{% endif %}
-
-  {% else %}
-    {{ contentTimetableNotPublished | safe }}
+  {% if examination.startDate %}
+    <p>{{ examination.startDate }}</p>
   {% endif %}
 
+  {% if examination.closeDate %}
+    <p>{{ examination.closeDate }}</p>
+  {% endif %}
+
+  {{ govukAccordion({
+    items: [
+      {
+        heading: {
+          text: events.upcoming.title
+        },
+        content: {
+          html: upcomingEventsHtml
+        }
+      },
+      {
+        heading: {
+          text: events.past.title
+        },
+        content: {
+          html: pastEventsHtml
+        }
+      }
+    ]
+  }) }}
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% block templateHeader %}{% endblock %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-quarter">
+      {% block templateSidebar %}{% endblock %}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters">
+      {% block templateContent %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
