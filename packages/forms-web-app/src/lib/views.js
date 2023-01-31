@@ -30,7 +30,8 @@ const VIEW = {
 			ARE_YOU_OVER_18: 'register/common/are-you-18-over',
 			TELEPHONE_NUMBER_VIEW: 'register/common/telephone',
 			DECLARATION: 'register/common/declaration',
-			REGISTRATION_COMPLETE: 'register/common/registration-complete'
+			REGISTRATION_COMPLETE: 'register/common/registration-complete',
+			REGISTRATION_SAVED: 'register/common/registration-saved'
 		},
 		MYSELF: {
 			FULL_NAME: 'register/myself/full-name',

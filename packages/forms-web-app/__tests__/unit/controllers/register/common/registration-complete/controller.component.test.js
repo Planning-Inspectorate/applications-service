@@ -5,8 +5,8 @@ jest.mock('../../../../../../src/services/registration.service', () => ({
 	postCommentsData: jest.fn(),
 	postRegistrationData: jest.fn()
 }));
-describe('controllers/register/common/declaration/controller', () => {
-	describe('#getDeclaration', () => {
+describe('controllers/register/common/registration-complete/controller', () => {
+	describe('#getConfirmation', () => {
 		describe('When getting the registration complete page', () => {
 			const res = {
 				render: jest.fn(),
