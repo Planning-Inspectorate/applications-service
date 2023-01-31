@@ -8,6 +8,8 @@ const sessionKeys = {
 
 const getSession = (session, key) =>
 	key === keys.agent ? session[sessionKeys[key]].representor : session[sessionKeys[key]];
+
+const getSessionBase = (session, key) => session[sessionKeys[key]];
 const setSession = (session, key, otherKey, sessionValue) =>
 	key === keys.agent
 		? (session[sessionKeys[key]].representor[otherKey] = sessionValue)
@@ -15,5 +17,6 @@ const setSession = (session, key, otherKey, sessionValue) =>
 
 module.exports = {
 	getSession,
+	getSessionBase,
 	setSession
 };

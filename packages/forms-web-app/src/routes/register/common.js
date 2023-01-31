@@ -12,6 +12,8 @@ const { rules: over18Rules } = require('../../validators/register/myself/are-you
 const areYouOver18Controller = require('../../controllers/register/common/are-you-18/controller');
 const { rules: telephoneValidationRules } = require('../../validators/register/myself/telephone');
 const telephoneNumberController = require('../../controllers/register/common/telephone-number/controller');
+const declarationController = require('../../controllers/register/common/declaration/controller');
+const { asyncRoute } = require('../../utils/async-route');
 
 const router = express.Router();
 
@@ -59,5 +61,9 @@ router.post(
 	validationErrorHandler,
 	telephoneNumberController.postTelephoneNumber
 );
+
+router.get('/declaration', declarationController.getDeclaration);
+
+router.post('/declaration', asyncRoute(declarationController.postDeclaration));
 
 module.exports = router;
