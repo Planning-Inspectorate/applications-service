@@ -12,6 +12,7 @@ const { rules: over18Rules } = require('../../validators/register/myself/are-you
 const areYouOver18Controller = require('../../controllers/register/common/are-you-18/controller');
 const { rules: telephoneValidationRules } = require('../../validators/register/myself/telephone');
 const telephoneNumberController = require('../../controllers/register/common/telephone-number/controller');
+const registrationCompleteController = require('../../controllers/register/common/registration-complete/controller');
 const declarationController = require('../../controllers/register/common/declaration/controller');
 const { asyncRoute } = require('../../utils/async-route');
 
@@ -65,5 +66,7 @@ router.post(
 router.get('/declaration', declarationController.getDeclaration);
 
 router.post('/declaration', asyncRoute(declarationController.postDeclaration));
+
+router.get('/registration-complete', registrationCompleteController.getConfirmation);
 
 module.exports = router;

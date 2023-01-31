@@ -41,7 +41,8 @@ describe('lib/views', () => {
 					EMAIL_ADDRESS_VIEW: 'register/common/email-address',
 					ARE_YOU_OVER_18: 'register/common/are-you-18-over',
 					TELEPHONE_NUMBER_VIEW: 'register/common/telephone',
-					DECLARATION: 'register/common/declaration'
+					DECLARATION: 'register/common/declaration',
+					REGISTRATION_COMPLETE: 'register/common/registration-complete'
 				},
 				REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 				START: 'register/start',
