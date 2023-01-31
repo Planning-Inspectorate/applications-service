@@ -51,10 +51,10 @@ module.exports = {
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true'
 	},
 	featureHideLink: {
-		hideAllExaminationDocumentsLink: false,
-		hideDecisionMakingProcessGuideLink: false,
-		hideProjectInformationLink: false,
-		hideRecommendationAndDecisionLink: false
+		hideAllExaminationDocumentsLink: true,
+		hideDecisionMakingProcessGuideLink: true,
+		hideProjectInformationLink: true,
+		hideRecommendationAndDecisionLink: true
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
