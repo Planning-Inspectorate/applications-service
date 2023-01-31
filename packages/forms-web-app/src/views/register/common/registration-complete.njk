@@ -1,7 +1,7 @@
 {% extends "layouts/register-main.njk" %}
 
 {% block pageTitle %}
-	Registration complete - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning
+	{{ pageTitle }}
 {% endblock %}
 
 {% block content %}
@@ -17,9 +17,7 @@
 				</div>
 			</div>
 
-			<p class="govuk-body">
-				We have sent a confirmation email to: {{ email }}
-			</p>
+			<p class="govuk-body">We have sent a confirmation email to: {{ email }}</p>
 
 			<h2 class="govuk-heading-m">What happens next</h2>
 			<p class="govuk-body">You are now registered to have your say. This means you can now:</p>
@@ -27,7 +25,6 @@
 				<li>get involved in the Preliminary Meeting</li>
 				<li>submit more information during Examination</li>
 			</ul>
-
 			<h2 class="govuk-heading-m">Getting involved in the Preliminary Meeting</h2>
 			<p class="govuk-body">After the registration period has closed, you will be sent a letter called the Rule 6
 				letter, telling you when and where the Preliminary Meeting will be held. This is to talk about how the
@@ -38,9 +35,10 @@
 				your interested party reference number to make sure your comments are included in the Examination of the
 				application.</p>
 			<p class="govuk-body">We will let you know when the Examination of this application starts.</p>
+
 			<p class="govuk-body">You can check our guide to <a href="/having-your-say-guide/have-your-say-examination"
-																													target="_blank" class='govuk-link'>find out more about having
-					your say during the Examination of the application (opens in new tab)</a>.</p>
+																													target="_blank">find out more about having your say during the
+					Examination of the application (opens in new tab)</a>.</p>
 
 			<p class="govuk-body">
 				<a id="project-link" href="{{ nsipProjectLink }}" class="govuk-link">
@@ -50,10 +48,9 @@
 
 			<p class="govuk-body">
 				<a
-					href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u"
-					class='govuk-link'>Tell us what you thought about this service</a> by completing a short survey.
+					href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">Tell
+					us what you thought about this service</a> by completing a short survey.
 			</p>
-
 		</div>
 	</div>
 
