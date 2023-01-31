@@ -12,6 +12,7 @@ Given('I navigate to the submission start page', () => {
 	examTimetable.acceptCookiesButton();
 	haveYourSay.clickOnHerf();
 	examTimetable.timeTableLink(); //TimeTable link
+	examTimetable.showAllsections();
 	examTimetable.makeSubmissionButton(); //Start the submission
 	cy.url().should('include', 'examination/have-your-say-during-examination'); // Verify user is on submission page
 });

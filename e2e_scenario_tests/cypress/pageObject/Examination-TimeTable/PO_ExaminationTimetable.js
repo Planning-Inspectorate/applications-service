@@ -6,6 +6,10 @@ class PO_ExaminationTimetable {
 		return cy.get("a[href='/projects/EN010118']").click(); //Longfield Solar Farm project
 	}
 
+	showAllsections() {
+		return cy.get('.govuk-accordion__show-all-text').click();
+	}
+
 	timeTableLink() {
 		return cy.get("a[href='/projects/EN010118/examination-timetable']").click(); //timetable link
 	}
