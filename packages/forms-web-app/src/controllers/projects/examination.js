@@ -14,7 +14,7 @@ exports.getExamination = async (req, res) => {
 		logger.error(
 			`Project page get - getAppData returned unexpected response code: ${resp_code} for case ref param: ${caseRef}`
 		);
-		return res.status(404).render('error/not-found');
+		return res.render('error/not-found');
 	}
 
 	const appData = data;
