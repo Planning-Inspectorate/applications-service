@@ -5,13 +5,12 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 
-{% set title = pageTitle %}
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set title = "Error: " + title %}
+		Error: {{ pageTitle }}
 	{% endif %}
-	{{ title }}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block content %}
@@ -30,7 +29,7 @@
 
 					{% call govukFieldset({
 						legend: {
-							text: "What is your address?",
+							text: title,
 							classes: "govuk-fieldset__legend--l",
 							isPageHeading: true
 						}

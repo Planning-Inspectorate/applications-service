@@ -62,7 +62,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					originalUrl: '/register/agent/registration-complete',
 					session: {
 						appData: { Region: 'mock region', ProjectName: 'mock project name' },
-						behalfRegdata: { email: 'mock email', ipRefNo: 'mock ip ref no' }
+						behalfRegdata: { representor: { email: 'mock email' }, ipRefNo: 'mock ip ref no' }
 					}
 				};
 				beforeEach(() => {
