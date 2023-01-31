@@ -5,13 +5,14 @@ const { nsipProjectLink } = require('../../../../lib/nsip-project-link');
 const { getKeyFromUrl } = require('../get-key-from-url');
 const logger = require('../../../../lib/logger');
 const { viewModel } = require('./viewModel');
-const { getSessionBase } = require('../session');
+const { getSessionBase, getSession } = require('../session');
 
 const getConfirmation = (req, res) => {
 	try {
 		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
-		const { ipRefNo, email } = getSessionBase(session, key);
+		const { ipRefNo } = getSessionBase(session, key);
+		const { email } = getSession(session, key);
 
 		if (session.mode === 'draft') {
 			session.ipRefNo = ipRefNo;

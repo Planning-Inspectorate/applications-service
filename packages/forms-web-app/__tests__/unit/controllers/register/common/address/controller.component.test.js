@@ -23,6 +23,7 @@ describe('controllers/register/common/address/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
 						pageTitle:
 							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						title: 'What is your address?',
 						address: {
 							text: 'mock address body'
 						}
@@ -41,6 +42,7 @@ describe('controllers/register/common/address/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
 						pageTitle:
 							'What is your address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						title: 'What is your address?',
 						address: {
 							text: 'mock address body'
 						}
@@ -61,6 +63,7 @@ describe('controllers/register/common/address/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
 						pageTitle:
 							'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						title: 'UK address details',
 						address: {
 							text: 'mock address body'
 						}
@@ -130,6 +133,7 @@ describe('controllers/register/common/address/controller', () => {
 						errors: {
 							address: 'an error'
 						},
+						title: 'What is your address?',
 						pageTitle:
 							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
