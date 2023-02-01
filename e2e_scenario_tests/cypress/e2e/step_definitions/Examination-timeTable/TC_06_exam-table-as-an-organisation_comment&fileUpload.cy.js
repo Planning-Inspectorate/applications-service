@@ -10,31 +10,31 @@ Then(
 	() => {
 		examTimetable.startNowButton();
 		examTimetable.partyNumberYesCheckBox();
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.partyNumberField().type('45677');
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.organizationCheckBox(); // Submission as an organisation
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.organizationField().type('Charity');
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.emailField().type('joeExample@gmail.com');
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.deadLineCheckBox_1();
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.bothCheckBox(); // Both comments and file upload checkboxes selected
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable
 			.yourCommentField()
 			.type('Lorem ipsum dolor sit amet, consectetur adipiscing elit'); // Comment
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.fileUploadButton().attachFile('Soap Opera Testing.pdf'); // Upload file
 		examTimetable.fileUploadButton_2();
 		examTimetable.persoanlInfoCheckBoxYes();
-		examTimetable.continueButton();
+		cy.continueButton();
 		examTimetable.persoanlInfoCheckBox_1(); //Which files and comments contain personal information?
 		examTimetable.persoanlInfoCheckBox_2(); // Which files and comments contain personal information?
-		examTimetable.continueButton();
-		examTimetable.continueButton();
+		cy.continueButton();
+		cy.continueButton();
 		examTimetable.deadLineCheckBoxNo(); //You added one deadline item
 		examTimetable.deadLineContinueBtn();
 		examTimetable.continueButton_2();

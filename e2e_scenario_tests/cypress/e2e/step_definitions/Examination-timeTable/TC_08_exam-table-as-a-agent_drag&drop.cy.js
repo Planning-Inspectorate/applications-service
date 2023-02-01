@@ -6,26 +6,26 @@ const examTimetable = new PO_ExaminationTimetable();
 Then('I complete the submission process as a agent - drag and drop', () => {
 	examTimetable.startNowButton();
 	examTimetable.partyNumberYesCheckBox();
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable.partyNumberField().type('45677');
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable.agentCheckbox(); // Submission as Agent
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable.agentField().type('Charity');
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable.emailField().type('joeExample@gmail.com');
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable.deadLineCheckBox_1();
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable.uploadFileCheckBox();
-	examTimetable.continueButton();
+	cy.continueButton();
 	examTimetable
 		.fileUploadButton()
 		.selectFile('cypress/fixtures/Soap Opera Testing.pdf', { action: 'drag-drop' }); // Drag and drop
 	examTimetable.fileUploadButton_2();
 	examTimetable.fileContentCheckBoxYes();
-	examTimetable.continueButton();
-	examTimetable.continueButton();
+	cy.continueButton();
+	cy.continueButton();
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();

@@ -13,6 +13,16 @@ class PO_Documents {
 				':nth-child(1) > .ui-checkbox-accordion__section-control > .ui-checkbox-accordion__section-control-title'
 			)
 			.click();
+	} //  the Pre-application filter
+
+	showAllFilterLink() {
+		return cy.get('#show-hide-all-filters').click({ force: true });
+	}
+
+	selectAllFilterLink() {
+		return cy
+			.get("div[id='ui-checkbox-accordion__checkboxes-section--stage-1'] button[type='button']")
+			.click({ force: true });
 	}
 
 	preAppFilterCheckBox_1() {
@@ -21,6 +31,22 @@ class PO_Documents {
 
 	preAppFilterCheckBox_2() {
 		return cy.get('#stage-1-2').check(); // Filter checkbox
+	}
+
+	devAppCheckBox_1() {
+		return cy.get("#category-Developer's Application").check();
+	}
+
+	acceptanceCheckBox_1() {
+		return cy.get('#stage-2-2').check();
+	}
+
+	preExamCheckBox_1() {
+		return cy.get('#stage-3').check();
+	}
+
+	examCheckBox_1() {
+		return cy.get('#stage-4').check();
 	}
 
 	applyFilterButton() {
