@@ -30,4 +30,5 @@ Given('A user has navigated to the document Filter page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
 	documents.clickOnHerfProjectLink();
 	documents.documentsLink();
+	cy.url().should('include', 'EN010021/documents'); // Verify user is on documents page
 });

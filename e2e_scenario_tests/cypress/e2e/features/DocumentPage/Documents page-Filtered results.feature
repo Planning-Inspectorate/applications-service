@@ -20,3 +20,11 @@ Feature:Documents page-Filtered results
     And A Filtered results section is displayed with the project stage Pre-application
     And The document type is displayed against the project stage
 
+  Scenario: 3 - Select all filters in 1 project stage
+    And User selects the Pre-application stage Filter
+    When the user clicks the  Select all filters link within the Pre-application filter
+    And User clicks Apply filters
+    And A Filtered results section is displayed with the project stage Pre-application
+    And The document type is displayed against the project stage
+
+   

@@ -6,4 +6,8 @@ Cypress.Commands.add('addressFields', () => {
 	cy.get('#country').type('UK');
 });
 
+Cypress.Commands.add('continueButton', () => {
+	cy.get('[data-cy="button-submit-and-continue"]').click();
+});
+
 import 'cypress-file-upload';

@@ -1,5 +1,5 @@
 ///<reference types ="cypress" />
-import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
+import { Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_HaveYourSay from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
 import PO_CheckBox from '../../../pageObject/Register-to-have-your-say/PO_CheckBox';
 const haveYourSay = new PO_HaveYourSay();
