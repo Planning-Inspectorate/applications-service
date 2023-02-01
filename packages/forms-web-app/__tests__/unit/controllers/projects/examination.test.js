@@ -16,6 +16,7 @@ jest.mock('../../../../src/config.js', () => ({
 describe('controllers/projects/examination', () => {
 	let req;
 	let res;
+	let responseWithStatus;
 
 	const mockConfig = {
 		logger: {
@@ -27,9 +28,11 @@ describe('controllers/projects/examination', () => {
 	};
 
 	beforeEach(() => {
+		jest.resetAllMocks();
 		req = mockReq();
 		res = mockRes();
-		jest.resetAllMocks();
+		responseWithStatus = mockRes();
+		res.status.mockImplementation(() => responseWithStatus);
 	});
 
 	describe('getExamination', () => {
@@ -63,7 +66,8 @@ describe('controllers/projects/examination', () => {
 				})
 			);
 			await examinationController.getExamination(req, res);
-			expect(res.render).toHaveBeenCalledWith('error/not-found');
+			expect(res.status).toHaveBeenCalledWith(404);
+			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});
 	});
 });
