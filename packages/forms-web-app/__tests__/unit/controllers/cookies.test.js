@@ -6,6 +6,7 @@ const { VIEW } = require('../../../src/lib/views');
 const { mockReq, mockRes } = require('../mocks');
 const { addFlashMessage } = require('../../../src/lib/flash-message');
 const { removeUnwantedCookies } = require('../../../src/lib/remove-unwanted-cookies');
+const { toBase64 } = require('../../../src/lib/base64');
 
 jest.mock('../../../src/config');
 jest.mock('../../../src/lib/remove-unwanted-cookies');
@@ -55,7 +56,7 @@ describe('controllers/cookies', () => {
 
 			expect(res.render).toHaveBeenCalledWith(VIEW.COOKIES, {
 				cookiePolicy: {},
-				previousPagePath: fakePreviousPage,
+				previousPagePath: toBase64(fakePreviousPage),
 				displayCookieBanner: false
 			});
 		});
@@ -65,7 +66,7 @@ describe('controllers/cookies', () => {
 
 			expect(res.render).toHaveBeenCalledWith(VIEW.COOKIES, {
 				cookiePolicy: undefined,
-				previousPagePath: fakePreviousPage,
+				previousPagePath: toBase64(fakePreviousPage),
 				displayCookieBanner: false
 			});
 		});
@@ -120,7 +121,7 @@ describe('controllers/cookies', () => {
 						...req,
 						body: {
 							'usage-cookies': 'off',
-							previous_page_path: fakePreviousPage
+							previous_page_path: toBase64(fakePreviousPage)
 						}
 					}),
 					runExtraAssertions: () => {
@@ -172,7 +173,7 @@ describe('controllers/cookies', () => {
 						...req,
 						body: {
 							'usage-cookies': 'on',
-							previous_page_path: fakePreviousPage
+							previous_page_path: toBase64(fakePreviousPage)
 						}
 					}),
 					runExtraAssertions: () => {
