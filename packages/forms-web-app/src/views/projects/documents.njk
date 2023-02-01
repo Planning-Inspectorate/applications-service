@@ -6,6 +6,7 @@
 {% from "../components/layout/slots.njk" import layoutSlots %}
 {% from "../components/section/results.njk" import sectionResults %}
 {% from "../components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
+{% from "../components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "../components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 
@@ -141,10 +142,7 @@
 				{% endif %}
 
 				{% if documents.length > 0 %}
-					<p>
-						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
-						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
-					</p>
+					{{ uiTagLinkList('Filtered results', activeFilters) }}
 
 					{% if queryUrl != '' and queryUrl != '?searchTerm=' %}
 						<p>
@@ -153,6 +151,11 @@
 							</a>
 						</p>
 					{% endif %}
+
+					<p>
+						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
+						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
+					</p>
 
 					{{ sectionResults(documents) }}
 

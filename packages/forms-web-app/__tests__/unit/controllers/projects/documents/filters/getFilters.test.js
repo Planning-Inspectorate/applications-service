@@ -37,7 +37,10 @@ describe('#getFilters', () => {
 		beforeEach(() => {
 			orderFilters.mockReturnValue(mockOrderedFilters);
 			convertFiltersToPageView.mockReturnValue(mockMappedFilters);
-			viewModel.mockReturnValue('mock filter view model');
+			viewModel.mockReturnValue({
+				filters: 'mock filter view model',
+				activeFilters: 'active filters'
+			});
 			result = getFilters(mockFilters, mockQuery);
 		});
 		it('should order the filters', () => {
@@ -50,7 +53,10 @@ describe('#getFilters', () => {
 			expect(viewModel).toHaveBeenCalledWith(mockMappedFilters, mockQuery);
 		});
 		it('should return the view model', () => {
-			expect(result).toEqual('mock filter view model');
+			expect(result).toEqual({
+				activeFilters: 'active filters',
+				filters: 'mock filter view model'
+			});
 		});
 	});
 });

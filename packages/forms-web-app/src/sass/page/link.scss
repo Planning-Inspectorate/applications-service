@@ -1,3 +1,5 @@
 a {
-  @extend .govuk-link;
+  &:not(.-not-default) {
+    @extend .govuk-link;
+  }
 }

@@ -5,7 +5,8 @@ const convertFiltersToPageView = (filters) =>
 		name: formatName(filter),
 		idPrefix: formatName(filter),
 		title: formatNameWithCount(filter.label, filter.count),
-		items: mapFilterTypeToCheckBox(filter.type)
+		items: mapFilterTypeToCheckBox(filter.type),
+		label: filter.label
 	}));
 
 module.exports = {
