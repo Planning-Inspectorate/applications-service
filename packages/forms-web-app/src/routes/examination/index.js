@@ -157,6 +157,7 @@ router.post(
 router.get(nameAgent.route, forwardView(nameAgent), getName);
 router.post(
 	nameAgent.route,
+	decodeUri('body', [nameAgent.id]),
 	validateNotEmptyAndLength(nameAgent),
 	validationErrorHandler,
 	forwardView(nameAgent),
@@ -176,6 +177,7 @@ router.post(
 router.get(nameOrganisation.route, forwardView(nameOrganisation), getName);
 router.post(
 	nameOrganisation.route,
+	decodeUri('body', [nameOrganisation.id]),
 	validateNotEmptyAndLength(nameOrganisation),
 	validationErrorHandler,
 	forwardView(nameOrganisation),
