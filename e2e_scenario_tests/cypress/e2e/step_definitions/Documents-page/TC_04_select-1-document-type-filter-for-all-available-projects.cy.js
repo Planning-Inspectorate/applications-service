@@ -38,9 +38,3 @@ And('Filtered results section is displayed with the project stages', function ()
 		'Examination'
 	);
 });
-
-And('The document types are displayed against the project stages', () => {
-	Cypress._.times(60, () => {
-		documents.documentsVisible().should('be.visible'); //  Document are displayed
-	});
-});
