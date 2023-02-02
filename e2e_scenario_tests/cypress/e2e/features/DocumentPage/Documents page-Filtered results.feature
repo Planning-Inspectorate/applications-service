@@ -27,4 +27,11 @@ Feature:Documents page-Filtered results
     And A Filtered results section is displayed with the project stage Pre-application
     And The document type is displayed against the project stage
 
-   
+  Scenario: 4 - Apply 1 document type filter in all available project stages
+    When The user selects 1 document type checkbox within the Pre-application stage
+    And The user selects 1 document type checkbox within the Acceptance stage
+    And The user selects 1 document type checkbox within the Pre-examination stage
+    And The user selects 1 document type checkbox within the Examination stage
+    And User clicks Apply filters
+    And Filtered results section is displayed with the project stages
+    And The document types are displayed against the project stages

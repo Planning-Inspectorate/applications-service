@@ -34,19 +34,19 @@ class PO_Documents {
 	}
 
 	devAppCheckBox_1() {
-		return cy.get("#category-Developer's Application").check();
+		return cy.get("#category-Developer's Application-3").check(); //Developer's Application checkbox
 	}
 
 	acceptanceCheckBox_1() {
-		return cy.get('#stage-2-2').check();
+		return cy.get('#stage-2-2').check(); // Acceptance checkbox
 	}
 
 	preExamCheckBox_1() {
-		return cy.get('#stage-3').check();
+		return cy.get('#stage-3').check(); // Pre-examination checkbox
 	}
 
 	examCheckBox_1() {
-		return cy.get('#stage-4').check();
+		return cy.get('#stage-4').check(); // Examination checkbox
 	}
 
 	applyFilterButton() {
