@@ -22,6 +22,6 @@ And('A Filtered results section is displayed with the project stage Pre-applicat
 });
 And('The document type is displayed against the project stage', () => {
 	Cypress._.times(41, () => {
-		documents.documentsVisible().should('be.visible'); // 6 Document are displayed
+		documents.documentsVisible().should('be.visible'); //  Document are displayed
 	});
 });

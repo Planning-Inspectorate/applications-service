@@ -16,7 +16,7 @@ module.exports = defineConfig({
 		chromeWebSecurity: false,
 		pageLoadTimeout: 8000,
 		env: {
-			commandDelay: 400
+			commandDelay: 100
 		}
 	}
 });
