@@ -1,4 +1,4 @@
-const { isEventDeadlineSubmissionOpen, isPastEventTypeDeadline } = require('../helpers');
+const { isEventDeadlineSubmissionOpen, isPastEvent } = require('../helpers');
 
 const eventStateTagMapper = (text, classes) => ({
 	text,
@@ -11,8 +11,7 @@ const getEventState = (event) => {
 	const isSubmissionOpen = isEventDeadlineSubmissionOpen(event);
 
 	if (isSubmissionOpen) eventStateTag = eventStateTagMapper('Open', 'govuk-tag govuk-tag--blue');
-	else if (isPastEventTypeDeadline(event))
-		eventStateTag = eventStateTagMapper('Closed', 'govuk-tag');
+	else if (isPastEvent(event)) eventStateTag = eventStateTagMapper('Closed', 'govuk-tag');
 
 	return {
 		isSubmissionOpen,
