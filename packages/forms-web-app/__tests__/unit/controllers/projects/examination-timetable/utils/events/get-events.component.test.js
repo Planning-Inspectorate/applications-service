@@ -54,7 +54,13 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 								eventTitle: 'mock title 1',
 								id: 'mock id 1',
 								inputId: 'project-examination-timetable',
-								state: { isSubmissionOpen: false, tag: null },
+								state: {
+									isSubmissionOpen: false,
+									tag: {
+										classes: 'govuk-tag',
+										text: 'Closed'
+									}
+								},
 								title: '1 January 2023 - mock title 1',
 								typeOfEvent: 'mock event type 1'
 							}

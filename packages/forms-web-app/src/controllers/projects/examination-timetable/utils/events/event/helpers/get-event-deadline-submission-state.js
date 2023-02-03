@@ -21,9 +21,4 @@ const eventDeadlineHasStarted = (event) => {
 const isEventDeadlineSubmissionOpen = (event) =>
 	isEventDeadlineUpcoming(event) && eventDeadlineHasStarted(event);
 
-const isPastEventTypeDeadline = (event) => isEventTypeDeadline(event) && isPastEvent(event);
-
-module.exports = {
-	isEventDeadlineSubmissionOpen,
-	isPastEventTypeDeadline
-};
+module.exports = { isEventDeadlineSubmissionOpen };
