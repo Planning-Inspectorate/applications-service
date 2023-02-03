@@ -1,0 +1,13 @@
+diff --git a/node_modules/cypress-cucumber-preprocessor/cypress-tags.js b/node_modules/cypress-cucumber-preprocessor/cypress-tags.js
+index e432b84..ba1b422 100644
+--- a/node_modules/cypress-cucumber-preprocessor/cypress-tags.js
++++ b/node_modules/cypress-cucumber-preprocessor/cypress-tags.js
+@@ -55,7 +55,7 @@ if (!envGlob) {
+     if (ignoreGlob) console.log("Ignored files: ", ignoreGlob);
+   } catch (err) {
+     usingCypressConf = false;
+-    specGlob = "cypress/integration/**/*.feature";
++    specGlob = "cypress/e2e/**/*.feature";
+     console.log("Failed to read cypress.json, using default configuration");
+     console.log("Spec files: ", specGlob);
+   }

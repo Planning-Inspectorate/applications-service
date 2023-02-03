@@ -9,7 +9,9 @@
 		"e2e-chrome-run": "npx cypress run --headed -b chrome",
 		"cy:run": "npx cypress run --env allure=true",
 		"report:allure": "allure generate allure-results --clean -o allure-report && allure open  allure-report",
-		"test:result": "npm run cy:run && npm run report:allure"
+		"test:result": "npm run cy:run && npm run report:allure",
+		"cy:qa": "npx cypress run --config baseUrl=https://applications-service-test.planninginspectorate.gov.uk",
+		"cy:dev": "npx cypress run --config baseUrl=https://applications-service-dev.planninginspectorate.gov.uk"
 	},
 	"keywords": [],
 	"author": "",
