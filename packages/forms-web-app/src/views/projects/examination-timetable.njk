@@ -19,7 +19,7 @@
 ' %}
 
 {% block columnTwo %}
-	{{ textHeadingSummary(title) }}
+	{{ textHeadingSummary(__("examinationTimetable.heading")) }}
 
 	{% if events | length %}
 		{% if confirmedStartOfExamination %}
@@ -29,6 +29,26 @@
 		<h1 class="govuk-heading-xl">
 			{{ __("examinationTimetable.title") }}
 		</h1>
+
+		<h1> Cookie Switch </h1>
+		<ul>
+			<li>
+				<a href="/lang?lang=cy"> Switch To Welsh</a>
+			</li>
+			<li>
+				<a href="/lang?lang=en"> Switch To English</a>
+			</li>
+		</ul>
+
+		<h1> Query Switch </h1>
+		<ul>
+			<li>
+				<a href="?lang=cy"> Switch To Welsh</a>
+			</li>
+			<li>
+				<a href="?lang=en"> Switch To English</a>
+			</li>
+		</ul>
 
 		{% if nextDeadline %}
 			{{ govukInsetText({

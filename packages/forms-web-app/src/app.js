@@ -55,6 +55,20 @@ app.use(
 	})
 );
 app.use(cookieParser());
+
+// comment out for query string demo
+app.use((req, res, next) => {
+	res.setLocale(req.cookies.lang || 'en');
+	next();
+});
+
+app.use('/lang', (req, res) => {
+	console.log('Cookie:', req.cookies.lang);
+	res.cookie('lang', req.query.lang, { maxAge: 900000, httpOnly: true });
+	console.log('Ref: ', req.get('Referrer'));
+	return res.redirect(req.get('Referrer'));
+});
+
 app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(env));
