@@ -12,7 +12,8 @@ const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanu
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const fileUpload = require('express-fileupload');
-
+const i18next = require('i18next');
+const middleware = require('i18next-http-middleware');
 require('express-async-errors');
 
 const config = require('./config');
@@ -57,17 +58,47 @@ app.use(
 app.use(cookieParser());
 
 // comment out for query string demo
-app.use((req, res, next) => {
-	res.setLocale(req.cookies.lang || 'en');
-	next();
-});
+// app.use((req, res, next) => {
+// 	res.setLocale(req.cookies.lang || 'en');
+// 	next();
+// });
+//
+// app.use('/lang', (req, res) => {
+// 	console.log('Cookie:', req.cookies.lang);
+// 	res.cookie('lang', req.query.lang, { maxAge: 900000, httpOnly: true });
+// 	console.log('Ref: ', req.get('Referrer'));
+// 	return res.redirect(req.get('Referrer'));
+// });
 
-app.use('/lang', (req, res) => {
-	console.log('Cookie:', req.cookies.lang);
-	res.cookie('lang', req.query.lang, { maxAge: 900000, httpOnly: true });
-	console.log('Ref: ', req.get('Referrer'));
-	return res.redirect(req.get('Referrer'));
+i18next.use(middleware.LanguageDetector).init({
+	preload: ['en', 'cy'],
+	debug: app.get('env') === 'development',
+	resources: {
+		en: {
+			translation: {
+				examinationTimetable: {
+					title: 'I am a English title',
+					heading: 'Examination timetable'
+				}
+			}
+		},
+		cy: {
+			translation: {
+				examinationTimetable: {
+					title: 'Teitl Cymraeg ydw i',
+					heading: 'Amserlen arholiadau'
+				}
+			}
+		}
+	}
 });
+app.use(
+	middleware.handle(i18next, {
+		ignoreRoutes: ['/foo'] // or function(req, res, options, i18next) { /* return true to ignore */ }
+	})
+);
+
+// env.addGlobal('t', i18next.t);
 
 app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);

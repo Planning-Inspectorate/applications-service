@@ -19,15 +19,21 @@
 ' %}
 
 {% block columnTwo %}
-	{{ textHeadingSummary(__("examinationTimetable.heading")) }}
+	{{ textHeadingSummary(t("examinationTimetable.heading")) }}
 
 	{% if events | length %}
 		{% if confirmedStartOfExamination %}
 			<p>{{ confirmedStartOfExamination }}</p>
 		{% endif %}
 
+		{{ language }}
+
+		{#    Here --- {{ 'examinationTimetable.heading' | translate }} #}
+		{#    Here --- {{ 'examinationTimetable.title' | translate }} #}
+
+
 		<h1 class="govuk-heading-xl">
-			{{ __("examinationTimetable.title") }}
+			{{ t("examinationTimetable.title") }}
 		</h1>
 
 		<h1> Cookie Switch </h1>

@@ -165,6 +165,10 @@ const getExaminationTimetable = async (req, res) => {
 		nextDeadline.title = `${nextDeadlineEvent.eventTitle} closes ${nextDeadlineEvent.dateOfEvent}`;
 	}
 
+	console.log('Lang: ', req.language);
+	console.log('Key: ', req.i18n.exists('examinationTimetable'));
+	console.log('TT:', req.t('examinationTimetable'));
+
 	res.render(project.pages.examinationTimetable.view, {
 		activeProjectLink,
 		caseRef,
@@ -177,7 +181,8 @@ const getExaminationTimetable = async (req, res) => {
 		projectEmailSignUpUrl,
 		projectName,
 		projectUrl,
-		title
+		title,
+		language: 'jimbob'
 	});
 };
 

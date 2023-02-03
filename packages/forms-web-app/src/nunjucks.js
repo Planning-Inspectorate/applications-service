@@ -9,7 +9,7 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const { Status: projectStageNames } = require('./utils/status');
 const { routesConfig } = require('./routes/config');
 const path = require('path');
-const { configureI18n } = require('./i18n');
+// const { configureI18n } = require('./i18n');
 
 const configureNunjcuks = (app) => {
 	const isDev = app.get('env') === 'development';
@@ -56,10 +56,14 @@ const configureNunjcuks = (app) => {
 	env.addGlobal('routes', routesConfig);
 	env.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
 
+	// env.addFilter('translate', function (key) {
+	// 	console.log('Context: ', this.ctx);
+	// 	return this.ctx.t(key);
+	// });
 	// i18n
-	const i18n = configureI18n(app);
-	env.addGlobal('__', i18n.__);
-	env.addFilter('t', i18n.__);
+	// const i18n = configureI18n(app);
+	// env.addGlobal('__', i18n.__);
+	// env.addFilter('t', i18n.__);
 
 	return env;
 };
