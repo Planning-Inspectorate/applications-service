@@ -59,6 +59,10 @@ class PO_HaveYourSay {
 	familyGroupField() {
 		return cy.get('[data-cy="full-name"]'); //What is the name of the family group
 	}
+
+	shortSurveyLink() {
+		return cy.get(':nth-child(13) > a').click(); // Tell us what you thought about this service
+	}
 }
 
 export default PO_HaveYourSay;
