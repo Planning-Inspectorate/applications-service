@@ -1,0 +1,57 @@
+{% extends "layouts/register-main.njk" %}
+
+{% block pageTitle %}
+	{{ pageTitle }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+
+			<div class="govuk-panel govuk-panel--confirmation">
+				<h1 class="govuk-panel__title">Registration complete</h1>
+				<div class="govuk-panel__body">
+					Your interested party reference number<br>
+					<strong>{{ ipRefNo }}</strong>
+				</div>
+			</div>
+
+			<p class="govuk-body">We have sent a confirmation email to: {{ email }}</p>
+
+			<h2 class="govuk-heading-m">What happens next</h2>
+			<p class="govuk-body">You are now registered to have your say. This means you can now:</p>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>get involved in the Preliminary Meeting</li>
+				<li>submit more information during Examination</li>
+			</ul>
+			<h2 class="govuk-heading-m">Getting involved in the Preliminary Meeting</h2>
+			<p class="govuk-body">After the registration period has closed, you will be sent a letter called the Rule 6
+				letter, telling you when and where the Preliminary Meeting will be held. This is to talk about how the
+				application will be examined. It will also include a draft timetable for the Examination of the application.</p>
+
+			<h2 class="govuk-heading-m">How and when to submit more information</h2>
+			<p class="govuk-body">You can submit more information by completing the form on the project page. You will need
+				your interested party reference number to make sure your comments are included in the Examination of the
+				application.</p>
+			<p class="govuk-body">We will let you know when the Examination of this application starts.</p>
+
+			<p class="govuk-body">You can check our guide to <a href="/having-your-say-guide/have-your-say-examination"
+																													target="_blank">find out more about having your say during the
+					Examination of the application (opens in new tab)</a>.</p>
+
+			<p class="govuk-body">
+				<a id="project-link" href="{{ nsipProjectLink }}" class="govuk-link">
+					Go back to the project page
+				</a>
+			</p>
+
+			<p class="govuk-body">
+				<a
+					href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">Tell
+					us what you thought about this service</a> by completing a short survey.
+			</p>
+		</div>
+	</div>
+
+{% endblock %}

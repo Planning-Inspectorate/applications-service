@@ -110,7 +110,7 @@ module.exports = (pageName) => {
 				'include',
 				'/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u'
 			);
-			cy.title().should('eq', 'Help us to improve our service');
+			cy.title().should('eq', 'Applications | Help us to improve our service');
 			break;
 		case 'having your say at the pre-application stage':
 			cy.title().should('eq', 'Having your say at the pre-application stage');
@@ -228,7 +228,7 @@ module.exports = (pageName) => {
 		case 'what is your address? organisation':
 			cy.title().should(
 				'eq',
-				'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'What is your address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -420,7 +420,7 @@ module.exports = (pageName) => {
 		case 'declaration registering on behalf of someone else':
 			cy.title().should(
 				'eq',
-				'Declaration -Registering on behalf of someone else- Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'Declaration - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -444,7 +444,7 @@ module.exports = (pageName) => {
 		case 'registration complete organisation':
 			cy.title().should(
 				'eq',
-				'Registration complete -Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'Registration complete - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -456,7 +456,7 @@ module.exports = (pageName) => {
 		case 'registration complete registering on behalf of someone else':
 			cy.title().should(
 				'eq',
-				'Registration complete -Registering on behalf of someone else- Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'Registration complete - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -468,7 +468,7 @@ module.exports = (pageName) => {
 		case 'registration complete':
 			cy.title().should(
 				'eq',
-				'Registration complete -Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'Registration complete - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')

@@ -1,3 +1,5 @@
 a {
-  @extend .govuk-link;
+  &:not(.govuk-button):not(.-not-default) {
+    @extend .govuk-link;
+  }
 }

@@ -1,6 +1,5 @@
 const {
-	isEventDeadlineSubmissionOpen,
-	isPastEventTypeDeadline
+	isEventDeadlineSubmissionOpen
 } = require('../../../../../../../../../src/controllers/projects/examination-timetable/utils/events/event/helpers/get-event-deadline-submission-state');
 
 describe('controllers/projects/examination-timetable/utils/events/event/helpers/get-event-deadline-submission-state', () => {
@@ -41,38 +40,6 @@ describe('controllers/projects/examination-timetable/utils/events/event/helpers/
 						it('should return false', () => {
 							expect(result).toEqual(false);
 						});
-					});
-				});
-			});
-		});
-	});
-	describe('#isPastEventTypeDeadline', () => {
-		describe('When getting the value for is past event type deadline', () => {
-			describe('and the event type is deadline', () => {
-				describe('and the event is in the past', () => {
-					let result;
-					const mockEvent = {
-						typeOfEvent: 'Deadline',
-						dateOfEvent: datePast
-					};
-					beforeEach(() => {
-						result = isPastEventTypeDeadline(mockEvent);
-					});
-					it('should return true', () => {
-						expect(result).toEqual(true);
-					});
-				});
-				describe('and the event is not in the past', () => {
-					let result;
-					const mockEvent = {
-						typeOfEvent: 'Deadline',
-						dateOfEvent: dateUpcoming
-					};
-					beforeEach(() => {
-						result = isPastEventTypeDeadline(mockEvent);
-					});
-					it('should return false', () => {
-						expect(result).toEqual(false);
 					});
 				});
 			});
