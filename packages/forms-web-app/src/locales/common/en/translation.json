@@ -9,7 +9,8 @@
 		"NOT_FOUND": "{{what}} is {{how}}"
 	},
 	"buttons": {
-		"SUBMIT": "Submit"
+		"SUBMIT": "Submit",
+		"START_NOW": "Start now"
 	},
 	"footer": {
 		"item1": "English"

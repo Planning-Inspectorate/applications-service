@@ -19,10 +19,9 @@ function setLangauageWithSession(req, res, next) {
 const readAllFolder = (dirMain) => fs.readdirSync(dirMain);
 
 function createResourcesFromPages() {
-	const allPages = readAllFolder(`${__dirname}/pages`);
+	const allFlatPages = readAllFolder(`${__dirname}/pages`);
 	const allLocales = readAllFolder(`${__dirname}/locales`);
 
-	console.log('Locales: ', allLocales);
 	const resources = {
 		en: {
 			translation: {}
@@ -31,7 +30,7 @@ function createResourcesFromPages() {
 			translation: {}
 		}
 	};
-	allPages.forEach((page) => {
+	allFlatPages.forEach((page) => {
 		languages.forEach((lang) => {
 			try {
 				resources[lang].translation[
@@ -39,6 +38,21 @@ function createResourcesFromPages() {
 				] = require(`./pages/${page}/locales/${lang}/translation.json`);
 			} catch (e) {
 				console.error(`Error - ${page} is missing a translation for ${lang}`);
+				console.log('Trying sup dir');
+				resources[lang].translation[page] = {};
+				const subDir = readAllFolder(`${__dirname}/pages/${page}`);
+				subDir.forEach((subDirPage) => {
+					languages.forEach((lang) => {
+						console.log('Path: ', `./pages/${page}/${subDirPage}/locales/${lang}/translation.json`);
+						try {
+							resources[lang].translation[page][
+								subDirPage
+							] = require(`./pages/${page}/${subDirPage}/locales/${lang}/translation.json`);
+						} catch (e) {
+							console.error(`Error - ${subDirPage} is missing a translation for ${lang}`);
+						}
+					});
+				});
 			}
 		});
 	});

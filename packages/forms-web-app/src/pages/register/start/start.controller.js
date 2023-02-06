@@ -1,8 +1,9 @@
 const moment = require('moment');
-const { VIEW } = require('../../lib/views');
-const { formatDate } = require('../../utils/date-utils');
-const { getAppData } = require('../../services/application.service');
-const logger = require('../../lib/logger');
+const { formatDate } = require('../../../utils/date-utils');
+const { getAppData } = require('../../../services/application.service');
+const logger = require('../../../lib/logger');
+
+const view = 'register/start/start.view.njk';
 
 exports.getStart = async (req, res) => {
 	delete req.session.comment;
@@ -17,7 +18,7 @@ exports.getStart = async (req, res) => {
 		const closeDate = req.session.appData.DateOfRelevantRepresentationClose;
 		const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closeDate);
 		req.session.isPeriodOpen = periodOpen;
-		res.render(VIEW.REGISTER.START, {
+		res.render(view, {
 			projectName: req.session.projectName,
 			closeDate: closeDate ? formatDate(closeDate) : '',
 			periodOpen

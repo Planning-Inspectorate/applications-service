@@ -1,10 +1,10 @@
-const startController = require('../../../../src/controllers/register/start');
-const { getAppData } = require('../../../../src/services/application.service');
-const { mockReq, mockRes } = require('../../mocks');
+const startController = require('./start.controller');
+const { getAppData } = require('../../../services/application.service');
+const { mockReq, mockRes } = require('../../../../__tests__/unit/mocks');
 
-jest.mock('../../../../src/lib/logger');
+jest.mock('../../../lib/logger');
 
-jest.mock('../../../../src/services/application.service');
+jest.mock('../../../services/application.service');
 
 describe('controllers/register/start', () => {
 	let res;
@@ -35,7 +35,7 @@ describe('controllers/register/start', () => {
 				}
 			};
 			await startController.getStart(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/start', {
+			expect(res.render).toHaveBeenCalledWith('register/start/start.view.njk', {
 				projectName: 'St James Barton Giant Wind Turbine',
 				periodOpen: true,
 				closeDate: '1 September 2024'
@@ -65,7 +65,7 @@ describe('controllers/register/start', () => {
 				}
 			};
 			await startController.getStart(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/start', {
+			expect(res.render).toHaveBeenCalledWith('register/start/start.view.njk', {
 				projectName: 'St James Barton Giant Wind Turbine',
 				periodOpen: true,
 				closeDate: '1 September 2024'

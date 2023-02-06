@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const startRouter = require('./start');
+const startRouter = require('../../pages/register/start/start.router');
 const registrationPeriodClosedRouter = require('./registration-period-closed');
 const typeOfPartyRouter = require('./type-of-party');
 const myselfRegistrationRouter = require('./myself');
