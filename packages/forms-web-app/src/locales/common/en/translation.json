@@ -1,0 +1,17 @@
+{
+	"forms": {
+		"options": {
+			"YES": "yes",
+			"NO": "no"
+		}
+	},
+	"errors": {
+		"NOT_FOUND": "{{what}} is {{how}}"
+	},
+	"buttons": {
+		"SUBMIT": "Submit"
+	},
+	"footer": {
+		"item1": "English"
+	}
+}

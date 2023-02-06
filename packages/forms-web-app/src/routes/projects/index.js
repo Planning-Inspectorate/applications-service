@@ -15,7 +15,6 @@ const {
 	featureFlag: {
 		hideProjectTimelineLink,
 		allowDocumentLibrary,
-		allowExaminationTimetable,
 		allowRepresentation,
 		usePrivateBetaV1RoutesOnly
 	}
@@ -25,11 +24,14 @@ const router = express.Router();
 const projectSearchController = require('../../controllers/project-search');
 const projectTimeLineController = require('../../controllers/projects/project-timeline');
 const representationsController = require('../../controllers/projects/representations');
-const examinationTimetable = require('../../controllers/projects/examination-timetable/controller');
+
 const recommendationsController = require('../../controllers/projects/recommendations');
 const allExaminationDocsController = require('../../controllers/projects/all-examination-documents');
 const projectsController = require('../../controllers/projects/examination');
 const aboutTheApplicationController = require('../../controllers/projects/documents/controller');
+const {
+	examinationTimetableRouter
+} = require('../../pages/examination-timetable/examination-timetable.router');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -49,17 +51,6 @@ if (allowDocumentLibrary) {
 	);
 }
 
-if (allowExaminationTimetable) {
-	router.get(
-		`${subDirectory}${pages.examinationTimetable.route}`,
-		examinationTimetable.getExaminationTimetable
-	);
-	router.post(
-		`${subDirectory}${pages.examinationTimetable.route}`,
-		examinationTimetable.postExaminationTimetable
-	);
-}
-
 if (allowRepresentation) {
 	router.get(
 		'/:case_ref/representations',
@@ -70,5 +61,7 @@ if (allowRepresentation) {
 		asyncRoute(representationsController.getRepresentation)
 	);
 }
+
+router.use(examinationTimetableRouter);
 
 module.exports = router;
