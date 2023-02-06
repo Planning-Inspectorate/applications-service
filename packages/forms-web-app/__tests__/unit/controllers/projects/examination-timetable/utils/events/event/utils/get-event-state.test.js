@@ -4,14 +4,14 @@ const {
 
 const {
 	isEventDeadlineSubmissionOpen,
-	isPastEventTypeDeadline
+	isPastEvent
 } = require('../../../../../../../../../src/controllers/projects/examination-timetable/utils/events/event/helpers');
 
 jest.mock(
 	'../../../../../../../../../src/controllers/projects/examination-timetable/utils/events/event/helpers',
 	() => ({
 		isEventDeadlineSubmissionOpen: jest.fn(),
-		isPastEventTypeDeadline: jest.fn()
+		isPastEvent: jest.fn()
 	})
 );
 
@@ -23,7 +23,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 				let result;
 				beforeEach(() => {
 					isEventDeadlineSubmissionOpen.mockReturnValue(false);
-					isPastEventTypeDeadline.mockReturnValue(false);
+					isPastEvent.mockReturnValue(false);
 					result = getEventState(mockEvent);
 				});
 				it('should return isSubmissionOpen as false with a null tag', () => {
@@ -47,7 +47,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 				let result;
 				beforeEach(() => {
 					isEventDeadlineSubmissionOpen.mockReturnValue(false);
-					isPastEventTypeDeadline.mockReturnValue(true);
+					isPastEvent.mockReturnValue(true);
 					result = getEventState(mockEvent);
 				});
 				it('should return the event state object', () => {

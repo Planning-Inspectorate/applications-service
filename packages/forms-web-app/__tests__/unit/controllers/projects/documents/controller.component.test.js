@@ -95,6 +95,7 @@ describe('#getApplicationDocuments', () => {
 						filters: [
 							{
 								idPrefix: 'mock filter-1',
+								label: 'mock label',
 								items: [
 									{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
 								],
@@ -126,6 +127,7 @@ describe('#getApplicationDocuments', () => {
 					filters: [
 						{
 							idPrefix: 'mock filter-1',
+							label: 'mock label',
 							items: [
 								{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
 							],
@@ -133,6 +135,7 @@ describe('#getApplicationDocuments', () => {
 							title: 'mock label (1)'
 						}
 					],
+					activeFilters: [],
 					hideAllExaminationDocumentsLink: true,
 					hideProjectInformationLink: true,
 					hideRecommendationAndDecisionLink: true,

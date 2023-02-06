@@ -25,6 +25,7 @@ describe('#convertFiltersToPageView', () => {
 				expect(response).toEqual([
 					{
 						idPrefix: 'mock name-mock value',
+						label: 'mock label',
 						items: [
 							{
 								checked: false,
@@ -37,6 +38,7 @@ describe('#convertFiltersToPageView', () => {
 					},
 					{
 						idPrefix: 'second mock name-second mock value',
+						label: 'second mock label',
 						items: [
 							{
 								checked: false,

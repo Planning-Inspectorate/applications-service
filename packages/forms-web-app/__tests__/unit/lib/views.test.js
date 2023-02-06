@@ -40,7 +40,10 @@ describe('lib/views', () => {
 					ADDRESS_VIEW: 'register/common/address',
 					EMAIL_ADDRESS_VIEW: 'register/common/email-address',
 					ARE_YOU_OVER_18: 'register/common/are-you-18-over',
-					TELEPHONE_NUMBER_VIEW: 'register/common/telephone'
+					TELEPHONE_NUMBER_VIEW: 'register/common/telephone',
+					DECLARATION: 'register/common/declaration',
+					REGISTRATION_COMPLETE: 'register/common/registration-complete',
+					REGISTRATION_SAVED: 'register/common/registration-saved'
 				},
 				REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 				START: 'register/start',
@@ -72,7 +75,7 @@ describe('lib/views', () => {
 					CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
 					DECLARATION: 'register/organisation/declaration',
 					REGISTRATION_SAVED: 'register/organisation/registration-saved',
-					CONFIRMATION: 'register/organisation/registration-complete'
+					REGISTRATION_COMPLETE: 'register/organisation/registration-complete'
 				},
 				AGENT: {
 					REPRESENTING_FOR: 'register/agent/who-representing',

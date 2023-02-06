@@ -48,11 +48,13 @@
   {% endif %}
 
   {{ govukAccordion({
+    id: "examination-timetable-events-accordion",
     items: [
       {
         heading: {
           text: events.upcoming.title
         },
+        expanded: true,
         content: {
           html: upcomingEventsHtml
         }

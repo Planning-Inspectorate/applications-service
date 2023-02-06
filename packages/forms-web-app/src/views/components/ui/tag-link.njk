@@ -1,0 +1,14 @@
+{% macro uiTagLink(tag) %}
+  <a
+    alt="{{ tag.alt }}"
+    class="ui-tag-link -not-default"
+    data-cy="ui-tag-link"
+    href="{{ tag.link }}"
+  >
+    {% if tag.icon == 'close' %}
+      <span class="ui-tag-link__close-icon"></span>
+    {% endif %}
+
+    <span class="ui-tag-link__text">{{ tag.text }}</span>
+  </a>
+{% endmacro %}

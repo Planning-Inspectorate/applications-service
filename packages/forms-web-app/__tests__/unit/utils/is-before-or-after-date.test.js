@@ -50,6 +50,7 @@ describe('#utils/is-before-or-after-date', () => {
 			});
 		});
 	});
+
 	describe('#getDateTimeExaminationEnds', () => {
 		describe('When getting the correct sentence if a date is before or after today`s date', () => {
 			describe('and the date is before today', () => {
@@ -74,6 +75,7 @@ describe('#utils/is-before-or-after-date', () => {
 					expect(result).toEqual('The examination is expected to close on 1 January 2022');
 				});
 			});
+
 			describe('and all dates are valid', () => {
 				let result;
 				const extensionDate = '2023-04-22';
@@ -86,22 +88,34 @@ describe('#utils/is-before-or-after-date', () => {
 					expect(result).toEqual('The examination is expected to close on 19 August 2022');
 				});
 			});
+
 			describe('and date and extension are bad', () => {
-				describe('and both dates are bad', () => {
+				describe('is before', () => {
 					let result;
 					const extensionDate = null;
 					const date = '0000-00-00';
 					beforeEach(() => {
-						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
+						jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
 						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual(
-							'The deadline for the close of the Examination has been extended to 14 March 2023'
-						);
+						expect(result).toEqual('The examination is expected to close on 14 March 2023');
+					});
+				});
+				describe('is after', () => {
+					let result;
+					const extensionDate = null;
+					const date = '0000-00-00';
+					beforeEach(() => {
+						jest.useFakeTimers().setSystemTime(new Date('2024-01-01'));
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+					});
+					it('should return the correct before date sentence. ', () => {
+						expect(result).toEqual('The examination closed on 14 March 2023');
 					});
 				});
 			});
+
 			describe('and the date is good and the extension is bad', () => {
 				describe('is before', () => {
 					let result;
@@ -127,6 +141,7 @@ describe('#utils/is-before-or-after-date', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
 					});
 				});
+
 				describe('and the extensionDate is 0000-00-00 00:00:00 and date is good, and startDate is good', () => {
 					let result;
 					const date = '2022-04-22';
@@ -139,6 +154,7 @@ describe('#utils/is-before-or-after-date', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
 					});
 				});
+
 				describe('and the extensionDate is 0000 and date is good, and startDate is good', () => {
 					let result;
 					const date = '2022-04-22';
@@ -151,6 +167,7 @@ describe('#utils/is-before-or-after-date', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
 					});
 				});
+
 				describe('and the extensionDate is 0000:00:00 and date is good, and startDate is good', () => {
 					let result;
 					const date = '2022-04-22';
@@ -164,6 +181,7 @@ describe('#utils/is-before-or-after-date', () => {
 					});
 				});
 			});
+
 			describe('and the date is bad', () => {
 				describe('and the date is 0000:00:00 and extension date is good, and startDate is good', () => {
 					let result;
@@ -174,7 +192,9 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14');
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2023');
+						expect(result).toEqual(
+							'The deadline for the close of the Examination has been extended to 22 April 2023'
+						);
 					});
 				});
 				describe('and the date is 0000 and extension date is good, and startDate is good', () => {
@@ -186,7 +206,9 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14');
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2023');
+						expect(result).toEqual(
+							'The deadline for the close of the Examination has been extended to 22 April 2023'
+						);
 					});
 				});
 				describe('and the date is null and extension date is good, and startDate is good', () => {
@@ -198,13 +220,26 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14');
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2023');
+						expect(result).toEqual(
+							'The deadline for the close of the Examination has been extended to 22 April 2023'
+						);
+					});
+				});
+				describe('and all dates are bad', () => {
+					let result;
+					beforeEach(() => {
+						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
+						result = getDateTimeExaminationEnds(null, null, null);
+					});
+					it('should return empty string.', () => {
+						expect(result).toEqual('');
 					});
 				});
 			});
 		});
 	});
 });
+
 describe('#getConfirmedStartOfExamination', () => {
 	describe('When getting the correct sentence if a date is before or after today`s date', () => {
 		describe('and the date is before today', () => {

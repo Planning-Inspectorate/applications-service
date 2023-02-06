@@ -154,7 +154,10 @@ describe('controllers/projects/examination-timetable/controller', () => {
 										inputId: 'project-examination-timetable',
 										state: {
 											isSubmissionOpen: false,
-											tag: null
+											tag: {
+												classes: 'govuk-tag',
+												text: 'Closed'
+											}
 										},
 										title: '1 January 2023 - mock title 1',
 										typeOfEvent: 'mock event type 1'

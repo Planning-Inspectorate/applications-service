@@ -16,6 +16,7 @@ jest.mock('../../../../src/config.js', () => ({
 describe('controllers/projects/examination', () => {
 	let req;
 	let res;
+	let responseWithStatus;
 
 	const mockConfig = {
 		logger: {
@@ -27,9 +28,11 @@ describe('controllers/projects/examination', () => {
 	};
 
 	beforeEach(() => {
+		jest.resetAllMocks();
 		req = mockReq();
 		res = mockRes();
-		jest.resetAllMocks();
+		responseWithStatus = mockRes();
+		res.status.mockImplementation(() => responseWithStatus);
 	});
 
 	describe('getExamination', () => {
@@ -54,6 +57,17 @@ describe('controllers/projects/examination', () => {
 				stageTotal: 8,
 				config: mockConfig
 			});
+		});
+		it('should redirect to not found route if Project caseRef does not exist', async () => {
+			getProjectData.mockImplementation(() =>
+				Promise.resolve({
+					resp_code: 503,
+					data: { DateOfRelevantRepresentationClose: '2020-02-02' }
+				})
+			);
+			await examinationController.getExamination(req, res);
+			expect(res.status).toHaveBeenCalledWith(404);
+			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});
 	});
 });
