@@ -7,7 +7,7 @@ Given('I have navigated to the "Have your say" guide', () => {
 });
 
 Given('I have selected the "Have your say" link from the related guides section', () => {
-	cy.clickOnHref('../having-your-say-guide/');
+	cy.clickOnHref('/having-your-say-guide/');
 });
 
 Given('I have viewed the overview page for a project', () => {
