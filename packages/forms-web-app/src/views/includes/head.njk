@@ -3,6 +3,8 @@
 
 {# <link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/> #}
 
+<script type="module" src="/public/scripts/register-sw.js"></script>
+
 {% if featureFlag.googleTagManager %}
   {% if googleTagManagerId and cookies.cookie_policy.usage %}
     <!-- Google Tag Manager -->
