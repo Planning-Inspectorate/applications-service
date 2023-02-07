@@ -1,16 +1,14 @@
-const { get, post } = require('../router-mock');
-const typeOfPartyController = require('../../../../src/controllers/register/type-of-party');
-const { validationErrorHandler } = require('../../../../src/validators/validation-error-handler');
-const {
-	rules: typeOfPartyValidationRules
-} = require('../../../../src/validators/register/type-of-party');
+const { get, post } = require('../../../../__tests__/unit/routes/router-mock');
+const typeOfPartyController = require('./type-of-party.controller');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
+const { rules: typeOfPartyValidationRules } = require('./type-of-party.validator');
 
-jest.mock('../../../../src/validators/register/type-of-party');
+jest.mock('./type-of-party.validator');
 
 describe('routes/register/who-registering-for', () => {
 	beforeEach(() => {
 		// eslint-disable-next-line global-require
-		require('../../../../src/routes/register/type-of-party');
+		require('./type-of-party.router');
 	});
 
 	afterEach(() => {

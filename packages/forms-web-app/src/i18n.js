@@ -1,6 +1,6 @@
 const i18next = require('i18next');
 const i18nMiddleware = require('i18next-http-middleware');
-// const Backend = require('i18next-fs-backend');
+
 const fs = require('fs');
 
 const languages = ['en', 'cy'];
@@ -74,23 +74,20 @@ function createResourcesFromPages() {
 
 function configureI18n(app) {
 	const resources = createResourcesFromPages();
-	i18next
-		// .use(Backend)
-		.use(i18nMiddleware.LanguageDetector)
-		.init(
-			{
-				detection: options,
-				preload: languages,
-				fallbackLng: 'en',
-				debug: app.get('env') === 'development',
-				ns: ['translation'],
-				defaultNS: 'translation',
-				resources
-			},
-			(err) => {
-				if (err) return console.error(err);
-			}
-		);
+	i18next.use(i18nMiddleware.LanguageDetector).init(
+		{
+			detection: options,
+			preload: languages,
+			fallbackLng: 'en',
+			debug: app.get('env') === 'development',
+			ns: ['translation'],
+			defaultNS: 'translation',
+			resources
+		},
+		(err) => {
+			if (err) return console.error(err);
+		}
+	);
 
 	app.use([i18nMiddleware.handle(i18next, {}), setLangauageWithSession]);
 

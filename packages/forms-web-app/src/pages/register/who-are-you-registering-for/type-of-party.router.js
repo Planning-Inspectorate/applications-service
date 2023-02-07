@@ -1,9 +1,9 @@
 const express = require('express');
 
-const typeOfPartyController = require('../../controllers/register/type-of-party');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const typeOfPartyController = require('./type-of-party.controller');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
-const { rules: typeOfPartyRules } = require('../../validators/register/type-of-party');
+const { rules: typeOfPartyRules } = require('./type-of-party.validator');
 
 const router = express.Router();
 

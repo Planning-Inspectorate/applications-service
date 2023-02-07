@@ -1,6 +1,6 @@
-const typeOfPartyController = require('../../../../src/controllers/register/type-of-party');
-const { VIEW } = require('../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../mocks');
+const typeOfPartyController = require('./type-of-party.controller');
+const { VIEW } = require('../../../lib/views');
+const { mockReq, mockRes } = require('../../../../__tests__/unit/mocks');
 
 jest.mock('../../../../src/lib/logger');
 
@@ -26,7 +26,10 @@ describe('controllers/register/type-of-party', () => {
 	describe('getTypeOfParty', () => {
 		it('should call the correct template', () => {
 			typeOfPartyController.getTypeOfParty(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/who-registering-for', { type: 'myself' });
+			expect(res.render).toHaveBeenCalledWith(
+				'register/who-are-you-registering-for/who-registering-for.njk',
+				{ type: 'myself' }
+			);
 		});
 	});
 
@@ -52,7 +55,7 @@ describe('controllers/register/type-of-party', () => {
 		it(`should return '/${VIEW.REGISTER.TYPE_OF_PARTY}' if it is 'default'`, async () => {
 			const pageRedirect = typeOfPartyController.forwardPage('default');
 
-			expect(pageRedirect).toEqual(VIEW.REGISTER.TYPE_OF_PARTY);
+			expect(pageRedirect).toEqual('register/who-are-you-registering-for/who-registering-for.njk');
 		});
 	});
 
@@ -109,11 +112,14 @@ describe('controllers/register/type-of-party', () => {
 
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.TYPE_OF_PARTY, {
-				errorSummary: [{ text: 'There were errors here', href: '#' }],
-				errors: { a: 'b' },
-				type: null
-			});
+			expect(res.render).toHaveBeenCalledWith(
+				'register/who-are-you-registering-for/who-registering-for.njk',
+				{
+					errorSummary: [{ text: 'There were errors here', href: '#' }],
+					errors: { a: 'b' },
+					type: null
+				}
+			);
 		});
 	});
 });

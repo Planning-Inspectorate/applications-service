@@ -15,6 +15,7 @@ const validationErrorHandler = (req, res, next) => {
 	req.body.errors = mappedErrors;
 	req.body.errorSummary = expressValidationErrorsToGovUkErrorList(mappedErrors);
 
+	console.log('Error: ', req.body.errors);
 	return next();
 };
 
