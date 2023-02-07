@@ -120,3 +120,4 @@ packages/forms-web-app/src/public/stylesheets/main.css
 
 uploads/*
 !uploads/.gitkeep
+.vs
