@@ -1,0 +1,11 @@
+{
+	"heading": "Who are you registering for?",
+	"options": {
+		"one": "Myself",
+		"two": "An organisation I work or volunteer for",
+		"three": "On behalf of another person, a family group or an organisation I do not work for fella"
+	},
+	"errors": {
+		"notEmpty": "Select who you are registering for"
+	}
+}

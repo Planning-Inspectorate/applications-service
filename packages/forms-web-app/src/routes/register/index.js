@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const startRouter = require('./start');
+const startRouter = require('../../pages/register/start/start.router');
 const registrationPeriodClosedRouter = require('./registration-period-closed');
-const typeOfPartyRouter = require('./type-of-party');
+const typeOfPartyRouter = require('../../pages/register/who-are-you-registering-for/type-of-party.router');
 const myselfRegistrationRouter = require('./myself');
 const organisationRegistrationRouter = require('./organisation');
 const behalfRegistrationRouter = require('./agent');
