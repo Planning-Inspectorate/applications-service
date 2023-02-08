@@ -28,5 +28,8 @@
 	"cypress-cucumber-preprocessor": {
 		"nonGlobalStepDefinitions": false,
 		"stepDefinitions": "cypress/e2e/step_definitions"
+	},
+	"dependencies": {
+		"dayjs": "^1.11.7"
 	}
 }

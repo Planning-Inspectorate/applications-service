@@ -34,7 +34,7 @@ Feature:Documents page-Filtered results
     And The user selects 1 document type checkbox within the Examination stage
     And User clicks Apply filters
     And Filtered results section is displayed with the project stages
-    
+
 
   Scenario: 5 - Select all filters in all available project stages
     And User expands the filter
@@ -43,6 +43,11 @@ Feature:Documents page-Filtered results
     And The user clicks the  Selects all filters link within the Acceptance stage
     And The user clicks the  Selects all filters link within the Pre-examination stage
     And The user clicks the  Selects all filters link within the Examination stage
-    And The user clicks Apply filters 
+    And The user clicks Apply filters
     Then The Filtered results section  is displayed with the project stages
-    
+
+  Scenario: 6 - Apply 1 document type filter 1 project stage and the dates displayed in a descending order
+    And User selects the Pre-application stage Filter
+    When User selects 1 document type checkbox within the Pre-application filter
+    And User clicks Apply filters
+    And The dates are displayed in a descending order
