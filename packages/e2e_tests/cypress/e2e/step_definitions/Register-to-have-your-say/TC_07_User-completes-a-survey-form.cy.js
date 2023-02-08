@@ -24,7 +24,7 @@ And('The user has completed the have your say journey', () => {
 });
 
 Then('User completes a survey form', () => {
-	cy.get(':nth-child(13) > a').click();
+	cy.contains('Tell us what you thought about this service').click();
 	cy.get(':nth-child(1) > .radio > .office-form-question-choice-row > input').click();
 	cy.get('.office-form-question-textbox').type(
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit'

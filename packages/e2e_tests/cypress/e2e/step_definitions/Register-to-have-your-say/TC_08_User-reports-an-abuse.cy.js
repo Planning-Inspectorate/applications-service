@@ -24,7 +24,7 @@ And('The user has completed the have your say journey', () => {
 });
 
 Then('User reports an abuse', () => {
-	cy.get(':nth-child(13) > a').click();
+	cy.contains('Tell us what you thought about this service').click();
 	cy.get('.office-form-notice-report').click();
 	cy.get('#Phishing').click();
 	cy.get('.office-form-reportabuse-input').type(
