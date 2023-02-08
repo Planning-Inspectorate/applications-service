@@ -18,7 +18,8 @@ const addKeyValuePair = require('./lib/add-key-value-pair');
 const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
-const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
+const removeUnwantedCookiesMiddleware = require('./middleware/remove-unwanted-cookies');
+const formSanitisationMiddleware = require('./middleware/form-sanitisation');
 const fileUpload = require('express-fileupload');
 const { routesConfig } = require('./routes/config');
 
@@ -106,7 +107,9 @@ app.use(cookieParser());
 app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(env));
-app.use(removeUnwantedCookiesMiddelware);
+app.use(removeUnwantedCookiesMiddleware);
+app.use(formSanitisationMiddleware());
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use(
