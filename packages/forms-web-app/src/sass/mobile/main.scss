@@ -1,0 +1,16 @@
+.mobile-show {
+	display: none;
+}
+
+.mobile-hide {
+}
+
+@media screen and (max-width: 640px) {
+
+	.mobile-show {
+		display: block;
+	}
+	.mobile-hide {
+		display: none;
+	}
+}
