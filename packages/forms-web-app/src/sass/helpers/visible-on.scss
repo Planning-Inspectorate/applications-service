@@ -1,0 +1,19 @@
+.visible-on {
+	display: block;
+
+	&--tablet {
+		@media screen and (min-width: map-get($govuk-breakpoints, "tablet")) {
+			display: none;
+		}
+	}
+
+	&--desktop {
+		display: none;
+		@media screen and (min-width: map-get($govuk-breakpoints, "tablet")) {
+			display: block;
+		}
+	}
+}
+
+
+
