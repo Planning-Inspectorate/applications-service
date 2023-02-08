@@ -1,0 +1,22 @@
+{% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
+
+{% macro relatedGuidesWrapper (featureHideLink, styles) %}
+	<div class="{{ styles }}">
+		{{ uiVerticalTabs(
+			"Related guides",
+			null,
+			[
+				{
+					hidden: featureHideLink.hideDecisionMakingProcessGuideLink,
+					name: "Find out more about the decision making process for national infrastructure projects",
+					url:"/decision-making-process-guide"
+				},
+				{
+					name: "Having your say about a national infrastructure project",
+					url:"/having-your-say-guide"
+				}
+			]
+		) }}
+	</div>
+
+{% endmacro %}

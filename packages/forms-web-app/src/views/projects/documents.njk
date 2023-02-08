@@ -9,6 +9,7 @@
 {% from "../components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "../components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
 {% set section = 'project-documents' %}
 
@@ -76,21 +77,7 @@
 							"Filter",
 							filters
 						),
-						uiVerticalTabs(
-							"Related guides",
-							null,
-							[
-								{
-									hidden: featureHideLink.hideDecisionMakingProcessGuideLink,
-									name: "Find out more about the decision making process for national infrastructure projects",
-									url:"/decision-making-process-guide"
-								},
-								{
-									name: "Having your say about a national infrastructure project",
-									url:"/having-your-say-guide"
-								}
-							]
-						)
+						relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--desktop"])
 					]) }}
 			</div>
 			<div class="govuk-grid-column-two-thirds">
@@ -175,7 +162,13 @@
 					<p data-cy="no-docs-text">There are no project application documents available to display at the moment.</p>
 					<p><a href="{{ baseUrl }}">Return to the project overview</a></p>
 				{% endif %}
+
+				<div class="visible-on visible-on--tablet">
+					<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible ">
+				</div>
+
+				{{ relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--tablet"]) }}
 			</div>
-			<div>
+		</div>
 	</form>
 {% endblock %}
