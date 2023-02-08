@@ -3,13 +3,13 @@
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% macro sectionEvents(events) %}
-  <ul class="section-events">
+  <div class="section-events">
     {% for event in events %}
-      <li class="section-events__event">
+      <section class="section-events__event">
         <div class="section-events__event-header">
-          <h3 class="section-events__event-title">
+          <h4 class="section-events__event-title">
             <strong>{{ event.title }}</strong>
-          </h3>
+          </h4>
 
           {% if event.state.tag -%}
             {{ govukTag(event.state.tag) }}
@@ -39,7 +39,7 @@
             </form>
           </div>
         {%- endif %}
-      </li>
+      </section>
     {% endfor %}
-  </ul>
+  </div>
 {% endmacro %}
