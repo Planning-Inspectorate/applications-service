@@ -8,7 +8,8 @@
 	"workspaces": [
 		"packages/forms-web-app",
 		"packages/applications-service-api",
-		"packages/common"
+		"packages/common",
+		"packages/back-office-subscribers"
 	],
 	"scripts": {
 		"commit": "cz",
