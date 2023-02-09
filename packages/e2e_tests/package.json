@@ -19,7 +19,7 @@
 	"devDependencies": {
 		"@shelex/cypress-allure-plugin": "^2.34.0",
 		"allure-commandline": "^2.20.1",
-		"cypress": "^12.3.0",
+		"cypress": "^12.5.1",
 		"cypress-cucumber-preprocessor": "^4.3.1",
 		"cypress-file-upload": "^5.0.8",
 		"cypress-slow-down": "^1.2.1",
