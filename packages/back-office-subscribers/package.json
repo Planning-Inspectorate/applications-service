@@ -1,0 +1,14 @@
+{
+	"name": "back-office-subscribers",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"start": "func start",
+		"lint": "eslint ./",
+		"test": "jest"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"azure-functions-core-tools": "^4.x"
+	}
+}
