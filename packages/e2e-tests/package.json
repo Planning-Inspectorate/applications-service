@@ -1,7 +1,7 @@
 {
 	"name": "e2e-tests",
 	"version": "1.0.0",
-	"description": "",
+	"description": "E2E Tests for the applications",
 	"main": "index.js",
 	"scripts": {
 		"e2e-open": "npx cypress open",
