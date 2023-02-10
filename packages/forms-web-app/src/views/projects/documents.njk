@@ -141,7 +141,7 @@
 				{{ uiTagLinkList('Filtered results', activeFilters) }}
 
 				{% if documents.length > 0 %}
-					{% if displayClearAllFilters %}
+					{% if queryUrl != '' and queryUrl != '?searchTerm=' %}
 						<p>
 							<a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}">
 								Clear all filters
