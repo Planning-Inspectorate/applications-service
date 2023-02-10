@@ -75,7 +75,7 @@
 
 {% set contentAboutProject = '
   <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
-    <a href="/projects/' + caseRef + '/documents?searchTerm=&type=Application+Form">
+    <a class="govuk-link" href="/projects/' + caseRef + '/documents?searchTerm=&type=Application+Form">
       Application introduction
     </a>
   </h4>
@@ -83,7 +83,7 @@
     Information about the project and what the developer is proposing
   </p>
   <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
-    <a href="/projects/' + caseRef + '/documents?searchTerm=&type=Environmental+Statement">
+    <a class="govuk-link" href="/projects/' + caseRef + '/documents?searchTerm=&type=Environmental+Statement">
       Environmental information
     </a>
   </h4>
@@ -91,7 +91,7 @@
     Information about how the project might impact the environment and what the developer is proposing to make the impact less serious.
   </p>
   <h4 class="govuk-heading-s govuk-!-margin-bottom-1">
-    <a href="/projects/' + caseRef + '/documents?searchTerm=&type=Plans">
+    <a class="govuk-link" href="/projects/' + caseRef + '/documents?searchTerm=&type=Plans">
       Drawings
     </a>
   </h4>
@@ -161,7 +161,7 @@
         Project case team email:
       </strong>
       <br>
-      <a href="mailto:' + appData.ProjectEmailAddress + '">
+      <a class="govuk-link" href="mailto:' + appData.ProjectEmailAddress + '">
         ' + appData.ProjectEmailAddress + '
       </a>
     </p>
@@ -174,7 +174,7 @@
       General enquiries telephone:
     </strong>
     <br>
-    <a href="tel:03034445000">
+    <a class="govuk-link" href="tel:03034445000">
       0303 444 5000
     </a>
     <br>

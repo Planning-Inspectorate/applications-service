@@ -38,7 +38,7 @@ describe('When markings filters as checked for the view model based on the query
 						label: 'label 1',
 						tags: [
 							{
-								alt: 'Remove filter-group-1-item-1 filter.',
+								alt: 'Remove filter-group-1-item-1 filter',
 								icon: 'close',
 								link: '?searchTerm=',
 								text: 'filter-group-1-item-1'
@@ -82,13 +82,13 @@ describe('When markings filters as checked for the view model based on the query
 						label: 'label 1',
 						tags: [
 							{
-								alt: 'Remove filter-group-1-item-1 filter.',
+								alt: 'Remove filter-group-1-item-1 filter',
 								icon: 'close',
 								link: '?filter+group+1=filter-group-1-item-2',
 								text: 'filter-group-1-item-1'
 							},
 							{
-								alt: 'Remove filter-group-1-item-2 filter.',
+								alt: 'Remove filter-group-1-item-2 filter',
 								icon: 'close',
 								link: '?filter+group+1=filter-group-1-item-1',
 								text: 'filter-group-1-item-2'
@@ -152,7 +152,7 @@ describe('When markings filters as checked for the view model based on the query
 						label: 'label 1',
 						tags: [
 							{
-								alt: 'Remove filter-group-1-item-1 filter.',
+								alt: 'Remove filter-group-1-item-1 filter',
 								icon: 'close',
 								link: '?filter+group+2=filter-group-2-item-1&filter+group+2=filter-group-2-item-2&searchTerm=',
 								text: 'filter-group-1-item-1'
@@ -163,13 +163,13 @@ describe('When markings filters as checked for the view model based on the query
 						label: 'label 2',
 						tags: [
 							{
-								alt: 'Remove filter-group-2-item-1 filter.',
+								alt: 'Remove filter-group-2-item-1 filter',
 								icon: 'close',
 								link: '?filter+group+1=filter-group-1-item-1&filter+group+2=filter-group-2-item-2&searchTerm=',
 								text: 'filter-group-2-item-1'
 							},
 							{
-								alt: 'Remove filter-group-2-item-2 filter.',
+								alt: 'Remove filter-group-2-item-2 filter',
 								icon: 'close',
 								link: '?filter+group+1=filter-group-1-item-1&filter+group+2=filter-group-2-item-1&searchTerm=',
 								text: 'filter-group-2-item-2'

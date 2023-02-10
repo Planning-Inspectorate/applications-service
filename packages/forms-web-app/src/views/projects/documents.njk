@@ -1,6 +1,7 @@
 {% extends "layouts/default.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% from "../components/layout/slots.njk" import layoutSlots %}
@@ -14,9 +15,11 @@
 {% set section = 'project-documents' %}
 
 {% block script %}
-	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
-		{ src: "/public/scripts/checkbox-accordion.script.js" }
-	), initiateScriptsConfig) %}
+	{% if filters.length > 1 %}
+		{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+			{ src: "/public/scripts/checkbox-accordion.script.js" }
+		), initiateScriptsConfig) %}
+	{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -81,6 +84,13 @@
 					]) }}
 			</div>
 			<div class="govuk-grid-column-two-thirds">
+				{% if errorSummary %}
+					{{ govukErrorSummary({
+						titleText: errorSummary.title,
+						errorList: errorSummary.list
+					}) }}
+				{% endif %}
+
         <span class="govuk-caption-l">
           {{ projectName }}
         </span>
@@ -128,12 +138,12 @@
 					</div>
 				{% endif %}
 
-				{% if documents.length > 0 %}
-					{{ uiTagLinkList('Filtered results', activeFilters) }}
+				{{ uiTagLinkList('Filtered results', activeFilters) }}
 
+				{% if documents.length > 0 %}
 					{% if queryUrl != '' and queryUrl != '?searchTerm=' %}
 						<p>
-							<a href="{{ baseUrl }}/{{ pageUrl }}">
+							<a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}">
 								Clear all filters
 							</a>
 						</p>
@@ -155,12 +165,12 @@
 				{% elseif documents.length == 0 and queryUrl != '' %}
 					<p data-cy="no-docs-text">No documents were found matching your search term and filters.</p>
 					<p>Would you like to clear your search and filters to view all available documents instead?</p>
-					<p><a href="{{ baseUrl }}/{{ pageUrl }}"
+					<p><a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}"
 								data-cy="clear-search">Clear search and filters</a></p>
 
 				{% elseif documents.length == 0 %}
 					<p data-cy="no-docs-text">There are no project application documents available to display at the moment.</p>
-					<p><a href="{{ baseUrl }}">Return to the project overview</a></p>
+					<p><a class="govuk-link" href="{{ baseUrl }}">Return to the project overview</a></p>
 				{% endif %}
 
 				<div class="visible-on visible-on--tablet">

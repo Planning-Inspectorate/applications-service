@@ -18,7 +18,8 @@
   }
 
   &__list-item-text {
-    @extend .govuk-body-s;
+    @extend
+      .govuk-body-s;
 
     &--active {
       display: block;

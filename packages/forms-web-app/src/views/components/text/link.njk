@@ -1,5 +1,5 @@
 {% macro textLink(href, label, text) -%}
   {% if href and label and text -%}
-    <a aria-label="{{ label }}" href="{{ href }}">{{ text }}</a>
+    <a aria-label="{{ label }}" class="govuk-link" href="{{ href }}">{{ text }}</a>
   {%- endif %}
 {%- endmacro %}
