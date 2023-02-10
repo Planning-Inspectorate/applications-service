@@ -11,6 +11,9 @@ const {
 const {
 	viewModel
 } = require('../../../../../../src/controllers/projects/documents/utils/filters/view-model');
+const {
+	getDatesFilter
+} = require('../../../../../../src/controllers/projects/documents/utils/filters/dates/get-dates-filter');
 
 jest.mock(
 	'../../../../../../src/controllers/projects/documents/utils/filters/order-filters',
@@ -27,6 +30,13 @@ jest.mock(
 jest.mock('../../../../../../src/controllers/projects/documents/utils/filters/view-model', () => ({
 	viewModel: jest.fn()
 }));
+jest.mock(
+	'../../../../../../src/controllers/projects/documents/utils/filters/dates/get-dates-filter',
+	() => ({
+		getDatesFilter: jest.fn()
+	})
+);
+
 describe('#getFilters', () => {
 	describe('When getting the filters', () => {
 		const mockFilters = { text: 'mock filters' };
@@ -38,8 +48,13 @@ describe('#getFilters', () => {
 			orderFilters.mockReturnValue(mockOrderedFilters);
 			convertFiltersToPageView.mockReturnValue(mockMappedFilters);
 			viewModel.mockReturnValue({
-				filters: 'mock filter view model',
-				activeFilters: 'active filters'
+				activeFilters: ['mock active filters'],
+				filters: ['mock filter view model']
+			});
+			getDatesFilter.mockReturnValue({
+				activeDateFilters: ['mock active dates filter'],
+				datesFilter: ['mock dates filter'],
+				datesFilterErrorSummary: 'mock dates filter error summary'
 			});
 			result = getFilters(mockFilters, mockQuery);
 		});
@@ -52,10 +67,14 @@ describe('#getFilters', () => {
 		it('should map filters to the view model', () => {
 			expect(viewModel).toHaveBeenCalledWith(mockMappedFilters, mockQuery);
 		});
+		it('should get the dates filters', () => {
+			expect(getDatesFilter).toHaveBeenCalledWith(mockQuery);
+		});
 		it('should return the view model', () => {
 			expect(result).toEqual({
-				activeFilters: 'active filters',
-				filters: 'mock filter view model'
+				activeFilters: ['mock active filters', 'mock active dates filter'],
+				filters: ['mock filter view model', 'mock dates filter'],
+				datesFilterErrorSummary: 'mock dates filter error summary'
 			});
 		});
 	});

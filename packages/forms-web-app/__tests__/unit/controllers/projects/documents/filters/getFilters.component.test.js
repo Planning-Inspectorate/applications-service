@@ -38,7 +38,7 @@ describe('component', () => {
 							label: 'filter group 1 label',
 							tags: [
 								{
-									alt: 'Remove filter-group1-item-1 filter.',
+									alt: 'Remove filter-group1-item-1 filter',
 									icon: 'close',
 									link: '?filter-group-2=filter-group2-item-1&filter-group-2=filter-group2-item-2',
 									text: 'filter-group1-item-1'
@@ -49,13 +49,13 @@ describe('component', () => {
 							label: 'filter group 2 label',
 							tags: [
 								{
-									alt: 'Remove filter-group2-item-1 filter.',
+									alt: 'Remove filter-group2-item-1 filter',
 									icon: 'close',
 									link: '?filter-group-1=filter-group1-item-1&filter-group-2=filter-group2-item-2',
 									text: 'filter-group2-item-1'
 								},
 								{
-									alt: 'Remove filter-group2-item-2 filter.',
+									alt: 'Remove filter-group2-item-2 filter',
 									icon: 'close',
 									link: '?filter-group-1=filter-group1-item-1&filter-group-2=filter-group2-item-1',
 									text: 'filter-group2-item-2'
@@ -63,6 +63,7 @@ describe('component', () => {
 							]
 						}
 					],
+					datesFilterErrorSummary: null,
 					filters: [
 						{
 							idPrefix: 'filter-group-1',
@@ -80,7 +81,8 @@ describe('component', () => {
 							],
 							label: 'filter group 1 label',
 							name: 'filter-group-1',
-							title: 'filter group 1 label (1)'
+							title: 'filter group 1 label (1)',
+							type: 'checkbox'
 						},
 						{
 							idPrefix: 'filter-group-2',
@@ -98,7 +100,66 @@ describe('component', () => {
 							],
 							label: 'filter group 2 label',
 							name: 'filter-group-2',
-							title: 'filter group 2 label (7)'
+							title: 'filter group 2 label (7)',
+							type: 'checkbox'
+						},
+						{
+							errorSummary: null,
+							formGroups: [
+								{
+									errorMessage: null,
+									errorMessageTitle: 'from',
+									id: 'docments-page-date-from-form-group',
+									inputNamePrefix: 'date-from',
+									inputs: [
+										{
+											classes: 'govuk-input--width-2',
+											name: 'day',
+											value: ''
+										},
+										{
+											classes: 'govuk-input--width-2',
+											name: 'month',
+											value: ''
+										},
+										{
+											classes: 'govuk-input--width-4',
+											name: 'year',
+											value: ''
+										}
+									],
+									name: 'date-from',
+									title: 'From'
+								},
+								{
+									errorMessage: null,
+									errorMessageTitle: 'to',
+									id: 'docments-page-date-to-form-group',
+									inputNamePrefix: 'date-to',
+									inputs: [
+										{
+											classes: 'govuk-input--width-2',
+											name: 'day',
+											value: ''
+										},
+										{
+											classes: 'govuk-input--width-2',
+											name: 'month',
+											value: ''
+										},
+										{
+											classes: 'govuk-input--width-4',
+											name: 'year',
+											value: ''
+										}
+									],
+									name: 'date-to',
+									title: 'To'
+								}
+							],
+							isOpen: false,
+							title: 'Date published',
+							type: 'date'
 						}
 					]
 				});

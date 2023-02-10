@@ -34,7 +34,8 @@ describe('#convertFiltersToPageView', () => {
 							}
 						],
 						name: 'mock name-mock value',
-						title: 'mock label (1)'
+						title: 'mock label (1)',
+						type: 'checkbox'
 					},
 					{
 						idPrefix: 'second mock name-second mock value',
@@ -47,7 +48,8 @@ describe('#convertFiltersToPageView', () => {
 							}
 						],
 						name: 'second mock name-second mock value',
-						title: 'second mock label (2)'
+						title: 'second mock label (2)',
+						type: 'checkbox'
 					}
 				]);
 			});

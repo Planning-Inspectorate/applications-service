@@ -1,5 +1,7 @@
 const moment = require('moment');
 
+const buildDateSting = (year, month, day) => `${year}-${month}-${day}`;
+
 const getDate = (date) => new Date(date);
 
 const getDateNow = () => new Date();
@@ -29,6 +31,7 @@ const setTimeToStartOfDay = (date) => new Date(date).setHours(0, 0, 0, 0);
 const setTimeToEndOfDay = (date) => new Date(date).setHours(23, 59, 59, 999);
 
 module.exports = {
+	buildDateSting,
 	getDate,
 	getDateNow,
 	formatDate,

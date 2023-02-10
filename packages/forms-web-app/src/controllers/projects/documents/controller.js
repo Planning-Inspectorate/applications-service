@@ -37,6 +37,7 @@ const getApplicationDocuments = async (req, res) => {
 			...paginationView,
 			filters: filteredView.filters,
 			activeFilters: filteredView.activeFilters,
+			errorSummary: filteredView.datesFilterErrorSummary,
 			projectName,
 			pageTitle: `Documents | ${projectName}`,
 			paginationUrl,

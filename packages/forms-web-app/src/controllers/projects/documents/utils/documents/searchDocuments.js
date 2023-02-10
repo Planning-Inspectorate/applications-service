@@ -4,7 +4,6 @@ const { searchExaminationLibraryDocument } = require('./search-examination-libra
 
 const searchDocuments = async (case_ref, query) => {
 	const body = getBody(case_ref, query);
-
 	const { data } = await searchDocumentsV3(body);
 	const examinationLibraryDocument = await searchExaminationLibraryDocument(case_ref);
 

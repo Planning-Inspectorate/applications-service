@@ -72,6 +72,16 @@
     .govuk-form-group {
       @extend .govuk-\!-margin-0;
     }
+
+    &--date {
+      > .govuk-form-group {
+        &:first-child {
+          @extend .govuk-\!-margin-top-3;
+        }
+
+        @extend .govuk-\!-margin-top-6;
+      }
+    }
   }
 
   &__checkboxes-section-switch {

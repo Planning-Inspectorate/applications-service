@@ -1,5 +1,6 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
 {% macro uiCheckboxAccordion(title, sections) %}
 	<div class="ui-checkbox-accordion">
@@ -15,6 +16,9 @@
 						class="ui-checkbox-accordion__section-switch"
 						id="ui-checkbox-accordion__section-switch--{{ section.name }}"
 						type="checkbox"
+						{% if section.isOpen %}
+						checked
+						{% endif %}
 					>
 
 					<label
@@ -37,24 +41,41 @@
 							<span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
 							<span class="govuk-visually-hidden">the</span>
 							{{ section.title }}
-							<span class="govuk-visually-hidden">checkbox section.</span>
+							<span class="govuk-visually-hidden">section</span>
 						</h4>
 					</label>
 
 					<div
-						id="ui-checkbox-accordion__checkboxes-section--{{ section.name }}"
-						class="ui-checkbox-accordion__checkboxes-section"
+						class="ui-checkbox-accordion__checkboxes-section ui-checkbox-accordion__checkboxes-section--{{section.type}}"
 					>
-						{{ govukCheckboxes({
-							name: section.name,
-							classes: "govuk-checkboxes--small",
-							fieldset: {
-								legend: {
-									html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
-								}
-							},
-							items: section.items
-						}) }}
+						{% if section.type === 'checkbox' %}
+							{{ govukCheckboxes({
+								name: section.name,
+								classes: "govuk-checkboxes--small",
+								fieldset: {
+									legend: {
+										html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
+									}
+								},
+								items: section.items
+							}) }}
+						{% endif %}
+
+						{% if section.type === 'date' %}
+							{% for formGroup in section.formGroups %}
+								{{ govukDateInput({
+									id: formGroup.id,
+									namePrefix: formGroup.inputNamePrefix,
+									fieldset: {
+										legend: {
+											text: formGroup.title
+										}
+									},
+									errorMessage: formGroup.errorMessage,
+									items: formGroup.inputs
+								}) }}
+							{% endfor %}
+						{% endif %}
 					</div>
 				</div>
 
