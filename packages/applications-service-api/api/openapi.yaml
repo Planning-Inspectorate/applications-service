@@ -6,6 +6,7 @@ info:
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
+
 servers:
   - url: '{environment}/'
     variables:
@@ -14,6 +15,7 @@ servers:
         enum:
           - 'http://localhost:3000'
           - 'https://applications-service-api.azurewebsites.net'
+          
 paths:
   '/api/v1/applications/{id}':
     get:
@@ -40,6 +42,7 @@ paths:
           description: The application could not be found
         '406':
           description: Application not eligible
+
   '/api/v1/applications':
     get:
       summary: Returns all existing applications
@@ -57,6 +60,7 @@ paths:
                   $ref: '#/components/schemas/Application'
         '404':
           description: No applications found
+
   '/api/v1/interested-party':
     post:
       summary: Creates an interested party
@@ -140,6 +144,7 @@ paths:
               schema:
                 type: string
                 example: '30000001'
+
   '/api/v1/interested-party/{token}':
     post:
       summary: Retrieves an interested party by token
@@ -170,6 +175,7 @@ paths:
                 $ref: '#/components/schemas/InterestedParty'
         '404':
           description: Interested party could not be found
+
   '/api/v1/interested-party/{ID}/comments':
     put:
       summary: Persist interested party's comments
@@ -203,6 +209,7 @@ paths:
           description: Comments updated successfully
         '400':
           description: Comments not updated
+
   '/api/v1/documents/{caseRef}':
     post:
       deprecated: true
@@ -234,6 +241,7 @@ paths:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
           description: No documents found
+
   '/api/v2/documents':
     get:
       deprecated: true
@@ -294,6 +302,7 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
         '404':
           description: No documents found
+
   '/api/v3/documents':
     post:
       summary: Returns project documents
@@ -319,6 +328,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+
   '/api/v1/representations':
     get:
       summary: Returns project representations
@@ -366,6 +376,7 @@ paths:
                   $ref: '#/components/schemas/RepresentationListWrapper'
         '404':
           description: No representations found
+
   '/api/v1/representations/{id}':
     get:
       summary: Returns representation by id
@@ -389,6 +400,7 @@ paths:
                 $ref: '#/components/schemas/Representation'
         '404':
           description: Representation not found
+
   '/api/v1/timetables/{caseReference}':
     get:
       summary: Returns timetable data for a case
@@ -417,6 +429,7 @@ paths:
           description: Not found error
         '500':
           description: Internal server error
+
   '/api/v1/submissions/{caseReference}':
     post:
       summary: Create a submission for a case
@@ -452,6 +465,7 @@ paths:
                 $ref: '#/components/schemas/ValidationError'
         '500':
           description: Internal server error
+
   '/api/v1/submissions/{submissionId}/complete':
     post:
       summary: Mark a submission as complete
@@ -480,7 +494,59 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
         '500':
-          description: Internal server error
+          description: Internal server error      
+
+  '/api/v1/advice':
+    get:
+      summary: Returns project advice
+      description: Returns project advice ordered by date advice given
+      tags:
+        - Advice
+      parameters:
+        - in: query
+          name: caseRef
+          example: 'TR040009'
+          required: false
+          schema:
+            type: string
+          description: Case reference
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
+        - in: query
+          name: size
+          example: 50
+          required: false
+          schema:
+            type: integer
+          description: Page size for results
+        - in: query
+          name: searchTerm
+          example: 'pdf'
+          required: false
+          schema:
+            type: string
+          description: Search term
+      responses:
+        '200':
+          description: Returns list of advice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdviceListWrapper'
+        '400':
+          description: Invalid parameter values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Internal server error   
+
   '/test':
     get:
       summary: Returns a list of log messages relating to database connectivity.
@@ -499,6 +565,7 @@ paths:
           description: Something went wrong.
         default:
           description: Something went wrong.
+
 components:
   schemas:
     Application:
@@ -614,6 +681,7 @@ components:
         dateOfNonAcceptance:
           type: string
           example: ''
+
     InterestedParty:
       type: object
       properties:
@@ -761,6 +829,7 @@ components:
           type: number
           example: 1
       description: All of the data and state information for an interested party
+
     InterestedPartyReqBody:
       type: object
       properties:
@@ -778,6 +847,7 @@ components:
           type: string
         telephone:
           type: string
+
     DocumentSearchCriteria:
       type: object
       properties:
@@ -787,6 +857,7 @@ components:
         searchTerm:
           type: string
           example: ''
+
     DocumentListWrapper:
       type: object
       properties:
@@ -808,11 +879,13 @@ components:
           example: 1
         filters:
           $ref: '#/components/schemas/Filters'
+
     DocumentListGroupByStage:
       type: object
       additionalProperties:
         # x-additionalPropertiesName: group
         $ref: '#/components/schemas/DocumentListGroupByType'
+
     DocumentListGroupByType:
       type: object
       additionalProperties:
@@ -820,6 +893,7 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Document'
+
     DocumentV3RequestBody:
       type: object
       required:
@@ -849,6 +923,7 @@ components:
           format: date
           description: Filter for documents published on or before {value}
           example: '2023-12-31'
+
     DocumentV3RequestFilter:
       required:
         - name
@@ -870,6 +945,7 @@ components:
               value:
                 type: string
                 example: Plans
+
     DocumentV3ResponseBody:
       type: object
       properties:
@@ -893,6 +969,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentV3ResponseFilter'
+
     DocumentV3ResponseFilter:
       type: object
       properties:
@@ -925,6 +1002,7 @@ components:
                 type: number
                 example: 5
                 description: Number of documents matching the type
+
     DocumentV3:
       type: object
       properties:
@@ -997,6 +1075,7 @@ components:
         dateCreated:
           type: string
           example: '2016-04-28 08:42:58'
+
     Document:
       type: object
       properties:
@@ -1069,6 +1148,7 @@ components:
         date_created:
           type: string
           example: '2016-04-28 08:42:58'
+
     Address:
       type: object
       properties:
@@ -1083,6 +1163,7 @@ components:
         country:
           type: string
           example: 'UK'
+
     Comment:
       type: object
       properties:
@@ -1092,12 +1173,14 @@ components:
         comment:
           type: string
           example: 'I dont like traffic'
+
     Email:
       type: object
       properties:
         email:
           type: string
           example: 'elvin.ali@planninginspectorate.gov.uk'
+
     Filters:
       type: object
       properties:
@@ -1109,6 +1192,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Filter'
+
     Filter:
       type: object
       properties:
@@ -1116,6 +1200,7 @@ components:
           type: string
         count:
           type: number
+
     Representation:
       type: object
       properties:
@@ -1195,6 +1280,7 @@ components:
         Attachments:
           type: string
           example: 'WS010006-000002'
+
     RepresentationListWrapper:
       type: object
       properties:
@@ -1216,6 +1302,7 @@ components:
           example: 1
         filters:
           $ref: '#/components/schemas/RepFilters'
+
     RepFilters:
       type: object
       properties:
@@ -1223,6 +1310,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Filter'
+
     Timetable:
       type: object
       properties:
@@ -1264,6 +1352,7 @@ components:
         sourceSystem:
           type: string
           example: "Horizon"
+
     Timetables:
       type: object
       properties:
@@ -1283,6 +1372,7 @@ components:
         currentPage:
           type: number
           example: 1
+
     SubmissionCreateRequestBody:
       properties:
         file:
@@ -1297,6 +1387,7 @@ components:
         - interestedParty
         - deadline
         - submissionType
+
     SubmissionResponseBody:
       allOf:
         - $ref: '#/components/schemas/SubmissionProperties'
@@ -1325,6 +1416,7 @@ components:
           type: string
           format: date
           example: 2022-08-02 08:24:05
+
     SubmissionProperties:
       type: object
       properties:
@@ -1366,6 +1458,108 @@ components:
           description: Comment text. **Required if submission is a comment**
           maxLength: 65234
           example: This is my representation
+
+    AdviceListWrapper:
+      type: object
+      properties:
+        advice:
+          type: array
+          items:
+            $ref: '#/components/schemas/Advice'
+        totalItems:
+          type: number
+          example: 1
+        itemsPerPage:
+          type: number
+          example: 25
+        totalPages:
+          type: number
+          example: 1
+        currentPage:
+          type: number
+          example: 1
+
+    Advice:
+      type: object
+      properties:
+        adviceID:
+          type: string
+          example: 'XX0123-Advice-00001'
+        enquiryDate:
+          type: string
+          format: date
+          example: '2020-02-19'
+        enquiryMethod:
+          type: string
+          example: 'Email'
+        industrySector:
+         type: string
+         example: 'Energy'
+        caseReference:
+          type: string
+          example: 'EN010009'
+        firstName:
+          type: string
+          example: 'Joe'
+        lastName:
+          type: string
+          example: 'Bloggs'
+        organisation:
+          type: string
+          example: 'The organisation'
+        enquiryDetail:
+          type: string
+          example: 'Do we need more energy'
+        adviceGiven:
+          type: string
+          example: 'Yes we do'
+        respondedBy:
+          type: string
+          example: 'Joe Bloggs'
+        section51Enquiry:
+          type: boolean
+          example: true
+        initiatedDate:
+          type: string
+          format: date
+          example: '2016-04-28'
+        dateEnquiryReceived:
+          type: string
+          format: date-time
+          example: '2016-04-28 08:42:58'
+        dateAdviceGiven:
+          type: string
+          format: date
+          example: '2016-04-28'
+        dateLastModified:
+          type: string
+          format: date-time
+          example: '2016-04-28 08:42:58'
+        dateCreated:
+          type: string
+          format: date-time
+          example: '2016-04-28 08:42:58'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+
+    Attachment:
+     type: object
+     properties:
+       documentDataID:
+         type: string
+         example: 'XX0123-EN024303-00001'
+       documentURI:
+         type: string
+         example: '/pathname/to/document/or/blob/uri'
+       mime:
+         type: string
+         example: 'application/pdf'
+       size:
+         type: number
+         example: 50427
+
     ValidationError:
       type: object
       properties:
@@ -1377,6 +1571,7 @@ components:
           items:
             type: string
             example: Missing property 'x'
+            
     NotFoundError:
       type: object
       properties:
