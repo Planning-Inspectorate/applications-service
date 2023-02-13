@@ -11,16 +11,12 @@ module.exports = {
 		};
 
 		const dbQuery = {
-			// include: [{
-			// 	model: db.Document
-			// }],
 			where,
 			order: [['dateAdviceGiven', 'DESC'], ['adviceID']],
 			offset,
 			limit: itemsPerPage
 		};
 
-		// const queryResult = await db.Advice.findAndCountAll(dbQuery);
 		const { count, rows } = await db.Advice.findandCountAllWithAttachments(dbQuery);
 
 		return {
