@@ -11,6 +11,9 @@ module.exports = {
 		};
 
 		const dbQuery = {
+			// include: [{
+			// 	model: db.Document
+			// }],
 			where,
 			order: [['dateAdviceGiven', 'DESC'], ['adviceID']],
 			offset,
