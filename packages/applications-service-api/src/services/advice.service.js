@@ -12,7 +12,7 @@ module.exports = {
 
 		const dbQuery = {
 			where,
-			order: [['DateAdviceGiven', 'DESC'], ['AdviceID']],
+			order: [['dateAdviceGiven', 'DESC'], ['adviceID']],
 			offset,
 			limit: itemsPerPage
 		};
@@ -21,7 +21,11 @@ module.exports = {
 
 		return {
 			count: queryResult.count,
-			rows: queryResult.rows.map((row) => row.dataValues)
+			rows: queryResult.rows.map((row) =>
+				row.get({
+					plain: true
+				})
+			)
 		};
 	}
 };

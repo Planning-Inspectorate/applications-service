@@ -10,28 +10,43 @@ module.exports = (sequelize, DataTypes) => {
 				primaryKey: true,
 				autoIncrement: true
 			},
-			AdviceID: DataTypes.STRING,
-			// case_reference: DataTypes.STRING,
-			// stage: { type: DataTypes.INTEGER, field: 'Stage' },
-			// type: DataTypes.STRING,
-			// filter_1: DataTypes.STRING,
-			// filter_2: DataTypes.STRING,
-			// category: DataTypes.STRING,
-			// description: DataTypes.TEXT,
-			// size: DataTypes.INTEGER,
-			// mime: DataTypes.STRING,
-			// path: DataTypes.TEXT,
-			// status: DataTypes.STRING,
-			DateAdviceGiven: DataTypes.DATE
-			// deadline_date: DataTypes.DATE,
-			// personal_name: DataTypes.STRING,
-			// representative: DataTypes.STRING,
-			// who_from: DataTypes.STRING,
-			// doc_reference: DataTypes.STRING,
-			// author: DataTypes.STRING,
-			// details: DataTypes.STRING,
-			// last_modified: DataTypes.STRING,
-			// date_created: DataTypes.STRING
+			adviceID: { type: DataTypes.STRING, field: 'AdviceID' },
+			enquiryDate: { type: DataTypes.DATEONLY, field: 'EnquiryDate' },
+			enquiryMethod: { type: DataTypes.STRING, field: 'EnquiryMethod' },
+			industrySector: { type: DataTypes.STRING, field: 'IndustrySector' },
+			caseReference: { type: DataTypes.STRING, field: 'CaseReference' },
+			firstName: { type: DataTypes.STRING, field: 'EnqFirstName' },
+			lastName: { type: DataTypes.STRING, field: 'EnqLastName' },
+			organisation: { type: DataTypes.STRING, field: 'EnquiryOrganisation' },
+			enquiryDetail: { type: DataTypes.STRING, field: 'EnquiryDetail' },
+			adviceGiven: { type: DataTypes.STRING, field: 'AdviceGiven' },
+			respondedBy: { type: DataTypes.STRING, field: 'RespondedBy' },
+			section51Enquiry: {
+				type: DataTypes.BOOLEAN,
+				field: 'Section51Enquiry',
+				get() {
+					return this.getDataValue('section51Enquiry')?.toUpperCase() === 'YES';
+				},
+				set(value) {
+					this.setDataValue('section51Enquiry', value ? 'Yes' : 'No');
+				}
+			},
+			initiatedDate: { type: DataTypes.DATEONLY, field: 'InitiatedDate' },
+			dateEnquiryReceived: { type: DataTypes.DATE, field: 'DateEnquiryReceived' },
+			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' }
+
+			//   dateLastModified:
+			// 	type: string
+			// 	format: date-time
+			// 	example: '2016-04-28 08:42:58'
+			//   dateCreated:
+			// 	type: string
+			// 	format: date-time
+			// 	example: '2016-04-28 08:42:58'
+			//   attachments:
+			// 	type: array
+			// 	items:
+			// 	  $ref: '#/components/schemas/Attachment'
 		},
 		{
 			sequelize,
