@@ -17,11 +17,12 @@ module.exports = {
 			limit: itemsPerPage
 		};
 
-		const queryResult = await db.Advice.findAndCountAll(dbQuery);
+		// const queryResult = await db.Advice.findAndCountAll(dbQuery);
+		const { count, rows } = await db.Advice.findandCountAllWithAttachments(dbQuery);
 
 		return {
-			count: queryResult.count,
-			rows: queryResult.rows.map((row) =>
+			count,
+			rows: rows.map((row) =>
 				row.get({
 					plain: true
 				})
