@@ -1,7 +1,31 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-	class Advice extends Model {}
+	class Advice extends Model {
+		static async findandCountAllWithAttachments(options = {}) {
+			const adviceSql = sequelize.dialect.QueryGenerator.selectQuery(
+				Advice.getTableName(),
+				{
+					attributes: Object.entries(Advice.rawAttributes).map(([key, attr]) => [attr.field, key]),
+					...options
+				},
+				Advice
+			);
+
+			const [count, rows] = await Promise.all([
+				0,
+				sequelize.query(adviceSql, {
+					model: Advice,
+					mapToModel: true
+				})
+			]);
+
+			return {
+				count,
+				rows
+			};
+		}
+	}
 
 	Advice.init(
 		{
