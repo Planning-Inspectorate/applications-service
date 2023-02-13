@@ -1,19 +1,6 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-	class Attachment extends Model {}
-
-	Attachment.init(
-		{
-			dataID: { type: DataTypes.STRING, field: 'dataID' }
-		},
-		{
-			sequelize,
-			modelName: 'Attachment',
-			tableName: 'wp_ipc_documents_api',
-			timestamps: false
-		}
-	);
 	class Advice extends Model {
 		static async findandCountAllWithAttachments(options = {}) {
 			const tableName = Advice.getTableName();
@@ -88,6 +75,12 @@ module.exports = (sequelize, DataTypes) => {
 			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' },
 			dateLastModified: { type: DataTypes.DATE, field: 'DateLastModified' },
 			dateCreated: { type: DataTypes.DATE, field: 'DateCreated' }
+
+			// Attachment props
+			// documentDataID: DataTypes.STRING,
+			// documentURI: DataTypes.STRING,
+			// mime: DataTypes.STRING,
+			// size: DataTypes.STRING
 		},
 		{
 			sequelize,
@@ -105,10 +98,10 @@ function attachmentsJoin(sql) {
 	return sql.replace(
 		'FROM `wp_ipc_advice` AS `Advice`',
 		`FROM (
-			SELECT Advice.* 
+			SELECT DISTINCT Advice.*
 			FROM wp_ipc_advice AS Advice 
-			INNER JOIN wp_ipc_documents_api AS Attachments 
-			ON Advice.Attachments LIKE CONCAT('%', Attachments.dataID, '%')
+			INNER JOIN wp_ipc_documents_api AS Attachment
+			ON Advice.Attachments LIKE CONCAT('%', Attachment.dataID, '%')
 		) as Advice`
 	);
 }
