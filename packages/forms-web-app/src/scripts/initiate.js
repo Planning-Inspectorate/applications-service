@@ -1,5 +1,5 @@
 function initiate() {
-	this.scripts = function (config) {
+	this.scripts = function (config, cspNonce) {
 		if (!Array.isArray(config)) return;
 
 		const configModified = config.map((configItem) => {
@@ -16,6 +16,7 @@ function initiate() {
 			if (!settings || typeof settings !== 'object') return;
 
 			const {
+				nonce = cspNonce,
 				async = false,
 				callback = null,
 				id = null,
@@ -32,6 +33,7 @@ function initiate() {
 			if (id) script.id = id;
 			script.src = src;
 			script.type = type;
+			script.nonce = nonce;
 
 			document.body.appendChild(script);
 		});

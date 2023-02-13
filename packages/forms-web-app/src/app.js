@@ -1,6 +1,5 @@
 const express = require('express');
 const compression = require('compression');
-const lusca = require('lusca');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const nunjucks = require('nunjucks');
@@ -28,6 +27,7 @@ const config = require('./config');
 const logger = require('./lib/logger');
 const routes = require('./routes');
 const { calcMaxFileSizeLimit } = require('./controllers/examination/select-file/utils/helpers');
+const { configureCSP } = require('./csp');
 
 const app = express();
 
@@ -39,6 +39,8 @@ app.use(
 		genReqId: () => uuid.v4()
 	})
 );
+
+if (config.featureFlag.contentSecurityPolicy) configureCSP(app);
 
 const isDev = app.get('env') === 'development';
 
@@ -92,8 +94,6 @@ if (config.server.useSecureSessionCookie) {
 const sessionStoreConfig = configureSessionStore(session);
 
 app.use(compression());
-app.use(lusca.xframe('SAMEORIGIN'));
-app.use(lusca.xssProtection(true));
 app.use(express.json());
 app.use(express.urlencoded(config.applications.urlencoded));
 app.use(

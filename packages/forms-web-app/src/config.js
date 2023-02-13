@@ -48,7 +48,8 @@ module.exports = {
 		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true',
 		allowDocumentLibrary: process.env.FEATURE_ALLOW_DOCUMENT_LIBRARY === 'true',
 		allowExaminationTimetable: process.env.FEATURE_ALLOW_EXAMINATION_TIMETABLE === 'true',
-		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true'
+		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true',
+		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
