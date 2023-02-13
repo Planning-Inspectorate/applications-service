@@ -17,30 +17,31 @@ module.exports = (sequelize, DataTypes) => {
 	class Advice extends Model {
 		static async findandCountAllWithAttachments(options = {}) {
 			const tableName = Advice.getTableName();
+
+			const adviceCountSql = sequelize.dialect.QueryGenerator.selectQuery(
+				tableName,
+				{
+					attributes: [[sequelize.fn('COUNT', sequelize.col('*')), 'count']],
+					...options
+				},
+				Advice
+			);
+			const adviceAndAttachmentsCountSql = attachmentsJoin(adviceCountSql);
+
 			const adviceSql = sequelize.dialect.QueryGenerator.selectQuery(
 				tableName,
 				{
 					attributes: Object.entries(Advice.rawAttributes).map(([key, attr]) => [attr.field, key]),
 					...options
-					// include: [{
-					// 	model: Attachment
-					// }]
 				},
 				Advice
 			);
-
-			const adviceAndAttachmentsSql = adviceSql.replace(
-				'FROM `wp_ipc_advice` AS `Advice`',
-				`FROM (
-					SELECT Advice.* 
-					FROM wp_ipc_advice AS Advice 
-					INNER JOIN ipclive.wp_ipc_documents_api AS Attachments 
-					ON Advice.Attachments LIKE CONCAT('%', Attachments.dataID, '%')
-				) AS Advice`
-			);
+			const adviceAndAttachmentsSql = attachmentsJoin(adviceSql);
 
 			const [count, rows] = await Promise.all([
-				0,
+				sequelize.query(adviceAndAttachmentsCountSql, {
+					type: sequelize.QueryTypes.SELECT
+				}),
 				sequelize.query(adviceAndAttachmentsSql, {
 					model: Advice,
 					mapToModel: true
@@ -48,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
 			]);
 
 			return {
-				count,
+				count: count[0]?.count ?? 0,
 				rows
 			};
 		}
@@ -87,10 +88,6 @@ module.exports = (sequelize, DataTypes) => {
 			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' },
 			dateLastModified: { type: DataTypes.DATE, field: 'DateLastModified' },
 			dateCreated: { type: DataTypes.DATE, field: 'DateCreated' }
-			// attachments: { type: DataTypes.STRING, field: 'Attachments' }
-			// 	type: array
-			// 	items:
-			// 	  $ref: '#/components/schemas/Attachment'
 		},
 		{
 			sequelize,
@@ -100,7 +97,18 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
-	// Advice.hasMany(Attachment, { sourceKey: 'attachments', foreignKey: 'dataID' })
-
 	return Advice;
 };
+
+// This SQL manipulation allows Sequelize to be used with the non-normalised join of Advice to attachments
+function attachmentsJoin(sql) {
+	return sql.replace(
+		'FROM `wp_ipc_advice` AS `Advice`',
+		`FROM (
+			SELECT Advice.* 
+			FROM wp_ipc_advice AS Advice 
+			INNER JOIN wp_ipc_documents_api AS Attachments 
+			ON Advice.Attachments LIKE CONCAT('%', Attachments.dataID, '%')
+		) as Advice`
+	);
+}
