@@ -33,16 +33,10 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			initiatedDate: { type: DataTypes.DATEONLY, field: 'InitiatedDate' },
 			dateEnquiryReceived: { type: DataTypes.DATE, field: 'DateEnquiryReceived' },
-			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' }
+			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' },
+			dateLastModified: { type: DataTypes.DATE, field: 'DateLastModified' },
+			dateCreated: { type: DataTypes.DATE, field: 'DateCreated' }
 
-			//   dateLastModified:
-			// 	type: string
-			// 	format: date-time
-			// 	example: '2016-04-28 08:42:58'
-			//   dateCreated:
-			// 	type: string
-			// 	format: date-time
-			// 	example: '2016-04-28 08:42:58'
 			//   attachments:
 			// 	type: array
 			// 	items:
@@ -51,12 +45,10 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			sequelize,
 			modelName: 'Advice',
-			tableName: 'wp_ipc_advice'
+			tableName: 'wp_ipc_advice',
+			timestamps: false
 		}
 	);
-
-	Advice.removeAttribute('createdAt');
-	Advice.removeAttribute('updatedAt');
 
 	return Advice;
 };
