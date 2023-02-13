@@ -1,30 +1,43 @@
-
-<link href="/public/stylesheets/main.css" media="all" rel="stylesheet" type="text/css" />
+<link href="/public/stylesheets/main.css" media="all" rel="stylesheet" type="text/css"/>
 
 {# <link href="/public/stylesheets/unbranded.css" media="all" rel="stylesheet" type="text/css"/> #}
 
 {% if featureFlag.googleTagManager %}
-  {% if googleTagManagerId and cookies.cookie_policy.usage %}
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{ googleTagManagerId | safe }}');</script>
-    <!-- End Google Tag Manager -->
-  {% endif %}
+	{% if googleTagManagerId and cookies.cookie_policy.usage %}
+		<!-- Google Tag Manager -->
+		<script nonce={{ cspNonce }}>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					'gtm.start':
+						new Date().getTime(), event: 'gtm.js'
+				});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+				j.async = true;
+				j.src =
+					'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, 'script', 'dataLayer', '{{ googleTagManagerId | safe }}');</script>
+		<!-- End Google Tag Manager -->
+	{% endif %}
 {% else %}
-  <script id="gaId" type='text/plain'>{{ googleAnalyticsId }}</script>
+	<script id="gaId" type='text/plain' nonce={{ cspNonce }}>{{ googleAnalyticsId }}</script>
 
-  {% if googleAnalyticsId and cookies.cookie_policy.usage %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    {# <script data-cy="Google Analytics" async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId | safe }}"></script> #}
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+	{% if googleAnalyticsId and cookies.cookie_policy.usage %}
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		{# <script data-cy="Google Analytics" async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId | safe }}"></script> #}
+		<script
+			nonce={{ cspNonce }}>
+			window.dataLayer = window.dataLayer || [];
 
-      gtag('config', '{{ googleAnalyticsId | safe }}');
-    </script>
-  {% endif %}
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+
+			gtag('js', new Date());
+
+			gtag('config', '{{ googleAnalyticsId | safe }}');
+		</script>
+	{% endif %}
 {% endif %}

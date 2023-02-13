@@ -135,101 +135,103 @@
 							Choose files
 						</label>
 					</div>
+				</div>
 
-					<br>
-					<button
-						class="govuk-button"
-						name="continue"
-						value="continue"
-						onclick="handleManualUpload()"
-						data-module="govuk-button"
-					>
-						Continue
-					</button>
-				</form>
+				<br>
+				<button
+					class="govuk-button"
+					name="continue"
+					value="continue"
+					onclick="handleManualUpload()"
+					data-module="govuk-button"
+				>
+					Continue
+				</button>
+			</form>
 
-				<script>
-					const target = document.documentElement;
-					const dropZone = document.querySelector('.dropZone');
-					const fileInput = document.getElementById('file-upload')
+			<script
+				nonce={{ cspNonce }}>
+				const target = document.documentElement;
+				const dropZone = document.querySelector('.dropZone');
+				const fileInput = document.getElementById('file-upload')
 
-					const input = document.createElement("input");
-					input.setAttribute("type", "hidden");
-					input.setAttribute("name", "isJsEnabled");
-					input.setAttribute("value", "true");
+				const input = document.createElement("input");
+				input.setAttribute("type", "hidden");
+				input.setAttribute("name", "isJsEnabled");
+				input.setAttribute("value", "true");
 
-					const handleChange = (e) => {
-						e.preventDefault();
-						fileInput.files = e.target
-							?.files;
-						document
-							.forms["fileUploadForm"]
-							.submit();
-					};
+				const handleChange = (e) => {
+					e.preventDefault();
+					fileInput.files = e.target
+						?.files;
+					document
+						.forms["fileUploadForm"]
+						.submit();
+				};
 
-					const handleDragOver = (e) => {
-						e.preventDefault();
-						dropZone
-							.classList
-							.add('dragging');
-					}
+				const handleDragOver = (e) => {
+					e.preventDefault();
+					dropZone
+						.classList
+						.add('dragging');
+				}
 
-					const handleDragLeave = () => {
-						dropZone
-							.classList
-							.remove('dragging');
-					}
+				const handleDragLeave = () => {
+					dropZone
+						.classList
+						.remove('dragging');
+				}
 
-					const handleManualUpload = () => {
-						document
-							.forms["fileUploadForm"]
-							.appendChild(input);
-						document
-							.forms["fileUploadForm"]
-							.submit();
-					}
+				const handleManualUpload = () => {
+					document
+						.forms["fileUploadForm"]
+						.appendChild(input);
+					document
+						.forms["fileUploadForm"]
+						.submit();
+				}
 
-					const handleDrop = (e) => {
-						e.preventDefault();
-						dropZone
-							.classList
-							.remove('dragging');
-						fileInput.files = e.dataTransfer.files;
-						document
-							.forms["fileUploadForm"]
-							.appendChild(input);
-						document
-							.forms["fileUploadForm"]
-							.submit();
-					}
+				const handleDrop = (e) => {
+					e.preventDefault();
+					dropZone
+						.classList
+						.remove('dragging');
+					fileInput.files = e.dataTransfer.files;
+					document
+						.forms["fileUploadForm"]
+						.appendChild(input);
+					document
+						.forms["fileUploadForm"]
+						.submit();
+				}
 
-					const handleRemoveEventListener = () => {
-						document
-							.body
-							.removeEventListener('change', handleChange);
-						document
-							.body
-							.removeEventListener('dragover', handleDragOver);
-						document
-							.body
-							.removeEventListener('dragleave', handleDragLeave);
-						document
-							.body
-							.removeEventListener('drop', handleDrop);
-						handleRemoveUnload();
-						return
-					}
+				const handleRemoveEventListener = () => {
+					document
+						.body
+						.removeEventListener('change', handleChange);
+					document
+						.body
+						.removeEventListener('dragover', handleDragOver);
+					document
+						.body
+						.removeEventListener('dragleave', handleDragLeave);
+					document
+						.body
+						.removeEventListener('drop', handleDrop);
+					handleRemoveUnload();
+					return
+				}
 
-					function handleRemoveUnload() {
-						window.removeEventListener('unload', handleRemoveEventListener);
-					}
+				function handleRemoveUnload() {
+					window.removeEventListener('unload', handleRemoveEventListener);
+				}
 
-					target.addEventListener('change', handleChange);
-					target.addEventListener('dragover', handleDragOver);
-					target.addEventListener('dragleave', handleDragLeave);
-					target.addEventListener('drop', handleDrop);
-					window.addEventListener('unload', handleRemoveEventListener);
-				</script>
-			</div>
+				target.addEventListener('change', handleChange);
+				target.addEventListener('dragover', handleDragOver);
+				target.addEventListener('dragleave', handleDragLeave);
+				target.addEventListener('drop', handleDrop);
+				window.addEventListener('unload', handleRemoveEventListener);
+			</script>
 		</div>
-	{% endblock %}
+	</div>
+{% endblock %}
