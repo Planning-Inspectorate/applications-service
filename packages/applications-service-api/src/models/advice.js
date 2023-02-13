@@ -75,12 +75,6 @@ module.exports = (sequelize, DataTypes) => {
 			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' },
 			dateLastModified: { type: DataTypes.DATE, field: 'DateLastModified' },
 			dateCreated: { type: DataTypes.DATE, field: 'DateCreated' }
-
-			// Attachment props
-			// documentDataID: DataTypes.STRING,
-			// documentURI: DataTypes.STRING,
-			// mime: DataTypes.STRING,
-			// size: DataTypes.STRING
 		},
 		{
 			sequelize,
