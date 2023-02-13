@@ -1,20 +1,47 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
+	class Attachment extends Model {}
+
+	Attachment.init(
+		{
+			dataID: { type: DataTypes.STRING, field: 'dataID' }
+		},
+		{
+			sequelize,
+			modelName: 'Attachment',
+			tableName: 'wp_ipc_documents_api',
+			timestamps: false
+		}
+	);
 	class Advice extends Model {
 		static async findandCountAllWithAttachments(options = {}) {
+			const tableName = Advice.getTableName();
 			const adviceSql = sequelize.dialect.QueryGenerator.selectQuery(
-				Advice.getTableName(),
+				tableName,
 				{
 					attributes: Object.entries(Advice.rawAttributes).map(([key, attr]) => [attr.field, key]),
 					...options
+					// include: [{
+					// 	model: Attachment
+					// }]
 				},
 				Advice
 			);
 
+			const adviceAndAttachmentsSql = adviceSql.replace(
+				'FROM `wp_ipc_advice` AS `Advice`',
+				`FROM (
+					SELECT Advice.* 
+					FROM wp_ipc_advice AS Advice 
+					INNER JOIN ipclive.wp_ipc_documents_api AS Attachments 
+					ON Advice.Attachments LIKE CONCAT('%', Attachments.dataID, '%')
+				) AS Advice`
+			);
+
 			const [count, rows] = await Promise.all([
 				0,
-				sequelize.query(adviceSql, {
+				sequelize.query(adviceAndAttachmentsSql, {
 					model: Advice,
 					mapToModel: true
 				})
@@ -60,8 +87,7 @@ module.exports = (sequelize, DataTypes) => {
 			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' },
 			dateLastModified: { type: DataTypes.DATE, field: 'DateLastModified' },
 			dateCreated: { type: DataTypes.DATE, field: 'DateCreated' }
-
-			//   attachments:
+			// attachments: { type: DataTypes.STRING, field: 'Attachments' }
 			// 	type: array
 			// 	items:
 			// 	  $ref: '#/components/schemas/Attachment'
@@ -73,6 +99,8 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: false
 		}
 	);
+
+	// Advice.hasMany(Attachment, { sourceKey: 'attachments', foreignKey: 'dataID' })
 
 	return Advice;
 };
