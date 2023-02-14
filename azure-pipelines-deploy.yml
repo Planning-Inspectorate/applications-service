@@ -7,6 +7,10 @@ parameters:
     displayName: Deploy Web
     type: boolean
     default: true
+  - name: deployBackOfficeSubscribers
+    type: boolean
+    displayName: Deploy Back Office Subscriber Functions
+    default: true
   - name: region
     displayName: Region
     type: string
@@ -57,6 +61,16 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
+          - name: Deploy Back Office Subscriber Functions
+            artifact:
+              name: back-office-subscribers
+              sourcePipeline: Applications Service Build
+            condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
+            steps:
+              - template: ../steps/function_app_deploy.yml
+                parameters:
+                  appName: pins-func-applications-service-bo-subscribers-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  resourceGroup: $(resourceGroup)
     region: ${{ parameters.Region }}
     globalVariables:
       - template: azure-pipelines-variables.yml@self

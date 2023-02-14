@@ -12,6 +12,8 @@ local.settings.json
 node_modules
 dist
 
+*.zip
+
 # Azurite artifacts
 __blobstorage__
 __queuestorage__

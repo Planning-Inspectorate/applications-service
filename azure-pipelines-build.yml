@@ -7,6 +7,10 @@ parameters:
     displayName: Build Web
     type: boolean
     default: true
+  - name: buildBackOfficeSubscribers
+    type: boolean
+    displayName: Build Back Office Subscriber Functions
+    default: true
 
 resources:
   repositories:
@@ -48,6 +52,8 @@ extends:
                   path: packages/common
                 - name: web
                   path: packages/forms-web-app
+                - name: back-office-subscribers
+                  path: packages/back-office-subscribers
               stepName: check_files
       - name: Build API
         condition: >-
@@ -103,3 +109,42 @@ extends:
               azurecrName: $(azurecrName)
               dockerfilePath: $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile
               repository: applications-service/forms-web-app
+      - name: Build Back Office Subscriber Functions
+        condition: >-
+          and(
+            succeeded(),
+            or(
+              and(
+                eq(variables['Build.Reason'], 'Manual'),
+                eq(${{ parameters.buildBackOfficeSubscribers }}, 'true')
+              ),
+              and(
+                ne(variables['Build.Reason'], 'Manual'),
+                or(
+                  eq(variables['Build.SourceBranchName'], 'main'),
+                  eq(dependencies.run_linting_and_tests.outputs['check_files.back-office-subscribers'], 'true')
+                )
+              )
+            )
+          )
+        dependsOn:
+          - Run Linting & Tests
+        steps:
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 16
+              script: npm ci --omit=dev --workspace=@pins/back-office-subscribers
+              workingDirectory: $(Build.Repository.LocalPath)
+          - script: mv node_modules/* packages/back-office-subscribers/node_modules
+            workingDirectory: $(Build.Repository.LocalPath)
+            displayName: merge node_modules
+          - task: ArchiveFiles@2
+            displayName: Package files
+            inputs:
+              rootFolderOrFile: $(Build.Repository.LocalPath)/packages/back-office-subscribers
+              includeRootFolder: false
+              archiveFile: $(System.DefaultWorkingDirectory)/functions.zip
+              verbose: true
+          - publish: $(System.DefaultWorkingDirectory)/functions.zip
+            artifact: back-office-subscribers
+            displayName: Publish Functions Artifact
