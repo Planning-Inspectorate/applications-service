@@ -32,13 +32,15 @@ module.exports = {
 				plain: true
 			});
 
-			advice.sttachments = attachments
+			advice.attachments = attachments
 				.filter((attachment) => attachment.adviceID === advice.adviceID)
-				.map((attachment) =>
-					attachment.get({
+				.map((attachment) => {
+					// eslint-disable-next-line no-unused-vars
+					const { adviceID, ...dto } = attachment.get({
 						plain: true
-					})
-				);
+					});
+					return dto;
+				});
 
 			return advice;
 		});
