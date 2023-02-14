@@ -1,7 +1,4 @@
-/* eslint-disable no-underscore-dangle */
-const httpMocks = require('node-mocks-http');
-const { StatusCodes } = require('http-status-codes');
-const { getAdvice } = require('../../../src/controllers/advice');
+const { getAdvice } = require('../../../src/services/advice.service');
 
 const mockAdvice = {
 	adviceID: 'XX0123-Advice-00001',
@@ -56,22 +53,16 @@ jest.mock('../../../src/models', () => {
 });
 
 describe('getAdvice', () => {
-	it('should get all advice from mock with default query params', async () => {
-		const req = httpMocks.createRequest();
-		const res = httpMocks.createResponse();
-		await getAdvice(req, res);
+	it('should get all advice from mock', async () => {
+		const { count, rows } = await getAdvice({
+			itemsPerPage: 25,
+			page: 1
+		});
 
-		const data = res._getData();
-		const { advice, totalItems, itemsPerPage, totalPages, currentPage } = data;
+		expect(count).toBe(1);
 
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(totalItems).toBe(1);
-		expect(itemsPerPage).toBe(25);
-		expect(totalPages).toBe(1);
-		expect(currentPage).toBe(1);
-
-		expect(advice.length).toBe(1);
-		const item = advice[0];
+		expect(rows.length).toBe(1);
+		const item = rows[0];
 		delete item.id;
 		delete item.createdAt;
 		delete item.updatedAt;

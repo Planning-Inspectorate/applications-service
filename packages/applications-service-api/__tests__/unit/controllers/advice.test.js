@@ -35,18 +35,21 @@ const mockAdvice = {
 };
 
 describe('getAdvice', () => {
-	getAdviceMock.mockResolvedValueOnce({
-		count: 1,
-		rows: [mockAdvice]
+	afterEach(() => {
+		jest.resetAllMocks();
 	});
 
 	it('should get all advice from mock with default query params', async () => {
+		getAdviceMock.mockResolvedValue({
+			count: 1,
+			rows: [mockAdvice]
+		});
+
 		const req = httpMocks.createRequest();
 		const res = httpMocks.createResponse();
 		await getAdvice(req, res);
 
 		const data = res._getData();
-		console.log('-------', data);
 		const { advice, totalItems, itemsPerPage, totalPages, currentPage } = data;
 
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
@@ -59,5 +62,28 @@ describe('getAdvice', () => {
 
 		const item = advice[0];
 		expect(item).toEqual(mockAdvice);
+	});
+
+	it('passes request Query params down to service', async () => {
+		getAdviceMock.mockResolvedValue({
+			count: 1,
+			rows: [mockAdvice]
+		});
+
+		const req = httpMocks.createRequest({
+			query: {
+				caseRef: 'EN010116',
+				size: '50',
+				page: '2'
+			}
+		});
+		const res = httpMocks.createResponse();
+		await getAdvice(req, res);
+
+		expect(getAdviceMock).toBeCalledWith({
+			caseReference: 'EN010116',
+			itemsPerPage: 50,
+			page: 2
+		});
 	});
 });
