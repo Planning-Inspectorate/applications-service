@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 			]);
 
 			return {
-				count: count[0]?.count ?? 0,
+				count: count?.[0]?.count ?? 0,
 				rows
 			};
 		}
