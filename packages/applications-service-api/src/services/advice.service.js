@@ -7,7 +7,7 @@ module.exports = {
 		const offset = (requestQuery.page - 1) * itemsPerPage;
 
 		const where = {
-			// case_reference: requestQuery.caseReference
+			...(requestQuery.caseReference ? { caseReference: requestQuery.caseReference } : {})
 		};
 
 		const dbQuery = {
@@ -27,21 +27,25 @@ module.exports = {
 			}
 		});
 
-		console.log(
-			attachments.map((row) =>
-				row.get({
-					plain: true
-				})
-			)
-		);
+		const adviceWithAttachments = rows.map((row) => {
+			const advice = row.get({
+				plain: true
+			});
+
+			advice.sttachments = attachments
+				.filter((attachment) => attachment.adviceID === advice.adviceID)
+				.map((attachment) =>
+					attachment.get({
+						plain: true
+					})
+				);
+
+			return advice;
+		});
 
 		return {
 			count,
-			rows: rows.map((row) =>
-				row.get({
-					plain: true
-				})
-			)
+			rows: adviceWithAttachments
 		};
 	}
 };
