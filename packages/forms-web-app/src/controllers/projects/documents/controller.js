@@ -1,12 +1,13 @@
-const { VIEW } = require('../../../lib/views');
+const logger = require('../../../lib/logger');
 const { pageData } = require('./utils/page-data');
 const { featureToggles } = require('./utils/feature-toggles');
-const logger = require('../../../lib/logger');
 const { getDocuments } = require('./utils/documents/getDocuments');
 const { getFilters } = require('./utils/filters/getFilters');
 const { getPagination, getPaginationUrl } = require('./utils/pagination/pagination');
 const { searchDocuments } = require('./utils/documents/searchDocuments');
 const { getApplicationData } = require('./utils/get-application-data');
+const { isClearAllFiltersDisplayed } = require('./utils/is-clear-all-filters-displayed');
+const { VIEW } = require('../../../lib/views');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
@@ -35,6 +36,7 @@ const getApplicationDocuments = async (req, res) => {
 			...pageFeatureToggles,
 			...pageDataObj,
 			...paginationView,
+			displayClearAllFilters: isClearAllFiltersDisplayed(query, filteredView.activeFilters),
 			filters: filteredView.filters,
 			activeFilters: filteredView.activeFilters,
 			errorSummary: filteredView.datesFilterErrorSummary,

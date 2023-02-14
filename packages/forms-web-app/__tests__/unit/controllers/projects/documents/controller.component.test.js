@@ -169,6 +169,7 @@ describe('#getApplicationDocuments', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/documents', {
 					baseUrl: '/projects/mock-case-ref',
 					caseRef: 'mock-case-ref',
+					displayClearAllFilters: false,
 					errorSummary: null,
 					documents: [
 						{
