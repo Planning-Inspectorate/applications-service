@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
 
 	Attachment.init(
 		{
+			id: {
+				type: DataTypes.INTEGER,
+				primaryKey: true,
+				autoIncrement: true
+			},
 			adviceID: {
 				type: DataTypes.STRING,
 				field: 'AdviceID'
@@ -48,6 +53,8 @@ module.exports = (sequelize, DataTypes) => {
 			timestamps: false
 		}
 	);
+
+	Attachment.removeAttribute('id');
 
 	return Attachment;
 };
