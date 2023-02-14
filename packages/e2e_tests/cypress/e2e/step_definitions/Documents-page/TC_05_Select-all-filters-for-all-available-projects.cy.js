@@ -8,7 +8,7 @@ And('User expands the filter', () => {
 });
 When('The user clicks the  Selects all filters link within the Pre-application filter', () => {
 	cy.get(
-		'#ui-checkbox-accordion__checkboxes-section--stage-1 > .ui-checkbox-accordion__checkboxes-section-switch'
+		':nth-child(1) > .ui-checkbox-accordion__checkboxes-section > .ui-checkbox-accordion__checkboxes-section-switch'
 	).click();
 });
 And('The user clicks the  Selects all filters link within the Developers application stage', () => {

@@ -24,7 +24,7 @@ And('I complete the registration process on behalf of another person, family - o
 	haveYourSay.continueButton();
 	haveYourSay.familyGroupField().type('Charity');
 	haveYourSay.continueButton();
-	checkBox.yesCheckBox(); // Are they 18 or over? Yes
+	cy.clickYesOrNoButton('yes'); // Are they 18 or over? Yes
 	haveYourSay.continueButton();
 	cy.addressFields(); // Address fields
 	haveYourSay.continueButton();

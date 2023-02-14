@@ -14,9 +14,9 @@ module.exports = defineConfig({
 		baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk',
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
-		pageLoadTimeout: 8000,
+		pageLoadTimeout: 10000,
 		env: {
-			commandDelay: 150
+			commandDelay: 300
 		}
 	}
 });

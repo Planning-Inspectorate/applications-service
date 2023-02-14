@@ -21,7 +21,9 @@ class PO_Documents {
 
 	selectAllFilterLink() {
 		return cy
-			.get("div[id='ui-checkbox-accordion__checkboxes-section--stage-1'] button[type='button']")
+			.get(
+				':nth-child(1) > .ui-checkbox-accordion__checkboxes-section > .ui-checkbox-accordion__checkboxes-section-switch'
+			)
 			.click({ force: true });
 	}
 

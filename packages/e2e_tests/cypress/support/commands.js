@@ -1,3 +1,6 @@
+import { clickYesOrNoButton } from '../support/customCommands/yesNoCheckBox';
+Cypress.Commands.add('clickYesOrNoButton', clickYesOrNoButton);
+
 Cypress.Commands.add('addressFields', () => {
 	cy.get('#line1').type('45');
 	cy.get('#line2').type('Moss Grange');
