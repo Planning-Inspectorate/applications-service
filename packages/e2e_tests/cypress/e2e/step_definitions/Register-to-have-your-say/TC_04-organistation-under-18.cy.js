@@ -13,7 +13,7 @@ And(
 	() => {
 		haveYourSay.fullNameField().type('John Doe');
 		haveYourSay.continueButton();
-		checkBox.noCheckBox(); //Are you 18 or over? No
+		cy.clickYesOrNoButton('no'); //Are you 18 or over? No
 		haveYourSay.continueButton();
 		haveYourSay.organisationNameField().type('Charity');
 		haveYourSay.continueButton();

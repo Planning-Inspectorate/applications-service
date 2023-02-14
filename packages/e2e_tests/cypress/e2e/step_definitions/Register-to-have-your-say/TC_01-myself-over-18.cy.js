@@ -1,15 +1,19 @@
+///<reference types ="cypress" />
 import { Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_HaveYourSay from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
 import PO_CheckBox from '../../../pageObject/Register-to-have-your-say/PO_CheckBox';
 const haveYourSay = new PO_HaveYourSay();
 const checkBox = new PO_CheckBox();
 
-And('The user has completed the have your say journey', () => {
+And('I selects checkbox for myself - over 18', () => {
 	checkBox.mySelfCheckBox(); //Who are you registering for? Myself
 	haveYourSay.continueButton();
+});
+
+And('I complete the registration process as myself - over 18', () => {
 	haveYourSay.fullNameField().type('John Doe');
 	haveYourSay.continueButton();
-	checkBox.yesCheckBox(); //Are you 18 or over? Yes
+	cy.clickYesOrNoButton('yes'); //Are you 18 or over? Yes
 	haveYourSay.continueButton();
 	haveYourSay.emailField().type('john-doe@aol.co.uk');
 	haveYourSay.continueButton();
@@ -23,13 +27,10 @@ And('The user has completed the have your say journey', () => {
 	haveYourSay.acceptRegister();
 });
 
-Then('User reports an abuse', () => {
-	cy.contains('Tell us what you thought about this service').click();
-	cy.get('.office-form-notice-report').click();
-	cy.get('#Phishing').click();
-	cy.get('.office-form-reportabuse-input').type(
-		'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
-	);
-	cy.get('.button-content').click();
-	cy.get('.thank-you-page-container').should('be.visible', 'Your report was submitted.');
-});
+Then(
+	'I sucessfully complete the registration process for myself - over 18 {string}',
+	(successMessage) => {
+		haveYourSay.regComplete().should('be.visible', successMessage);
+		cy.clearCookies();
+	}
+);

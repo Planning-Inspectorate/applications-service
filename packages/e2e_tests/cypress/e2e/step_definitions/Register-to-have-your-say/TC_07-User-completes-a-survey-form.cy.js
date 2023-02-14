@@ -9,7 +9,7 @@ And('The user has completed the have your say journey', () => {
 	haveYourSay.continueButton();
 	haveYourSay.fullNameField().type('John Doe');
 	haveYourSay.continueButton();
-	checkBox.yesCheckBox(); //Are you 18 or over? Yes
+	cy.clickYesOrNoButton('yes'); //Are you 18 or over? Yes
 	haveYourSay.continueButton();
 	haveYourSay.emailField().type('john-doe@aol.co.uk');
 	haveYourSay.continueButton();
