@@ -7,12 +7,8 @@ class PO_Documents {
 		return cy.get("a[href='/projects/EN010021/documents']").click();
 	}
 
-	preAppFilter() {
-		return cy
-			.get(
-				':nth-child(1) > .ui-checkbox-accordion__section-control > .ui-checkbox-accordion__section-control-title'
-			)
-			.click();
+	allFilters() {
+		return cy.get('.ui-checkbox-accordion__section-control-title');
 	} //  the Pre-application filter
 
 	showAllFilterLink() {
@@ -40,7 +36,7 @@ class PO_Documents {
 	}
 
 	acceptanceCheckBox_1() {
-		return cy.get('#stage-2-2').check(); // Acceptance checkbox
+		return cy.get('#stage-2').check(); // Acceptance checkbox
 	}
 
 	preExamCheckBox_1() {
@@ -61,6 +57,10 @@ class PO_Documents {
 
 	documentsVisible() {
 		return cy.get('.section-results__result-link'); // Documents present
+	}
+
+	filterResultsIcon() {
+		return cy.get('.ui-tag-link-list__caption');
 	}
 }
 

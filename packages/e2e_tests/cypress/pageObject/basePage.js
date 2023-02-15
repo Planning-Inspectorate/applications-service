@@ -1,5 +1,1 @@
-export class BasePage {
-	hello() {
-		console.log('hello');
-	}
-}
+export class BasePage {}

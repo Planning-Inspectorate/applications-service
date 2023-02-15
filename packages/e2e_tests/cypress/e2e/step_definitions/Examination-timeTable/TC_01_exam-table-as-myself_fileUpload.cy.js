@@ -21,6 +21,7 @@ Then('I complete the submission process as myself', () => {
 	cy.continueButton();
 	examTimetable.fileUploadButton().attachFile('Soap Opera Testing.pdf'); // Upload file
 	examTimetable.fileUploadButton_2();
+	cy.continueButton();
 	examTimetable.fileContentCheckBoxYes();
 	cy.continueButton();
 	cy.continueButton();

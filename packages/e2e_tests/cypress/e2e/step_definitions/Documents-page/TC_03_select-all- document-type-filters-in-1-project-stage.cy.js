@@ -8,8 +8,8 @@ And('User selects the Pre-application stage Filter', () => {
 });
 
 When('the user clicks the  Select all filters link within the Pre-application filter', () => {
-	documents.showAllFilterLink();
-	documents.selectAllFilterLink();
+	documents.preAppFilterCheckBox_1();
+	// documents.selectAllFilterLink();
 });
 And('User clicks Apply filters', () => {
 	documents.applyFilterButton();

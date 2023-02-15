@@ -10,7 +10,7 @@ Cypress.Commands.add('addressFields', () => {
 });
 
 Cypress.Commands.add('continueButton', () => {
-	cy.get('[data-cy="button-submit-and-continue"]').click();
+	cy.get('form > button.govuk-button').click();
 });
 
 import 'cypress-file-upload';

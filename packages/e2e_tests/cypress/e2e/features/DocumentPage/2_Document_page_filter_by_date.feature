@@ -33,7 +33,14 @@ Feature: As a user I want to be able to filter documents by date published
         Then The user is presented with an error "The from date must include month"
 
 
-    Scenario: 6-Incomplete information - Missing Month - To published box
+    Scenario: 6-Incomplete information - Missing Month - 'To' published box
         When The user completes only to day and year "6" "2020" into the published box
         And The user is presented with an error message
 
+
+    Scenario: 7-User completes the 'From' and 'To' published box
+        When The user enters a date into the from published box "17" "10" "2019"
+        And  The user completes a date into the to published box "2" "11" "2020"
+        And Users clicks apply filter
+        Then A filter results section is displayed with the from and to filtered results
+        And A list of documents that were published from 17 10 2019 until the current date are displayed

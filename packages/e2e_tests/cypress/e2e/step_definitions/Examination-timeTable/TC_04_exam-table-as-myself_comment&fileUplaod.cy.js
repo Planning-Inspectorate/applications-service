@@ -25,6 +25,7 @@ Then('I complete the submission process as myself with both comments and file up
 	cy.continueButton();
 	examTimetable.fileUploadButton().attachFile('Soap Opera Testing.pdf'); // Upload file
 	examTimetable.fileUploadButton_2();
+	cy.get('#continue-form-button').click();
 	examTimetable.persoanlInfoCheckBoxNo();
 	cy.continueButton();
 	cy.continueButton();
