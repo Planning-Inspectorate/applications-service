@@ -9,17 +9,14 @@ const examTimetable = new PO_ExaminationTimetable();
 
 Given('I navigate to the submission start page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
-	examTimetable.acceptCookiesButton();
 	haveYourSay.clickOnHerf();
 	examTimetable.timeTableLink(); //TimeTable link
-	examTimetable.showAllsections();
 	examTimetable.makeSubmissionButton(); //Start the submission
 	cy.url().should('include', 'examination/have-your-say-during-examination'); // Verify user is on submission page
 });
 
 Given('I navigate to the registration start page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
-	haveYourSay.acceptCookiesButton();
 	haveYourSay.clickOnHerf();
 	haveYourSay.registerButton(); // Register to have your say - Start page
 	cy.url().should('include', 'register-have-your-say/EN010118'); // Verify user is on have your say page

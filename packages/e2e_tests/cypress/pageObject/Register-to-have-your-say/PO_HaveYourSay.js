@@ -1,6 +1,6 @@
 class PO_HaveYourSay {
 	acceptCookiesButton() {
-		return cy.get('[data-cy="cookie-banner-accept-analytics-cookies"]').click();
+		return cy.get("a[data-cy='cookie-banner-view-cookies']").click();
 	}
 
 	clickOnHerf() {

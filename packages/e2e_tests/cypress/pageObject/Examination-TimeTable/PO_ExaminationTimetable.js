@@ -93,7 +93,7 @@ class PO_ExaminationTimetable {
 		return cy.get('.moj-multi-file-upload__dropzone > .govuk-button').click(); // Upload files button
 	}
 	fileUploadButton_2() {
-		return cy.get('#file-upload-js-content > button.govuk-button').click();
+		return cy.get('.moj-multi-file-upload__dropzone > .govuk-button').click();
 	}
 	persoanlInfoCheckBoxYes() {
 		return cy.get('#examination-personal-information-comment-files').click(); // Do your comment and files contain personal information? Yes

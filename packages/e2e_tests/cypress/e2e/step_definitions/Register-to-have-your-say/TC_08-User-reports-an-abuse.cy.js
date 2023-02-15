@@ -1,3 +1,4 @@
+///<reference types ="cypress"/>
 import { Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_HaveYourSay from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
 import PO_CheckBox from '../../../pageObject/Register-to-have-your-say/PO_CheckBox';
@@ -31,10 +32,5 @@ Then('User reports an abuse', () => {
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 	);
 	cy.get('.button-content').click();
-	//cy.get('.thank-you-page-container').should('be.visible', 'Your report was submitted.');
-	cy.get('.thank-you-page-container')
-		.invoke('text')
-		.then((text) => {
-			expect(text).to.equal('Your report was submitted.');
-		});
+	cy.get('.thank-you-page-container').should('have.text', 'Your report was submitted.');
 });
