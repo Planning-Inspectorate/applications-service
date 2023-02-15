@@ -1539,6 +1539,10 @@ components:
           type: string
           format: date-time
           example: '2016-04-28 08:42:58'
+
+    AdviceAttachments:
+      type: object
+      properties:
         attachments:
           type: array
           items:
