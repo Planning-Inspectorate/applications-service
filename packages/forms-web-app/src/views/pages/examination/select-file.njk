@@ -125,7 +125,6 @@
 							multiple
 							accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
 							name="documents"
-							onchange="handleManualUpload()"
 						>
 						<p>Drag and drop files here or</p>
 						<label
@@ -139,10 +138,10 @@
 
 				<br>
 				<button
+					id="continue-form-button"
 					class="govuk-button"
 					name="continue"
 					value="continue"
-					onclick="handleManualUpload()"
 					data-module="govuk-button"
 				>
 					Continue
@@ -218,6 +217,9 @@
 					document
 						.body
 						.removeEventListener('drop', handleDrop);
+					document
+						.body
+						.removeEventListener('click', handleManualUpload);
 					handleRemoveUnload();
 					return
 				}
