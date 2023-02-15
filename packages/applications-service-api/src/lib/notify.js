@@ -23,7 +23,8 @@ const sendIPRegistrationConfirmationEmailToIP = async (details) => {
 				interested_party_name: details.ipName,
 				interested_party_ref: details.ipRef,
 				preliminary_meeting_url: config.services.notify.preliminaryMeetingUrl,
-				having_your_say_url: config.services.notify.havingYourSayUrl
+				having_your_say_url: config.services.notify.havingYourSayUrl,
+				project_email: details.projectEmail
 			})
 			.setReference(details.ipRef)
 			.sendEmail();
@@ -67,7 +68,7 @@ const sendSubmissionNotification = async (details) => {
 		})
 		.setReference(`Submission ${details.submissionId}`)
 		.sendEmail();
-}
+};
 
 module.exports = {
 	sendIPRegistrationConfirmationEmailToIP,

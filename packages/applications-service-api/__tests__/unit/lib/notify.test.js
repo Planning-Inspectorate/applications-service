@@ -33,7 +33,8 @@ describe('notify lib', () => {
 				email: 'elvin.ali@planninginspectorate.gov.uk',
 				projectName: 'St James Barton Giant Wind Turbine',
 				ipName: 'David White',
-				ipRef: '30000120'
+				ipRef: '30000120',
+				projectEmail: 'david.white@pins.gsi.gov.uk'
 			};
 			await sendIPRegistrationConfirmationEmailToIP(details);
 
@@ -50,7 +51,8 @@ describe('notify lib', () => {
 				interested_party_name: details.ipName,
 				interested_party_ref: details.ipRef,
 				preliminary_meeting_url: 'https://applications-service-web-app.azurewebsites.net/',
-				having_your_say_url: 'https://applications-service-web-app.azurewebsites.net/'
+				having_your_say_url: 'https://applications-service-web-app.azurewebsites.net/',
+				project_email: details.projectEmail
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
 			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
