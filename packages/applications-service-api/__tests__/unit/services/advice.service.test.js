@@ -1,3 +1,5 @@
+const SequelizeMock = require('sequelize-mock');
+
 const { getAdvice } = require('../../../src/services/advice.service');
 
 const mockAdvice = {
@@ -20,40 +22,23 @@ const mockAdvice = {
 	dateCreated: '2016-04-28 08:42:58'
 };
 
-const mockAttachment = {
-	documentDataID: 'XX0123-EN024303-00001',
-	documentURI: '/pathname/to/document/or/blob/uri',
-	mime: 'application/pdf',
-	size: 50427
-};
+const dbMock = new SequelizeMock();
+const Advice = dbMock.define('Advice');
 
-jest.mock('../../../src/models', () => {
-	// eslint-disable-next-line global-require
-	const SequelizeMock = require('sequelize-mock');
-	const dbMock = new SequelizeMock();
-	const Advice = dbMock.define('Advice');
-	const Attachment = dbMock.define('Attachment');
-
-	Advice.findandCountAllWithAttachments = async () => {
-		return {
-			count: 1,
-			rows: [Advice.build({ ...mockAdvice })]
-		};
-	};
-
-	Attachment.findAllAttachments = async () => {
-		return [Attachment.build({ ...mockAttachment, adviceID: 'XX0123-Advice-00001' })];
-	};
-
-	const db = {
-		Advice,
-		Attachment
-	};
-	return db;
-});
+const mockFindAndCountAll = jest.fn();
+jest.mock('../../../src/models', () => ({
+	Advice: {
+		findAndCountAll: (query) => mockFindAndCountAll(query)
+	}
+}));
 
 describe('getAdvice', () => {
 	it('should get all advice from mock', async () => {
+		mockFindAndCountAll.mockResolvedValueOnce({
+			count: 1,
+			rows: [Advice.build({ ...mockAdvice })]
+		});
+
 		const { count, rows } = await getAdvice({
 			itemsPerPage: 25,
 			page: 1
@@ -66,14 +51,9 @@ describe('getAdvice', () => {
 		delete item.id;
 		delete item.createdAt;
 		delete item.updatedAt;
-		const itemAttachment = item.attachments[0];
-		delete itemAttachment.id;
-		delete itemAttachment.createdAt;
-		delete itemAttachment.updatedAt;
 
 		expect(item).toEqual({
-			...mockAdvice,
-			attachments: [{ ...mockAttachment }]
+			...mockAdvice
 		});
 	});
 });
