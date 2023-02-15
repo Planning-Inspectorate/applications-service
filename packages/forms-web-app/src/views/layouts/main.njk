@@ -97,8 +97,11 @@
 
 			{% block bodyEnd %}
 				{% block script %}{% endblock %}
-				
-				<script nonce={{ cspNonce }}>
+
+				<script
+					{% if cspNonce %}
+				nonce={{ cspNonce }}
+					{% endif %}>
 					const link = document.getElementById('back-link')
 
 					function handleLink() {

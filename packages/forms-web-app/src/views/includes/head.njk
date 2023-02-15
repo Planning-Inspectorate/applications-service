@@ -5,7 +5,10 @@
 {% if featureFlag.googleTagManager %}
 	{% if googleTagManagerId and cookies.cookie_policy.usage %}
 		<!-- Google Tag Manager -->
-		<script nonce={{ cspNonce }}>
+		<script
+			{% if cspNonce %}
+		nonce={{ cspNonce }}
+			{% endif %}>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
 				w[l].push({
@@ -22,13 +25,18 @@
 		<!-- End Google Tag Manager -->
 	{% endif %}
 {% else %}
-	<script id="gaId" type='text/plain' nonce={{ cspNonce }}>{{ googleAnalyticsId }}</script>
+	<script id="gaId" type='text/plain'
+		{% if cspNonce %}
+	nonce={{ cspNonce }}
+		{% endif %}>{{ googleAnalyticsId }}</script>
 
 	{% if googleAnalyticsId and cookies.cookie_policy.usage %}
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		{# <script data-cy="Google Analytics" async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId | safe }}"></script> #}
 		<script
-			nonce={{ cspNonce }}>
+			{% if cspNonce %}
+		nonce={{ cspNonce }}
+			{% endif %}>
 			window.dataLayer = window.dataLayer || [];
 
 			function gtag() {

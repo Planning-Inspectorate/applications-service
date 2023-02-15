@@ -149,7 +149,10 @@
 			</form>
 
 			<script
-				nonce={{ cspNonce }}>
+				{% if cspNonce %}
+				nonce={{ cspNonce }}
+				{% endif %}
+			>
 				const target = document.documentElement;
 				const dropZone = document.querySelector('.dropZone');
 				const fileInput = document.getElementById('file-upload')

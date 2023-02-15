@@ -1,11 +1,15 @@
 <script
+	{% if cspNonce %}
 	nonce={{ cspNonce }}
+		{% endif %}
 >
 	var initiateScriptsConfig = {{ initiateScriptsConfig | dump | safe }}</script>
 
 {% if initiateScriptsConfig | length %}
 	<script
+		{% if cspNonce %}
 		nonce={{ cspNonce }}
+		{% endif %}
 		defer="true"
 		id="triggerMe"
 		src="/public/scripts/initiate.script.js"
@@ -14,7 +18,9 @@
 
 	</script>
 
-	<script nonce={{ cspNonce }}>
+	<script {% if cspNonce %}
+	nonce={{ cspNonce }}
+		{% endif %}>
 		document.querySelector('#triggerMe').addEventListener('load', function () {
 			var initiateSite = new appScripts.initiate();
 			initiateSite.scripts(initiateScriptsConfig, "{{ cspNonce }}");
