@@ -27,12 +27,21 @@ const updateInterestedPartyComments = async (ID, comments, mode) => {
 	});
 
 	const { behalf } = party.dataValues;
-	const { ProjectName: projectName, DateOfRelevantRepresentationClose: repCloseDate } =
-		project.dataValues;
+	const {
+		ProjectName: projectName,
+		DateOfRelevantRepresentationClose: repCloseDate,
+		ProjectEmailAddress: projectEmail
+	} = project.dataValues;
 
 	const { email, ipName, ipRef } = IPFactory.createIP(behalf).getEmailingDetails(party.dataValues);
 	if (mode && mode.toUpperCase() === MODE_FINAL) {
-		await notify.sendIPRegistrationConfirmationEmailToIP({ email, projectName, ipName, ipRef });
+		await notify.sendIPRegistrationConfirmationEmailToIP({
+			email,
+			projectName,
+			ipName,
+			ipRef,
+			projectEmail
+		});
 		await db.InterestedParty.update({ emailed: new Date() }, { where: { ID } });
 	} else if (mode && mode.toUpperCase() === MODE_DRAFT) {
 		const token = crypto.encrypt(ID);
