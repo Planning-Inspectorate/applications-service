@@ -33,7 +33,7 @@ function initiate() {
 			if (id) script.id = id;
 			script.src = src;
 			script.type = type;
-			script.nonce = nonce;
+			if (nonce) script.nonce = nonce;
 
 			document.body.appendChild(script);
 		});
