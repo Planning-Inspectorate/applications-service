@@ -4,24 +4,20 @@ import PO_Documents from '../../../pageObject/Documents/PO_Documents';
 const documents = new PO_Documents();
 
 And('User selects the Pre-application stage Filter', () => {
-	documents.preAppFilter();
+	documents.filterTitleLink().eq(0).click();
 });
 
 When('User selects 2 document type checkbox within the Pre-application filter', () => {
-	documents.preAppFilterCheckBox_1();
-	documents.preAppFilterCheckBox_2();
+	cy.get('#stage-1').click();
+	cy.get('#stage-1-2').click();
 });
 And('User clicks Apply filters', () => {
 	documents.applyFilterButton();
 });
 
 And('A Filtered results section is displayed with the project stage Pre-application', function () {
-	Cypress._.times(41, () => {
-		documents.preAppFilteText().should('be.visible', 'Pre-application'); // 6 applicaion types are shown
-	});
+	documents.filterResultsCaption().should('contain', 'Pre-application');
 });
 And('The document type is displayed against the project stage', () => {
-	Cypress._.times(41, () => {
-		documents.documentsVisible().should('be.visible'); // 6 Document are displayed
-	});
+	documents.documentsListVisible().should('be.visible');
 });

@@ -5,11 +5,11 @@ const documents = new PO_Documents();
 const dayjs = require('dayjs');
 
 And('User selects the Pre-application stage Filter', () => {
-	documents.preAppFilter();
+	documents.showHideAllFilters();
 });
 
 When('User selects 1 document type checkbox within the Pre-application filter', () => {
-	documents.preAppFilterCheckBox_1();
+	documents.selectAllFiters().eq(0).click();
 });
 And('User clicks Apply filters', () => {
 	documents.applyFilterButton();

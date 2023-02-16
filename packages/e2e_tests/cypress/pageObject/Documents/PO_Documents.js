@@ -4,63 +4,39 @@ class PO_Documents {
 	}
 
 	documentsLink() {
-		return cy.get("a[href='/projects/EN010021/documents']").click();
+		return cy.get("a[href='/projects/EN010021/documents']").click(); //
 	}
 
-	allFilters() {
-		return cy.get('.ui-checkbox-accordion__section-control-title');
-	} //  the Pre-application filter
-
-	showAllFilterLink() {
-		return cy.get('#show-hide-all-filters').click({ force: true });
+	showHideAllFilters() {
+		return cy.get('#show-hide-all-filters').click(); // Show & Hide all sections
 	}
 
-	selectAllFilterLink() {
-		return cy
-			.get(
-				':nth-child(1) > .ui-checkbox-accordion__checkboxes-section > .ui-checkbox-accordion__checkboxes-section-switch'
-			)
-			.click({ force: true });
+	selectAllFiters() {
+		return cy.get('.ui-checkbox-accordion__checkboxes-section-switch'); // Select all filters link
 	}
 
-	preAppFilterCheckBox_1() {
-		return cy.get('#stage-1').check(); // Filter checkbox
+	filterResultsCaption() {
+		return cy.get('.ui-tag-link-list__caption'); // Filter results caption
 	}
 
-	preAppFilterCheckBox_2() {
-		return cy.get('#stage-1-2').check(); // Filter checkbox
+	filterTitleLink() {
+		return cy.get(
+			'.ui-checkbox-accordion__section-control > .ui-checkbox-accordion__section-control-title'
+		); // Section title link
 	}
 
-	devAppCheckBox_1() {
-		return cy.get("#category-Developer's Application-3").check(); //Developer's Application checkbox
-	}
-
-	acceptanceCheckBox_1() {
-		return cy.get('#stage-2').check(); // Acceptance checkbox
-	}
-
-	preExamCheckBox_1() {
-		return cy.get('#stage-3').check(); // Pre-examination checkbox
-	}
-
-	examCheckBox_1() {
-		return cy.get('#stage-4').check(); // Examination checkbox
+	sectionCheckBoxes() {
+		return cy.get("div[class='govuk-checkboxes__item']"); // Section checkboxes
 	}
 
 	applyFilterButton() {
 		return cy.get('[data-cy="apply-filter-button"]').click(); // Apply filter button
 	}
 
-	preAppFilteText() {
-		return cy.get('[data-cy="published-stage"]'); // "Pre-application" text is present
-	}
-
-	documentsVisible() {
-		return cy.get('.section-results__result-link'); // Documents present
-	}
-
-	filterResultsIcon() {
-		return cy.get('.ui-tag-link-list__caption');
+	documentsListVisible() {
+		return cy.get(
+			'.section-results__result-meta-data > :nth-child(1) > [data-cy="published-date"]'
+		);
 	}
 }
 

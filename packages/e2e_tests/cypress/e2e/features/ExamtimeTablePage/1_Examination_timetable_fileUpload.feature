@@ -5,7 +5,7 @@ Feature: User Completes submission of examination timetable for a national infra
 
     Background: User Starts submission of examination timetable process
         Given I navigate to the submission start page
-        
+
 
     Scenario: 1 - User completes submission of examination timetable process as myself
         Then I complete the submission process as myself
@@ -18,3 +18,7 @@ Feature: User Completes submission of examination timetable for a national infra
     Scenario: 3 - User completes submission of examination timetable process as an organisation
         Then I complete the submission process as an organisation
         Then I sucessfully complete the submission as an organisation "Submission Complete"
+
+    Scenario: 4 - User uploads a none accepted file
+        Then I upload a unsupported file as myself
+        Then An error message is displayed
