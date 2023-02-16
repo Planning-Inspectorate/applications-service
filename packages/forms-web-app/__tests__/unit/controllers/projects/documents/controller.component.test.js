@@ -160,66 +160,6 @@ describe('#getApplicationDocuments', () => {
 								isOpen: false,
 								title: 'Date published',
 								type: 'date'
-								title: 'mock label (1)',
-								type: 'checkbox'
-							},
-							{
-								errorSummary: null,
-								formGroups: [
-									{
-										errorMessage: null,
-										errorMessageTitle: 'from',
-										id: 'docments-page-date-from-form-group',
-										inputNamePrefix: 'date-from',
-										inputs: [
-											{
-												classes: 'govuk-input--width-2',
-												name: 'day',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-2',
-												name: 'month',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-4',
-												name: 'year',
-												value: ''
-											}
-										],
-										name: 'date-from',
-										title: 'From'
-									},
-									{
-										errorMessage: null,
-										errorMessageTitle: 'to',
-										id: 'docments-page-date-to-form-group',
-										inputNamePrefix: 'date-to',
-										inputs: [
-											{
-												classes: 'govuk-input--width-2',
-												name: 'day',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-2',
-												name: 'month',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-4',
-												name: 'year',
-												value: ''
-											}
-										],
-										name: 'date-to',
-										title: 'To'
-									}
-								],
-								isOpen: false,
-								title: 'Date published',
-								type: 'date'
 							}
 						]
 					})
@@ -229,6 +169,7 @@ describe('#getApplicationDocuments', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/documents', {
 					baseUrl: '/projects/mock-case-ref',
 					caseRef: 'mock-case-ref',
+					displayClearAllFilters: false,
 					errorSummary: null,
 					documents: [
 						{
