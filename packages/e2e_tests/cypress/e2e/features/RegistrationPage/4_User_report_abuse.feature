@@ -5,5 +5,5 @@ Feature: User reports an abuse
         Given I navigate to the registration start page
 
     Scenario: User reports an abuse
-       And The user has completed the have your say journey
+       And The user selects feedback link
        Then User reports an abuse

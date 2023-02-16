@@ -4,26 +4,23 @@ import PO_Documents from '../../../pageObject/Documents/PO_Documents';
 const documents = new PO_Documents();
 
 When('The user selects 1 document type checkbox within the Pre-application stage', () => {
-	documents.allFilters().eq(0).click();
-	documents.preAppFilterCheckBox_1();
+	documents.showHideAllFilters();
+	documents.sectionCheckBoxes().eq(0).click();
 });
 And('The user selects 1 document type checkbox within the Acceptance stage', () => {
-	documents.allFilters().eq(3).click();
-	//documents.acceptanceCheckBox_1()
+	documents.sectionCheckBoxes().eq(1).click();
 });
 And('The user selects 1 document type checkbox within the Pre-examination stage', () => {
-	documents.allFilters().eq(4).click();
-	documents.preExamCheckBox_1();
+	documents.sectionCheckBoxes().eq(12).click();
 });
 And('The user selects 1 document type checkbox within the Examination stage', () => {
-	documents.allFilters().eq(5).click();
-	documents.examCheckBox_1();
+	documents.sectionCheckBoxes().eq(23).click();
 });
 And('User clicks Apply filters', () => {
 	documents.applyFilterButton();
 });
 And('Filtered results section is displayed with the project stages', () => {
-	documents.filterResultsIcon().eq(0).should('contain', 'Pre-application');
-	documents.filterResultsIcon().eq(1).should('contain', 'Pre-examination');
-	documents.filterResultsIcon().eq(2).should('contain', 'Examination');
+	documents.filterResultsCaption().eq(0).should('contain', 'Pre-application');
+	documents.filterResultsCaption().eq(1).should('contain', 'Acceptance');
+	documents.filterResultsCaption().eq(2).should('contain', 'Pre-examination');
 });
