@@ -909,6 +909,12 @@ components:
           type: integer
           description: Page number
           example: 1
+        size:
+          type: integer
+          description: Page Size (items per page)
+          example: 25
+          minimum: 1
+          maximum: 100
         filters:
           type: array
           items:
