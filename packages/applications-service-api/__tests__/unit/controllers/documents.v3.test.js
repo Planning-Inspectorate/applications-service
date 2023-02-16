@@ -138,5 +138,52 @@ describe('documentsV3 controller', () => {
 		};
 
 		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			documents: RESPONSE_DOCUMENTS,
+			filters: RESPONSE_FILTERS,
+			totalItems: 4,
+			itemsPerPage: 100,
+			totalPages: 1,
+			currentPage: 2
+		});
+	});
+
+	it('calculates the correct pagination', async () => {
+		fetchDocumentsMock.mockResolvedValueOnce({
+			count: 4,
+			rows: DB_DOCUMENTS
+		});
+		getAvailableFiltersMock.mockResolvedValueOnce(DB_FILTERS);
+
+		await getDocuments(
+			{
+				body: {
+					caseReference: 'EN000001',
+					page: 2,
+					size: 2
+				}
+			},
+			res
+		);
+
+		const expectedFilters = {
+			caseReference: 'EN000001',
+			page: 2,
+			itemsPerPage: 2
+		};
+
+		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			documents: RESPONSE_DOCUMENTS,
+			filters: RESPONSE_FILTERS,
+			totalItems: 4,
+			itemsPerPage: 2,
+			totalPages: 2,
+			currentPage: 2
+		});
 	});
 });
