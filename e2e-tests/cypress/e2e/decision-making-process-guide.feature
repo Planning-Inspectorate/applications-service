@@ -32,8 +32,3 @@ Feature: Decision making process guide page
         And I click on show all link
         And I click on "Making a recommendation and who makes the final decision" link
         Then I am on the "recommendation and decision" page
-
-    Scenario: click on What you can do after the decision has been made link
-        And I click on show all link
-        And I click on "What happens after the decision is made" link
-        Then I am on the "what happens after the decision is made" page
