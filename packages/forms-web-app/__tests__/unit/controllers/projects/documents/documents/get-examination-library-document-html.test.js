@@ -26,7 +26,7 @@ describe('controllers/projects/documents/utils/documents/get-examination-library
 				});
 				it('should return the examination library document html', () => {
 					expect(result).toEqual(
-						'<p><a href="mock/path">View examination library (PDF, 100Bytes)</a> containing document reference numbers</p>'
+						'<p><a class="govuk-link" href="mock/path">View examination library (PDF, 100Bytes)</a> containing document reference numbers</p>'
 					);
 				});
 			});

@@ -184,7 +184,7 @@ describe('#getApplicationDocuments', () => {
 						}
 					],
 					examinationLibraryDocumentHtml:
-						'<p><a href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers</p>',
+						'<p><a class="govuk-link" href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers</p>',
 					filters: [
 						{
 							idPrefix: 'mock filter-1',

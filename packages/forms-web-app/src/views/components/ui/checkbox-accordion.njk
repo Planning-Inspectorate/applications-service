@@ -2,94 +2,122 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
-{% macro uiCheckboxAccordion(title, sections) %}
-	<div class="ui-checkbox-accordion">
-		<h3 class="ui-checkbox-accordion__title">
-			{{ title }}
-		</h3>
+{% macro uiCheckboxAccordion(display, sections, title, modalSubtitle, id, isModal) %}
+	{% if display %}
+		<div class="ui-checkbox-accordion {% if isModal %}ui-checkbox-accordion--{{ isModal }}{% endif %}" {% if id %}id="{{ id }}"{% endif %}>
+			<div class="ui-checkbox-accordion__outer-container">
+				<div class="ui-checkbox-accordion__inner-container">
+					<div class="ui-checkbox-accordion__modal-header">
+						<div class="ui-checkbox-accordion__modal-header-content-start">
+							<h3 class="ui-checkbox-accordion__modal-title">
+								{{ title }}
+							</h3>
 
-		<div class="ui-checkbox-accordion__sections">
-			{% for section in sections %}
-				<div class="ui-checkbox-accordion__section">
-					<input
-						aria-controls="ui-checkbox-accordion__checkboxes-section--{{ section.name }}"
-						class="ui-checkbox-accordion__section-switch"
-						id="ui-checkbox-accordion__section-switch--{{ section.name }}"
-						type="checkbox"
-						{% if section.isOpen %}
-						checked
-						{% endif %}
-					>
+							<span class="ui-checkbox-accordion__modal-subtitle">{{ modalSubtitle }}</span>
+						</div>
 
-					<label
-						class="ui-checkbox-accordion__section-control"
-						for="ui-checkbox-accordion__section-switch--{{ section.name }}"
-					>
-						<svg
-							class="ui-checkbox-accordion__section-control-indicator"
-							height="10"
-							width="18"
-						>
-							<path
-								d="m.377 2.134 7.713 7.5a1.31 1.31 0 0 0 1.818 0l7.714-7.5a1.224 1.224 0 0 0 0-1.767 1.312 1.312 0 0 0-1.818 0L9 6.983 2.194.367a1.31 1.31 0 0 0-1.818 0 1.225 1.225 0 0 0 0 1.767h.001Z"
-								fill="#000"
-							/>
-						</svg>
-
-						<h4 class="ui-checkbox-accordion__section-control-title">
-							<span class="govuk-visually-hidden">Select to</span>
-							<span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
-							<span class="govuk-visually-hidden">the</span>
-							{{ section.title }}
-							<span class="govuk-visually-hidden">section</span>
-						</h4>
-					</label>
-
-					<div
-						class="ui-checkbox-accordion__checkboxes-section ui-checkbox-accordion__checkboxes-section--{{section.type}}"
-					>
-						{% if section.type === 'checkbox' %}
-							{{ govukCheckboxes({
-								name: section.name,
-								classes: "govuk-checkboxes--small",
-								fieldset: {
-									legend: {
-										html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
-									}
-								},
-								items: section.items
-							}) }}
-						{% endif %}
-
-						{% if section.type === 'date' %}
-							{% for formGroup in section.formGroups %}
-								{{ govukDateInput({
-									id: formGroup.id,
-									namePrefix: formGroup.inputNamePrefix,
-									fieldset: {
-										legend: {
-											text: formGroup.title
-										}
-									},
-									errorMessage: formGroup.errorMessage,
-									items: formGroup.inputs
-								}) }}
-							{% endfor %}
-						{% endif %}
+						<div>
+							<button
+								aria-label="Close modal"
+								class="ui-checkbox-accordion__modal-close-btn"
+								type="button"
+							>
+								Return to results
+							</button>
+						</div>
 					</div>
+
+					<div class="ui-checkbox-accordion__header">
+						<h3 class="ui-checkbox-accordion__title">
+							{{ title }}
+						</h3>
+					</div>
+
+					<div class="ui-checkbox-accordion__sections">
+						{% for section in sections %}
+							<detail class="ui-checkbox-accordion__section">
+								<input
+									aria-controls="ui-checkbox-accordion__checkboxes-section--{{ section.name }}"
+									class="ui-checkbox-accordion__section-switch"
+									id="ui-checkbox-accordion__section-switch--{{ section.name }}"
+									type="checkbox"
+									{% if section.isOpen %}
+									checked
+									{% endif %}
+								>
+
+								<label
+									class="ui-checkbox-accordion__section-control"
+									for="ui-checkbox-accordion__section-switch--{{ section.name }}"
+								>
+									<svg
+										class="ui-checkbox-accordion__section-control-indicator"
+										height="10"
+										width="18"
+									>
+										<path
+											d="m.377 2.134 7.713 7.5a1.31 1.31 0 0 0 1.818 0l7.714-7.5a1.224 1.224 0 0 0 0-1.767 1.312 1.312 0 0 0-1.818 0L9 6.983 2.194.367a1.31 1.31 0 0 0-1.818 0 1.225 1.225 0 0 0 0 1.767h.001Z"
+											fill="#000"
+										/>
+									</svg>
+
+									<h4 class="ui-checkbox-accordion__section-control-title">
+										<span class="govuk-visually-hidden">Select to</span>
+										<span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
+										<span class="govuk-visually-hidden">the</span>
+										{{ section.title }}
+										<span class="govuk-visually-hidden">section</span>
+									</h4>
+								</label>
+
+								<div
+									class="ui-checkbox-accordion__checkboxes-section ui-checkbox-accordion__checkboxes-section--{{section.type}}"
+								>
+									{% if section.type === 'checkbox' %}
+										{{ govukCheckboxes({
+											name: section.name,
+											classes: "govuk-checkboxes--small",
+											fieldset: {
+												legend: {
+													html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
+												}
+											},
+											items: section.items
+										}) }}
+									{% endif %}
+
+									{% if section.type === 'date' %}
+										{% for formGroup in section.formGroups %}
+											{{ govukDateInput({
+												id: formGroup.id,
+												namePrefix: formGroup.inputNamePrefix,
+												fieldset: {
+													legend: {
+														text: formGroup.title
+													}
+												},
+												errorMessage: formGroup.errorMessage,
+												items: formGroup.inputs
+											}) }}
+										{% endfor %}
+									{% endif %}
+								</div>
+							</detail>
+
+							{% if not loop.last %}
+								<hr class="ui-checkbox-accordion__section-break">
+							{% endif %}
+						{% endfor %}
+					</div>
+
+					{{ govukButton({
+						attributes: { "enterkeyhint": "search", "data-cy": "apply-filter-button" },
+						classes: "ui-checkbox-accordion__submit",
+						text: "Apply filters",
+						type: "Submit"
+					}) }}
 				</div>
-
-				{% if not loop.last %}
-					<hr class="ui-checkbox-accordion__section-break">
-				{% endif %}
-			{% endfor %}
+			</div>
 		</div>
-
-		{{ govukButton({
-			attributes: { "enterkeyhint": "search", "data-cy": "apply-filter-button" },
-			classes: "ui-checkbox-accordion__submit",
-			text: "Apply filters",
-			type: "Submit"
-		}) }}
-	</div>
+	{% endif %}
 {% endmacro %}

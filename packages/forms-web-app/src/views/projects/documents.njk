@@ -1,12 +1,12 @@
 {% extends "layouts/default.njk" %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% from "../components/layout/slots.njk" import layoutSlots %}
 {% from "../components/section/results.njk" import sectionResults %}
 {% from "../components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
+{% from "../components/ui/search-bar.njk" import uiSearchBar %}
 {% from "../components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "../components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
@@ -15,9 +15,13 @@
 {% set section = 'project-documents' %}
 
 {% block script %}
-	{% if filters.length > 1 %}
+	{% if documents.length %}
 		{% set initiateScriptsConfig = (initiateScriptsConfig.push(
-			{ src: "/public/scripts/checkbox-accordion.script.js" }
+			{ src: "/public/scripts/checkbox-accordion.script.js" },
+			{
+				callback: "var modal = new appScripts.modal(); modal.initiate('#documents-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#documents-page-search-bar', 'Show filters', 'tablet');",
+				src: "/public/scripts/modal.script.js"
+			}
 		), initiateScriptsConfig) %}
 	{% endif %}
 {% endblock %}
@@ -77,12 +81,17 @@
 							]
 						),
 						uiCheckboxAccordion(
+							documents.length,
+							filters,
 							"Filter",
-							filters
+							paginationData.totalItems + " documents",
+							"documents-page-filters",
+							'modal-on-tablet'
 						),
 						relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--desktop"])
 					]) }}
 			</div>
+
 			<div class="govuk-grid-column-two-thirds">
 				{% if errorSummary %}
 					{{ govukErrorSummary({
@@ -112,30 +121,7 @@
 						Search by author, description or document type.
 					</p>
 
-					<div class="govuk-!-margin-bottom-6">
-						<div
-							class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-0 govuk-!-width-one-half"
-						>
-							<label class="govuk-label govuk-visually-hidden" for="searchTerm">
-								Search documents
-							</label>
-
-							<input
-								class="govuk-input"
-								id="searchTerm"
-								name="searchTerm"
-								type="search"
-								value="{{ searchTerm }}"
-							>
-						</div>
-
-						{{ govukButton({
-							attributes: { "enterkeyhint": "search", "id": "search-button" },
-							classes: "govuk-!-margin-0",
-							text: "Search",
-							type: "Submit"
-						}) }}
-					</div>
+					{{ uiSearchBar('documents-page-search-bar', 'searchTerm', searchTerm, 'Search documents') }}
 				{% endif %}
 
 				{{ uiTagLinkList('Filtered results', activeFilters) }}

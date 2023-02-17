@@ -36,6 +36,7 @@ const configAppScripts = {
 	...config,
 	entry: {
 		initiate: `${entryPath}/initiate.js`,
+		modal: `${entryPath}/modal`,
 		sanitiseForm: `${entryPath}/sanitise-form.js`,
 		stepByStep: `${entryPath}/step-by-step.js`
 	},

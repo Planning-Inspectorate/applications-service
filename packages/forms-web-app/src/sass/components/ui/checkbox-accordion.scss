@@ -1,4 +1,4 @@
-.-state--focus {
+.-link-focus {
   outline: 3px solid rgba(0,0,0,0);
   color: #0b0c0c;
   background-color: #fd0;
@@ -7,57 +7,129 @@
 }
 
 .ui-checkbox-accordion {
-  &__section {
+  box-sizing: border-box;
+
+  &--modal-on-tablet {
+    .js-enabled & {
+      @media only screen and (max-width: calc(map-get($govuk-breakpoints, "tablet") - 1px)) {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: govuk-colour("white");
+        z-index: 10;
+
+        .ui-checkbox-accordion {
+          &__outer-container {
+            height: 100%;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          &__inner-container {
+            @include govuk-responsive-padding(6);
+          }
+
+          &__modal-header {
+            display: flex;
+          }
+
+          &__title {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  &__modal-header {
+    @include govuk-responsive-padding(2, "bottom");
+    @include govuk-responsive-margin(2, "bottom");
+
+    display: none;
+    border-bottom: 1px solid $govuk-border-colour;
+  }
+
+  &__modal-header-content-start {
+    flex-grow: 1;
+  }
+
+  &__modal-title {
+    @extend .govuk-heading-l;
+    @include govuk-responsive-margin(2, "bottom");
+  }
+
+  &__modal-subtitle {
+    @extend .govuk-body-s;
+  }
+
+  &__modal-close-btn {
     @extend
-      .govuk-\!-padding-right-3,
-      .govuk-\!-padding-left-3;
+      .govuk-link,
+      .govuk-body-s;
+
+    color: $govuk-link-colour;
   }
 
   &__title {
     @extend .govuk-heading-m;
+
+    display: block;
   }
 
   &__switch {
-    @extend
-      .govuk-link,
-      .govuk-\!-margin-bottom-4;
+    @extend .govuk-link;
+    @include govuk-responsive-margin(4, "bottom");
   }
 
   &__sections {
     @extend .govuk-\!-margin-bottom-7;
   }
 
-  &__section-control {
-    @extend .govuk-\!-display-block;
+  &__section {
+    @include govuk-responsive-padding(1, "right");
+    @include govuk-responsive-padding(1, "left");
 
+    display: block;
+
+    @media (min-width: map-get($govuk-breakpoints, "tablet")) {
+      @include govuk-responsive-padding(3, "right");
+      @include govuk-responsive-padding(3, "left");
+    }
+  }
+
+  &__section-control {
+    display: block;
     font-size: 0;
     line-height: 1;
+    white-space: nowrap;
     cursor: pointer;
 
     &:active {
       .ui-checkbox-accordion__section-control-title {
-        @extend .-state--focus;
+        @extend .-link-focus;
       }
     }
   }
 
   &__section-control-indicator,
   &__section-control-title {
-    @extend
-      .govuk-\!-display-inline,
-      .govuk-\!-margin-0;
-
+    display: inline-block;
     vertical-align: middle;
+    margin: govuk-spacing(0);
   }
 
   &__section-control-indicator {
-    @extend .govuk-\!-margin-right-2;
+    @include govuk-responsive-margin(2, "right");
   }
 
   &__section-control-title {
     @extend .govuk-body;
 
     color: $govuk-link-colour;
+    white-space: normal;
   }
 
   &__section-state-text {
@@ -67,19 +139,19 @@
   }
 
   &__checkboxes-section {
-    @extend .govuk-\!-display-none;
+    display: none;
 
     .govuk-form-group {
-      @extend .govuk-\!-margin-0;
+      margin: govuk-spacing(0);
     }
 
     &--date {
       > .govuk-form-group {
         &:first-child {
-          @extend .govuk-\!-margin-top-3;
+          @include govuk-responsive-margin(3, "top");
         }
 
-        @extend .govuk-\!-margin-top-6;
+        @include govuk-responsive-margin(6, "top");
       }
     }
   }
@@ -105,7 +177,7 @@
   }
 
   &__submit {
-    @extend .govuk-\!-margin-0;
+    margin: govuk-spacing(0);
   }
 
   &__section-switch {
@@ -114,7 +186,7 @@
     &:focus {
       & + .ui-checkbox-accordion__section-control {
         .ui-checkbox-accordion__section-control-title {
-          @extend .-state--focus;
+          @extend .-link-focus;
         }
       }
     }
@@ -131,7 +203,7 @@
         }
 
         & + .ui-checkbox-accordion__checkboxes-section {
-          @extend .govuk-\!-display-block;
+          display: block;
         }
       }
     }
