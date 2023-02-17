@@ -13,9 +13,9 @@ Feature: Review of the application page
     Scenario: verify page title, heading and contents
         Then I am on the "review of the application" page
         And I verify below links present on Review of the application page
-            | Links                                                         |
-            | About the review of the application                           |
-            | What the Planning Inspectorate does to review the application |
+            | Links                                                          |
+            | The acceptance for examination stage                           |
+            | The acceptance for examination stage                           |
         And I click on "Find out what you can do at this stage and check our detailed guides" link
         Then I am on the "Pre-application" page
 
@@ -26,7 +26,3 @@ Feature: Review of the application page
     Scenario: click on Making a recommendation and who makes the final decision link
         And I click on "Making a recommendation and who makes the final decision" link
         Then I am on the "recommendation and decision" page
-
-    Scenario: click on What you can do after the decision has been made link
-        And I click on "What happens after the decision is made" link
-        Then I am on the "what happens after the decision is made" page
