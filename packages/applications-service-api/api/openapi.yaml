@@ -8,13 +8,7 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 servers:
-  - url: '{environment}/'
-    variables:
-      environment:
-        default: 'http://localhost:3000'
-        enum:
-          - 'http://localhost:3000'
-          - 'https://applications-service-api.azurewebsites.net'
+  - url: '/'
           
 paths:
   '/api/v1/applications/{id}':
