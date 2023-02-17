@@ -16,6 +16,7 @@
 
 /* components */
 @import './components/core/pins-header.scss';
+@import './components/layout/slots.scss';
 @import './components/section/events.scss';
 @import './components/section/results.scss';
 @import './components/style/contents-list.scss';
@@ -26,6 +27,7 @@
 @import './components/ui/map.scss';
 @import './components/ui/next-step.scss';
 @import './components/ui/results-list.scss';
+@import './components/ui/search-bar.scss';
 @import './components/ui/side-search.scss';
 @import './components/ui/step-nav.scss';
 @import './components/ui/tag-link.scss';
@@ -33,6 +35,6 @@
 @import './components/ui/vertical-tabs.scss';
 
 /* helpers */
-@import './helpers/white-space.scss';
 @import './helpers/visible-on';
+@import './helpers/white-space.scss';
 

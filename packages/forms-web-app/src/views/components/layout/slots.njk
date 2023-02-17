@@ -1,10 +1,10 @@
 {% macro layoutSlots(slots) %}
-  <div class="govuk-!-padding-bottom-6">
+  <div class="layout-slots">
     {% for slot in slots %}
       {{ slot }}
 
       {% if not loop.last %}
-        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        <hr class="layout-slots__divider">
       {% endif %}
     {% endfor %}
   </div>

@@ -1,5 +1,5 @@
 const { accordionSwitchId } = require('./config');
-const { getAccordionTitle } = require('./getters');
+const { getAccordionSections } = require('./getters');
 const { setAccordionSwitchState } = require('./setters');
 
 const buildAccordionSwitch = (accordion) => {
@@ -16,9 +16,9 @@ const createAccordionSwitch = () => {
 };
 
 const insertAccordionSwitch = (accordion, accordionSwitch) => {
-	const accordionTitle = getAccordionTitle(accordion);
-	if (!accordionTitle) return;
-	accordionTitle.parentNode.insertBefore(accordionSwitch, accordionTitle.nextSibling);
+	const accordionSections = getAccordionSections(accordion);
+	if (!accordionSections) return;
+	accordionSections.insertBefore(accordionSwitch, accordionSections.firstChild);
 };
 
 module.exports = { buildAccordionSwitch };
