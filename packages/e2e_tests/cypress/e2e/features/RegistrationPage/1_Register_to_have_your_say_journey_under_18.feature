@@ -1,11 +1,11 @@
-Feature: User completes have your say registration journey on a national infrastructure project
+Feature: User completes have your say registration journey on a project
     As Myself
     As an organisation I work or volunteer for
     On behalf of another person, a family group or an organisation I do not work for
 
     Background: User start the registration process
         Given I navigate to the registration start page
-        
+
 
     Scenario: 1 - User completes registration process as myself - under 18
         And I selects checkbox for myself - under 18

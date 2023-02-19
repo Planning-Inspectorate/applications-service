@@ -1,4 +1,4 @@
-Feature:Documents page-Filtered results
+Feature: Documents page filtered results
   I want to be able to view the project type and document type my filtered results are based on
   So that I am certain that the right documents are displayed
 

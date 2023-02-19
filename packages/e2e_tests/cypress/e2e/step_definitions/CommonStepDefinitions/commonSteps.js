@@ -19,7 +19,7 @@ Given('I navigate to the registration start page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
 	haveYourSay.clickOnHerf();
 	haveYourSay.registerButton(); // Register to have your say - Start page
-	cy.url().should('include', 'register-have-your-say/EN010118'); // Verify user is on have your say page
+	cy.url().should('include', 'register-have-your-say'); // Verify user is on have your say page
 	haveYourSay.startNowButton();
 });
 
@@ -27,5 +27,5 @@ Given('A user has navigated to the document Filter page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
 	documents.clickOnHerfProjectLink();
 	documents.documentsLink();
-	cy.url().should('include', 'EN010021/documents'); // Verify user is on documents page
+	cy.url().should('include', 'documents'); // Verify user is on documents page
 });

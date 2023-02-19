@@ -1,10 +1,6 @@
 class PO_DateFilter {
 	datePublishedLink() {
-		return cy
-			.get(
-				':nth-child(15) > .ui-checkbox-accordion__section-control > .ui-checkbox-accordion__section-control-title'
-			)
-			.click();
+		return cy.contains('Date published').click();
 	}
 
 	// From date published box

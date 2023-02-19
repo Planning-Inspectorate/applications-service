@@ -23,9 +23,7 @@ Then('I complete the submission process as myself - drag-drop & comment', () => 
 	cy.continueButton();
 	examTimetable.yourCommentField().type('Lorem ipsum dolor sit amet, consectetur adipiscing elit'); // Comment
 	cy.continueButton();
-	examTimetable
-		.fileUploadButton()
-		.selectFile('cypress/fixtures/Soap Opera Testing.pdf', { action: 'drag-drop' }); // Drag and drop
+	examTimetable.fileUploadButton().selectFile('cypress/fixtures/SQL.pdf', { action: 'drag-drop' }); // Drag and drop
 	examTimetable.fileUploadButton_2();
 	cy.get('#continue-form-button').click();
 	examTimetable.persoanlInfoCheckBoxYes();

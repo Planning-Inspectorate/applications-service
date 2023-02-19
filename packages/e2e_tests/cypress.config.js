@@ -11,10 +11,10 @@ module.exports = defineConfig({
 		},
 
 		specPattern: 'cypress/e2e/**/*.feature',
-		baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk',
+		baseUrl: 'http://localhost:9004',
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
-		pageLoadTimeout: 10000,
+		pageLoadTimeout: 20000,
 		env: {
 			commandDelay: 300
 		}

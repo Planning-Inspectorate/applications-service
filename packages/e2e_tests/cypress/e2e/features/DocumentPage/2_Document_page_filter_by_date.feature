@@ -68,5 +68,5 @@ Feature: As a user I want to be able to filter documents by date published
 
     Scenario: 12 - Incomplete information - missing year 'To' published box
         When User enters only month and date into the to published box "2" "7"
-        And User is displayed with an error message "The to date must include year"    
+        And User is displayed with an error message "The to date must include year"
 

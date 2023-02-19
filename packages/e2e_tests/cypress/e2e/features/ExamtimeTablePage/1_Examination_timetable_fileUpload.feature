@@ -1,4 +1,4 @@
-Feature: User Completes submission of examination timetable for a national infrastructure project
+Feature: User Completes submission of examination timetable for a project
     As Myself
     As an organisation I work or volunteer for
     On behalf of another person, a family group or an organisation I do not work for

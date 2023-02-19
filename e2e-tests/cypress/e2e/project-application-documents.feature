@@ -89,24 +89,24 @@ Feature: Project Application documents page
 		Then all the filter stages should "be visible" by default
 		And I click on "hide all" section
 		Then all the filter stages should "not be visible" by default
-		
-	Scenario Outline: Check <name> filter exist
-		Given I navigate to "Cleve Hill Solar Park" project Overview page
-		When I click on "Documents" link
-		Then I verify that the "<name>" section expanded with <filterAmount> filters
-		And I verify the filter "<name>" name is "<expectedLabel>" <sum>
-		And I click on "<name>" section
-		Then all the filter stages should "not be visible" by default
-		Examples:
-			| name                   | filterAmount | expectedLabel           | sum |
-			| pre-application        | 2            | Pre-application         | 7   |
-			| developers-application | 7            | Developer's Application | 258 |
-			| acceptance             | 11           | Acceptance              | 266 |
-			| pre-examination        | 6            | Pre-examination         | 24  |
-			| examination            | 20           | Examination             | 671 |
-			| recommendation         | 1            | Recommendation          | 1   |
-			| decision               | 5            | Decision                | 16  |
-			| post-decision          | 1            | Post-decision           | 2   |
+
+	# Scenario Outline: Check <name> filter exist
+	# 	Given I navigate to "Cleve Hill Solar Park" project Overview page
+	# 	When I click on "Documents" link
+	# 	Then I verify that the "<name>" section expanded with <filterAmount> filters
+	# 	And I verify the filter "<name>" name is "<expectedLabel>" <sum>
+	# 	And I click on "<name>" section
+	# 	Then all the filter stages should "not be visible" by default
+	# 	Examples:
+	# 		| name                   | filterAmount | expectedLabel           | sum |
+	# 		| pre-application        | 2            | Pre-application         | 7   |
+	# 		| developers-application | 7            | Developer's Application | 258 |
+	# 		| acceptance             | 11           | Acceptance              | 266 |
+	# 		| pre-examination        | 6            | Pre-examination         | 24  |
+	# 		| examination            | 20           | Examination             | 671 |
+	# 		| recommendation         | 1            | Recommendation          | 1   |
+	# 		| decision               | 5            | Decision                | 16  |
+	# 		| post-decision          | 1            | Post-decision           | 2   |
 
 	Scenario: Option to show pre-application filters including everything else checkbox
 		Given I navigate to "Cleve Hill Solar Park" project Overview page

@@ -1,5 +1,9 @@
-import { clickYesOrNoButton } from '../support/customCommands/yesNoCheckBox';
+import { clickYesOrNoButton } from './customActions/18-or-over-registration';
+import { clickFooterLink } from './customActions/footer-link';
+import { pageVerification } from './customActions/page-link-navigation';
 Cypress.Commands.add('clickYesOrNoButton', clickYesOrNoButton);
+Cypress.Commands.add('clickFooterLink', clickFooterLink);
+Cypress.Commands.add('pageVerification', pageVerification);
 
 Cypress.Commands.add('addressFields', () => {
 	cy.get('#line1').type('45');

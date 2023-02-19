@@ -21,7 +21,7 @@ Then('I complete the submission process as myself - drag and drop', () => {
 	cy.continueButton();
 	examTimetable
 		.fileUploadButton()
-		.selectFile('cypress/fixtures/Soap Opera Testing.pdf', { action: 'drag-drop' }); // Drag and drop
+		.selectFile('cypress/fixtures/Cypress.docx', { action: 'drag-drop' }); // Drag and drop
 	examTimetable.fileUploadButton_2();
 	cy.get('#continue-form-button').click();
 	examTimetable.fileContentCheckBoxYes();
