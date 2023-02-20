@@ -56,4 +56,23 @@ describe('getAdvice', () => {
 			...mockAdvice
 		});
 	});
+
+	it('sets correct offset when page number >1 is requested', async () => {
+		mockFindAndCountAll.mockResolvedValueOnce({
+			count: 1,
+			rows: [Advice.build({ ...mockAdvice })]
+		});
+
+		await getAdvice({
+			page: 2,
+			itemsPerPage: 25
+		});
+
+		expect(mockFindAndCountAll).toBeCalledWith(
+			expect.objectContaining({
+				offset: 25,
+				limit: 25
+			})
+		);
+	});
 });

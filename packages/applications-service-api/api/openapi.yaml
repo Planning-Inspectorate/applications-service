@@ -518,6 +518,8 @@ paths:
           schema:
             type: integer
           description: Page size for results
+          minimum: 1
+          maximum: 100
         - in: query
           name: searchTerm
           example: 'pdf'

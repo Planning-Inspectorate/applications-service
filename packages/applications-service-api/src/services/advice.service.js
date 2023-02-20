@@ -3,7 +3,6 @@ const db = require('../models');
 module.exports = {
 	async getAdvice(requestQuery) {
 		const itemsPerPage = requestQuery.itemsPerPage;
-		const offset = (requestQuery.page - 1) * itemsPerPage;
 
 		const where = {
 			...(requestQuery.caseReference ? { caseReference: requestQuery.caseReference } : {})
@@ -12,7 +11,7 @@ module.exports = {
 		const dbQuery = {
 			where,
 			order: [['dateAdviceGiven', 'DESC'], ['adviceID']],
-			offset,
+			offset: (requestQuery.page - 1) * itemsPerPage,
 			limit: itemsPerPage
 		};
 
@@ -28,7 +27,7 @@ module.exports = {
 		};
 	},
 
-	// Stubbed for future ticket, will determin waht can be reused/discarded then
+	// Stubbed for future ticket, will determin what can be reused/discarded then
 	async getAdviceById(/*adviceId*/) {
 		// const attachments = await db.Attachment.findAllAttachments({
 		// 	where: {
