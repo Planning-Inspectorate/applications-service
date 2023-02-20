@@ -7,6 +7,7 @@ const getDocuments = async (req, res) => {
 	const requestFilters = {
 		caseReference: req.body.caseReference,
 		page: req.body.page || 1,
+		itemsPerPage: Math.min(req.body.size || 25, 100),
 		filters: req.body.filters,
 		searchTerm: req.body.searchTerm,
 		datePublishedFrom: req.body.datePublishedFrom,
@@ -20,8 +21,8 @@ const getDocuments = async (req, res) => {
 
 	const paginationData = {
 		totalItems: documents.count,
-		itemsPerPage: config.itemsPerPage,
-		totalPages: Math.ceil(Math.max(1, documents.count) / config.itemsPerPage),
+		itemsPerPage: requestFilters.itemsPerPage,
+		totalPages: Math.ceil(Math.max(1, documents.count) / requestFilters.itemsPerPage),
 		currentPage: requestFilters.page
 	};
 

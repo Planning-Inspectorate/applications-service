@@ -22,7 +22,7 @@ describe('documentV3 service', () => {
 
 	describe('fetchDocuments', () => {
 		const expectedQuery = {
-			limit: 20,
+			limit: 25,
 			offset: 0,
 			order: [['date_published', 'DESC'], ['id']]
 		};
@@ -37,7 +37,8 @@ describe('documentV3 service', () => {
 		it('calls query api with correct params and returns document rows and total count', async () => {
 			const result = await fetchDocuments({
 				caseReference: 'EN010085',
-				page: 1
+				page: 1,
+				itemsPerPage: 25
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
@@ -57,6 +58,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				filters: [
 					{
 						name: 'category',
@@ -92,6 +94,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				searchTerm: 'foo'
 			});
 
@@ -118,6 +121,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				datePublishedFrom: '2000-01-01'
 			});
 
@@ -141,6 +145,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				datePublishedTo: '2023-12-31'
 			});
 
@@ -164,6 +169,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				datePublishedFrom: '2000-01-01',
 				datePublishedTo: '2023-12-31'
 			});
@@ -188,6 +194,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				searchTerm: 'foo',
 				filters: [
 					{
@@ -224,6 +231,7 @@ describe('documentV3 service', () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
+				itemsPerPage: 25,
 				filters: [
 					{
 						name: 'stage',
@@ -249,12 +257,14 @@ describe('documentV3 service', () => {
 		it('sets correct offset when page number >1 is requested', async () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
-				page: 2
+				page: 2,
+				itemsPerPage: 25
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith(
 				expect.objectContaining({
-					offset: 20
+					offset: 25,
+					limit: 25
 				})
 			);
 		});

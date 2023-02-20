@@ -2,7 +2,6 @@ class PO_DateFilter {
 	datePublishedLink() {
 		return cy.contains('Date published').click();
 	}
-
 	// From date published box
 
 	fromDay() {

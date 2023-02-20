@@ -683,19 +683,19 @@ module.exports = (pageName) => {
 		case 'the decision-making process for national infrastructure projects':
 			cy.title().should(
 				'eq',
-				'The decision-making process for national infrastructure projects - step by step - National Infrastructure Planning'
+				'The process for nationally significant infrastructure projects (NSIPs)'
 			);
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
 					expect(text).to.contain(
-						'The decision-making process for national infrastructure projects'
+						'The process for nationally significant infrastructure projects (NSIPs)'
 					);
 				});
 			cy.url().should('include', '/decision-making-process-guide');
 			break;
 		case 'pre-application':
-			cy.title().should('eq', 'Pre-application - National Infrastructure Planning');
+			cy.title().should('eq', 'Pre-application');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
@@ -704,16 +704,16 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/pre-application');
 			break;
 		case 'review of the application':
-			cy.title().should('eq', 'Review of the application - National Infrastructure Planning');
+			cy.title().should('eq', 'Acceptance for examination');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Review of the application');
+					expect(text).to.contain('Acceptance for examination');
 				});
 			cy.url().should('include', '/review-of-the-application');
 			break;
 		case 'pre-examination':
-			cy.title().should('eq', 'Pre-examination - National Infrastructure Planning');
+			cy.title().should('eq', 'Pre-examination');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
@@ -722,7 +722,7 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/pre-examination');
 			break;
 		case 'examination of the application':
-			cy.title().should('eq', 'Examination of the application - National Infrastructure Planning');
+			cy.title().should('eq', 'Examination of the application');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
@@ -731,19 +731,16 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/examination-of-the-application');
 			break;
 		case 'recommendation and decision':
-			cy.title().should('eq', 'Recommendation and decision - National Infrastructure Planning');
+			cy.title().should('eq', 'Recommendation and decision');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('\n  Recommendation and Decision\n');
+					expect(text).to.contain('Recommendation and decision');
 				});
 			cy.url().should('include', '/recommendation-and-decision');
 			break;
 		case 'what happens after the decision is made':
-			cy.title().should(
-				'eq',
-				'What happens after the decision is made - National Infrastructure Planning'
-			);
+			cy.title().should('eq', 'What happens after the decision is made');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {

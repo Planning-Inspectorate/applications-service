@@ -3,9 +3,11 @@ const fileTypeDisplayHelper = require('../../../../../lib/file-type-display-help
 
 const getExaminationLibraryDocumentHtml = (document) =>
 	document
-		? `<p><a href="${document.path}">View examination library (${fileTypeDisplayHelper(
-				document.mime
-		  )}, ${fileSizeDisplayHelper(document.size)})</a> containing document reference numbers</p>`
+		? `<p><a class="govuk-link" href="${
+				document.path
+		  }">View examination library (${fileTypeDisplayHelper(document.mime)}, ${fileSizeDisplayHelper(
+				document.size
+		  )})</a> containing document reference numbers</p>`
 		: null;
 
 module.exports = { getExaminationLibraryDocumentHtml };

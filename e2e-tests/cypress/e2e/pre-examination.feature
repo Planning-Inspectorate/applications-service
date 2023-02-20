@@ -8,7 +8,7 @@ Feature: Pre-examination page
         Given I navigate to Decision making process guide page
         Then I am on the "The decision-making process for national infrastructure projects" page
         And I click on show all link
-        And I click on "What happens during the preparation for the Examination" link
+        And I click on "What happens during the preparation for the examination" link
 
     Scenario: verify page title, heading and contents
         Then I am on the "pre-examination" page
@@ -16,7 +16,7 @@ Feature: Pre-examination page
             | Links                        |
             | Pre-examination stage        |
             | Registering to have your say |
-            | The Preliminary Meeting      |
+            | Preliminary meeting      |
             | What happens next            |
             | More detailed advice         |
         And I click on "Find out what you can do at this stage and check our detailed guides" link
@@ -29,7 +29,3 @@ Feature: Pre-examination page
     Scenario: click on Making a recommendation and who makes the final decision link
         And I click on "Making a recommendation and who makes the final decision" link
         Then I am on the "recommendation and decision" page
-
-    Scenario: click on What you can do after the decision has been made link
-        And I click on "What happens after the decision is made" link
-        Then I am on the "what happens after the decision is made" page

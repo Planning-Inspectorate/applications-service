@@ -1,10 +1,7 @@
 const { Op, fn, col, literal } = require('sequelize');
 const db = require('../models');
-const config = require('../lib/config');
 
 const fetchDocuments = async (requestQuery) => {
-	const offset = (requestQuery.page - 1) * config.itemsPerPage;
-
 	const where = {
 		[Op.and]: buildWhereStatements(
 			requestQuery.caseReference,
@@ -17,8 +14,8 @@ const fetchDocuments = async (requestQuery) => {
 	const dbQuery = {
 		where,
 		order: [['date_published', 'DESC'], ['id']],
-		offset,
-		limit: config.itemsPerPage
+		offset: (requestQuery.page - 1) * requestQuery.itemsPerPage,
+		limit: requestQuery.itemsPerPage
 	};
 
 	const queryResult = await db.Document.findAndCountAll(dbQuery);

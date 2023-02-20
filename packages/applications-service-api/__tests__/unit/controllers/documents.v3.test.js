@@ -16,6 +16,10 @@ const getAvailableFiltersMock =
 describe('documentsV3 controller', () => {
 	const res = httpMocks.createResponse();
 
+	afterEach(() => {
+		jest.resetAllMocks();
+	});
+
 	it('returns documents and filters in correct format', async () => {
 		fetchDocumentsMock.mockResolvedValueOnce({
 			count: 4,
@@ -34,7 +38,8 @@ describe('documentsV3 controller', () => {
 
 		const expectedFilters = {
 			caseReference: 'EN000001',
-			page: 1
+			page: 1,
+			itemsPerPage: 25
 		};
 
 		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
@@ -45,7 +50,7 @@ describe('documentsV3 controller', () => {
 			documents: RESPONSE_DOCUMENTS,
 			filters: RESPONSE_FILTERS,
 			totalItems: 4,
-			itemsPerPage: 20,
+			itemsPerPage: 25,
 			totalPages: 1,
 			currentPage: 1
 		});
@@ -63,6 +68,7 @@ describe('documentsV3 controller', () => {
 				body: {
 					caseReference: 'EN000001',
 					page: 2,
+					size: 50,
 					filters: [
 						{
 							name: 'category',
@@ -71,8 +77,8 @@ describe('documentsV3 controller', () => {
 						}
 					],
 					searchTerm: 'search',
-					datePublishedFrom: '',
-					datePublishedTo: ''
+					datePublishedFrom: '2000-01-01',
+					datePublishedTo: '2020-12-31'
 				}
 			},
 			res
@@ -80,9 +86,104 @@ describe('documentsV3 controller', () => {
 
 		const expectedFilters = {
 			caseReference: 'EN000001',
-			page: 1
+			page: 2,
+			itemsPerPage: 50,
+			filters: [
+				{
+					name: 'category',
+					value: "Developer's Application",
+					type: [{ value: 'Plans' }, { value: 'Reports' }]
+				}
+			],
+			searchTerm: 'search',
+			datePublishedFrom: '2000-01-01',
+			datePublishedTo: '2020-12-31'
 		};
 
 		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			documents: RESPONSE_DOCUMENTS,
+			filters: RESPONSE_FILTERS,
+			totalItems: 4,
+			itemsPerPage: 50,
+			totalPages: 1,
+			currentPage: 2
+		});
+	});
+
+	it('limits itemsPerPage to 100', async () => {
+		fetchDocumentsMock.mockResolvedValueOnce({
+			count: 4,
+			rows: DB_DOCUMENTS
+		});
+		getAvailableFiltersMock.mockResolvedValueOnce(DB_FILTERS);
+
+		await getDocuments(
+			{
+				body: {
+					caseReference: 'EN000001',
+					page: 2,
+					size: 101
+				}
+			},
+			res
+		);
+
+		const expectedFilters = {
+			caseReference: 'EN000001',
+			page: 2,
+			itemsPerPage: 100
+		};
+
+		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			documents: RESPONSE_DOCUMENTS,
+			filters: RESPONSE_FILTERS,
+			totalItems: 4,
+			itemsPerPage: 100,
+			totalPages: 1,
+			currentPage: 2
+		});
+	});
+
+	it('calculates the correct pagination', async () => {
+		fetchDocumentsMock.mockResolvedValueOnce({
+			count: 4,
+			rows: DB_DOCUMENTS
+		});
+		getAvailableFiltersMock.mockResolvedValueOnce(DB_FILTERS);
+
+		await getDocuments(
+			{
+				body: {
+					caseReference: 'EN000001',
+					page: 2,
+					size: 2
+				}
+			},
+			res
+		);
+
+		const expectedFilters = {
+			caseReference: 'EN000001',
+			page: 2,
+			itemsPerPage: 2
+		};
+
+		expect(fetchDocumentsMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			documents: RESPONSE_DOCUMENTS,
+			filters: RESPONSE_FILTERS,
+			totalItems: 4,
+			itemsPerPage: 2,
+			totalPages: 2,
+			currentPage: 2
+		});
 	});
 });

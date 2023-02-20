@@ -1,0 +1,37 @@
+.ui-search-bar {
+  @include govuk-responsive-margin(6, "bottom");
+  width: 100%;
+
+  @media only screen and (min-width: map-get($govuk-breakpoints, "tablet")) {
+    display: flex;
+  }
+
+  &__section {
+    &--input {
+      flex-grow: 1;
+
+      @media only screen and (min-width: map-get($govuk-breakpoints, "tablet")) {
+        margin-right: 3px;
+      }
+    }
+  }
+
+  &__label {
+    @extend
+      .govuk-label,
+      .govuk-visually-hidden;
+  }
+
+  &__input {
+    @extend .govuk-input;
+    @include govuk-responsive-margin(6, "bottom");
+
+    @media only screen and (min-width: map-get($govuk-breakpoints, "tablet")) {
+      margin-bottom: govuk-spacing(0);
+    }
+  }
+
+  &__submit {
+    margin: govuk-spacing(0);
+  }
+}
