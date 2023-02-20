@@ -27,7 +27,8 @@ describe('#getBody', () => {
 				expect(response).toEqual({
 					caseReference: 'mock case ref',
 					filters: [],
-					page: 1
+					page: 1,
+					size: 25
 				});
 			});
 		});
@@ -59,7 +60,8 @@ describe('#getBody', () => {
 						}
 					],
 					searchTerm: 'mock search term',
-					page: 3
+					page: 3,
+					size: 25
 				});
 			});
 		});

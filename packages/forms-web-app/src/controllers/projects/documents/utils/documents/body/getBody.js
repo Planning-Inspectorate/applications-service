@@ -9,9 +9,11 @@ const getBody = (case_ref, query) => {
 	const { datePublishedFrom, datePublishedTo } = getDatesFilterPublishedDates(localQuery);
 	const searchTerm = localQuery.searchTerm;
 	const page = localQuery.page;
+	const size = Number(localQuery.itemsPerPage) || 25;
 
 	delete localQuery.page;
 	delete localQuery.searchTerm;
+	delete localQuery.itemsPerPage;
 	deleteDatesFilterFromQuery(localQuery);
 
 	const filterBody = mapQueryToFilterBody(localQuery);
@@ -20,7 +22,8 @@ const getBody = (case_ref, query) => {
 		caseReference: case_ref,
 		filters: filterBody,
 		searchTerm,
-		page: parseInt(page) || 1
+		page: parseInt(page) || 1,
+		size
 	};
 
 	if (datePublishedFrom) requestBody.datePublishedFrom = datePublishedFrom;

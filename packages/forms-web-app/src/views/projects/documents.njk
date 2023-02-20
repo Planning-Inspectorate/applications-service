@@ -9,6 +9,7 @@
 {% from "../components/ui/search-bar.njk" import uiSearchBar %}
 {% from "../components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "../components/ui/vertical-tabs.njk" import uiVerticalTabs %}
+{% from "../components/ui/results-per-page.njk" import uiResultsPerPage %}
 {% from "../macros/pagination-bar.njk" import paginationBar %}
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
@@ -139,6 +140,8 @@
 						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
 						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
 					</p>
+
+					{{ uiResultsPerPage(resultsPerPage) }}
 
 					{{ sectionResults(documents) }}
 
