@@ -73,6 +73,7 @@ describe('getAdvice', () => {
 		const req = httpMocks.createRequest({
 			query: {
 				caseRef: 'EN010116',
+				searchTerm: 'test 123',
 				size: '50',
 				page: '2'
 			}
@@ -82,6 +83,7 @@ describe('getAdvice', () => {
 
 		expect(getAdviceMock).toBeCalledWith({
 			caseReference: 'EN010116',
+			searchTerm: 'test 123',
 			itemsPerPage: 50,
 			page: 2
 		});
