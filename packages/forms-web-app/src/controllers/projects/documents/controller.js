@@ -8,6 +8,7 @@ const { searchDocuments } = require('./utils/documents/searchDocuments');
 const { getApplicationData } = require('./utils/get-application-data');
 const { isClearAllFiltersDisplayed } = require('./utils/is-clear-all-filters-displayed');
 const { VIEW } = require('../../../lib/views');
+const { documentsPerPage } = require('./utils/pagination/documentsPerPage');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
@@ -30,6 +31,7 @@ const getApplicationDocuments = async (req, res) => {
 		const documentsView = getDocuments(documents, examinationLibraryDocument);
 		const filteredView = getFilters(filters, query);
 		const paginationView = getPagination(pagination);
+		const resultsPerPage = documentsPerPage(query);
 
 		return res.render(VIEW.PROJECTS.DOCUMENTS, {
 			...documentsView,
@@ -45,7 +47,8 @@ const getApplicationDocuments = async (req, res) => {
 			paginationUrl,
 			queryUrl,
 			searchTerm,
-			title: 'Documents'
+			title: 'Documents',
+			resultsPerPage
 		});
 	} catch (e) {
 		logger.error(e);
