@@ -1,0 +1,22 @@
+{% macro uiResultsPerPage(resultsPerPage) %}
+	<p >
+		<span class="govuk-!-margin-right-3">
+			<strong>Results per page</strong>
+		</span>
+		<a href="{{ resultsPerPage.twentyFive.link }}"
+			 aria-label="view {{ resultsPerPage.twentyFive.size  }} results per page"
+		>{{ resultsPerPage.twentyFive.size }}</a>
+		<span class="govuk-!-margin-left-1">|</span>
+		<span class="govuk-!-margin-left-1">
+			<a href="{{ resultsPerPage.fifty.link }}"
+				 aria-label="view {{ resultsPerPage.fifty.size  }} results per page"
+			>{{ resultsPerPage.fifty.size }}</a>
+		</span>
+		<span class="govuk-!-margin-left-1">|</span>
+		<span class="govuk-!-margin-left-1">
+			<a href="{{ resultsPerPage.oneHundred.link }}"
+				aria-label="view {{ resultsPerPage.oneHundred.size  }} results per page"
+				>{{ resultsPerPage.oneHundred.size }}</a>
+		</span>
+	</p>
+{% endmacro %}
