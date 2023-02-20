@@ -16,9 +16,8 @@ module.exports = {
 			const advice = await getAdvice({
 				caseReference: req.query.caseRef,
 				page,
-				itemsPerPage
-				// For next ticket
-				//searchTerm: req.query.searchTerm
+				itemsPerPage,
+				searchTerm: req.query.searchTerm
 			});
 
 			const paginationData = {
