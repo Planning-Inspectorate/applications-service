@@ -11,7 +11,7 @@ module.exports = defineConfig({
 		},
 
 		specPattern: 'cypress/e2e/**/*.feature',
-		baseUrl: 'http://localhost:9004',
+		baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk',
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
 		pageLoadTimeout: 20000,
