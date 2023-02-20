@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 const db = require('../models');
 
 module.exports = {
@@ -5,7 +7,14 @@ module.exports = {
 		const itemsPerPage = requestQuery.itemsPerPage;
 
 		const where = {
-			...(requestQuery.caseReference ? { caseReference: requestQuery.caseReference } : {})
+			[Op.and]: [
+				{
+					...(requestQuery.caseReference ? { caseReference: requestQuery.caseReference } : {})
+				},
+				{
+					...(requestQuery.searchTerm ? mapSearchTermToQuery(requestQuery.searchTerm) : {})
+				}
+			]
 		};
 
 		const dbQuery = {
@@ -53,3 +62,18 @@ module.exports = {
 		// });
 	}
 };
+
+function mapSearchTermToQuery(searchTerm) {
+	if (searchTerm) {
+		const searchStatements = [
+			'firstName',
+			'lastName',
+			'organisation',
+			'enquiryDetail',
+			'adviceGiven'
+		].map((field) => ({
+			[field]: { [Op.like]: `%${searchTerm}%` }
+		}));
+		return { [Op.or]: searchStatements };
+	}
+}
