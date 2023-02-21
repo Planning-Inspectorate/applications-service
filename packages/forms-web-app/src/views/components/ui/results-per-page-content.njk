@@ -1,0 +1,10 @@
+{% macro uiResultsPerPageContent(size, link, active) %}
+	{% if active %}
+		{{ size }}
+	{% else %}
+		<a href="{{ link }}"
+			 aria-label="view {{ size  }} results per page"
+		>
+			{{ size }}</a>
+	{% endif %}
+{% endmacro %}
