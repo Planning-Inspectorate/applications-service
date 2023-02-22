@@ -14,6 +14,7 @@ const emailValidationRules = (object) => {
 				onError?.message?.checkLength ?? 'Email address must be between 3 and 255 characters'
 			),
 		body(id ?? 'email')
+			.trim()
 			.isEmail()
 			.withMessage('Enter an email address in the correct format, like name@example.com')
 	];
