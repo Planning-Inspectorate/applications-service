@@ -2,8 +2,7 @@
 import { Given } from 'cypress-cucumber-preprocessor/steps';
 import PO_HaveYourSay from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
 import PO_ExaminationTimetable from '../../../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
-import PO_Documents from '../../../pageObject/Documents/PO_Documents';
-const documents = new PO_Documents();
+
 const haveYourSay = new PO_HaveYourSay();
 const examTimetable = new PO_ExaminationTimetable();
 
@@ -25,7 +24,7 @@ Given('I navigate to the registration start page', () => {
 
 Given('A user has navigated to the document Filter page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
-	documents.clickOnHerfProjectLink();
-	documents.documentsLink();
+	cy.get("a[href='/projects/EN010021']").click();
+	cy.get("a[href='/projects/EN010021/documents']").click();
 	cy.url().should('include', 'EN010021/documents'); // Verify user is on documents page
 });
