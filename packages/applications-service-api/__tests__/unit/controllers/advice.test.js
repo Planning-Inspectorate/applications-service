@@ -73,6 +73,7 @@ describe('getAdvice', () => {
 		const req = httpMocks.createRequest({
 			query: {
 				caseRef: 'EN010116',
+				searchTerm: 'test 123',
 				size: '50',
 				page: '2'
 			}
@@ -82,8 +83,79 @@ describe('getAdvice', () => {
 
 		expect(getAdviceMock).toBeCalledWith({
 			caseReference: 'EN010116',
+			searchTerm: 'test 123',
 			itemsPerPage: 50,
 			page: 2
+		});
+	});
+
+	it('limits itemsPerPage to 100', async () => {
+		getAdviceMock.mockResolvedValueOnce({
+			count: 2,
+			rows: [mockAdvice, mockAdvice]
+		});
+
+		const req = httpMocks.createRequest({
+			query: {
+				caseRef: 'EN010116',
+				size: '101',
+				page: '2'
+			}
+		});
+		const res = httpMocks.createResponse();
+
+		await getAdvice(req, res);
+
+		const expectedFilters = {
+			caseReference: 'EN010116',
+			page: 2,
+			itemsPerPage: 100
+		};
+
+		expect(getAdviceMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			advice: [mockAdvice, mockAdvice],
+			totalItems: 2,
+			itemsPerPage: 100,
+			totalPages: 1,
+			currentPage: 2
+		});
+	});
+
+	it('calculates the correct pagination', async () => {
+		getAdviceMock.mockResolvedValueOnce({
+			count: 2,
+			rows: [mockAdvice, mockAdvice]
+		});
+
+		const req = httpMocks.createRequest({
+			query: {
+				caseRef: 'EN010116',
+				size: '1',
+				page: '2'
+			}
+		});
+		const res = httpMocks.createResponse();
+
+		await getAdvice(req, res);
+
+		const expectedFilters = {
+			caseReference: 'EN010116',
+			page: 2,
+			itemsPerPage: 1
+		};
+
+		expect(getAdviceMock).toBeCalledWith(expectedFilters);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual({
+			advice: [mockAdvice, mockAdvice],
+			totalItems: 2,
+			itemsPerPage: 1,
+			totalPages: 2,
+			currentPage: 2
 		});
 	});
 });

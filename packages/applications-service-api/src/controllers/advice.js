@@ -10,15 +10,14 @@ module.exports = {
 	async getAdvice(req, res) {
 		logger.debug(`Retrieving advice ...`);
 		try {
-			const itemsPerPage = Number(req.query.size) || 25;
+			const itemsPerPage = Math.min(Number(req.query.size), 100) || 25;
 			const page = Number(req.query.page) || 1;
 
 			const advice = await getAdvice({
 				caseReference: req.query.caseRef,
 				page,
-				itemsPerPage
-				// For next ticket
-				//searchTerm: req.query.searchTerm
+				itemsPerPage,
+				searchTerm: req.query.searchTerm
 			});
 
 			const paginationData = {
