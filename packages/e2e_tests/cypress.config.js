@@ -9,7 +9,6 @@ module.exports = defineConfig({
 			allureWriter(on, config);
 			return config;
 		},
-
 		specPattern: 'cypress/e2e/**/*.feature',
 		baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk',
 		experimentalRunAllSpecs: true,
@@ -17,6 +16,8 @@ module.exports = defineConfig({
 		pageLoadTimeout: 20000,
 		env: {
 			commandDelay: 300
-		}
+		},
+		viewportWidth: 1920,
+		viewportHeight: 2000
 	}
 });

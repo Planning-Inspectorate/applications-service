@@ -1,4 +1,5 @@
 const SequelizeMock = require('sequelize-mock');
+const { Op } = require('sequelize');
 
 const { getAdvice } = require('../../../src/services/advice.service');
 
@@ -54,6 +55,81 @@ describe('getAdvice', () => {
 
 		expect(item).toEqual({
 			...mockAdvice
+		});
+	});
+
+	it('sets correct offset when page number >1 is requested', async () => {
+		mockFindAndCountAll.mockResolvedValueOnce({
+			count: 1,
+			rows: [Advice.build({ ...mockAdvice })]
+		});
+
+		await getAdvice({
+			page: 2,
+			itemsPerPage: 25
+		});
+
+		expect(mockFindAndCountAll).toBeCalledWith(
+			expect.objectContaining({
+				offset: 25,
+				limit: 25
+			})
+		);
+	});
+
+	it('builds the caseReference query', async () => {
+		mockFindAndCountAll.mockResolvedValueOnce({
+			count: 1,
+			rows: [Advice.build({ ...mockAdvice })]
+		});
+
+		await getAdvice({
+			itemsPerPage: 25,
+			page: 1,
+			caseReference: 'EN010085'
+		});
+
+		expect(mockFindAndCountAll).toHaveBeenCalledWith({
+			where: {
+				[Op.and]: [{ caseReference: 'EN010085' }, {}]
+			},
+			limit: 25,
+			offset: 0,
+			order: [['dateAdviceGiven', 'DESC'], ['adviceID']]
+		});
+	});
+
+	it('builds the searchTerm query', async () => {
+		mockFindAndCountAll.mockResolvedValueOnce({
+			count: 1,
+			rows: [Advice.build({ ...mockAdvice })]
+		});
+
+		await getAdvice({
+			itemsPerPage: 25,
+			page: 1,
+			caseReference: 'EN010085',
+			searchTerm: 'testing 123'
+		});
+
+		expect(mockFindAndCountAll).toHaveBeenCalledWith({
+			where: {
+				[Op.and]: [
+					{ caseReference: 'EN010085' },
+					{
+						[Op.or]: [
+							{ firstName: { [Op.like]: '%testing 123%' } },
+							{ lastName: { [Op.like]: '%testing 123%' } },
+							{ organisation: { [Op.like]: '%testing 123%' } },
+							{ enquiryDetail: { [Op.like]: '%testing 123%' } },
+							{ adviceGiven: { [Op.like]: '%testing 123%' } }
+						]
+					}
+				]
+			},
+			limit: 25,
+			offset: 0,
+			order: [['dateAdviceGiven', 'DESC'], ['adviceID']]
 		});
 	});
 });

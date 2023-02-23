@@ -2,8 +2,7 @@
 import { Given } from 'cypress-cucumber-preprocessor/steps';
 import PO_HaveYourSay from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
 import PO_ExaminationTimetable from '../../../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
-import PO_Documents from '../../../pageObject/Documents/PO_Documents';
-const documents = new PO_Documents();
+
 const haveYourSay = new PO_HaveYourSay();
 const examTimetable = new PO_ExaminationTimetable();
 

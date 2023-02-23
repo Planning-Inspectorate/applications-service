@@ -25,7 +25,8 @@
 		"release": "multi-semantic-release --ignore-packages=packages/common",
 		"test": "turbo run test --parallel --continue",
 		"test:cov": "turbo run test:cov --parallel --continue",
-		"test:watch": "turbo run test:watch --parallel --continue"
+		"test:watch": "turbo run test:watch --parallel --continue",
+		"win:common:fix": "xcopy /E /Y packages\\common node_modules\\@pins\\common\\"
 	},
 	"repository": {
 		"type": "git",

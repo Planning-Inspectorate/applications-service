@@ -1,18 +1,26 @@
+const { Op } = require('sequelize');
+
 const db = require('../models');
 
 module.exports = {
 	async getAdvice(requestQuery) {
 		const itemsPerPage = requestQuery.itemsPerPage;
-		const offset = (requestQuery.page - 1) * itemsPerPage;
 
 		const where = {
-			...(requestQuery.caseReference ? { caseReference: requestQuery.caseReference } : {})
+			[Op.and]: [
+				{
+					...(requestQuery.caseReference ? { caseReference: requestQuery.caseReference } : {})
+				},
+				{
+					...(requestQuery.searchTerm ? mapSearchTermToQuery(requestQuery.searchTerm) : {})
+				}
+			]
 		};
 
 		const dbQuery = {
 			where,
 			order: [['dateAdviceGiven', 'DESC'], ['adviceID']],
-			offset,
+			offset: (requestQuery.page - 1) * itemsPerPage,
 			limit: itemsPerPage
 		};
 
@@ -28,7 +36,7 @@ module.exports = {
 		};
 	},
 
-	// Stubbed for future ticket, will determin waht can be reused/discarded then
+	// Stubbed for future ticket, will determin what can be reused/discarded then
 	async getAdviceById(/*adviceId*/) {
 		// const attachments = await db.Attachment.findAllAttachments({
 		// 	where: {
@@ -54,3 +62,18 @@ module.exports = {
 		// });
 	}
 };
+
+function mapSearchTermToQuery(searchTerm) {
+	if (searchTerm) {
+		const searchStatements = [
+			'firstName',
+			'lastName',
+			'organisation',
+			'enquiryDetail',
+			'adviceGiven'
+		].map((field) => ({
+			[field]: { [Op.like]: `%${searchTerm}%` }
+		}));
+		return { [Op.or]: searchStatements };
+	}
+}
