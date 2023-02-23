@@ -1,6 +1,6 @@
-.document-file-upload__label {
+.ui-file-upload__input {
 	&:focus {
-		+ .govuk-button {
+		+ .ui-file-upload__label {
 			border-color: #fd0;
 			color: #0b0c0c;
 			background-color: #fd0;
