@@ -3,7 +3,7 @@ Feature: Documents page filtered results
   So that I am certain that the right documents are displayed
 
   Background: User is on the filter page
-    Given A user has navigated to the document Filter page
+    Given A user has navigated to the document page
 
 
   Scenario: 1 - Apply 1 document type filter 1 project stage

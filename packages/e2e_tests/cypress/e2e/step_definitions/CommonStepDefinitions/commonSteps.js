@@ -23,7 +23,7 @@ Given('I navigate to the registration start page', () => {
 	haveYourSay.startNowButton();
 });
 
-Given('A user has navigated to the document Filter page', () => {
+Given('A user has navigated to the document page', () => {
 	cy.visit('/projects', { failOnStatusCode: false });
 	documents.clickOnHerfProjectLink();
 	documents.documentsLink();

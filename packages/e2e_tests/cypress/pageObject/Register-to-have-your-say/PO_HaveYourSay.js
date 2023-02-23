@@ -16,7 +16,7 @@ class PO_HaveYourSay {
 	}
 
 	continueButton() {
-		return cy.get("button[data-cy='button-save-and-continue']").click(); //Continue
+		return cy.get("button[data-cy='button-save-and-continue']"); //Continue
 	}
 
 	fullNameField() {

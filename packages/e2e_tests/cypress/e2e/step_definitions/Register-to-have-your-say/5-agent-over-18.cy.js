@@ -6,34 +6,34 @@ const checkBox = new PO_CheckBox();
 
 And('I selects checkbox on behalf of another person, family - over 18', () => {
 	checkBox.onBehalfCheckBox(); //Who are you registering for? On behalf of another person, a family group
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 });
 
 And('I complete the registration process on behalf of another person, family - over 18', () => {
 	haveYourSay.fullNameField().type('John Doe'); // Full Name
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.organisationNameField().type('Genesis');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.emailField().type('john.doe@genesis.com');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.phoneField().type('01265789456');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	cy.addressFields();
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	checkBox.aFamilyGroupCheckBox();
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.familyGroupField().type('Charity');
-	haveYourSay.continueButton();
-	cy.clickYesOrNoButton('yes'); // Are they 18 or over? Yes
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
+	checkBox.yesCheckBox(); // Are they 18 or over? Yes
+	haveYourSay.continueButton().click();
 	cy.addressFields(); // Address fields
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.emailField().type('john.doe@genesis.com');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.phoneField().type('01265789456');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.commentField().type('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.acceptContinueBtn();
 	haveYourSay.acceptRegister();
 });

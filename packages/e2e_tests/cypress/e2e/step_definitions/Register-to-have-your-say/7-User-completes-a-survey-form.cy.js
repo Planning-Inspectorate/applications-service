@@ -6,19 +6,19 @@ const checkBox = new PO_CheckBox();
 
 And('The user has completed the have your say journey', () => {
 	checkBox.mySelfCheckBox(); //Who are you registering for? Myself
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.fullNameField().type('John Doe');
-	haveYourSay.continueButton();
-	cy.clickYesOrNoButton('yes'); //Are you 18 or over? Yes
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
+	checkBox.yesCheckBox(); //Are you 18 or over? Yes
+	haveYourSay.continueButton().click();
 	haveYourSay.emailField().type('john-doe@aol.co.uk');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	cy.addressFields(); // Address fields
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.phoneField().type('01265789456');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.commentField().type('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 	haveYourSay.acceptContinueBtn();
 	haveYourSay.acceptRegister();
 });

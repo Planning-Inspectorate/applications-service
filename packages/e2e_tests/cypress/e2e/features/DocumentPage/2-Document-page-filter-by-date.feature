@@ -1,12 +1,9 @@
 Feature: As a user I want to be able to filter documents by date published
     User can find the documents I need within a specific timeframe.
 
-Feature: As a user I want to be able to filter documents by date published
-    User can find the documents I need within a specific timeframe.
-
 
     Background: User is on the filter page
-        Given A user has navigated to the document Filter page
+        Given A user has navigated to the document page
 
     Scenario: 1 - User enters 'From' date only
         When The user enters a from date "17" "10" "2019" into date published box

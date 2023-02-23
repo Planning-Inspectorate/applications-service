@@ -6,27 +6,27 @@ const checkBox = new PO_CheckBox();
 
 And('I selects checkbox for organisation I work or volunteer - under 18', () => {
 	checkBox.organizationCheckBox(); //Who are you registering for? An organisation I work or volunteer for
-	haveYourSay.continueButton();
+	haveYourSay.continueButton().click();
 });
 And(
 	'I complete the registration process for an organisation I work or volunteer - under 18',
 	() => {
 		haveYourSay.fullNameField().type('John Doe');
-		haveYourSay.continueButton();
-		cy.clickYesOrNoButton('no'); //Are you 18 or over? No
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
+		checkBox.noCheckBox(); //Are you 18 or over? No
+		haveYourSay.continueButton().click();
 		haveYourSay.organisationNameField().type('Charity');
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
 		haveYourSay.jobRoleField().type('Manager');
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
 		haveYourSay.emailField().type('john.doe@gmail.com');
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
 		cy.addressFields(); // Address fields
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
 		haveYourSay.phoneField().type('01265789456');
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
 		haveYourSay.commentField().type('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
-		haveYourSay.continueButton();
+		haveYourSay.continueButton().click();
 		haveYourSay.acceptContinueBtn();
 		haveYourSay.acceptRegister();
 	}
