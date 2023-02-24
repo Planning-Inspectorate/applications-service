@@ -274,7 +274,24 @@ describe('#getApplicationDocuments', () => {
 					queryUrl: '',
 					searchTerm: undefined,
 					title: 'Documents',
-					pageTitle: 'Documents | mock project name'
+					pageTitle: 'Documents | mock project name',
+					resultsPerPage: {
+						fifty: {
+							link: '?itemsPerPage=50',
+							size: 50,
+							active: false
+						},
+						oneHundred: {
+							link: '?itemsPerPage=100',
+							size: 100,
+							active: false
+						},
+						twentyFive: {
+							link: '?itemsPerPage=25',
+							size: 25,
+							active: true
+						}
+					}
 				});
 			});
 		});

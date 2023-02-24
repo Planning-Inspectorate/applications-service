@@ -4,7 +4,7 @@ Monorepo for all Applications Service services and infrastructure
 
 ## TL;DR
 
-- `npm ci`
+- `npm i`
 - `npm run dev`
 - Go to [localhost:9004](http://localhost:9004)
 
@@ -156,6 +156,38 @@ db:
 
 './init:/docker-entrypoint-initdb.d'
 ```
+
+On Windows you may get an error:
+
+```shell
+applications-web-app      | node:internal/modules/cjs/loader:998
+applications-web-app      |   throw err;
+applications-web-app      |   ^
+applications-web-app      |
+applications-web-app      | Error: Cannot find module '@pins/common/src/utils/redis'
+applications-web-app      | Require stack:
+applications-web-app      | - /opt/app/packages/forms-web-app/src/config.js
+applications-web-app      | - /opt/app/packages/forms-web-app/src/server.js
+applications-web-app      |     at Function.Module._resolveFilename (node:internal/modules/cjs/loader:995:15)
+applications-web-app      |     at Function.Module._load (node:internal/modules/cjs/loader:841:27)
+applications-web-app      |     at Module.require (node:internal/modules/cjs/loader:1067:19)
+applications-web-app      |     at require (node:internal/modules/cjs/helpers:103:18)
+applications-web-app      |     at Object.<anonymous> (/opt/app/packages/forms-web-app/src/config.js:1:40)
+applications-web-app      |     at Module._compile (node:internal/modules/cjs/loader:1165:14)
+applications-web-app      |     at Object.Module._extensions..js (node:internal/modules/cjs/loader:1219:10)
+applications-web-app      |     at Module.load (node:internal/modules/cjs/loader:1043:32)
+applications-web-app      |     at Function.Module._load (node:internal/modules/cjs/loader:878:12)
+applications-web-app      |     at Module.require (node:internal/modules/cjs/loader:1067:19) {
+applications-web-app      |   code: 'MODULE_NOT_FOUND',
+applications-web-app      |   requireStack: [
+applications-web-app      |     '/opt/app/packages/forms-web-app/src/config.js',
+applications-web-app      |     '/opt/app/packages/forms-web-app/src/server.js'
+applications-web-app      |   ]
+applications-web-app      | }
+```
+
+Run `npm run windows:common:fix`after any `npm i`
+
 
 ## Branching
 

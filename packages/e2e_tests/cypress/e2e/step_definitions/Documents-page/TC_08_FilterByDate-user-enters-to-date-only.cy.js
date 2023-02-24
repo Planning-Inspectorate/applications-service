@@ -1,6 +1,7 @@
 ///<reference types ="cypress" />
 import { And, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import PO_DateFilter from '../../../pageObject/Documents/PO_DateFilter';
+
 const dateFilter = new PO_DateFilter();
 const dayjs = require('dayjs');
 
@@ -13,11 +14,6 @@ When(
 		dateFilter.toYear().type(yyyy);
 	}
 );
-
-And('Clicks Apply filter', () => {
-	dateFilter.applyFilterBtn();
-});
-
 Then('A Filtered results section is displayed with the date to active filters', () => {
 	dateFilter.filterResultIcon().should('contain', '6 February 2020');
 	dateFilter.filterResultIcon().then((date_1) => {

@@ -1,0 +1,15 @@
+{% from "components/ui/results-per-page-content.njk" import uiResultsPerPageContent %}
+
+{% macro uiResultsPerPage(resultsPerPage) %}
+	<p >
+		<span class="govuk-!-margin-right-2">
+			<strong>Results per page</strong>
+		</span>
+		{% for key, value in  resultsPerPage %}
+			{% if loop.index !== 1 %}<span class="govuk-!-margin-left-1">|</span>{% endif %}
+			<span class="govuk-!-margin-left-1">
+			{{ uiResultsPerPageContent(value.size, value.link, value.active) }}
+		</span>
+		{% endfor %}
+	</p>
+{% endmacro %}
