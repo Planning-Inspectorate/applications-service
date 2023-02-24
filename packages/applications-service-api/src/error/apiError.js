@@ -51,6 +51,10 @@ class ApiError {
 	static representationNotFound(id) {
 		return this.notFound(`Representation with ID ${id} not found`);
 	}
+
+	static adviceNotFound(id) {
+		return this.notFound(`Advice with ID ${id} not found`);
+	}
 }
 
 module.exports = ApiError;
