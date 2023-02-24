@@ -8,7 +8,8 @@ const {
 	getExaminationSubmissionId,
 	getExaminationEmailAddress,
 	getExaminationSubmissionRetryErrorCount,
-	setExaminationSubmissionRetryErrorCount
+	setExaminationSubmissionRetryErrorCount,
+	getExaminationSubmissionItems
 } = require('../../../../../src/controllers/examination/session/examination-session');
 describe('controllers/examination/session/examination-session', () => {
 	describe('#getExaminationSession', () => {
@@ -151,6 +152,17 @@ describe('controllers/examination/session/examination-session', () => {
 			const result = getExaminationEmailAddress(mockSession);
 			it('should return the value of submission id', () => {
 				expect(result).toEqual('mock email');
+			});
+		});
+	});
+	describe('#getExaminationSubmissionItems', () => {
+		describe('When getting submission items', () => {
+			const mockSession = {
+				examination: { submissionItems: ['mock submission item 1', 'mock submission item 2'] }
+			};
+			const result = getExaminationSubmissionItems(mockSession);
+			it('should return the submission items', () => {
+				expect(result).toEqual(['mock submission item 1', 'mock submission item 2']);
 			});
 		});
 	});

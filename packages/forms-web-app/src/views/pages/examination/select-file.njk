@@ -101,21 +101,16 @@
 					}) }}
 
 					<br>
+
 					{{ govukButton({
 						text: 'Continue',
 						classes: 'govuk-button',
 						name: 'continue',
 						value: 'continue'
 					}) }}
-
-					<style type="text/css">
-						#file-upload-js-content {
-							display: none;
-						}
-					</style>
 				</noscript>
 
-				<div id="file-upload-js-content">
+				<div class="visible-on visible-on--js-enabled">
 					<div class="moj-multi-file-upload__dropzone">
 						<input type="hidden" id="upload" name="upload" value="true">
 						<p>Drag and drop files here or</p>
