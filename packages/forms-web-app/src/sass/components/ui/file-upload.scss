@@ -1,0 +1,10 @@
+.ui-file-upload__input {
+	&:focus {
+		+ .ui-file-upload__label {
+			border-color: #fd0;
+			color: #0b0c0c;
+			background-color: #fd0;
+			box-shadow: 0 2px 0 #0b0c0c;
+		}
+	}
+}

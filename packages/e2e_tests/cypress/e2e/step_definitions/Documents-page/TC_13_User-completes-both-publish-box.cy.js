@@ -1,6 +1,7 @@
 ///<reference types ="cypress" />
 import { When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_DateFilter from '../../../pageObject/Documents/PO_DateFilter';
+
 const dateFilter = new PO_DateFilter();
 const dayjs = require('dayjs');
 
@@ -21,9 +22,7 @@ And(
 		dateFilter.toYear().type(yyyy);
 	}
 );
-And('Users clicks apply filter', () => {
-	dateFilter.applyFilterBtn();
-});
+
 Then('A filter results section is displayed with the from and to filtered results', () => {
 	dateFilter.filterResultIcon().eq(0).should('contain', '17 October 2019');
 	dateFilter.filterResultIcon().eq(1).should('contain', '2 November 2020');

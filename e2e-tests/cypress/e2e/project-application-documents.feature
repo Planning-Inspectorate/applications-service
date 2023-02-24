@@ -30,6 +30,11 @@ Feature: Project Application documents page
 			| 16 April 2019 | Pre-application | Material Change - 18 |
 			| 16 April 2019 | Pre-application | Material Change - 19 |
 			| 16 April 2019 | Pre-application | Material Change - 20 |
+			| 16 April 2019 | Pre-application | Material Change - 21 |
+			| 16 April 2019 | Pre-application | Material Change - 22 |
+			| 16 April 2019 | Pre-application | Material Change - 23 |
+			| 16 April 2019 | Pre-application | Material Change - 24 |
+			| 16 April 2019 | Pre-application | Material Change - 25 |
 
 	Scenario: verify no documents displayed for a project
 		Given I navigate to "Ho Ho Hooo" project Overview page
@@ -55,7 +60,7 @@ Feature: Project Application documents page
 			| 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB)      	From NULL on behalf of Removed                                                                                                                | 23 November 2018 | Acceptance (Review of the application) | Environmental Statement |
 		When I enter text "" into search field
 		And I click on search button
-		Then I verify text "Showing 1 to 20 of 987 results" is present on the page
+		Then I verify text "Showing 1 to 25 of 987 results" is present on the page
 
 	Scenario: search returns no matching documents
 		Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
@@ -66,19 +71,20 @@ Feature: Project Application documents page
 		And I click on clear search link
 		When I enter text "attachment" into search field
 		And I click on search button
-		Then I verify text "Showing 1 to 20 of 149 results" is present on the page
-		Then I verify that only "20" results present on each page
-		When I navigate to page "8" of the results
+		Then I verify text "Showing 1 to 25 of 149 results" is present on the page
+		Then I verify that only "25" results present on each page
+		When I navigate to page "6" of the results
 		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| ...                   |
-			| 6                     |
-			| 7                     |
-			| 8                     |
-		Then I verify text "Showing 141 to 149 of 149 results" is present on the page
-		Then I verify that only "9" results present on each page
+			| Data     |
+			| Previous |
+			| 1        |
+			| ...      |
+			| 4        |
+			| 5        |
+			| 6        |
+			| Next     |
+		Then I verify text "Showing 126 to 149 of 149 results" is present on the page
+		Then I verify that only "24" results present on each page
 
 # ------- Filtering -------
 	Scenario: Option to show filters
@@ -89,7 +95,7 @@ Feature: Project Application documents page
 		Then all the filter stages should "be visible" by default
 		And I click on "hide all" section
 		Then all the filter stages should "not be visible" by default
-		
+
 	Scenario Outline: Check <name> filter exist
 		Given I navigate to "Cleve Hill Solar Park" project Overview page
 		When I click on "Documents" link
@@ -155,8 +161,8 @@ Feature: Project Application documents page
 			| 2                 |
 			| 3                 |
 			| Next set of pages |
-		Then I verify text "Showing 1 to 20 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify text "Showing 1 to 25 of 46 results" is present on the page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "2" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -166,7 +172,7 @@ Feature: Project Application documents page
 			| 3                     |
 			| Next set of pages     |
 		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "3" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -189,7 +195,7 @@ Feature: Project Application documents page
 			| 3                     |
 			| Next set of pages     |
 		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "Next set of pages" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -208,7 +214,7 @@ Feature: Project Application documents page
 			| 3                     |
 			| Next set of pages     |
 		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "Previous set of pages" of the results
 		Then I verify below pagination is present on the page
 			| Data              |
@@ -216,8 +222,8 @@ Feature: Project Application documents page
 			| 2                 |
 			| 3                 |
 			| Next set of pages |
-		Then I verify text "Showing 1 to 20 of 46 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify text "Showing 1 to 25 of 46 results" is present on the page
+		Then I verify that only "25" results present on each page
 
 	Scenario: verify ellipsis on Project application documents page
 		Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
@@ -230,8 +236,8 @@ Feature: Project Application documents page
 			| ...               |
 			| 8                 |
 			| Next set of pages |
-		Then I verify text "Showing 1 to 20 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify text "Showing 1 to 25 of 152 results" is present on the page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "3" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -244,7 +250,7 @@ Feature: Project Application documents page
 			| 8                     |
 			| Next set of pages     |
 		Then I verify text "Showing 41 to 60 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "4" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -258,7 +264,7 @@ Feature: Project Application documents page
 			| 8                     |
 			| Next set of pages     |
 		Then I verify text "Showing 61 to 80 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "Previous set of pages" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -271,7 +277,7 @@ Feature: Project Application documents page
 			| 8                     |
 			| Next set of pages     |
 		Then I verify text "Showing 41 to 60 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "Next set of pages" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
@@ -285,7 +291,7 @@ Feature: Project Application documents page
 			| 8                     |
 			| Next set of pages     |
 		Then I verify text "Showing 61 to 80 of 152 results" is present on the page
-		Then I verify that only "20" results present on each page
+		Then I verify that only "25" results present on each page
 		When I navigate to page "8" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |

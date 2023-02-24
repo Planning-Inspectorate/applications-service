@@ -118,18 +118,18 @@
 				<div id="file-upload-js-content">
 					<div class="moj-multi-file-upload__dropzone">
 						<input type="hidden" id="upload" name="upload" value="true">
+						<p>Drag and drop files here or</p>
 						<input
-							class="dropZone govuk-file-upload moj-multi-file-upload__input"
+							class="dropZone govuk-file-upload moj-multi-file-upload__input ui-file-upload__input"
 							id="file-upload"
 							type="file"
 							multiple
 							accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
 							name="documents"
 						>
-						<p>Drag and drop files here or</p>
 						<label
 							for="file-upload"
-							class="govuk-button govuk-button--secondary"
+							class="govuk-button govuk-button--secondary ui-file-upload__label"
 						>
 							Choose files
 						</label>
@@ -155,19 +155,19 @@
 			>
 				const target = document.documentElement;
 				const dropZone = document.querySelector('.dropZone');
-				const fileInput = document.getElementById('file-upload')
+				const fileInput = document.getElementById('file-upload');
 
-				const input = document.createElement("input");
-				input.setAttribute("type", "hidden");
-				input.setAttribute("name", "isJsEnabled");
-				input.setAttribute("value", "true");
+				const input = document.createElement('input');
+				input.setAttribute('type', 'hidden');
+				input.setAttribute('name', 'isJsEnabled');
+				input.setAttribute('value', 'true');
 
 				const handleChange = (e) => {
 					e.preventDefault();
 					fileInput.files = e.target
 						?.files;
 					document
-						.forms["fileUploadForm"]
+						.forms['fileUploadForm']
 						.submit();
 				};
 
@@ -176,22 +176,22 @@
 					dropZone
 						.classList
 						.add('dragging');
-				}
+				};
 
 				const handleDragLeave = () => {
 					dropZone
 						.classList
 						.remove('dragging');
-				}
+				};
 
 				const handleManualUpload = () => {
 					document
-						.forms["fileUploadForm"]
+						.forms['fileUploadForm']
 						.appendChild(input);
 					document
-						.forms["fileUploadForm"]
+						.forms['fileUploadForm']
 						.submit();
-				}
+				};
 
 				const handleDrop = (e) => {
 					e.preventDefault();
@@ -200,12 +200,12 @@
 						.remove('dragging');
 					fileInput.files = e.dataTransfer.files;
 					document
-						.forms["fileUploadForm"]
+						.forms['fileUploadForm']
 						.appendChild(input);
 					document
-						.forms["fileUploadForm"]
+						.forms['fileUploadForm']
 						.submit();
-				}
+				};
 
 				const handleRemoveEventListener = () => {
 					document
@@ -224,8 +224,8 @@
 						.body
 						.removeEventListener('click', handleManualUpload);
 					handleRemoveUnload();
-					return
-				}
+					return;
+				};
 
 				function handleRemoveUnload() {
 					window.removeEventListener('unload', handleRemoveEventListener);
