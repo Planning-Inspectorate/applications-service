@@ -85,7 +85,7 @@
   }
 
   &__sections {
-    @extend .govuk-\!-margin-bottom-7;
+    @include govuk-responsive-margin(7, "bottom")
   }
 
   &__section {
