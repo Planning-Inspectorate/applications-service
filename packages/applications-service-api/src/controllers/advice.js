@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const logger = require('../lib/logger');
 
-const { getAdvice } = require('../services/advice.service');
+const { getAdvice, getAdviceById } = require('../services/advice.service');
 
 const ApiError = require('../error/apiError');
 
@@ -39,6 +39,31 @@ module.exports = {
 			}
 			logger.error(e.message);
 			res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Problem getting advice \n ${e}`);
+		}
+	},
+
+	async getAdviceById(req, res) {
+		const { adviceID } = req.params;
+		try {
+			logger.debug(`Retrieving advice by ID...`);
+
+			const advice = await getAdviceById(adviceID);
+
+			if (!advice) {
+				throw ApiError.adviceNotFound(adviceID);
+			}
+
+			res.status(StatusCodes.OK).send(advice);
+		} catch (e) {
+			if (e instanceof ApiError) {
+				logger.debug(e.message);
+				res.status(e.code).send({ code: e.code, errors: e.message.errors });
+				return;
+			}
+			logger.error(e.message);
+			res
+				.status(StatusCodes.INTERNAL_SERVER_ERROR)
+				.send(`Problem getting advice ${adviceID} \n ${e}`);
 		}
 	}
 };

@@ -552,7 +552,7 @@ paths:
       parameters:
         - in: path
           name: adviceID
-          example: '"WA023013-Advice-00004'
+          example: 'WA023013-Advice-00005'
           required: true
           schema:
             type: string
