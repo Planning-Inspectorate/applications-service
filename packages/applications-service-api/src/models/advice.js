@@ -1,46 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-	class Advice extends Model {
-		static async findandCountAllWithAttachments(options = {}) {
-			const tableName = Advice.getTableName();
-
-			const adviceCountSql = sequelize.dialect.QueryGenerator.selectQuery(
-				tableName,
-				{
-					attributes: [[sequelize.fn('COUNT', sequelize.col('*')), 'count']],
-					...options
-				},
-				Advice
-			);
-			const adviceAndAttachmentsCountSql = attachmentsJoin(adviceCountSql);
-
-			const adviceSql = sequelize.dialect.QueryGenerator.selectQuery(
-				tableName,
-				{
-					attributes: Object.entries(Advice.rawAttributes).map(([key, attr]) => [attr.field, key]),
-					...options
-				},
-				Advice
-			);
-			const adviceAndAttachmentsSql = attachmentsJoin(adviceSql);
-
-			const [count, rows] = await Promise.all([
-				sequelize.query(adviceAndAttachmentsCountSql, {
-					type: sequelize.QueryTypes.SELECT
-				}),
-				sequelize.query(adviceAndAttachmentsSql, {
-					model: Advice,
-					mapToModel: true
-				})
-			]);
-
-			return {
-				count: count?.[0]?.count ?? 0,
-				rows
-			};
-		}
-	}
+	class Advice extends Model {}
 
 	Advice.init(
 		{
@@ -88,16 +49,3 @@ module.exports = (sequelize, DataTypes) => {
 
 	return Advice;
 };
-
-// This SQL manipulation allows Sequelize to be used with the non-normalised join of Advice to attachments
-function attachmentsJoin(sql) {
-	return sql.replace(
-		'FROM `wp_ipc_advice` AS `Advice`',
-		`FROM (
-			SELECT DISTINCT Advice.*
-			FROM wp_ipc_advice AS Advice 
-			INNER JOIN wp_ipc_documents_api AS Attachment
-			ON Advice.Attachments LIKE CONCAT('%', Attachment.dataID, '%')
-		) as Advice`
-	);
-}
