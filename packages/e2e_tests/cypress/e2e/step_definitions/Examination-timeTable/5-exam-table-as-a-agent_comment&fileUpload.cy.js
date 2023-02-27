@@ -35,7 +35,6 @@ Then('I complete the submission process as a agent with both comments and file u
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then(

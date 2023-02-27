@@ -30,7 +30,6 @@ Then('I complete the submission process as myself - drag and drop', () => {
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then('I sucessfully complete the submission as myself {string}', (successMessage) => {

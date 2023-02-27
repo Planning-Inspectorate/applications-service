@@ -12,7 +12,9 @@ When(
 		dateFilter.applyFilterBtn();
 	}
 );
-
+And('Clicks Apply filter', () => {
+	dateFilter.applyFilterBtn();
+});
 And('The user is presented with an error message', () => {
 	dateFilter.toDateErrors().should('contain', 'The to date must include month');
 });

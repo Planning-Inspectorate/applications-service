@@ -14,6 +14,10 @@ When(
 		dateFilter.toYear().type(yyyy);
 	}
 );
+And('Clicks Apply filter', () => {
+	dateFilter.applyFilterBtn();
+});
+
 Then('A Filtered results section is displayed with the date to active filters', () => {
 	dateFilter.filterResultIcon().should('contain', '6 February 2020');
 	dateFilter.filterResultIcon().then((date_1) => {

@@ -5,7 +5,7 @@ module.exports = {
 
 	pageVerification: (pageName) => {
 		cy.contains('h1', pageName, { matchCase: false }).should('be.visible');
-		cy.history('back');
+		cy.go('back');
 	},
 
 	errorMessages: (errorText) => {

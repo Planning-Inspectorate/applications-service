@@ -39,7 +39,6 @@ Then(
 		examTimetable.deadLineCheckBoxNo(); //You added one deadline item
 		examTimetable.deadLineContinueBtn();
 		examTimetable.continueButton_2();
-		examTimetable.processSubmissionButton();
 	}
 );
 

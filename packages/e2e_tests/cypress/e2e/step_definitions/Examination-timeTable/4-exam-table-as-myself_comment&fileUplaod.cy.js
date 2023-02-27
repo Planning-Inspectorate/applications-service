@@ -32,7 +32,6 @@ Then('I complete the submission process as myself with both comments and file up
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then(

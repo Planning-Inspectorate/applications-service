@@ -27,8 +27,6 @@ Then('I complete the submission process as an organisation', () => {
 	cy.continueButton();
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
-	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then('I sucessfully complete the submission as an organisation {string}', (successMessage) => {

@@ -37,7 +37,6 @@ Then('I complete the submission process as a agent - drag-drop & comment', () =>
 	examTimetable.deadLineCheckBoxNo(); //You added one deadline item
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then(

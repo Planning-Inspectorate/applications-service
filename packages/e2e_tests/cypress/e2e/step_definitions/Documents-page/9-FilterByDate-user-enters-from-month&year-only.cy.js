@@ -12,6 +12,9 @@ When(
 		dateFilter.applyFilterBtn();
 	}
 );
+And('Clicks Apply filter', () => {
+	dateFilter.applyFilterBtn();
+});
 
 Then('The user is presented with an error {string}', (errormessage) => {
 	dateFilter.fromDateErrors().should('be.visible', errormessage);

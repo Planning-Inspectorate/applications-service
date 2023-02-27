@@ -129,7 +129,7 @@ class PO_ExaminationTimetable {
 	}
 
 	continueButton_2() {
-		return cy.get('.govuk-grid-column-two-thirds > .govuk-button').click();
+		return cy.get("a[class='govuk-button']").click();
 	}
 
 	processSubmissionButton() {

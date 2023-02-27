@@ -28,7 +28,6 @@ Then('I complete the submission process as a agent - drag and drop', () => {
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then('I sucessfully complete the submission as a agent {string}', (successMessage) => {

@@ -28,7 +28,6 @@ Then('I complete the submission process as myself', () => {
 	examTimetable.deadLineCheckBoxNo();
 	examTimetable.deadLineContinueBtn();
 	examTimetable.continueButton_2();
-	examTimetable.processSubmissionButton();
 });
 
 Then('I sucessfully complete the submission as myself {string}', (successMessage) => {
