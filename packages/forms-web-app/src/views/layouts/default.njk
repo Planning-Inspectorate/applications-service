@@ -1,53 +1,67 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink -%}
 
 {% set backLinkUrl = backLinkUrl %}
-{%-
-  set initiateScriptsConfig = [
-    {
-      src: "/public/scripts/index.script.js"
-    }
-  ]
--%}
+{%- set initiateScriptsConfig = [
+	{
+		src: "/public/scripts/index.script.js"
+	}
+] -%}
 {% set pageTitle = pageTitle %}
 
 {% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
+	{% if errors %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
 
-  {{ pageTitle }}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block head %}
-  {% include "includes/head.njk" %}
+	{% include "includes/head.njk" %}
 {% endblock %}
 
 {% block bodyStart %}
-  {% include "includes/gtm-no-script.njk" %}
+	{% include "includes/gtm-no-script.njk" %}
 
-  {% include "includes/cookie-banner.njk" %}
+	{% include "includes/cookie-banner.njk" %}
+	<section aria-label="Skip to main content">
+		{{ govukSkipLink({
+			href: '#main-content',
+			text: 'Skip to main content'
+		}) }}
+	</section>
 {% endblock %}
 
 {% block header %}
-  {% include "components/core/header.njk" %}
+	{% include "components/core/header.njk" %}
+{% endblock %}
+
+ {% block skipLink %}
+ {% endblock %}
+
+
+{% block beforeContent %}
+	<section aria-label="service status banner">
+		{% include "components/core/banner.njk" %}
+	</section>
+	{% if backLinkUrl %}
+		<section aria-label="back link">
+			{% include "components/core/back-link.njk" %}
+		</section>
+	{% endif %}
 {% endblock %}
 
 {% block main %}
-  {{ super() }}
-{% endblock %}
-
-{% block beforeContent %}
-  {% include "components/core/banner.njk" %}
-
-  {% include "components/core/back-link.njk" %}
+	{{ super() }}
 {% endblock %}
 
 {% block footer %}
-  {% include "components/core/footer.njk" %}
+	{% include "components/core/footer.njk" %}
 {% endblock %}
 
 {% block bodyEnd %}
-  {% block script %}{% endblock %}
+	{% block script %}{% endblock %}
 
-  {% include "includes/initiate-scripts.njk" %}
+	{% include "includes/initiate-scripts.njk" %}
 {% endblock %}
