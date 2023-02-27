@@ -170,6 +170,7 @@ describe('#getApplicationDocuments', () => {
 					baseUrl: '/projects/mock-case-ref',
 					caseRef: 'mock-case-ref',
 					displayClearAllFilters: false,
+					displayFilters: true,
 					errorSummary: null,
 					documents: [
 						{
