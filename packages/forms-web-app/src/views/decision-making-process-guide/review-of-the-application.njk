@@ -3,55 +3,58 @@
 {% from "../components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-  Acceptance for examination
-{% endblock %}
-
-{% block beforeContent %}
-  {% include "../components/core/banner.njk" %}
+	Acceptance for examination
 {% endblock %}
 
 {% block content %}
+	<h1 class="govuk-heading-xl">
+		Acceptance for examination
+	</h1>
+	<h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#about-the-review-of-the-application">The acceptance for examination stage</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#what-the-planning-inspectorate-does-to-review-the-application">What we consider at
+				the acceptance for examination stage</a>
+		</li>
+	</ol>
 
-  <h1 class="govuk-heading-xl">
-  Acceptance for examination
-</h1>
-  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
-  <ol class="govuk-list style-contents-list">
-    <li>
-      <a class="govuk-link" href="#about-the-review-of-the-application">The acceptance for examination stage</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="#what-the-planning-inspectorate-does-to-review-the-application">What we consider at the acceptance for examination stage</a>
-    </li>
-  </ol>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 class="govuk-heading-m" id="about-the-review-of-the-application">The acceptance for examination stage</h2>
+				<p class="govuk-body">This is where the developer sends us their application. The application must include all
+					the required documents as set out in legislation and details of the consultation the developer has carried out
+					during the pre-application stage. We look at the documents to check if we can accept the application for
+					examination. We have 28 days to make this decision.</p>
+				<p class="govuk-body">This stage can have one of 3 outcomes:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>we accept the application for examination</li>
+					<li>we do not accept the application</li>
+					<li>the developer withdraws their application</li>
+				</ul>
+				<p class="govuk-body">If it is accepted, the application will progress to the pre-examination stage.</p>
+				<p class="govuk-body">The examining authority examines the application and makes a recommendation to the
+					relevant Secretary of State, who then decides whether the development can go ahead.</p>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
-        <h2 class="govuk-heading-m" id="about-the-review-of-the-application">The acceptance for examination stage</h2>
-        <p class="govuk-body">This is where the developer sends us their application. The application must include all the required documents as set out in legislation and details of the consultation the developer has carried out during the pre-application stage. We look at the documents to check if we can accept the application for examination. We have 28 days to make this decision.</p>
-        <p class="govuk-body">This stage can have one of 3 outcomes:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>we accept the application for examination</li>
-          <li>we do not accept the application</li>
-          <li>the developer withdraws their application</li>
-        </ul>
-        <p class="govuk-body">If it is accepted, the application will progress to the pre-examination stage.</p>
-        <p class="govuk-body">The examining authority examines the application and makes a recommendation to the relevant Secretary of State, who then decides whether the development can go ahead.</p>
+				<h2 class="govuk-heading-m" id="what-the-planning-inspectorate-does-to-review-the-application">What we consider
+					at the acceptance for examination stage</h2>
+				<p class="govuk-body">Our team will check the application to make sure the developer has submitted all the
+					documents required by law and that these are of a satisfactory standard to examine the application.</p>
+				<p class="govuk-body">If anything missing or we need more information, we may not be able to accept the
+					application for examination.</p>
 
-        <h2 class="govuk-heading-m" id="what-the-planning-inspectorate-does-to-review-the-application">What we consider at the acceptance for examination stage</h2>
-        <p class="govuk-body">Our team will check the application to make sure the developer has submitted all the documents required by law and that these are of a satisfactory standard to examine the application.</p>
-        <p class="govuk-body">If anything missing or we need more information, we may not be able to accept the application for examination.</p>
+				{{ uiNextStep("/decision-making-process-guide/pre-examination", "Pre-examination") }}
+			</div>
+		</div>
 
-        {{ uiNextStep("/decision-making-process-guide/pre-examination", "Pre-examination") }}
-      </div>
-    </div>
+		<div class="govuk-grid-column-one-third">
+			{% set currentDefaultStep = 1 %}
+			{% include "../includes/dco-step-by-step-navigation.njk" %}
+		</div>
 
-    <div class="govuk-grid-column-one-third">
-      {% set currentDefaultStep = 1 %}
-      {% include "../includes/dco-step-by-step-navigation.njk" %}
-    </div>
-
-  </div>
+	</div>
 
 {% endblock %}

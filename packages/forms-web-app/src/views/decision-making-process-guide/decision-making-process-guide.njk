@@ -1,22 +1,20 @@
 {% extends "layouts/layout.njk" %}
 
 {% block script %}
-	{%
-		set initiatePageConfig = [{
-			callback: "
+	{% set initiatePageConfig = [{
+		callback: "
 				var initiateStepByStep = new appScripts.stepByStep();
 				initiateStepByStep.start('#step-by-step-navigation');
 			",
-			src: "/public/scripts/stepByStep.script.js"
-		}]
-	%}
+		src: "/public/scripts/stepByStep.script.js"
+	}] %}
 
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
 		callback: "
  var initiatePage = new appScripts.initiate();
 		initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
 		",
- src: "/assets/jquery.js"
+		src: "/assets/jquery.js"
 	}), initiateScriptsConfig) %}
 {% endblock %}
 
@@ -24,16 +22,13 @@
 	The process for nationally significant infrastructure projects (NSIPs)
 {% endblock %}
 
-{% block beforeContent %}
-	{% include "../components/core/banner.njk" %}
-{% endblock %}
-
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 
 			<h1 class="govuk-heading-xl">The process for nationally significant infrastructure projects (NSIPs)</h1>
-			<p class="govuk-body">Nationally significant infrastructure projects are submitted to the planning inspectorate who examines the proposal.</p>
+			<p class="govuk-body">Nationally significant infrastructure projects are submitted to the planning inspectorate
+				who examines the proposal.</p>
 			<p class="govuk-body">Anyone can get involved:
 			</p>
 			<ul class="govuk-list govuk-list--bullet">
@@ -43,7 +38,8 @@
 				<li>charities</li>
 				<li>local authorities</li>
 			</ul>
-			<p class="govuk-body">A developer submits an application for a development consent order to the planning inspectorate. These can be developments like:
+			<p class="govuk-body">A developer submits an application for a development consent order to the planning
+				inspectorate. These can be developments like:
 			</p>
 			<ul class="govuk-list govuk-list--bullet">
 				<li>offshore wind farms</li>
@@ -52,22 +48,29 @@
 				<li>railways</li>
 				<li>gas pipelines</li>
 			</ul>
-			<p>The planning inspectorate is a government agency. Independent inspectors make a recommendation to the relevant Secretary of State about if permission for a proposed development should be granted. The relevant Secretary of State makes the final decision.
+			<p>The planning inspectorate is a government agency. Independent inspectors make a recommendation to the relevant
+				Secretary of State about if permission for a proposed development should be granted. The relevant Secretary of
+				State makes the final decision.
 			</p>
-			<p class="govuk-body">There are several stages in the process for considering whether a national infrastructure project should receive consent. The whole process can take around 18 months.
+			<p class="govuk-body">There are several stages in the process for considering whether a national infrastructure
+				project should receive consent. The whole process can take around 18 months.
 			</p>
 
 			<h2 class="govuk-heading-m">Guide for people or organisations who want to have their say</h2>
 
-			<p class="govuk-body">You can get involved at the pre-application stage by contacting the developer before they submit their application to the planning inspectorate.
+			<p class="govuk-body">You can get involved at the pre-application stage by contacting the developer before they
+				submit their application to the planning inspectorate.
 			</p>
-			<p class="govuk-body">If you want to register to have your say about a national infrastructure project, you can register during the pre-examination stage.
+			<p class="govuk-body">If you want to register to have your say about a national infrastructure project, you can
+				register during the pre-examination stage.
 			</p>
 			<p>There is a
 				<a class="govuk-link" href="../having-your-say-guide/">guide</a>
-				with information for people or organisations who want to have their say about a national infrastructure project.</p>
+				with information for people or organisations who want to have their say about a national infrastructure project.
+			</p>
 
-			<div id="step-by-step-navigation" class="ui-step-nav ui-step-nav--large ui-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
+			<div id="step-by-step-navigation" class="ui-step-nav ui-step-nav--large ui-step-nav--active" data-show-text="Show"
+					 data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
 				<ol class="ui-step-nav__steps">
 					<li class="ui-step-nav__step js-step" id="pre-application">
 						<div class="ui-step-nav__header js-toggle-panel" data-position="1">
@@ -88,10 +91,14 @@
 						</div>
 
 						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-pre-application-1">
-							<p class="govuk-body">This is where the developer creates their application. They must also begin to consult with organisations and people living in the area. They must also create detailed documents about the impact the project could have on the environment.</p>
-							<p class="govuk-body">It is important to get involved at this stage to influence the application before the developer sends it to the planning inspectorate.</p>
+							<p class="govuk-body">This is where the developer creates their application. They must also begin to
+								consult with organisations and people living in the area. They must also create detailed documents about
+								the impact the project could have on the environment.</p>
+							<p class="govuk-body">It is important to get involved at this stage to influence the application before
+								the developer sends it to the planning inspectorate.</p>
 							<p class="govuk-body">
-								<a class="govuk-link" href="/decision-making-process-guide/pre-application">Find out what you can do at this stage and check our detailed guides</a>
+								<a class="govuk-link" href="/decision-making-process-guide/pre-application">Find out what you can do at
+									this stage and check our detailed guides</a>
 							</p>
 						</div>
 
@@ -115,9 +122,11 @@
 						</div>
 
 						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-review-of-the-application-2">
-							<p class="govuk-body">This is when the developer sends us their application documents. We check if we can accept the application for examination. We have 28 days to make this decision.</p>
+							<p class="govuk-body">This is when the developer sends us their application documents. We check if we can
+								accept the application for examination. We have 28 days to make this decision.</p>
 							<p class="govuk-body">
-								<a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">How the acceptance stage works and what happens next</a>
+								<a class="govuk-link" href="/decision-making-process-guide/review-of-the-application">How the acceptance
+									stage works and what happens next</a>
 							</p>
 						</div>
 
@@ -141,11 +150,15 @@
 						</div>
 
 						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-pre-examination-3">
-							<p class="govuk-body">The examining authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say will be able to register at this stage.</p>
-							<p class="govuk-body">The developer must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the developer but must be no less than 28 days.</p>
+							<p class="govuk-body">The examining authority is appointed and is made up of one or more inspectors.
+								Anyone who wants to have their say will be able to register at this stage.</p>
+							<p class="govuk-body">The developer must publish that the application has been accepted by us. They
+								include when and how parties can register to get involved. The time period for registering is set by the
+								developer but must be no less than 28 days.</p>
 							<p class="govuk-body">The pre-examination stage usually takes about 3 months.</p>
 							<p class="govuk-body">
-								<a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the pre-examination stage</a>
+								<a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the
+									pre-examination stage</a>
 							</p>
 						</div>
 
@@ -169,9 +182,13 @@
 						</div>
 
 						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-examination-of-the-project-4">
-							<p class="govuk-body">The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.</p>
+							<p class="govuk-body">The examining authority will ask questions about the proposed development. The
+								developer and anyone who has registered to have their say can get involved and submit comments at each
+								deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6
+								months.</p>
 							<p class="govuk-body">
-								<a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application">What happens at the examination of the application</a>
+								<a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application">What happens
+									at the examination of the application</a>
 							</p>
 						</div>
 
@@ -195,10 +212,13 @@
 						</div>
 
 						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-recommendation-and-decision-5">
-							<p class="govuk-body">The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.</p>
-							<p class="govuk-body">The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.</p>
+							<p class="govuk-body">The examining authority writes its recommendation report. This must be completed and
+								sent to the relevant Secretary of State within 3 months of the end of examination.</p>
+							<p class="govuk-body">The decision stage is when the relevant Secretary of State then reviews the report
+								and makes the final decision. They have 3 months to make a decision.</p>
 							<p class="govuk-body">
-								<a class="govuk-link" href="/decision-making-process-guide/recommendation-and-decision">Making a recommendation and who makes the final decision</a>
+								<a class="govuk-link" href="/decision-making-process-guide/recommendation-and-decision">Making a
+									recommendation and who makes the final decision</a>
 							</p>
 						</div>
 					</li>
@@ -221,7 +241,8 @@
 						</div>
 
 						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-after-a-decision-is-made-6">
-							<p class="govuk-body">Once the Secretary of State has made a decision, there is a 6-week period where people can challenge the decision in the high court. This is called a judicial review.</p>
+							<p class="govuk-body">Once the Secretary of State has made a decision, there is a 6-week period where
+								people can challenge the decision in the high court. This is called a judicial review.</p>
 						</div>
 					</li>
 				</ol>

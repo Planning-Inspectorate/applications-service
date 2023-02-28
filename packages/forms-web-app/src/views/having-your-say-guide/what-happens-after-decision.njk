@@ -1,39 +1,38 @@
 {% extends "layouts/layout.njk" %}
 
 {% block pageTitle %}
-  What you can do after the decision has been made - National Infrastructure Planning
-{% endblock %}
-
-{% block beforeContent %}
-  {% include "../components/core/banner.njk" %}
+	What you can do after the decision has been made - National Infrastructure Planning
 {% endblock %}
 
 {% block content %}
 
-  <h1 class="govuk-heading-xl">
-      What you can do after the decision has been made
-    </h1>
-  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
-  <ol class="govuk-list style-contents-list">
-    <li>
-      <a class="govuk-link" href="#after-decision">After the decision is made</a>
-    </li>
-  </ol>
+	<h1 class="govuk-heading-xl">
+		What you can do after the decision has been made
+	</h1>
+	<h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#after-decision">After the decision is made</a>
+		</li>
+	</ol>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
-        <h2 class="govuk-heading-m" id="after-decision">After the decision is made</h2>
-        <p class="govuk-body">After the relevant Secretary of State has made their decision, there is a six-week period where people can challenge the decision in the High Court. This is called a Judicial Review.</p>
-        <p class="govuk-body">You can <a target="_blank" class="govuk-link" href="https://www.gov.uk/courts-tribunals/administrative-court">find out more about the Judicial Review process and how it works (opens in a new tab)</a>.</p>
-      </div>
-    </div>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 class="govuk-heading-m" id="after-decision">After the decision is made</h2>
+				<p class="govuk-body">After the relevant Secretary of State has made their decision, there is a six-week period
+					where people can challenge the decision in the High Court. This is called a Judicial Review.</p>
+				<p class="govuk-body">You can <a target="_blank" class="govuk-link"
+																				 href="https://www.gov.uk/courts-tribunals/administrative-court">find out more
+						about the Judicial Review process and how it works (opens in a new tab)</a>.</p>
+			</div>
+		</div>
 
-    <div class="govuk-grid-column-one-third">
-      {% set currentDefaultStep = 5 %}
-      {% include "../includes/step-by-step-navigation.njk" %}
-    </div>
+		<div class="govuk-grid-column-one-third">
+			{% set currentDefaultStep = 5 %}
+			{% include "../includes/step-by-step-navigation.njk" %}
+		</div>
 
-  </div>
+	</div>
 
 {% endblock %}

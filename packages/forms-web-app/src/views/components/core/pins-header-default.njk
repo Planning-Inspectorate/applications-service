@@ -1,0 +1,40 @@
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+
+{% macro pinsHeaderDefault(title, backLink) %}
+	<header role="banner">
+		{{ govukSkipLink({
+			href: '#main-content',
+			text: 'Skip to main content'
+		}) }}
+
+		<div class="pins-header">
+			<div class="govuk-width-container">
+				{% include "components/core/pins-logo.njk" %}
+
+				{% if title %}
+					<span class="pins-header__title">
+            <strong>
+              {{ title }}
+            </strong>
+          </span>
+				{% endif %}
+			</div>
+		</div>
+
+		<div class="govuk-width-container">
+			{% include "components/core/banner.njk" %}
+			{% if backLink %}
+				{% if backLink == 'show' %}
+					<a class="govuk-back-link" href="javascript:history.back()">Back</a>
+				{% else %}
+					{{ govukBackLink({
+						href: backLink,
+						text: "Back"
+					}) }}
+				{% endif %}
+
+			{% endif %}
+		</div>
+	</header>
+{% endmacro %}
