@@ -1,53 +1,46 @@
 {% extends "govuk/template.njk" %}
 
-{% set backLinkUrl = backLinkUrl %}
-{%-
-  set initiateScriptsConfig = [
-    {
-      src: "/public/scripts/index.script.js"
-    }
-  ]
--%}
+{% from "components/core/pins-header-default.njk" import pinsHeaderDefault %}
+
 {% set pageTitle = pageTitle %}
+{% set headerTitle = headerTitle %}
+{% set backLinkUrl = backLinkUrl %}
+{%- set initiateScriptsConfig = [{ src: "/public/scripts/index.script.js" }] -%}
 
 {% block pageTitle %}
-  {% if errors %}
-    {% set pageTitle = "Error: " + pageTitle %}
-  {% endif %}
+	{% if errors %}
+		{% set pageTitle = "Error: " + pageTitle %}
+	{% endif %}
 
-  {{ pageTitle }}
+	{{ pageTitle }}
 {% endblock %}
 
 {% block head %}
-  {% include "includes/head.njk" %}
+	{% include "includes/head.njk" %}
 {% endblock %}
 
 {% block bodyStart %}
-  {% include "includes/gtm-no-script.njk" %}
+	{% include "includes/gtm-no-script.njk" %}
 
-  {% include "includes/cookie-banner.njk" %}
+	{% include "includes/cookie-banner.njk" %}
 {% endblock %}
 
+{% block skipLink %}{% endblock %}
+
 {% block header %}
-  {% include "components/core/header.njk" %}
+	{{ pinsHeaderDefault(headerTitle, backLinkUrl) }}
 {% endblock %}
 
 {% block main %}
-  {{ super() }}
-{% endblock %}
-
-{% block beforeContent %}
-  {% include "components/core/banner.njk" %}
-
-  {% include "components/core/back-link.njk" %}
+	{{ super() }}
 {% endblock %}
 
 {% block footer %}
-  {% include "components/core/footer.njk" %}
+	{% include "components/core/footer.njk" %}
 {% endblock %}
 
 {% block bodyEnd %}
-  {% block script %}{% endblock %}
+	{% block script %}{% endblock %}
 
-  {% include "includes/initiate-scripts.njk" %}
+	{% include "includes/initiate-scripts.njk" %}
 {% endblock %}

@@ -1,10 +1,11 @@
 {% extends "govuk/template.njk" %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "pins/components/header/macro.njk" import pinsHeader %}
 {% from "pins/components/footer/macro.njk" import pinsFooter %}
+{% from "components/core/pins-header-layout.njk" import pinsHeaderLayout %}
 
 {% set bodyClasses = '-extended-max-width' %}
+{% set headerTitle = headerTitle %}
 
 {% set a_href = "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice" %}
 
@@ -17,13 +18,12 @@
 	{% include "includes/head.njk" %}
 {% endblock %}
 
+{% block skipLink %}{% endblock %}
+
 {% block header %}
 	{% include "includes/cookie-banner.njk" %}
 
-	{{ pinsHeader({
-		serviceName: serviceName,
-		containerClasses: "govuk-width-container"
-	}) }}
+	{{ pinsHeaderLayout(headerTitle) }}
 {% endblock %}
 
 {% block bodyStart %}

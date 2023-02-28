@@ -3,70 +3,84 @@
 {% from "../components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-  Have your say during the Examination of the application - National Infrastructure Planning
+	Have your say during the Examination of the application - National Infrastructure Planning
 {% endblock %}
-
-{% block beforeContent %}
-  {% include "../components/core/banner.njk" %}
-{% endblock %}
-
 
 {% block content %}
+	<h1 class="govuk-heading-xl">
+		Have your say during the Examination of the application
+	</h1>
+	<h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#what-examination-means">What Examination means</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#how-to-comment-during-examination">How to comment during examination</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#missed-deadline">If you have missed the deadline to register</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
+		</li>
+	</ol>
 
-  <h1 class="govuk-heading-xl">
-        Have your say during the Examination of the application
-    </h1>
-  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
-  <ol class="govuk-list style-contents-list">
-    <li>
-      <a class="govuk-link" href="#what-examination-means">What Examination means</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="#how-to-comment-during-examination">How to comment during examination</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="#missed-deadline">If you have missed the deadline to register</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
-    </li>
-  </ol>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 id="what-examination-means" class="govuk-heading-m">What Examination means</h2>
+				<p class="govuk-body">The Examination stage is where the Examining Authority will look at the proposed project
+					and ask questions.</p>
+				<p class="govuk-body">The developer, anyone who is registered to have their say, and anyone else involved in the
+					project can comment on the proposed development or answer any of the questions at each deadline.</p>
+				<p class="govuk-body">This is usually done in writing. The Examining Authority will create and publish a
+					document of their questions. The Examination may also involve hearings if there are issues that need to be
+					discussed in more detail.</p>
+				<p class="govuk-body">The Examining Authority will send you a timetable with the dates of each deadline for
+					sending your comments. All comments will be published in the project section of this website after they’ve
+					been received.</p>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
-        <h2 id="what-examination-means" class="govuk-heading-m">What Examination means</h2>
-        <p class="govuk-body">The Examination stage is where the Examining Authority will look at the proposed project and ask questions.</p>
-        <p class="govuk-body">The developer, anyone who is registered to have their say, and anyone else involved in the project can comment on the proposed development or answer any of the questions at each deadline.</p>
-        <p class="govuk-body">This is usually done in writing. The Examining Authority will create and publish a document of their questions. The Examination may also involve hearings if there are issues that need to be discussed in more detail.</p>
-        <p class="govuk-body">The Examining Authority will send you a timetable with the dates of each deadline for sending your comments. All comments will be published in the project section of this website after they’ve been received.</p>
+				<h2 id="how-to-comment-during-examination" class="govuk-heading-m">How to comment during examination</h2>
+				<p class="govuk-body">All project documents, comments from others who have registered or have a statutory right,
+					and Examination questions will be published in the specific project section of this website.</p>
+				<p class="govuk-body">You can view these documents and make comments by filling in the online form in the
+					project section of this website.</p>
+				<p class="govuk-body">If you have difficulty using online services, you can also send us information by email or
+					post. You can check the project information in the project section of this website to find contact details for
+					the Planning Inspectorate's case team.</p>
+				<p class="govuk-body">Your name and comments will be published alongside the other documents in the project
+					section of this website. Your address, email address and telephone number will be kept private. <a
+						target="_blank" class="govuk-link"
+						href="https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice">You
+						can view our privacy notice for more information (opens in a new tab)</a>
+				</p>
 
-        <h2 id="how-to-comment-during-examination" class="govuk-heading-m">How to comment during examination</h2>
-        <p class="govuk-body">All project documents, comments from others who have registered or have a statutory right, and Examination questions will be published in the specific project section of this website.</p>
-        <p class="govuk-body">You can view these documents and make comments by filling in the online form in the project section of this website.</p>
-        <p class="govuk-body">If you have difficulty using online services, you can also send us information by email or post. You can check the project information in the project section of this website to find contact details for the Planning Inspectorate's case team.</p>
-        <p class="govuk-body">Your name and comments will be published alongside the other documents in the project section of this website. Your address, email address and telephone number will be kept private. <a target="_blank" class="govuk-link" href="https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice">You can view our privacy notice for more information (opens in a new tab)</a>
-        </p>
+				<h2 id="missed-deadline" class="govuk-heading-m">If you have missed the deadline to register to have your
+					say</h2>
+				<p class="govuk-body">You can still look at all of the project information and use the submission form at the
+					Examination stage to submit information, but there is no guarantee that your views will be included in the
+					Examination of the application.</p>
+				<p class="govuk-body">If you choose to submit information at Examination without being registered, the Examining
+					Authority will decide if your views can be taken into account.</p>
 
-        <h2 id="missed-deadline" class="govuk-heading-m">If you have missed the deadline to register to have your say</h2>
-        <p class="govuk-body">You can still look at all of the project information and use the submission form at the Examination stage to submit information, but there is no guarantee that your views will be included in the Examination of the application.</p>
-        <p class="govuk-body">If you choose to submit information at Examination without being registered, the Examining Authority will decide if your views can be taken into account.</p>
+				<h2 id="more-detailed-advice" class="govuk-heading-m">More detailed advice</h2>
+				<p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
+				<p class="govuk-body">
+					<a target="_blank" class="govuk-link"
+						 href="https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/">Read the
+						full set of advice notes (opens in a new tab)</a>
+				</p>
 
-        <h2 id="more-detailed-advice" class="govuk-heading-m">More detailed advice</h2>
-        <p class="govuk-body">If you need more detailed advice, you can check our advice notes for more information.</p>
-        <p class="govuk-body">
-          <a target="_blank" class="govuk-link" href="https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/">Read the full set of advice notes (opens in a new tab)</a>
-        </p>
+				{{ uiNextStep("/having-your-say-guide/what-happens-after-decision", "What you can do after the decision has been made") }}
+			</div>
+		</div>
 
-        {{ uiNextStep("/having-your-say-guide/what-happens-after-decision", "What you can do after the decision has been made") }}
-      </div>
-    </div>
+		<div class="govuk-grid-column-one-third">
+			{% set currentDefaultStep = 4 %}
+			{% include "../includes/step-by-step-navigation.njk" %}
+		</div>
 
-    <div class="govuk-grid-column-one-third">
-      {% set currentDefaultStep = 4 %}
-      {% include "../includes/step-by-step-navigation.njk" %}
-    </div>
-
-  </div>
+	</div>
 
 {% endblock %}
