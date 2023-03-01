@@ -38,7 +38,9 @@ module.exports = {
 				return;
 			}
 			logger.error(e.message);
-			res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Problem getting advice \n ${e}`);
+			res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+				message: `Problem getting advice \n ${e}`
+			});
 		}
 	},
 
@@ -61,9 +63,9 @@ module.exports = {
 				return;
 			}
 			logger.error(e.message);
-			res
-				.status(StatusCodes.INTERNAL_SERVER_ERROR)
-				.send(`Problem getting advice ${adviceID} \n ${e}`);
+			res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+				message: `Problem getting advice ${adviceID} \n ${e}`
+			});
 		}
 	}
 };
