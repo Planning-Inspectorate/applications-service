@@ -2,6 +2,13 @@ class PO_DateFilter {
 	datePublishedLink() {
 		return cy.contains('Date published').click();
 	}
+
+	docProjectLink() {
+		return cy.visit(
+			'https://applications-service-test.planninginspectorate.gov.uk/projects/BC080001/documents',
+			{ failOnStatusCode: false }
+		);
+	}
 	// From date published box
 
 	fromDay() {

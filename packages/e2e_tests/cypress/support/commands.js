@@ -19,4 +19,8 @@ Cypress.Commands.add('continueButton', () => {
 	cy.get('form > button.govuk-button').click();
 });
 
+Cypress.Commands.add('documentResults', () => {
+	cy.get('.section-results__result-link');
+});
+
 import 'cypress-file-upload';
