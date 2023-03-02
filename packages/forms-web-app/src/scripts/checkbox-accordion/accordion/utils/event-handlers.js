@@ -1,18 +1,29 @@
 const {
 	isEveryAccordionSectionSwitchChecked,
-	isAccordionSwitchStateExpanded
+	isAccordionSwitchStateExpanded,
+	isAccordionSectionSwitchChecked
 } = require('./helpers');
 const {
 	setAccordionSwitchState,
 	toggleAccordionSwitchState,
-	setAccordionSectionSwitchesChecked
+	setAccordionSectionSwitchesChecked,
+	setAccordionSectionSwitchState
 } = require('./setters');
 
-const onAccordionSectionSwitchChange = (accordionSectionSwitches, accordionSwitch) =>
+const onAccordionSectionSwitchChange = (
+	accordionSectionSwitch,
+	accordionSectionSwitches,
+	accordionSwitch
+) => {
+	setAccordionSectionSwitchState(
+		accordionSectionSwitch,
+		isAccordionSectionSwitchChecked(accordionSectionSwitch)
+	);
 	setAccordionSwitchState(
 		accordionSwitch,
 		`${isEveryAccordionSectionSwitchChecked(accordionSectionSwitches)}`
 	);
+};
 
 const onAccordionSwitchClick = (accordionSectionSwitches, accordionSwitch) => {
 	toggleAccordionSwitchState(accordionSwitch);
