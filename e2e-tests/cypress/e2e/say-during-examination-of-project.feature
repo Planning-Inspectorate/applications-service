@@ -7,7 +7,7 @@ Feature: Have your say during the examination of the project page
     Background: Navigate to page
         Given I navigate to Have your say during the examination of the project page
 
-    Scenario: verify page title and click Nationally Significant Infrastructure planning process step by step link
+    Scenario: verify page title and click Having your say about a national infrastructure project link
         Then I am on the "Have your say during the examination of the project" page
         And I verify below links present on Have your say during the examination of the project
             | Links                                       |
@@ -15,7 +15,7 @@ Feature: Have your say during the examination of the project page
             | How to comment during examination           |
             | If you have missed the deadline to register |
             | More detailed advice                        |
-        When I click on "The Nationally Significant Infrastructure planning process step by step" link
+        When I click on "Having your say about a national infrastructure project" link
         Then I am on the "Having your say about a national infrastructure project" page
 
     Scenario: click taking part in the pre-application stage link
