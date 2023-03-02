@@ -1,8 +1,11 @@
 const { VIEW } = require('../lib/views');
 const { nsipProjectLink } = require('../lib/nsip-project-link');
+const { referrerBackLink } = require('../utils/referrer-back-link');
 
-exports.getHavingYourSayAboutProject = (_, res) => {
-	res.render(VIEW.INTERESTED_PARTY_GUIDE.INTERESTED_PARTY);
+exports.getHavingYourSayAboutProject = (req, res) => {
+	res.render(VIEW.INTERESTED_PARTY_GUIDE.INTERESTED_PARTY, {
+		backLink: referrerBackLink(req.get('Referrer'), req.session)
+	});
 };
 
 exports.getHavingYourSayPreApp = (_, res) => {
