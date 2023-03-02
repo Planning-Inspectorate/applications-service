@@ -3,6 +3,7 @@ const { mapFilterTypeToCheckBox } = require('./mappers');
 const convertFilterToPageView = (filter, type) => {
 	return {
 		idPrefix: formatName(filter),
+		isOpen: false,
 		items: mapFilterTypeToCheckBox(filter.type),
 		label: filter.label,
 		name: formatName(filter),

@@ -95,6 +95,7 @@ describe('#getApplicationDocuments', () => {
 						filters: [
 							{
 								idPrefix: 'mock filter-1',
+								isOpen: false,
 								label: 'mock label',
 								items: [
 									{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
@@ -189,6 +190,7 @@ describe('#getApplicationDocuments', () => {
 					filters: [
 						{
 							idPrefix: 'mock filter-1',
+							isOpen: false,
 							label: 'mock label',
 							items: [
 								{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }

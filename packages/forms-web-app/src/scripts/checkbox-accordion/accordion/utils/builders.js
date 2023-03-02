@@ -1,4 +1,4 @@
-const { accordionSwitchId } = require('./config');
+const { accordionSwitchClassId, accordionSwitchId } = require('./config');
 const { getAccordionSections } = require('./getters');
 const { setAccordionSwitchState } = require('./setters');
 
@@ -11,7 +11,8 @@ const buildAccordionSwitch = (accordion) => {
 const createAccordionSwitch = () => {
 	const accordionSwitch = document.createElement('button');
 	accordionSwitch.type = 'button';
-	accordionSwitch.classList = accordionSwitchId;
+	accordionSwitch.setAttribute('class', accordionSwitchClassId);
+	accordionSwitch.setAttribute('id', accordionSwitchId);
 	return accordionSwitch;
 };
 
