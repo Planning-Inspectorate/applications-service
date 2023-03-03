@@ -1,4 +1,4 @@
-const { checkboxesId, checkboxesSectionId, checkboxesSectionSwitchId } = require('./config');
+const { checkboxesId, checkboxesSectionId, checkboxesSectionSwitchClassId } = require('./config');
 
 const getCheckboxes = (checkboxesSection) => [
 	...checkboxesSection.querySelectorAll(`.${checkboxesId}`)
@@ -7,7 +7,7 @@ const getCheckboxes = (checkboxesSection) => [
 const getCheckboxesSections = () => [...document.querySelectorAll(`.${checkboxesSectionId}`)];
 
 const getCheckboxesSectionSwitch = (checkboxesSection) =>
-	checkboxesSection.querySelector(`.${checkboxesSectionSwitchId}`);
+	checkboxesSection.querySelector(`.${checkboxesSectionSwitchClassId}`);
 
 module.exports = {
 	getCheckboxes,

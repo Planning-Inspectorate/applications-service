@@ -41,8 +41,11 @@
 							<detail class="ui-checkbox-accordion__section">
 								<input
 									aria-controls="{{ sectionAriaControlsId }}"
+									aria-expanded="{{ section.isOpen }}"
+									aria-pressed="{{ section.isOpen }}"
 									class="ui-checkbox-accordion__section-switch"
 									id="{{ sectionInputId }}"
+									role="button"
 									type="checkbox"
 									{% if section.isOpen %}
 									checked
