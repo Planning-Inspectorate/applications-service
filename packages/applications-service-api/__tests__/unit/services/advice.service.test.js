@@ -36,14 +36,14 @@ const Attachment = dbMock.define('Attachment');
 
 const mockFindAndCountAll = jest.fn();
 const mockFindOne = jest.fn();
-const mockFindAllAttachments = jest.fn();
+const mockFindAllAttachmentsWithCase = jest.fn();
 jest.mock('../../../src/models', () => ({
 	Advice: {
 		findAndCountAll: (query) => mockFindAndCountAll(query),
 		findOne: (query) => mockFindOne(query)
 	},
 	Attachment: {
-		findAllAttachments: (query) => mockFindAllAttachments(query)
+		findAllAttachmentsWithCase: (query) => mockFindAllAttachmentsWithCase(query)
 	}
 }));
 
@@ -152,7 +152,9 @@ describe('Advice Service', () => {
 	describe('getAdviceById', () => {
 		it('should get advice from mock model', async () => {
 			mockFindOne.mockResolvedValueOnce(Advice.build({ ...mockAdvice }));
-			mockFindAllAttachments.mockResolvedValueOnce([Attachment.build({ ...mockAttachment })]);
+			mockFindAllAttachmentsWithCase.mockResolvedValueOnce([
+				Attachment.build({ ...mockAttachment })
+			]);
 
 			const advice = await getAdviceById('adviceid123');
 			delete advice.id;
