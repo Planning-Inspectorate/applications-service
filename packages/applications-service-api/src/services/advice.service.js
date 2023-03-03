@@ -37,20 +37,19 @@ module.exports = {
 	},
 
 	async getAdviceById(adviceID) {
-		const [advice, attachments] = await Promise.all([
-			db.Advice.findOne({
-				where: {
-					adviceID
-				}
-			}),
-			db.Attachment.findAllAttachments({
-				where: {
-					adviceID
-				}
-			})
-		]);
+		const advice = await db.Advice.findOne({
+			where: {
+				adviceID
+			}
+		});
 
 		if (!advice) return undefined;
+
+		const attachments = await db.Attachment.findAllAttachmentsWithCase(advice.caseReference, {
+			where: {
+				adviceID
+			}
+		});
 
 		const adviceDTO = advice.get({
 			plain: true
