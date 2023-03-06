@@ -9,7 +9,7 @@ info:
 
 servers:
   - url: '/'
-          
+
 paths:
   '/api/v1/applications/{id}':
     get:
@@ -488,7 +488,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
         '500':
-          description: Internal server error      
+          description: Internal server error
 
   '/api/v1/advice':
     get:
@@ -541,7 +541,36 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
         '500':
-          description: Internal server error   
+          description: Internal server error
+
+  '/api/v1/advice/{adviceID}':
+    get:
+      summary: Returns project advice item
+      description: Returns project advice resource
+      tags:
+        - Advice
+      parameters:
+        - in: path
+          name: adviceID
+          example: 'WA023013-Advice-00005'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns advice resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdviceWithAttachments'
+        '400':
+          description: Invalid parameter values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Internal server error
 
   '/test':
     get:
@@ -1542,29 +1571,30 @@ components:
           format: date-time
           example: '2016-04-28 08:42:58'
 
-    AdviceAttachments:
+    Attachment:
       type: object
+      properties:
+        documentDataID:
+          type: string
+          example: 'XX0123-EN024303-00001'
+        documentURI:
+          type: string
+          example: '/pathname/to/document/or/blob/uri'
+        mime:
+          type: string
+          example: 'application/pdf'
+        size:
+          type: number
+          example: 50427
+
+    AdviceWithAttachments:
+      allOf:
+        - $ref: '#/components/schemas/Advice'
       properties:
         attachments:
           type: array
           items:
             $ref: '#/components/schemas/Attachment'
-
-    Attachment:
-     type: object
-     properties:
-       documentDataID:
-         type: string
-         example: 'XX0123-EN024303-00001'
-       documentURI:
-         type: string
-         example: '/pathname/to/document/or/blob/uri'
-       mime:
-         type: string
-         example: 'application/pdf'
-       size:
-         type: number
-         example: 50427
 
     ValidationError:
       type: object
@@ -1577,7 +1607,7 @@ components:
           items:
             type: string
             example: Missing property 'x'
-            
+
     NotFoundError:
       type: object
       properties:

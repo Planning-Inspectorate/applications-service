@@ -7,6 +7,7 @@ describe('controllers/having-your-say-guide', () => {
 	let res;
 
 	beforeEach(() => {
+		jest.resetAllMocks();
 		req = {
 			...mockReq(),
 			session: {
@@ -16,16 +17,18 @@ describe('controllers/having-your-say-guide', () => {
 					ProjectName: 'St James Barton Giant Wind Turbine',
 					Region: 'eastern'
 				}
-			}
+			},
+			get: jest.fn().mockReturnValue('mock req get')
 		};
 		res = mockRes();
-		jest.resetAllMocks();
 	});
 
 	describe('getHavingYourSayAboutProject', () => {
 		it('should call the correct template', async () => {
 			await interestedPartyGuideController.getHavingYourSayAboutProject(req, res);
-			expect(res.render).toHaveBeenCalledWith(VIEW.INTERESTED_PARTY_GUIDE.INTERESTED_PARTY);
+			expect(res.render).toHaveBeenCalledWith(VIEW.INTERESTED_PARTY_GUIDE.INTERESTED_PARTY, {
+				backLink: 'mock req get'
+			});
 		});
 	});
 

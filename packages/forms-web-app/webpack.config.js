@@ -38,6 +38,7 @@ const configAppScripts = {
 		initiate: `${entryPath}/initiate.js`,
 		modal: `${entryPath}/modal`,
 		sanitiseForm: `${entryPath}/sanitise-form.js`,
+		simulateUserAction: `${entryPath}/simulate-user-action.js`,
 		stepByStep: `${entryPath}/step-by-step.js`
 	},
 	output: {

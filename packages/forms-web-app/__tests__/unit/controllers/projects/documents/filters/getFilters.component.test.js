@@ -67,6 +67,7 @@ describe('component', () => {
 					filters: [
 						{
 							idPrefix: 'filter-group-1',
+							isOpen: false,
 							items: [
 								{
 									checked: true,
@@ -86,6 +87,7 @@ describe('component', () => {
 						},
 						{
 							idPrefix: 'filter-group-2',
+							isOpen: false,
 							items: [
 								{
 									checked: true,

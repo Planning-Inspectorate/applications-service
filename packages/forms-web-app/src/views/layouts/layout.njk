@@ -15,81 +15,75 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/accordion/macro.njk" import govukAccordion %}
-{% from "pins/components/header/macro.njk" import pinsHeader %}
 {% from "pins/components/footer/macro.njk" import pinsFooter %}
 {% from "pins/components/contents-sidebar/macro.njk" import pinsContentSidebar %}
 {% from "pins/components/step-by-step-navigation/macro.njk" import pinsStepByStepNavigation %}
+{% from "components/core/pins-header-default.njk" import pinsHeaderDefault %}
 
-{%
-  set bodyClasses = '-extended-max-width'
-%}
+{% set bodyClasses = '-extended-max-width' %}
 
 {% block head %}
-  {% include "includes/head.njk" %}
+	{% include "includes/head.njk" %}
 {% endblock %}
 
 {% block pageTitle %}
-  {{ serviceName }}
+	{{ serviceName }}
 {% endblock %}
 
+{% block skipLink %}{% endblock %}
+
 {% block header %}
-  {% include "includes/cookie-banner.njk" %}
-  {# Set serviceName in config.js. #}
-  {{ pinsHeader({
-    serviceName: serviceName,
-    containerClasses: "govuk-width-container"
-  }) }}
+	{% include "includes/cookie-banner.njk" %}
+
+	{{ pinsHeaderDefault(serviceName, backLink) }}
 {% endblock %}
 
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
 
 {% if host %}
-  {% set ac_href = host + 'accessibility-statement' %}
-  {% set ck_href = host + 'cookies' %}
+	{% set ac_href = host + 'accessibility-statement' %}
+	{% set ck_href = host + 'cookies' %}
 {% endif %}
 
 {% block footer %}
-  {{ pinsFooter({
-    items: [
-      {
-        href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
-        text: "Terms and conditions",
-        attributes: { "data-cy":"Terms and conditions" }
-      },
-      {
-        href: ac_href,
-        text: "Accessibility",
-        attributes: { "data-cy":"Accessibility" }
-      },
-      {
-        href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
-        text: "Privacy Notice (on GOV.UK)",
-        attributes: { "data-cy":"Privacy Notice (on GOV.UK)" }
-      },
-      {
-        href: ck_href,
-        text: "Cookies",
-        attributes: { "data-cy":"Cookies" }
-      }
-    ]
-  })
-}}
+	{{ pinsFooter({
+		items: [
+			{
+				href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
+				text: "Terms and conditions",
+				attributes: { "data-cy":"Terms and conditions" }
+			},
+			{
+				href: ac_href,
+				text: "Accessibility",
+				attributes: { "data-cy":"Accessibility" }
+			},
+			{
+				href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
+				text: "Privacy Notice (on GOV.UK)",
+				attributes: { "data-cy":"Privacy Notice (on GOV.UK)" }
+			},
+			{
+				href: ck_href,
+				text: "Cookies",
+				attributes: { "data-cy":"Cookies" }
+			}
+		]
+	}) }}
 {% endblock %}
 
-{%
-  set initiateScriptsConfig = [
-    {
-      callback: "window.GOVUKFrontend.initAll();",
-      src: "/assets/govuk/all.js"
-    },
-    {
-      src: "/public/scripts/index.script.js"
-    }
-  ]
-%}
+{% set initiateScriptsConfig = [
+	{
+		callback: "window.GOVUKFrontend.initAll();",
+		src: "/assets/govuk/all.js"
+	},
+	{
+		src: "/public/scripts/index.script.js"
+	}
+] %}
 
 {% block bodyEnd %}
-  {% block script %}{% endblock %}
+	{% block script %}{% endblock %}
 
-  {% include "includes/initiate-scripts.njk" %}
+	{% include "includes/initiate-scripts.njk" %}
 {% endblock %}
