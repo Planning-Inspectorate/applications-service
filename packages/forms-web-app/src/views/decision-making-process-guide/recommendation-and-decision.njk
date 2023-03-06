@@ -3,39 +3,39 @@
 {% from "../components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-  Recommendation and decision
-{% endblock %}
-
-{% block beforeContent %}
-  {% include "../components/core/banner.njk" %}
+	Recommendation and decision
 {% endblock %}
 
 {% block content %}
+	<h1 class="govuk-heading-xl">
+		Recommendation and decision
+	</h1>
+	<h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#about-the-recommendation-of-the-project">About recommendation and final decision</a>
+		</li>
+	</ol>
 
-  <h1 class="govuk-heading-xl">
-    Recommendation and decision
-  </h1>
-  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
-  <ol class="govuk-list style-contents-list">
-    <li>
-      <a class="govuk-link" href="#about-the-recommendation-of-the-project">About recommendation and final decision</a>
-    </li>
-  </ol>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 class="govuk-heading-m" id="about-the-recommendation-of-the-project">About recommendation and final
+					decision</h2>
+				<p class="govuk-body">After the examining authority has completed all its enquiries and understood everyone's
+					views during the examination, it will then write its recommendation report. The report must be completed and
+					sent to the Secretary of State within 3 months of the end of the examination.</p>
+				<p class="govuk-body">The Secretary of State then has another 3 months to make the final decision. The Secretary
+					of State considers the examining authority’s report to decide if the development should go ahead. When a
+					decision is made, we will publish the decision and report on the relevant project overview page.</p>
+			</div>
+		</div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
-        <h2 class="govuk-heading-m" id="about-the-recommendation-of-the-project">About recommendation and final decision</h2>
-        <p class="govuk-body">After the examining authority has completed all its enquiries and understood everyone's views during the examination, it will then write its recommendation report. The report must be completed and sent to the Secretary of State within 3 months of the end of the examination.</p>
-        <p class="govuk-body">The Secretary of State then has another 3 months to make the final decision. The Secretary of State considers the examining authority’s report to decide if the development should go ahead. When a decision is made, we will publish the decision and report on the relevant project overview page.</p>
-      </div>
-    </div>
+		<div class="govuk-grid-column-one-third">
+			{% set currentDefaultStep = 1 %}
+			{% include "../includes/dco-step-by-step-navigation.njk" %}
+		</div>
 
-    <div class="govuk-grid-column-one-third">
-      {% set currentDefaultStep = 1 %}
-      {% include "../includes/dco-step-by-step-navigation.njk" %}
-    </div>
-
-  </div>
+	</div>
 
 {% endblock %}

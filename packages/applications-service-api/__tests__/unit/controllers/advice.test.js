@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
-const { getAdvice } = require('../../../src/controllers/advice');
+const { getAdvice, getAdviceById } = require('../../../src/controllers/advice');
 
 jest.mock('../../../src/services/advice.service');
 const { getAdvice: getAdviceMock } = require('../../../src/services/advice.service');
+const { getAdviceById: getAdviceByIdMock } = require('../../../src/services/advice.service');
 
 const mockAdvice = {
 	adviceID: 'XX0123-Advice-00001',
@@ -156,6 +157,30 @@ describe('getAdvice', () => {
 			itemsPerPage: 1,
 			totalPages: 2,
 			currentPage: 2
+		});
+	});
+
+	describe('getAdviceById', () => {
+		afterEach(() => {
+			jest.resetAllMocks();
+		});
+
+		it('should get advice by Id from mock', async () => {
+			getAdviceByIdMock.mockResolvedValue(mockAdvice);
+
+			const req = httpMocks.createRequest({
+				params: {
+					adviceID: 'adviceid123'
+				}
+			});
+			const res = httpMocks.createResponse();
+			await getAdviceById(req, res);
+
+			expect(getAdviceByIdMock).toBeCalledWith('adviceid123');
+			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+
+			const advice = res._getData();
+			expect(advice).toEqual(mockAdvice);
 		});
 	});
 });

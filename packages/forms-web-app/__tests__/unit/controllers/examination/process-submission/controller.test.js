@@ -2,6 +2,7 @@ const {
 	getProcessSubmission,
 	postProcessSubmission
 } = require('../../../../../src/controllers/examination/process-submission/controller');
+
 const {
 	setExaminationUploadingState
 } = require('../../../../../src/controllers/examination/session/examination-session');
@@ -11,6 +12,9 @@ const {
 const {
 	deleteExaminationSession
 } = require('../../../../../src/controllers/examination/session/delete-examination-session');
+const {
+	getSubmittingItemsSubtitle
+} = require('../../../../../src/controllers/examination/process-submission/utils/get-submitting-items-subtitle');
 
 jest.mock('../../../../../src/controllers/examination/session/examination-session', () => ({
 	setExaminationUploadingState: jest.fn()
@@ -18,10 +22,16 @@ jest.mock('../../../../../src/controllers/examination/session/examination-sessio
 jest.mock('../../../../../src/controllers/examination/process-submission/utils/process', () => ({
 	handleProcessSubmission: jest.fn()
 }));
-
 jest.mock('../../../../../src/controllers/examination/session/delete-examination-session', () => ({
 	deleteExaminationSession: jest.fn()
 }));
+jest.mock(
+	'../../../../../src/controllers/examination/process-submission/utils/get-submitting-items-subtitle',
+	() => ({
+		getSubmittingItemsSubtitle: jest.fn()
+	})
+);
+
 describe('examination/process-submission/controller', () => {
 	describe('#getProcessSubmission', () => {
 		const req = {};
@@ -33,13 +43,19 @@ describe('examination/process-submission/controller', () => {
 		describe('When getting the process a submission page', () => {
 			describe('and the page is rendered', () => {
 				beforeEach(() => {
+					getSubmittingItemsSubtitle.mockReturnValue('mock submitting items subtitle copy');
 					getProcessSubmission(req, res);
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('pages/examination/process-submission', {
+						submittingItemsSubtitle: 'mock submitting items subtitle copy',
+						submittingItemsTitle: 'Processing submission',
 						text: 'This may take a few minutes.',
 						title: 'Process submission',
-						warningText: 'Do not refresh this page or navigate away until processing is complete.'
+						pageTitle: 'Process submission',
+						warningTextJSEnabled: 'This may take several minutes. Do not refresh this page.',
+						warningTextNoScript:
+							'Do not refresh this page or navigate away until processing is complete.'
 					});
 				});
 			});

@@ -3,66 +3,73 @@
 {% from "../components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-  Get involved in the Preliminary Meeting - National Infrastructure Planning
-{% endblock %}
-
-{% block beforeContent %}
-  {% include "../components/core/banner.njk" %}
+	Get involved in the Preliminary Meeting - National Infrastructure Planning
 {% endblock %}
 
 {% block content %}
+	<h1 class="govuk-heading-xl">
+		Get involved in the Preliminary Meeting
+	</h1>
+	<h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#about-the-preliminary-meeting">About the Preliminary Meeting</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#attending-the-preliminary-meeting">Attending the Preliminary Meeting</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#what-happens-next">What happens next</a>
+		</li>
+	</ol>
 
-  <h1 class="govuk-heading-xl">
-      Get involved in the Preliminary Meeting
-    </h1>
-  <h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
-  <ol class="govuk-list style-contents-list">
-    <li>
-      <a class="govuk-link" href="#about-the-preliminary-meeting">About the Preliminary Meeting</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="#attending-the-preliminary-meeting">Attending the Preliminary Meeting</a>
-    </li>
-    <li>
-      <a class="govuk-link" href="#what-happens-next">What happens next</a>
-    </li>
-  </ol>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 class="govuk-heading-m" id="about-the-preliminary-meeting">About the Preliminary Meeting</h2>
+				<p class="govuk-body">In the months after the registration period closes, the Examining Authority will hold a
+					Preliminary Meeting.</p>
+				<p class="govuk-body">Several weeks before this meeting, a letter called the Rule 6 letter is sent to everyone
+					who registered to have their say. This is to let everyone know when and where the meeting will be held. It
+					will also include a draft timetable for the Examination of the application and how the Examining Authority
+					will examine the application.</p>
+				<h2 class="govuk-heading-m" id="attending-the-preliminary-meeting">Attending the Preliminary Meeting</h2>
+				<p class="govuk-body">To be involved in the Preliminary Meeting, you must either:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>be registered to have your say, and have an interested party reference number</li>
+					<li>have a statutory right to be involved</li>
+				</ul>
+				<p class="govuk-body">After the registration period has closed, you will be invited to a Preliminary Meeting.
+					This is to talk about how the application will be examined. You can choose not to attend this meeting and will
+					still be invited to submit more information when the Examination starts.</p>
+				<p class="govuk-body">You cannot give your views about the proposed development at this meeting.</p>
+				<p class="govuk-body">You can talk about:</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>anything that may affect your ability to attend hearings or meet deadlines, for example other local events
+						happening at the same time or issues with travel or working patterns
+					</li>
+					<li>if there are any suitable local places to hold the hearings</li>
+					<li>if there are any groups of people who need a different approach to be able to take part in the process
+					</li>
+					<li>any other matters relating to the draft Examination timetable</li>
+				</ul>
+				<h2 class="govuk-heading-m" id="what-happens-next">What happens next</h2>
+				<p class="govuk-body">The Planning Inspectorate will publish the meeting notes and a live stream recording on
+					the project section of this website a week after the Preliminary Meeting.</p>
+				<p class="govuk-body">A letter called the Rule 8 letter is sent to everyone who registered,as well as anyone
+					with a statutory right. This will have details of the Examination including the finalised timetable with all
+					deadlines for submitting more information.</p>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
-        <h2 class="govuk-heading-m" id="about-the-preliminary-meeting">About the Preliminary Meeting</h2>
-        <p class="govuk-body">In the months after the registration period closes, the Examining Authority will hold a Preliminary Meeting.</p>
-        <p class="govuk-body">Several weeks before this meeting, a letter called the Rule 6 letter is sent to everyone who registered to have their say. This is to let everyone know when and where the meeting will be held. It will also include a draft timetable for the Examination of the application and how the Examining Authority will examine the application.</p>
-        <h2 class="govuk-heading-m" id="attending-the-preliminary-meeting">Attending the Preliminary Meeting</h2>
-        <p class="govuk-body">To be involved in the Preliminary Meeting, you must either:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>be registered to have your say, and have an interested party reference number</li>
-          <li>have a statutory right to be involved</li>
-        </ul>
-        <p class="govuk-body">After the registration period has closed, you will be invited to a Preliminary Meeting. This is to talk about how the application will be examined. You can choose not to attend this meeting and will still be invited to submit more information when the Examination starts.</p>
-        <p class="govuk-body">You cannot give your views about the proposed development at this meeting.</p>
-        <p class="govuk-body">You can talk about:</p>
-        <ul class="govuk-list govuk-list--bullet">
-          <li>anything that may affect your ability to attend hearings or meet deadlines, for example other local events happening at the same time or issues with travel or working patterns</li>
-          <li>if there are any suitable local places to hold the hearings</li>
-          <li>if there are any groups of people who need a different approach to be able to take part in the process</li>
-          <li>any other matters relating to the draft Examination timetable</li>
-        </ul>
-        <h2 class="govuk-heading-m" id="what-happens-next">What happens next</h2>
-        <p class="govuk-body">The Planning Inspectorate will publish the meeting notes and a live stream recording on the project section of this website a week after the Preliminary Meeting.</p>
-        <p class="govuk-body">A letter called the Rule 8 letter is sent to everyone who registered,as well as anyone with a statutory right. This will have details of the Examination including the finalised timetable with all deadlines for submitting more information.</p>
+				{{ uiNextStep("/having-your-say-guide/have-your-say-examination", "Having your say during the examination of the project") }}
+			</div>
+		</div>
 
-        {{ uiNextStep("/having-your-say-guide/have-your-say-examination", "Having your say during the examination of the project") }}
-      </div>
-    </div>
+		<div class="govuk-grid-column-one-third">
+			{% set currentDefaultStep = 3 %}
+			{% include "../includes/step-by-step-navigation.njk" %}
+		</div>
 
-    <div class="govuk-grid-column-one-third">
-      {% set currentDefaultStep = 3 %}
-      {% include "../includes/step-by-step-navigation.njk" %}
-    </div>
-
-  </div>
+	</div>
 
 {% endblock %}
 

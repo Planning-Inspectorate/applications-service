@@ -1,13 +1,18 @@
 const { isAccordionSwitchStateExpanded } = require('./helpers');
 
 const setAccordionSectionSwitchesChecked = (accordionSectionSwitches, isChecked) =>
-	accordionSectionSwitches.forEach(
-		(accordionSectionSwitch) => (accordionSectionSwitch.checked = isChecked)
-	);
+	accordionSectionSwitches.forEach((accordionSectionSwitch) => {
+		accordionSectionSwitch.checked = isChecked;
+		setAccordionSectionSwitchState(accordionSectionSwitch, isChecked);
+	});
+
+const setAccordionSectionSwitchState = (accordionSectionSwitch, isChecked) => {
+	accordionSectionSwitch.ariaExpanded = isChecked;
+	accordionSectionSwitch.ariaPressed = isChecked;
+};
 
 const setAccordionSwitchState = (accordionSwitch, isExpanded) => {
 	accordionSwitch.ariaExpanded = isExpanded;
-	accordionSwitch.setAttribute('id', 'show-hide-all-filters');
 	if (isAccordionSwitchStateExpanded(accordionSwitch))
 		accordionSwitch.innerHTML = 'Hide all sections';
 	else accordionSwitch.innerHTML = 'Show all sections';
@@ -18,6 +23,7 @@ const toggleAccordionSwitchState = (accordionSwitch) =>
 
 module.exports = {
 	setAccordionSectionSwitchesChecked,
+	setAccordionSectionSwitchState,
 	setAccordionSwitchState,
 	toggleAccordionSwitchState
 };

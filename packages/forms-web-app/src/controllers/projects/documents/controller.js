@@ -9,6 +9,7 @@ const { getApplicationData } = require('./utils/get-application-data');
 const { isClearAllFiltersDisplayed } = require('./utils/is-clear-all-filters-displayed');
 const { VIEW } = require('../../../lib/views');
 const { documentsPerPage } = require('./utils/pagination/documentsPerPage');
+const { isFiltersDisplayed } = require('./utils/is-filters-displayed');
 
 const getApplicationDocuments = async (req, res) => {
 	try {
@@ -40,6 +41,7 @@ const getApplicationDocuments = async (req, res) => {
 			...paginationView,
 			displayClearAllFilters: isClearAllFiltersDisplayed(query, filteredView.activeFilters),
 			filters: filteredView.filters,
+			displayFilters: isFiltersDisplayed(filteredView.filters),
 			activeFilters: filteredView.activeFilters,
 			errorSummary: filteredView.datesFilterErrorSummary,
 			projectName,

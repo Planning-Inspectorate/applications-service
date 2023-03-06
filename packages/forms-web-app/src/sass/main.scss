@@ -20,11 +20,13 @@
 /* components */
 @import './components/core/pins-header.scss';
 @import './components/layout/slots.scss';
+@import './components/indicator/loading-spinner.scss';
 @import './components/section/events.scss';
 @import './components/section/results.scss';
 @import './components/style/contents-list.scss';
 @import './components/style/canvas-background.scss';
 @import './components/style/vertical-tabs.scss';
+@import './components/text/centred-title-subtitle.scss';
 @import './components/ui/checkbox-accordion.scss';
 @import './components/ui/link-button.scss';
 @import './components/ui/map.scss';

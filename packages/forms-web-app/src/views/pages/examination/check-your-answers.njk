@@ -25,12 +25,27 @@
         rows: summaryListSubmissionItems
       }) }}
 
-      {{ govukWarningText({
-        iconFallbackText: "Warning",
-        text: "You cannot make any further changes after you press continue."
-      }) }}
+      <div class="visible-on visible-on--js-enabled">
+        {{ govukWarningText({
+          iconFallbackText: "Warning",
+          text: "You cannot make any further changes after you press submit."
+        }) }}
 
-      <a class="govuk-button" href="{{ nextPageUrl }}">Continue</a>
+        <a class="govuk-button" href="{{ nextPageUrl }}">
+          Submit
+        </a>
+      </div>
+
+      <noscript>
+        {{ govukWarningText({
+          iconFallbackText: "Warning",
+          text: "You cannot make any further changes after you press continue."
+        }) }}
+
+        <a class="govuk-button" href="{{ nextPageUrl }}">
+          Continue
+        </a>
+      </noscript>
     </div>
   </div>
 {% endblock %}

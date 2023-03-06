@@ -95,6 +95,7 @@ describe('#getApplicationDocuments', () => {
 						filters: [
 							{
 								idPrefix: 'mock filter-1',
+								isOpen: false,
 								label: 'mock label',
 								items: [
 									{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
@@ -170,6 +171,7 @@ describe('#getApplicationDocuments', () => {
 					baseUrl: '/projects/mock-case-ref',
 					caseRef: 'mock-case-ref',
 					displayClearAllFilters: false,
+					displayFilters: true,
 					errorSummary: null,
 					documents: [
 						{
@@ -188,6 +190,7 @@ describe('#getApplicationDocuments', () => {
 					filters: [
 						{
 							idPrefix: 'mock filter-1',
+							isOpen: false,
 							label: 'mock label',
 							items: [
 								{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }

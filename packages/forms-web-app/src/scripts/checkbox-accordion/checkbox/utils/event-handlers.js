@@ -1,17 +1,10 @@
-const { isEveryCheckboxChecked, isCheckboxesSectionSwitchChecked } = require('./helpers');
-const {
-	setCheckboxesSectionSwitchState,
-	toggleCheckboxesSectionSwitchState,
-	setCheckboxesChecked
-} = require('./setters');
+const { setCheckboxesSectionSwitchState, toggleAccordionSwitchState } = require('./setters');
 
 const onCheckboxChange = (checkboxes, checkboxesSectionSwitch) => {
-	setCheckboxesSectionSwitchState(checkboxesSectionSwitch, `${isEveryCheckboxChecked(checkboxes)}`);
+	setCheckboxesSectionSwitchState(checkboxes, checkboxesSectionSwitch);
 };
 
-const onCheckboxesSectionSwitchClick = (checkboxes, checkboxesSectionSwitch) => {
-	toggleCheckboxesSectionSwitchState(checkboxesSectionSwitch);
-	setCheckboxesChecked(checkboxes, isCheckboxesSectionSwitchChecked(checkboxesSectionSwitch));
-};
+const onCheckboxesSectionSwitchClick = (checkboxes, checkboxesSectionSwitch) =>
+	toggleAccordionSwitchState(checkboxes, checkboxesSectionSwitch);
 
 module.exports = { onCheckboxChange, onCheckboxesSectionSwitchClick };

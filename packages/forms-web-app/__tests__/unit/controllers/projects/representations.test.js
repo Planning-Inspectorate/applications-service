@@ -30,6 +30,7 @@ describe('controllers/projects/representations', () => {
 			params: {
 				case_ref: caseRef
 			},
+			get: jest.fn(),
 			query: {
 				page: '1'
 			}
@@ -130,6 +131,7 @@ describe('controllers/projects/representations', () => {
 			})
 		);
 		await controller.getRepresentation(req, res);
+		expect(req.get).toHaveBeenCalledWith('Referrer');
 		expect(res.render).toHaveBeenCalledWith(VIEW.PROJECTS.REPRESENTATION, {
 			projectName: 'ABC',
 			caseRef,
