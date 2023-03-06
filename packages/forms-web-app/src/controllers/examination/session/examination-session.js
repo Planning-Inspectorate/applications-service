@@ -38,6 +38,13 @@ const setExaminationSubmissionId = (session, submissionId) => {
 	examinationSession.submissionId = submissionId;
 };
 
+const getExaminationSubmissionItems = (session) => {
+	const examinationSession = getExaminationSession(session);
+	const examinationSubmissionItems = examinationSession.submissionItems;
+	if (!examinationSubmissionItems) throw new Error('Examination submission items not found');
+	return examinationSubmissionItems;
+};
+
 const getExaminationSubmissionComplete = (session) => {
 	const examinationSession = getExaminationSession(session);
 	return examinationSession.submissionComplete;
@@ -66,6 +73,7 @@ module.exports = {
 	setExaminationUploadingState,
 	setExaminationSubmissionComplete,
 	setExaminationSubmissionId,
+	getExaminationSubmissionItems,
 	getExaminationSubmissionComplete,
 	getExaminationUploadingState,
 	getExaminationSubmissionId,

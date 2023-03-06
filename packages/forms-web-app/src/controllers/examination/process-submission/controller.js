@@ -11,13 +11,20 @@ const {
 const { handleProcessSubmission } = require('./utils/process');
 const { setExaminationUploadingState } = require('../session/examination-session');
 const { deleteExaminationSession } = require('../session/delete-examination-session');
+const { getSubmittingItemsSubtitle } = require('./utils/get-submitting-items-subtitle');
 
 const getProcessSubmission = (req, res) => {
+	const { session } = req;
+
 	try {
 		const pageData = {
-			warningText: 'Do not refresh this page or navigate away until processing is complete.',
+			submittingItemsTitle: 'Processing submission',
+			submittingItemsSubtitle: getSubmittingItemsSubtitle(session),
 			text: 'This may take a few minutes.',
-			title: processSubmission.pageTitle
+			title: processSubmission.pageTitle,
+			pageTitle: processSubmission.pageTitle,
+			warningTextJSEnabled: 'This may take several minutes. Do not refresh this page.',
+			warningTextNoScript: 'Do not refresh this page or navigate away until processing is complete.'
 		};
 		return res.render(processSubmission.view, pageData);
 	} catch (error) {

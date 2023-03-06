@@ -63,7 +63,7 @@ describe('controllers/register/common/address/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('register/common/address', {
 						pageTitle:
 							'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						title: 'UK address details',
+						title: 'What is your address?',
 						address: {
 							text: 'mock address body'
 						}

@@ -3,7 +3,11 @@ const { onAccordionSectionSwitchChange, onAccordionSwitchClick } = require('./ev
 const applyAccordionSectionSwitchEvent = (accordionSectionSwitches, accordionSwitch) =>
 	accordionSectionSwitches.forEach((accordionSectionSwitch) =>
 		accordionSectionSwitch.addEventListener('change', () =>
-			onAccordionSectionSwitchChange(accordionSectionSwitches, accordionSwitch)
+			onAccordionSectionSwitchChange(
+				accordionSectionSwitch,
+				accordionSectionSwitches,
+				accordionSwitch
+			)
 		)
 	);
 

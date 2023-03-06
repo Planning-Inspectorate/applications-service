@@ -85,6 +85,7 @@ exports.getRepresentation = async (req, res) => {
 	}
 
 	res.render(VIEW.PROJECTS.REPRESENTATION, {
+		backLinkUrl: req.get('Referrer'),
 		projectName: applicationResponse.data.ProjectName,
 		caseRef: applicationResponse.data.CaseReference,
 		hideProjectInformationLink,
