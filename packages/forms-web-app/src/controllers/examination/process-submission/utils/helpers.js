@@ -1,6 +1,6 @@
 const FormData = require('form-data');
 const { getExaminationSession } = require('../../session/examination-session');
-const { getProjectPromoterName } = require('../../../projects/session');
+const { getProjectPromoterName } = require('../../../../session');
 const { getDeadlineDetailsName } = require('../../session/deadline/details/name');
 const { isUserApplicant } = require('../../session/deadline/helpers');
 const getDeadlineTitle = (title) => {

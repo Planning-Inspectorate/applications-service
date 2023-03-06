@@ -1,5 +1,5 @@
 const express = require('express');
-const projectSearchController = require('../controllers/project-search');
+const projectSearchController = require('../pages/projects/project-search/project-search');
 
 const router = express.Router();
 
