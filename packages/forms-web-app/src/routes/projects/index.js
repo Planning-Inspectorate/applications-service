@@ -71,4 +71,8 @@ if (allowRepresentation) {
 	);
 }
 
+// Section 51
+
+router.use('/:case_ref/s51advice/', require('../../pages/section-51/section-51.router'));
+
 module.exports = router;

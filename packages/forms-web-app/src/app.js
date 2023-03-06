@@ -63,6 +63,7 @@ const viewPaths = [
 	govukFrontendRoot,
 	mojFrontendRoot,
 	path.join(__dirname, 'views'),
+	path.join(__dirname, 'pages'),
 	pinsComponentsRoot
 ];
 

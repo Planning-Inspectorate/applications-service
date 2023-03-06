@@ -34,7 +34,7 @@ describe('routes/examination', () => {
 
 	it('should define the expected routes', () => {
 		const mockCallsLength = () => {
-			let totalCalls = 9;
+			let totalCalls = 10;
 			if (!hideProjectTimelineLink) {
 				totalCalls -= 1;
 			}
