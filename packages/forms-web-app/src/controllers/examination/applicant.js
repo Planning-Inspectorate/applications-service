@@ -25,7 +25,7 @@ const pageData = {
 const getProjectName = (req) => {
 	const { session } = req;
 
-	return session?.appData?.ProjectName || 'the applicant?';
+	return session?.promoterName || 'the applicant?';
 };
 
 const addProjectName = (copy, projectName) => {
