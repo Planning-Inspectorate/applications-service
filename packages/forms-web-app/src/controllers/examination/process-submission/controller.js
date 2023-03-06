@@ -22,6 +22,7 @@ const getProcessSubmission = (req, res) => {
 			submittingItemsSubtitle: getSubmittingItemsSubtitle(session),
 			text: 'This may take a few minutes.',
 			title: processSubmission.pageTitle,
+			pageTitle: processSubmission.pageTitle,
 			warningTextJSEnabled: 'This may take several minutes. Do not refresh this page.',
 			warningTextNoScript: 'Do not refresh this page or navigate away until processing is complete.'
 		};
