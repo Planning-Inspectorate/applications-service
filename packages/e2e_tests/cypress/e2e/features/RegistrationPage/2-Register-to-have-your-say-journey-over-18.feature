@@ -6,7 +6,7 @@ Feature: User completes have your say registration journey on a project
     Background: User start the registration process
         Given I navigate to the registration start page
 
-@focus
+
     Scenario: 1 - User completes registration process as myself - over 18
         And I selects checkbox for myself - over 18
         And I complete the registration process as myself - over 18
