@@ -1,8 +1,11 @@
+const {
+	formatValueToValidElementId
+} = require('../../../../../utils/format-value-to-valid-element-id');
 const { formatName, formatNameWithCount } = require('./formatters');
 const { mapFilterTypeToCheckBox } = require('./mappers');
 const convertFilterToPageView = (filter, type) => {
 	return {
-		idPrefix: formatName(filter),
+		idPrefix: formatValueToValidElementId(`${filter.name} ${filter.value}`),
 		isOpen: false,
 		items: mapFilterTypeToCheckBox(filter.type),
 		label: filter.label,

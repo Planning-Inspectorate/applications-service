@@ -1,29 +1,21 @@
-const { isAccordionSwitchStateExpanded } = require('./helpers');
+const { isEveryAccordionSectionOpen } = require('./helpers');
 
-const setAccordionSectionSwitchesChecked = (accordionSectionSwitches, isChecked) =>
-	accordionSectionSwitches.forEach((accordionSectionSwitch) => {
-		accordionSectionSwitch.checked = isChecked;
-		setAccordionSectionSwitchState(accordionSectionSwitch, isChecked);
-	});
-
-const setAccordionSectionSwitchState = (accordionSectionSwitch, isChecked) => {
-	accordionSectionSwitch.ariaExpanded = isChecked;
-	accordionSectionSwitch.ariaPressed = isChecked;
-};
-
-const setAccordionSwitchState = (accordionSwitch, isExpanded) => {
-	accordionSwitch.ariaExpanded = isExpanded;
-	if (isAccordionSwitchStateExpanded(accordionSwitch))
-		accordionSwitch.innerHTML = 'Hide all sections';
+const setAccordionState = (accordionSwitch, isOpen) => {
+	if (isOpen) accordionSwitch.innerHTML = 'Hide all sections';
 	else accordionSwitch.innerHTML = 'Show all sections';
 };
 
-const toggleAccordionSwitchState = (accordionSwitch) =>
-	setAccordionSwitchState(accordionSwitch, `${!isAccordionSwitchStateExpanded(accordionSwitch)}`);
-
-module.exports = {
-	setAccordionSectionSwitchesChecked,
-	setAccordionSectionSwitchState,
-	setAccordionSwitchState,
-	toggleAccordionSwitchState
+const setAccordionSectionsState = (accordionSections, open) => {
+	accordionSections.forEach((accordionSection) => {
+		if (open) accordionSection.setAttribute('open', '');
+		else accordionSection.removeAttribute('open');
+	});
 };
+
+const toggleAccordionSwitchState = (accordionSwitch, accordionSections) => {
+	const toggledSwitchState = !isEveryAccordionSectionOpen(accordionSections);
+	setAccordionSectionsState(accordionSections, toggledSwitchState);
+	setAccordionState(accordionSwitch, toggledSwitchState);
+};
+
+module.exports = { setAccordionState, toggleAccordionSwitchState };

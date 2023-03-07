@@ -24,7 +24,7 @@ describe('#convertFiltersToPageView', () => {
 			it('should map the filter to correct structure', () => {
 				expect(response).toEqual([
 					{
-						idPrefix: 'mock name-mock value',
+						idPrefix: 'mock-name-mock-value',
 						isOpen: false,
 						label: 'mock label',
 						items: [
@@ -39,7 +39,7 @@ describe('#convertFiltersToPageView', () => {
 						type: 'checkbox'
 					},
 					{
-						idPrefix: 'second mock name-second mock value',
+						idPrefix: 'second-mock-name-second-mock-value',
 						isOpen: false,
 						label: 'second mock label',
 						items: [

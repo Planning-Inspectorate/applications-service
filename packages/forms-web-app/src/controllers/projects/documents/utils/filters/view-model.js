@@ -20,9 +20,8 @@ const viewModel = (filters, query) => {
 						item.checked = true;
 
 						active.tags.push({
-							alt: `Remove ${item.value} filter`,
 							icon: 'close',
-							text: item.value,
+							textHtml: `<span class="govuk-visually-hidden">Remove</span> ${item.value} <span class="govuk-visually-hidden">filter</span>`,
 							link: `${getActiveFilterQueryParamsWithRemovedFilter(localQuery, {
 								key: filterObj.name,
 								value: item.value

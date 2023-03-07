@@ -1,6 +1,5 @@
 {% macro uiTagLink(tag) %}
   <a
-    alt="{{ tag.alt }}"
     class="ui-tag-link"
     data-cy="ui-tag-link"
     href="{{ tag.link }}"
@@ -9,6 +8,6 @@
       <span class="ui-tag-link__close-icon"></span>
     {% endif %}
 
-    <span class="ui-tag-link__text">{{ tag.text }}</span>
+    <span class="ui-tag-link__text">{{ tag.textHtml | safe }}</span>
   </a>
 {% endmacro %}

@@ -94,7 +94,7 @@ describe('#getApplicationDocuments', () => {
 					expect.objectContaining({
 						filters: [
 							{
-								idPrefix: 'mock filter-1',
+								idPrefix: 'mock-filter-1',
 								isOpen: false,
 								label: 'mock label',
 								items: [
@@ -189,7 +189,7 @@ describe('#getApplicationDocuments', () => {
 						'<p><a class="govuk-link" href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers</p>',
 					filters: [
 						{
-							idPrefix: 'mock filter-1',
+							idPrefix: 'mock-filter-1',
 							isOpen: false,
 							label: 'mock label',
 							items: [

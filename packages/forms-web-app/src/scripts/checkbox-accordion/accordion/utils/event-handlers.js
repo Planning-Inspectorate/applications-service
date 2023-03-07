@@ -1,36 +1,18 @@
-const {
-	isEveryAccordionSectionSwitchChecked,
-	isAccordionSwitchStateExpanded,
-	isAccordionSectionSwitchChecked
-} = require('./helpers');
-const {
-	setAccordionSwitchState,
-	toggleAccordionSwitchState,
-	setAccordionSectionSwitchesChecked,
-	setAccordionSectionSwitchState
-} = require('./setters');
+const { isEveryAccordionSectionOpen } = require('./helpers');
+const { toggleAccordionSwitchState, setAccordionState } = require('./setters');
 
-const onAccordionSectionSwitchChange = (
-	accordionSectionSwitch,
-	accordionSectionSwitches,
-	accordionSwitch
-) => {
-	setAccordionSectionSwitchState(
-		accordionSectionSwitch,
-		isAccordionSectionSwitchChecked(accordionSectionSwitch)
-	);
-	setAccordionSwitchState(
-		accordionSwitch,
-		`${isEveryAccordionSectionSwitchChecked(accordionSectionSwitches)}`
+const addAccordionSwitchClickEvent = (accordionSwitch, accordionSections) => {
+	accordionSwitch.addEventListener('click', () =>
+		toggleAccordionSwitchState(accordionSwitch, accordionSections)
 	);
 };
 
-const onAccordionSwitchClick = (accordionSectionSwitches, accordionSwitch) => {
-	toggleAccordionSwitchState(accordionSwitch);
-	setAccordionSectionSwitchesChecked(
-		accordionSectionSwitches,
-		isAccordionSwitchStateExpanded(accordionSwitch)
-	);
+const addAccordionSectionClickEvent = (accordionSwitch, accordionSections) => {
+	accordionSections.forEach((accordionSection) => {
+		accordionSection.addEventListener('toggle', () => {
+			setAccordionState(accordionSwitch, isEveryAccordionSectionOpen(accordionSections));
+		});
+	});
 };
 
-module.exports = { onAccordionSectionSwitchChange, onAccordionSwitchClick };
+module.exports = { addAccordionSwitchClickEvent, addAccordionSectionClickEvent };

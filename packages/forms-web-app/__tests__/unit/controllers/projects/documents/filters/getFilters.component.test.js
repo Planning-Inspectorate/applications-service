@@ -38,10 +38,10 @@ describe('component', () => {
 							label: 'filter group 1 label',
 							tags: [
 								{
-									alt: 'Remove filter-group1-item-1 filter',
 									icon: 'close',
 									link: '?filter-group-2=filter-group2-item-1&filter-group-2=filter-group2-item-2',
-									text: 'filter-group1-item-1'
+									textHtml:
+										'<span class="govuk-visually-hidden">Remove</span> filter-group1-item-1 <span class="govuk-visually-hidden">filter</span>'
 								}
 							]
 						},
@@ -49,16 +49,16 @@ describe('component', () => {
 							label: 'filter group 2 label',
 							tags: [
 								{
-									alt: 'Remove filter-group2-item-1 filter',
 									icon: 'close',
 									link: '?filter-group-1=filter-group1-item-1&filter-group-2=filter-group2-item-2',
-									text: 'filter-group2-item-1'
+									textHtml:
+										'<span class="govuk-visually-hidden">Remove</span> filter-group2-item-1 <span class="govuk-visually-hidden">filter</span>'
 								},
 								{
-									alt: 'Remove filter-group2-item-2 filter',
 									icon: 'close',
 									link: '?filter-group-1=filter-group1-item-1&filter-group-2=filter-group2-item-1',
-									text: 'filter-group2-item-2'
+									textHtml:
+										'<span class="govuk-visually-hidden">Remove</span> filter-group2-item-2 <span class="govuk-visually-hidden">filter</span>'
 								}
 							]
 						}

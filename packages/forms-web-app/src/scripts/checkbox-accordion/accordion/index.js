@@ -1,10 +1,8 @@
-const { applyAccordionSectionSwitchEvent, applyAccordionSwitchEvent } = require('./utils/appliers');
-const { buildAccordionSwitch } = require('./utils/builders');
 const {
-	getAccordions,
-	getAccordionSectionSwitches,
-	getAccordionSwitch
-} = require('./utils/getters');
+	addAccordionSwitchClickEvent,
+	addAccordionSectionClickEvent
+} = require('./utils/event-handlers');
+const { getAccordions, getaccordionSections, getAccordionSwitch } = require('./utils/getters');
 
 const initiateAccordions = () => {
 	const accordions = getAccordions();
@@ -12,15 +10,13 @@ const initiateAccordions = () => {
 	if (!accordions?.length) return;
 
 	accordions.forEach((accordion) => {
-		buildAccordionSwitch(accordion);
-
-		const accordionSectionSwitches = getAccordionSectionSwitches(accordion);
 		const accordionSwitch = getAccordionSwitch(accordion);
+		const accordionSections = getaccordionSections(accordion);
 
-		if (!accordionSectionSwitches.length || !accordionSwitch) return;
+		if (!accordionSwitch || !accordionSections.length) return;
 
-		applyAccordionSectionSwitchEvent(accordionSectionSwitches, accordionSwitch);
-		applyAccordionSwitchEvent(accordionSectionSwitches, accordionSwitch);
+		addAccordionSwitchClickEvent(accordionSwitch, accordionSections);
+		addAccordionSectionClickEvent(accordionSwitch, accordionSections);
 	});
 };
 
