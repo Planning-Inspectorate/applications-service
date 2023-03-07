@@ -1,14 +1,8 @@
-const formatTitle = (filter) => {
-	return `${filter.name} ${filter.value}`;
-};
+const formatTitle = (filter) => `${filter.name} ${filter.value}`;
 
-const formatName = (filter) => {
-	return `${filter.name}-${filter.value}`;
-};
+const formatName = (filter) => `${filter.name}-${filter.value}`;
 
-const formatNameWithCount = (name, count) => {
-	return `${name} (${count})`;
-};
+const formatNameWithCount = (name, count) => `${name} (${count})`;
 
 module.exports = {
 	formatName,

@@ -1,5 +1,5 @@
 function initiate() {
-	this.scripts = function (config, cspNonce) {
+	this.scripts = function (config, nonce) {
 		if (!Array.isArray(config)) return;
 
 		const configModified = config.map((configItem) => {
@@ -15,25 +15,17 @@ function initiate() {
 		configModified.forEach((settings) => {
 			if (!settings || typeof settings !== 'object') return;
 
-			const {
-				nonce = cspNonce,
-				async = false,
-				callback = null,
-				id = null,
-				src = null,
-				type = 'text/javascript'
-			} = settings;
+			const { async = false, callback = null, id = null, src = null } = settings;
 
 			if (!src) return;
 
 			const script = document.createElement('script');
-			if (async) script.setAttribute('async', true);
-			else script.setAttribute('defer', true);
+			if (async) script.setAttribute('async', '');
+			else script.setAttribute('defer', '');
 			if (callback && typeof callback === 'function') script.onload = () => callback();
 			if (id) script.id = id;
-			script.src = src;
-			script.type = type;
 			if (nonce) script.nonce = nonce;
+			script.src = src;
 
 			document.body.appendChild(script);
 		});

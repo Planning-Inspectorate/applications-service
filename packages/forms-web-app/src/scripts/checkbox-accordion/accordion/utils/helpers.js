@@ -1,12 +1,6 @@
-const isAccordionSectionSwitchChecked = (accordionSectionSwitch) => accordionSectionSwitch.checked;
+const isEveryAccordionSectionOpen = (accordionSections) =>
+	accordionSections.every(
+		(accordionSectionSwitch) => accordionSectionSwitch.getAttribute('open') !== null
+	);
 
-const isAccordionSwitchStateExpanded = (accordionSwitch) => accordionSwitch.ariaExpanded === 'true';
-
-const isEveryAccordionSectionSwitchChecked = (accordionSectionSwitches) =>
-	accordionSectionSwitches.every((accordionSectionSwitch) => accordionSectionSwitch.checked);
-
-module.exports = {
-	isAccordionSectionSwitchChecked,
-	isAccordionSwitchStateExpanded,
-	isEveryAccordionSectionSwitchChecked
-};
+module.exports = { isEveryAccordionSectionOpen };

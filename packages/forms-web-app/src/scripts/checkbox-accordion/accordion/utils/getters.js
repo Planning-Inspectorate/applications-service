@@ -1,20 +1,20 @@
 const {
 	accordionId,
-	accordionSectionSwitchId,
+	accordionSectionId,
 	accordionSectionsId,
 	accordionSwitchClassId
 } = require('./config');
 
 const getAccordions = () => [...document.querySelectorAll(`.${accordionId}`)];
-const getAccordionSectionSwitches = (accordion) => [
-	...accordion.querySelectorAll(`.${accordionSectionSwitchId}`)
+const getaccordionSections = (accordion) => [
+	...accordion.querySelectorAll(`.${accordionSectionId}`)
 ];
 const getAccordionSections = (accordion) => accordion.querySelector(`.${accordionSectionsId}`);
 const getAccordionSwitch = (accordion) => accordion.querySelector(`.${accordionSwitchClassId}`);
 
 module.exports = {
 	getAccordions,
-	getAccordionSectionSwitches,
+	getaccordionSections,
 	getAccordionSections,
 	getAccordionSwitch
 };
