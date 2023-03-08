@@ -1,11 +1,10 @@
 {% macro layoutSlots(slots) %}
-  <div class="layout-slots">
-    {% for slot in slots %}
-      {{ slot }}
-
-      {% if not loop.last %}
-        <hr class="layout-slots__divider">
-      {% endif %}
-    {% endfor %}
-  </div>
+	<div class="layout-slots">
+		{% for slot in slots %}
+			{{ slot }}
+			{% if not loop.last %}
+				<hr class="layout-slots__divider">
+			{% endif %}
+		{% endfor %}
+	</div>
 {% endmacro %}

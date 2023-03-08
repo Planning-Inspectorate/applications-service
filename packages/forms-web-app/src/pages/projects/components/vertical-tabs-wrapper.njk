@@ -1,0 +1,27 @@
+{% from "components/layout/slots.njk" import layoutSlots %}
+{% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
+
+
+{% set slots = [  uiVerticalTabs(
+	null,
+	activeId,
+	verticalTabs,
+	"Project navigation"
+)] %}
+
+{% if displayFilters %}
+	{% set slots = (slots.push(uiCheckboxAccordion(
+		displayFilters,
+		filters,
+		"Filter",
+		paginationData.totalItems + " documents",
+		"documents-page-filters",
+		'modal-on-tablet'
+	)), slots) %}
+{% endif %}
+
+{% set slots = (slots.push(relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--desktop"])), slots) %}
+
+{{ layoutSlots(slots) }}
