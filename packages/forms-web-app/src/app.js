@@ -18,6 +18,9 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
+const {
+	setLocalslDisplayCookieBannerValue
+} = require('./middleware/set-locals-display-cookie-banner-value');
 const fileUpload = require('express-fileupload');
 const { routesConfig } = require('./routes/config');
 
@@ -107,6 +110,7 @@ app.use(session(sessionStoreConfig));
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(env));
 app.use(removeUnwantedCookiesMiddelware);
+app.use(setLocalslDisplayCookieBannerValue);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use(
