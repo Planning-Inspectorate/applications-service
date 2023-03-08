@@ -9,7 +9,7 @@ const {
 const {
 	getExaminationSession
 } = require('../../../../../../src/controllers/examination/session/examination-session');
-const { getProjectPromoterName } = require('../../../../../../src/controllers/projects/session');
+const { getProjectPromoterName } = require('../../../../../../src/session');
 const {
 	isUserApplicant
 } = require('../../../../../../src/controllers/examination/session/deadline/helpers');
@@ -20,7 +20,7 @@ jest.mock('../../../../../../src/controllers/examination/session/deadline/detail
 jest.mock('../../../../../../src/controllers/examination/session/examination-session', () => ({
 	getExaminationSession: jest.fn()
 }));
-jest.mock('../../../../../../src/controllers/projects/session', () => ({
+jest.mock('../../../../../../src/session', () => ({
 	getProjectPromoterName: jest.fn()
 }));
 jest.mock('../../../../../../src/controllers/examination/session/deadline/helpers', () => ({

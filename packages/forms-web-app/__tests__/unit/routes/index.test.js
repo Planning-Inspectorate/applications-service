@@ -1,7 +1,7 @@
 const { use } = require('./router-mock');
 const registerRouter = require('../../../src/routes/register');
 const cookieRouter = require('../../../src/routes/cookies');
-const projectsRouter = require('../../../src/routes/projects');
+const projectsRouter = require('../../../src/pages/projects/projects.router');
 const projectSearchRouter = require('../../../src/routes/project-search');
 const interestedPartyRouter = require('../../../src/routes/having-your-say-guide');
 const footerPagesRouter = require('../../../src/routes/footer-pages');
