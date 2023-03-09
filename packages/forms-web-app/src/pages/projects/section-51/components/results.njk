@@ -1,0 +1,41 @@
+{% macro sectionResults(results) %}
+	<ul class="section-results">
+		{% for result in results %}
+			<li class="section-results__result">
+				<a class="section-results__result-link " href="s51advice/{{ result.adviceID }}">
+					<strong>
+						{{ result.enquiryDetail }}
+					</strong>
+				</a>
+
+				<p class="section-results__result-copy">
+					<strong>
+						To:
+					</strong>
+					{{ result.firstName + result.lastName }}
+				</p>
+				<div class="section-results__result-meta-data">
+					<div
+						class="section-results__result-item-two-thirds">
+						<p class="section-results__result-copy">
+							<strong>
+								Date published:
+							</strong>
+							{{ result.dateAdviceGiven | date }}
+						</p>
+
+					</div>
+					<div
+						class="section-results__result-item-one-third">
+						<p class="section-results__result-copy">
+							<strong>
+								Enquiry type:
+							</strong>{{ result.enquiryMethod }}
+						</p>
+
+					</div>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+{% endmacro %}

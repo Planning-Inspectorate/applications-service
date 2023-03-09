@@ -182,3 +182,18 @@ exports.wrappedPostSubmissionComplete = async (submissionId) => {
 	const method = 'POST';
 	return handler('postSubmissionComplete', URL, method, {});
 };
+
+exports.searchAdviceDocuments = async (params) => {
+	const queryString = queryStringBuilder(params, [
+		'caseRef',
+		'classification',
+		'page',
+		'searchTerm',
+		'stage',
+		'type',
+		'category'
+	]);
+	const documentServiceApiUrl = `/api/v1/advice`;
+	const method = 'GET';
+	return handler('searchAdviceDocuments', documentServiceApiUrl, queryString, method);
+};

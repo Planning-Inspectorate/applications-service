@@ -9,6 +9,9 @@
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
 {% from "macros/pagination-bar.njk" import paginationBar %}
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+{% from "projects/section-51/components/results.njk" import sectionResults %}
+
+{% set pageTitle = title %}
 
 {% set section = 'section-51-documents' %}
 
@@ -40,6 +43,15 @@
 				<h1 class="govuk-heading-xl">
 					{{ title }}
 				</h1>
+
+				<p class="govuk-body">The list below includes a record of advice we have provided for this project.</p>
+
+				<p class="govuk-body">There is a statutory duty, under <a
+						href="https://www.legislation.gov.uk/ukpga/2008/29/section/51">section 51 of the Planning Act 2008</a>, to
+					record the advice that is given in relation to an application or a potential application, including the name
+					of the person who requested the advice, and to make this publicly available.</p>
+				
+				{{ sectionResults(advice) }}
 
 				<div class="visible-on visible-on--tablet">
 					<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible ">
