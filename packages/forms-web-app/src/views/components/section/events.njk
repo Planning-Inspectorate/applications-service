@@ -26,7 +26,8 @@
           <div class="section-events__event-content">
             <form method="POST" novalidate>
               {{ govukInput({
-                attributes: { "hidden": true },
+                attributes: { "hidden": "" },
+                id: event.id,
                 name: event.inputId,
                 value: event.id
               }) }}
