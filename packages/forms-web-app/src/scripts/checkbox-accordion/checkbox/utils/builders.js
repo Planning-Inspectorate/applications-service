@@ -1,17 +1,16 @@
-const { checkboxesSectionSwitchId } = require('./config');
-const { isEveryCheckboxChecked } = require('./helpers');
+const { checkboxesSectionSwitchClassId } = require('./config');
 const { setCheckboxesSectionSwitchState } = require('./setters');
 
 const buildCheckboxesSectionSwitch = (checkboxes, checkboxesSection) => {
 	const checkboxesSectionSwitch = createCheckboxesSectionSwitch();
-	setCheckboxesSectionSwitchState(checkboxesSectionSwitch, `${isEveryCheckboxChecked(checkboxes)}`);
+	setCheckboxesSectionSwitchState(checkboxes, checkboxesSectionSwitch);
 	insertCheckboxesSectionSwitch(checkboxesSection, checkboxesSectionSwitch);
 };
 
 const createCheckboxesSectionSwitch = () => {
 	const checkboxesSectionSwitch = document.createElement('button');
 	checkboxesSectionSwitch.type = 'button';
-	checkboxesSectionSwitch.classList = checkboxesSectionSwitchId;
+	checkboxesSectionSwitch.setAttribute('class', checkboxesSectionSwitchClassId);
 	return checkboxesSectionSwitch;
 };
 

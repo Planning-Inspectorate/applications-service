@@ -1,0 +1,114 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% from "components/section/results.njk" import sectionResults %}
+
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+{% from "components/ui/tag-link-list.njk" import uiTagLinkList %}
+{% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
+{% from "macros/pagination-bar.njk" import paginationBar %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+
+{% set section = 'project-documents' %}
+
+{% block script %}
+	{% if displayFilters %}
+		{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+			{ src: "/public/scripts/checkbox-accordion.script.js" },
+			{
+				callback: "var modal = new appScripts.modal(); modal.initiate('#documents-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#documents-page-search-bar', 'Show filters', 'tablet');",
+				src: "/public/scripts/modal.script.js"
+			}
+		), initiateScriptsConfig) %}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<form>
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-one-third">
+				{% set activeId = "project-documents" %}
+				{% include "projects/components/vertical-tabs-wrapper.njk" %}
+			</div>
+
+
+			<div class="govuk-grid-column-two-thirds">
+				{% if errorSummary %}
+					{{ govukErrorSummary({
+						titleText: errorSummary.title,
+						errorList: errorSummary.list
+					}) }}
+				{% endif %}
+
+				<span class="govuk-caption-l">
+          {{ projectName }}
+        </span>
+
+				<h1 class="govuk-heading-xl">
+					{{ title }}
+				</h1>
+
+				{% if examinationLibraryDocumentHtml %}
+					{{ govukInsetText({ html: examinationLibraryDocumentHtml }) }}
+				{% endif %}
+
+				{% if documents.length != 0 or queryUrl != '' %}
+					<h2 class="govuk-heading-m">
+						Search documents
+					</h2>
+
+					<p class="govuk-body">
+						Search by author, description or document type.
+					</p>
+
+					{{ uiSearchBar('documents-page-search-bar', 'searchTerm', searchTerm, 'Search documents') }}
+				{% endif %}
+
+				{{ uiTagLinkList('Filtered results', activeFilters) }}
+
+				{% if documents.length > 0 %}
+					{% if displayClearAllFilters %}
+						<p>
+							<a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}">
+								Clear all filters
+							</a>
+						</p>
+					{% endif %}
+
+					<p>
+						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
+						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
+					</p>
+
+					{{ uiResultsPerPage(resultsPerPage) }}
+
+					{{ sectionResults(documents) }}
+
+					{{ paginationBar(
+						pageOptions,
+						paginationData,
+						paginationUrl
+					) }}
+
+				{% elseif documents.length == 0 and queryUrl != '' %}
+					<p data-cy="no-docs-text">No documents were found matching your search term and filters.</p>
+					<p>Would you like to clear your search and filters to view all available documents instead?</p>
+					<p><a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}"
+								data-cy="clear-search">Clear search and filters</a></p>
+
+				{% elseif documents.length == 0 %}
+					<p data-cy="no-docs-text">There are no project application documents available to display at the moment.</p>
+					<p><a class="govuk-link" href="{{ baseUrl }}">Return to the project overview</a></p>
+				{% endif %}
+
+				<div class="visible-on visible-on--tablet">
+					<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible ">
+				</div>
+
+				{{ relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--tablet"]) }}
+			</div>
+		</div>
+	</form>
+{% endblock %}

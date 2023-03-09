@@ -52,6 +52,7 @@ describe('examination/process-submission/controller', () => {
 						submittingItemsTitle: 'Processing submission',
 						text: 'This may take a few minutes.',
 						title: 'Process submission',
+						pageTitle: 'Process submission',
 						warningTextJSEnabled: 'This may take several minutes. Do not refresh this page.',
 						warningTextNoScript:
 							'Do not refresh this page or navigate away until processing is complete.'

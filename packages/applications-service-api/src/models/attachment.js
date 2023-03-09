@@ -2,7 +2,7 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
 	class Attachment extends Model {
-		static async findAllAttachments(options = {}) {
+		static async findAllAttachmentsWithCase(caseReference, options = {}) {
 			const tableName = Attachment.getTableName();
 			const attachmentsSql = sequelize.dialect.QueryGenerator.selectQuery(
 				tableName,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 				Attachment
 			);
-			const adviceAndAttachmentsSql = attachmentsJoin(attachmentsSql);
+			const adviceAndAttachmentsSql = attachmentsJoin(caseReference, attachmentsSql);
 
 			return sequelize.query(adviceAndAttachmentsSql, {
 				model: Attachment,
@@ -60,14 +60,15 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 // This SQL manipulation allows Sequelize to be used with the non-normalised join of Advice to attachments
-function attachmentsJoin(sql) {
+function attachmentsJoin(caseReference, sql) {
 	return sql.replace(
 		'FROM `wp_ipc_documents_api` AS `Attachment`',
 		`FROM (
 			SELECT DISTINCT Attachment.*, Advice.AdviceID
-			FROM wp_ipc_advice AS Advice 
+			FROM wp_ipc_advice AS Advice
 			INNER JOIN wp_ipc_documents_api AS Attachment
 			ON Advice.Attachments LIKE CONCAT('%', Attachment.dataID, '%')
+			AND Attachment.case_reference = ${JSON.stringify(caseReference)}
 		) as Attachment`
 	);
 }

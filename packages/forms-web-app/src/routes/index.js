@@ -12,7 +12,7 @@ const decisionMakingProcessGuideRouter = require('./decision-making-process-guid
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('./examination');
-const projectsRouter = require('./projects');
+const projectsRouter = require('../pages/projects/projects.router');
 const {
 	isProcessingSubmission
 } = require('../controllers/examination/middleware/submission.middleware');

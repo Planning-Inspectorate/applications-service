@@ -49,13 +49,13 @@ module.exports = {
 		allowDocumentLibrary: process.env.FEATURE_ALLOW_DOCUMENT_LIBRARY === 'true',
 		allowExaminationTimetable: process.env.FEATURE_ALLOW_EXAMINATION_TIMETABLE === 'true',
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true',
-		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true'
+		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
+		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
 		hideDecisionMakingProcessGuideLink: true,
-		hideProjectInformationLink: true,
-		hideRecommendationAndDecisionLink: true
+		hideProjectInformationLink: true
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',

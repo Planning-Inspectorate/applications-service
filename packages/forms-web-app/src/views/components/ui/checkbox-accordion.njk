@@ -34,83 +34,77 @@
 					</div>
 
 					<div class="ui-checkbox-accordion__sections">
+						<button type="button" class="ui-checkbox-accordion__switch" id="show-hide-all-filters">Show all sections</button>
+
 						{% for section in sections %}
-							{% set sectionAriaControlsId = 'ui-checkbox-accordion__checkboxes-section--' + loop.index + '' %}
-							{% set sectionInputId = 'ui-checkbox-accordion__section-switch--' + loop.index + '' %}
-
-							<detail class="ui-checkbox-accordion__section">
-								<input
-									aria-controls="{{ sectionAriaControlsId }}"
-									class="ui-checkbox-accordion__section-switch"
-									id="{{ sectionInputId }}"
-									type="checkbox"
-									{% if section.isOpen %}
-									checked
-									{% endif %}
+						{% set sectionAriaControlsId = 'ui-checkbox-accordion__checkboxes-section--' + loop.index + '' %}
+						{% set sectionInputId = 'ui-checkbox-accordion__section-switch--' + loop.index + '' %}
+						<details
+							class="ui-checkbox-accordion__section"
+							{% if section.isOpen %}
+							open
+							{% endif %}
+						>
+							<summary class="ui-checkbox-accordion__section-switch">
+								<svg
+									class="ui-checkbox-accordion__section-switch-indicator"
+									height="10"
+									width="18"
 								>
+									<path
+										d="m.377 2.134 7.713 7.5a1.31 1.31 0 0 0 1.818 0l7.714-7.5a1.224 1.224 0 0 0 0-1.767 1.312 1.312 0 0 0-1.818 0L9 6.983 2.194.367a1.31 1.31 0 0 0-1.818 0 1.225 1.225 0 0 0 0 1.767h.001Z"
+										fill="#000"
+									/>
+								</svg>
 
-								<label
-									class="ui-checkbox-accordion__section-control"
-									for="{{ sectionInputId }}"
-								>
-									<svg
-										class="ui-checkbox-accordion__section-control-indicator"
-										height="10"
-										width="18"
-									>
-										<path
-											d="m.377 2.134 7.713 7.5a1.31 1.31 0 0 0 1.818 0l7.714-7.5a1.224 1.224 0 0 0 0-1.767 1.312 1.312 0 0 0-1.818 0L9 6.983 2.194.367a1.31 1.31 0 0 0-1.818 0 1.225 1.225 0 0 0 0 1.767h.001Z"
-											fill="#000"
-										/>
-									</svg>
+								<span class="ui-checkbox-accordion__section-switch-title">
+									<span class="govuk-visually-hidden">Select to</span>
+									<span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
+									<span class="govuk-visually-hidden">the</span>
+									{{ section.title }}
+									<span class="govuk-visually-hidden">filter options</span>
+								</span>
+							</summary>
 
-									<h4 class="ui-checkbox-accordion__section-control-title">
-										<span class="govuk-visually-hidden">Select to</span>
-										<span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
-										<span class="govuk-visually-hidden">the</span>
-										{{ section.title }}
-										<span class="govuk-visually-hidden">section</span>
-									</h4>
-								</label>
+							<div
+								class="ui-checkbox-accordion__checkboxes-section ui-checkbox-accordion__checkboxes-section--{{ section.type }}"
+								id="{{ sectionAriaControlsId }}"
+							>
+								{% if section.type === 'checkbox' %}
+									{{ govukCheckboxes({
+										classes: "govuk-checkboxes--small",
+										fieldset: {
+											legend: {
+												html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
+											}
+										},
+										idPrefix: section.idPrefix,
+										items: section.items,
+										name: section.name
+									}) }}
+								{% endif %}
 
-								<div
-									class="ui-checkbox-accordion__checkboxes-section ui-checkbox-accordion__checkboxes-section--{{ section.type }}"
-									id="{{ sectionAriaControlsId }}"
-								>
-									{% if section.type === 'checkbox' %}
-										{{ govukCheckboxes({
-											name: section.name,
-											classes: "govuk-checkboxes--small",
+								{% if section.type === 'date' %}
+									{% for formGroup in section.formGroups %}
+										{{ govukDateInput({
+											id: formGroup.id,
+											namePrefix: formGroup.inputNamePrefix,
 											fieldset: {
 												legend: {
-													html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
+													text: formGroup.title
 												}
 											},
-											items: section.items
+											errorMessage: formGroup.errorMessage,
+											items: formGroup.inputs
 										}) }}
-									{% endif %}
+									{% endfor %}
+								{% endif %}
+							</div>
+						</details>
 
-									{% if section.type === 'date' %}
-										{% for formGroup in section.formGroups %}
-											{{ govukDateInput({
-												id: formGroup.id,
-												namePrefix: formGroup.inputNamePrefix,
-												fieldset: {
-													legend: {
-														text: formGroup.title
-													}
-												},
-												errorMessage: formGroup.errorMessage,
-												items: formGroup.inputs
-											}) }}
-										{% endfor %}
-									{% endif %}
-								</div>
-							</detail>
-
-							{% if not loop.last %}
-								<hr class="ui-checkbox-accordion__section-break">
-							{% endif %}
+						{% if not loop.last %}
+						<hr class="ui-checkbox-accordion__section-break">
+						{% endif %}
 						{% endfor %}
 					</div>
 

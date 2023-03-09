@@ -105,7 +105,7 @@ describe('scripts/initiate', () => {
 
 	test('Expect script tag to have async attibute without a defer attibute', () => {
 		const scriptHasAsync = allScriptTags.find((scriptTag) => {
-			return scriptTag.getAttribute('async') && !scriptTag.getAttribute('defer');
+			return scriptTag.getAttributeNode('async') && !scriptTag.getAttributeNode('defer');
 		});
 
 		expect(scriptHasAsync).toBeDefined();
@@ -113,7 +113,7 @@ describe('scripts/initiate', () => {
 
 	test('Expect script tag to have defer attibute without an async attibute', () => {
 		const scriptHasDefer = allScriptTags.find((scriptTag) => {
-			return scriptTag.getAttribute('defer') && !scriptTag.getAttribute('async');
+			return scriptTag.getAttributeNode('defer') && !scriptTag.getAttributeNode('async');
 		});
 
 		expect(scriptHasDefer).toBeDefined();

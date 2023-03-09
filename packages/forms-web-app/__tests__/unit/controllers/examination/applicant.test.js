@@ -19,8 +19,8 @@ const pageData = {
 	backLinkUrl: '/examination/have-an-interested-party-number',
 	id: 'examination-applicant',
 	options: [applicantOptions[1], applicantOptions[2]],
-	pageTitle: 'Are you Test Project Name?',
-	title: 'Are you Test Project Name?'
+	pageTitle: 'Are you Mock promoter name?',
+	title: 'Are you Mock promoter name?'
 };
 
 describe('controllers/examination/applicant', () => {
@@ -34,6 +34,7 @@ describe('controllers/examination/applicant', () => {
 				appData: {
 					ProjectName: 'Test Project Name'
 				},
+				promoterName: 'Mock promoter name',
 				examination: {}
 			}
 		};
@@ -58,6 +59,7 @@ describe('controllers/examination/applicant', () => {
 					appData: {
 						ProjectName: 'Test Project Name'
 					},
+					promoterName: 'Mock promoter name',
 					examination: {
 						isApplicant: 'yes'
 					}

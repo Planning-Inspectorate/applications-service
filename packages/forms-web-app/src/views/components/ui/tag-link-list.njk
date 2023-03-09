@@ -2,7 +2,7 @@
 
 {% macro uiTagLinkList(caption, tagLinks) %}
   {% if tagLinks | length > 0 %}
-    <h3 class="govuk-heading-m">{{ caption }}</h1>
+    <h3 class="govuk-heading-m">{{ caption }}</h3>
 
     <ul class="ui-tag-link-list {% if tagLinks | length > 1 %}ui-tag-link-list--multi{% endif %}">
       {% for tagLink in tagLinks %}

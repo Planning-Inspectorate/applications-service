@@ -1,211 +1,187 @@
 .-link-focus {
-  outline: 3px solid rgba(0,0,0,0);
-  color: #0b0c0c;
-  background-color: #fd0;
-  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
-  text-decoration: none;
+	outline: 3px solid rgba(0, 0, 0, 0);
+	color: #0b0c0c;
+	background-color: #fd0;
+	box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+	text-decoration: none;
 }
 
 .ui-checkbox-accordion {
-  box-sizing: border-box;
+	box-sizing: border-box;
 
-  &--modal-on-tablet {
-    .js-enabled & {
-      @media only screen and (max-width: calc(map-get($govuk-breakpoints, "tablet") - 1px)) {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: govuk-colour("white");
-        z-index: 10;
+	&__title {
+		@extend .govuk-heading-m;
 
-        .ui-checkbox-accordion {
-          &__outer-container {
-            height: 100%;
-            overflow: auto;
-            -webkit-overflow-scrolling: touch;
-          }
+		display: block;
+	}
 
-          &__inner-container {
-            @include govuk-responsive-padding(6);
-          }
+	&__switch {
+		@extend .govuk-link;
+		@include govuk-responsive-margin(4, 'bottom');
 
-          &__modal-header {
-            display: flex;
-          }
+		display: none;
 
-          &__title {
-            display: none;
-          }
-        }
-      }
-    }
-  }
+		.js-enabled & {
+			display: block;
+		}
+	}
 
-  &__modal-header {
-    @include govuk-responsive-padding(2, "bottom");
-    @include govuk-responsive-margin(2, "bottom");
+	&__sections {
+		@include govuk-responsive-margin(7, 'bottom');
+	}
 
-    display: none;
-    border-bottom: 1px solid $govuk-border-colour;
-  }
+	&__section {
+		@include govuk-responsive-padding(1, 'right');
+		@include govuk-responsive-padding(1, 'left');
 
-  &__modal-header-content-start {
-    flex-grow: 1;
-  }
+		display: block;
 
-  &__modal-title {
-    @extend .govuk-heading-l;
-    @include govuk-responsive-margin(2, "bottom");
-  }
+		@media (min-width: map-get($govuk-breakpoints, 'tablet')) {
+			@include govuk-responsive-padding(3, 'right');
+			@include govuk-responsive-padding(3, 'left');
+		}
 
-  &__modal-subtitle {
-    @extend .govuk-body-s;
-  }
+		&[open] {
+			.ui-checkbox-accordion__section-switch-indicator {
+				transform: rotate(180deg);
+			}
+		}
+	}
 
-  &__modal-close-btn {
-    @extend
-      .govuk-link,
-      .govuk-body-s;
+	&__section-switch {
+		display: block;
+		font-size: 0;
+		line-height: 1;
+		white-space: nowrap;
+		cursor: pointer;
 
-    color: $govuk-link-colour;
-  }
+		&:focus {
+			.ui-checkbox-accordion__section-switch-title {
+				@extend .-link-focus;
+			}
+		}
 
-  &__title {
-    @extend .govuk-heading-m;
+		&:focus-within {
+			outline: none;
+		}
+	}
 
-    display: block;
-  }
+	&__section-switch-indicator,
+	&__section-switch-title {
+		display: inline-block;
+		vertical-align: middle;
+		margin: govuk-spacing(0);
+	}
 
-  &__switch {
-    @extend .govuk-link;
-    @include govuk-responsive-margin(4, "bottom");
-  }
+	&__section-switch-indicator {
+		@include govuk-responsive-margin(2, 'right');
+	}
 
-  &__sections {
-    @include govuk-responsive-margin(7, "bottom")
-  }
+	&__section-switch-title {
+		@extend .govuk-body;
 
-  &__section {
-    @include govuk-responsive-padding(1, "right");
-    @include govuk-responsive-padding(1, "left");
+		color: $govuk-link-colour;
+		white-space: normal;
+	}
 
-    display: block;
+	&__section-state-text {
+		&::before {
+			content: 'show';
+		}
+	}
 
-    @media (min-width: map-get($govuk-breakpoints, "tablet")) {
-      @include govuk-responsive-padding(3, "right");
-      @include govuk-responsive-padding(3, "left");
-    }
-  }
+	&__checkboxes-section {
+		.govuk-form-group {
+			margin: govuk-spacing(0);
+		}
 
-  &__section-control {
-    display: block;
-    font-size: 0;
-    line-height: 1;
-    white-space: nowrap;
-    cursor: pointer;
+		&--date {
+			> .govuk-form-group {
+				&:first-child {
+					@include govuk-responsive-margin(3, 'top');
+				}
 
-    &:active {
-      .ui-checkbox-accordion__section-control-title {
-        @extend .-link-focus;
-      }
-    }
-  }
+				@include govuk-responsive-margin(6, 'top');
+			}
+		}
+	}
 
-  &__section-control-indicator,
-  &__section-control-title {
-    display: inline-block;
-    vertical-align: middle;
-    margin: govuk-spacing(0);
-  }
+	&__checkboxes-section-switch {
+		@extend .govuk-link, .govuk-body-s, .govuk-\!-margin-0, .govuk-\!-margin-top-3;
 
-  &__section-control-indicator {
-    @include govuk-responsive-margin(2, "right");
-  }
+		color: $govuk-link-colour;
+	}
 
-  &__section-control-title {
-    @extend .govuk-body;
+	&__section-break {
+		@extend .govuk-\!-margin-0, .govuk-\!-margin-top-2, .govuk-\!-margin-bottom-2;
 
-    color: $govuk-link-colour;
-    white-space: normal;
-  }
+		border: 0;
+		border-bottom: 1px solid $govuk-border-colour;
+	}
 
-  &__section-state-text {
-    &::before {
-      content: 'show';
-    }
-  }
+	&__submit {
+		margin: govuk-spacing(0);
+	}
 
-  &__checkboxes-section {
-    display: none;
+	&--modal-on-tablet {
+		.js-enabled & {
+			@media only screen and (max-width: calc(map-get($govuk-breakpoints, 'tablet') - 1px)) {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: govuk-colour('white');
+				z-index: 10;
 
-    .govuk-form-group {
-      margin: govuk-spacing(0);
-    }
+				.ui-checkbox-accordion {
+					&__outer-container {
+						height: 100%;
+						overflow: auto;
+						-webkit-overflow-scrolling: touch;
+					}
 
-    &--date {
-      > .govuk-form-group {
-        &:first-child {
-          @include govuk-responsive-margin(3, "top");
-        }
+					&__inner-container {
+						@include govuk-responsive-padding(6);
+					}
 
-        @include govuk-responsive-margin(6, "top");
-      }
-    }
-  }
+					&__modal-header {
+						display: flex;
+					}
 
-  &__checkboxes-section-switch {
-    @extend
-      .govuk-link,
-      .govuk-body-s,
-      .govuk-\!-margin-0,
-      .govuk-\!-margin-top-3;
+					&__title {
+						display: none;
+					}
+				}
+			}
+		}
+	}
 
-    color: $govuk-link-colour;
-  }
+	&__modal-header {
+		@include govuk-responsive-padding(2, 'bottom');
+		@include govuk-responsive-margin(2, 'bottom');
 
-  &__section-break {
-    @extend
-      .govuk-\!-margin-0,
-      .govuk-\!-margin-top-2,
-      .govuk-\!-margin-bottom-2;
+		display: none;
+		border-bottom: 1px solid $govuk-border-colour;
+	}
 
-    border: 0;
-    border-bottom: 1px solid $govuk-border-colour;
-  }
+	&__modal-header-content-start {
+		flex-grow: 1;
+	}
 
-  &__submit {
-    margin: govuk-spacing(0);
-  }
+	&__modal-title {
+		@extend .govuk-heading-l;
+		@include govuk-responsive-margin(2, 'bottom');
+	}
 
-  &__section-switch {
-    @extend .govuk-visually-hidden;
+	&__modal-subtitle {
+		@extend .govuk-body-s;
+	}
 
-    &:focus {
-      & + .ui-checkbox-accordion__section-control {
-        .ui-checkbox-accordion__section-control-title {
-          @extend .-link-focus;
-        }
-      }
-    }
-    &:checked {
-      & + .ui-checkbox-accordion__section-control {
-        .ui-checkbox-accordion__section-control-indicator {
-          transform: rotate(180deg);
-        }
+	&__modal-close-btn {
+		@extend .govuk-link, .govuk-body-s;
 
-        .ui-checkbox-accordion__section-state-text {
-          &::before {
-            content: 'hide';
-          }
-        }
-
-        & + .ui-checkbox-accordion__checkboxes-section {
-          display: block;
-        }
-      }
-    }
-  }
+		color: $govuk-link-colour;
+	}
 }

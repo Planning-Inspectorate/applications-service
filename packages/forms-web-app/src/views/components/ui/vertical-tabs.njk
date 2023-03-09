@@ -1,9 +1,12 @@
-{% macro uiVerticalTabs(title, activeId, tabs) %}
-  <nav class="ui-vertical-tabs">
+{% macro uiVerticalTabs(title, activeId, tabs, ariaLabel, headingLevel = 'span') %}
+  <nav
+    aria-label="{{ ariaLabel }}"
+    class="ui-vertical-tabs"
+  >
     {% if title %}
-      <h5 class="ui-vertical-tabs__title">
+      <{{ headingLevel }} class="ui-vertical-tabs__title">
         {{ title }}
-      </h5>
+      </{{ headingLevel }}>
     {% endif %}
     <ul class="ui-vertical-tabs__list">
       {% for tab in tabs %}
