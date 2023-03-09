@@ -121,3 +121,6 @@ packages/forms-web-app/src/public/stylesheets/main.css
 uploads/*
 !uploads/.gitkeep
 .vs
+
+init/mssql
+!init/mssql/mssql.conf
