@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id                                          Int      @id @default(autoincrement())
+  caseReference                               String?
+  projectName                                 String?
+  projectDescription                          String?
+  publishStatus                               String?
+  sector                                      String?
+  projectType                                 String?
+  sourceSystem                                String
+  stage                                       String?
+  projectLocation                             String?
+  projectEmailAddress                         String?
+  regions                                     String?
+  transboundary                               Boolean?
+  easting                                     Int?
+  northing                                    Int?
+  welshLanguage                               Boolean?
+  mapZoomLevel                                String?
+  secretaryOfState                            String?
+  dateProjectAppearsOnWebsite                 DateTime?
+  dateOfDCOAcceptance                         DateTime?
+  anticipatedDateOfSubmission                 DateTime?
+  anticipatedSubmissionDateNonSpecific        String?
+  dateOfDCOSubmission                         DateTime?
+  dateOfRepresentationPeriodOpen              DateTime?
+  dateOfRelevantRepresentationClose           DateTime?
+  dateRRepAppearOnWebsite                     DateTime?
+  confirmedStartOfExamination                 DateTime?
+  dateTimeExaminationEnds                     DateTime?
+  stage4ExtensionToExamCloseDate              DateTime?
+  stage5ExtensionToRecommendationDeadline     DateTime?
+  dateOfRecommendations                       DateTime?
+  confirmedDateOfDecision                     DateTime?
+  stage5ExtensionToDecisionDeadline           DateTime?
+  dateProjectWithdrawn                        DateTime?
+  section46Notification                       DateTime?
+  datePINSFirstNotifiedOfProject              DateTime?
+  screeningOpinionSought                      DateTime?
+  screeningOpinionIssued                      DateTime?
+  scopingOpinionSought                        DateTime?
+  scopingOpinionIssued                        DateTime?
+  deadlineForAcceptanceDecision               DateTime?
+  dateSection58NoticeReceived                 DateTime?
+  preliminaryMeetingStartDate                 DateTime?
+  deadlineForCloseOfExamination               DateTime?
+  deadlineForSubmissionOfRecommendation       DateTime?
+  deadlineForDecision                         DateTime?
+  jRPeriodEndDate                             DateTime?
+  extensionToDateRelevantRepresentationsClose DateTime?
+  examinationTimetableId                      Int?
+  createdAt                                   DateTime? @default(now())
+  modifiedAt                                  DateTime? @default(now())
+}
