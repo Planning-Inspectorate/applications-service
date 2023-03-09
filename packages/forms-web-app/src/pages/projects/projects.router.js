@@ -25,6 +25,7 @@ const projectsController = require('./examination/examination');
 const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
 const { verticalTabs } = require('./middleware');
+const { featureFlag } = require('../../config');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -65,7 +66,8 @@ if (allowRepresentation) {
 }
 
 // Section 51
-router.use(section51Router);
-// router.get('/:case_ref/s51advice', getSection51);
+if (featureFlag.allowSection51) {
+	router.use(section51Router);
+}
 
 module.exports = router;
