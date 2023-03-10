@@ -84,6 +84,7 @@ async function handler(
 	}
 }
 
+exports.handler = handler;
 exports.getProjectData = async (case_ref) => {
 	return handler('getProjectData', `/api/v1/applications/${case_ref}`);
 };
@@ -181,19 +182,4 @@ exports.wrappedPostSubmissionComplete = async (submissionId) => {
 	const URL = `/api/v1/submissions/${submissionId}/complete`;
 	const method = 'POST';
 	return handler('postSubmissionComplete', URL, method, {});
-};
-
-exports.searchAdviceDocuments = async (params) => {
-	const queryString = queryStringBuilder(params, [
-		'caseRef',
-		'classification',
-		'page',
-		'searchTerm',
-		'stage',
-		'type',
-		'category'
-	]);
-	const documentServiceApiUrl = `/api/v1/advice`;
-	const method = 'GET';
-	return handler('searchAdviceDocuments', documentServiceApiUrl, queryString, method);
 };
