@@ -1,4 +1,4 @@
-const { buildQueryString } = require('../common/buildQuerySring');
+const { buildQueryString } = require('../../documents/utils/common/buildQuerySring');
 
 const defaultDocumentsPerPage = 25;
 
