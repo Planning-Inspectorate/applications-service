@@ -23,15 +23,19 @@ describe('#getSection51', () => {
 			}
 		};
 		const res = { render: jest.fn(), locals: { caseRef: 'mock case ref' } };
+		const next = jest.fn();
 		beforeEach(async () => {
-			getPaginationUrl.mockReturnValue({ paginationUrl: 'mock pagination url' });
+			getPaginationUrl.mockReturnValue({
+				paginationUrl: 'mock pagination url',
+				queryUrl: 'mock query url'
+			});
 			getPagination.mockReturnValue({ pagination: 'mock pagination' });
 			documentsPerPage.mockReturnValue('mock results per page');
 			listAdvice.mockReturnValue({
 				advice: 'mock advice',
 				pagination: 'mock pagination'
 			});
-			await getSection51(req, res);
+			await getSection51(req, res, next);
 		});
 		it('should call the list advice service', () => {
 			expect(listAdvice).toHaveBeenCalledWith('mock case ref', 'mock search term', {
@@ -45,7 +49,9 @@ describe('#getSection51', () => {
 				advice: 'mock advice',
 				pagination: 'mock pagination',
 				paginationUrl: 'mock pagination url',
-				resultsPerPage: 'mock results per page'
+				resultsPerPage: 'mock results per page',
+				queryUrl: 'mock query url',
+				searchTerm: 'mock search term'
 			});
 		});
 	});
@@ -55,15 +61,17 @@ describe('#getSection51', () => {
 			params: {}
 		};
 		const res = { render: jest.fn(), status: jest.fn(() => res) };
-
+		const next = jest.fn();
 		beforeEach(async () => {
 			listAdvice.mockResolvedValue(() => {
 				throw new Error('something went wrong');
 			});
-			await getSection51(req, res);
+			await getSection51(req, res, next);
 		});
 		it('should render the error page', () => {
-			expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+			expect(next).toHaveBeenCalledWith(
+				new TypeError("Cannot read properties of undefined (reading 'caseRef')")
+			);
 		});
 	});
 });

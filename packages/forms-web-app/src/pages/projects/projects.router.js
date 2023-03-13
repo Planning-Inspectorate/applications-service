@@ -24,18 +24,18 @@ const examinationTimetable = require('./examination-timetable/controller');
 const projectsController = require('./examination/examination');
 const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
-const { verticalTabs } = require('./middleware');
+const { middleware } = require('./middleware');
 const { featureFlag } = require('../../config');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
-	router.get('/:case_ref', verticalTabs, projectsController.getExamination);
+	router.get('/:case_ref', middleware, projectsController.getExamination);
 }
 
 if (allowDocumentLibrary) {
 	router.get(
 		`${subDirectory}${pages.documents.route}`,
-		verticalTabs,
+		middleware,
 		aboutTheApplicationController.getApplicationDocuments
 	);
 }
@@ -43,7 +43,7 @@ if (allowDocumentLibrary) {
 if (allowExaminationTimetable) {
 	router.get(
 		`${subDirectory}${pages.examinationTimetable.route}`,
-		verticalTabs,
+		middleware,
 		examinationTimetable.getExaminationTimetable
 	);
 	router.post(
@@ -55,12 +55,12 @@ if (allowExaminationTimetable) {
 if (allowRepresentation) {
 	router.get(
 		'/:case_ref/representations',
-		verticalTabs,
+		middleware,
 		asyncRoute(representationsController.getRepresentations)
 	);
 	router.get(
 		'/:case_ref/representations/:id',
-		verticalTabs,
+		middleware,
 		asyncRoute(representationsController.getRepresentation)
 	);
 }
