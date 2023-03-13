@@ -1,9 +1,9 @@
 <link href="/public/stylesheets/main.css" media="all" rel="stylesheet" type="text/css">
 
 {% if featureFlag.generalisedFormSanitisation %}
-<script type="module" src="/public/scripts/register-sw.js"></script>
+<script type="module" src="/public/scripts/register-sw.script.js"></script>
 {% else %}
-<script type="module" src="/public/scripts/unregister-sw.js"></script>
+<script type="module" src="/public/scripts/unregister-sw.script.js"></script>
 {% endif %}
 
 {% if featureFlag.googleTagManager %}
