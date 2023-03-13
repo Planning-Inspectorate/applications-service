@@ -5,7 +5,7 @@ module.exports = function formSanitisation() {
 		try {
 			if (
 				req.method === 'POST' &&
-				['application/json' /* , 'application/x-www-form-urlencoded' */].includes(
+				['application/json', 'application/x-www-form-urlencoded'].includes(
 					req.headers['content-type']
 				)
 			) {
