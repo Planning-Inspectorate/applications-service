@@ -44,27 +44,37 @@
 					{{ title }}
 				</h1>
 
-				<p class="govuk-body">The list below includes a record of advice we have provided for this project.</p>
+				{% if advice.length > 0 %}
+					<p class="govuk-body">The list below includes a record of advice we have provided for this project.</p>
+				{% else %}
+					<h2 class="govuk-heading-m">
+						There is no advice to show for this project
+					</h2>
+				{% endif %}
 
 				<p class="govuk-body">There is a statutory duty, under <a
 						href="https://www.legislation.gov.uk/ukpga/2008/29/section/51">section 51 of the Planning Act 2008</a>, to
 					record the advice that is given in relation to an application or a potential application, including the name
 					of the person who requested the advice, and to make this publicly available.</p>
 
-				<p>
-					Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
-					<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
-				</p>
+				{% if advice.length > 0 %}
+					<p>
+						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
+						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
+					</p>
 
-				{{ uiResultsPerPage(resultsPerPage) }}
+					{{ uiResultsPerPage(resultsPerPage) }}
 
-				{{ sectionResults(advice) }}
-				
-				{{ paginationBar(
-					pageOptions,
-					paginationData,
-					paginationUrl
-				) }}
+					{{ sectionResults(advice) }}
+
+					{{ paginationBar(
+						pageOptions,
+						paginationData,
+						paginationUrl
+					) }}
+
+				{% endif %}
+
 
 				<div class="visible-on visible-on--tablet">
 					<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible ">
