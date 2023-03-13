@@ -50,7 +50,8 @@ module.exports = {
 		allowExaminationTimetable: process.env.FEATURE_ALLOW_EXAMINATION_TIMETABLE === 'true',
 		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
-		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true'
+		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true',
+		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
