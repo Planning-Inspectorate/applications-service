@@ -72,7 +72,7 @@ app.use(
 	express.static(path.join(jQueryFrontendRoot, 'dist', 'jquery.min.js'))
 );
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
-app.use('/sw.js', express.static(path.join(__dirname, 'public/sw.js')));
+app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
 
 function isProjectClosed(req, res, next) {
 	const { isPeriodOpen } = req.session;
