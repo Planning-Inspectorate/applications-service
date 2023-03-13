@@ -1,5 +1,5 @@
 const { getSection51 } = require('./section-51.controller');
-const { verticalTabs } = require('../middleware');
+const { middleware } = require('../middleware');
 
 jest.mock('express', () => ({
 	Router: () => ({
@@ -14,7 +14,7 @@ describe('#section51Router', () => {
 		});
 		describe('and the route is /', () => {
 			it('should add the controller to the route', () => {
-				expect(router.get).toHaveBeenCalledWith('/:case_ref/s51advice', verticalTabs, getSection51);
+				expect(router.get).toHaveBeenCalledWith('/:case_ref/s51advice', middleware, getSection51);
 			});
 		});
 	});

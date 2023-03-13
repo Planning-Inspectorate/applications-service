@@ -3,16 +3,17 @@ const { listAdvice } = require('../../../services/advice.service');
 const { getPagination, getPaginationUrl } = require('../utils/pagination/pagination');
 const logger = require('../../../lib/logger');
 
-async function getSection51(req, res) {
+async function getSection51(req, res, next) {
 	try {
 		const { query } = req;
 		const { locals } = res;
+		const { searchTerm, page, itemsPerPage } = query;
 
-		const { pagination, advice } = await listAdvice(locals.caseRef, query.searchTerm, {
-			page: query.page,
-			itemsPerPage: query.itemsPerPage
+		const { pagination, advice } = await listAdvice(locals.caseRef, searchTerm, {
+			page: page,
+			itemsPerPage: itemsPerPage
 		});
-		const { paginationUrl } = getPaginationUrl(req, 's51Advice');
+		const { paginationUrl, queryUrl } = getPaginationUrl(req, 's51Advice');
 		const paginationView = getPagination(pagination);
 		const resultsPerPage = documentsPerPage(query);
 
@@ -22,11 +23,13 @@ async function getSection51(req, res) {
 			pagination,
 			resultsPerPage,
 			...paginationView,
-			paginationUrl
+			paginationUrl,
+			searchTerm,
+			queryUrl
 		});
 	} catch (e) {
 		logger.error(e);
-		return res.render('error/unhandled-exception');
+		next(e);
 	}
 }
 
