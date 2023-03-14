@@ -1,0 +1,50 @@
+{% extends "projects/components/project-pages-template.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block pageContent %}
+  {{ govukBackLink({
+    classes: 'govuk-!-margin-top-0',
+    href: backToListUrl,
+    text: 'Back to list'
+  }) }}
+
+  {% if enquirySummaryList or enquiryText %}
+  <h2 class="govuk-heading-m">
+    Enquiry
+  </h2>
+
+  {% if enquirySummaryList %}
+  {{ govukSummaryList({
+    rows: enquirySummaryList
+  }) }}
+  {% endif %}
+
+  {% if enquiryText %}
+  <p class="govuk-body">
+    {{ enquiryText }}
+  </p>
+  {% endif %}
+  {% endif %}
+
+  {% if adviceGiven %}
+  <h2 class="govuk-heading-m">
+    Advice given
+  </h2>
+
+  <p class="govuk-body">
+    {{ adviceGiven }}
+  </p>
+  {% endif %}
+
+  {% if attachments.length %}
+  <h2 class="govuk-heading-m">
+    Attachments
+  </h2>
+
+  {% for attachment in attachments %}
+  <p class="govuk-body"><a class="govuk-link" href="{{ attachment.url }}" rel="noopener noreferrer" target="_blank">{{ attachment.text }}</a></p>
+  {% endfor %}
+  {% endif %}
+{% endblock %}

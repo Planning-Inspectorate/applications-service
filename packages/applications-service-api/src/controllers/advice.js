@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 
 const logger = require('../lib/logger');
-
+const { documentsHost } = require('../lib/config');
 const { getAdvice, getAdviceById } = require('../services/advice.service');
 
 const ApiError = require('../error/apiError');
@@ -55,7 +55,15 @@ module.exports = {
 				throw ApiError.adviceNotFound(adviceID);
 			}
 
-			res.status(StatusCodes.OK).send(advice);
+			res.status(StatusCodes.OK).send({
+				...advice,
+				attachments: advice.attachments.map((adviceAttachment) => ({
+					...adviceAttachment,
+					documentURI: adviceAttachment.documentURI
+						? `${documentsHost}${adviceAttachment.documentURI}`
+						: null
+				}))
+			});
 		} catch (e) {
 			if (e instanceof ApiError) {
 				logger.debug(e.message);

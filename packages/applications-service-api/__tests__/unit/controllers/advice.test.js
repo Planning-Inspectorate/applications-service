@@ -180,7 +180,16 @@ describe('getAdvice', () => {
 			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 
 			const advice = res._getData();
-			expect(advice).toEqual(mockAdvice);
+			expect(advice).toEqual({
+				...mockAdvice,
+				attachments: [
+					{
+						...mockAdvice.attachments[0],
+						documentURI:
+							'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects//pathname/to/document/or/blob/uri'
+					}
+				]
+			});
 		});
 	});
 });
