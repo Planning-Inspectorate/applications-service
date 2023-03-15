@@ -4,24 +4,19 @@
 			<li class="section-results__result">
 				<a class="section-results__result-link " href="s51advice/{{ result.adviceID }}">
 					<strong>
-						{{ result.enquiryDetail }}
+						{{ result.link }}
 					</strong>
 				</a>
 
-				<p class="section-results__result-copy">
-					<strong>
-						To:
-					</strong>
-					{{ result.firstName + result.lastName }}
-				</p>
 				<div class="section-results__result-meta-data">
 					<div
 						class="section-results__result-item-two-thirds">
+
 						<p class="section-results__result-copy">
 							<strong>
-								Date published:
+								{{ result.date.text }}
 							</strong>
-							{{ result.dateAdviceGiven | date }}
+							{{ result.date.date | date('D MMMM YYYY') }}
 						</p>
 
 					</div>
@@ -30,7 +25,7 @@
 						<p class="section-results__result-copy">
 							<strong>
 								Enquiry type:
-							</strong>{{ result.enquiryMethod }}
+							</strong>{{ result.method }}
 						</p>
 
 					</div>
