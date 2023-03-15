@@ -2,17 +2,22 @@ const { getAttachments } = require('./get-attachments');
 const { getBackLinkUrl } = require('./get-navigation-urls');
 const { getEnquirySummaryList } = require('./get-enquiry-summary-list');
 const { getBreadcrumbsItems } = require('./get-breadcrumbs-items');
+const { getAdviceTitle } = require('../../utils/advice-helpers');
 
-const getPageViewModel = async (locals, pageData, referer) => ({
+const handleAdviceDetails = (adviceDetails) => ({
+	adviceGiven: adviceDetails.adviceGiven,
+	attachments: getAttachments(adviceDetails.attachments),
+	enquirySummaryList: getEnquirySummaryList(adviceDetails),
+	enquiryText: adviceDetails.enquiryDetail,
+	pageTitle: adviceDetails.enquiryDetail,
+	title: getAdviceTitle(adviceDetails)
+});
+
+const getPageViewModel = async ({ caseRef }, adviceDetails, referer) => ({
 	activeId: 'section-51',
-	adviceGiven: pageData.adviceGiven,
-	attachments: getAttachments(pageData.attachments),
-	backToListUrl: getBackLinkUrl(referer, locals.caseRef),
-	breadcrumbsItems: getBreadcrumbsItems(locals.caseRef),
-	enquirySummaryList: getEnquirySummaryList(pageData),
-	enquiryText: pageData.enquiryDetail,
-	pageTitle: pageData.enquiryDetail,
-	title: pageData.enquiryDetail
+	backToListUrl: getBackLinkUrl(referer, caseRef),
+	breadcrumbsItems: getBreadcrumbsItems(caseRef),
+	...handleAdviceDetails(adviceDetails)
 });
 
 module.exports = { getPageViewModel };

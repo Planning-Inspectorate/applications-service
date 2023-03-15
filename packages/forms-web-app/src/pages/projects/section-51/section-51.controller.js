@@ -2,6 +2,7 @@ const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
 const { listAdvice } = require('../../../services/advice.service');
 const { getPagination, getPaginationUrl } = require('../utils/pagination/pagination');
 const logger = require('../../../lib/logger');
+const { adviceViewModel } = require('./section-51.view-model');
 
 async function getSection51(req, res, next) {
 	try {
@@ -19,7 +20,7 @@ async function getSection51(req, res, next) {
 
 		return res.render('projects/section-51/index.njk', {
 			title: 'Section 51 Advice',
-			advice,
+			advice: adviceViewModel(advice),
 			pagination,
 			resultsPerPage,
 			...paginationView,

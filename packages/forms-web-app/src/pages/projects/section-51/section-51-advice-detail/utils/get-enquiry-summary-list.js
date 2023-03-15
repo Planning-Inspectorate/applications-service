@@ -1,4 +1,9 @@
 const { formatDate } = require('../../../../../utils/date-utils');
+const {
+	getAdviceDateText,
+	getAdviceName,
+	getAdviceEnquiryText
+} = require('../../utils/advice-helpers');
 
 const getEnquirySummaryListItemViewModel = (keyText, valueText) => ({
 	key: {
@@ -10,8 +15,14 @@ const getEnquirySummaryListItemViewModel = (keyText, valueText) => ({
 });
 
 const getEnquirySummaryList = (pageData) => [
-	getEnquirySummaryListItemViewModel('Author', pageData.organisation),
-	getEnquirySummaryListItemViewModel('Date published', formatDate(pageData.dateAdviceGiven)),
+	getEnquirySummaryListItemViewModel(
+		getAdviceEnquiryText(pageData.enquiryMethod),
+		getAdviceName(pageData)
+	),
+	getEnquirySummaryListItemViewModel(
+		getAdviceDateText(pageData.enquiryMethod),
+		formatDate(pageData.dateAdviceGiven)
+	),
 	getEnquirySummaryListItemViewModel('Enquiry type', pageData.enquiryMethod)
 ];
 

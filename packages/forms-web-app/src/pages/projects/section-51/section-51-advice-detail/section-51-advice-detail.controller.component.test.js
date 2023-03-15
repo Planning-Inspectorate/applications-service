@@ -1,6 +1,7 @@
 const { getSection51AdviceDetail } = require('./section-51-advice-detail.controller');
 
 const { getAdviceDetailData } = require('../../../../services/advice.service');
+const { adviceList } = require('../__mocks__/fixtures');
 
 jest.mock('../../../../services/advice.service', () => ({
 	getAdviceDetailData: jest.fn()
@@ -26,17 +27,7 @@ describe('#getSection51AdviceDetail', () => {
 		});
 		describe('and there are no errors', () => {
 			beforeEach(async () => {
-				getAdviceDetailData.mockReturnValue({
-					adviceGiven: 'mock advice given',
-					attachments: [
-						{ documentURI: 'mock document URI 1', mime: 'application/pdf' },
-						{ documentURI: 'mock document URI 2', mime: 'application/msword' }
-					],
-					dateAdviceGiven: '2023-01-01',
-					enquiryDetail: 'mock enquiry detail',
-					enquiryMethod: 'mock enquiry method',
-					organisation: 'mock organisation'
-				});
+				getAdviceDetailData.mockReturnValue(adviceList[0]);
 				await getSection51AdviceDetail(mockReq, mockRes);
 			});
 			it('should call the correct template with the page data', () => {
@@ -55,13 +46,13 @@ describe('#getSection51AdviceDetail', () => {
 							{ href: undefined, text: 'Advice in detail' }
 						],
 						enquirySummaryList: [
-							{ key: { text: 'Author' }, value: { text: 'mock organisation' } },
-							{ key: { text: 'Date published' }, value: { text: '1 January 2023' } },
+							{ key: { text: 'From' }, value: { text: 'mock organisation' } },
+							{ key: { text: 'Date advice given' }, value: { text: '1 January 2023' } },
 							{ key: { text: 'Enquiry type' }, value: { text: 'mock enquiry method' } }
 						],
 						enquiryText: 'mock enquiry detail',
 						pageTitle: 'mock enquiry detail',
-						title: 'mock enquiry detail'
+						title: 'Advice to mock organisation'
 					}
 				);
 			});
