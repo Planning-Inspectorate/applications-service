@@ -1,9 +1,9 @@
 const {
 	addClickEventToOpenModalButton,
-	addClickEventToCloseModalButton
+	addClickEventToCloseModalButton,
+	addFocusoutEventToModal
 } = require('./add-event-listeners');
 const { insertOpenModalButton, buildOpenModalButton } = require('./builders');
-const { getModal, getCloseModalButton, getOpenModalButtonNextToElement } = require('./getters');
 const { setModalInitiatedAttribute, setModalActiveAttribute } = require('./setters');
 
 const initiateModal = (
@@ -13,16 +13,15 @@ const initiateModal = (
 	openModalButtonText,
 	screenSizeModalIsActive
 ) => {
-	const modal = getModal(modalId);
+	const modal = document.querySelector(modalId);
 	const openModalButton = buildOpenModalButton(modalId, openModalButtonText);
-	const closeModalButton = getCloseModalButton(closeModalButtonId);
-	const insertOpenModalButtonNextToElement = getOpenModalButtonNextToElement(
-		insertOpenModalButtonNextToId
-	);
+	const closeModalButton = modal.querySelector(closeModalButtonId);
+	const insertOpenModalButtonNextToElement = document.querySelector(insertOpenModalButtonNextToId);
 
 	insertOpenModalButton(openModalButton, insertOpenModalButtonNextToElement);
-	addClickEventToOpenModalButton(modal, openModalButton, screenSizeModalIsActive);
-	addClickEventToCloseModalButton(modal, closeModalButton);
+	addFocusoutEventToModal(modalId, modal, closeModalButton, screenSizeModalIsActive);
+	addClickEventToOpenModalButton(modal, openModalButton, closeModalButton, screenSizeModalIsActive);
+	addClickEventToCloseModalButton(modal, closeModalButton, openModalButton);
 	setModalInitiatedAttribute(modal);
 	setModalActiveAttribute(modal, true);
 };

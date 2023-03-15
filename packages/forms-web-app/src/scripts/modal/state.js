@@ -22,4 +22,12 @@ const restoreModalState = (modal, openModalButton) => {
 	setModalActiveAttribute(modal, true);
 };
 
-module.exports = { openModal, closeModal, resetModalState, restoreModalState };
+const focusElement = (elementToFocus) => elementToFocus.focus({ focusVisible: true });
+
+module.exports = {
+	openModal,
+	closeModal,
+	resetModalState,
+	restoreModalState,
+	focusElement
+};
