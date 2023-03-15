@@ -7,9 +7,10 @@ const getSection51AdviceDetail = async (req, res) => {
 		const { params } = req;
 		const { locals } = res;
 		const adviceDetailData = await getAdviceDetailData(params.id);
+		const referer = req.get('Referer');
 		return res.render(
 			'projects/section-51/section-51-advice-detail/index.njk',
-			await getPageViewModel(locals, adviceDetailData)
+			await getPageViewModel(locals, adviceDetailData, referer)
 		);
 	} catch (e) {
 		logger.error(e);

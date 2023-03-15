@@ -13,12 +13,13 @@ describe('#getSection51AdviceDetail', () => {
 
 		beforeEach(() => {
 			mockReq = {
+				get: jest.fn(() => 's51advice/mock-referer-value'),
 				params: {
 					id: 'mock advice detail id'
 				}
 			};
 			mockRes = {
-				locals: { caseRef: 'mock case ref' },
+				locals: { caseRef: 'mock-case-ref' },
 				render: jest.fn(),
 				status: jest.fn(() => mockRes)
 			};
@@ -48,9 +49,9 @@ describe('#getSection51AdviceDetail', () => {
 							{ text: 'View advice (PDF)', url: 'mock document URI 1' },
 							{ text: 'View advice (Word)', url: 'mock document URI 2' }
 						],
-						backToListUrl: '/projects/mock case ref/s51advice',
+						backToListUrl: 's51advice/mock-referer-value',
 						breadcrumbsItems: [
-							{ href: '/projects/mock case ref/s51advice', text: 'Section 51 advice' },
+							{ href: '/projects/mock-case-ref/s51advice', text: 'Section 51 advice' },
 							{ href: undefined, text: 'Advice in detail' }
 						],
 						enquirySummaryList: [
