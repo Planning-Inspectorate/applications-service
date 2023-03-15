@@ -1,5 +1,5 @@
 const debounce = require('lodash/debounce');
-const { getModal, getOpenModalButton } = require('./getters');
+const { getOpenModalButton } = require('./getters');
 const {
 	isScreenSizeActiveModalSize,
 	isModalInitiated,
@@ -16,7 +16,7 @@ const handleModalOnResize = (
 	openModalButtonText,
 	screenSizeModalIsActive
 ) => {
-	const modal = getModal(modalId);
+	const modal = document.querySelector(modalId);
 	let openModalButton = getOpenModalButton(modalId);
 
 	const debounceInitiateModalWhenScreenSizeIsActive = debounce(() => {
