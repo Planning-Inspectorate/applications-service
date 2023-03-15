@@ -51,7 +51,7 @@ describe('scripts/sw', () => {
 		expect(mockWaitUntil).toHaveBeenCalledWith('value');
 	});
 
-	it('handles fetch event for form post ', async () => {
+	it('intercepts fetch event for form post', async () => {
 		require('../../../src/public/scripts/sw.script.js');
 		await delay(100); // Give async code time to run
 
@@ -81,6 +81,81 @@ describe('scripts/sw', () => {
 			},
 			body: '{"first":"one","second":"two"}'
 		});
+	});
+
+	it('does not handle fetch event for non-form post ', async () => {
+		require('../../../src/public/scripts/sw.script.js');
+		await delay(100); // Give async code time to run
+
+		const mockResponseWith = jest.fn();
+		listeners.fetch({
+			request: {
+				method: 'POST',
+				url: 'http://example.com/example',
+				headers: {
+					get: () => 'application/json'
+				},
+				clone: () => ({
+					url: 'http://example.com/example',
+					body: ''
+				})
+			},
+			respondWith: mockResponseWith
+		});
+		await delay(100); // Give async code time to run
+
+		expect(mockResponseWith).not.toBeCalled();
+		expect(mockFetch).not.toBeCalled();
+	});
+
+	it('does not handle fetch event for non-post ', async () => {
+		require('../../../src/public/scripts/sw.script.js');
+		await delay(100); // Give async code time to run
+
+		const mockResponseWith = jest.fn();
+		listeners.fetch({
+			request: {
+				method: 'GET',
+				url: 'http://example.com/example',
+				headers: {
+					get: () => 'application/x-www-form-urlencoded'
+				},
+				clone: () => ({
+					url: 'http://example.com/example',
+					body: ''
+				})
+			},
+			respondWith: mockResponseWith
+		});
+		await delay(100); // Give async code time to run
+
+		expect(mockResponseWith).not.toBeCalled();
+		expect(mockFetch).not.toBeCalled();
+	});
+
+	it('does not handle fetch event for non-same origin ', async () => {
+		require('../../../src/public/scripts/sw.script.js');
+		await delay(100); // Give async code time to run
+
+		const mockResponseWith = jest.fn();
+		listeners.fetch({
+			request: {
+				method: 'POST',
+				url: 'http://not.example.com/example',
+				headers: {
+					get: () => 'application/x-www-form-urlencoded'
+				},
+				clone: () => ({
+					url: 'http://not.example.com/example',
+					body: ''
+				})
+			},
+			respondWith: mockResponseWith
+		});
+		await delay(100); // Give async code time to run
+
+		expect(mockResponseWith).not.toBeCalled();
+		expect(mockFetch).not.toBeCalled();
 	});
 });
 
