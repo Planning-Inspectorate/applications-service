@@ -1,13 +1,13 @@
 const { getAttachments } = require('./get-attachments');
-const { getBackLinkUrl } = require('./get-back-link-url');
+const { getBackLinkUrl } = require('./get-navigation-urls');
 const { getEnquirySummaryList } = require('./get-enquiry-summary-list');
 const { getBreadcrumbsItems } = require('./get-breadcrumbs-items');
 
-const getPageViewModel = async (locals, pageData) => ({
+const getPageViewModel = async (locals, pageData, referer) => ({
 	activeId: 'section-51',
 	adviceGiven: pageData.adviceGiven,
 	attachments: getAttachments(pageData.attachments),
-	backToListUrl: getBackLinkUrl(locals.caseRef),
+	backToListUrl: getBackLinkUrl(referer, locals.caseRef),
 	breadcrumbsItems: getBreadcrumbsItems(locals.caseRef),
 	enquirySummaryList: getEnquirySummaryList(pageData),
 	enquiryText: pageData.enquiryDetail,
