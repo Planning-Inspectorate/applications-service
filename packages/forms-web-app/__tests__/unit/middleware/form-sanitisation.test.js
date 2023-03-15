@@ -42,7 +42,7 @@ describe('middleware/form-sanitisation', () => {
 		expect(req.body.inputTwo).toEqual(expected.inputTwo);
 	});
 
-	it(`should not apply sanitisation for text`, () => {
+	it(`should NOT apply sanitisation for text`, () => {
 		const req = {
 			...baseReq,
 			headers: {
@@ -55,7 +55,7 @@ describe('middleware/form-sanitisation', () => {
 		expect(req.body.inputTwo).toEqual(baseReq.body.inputTwo);
 	});
 
-	it(`should not apply sanitisation GET`, () => {
+	it(`should NOT apply sanitisation to GET request`, () => {
 		const req = {
 			...baseReq,
 			method: 'GET'
