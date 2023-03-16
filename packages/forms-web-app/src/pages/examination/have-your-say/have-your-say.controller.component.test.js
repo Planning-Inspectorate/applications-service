@@ -1,5 +1,5 @@
-const { getHaveYourSay } = require('../../../../src/controllers/examination/have-your-say');
-const { mockReq, mockRes } = require('../../mocks');
+const { getHaveYourSay } = require('./have-your-say.controller');
+const { mockReq, mockRes } = require('../../../../__tests__/unit/mocks');
 
 jest.mock('../../../../src/lib/logger');
 
@@ -27,7 +27,7 @@ describe('controllers/register/start', () => {
 				}
 			};
 			await getHaveYourSay(req, res);
-			expect(res.render).toHaveBeenCalledWith('pages/examination/have-your-say', {
+			expect(res.render).toHaveBeenCalledWith('examination/have-your-say/have-your-say.njk', {
 				backLinkUrl: '/projects/ABC123/examination-timetable',
 				pageTitle: 'Have your say during the Examination of the application',
 				startNowUrl: '/examination/have-an-interested-party-number',
@@ -45,7 +45,7 @@ describe('controllers/register/start', () => {
 				}
 			};
 			await getHaveYourSay(req, res);
-			expect(res.render).toHaveBeenCalledWith('pages/examination/have-your-say', {
+			expect(res.render).toHaveBeenCalledWith('examination/have-your-say/have-your-say.njk', {
 				backLinkUrl: '/projects/ABC120/examination-timetable',
 				pageTitle: 'Have your say during the Examination of the application',
 				startNowUrl: '/examination/have-an-interested-party-number',

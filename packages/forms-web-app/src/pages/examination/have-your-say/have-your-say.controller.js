@@ -1,4 +1,4 @@
-const config = require('../../config');
+const config = require('../../../config');
 const examinationSession = config.sessionStorage.examination;
 
 const {
@@ -6,13 +6,12 @@ const {
 		examination: {
 			directory: examinationDirectory,
 			pages: {
-				haveYourSay: { view: examinationHaveYourSayView },
 				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute }
 			}
 		}
 	},
 	routesConfig: { project }
-} = require('../../routes/config');
+} = require('../../../routes/config');
 
 const getHaveYourSay = async (req, res) => {
 	const { session = { examination: { caseRef: null, name: null } } } = req;
@@ -27,7 +26,7 @@ const getHaveYourSay = async (req, res) => {
 	const startNowUrl = `${examinationDirectory}${hasInterestedPartyNumberRoute}`;
 	const title = 'Have your say during the Examination of the application';
 
-	res.render(examinationHaveYourSayView, {
+	res.render('examination/have-your-say/have-your-say.njk', {
 		backLinkUrl,
 		pageTitle,
 		startNowUrl,
