@@ -16,7 +16,7 @@ describe('#section51Router', () => {
 			router = require('./section-51.router');
 		});
 		describe('and the route is /', () => {
-			it('should mount the routes/middleware/controllers for section 51', () => {
+			it('should mount the routes/_middleware/controllers for section 51', () => {
 				expect(router.get).toHaveBeenCalledWith('/:case_ref/s51advice', middleware, getSection51);
 				expect(router.get).toHaveBeenCalledWith(
 					'/:case_ref/s51advice/:id',

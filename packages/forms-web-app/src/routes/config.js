@@ -105,7 +105,7 @@ const routesConfig = {
 				id: 'examination-have-your-say',
 				name: 'Have your say during the Examination of the application',
 				route: '/have-your-say-during-examination',
-				view: 'pages/examination/have-your-say'
+				view: 'pages/examination/have-your-say/have-your-say'
 			},
 			hasInterestedPartyNumber: {
 				id: 'examination-has-interested-party-number',

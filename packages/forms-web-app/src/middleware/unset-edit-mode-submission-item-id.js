@@ -1,6 +1,6 @@
 const {
 	deleteEditModeSubmissionItemId
-} = require('../controllers/examination/session/submission-items-session');
+} = require('../pages/examination/_session/submission-items-session');
 
 const unsetEditModeSubmissionItemId = () => (req, res, next) => {
 	const { session } = req;

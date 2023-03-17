@@ -1,6 +1,4 @@
-const {
-	makeIntoArray
-} = require('../../../../../controllers/examination/select-file/utils/helpers');
+const { makeIntoArray } = require('../../../../examination/select-file/utils/helpers');
 const {
 	getActiveFilterQueryParamsWithRemovedFilter
 } = require('./get-active-filter-query-params-with-removed-filter');
