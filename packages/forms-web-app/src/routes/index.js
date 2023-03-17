@@ -11,11 +11,11 @@ const interestedPartyRouter = require('./having-your-say-guide');
 const decisionMakingProcessGuideRouter = require('./decision-making-process-guide');
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
-const examinationRouter = require('./examination');
+const examinationRouter = require('../pages/examination/exmaination.router');
 const projectsRouter = require('../pages/projects/projects.router');
 const {
 	isProcessingSubmission
-} = require('../controllers/examination/middleware/submission.middleware');
+} = require('../pages/examination/_middleware/submission.middleware');
 
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);

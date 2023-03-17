@@ -61,7 +61,7 @@ function stepByStep() {
 
 		function addShowHideAllButton() {
 			$element.prepend(
-				`<div class="ui-step-nav__controls"><button aria-expanded="false" class="ui-step-nav__button ui-step-nav__button--controls js-step-controls-button">${actions.showAllText}</button></div>`
+				`<div class='ui-step-nav__controls'><button aria-expanded='false' class='ui-step-nav__button ui-step-nav__button--controls js-step-controls-button'>${actions.showAllText}</button></div>`
 			);
 		}
 

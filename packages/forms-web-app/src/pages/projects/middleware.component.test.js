@@ -4,8 +4,8 @@ const { getApplicationData } = require('./documents/utils/get-application-data')
 jest.mock('./documents/utils/get-application-data', () => ({
 	getApplicationData: jest.fn()
 }));
-describe('projects middleware', () => {
-	describe('#middleware', () => {
+describe('projects _middleware', () => {
+	describe('#_middleware', () => {
 		const next = jest.fn();
 		const req = {
 			params: { case_ref: 'mock-case-ref' },

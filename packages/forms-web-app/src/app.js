@@ -20,7 +20,7 @@ require('express-async-errors');
 const config = require('./config');
 const logger = require('./lib/logger');
 const routes = require('./routes');
-const { calcMaxFileSizeLimit } = require('./controllers/examination/select-file/utils/helpers');
+const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/helpers');
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
 
