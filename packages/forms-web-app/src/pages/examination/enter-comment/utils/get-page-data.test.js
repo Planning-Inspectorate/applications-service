@@ -25,7 +25,7 @@ describe('examination/enter-comment/utils/get-page-data', () => {
 			id: 'examination-enter-comment',
 			pageTitle: 'Your comment',
 			title: 'Your comment',
-			url: '/examination/enter-a-comment',
+			url: 'enter-a-comment',
 			sessionId: 'comment',
 			view: 'examination/enter-comment/view.njk'
 		};

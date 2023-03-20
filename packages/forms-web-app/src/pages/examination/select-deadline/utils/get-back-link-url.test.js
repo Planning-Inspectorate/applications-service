@@ -22,7 +22,7 @@ describe('examination/select-deadline/utils/get-back-link-url', () => {
 				});
 
 				it('should return the url', () => {
-					expect(result).toEqual('/examination/check-your-deadline-item');
+					expect(result).toEqual('check-your-deadline-item');
 				});
 			});
 			describe('and the query is NOT in edit mode', () => {
@@ -34,7 +34,7 @@ describe('examination/select-deadline/utils/get-back-link-url', () => {
 				});
 
 				it('should return the url', () => {
-					expect(result).toEqual('/examination/your-email-address');
+					expect(result).toEqual('your-email-address');
 				});
 			});
 		});

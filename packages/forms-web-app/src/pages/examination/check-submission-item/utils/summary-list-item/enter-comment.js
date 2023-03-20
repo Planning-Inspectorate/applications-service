@@ -3,7 +3,6 @@ const { editQuery } = require('../../../../../controllers/utils/queryMode');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { enterComment }
 		}
 	}
@@ -17,7 +16,7 @@ const getSummaryListItemEnterComment = (submissionItem) => {
 	return getSummaryListItem(
 		'Your comment',
 		submissionItemComment,
-		`${directory}${enterComment.route}${editQuery}`
+		`${enterComment.route}${editQuery}`
 	);
 };
 

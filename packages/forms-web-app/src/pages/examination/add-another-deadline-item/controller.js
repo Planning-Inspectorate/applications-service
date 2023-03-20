@@ -8,7 +8,6 @@ const {
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { addAnotherDeadlineItem, checkSubmissionItem }
 		}
 	}
@@ -36,7 +35,7 @@ const postChangeADeadlineItem = (req, res) => {
 
 		setActiveSubmissionItemId(session, itemIdToChange);
 		setEditModeSubmissionItemId(session, itemIdToChange);
-		return res.redirect(`${directory}${checkSubmissionItem.route}${editQuery}`);
+		return res.redirect(`${checkSubmissionItem.route}${editQuery}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

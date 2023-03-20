@@ -5,13 +5,13 @@ describe('examination/your-interested-party-number/utils/get-redirect-url', () =
 			describe('and the page is in edit mode', () => {
 				const result = getRedirectUrl({ mode: 'edit' });
 				it('should return the check your answers url', () => {
-					expect(result).toEqual('/examination/check-your-answers');
+					expect(result).toEqual('check-your-answers');
 				});
 			});
 			describe('and the page is NOT in edit mode', () => {
 				const result = getRedirectUrl({});
 				it('should return the check your answers url', () => {
-					expect(result).toEqual('/examination/who-are-you-submitting-for');
+					expect(result).toEqual('who-are-you-submitting-for');
 				});
 			});
 		});

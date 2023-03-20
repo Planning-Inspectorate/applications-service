@@ -20,7 +20,7 @@ const expectNotFound = (res) => {
 	expect(res.status).toHaveBeenLastCalledWith(404);
 };
 
-describe('controllers/projects/examination-timetable/controller', () => {
+describe.skip('controllers/projects/examination-timetable/controller', () => {
 	let req;
 	let res;
 

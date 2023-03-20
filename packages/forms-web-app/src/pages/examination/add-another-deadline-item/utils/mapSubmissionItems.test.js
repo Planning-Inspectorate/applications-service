@@ -33,18 +33,18 @@ describe('#mapSubmissionItems', () => {
 				expect(result).toEqual({
 					hasNoSubmissionItems: false,
 					noDeadlineItems: {
-						selectDeadlineURL: '/examination/select-deadline-item',
+						selectDeadlineURL: 'select-deadline-item',
 						title: 'You have not added a deadline item'
 					},
 					submissionItems: [
 						{
 							change: {
 								itemId: 1,
-								url: '/examination/change-a-deadline-item'
+								url: 'change-a-deadline-item'
 							},
 							remove: {
 								itemId: 1,
-								url: '/examination/mark-deadline-item-to-delete'
+								url: 'mark-deadline-item-to-delete'
 							},
 							submissionItem: 'mock submission item'
 						}
@@ -69,29 +69,29 @@ describe('#mapSubmissionItems', () => {
 				expect(result).toEqual({
 					hasNoSubmissionItems: false,
 					noDeadlineItems: {
-						selectDeadlineURL: '/examination/select-deadline-item',
+						selectDeadlineURL: 'select-deadline-item',
 						title: 'You have not added a deadline item'
 					},
 					submissionItems: [
 						{
 							change: {
 								itemId: 1,
-								url: '/examination/change-a-deadline-item'
+								url: 'change-a-deadline-item'
 							},
 							remove: {
 								itemId: 1,
-								url: '/examination/mark-deadline-item-to-delete'
+								url: 'mark-deadline-item-to-delete'
 							},
 							submissionItem: 'mock submission item'
 						},
 						{
 							change: {
 								itemId: 2,
-								url: '/examination/change-a-deadline-item'
+								url: 'change-a-deadline-item'
 							},
 							remove: {
 								itemId: 2,
-								url: '/examination/mark-deadline-item-to-delete'
+								url: 'mark-deadline-item-to-delete'
 							},
 							submissionItem: 'mock another submission item'
 						}

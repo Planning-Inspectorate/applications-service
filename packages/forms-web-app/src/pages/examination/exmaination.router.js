@@ -92,49 +92,54 @@ const { getProcessSubmission, postProcessSubmission } = require('./process-submi
 const { getSubmissionComplete } = require('./submission-complete/controller');
 const { getSubmissionError } = require('./submission-error/controller');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-router.get(applicant.route, getApplicant);
-router.post(applicant.route, validateNotEmpty(applicant), validationErrorHandler, postApplicant);
-
-router.get(checkSubmissionItem.route, getCheckSubmissionItem);
-router.post(checkSubmissionItem.route, postCheckSubmissionItem);
-
-router.get(checkYourAnswers.route, getCheckYourAnswers);
-
-router.get(haveYourSay.route, getHaveYourSay);
-
-router.get(email.route, getEmail);
-router.post(email.route, emailValidationRules(email), validationErrorHandler, postEmail);
-
-router.get(evidenceOrComment.route, getEvidenceOrComment);
+router.get(`/${applicant.route}`, getApplicant);
 router.post(
-	evidenceOrComment.route,
+	`/${applicant.route}`,
+	validateNotEmpty(applicant),
+	validationErrorHandler,
+	postApplicant
+);
+
+router.get(`/${checkSubmissionItem.route}`, getCheckSubmissionItem);
+router.post(`/${checkSubmissionItem.route}`, postCheckSubmissionItem);
+
+router.get(`/${checkYourAnswers.route}`, getCheckYourAnswers);
+
+router.get(`/${haveYourSay.route}`, getHaveYourSay);
+
+router.get(`/${email.route}`, getEmail);
+router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);
+
+router.get(`/${evidenceOrComment.route}`, getEvidenceOrComment);
+router.post(
+	`/${evidenceOrComment.route}`,
 	validateNotEmpty(evidenceOrComment),
 	validationErrorHandler,
 	postEvidenceOrComment
 );
 
-router.get(enterComment.route, getEnterComment);
+router.get(`/${enterComment.route}`, getEnterComment);
 router.post(
-	enterComment.route,
+	`/${enterComment.route}`,
 	decodeUri('body', [enterComment.id]),
 	validateNotEmptyAndLength(enterComment),
 	validationErrorHandler,
 	postEnterComment
 );
 
-router.get(hasInterestedPartyNumber.route, getHasInterestedPartyNumber);
+router.get(`/${hasInterestedPartyNumber.route}`, getHasInterestedPartyNumber);
 router.post(
-	hasInterestedPartyNumber.route,
+	`/${hasInterestedPartyNumber.route}`,
 	validateNotEmpty(hasInterestedPartyNumber),
 	validationErrorHandler,
 	postHasInterestedPartyNumber
 );
 
-router.get(nameAgent.route, forwardView(nameAgent), getName);
+router.get(`/${nameAgent.route}`, forwardView(nameAgent), getName);
 router.post(
-	nameAgent.route,
+	`/${nameAgent.route}`,
 	decodeUri('body', [nameAgent.id]),
 	validateNotEmptyAndLength(nameAgent),
 	validationErrorHandler,
@@ -142,9 +147,9 @@ router.post(
 	postName
 );
 
-router.get(nameMyself.route, forwardView(nameMyself), getName);
+router.get(`/${nameMyself.route}`, forwardView(nameMyself), getName);
 router.post(
-	nameMyself.route,
+	`/${nameMyself.route}`,
 	decodeUri('body', [nameMyself.id]),
 	validateNotEmptyAndLength(nameMyself),
 	validationErrorHandler,
@@ -152,9 +157,9 @@ router.post(
 	postName
 );
 
-router.get(nameOrganisation.route, forwardView(nameOrganisation), getName);
+router.get(`/${nameOrganisation.route}`, forwardView(nameOrganisation), getName);
 router.post(
-	nameOrganisation.route,
+	`/${nameOrganisation.route}`,
 	decodeUri('body', [nameOrganisation.id]),
 	validateNotEmptyAndLength(nameOrganisation),
 	validationErrorHandler,
@@ -163,12 +168,12 @@ router.post(
 );
 
 router.get(
-	personalInformationComment.route,
+	`/${personalInformationComment.route}`,
 	forwardView(personalInformationComment),
 	getPersonalInformation
 );
 router.post(
-	personalInformationComment.route,
+	`/${personalInformationComment.route}`,
 	validateNotEmpty(personalInformationComment),
 	validationErrorHandler,
 	forwardView(personalInformationComment),
@@ -176,12 +181,12 @@ router.post(
 );
 
 router.get(
-	personalInformationCommentFiles.route,
+	`/${personalInformationCommentFiles.route}`,
 	forwardView(personalInformationCommentFiles),
 	getPersonalInformation
 );
 router.post(
-	personalInformationCommentFiles.route,
+	`/${personalInformationCommentFiles.route}`,
 	validateNotEmpty(personalInformationCommentFiles),
 	validationErrorHandler,
 	forwardView(personalInformationCommentFiles),
@@ -189,12 +194,12 @@ router.post(
 );
 
 router.get(
-	personalInformationFiles.route,
+	`/${personalInformationFiles.route}`,
 	forwardView(personalInformationFiles),
 	getPersonalInformation
 );
 router.post(
-	personalInformationFiles.route,
+	`/${personalInformationFiles.route}`,
 	validateNotEmpty(personalInformationFiles),
 	validationErrorHandler,
 	forwardView(personalInformationFiles),
@@ -202,12 +207,12 @@ router.post(
 );
 
 router.get(
-	personalInformationWhichCommentFiles.route,
+	`/${personalInformationWhichCommentFiles.route}`,
 	forwardView(personalInformationWhichCommentFiles),
 	getPersonalInformationWhich
 );
 router.post(
-	personalInformationWhichCommentFiles.route,
+	`/${personalInformationWhichCommentFiles.route}`,
 	validateNotEmpty(personalInformationWhichCommentFiles),
 	validationErrorHandler,
 	forwardView(personalInformationWhichCommentFiles),
@@ -215,84 +220,84 @@ router.post(
 );
 
 router.get(
-	personalInformationWhichFiles.route,
+	`/${personalInformationWhichFiles.route}`,
 	forwardView(personalInformationWhichFiles),
 	getPersonalInformationWhich
 );
 router.post(
-	personalInformationWhichFiles.route,
+	`/${personalInformationWhichFiles.route}`,
 	validateNotEmpty(personalInformationWhichFiles),
 	validationErrorHandler,
 	forwardView(personalInformationWhichFiles),
 	postPersonalInformationWhich
 );
 
-router.get(selectDeadline.route, getSelectDeadline);
+router.get(`/${selectDeadline.route}`, getSelectDeadline);
 router.post(
-	selectDeadline.route,
+	`/${selectDeadline.route}`,
 	validateNotEmpty(selectDeadline),
 	validationErrorHandler,
 	postSelectDeadline
 );
 
-router.get(selectFile.route, getSelectFile);
-router.post(selectFile.route, postSelectFile);
+router.get(`/${selectFile.route}`, getSelectFile);
+router.post(`/${selectFile.route}`, postSelectFile);
 
-router.get(submittingFor.route, getSubmittingFor);
+router.get(`/${submittingFor.route}`, getSubmittingFor);
 router.post(
-	submittingFor.route,
+	`/${submittingFor.route}`,
 	validateNotEmpty(submittingFor),
 	validationErrorHandler,
 	postSubmittingFor
 );
 
-router.get(yourInterestedPartyNumber.route, getYourInterestedPartyNumber);
+router.get(`/${yourInterestedPartyNumber.route}`, getYourInterestedPartyNumber);
 router.post(
-	yourInterestedPartyNumber.route,
+	`/${yourInterestedPartyNumber.route}`,
 	validateNotEmptyAndLength(yourInterestedPartyNumber),
 	validationErrorHandler,
 	postYourInterestedPartyNumber
 );
 
 router.get(
-	addAnotherDeadlineItem.route,
+	`/${addAnotherDeadlineItem.route}`,
 	unsetEditModeSubmissionItemId(),
 	getAddAnotherDeadlineItem
 );
-router.post(addAnotherDeadlineItem.changeADeadlineItem.route, postChangeADeadlineItem);
+router.post(`/${addAnotherDeadlineItem.changeADeadlineItem.route}`, postChangeADeadlineItem);
 router.post(
-	addAnotherDeadlineItem.route,
+	`/${addAnotherDeadlineItem.route}`,
 	validateNotEmpty(addAnotherDeadlineItem),
 	validationErrorHandler,
 	postAddAnotherDeadlineItem
 );
 
-router.get(addAnotherDeadlineItem.route, getAddAnotherDeadlineItem);
+router.get(`/${addAnotherDeadlineItem.route}`, getAddAnotherDeadlineItem);
 router.post(
-	addAnotherDeadlineItem.route,
+	`/${addAnotherDeadlineItem.route}`,
 	validateNotEmpty(addAnotherDeadlineItem),
 	validationErrorHandler,
 	postAddAnotherDeadlineItem
 );
 
-router.get(selectIfYouWantToDeleteData.route, getSelectIfYouWantToDeleteData);
+router.get(`/${selectIfYouWantToDeleteData.route}`, getSelectIfYouWantToDeleteData);
 router.post(
-	selectIfYouWantToDeleteData.route,
+	`/${selectIfYouWantToDeleteData.route}`,
 	validateNotEmpty(selectIfYouWantToDeleteData),
 	validationErrorHandler,
 	postSelectIfYouWantToDeleteData
 );
 
 router.post(
-	selectIfYouWantToDeleteData.markDeadlineItemForDelete.route,
+	`/${selectIfYouWantToDeleteData.markDeadlineItemForDelete.route}`,
 	postMarkDeadlineItemForDelete
 );
 
-router.get(processSubmission.route, getProcessSubmission);
-router.post(processSubmission.route, postProcessSubmission);
+router.get(`/${processSubmission.route}`, getProcessSubmission);
+router.post(`/${processSubmission.route}`, postProcessSubmission);
 
-router.get(submissionComplete.route, getSubmissionComplete);
+router.get(`/${submissionComplete.route}`, getSubmissionComplete);
 
-router.get(submissionError.route, getSubmissionError);
+router.get(`/${submissionError.route}`, getSubmissionError);
 
 module.exports = router;

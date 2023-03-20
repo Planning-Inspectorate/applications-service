@@ -4,7 +4,6 @@ const { getSummaryListItem } = require('../../../../../controllers/utils/get-sum
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { addAnotherDeadlineItem }
 		}
 	}
@@ -24,7 +23,7 @@ const getSummaryListItemSubmissionItems = (session) => {
 	return getSummaryListItem(
 		'Deadline items added',
 		getSubmissionItemsValue(getSubmissionItems(session)),
-		`${directory}${addAnotherDeadlineItem.route}${editQuery}`
+		`${addAnotherDeadlineItem.route}${editQuery}`
 	);
 };
 

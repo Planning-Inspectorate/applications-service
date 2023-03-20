@@ -13,7 +13,7 @@ describe('examination/check-submission-item/utils/summary-list-item/enter-commen
 						actions: {
 							items: [
 								{
-									href: '/examination/enter-a-comment?mode=edit',
+									href: 'enter-a-comment?mode=edit',
 									text: 'Change',
 									visuallyHiddenText: 'Your comment'
 								}

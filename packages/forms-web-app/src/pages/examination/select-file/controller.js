@@ -2,7 +2,6 @@ const logger = require('../../../lib/logger');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { selectFile }
 		}
 	}
@@ -27,7 +26,7 @@ const postSelectFile = async (req, res) => {
 		const { body, session, files } = req;
 		if ('delete' in body) {
 			await deleteHandler(session, body.delete);
-			return res.redirect(`${directory}${selectFile.route}`);
+			return res.redirect(`${selectFile.route}`);
 		}
 
 		if ('continue' in body) return continueHandler(req, res);

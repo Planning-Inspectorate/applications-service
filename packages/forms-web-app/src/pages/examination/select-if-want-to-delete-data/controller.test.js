@@ -31,7 +31,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'examination/select-if-want-to-delete-data/view.njk',
 						{
-							backLinkUrl: '/examination/add-another-deadline-item',
+							backLinkUrl: 'add-another-deadline-item',
 							id: 'examination-select-if-want-to-delete-data',
 							options: [
 								{
@@ -69,7 +69,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 					expect(setDeadlineItemToDelete).toHaveBeenCalledWith('mock session', 'mock item');
 				});
 				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/select-if-want-to-delete-data');
+					expect(res.redirect).toHaveBeenCalledWith('select-if-want-to-delete-data');
 				});
 			});
 			describe('and it fails', () => {
@@ -110,7 +110,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'examination/select-if-want-to-delete-data/view.njk',
 						{
-							backLinkUrl: '/examination/add-another-deadline-item',
+							backLinkUrl: 'add-another-deadline-item',
 							errorSummary: 'mock error summary',
 							errors: 'mock error',
 							id: 'examination-select-if-want-to-delete-data',
@@ -159,7 +159,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 					expect(setDeadlineItemToDelete).toHaveBeenCalledWith(mockSession, -1);
 				});
 				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/add-another-deadline-item');
+					expect(res.redirect).toHaveBeenCalledWith('add-another-deadline-item');
 				});
 			});
 			describe('and the option chosen was no', () => {
@@ -178,7 +178,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 					expect(setDeadlineItemToDelete).toHaveBeenCalledWith(mockSession, -1);
 				});
 				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/add-another-deadline-item');
+					expect(res.redirect).toHaveBeenCalledWith('add-another-deadline-item');
 				});
 			});
 		});

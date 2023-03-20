@@ -1,7 +1,6 @@
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: {
 				personalInformationCommentFiles,
 				personalInformationWhichCommentFiles,
@@ -15,19 +14,19 @@ const { getActiveSubmissionItem } = require('../../_session/submission-items-ses
 const { getFileOptions, getCommentOption } = require('./getOptions');
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${personalInformationFiles.route}`,
+	backLinkUrl: `${personalInformationFiles.route}`,
 	id: personalInformationWhichFiles.id,
 	pageTitle: personalInformationWhichFiles.name,
 	title: personalInformationWhichFiles.name,
-	route: `${examinationDirectory}${personalInformationWhichFiles.route}`
+	route: `${personalInformationWhichFiles.route}`
 };
 
 const bothCommentAndFilesPageData = {
 	id: personalInformationWhichCommentFiles.id,
 	pageTitle: personalInformationWhichCommentFiles.name,
 	title: personalInformationWhichCommentFiles.name,
-	backLinkUrl: `${examinationDirectory}${personalInformationCommentFiles.route}`,
-	route: `${examinationDirectory}${personalInformationWhichCommentFiles.route}`
+	backLinkUrl: `${personalInformationCommentFiles.route}`,
+	route: `${personalInformationWhichCommentFiles.route}`
 };
 
 const getPageData = (session) => {

@@ -3,7 +3,6 @@ const { filterSubmissionItems } = require('./filter-submission-items');
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: { addAnotherDeadlineItem, selectIfYouWantToDeleteData, selectDeadline }
 		}
 	}
@@ -22,7 +21,7 @@ const mapSubmissionItems = (session) => {
 		hasNoSubmissionItems: filterdSubmissionItems.length === 0,
 		noDeadlineItems: {
 			title: 'You have not added a deadline item',
-			selectDeadlineURL: `${examinationDirectory}${selectDeadline.route}`
+			selectDeadlineURL: `${selectDeadline.route}`
 		},
 		title:
 			`You added ${filterdSubmissionItems.length} deadline item` +
@@ -30,11 +29,11 @@ const mapSubmissionItems = (session) => {
 		submissionItems: filterdSubmissionItems.map((item) => ({
 			submissionItem: item.submissionItem,
 			change: {
-				url: `${examinationDirectory}${addAnotherDeadlineItem.changeADeadlineItem.route}`,
+				url: `${addAnotherDeadlineItem.changeADeadlineItem.route}`,
 				itemId: item.itemId
 			},
 			remove: {
-				url: `${examinationDirectory}${selectIfYouWantToDeleteData.markDeadlineItemForDelete.route}`,
+				url: `${selectIfYouWantToDeleteData.markDeadlineItemForDelete.route}`,
 				itemId: item.itemId
 			}
 		}))

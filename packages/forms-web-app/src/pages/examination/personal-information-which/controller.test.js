@@ -120,7 +120,7 @@ describe('examination/personal-information-which/controller', () => {
 					expect(savePersonalInformationFlags).toHaveBeenCalledWith('mock session', ['options']);
 				});
 				it('should redirect to the next page', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-deadline-item');
+					expect(res.redirect).toHaveBeenCalledWith('check-your-deadline-item');
 				});
 			});
 		});

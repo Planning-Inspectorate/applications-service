@@ -13,7 +13,7 @@ const applicantOptions = {
 };
 
 const pageData = {
-	backLinkUrl: '/examination/have-an-interested-party-number',
+	backLinkUrl: 'have-an-interested-party-number',
 	id: 'examination-applicant',
 	options: [applicantOptions[1], applicantOptions[2]],
 	pageTitle: 'Are you Mock promoter name?',
@@ -87,7 +87,7 @@ describe('examination/applicant', () => {
 	});
 
 	describe('postApplicant', () => {
-		it('should render pages/examination/applicant with errors', () => {
+		it('should render pagesapplicant with errors', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -109,7 +109,7 @@ describe('examination/applicant', () => {
 			});
 		});
 
-		it('should redirect to /examination/check-your-answers', () => {
+		it('should redirect to check-your-answers', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -121,10 +121,10 @@ describe('examination/applicant', () => {
 			};
 
 			postApplicant(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
+			expect(res.redirect).toHaveBeenCalledWith('check-your-answers');
 		});
 
-		it('should redirect to /examination/your-email-address', () => {
+		it('should redirect to your-email-address', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -133,10 +133,10 @@ describe('examination/applicant', () => {
 			};
 
 			postApplicant(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/your-email-address');
+			expect(res.redirect).toHaveBeenCalledWith('your-email-address');
 		});
 
-		it('should redirect to /examination/who-are-you-submitting-for', () => {
+		it('should redirect to who-are-you-submitting-for', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -145,7 +145,7 @@ describe('examination/applicant', () => {
 			};
 
 			postApplicant(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/who-are-you-submitting-for');
+			expect(res.redirect).toHaveBeenCalledWith('who-are-you-submitting-for');
 		});
 	});
 });

@@ -25,7 +25,11 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 }
 router.use('/register', registerRouter);
 router.use('/register-have-your-say', registerRouter);
-router.use(routesConfig.examination.directory, isProcessingSubmission, examinationRouter);
+router.use(
+	`/projects/:case_ref/${routesConfig.examination.baseDirectory}`,
+	isProcessingSubmission,
+	examinationRouter
+);
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);

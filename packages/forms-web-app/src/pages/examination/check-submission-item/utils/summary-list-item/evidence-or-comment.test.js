@@ -14,7 +14,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 							actions: {
 								items: [
 									{
-										href: '/examination/select-upload-evidence-or-comment?mode=edit',
+										href: 'select-upload-evidence-or-comment?mode=edit',
 										text: 'Change',
 										visuallyHiddenText: "How you've submitted your representation"
 									}
@@ -35,7 +35,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 							actions: {
 								items: [
 									{
-										href: '/examination/select-upload-evidence-or-comment?mode=edit',
+										href: 'select-upload-evidence-or-comment?mode=edit',
 										text: 'Change',
 										visuallyHiddenText: "How you've submitted your representation"
 									}
@@ -56,7 +56,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 							actions: {
 								items: [
 									{
-										href: '/examination/select-upload-evidence-or-comment?mode=edit',
+										href: 'select-upload-evidence-or-comment?mode=edit',
 										text: 'Change',
 										visuallyHiddenText: "How you've submitted your representation"
 									}

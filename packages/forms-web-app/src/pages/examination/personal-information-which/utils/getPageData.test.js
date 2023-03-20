@@ -27,11 +27,11 @@ describe('examination/personal-information-which/utils/getPageData', () => {
 			});
 			it('should return the comment and files page data (both)', () => {
 				expect(result).toEqual({
-					backLinkUrl: '/examination/comment-file-has-personal-information-or-not',
+					backLinkUrl: 'comment-file-has-personal-information-or-not',
 					id: 'examination-personal-information-which-comment-files',
 					pageTitle: 'Which files and comments contain personal information?',
 					radioOptions: ['comment option', 'file options'],
-					route: '/examination/select-which-files-comments-have-personal-information',
+					route: 'select-which-files-comments-have-personal-information',
 					title: 'Which files and comments contain personal information?'
 				});
 			});
@@ -48,11 +48,11 @@ describe('examination/personal-information-which/utils/getPageData', () => {
 			});
 			it('should return the files page data', () => {
 				expect(result).toEqual({
-					backLinkUrl: '/examination/files-have-personal-information-or-not',
+					backLinkUrl: 'files-have-personal-information-or-not',
 					id: 'examination-personal-information-which-files',
 					pageTitle: 'Which files contain personal information?',
 					radioOptions: ['file options'],
-					route: '/examination/which-files-have-personal-information-or-not',
+					route: 'which-files-have-personal-information-or-not',
 					title: 'Which files contain personal information?'
 				});
 			});

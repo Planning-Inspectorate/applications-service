@@ -5,14 +5,14 @@ describe('#getBackLinkUrl', () => {
 			const query = { mode: 'edit' };
 			const result = getBackLinkUrl(query);
 			it('should return the correct back link', () => {
-				expect(result).toEqual('/examination/check-your-answers');
+				expect(result).toEqual('check-your-answers');
 			});
 		});
 		describe('and the mode is NOT edit', () => {
 			const query = {};
 			const result = getBackLinkUrl(query);
 			it('should return the correct back link', () => {
-				expect(result).toEqual('/examination/who-are-you-submitting-for');
+				expect(result).toEqual('who-are-you-submitting-for');
 			});
 		});
 	});

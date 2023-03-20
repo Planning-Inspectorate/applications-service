@@ -33,7 +33,7 @@ describe('examination/check-submission-item/utils/get-back-link-url', () => {
 				});
 				it('Should return the back link url', () => {
 					expect(result).toEqual({
-						backLinkUrl: '/examination/add-another-deadline-item'
+						backLinkUrl: 'add-another-deadline-item'
 					});
 				});
 			});
@@ -45,7 +45,7 @@ describe('examination/check-submission-item/utils/get-back-link-url', () => {
 				});
 				it('Should return the back link url', () => {
 					expect(result).toEqual({
-						backLinkUrl: '/examination/comment-has-personal-information-or-not'
+						backLinkUrl: 'comment-has-personal-information-or-not'
 					});
 				});
 			});
@@ -62,7 +62,7 @@ describe('examination/check-submission-item/utils/get-back-link-url', () => {
 					});
 					it('Should return the back link url', () => {
 						expect(result).toEqual({
-							backLinkUrl: '/examination/which-files-have-personal-information-or-not'
+							backLinkUrl: 'which-files-have-personal-information-or-not'
 						});
 					});
 				});
@@ -74,7 +74,7 @@ describe('examination/check-submission-item/utils/get-back-link-url', () => {
 					});
 					it('Should return the back link url', () => {
 						expect(result).toEqual({
-							backLinkUrl: '/examination/files-have-personal-information-or-not'
+							backLinkUrl: 'files-have-personal-information-or-not'
 						});
 					});
 				});
@@ -92,7 +92,7 @@ describe('examination/check-submission-item/utils/get-back-link-url', () => {
 					});
 					it('Should return the back link url', () => {
 						expect(result).toEqual({
-							backLinkUrl: '/examination/select-which-files-comments-have-personal-information'
+							backLinkUrl: 'select-which-files-comments-have-personal-information'
 						});
 					});
 				});
@@ -103,7 +103,7 @@ describe('examination/check-submission-item/utils/get-back-link-url', () => {
 					});
 					it('Should return the back link url', () => {
 						expect(result).toEqual({
-							backLinkUrl: '/examination/comment-file-has-personal-information-or-not'
+							backLinkUrl: 'comment-file-has-personal-information-or-not'
 						});
 					});
 				});

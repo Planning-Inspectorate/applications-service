@@ -21,7 +21,7 @@ describe('#isProcessingSubmission', () => {
 		describe('and a route is an allowable route', () => {
 			describe('and a submission has complete and the user is on the complete submission route', () => {
 				beforeEach(() => {
-					const url = '/submission-complete';
+					const url = 'submission-complete';
 					isProcessingSubmission({ ...req, url }, res, next);
 				});
 				it('should go to the next middleware', () => {
@@ -36,7 +36,7 @@ describe('#isProcessingSubmission', () => {
 				isProcessingSubmission(req, res, next);
 			});
 			it('should redirect to the submission	complete page', () => {
-				expect(res.redirect).toHaveBeenCalledWith('/examination/submission-complete');
+				expect(res.redirect).toHaveBeenCalledWith('submission-complete');
 			});
 		});
 		describe('and the process is still uploading', () => {

@@ -4,7 +4,6 @@ const examinationSessionStorage = config?.sessionStorage?.examination;
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: {
 				applicant: { route: applicantRoute },
 				checkYourAnswers: { route: checkYourAnswersRoute },
@@ -21,7 +20,7 @@ const {
 } = hasInterestedPartyNumber;
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${examinationHaveYourSayRoute}`,
+	backLinkUrl: `${examinationHaveYourSayRoute}`,
 	hintHtml:
 		'This is a unique reference number that identifies you as an interested party.<br />You will have been given this number when you registered.',
 	id: hasInterestedPartyNumber.id,
@@ -109,11 +108,10 @@ const postHasInterestedPartyNumber = (req, res) => {
 		examinationSession[examinationSessionStorage.property.interestedPartyNumber] = '';
 	}
 
-	if (isQueryModeEdit(query)) res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
+	if (isQueryModeEdit(query)) res.redirect(`${checkYourAnswersRoute}`);
 	else if (yesOption.value === hasInterestedPartyNoValue)
-		res.redirect(`${examinationDirectory}${yourInterestedPartyNumberRoute}`);
-	else if (noOption.value === hasInterestedPartyNoValue)
-		res.redirect(`${examinationDirectory}${applicantRoute}`);
+		res.redirect(`${yourInterestedPartyNumberRoute}`);
+	else if (noOption.value === hasInterestedPartyNoValue) res.redirect(`${applicantRoute}`);
 	else res.status(500).render('error/unhandled-exception');
 };
 

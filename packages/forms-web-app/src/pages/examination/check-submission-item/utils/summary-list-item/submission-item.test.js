@@ -23,7 +23,7 @@ describe('examination/check-submission-item/utils/summary-list-item/submission-i
 							actions: {
 								items: [
 									{
-										href: '/examination/select-deadline-item?mode=edit',
+										href: 'select-deadline-item?mode=edit',
 										text: 'Change',
 										visuallyHiddenText: 'Deadline item'
 									}

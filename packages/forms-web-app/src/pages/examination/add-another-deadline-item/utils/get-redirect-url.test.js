@@ -7,14 +7,14 @@ describe('examination/add-another-deadline-item/utils/get-redirect-url', () => {
 				const option = 'yes';
 				const result = getRedirectUrl(option);
 				it('should return the correct url', () => {
-					expect(result).toEqual('/examination/select-deadline-item');
+					expect(result).toEqual('select-deadline-item');
 				});
 			});
 			describe('and the option was no', () => {
 				const option = 'no';
 				const result = getRedirectUrl(option);
 				it('should return the correct url', () => {
-					expect(result).toEqual('/examination/check-your-answers');
+					expect(result).toEqual('check-your-answers');
 				});
 			});
 			describe('and there is no option', () => {

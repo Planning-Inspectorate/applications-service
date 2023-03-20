@@ -34,7 +34,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/sub
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						'Deadline items added',
 						'<ul class="govuk-list"><li>mock submission item 1</li><li>mock submission item 2</li></ul>',
-						'/examination/add-another-deadline-item?mode=edit'
+						'add-another-deadline-item?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {

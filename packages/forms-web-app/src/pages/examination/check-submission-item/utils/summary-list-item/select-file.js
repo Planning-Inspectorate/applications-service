@@ -4,7 +4,6 @@ const { editQuery } = require('../../../../../controllers/utils/queryMode');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { selectFile }
 		}
 	}
@@ -26,7 +25,7 @@ const getSummaryListItemSelectFile = (submissionItem) => {
 	return getSummaryListItem(
 		'Documents uploaded',
 		formatSubmissionItemFiles(submissionItemFiles),
-		`${directory}${selectFile.route}${editQuery}`
+		`${selectFile.route}${editQuery}`
 	);
 };
 

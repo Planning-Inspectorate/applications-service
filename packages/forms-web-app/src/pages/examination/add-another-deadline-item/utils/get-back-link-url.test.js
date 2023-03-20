@@ -15,7 +15,7 @@ describe('#getBackLinkUrl', () => {
 				response = getBackLinkUrl({});
 			});
 			it('should return the previous page url from edit', () => {
-				expect(response).toEqual('/examination/check-your-answers');
+				expect(response).toEqual('check-your-answers');
 			});
 		});
 		describe('and the page is in the normal state', () => {

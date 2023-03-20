@@ -9,7 +9,6 @@ const { getSummaryList } = require('./utils/get-summary-list');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { addDeadline }
 		}
 	}
@@ -33,7 +32,7 @@ const postCheckSubmissionItem = (req, res) => {
 		const { session } = req;
 		setActiveSubmissionItemSubmitted(session, true);
 		deleteActiveSubmissionItemId(session);
-		res.redirect(`${directory}${addDeadline.route}`);
+		res.redirect(`${addDeadline.route}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

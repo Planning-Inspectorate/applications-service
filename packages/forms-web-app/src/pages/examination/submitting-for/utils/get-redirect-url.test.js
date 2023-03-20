@@ -21,7 +21,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getRedirectUrl(mockQuery, '');
 				});
 				it('should return the check your answers URL', () => {
-					expect(result).toEqual('/examination/check-your-answers');
+					expect(result).toEqual('check-your-answers');
 				});
 			});
 			describe('and the selected submitting for value is myself', () => {
@@ -30,7 +30,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getRedirectUrl(mockQuery, 'myself');
 				});
 				it('should return the your name URL', () => {
-					expect(result).toEqual('/examination/your-name');
+					expect(result).toEqual('your-name');
 				});
 			});
 			describe('and the selected submittin for value is organisation', () => {
@@ -39,7 +39,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getRedirectUrl(mockQuery, 'organisation');
 				});
 				it('should return the organisation name URL', () => {
-					expect(result).toEqual('/examination/your-organisation-name');
+					expect(result).toEqual('your-organisation-name');
 				});
 			});
 			describe('and the selected submittin for value is agent', () => {
@@ -48,7 +48,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getRedirectUrl(mockQuery, 'agent');
 				});
 				it('should return the agent name URL', () => {
-					expect(result).toEqual('/examination/name-of-person-or-group');
+					expect(result).toEqual('name-of-person-or-group');
 				});
 			});
 		});

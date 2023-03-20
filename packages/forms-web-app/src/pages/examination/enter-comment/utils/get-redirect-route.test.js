@@ -25,7 +25,7 @@ describe('examination/enter-comment/utils/get-redirect-route', () => {
 					result = getRedirectRoute(req.session);
 				});
 				it('should return the route', () => {
-					expect(result).toEqual('/comment-has-personal-information-or-not');
+					expect(result).toEqual('comment-has-personal-information-or-not');
 				});
 			});
 			describe('and the submission item type value is "both"', () => {
@@ -36,7 +36,7 @@ describe('examination/enter-comment/utils/get-redirect-route', () => {
 					result = getRedirectRoute(req.session);
 				});
 				it('should return the route', () => {
-					expect(result).toEqual('/select-a-file');
+					expect(result).toEqual('select-a-file');
 				});
 			});
 			describe('and the submission item type value is neither "comment" or "both"', () => {

@@ -2,15 +2,14 @@ const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { checkSubmissionItem, evidenceOrComment }
 		}
 	}
 } = require('../../../../routes/config');
 
 const getRedirectUrl = (query) => {
-	if (isQueryModeEdit(query)) return `${directory}${checkSubmissionItem.route}`;
-	else return `${directory}${evidenceOrComment.route}`;
+	if (isQueryModeEdit(query)) return `${checkSubmissionItem.route}`;
+	else return `${evidenceOrComment.route}`;
 };
 
 module.exports = { getRedirectUrl };

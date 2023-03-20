@@ -6,21 +6,21 @@ describe('#getBackLinkUrl', () => {
 				const currentViewId = 'examination-personal-information-comment';
 				const result = getBackLinkUrl(currentViewId);
 				it('should return the correct back link', () => {
-					expect(result).toEqual('/examination/enter-a-comment');
+					expect(result).toEqual('enter-a-comment');
 				});
 			});
 			describe('examination-personal-information-comment-files', () => {
 				const currentViewId = 'examination-personal-information-comment-files';
 				const result = getBackLinkUrl(currentViewId);
 				it('should return the correct back link', () => {
-					expect(result).toEqual('/examination/select-a-file');
+					expect(result).toEqual('select-a-file');
 				});
 			});
 			describe('examination-personal-information-files', () => {
 				const currentViewId = 'examination-personal-information-files';
 				const result = getBackLinkUrl(currentViewId);
 				it('should return the correct back link', () => {
-					expect(result).toEqual('/examination/select-a-file');
+					expect(result).toEqual('select-a-file');
 				});
 			});
 		});

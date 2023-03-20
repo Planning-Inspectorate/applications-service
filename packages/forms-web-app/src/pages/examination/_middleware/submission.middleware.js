@@ -6,7 +6,6 @@ const {
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { submissionComplete, submissionError }
 		}
 	}
@@ -16,15 +15,12 @@ const allowableRoutes = [submissionComplete.route, submissionError.route];
 
 const isProcessingSubmission = (req, res, next) => {
 	const { url, session } = req;
-
 	if (allowableRoutes.includes(url)) return next();
 
-	if (getExaminationSubmissionComplete(session))
-		return res.redirect(`${directory}${submissionComplete.route}`);
+	if (getExaminationSubmissionComplete(session)) return res.redirect(`${submissionComplete.route}`);
 
 	if (getExaminationUploadingState(session))
 		return res.status(500).render('error/unhandled-exception');
-
 	next();
 };
 

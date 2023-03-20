@@ -2,7 +2,6 @@ const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { checkYourAnswers, nameAgent, nameMyself, nameOrganisation, submittingFor }
 		}
 	}
@@ -11,13 +10,13 @@ const {
 const getRedirectUrl = (query, selectedSubmittingForValue) => {
 	let redirectUrl;
 
-	if (isQueryModeEdit(query)) redirectUrl = `${directory}${checkYourAnswers.route}`;
+	if (isQueryModeEdit(query)) redirectUrl = `${checkYourAnswers.route}`;
 	else if (selectedSubmittingForValue === submittingFor.options[1].value)
-		redirectUrl = `${directory}${nameMyself.route}`;
+		redirectUrl = `${nameMyself.route}`;
 	else if (selectedSubmittingForValue === submittingFor.options[2].value)
-		redirectUrl = `${directory}${nameOrganisation.route}`;
+		redirectUrl = `${nameOrganisation.route}`;
 	else if (selectedSubmittingForValue === submittingFor.options[3].value)
-		redirectUrl = `${directory}${nameAgent.route}`;
+		redirectUrl = `${nameAgent.route}`;
 
 	return redirectUrl;
 };

@@ -4,7 +4,6 @@ const examinationSessionStorage = config?.sessionStorage?.examination;
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: {
 				applicant,
 				checkYourAnswers: { route: checkYourAnswersRoute },
@@ -17,7 +16,7 @@ const {
 } = require('../../../routes/config');
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory + hasInterestedPartyNumberRoute}`,
+	backLinkUrl: `${hasInterestedPartyNumberRoute}`,
 	id: applicant.id,
 	options: [applicant.options[1], applicant.options[2]]
 };
@@ -128,10 +127,9 @@ const postApplicant = (req, res) => {
 
 	examinationSession[examinationSessionStorage.property.applicant] = applicantValue;
 
-	if (isQueryModeEdit(query)) res.redirect(`${examinationDirectory}${checkYourAnswersRoute}`);
-	else if (yesOption.value === applicantValue) res.redirect(`${examinationDirectory}${emailRoute}`);
-	else if (noOption.value === applicantValue)
-		res.redirect(`${examinationDirectory}${submittingForRoute}`);
+	if (isQueryModeEdit(query)) res.redirect(`${checkYourAnswersRoute}`);
+	else if (yesOption.value === applicantValue) res.redirect(`${emailRoute}`);
+	else if (noOption.value === applicantValue) res.redirect(`${submittingForRoute}`);
 	else res.status(500).render('error/unhandled-exception');
 };
 

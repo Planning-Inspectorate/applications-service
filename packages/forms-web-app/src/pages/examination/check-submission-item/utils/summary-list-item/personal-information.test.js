@@ -19,7 +19,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 									actions: {
 										items: [
 											{
-												href: '/examination/comment-has-personal-information-or-not',
+												href: 'comment-has-personal-information-or-not',
 												text: 'Change',
 												visuallyHiddenText: 'Personal information'
 											}
@@ -43,7 +43,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 									actions: {
 										items: [
 											{
-												href: '/examination/files-have-personal-information-or-not',
+												href: 'files-have-personal-information-or-not',
 												text: 'Change',
 												visuallyHiddenText: 'Personal information'
 											}
@@ -67,7 +67,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 									actions: {
 										items: [
 											{
-												href: '/examination/comment-file-has-personal-information-or-not',
+												href: 'comment-file-has-personal-information-or-not',
 												text: 'Change',
 												visuallyHiddenText: 'Personal information'
 											}
@@ -105,7 +105,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 							actions: {
 								items: [
 									{
-										href: '/examination/comment-has-personal-information-or-not',
+										href: 'comment-has-personal-information-or-not',
 										text: 'Change',
 										visuallyHiddenText: 'Personal information'
 									}

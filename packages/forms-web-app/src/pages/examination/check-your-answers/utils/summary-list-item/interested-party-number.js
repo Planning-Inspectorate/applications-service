@@ -4,7 +4,6 @@ const { getSummaryListItem } = require('../../../../../controllers/utils/get-sum
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { yourInterestedPartyNumber }
 		}
 	}
@@ -15,7 +14,7 @@ const getSummaryListItemInterestedPartyNumber = (session) =>
 	getSummaryListItem(
 		'Interested party number',
 		getDeadlineDetailsInterestedPartyNumber(session),
-		`${directory}${yourInterestedPartyNumber.route}${editQuery}`
+		`${yourInterestedPartyNumber.route}${editQuery}`
 	);
 
 module.exports = { getSummaryListItemInterestedPartyNumber };

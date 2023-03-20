@@ -102,7 +102,7 @@ describe('examination/add-another-deadline-item/controller', () => {
 					postAddAnotherDeadlineItem(req, res);
 				});
 				it('should render the error page', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/select-deadline-item');
+					expect(res.redirect).toHaveBeenCalledWith('select-deadline-item');
 				});
 			});
 		});
@@ -135,9 +135,7 @@ describe('examination/add-another-deadline-item/controller', () => {
 					expect(setEditModeSubmissionItemId).toHaveBeenCalledWith(req.session, 1);
 				});
 				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith(
-						'/examination/check-your-deadline-item?mode=edit'
-					);
+					expect(res.redirect).toHaveBeenCalledWith('check-your-deadline-item?mode=edit');
 				});
 			});
 		});
