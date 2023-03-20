@@ -4,7 +4,6 @@ const { getSelectedOptionText } = require('./helpers');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { submittingFor }
 		}
 	}
@@ -21,7 +20,7 @@ const getSummaryListItemSubmittingFor = (session) => {
 	return getSummaryListItem(
 		'Making submission for',
 		submittingForText,
-		`${directory}${submittingFor.route}${editQuery}`
+		`${submittingFor.route}${editQuery}`
 	);
 };
 

@@ -8,7 +8,6 @@ const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: {
 				addAnotherDeadlineItem,
 				evidenceOrComment,
@@ -25,13 +24,13 @@ const {
 
 const getOptionTwoBackLinkUrl = (submissionItemFilesLength, hasPersonalInformation) =>
 	submissionItemFilesLength > 1 && hasPersonalInformation
-		? `${directory}${personalInformationWhichFiles.route}`
-		: `${directory}${personalInformationFiles.route}`;
+		? `${personalInformationWhichFiles.route}`
+		: `${personalInformationFiles.route}`;
 
 const getOptionThreeBackLinkUrl = (hasPersonalInformation) =>
 	hasPersonalInformation
-		? `${directory}${personalInformationWhichCommentFiles.route}`
-		: `${directory}${personalInformationCommentFiles.route}`;
+		? `${personalInformationWhichCommentFiles.route}`
+		: `${personalInformationCommentFiles.route}`;
 
 const getBackLinkUrl = (query, session) => {
 	const activeSubmissionItem = getActiveSubmissionItem(session);
@@ -43,9 +42,9 @@ const getBackLinkUrl = (query, session) => {
 	let backLinkUrl;
 
 	if (isQueryModeEdit(query)) {
-		backLinkUrl = `${directory}${addAnotherDeadlineItem.route}`;
+		backLinkUrl = `${addAnotherDeadlineItem.route}`;
 	} else if (submissionItemType === evidenceOrComment.options[1].value) {
-		backLinkUrl = `${directory}${personalInformationComment.route}`;
+		backLinkUrl = `${personalInformationComment.route}`;
 	} else if (submissionItemType === evidenceOrComment.options[2].value) {
 		backLinkUrl = getOptionTwoBackLinkUrl(
 			getActiveSubmissionItemFiles(session),

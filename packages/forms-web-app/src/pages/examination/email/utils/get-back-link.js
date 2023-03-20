@@ -1,7 +1,6 @@
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { applicant, nameMyself, nameAgent, nameOrganisation, checkYourAnswers }
 		}
 	}
@@ -14,14 +13,12 @@ const getBackLink = (session, query) => {
 
 	let backLink;
 
-	if (isQueryModeEdit(query)) backLink = `${directory + checkYourAnswers.route}`;
-	else if (examinationSession.isApplicant === 'yes') backLink = `${directory}${applicant.route}`;
+	if (isQueryModeEdit(query)) backLink = `${checkYourAnswers.route}`;
+	else if (examinationSession.isApplicant === 'yes') backLink = `${applicant.route}`;
 	else if (examinationSession.submittingFor === 'organisation')
-		backLink = `${directory}${nameOrganisation.route}`;
-	else if (examinationSession.submittingFor === 'agent')
-		backLink = `${directory}${nameAgent.route}`;
-	else if (examinationSession.submittingFor === 'myself')
-		backLink = `${directory}${nameMyself.route}`;
+		backLink = `${nameOrganisation.route}`;
+	else if (examinationSession.submittingFor === 'agent') backLink = `${nameAgent.route}`;
+	else if (examinationSession.submittingFor === 'myself') backLink = `${nameMyself.route}`;
 
 	return backLink;
 };

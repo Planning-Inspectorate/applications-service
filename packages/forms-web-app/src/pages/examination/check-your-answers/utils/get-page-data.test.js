@@ -38,9 +38,9 @@ describe('examination/check-your-answers/utils/get-page-data', () => {
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
-					backLinkUrl: '/examination/add-another-deadline-item',
+					backLinkUrl: 'add-another-deadline-item',
 					deadlineTitle: mockDeadlineTitle,
-					nextPageUrl: '/examination/process-submission',
+					nextPageUrl: 'process-submission',
 					pageTitle: 'Check your answers',
 					summaryListDetails: mockSummaryListDetails,
 					summaryListDetailsTitle: 'Your details',

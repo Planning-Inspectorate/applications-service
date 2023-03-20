@@ -16,7 +16,7 @@ describe('examination/check-submission-item/utils/summary-list-item/personal-inf
 					result = getPersonalInformationWhichUrl();
 				});
 				it('should return', () => {
-					expect(result).toEqual('/examination/which-files-have-personal-information-or-not');
+					expect(result).toEqual('which-files-have-personal-information-or-not');
 				});
 			});
 			describe('and the submission type is equal to "both"', () => {
@@ -26,9 +26,7 @@ describe('examination/check-submission-item/utils/summary-list-item/personal-inf
 					result = getPersonalInformationWhichUrl();
 				});
 				it('should return', () => {
-					expect(result).toEqual(
-						'/examination/select-which-files-comments-have-personal-information'
-					);
+					expect(result).toEqual('select-which-files-comments-have-personal-information');
 				});
 			});
 			describe('and the submission type does not match an option', () => {

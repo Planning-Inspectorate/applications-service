@@ -45,7 +45,7 @@ describe('examination/evidence-or-comment/utils/get-redirect-url', () => {
 					redirectUrl = getRedirectUrl(req.query, req.session, mockValue);
 				});
 				it('should return the URL', () => {
-					expect(redirectUrl).toEqual(`/examination${mockRedirectRouteValue}`);
+					expect(redirectUrl).toEqual(`${mockRedirectRouteValue}`);
 				});
 			});
 		});

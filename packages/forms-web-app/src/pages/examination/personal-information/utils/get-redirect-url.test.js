@@ -19,9 +19,7 @@ describe('examination/personal-information/utils/get-redirect-url', () => {
 					describe(`and the id is equal to '${personalInformationCommentFilesId}'`, () => {
 						const result = getRedirectUrl(mockSession, personalInformationCommentFilesId, 'yes');
 						it('should return the URL', () => {
-							expect(result).toEqual(
-								'/examination/select-which-files-comments-have-personal-information'
-							);
+							expect(result).toEqual('select-which-files-comments-have-personal-information');
 						});
 					});
 
@@ -33,7 +31,7 @@ describe('examination/personal-information/utils/get-redirect-url', () => {
 								result = getRedirectUrl(mockSession, personalInformationFilesId, 'yes');
 							});
 							it('should return the URL', () => {
-								expect(result).toEqual('/examination/which-files-have-personal-information-or-not');
+								expect(result).toEqual('which-files-have-personal-information-or-not');
 							});
 						});
 						describe(`and the examination session contains one file`, () => {
@@ -43,7 +41,7 @@ describe('examination/personal-information/utils/get-redirect-url', () => {
 								result = getRedirectUrl(mockSession, personalInformationFilesId, 'yes');
 							});
 							it('should return the URL', () => {
-								expect(result).toEqual('/examination/check-your-deadline-item');
+								expect(result).toEqual('check-your-deadline-item');
 							});
 						});
 					});
@@ -52,7 +50,7 @@ describe('examination/personal-information/utils/get-redirect-url', () => {
 			describe(`in all other scenarios`, () => {
 				const result = getRedirectUrl(mockSession, personalInformationComment, 'no');
 				it('should return the URL', () => {
-					expect(result).toEqual('/examination/check-your-deadline-item');
+					expect(result).toEqual('check-your-deadline-item');
 				});
 			});
 		});

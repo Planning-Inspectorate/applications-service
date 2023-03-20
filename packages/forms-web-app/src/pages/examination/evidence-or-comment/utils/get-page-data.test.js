@@ -21,7 +21,7 @@ const mockActiveSubmissionItemValue = {
 const mockMarkActiveAsCheckedValue = 'mock mark active as checked value';
 
 const pageData = {
-	backLinkUrl: '/examination/select-deadline-item',
+	backLinkUrl: 'select-deadline-item',
 	activeSubmissionItemTitle: mockActiveSubmissionItemValue.submissionItem,
 	id: 'examination-evidence-or-comment',
 	options: [

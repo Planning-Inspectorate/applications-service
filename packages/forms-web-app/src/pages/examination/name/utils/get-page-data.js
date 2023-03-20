@@ -3,7 +3,6 @@ const { getBackLinkUrl } = require('./get-back-link-url');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { nameMyself }
 		}
 	}
@@ -17,7 +16,7 @@ const getPageData = (session, query) => {
 		pageTitle,
 		title,
 		view: 'examination/name/view.njk',
-		url: directory + nameMyself.route
+		url: nameMyself.route
 	};
 };
 

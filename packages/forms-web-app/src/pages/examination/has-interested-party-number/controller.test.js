@@ -13,7 +13,7 @@ const hasInterestedPartyNumberOptions = {
 };
 
 const pageData = {
-	backLinkUrl: '/examination/have-your-say-during-examination',
+	backLinkUrl: 'have-your-say-during-examination',
 	hintHtml:
 		'This is a unique reference number that identifies you as an interested party.<br />You will have been given this number when you registered.',
 	id: 'examination-has-interested-party-number',
@@ -107,7 +107,7 @@ describe('controllers/examination/has-interested-party-number', () => {
 			});
 		});
 
-		it('should redirect to /examination/check-your-answers', () => {
+		it('should redirect to check-your-answers', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -124,10 +124,10 @@ describe('controllers/examination/has-interested-party-number', () => {
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/check-your-answers');
+			expect(res.redirect).toHaveBeenCalledWith('check-your-answers');
 		});
 
-		it('should redirect to /examination/your-interested-party-number', () => {
+		it('should redirect to your-interested-party-number', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -136,10 +136,10 @@ describe('controllers/examination/has-interested-party-number', () => {
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/your-interested-party-number');
+			expect(res.redirect).toHaveBeenCalledWith('your-interested-party-number');
 		});
 
-		it('should redirect to /examination/are-you-applicant', () => {
+		it('should redirect to are-you-applicant', () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -148,7 +148,7 @@ describe('controllers/examination/has-interested-party-number', () => {
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
-			expect(res.redirect).toHaveBeenCalledWith('/examination/are-you-applicant');
+			expect(res.redirect).toHaveBeenCalledWith('are-you-applicant');
 		});
 	});
 });

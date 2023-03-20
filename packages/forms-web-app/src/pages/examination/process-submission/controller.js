@@ -3,7 +3,6 @@ const logger = require('../../../lib/logger');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { processSubmission, submissionComplete, submissionError }
 		}
 	}
@@ -41,10 +40,10 @@ const postProcessSubmission = async (req, res) => {
 		setExaminationUploadingState(session, true);
 		await handleProcessSubmission(session);
 		deleteExaminationSession(session);
-		return res.redirect(`${directory}${submissionComplete.route}`);
+		return res.redirect(`${submissionComplete.route}`);
 	} catch (error) {
 		logger.error(error);
-		return res.redirect(`${directory}${submissionError.route}`);
+		return res.redirect(`${submissionError.route}`);
 	}
 };
 

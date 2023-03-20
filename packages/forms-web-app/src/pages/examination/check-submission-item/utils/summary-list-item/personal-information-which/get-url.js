@@ -3,7 +3,6 @@ const { getSubmissionItemType } = require('../../../../_session/submission-items
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: {
 				evidenceOrComment,
 				personalInformationWhichCommentFiles,
@@ -18,9 +17,9 @@ const getPersonalInformationWhichUrl = (submissionItem) => {
 
 	switch (submissionItemType) {
 		case evidenceOrComment.options[2].value:
-			return `${directory}${personalInformationWhichFiles.route}`;
+			return `${personalInformationWhichFiles.route}`;
 		case evidenceOrComment.options[3].value:
-			return `${directory}${personalInformationWhichCommentFiles.route}`;
+			return `${personalInformationWhichCommentFiles.route}`;
 		default:
 			throw new Error('Submission item type does not match an option');
 	}

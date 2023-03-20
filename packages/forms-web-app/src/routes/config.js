@@ -1,12 +1,13 @@
 const routesConfig = {
 	examination: {
 		directory: '/examination',
+		baseDirectory: 'examination',
 		sessionId: 'examination',
 		pages: {
 			addDeadline: {
 				id: 'examination-add-deadline',
 				name: 'Add another deadline?',
-				route: '/add-another-deadline-item',
+				route: 'add-another-deadline-item',
 				view: 'pages/examination/add-deadline'
 			},
 			applicant: {
@@ -26,26 +27,26 @@ const routesConfig = {
 						text: 'No'
 					}
 				},
-				route: '/are-you-applicant',
+				route: 'are-you-applicant',
 				title: 'Are you #?',
 				view: 'pages/examination/applicant'
 			},
 			checkSubmissionItem: {
 				id: 'examination-check-submission-item',
 				name: 'Check your answers',
-				route: '/check-your-deadline-item',
+				route: 'check-your-deadline-item',
 				view: 'pages/examination/check-submission-item'
 			},
 			checkYourAnswers: {
 				id: 'examination-check-your-answers',
 				name: 'Check your answers',
-				route: '/check-your-answers',
+				route: 'check-your-answers',
 				view: 'pages/examination/check-your-answers'
 			},
 			email: {
 				id: 'examination-email',
 				name: `What's your email address?`,
-				route: '/your-email-address',
+				route: 'your-email-address',
 				view: 'pages/examination/email',
 				onError: {
 					message: {
@@ -70,7 +71,7 @@ const routesConfig = {
 						max: 65234
 					}
 				},
-				route: '/enter-a-comment',
+				route: 'enter-a-comment',
 				sessionId: 'comment',
 				title: 'Your comment',
 				view: 'pages/examination/enter-comment'
@@ -96,7 +97,7 @@ const routesConfig = {
 						text: 'Both'
 					}
 				},
-				route: '/select-upload-evidence-or-comment',
+				route: 'select-upload-evidence-or-comment',
 				sessionId: 'submissionType',
 				title: 'How would you like to submit comments ("written representation")?',
 				view: 'pages/examination/evidence-or-comment'
@@ -104,7 +105,7 @@ const routesConfig = {
 			haveYourSay: {
 				id: 'examination-have-your-say',
 				name: 'Have your say during the Examination of the application',
-				route: '/have-your-say-during-examination',
+				route: 'have-your-say-during-examination',
 				view: 'pages/examination/have-your-say/have-your-say'
 			},
 			hasInterestedPartyNumber: {
@@ -125,7 +126,7 @@ const routesConfig = {
 						text: 'No'
 					}
 				},
-				route: '/have-an-interested-party-number',
+				route: 'have-an-interested-party-number',
 				view: 'pages/examination/has-interested-party-number'
 			},
 			nameAgent: {
@@ -144,7 +145,7 @@ const routesConfig = {
 						max: 255
 					}
 				},
-				route: '/name-of-person-or-group',
+				route: 'name-of-person-or-group',
 				view: 'pages/examination/name'
 			},
 			nameMyself: {
@@ -162,7 +163,7 @@ const routesConfig = {
 						max: 64
 					}
 				},
-				route: '/your-name',
+				route: 'your-name',
 				view: 'pages/examination/name'
 			},
 			nameOrganisation: {
@@ -180,7 +181,7 @@ const routesConfig = {
 						max: 255
 					}
 				},
-				route: '/your-organisation-name',
+				route: 'your-organisation-name',
 				view: 'pages/examination/name'
 			},
 			personalInformation: {
@@ -207,7 +208,7 @@ const routesConfig = {
 					}
 				},
 				pageTitle: 'Comment has personal information or not',
-				route: '/comment-has-personal-information-or-not',
+				route: 'comment-has-personal-information-or-not',
 				title: 'Does your comment contain personal information?'
 			},
 			personalInformationCommentFiles: {
@@ -218,7 +219,7 @@ const routesConfig = {
 					}
 				},
 				pageTitle: 'Comment or files has personal information or not',
-				route: '/comment-file-has-personal-information-or-not',
+				route: 'comment-file-has-personal-information-or-not',
 				title: 'Do your comment and files contain personal information?'
 			},
 			personalInformationFiles: {
@@ -229,7 +230,7 @@ const routesConfig = {
 					}
 				},
 				pageTitle: 'Files have personal information or not',
-				route: '/files-have-personal-information-or-not',
+				route: 'files-have-personal-information-or-not',
 				title: 'Do your files contain personal information?'
 			},
 			personalInformationWhich: {
@@ -238,7 +239,7 @@ const routesConfig = {
 			personalInformationWhichCommentFiles: {
 				id: 'examination-personal-information-which-comment-files',
 				name: 'Which files and comments contain personal information?',
-				route: '/select-which-files-comments-have-personal-information',
+				route: 'select-which-files-comments-have-personal-information',
 				onError: {
 					message: {
 						isEmpty: 'Select files and comments that contain personal information'
@@ -248,7 +249,7 @@ const routesConfig = {
 			personalInformationWhichFiles: {
 				id: 'examination-personal-information-which-files',
 				name: 'Which files contain personal information?',
-				route: '/which-files-have-personal-information-or-not',
+				route: 'which-files-have-personal-information-or-not',
 				onError: {
 					message: {
 						isEmpty: 'Select files that contain personal information'
@@ -263,7 +264,7 @@ const routesConfig = {
 						isEmpty: 'Select an item'
 					}
 				},
-				route: '/select-deadline-item',
+				route: 'select-deadline-item',
 				sessionId: {
 					1: 'submissionId',
 					2: 'submissionItem',
@@ -275,7 +276,7 @@ const routesConfig = {
 			selectFile: {
 				id: 'examination-select-file',
 				name: 'Select a file',
-				route: '/select-a-file',
+				route: 'select-a-file',
 				view: 'pages/examination/select-file',
 				sessionId: 'files',
 				onError: {
@@ -314,7 +315,7 @@ const routesConfig = {
 						text: 'On behalf of another person, a family group or another organisation I do not work for'
 					}
 				},
-				route: '/who-are-you-submitting-for',
+				route: 'who-are-you-submitting-for',
 				view: 'pages/examination/submitting-for'
 			},
 			yourInterestedPartyNumber: {
@@ -330,7 +331,7 @@ const routesConfig = {
 						max: 20
 					}
 				},
-				route: '/your-interested-party-number',
+				route: 'your-interested-party-number',
 				view: 'pages/examination/your-interested-party-number'
 			},
 			addAnotherDeadlineItem: {
@@ -338,11 +339,11 @@ const routesConfig = {
 				name: 'You added one deadline item',
 				title: 'You added one deadline item',
 				pageTitle: 'You added one deadline item',
-				route: '/add-another-deadline-item',
+				route: 'add-another-deadline-item',
 				view: 'pages/examination/add-another-deadline-item',
 				comment: '',
 				changeADeadlineItem: {
-					route: '/change-a-deadline-item'
+					route: 'change-a-deadline-item'
 				},
 				onError: {
 					message: {
@@ -353,9 +354,9 @@ const routesConfig = {
 			selectIfYouWantToDeleteData: {
 				id: 'examination-select-if-want-to-delete-data',
 				pageTitle: 'Are you sure you want to delete data for this item?',
-				route: '/select-if-want-to-delete-data',
+				route: 'select-if-want-to-delete-data',
 				markDeadlineItemForDelete: {
-					route: '/mark-deadline-item-to-delete'
+					route: 'mark-deadline-item-to-delete'
 				},
 				view: 'pages/examination/select-if-want-to-delete-data',
 				onError: {
@@ -367,16 +368,16 @@ const routesConfig = {
 			processSubmission: {
 				id: 'examination-process-submission',
 				pageTitle: 'Process submission',
-				route: '/process-submission',
+				route: 'process-submission',
 				view: 'pages/examination/process-submission'
 			},
 			submissionComplete: {
-				route: '/submission-complete',
+				route: 'submission-complete',
 				view: 'pages/examination/submission-complete'
 			},
 			submissionError: {
 				id: 'examination-submission-error',
-				route: '/submission-error',
+				route: 'submission-error',
 				view: 'error/examination-submission-error'
 			}
 		}

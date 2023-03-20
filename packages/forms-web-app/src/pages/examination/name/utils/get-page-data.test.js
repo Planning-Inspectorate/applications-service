@@ -29,7 +29,7 @@ describe('#getPageData', () => {
 					pageTitle: 'mock page title',
 					title: 'mock page title',
 					view: 'examination/name/view.njk',
-					url: '/examination/your-name'
+					url: 'your-name'
 				});
 			});
 		});

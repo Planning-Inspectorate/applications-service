@@ -3,16 +3,13 @@ const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { hasInterestedPartyNumber, checkYourAnswers }
 		}
 	}
 } = require('../../../../routes/config');
 
 const getBackLinkUrl = (query) =>
-	isQueryModeEdit(query)
-		? `${directory + checkYourAnswers.route}`
-		: `${directory + hasInterestedPartyNumber.route}`;
+	isQueryModeEdit(query) ? `${checkYourAnswers.route}` : `${hasInterestedPartyNumber.route}`;
 
 module.exports = {
 	getBackLinkUrl

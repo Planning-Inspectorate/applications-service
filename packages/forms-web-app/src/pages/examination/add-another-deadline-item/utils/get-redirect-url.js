@@ -1,7 +1,6 @@
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: { selectDeadline, checkYourAnswers }
 		}
 	}
@@ -10,9 +9,9 @@ const {
 const getRedirectUrl = (addAnotherDeadlineItemValue) => {
 	let redirectURl;
 	if (addAnotherDeadlineItemValue === 'yes') {
-		redirectURl = `${examinationDirectory}${selectDeadline.route}`;
+		redirectURl = `${selectDeadline.route}`;
 	} else if (addAnotherDeadlineItemValue === 'no') {
-		redirectURl = `${examinationDirectory}${checkYourAnswers.route}`;
+		redirectURl = `${checkYourAnswers.route}`;
 	}
 
 	if (!redirectURl) throw new Error('No redirect URL for add another deadline item');

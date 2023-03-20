@@ -71,7 +71,7 @@ describe('examination/submitting-for', () => {
 				});
 
 				it('should then redirect to the next page', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/select-a-file');
+					expect(res.redirect).toHaveBeenCalledWith('select-a-file');
 				});
 			});
 			describe('and the body contains upload', () => {

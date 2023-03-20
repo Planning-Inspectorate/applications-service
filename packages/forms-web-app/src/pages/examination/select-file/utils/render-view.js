@@ -7,7 +7,6 @@ const view = 'examination/select-file/view.njk';
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: { evidenceOrComment, selectFile, enterComment }
 		}
 	}
@@ -25,9 +24,9 @@ const pageData = {
 };
 
 const getBackLinkUrl = (submissionType) => {
-	let backLinkUrl = `${examinationDirectory}${evidenceOrComment.route}`;
+	let backLinkUrl = `${evidenceOrComment.route}`;
 
-	if (submissionType === 'both') backLinkUrl = `${examinationDirectory}${enterComment.route}`;
+	if (submissionType === 'both') backLinkUrl = `${enterComment.route}`;
 
 	return backLinkUrl;
 };

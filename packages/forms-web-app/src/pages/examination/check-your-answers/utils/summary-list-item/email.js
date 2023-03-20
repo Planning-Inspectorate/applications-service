@@ -5,7 +5,6 @@ const { editQuery } = require('../../../../../controllers/utils/queryMode');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { email }
 		}
 	}
@@ -15,7 +14,7 @@ const getSummaryListItemEmail = (session) =>
 	getSummaryListItem(
 		'Email Address',
 		getDeadlineDetailsEmail(session),
-		`${directory}${email.route}${editQuery}`
+		`${email.route}${editQuery}`
 	);
 
 module.exports = { getSummaryListItemEmail };

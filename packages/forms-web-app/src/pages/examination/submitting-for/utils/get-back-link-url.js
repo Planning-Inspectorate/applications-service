@@ -5,7 +5,6 @@ const { getExaminationApplicantValue } = require('../../_session/deadline/detail
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { applicant, checkYourAnswers, yourInterestedPartyNumber }
 		}
 	}
@@ -14,11 +13,11 @@ const {
 const getBackLinkUrl = (query, session) => {
 	let backLinkUrl;
 
-	if (isQueryModeEdit(query)) backLinkUrl = `${directory}${checkYourAnswers.route}`;
+	if (isQueryModeEdit(query)) backLinkUrl = `${checkYourAnswers.route}`;
 	else if (getUserHasInterestedPartyNumber(session))
-		backLinkUrl = `${directory}${yourInterestedPartyNumber.route}`;
+		backLinkUrl = `${yourInterestedPartyNumber.route}`;
 	else if (getExaminationApplicantValue(session) === applicant.options[2].value)
-		backLinkUrl = `${directory}${applicant.route}`;
+		backLinkUrl = `${applicant.route}`;
 	else throw new Error('Submitting for page back link URL can not be set');
 
 	return backLinkUrl;

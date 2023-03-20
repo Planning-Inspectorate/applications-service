@@ -1,7 +1,6 @@
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: {
 				submittingFor: { route: submittingForRoute },
 				checkYourAnswers
@@ -11,9 +10,7 @@ const {
 } = require('../../../../routes/config');
 const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode-edit');
 const getRedirectUrl = (query) =>
-	isQueryModeEdit(query)
-		? `${directory + checkYourAnswers.route}`
-		: `${directory + submittingForRoute}`;
+	isQueryModeEdit(query) ? `${checkYourAnswers.route}` : `${submittingForRoute}`;
 
 module.exports = {
 	getRedirectUrl

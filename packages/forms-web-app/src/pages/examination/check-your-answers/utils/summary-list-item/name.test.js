@@ -45,7 +45,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						'Full name',
 						mockDeadlineNameValue,
-						'/examination/your-name?mode=edit'
+						'your-name?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {
@@ -62,7 +62,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						`Organisation's name`,
 						mockDeadlineNameValue,
-						'/examination/your-organisation-name?mode=edit'
+						'your-organisation-name?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {
@@ -79,7 +79,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						'Submitting on behalf of',
 						mockDeadlineNameValue,
-						'/examination/name-of-person-or-group?mode=edit'
+						'name-of-person-or-group?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {

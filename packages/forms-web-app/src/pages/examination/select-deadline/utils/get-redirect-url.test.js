@@ -21,7 +21,7 @@ describe('controllers/examination/select-deadline/utils/get-redirect-url', () =>
 					expect(isQueryModeEdit).toHaveBeenCalledWith(query);
 				});
 				it('should return the url', () => {
-					expect(result).toEqual('/examination/check-your-deadline-item');
+					expect(result).toEqual('check-your-deadline-item');
 				});
 			});
 			describe('and the query does not have a mode that is set to edit', () => {
@@ -34,7 +34,7 @@ describe('controllers/examination/select-deadline/utils/get-redirect-url', () =>
 					expect(isQueryModeEdit).toHaveBeenCalledWith(query);
 				});
 				it('should return the url', () => {
-					expect(result).toEqual('/examination/select-upload-evidence-or-comment');
+					expect(result).toEqual('select-upload-evidence-or-comment');
 				});
 			});
 		});

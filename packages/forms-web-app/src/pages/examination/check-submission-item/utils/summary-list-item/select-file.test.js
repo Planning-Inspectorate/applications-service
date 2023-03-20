@@ -26,7 +26,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 							actions: {
 								items: [
 									{
-										href: '/examination/select-a-file?mode=edit',
+										href: 'select-a-file?mode=edit',
 										text: 'Change',
 										visuallyHiddenText: 'Documents uploaded'
 									}
@@ -54,7 +54,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 							actions: {
 								items: [
 									{
-										href: '/examination/select-a-file?mode=edit',
+										href: 'select-a-file?mode=edit',
 										text: 'Change',
 										visuallyHiddenText: 'Documents uploaded'
 									}

@@ -4,7 +4,6 @@ const { getSummaryListSubmissionItems } = require('./get-summary-list-submission
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { addAnotherDeadlineItem, checkYourAnswers, processSubmission }
 		}
 	}
@@ -12,9 +11,9 @@ const {
 
 const getPageData = (session) => {
 	return {
-		backLinkUrl: `${directory}${addAnotherDeadlineItem.route}`,
+		backLinkUrl: `${addAnotherDeadlineItem.route}`,
 		deadlineTitle: getDeadlineTitle(session),
-		nextPageUrl: `${directory}${processSubmission.route}`,
+		nextPageUrl: `${processSubmission.route}`,
 		pageTitle: checkYourAnswers.name,
 		summaryListDetails: getSummaryListDetails(session),
 		summaryListDetailsTitle: 'Your details',

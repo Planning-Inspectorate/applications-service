@@ -3,7 +3,6 @@ const logger = require('../../../lib/logger');
 const {
 	routesConfig: {
 		examination: {
-			directory: examinationDirectory,
 			pages: { selectIfYouWantToDeleteData, addAnotherDeadlineItem }
 		}
 	}
@@ -15,7 +14,7 @@ const { yesDeleteSubmissionItem } = require('./utils/yes-delete-submission-item'
 const view = 'examination/select-if-want-to-delete-data/view.njk';
 
 const pageData = {
-	backLinkUrl: `${examinationDirectory}${addAnotherDeadlineItem.route}`,
+	backLinkUrl: `${addAnotherDeadlineItem.route}`,
 	id: selectIfYouWantToDeleteData.id,
 	pageTitle: selectIfYouWantToDeleteData.pageTitle,
 	options: [
@@ -44,7 +43,7 @@ const postMarkDeadlineItemForDelete = (req, res) => {
 
 		setDeadlineItemToDelete(session, itemIdToDelete);
 
-		return res.redirect(`${examinationDirectory}${selectIfYouWantToDeleteData.route}`);
+		return res.redirect(`${selectIfYouWantToDeleteData.route}`);
 	} catch (error) {
 		logger.error('Error: ', error);
 		return res.status(500).render('error/unhandled-exception');
@@ -70,7 +69,7 @@ const postSelectIfYouWantToDeleteData = async (req, res) => {
 		if (answer === 'yes') await yesDeleteSubmissionItem(session);
 		setDeadlineItemToDelete(session, -1);
 
-		return res.redirect(`${examinationDirectory}${addAnotherDeadlineItem.route}`);
+		return res.redirect(`${addAnotherDeadlineItem.route}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

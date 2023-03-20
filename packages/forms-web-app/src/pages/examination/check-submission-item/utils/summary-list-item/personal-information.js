@@ -2,7 +2,6 @@ const { getSummaryListItem } = require('../../../../../controllers/utils/get-sum
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: {
 				evidenceOrComment,
 				personalInformation,
@@ -40,13 +39,13 @@ const getChangeUrl = (submissionItem) => {
 
 	switch (evidenceOrCommentSessionValue) {
 		case evidenceOrComment.options[1].value:
-			changeUrl = `${directory}${personalInformationComment.route}`;
+			changeUrl = `${personalInformationComment.route}`;
 			break;
 		case evidenceOrComment.options[2].value:
-			changeUrl = `${directory}${personalInformationFiles.route}`;
+			changeUrl = `${personalInformationFiles.route}`;
 			break;
 		case evidenceOrComment.options[3].value:
-			changeUrl = `${directory}${personalInformationCommentFiles.route}`;
+			changeUrl = `${personalInformationCommentFiles.route}`;
 			break;
 		default:
 			throw new Error('Submission item submission type value does not match a required option');

@@ -6,19 +6,19 @@ describe('examination/evidence-or-comment/utils/get-redirect-route', () => {
 			describe('and the passed argument is "comment"', () => {
 				const route = getRedirectRoute('comment');
 				it('should return the route', () => {
-					expect(route).toEqual('/enter-a-comment');
+					expect(route).toEqual('enter-a-comment');
 				});
 			});
 			describe('and the passed argument is "upload"', () => {
 				const route = getRedirectRoute('upload');
 				it('should return the route', () => {
-					expect(route).toEqual('/select-a-file');
+					expect(route).toEqual('select-a-file');
 				});
 			});
 			describe('and the passed argument is "both"', () => {
 				const route = getRedirectRoute('both');
 				it('should return the route', () => {
-					expect(route).toEqual('/enter-a-comment');
+					expect(route).toEqual('enter-a-comment');
 				});
 			});
 			describe('and the passed argument does not match a required submission type', () => {

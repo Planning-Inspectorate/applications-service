@@ -4,7 +4,6 @@ const { editQuery } = require('../../../../../controllers/utils/queryMode');
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { selectDeadline }
 		}
 	}
@@ -16,7 +15,7 @@ const getSummaryListItemSubmissionItem = (submissionItem, session) => {
 	if (!submissionItemValueText)
 		throw new Error('Submission item does not have a submission item value');
 
-	let deadlineItemChangeUrl = `${directory}${selectDeadline.route}${editQuery}`;
+	let deadlineItemChangeUrl = `${selectDeadline.route}${editQuery}`;
 
 	if (showDeadlineItemChangeUrl(session) === false) {
 		deadlineItemChangeUrl = '';

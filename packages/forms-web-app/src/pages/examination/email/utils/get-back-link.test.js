@@ -13,7 +13,7 @@ describe('#getBackLink', () => {
 				result = getBackLink({}, { mode: 'edit' });
 			});
 			it('should return the previous page', () => {
-				expect(result).toEqual('/examination/check-your-answers');
+				expect(result).toEqual('check-your-answers');
 			});
 		});
 		describe('and the user is the applicant', () => {
@@ -24,7 +24,7 @@ describe('#getBackLink', () => {
 				result = getBackLink();
 			});
 			it('should return the previous page', () => {
-				expect(result).toEqual('/examination/are-you-applicant');
+				expect(result).toEqual('are-you-applicant');
 			});
 		});
 		describe('and the user is submitting for organisation', () => {
@@ -35,7 +35,7 @@ describe('#getBackLink', () => {
 				result = getBackLink();
 			});
 			it('should return the previous page', () => {
-				expect(result).toEqual('/examination/your-organisation-name');
+				expect(result).toEqual('your-organisation-name');
 			});
 		});
 		describe('and the user is submitting for agent', () => {
@@ -46,7 +46,7 @@ describe('#getBackLink', () => {
 				result = getBackLink();
 			});
 			it('should return the previous page', () => {
-				expect(result).toEqual('/examination/name-of-person-or-group');
+				expect(result).toEqual('name-of-person-or-group');
 			});
 		});
 		describe('and the user is submitting for myself', () => {
@@ -57,7 +57,7 @@ describe('#getBackLink', () => {
 				result = getBackLink();
 			});
 			it('should return the previous page', () => {
-				expect(result).toEqual('/examination/your-name');
+				expect(result).toEqual('your-name');
 			});
 		});
 	});

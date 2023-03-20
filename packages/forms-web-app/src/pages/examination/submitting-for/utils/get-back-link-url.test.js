@@ -29,7 +29,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getBackLinkUrl();
 				});
 				it('should return the check your answers URL', () => {
-					expect(result).toEqual('/examination/check-your-answers');
+					expect(result).toEqual('check-your-answers');
 				});
 			});
 			describe('and the user has previously selected that they have an interested party number', () => {
@@ -39,7 +39,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getBackLinkUrl();
 				});
 				it('should return the interested party number URL', () => {
-					expect(result).toEqual('/examination/your-interested-party-number');
+					expect(result).toEqual('your-interested-party-number');
 				});
 			});
 			describe('and the user has previously selected that they are not the applicant', () => {
@@ -49,7 +49,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 					result = getBackLinkUrl();
 				});
 				it('should return the aare you the applicant URL', () => {
-					expect(result).toEqual('/examination/are-you-applicant');
+					expect(result).toEqual('are-you-applicant');
 				});
 			});
 			describe('and there is no back link URL created', () => {

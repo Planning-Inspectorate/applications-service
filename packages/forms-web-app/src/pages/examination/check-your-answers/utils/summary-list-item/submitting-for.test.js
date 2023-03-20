@@ -57,7 +57,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/sub
 					expect(getSummaryListItem).toHaveBeenCalledWith(
 						'Making submission for',
 						mockSubmittingForText,
-						'/examination/who-are-you-submitting-for?mode=edit'
+						'who-are-you-submitting-for?mode=edit'
 					);
 				});
 				it('should return a summary list item', () => {

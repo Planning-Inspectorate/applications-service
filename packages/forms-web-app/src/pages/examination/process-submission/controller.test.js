@@ -84,7 +84,7 @@ describe('examination/process-submission/controller', () => {
 					expect(deleteExaminationSession).toHaveBeenCalledWith(req.session);
 				});
 				it('should redirect', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/submission-complete');
+					expect(res.redirect).toHaveBeenCalledWith('submission-complete');
 				});
 			});
 			describe('and there is an error', () => {
@@ -95,7 +95,7 @@ describe('examination/process-submission/controller', () => {
 					postProcessSubmission(req, res);
 				});
 				it('should redirect to the process submission failure error page', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/submission-error');
+					expect(res.redirect).toHaveBeenCalledWith('submission-error');
 				});
 			});
 		});

@@ -1,7 +1,6 @@
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { addDeadline, checkSubmissionItem }
 		}
 	}
@@ -9,7 +8,7 @@ const {
 
 const getPageData = () => ({
 	id: checkSubmissionItem.id,
-	nextPageUrl: `${directory}${addDeadline.route}`,
+	nextPageUrl: `${addDeadline.route}`,
 	pageTitle: checkSubmissionItem.name,
 	title: checkSubmissionItem.name
 });

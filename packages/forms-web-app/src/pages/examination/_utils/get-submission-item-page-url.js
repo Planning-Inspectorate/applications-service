@@ -2,15 +2,14 @@ const { isQueryModeEdit } = require('../../../controllers/utils/is-query-mode-ed
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { checkSubmissionItem }
 		}
 	}
 } = require('../../../routes/config');
 
 const getSubmissionItemPageUrl = (query, route) => {
-	if (isQueryModeEdit(query)) return `${directory}${checkSubmissionItem.route}`;
-	else if (route) return `${directory}${route}`;
+	if (isQueryModeEdit(query)) return `${checkSubmissionItem.route}`;
+	else if (route) return `${route}`;
 	else throw new Error('Route is undefined');
 };
 

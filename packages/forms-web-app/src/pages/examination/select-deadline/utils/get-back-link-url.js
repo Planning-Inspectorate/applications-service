@@ -2,15 +2,12 @@ const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode
 const {
 	routesConfig: {
 		examination: {
-			directory,
 			pages: { checkSubmissionItem, email }
 		}
 	}
 } = require('../../../../routes/config');
 
 const getBackLinkUrl = (query) =>
-	isQueryModeEdit(query)
-		? `${directory}${checkSubmissionItem.route}`
-		: `${directory}${email.route}`;
+	isQueryModeEdit(query) ? `${checkSubmissionItem.route}` : `${email.route}`;
 
 module.exports = { getBackLinkUrl };

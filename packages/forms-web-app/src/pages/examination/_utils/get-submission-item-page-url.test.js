@@ -10,7 +10,7 @@ describe('examination/utils/get-submission-item-page-url', () => {
 				};
 				const result = getSubmissionItemPageUrl(mockQueryValue, mockRouteValue);
 				it('should return the URL', () => {
-					expect(result).toEqual('/examination/check-your-deadline-item');
+					expect(result).toEqual('check-your-deadline-item');
 				});
 			});
 			describe('and the query does not have a mode', () => {
@@ -18,7 +18,7 @@ describe('examination/utils/get-submission-item-page-url', () => {
 					const mockQueryValue = {};
 					const result = getSubmissionItemPageUrl(mockQueryValue, mockRouteValue);
 					it('should return the URL', () => {
-						expect(result).toEqual(`/examination${mockRouteValue}`);
+						expect(result).toEqual(`${mockRouteValue}`);
 					});
 				});
 				describe('and does not have a route', () => {

@@ -81,7 +81,7 @@ describe('examination/check-submission-item/controller', () => {
 					expect(deleteActiveSubmissionItemId).toHaveBeenCalledWith(req.session);
 				});
 				it('should redirct to the next page', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/examination/add-another-deadline-item');
+					expect(res.redirect).toHaveBeenCalledWith('add-another-deadline-item');
 				});
 			});
 			describe('and there is an error', () => {

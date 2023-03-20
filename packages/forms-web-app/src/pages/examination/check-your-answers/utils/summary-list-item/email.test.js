@@ -30,7 +30,7 @@ describe('examination/check-your-answers/utils/summary-list-item/email', () => {
 				expect(getSummaryListItem).toHaveBeenCalledWith(
 					'Email Address',
 					mockDeadlineEmailValue,
-					'/examination/your-email-address?mode=edit'
+					'your-email-address?mode=edit'
 				);
 			});
 			it('should return the summary list', () => {

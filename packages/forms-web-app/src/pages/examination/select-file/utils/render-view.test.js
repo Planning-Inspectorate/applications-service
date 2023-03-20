@@ -27,7 +27,7 @@ describe('Rendering Views for ', () => {
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
 						activeSubmissionItemTitle: 'mock submission item',
-						backLinkUrl: '/examination/select-upload-evidence-or-comment',
+						backLinkUrl: 'select-upload-evidence-or-comment',
 						id: 'examination-select-file',
 						maxFileSizeInMb: 50,
 						pageTitle: 'Select a file',
@@ -48,7 +48,7 @@ describe('Rendering Views for ', () => {
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
 						activeSubmissionItemTitle: 'mock submission item',
-						backLinkUrl: '/examination/enter-a-comment',
+						backLinkUrl: 'enter-a-comment',
 						id: 'examination-select-file',
 						maxFileSizeInMb: 50,
 						pageTitle: 'Select a file',
@@ -82,7 +82,7 @@ describe('Rendering Views for ', () => {
 				it('should render the page with the correct data', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
 						activeSubmissionItemTitle: 'mock submission item',
-						backLinkUrl: '/examination/select-upload-evidence-or-comment',
+						backLinkUrl: 'select-upload-evidence-or-comment',
 						errorMessage: 'mock error',
 						errorSummary: 'mocked href summary',
 						id: 'examination-select-file',
@@ -111,7 +111,7 @@ describe('Rendering Views for ', () => {
 				it('should render the page with the correct data', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
 						activeSubmissionItemTitle: 'mock submission item',
-						backLinkUrl: '/examination/select-upload-evidence-or-comment',
+						backLinkUrl: 'select-upload-evidence-or-comment',
 						errorMessage: 'mock error',
 						errorSummary: 'mocked href summary',
 						id: 'examination-select-file',
