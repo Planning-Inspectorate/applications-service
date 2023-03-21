@@ -15,8 +15,6 @@ module.exports = function formSanitisation() {
 						typeof value === 'string' ? sanitiseString(value) : value
 					])
 				);
-
-				return next();
 			}
 
 			return next();
