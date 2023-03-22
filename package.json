@@ -9,8 +9,7 @@
 		"packages/forms-web-app",
 		"packages/applications-service-api",
 		"packages/common",
-		"packages/back-office-subscribers",
-		"packages/data-service"
+		"packages/back-office-subscribers"
 	],
 	"scripts": {
 		"commit": "cz",
