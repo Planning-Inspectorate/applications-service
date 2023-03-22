@@ -4,63 +4,30 @@ const {
 			pages: {
 				hasInterestedPartyNumber: { route: hasInterestedPartyNumberRoute }
 			}
-		},
-		project
+		}
 	}
 } = require('../../../routes/config');
 const logger = require('../../../lib/logger');
-const { setProjectPromoterName } = require('../../../session');
-const { getAppData } = require('../../../services/application.service');
-const { getEvents } = require('../../projects/examination-timetable/utils/events/get-events');
+const { setupExaminationJourney } = require('./utils/setup/setup-examination-journey');
+const { getBackLink } = require('./utils/get-back-link');
 
 const view = 'examination/have-your-say/view.njk';
 
-async function getSessionStuff(session, case_ref) {
-	const applicationData = await getAppData(case_ref);
-	const appData = applicationData.data;
-	session.caseRef = case_ref;
-	session.projectName = appData.ProjectName;
-	setProjectPromoterName(session, appData.PromoterName);
-	const events = await getEvents(appData);
-	const setEvent = events.upcoming.events.find(
-		({ id: uniqueId }) => `${uniqueId}` === `${session.examination.examinationTimetableId}`
-	);
-
-	const deadlineItemsList = setEvent.description.match(/<li>(.|\n)*?<\/li>/gm);
-	const deadlineItems = deadlineItemsList.map((deadlineItem, index) => ({
-		value: `${index}`,
-		text: deadlineItem.replace(/<\/?li>/g, '')
-	}));
-
-	session.examination = {
-		...session.examination,
-		caseRef: case_ref,
-		deadlineItems: deadlineItems,
-		id: setEvent.id,
-		title: setEvent.title
-	};
-}
-
-const getHaveYourSay = async (req, res) => {
+const getHaveYourSay = async (req, res, next) => {
 	try {
 		const { params, session } = req;
+		const referrer = req.get('Referrer');
 		const { case_ref } = params;
-		await getSessionStuff(session, case_ref);
-
-		const backLinkUrl = `${project.directory}/${case_ref}${project.pages.examinationTimetable.route}`;
-		const pageTitle = 'Have your say during the Examination of the application fella';
-		const startNowUrl = `${hasInterestedPartyNumberRoute}`;
-		const title = 'Have your say during the Examination of the application';
-
+		await setupExaminationJourney(session, case_ref);
 		return res.render(view, {
-			backLinkUrl,
-			pageTitle,
-			startNowUrl,
-			title
+			backLinkUrl: getBackLink(case_ref, referrer),
+			startNowUrl: `${hasInterestedPartyNumberRoute}`
 		});
 	} catch (e) {
 		logger.error(e);
-		return res.status(404).render('error/not-found');
+		if (e.message === 'NO_OPEN_DEADLINES')
+			return res.render('examination/have-your-say/no-deadlines-view.njk');
+		next(e);
 	}
 };
 

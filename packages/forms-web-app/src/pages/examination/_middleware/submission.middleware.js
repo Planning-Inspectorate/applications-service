@@ -6,16 +6,16 @@ const {
 const {
 	routesConfig: {
 		examination: {
-			pages: { submissionComplete, submissionError }
+			pages: { submissionComplete, submissionError, haveYourSay }
 		}
 	}
 } = require('../../../routes/config');
 
-const allowableRoutes = [submissionComplete.route, submissionError.route];
+const allowableRoutes = [submissionComplete.route, submissionError.route, haveYourSay.route];
 
 const isProcessingSubmission = (req, res, next) => {
 	const { url, session } = req;
-	if (allowableRoutes.includes(url)) return next();
+	if (allowableRoutes.includes(url.replace('/', ''))) return next();
 
 	if (getExaminationSubmissionComplete(session)) return res.redirect(`${submissionComplete.route}`);
 

@@ -29,7 +29,7 @@ describe('#mapSessionToCommonFormData', () => {
 			getExaminationSession.mockReturnValue({
 				hasInterestedPartyNo: 'yes',
 				email: 'mock email',
-				title: 'remove me - mock title',
+				title: 'mock title',
 				interestedPartyNumber: '1234'
 			});
 		});
@@ -87,7 +87,7 @@ describe('#mapSessionToCommonFormData', () => {
 				getExaminationSession.mockReturnValue({
 					hasInterestedPartyNo: 'no',
 					email: 'mock email',
-					title: 'remove me - mock title',
+					title: 'mock title',
 					interestedPartyNumber: '1234'
 				});
 				result = mapSessionToCommonFormData(mockSession, mockSubmissionItem);

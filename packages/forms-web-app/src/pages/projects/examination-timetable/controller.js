@@ -21,13 +21,13 @@ const getExaminationTimetable = async (req, res) => {
 	try {
 		const { params } = req;
 		const { case_ref } = params;
-		const response = await getAppData(case_ref);
-		const examinationTimetableData = response.data;
+		const { data } = await getAppData(case_ref);
+		const examinationTimetableData = data;
 		const projectName = examinationTimetableData.ProjectName;
-		const pageData = getPageData(case_ref, projectName);
+		const pageData = getPageData(case_ref, projectName, examinationTimetableData);
 
 		return res.render(view, {
-			pageData,
+			...pageData,
 			events: await getEvents(examinationTimetableData)
 		});
 	} catch (error) {
@@ -37,13 +37,20 @@ const getExaminationTimetable = async (req, res) => {
 	}
 };
 
-const postExaminationTimetable = (req, res) => {
-	const { body, session } = req;
+const postExaminationTimetable = (req, res, next) => {
+	try {
+		const { body, session } = req;
 
-	session.examination = {};
-	session.examination.examinationTimetableId = body[examinationTimetable.id];
+		if (!body[examinationTimetable.id]) throw new Error('NO_EXAM_TIMETABLE_ID');
 
-	return res.redirect(`${baseDirectory}/${examinationHaveYourSayRoute}`);
+		session.examination = {};
+		session.examination.examinationTimetableId = body[examinationTimetable.id];
+
+		return res.redirect(`${baseDirectory}/${examinationHaveYourSayRoute}`);
+	} catch (e) {
+		logger.error(e);
+		next(e);
+	}
 };
 
 module.exports = { getExaminationTimetable, postExaminationTimetable };

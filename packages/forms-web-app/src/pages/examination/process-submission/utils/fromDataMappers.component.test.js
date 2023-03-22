@@ -9,7 +9,7 @@ describe('examination/process-submission/utils/fromDataMappers', () => {
 					hasInterestedPartyNo: 'yes',
 					name: 'mock name',
 					email: 'mock email',
-					title: 'remove me - mock title'
+					title: 'mock title'
 				}
 			};
 			describe('and the submission items only has a comment', () => {

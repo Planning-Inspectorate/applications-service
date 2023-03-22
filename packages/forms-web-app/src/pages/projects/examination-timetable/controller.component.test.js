@@ -10,17 +10,7 @@ jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
 }));
 
-const expectUnhandledException = (res) => {
-	expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
-	expect(res.status).toHaveBeenLastCalledWith(500);
-};
-
-const expectNotFound = (res) => {
-	expect(res.render).toHaveBeenCalledWith('error/not-found');
-	expect(res.status).toHaveBeenLastCalledWith(404);
-};
-
-describe.skip('controllers/projects/examination-timetable/controller', () => {
+describe('controllers/projects/examination-timetable/controller', () => {
 	let req;
 	let res;
 
@@ -92,54 +82,10 @@ describe.skip('controllers/projects/examination-timetable/controller', () => {
 
 					await getExaminationTimetable(req, res);
 				});
-				it('should assign the data to the session', () => {
-					expect(req.session).toEqual({
-						appData: {
-							CaseReference: 'mock_case_ref',
-							ConfirmedStartOfExamination: '2023-01-01',
-							DateTimeExaminationEnds: '2023-01-03',
-							dateOfNonAcceptance: '2023-01-01',
-							ProjectName: 'mock project name',
-							PromoterName: 'mock promoter name'
-						},
-						allEvents: [
-							{
-								description: '<p>mock description 3</p>',
-								eventTitle: 'mock title 3',
-								id: 'mock id 3',
-								inputId: 'project-examination-timetable',
-								state: {
-									isSubmissionOpen: false,
-									tag: null
-								},
-								title: '3 January 2023 - mock title 3',
-								typeOfEvent: 'mock event type 3'
-							},
-							{
-								description: '<p>mock description 4</p>',
-								eventTitle: 'mock title 4',
-								id: 'mock id 4',
-								inputId: 'project-examination-timetable',
-								state: {
-									isSubmissionOpen: true,
-									tag: {
-										classes: 'govuk-tag govuk-tag--blue',
-										text: 'Open'
-									}
-								},
-								title: '3 January 2023 - mock title 4',
-								typeOfEvent: 'Deadline'
-							}
-						],
-						caseRef: 'mock_case_ref',
-						projectName: 'mock project name',
-						promoterName: 'mock promoter name'
-					});
-				});
 				it('should call the correct template with the page data', async () => {
 					expect(res.render).toHaveBeenCalledWith('projects/examination-timetable/index.njk', {
 						activeProjectLink: 'project-examination-timetable',
-						caseRef: 'mock_case_ref',
+						caseRef: 'mock case ref',
 						events: {
 							past: {
 								displayEvents: true,
@@ -232,86 +178,49 @@ describe.skip('controllers/projects/examination-timetable/controller', () => {
 					await getExaminationTimetable(req, res);
 				});
 				it('should render the error page', () => {
-					expectUnhandledException(res);
+					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+					expect(res.status).toHaveBeenLastCalledWith(500);
 				});
 			});
 		});
 	});
 
 	describe('#postExaminationTimetable', () => {
-		beforeEach(() => {
-			req = {
-				params: {
-					case_ref: 'mock case ref'
-				},
-				session: {}
-			};
-			res = {
-				status: jest.fn(() => res),
-				render: jest.fn(),
-				redirect: jest.fn()
-			};
-		});
-		it('should render a not found page for missing events', async () => {
-			const req = {};
-			req.session = {
-				caseRef: '123ABC',
-				allEvents: undefined
-			};
-			req.body = {};
-			req.body['event-id'] = 'EN010011-0001';
+		const req = {
+			params: {
+				case_ref: 'mock case ref'
+			},
+			body: {},
+			session: {}
+		};
+		const res = {
+			redirect: jest.fn()
+		};
+		const next = jest.fn();
+		describe('When a timetable id is present', () => {
+			beforeEach(() => {
+				req.body = { 'project-examination-timetable': 'mock-id' };
+				postExaminationTimetable(req, res);
+			});
 
-			await postExaminationTimetable(req, res);
-
-			expectNotFound(res);
-		});
-
-		it('should set the session storage values', async () => {
-			req = {
-				session: {
-					caseRef: '123ABC',
-					allEvents: [
-						{
-							closed: false,
-							dateOfEvent: '18 January 2023',
-							description:
-								'<ul><li>Comments on submissions received for Deadline 2</li><li>Written summaries of oral submissions made at Hearings held during the w/c 26 September</li><li>Updated SoCG requested by the ExA</li></ul>',
-							eventTitle: 'Test',
-							id: 'EN010011-0001',
-							eventIdFieldName: 'event-id',
-							elementId: '17EN010011-0001',
-							title: '18 January 2023 - Test'
-						}
-					]
-				}
-			};
-			req.body = {};
-			req.body['project-examination-timetable'] = 'EN010011-0001';
-
-			await postExaminationTimetable(req, res);
-
-			expect(res.redirect).toHaveBeenLastCalledWith(
-				'/examination/have-your-say-during-examination'
-			);
-
-			expect(req.session.examination).toEqual({
-				caseRef: '123ABC',
-				deadlineItems: [
-					{
-						text: 'Comments on submissions received for Deadline 2',
-						value: '0'
-					},
-					{
-						text: 'Written summaries of oral submissions made at Hearings held during the w/c 26 September',
-						value: '1'
-					},
-					{
-						text: 'Updated SoCG requested by the ExA',
-						value: '2'
+			it('should set the id in the session', () => {
+				expect(req.session).toEqual({
+					examination: {
+						examinationTimetableId: 'mock-id'
 					}
-				],
-				id: 'EN010011-0001',
-				title: '18 January 2023 - Test'
+				});
+			});
+			it('should redirect to the have your say journey', () => {
+				expect(res.redirect).toHaveBeenCalledWith('examination/have-your-say-during-examination');
+			});
+		});
+		describe('When a timetable id is NOT present', () => {
+			beforeEach(() => {
+				req.body = {};
+				postExaminationTimetable(req, res, next);
+			});
+			it('should redirect to the have your say journey', () => {
+				expect(next).toHaveBeenCalledWith(new Error('NO_EXAM_TIMETABLE_ID'));
 			});
 		});
 	});
