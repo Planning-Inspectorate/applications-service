@@ -6,6 +6,10 @@ const getExaminationSession = (session) => {
 	return examinationSession;
 };
 
+const hasExaminationSession = (session) => session.examination;
+
+const getExaminationTimetableId = ({ examination }) => examination.examinationTimetableId;
+
 const setExaminationUploadingState = (session, state) => {
 	const examinationSession = getExaminationSession(session);
 	if (typeof state !== 'boolean') throw new Error('Examination upload state is not a boolean');
@@ -69,7 +73,9 @@ const setExaminationSubmissionRetryErrorCount = (session) => {
 };
 
 module.exports = {
+	hasExaminationSession,
 	getExaminationSession,
+	getExaminationTimetableId,
 	setExaminationUploadingState,
 	setExaminationSubmissionComplete,
 	setExaminationSubmissionId,

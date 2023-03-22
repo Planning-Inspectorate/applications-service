@@ -28,6 +28,15 @@ describe('#isProcessingSubmission', () => {
 					expect(next).toHaveBeenCalled();
 				});
 			});
+			describe('and the user in on the start page', () => {
+				beforeEach(() => {
+					const url = '/have-your-say-during-examination';
+					isProcessingSubmission({ ...req, url }, res, next);
+				});
+				it('should go to the next middleware', () => {
+					expect(next).toHaveBeenCalled();
+				});
+			});
 		});
 
 		describe('and the uploading process is completed', () => {

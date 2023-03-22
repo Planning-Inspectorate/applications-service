@@ -2,60 +2,64 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% set pageTitle = 'Have your say during the Examination of the application' %}
+
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">
-        {{ title }}
-      </h1>
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-l">
+				Have your say during the examination of the application
+			</h1>
 
-      <p>
-        Use this service to have your say about the <strong>{{ projectName }}</strong> at the Examination stage.
-      </p>
+			<p>
+				Use this service to have your say about the <strong>{{ projectName }}</strong> at the Examination stage.
+			</p>
 
-      <p>
-        We&#39;ll ask for your personal details and your examination comments (“written representation”) about this project.
-      </p>
+			<p>
+				We&#39;ll ask for your personal details and your examination comments (“written representation”) about this
+				project.
+			</p>
 
-      {{ govukButton({
+			{{ govukButton({
 				text: "Start now",
 				href: startNowUrl,
 				isStartButton: true
 			}) }}
 
-      <h2 class="govuk-heading-m">Before you start</h2>
+			<h2 class="govuk-heading-m">Before you start</h2>
 
-      <p>
-        <b>If you&#39;re an individual and have registered as an interested party</b>
-      </p>
+			<p>
+				<b>If you&#39;re an individual and have registered as an interested party</b>
+			</p>
 
-      <p>You&#39;ll need your:</p>
+			<p>You&#39;ll need your:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>interested party number</li>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>interested party number</li>
 
-        <li>email address</li>
+				<li>email address</li>
 
-        <li>documents to support your comments if you plan to upload them</li>
-      </ul>
+				<li>documents to support your comments if you plan to upload them</li>
+			</ul>
 
-      <p>If you have not registered as an interested party, we&#39;ll ask you for your personal details and documents to support your comments if you plan to upload them.</p>
+			<p>If you have not registered as an interested party, we&#39;ll ask you for your personal details and documents to
+				support your comments if you plan to upload them.</p>
 
-      <p>
-        <b>If you&#39;re submitting comments as an organisation you work for</b>
-      </p>
+			<p>
+				<b>If you&#39;re submitting comments as an organisation you work for</b>
+			</p>
 
-      <p>You&#39;ll need your organisation&#39;s:</p>
+			<p>You&#39;ll need your organisation&#39;s:</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>name</li>
+			<ul class="govuk-list govuk-list--bullet">
+				<li>name</li>
 
-        <li>interested party number</li>
+				<li>interested party number</li>
 
-        <li>email address</li>
+				<li>email address</li>
 
-        <li>supporting documents if you plan to upload your documents</li>
-      </ul>
-    </div>
-  </div>
+				<li>supporting documents if you plan to upload your documents</li>
+			</ul>
+		</div>
+	</div>
 {% endblock %}
