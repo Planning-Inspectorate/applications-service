@@ -183,6 +183,14 @@ const routesConfig = {
 				route: '/your-organisation-name',
 				view: 'pages/examination/name'
 			},
+			noOpenDeadlines: {
+				id: 'examination-no-open-deadlines',
+				name: 'No open deadlines',
+				title: `Have your say during the examination of the application`,
+				pageTitle: `no open deadlines`,
+				route: '/no-open-deadlines',
+				view: 'pages/examination/no-open-deadlines'
+			},
 			personalInformation: {
 				name: 'Personal information',
 				options: {

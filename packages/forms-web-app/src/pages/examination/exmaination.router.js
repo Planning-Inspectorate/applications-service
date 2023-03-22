@@ -28,6 +28,7 @@ const {
 				nameMyself,
 				nameOrganisation,
 				nameAgent,
+				noOpenDeadlines,
 				personalInformationComment,
 				personalInformationCommentFiles,
 				personalInformationFiles,
@@ -62,6 +63,7 @@ const {
 } = require('./has-interested-party-number/controller');
 const { getHaveYourSay } = require('./have-your-say/controller');
 const { getName, postName } = require('./name/controller');
+const { getNoOpenDeadlines } = require('./no-open-deadlines/controller');
 const {
 	getPersonalInformation,
 	postPersonalInformation
@@ -161,6 +163,8 @@ router.post(
 	forwardView(nameOrganisation),
 	postName
 );
+
+router.get(noOpenDeadlines.route, getNoOpenDeadlines);
 
 router.get(
 	personalInformationComment.route,

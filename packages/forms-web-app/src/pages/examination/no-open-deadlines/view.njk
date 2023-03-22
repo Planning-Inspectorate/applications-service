@@ -1,0 +1,20 @@
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+			<span class="govuk-caption-l">
+				{{ projectName }}
+			</span>
+
+      <h1 class="govuk-heading-xl">
+        {{ title }}
+      </h1>
+
+      <p>
+        You cannot submit anything as there are no open dealines.
+      </p>
+
+    </div>
+  </div>
+{% endblock %}
