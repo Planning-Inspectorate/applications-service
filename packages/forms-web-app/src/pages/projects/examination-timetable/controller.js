@@ -26,7 +26,7 @@ const getExaminationTimetable = async (req, res) => {
 		const projectName = examinationTimetableData.ProjectName;
 		const pageData = getPageData(case_ref, projectName);
 
-		res.render(view, {
+		return res.render(view, {
 			pageData,
 			events: await getEvents(examinationTimetableData)
 		});

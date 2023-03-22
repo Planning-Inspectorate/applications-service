@@ -49,7 +49,7 @@ const getHaveYourSay = async (req, res) => {
 
 		const backLinkUrl = `${project.directory}/${case_ref}${project.pages.examinationTimetable.route}`;
 		const pageTitle = 'Have your say during the Examination of the application fella';
-		const startNowUrl = `${project.directory}/${case_ref}/${hasInterestedPartyNumberRoute}`;
+		const startNowUrl = `${hasInterestedPartyNumberRoute}`;
 		const title = 'Have your say during the Examination of the application';
 
 		return res.render(view, {
