@@ -9,7 +9,8 @@
 		"packages/forms-web-app",
 		"packages/applications-service-api",
 		"packages/common",
-		"packages/back-office-subscribers"
+		"packages/back-office-subscribers",
+		"packages/data-service"
 	],
 	"scripts": {
 		"commit": "cz",
@@ -23,9 +24,9 @@
 		"lint:fix": "turbo run lint --parallel --continue",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
 		"release": "multi-semantic-release --ignore-packages=packages/common",
-		"test": "turbo run test --parallel --continue",
-		"test:cov": "turbo run test:cov --parallel --continue",
-		"test:watch": "turbo run test:watch --parallel --continue",
+		"test": "turbo run test --parallel --continue --filter=!@pins/data-service",
+		"test:cov": "turbo run test:cov --parallel --continue --filter=!@pins/data-service",
+		"test:watch": "turbo run test:watch --parallel --continue --filter=!@pins/data-service",
 		"win:common:fix": "xcopy /E /Y packages\\common node_modules\\@pins\\common\\"
 	},
 	"repository": {
