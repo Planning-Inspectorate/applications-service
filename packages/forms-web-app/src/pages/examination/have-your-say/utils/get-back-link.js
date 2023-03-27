@@ -1,10 +1,5 @@
-const {
-	routesConfig: { project }
-} = require('../../../../routes/config');
-const getBackLink = (caseRef, url) =>
-	url && url.includes(project.directory)
-		? `${project.directory}/${caseRef}${project.pages.examinationTimetable.route}`
-		: '';
+const { server } = require('../../../../config');
+const getBackLink = (caseRef, url) => (url && url.includes(server.host) ? url : '');
 
 module.exports = {
 	getBackLink
