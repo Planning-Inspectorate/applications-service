@@ -1,38 +1,37 @@
-const accordionId = 'ui-checkbox-accordion__section-switch--';
 const checkboxId = 'ui-checkbox-accordion__checkboxes-section--';
 
 const filterKeys = {
 	'pre-application': {
-		accordionId: accordionId + 'stage-1',
-		checkboxId: checkboxId + 'stage-1'
+		accordionIndex: 0,
+		checkboxId: checkboxId + '1'
 	},
 	'developers-application': {
-		accordionId: accordionId + "category-Developer's Application",
-		checkboxId: checkboxId + "category-Developer's Application"
+		accordionIndex: 1,
+		checkboxId: checkboxId + '2'
 	},
 	acceptance: {
-		accordionId: accordionId + 'stage-2',
-		checkboxId: checkboxId + 'stage-2'
+		accordionIndex: 2,
+		checkboxId: checkboxId + '3'
 	},
 	'pre-examination': {
-		accordionId: accordionId + 'stage-3',
-		checkboxId: checkboxId + 'stage-3'
+		accordionIndex: 3,
+		checkboxId: checkboxId + '4'
 	},
 	examination: {
-		accordionId: accordionId + 'stage-4',
-		checkboxId: checkboxId + 'stage-4'
+		accordionIndex: 4,
+		checkboxId: checkboxId + '5'
 	},
 	recommendation: {
-		accordionId: accordionId + 'stage-5',
-		checkboxId: checkboxId + 'stage-5'
+		accordionIndex: 5,
+		checkboxId: checkboxId + '6'
 	},
 	decision: {
-		accordionId: accordionId + 'stage-6',
-		checkboxId: checkboxId + 'stage-6'
+		accordionIndex: 6,
+		checkboxId: checkboxId + '7'
 	},
 	'post-decision': {
-		accordionId: accordionId + 'stage-7',
-		checkboxId: checkboxId + 'stage-7'
+		accordionIndex: 7,
+		checkboxId: checkboxId + '8'
 	}
 };
 
@@ -166,7 +165,7 @@ class PO_ProjectAppDocs {
 		if (caseCondition === 'show all' || caseCondition === 'hide all')
 			cy.get('#show-hide-all-filters').click();
 		else if (Object.hasOwnProperty.call(filterKeys, caseCondition))
-			cy.get(`[id="${filterKeys[caseCondition].accordionId}"]`).click({ force: true });
+			cy.get('summary').eq(filterKeys[caseCondition].accordionIndex).click({ force: true });
 		else throw new Error(`Test failed: is the filter ${caseCondition} in filterKeys`);
 	}
 
@@ -187,7 +186,7 @@ class PO_ProjectAppDocs {
 	}
 
 	filterNameWithSumOfItems(sectionName, label, sum) {
-		cy.get(`[for="${filterKeys[sectionName].accordionId}"]`).contains(`${label} (${sum})`);
+		cy.get('details').contains(`${label} (${sum})`);
 	}
 }
 

@@ -245,7 +245,7 @@ module.exports = (pageName) => {
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('UK address details');
+					expect(text).to.contain('What is your address');
 				});
 			cy.url().should('include', '/address');
 			break;

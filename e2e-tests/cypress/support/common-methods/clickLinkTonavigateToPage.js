@@ -22,7 +22,7 @@ module.exports = (pageName) => {
 			cy.clickOnHref('/having-your-say-guide/index');
 			break;
 		case 'find out more about the decision making process for national infrastructure projects':
-			cy.clickOnHref('/decision-making-process-guide/');
+			cy.clickOnHref('/decision-making-process-guide');
 			break;
 		case 'find out what you can do at this stage and check our detailed guides':
 			cy.clickOnHref('pre-application');

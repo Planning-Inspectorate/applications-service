@@ -83,7 +83,7 @@ Then('I am informed that no results were found', () => {
 Then(
 	'I am given the option to clear the search to list all available registration comments',
 	() => {
-		cy.get('a[data-cy="clear-search"]').should('contain.text', 'Clear search and filters');
+		cy.get('a[data-cy="clear-search"]').should('contain.text', 'Clear');
 	}
 );
 

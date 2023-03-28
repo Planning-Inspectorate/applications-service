@@ -1,11 +1,7 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
 
 Given('I navigate to Decision making process guide page', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickLinkTonavigateToPage(
-		'Find out more about the decision making process for national infrastructure projects'
-	);
+	cy.visit('/decision-making-process-guide', { failOnStatusCode: false });
 });
 
 Then('I am on the {string} page', (pageName) => {
