@@ -40,7 +40,7 @@ class PO_RegComments {
 	assertNoRegCommentsOnThePage() {
 		cy.get('[data-cy="no-comments-available"]').should(
 			'contain.text',
-			'There are no registration comments to display. Registration comments will be published after the registration period has closed.'
+			'There are no registration comments to display.'
 		);
 	}
 

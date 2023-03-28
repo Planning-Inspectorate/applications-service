@@ -159,7 +159,6 @@ Feature: Project Application documents page
 			| Data              |
 			| 1                 |
 			| 2                 |
-			| 3                 |
 			| Next set of pages |
 		Then I verify text "Showing 1 to 25 of 46 results" is present on the page
 		Then I verify that only "25" results present on each page
@@ -169,19 +168,15 @@ Feature: Project Application documents page
 			| Previous set of pages |
 			| 1                     |
 			| 2                     |
-			| 3                     |
 			| Next set of pages     |
-		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "25" results present on each page
-		When I navigate to page "3" of the results
+		Then I verify text "Showing 26 to 46 of 46 results" is present on the page
+		Then I verify that only "21" results present on each page
 		Then I verify below pagination is present on the page
 			| Data                  |
 			| Previous set of pages |
 			| 1                     |
 			| 2                     |
-			| 3                     |
-		Then I verify text "Showing 41 to 46 of 46 results" is present on the page
-		Then I verify that only "6" results present on each page
+
 
 	Scenario: verify Next/Previous pagination links on Project application documents page
 		Given I navigate to "North Lincolnshire Green Energy Park" project Overview page
@@ -192,35 +187,14 @@ Feature: Project Application documents page
 			| Previous set of pages |
 			| 1                     |
 			| 2                     |
-			| 3                     |
 			| Next set of pages     |
-		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "25" results present on each page
-		When I navigate to page "Next set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-		Then I verify text "Showing 41 to 46 of 46 results" is present on the page
-		Then I verify that only "6" results present on each page
-		When I navigate to page "Previous set of pages" of the results
-		Then I verify below pagination is present on the page
-			| Data                  |
-			| Previous set of pages |
-			| 1                     |
-			| 2                     |
-			| 3                     |
-			| Next set of pages     |
-		Then I verify text "Showing 21 to 40 of 46 results" is present on the page
-		Then I verify that only "25" results present on each page
+		Then I verify text "Showing 26 to 46 of 46 results" is present on the page
+		Then I verify that only "21" results present on each page
 		When I navigate to page "Previous set of pages" of the results
 		Then I verify below pagination is present on the page
 			| Data              |
 			| 1                 |
 			| 2                 |
-			| 3                 |
 			| Next set of pages |
 		Then I verify text "Showing 1 to 25 of 46 results" is present on the page
 		Then I verify that only "25" results present on each page
@@ -234,7 +208,7 @@ Feature: Project Application documents page
 			| 2                 |
 			| 3                 |
 			| ...               |
-			| 8                 |
+			| 7                 |
 			| Next set of pages |
 		Then I verify text "Showing 1 to 25 of 152 results" is present on the page
 		Then I verify that only "25" results present on each page
@@ -247,9 +221,9 @@ Feature: Project Application documents page
 			| 3                     |
 			| 4                     |
 			| ...                   |
-			| 8                     |
+			| 7                     |
 			| Next set of pages     |
-		Then I verify text "Showing 41 to 60 of 152 results" is present on the page
+		Then I verify text "Showing 51 to 75 of 152 results" is present on the page
 		Then I verify that only "25" results present on each page
 		When I navigate to page "4" of the results
 		Then I verify below pagination is present on the page
@@ -261,9 +235,9 @@ Feature: Project Application documents page
 			| 4                     |
 			| 5                     |
 			| ...                   |
-			| 8                     |
+			| 7                     |
 			| Next set of pages     |
-		Then I verify text "Showing 61 to 80 of 152 results" is present on the page
+		Then I verify text "Showing 76 to 100 of 152 results" is present on the page
 		Then I verify that only "25" results present on each page
 		When I navigate to page "Previous set of pages" of the results
 		Then I verify below pagination is present on the page
@@ -274,9 +248,9 @@ Feature: Project Application documents page
 			| 3                     |
 			| 4                     |
 			| ...                   |
-			| 8                     |
+			| 7                     |
 			| Next set of pages     |
-		Then I verify text "Showing 41 to 60 of 152 results" is present on the page
+		Then I verify text "Showing 51 to 75 of 152 results" is present on the page
 		Then I verify that only "25" results present on each page
 		When I navigate to page "Next set of pages" of the results
 		Then I verify below pagination is present on the page
@@ -288,18 +262,18 @@ Feature: Project Application documents page
 			| 4                     |
 			| 5                     |
 			| ...                   |
-			| 8                     |
+			| 7                     |
 			| Next set of pages     |
-		Then I verify text "Showing 61 to 80 of 152 results" is present on the page
+		Then I verify text "Showing 76 to 100 of 152 results" is present on the page
 		Then I verify that only "25" results present on each page
-		When I navigate to page "8" of the results
+		When I navigate to page "7" of the results
 		Then I verify below pagination is present on the page
 			| Data                  |
 			| Previous set of pages |
 			| 1                     |
 			| ...                   |
+			| 5                     |
 			| 6                     |
 			| 7                     |
-			| 8                     |
-		Then I verify text "Showing 141 to 152 of 152 results" is present on the page
-		Then I verify that only "12" results present on each page
+		Then I verify text "Showing 151 to 152 of 152 results" is present on the page
+		Then I verify that only "2" results present on each page

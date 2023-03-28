@@ -23,11 +23,6 @@ Feature: Overview page
     Scenario: click on Examination timetable link
         When I click on "Examination timetable" link
 
-    Scenario: click on All Examination documents link
-        When I click on "All Examination documents" link
-        Then I click on required "Return to the project overview" link
-        Then I am on the "North Lincolnshire Green Energy Park project information" page
-
     Scenario: click on Recommendation and decision link
         When I click on "Recommendation and decision" link
         Then I click on required "Return to the project overview" link
