@@ -92,6 +92,7 @@ services:
       FEATURE_ENABLED_CONTENT_SECURITY_POLICY: 'true'
       FEATURE_ALLOW_SECTION_51: 'true'
       FEATURE_ENABLE_GENERALISED_FORM_SANITISATION: 'true'
+      FEATURE_ALLOW_HAVE_YOUR_SAY: 'true'
       FILE_UPLOAD_DEBUG: 'false'
       FILE_UPLOAD_MAX_FILE_SIZE_BYTES: 15000000
       FILE_UPLOAD_TMP_PATH: /tmp
@@ -174,4 +175,4 @@ services:
     hostname: mssql
     volumes:
       - ./init/mssql:/var/opt/mssql
-    profiles: ['next']
+    profiles: [ 'next' ]

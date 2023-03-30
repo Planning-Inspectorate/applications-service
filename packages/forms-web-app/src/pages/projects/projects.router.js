@@ -24,7 +24,7 @@ const examinationTimetable = require('./examination-timetable/controller');
 const projectsController = require('./examination/examination');
 const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
-const { middleware } = require('./middleware');
+const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
 
 if (!usePrivateBetaV1RoutesOnly) {

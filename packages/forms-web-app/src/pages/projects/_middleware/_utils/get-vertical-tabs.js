@@ -1,6 +1,6 @@
-const { featureHideLink, featureFlag } = require('../../../config');
+const { featureHideLink, featureFlag } = require('../../../../config');
 
-function getVerticalTabs(projectName, caseRef) {
+function getVerticalTabs(projectName, caseRef, hasOpenTimetables) {
 	return [
 		{
 			hidden: featureHideLink.hideProjectInformationLink,
@@ -31,6 +31,12 @@ function getVerticalTabs(projectName, caseRef) {
 			id: 'project-examination-timetable',
 			name: 'Examination timetable',
 			url: '/projects/' + caseRef + '/examination-timetable'
+		},
+		{
+			hidden: featureFlag.allowHaveYourSay != true || !hasOpenTimetables,
+			id: 'project-have-your-say',
+			name: 'Have your say',
+			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
 			hidden: featureHideLink.hideAllExaminationDocumentsLink,

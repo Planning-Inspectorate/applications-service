@@ -38,15 +38,20 @@
 	</p>
 
 	{% if examination.startDate or examination.closeDate %}
-	<h2 class="govuk-heading-m">The examination stage</h2>
+		<h2 class="govuk-heading-m">The examination stage</h2>
 	{% endif %}
 
 	{% if examination.startDate %}
-	<p>{{ examination.startDate }}</p>
+		<p>{{ examination.startDate }}</p>
 	{% endif %}
 
 	{% if examination.closeDate %}
-	<p>{{ examination.closeDate }}</p>
+		<p>{{ examination.closeDate }}</p>
+	{% endif %}
+	
+	{% if hasOpenTimetables and featureFlag.allowHaveYourSay == true %}
+		<a class="govuk-button" href='{{ baseUrl }}/{{ caseRef }}/examination/have-your-say-during-examination'> Have your
+			say </a>
 	{% endif %}
 
 	{{ govukAccordion({

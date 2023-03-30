@@ -16,6 +16,11 @@ const setupExaminationJourney = async (session, caseRef) => {
 	const { data: applicationData } = await getAppData(caseRef);
 	setBaseSessionData(session, caseRef, applicationData);
 
+	const examinationTimetableId = session.examination?.examinationTimetableId;
+	session.examination = {
+		examinationTimetableId
+	};
+
 	if (hasComeFromTheExaminationTimetablePage(session)) {
 		await getAndAddSelectedTimetableToSession(
 			session,

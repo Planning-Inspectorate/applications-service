@@ -1,7 +1,7 @@
 const { getVerticalTabs } = require('./get-vertical-tabs');
-const { featureHideLink, featureFlag } = require('../../../config');
+const { featureHideLink, featureFlag } = require('../../../../config');
 
-jest.mock('../../../config', () => ({
+jest.mock('../../../../config', () => ({
 	featureFlag: {},
 	featureHideLink: {}
 }));
@@ -16,7 +16,8 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowExaminationTimetable = false;
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 				featureFlag.allowSection51 = false;
-				result = getVerticalTabs('mock project name', 'mock case ref');
+				featureFlag.allowHaveYourSay = false;
+				result = getVerticalTabs('mock project name', 'mock case ref', true);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -50,6 +51,12 @@ describe('#getVerticalTabs', () => {
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock case ref/examination-timetable'
+					},
+					{
+						hidden: true,
+						id: 'project-have-your-say',
+						name: 'Have your say',
+						url: '/projects/mock case ref/examination/have-your-say-during-examination'
 					},
 					{
 						hidden: true,
@@ -75,7 +82,8 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowExaminationTimetable = true;
 				featureHideLink.hideAllExaminationDocumentsLink = false;
 				featureFlag.allowSection51 = true;
-				result = getVerticalTabs('mock project name', 'mock case ref');
+				featureFlag.allowHaveYourSay = true;
+				result = getVerticalTabs('mock project name', 'mock case ref', false);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -109,6 +117,12 @@ describe('#getVerticalTabs', () => {
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock case ref/examination-timetable'
+					},
+					{
+						hidden: true,
+						id: 'project-have-your-say',
+						name: 'Have your say',
+						url: '/projects/mock case ref/examination/have-your-say-during-examination'
 					},
 					{
 						hidden: false,
