@@ -7,14 +7,14 @@ Feature: Get involved in the preliminary meeting page
     Background: Navigate to page
         Given I navigate to Get involved in the preliminary meeting page
 
-    Scenario: verify page title and click Nationally Significant Infrastructure planning process step by step link
+    Scenario: verify page title and click Having your say about a national infrastructure project
         Then I am on the "Get involved in the preliminary meeting" page
         And I verify below links present on Get involved in the preliminary meeting
             | Links                             |
             | About the Preliminary Meeting     |
             | Attending the Preliminary Meeting |
             | What happens next                 |
-        When I click on "The Nationally Significant Infrastructure planning process step by step" link
+        When I click on "Having your say about a national infrastructure project" link
         Then I am on the "Having your say about a national infrastructure project" page
 
     Scenario: click taking part in the pre-application stage link

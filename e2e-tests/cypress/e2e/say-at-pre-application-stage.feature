@@ -7,7 +7,7 @@ Feature: Having your say at the pre-application stage page
     Background: Navigate to page
         Given I navigate to Having your say at the pre-application stage page
 
-    Scenario: verify page title and click Nationally Significant Infrastructure planning process step by step link
+    Scenario: verify page title and click NHaving your say about a national infrastructure project link
         Then I am on the "taking part at the pre-application stage" page
         And I verify below links present on Having your say at the pre-application stage
             | Links                                                         |
@@ -15,7 +15,7 @@ Feature: Having your say at the pre-application stage page
             | What the developer must do                                    |
             | How you can get involved at this point                        |
             | What you can do if the application has already been submitted |
-        When I click on "The Nationally Significant Infrastructure planning process step by step" link
+        When I click on "Having your say about a national infrastructure project" link
         Then I am on the "Having your say about a national infrastructure project" page
 
     Scenario: click taking part in the pre-application stage link

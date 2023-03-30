@@ -8,7 +8,7 @@ Feature: Registering to have your say about a national infrastructure project pa
         Given I have navigated to the "Have your say" guide
         And I select the "How to register link"
 
-    Scenario: verify page title and click Nationally Significant Infrastructure planning process step by step link
+    Scenario: verify page title and click Having your say about a national infrastructure project link
         Given I have navigated to the "Have your say" guide
         When I select the "How to register link"
         Then I am on the "registering to have your say about a national infrastructure project" page
@@ -21,7 +21,7 @@ Feature: Registering to have your say about a national infrastructure project pa
             | After you have registered |
             | Register to have your say |
             | More detailed advice      |
-        When I click on "The Nationally Significant Infrastructure planning process step by step" link
+        When I click on "Having your say about a national infrastructure project" link
         Then I am on the "Having your say about a national infrastructure project" page
 
     Scenario: View a project before selecting "Have your say during the examination of the project" link
