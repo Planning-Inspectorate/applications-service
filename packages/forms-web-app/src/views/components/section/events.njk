@@ -3,44 +3,44 @@
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
 {% macro sectionEvents(events) %}
-  <div class="section-events">
-    {% for event in events %}
-      <section class="section-events__event">
-        <div class="section-events__event-header">
-          <h4 class="section-events__event-title">
-            <strong>{{ event.title }}</strong>
-          </h4>
+	<div class="section-events">
+		{% for event in events %}
+			<section class="section-events__event">
+				<div class="section-events__event-header">
+					<h4 class="section-events__event-title">
+						<strong>{{ event.title }}</strong>
+					</h4>
 
-          {% if event.state.tag -%}
-            {{ govukTag(event.state.tag) }}
-          {%- endif %}
-        </div>
+					{% if event.state.tag -%}
+						{{ govukTag(event.state.tag) }}
+					{%- endif %}
+				</div>
 
-        {% if event.description -%}
-          <div class="section-events__event-content">
-            {{ event.description | safe }}
-          </div>
-        {%- endif %}
+				{% if event.description -%}
+					<div class="section-events__event-content">
+						{{ event.description | safe }}
+					</div>
+				{%- endif %}
 
-        {% if event.state.isSubmissionOpen -%}
-          <div class="section-events__event-content">
-            <form method="POST" novalidate>
-              {{ govukInput({
-                attributes: { "hidden": "" },
-                id: event.id,
-                name: event.inputId,
-                value: event.id
-              }) }}
+				{% if event.state.isSubmissionOpen -%}
+					<div class="section-events__event-content">
+						<form method="POST" novalidate>
+							{{ govukInput({
+								attributes: { "hidden": "" },
+								id: event.id,
+								name: event.inputId,
+								value: event.id
+							}) }}
 
-              {{ govukButton({
-                classes: "section-events__event-submit",
-                text: "Make a submission",
-                type: "Submit"
-              }) }}
-            </form>
-          </div>
-        {%- endif %}
-      </section>
-    {% endfor %}
-  </div>
+							{{ govukButton({
+								classes: "section-events__event-submit ",
+								text: "Have your say",
+								type: "Submit"
+							}) }}
+						</form>
+					</div>
+				{%- endif %}
+			</section>
+		{% endfor %}
+	</div>
 {% endmacro %}

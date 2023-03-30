@@ -1,8 +1,13 @@
 const { middleware } = require('./middleware');
-const { getApplicationData } = require('./documents/utils/get-application-data');
+const { getApplicationData } = require('../documents/utils/get-application-data');
+const { getTimetables } = require('../../../services/timetable.service');
+const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
 
-jest.mock('./documents/utils/get-application-data', () => ({
+jest.mock('../documents/utils/get-application-data', () => ({
 	getApplicationData: jest.fn()
+}));
+jest.mock('../../../services/timetable.service', () => ({
+	getTimetables: jest.fn()
 }));
 describe('projects _middleware', () => {
 	describe('#_middleware', () => {
@@ -14,7 +19,9 @@ describe('projects _middleware', () => {
 		};
 		const res = { locals: {} };
 		beforeEach(() => {
+			jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
 			getApplicationData.mockReturnValue({ projectName: 'mock project name' });
+			getTimetables.mockReturnValue(fixturesTimetableResponse);
 			middleware(req, res, next);
 		});
 		it('should set the locals', () => {
@@ -23,6 +30,7 @@ describe('projects _middleware', () => {
 				caseRef: 'mock-case-ref',
 				path: 'mock path',
 				projectName: 'mock project name',
+				hasOpenTimetables: true,
 				verticalTabs: [
 					{
 						hidden: true,
@@ -53,6 +61,12 @@ describe('projects _middleware', () => {
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock-case-ref/examination-timetable'
+					},
+					{
+						hidden: true,
+						id: 'project-have-your-say',
+						name: 'Have your say',
+						url: '/projects/mock-case-ref/examination/have-your-say-during-examination'
 					},
 					{
 						hidden: true,

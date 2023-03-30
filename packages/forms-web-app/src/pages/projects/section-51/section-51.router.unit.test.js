@@ -1,5 +1,5 @@
 const { getSection51 } = require('./section-51.controller');
-const { middleware } = require('../middleware');
+const { middleware } = require('../_middleware/middleware');
 const {
 	getSection51AdviceDetail
 } = require('./section-51-advice-detail/section-51-advice-detail.controller');

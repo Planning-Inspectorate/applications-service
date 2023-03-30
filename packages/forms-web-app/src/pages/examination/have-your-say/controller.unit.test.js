@@ -1,12 +1,8 @@
 const { getHaveYourSay } = require('./controller');
 const { setupExaminationJourney } = require('./utils/setup/setup-examination-journey');
-const { getBackLink } = require('./utils/get-back-link');
 
 jest.mock('./utils/setup/setup-examination-journey', () => ({
 	setupExaminationJourney: jest.fn()
-}));
-jest.mock('./utils/get-back-link', () => ({
-	getBackLink: jest.fn()
 }));
 describe('pages examination have-your-say', () => {
 	const req = { session: {}, params: { case_ref: 'mock case ref' }, get: () => 'mock ref' };
@@ -15,7 +11,6 @@ describe('pages examination have-your-say', () => {
 	describe('When rendering the have your say page', () => {
 		beforeEach(async () => {
 			setupExaminationJourney.mockResolvedValue();
-			getBackLink.mockReturnValue('mock back link');
 			await getHaveYourSay(req, res, next);
 		});
 		it('should setup the examination journey', () => {
@@ -23,7 +18,6 @@ describe('pages examination have-your-say', () => {
 		});
 		it('should render the correct data for the view', () => {
 			expect(res.render).toHaveBeenCalledWith('examination/have-your-say/view.njk', {
-				backLinkUrl: 'mock back link',
 				startNowUrl: 'have-an-interested-party-number'
 			});
 		});
@@ -32,7 +26,6 @@ describe('pages examination have-your-say', () => {
 		describe('and the error is for no open deadlines', () => {
 			beforeEach(async () => {
 				setupExaminationJourney.mockRejectedValue(new Error('NO_OPEN_DEADLINES'));
-				getBackLink.mockReturnValue('mock back link');
 				await getHaveYourSay(req, res, next);
 			});
 			it('should redirect to the  no open deadline page', () => {
@@ -43,7 +36,6 @@ describe('pages examination have-your-say', () => {
 			const error = new Error('BAD ERROR');
 			beforeEach(async () => {
 				setupExaminationJourney.mockRejectedValue(error);
-				getBackLink.mockReturnValue('mock back link');
 				await getHaveYourSay(req, res, next);
 			});
 			it('should redirect to the  no open deadline page', () => {
