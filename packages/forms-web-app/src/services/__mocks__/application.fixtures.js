@@ -5,7 +5,8 @@ const fixtureApplicationResponse = {
 		DateTimeExaminationEnds: '2023-01-03',
 		dateOfNonAcceptance: '2023-01-01',
 		ProjectName: 'mock project name',
-		PromoterName: 'mock promoter name'
+		PromoterName: 'mock promoter name',
+		ProjectEmailAddress: 'mock project email address'
 	}
 };
 

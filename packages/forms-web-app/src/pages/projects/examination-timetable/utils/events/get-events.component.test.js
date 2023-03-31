@@ -1,9 +1,9 @@
 const { getEvents } = require('./get-events');
 
-const { fetchEvents } = require('./utils/fetch-events');
+const { getTimetables } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('./utils/fetch-events', () => ({
-	fetchEvents: jest.fn()
+jest.mock('../../../../../lib/application-api-wrapper', () => ({
+	getTimetables: jest.fn()
 }));
 
 describe('controllers/projects/examination-timetable/utils/events/get-events', () => {
@@ -11,7 +11,7 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 		describe('When getting the events for the examination timetable page', () => {
 			let result;
 			const datePresent = '2023-01-02';
-			const dateFuture = '2023-01-03';
+			const dateUpcoming = '2023-01-03';
 			const datePast = '2023-01-01';
 			const mockAppData = {
 				CaseReference: 'mock case reference',
@@ -19,22 +19,26 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 			};
 			beforeEach(async () => {
 				jest.useFakeTimers().setSystemTime(new Date(datePresent));
-				fetchEvents.mockResolvedValue([
-					{
-						dateOfEvent: datePast,
-						description: '<p>mock description 1</p>',
-						title: 'mock title 1',
-						uniqueId: 'mock id 1',
-						typeOfEvent: 'mock event type 1'
-					},
-					{
-						dateOfEvent: dateFuture,
-						description: '<p>mock description 2</p>',
-						title: 'mock title 2',
-						uniqueId: 'mock id 2',
-						typeOfEvent: 'mock event type 2'
+				getTimetables.mockResolvedValue({
+					data: {
+						timetables: [
+							{
+								dateOfEvent: datePast,
+								description: '<p>mock description 1</p>',
+								title: 'mock title 1',
+								uniqueId: 'mock id 1',
+								typeOfEvent: 'mock event type 1'
+							},
+							{
+								dateOfEvent: dateUpcoming,
+								description: '<p>mock description 2</p>',
+								title: 'mock title 2',
+								uniqueId: 'mock id 2',
+								typeOfEvent: 'mock event type 2'
+							}
+						]
 					}
-				]);
+				});
 				result = await getEvents(mockAppData);
 			});
 			it('should return the events formatted to the view model', () => {

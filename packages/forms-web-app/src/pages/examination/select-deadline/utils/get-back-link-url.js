@@ -7,7 +7,13 @@ const {
 	}
 } = require('../../../../routes/config');
 
-const getBackLinkUrl = (query) =>
-	isQueryModeEdit(query) ? `${checkSubmissionItem.route}` : `${email.route}`;
+const getBackLinkUrl = (query, session) => {
+	let backLinkUrl = email.route;
+
+	if (isQueryModeEdit(query)) backLinkUrl = checkSubmissionItem.route;
+	else if (session.examination?.showChooseDeadline) backLinkUrl = 'choose-deadline';
+
+	return backLinkUrl;
+};
 
 module.exports = { getBackLinkUrl };

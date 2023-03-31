@@ -6,20 +6,7 @@ const setBaseSessionData = (
 	session.caseRef = case_ref;
 	session.projectName = ProjectName;
 	session.promoterName = PromoterName;
-	session.projectEmailAddress = ProjectEmailAddress;
+	session.ProjectEmailAddress = ProjectEmailAddress;
 };
 
-const setExaminationData = (session, caseRef, deadlineItems, { id, title }) => {
-	session.examination = {
-		...session.examination,
-		caseRef,
-		deadlineItems,
-		id,
-		title
-	};
-};
-
-module.exports = {
-	setExaminationData,
-	setBaseSessionData
-};
+module.exports = { setBaseSessionData };

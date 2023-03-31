@@ -1,4 +1,9 @@
-const { isEventDeadlineSubmissionOpen, isPastEvent } = require('../helpers');
+const {
+	isTimetableDateOfEventPast
+} = require('../../../../../../../utils/timetables/check-timetable-state');
+const {
+	isTimetableTypeOfEventDeadlineOpen
+} = require('../../../../../../../utils/timetables/check-timetable-state');
 
 const eventStateTagMapper = (text, classes) => ({
 	text,
@@ -8,10 +13,15 @@ const eventStateTagMapper = (text, classes) => ({
 const getEventState = (event) => {
 	let eventStateTag = null;
 
-	const isSubmissionOpen = isEventDeadlineSubmissionOpen(event);
+	const isSubmissionOpen = isTimetableTypeOfEventDeadlineOpen(
+		event.typeOfEvent,
+		event.dateOfEvent,
+		event.dateTimeDeadlineStart
+	);
 
 	if (isSubmissionOpen) eventStateTag = eventStateTagMapper('Open', 'govuk-tag govuk-tag--blue');
-	else if (isPastEvent(event)) eventStateTag = eventStateTagMapper('Closed', 'govuk-tag');
+	else if (isTimetableDateOfEventPast(event.dateOfEvent))
+		eventStateTag = eventStateTagMapper('Closed', 'govuk-tag');
 
 	return {
 		isSubmissionOpen,

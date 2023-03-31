@@ -48,7 +48,7 @@ describe('examination/select-deadline/utils/get-page-data', () => {
 					result = getPageData(req.query, req.session);
 				});
 				it('should call the functions', () => {
-					expect(getBackLinkUrl).toHaveBeenCalledWith(req.query);
+					expect(getBackLinkUrl).toHaveBeenCalledWith(req.query, req.session);
 					expect(getDeadlineItemStillToSubmit).toHaveBeenCalledWith(req.session);
 				});
 				it('should return the page data with no checked option', () => {
@@ -65,7 +65,7 @@ describe('examination/select-deadline/utils/get-page-data', () => {
 					result = getPageData(req.query, req.session);
 				});
 				it('should call the functions', () => {
-					expect(getBackLinkUrl).toHaveBeenCalledWith(req.query);
+					expect(getBackLinkUrl).toHaveBeenCalledWith(req.query, req.session);
 					expect(getDeadlineItemStillToSubmit).toHaveBeenCalledWith(req.session);
 					expect(getActiveSubmissionItemId).toHaveBeenCalledWith(req.session);
 					expect(markActiveDeadlineItemAsChecked).toHaveBeenCalledWith(

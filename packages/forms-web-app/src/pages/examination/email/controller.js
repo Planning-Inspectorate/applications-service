@@ -43,7 +43,7 @@ const postEmail = async (req, res) => {
 
 	setDeadlineDetailsEmail(session, body[email.id]);
 
-	return res.redirect(getRedirectUrl(query));
+	return res.redirect(getRedirectUrl(query, session));
 };
 
 module.exports = {
