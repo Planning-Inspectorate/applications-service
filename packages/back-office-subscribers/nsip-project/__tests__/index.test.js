@@ -1,6 +1,20 @@
 const subject = require('../index');
 
 describe('nsip-project', () => {
+	const project = {
+		caseId: 1,
+		caseReference: null,
+		projectName: 'some case',
+		projectDescription: 'some desc',
+		publishStatus: 'unpublished',
+		sourceSystem: 'ODT',
+		applicantIds: ['1'],
+		nsipOfficerIds: [],
+		nsipAdministrationOfficerIds: [],
+		inspectorIds: [],
+		interestedPartyIds: []
+	};
+
 	describe('index', () => {
 		it('invokes log', async () => {
 			const mockLog = jest.fn();
@@ -10,15 +24,15 @@ describe('nsip-project', () => {
 					enqueuedTimeUtc: 1,
 					deliveryCount: 1,
 					messageId: 123
+				},
+				bindings: {
+					project: jest.fn()
 				}
 			};
 
-			await subject(mockContext, 'some-message');
+			await subject(mockContext, project);
 
-			expect(mockLog).toBeCalledWith('Message: some-message');
-			expect(mockLog).toBeCalledWith('EnqueuedTimeUtc: 1');
-			expect(mockLog).toBeCalledWith('DeliveryCount: 1');
-			expect(mockLog).toBeCalledWith('MessageId: 123');
+			expect(mockContext.bindings.project).toEqual(project);
 		});
 	});
 });
