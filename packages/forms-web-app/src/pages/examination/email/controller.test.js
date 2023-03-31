@@ -109,7 +109,10 @@ describe('examination/email/controller', () => {
 					);
 				});
 				it('should call the functions', () => {
-					expect(getRedirectUrl).toHaveBeenCalledWith({ text: 'mock query' });
+					expect(getRedirectUrl).toHaveBeenCalledWith(
+						{ text: 'mock query' },
+						{ text: 'mock session' }
+					);
 				});
 				it('should redirect to the next page', () => {
 					expect(res.redirect).toHaveBeenCalledWith(mockRedirectUrl);

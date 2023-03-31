@@ -91,6 +91,7 @@ const {
 const { getProcessSubmission, postProcessSubmission } = require('./process-submission/controller');
 const { getSubmissionComplete } = require('./submission-complete/controller');
 const { getSubmissionError } = require('./submission-error/controller');
+const chooseDeadlineRouter = require('./choose-deadline/router');
 
 const router = express.Router({ mergeParams: true });
 
@@ -297,7 +298,8 @@ router.get(`/${processSubmission.route}`, getProcessSubmission);
 router.post(`/${processSubmission.route}`, postProcessSubmission);
 
 router.get(`/${submissionComplete.route}`, getSubmissionComplete);
-
 router.get(`/${submissionError.route}`, getSubmissionError);
+
+router.use(chooseDeadlineRouter);
 
 module.exports = router;

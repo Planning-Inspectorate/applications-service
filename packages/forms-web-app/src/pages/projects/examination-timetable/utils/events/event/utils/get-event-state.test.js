@@ -1,10 +1,13 @@
 const { getEventState } = require('./get-event-state');
 
-const { isEventDeadlineSubmissionOpen, isPastEvent } = require('../helpers');
+const {
+	isTimetableDateOfEventPast,
+	isTimetableTypeOfEventDeadlineOpen
+} = require('../../../../../../../utils/timetables/check-timetable-state');
 
-jest.mock('../helpers', () => ({
-	isEventDeadlineSubmissionOpen: jest.fn(),
-	isPastEvent: jest.fn()
+jest.mock('../../../../../../../utils/timetables/check-timetable-state', () => ({
+	isTimetableDateOfEventPast: jest.fn(),
+	isTimetableTypeOfEventDeadlineOpen: jest.fn()
 }));
 
 describe('controllers/projects/examination-timetable/utils/events/event/utils/get-event-state', () => {
@@ -14,8 +17,8 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 			describe('and the event is not a deadline or the event deadline has not started', () => {
 				let result;
 				beforeEach(() => {
-					isEventDeadlineSubmissionOpen.mockReturnValue(false);
-					isPastEvent.mockReturnValue(false);
+					isTimetableTypeOfEventDeadlineOpen.mockReturnValue(false);
+					isTimetableDateOfEventPast.mockReturnValue(false);
 					result = getEventState(mockEvent);
 				});
 				it('should return isSubmissionOpen as false with a null tag', () => {
@@ -25,7 +28,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 			describe('and the event deadline submission is open', () => {
 				let result;
 				beforeEach(() => {
-					isEventDeadlineSubmissionOpen.mockReturnValue(true);
+					isTimetableTypeOfEventDeadlineOpen.mockReturnValue(true);
 					result = getEventState(mockEvent);
 				});
 				it('should return the event state object', () => {
@@ -38,8 +41,8 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 			describe('and the event deadline is in the past', () => {
 				let result;
 				beforeEach(() => {
-					isEventDeadlineSubmissionOpen.mockReturnValue(false);
-					isPastEvent.mockReturnValue(true);
+					isTimetableTypeOfEventDeadlineOpen.mockReturnValue(false);
+					isTimetableDateOfEventPast.mockReturnValue(true);
 					result = getEventState(mockEvent);
 				});
 				it('should return the event state object', () => {

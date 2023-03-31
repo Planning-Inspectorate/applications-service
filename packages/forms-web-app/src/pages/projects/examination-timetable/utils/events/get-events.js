@@ -1,11 +1,12 @@
+const { getTimetables } = require('../../../../../lib/application-api-wrapper');
 const { getDate, getDateNow } = require('../../../../../utils/date-utils');
 const { getProjectCaseRef } = require('../../../utils/get-project-case-ref');
 const {
 	getProjectDateOfNonAcceptance
 } = require('../../../utils/get-project-date-of-non-acceptance');
-const { fetchEvents } = require('./utils/fetch-events');
-const { sortEvents } = require('./utils/sort-events');
 const { eventsViewModel } = require('./events-view-model');
+const { getUpcomingTimetables } = require('../../../../../utils/timetables/get-timetables-state');
+const { getPastTimetables } = require('../../../../../utils/timetables/get-timetables-state');
 
 const areEventsEligibleForDisplay = (appData) => {
 	const projectDateOfNonAcceptance = getProjectDateOfNonAcceptance(appData);
@@ -14,11 +15,16 @@ const areEventsEligibleForDisplay = (appData) => {
 };
 
 const getEvents = async (appData) => {
-	const events = await fetchEvents(getProjectCaseRef(appData));
-	const sortedEvents = sortEvents(events);
+	const {
+		data: { timetables }
+	} = await getTimetables(getProjectCaseRef(appData));
+	const sortedTimetables = {
+		past: getPastTimetables(timetables),
+		upcoming: getUpcomingTimetables(timetables)
+	};
 	const available = areEventsEligibleForDisplay(appData);
 
-	return eventsViewModel(sortedEvents, available);
+	return eventsViewModel(sortedTimetables, available);
 };
 
 module.exports = { getEvents };

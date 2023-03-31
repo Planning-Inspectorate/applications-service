@@ -1,6 +1,4 @@
-const {
-	unformattedDeadlines
-} = require('../../pages/examination/have-your-say/__mocks__/fixtures');
+const { unformattedDeadlines } = require('../../utils/timetables/__mocks__/fixtures');
 const fixturesTimetableResponse = {
 	data: {
 		timetables: [

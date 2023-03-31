@@ -1,19 +1,22 @@
 const { setupExaminationJourney } = require('./setup-examination-journey');
+
 const { getAppData } = require('../../../../../services/application.service');
-const {
-	fixtureApplicationResponse
-} = require('../../../../../services/__mocks__/application.fixtures');
-const { getTimetables } = require('../../../../../services/timetable.service');
-const {
-	fixturesTimetableResponse
-} = require('../../../../../services/__mocks__/timetable.fixtures');
+const { getTimetables } = require('../../../../../lib/application-api-wrapper');
 
 jest.mock('../../../../../services/application.service', () => ({
 	getAppData: jest.fn()
 }));
-jest.mock('../../../../../services/timetable.service', () => ({
+jest.mock('../../../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
 }));
+
+const {
+	fixtureApplicationResponse
+} = require('../../../../../services/__mocks__/application.fixtures');
+const {
+	fixturesTimetableResponse
+} = require('../../../../../services/__mocks__/timetable.fixtures');
+
 describe('have your say decide exam journey route', () => {
 	describe('#setupExaminationJourney', () => {
 		describe('When the use user has come from the examination timetable', () => {
@@ -28,27 +31,27 @@ describe('have your say decide exam journey route', () => {
 				expect(session).toEqual({
 					caseRef: 'mock case ref',
 					examination: {
-						caseRef: 'mock case ref',
 						deadlineItems: [
 							{
-								text: 'Comments on submissions received for Deadline 2',
+								text: 'mock timetable item 1',
 								value: '0'
 							},
 							{
-								text: 'Written summaries of oral submissions made at Hearings held during the w/c 26 September',
+								text: 'mock timetable item 2',
 								value: '1'
 							},
 							{
-								text: 'Updated SoCG requested by the ExA',
+								text: 'mock timetable item 3',
 								value: '2'
 							}
 						],
 						examinationTimetableId: 'mock id 2',
-						showDeadlineSelection: true,
+						showChooseDeadline: false,
 						title: 'mock title 2'
 					},
 					projectName: 'mock project name',
-					promoterName: 'mock promoter name'
+					promoterName: 'mock promoter name',
+					ProjectEmailAddress: 'mock project email address'
 				});
 			});
 		});
@@ -64,10 +67,11 @@ describe('have your say decide exam journey route', () => {
 				expect(session).toEqual({
 					caseRef: 'mock case ref',
 					examination: {
-						showDeadlineSelection: false
+						showChooseDeadline: true
 					},
 					projectName: 'mock project name',
-					promoterName: 'mock promoter name'
+					promoterName: 'mock promoter name',
+					ProjectEmailAddress: 'mock project email address'
 				});
 			});
 		});

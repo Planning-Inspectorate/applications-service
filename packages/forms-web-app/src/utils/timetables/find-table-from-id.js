@@ -1,6 +1,6 @@
-const findEventFromId = ({ timetables }, idToFind) =>
+const findTimetableFromId = (timetables, idToFind) =>
 	timetables.find(({ uniqueId }) => `${uniqueId}` === `${idToFind}`);
 
 module.exports = {
-	findEventFromId
+	findTimetableFromId
 };

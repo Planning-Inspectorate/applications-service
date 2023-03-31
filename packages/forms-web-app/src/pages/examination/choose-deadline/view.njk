@@ -1,0 +1,69 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set title = 'Which deadline would you like to submit against?' %}
+{% set pageTitle = 'Which deadline would you like to submit against?' %}
+
+{% set radioItems = [] %}
+{% for timetable in timetables %}
+
+  {% set timetableItemsHtml = '' %}
+  {% for timetableItem in timetable.items %}
+    {% set timetableItemsHtml = '' + timetableItemsHtml + '<li>' + timetableItem + '</li>' %}
+  {% endfor %}
+  {% set timetableItemsHtml = '<ul class="govuk-list govuk-list--bullet">' + timetableItemsHtml + '</ul>' %}
+
+  {% set radioItems = (radioItems.push(
+    {
+      checked: timetable.checked,
+      html: '
+        <p class="govuk-body govuk-!-margin-bottom-1">' + timetable.title + '</p>
+        ' + govukDetails({
+          classes: "govuk-!-margin-0",
+          summaryText: "View deadline items",
+          html: timetableItemsHtml
+        }) + '',
+      value: timetable.value
+    }), radioItems) %}
+{% endfor %}
+
+{% block content %}
+  {% if errorSummary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: errorSummary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" novalidate>
+        {{ govukRadios({
+          idPrefix: id,
+          name: id,
+          errorMessage: errors[id] and {
+            text: errors[id].msg
+          },
+          fieldset: {
+            legend: {
+              text: title,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          items: radioItems
+        }) }}
+
+        {{ govukButton({
+          attributes: { "data-cy": "button-submit-and-continue" },
+          text: "Continue",
+          type: "Submit"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

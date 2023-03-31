@@ -13,7 +13,7 @@ const {
 
 const getPageData = (query, session) => {
 	const pageData = {
-		backLinkUrl: getBackLinkUrl(query),
+		backLinkUrl: getBackLinkUrl(query, session),
 		hintText:
 			'Select the item you want to submit against. You can submit against another item later.',
 		id: selectDeadline.id,
