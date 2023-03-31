@@ -7,7 +7,7 @@ Feature: Having your say at the pre-application stage page
     Background: Navigate to page
         Given I navigate to Having your say at the pre-application stage page
 
-    Scenario: verify page title and click NHaving your say about a national infrastructure project link
+    Scenario: verify page title and click Having your say about a national infrastructure project link
         Then I am on the "taking part at the pre-application stage" page
         And I verify below links present on Having your say at the pre-application stage
             | Links                                                         |
