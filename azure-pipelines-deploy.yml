@@ -10,7 +10,7 @@ parameters:
   - name: deployBackOfficeSubscribers
     type: boolean
     displayName: Deploy Back Office Subscriber Functions
-    default: true
+    default: false
   - name: runDbMigrations
     displayName: Run Database Migration
     type: boolean
