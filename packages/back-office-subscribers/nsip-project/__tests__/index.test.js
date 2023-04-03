@@ -1,23 +1,34 @@
 const subject = require('../index');
 
 describe('nsip-project', () => {
-	const project = {
+	const mockLog = jest.fn();
+
+	const projectMessage = {
 		caseId: 1,
-		caseReference: null,
+		caseReference: 'ABC',
 		projectName: 'some case',
 		projectDescription: 'some desc',
-		publishStatus: 'unpublished',
+		publishStatus: 'published',
 		sourceSystem: 'ODT',
 		applicantIds: ['1'],
 		nsipOfficerIds: [],
 		nsipAdministrationOfficerIds: [],
 		inspectorIds: [],
-		interestedPartyIds: []
+		interestedPartyIds: [],
+		regions: ['a', 'b']
+	};
+
+	const project = {
+		caseReference: 'ABC',
+		projectName: 'some case',
+		projectDescription: 'some desc',
+		publishStatus: 'published',
+		sourceSystem: 'ODT',
+		regions: 'a,b'
 	};
 
 	describe('index', () => {
-		it('invokes log', async () => {
-			const mockLog = jest.fn();
+		it('assigns project data to binding in correct format', async () => {
 			const mockContext = {
 				log: mockLog,
 				bindingData: {
@@ -30,7 +41,7 @@ describe('nsip-project', () => {
 				}
 			};
 
-			await subject(mockContext, project);
+			await subject(mockContext, projectMessage);
 
 			expect(mockContext.bindings.project).toEqual(project);
 		});
