@@ -8,11 +8,8 @@ const { eventsViewModel } = require('./events-view-model');
 const { getUpcomingTimetables } = require('../../../../../utils/timetables/get-timetables-state');
 const { getPastTimetables } = require('../../../../../utils/timetables/get-timetables-state');
 
-const areEventsEligibleForDisplay = (appData) => {
-	const projectDateOfNonAcceptance = getProjectDateOfNonAcceptance(appData);
-
-	return projectDateOfNonAcceptance && getDateNow() >= getDate(projectDateOfNonAcceptance);
-};
+const areEventsEligibleForDisplay = (projectDateOfNonAcceptance) =>
+	projectDateOfNonAcceptance && getDateNow() >= getDate(projectDateOfNonAcceptance);
 
 const getEvents = async (appData) => {
 	const {
@@ -22,9 +19,10 @@ const getEvents = async (appData) => {
 		past: getPastTimetables(timetables),
 		upcoming: getUpcomingTimetables(timetables)
 	};
-	const available = areEventsEligibleForDisplay(appData);
+	const projectDateOfNonAcceptance = getProjectDateOfNonAcceptance(appData);
+	const available = areEventsEligibleForDisplay(projectDateOfNonAcceptance);
 
 	return eventsViewModel(sortedTimetables, available);
 };
 
-module.exports = { getEvents };
+module.exports = { getEvents, areEventsEligibleForDisplay };
