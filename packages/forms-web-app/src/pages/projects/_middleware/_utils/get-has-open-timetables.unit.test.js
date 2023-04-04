@@ -29,4 +29,16 @@ describe('#getHasOpenTimetables', () => {
 			});
 		});
 	});
+
+	describe('When there are NO timetables', () => {
+		let response;
+		beforeEach(async () => {
+			jest.useFakeTimers().setSystemTime(new Date('2023-01-28'));
+			getTimetables.mockReturnValue({ resp_code: 404 });
+			response = await getHasOpenTimetables('mock case ref');
+		});
+		it('should return false', () => {
+			expect(response).toBe(false);
+		});
+	});
 });
