@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Project {
-  id                                          Int      @id @default(autoincrement())
-  caseId                                      Int      @unique
+  id                                          Int      @unique @default(autoincrement())
+  caseId                                      Int      @id
   caseReference                               String?
   projectName                                 String?
   projectDescription                          String?

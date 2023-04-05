@@ -19,6 +19,7 @@ describe('nsip-project', () => {
 	};
 
 	const project = {
+		caseId: 1,
 		caseReference: 'ABC',
 		projectName: 'some case',
 		projectDescription: 'some desc',
