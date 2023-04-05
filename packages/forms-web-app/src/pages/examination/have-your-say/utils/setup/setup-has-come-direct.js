@@ -1,6 +1,7 @@
-const hasDateInThePast = (dateOfNonAcceptance) => new Date() >= new Date(dateOfNonAcceptance);
-const setupHasComeDirect = (session, dateOfNonAcceptance) => {
-	if (dateOfNonAcceptance && hasDateInThePast(dateOfNonAcceptance)) {
+const { getHasOpenTimetables } = require('../../../../../utils/timetables/get-timetables-state');
+
+const setupHasComeDirect = async (session, caseRef) => {
+	if (await getHasOpenTimetables(caseRef)) {
 		session.examination = {
 			showChooseDeadline: true
 		};

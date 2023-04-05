@@ -29,6 +29,7 @@ describe('utils/timetables/get-selected-timetable', () => {
 				expect(result).toEqual({
 					selectedTimetable: {
 						dateOfEvent: '2023-01-01',
+						dateTimeDeadlineStart: '2023-01-01',
 						description:
 							'* mock timetable item 1\n * mock timetable item 2\n * mock timetable item 3',
 						title: 'mock title 2',

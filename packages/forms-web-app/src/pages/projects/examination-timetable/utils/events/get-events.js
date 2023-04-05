@@ -15,9 +15,9 @@ const areEventsEligibleForDisplay = (appData) => {
 };
 
 const getEvents = async (appData) => {
-	const {
-		data: { timetables }
-	} = await getTimetables(getProjectCaseRef(appData));
+	let timetables = [];
+	const { data } = await getTimetables(getProjectCaseRef(appData));
+	if (data && data.timetables) timetables = data.timetables;
 	const sortedTimetables = {
 		past: getPastTimetables(timetables),
 		upcoming: getUpcomingTimetables(timetables)

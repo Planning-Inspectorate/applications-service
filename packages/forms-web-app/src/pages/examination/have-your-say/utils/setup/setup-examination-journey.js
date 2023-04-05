@@ -28,7 +28,7 @@ const setupExaminationJourney = async (session, caseRef) => {
 			session.examination.examinationTimetableId
 		);
 		session.examination.showChooseDeadline = false;
-	} else setupHasComeDirect(session, applicationData.dateOfNonAcceptance);
+	} else await setupHasComeDirect(session, caseRef);
 };
 
 module.exports = {
