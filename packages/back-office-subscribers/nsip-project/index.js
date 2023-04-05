@@ -1,5 +1,4 @@
 const excludedProperties = [
-	'caseId',
 	'operationsLeadId',
 	'operationsManagerId',
 	'caseManagerId',

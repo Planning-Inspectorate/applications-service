@@ -56,8 +56,8 @@ CREATE TABLE [dbo].[Project] (
     [examinationTimetableId] INT,
     [createdAt] DATETIME2 CONSTRAINT [Project_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
     [modifiedAt] DATETIME2 CONSTRAINT [Project_modifiedAt_df] DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT [Project_pkey] PRIMARY KEY CLUSTERED ([id]),
-    CONSTRAINT [Project_caseId_key] UNIQUE NONCLUSTERED ([caseId])
+    CONSTRAINT [Project_pkey] PRIMARY KEY CLUSTERED ([caseId]),
+    CONSTRAINT [Project_id_key] UNIQUE NONCLUSTERED ([id])
 );
 
 COMMIT TRAN;
