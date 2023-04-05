@@ -5,6 +5,7 @@ BEGIN TRAN;
 -- CreateTable
 CREATE TABLE [dbo].[Project] (
     [id] INT NOT NULL IDENTITY(1,1),
+    [caseId] INT NOT NULL,
     [caseReference] NVARCHAR(1000),
     [projectName] NVARCHAR(1000),
     [projectDescription] NVARCHAR(1000),
@@ -55,7 +56,8 @@ CREATE TABLE [dbo].[Project] (
     [examinationTimetableId] INT,
     [createdAt] DATETIME2 CONSTRAINT [Project_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
     [modifiedAt] DATETIME2 CONSTRAINT [Project_modifiedAt_df] DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT [Project_pkey] PRIMARY KEY CLUSTERED ([id])
+    CONSTRAINT [Project_pkey] PRIMARY KEY CLUSTERED ([id]),
+    CONSTRAINT [Project_caseId_key] UNIQUE NONCLUSTERED ([caseId])
 );
 
 COMMIT TRAN;
