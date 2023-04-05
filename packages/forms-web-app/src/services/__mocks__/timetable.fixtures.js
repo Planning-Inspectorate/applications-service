@@ -4,6 +4,7 @@ const fixturesTimetableResponse = {
 		timetables: [
 			{
 				dateOfEvent: '2023-01-01',
+				dateTimeDeadlineStart: '2023-01-01',
 				description: '<p>mock description 1</p>',
 				title: 'mock title 1',
 				uniqueId: 'mock id 1',
@@ -11,6 +12,7 @@ const fixturesTimetableResponse = {
 			},
 			{
 				dateOfEvent: '2023-01-01',
+				dateTimeDeadlineStart: '2023-01-01',
 				description: unformattedDeadlines,
 				title: 'mock title 2',
 				uniqueId: 'mock id 2',
@@ -18,6 +20,7 @@ const fixturesTimetableResponse = {
 			},
 			{
 				dateOfEvent: '2023-01-03',
+				dateTimeDeadlineStart: '2023-01-03',
 				description: '<p>mock description 3</p>',
 				title: 'mock title 3',
 				uniqueId: 'mock id 3',

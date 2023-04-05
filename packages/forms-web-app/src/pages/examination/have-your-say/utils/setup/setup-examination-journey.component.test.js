@@ -59,6 +59,7 @@ describe('have your say decide exam journey route', () => {
 			const session = {};
 			const caseRef = 'mock case ref';
 			beforeEach(async () => {
+				jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
 				getAppData.mockResolvedValue(fixtureApplicationResponse);
 				getTimetables.mockResolvedValue(fixturesTimetableResponse);
 				await setupExaminationJourney(session, caseRef);

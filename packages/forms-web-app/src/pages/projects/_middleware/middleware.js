@@ -1,7 +1,7 @@
 const { getApplicationData } = require('../documents/utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
-const { getHasOpenTimetables } = require('./_utils/get-has-open-timetables');
+const { getHasOpenTimetables } = require('../../../utils/timetables/get-timetables-state');
 
 async function middleware(req, res, next) {
 	try {

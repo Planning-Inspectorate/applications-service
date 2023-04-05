@@ -1,14 +1,15 @@
 const { middleware } = require('./middleware');
 const { getApplicationData } = require('../documents/utils/get-application-data');
-const { getTimetables } = require('../../../services/timetable.service');
+const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
 
 jest.mock('../documents/utils/get-application-data', () => ({
 	getApplicationData: jest.fn()
 }));
-jest.mock('../../../services/timetable.service', () => ({
+jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
 }));
+
 describe('projects _middleware', () => {
 	describe('#_middleware', () => {
 		const next = jest.fn();

@@ -1,8 +1,16 @@
 const {
+	getHasOpenTimetables,
 	getPastTimetables,
 	getUpcomingTimetables,
 	getOpenEventDeadlineTimetables
 } = require('./get-timetables-state');
+
+const { getTimetables } = require('../../lib/application-api-wrapper');
+const { fixturesTimetableResponse } = require('../../services/__mocks__/timetable.fixtures');
+
+jest.mock('../../lib/application-api-wrapper', () => ({
+	getTimetables: jest.fn()
+}));
 
 describe('utils/timetables/get-timetables-state', () => {
 	const datePresent = '2022-01-02';
@@ -10,6 +18,44 @@ describe('utils/timetables/get-timetables-state', () => {
 	const dateUpcoming = '2022-01-03';
 	beforeEach(() => {
 		jest.useFakeTimers().setSystemTime(new Date(datePresent));
+	});
+
+	describe('#getHasOpenTimetables', () => {
+		describe('When there are open deadline for a timetable', () => {
+			let response;
+			beforeEach(async () => {
+				jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
+				getTimetables.mockReturnValue(fixturesTimetableResponse);
+				response = await getHasOpenTimetables('mock case ref');
+			});
+			it('should return true', () => {
+				expect(response).toBe(true);
+			});
+
+			describe('When there are NO open deadline for a timetable', () => {
+				let response;
+				beforeEach(async () => {
+					jest.useFakeTimers().setSystemTime(new Date('2023-01-28'));
+					getTimetables.mockReturnValue(fixturesTimetableResponse);
+					response = await getHasOpenTimetables('mock case ref');
+				});
+				it('should return false', () => {
+					expect(response).toBe(false);
+				});
+			});
+		});
+
+		describe('When there are NO timetables', () => {
+			let response;
+			beforeEach(async () => {
+				jest.useFakeTimers().setSystemTime(new Date('2023-01-28'));
+				getTimetables.mockReturnValue({ resp_code: 404 });
+				response = await getHasOpenTimetables('mock case ref');
+			});
+			it('should return false', () => {
+				expect(response).toBe(false);
+			});
+		});
 	});
 	describe('#getPastTimetables', () => {
 		describe('When getting the past timetables', () => {
