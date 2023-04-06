@@ -11,7 +11,7 @@ router.get(route, getChooseDeadline);
 router.post(
 	route,
 	validateNotEmpty({
-		chooseDeadlineId,
+		id: chooseDeadlineId,
 		onError: { message: { isEmpty: 'Select a deadline' } }
 	}),
 	validationErrorHandler,
