@@ -1,7 +1,6 @@
 {% extends "govuk/template.njk" %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "pins/components/footer/macro.njk" import pinsFooter %}
 {% from "components/core/pins-header-layout.njk" import pinsHeaderLayout %}
 
 {% set bodyClasses = '-extended-max-width' %}
@@ -58,68 +57,45 @@
 	</div>
 {% endblock %}
 
-			{% block footer %}
-				{{ pinsFooter({
-					items: [
-						{
-							href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
-							text: "Terms and conditions",
-							attributes: { "data-cy":"Terms and conditions" }
-						},
-						{
-							href: ac_href,
-							text: "Accessibility",
-							attributes: { "data-cy":"Accessibility" }
-						},
-						{
-							href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
-							text: "Privacy Notice (on GOV.UK)",
-							attributes: { "data-cy":"Privacy Notice (on GOV.UK)" }
-						},
-						{
-							href: ck_href,
-							text: "Cookies",
-							attributes: { "data-cy":"Cookies" }
-						}
-					]
-				}) }}
-			{% endblock %}
+{% block footer %}
+	{% include "components/core/pins-footer.njk" %}
+{% endblock %}
 
-			{% set initiateScriptsConfig = [
-				{
-					callback: "window.GOVUKFrontend.initAll();",
-					src: "/assets/govuk/all.js"
-				},
-				{
-					src: "/public/scripts/index.script.js"
-				}
-			] %}
+{% set initiateScriptsConfig = [
+	{
+		callback: "window.GOVUKFrontend.initAll();",
+		src: "/assets/govuk/all.js"
+	},
+	{
+		src: "/public/scripts/index.script.js"
+	}
+] %}
 
-			{% block bodyEnd %}
-				{% block script %}{% endblock %}
+{% block bodyEnd %}
+	{% block script %}{% endblock %}
 
-				<script
-					{% if cspNonce %}
-				nonce={{ cspNonce }}
-					{% endif %}>
-					const link = document.getElementById('back-link')
+	<script
+		{% if cspNonce %}
+	nonce={{ cspNonce }}
+		{% endif %}>
+		const link = document.getElementById('back-link')
 
-					function handleLink() {
-						history.back()
-					}
+		function handleLink() {
+			history.back()
+		}
 
-					if (link) {
-						link.addEventListener('click', handleLink)
-					}
+		if (link) {
+			link.addEventListener('click', handleLink)
+		}
 
-					window.removeEventListener('unload', () => {
-						link.removeEventListener('click', handleLink);
-						handleRemoveUnload()
-						return
-					});
+		window.removeEventListener('unload', () => {
+			link.removeEventListener('click', handleLink);
+			handleRemoveUnload()
+			return
+		});
 
-				</script>
+	</script>
 
-				{% include "includes/initiate-scripts.njk" %}
-			{% endblock %}
+	{% include "includes/initiate-scripts.njk" %}
+{% endblock %}
 
