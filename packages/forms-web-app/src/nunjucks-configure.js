@@ -9,6 +9,7 @@ const renderTemplateFilter = require('./lib/render-template-filter');
 const { Status: projectStageNames } = require('./utils/status');
 const { routesConfig } = require('./routes/config');
 const path = require('path');
+const { getYearNow } = require('./utils/date-utils');
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
@@ -54,6 +55,7 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addGlobal('projectStageNames', projectStageNames);
 	nunjucksEnv.addGlobal('routes', routesConfig);
 	nunjucksEnv.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
+	nunjucksEnv.addGlobal('yearNow', getYearNow());
 
 	return nunjucksEnv;
 }

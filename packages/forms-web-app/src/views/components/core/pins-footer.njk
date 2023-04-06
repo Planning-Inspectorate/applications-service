@@ -1,0 +1,46 @@
+{%
+  set links = [
+    {
+      href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
+      text: "Terms and conditions",
+      attributes: { "data-cy": "Terms and conditions" }
+    },
+    {
+      href: "" + host + "accessibility-statement",
+      text: "Accessibility",
+      attributes: { "data-cy":"Accessibility" }
+    },
+    {
+      href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
+      text: "Privacy Notice (on GOV.UK)",
+      attributes: { "data-cy": "Privacy Notice (on GOV.UK)" }
+    },
+    {
+      href: "" + host + "cookies",
+      text: "Cookies",
+      attributes: { "data-cy": "Cookies" }
+    }
+  ]
+%}
+
+<footer class="govuk-footer govuk-!-padding-top-9 govuk-!-padding-bottom-9" role="contentinfo">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-visually-hidden">Support links</h2>
+
+        <ul class="govuk-footer__inline-list">
+          {% for link in links %}
+          <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" data-cy="{{ link.text }}" href="{{ link.href }}">
+              {{ link.text }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <p class="govuk-body-s govuk-!-margin-0">Site content: Copyright {{ yearNow }} <a class="govuk-link" href="http://planninginspectorate.gov.uk/">The Planning Inspectorate</a></p>
+      </div>
+    </div>
+  </div>
+</footer>

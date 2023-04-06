@@ -6,6 +6,8 @@ const getDate = (date) => new Date(date);
 
 const getDateNow = () => new Date();
 
+const getYearNow = () => getDateNow().getFullYear();
+
 function formatDate(date) {
 	const notValidDateString = !date || typeof date !== 'string';
 
@@ -34,6 +36,7 @@ module.exports = {
 	buildDateSting,
 	getDate,
 	getDateNow,
+	getYearNow,
 	formatDate,
 	isNullSQLDate,
 	setTimeToStartOfDay,
