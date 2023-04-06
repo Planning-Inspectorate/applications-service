@@ -17,7 +17,7 @@ describe('#getVerticalTabs', () => {
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
-				result = getVerticalTabs('mock project name', 'mock case ref', true);
+				result = getVerticalTabs('mock project name', 'mock case ref', true, true);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -83,7 +83,7 @@ describe('#getVerticalTabs', () => {
 				featureHideLink.hideAllExaminationDocumentsLink = false;
 				featureFlag.allowSection51 = true;
 				featureFlag.allowHaveYourSay = true;
-				result = getVerticalTabs('mock project name', 'mock case ref', false);
+				result = getVerticalTabs('mock project name', 'mock case ref', false, false);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -113,7 +113,7 @@ describe('#getVerticalTabs', () => {
 						url: '/projects/mock case ref/representations'
 					},
 					{
-						hidden: false,
+						hidden: true,
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock case ref/examination-timetable'
