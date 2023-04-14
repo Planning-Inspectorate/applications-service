@@ -17,7 +17,9 @@ module.exports = async (context, message) => {
 };
 
 const parseMessage = (message) => {
-	let output = {};
+	let output = {
+		modifiedAt: new Date()
+	};
 
 	for (const [key, value] of Object.entries(message)) {
 		if (!excludedProperties.includes(key)) {

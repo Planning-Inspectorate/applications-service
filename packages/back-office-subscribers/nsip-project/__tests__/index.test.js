@@ -28,8 +28,14 @@ describe('nsip-project', () => {
 		regions: 'a,b'
 	};
 
+	beforeAll(() => jest.useFakeTimers());
+	afterAll(() => jest.useRealTimers());
+
 	describe('index', () => {
 		it('assigns project data to binding in correct format', async () => {
+			const dateNow = new Date();
+			jest.setSystemTime(dateNow);
+
 			const mockContext = {
 				log: mockLog,
 				bindingData: {
@@ -44,7 +50,12 @@ describe('nsip-project', () => {
 
 			await subject(mockContext, projectMessage);
 
-			expect(mockContext.bindings.project).toEqual(project);
+			const expectedProject = {
+				...project,
+				modifiedAt: dateNow
+			};
+
+			expect(mockContext.bindings.project).toEqual(expectedProject);
 		});
 	});
 });
