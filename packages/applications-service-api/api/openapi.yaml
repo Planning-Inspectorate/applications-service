@@ -55,6 +55,30 @@ paths:
         '404':
           description: No applications found
 
+  '/api/v2/applications/{caseReference}':
+    get:
+      summary: Returns application data from Back Office
+      description: Returns an Application (Project) by Case Reference
+      tags:
+        - Applications
+      parameters:
+        - in: path
+          name: caseReference
+          example: 'EN010116'
+          required: true
+          schema:
+            type: string
+          description: Case Reference unique identifier
+      responses:
+        '200':
+          description: Returns application data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationV2'
+        '404':
+          description: The application could not be found
+
   '/api/v1/interested-party':
     post:
       summary: Creates an interested party
@@ -517,9 +541,9 @@ paths:
           required: false
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
           description: Page size for results
-          minimum: 1
-          maximum: 100
         - in: query
           name: searchTerm
           example: 'pdf'
@@ -706,6 +730,217 @@ components:
         dateOfNonAcceptance:
           type: string
           example: ''
+
+    ApplicationV2:
+      type: object
+      properties:
+        caseId:
+          type: number
+          example: 1
+        caseReference:
+          type: string
+          example: EN010009
+        projectName:
+          type: string
+          example: Drax Bioenergy with Carbon Capture and Storage Project
+        projectDescription:
+          type: string
+          example: Drax Power Limited proposes to install post-combustion capture technology into the existing Common Services at Drax Power Station.
+        publishStatus:
+          type: string
+          enum:
+            - published
+            - unpublished
+        sector:
+          type: string
+          enum:
+            - BC - Business and Commercial
+            - EN - Energy
+            - TR - Transport
+            - WA - Water
+            - WS - Waste
+            - WW - Waste Water
+        projectType:
+          type: string
+          enum:
+            - BC01 - Office Use
+            - BC02 - Research and Development of Products or Processes
+            - BC03 - An Industrial Process or Processes
+            - BC04 - Storage or Distribution of Goods
+            - BC05 - Conferences
+            - BC06 - Exhibitions
+            - BC07 - Sport
+            - BC08 - Leisure
+            - BC09 - Tourism
+            - EN01 - Generating Stations
+            - EN02 - Electric Lines
+            - EN03 - Underground Gas Storage Facilities
+            - EN04 - LNG Facilities
+            - EN05 - Gas Reception Facilities
+            - EN06 - Gas Transporter Pipe-lines
+            - EN07 - Other Pipe-lines
+            - TR01 - Highways
+            - TR02 - Airports
+            - TR03 - Harbour Facilities
+            - TR04 - Railways
+            - TR05 - Rail Freight Interchanges
+            - WS01 - Hazardous Waste Facilities
+            - WW01 - Waste Water Treatment Plants
+            - WA01 - Dams and Reservoirs
+            - WA02 - Transfer of Water Resources
+        sourceSystem:
+          type: string
+          enum:
+            - ODT
+            - Horizon
+        stage:
+          type: string
+          enum:
+            - draft
+            - pre_application
+            - acceptance
+            - pre_examination
+            - examination
+            - recommendation
+            - decision
+            - post_decision
+            - withdrawn
+        projectLocation:
+          type: string
+          example: Drax Power Station, North Yorkshire
+        projectEmailAddress:
+          type: string
+          example: drax.project.email@example.org
+        regions:
+          type: array
+          items:
+            type: string
+            enum:
+              - east_midlands
+              - eastern
+              - london
+              - north_east
+              - north_west
+              - south_east
+              - south_west
+              - wales
+              - west_midlands
+              - yorkshire_and_the_humber
+        transboundary:
+          type: boolean
+        easting:
+          type: number
+          example: 345678
+        northing:
+          type: number
+          example: 345678
+        welshLanguage:
+          type: boolean
+        mapZoomLevel:
+          type: string
+          enum:
+            - country
+            - region
+            - county
+            - borough
+            - district
+            - city
+            - town
+            - junction
+            - none
+        secretaryOfState:
+          type: string
+        dateProjectAppearsOnWebsite:
+          type: string
+          format: date-time
+        dateOfDCOAcceptance:
+          type: string
+          format: date-time
+        anticipatedDateOfSubmission:
+          type: string
+          format: date-time
+        anticipatedSubmissionDateNonSpecific:
+          type: string
+        dateOfDCOSubmission:
+          type: string
+          format: date-time
+        dateOfRepresentationPeriodOpen:
+          type: string
+          format: date-time
+        dateOfRelevantRepresentationClose:
+          type: string
+          format: date-time
+        dateRRepAppearOnWebsite:
+          type: string
+          format: date-time
+        confirmedStartOfExamination:
+          type: string
+          format: date-time
+        dateTimeExaminationEnds:
+          type: string
+          format: date-time
+        stage4ExtensionToExamCloseDate:
+          type: string
+          format: date-time
+        stage5ExtensionToRecommendationDeadline:
+          type: string
+          format: date-time
+        dateOfRecommendations:
+          type: string
+          format: date-time
+        confirmedDateOfDecision:
+          type: string
+          format: date-time
+        stage5ExtensionToDecisionDeadline:
+          type: string
+          format: date-time
+        dateProjectWithdrawn:
+          type: string
+          format: date-time
+        section46Notification:
+          type: string
+          format: date-time
+        datePINSFirstNotifiedOfProject:
+          type: string
+          format: date-time
+        screeningOpinionSought:
+          type: string
+          format: date-time
+        screeningOpinionIssued:
+          type: string
+          format: date-time
+        scopingOpinionSought:
+          type: string
+          format: date-time
+        scopingOpinionIssued:
+          type: string
+          format: date-time
+        deadlineForAcceptanceDecision:
+          type: string
+          format: date-time
+        dateSection58NoticeReceived:
+          type: string
+          format: date-time
+        preliminaryMeetingStartDate:
+          type: string
+          format: date-time
+        deadlineForCloseOfExamination:
+          type: string
+          format: date-time
+        deadlineForSubmissionOfRecommendation:
+          type: string
+          format: date-time
+        deadlineForDecision:
+          type: string
+          format: date-time
+        jRPeriodEndDate:
+          type: string
+          format: date-time
+        extensionToDateRelevantRepresentationsClose:
+          type: string
+          format: date-time
+        examinationTimetableId:
+          type: number
 
     InterestedParty:
       type: object
@@ -1524,8 +1759,8 @@ components:
           type: string
           example: 'Email'
         industrySector:
-         type: string
-         example: 'Energy'
+          type: string
+          example: 'Energy'
         caseReference:
           type: string
           example: 'EN010009'

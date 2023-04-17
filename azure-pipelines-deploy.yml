@@ -88,7 +88,7 @@ extends:
                 parameters:
                   environmentVariables:
                     DATABASE_URL: $(DATABASE_URL)
-                  script: npm run db:migrate:deploy --workspace=@pins/data-service
+                  script: npm run db:migrate:deploy --workspace=@pins/applications-service-api
     region: ${{ parameters.Region }}
     globalVariables:
       - template: azure-pipelines-variables.yml@self
