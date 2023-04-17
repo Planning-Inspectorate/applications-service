@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
 }
 
 datasource db {
@@ -12,8 +13,8 @@ datasource db {
 
 model Project {
   id                                          Int      @unique @default(autoincrement())
-  caseId                                      Int      @id
-  caseReference                               String?
+  caseId                                      Int      @unique
+  caseReference                               String   @id
   projectName                                 String?
   projectDescription                          String?
   publishStatus                               String?

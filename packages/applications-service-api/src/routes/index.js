@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 const applicationsRouter = require('./applications');
+const applicationsV2Router = require('./applications.v2');
 const interestedPartyRouter = require('./interested-party');
 const apiDocsRouter = require('./api-docs');
 const dbConnectionTestRouter = require('./db-connection-test');
@@ -16,6 +17,7 @@ const submissionRouter = require('./submissions');
 const adviceRoute = require('./advice');
 
 router.use('/api/v1/applications', applicationsRouter);
+router.use('/api/v2/applications', applicationsV2Router);
 router.use('/api/v1/interested-party', interestedPartyRouter);
 router.use('/api-docs', apiDocsRouter);
 router.use('/test', dbConnectionTestRouter);

@@ -9,8 +9,7 @@
 		"packages/forms-web-app",
 		"packages/applications-service-api",
 		"packages/common",
-		"packages/back-office-subscribers",
-		"packages/data-service"
+		"packages/back-office-subscribers"
 	],
 	"scripts": {
 		"commit": "cz",
@@ -24,9 +23,9 @@
 		"lint:fix": "turbo run lint --parallel --continue",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
 		"release": "multi-semantic-release --ignore-packages=packages/common",
-		"test": "turbo run test --parallel --continue --filter=!@pins/data-service",
-		"test:cov": "turbo run test:cov --parallel --continue --filter=!@pins/data-service",
-		"test:watch": "turbo run test:watch --parallel --continue --filter=!@pins/data-service",
+		"test": "turbo run test --parallel --continue",
+		"test:cov": "turbo run test:cov --parallel --continue",
+		"test:watch": "turbo run test:watch --parallel --continue",
 		"win:common:fix": "xcopy /E /Y packages\\common node_modules\\@pins\\common\\"
 	},
 	"repository": {
@@ -49,6 +48,7 @@
 		"lint-staged": "^13.0.0",
 		"multi-semantic-release": "^2.13.0",
 		"prettier": "^2.7.1",
+		"prisma": "^4.12.0",
 		"semantic-release": "^19.0.3",
 		"turbo": "^1.3.1"
 	},
@@ -80,5 +80,8 @@
 				}
 			]
 		]
+	},
+	"dependencies": {
+		"@prisma/client": "^4.12.0"
 	}
 }
