@@ -1,4 +1,4 @@
-const { asyncRoute } = require('../../../src/utils/async-route');
+const { asyncRoute } = require('./async-route');
 
 describe('async-route helper', () => {
 	it('should throw error if route throws error', () => {
