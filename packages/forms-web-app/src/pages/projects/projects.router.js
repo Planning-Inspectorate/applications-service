@@ -1,7 +1,7 @@
 const express = require('express');
 
 const config = require('../../config');
-const { asyncRoute } = require('../../utils/async-route');
+const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const {
 	routesConfig: {
 		project: { pages, subDirectory }
