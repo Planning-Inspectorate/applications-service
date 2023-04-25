@@ -1,4 +1,4 @@
-const { parseBoolean, parseInteger } = require('../../../src/utils/parse');
+const { parseBoolean, parseInteger, parseCSV } = require('../../../src/utils/parse');
 describe('parse utils', () => {
 	describe('parseBoolean', () => {
 		it.each([
@@ -26,6 +26,21 @@ describe('parse utils', () => {
 			[{}, null]
 		])('given %s, returns %s', (input, expected) => {
 			expect(parseInteger(input)).toBe(expected);
+		});
+	});
+
+	describe('parseCSV', () => {
+		it.each([
+			['a,b,c', ['a', 'b', 'c']],
+			['a, b, c', ['a', 'b', 'c']],
+			['', []],
+			['a,', ['a', '']],
+			['a', ['a']],
+			[1, []],
+			[NaN, []],
+			[null, []]
+		])('given %s, returns %s', (input, expected) => {
+			expect(parseCSV(input)).toEqual(expected);
 		});
 	});
 });
