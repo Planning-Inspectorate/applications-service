@@ -18,6 +18,7 @@ const getHaveYourSay = async (req, res, next) => {
 		const { case_ref } = params;
 		await setupExaminationJourney(session, case_ref);
 		return res.render(view, {
+			activeId: 'project-have-your-say',
 			startNowUrl: `${hasInterestedPartyNumberRoute}`
 		});
 	} catch (e) {
