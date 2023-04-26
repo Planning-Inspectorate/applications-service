@@ -12,6 +12,7 @@ const {
 } = require('../../middleware/unset-edit-mode-submission-item-id');
 
 const { decodeUri } = require('../../middleware/decode-uri');
+const { middleware: projectsMiddleware } = require('../projects/_middleware/middleware');
 
 const {
 	routesConfig: {
@@ -108,7 +109,7 @@ router.post(`/${checkSubmissionItem.route}`, postCheckSubmissionItem);
 
 router.get(`/${checkYourAnswers.route}`, getCheckYourAnswers);
 
-router.get(`/${haveYourSay.route}`, getHaveYourSay);
+router.get(`/${haveYourSay.route}`, projectsMiddleware, getHaveYourSay);
 
 router.get(`/${email.route}`, getEmail);
 router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);
