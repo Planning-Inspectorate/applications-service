@@ -7,7 +7,7 @@ describe('mapDocumentFilterLabel', () => {
 		['stage', 3, 'Pre-examination'],
 		['stage', 4, 'Examination'],
 		['stage', 5, 'Recommendation'],
-		['stage', 6, 'Decision'],
+		['stage', 6, 'Recommendation and Decision'],
 		['stage', 7, 'Post-decision'],
 		['category', "Developer's Application", "Developer's Application"],
 		['category', "Developer's application", "Developer's Application"],
