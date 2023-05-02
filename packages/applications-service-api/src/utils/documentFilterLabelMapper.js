@@ -6,7 +6,7 @@ const mapDocumentFilterLabel = (filterName, filterValue) => {
 			3: 'Pre-examination',
 			4: 'Examination',
 			5: 'Recommendation',
-			6: 'Decision',
+			6: 'Recommendation and Decision',
 			7: 'Post-decision'
 		},
 		category: {
