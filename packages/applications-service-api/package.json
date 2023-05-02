@@ -7,18 +7,22 @@
 	},
 	"main": "src/main.js",
 	"scripts": {
+		"db:migrate:dev": "npx prisma migrate dev",
+		"db:migrate:deploy": "npx prisma migrate deploy",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"start": "node ./",
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"start:dev:debug": "nodemon --inspect-brk=0.0.0.0 -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"test": "jest",
-		"test:cov": "jest --coverage --verbose",
+		"test:cov": "npx prisma generate && jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
 	"dependencies": {
+		"@pins/common": "file:../common",
 		"@planning-inspectorate/pins-notify": "^1.0.2",
+		"@prisma/client": "^4.11.0",
 		"axios": "^1.0.0",
 		"axios-logger": "^2.6.1",
 		"body-parser": "^1.19.0",
@@ -29,13 +33,15 @@
 		"express-pino-logger": "^5.0.0",
 		"form-data": "^4.0.0",
 		"http-status-codes": "^2.1.4",
-		"jspdf": "^2.5.1",
 		"js-yaml": "^3.14.0",
+		"jspdf": "^2.5.1",
 		"lodash.camelcase": "^4.3.0",
 		"moment": "^2.29.1",
 		"mysql2": "^2.3.2",
 		"openapi-request-validator": "^12.0.2",
+		"ospoint": "^0.2.1",
 		"pino": "^6.13.2",
+		"prisma": "^4.11.0",
 		"ramda": "^0.27.1",
 		"sequelize": "~5.22.4",
 		"swagger-ui-express": "^4.1.6",
@@ -51,6 +57,7 @@
 		"node-mocks-http": "^1.11.0",
 		"nodemon": "^2.0.12",
 		"pino-pretty": "^4.8.0",
-		"sequelize-mock": "^0.10.2"
+		"sequelize-mock": "^0.10.2",
+		"supertest": "^6.3.3"
 	}
 }

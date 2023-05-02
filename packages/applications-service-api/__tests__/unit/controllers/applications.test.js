@@ -3,6 +3,14 @@ const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const { getApplication, getAllApplications } = require('../../../src/controllers/applications');
 
+jest.mock('../../../src/services/application.service');
+const mockGetApplicationService =
+	require('../../../src/services/application.service').getApplication;
+
+jest.mock('../../../src/services/application.service');
+const mockGetAllApplications =
+	require('../../../src/services/application.service').getAllApplications;
+
 const projectData = {
 	CaseReference: 'EN010116',
 	ProjectName: 'North Lincolnshire Green Energy Park',
@@ -81,41 +89,17 @@ const project = {
 	dateOfNonAcceptance: null
 };
 
-jest.mock('../../../src/models', () => {
-	// eslint-disable-next-line global-require
-	const SequelizeMock = require('sequelize-mock');
-	const dbMock = new SequelizeMock();
-	const Project = dbMock.define('Project');
-
-	// eslint-disable-next-line consistent-return
-	Project.$queryInterface.$useHandler((query, queryOptions) => {
-		if (query === 'findOne') {
-			if (queryOptions[0].where.CaseReference === 'EN010116') {
-				return Project.build({ ...projectData });
-			}
-			return null;
-		}
-		if (query === 'findAll') {
-			return [Project.build({ ...projectData })];
-		}
-	});
-	const db = {
-		Project
-	};
-	return db;
-});
-
-jest.mock('fs', () => ({
-	promises: {
-		readFile: jest.fn().mockResolvedValue(JSON.stringify(['EN000000', 'EN010116']))
-	}
-}));
-
 describe('getApplication', () => {
+	afterEach(() => mockGetApplicationService.mockClear());
+
 	it('should get application from mock', async () => {
+		mockGetApplicationService.mockResolvedValueOnce({
+			dataValues: projectData
+		});
+
 		const req = httpMocks.createRequest({
 			params: {
-				id: 'EN010116'
+				caseReference: 'EN010116'
 			}
 		});
 
@@ -129,50 +113,45 @@ describe('getApplication', () => {
 		expect(data).toEqual(project);
 	});
 
-	// TODO Uncomment bellow test when below code in applications.js is uncommneted
-	// TODO Temporarily commented
-	// if (!trialists.includes(id)) {
-	//   throw ApiError.applicationNotAcceptable(id);
-	// }
+	it('should throw application not found', async () => {
+		mockGetApplicationService.mockResolvedValueOnce(null);
 
-	// it('should throw application not eligible', async () => {
-	//   const req = httpMocks.createRequest({
-	//     params: {
-	//       id: 'EN010009',
-	//     },
-	//   });
-
-	//   const res = httpMocks.createResponse();
-
-	//   await expect(() => getApplication(req, res)).rejects.toEqual(
-	//     new ApiError(StatusCodes.NOT_ACCEPTABLE, { errors: ['Application EN010009 is not eligible'] })
-	//   );
-	// });
-
-	it('should return application not found', async () => {
 		const req = httpMocks.createRequest({
 			params: {
-				id: 'EN000000'
+				caseReference: 'EN000000'
 			}
 		});
-
 		const res = httpMocks.createResponse();
-		await getApplication(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-		expect(res._getData()).toEqual({ code: 404, errors: ['Application EN000000 was not found'] });
+
+		await expect(getApplication(req, res)).rejects.toEqual({
+			code: 404,
+			message: {
+				errors: ['Application EN000000 was not found']
+			}
+		});
 	});
 });
 
 describe('getAllApplications', () => {
+	afterEach(() => mockGetApplicationService.mockClear());
+
 	it('should get all applications from mock', async () => {
+		mockGetAllApplications.mockResolvedValueOnce([
+			{
+				dataValues: projectData
+			}
+		]);
+
 		const req = httpMocks.createRequest();
 		const res = httpMocks.createResponse();
+
 		await getAllApplications(req, res);
 		const data = res._getData();
 		const dataValue = data[0];
 		delete dataValue.id;
 		delete dataValue.createdAt;
 		delete dataValue.updatedAt;
+
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 		expect(data.length).toBe(1);
 		expect(dataValue).toEqual({ ...project });

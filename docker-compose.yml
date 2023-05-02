@@ -33,6 +33,8 @@ services:
     container_name: applications-service-api
     environment:
       APP_APPLICATIONS_BASE_URL: http://forms-web-app:9004
+      BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES: EN0110004,EN0310004
+      DATABASE_URL: sqlserver://mssql:1433;database=pins_applications_development;user=sa;password=dbPASSw0_rd;trustServerCertificate=true
       DOCS_API_PATH: /opt/app/packages/applications-service-api/api
       DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/
       DOCUMENTS_PER_PAGE: 20
@@ -62,7 +64,6 @@ services:
       SRV_NOTIFY_MAGIC_LINK_EMAIL: 4ca6b93a-4c45-4abe-a8ea-69ba13c80915
       SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL: e900038b-f112-4862-9a93-0b8bbb48a09c
       SRV_NOTIFY_SERVICE_ID: 9b89eb93-3071-432c-9c6b-4e07dbda9071
-      TRIALIST_DATA_PATH: /opt/app/packages/applications-service-api/data/trialists.json
     ports:
       - 3000:3000
       - 9230:9229
@@ -70,9 +71,10 @@ services:
     volumes:
       - ./package.json:/opt/app/package.json
       - ./node_modules:/opt/app/node_modules
+      - ./packages/common:/opt/app/packages/common
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
       - ./uploads:/opt/app/uploads
-    #    command: npm run start:dev:debug --workspace=packages/applications-service-api
+#    command: npm run start:dev:debug --workspace=packages/applications-service-api
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:

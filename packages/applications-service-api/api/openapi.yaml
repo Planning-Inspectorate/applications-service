@@ -11,7 +11,7 @@ servers:
   - url: '/'
 
 paths:
-  '/api/v1/applications/{id}':
+  '/api/v1/applications/{caseReference}':
     get:
       summary: Returns an existing application
       description: Returns an existing application (Project) by id (Case Reference)
@@ -19,7 +19,7 @@ paths:
         - Applications
       parameters:
         - in: path
-          name: id
+          name: caseReference
           example: 'EN010116'
           required: true
           schema:
@@ -54,6 +54,7 @@ paths:
                   $ref: '#/components/schemas/Application'
         '404':
           description: No applications found
+
 
   '/api/v1/interested-party':
     post:
@@ -517,9 +518,9 @@ paths:
           required: false
           schema:
             type: integer
+            minimum: 1
+            maximum: 100
           description: Page size for results
-          minimum: 1
-          maximum: 100
         - in: query
           name: searchTerm
           example: 'pdf'
@@ -1524,8 +1525,8 @@ components:
           type: string
           example: 'Email'
         industrySector:
-         type: string
-         example: 'Energy'
+          type: string
+          example: 'Energy'
         caseReference:
           type: string
           example: 'EN010009'

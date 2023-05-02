@@ -7,8 +7,18 @@
  */
 
 const path = require('path');
+const { parseCSV } = require('../utils/parse');
 
 module.exports = {
+	backOfficeIntegration: {
+		applications: {
+			getApplication: {
+				caseReferences: parseCSV(
+					process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES
+				)
+			}
+		}
+	},
 	db: {},
 	docs: {
 		api: {
@@ -48,8 +58,6 @@ module.exports = {
 			baseUrl: process.env.APP_APPLICATIONS_BASE_URL
 		}
 	},
-	trialistPath:
-		process.env.TRIALIST_DATA_PATH || path.join(__dirname, '..', '..', 'data', 'trialists.json'),
 	itemsPerPage: Number(process.env.DOCUMENTS_PER_PAGE || 20),
 	timetableItemsPerPage: 100,
 	documentsHost:

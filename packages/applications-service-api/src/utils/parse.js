@@ -20,7 +20,19 @@ const parseInteger = (str) => {
 	return isNaN(i) ? null : i;
 };
 
+const parseCSV = (str) => {
+	if (!str) return [];
+
+	try {
+		return str.split(',').map((s) => s.trim());
+	} catch (e) {
+		console.error(e);
+		return [];
+	}
+};
+
 module.exports = {
 	parseBoolean,
-	parseInteger
+	parseInteger,
+	parseCSV
 };

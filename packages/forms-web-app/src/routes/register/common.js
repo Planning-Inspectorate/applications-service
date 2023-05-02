@@ -15,7 +15,7 @@ const telephoneNumberController = require('../../controllers/register/common/tel
 const registrationCompleteController = require('../../controllers/register/common/registration-complete/controller');
 const registrationSavedController = require('../../controllers/register/common/registration-saved/controller');
 const declarationController = require('../../controllers/register/common/declaration/controller');
-const { asyncRoute } = require('../../utils/async-route');
+const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router();
 
