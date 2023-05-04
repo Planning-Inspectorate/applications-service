@@ -9,7 +9,10 @@ const validateRequestWithOpenAPI = (req, res, next) => {
 	if (errors) {
 		throw ApiError.badRequest(
 			errors.errors.map((e) => {
-				if (e.errorCode.match(/(maxLength|minLength|type|enum)\.openapi\.requestValidation/)) {
+				if (
+					e.errorCode &&
+					e.errorCode.match(/(maxLength|minLength|type|enum)\.openapi\.requestValidation/)
+				) {
 					return `'${e.path}' ${e.message.toLowerCase()}`;
 				}
 				return e.message;
