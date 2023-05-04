@@ -2,28 +2,16 @@ const {
 	getDatesFilterPublishedDates
 } = require('../../dates/utils/get-dates-filter-published-dates');
 const { mapQueryToFilterBody } = require('./mapQueryToFilterBody');
-const { deleteDatesFilterFromQuery } = require('./delete-dates-filter-from-query');
 
 const getBody = (case_ref, query) => {
-	const localQuery = JSON.parse(JSON.stringify(query));
-	const { datePublishedFrom, datePublishedTo } = getDatesFilterPublishedDates(localQuery);
-	const searchTerm = localQuery.searchTerm;
-	const page = localQuery.page;
-	const size = Number(localQuery.itemsPerPage) || 25;
-
-	delete localQuery.page;
-	delete localQuery.searchTerm;
-	delete localQuery.itemsPerPage;
-	deleteDatesFilterFromQuery(localQuery);
-
-	const filterBody = mapQueryToFilterBody(localQuery);
+	const { datePublishedFrom, datePublishedTo } = getDatesFilterPublishedDates(query);
 
 	const requestBody = {
 		caseReference: case_ref,
-		filters: filterBody,
-		searchTerm,
-		page: parseInt(page) || 1,
-		size
+		filters: mapQueryToFilterBody(getFilters(query)),
+		searchTerm: query.searchTerm,
+		page: parseInt(query.page) || 1,
+		size: Number(query.itemsPerPage) || 25
 	};
 
 	if (datePublishedFrom) requestBody.datePublishedFrom = datePublishedFrom;
@@ -31,6 +19,12 @@ const getBody = (case_ref, query) => {
 
 	return requestBody;
 };
+
+const getFilters = (query) =>
+	Object.keys(query).reduce((memo, key) => {
+		if (key.match(/(stage|category)-/i)) memo[key] = query[key];
+		return memo;
+	}, {});
 
 module.exports = {
 	getBody
