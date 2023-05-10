@@ -24,7 +24,10 @@ paths:
           required: true
           schema:
             type: string
-          description: Unique identifier
+            minLength: 2
+            maxLength: 12
+            pattern: '^[A-Z]{2}\d{6,8}$'
+          description: Case / Project unique identifier
       responses:
         '200':
           description: Returns an application
@@ -410,6 +413,7 @@ paths:
             type: string
             minLength: 2
             maxLength: 12
+            pattern: '^[A-Z]{2}\d{6,8}$'
           description: Case / Project unique identifier
       responses:
         '200':
@@ -439,6 +443,7 @@ paths:
             type: string
             minLength: 2
             maxLength: 12
+            pattern: '^[A-Z]{2}\d{6,8}$'
           description: Case / Project unique identifier
       requestBody:
         content:
