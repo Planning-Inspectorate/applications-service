@@ -11,9 +11,9 @@ const validateRequestWithOpenAPI = (req, res, next) => {
 			errors.errors.map((e) => {
 				if (
 					e.errorCode &&
-					e.errorCode.match(/(maxLength|minLength|type|enum)\.openapi\.requestValidation/)
+					e.errorCode.match(/(enum|maxLength|minLength|pattern|type)\.openapi\.requestValidation/)
 				) {
-					return `'${e.path}' ${e.message.toLowerCase()}`;
+					return `'${e.path}' ${e.message}`;
 				}
 				return e.message;
 			})

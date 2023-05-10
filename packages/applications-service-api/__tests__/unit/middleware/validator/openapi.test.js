@@ -25,13 +25,14 @@ describe('openapi validator', () => {
 
 			const expectedError = new ApiError(400, {
 				errors: [
-					"'representation' must not have more than 65234 characters",
+					"'representation' must NOT have more than 65234 characters",
 					"must have required property 'name'",
 					"must have required property 'email'",
 					"must have required property 'interestedParty'",
 					"must have required property 'deadline'",
 					"must have required property 'submissionType'",
-					"'caseReference' must not have more than 12 characters"
+					"'caseReference' must NOT have more than 12 characters",
+					'\'caseReference\' must match pattern "^[A-Z]{2}\\d{6,8}$"'
 				]
 			});
 
