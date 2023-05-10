@@ -15,7 +15,7 @@
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"start:dev:debug": "nodemon --inspect-brk=0.0.0.0 -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
 		"test": "jest",
-		"test:cov": "npx prisma generate && jest --coverage --verbose",
+		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
