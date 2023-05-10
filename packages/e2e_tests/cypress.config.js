@@ -9,11 +9,12 @@ module.exports = defineConfig({
 			allureWriter(on, config);
 			return config;
 		},
-		specPattern: 'cypress/e2e/**/*.feature',
+		//specPattern: 'cypress/e2e/**/*.feature',
 		baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk',
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
 		pageLoadTimeout: 10000,
+		testIsolation: false,
 		env: {
 			commandDelay: 300
 		},

@@ -1,0 +1,74 @@
+import { PO_HaveYourSay } from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
+const haveYourSay = new PO_HaveYourSay();
+
+describe('User registers to have their say and submits a comment against a project', () => {
+	it('Navigate to projects search page', () => {
+		cy.visit('https://applications-service-test.planninginspectorate.gov.uk/project-search/');
+	});
+
+	it('Finds and clicks on a project', () => {
+		haveYourSay.findAndClickLink('North Lincolnshire Green Energy Park');
+	});
+
+	it('Clicks to register and have their say', () => {
+		haveYourSay.findAndClickButton('Register to have your say');
+	});
+
+	it('Clicks to start the registration journey', () => {
+		haveYourSay.findAndClickButton('Start now');
+	});
+
+	it('Chooses to register as myself and clicks continue', () => {
+		haveYourSay.findAndSelectRadioButton('myself');
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Enters their full name and clicks continue', () => {
+		haveYourSay.findFieldAndEnterText('full-name', 'John Tester');
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Confirms they are over 18 and clicks continue', () => {
+		haveYourSay.findAndSelectRadioButton('yes');
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Enters their email address and clicks continue', () => {
+		haveYourSay.findFieldAndEnterText('email', 'pinsemail@examplePINS.com');
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Enters their address details and clicks continue', () => {
+		haveYourSay.findFieldAndEnterText('line1', '149 Testing Flats');
+		haveYourSay.findFieldAndEnterText('line2', 'Testing Street');
+		haveYourSay.findFieldAndEnterText('line3', 'London');
+		haveYourSay.findFieldAndEnterText('postcode', 'SW1P 4DF');
+		haveYourSay.findFieldAndEnterText('country', 'United Kingdomw');
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Enters their telephone number and clicks continue', () => {
+		haveYourSay.findFieldAndEnterText('telephone', '07743646926');
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Adds a comment against a project and clicks continue', () => {
+		haveYourSay.findFieldAndEnterText(
+			'comment',
+			'This is a test comment against the North Lincolnshire project.'
+		);
+		haveYourSay.findAndClickButton('Continue');
+	});
+
+	it('Register their answers and comment against a project', () => {
+		haveYourSay.findAndClickButton('Accept and continue');
+	});
+
+	it('Agrees to the the declarations', () => {
+		haveYourSay.findAndClickButton('Accept and continue');
+	});
+
+	it('User sees the registration complete message', () => {
+		haveYourSay.registrationCompleteText('Registration complete');
+	});
+});
