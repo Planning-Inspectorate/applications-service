@@ -1,4 +1,4 @@
-class PO_HaveYourSay {
+export class PO_HaveYourSay {
 	acceptCookiesButton() {
 		return cy.get("a[data-cy='cookie-banner-view-cookies']").click();
 	}
@@ -63,6 +63,26 @@ class PO_HaveYourSay {
 	shortSurveyLink() {
 		return cy.get(':nth-child(13) > a').click(); // Tell us what you thought about this service
 	}
-}
 
-export default PO_HaveYourSay;
+	// Jacob's methods
+
+	findAndClickLink(string) {
+		cy.get('.govuk-link').contains(string).click();
+	}
+
+	findAndClickButton(string) {
+		cy.get('.govuk-button').contains(string).click();
+	}
+
+	findAndSelectRadioButton(string) {
+		cy.get('[type="radio"]').check(string).click();
+	}
+
+	findFieldAndEnterText(inputFieldId, text) {
+		cy.get(`#${inputFieldId}`).type(text);
+	}
+
+	registrationCompleteText(string) {
+		cy.get('.govuk-panel__title').contains(string);
+	}
+}
