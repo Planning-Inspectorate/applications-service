@@ -305,6 +305,7 @@ describe('#getApplicationDocuments', () => {
 				await getApplicationDocuments(req, res);
 			});
 			it('should render the error page', () => {
+				expect(res.status).toHaveBeenCalledWith(500);
 				expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 			});
 		});

@@ -20,7 +20,7 @@ const handleProcessSubmission = async (session) => {
 			const listOfCommentAndFiles = getListOfFormData(session, item);
 			for (let form of listOfCommentAndFiles) {
 				if (submissionId) form.append('submissionId', submissionId);
-				const response = await postSubmission(examinationSession.caseRef, form);
+				const response = await postSubmission(session.caseRef, form);
 				submissionId = response.data.submissionId;
 			}
 		}

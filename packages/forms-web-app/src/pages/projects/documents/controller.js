@@ -54,7 +54,7 @@ const getApplicationDocuments = async (req, res) => {
 		});
 	} catch (e) {
 		logger.error(e);
-		return res.render('error/unhandled-exception');
+		return res.status(500).render('error/unhandled-exception');
 	}
 };
 

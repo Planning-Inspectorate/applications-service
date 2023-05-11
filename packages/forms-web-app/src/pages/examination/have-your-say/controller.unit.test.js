@@ -18,6 +18,7 @@ describe('pages examination have-your-say', () => {
 		});
 		it('should render the correct data for the view', () => {
 			expect(res.render).toHaveBeenCalledWith('examination/have-your-say/view.njk', {
+				activeId: 'project-have-your-say',
 				startNowUrl: 'have-an-interested-party-number'
 			});
 		});

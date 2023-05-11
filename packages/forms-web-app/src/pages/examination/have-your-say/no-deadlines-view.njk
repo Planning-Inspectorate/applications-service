@@ -1,17 +1,11 @@
-{% extends "layouts/default.njk" %}
-
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% extends "projects/components/project-pages-template.njk" %}
 
 {% set pageTitle = 'No Deadlines - Have your say during the Examination of the application' %}
-{% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<h1 class="govuk-heading-l">
-				Have your say during the examination of the application
-			</h1>
-			<p>
-				You cannot submit anything as there are no open deadlines.
-			</p>
-		</div>
-	</div>
+{% set title = 'Have your say during the examination of the application' %}
+{% set h1Style = 'govuk-heading-l' %}
+
+{% block pageContent %}
+	<p>
+		You cannot submit anything as there are no open deadlines.
+	</p>
 {% endblock %}

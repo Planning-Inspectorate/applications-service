@@ -1,7 +1,7 @@
 const express = require('express');
 
 const startController = require('../../controllers/register/start');
-const { asyncRoute } = require('../../utils/async-route');
+const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router();
 

@@ -29,8 +29,8 @@ jest.mock('./fromDataMappers', () => ({
 describe('#process', () => {
 	describe('When processing a submission', () => {
 		const session = {
+			caseRef: 'mock-case-ref',
 			examination: {
-				caseRef: 'mock-case-ref',
 				submissionItems: ['mock submission item', 'another mock submission item']
 			}
 		};
