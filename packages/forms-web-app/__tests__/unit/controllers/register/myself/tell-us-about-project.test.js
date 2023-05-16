@@ -135,51 +135,29 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					comments: 'test',
-					origin: 'sanitise-form-post'
+					comments: 'test'
 				}
 			};
 
-			let resValue = '';
-			const mockResult = {
-				send: (value) => {
-					resValue = value;
-				}
-			};
+			await commentsController.postComments(mockRequest, res);
 
-			await commentsController.postComments(mockRequest, mockResult);
-
-			expect(resValue).toEqual({
-				error: false,
-				url: `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`
-			});
+			expect(res.redirect).toBeCalledWith(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
 		});
 
 		test('on success edit mode', async () => {
 			const mockRequest = {
 				...req,
 				body: {
-					comments: 'test',
-					origin: 'sanitise-form-post'
+					comments: 'test'
 				},
 				query: {
 					mode: 'edit'
 				}
 			};
 
-			let resValue = '';
-			const mockResult = {
-				send: (value) => {
-					resValue = value;
-				}
-			};
+			await commentsController.postComments(mockRequest, res);
 
-			await commentsController.postComments(mockRequest, mockResult);
-
-			expect(resValue).toEqual({
-				error: false,
-				url: `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`
-			});
+			expect(res.redirect).toBeCalledWith(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
 		});
 
 		test('on error', async () => {
@@ -187,24 +165,16 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 				...req,
 				body: {
 					errorSummary: [{ text: 'There were errors here', href: '#' }],
-					errors: { a: 'b' },
-					origin: 'sanitise-form-post'
+					errors: { a: 'b' }
 				}
 			};
 
-			let resValue = '';
-			const mockResult = {
-				send: (value) => {
-					resValue = value;
-				}
-			};
+			await commentsController.postComments(mockRequest, res);
 
-			await commentsController.postComments(mockRequest, mockResult);
-
-			expect(resValue).toEqual({
-				error: true,
-				url: VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT
-			});
+			expect(res.render).toBeCalledWith(
+				VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT,
+				expect.objectContaining(mockRequest.body)
+			);
 		});
 	});
 });
