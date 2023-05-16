@@ -3,7 +3,6 @@ const { addKeyValueToActiveSubmissionItem } = require('../_session/submission-it
 const { getPageData } = require('./utils/get-page-data');
 const { getRedirectRoute } = require('./utils/get-redirect-route');
 const { getSubmissionItemPageUrl } = require('../_utils/get-submission-item-page-url');
-const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post.js');
 
 const getEnterComment = async (req, res) => {
 	try {
@@ -19,14 +18,9 @@ const getEnterComment = async (req, res) => {
 const postEnterComment = async (req, res) => {
 	try {
 		const { body, query, session } = req;
-		const { errors = {}, errorSummary = [], origin } = body;
-		const originIsSanitiseFormPost = origin === 'sanitise-form-post';
+		const { errors = {}, errorSummary = [] } = body;
 		const pageData = getPageData(query, session);
 		if (errors[pageData.id] || Object.keys(errors).length > 0) {
-			if (originIsSanitiseFormPost) {
-				return res.send(new sanitiseFormPostResponse(true, pageData.url));
-			}
-
 			return res.render(pageData.view, {
 				...pageData,
 				errors,
@@ -40,10 +34,6 @@ const postEnterComment = async (req, res) => {
 		addKeyValueToActiveSubmissionItem(session, pageData.sessionId, enterCommentValue);
 
 		const redirectUrl = getSubmissionItemPageUrl(query, getRedirectRoute(session));
-
-		if (originIsSanitiseFormPost) {
-			return res.send(new sanitiseFormPostResponse(false, redirectUrl));
-		}
 
 		return res.redirect(redirectUrl);
 	} catch (error) {
