@@ -1,9 +1,9 @@
-import { PO_HaveYourSay } from '../../../pageObject/Register-to-have-your-say/PO_HaveYourSay';
+import { PO_HaveYourSay } from '../pageObject/Register-to-have-your-say/PO_HaveYourSay';
 const haveYourSay = new PO_HaveYourSay();
 
 describe('User registers to have their say and submits a comment against a project', () => {
 	it('Navigate to projects search page', () => {
-		cy.visit('https://applications-service-test.planninginspectorate.gov.uk/project-search/');
+		cy.visit('/project-search/');
 	});
 
 	it('Finds and clicks on a project', () => {

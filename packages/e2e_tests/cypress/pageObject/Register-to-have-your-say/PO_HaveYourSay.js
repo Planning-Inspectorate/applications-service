@@ -64,8 +64,6 @@ export class PO_HaveYourSay {
 		return cy.get(':nth-child(13) > a').click(); // Tell us what you thought about this service
 	}
 
-	// Jacob's methods
-
 	findAndClickLink(string) {
 		cy.get('.govuk-link').contains(string).click();
 	}
