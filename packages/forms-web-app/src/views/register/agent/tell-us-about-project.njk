@@ -7,18 +7,6 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-{% block script %}
-  {% set initiateScriptsConfig = (initiateScriptsConfig.push(
-    {
-      callback: "
-        var sanitise = new appScripts.sanitiseForm();
-        sanitise.form('form', ['comment']);
-      ",
-      src: "/public/scripts/sanitiseForm.script.js"
-    }
-  ), initiateScriptsConfig) %}
-{% endblock %}
-
 {% set title = "What do you want to tell us about the proposed project? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% if errors %}

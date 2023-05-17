@@ -127,15 +127,21 @@ describe('controllers/register/common/full-name/controller', () => {
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } },
 					body: {
 						errors: { ['full-name']: 'an error' },
-						errorSummary: [{ text: 'Error summary', href: '#' }],
-						origin: 'sanitise-form-post'
+						errorSummary: [{ text: 'Error summary', href: '#' }]
 					}
 				};
 				beforeEach(() => {
 					postFullName(req, res);
 				});
 				it('should render full name page with the error', () => {
-					expect(res.send).toHaveBeenCalledWith({ error: true, url: 'register/common/full-name' });
+					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
+						errors: { ['full-name']: 'an error' },
+						errorSummary: [{ text: 'Error summary', href: '#' }],
+						pageTitle:
+							'What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						hint: `<p>We will publish this on the website along with your comments about the project.</p>
+                <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
+					});
 				});
 			});
 			describe('and the user has submitted a full name for selected myself and is in edit mode', () => {

@@ -6,7 +6,6 @@ const {
 	}
 } = require('../../../../lib/views');
 const { getKeyFromUrl } = require('../get-key-from-url');
-const { sanitiseFormPostResponse } = require('../../../../utils/sanitise-form-post');
 const { getRedirectUrl } = require('./get-redirect-url');
 const { viewModel } = require('./viewModel');
 const logger = require('../../../../lib/logger');
@@ -31,16 +30,11 @@ const getFullName = (req, res) => {
 const postFullName = (req, res) => {
 	try {
 		const { body, query, originalUrl, session } = req;
-		const { errors = {}, errorSummary = [], origin } = body;
+		const { errors = {}, errorSummary = [] } = body;
 
 		const key = getKeyFromUrl(originalUrl);
-		const originIsSanitiseFormPost = origin === 'sanitise-form-post';
 
 		if (errors[fullNameKey] || Object.keys(errors).length > 0) {
-			if (originIsSanitiseFormPost) {
-				return res.send(new sanitiseFormPostResponse(true, FULL_NAME_VIEW));
-			}
-
 			return res.render(FULL_NAME_VIEW, {
 				errors,
 				errorSummary,
@@ -51,8 +45,7 @@ const postFullName = (req, res) => {
 		setSession(session, key, fullNameKey, body[fullNameKey]);
 		const redirectUrl = getRedirectUrl(query, key);
 
-		if (originIsSanitiseFormPost) return res.send(new sanitiseFormPostResponse(false, redirectUrl));
-		else return res.redirect(redirectUrl);
+		return res.redirect(redirectUrl);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

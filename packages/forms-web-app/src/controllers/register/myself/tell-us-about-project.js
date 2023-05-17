@@ -1,5 +1,4 @@
 const { VIEW } = require('../../../lib/views');
-const { sanitiseFormPostResponse } = require('../../../utils/sanitise-form-post.js');
 const {
 	postRegistrationData,
 	postCommentsData
@@ -13,10 +12,9 @@ exports.getComments = (req, res) => {
 
 exports.postComments = async (req, res) => {
 	const { body } = req;
-	const { comment, errors = {}, errorSummary = [], origin } = body;
+	const { comment, errors = {}, errorSummary = [] } = body;
 
 	const hasErrors = !!errors.comment || Object.keys(errors).length > 0;
-	const originIsSanitiseFormPost = origin === 'sanitise-form-post';
 
 	const routes = {
 		checkYourAnswers: `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`,
@@ -25,12 +23,6 @@ exports.postComments = async (req, res) => {
 	};
 
 	if (hasErrors) {
-		if (originIsSanitiseFormPost) {
-			res.send(new sanitiseFormPostResponse(true, routes.tellUsAboutProject));
-
-			return;
-		}
-
 		res.render(routes.tellUsAboutProject, {
 			errors,
 			errorSummary,
@@ -44,12 +36,6 @@ exports.postComments = async (req, res) => {
 
 	if (mode === 'edit') {
 		req.session.comment = comment;
-
-		if (originIsSanitiseFormPost) {
-			res.send(new sanitiseFormPostResponse(false, routes.checkYourAnswers));
-
-			return;
-		}
 
 		res.redirect(routes.checkYourAnswers);
 
@@ -81,23 +67,11 @@ exports.postComments = async (req, res) => {
 
 			if (commentsData) await postCommentsData(ipRefNo, commentsData);
 
-			if (originIsSanitiseFormPost) {
-				res.send(new sanitiseFormPostResponse(false, routes.registrationComplete));
-
-				return;
-			}
-
 			res.redirect(routes.registrationComplete);
 
 			return;
 		} else {
 			req.session.mode = 'final';
-
-			if (originIsSanitiseFormPost) {
-				res.send(new sanitiseFormPostResponse(false, routes.checkYourAnswers));
-
-				return;
-			}
 
 			res.redirect(routes.checkYourAnswers);
 

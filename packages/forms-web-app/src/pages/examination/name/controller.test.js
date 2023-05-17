@@ -90,34 +90,33 @@ describe('examination/name/controller', () => {
 					});
 				});
 
-				it('Should send the sanitized response with errors', () => {
+				it('Should send the response with errors', () => {
 					req.body = {
-						...mockErrorValue,
-						origin: 'sanitise-form-post'
+						...mockErrorValue
 					};
-					getPageData.mockReturnValue({
+					const pageData = {
 						id: 'a',
 						text: 'mock page data',
 						view: 'mock name view',
 						url: '/mock-url'
-					});
+					};
+					getPageData.mockReturnValue(pageData);
 					postName(req, res);
 
-					expect(res.send).toHaveBeenCalledWith({
-						error: true,
-						url: '/mock-url'
+					expect(res.render).toHaveBeenCalledWith(pageData.view, {
+						...pageData,
+						...mockErrorValue
 					});
 				});
 			});
 
-			describe('and there is a sanitised request', () => {
+			describe('and there is a request', () => {
 				const mockPageDataValue = { id: 'examination-name' };
 				const mockPageDataIdValue = 'name value';
 				const mockRedirectUrl = 'redirect url';
 				beforeEach(() => {
 					req.body = {
-						[mockPageDataValue.id]: mockPageDataIdValue,
-						origin: 'sanitise-form-post'
+						[mockPageDataValue.id]: mockPageDataIdValue
 					};
 					getPageData.mockReturnValue({ id: 'examination-name' });
 					setDeadlineDetailsName.mockReturnValue();
@@ -133,11 +132,8 @@ describe('examination/name/controller', () => {
 				it('should call the functions', () => {
 					expect(getRedirectUrl).toHaveBeenCalledWith({ text: 'mock query' });
 				});
-				it('should sanitised response to redirect to the next page to be sent', () => {
-					expect(res.send).toHaveBeenCalledWith({
-						error: false,
-						url: 'redirect url'
-					});
+				it('should response to redirect to the next page to be sent', () => {
+					expect(res.redirect).toHaveBeenCalledWith('redirect url');
 				});
 			});
 
