@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl", "linux-musl-arm64-openssl-3.0.x", "windows"]
 }
 
@@ -12,9 +12,9 @@ datasource db {
 }
 
 model Project {
-  id                                          Int      @unique @default(autoincrement())
-  caseId                                      Int      @unique
-  caseReference                               String   @id
+  id                                          Int       @unique @default(autoincrement())
+  caseId                                      Int       @unique
+  caseReference                               String    @id
   projectName                                 String?
   projectDescription                          String?
   publishStatus                               String?
@@ -64,4 +64,43 @@ model Project {
   examinationTimetableId                      Int?
   createdAt                                   DateTime? @default(now())
   modifiedAt                                  DateTime? @default(now())
+}
+
+model Document {
+  id                     Int       @unique @default(autoincrement())
+  documentId             String    @id
+  caseRef                String?
+  documentReference      String?
+  version                String
+  examinationRefNo       String?
+  filename               String
+  originalFilename       String
+  size                   Int
+  mime                   String?
+  documentURI            String
+  path                   String?
+  virusCheckStatus       String?
+  fileMD5                String?
+  dateCreated            String
+  lastModified           String?
+  caseType               String?
+  documentStatus         String?
+  redactedStatus         String?
+  publishedStatus        String?
+  datePublished          String?
+  documentType           String?
+  securityClassification String?
+  sourceSystem           String?
+  origin                 String?
+  owner                  String?
+  author                 String?
+  representative         String?
+  description            String?
+  stage                  String?
+  filter1                String?
+  filter2                String?
+  createdAt              DateTime? @default(now())
+  modifiedAt             DateTime? @default(now())
+
+  @@index([caseRef])
 }
