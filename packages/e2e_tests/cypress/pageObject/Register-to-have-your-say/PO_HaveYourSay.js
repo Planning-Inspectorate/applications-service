@@ -64,14 +64,6 @@ export class PO_HaveYourSay {
 		return cy.get(':nth-child(13) > a').click(); // Tell us what you thought about this service
 	}
 
-	findAndClickLink(string) {
-		cy.get('.govuk-link').contains(string).click();
-	}
-
-	findAndClickButton(string) {
-		cy.get('.govuk-button').contains(string).click();
-	}
-
 	findAndSelectRadioButton(string) {
 		cy.get('[type="radio"]').check(string).click();
 	}

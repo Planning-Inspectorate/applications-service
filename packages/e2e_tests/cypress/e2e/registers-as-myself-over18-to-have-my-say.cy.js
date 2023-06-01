@@ -1,5 +1,10 @@
 import { PO_HaveYourSay } from '../pageObject/Register-to-have-your-say/PO_HaveYourSay';
+import { PO_ProjectSearch } from '../pageObject/Search-and-project-pages/PO_ProjectSearch';
+import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
+
 const haveYourSay = new PO_HaveYourSay();
+const projectSearch = new PO_ProjectSearch();
+const projectPage = new PO_ProjectPage();
 
 describe('User registers to have their say and submits a comment against a project', () => {
 	it('Navigate to projects search page', () => {
@@ -7,35 +12,35 @@ describe('User registers to have their say and submits a comment against a proje
 	});
 
 	it('Finds and clicks on a project', () => {
-		haveYourSay.findAndClickLink('North Lincolnshire Green Energy Park');
+		projectSearch.findAndClickLink('North Lincolnshire Green Energy Park');
 	});
 
 	it('Clicks to register and have their say', () => {
-		haveYourSay.findAndClickButton('Register to have your say');
+		projectPage.findAndClickButton('Register to have your say');
 	});
 
 	it('Clicks to start the registration journey', () => {
-		haveYourSay.findAndClickButton('Start now');
+		projectPage.findAndClickButton('Start now');
 	});
 
 	it('Chooses to register as myself and clicks continue', () => {
 		haveYourSay.findAndSelectRadioButton('myself');
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Enters their full name and clicks continue', () => {
 		haveYourSay.findFieldAndEnterText('full-name', 'John Tester');
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Confirms they are over 18 and clicks continue', () => {
 		haveYourSay.findAndSelectRadioButton('yes');
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Enters their email address and clicks continue', () => {
 		haveYourSay.findFieldAndEnterText('email', 'pinsemail@examplePINS.com');
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Enters their address details and clicks continue', () => {
@@ -44,12 +49,12 @@ describe('User registers to have their say and submits a comment against a proje
 		haveYourSay.findFieldAndEnterText('line3', 'London');
 		haveYourSay.findFieldAndEnterText('postcode', 'SW1P 4DF');
 		haveYourSay.findFieldAndEnterText('country', 'United Kingdomw');
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Enters their telephone number and clicks continue', () => {
 		haveYourSay.findFieldAndEnterText('telephone', '07743646926');
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Adds a comment against a project and clicks continue', () => {
@@ -57,15 +62,15 @@ describe('User registers to have their say and submits a comment against a proje
 			'comment',
 			'This is a test comment against the North Lincolnshire project.'
 		);
-		haveYourSay.findAndClickButton('Continue');
+		projectPage.findAndClickButton('Continue');
 	});
 
 	it('Register their answers and comment against a project', () => {
-		haveYourSay.findAndClickButton('Accept and continue');
+		projectPage.findAndClickButton('Accept and continue');
 	});
 
 	it('Agrees to the the declarations', () => {
-		haveYourSay.findAndClickButton('Accept and continue');
+		projectPage.findAndClickButton('Accept and continue');
 	});
 
 	it('User sees the registration complete message', () => {
