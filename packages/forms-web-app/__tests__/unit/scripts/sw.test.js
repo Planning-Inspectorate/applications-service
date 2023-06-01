@@ -65,7 +65,13 @@ describe('scripts/sw', () => {
 				},
 				clone: () => ({
 					url: 'http://example.com/example',
-					body: 'first=one&second=two'
+					formData: jest.fn().mockResolvedValue({
+						entries: () =>
+							new Map([
+								['first', 'one'],
+								['second', 'two']
+							])
+					})
 				})
 			},
 			respondWith: mockResponseWith
@@ -97,7 +103,13 @@ describe('scripts/sw', () => {
 				},
 				clone: () => ({
 					url: 'http://example.com/example',
-					body: ''
+					formData: jest.fn().mockResolvedValue({
+						entries: () =>
+							new Map([
+								['first', 'one'],
+								['second', 'two']
+							])
+					})
 				})
 			},
 			respondWith: mockResponseWith
@@ -122,7 +134,13 @@ describe('scripts/sw', () => {
 				},
 				clone: () => ({
 					url: 'http://example.com/example',
-					body: ''
+					formData: jest.fn().mockResolvedValue({
+						entries: () =>
+							new Map([
+								['first', 'one'],
+								['second', 'two']
+							])
+					})
 				})
 			},
 			respondWith: mockResponseWith
@@ -147,7 +165,13 @@ describe('scripts/sw', () => {
 				},
 				clone: () => ({
 					url: 'http://not.example.com/example',
-					body: ''
+					formData: jest.fn().mockResolvedValue({
+						entries: () =>
+							new Map([
+								['first', 'one'],
+								['second', 'two']
+							])
+					})
 				})
 			},
 			respondWith: mockResponseWith
