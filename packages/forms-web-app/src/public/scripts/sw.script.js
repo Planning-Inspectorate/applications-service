@@ -24,16 +24,15 @@ function handleFormPost(event) {
 		(async () => {
 			try {
 				const request = event.request.clone();
-
-				const rawFormData = await new Response(request.body).text();
-				const formData = Object.fromEntries(new URLSearchParams(rawFormData).entries());
+				const formData = await request.formData();
+				const formDataValues = Object.fromEntries(formData.entries());
 
 				return fetch(request.url, {
 					method: 'POST',
 					headers: {
 						'content-type': 'application/json'
 					},
-					body: JSON.stringify(formData),
+					body: JSON.stringify(formDataValues),
 					redirect: 'manual'
 				});
 			} catch (error) {
