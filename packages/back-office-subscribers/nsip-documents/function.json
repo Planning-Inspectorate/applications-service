@@ -1,0 +1,21 @@
+{
+	"bindings": [
+		{
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"name": "message",
+			"topicName": "nsip-documents",
+			"subscriptionName": "applications-nsip-documents-subscription",
+			"connection": "ServiceBusConnection",
+			"accessRights": "listen"
+		},
+		{
+			"name": "document",
+			"type": "sql",
+			"direction": "out",
+			"commandText": "dbo.Document",
+			"connectionStringSetting": "SqlConnectionString"
+		}
+	],
+	"disabled": false
+}
