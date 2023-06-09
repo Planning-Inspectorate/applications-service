@@ -12,6 +12,13 @@ parameters:
     displayName: Build Back Office Subscriber Functions
     default: true
 
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+
 resources:
   repositories:
     - repository: templates
@@ -33,18 +40,9 @@ extends:
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
-              script: cd packages/applications-service-api && npx prisma generate
-          - template: ../steps/node_script.yml
-            parameters:
-              condition: ne(variables['Build.SourceBranchName'], 'main')
-              script: npm run commitlint
-          - template: ../steps/node_script.yml
-            parameters:
-              condition: succeededOrFailed()
               script: npm run lint
           - template: ../steps/node_script.yml
             parameters:
-              condition: succeededOrFailed()
               script: npm run test:cov
           - template: ../steps/check_changed_files.yml
             parameters:
