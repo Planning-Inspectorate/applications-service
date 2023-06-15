@@ -10,7 +10,7 @@ const {
 	getFilters
 } = require('../services/representation.service');
 
-const { getDocumentsByDataId } = require('../services/document.service');
+const { getDocumentsByDataId } = require('../services/document.ni.service');
 
 const ApiError = require('../error/apiError');
 
