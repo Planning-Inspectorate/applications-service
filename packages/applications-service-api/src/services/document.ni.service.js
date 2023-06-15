@@ -114,7 +114,15 @@ function buildDateQuery({ from, to } = {}) {
 	}
 }
 
+const getDocumentsByDataId = (dataIds) =>
+	db.Document.findAll({
+		where: {
+			dataID: { [Op.in]: dataIds }
+		}
+	});
+
 module.exports = {
 	fetchDocuments,
-	getAvailableFilters
+	getAvailableFilters,
+	getDocumentsByDataId
 };

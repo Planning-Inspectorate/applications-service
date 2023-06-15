@@ -1,4 +1,4 @@
-const { fetchDocuments, getAvailableFilters } = require('../services/document.v3.service');
+const { fetchDocuments, getAvailableFilters } = require('../services/document.ni.service');
 const config = require('../lib/config');
 const toCamelCase = require('lodash.camelcase');
 const { mapDocumentFilterLabel } = require('../utils/documentFilterLabelMapper');

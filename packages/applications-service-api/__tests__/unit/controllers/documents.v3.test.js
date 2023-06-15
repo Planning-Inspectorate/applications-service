@@ -8,10 +8,10 @@ const {
 	DB_FILTERS
 } = require('../../__data__/documents');
 
-jest.mock('../../../src/services/document.v3.service');
-const fetchDocumentsMock = require('../../../src/services/document.v3.service').fetchDocuments;
+jest.mock('../../../src/services/document.ni.service');
+const fetchDocumentsMock = require('../../../src/services/document.ni.service').fetchDocuments;
 const getAvailableFiltersMock =
-	require('../../../src/services/document.v3.service').getAvailableFilters;
+	require('../../../src/services/document.ni.service').getAvailableFilters;
 
 describe('documentsV3 controller', () => {
 	const res = httpMocks.createResponse();
