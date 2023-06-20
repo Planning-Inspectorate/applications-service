@@ -34,6 +34,7 @@ services:
     environment:
       APP_APPLICATIONS_BASE_URL: http://forms-web-app:9004
       BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES: EN0110004,EN0310004
+      BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES: EN0100085,EN0110004,EN0310004
       DATABASE_URL: sqlserver://mssql:1433;database=pins_applications_development;user=sa;password=dbPASSw0_rd;trustServerCertificate=true
       DOCS_API_PATH: /opt/app/packages/applications-service-api/api
       DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/

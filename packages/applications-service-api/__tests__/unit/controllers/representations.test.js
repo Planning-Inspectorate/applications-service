@@ -11,7 +11,7 @@ const {
 	getRepresentationById
 } = require('../../../src/services/representation.service');
 
-const { getDocumentsByDataId } = require('../../../src/services/document.ni.service');
+const { getDocumentsByDataId } = require('../../../src/repositories/document.ni.repository');
 
 const mockData = {
 	count: 1,
@@ -91,7 +91,7 @@ jest.mock('../../../src/lib/config.js', () => ({
 }));
 
 jest.mock('../../../src/services/representation.service');
-jest.mock('../../../src/services/document.ni.service');
+jest.mock('../../../src/repositories/document.ni.repository');
 
 getFilters.mockImplementation(() => Promise.resolve([]));
 
