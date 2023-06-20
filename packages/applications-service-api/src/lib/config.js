@@ -17,6 +17,11 @@ module.exports = {
 					process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES
 				)
 			}
+		},
+		documents: {
+			getDocuments: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES)
+			}
 		}
 	},
 	db: {},
