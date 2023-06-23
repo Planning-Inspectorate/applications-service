@@ -1,4 +1,87 @@
-class PO_ExaminationTimetable {
+export class PO_ExaminationTimetable {
+	elements = {
+		govukLinkHaveYourSay: () => cy.get('a.govuk-button'),
+		startNow: () => cy.get('a[href*="interested-party-number"]'),
+		radioButton: () => cy.get('[type="radio"]'),
+		continueButton: () => cy.get('[data-cy="button-submit-and-continue"]'),
+		firstDeadline: () => cy.get('#choose-deadline'),
+		firstDeadlineItem: () => cy.get('#examination-select-deadline'),
+		commentTextArea: () => cy.get('#examination-enter-comment'),
+		continueButtonFileUpload: () => cy.get('#continue-form-button'),
+		button: () => cy.get('.govuk-button'),
+		titleText: () => cy.get('.govuk-panel__title')
+	};
+
+	clickLink() {
+		this.elements.govukLinkHaveYourSay().click();
+	}
+
+	clickStartNowButton() {
+		this.elements.startNow().click();
+	}
+
+	findAndSelectRadioOption(string) {
+		this.elements.radioButton().check(string).click();
+	}
+
+	clickContinueButton() {
+		this.elements.continueButton().click();
+	}
+
+	clickContinueUploadFile() {
+		this.elements.continueButtonFileUpload().click();
+	}
+
+	enterTextInField(inputFieldId, text) {
+		cy.get(`#${inputFieldId}`).type(text);
+	}
+
+	checkFirstRadioButton() {
+		this.elements.radioButton().first().check();
+	}
+
+	typeComment(string) {
+		this.elements.commentTextArea().type(string);
+	}
+
+	getAllAnswers() {
+		return cy.get('.govuk-summary-list__value');
+	}
+
+	checkAnswers(expectedAnswers) {
+		this.getAllAnswers().then((answers) => {
+			const myAnswers = [];
+			cy.wrap(answers)
+				.each((ans) => myAnswers.push(ans.text().trim()))
+				.then(() => {
+					console.log(myAnswers);
+					myAnswers.shift();
+					expect(expectedAnswers).to.deep.eq(myAnswers);
+				});
+		});
+	}
+
+	checkAnswersFinal(expectedAnswersFinal) {
+		this.getAllAnswers().then((answers) => {
+			const myAnswers = [];
+			cy.wrap(answers)
+				.each((ans) => myAnswers.push(ans.text().trim()))
+				.then(() => {
+					console.log(myAnswers);
+					myAnswers.pop();
+					expect(expectedAnswersFinal).to.deep.eq(myAnswers);
+				});
+		});
+	}
+
+	clickButton(string) {
+		this.elements.button().contains(string).click();
+	}
+
+	confirmTitleTextDisplays(string) {
+		this.elements.titleText().contains(string).should('be.visible');
+	}
+
 	acceptCookiesButton() {
 		return cy.get('[data-cy="cookie-banner-accept-analytics-cookies"]').click();
 	}
@@ -140,5 +223,3 @@ class PO_ExaminationTimetable {
 		return cy.get('.govuk-panel__title');
 	}
 }
-
-export default PO_ExaminationTimetable;
