@@ -8,6 +8,7 @@ const projectPage = new PO_ProjectPage();
 
 describe('User registers to have their say and submits a comment against a project', () => {
 	it('Navigate to projects search page', () => {
+		cy.clearCookies();
 		cy.visit('/project-search/');
 	});
 

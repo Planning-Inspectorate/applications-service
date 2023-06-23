@@ -15,6 +15,7 @@ module.exports = defineConfig({
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
 		pageLoadTimeout: 10000,
+		defaultCommandTimeout: 10000,
 		testIsolation: false,
 		env: {
 			commandDelay: 300
