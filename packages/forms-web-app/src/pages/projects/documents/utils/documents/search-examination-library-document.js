@@ -8,7 +8,9 @@ const searchExaminationLibraryDocument = async (case_ref) => {
 		searchTerm: examinationLibraryDocumentSearchTerm
 	});
 	const { data } = await searchDocumentsV3(examinationLibraryDocumentBody);
-	return data?.documents[0];
+	return data?.documents.filter(
+		(document) => document.type?.toLowerCase() === examinationLibraryDocumentSearchTerm
+	)[0];
 };
 
 module.exports = { searchExaminationLibraryDocument };
