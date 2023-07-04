@@ -68,7 +68,9 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 			};
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+			);
 		});
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}' if comments is provided and mode is edit`, async () => {
 			const mockRequest = {
@@ -85,7 +87,9 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 			};
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}' if comments is provided and mode is draft`, async () => {
@@ -104,7 +108,9 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 			};
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}`
+			);
 		});
 
 		it('should re-render the template with errors if there is any validation error', async () => {
@@ -137,7 +143,9 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toBeCalledWith(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toBeCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+			);
 		});
 
 		test('on success edit mode', async () => {
@@ -153,7 +161,9 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toBeCalledWith(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toBeCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+			);
 		});
 
 		test('on error', async () => {

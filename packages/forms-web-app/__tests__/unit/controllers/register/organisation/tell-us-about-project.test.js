@@ -69,7 +69,7 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
 			await commentsController.postComments(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
 			);
 		});
 
@@ -89,7 +89,9 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
 			};
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`
+			);
 		});
 
 		it('should re-render the template with errors if there is any validation error', async () => {
@@ -122,7 +124,9 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
 
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toBeCalledWith(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toBeCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
+			);
 		});
 
 		test('on success edit mode', async () => {
@@ -138,7 +142,9 @@ describe('controllers/register/organisation/tell-us-about-project', () => {
 
 			await commentsController.postComments(mockRequest, res);
 
-			expect(res.redirect).toBeCalledWith(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toBeCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`
+			);
 		});
 
 		test('on error', async () => {

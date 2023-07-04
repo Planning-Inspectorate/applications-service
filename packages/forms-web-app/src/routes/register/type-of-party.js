@@ -5,7 +5,7 @@ const { validationErrorHandler } = require('../../validators/validation-error-ha
 
 const { rules: typeOfPartyRules } = require('../../validators/register/type-of-party');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get('/who-registering-for', typeOfPartyController.getTypeOfParty);
 

@@ -44,7 +44,7 @@ const postTelephoneNumber = (req, res) => {
 
 		setSession(session, key, telephoneNumberKey, body[telephoneNumberKey]);
 
-		return res.redirect(getRedirectUrl(query, key));
+		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(query, key)}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

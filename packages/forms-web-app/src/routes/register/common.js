@@ -17,7 +17,7 @@ const registrationSavedController = require('../../controllers/register/common/r
 const declarationController = require('../../controllers/register/common/declaration/controller');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get('/full-name', fullNameController.getFullName);
 router.post(

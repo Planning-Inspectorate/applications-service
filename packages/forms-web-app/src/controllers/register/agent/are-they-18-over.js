@@ -20,9 +20,9 @@ exports.postOver18 = (req, res) => {
 
 	req.session.behalfRegdata.representee['over-18'] = over18;
 
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS}`);
-	}
+	const redirectUrl =
+		req.query.mode === 'edit'
+			? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS
+			: VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS;
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

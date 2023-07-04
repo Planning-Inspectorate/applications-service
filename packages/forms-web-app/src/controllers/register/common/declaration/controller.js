@@ -50,7 +50,7 @@ const postDeclaration = async (req, res) => {
 			await postCommentsData(ipRefNo, commentsData);
 		}
 
-		return res.redirect(getRedirectUrl(key));
+		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
 		logger.error(`Could not Post declaration, internal error occurred ${e}`);
 		return res.status(500).render('error/unhandled-exception');

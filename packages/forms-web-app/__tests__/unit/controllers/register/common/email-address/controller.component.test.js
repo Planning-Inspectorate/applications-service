@@ -7,13 +7,14 @@ describe('controllers/register/common/email-address/controller', () => {
 	describe('#getEmailAddress', () => {
 		describe('When getting the registration email page', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/email',
 					session: { mySelfRegdata: { ['email']: 'mock email' } }
 				};
 				beforeEach(() => {
@@ -29,7 +30,7 @@ describe('controllers/register/common/email-address/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/email',
 					session: { orgRegdata: { ['email']: 'mock email' } }
 				};
 				beforeEach(() => {
@@ -45,7 +46,7 @@ describe('controllers/register/common/email-address/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/email',
 					session: { behalfRegdata: { representor: { ['email']: 'mock email' } } }
 				};
 				beforeEach(() => {
@@ -61,7 +62,11 @@ describe('controllers/register/common/email-address/controller', () => {
 			});
 		});
 		describe('and there is an error', () => {
-			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
 				expect(() => getEmailAddress(req, res)).toThrowError(
@@ -74,6 +79,7 @@ describe('controllers/register/common/email-address/controller', () => {
 	describe('#postEmailAddress', () => {
 		describe('When posting the registration email address', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res),
@@ -91,7 +97,7 @@ describe('controllers/register/common/email-address/controller', () => {
 			});
 			describe('and there is an error in the form', () => {
 				const req = {
-					originalUrl: '/register/myself/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/email',
 					session: { mySelfRegdata: { ['email']: 'mock email address' } },
 					body: {
 						errors: { ['email']: 'an error' },
@@ -119,7 +125,7 @@ describe('controllers/register/common/email-address/controller', () => {
 			});
 			describe('and the user has submitted a email address for selected myself and is in edit mode', () => {
 				const req = {
-					originalUrl: '/register/myself/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/email',
 					session: { mySelfRegdata: { ['email']: 'mock email address' } },
 					body: {
 						['email']: 'mock email address'
@@ -130,12 +136,14 @@ describe('controllers/register/common/email-address/controller', () => {
 					postEmailAddress(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/check-answers'
+					);
 				});
 			});
 			describe('and the user has submitted a email address for selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/email',
 					session: { mySelfRegdata: { ['email']: 'mock email address' } },
 					body: {
 						['email']: 'mock email address'
@@ -146,12 +154,14 @@ describe('controllers/register/common/email-address/controller', () => {
 					postEmailAddress(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/address');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/address'
+					);
 				});
 			});
 			describe('and the user has submitted a email address for selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/email',
 					session: { orgRegdata: { ['email']: 'mock email address' } },
 					body: {
 						['email']: 'mock email address'
@@ -162,12 +172,14 @@ describe('controllers/register/common/email-address/controller', () => {
 					postEmailAddress(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/organisation/address');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/organisation/address'
+					);
 				});
 			});
 			describe('and the user has submitted a email address for selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/email',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/email',
 					session: { behalfRegdata: { representor: { ['email']: 'mock email address' } } },
 					body: {
 						['email']: 'mock email address'
@@ -178,7 +190,9 @@ describe('controllers/register/common/email-address/controller', () => {
 					postEmailAddress(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/agent/telephone-number');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/agent/telephone-number'
+					);
 				});
 			});
 		});

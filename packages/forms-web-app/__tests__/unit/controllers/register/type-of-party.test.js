@@ -67,7 +67,9 @@ describe('controllers/register/type-of-party', () => {
 			};
 			await typeOfPartyController.postTypeOfParty(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.FULL_NAME}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.FULL_NAME}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.FULL_NAME}' if 2nd option is selected`, async () => {
@@ -80,7 +82,9 @@ describe('controllers/register/type-of-party', () => {
 			};
 			await typeOfPartyController.postTypeOfParty(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.FULL_NAME}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.FULL_NAME}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.FULL_NAME}' if 3rd option is selected`, async () => {
@@ -93,7 +97,9 @@ describe('controllers/register/type-of-party', () => {
 			};
 			await typeOfPartyController.postTypeOfParty(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.FULL_NAME}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.FULL_NAME}`
+			);
 		});
 
 		it('should re-render the template with errors if there is any validation error', async () => {

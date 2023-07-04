@@ -46,7 +46,9 @@ describe('controllers/register/agent/name-of-organisation', () => {
 			};
 			await organisationNameController.postOrganisationName(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.EMAIL}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.EMAIL}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

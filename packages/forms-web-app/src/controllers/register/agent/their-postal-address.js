@@ -23,9 +23,11 @@ exports.postAddress = (req, res) => {
 	req.session.behalfRegdata.representee.address.line3 = body.line3;
 	req.session.behalfRegdata.representee.address.postcode = body.postcode;
 	req.session.behalfRegdata.representee.address.country = body.country;
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL}`);
-	}
+
+	const redirectUrl =
+		req.query.mode === 'edit'
+			? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS
+			: VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL;
+
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

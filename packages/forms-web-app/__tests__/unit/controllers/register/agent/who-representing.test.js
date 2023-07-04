@@ -43,7 +43,9 @@ describe('controllers/register/agent/who-representing', () => {
 			};
 			await representingForController.postRepresentingFor(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}' if representing-for is changed to person`, async () => {
@@ -63,7 +65,9 @@ describe('controllers/register/agent/who-representing', () => {
 			};
 			await representingForController.postRepresentingFor(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}' if representing-for is changed to family`, async () => {
@@ -83,7 +87,9 @@ describe('controllers/register/agent/who-representing', () => {
 			};
 			await representingForController.postRepresentingFor(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}' if representing-for is changed to organisation`, async () => {
@@ -104,7 +110,7 @@ describe('controllers/register/agent/who-representing', () => {
 			await representingForController.postRepresentingFor(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`
 			);
 		});
 
@@ -125,7 +131,9 @@ describe('controllers/register/agent/who-representing', () => {
 			};
 			await representingForController.postRepresentingFor(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}' if representing-for is organisation in normal journey`, async () => {
@@ -141,7 +149,7 @@ describe('controllers/register/agent/who-representing', () => {
 			await representingForController.postRepresentingFor(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`
 			);
 		});
 
@@ -157,7 +165,9 @@ describe('controllers/register/agent/who-representing', () => {
 			};
 			await representingForController.postRepresentingFor(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

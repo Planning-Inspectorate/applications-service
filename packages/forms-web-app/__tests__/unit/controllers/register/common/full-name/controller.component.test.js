@@ -7,13 +7,14 @@ describe('controllers/register/common/full-name/controller', () => {
 	describe('#getFullname', () => {
 		describe('When getting the registration full name page', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/full-name',
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } }
 				};
 				beforeEach(() => {
@@ -31,7 +32,7 @@ describe('controllers/register/common/full-name/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/full-name',
 					session: { orgRegdata: { ['full-name']: 'mock full name' } }
 				};
 				beforeEach(() => {
@@ -47,7 +48,7 @@ describe('controllers/register/common/full-name/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/full-name',
 					session: { behalfRegdata: { representor: { ['full-name']: 'mock full name' } } }
 				};
 				beforeEach(() => {
@@ -63,7 +64,11 @@ describe('controllers/register/common/full-name/controller', () => {
 			});
 		});
 		describe('and there is an error', () => {
-			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
 				expect(() => getFullName(req, res)).toThrowError(
@@ -76,6 +81,7 @@ describe('controllers/register/common/full-name/controller', () => {
 	describe('#postFullName', () => {
 		describe('When posting the registration full name', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res),
@@ -93,7 +99,7 @@ describe('controllers/register/common/full-name/controller', () => {
 			});
 			describe('and there is an error in the form', () => {
 				const req = {
-					originalUrl: '/register/myself/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/full-name',
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } },
 					body: {
 						errors: { ['full-name']: 'an error' },
@@ -123,7 +129,7 @@ describe('controllers/register/common/full-name/controller', () => {
 			});
 			describe('and there is an error in the form with sanitiseFormPostResponse', () => {
 				const req = {
-					originalUrl: '/register/myself/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/full-name',
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } },
 					body: {
 						errors: { ['full-name']: 'an error' },
@@ -146,7 +152,7 @@ describe('controllers/register/common/full-name/controller', () => {
 			});
 			describe('and the user has submitted a full name for selected myself and is in edit mode', () => {
 				const req = {
-					originalUrl: '/register/myself/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/full-name',
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } },
 					body: {
 						['full-name']: 'mock full name'
@@ -157,12 +163,14 @@ describe('controllers/register/common/full-name/controller', () => {
 					postFullName(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/check-answers'
+					);
 				});
 			});
 			describe('and the user has submitted a full name for selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/full-name',
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } },
 					body: {
 						['full-name']: 'mock full name'
@@ -173,12 +181,14 @@ describe('controllers/register/common/full-name/controller', () => {
 					postFullName(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/are-you-18-over');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/are-you-18-over'
+					);
 				});
 			});
 			describe('and the user has submitted a full name for selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/full-name',
 					session: { orgRegdata: { ['full-name']: 'mock full name' } },
 					body: {
 						['full-name']: 'mock full name'
@@ -189,12 +199,14 @@ describe('controllers/register/common/full-name/controller', () => {
 					postFullName(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/organisation/are-you-18-over');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/organisation/are-you-18-over'
+					);
 				});
 			});
 			describe('and the user has submitted a full name for selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/full-name',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/full-name',
 					session: { behalfRegdata: { representor: { ['full-name']: 'mock full name' } } },
 					body: {
 						['full-name']: 'mock full name'
@@ -205,7 +217,9 @@ describe('controllers/register/common/full-name/controller', () => {
 					postFullName(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/agent/name-of-organisation');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/agent/name-of-organisation'
+					);
 				});
 			});
 		});

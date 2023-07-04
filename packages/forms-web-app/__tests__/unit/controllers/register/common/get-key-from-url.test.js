@@ -5,7 +5,7 @@ const {
 describe('#getKeyFromUrl', () => {
 	describe('When getting the key form the URL', () => {
 		describe('and the key is in the list of valid keys', () => {
-			const mockUrl = '/register/myself';
+			const mockUrl = '/projects/mock-case-ref/register/myself';
 			const response = getKeyFromUrl(mockUrl);
 			it('should return the valid key', () => {
 				expect(response).toEqual('myself');
