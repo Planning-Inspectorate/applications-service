@@ -19,9 +19,10 @@ exports.postEmail = (req, res) => {
 
 	req.session.behalfRegdata.representee.email = body.email;
 
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE}`);
-	}
+	const redirectUrl =
+		req.query.mode === 'edit'
+			? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS
+			: VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE;
+
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

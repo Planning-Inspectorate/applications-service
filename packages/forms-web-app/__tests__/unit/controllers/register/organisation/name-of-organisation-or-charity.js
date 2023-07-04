@@ -47,7 +47,9 @@ describe('controllers/register/organisation/name-of-organisation-or-charity', ()
 			};
 			await organisationNameController.postOrganisationName(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.ROLE}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.ROLE}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

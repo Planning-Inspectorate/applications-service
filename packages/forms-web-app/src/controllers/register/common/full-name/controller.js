@@ -43,9 +43,8 @@ const postFullName = (req, res) => {
 		}
 
 		setSession(session, key, fullNameKey, body[fullNameKey]);
-		const redirectUrl = getRedirectUrl(query, key);
 
-		return res.redirect(redirectUrl);
+		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(query, key)}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

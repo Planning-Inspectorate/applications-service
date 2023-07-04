@@ -11,17 +11,18 @@ exports.postOrganisationName = (req, res) => {
 
 	const { errors = {}, errorSummary = [] } = body;
 	if (errors['organisation-name'] || Object.keys(errors).length > 0) {
-		res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {
+		return res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	req.session.orgRegdata['organisation-name'] = body['organisation-name'];
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.ORGANISATION.ROLE}`);
-	}
+
+	const redirectUrl =
+		req.query.mode === 'edit'
+			? VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS
+			: VIEW.REGISTER.ORGANISATION.ROLE;
+
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

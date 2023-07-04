@@ -7,13 +7,14 @@ describe('controllers/register/common/telephone-number/controller', () => {
 	describe('#getTelephoneNumber', () => {
 		describe('When getting the registration telephone number page', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/telephone-number',
 					session: { mySelfRegdata: { ['telephone']: 'mock telephone number' } }
 				};
 				beforeEach(() => {
@@ -29,7 +30,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/telephone-number',
 					session: { orgRegdata: { ['telephone']: 'mock telephone number' } }
 				};
 				beforeEach(() => {
@@ -45,7 +46,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/telephone-number',
 					session: {
 						behalfRegdata: { representor: { ['telephone']: 'mock telephone number' } }
 					}
@@ -63,7 +64,11 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			});
 		});
 		describe('and there is an error', () => {
-			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
 				expect(() => getTelephoneNumber(req, res)).toThrowError(
@@ -76,6 +81,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 	describe('#postTelephoneNumber', () => {
 		describe('When posting the registration telephone number', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res),
@@ -93,7 +99,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			});
 			describe('and there is an error in the form', () => {
 				const req = {
-					originalUrl: '/register/myself/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/telephone-number',
 					session: { mySelfRegdata: { ['telephone']: 'mock telephone number' } },
 					body: {
 						errors: { ['telephone']: 'an error' },
@@ -121,7 +127,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			});
 			describe('and the user has submitted a telephone number for selected myself and is in edit mode', () => {
 				const req = {
-					originalUrl: '/register/myself/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/telephone-number',
 					session: { mySelfRegdata: { ['telephone']: 'mock telephone number' } },
 					body: {
 						['telephone']: 'mock telephone number'
@@ -132,12 +138,14 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					postTelephoneNumber(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/check-answers'
+					);
 				});
 			});
 			describe('and the user has submitted a telephone number for selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/telephone-number',
 					session: { mySelfRegdata: { ['telephone-number']: 'mock telephone number' } },
 					body: {
 						['telephone-number']: 'mock telephone number'
@@ -148,12 +156,14 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					postTelephoneNumber(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/tell-us-about-project');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/tell-us-about-project'
+					);
 				});
 			});
 			describe('and the user has submitted a telephone number for selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/telephone-number',
 					session: { orgRegdata: { ['telephone-number']: 'mock telephone number' } },
 					body: {
 						['telephone-number']: 'mock telephone number'
@@ -164,12 +174,14 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					postTelephoneNumber(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/organisation/tell-us-about-project');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/organisation/tell-us-about-project'
+					);
 				});
 			});
 			describe('and the user has submitted a telephone number for selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/telephone-number',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/telephone-number',
 					session: {
 						behalfRegdata: { representor: { ['telephone']: 'mock telephone number' } }
 					},
@@ -182,7 +194,9 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					postTelephoneNumber(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/agent/address');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/agent/address'
+					);
 				});
 			});
 		});

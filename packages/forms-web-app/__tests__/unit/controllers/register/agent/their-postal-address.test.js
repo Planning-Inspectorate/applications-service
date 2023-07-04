@@ -57,7 +57,9 @@ describe('controllers/register/agent/their-postal-address', () => {
 			};
 			await addressController.postAddress(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

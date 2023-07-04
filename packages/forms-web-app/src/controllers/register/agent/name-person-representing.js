@@ -29,20 +29,21 @@ exports.postFullName = (req, res) => {
 	else if (representing === 'family') view = VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY;
 
 	if (errors['full-name'] || Object.keys(errors).length > 0) {
-		res.render(view, {
+		return res.render(view, {
 			representing,
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	req.session.behalfRegdata.representee['full-name'] = body['full-name'];
+	let redirectUrl = '';
 	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+		redirectUrl = VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS;
 	} else if (representing === 'organisation') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS}`);
+		redirectUrl = VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS;
 	} else {
-		res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18}`);
+		redirectUrl = VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18;
 	}
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

@@ -37,9 +37,7 @@ exports.postComments = async (req, res) => {
 	if (mode === 'edit') {
 		req.session.comment = comment;
 
-		res.redirect(routes.checkYourAnswers);
-
-		return;
+		return res.redirect(`${res.locals.baseUrl}${routes.checkYourAnswers}`);
 	} else {
 		delete body.mode;
 
@@ -67,15 +65,10 @@ exports.postComments = async (req, res) => {
 
 			if (commentsData) await postCommentsData(ipRefNo, commentsData);
 
-			res.redirect(routes.registrationComplete);
-
-			return;
+			return res.redirect(`${res.locals.baseUrl}${routes.registrationComplete}`);
 		} else {
 			req.session.mode = 'final';
-
-			res.redirect(routes.checkYourAnswers);
-
-			return;
+			return res.redirect(`${res.locals.baseUrl}${routes.checkYourAnswers}`);
 		}
 	}
 };

@@ -42,7 +42,9 @@ describe('controllers/register/confirm-email', () => {
 			};
 			await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`
+			);
 		});
 
 		it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}' if email is provided and is organisation journey`, async () => {
@@ -61,7 +63,7 @@ describe('controllers/register/confirm-email', () => {
 			await confirmEmailController.postConfirmEmail(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`
 			);
 		});
 
@@ -80,7 +82,9 @@ describe('controllers/register/confirm-email', () => {
 			);
 			await confirmEmailController.postConfirmEmail(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`
+			);
 		});
 
 		it(`'should render '/${VIEW.REGISTER.MISSED_DEADLINE}' if registration period is closed`, async () => {
@@ -125,7 +129,7 @@ describe('controllers/register/confirm-email', () => {
 			await confirmEmailController.postConfirmEmail(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=abc`
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=abc`
 			);
 		});
 

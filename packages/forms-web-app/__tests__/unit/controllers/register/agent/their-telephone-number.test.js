@@ -45,7 +45,9 @@ describe('controllers/register/agent/their-telephone-number', () => {
 			};
 			await telephoneController.postTelephone(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

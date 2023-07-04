@@ -44,7 +44,9 @@ describe('controllers/register/organisation/what-job-title-or-role', () => {
 			};
 			await roleController.postRole(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.ORGANISATION.EMAIL}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.EMAIL}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

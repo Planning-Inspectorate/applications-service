@@ -16,7 +16,9 @@ const getConfirmation = (req, res) => {
 
 		if (session.mode === 'draft') {
 			session.ipRefNo = ipRefNo;
-			return res.redirect(`/${REGISTER[key.toUpperCase()].REGISTRATION_SAVED}`);
+			return res.redirect(
+				`${res.locals.baseUrl}/${REGISTER[key.toUpperCase()].REGISTRATION_SAVED}`
+			);
 		} else {
 			return res.render(REGISTER.COMMON.REGISTRATION_COMPLETE, {
 				...viewModel[key],

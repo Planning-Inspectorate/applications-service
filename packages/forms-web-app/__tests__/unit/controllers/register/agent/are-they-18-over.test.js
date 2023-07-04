@@ -45,7 +45,9 @@ describe('controllers/register/agent/are-they-18-over', () => {
 			};
 			await over18Controller.postOver18(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

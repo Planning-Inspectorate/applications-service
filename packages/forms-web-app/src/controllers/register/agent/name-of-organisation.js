@@ -19,9 +19,8 @@ exports.postOrganisationName = (req, res) => {
 	}
 
 	req.session.behalfRegdata.representor['organisation-name'] = body['organisation-name'];
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.AGENT.EMAIL}`);
-	}
+
+	const redirectUrl =
+		req.query.mode === 'edit' ? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS : VIEW.REGISTER.AGENT.EMAIL;
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

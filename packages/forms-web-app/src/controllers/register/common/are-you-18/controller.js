@@ -40,7 +40,7 @@ const postAreYouOver18 = (req, res) => {
 			});
 		}
 		setSession(session, key, areYouOver18Key, body[areYouOver18Key]);
-		res.redirect(getRedirectUrl(query, key));
+		res.redirect(`${res.locals.baseUrl}${getRedirectUrl(query, key)}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

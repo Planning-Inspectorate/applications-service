@@ -21,17 +21,20 @@ exports.postRepresentingFor = (req, res) => {
 	// const oldRepresenting = req.session.behalfRegdata.representing;
 	const representingChanged = req.session.behalfRegdata.representing !== representing;
 	if (!representingChanged && req.query.mode === 'edit') {
-		return res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+		return res.redirect(`${res.locals.baseUrl}/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
 	} else if (req.query.mode === 'edit') {
 		req.session.behalfRegdata.representee = registrationData.behalf.representee;
 		delete req.session.comment;
 	}
 	req.session.behalfRegdata.representing = representing;
+	let redirectUrl = '';
 	if (representing === 'person') {
-		return res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`);
+		redirectUrl = `/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME}`;
 	} else if (representing === 'organisation') {
-		return res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`);
+		redirectUrl = `/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`;
 	} else if (representing === 'family') {
-		return res.redirect(`/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`);
+		redirectUrl = `/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`;
 	}
+
+	return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
 };

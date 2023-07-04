@@ -22,7 +22,9 @@ exports.postConfirmEmail = async (req, res) => {
 
 	const response = await postAuthToken(token, email);
 	if (response.resp_code === 404) {
-		res.redirect(`/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=${token}`);
+		return res.redirect(
+			`${res.locals.baseUrl}/${VIEW.REGISTER.TOKEN_EMAIL_NOT_VERIFIED}?token=${token}`
+		);
 	} else {
 		const { personal_data, comments, submissionPeriodClosed, projectData } = response.data;
 
@@ -36,16 +38,19 @@ exports.postConfirmEmail = async (req, res) => {
 			req.session.comments = comments;
 			req.session.comment = comments;
 
+			let redirectUrl = '';
 			if (type === 'me') {
 				req.session.mySelfRegdata = personal_data;
-				res.redirect(`/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`);
+				redirectUrl = `/${VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT}`;
 			} else if (type === 'them') {
 				req.session.orgRegdata = personal_data;
-				res.redirect(`/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`);
+				redirectUrl = `/${VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT}`;
 			} else if (type === 'you') {
 				req.session.behalfRegdata = personal_data;
-				res.redirect(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
+				redirectUrl = `/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`;
 			}
+
+			return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
 		}
 	}
 };
