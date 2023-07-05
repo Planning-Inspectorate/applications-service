@@ -29,15 +29,15 @@ const getDeclaration = (req, res) => {
 
 const postDeclaration = async (req, res) => {
 	try {
-		const { session } = req;
+		const { session, params } = req;
+		const { case_ref } = params;
 		const key = getKeyFromUrl(req.originalUrl);
 
 		const sessionForKey = getSessionBase(session, key);
-
-		let { ipRefNo } = sessionForKey;
+		let ipRefNo = sessionForKey?.ipRefNo;
 
 		if (!ipRefNo) {
-			sessionForKey.case_ref = session.caseRef;
+			sessionForKey.case_ref = case_ref;
 			sessionForKey.mode = session.mode;
 			const registrationData = JSON.stringify(sessionForKey);
 			const response = await postRegistrationData(registrationData);
@@ -52,6 +52,7 @@ const postDeclaration = async (req, res) => {
 
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
+		console.log(e);
 		logger.error(`Could not Post declaration, internal error occurred ${e}`);
 		return res.status(500).render('error/unhandled-exception');
 	}

@@ -88,7 +88,7 @@ describe('controllers/register/common/declaration/controller', () => {
 				send: jest.fn()
 			};
 			describe('and there is an unrecoverable error', () => {
-				const req = {};
+				const req = { params: { case_ref: 'mock case ref' } };
 				beforeEach(() => {
 					postDeclaration(req, res);
 				});
@@ -101,6 +101,7 @@ describe('controllers/register/common/declaration/controller', () => {
 				describe('and the session has an ipRefNo', () => {
 					const req = {
 						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+						params: { case_ref: 'mock case ref' },
 						session: {
 							comment: 'mock comment',
 							mode: 'mock session mode',
@@ -131,6 +132,7 @@ describe('controllers/register/common/declaration/controller', () => {
 				describe('and the session does NOT have an ipRefNo', () => {
 					const req = {
 						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+						params: { case_ref: 'mock case ref' },
 						session: {
 							comment: 'mock comment',
 							mode: 'mock session mode',

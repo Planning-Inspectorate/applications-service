@@ -16,7 +16,6 @@ const projectsRouter = require('../pages/projects/projects.router');
 const {
 	isProcessingSubmission
 } = require('../pages/examination/_middleware/submission.middleware');
-const { setBaseUrlMiddleware } = require('./middleware');
 
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
@@ -25,7 +24,7 @@ if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 	router.use('/project-search', projectSearchRouter);
 }
 
-router.use('/projects/:case_ref/register', setBaseUrlMiddleware, registerRouter);
+router.use('/projects/:case_ref/register', registerRouter);
 router.use(
 	`/projects/:case_ref/${routesConfig.examination.baseDirectory}`,
 	isProcessingSubmission,
