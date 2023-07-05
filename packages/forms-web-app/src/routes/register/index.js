@@ -10,17 +10,19 @@ const organisationRegistrationRouter = require('./organisation');
 const behalfRegistrationRouter = require('./agent');
 const couldNotVerifyEmailRouter = require('./could-not-verify-email');
 const commonRouter = require('./common');
+const { registerMiddleware } = require('./middleware');
 
-router.use('/registration-period-closed', registrationPeriodClosedRouter);
-router.use('/', typeOfPartyRouter);
-router.use('/myself', myselfRegistrationRouter);
-router.use('/organisation', organisationRegistrationRouter);
-router.use('/agent', behalfRegistrationRouter);
-router.use('/could-not-verify-email', couldNotVerifyEmailRouter);
 router.use('/register-have-your-say', startRouter);
 
-router.use('/myself', commonRouter);
-router.use('/organisation', commonRouter);
-router.use('/agent', commonRouter);
+router.use('/registration-period-closed', registerMiddleware, registrationPeriodClosedRouter);
+router.use('/who-registering-for', registerMiddleware, typeOfPartyRouter);
+router.use('/myself', registerMiddleware, myselfRegistrationRouter);
+router.use('/organisation', registerMiddleware, organisationRegistrationRouter);
+router.use('/agent', registerMiddleware, behalfRegistrationRouter);
+router.use('/could-not-verify-email', registerMiddleware, couldNotVerifyEmailRouter);
+
+router.use('/myself', registerMiddleware, commonRouter);
+router.use('/organisation', registerMiddleware, commonRouter);
+router.use('/agent', registerMiddleware, commonRouter);
 
 module.exports = router;
