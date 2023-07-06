@@ -13,7 +13,7 @@ class PO_CyaBeforeReg {
 			cy.get('.govuk-summary-list__value')
 				.eq(index)
 				.should(($div) => {
-					const text = $div.text().replace('kr', '').replace('\xa0', '').trim();
+					const text = $div.text().replace(/\s\s+/g, ' ').trim();
 					expect(text).to.include(data[index].Column2);
 				});
 		}
@@ -44,4 +44,5 @@ class PO_CyaBeforeReg {
 		}
 	}
 }
+
 export default PO_CyaBeforeReg;
