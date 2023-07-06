@@ -1,127 +1,127 @@
 {% set address %}
-{{ data.representor.address.line1 }}<br>
-{% if data.representor.address.line2 %}
-  {{ data.representor.address.line2 }}<br>
-{% endif %}
-{% if data.representor.address.line3 %}
-  {{ data.representor.address.line3 }}<br>
-{% endif %}
-{{ data.representor.address.postcode }}<br>
-{{ data.representor.address.country }}
+	{{ data.representor.address.line1 }}<br>
+	{% if data.representor.address.line2 %}
+		{{ data.representor.address.line2 }}<br>
+	{% endif %}
+	{% if data.representor.address.line3 %}
+		{{ data.representor.address.line3 }}<br>
+	{% endif %}
+	{{ data.representor.address.postcode }}<br>
+	{{ data.representor.address.country }}
 {% endset %}
 
 <h2 class="govuk-heading-m">Your details</h2>
 
 {{ govukSummaryList({
-  classes: "govuk-!-margin-bottom-9",
-  rows: [
-    {
-      key: {
-        text: "Who are you registering for?"
-      },
-      value: {
-        text: summaryField( "On behalf of another person, a family group or an organisation I do not work for", { 'data-cy': "type-of-party" })
-      },
-      actions: {
-        items: [
-          {
-            href: "/register/who-registering-for?mode=edit",
-            text: "Change",
-            visuallyHiddenText: "who are you registering for",
-            attributes: { "data-cy": "registering-for" }
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Full name"
-      },
-      value: {
-        text: summaryField( data.representor['full-name'], { 'data-cy': "full-name" })
-      },
-      actions: {
-        items: [
-          {
-            href: "/register/agent/full-name?mode=edit",
-            text: "Change",
-            visuallyHiddenText: "your full name",
-            attributes: { "data-cy": "full-name" }
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Organisation name"
-      },
-      value: {
-        text: summaryField( data.representor['organisation-name'], { 'data-cy': "organisation-name" })
-      },
-      actions: {
-        items: [
-          {
-            href: "/register/agent/name-of-organisation?mode=edit",
-            text: "Change",
-            visuallyHiddenText: "your organisation name",
-            attributes: { "data-cy": "organisation-name" }
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Address"
-      },
-      value: {
-        html: address
-      },
-      actions: {
-        items: [
-          {
-            href: "/register/agent/address?mode=edit",
-            text: "Change",
-            visuallyHiddenText: "your address",
-            attributes: { "data-cy": "address" }
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Email address"
-      },
-      value: {
-        text: summaryField( data.representor['email'], { 'data-cy': "email" })
-      },
-      actions: {
-        items: [
-          {
-            href: "/register/agent/email-address?mode=edit",
-            text: "Change",
-            visuallyHiddenText: "your email address",
-            attributes: { "data-cy": "email" }
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Telephone number"
-      },
-      value: {
-        text: summaryField( data.representor['telephone'], { 'data-cy': "telephone" })
-      },
-      actions: {
-        items: [
-          {
-            href: "/register/agent/telephone-number?mode=edit",
-            text: "Change",
-            visuallyHiddenText: "your telephone number",
-            attributes: { "data-cy": "telephone" }
-          }
-        ]
-      }
-    }
-  ]
+	classes: "govuk-!-margin-bottom-9",
+	rows: [
+		{
+			key: {
+			text: "Who are you registering for?"
+		},
+			value: {
+			text: summaryField( "On behalf of another person, a family group or an organisation I do not work for", { 'data-cy': "type-of-party" })
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/who-registering-for?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "who are you registering for",
+					attributes: { "data-cy": "registering-for" }
+				}
+			]
+		}
+		},
+		{
+			key: {
+			text: "Full name"
+		},
+			value: {
+			text: summaryField( data.representor['full-name'], { 'data-cy': "full-name" })
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/full-name?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "your full name",
+					attributes: { "data-cy": "full-name" }
+				}
+			]
+		}
+		},
+		{
+			key: {
+			text: "Organisation name"
+		},
+			value: {
+			text: summaryField( data.representor['organisation-name'], { 'data-cy': "organisation-name" })
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/name-of-organisation?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "your organisation name",
+					attributes: { "data-cy": "organisation-name" }
+				}
+			]
+		}
+		},
+		{
+			key: {
+			text: "Address"
+		},
+			value: {
+			html: address
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/address?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "your address",
+					attributes: { "data-cy": "address" }
+				}
+			]
+		}
+		},
+		{
+			key: {
+			text: "Email address"
+		},
+			value: {
+			text: summaryField( data.representor['email'], { 'data-cy': "email" })
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/email-address?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "your email address",
+					attributes: { "data-cy": "email" }
+				}
+			]
+		}
+		},
+		{
+			key: {
+			text: "Telephone number"
+		},
+			value: {
+			text: summaryField( data.representor['telephone'], { 'data-cy': "telephone" })
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/telephone-number?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "your telephone number",
+					attributes: { "data-cy": "telephone" }
+				}
+			]
+		}
+		}
+	]
 }) }}
