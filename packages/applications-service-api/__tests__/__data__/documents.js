@@ -215,6 +215,45 @@ const DB_FILTERS = [
 	{ stage: 7, filter_1: 'Decided', category: null, count: 1 }
 ];
 
+const BACK_OFFICE_DB_DOCUMENTS = [
+	{
+		id: 1,
+		documentId: '1',
+		caseRef: 'EN010009',
+		documentReference: null,
+		version: '1',
+		examinationRefNo: '',
+		filename: 'TR0100012-Advice-note-6-Annex-PINS.pdf',
+		originalFilename: 'TR0100012-Advice-note-6-Annex-PINS.pdf',
+		size: 412846,
+		mime: 'application/pdf',
+		documentURI: 'https://example.org/file.pdf',
+		path: 'EN010009/TR0100012-Advice-note-6-Annex-PINS.pdf',
+		virusCheckStatus: 'scanned',
+		fileMD5: '49f68a5c8493ec2c0bf489821c21fc3b',
+		dateCreated: '2023-03-26T00:00:00.000',
+		lastModified: '2023-03-26T00:00:00.000',
+		caseType: 'nsip',
+		documentStatus: 'submitted',
+		redactedStatus: 'redacted',
+		publishedStatus: 'published',
+		datePublished: '2023-03-26T00:00:00.000',
+		documentType: 'Dave',
+		securityClassification: 'public',
+		sourceSystem: 'back_office',
+		origin: 'pins',
+		owner: '',
+		author: null,
+		representative: '',
+		description: '',
+		stage: 'pre-application',
+		filter1: 'CR-1234-A',
+		filter2: '',
+		createdAt: '2023-06-19 10:50:31.8860000',
+		modifiedAt: '2023-06-19 10:50:31.8860000'
+	}
+];
+
 const RESPONSE_FILTERS = [
 	{
 		name: 'stage',
@@ -253,5 +292,6 @@ module.exports = {
 	DB_DOCUMENTS,
 	RESPONSE_DOCUMENTS,
 	RESPONSE_FILTERS,
-	DB_FILTERS
+	DB_FILTERS,
+	BACK_OFFICE_DB_DOCUMENTS
 };
