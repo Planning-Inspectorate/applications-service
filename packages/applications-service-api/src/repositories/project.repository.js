@@ -1,6 +1,4 @@
-const { createPrismaClient } = require('../lib/prisma');
-
-const prismaClient = createPrismaClient();
+const { prismaClient } = require('../lib/prisma');
 
 const getByCaseReference = async (caseReference) => {
 	return prismaClient.project.findUnique({

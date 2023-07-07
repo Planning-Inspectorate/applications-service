@@ -2,11 +2,11 @@ const { getByCaseReference } = require('../../../src/repositories/project.reposi
 
 const mockFindUnique = jest.fn();
 jest.mock('../../../src/lib/prisma', () => ({
-	createPrismaClient: () => ({
+	prismaClient: {
 		project: {
 			findUnique: (query) => mockFindUnique(query)
 		}
-	})
+	}
 }));
 
 describe('project repository', () => {

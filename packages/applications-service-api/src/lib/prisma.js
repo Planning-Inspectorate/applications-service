@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 
 let prismaClientInstance;
 
-exports.createPrismaClient = () => {
+const createPrismaClient = () => {
 	if (!prismaClientInstance) {
 		prismaClientInstance = new PrismaClient({
 			log: ['query', 'info', 'warn', 'error']
@@ -12,3 +12,5 @@ exports.createPrismaClient = () => {
 
 	return prismaClientInstance;
 };
+
+module.exports = { prismaClient: createPrismaClient() };

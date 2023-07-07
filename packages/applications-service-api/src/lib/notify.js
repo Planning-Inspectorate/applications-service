@@ -46,7 +46,7 @@ const sendMagicLinkToIP = async (details) => {
 				interested_party_name: details.ipName,
 				ProjectName: details.projectName,
 				DateOfRelevantRepresentationClose: `${details.repCloseDate} at 11:59pm GMT`,
-				'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
+				'magic link': `${config.services.notify.magicLinkDomain}/interested-party/confirm-your-email?token=${details.token}`,
 				interested_party_number: details.ipRef
 			})
 			.setReference(details.ipRef)
@@ -70,8 +70,26 @@ const sendSubmissionNotification = async (details) => {
 		.sendEmail();
 };
 
+const sendSubscriptionCreateNotification = async (details) =>
+	buildNotifyClient()
+		.setTemplateId(config.services.notify.templates.subscriptionCreateEmail)
+		.setDestinationEmailAddress(details.email)
+		.setTemplateVariablesFromObject({
+			subscription_url: config.services.notify.subscriptionCreateDomain.concat(
+				'/projects/',
+				details.project.caseReference,
+				'/get-updates/subscribed?subscriptionDetails=',
+				details.subscriptionDetails
+			),
+			project_name: details.project.name,
+			project_email: details.project.email
+		})
+		.setReference(`Subscription ${details.project.caseReference} ${details.email}`)
+		.sendEmail();
+
 module.exports = {
 	sendIPRegistrationConfirmationEmailToIP,
 	sendMagicLinkToIP,
-	sendSubmissionNotification
+	sendSubmissionNotification,
+	sendSubscriptionCreateNotification
 };

@@ -496,6 +496,61 @@ paths:
         '500':
           description: Internal server error
 
+  '/api/v1/subscriptions/{caseReference}':
+    post:
+      description: Creates an email update subscription
+      tags:
+        - Subscription
+      parameters:
+        - in: path
+          name: caseReference
+          example: 'EN010116'
+          required: true
+          schema:
+            type: string
+            minLength: 8
+            maxLength: 10
+            pattern: '^[A-Za-z]{2}\d{6,8}$'
+          description: Case / Project unique identifier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - subscriptionTypes
+              properties:
+                email:
+                  type: string
+                  format: email
+                subscriptionTypes:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - allUpdates
+                      - applicationSubmitted
+                      - applicationDecided
+                      - registrationOpen
+      responses:
+        '201':
+          description: Successfully created subscription
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+
   '/api/v1/advice':
     get:
       summary: Returns project advice
