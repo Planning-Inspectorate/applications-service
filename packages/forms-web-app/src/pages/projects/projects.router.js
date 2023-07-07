@@ -13,7 +13,8 @@ const {
 		allowDocumentLibrary,
 		allowExaminationTimetable,
 		allowRepresentation,
-		usePrivateBetaV1RoutesOnly
+		usePrivateBetaV1RoutesOnly,
+		allowGetUpdates
 	}
 } = config;
 
@@ -26,6 +27,7 @@ const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
+const { getProjectUpdates } = require('./project-updates/controller');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -63,6 +65,10 @@ if (allowRepresentation) {
 		middleware,
 		asyncRoute(representationsController.getRepresentation)
 	);
+}
+
+if (allowGetUpdates) {
+	router.get('/:case_ref/get-updates/start', middleware, getProjectUpdates);
 }
 
 // Section 51

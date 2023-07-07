@@ -71,6 +71,12 @@ describe('projects _middleware', () => {
 					},
 					{
 						hidden: true,
+						id: 'project-updates',
+						name: 'Get Updates',
+						url: '/projects/mock-case-ref/get-updates/start'
+					},
+					{
+						hidden: true,
 						id: 'all-examination-documents',
 						name: 'All Examination documents',
 						url: '/projects/all-examination-documents'

@@ -52,6 +52,7 @@ module.exports = {
 		allowHaveYourSay: process.env.FEATURE_ALLOW_HAVE_YOUR_SAY === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
 		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true',
+		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
 		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
 	},
 	featureHideLink: {
