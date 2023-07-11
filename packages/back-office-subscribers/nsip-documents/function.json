@@ -4,7 +4,7 @@
 			"type": "serviceBusTrigger",
 			"direction": "in",
 			"name": "message",
-			"topicName": "nsip-documents",
+			"topicName": "nsip-document",
 			"subscriptionName": "applications-nsip-documents-subscription",
 			"connection": "ServiceBusConnection",
 			"accessRights": "listen"
