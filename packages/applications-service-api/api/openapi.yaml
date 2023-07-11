@@ -534,8 +534,49 @@ paths:
                       - applicationDecided
                       - registrationOpen
       responses:
-        '201':
+        '200':
           description: Successfully created subscription
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+    put:
+      description: Confirms an email update subscription
+      tags:
+        - Subscription
+      parameters:
+        - in: path
+          name: caseReference
+          example: 'EN010116'
+          required: true
+          schema:
+            type: string
+            minLength: 8
+            maxLength: 10
+            pattern: '^[A-Za-z]{2}\d{6,8}$'
+          description: Case / Project unique identifier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subscriptionDetails:
+                  type: string
+                  description: encrypted string containing 'email', 'subscriptionTypes' and 'date'
+      responses:
+        '200':
+          description: Successfully confirmed subscription
         '400':
           description: Invalid request
           content:
