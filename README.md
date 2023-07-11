@@ -5,6 +5,7 @@ Monorepo for all Applications Service services and infrastructure
 ## TL;DR
 
 - `npm i`
+- `npm run prisma:generate` (on first set up only, or after upgrading `prisma`)
 - `npm run dev`
 - Go to [localhost:9004](http://localhost:9004)
 
@@ -24,16 +25,24 @@ and containers within the Applications Service.
 
 ![PINS Applications Architecture C1 Context!](doc/images/pins-applications-c2-context.drawio.png "PINS Applications Architecture C1 Context")
 
+### Packages
+
+The monorepo comprises of several packages:
+
+- **forms-web-app**: User facing website ([link](https://national-infrastructure-consenting.planninginspectorate.gov.uk/))
+- **applications-service-api**: Web API serving data to the website
+- **back-office-subscribers**: Azure Function App for publishing and consuming Service Bus events on various topics
+- **e2e_tests**: Cypress test suite
 
 ## Pre-requisites
 
-- [NodeJS v16](https://nodejs.org/en/download/)
+- [Node.js](https://nodejs.org/en/download/)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## NodeJS
+## Node.js
 
-Install NodeJS using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Install Node.js using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 ```
 nvm install 16
@@ -41,153 +50,139 @@ nvm use 16
 nvm alias default 16
 ```
 
+The Node.js version in use should closely follow [what is supported by the Azure App Service runtime](https://github.com/Azure/app-service-linux-docs/blob/master/Runtime_Support/node_support.md). From time to time, it may be necessary to update Node.js version to a newer LTS release when support for the current version is ending.
+
 ## Running
 
-> Docker and Docker Compose are both very well documented. Please check their
-> documentation for advice on running it in development.
+### Docker
 
-To run the development stack, you can run this in Docker Compose. This will
-run all services, including databases, and pre-fill all stubbed data into the
-databases.
+For local development, we use `docker compose` which creates the various Docker containers using the `docker-compose.yml` config.
 
-To run the whole stack:
+Each service contains a `Dockerfile`, which is used to create an image to be deployed to remote environments (Docker Compose is not used)
 
-```
+If making changes to containers, be mindful you may need to update both the `Dockerfile` and `docker-compose.yml` so the changes are consistent between local and remote environments.
+
+### Local development
+
+**To run the whole stack**
+
+```shell
 npm run dev
 ```
 
 Then go to [localhost:9004](http://localhost:9004) (forms-web-app) or
 [localhost:3000](http://localhost:3000) (applications-service-api)
 
-> As a convention, public facing web service will use the port range `9000-9999`
-> and API services will use the port range `3000-3999`
-
 > A database for local development can be accessed at http://localhost:9000/ via [Adminer](https://www.adminer.org/)
-> which is running in its own container locally
-> Alternatively, you can use [MySQL Workbench](https://www.mysql.com/products/workbench/)
+> which can be run in its own container. Uncomment the `adminer` section in `docker-compose.yml` to use it.
+> Alternatively, you can use [MySQL Workbench](https://www.mysql.com/products/workbench/) or another GUI tool of your choice.
 
-To run a single service (and it's dependencies), run the dev command for the relevant service:
+**To run a single service**
 
-```
+```shell
 npm run dev:api
 ```
 
-This will run just the `applications-service-api` app. Change the npm script for
-different services.
-
----
-
-If you wish to use the shell of the container (useful if you want to install
-new npm dependencies):
-
-```
-npm run dev:api -- sh
+```shell
+npm run dev:web
 ```
 
----
+   This will run just the `applications-service-api` app. Change the npm script for
+   different services.
 
-To stop all services:
+Other tips:
 
-```
-docker-compose down
-```
+- If you want to remove any containers to they are rebuilt the next time you run `npm run dev`, you can run:
+
+   ```shell
+   docker compose down
+   ```
+
+- If you wish to use the shell of the container:
+
+   ```shell
+   npm run dev:api -- sh
+   ```
 
 ### Troubleshooting
 
 On (**npm run dev**), you may get the following error:
 
-```
+```shell
 no matching manifest for linux/arm64/v8 in the manifest list entries:
-```
-
-Example output message:
-
-```
-docker-compose up
-[+] Running 1/17
- ⠇ db Pulling                                                                                             1.8s
- ⠇ adminer Pulling                                                                                           1.8s
-  ⠿ 552d1f2373af Already exists                                                                                    0.0s
-  ⠋ f327d3d40ef4 Pulling fs layer                                                                                   0.0s
-  ⠋ a3586b69bdc1 Pulling fs layer                                                                                   0.0s
-  ⠋ 226a5565cd99 Pulling fs layer                                                                                   0.0s
-  ⠋ a29c49208f73 Waiting                                                                                       0.0s
-  ⠋ e04acff31b30 Waiting                                                                                       0.0s
-  ⠋ 1fd966f11fdc Waiting                                                                                       0.0s
-  ⠋ af329026e61b Waiting                                                                                       0.0s
-  ⠋ d1c16c674cf6 Waiting                                                                                       0.0s
-  ⠋ 1f79445e9e05 Waiting                                                                                       0.0s
-  ⠋ 102c95209aff Waiting                                                                                       0.0s
-  ⠋ d8471d71259d Waiting                                                                                       0.0s
-  ⠋ ab023144139a Waiting                                                                                       0.0s
-  ⠋ c9a46da6deea Waiting                                                                                       0.0s
-  ⠋ 2653012098a8 Waiting                                                                                       0.0s
-no matching manifest for linux/arm64/v8 in the manifest list entries
 ```
 
 This is resolved by entering the following line in the **docker-compose.yml** file in the **db** settings of the **services**:
 
-```
+```yaml
 platform: linux/x86_64
 ```
 
-Example with the line '**platform: linux/x86_64**' added in the **docker-compose.yml** file:
+For example,
 
-```
+```yaml
 db:
-  image: 'mysql'
-  cap_add:
-
-   SYS_NICE # CAP_SYS_NICE
-
-  command: '--default-authentication-plugin=mysql_native_password'
-  restart: 'always'
-  environment:
-   MYSQL_ROOT_PASSWORD: 'root'
-   MYSQL_DATABASE: 'ipclive'
-   MYSQL_USER: 'pins'
-   MYSQL_PASSWORD: 'pins'
-   platform: linux/x86_64
-  ports:
-
- '3306:3306'
-
-  volumes:
-
-'./init:/docker-entrypoint-initdb.d'
+image: 'mysql'
+platform: linux/x86_64 // <----
+environment:
+// ... etc
 ```
+
+---
 
 On Windows you may get an error:
 
+  ```shell
+  applications-web-app      | node:internal/modules/cjs/loader:998
+  applications-web-app      |   throw err;
+  applications-web-app      |   ^
+  applications-web-app      |
+  applications-web-app      | Error: Cannot find module '@pins/common/src/utils/redis'
+  applications-web-app      | Require stack:
+  applications-web-app      | - /opt/app/packages/forms-web-app/src/config.js
+  applications-web-app      | - /opt/app/packages/forms-web-app/src/server.js
+  applications-web-app      |     at Function.Module._resolveFilename (node:internal/modules/cjs/loader:995:15)
+  applications-web-app      |     at Function.Module._load (node:internal/modules/cjs/loader:841:27)
+  applications-web-app      |     at Module.require (node:internal/modules/cjs/loader:1067:19)
+  applications-web-app      |     at require (node:internal/modules/cjs/helpers:103:18)
+  applications-web-app      |     at Object.<anonymous> (/opt/app/packages/forms-web-app/src/config.js:1:40)
+  applications-web-app      |     at Module._compile (node:internal/modules/cjs/loader:1165:14)
+  applications-web-app      |     at Object.Module._extensions..js (node:internal/modules/cjs/loader:1219:10)
+  applications-web-app      |     at Module.load (node:internal/modules/cjs/loader:1043:32)
+  applications-web-app      |     at Function.Module._load (node:internal/modules/cjs/loader:878:12)
+  applications-web-app      |     at Module.require (node:internal/modules/cjs/loader:1067:19) {
+  applications-web-app      |   code: 'MODULE_NOT_FOUND',
+  applications-web-app      |   requireStack: [
+  applications-web-app      |     '/opt/app/packages/forms-web-app/src/config.js',
+  applications-web-app      |     '/opt/app/packages/forms-web-app/src/server.js'
+  applications-web-app      |   ]
+  applications-web-app      | }
+  ```
+  
+  A workaround is to run `npm run win:common:fix` after any `npm i`
+
+---
+  
+Prisma errors 
+
 ```shell
-applications-web-app      | node:internal/modules/cjs/loader:998
-applications-web-app      |   throw err;
-applications-web-app      |   ^
-applications-web-app      |
-applications-web-app      | Error: Cannot find module '@pins/common/src/utils/redis'
-applications-web-app      | Require stack:
-applications-web-app      | - /opt/app/packages/forms-web-app/src/config.js
-applications-web-app      | - /opt/app/packages/forms-web-app/src/server.js
-applications-web-app      |     at Function.Module._resolveFilename (node:internal/modules/cjs/loader:995:15)
-applications-web-app      |     at Function.Module._load (node:internal/modules/cjs/loader:841:27)
-applications-web-app      |     at Module.require (node:internal/modules/cjs/loader:1067:19)
-applications-web-app      |     at require (node:internal/modules/cjs/helpers:103:18)
-applications-web-app      |     at Object.<anonymous> (/opt/app/packages/forms-web-app/src/config.js:1:40)
-applications-web-app      |     at Module._compile (node:internal/modules/cjs/loader:1165:14)
-applications-web-app      |     at Object.Module._extensions..js (node:internal/modules/cjs/loader:1219:10)
-applications-web-app      |     at Module.load (node:internal/modules/cjs/loader:1043:32)
-applications-web-app      |     at Function.Module._load (node:internal/modules/cjs/loader:878:12)
-applications-web-app      |     at Module.require (node:internal/modules/cjs/loader:1067:19) {
-applications-web-app      |   code: 'MODULE_NOT_FOUND',
-applications-web-app      |   requireStack: [
-applications-web-app      |     '/opt/app/packages/forms-web-app/src/config.js',
-applications-web-app      |     '/opt/app/packages/forms-web-app/src/server.js'
-applications-web-app      |   ]
-applications-web-app      | }
+Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues
+  at new PrismaClient (/opt/app/node_modules/.prisma/client/index.js:3:11)
+  at exports.createPrismaClient (/opt/app/packages/applications-service-api/src/lib/prisma.js:7:26)
+```
+    
+- Run `npm run prisma:generate` to re-generate the Prisma client. This should only be necessary on your first setup, after removing `node_modules`, or upgrading the Prisma version.
+
+```shell
+PrismaClientInitializationError: Query engine library for current platform "linux-musl" could not be found.
+You incorrectly pinned it to linux-musl
+
+This probably happens, because you built Prisma Client on a different platform.
+(Prisma Client looked in "/opt/app/node_modules/@prisma/client/runtime/libquery_engine-linux-musl.so.node")
 ```
 
-Run `npm run windows:common:fix`after any `npm i`
-
+- Add the platform (in this case `"linux-musl"`) to `binaryTargets` in `prisma.schema` then run `npm run prisma:generate` 
 
 ## Branching
 
@@ -199,20 +194,25 @@ All commit messages must be written in the [Conventional Commit Format](#commit-
 This uses [Semantic Release](https://semantic-release.gitbook.io/semantic-release/)
 to generate the release numbers for the artifacts.
 
-## Releases
-
-TO DO
-
 ## Deployments
 
-TO DO
+- Builds in Azure DevOps are triggered automatically when pushing a branch or opening a PR on Github
+- Merging a PR will trigger a deployment to the `dev` environment (`main` branch is deployed)
+- Deploying to the `test` environment is manual. Run the `Applications Service Deploy` pipeline in Azure DevOps to do this.
 
-## Automatically format and lint code on git commit
+## Releases
+
+- Run the `Applications Service Release` pipeline in Azure DevOps to release to production
+- The pipeline uses [Semantic Release](https://semantic-release.gitbook.io/semantic-release/) to generate git tags, release notes and a [release on Github](https://github.com/Planning-Inspectorate/applications-service/releases), before deploying the build to the production environment
+
+## Code convention, linting, etc
+
+### Automatically format and lint code on git commit
 
 We use [husky](https://typicode.github.io/husky/#/) to format and lint code before committing.
 These are installed automatically when running `npm ci`.
 
-## Commit Message Format
+### Commit Message Format
 
 This repo uses [Semantic Release](https://semantic-release.gitbook.io) to
 generate release version numbers, so it is imperative that all commits are
@@ -222,7 +222,7 @@ Commits to the `main` branch will create release candidates. These are a release
 of software that may or may not be made public. Under normal circumstance, releases
 should be made directly to the `main` branch.
 
-## Commit Message Rules
+### Commit Message Rules
 
 Commit messages dictate how the software is released. You must ensure that you are
 using the correct commit type. Commit messages starting `feat` or `fix` will trigger
@@ -237,22 +237,7 @@ commit type and make a release based on that. For instance, a PR with many `chor
 and one `feat` will produce a new release bumping the minor semantic version number.
 Without the `feat`, it would create no new release.
 
-## Checking The Correct Release Has Been Deployed
-
-1. Check your PR has passed. If there are any failures, check these to see if the
-   reasons for failure give a clue as to what went wrong (and then fix). There is a job
-   called `Next version` which will tell you the version number that this should create
-   if successful.
-2. Check a [new release was made](https://github.com/Planning-Inspectorate/applications-service/releases).
-   Dependent upon whether it was made from the `develop` or `master` branch, you will be
-   looking for either a pre-release version or a release. If no release has been made,
-   ensure that your commit message was formatted correctly and begins with `feat` or `fix`.
-3. Check the [/releases](https://github.com/Planning-Inspectorate/applications-service/tree/master/releases)
-   folder against the cluster you are expecting to see it deployed on. If the `app.yml` file does
-   not contain the tag you are expecting then the deployment may have failed. It takes up to
-   5 minutes for a new release to be detected.
-
-## Ensure Linear Commits
+### Ensure Linear Commits
 
 It's very important that PRs have linear commits. There can be multiple commits per PR
 (if appropriate), but they should be linear. An example of a non-linear commit is:
@@ -269,7 +254,7 @@ bf2a09e erm, not sure why CI has broken so another go
 
 Linear commits are much easier to find problems when tracing through Git history.
 
-## Commitizen
+### Commitizen
 
 To automatically generate the format correctly, please use Commitizen to make
 all commits to this repo. This repo is
@@ -292,45 +277,8 @@ Or:
     git add .
     npm run commit
 
-## Logging
+### Logging
 
-> Please see [Confluence](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/edit-v2/554205478) for further information
+We use the logger [Pino](http://getpino.io), and [express-pino-logger](https://github.com/pinojs/express-pino-logger). Import the logger and use `logger.info`, `logger.error`, etc rather than `console.log` as this will ensure logs are formatted in a way that Azure can collect.
 
-tl;dr If in controller/middleware, use `req.log`, otherwise `*/src/lib/logger.js`. We use the logger [Pino](http://getpino.io),
-and [express-pino-logger](https://github.com/pinojs/express-pino-logger).
-
-### Logging Levels
-
-This is an overview of the different levels available in Pino, in order of least to most verbose.
-
-| Level | Description                                                                                                                                                                                             |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Fatal | To be used if the application is going down. Typically this won't be used in the application.                                                                                                           |
-| Error | To be used if an error has occurred. This will most likely be a `try/catch` but not exclusively. If an `Error` object is present, always send it to the logger - `log.error({ err }, 'error message')`. |
-| Warn  | To be used when something has happened that is not ideal, but may not result in an error being thrown. Typically, this would be used when a user has failed validation.                                 |
-| Info  | To be used when recording normal information about a process. This is likely to be the most used level.                                                                                                 |
-| Debug | Information to be used when debugging a problem.                                                                                                                                                        |
-| Trace | The most verbose level.                                                                                                                                                                                 |
-
-### try/catch
-
-Always log try / catch statements. Good practice:
-
-```javascript
-try {
-  log.debug('this is something happening');
-} catch (err) {
-  log.error({ err }, 'error message');
-  throw err;
-}
-```
-
-### Child
-
-Sometimes it makes sense to logically group log messages. We can achieve this with a [child logger](https://getpino.io/#/docs/child-loggers).
-Typically, you will need to add some identifying detail to associate the logs together, a good example would be using `uuid.v4()`.
-
-```javascript
-const log = logger.child({ someId: uuid.v4() });
-log.info('an informational message');
-```
+Please see [Confluence](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/edit-v2/554205478) for further information
