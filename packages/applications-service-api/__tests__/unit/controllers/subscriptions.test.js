@@ -1,32 +1,41 @@
 jest.mock('../../../src/services/application.v2.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/lib/crypto');
+jest.mock('../../../src/services/backoffice.publish.service');
 
 const { getApplication } = require('../../../src/services/application.v2.service');
 const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify');
-const { encrypt } = require('../../../src/lib/crypto');
-const { createSubscription } = require('../../../src/controllers/subscriptions');
+const { encrypt, decrypt } = require('../../../src/lib/crypto');
+const {
+	createSubscription,
+	confirmSubscription
+} = require('../../../src/controllers/subscriptions');
 const ApiError = require('../../../src/error/apiError');
+const { when } = require('jest-when');
+const { publishNSIPSubscription } = require('../../../src/services/backoffice.publish.service');
 
 describe('subscriptions controller', () => {
 	const mockTime = new Date('2023-07-06T11:06:00.000Z');
-	const mockRes = { send: jest.fn() };
+	let mockRes;
 
-	const req = {
-		params: {
-			caseReference: 'BC0110001'
-		},
-		body: {
-			email: 'user@example.org',
-			subscriptionTypes: ['applicationSubmitted', 'applicationDecided']
-		}
-	};
-
-	beforeEach(() => jest.resetAllMocks());
+	beforeEach(() => {
+		jest.spyOn(Date, 'now').mockImplementation(() => mockTime.getTime());
+		mockRes = { send: jest.fn(), status: jest.fn().mockImplementation(() => mockRes) };
+	});
+	afterEach(() => jest.resetAllMocks());
 
 	describe('createSubscription', () => {
+		const req = {
+			params: {
+				caseReference: 'BC0110001'
+			},
+			body: {
+				email: 'user@example.org',
+				subscriptionTypes: ['applicationSubmitted', 'applicationDecided']
+			}
+		};
+
 		it('invokes notify with correct project and subscription details', async () => {
-			jest.useFakeTimers().setSystemTime(mockTime);
 			getApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
@@ -75,6 +84,98 @@ describe('subscriptions controller', () => {
 			sendSubscriptionCreateNotification.mockRejectedValueOnce(expectedError);
 
 			await expect(() => createSubscription(req, mockRes)).rejects.toEqual(expectedError);
+		});
+	});
+
+	describe('completeSubscription', () => {
+		const req = {
+			params: {
+				caseReference: 'BC0110001'
+			},
+			body: {
+				subscriptionDetails: 'some_encrypted_string'
+			}
+		};
+
+		it('given valid subscriptionDetails, invokes publishNSIPSubscription, and returns 200', async () => {
+			getApplication.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseRef: 'BC0110001'
+			});
+			when(decrypt)
+				.calledWith('some_encrypted_string')
+				.mockReturnValue(
+					JSON.stringify({
+						email: 'user@example.org',
+						subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
+						date: mockTime
+					})
+				);
+
+			await confirmSubscription(req, mockRes);
+
+			expect(publishNSIPSubscription).toBeCalledWith('BC0110001', 'user@example.org', [
+				'applicationSubmitted',
+				'applicationDecided'
+			]);
+			expect(mockRes.status).toBeCalledWith(200);
+			expect(mockRes.send).toBeCalled();
+		});
+
+		it('throws not found error if project with case reference does not exist', async () => {
+			getApplication.mockResolvedValueOnce(null);
+
+			const expectedError = new ApiError(404, {
+				errors: ['Project with case reference BC0110001 not found']
+			});
+
+			await expect(() => confirmSubscription(req, mockRes)).rejects.toEqual(expectedError);
+		});
+
+		it('throws bad request error if subscriptionDetails have expired', async () => {
+			getApplication.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseRef: 'BC0110001'
+			});
+			when(decrypt)
+				.calledWith('some_encrypted_string')
+				.mockReturnValue(
+					JSON.stringify({
+						email: 'user@example.org',
+						subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
+						date: new Date('2023-01-01 12:00:00')
+					})
+				);
+
+			const expectedError = new ApiError(400, {
+				errors: ['Subscription details have expired']
+			});
+
+			await expect(() => confirmSubscription(req, mockRes)).rejects.toEqual(expectedError);
+		});
+
+		it('throws error if publishNSIPSubscription fails', async () => {
+			getApplication.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseRef: 'BC0110001'
+			});
+			when(decrypt)
+				.calledWith('some_encrypted_string')
+				.mockReturnValue(
+					JSON.stringify({
+						email: 'user@example.org',
+						subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
+						date: mockTime
+					})
+				);
+			publishNSIPSubscription.mockRejectedValueOnce(new Error('some publishing error'));
+
+			await expect(() => confirmSubscription(req, mockRes)).rejects.toThrow(
+				'some publishing error'
+			);
 		});
 	});
 });
