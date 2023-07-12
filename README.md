@@ -17,20 +17,18 @@ https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/907870332/Current+ODT+Arch
 The following diagrams provide a more detailed view of the immediate system context 
 and containers within the Applications Service.
 
-### C1: System Context
+[PINS Applications Architecture C1 Context](doc/images/pins-applications-c1-context.drawio.png "PINS Applications Architecture C1 Context")
 
-![PINS Applications Architecture C1 Context!](doc/images/pins-applications-c1-context.drawio.png "PINS Applications Architecture C1 Context")
-
-### C2: Containers
-
-![PINS Applications Architecture C1 Context!](doc/images/pins-applications-c2-context.drawio.png "PINS Applications Architecture C1 Context")
+[PINS Applications Architecture C2 Containers](doc/images/pins-applications-c2-context.drawio.png "PINS Applications Architecture C1 Context")
 
 ### Packages
 
 The monorepo comprises of several packages:
 
 - **forms-web-app**: User facing website ([link](https://national-infrastructure-consenting.planninginspectorate.gov.uk/))
+  - depends on `redis` for storing session data
 - **applications-service-api**: Web API serving data to the website
+  - depends on `mysql` (NI database), and `mssql` (local Back Office database projection)
 - **back-office-subscribers**: Azure Function App for publishing and consuming Service Bus events on various topics
 - **e2e_tests**: Cypress test suite
 
@@ -38,11 +36,12 @@ The monorepo comprises of several packages:
 
 - [Node.js](https://nodejs.org/en/download/)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Node.js
 
-Install Node.js using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+The version in use is defined in the [.nvmrc file](./.nvmrc). It is recommended to use a node version manager, such as [nvm](https://github.com/nvm-sh/nvm#installing-and-updating). Alternatively, locate and install the correct version directly from the [Node.js website](https://nodejs.org/en/download/)
+
+Example, using `nvm`: 
 
 ```
 nvm install 16
@@ -79,16 +78,17 @@ Then go to [localhost:9004](http://localhost:9004) (forms-web-app) or
 
 **To run a single service**
 
+This will run just the `applications-service-api` app:
+
 ```shell
 npm run dev:api
 ```
 
+This will run just the `forms-web-app` app:
+
 ```shell
 npm run dev:web
 ```
-
-   This will run just the `applications-service-api` app. Change the npm script for
-   different services.
 
 Other tips:
 
