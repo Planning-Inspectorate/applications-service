@@ -28,7 +28,12 @@ const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
 const { getProjectUpdates } = require('./project-updates/controller');
-
+const {
+	getProjectUpdatesEmail,
+	postProjectUpdatesEmail
+} = require('./project-updates/project-updates-email/project-updates-email.controller');
+const { emailValidationRules } = require('../../validators/shared/email-address');
+const { validationErrorHandler } = require('../../validators/validation-error-handler');
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
 	router.get('/:case_ref', middleware, projectsController.getExamination);
@@ -69,6 +74,14 @@ if (allowRepresentation) {
 
 if (allowGetUpdates) {
 	router.get('/:case_ref/get-updates/start', middleware, getProjectUpdates);
+	router.get('/:case_ref/get-updates/email', middleware, getProjectUpdatesEmail);
+	router.post(
+		'/:case_ref/get-updates/email',
+		middleware,
+		emailValidationRules(),
+		validationErrorHandler,
+		postProjectUpdatesEmail
+	);
 }
 
 // Section 51
