@@ -22,6 +22,7 @@
 		"lint": "turbo run lint --parallel --continue",
 		"lint:fix": "turbo run lint --parallel --continue",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
+		"prisma:generate": "npx prisma generate --schema=packages/applications-service-api/prisma/schema.prisma",
 		"release": "multi-semantic-release --ignore-packages=packages/common",
 		"test": "turbo run test --parallel --continue",
 		"test:cov": "turbo run test:cov --parallel --continue",
@@ -48,7 +49,6 @@
 		"lint-staged": "^13.0.0",
 		"multi-semantic-release": "^2.13.0",
 		"prettier": "^2.7.1",
-		"prisma": "^4.12.0",
 		"semantic-release": "^19.0.3",
 		"turbo": "^1.3.1"
 	},

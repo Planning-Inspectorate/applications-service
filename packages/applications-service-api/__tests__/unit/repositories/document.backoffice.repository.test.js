@@ -8,13 +8,13 @@ const mockCount = jest.fn();
 const mockQueryRaw = jest.fn();
 
 jest.mock('../../../src/lib/prisma', () => ({
-	createPrismaClient: () => ({
+	prismaClient: {
 		document: {
 			findMany: (query) => mockFindMany(query),
 			count: (query) => mockCount(query)
 		},
 		$queryRaw: (sql) => mockQueryRaw(sql)
-	})
+	}
 }));
 
 describe('document repository', () => {

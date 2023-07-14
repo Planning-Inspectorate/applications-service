@@ -14,27 +14,14 @@ services:
     ports:
       - 6379:6379
 
-  redis-commander:
-    container_name: redis-commander
-    hostname: redis-commander
-    image: rediscommander/redis-commander:latest
-    restart: always
-    environment:
-      REDIS_HOSTS: redis
-      REDIS_HOST: redis
-      REDIS_PORT: redis:6379
-      REDIS_PASSWORD: some_redis_password
-    ports:
-      - "8081:8081"
-
   applications-service-api:
     image: node:16-alpine
     user: node
     container_name: applications-service-api
     environment:
-      APP_APPLICATIONS_BASE_URL: http://forms-web-app:9004
-      BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES: EN0110004,EN0310004
-      BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES: EN0100085,EN0110004,EN0310004
+      APPLICATIONS_WEB_BASE_URL: http://forms-web-app:9004
+      BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES: BC0110001,EN0110004,EN0310004
+      BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES: BC0110001,EN0100085,EN0110004,EN0310004
       DATABASE_URL: sqlserver://mssql:1433;database=pins_applications_development;user=sa;password=dbPASSw0_rd;trustServerCertificate=true
       DOCS_API_PATH: /opt/app/packages/applications-service-api/api
       DOCUMENTS_HOST: https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/
@@ -42,9 +29,7 @@ services:
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       ENCRYPTION_SECRET_KEY: x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K
       FILE_UPLOADS_PATH: /opt/app/uploads
-      HAVING_YOUR_SAY_URL: https://applications-service-web-app.azurewebsites.net/
       LOGGER_LEVEL: debug
-      MAGIC_LINK_DOMAIN: http://localhost:9004/
       MYSQL_USERNAME: pins
       MYSQL_PASSWORD: pins
       MYSQL_DATABASE: ipclive
@@ -57,7 +42,6 @@ services:
       NI_OAUTH_CLIENT_SECRET: some-client-secret
       NI_OAUTH_USERNAME: some-username
       NI_OAUTH_PASSWORD: some-password
-      PRELIMINARY_MEETING_URL: https://applications-service-web-app.azurewebsites.net/
       SERVER_SHOW_ERRORS: 'true'
       SRV_NOTIFY_API_KEY: applicationsservice-9b89eb93-3071-432c-9c6b-4e07dbda9071-101fa83a-8d08-40af-92b6-246b95074e5a
       SRV_NOTIFY_BASE_URL: https://api.notifications.service.gov.uk/
@@ -65,6 +49,7 @@ services:
       SRV_NOTIFY_MAGIC_LINK_EMAIL: 4ca6b93a-4c45-4abe-a8ea-69ba13c80915
       SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL: e900038b-f112-4862-9a93-0b8bbb48a09c
       SRV_NOTIFY_SERVICE_ID: 9b89eb93-3071-432c-9c6b-4e07dbda9071
+      SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL: cb987449-fad5-485f-aef1-9c5c616c6d42
     ports:
       - 3000:3000
       - 9230:9229
@@ -149,13 +134,6 @@ services:
     volumes:
       - ./init:/docker-entrypoint-initdb.d
 
-  adminer:
-    image: adminer
-    container_name: adminer
-    restart: always
-    ports:
-      - 9000:8080
-
   api-mock-server:
     image: mockserver/mockserver:5.14.0
     container_name: api-mock-server
@@ -179,4 +157,25 @@ services:
     hostname: mssql
     volumes:
       - ./init/mssql:/var/opt/mssql
-    profiles: [ 'next' ]
+    profiles:
+      - next
+
+#  redis-commander:
+#    container_name: redis-commander
+#    hostname: redis-commander
+#    image: rediscommander/redis-commander:latest
+#    restart: always
+#    environment:
+#      REDIS_HOSTS: redis
+#      REDIS_HOST: redis
+#      REDIS_PORT: redis:6379
+#      REDIS_PASSWORD: some_redis_password
+#    ports:
+#      - "8081:8081"
+#
+#  adminer:
+#    image: adminer
+#    container_name: adminer
+#    restart: always
+#    ports:
+#      - 9000:8080

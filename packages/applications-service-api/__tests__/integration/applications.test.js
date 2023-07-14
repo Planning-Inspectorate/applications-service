@@ -1,13 +1,14 @@
-const supertest = require('supertest');
-const app = require('../../src/app');
 const { APPLICATION_DB } = require('../__data__/application');
+const { request } = require('../__data__/supertest');
 
 const mockFindUnique = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
-	createPrismaClient: () => ({ project: { findUnique: (query) => mockFindUnique(query) } })
+	prismaClient: {
+		project: {
+			findUnique: (query) => mockFindUnique(query)
+		}
+	}
 }));
-
-const request = supertest(app);
 
 describe('/api/v1/applications', () => {
 	afterEach(() => mockFindUnique.mockClear());
@@ -56,6 +57,18 @@ describe('/api/v1/applications', () => {
 				WebAddress: 'TBC',
 				sourceSystem: 'ODT',
 				stage5ExtensionToRecommendationDeadline: null
+			});
+		});
+
+		it('returns 400 if caseReference is in invalid format', async () => {
+			const response = await request.get('/api/v1/applications/bad_format');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				code: 400,
+				errors: [
+					"'caseReference' must match pattern \"^[A-Za-z]{2}\\d{6,8}$\""
+				]
 			});
 		});
 	});

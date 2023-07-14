@@ -2,10 +2,29 @@ const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
 const {
 	sendIPRegistrationConfirmationEmailToIP,
 	sendMagicLinkToIP,
-	sendSubmissionNotification
+	sendSubmissionNotification,
+	sendSubscriptionCreateNotification
 } = require('../../../src/lib/notify');
 
-const config = require('../../../src/lib/config');
+jest.mock('../../../src/lib/config', () => ({
+	services: {
+		notify: {
+			templates: {
+				IPRegistrationConfirmationEmailToIP: 'registration_confirmation_template_id',
+				MagicLinkEmail: 'magic_link_template_id',
+				submissionCompleteEmail: 'submission_complete_template_id',
+				subscriptionCreateEmail: 'subscription_create_template_id'
+			},
+			preliminaryMeetingUrl: 'somedomain.example.com',
+			havingYourSayUrl: 'somedomain.example.com/having-your-say-guide',
+			magicLinkDomain: 'somedomain.example.com',
+			subscriptionCreateDomain: 'somedomain.example.com',
+		}
+	},
+	logger: {
+		level: 'info'
+	}
+}));
 
 jest.mock('@planning-inspectorate/pins-notify', () => ({
 	createNotifyClient: {
@@ -40,7 +59,7 @@ describe('notify lib', () => {
 
 			expect(notifyBuilder.reset).toHaveBeenCalled();
 			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
-				config.services.notify.templates.IPRegistrationConfirmationEmailToIP
+				'registration_confirmation_template_id'
 			);
 			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith(
 				'elvin.ali@planninginspectorate.gov.uk'
@@ -50,8 +69,8 @@ describe('notify lib', () => {
 				project_name: details.projectName,
 				interested_party_name: details.ipName,
 				interested_party_ref: details.ipRef,
-				preliminary_meeting_url: 'https://applications-service-web-app.azurewebsites.net/',
-				having_your_say_url: 'https://applications-service-web-app.azurewebsites.net/',
+				preliminary_meeting_url: 'somedomain.example.com',
+				having_your_say_url: 'somedomain.example.com/having-your-say-guide',
 				project_email: details.projectEmail
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
@@ -71,9 +90,7 @@ describe('notify lib', () => {
 			await sendMagicLinkToIP(details);
 
 			expect(notifyBuilder.reset).toHaveBeenCalled();
-			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
-				config.services.notify.templates.MagicLinkEmail
-			);
+			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith('magic_link_template_id');
 			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith(
 				'elvin.ali@planninginspectorate.gov.uk'
 			);
@@ -82,7 +99,7 @@ describe('notify lib', () => {
 				interested_party_name: details.ipName,
 				ProjectName: details.projectName,
 				DateOfRelevantRepresentationClose: `${details.repCloseDate} at 11:59pm GMT`,
-				'magic link': `${config.services.notify.magicLinkDomain}interested-party/confirm-your-email?token=${details.token}`,
+				'magic link': `somedomain.example.com/interested-party/confirm-your-email?token=${details.token}`,
 				interested_party_number: details.ipRef
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
@@ -103,9 +120,7 @@ describe('notify lib', () => {
 			await sendSubmissionNotification(details);
 
 			expect(notifyBuilder.reset).toHaveBeenCalled();
-			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
-				config.services.notify.templates.submissionCompleteEmail
-			);
+			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith('submission_complete_template_id');
 			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('a@example.com');
 			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
 				'email address': 'a@example.com',
@@ -114,6 +129,35 @@ describe('notify lib', () => {
 				project_email: 'project@example.com'
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('Submission 1');
+			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	describe('sendSubscriptionCreateNotification', () => {
+		it('should send an email', async () => {
+			const details = {
+				email: 'a@example.com',
+				subscriptionDetails: 'some_encrypted_string',
+				project: {
+					name: 'some project',
+					email: 'project@example.com',
+					caseReference: 'BC0110001'
+				}
+			};
+			await sendSubscriptionCreateNotification(details);
+
+			expect(notifyBuilder.reset).toHaveBeenCalled();
+			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith('subscription_create_template_id');
+			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('a@example.com');
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				subscription_url:
+					'somedomain.example.com/projects/BC0110001/get-updates/subscribed?subscriptionDetails=some_encrypted_string',
+				project_name: 'some project',
+				project_email: 'project@example.com'
+			});
+			expect(notifyBuilder.setReference).toHaveBeenCalledWith(
+				'Subscription BC0110001 a@example.com'
+			);
 			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
 		});
 	});
