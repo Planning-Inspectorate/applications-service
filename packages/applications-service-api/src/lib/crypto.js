@@ -19,12 +19,12 @@ const decrypt = (value) => {
 	const encrypted = value.substring(ivLength, value.length);
 	const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(iv, 'hex'));
 
-	const decrpyted = Buffer.concat([
+	const decrypted = Buffer.concat([
 		decipher.update(Buffer.from(encrypted, 'hex')),
 		decipher.final()
 	]);
 
-	return decrpyted.toString();
+	return decrypted.toString();
 };
 
 module.exports = {

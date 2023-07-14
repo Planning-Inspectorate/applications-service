@@ -23,8 +23,8 @@ router.use('/cookies', cookieRouter);
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 	router.use('/project-search', projectSearchRouter);
 }
-router.use('/register', registerRouter);
-router.use('/register-have-your-say', registerRouter);
+
+router.use('/projects/:case_ref/register', registerRouter);
 router.use(
 	`/projects/:case_ref/${routesConfig.examination.baseDirectory}`,
 	isProcessingSubmission,

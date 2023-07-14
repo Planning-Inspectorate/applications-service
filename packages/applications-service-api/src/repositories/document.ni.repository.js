@@ -34,9 +34,9 @@ const getAvailableFilters = async (caseReference) => {
 	const query = {
 		attributes: [
 			[fn('DISTINCT', col('stage')), 'stage'],
-			'filter_1',
+			['filter_1', 'filter1'],
 			'category',
-			[fn('COUNT', col('id')), 'count']
+			[fn('COUNT', col('id')), 'total']
 		],
 		where,
 		group: [literal('stage, filter_1, category')]
@@ -100,7 +100,7 @@ const mapSearchTermToQuery = (searchTerm) => {
 	}
 };
 
-function buildDateQuery({ from, to } = {}) {
+const buildDateQuery = ({ from, to } = {}) => {
 	if (from && to) {
 		return { ['date_published']: { [Op.between]: [from, to] } };
 	}
@@ -112,9 +112,16 @@ function buildDateQuery({ from, to } = {}) {
 	if (from) {
 		return { ['date_published']: { [Op.gte]: from } };
 	}
-}
+};
+const getDocumentsByDataId = (dataIds) =>
+	db.Document.findAll({
+		where: {
+			dataID: { [Op.in]: dataIds }
+		}
+	});
 
 module.exports = {
 	fetchDocuments,
-	getAvailableFilters
+	getAvailableFilters,
+	getDocumentsByDataId
 };

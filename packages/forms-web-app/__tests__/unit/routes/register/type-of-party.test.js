@@ -18,9 +18,9 @@ describe('routes/register/who-registering-for', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(get).toHaveBeenCalledWith('/who-registering-for', typeOfPartyController.getTypeOfParty);
+		expect(get).toHaveBeenCalledWith('/', typeOfPartyController.getTypeOfParty);
 		expect(post).toHaveBeenCalledWith(
-			'/who-registering-for',
+			'/',
 			typeOfPartyValidationRules(),
 			validationErrorHandler,
 			typeOfPartyController.postTypeOfParty

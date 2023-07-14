@@ -38,6 +38,8 @@ exports.postTypeOfParty = (req, res) => {
 		});
 		return;
 	}
+
+	let redirectUrl = `/${forwardPage(selectedParty)}`;
 	if (typeOfParty !== req.session.typeOfParty) {
 		req.session.typeOfParty = typeOfParty;
 		if (typeOfParty === 'myself') {
@@ -47,16 +49,15 @@ exports.postTypeOfParty = (req, res) => {
 		} else if (typeOfParty === 'behalf') {
 			req.session.behalfRegdata = registrationData.behalf;
 		}
-		res.redirect(`/${forwardPage(selectedParty)}`);
 	} else if (req.query.mode === 'edit') {
 		if (typeOfParty === 'myself') {
-			res.redirect(`/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`);
+			redirectUrl = `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`;
 		} else if (typeOfParty === 'organisation') {
-			res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
+			redirectUrl = `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`;
 		} else if (typeOfParty === 'behalf') {
-			res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
+			redirectUrl = `/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`;
 		}
-	} else {
-		res.redirect(`/${forwardPage(selectedParty)}`);
 	}
+
+	return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
 };

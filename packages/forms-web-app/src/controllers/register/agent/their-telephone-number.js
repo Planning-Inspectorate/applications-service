@@ -18,9 +18,11 @@ exports.postTelephone = (req, res) => {
 	}
 
 	req.session.behalfRegdata.representee.telephone = body.telephone;
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT}`);
-	}
+
+	const redirectUrl =
+		req.query.mode === 'edit'
+			? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS
+			: VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT;
+
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

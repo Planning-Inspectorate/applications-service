@@ -7,13 +7,14 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 	describe('#getAreYouOver18', () => {
 		describe('When getting the registration are you over 18 page', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/over18',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/over18',
 					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } }
 				};
 				beforeEach(() => {
@@ -29,7 +30,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/over18',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/over18',
 					session: { orgRegdata: { ['over-18']: 'mock are you over 18' } }
 				};
 				beforeEach(() => {
@@ -45,7 +46,11 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 			});
 		});
 		describe('and there is an error', () => {
-			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
 				expect(() => getAreYouOver18(req, res)).toThrowError(
@@ -58,10 +63,11 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 	describe('#postAreYouOver18', () => {
 		describe('When posting the registration are you over 18', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res),
-				send: jest.fn()
+				send: jest.fn().mock
 			};
 			describe('and there is an unrecoverable error', () => {
 				const req = {};
@@ -75,7 +81,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 			});
 			describe('and there is an error in the form', () => {
 				const req = {
-					originalUrl: '/register/myself/over18',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/over18',
 					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } },
 					body: {
 						errors: { ['over-18']: 'an error' },
@@ -103,7 +109,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 			});
 			describe('and the user has submitted a are you over 18 for selected myself and is in edit mode', () => {
 				const req = {
-					originalUrl: '/register/myself/over18',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/over18',
 					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } },
 					body: {
 						['over18']: 'mock are you over 18'
@@ -114,12 +120,14 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					postAreYouOver18(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/check-answers');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/check-answers'
+					);
 				});
 			});
 			describe('and the user has submitted a are you over 18 for selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/over18',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/over18',
 					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } },
 					body: {
 						['over18']: 'mock are you over 18'
@@ -130,12 +138,14 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					postAreYouOver18(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith('/register/myself/email-address');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/email-address'
+					);
 				});
 			});
 			describe('and the user has submitted a are you over 18 for selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/over18',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/over18',
 					session: { orgRegdata: { ['over-18']: 'mock are you over 18' } },
 					body: {
 						['over-18']: 'mock are you over 18'
@@ -147,7 +157,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
-						'/register/organisation/name-of-organisation-or-charity'
+						'/mock-base-url/mock-case-ref/register/organisation/name-of-organisation-or-charity'
 					);
 				});
 			});

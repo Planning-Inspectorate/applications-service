@@ -46,7 +46,9 @@ describe('controllers/register/agent/name-person-representing', () => {
 			};
 			await fullNameController.postFullName(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18}`);
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18}`
+			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {

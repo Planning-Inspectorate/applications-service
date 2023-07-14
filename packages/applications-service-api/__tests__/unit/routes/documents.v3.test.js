@@ -1,5 +1,4 @@
 const { post } = require('./router-mock');
-const documentsController = require('../../../src/controllers/documents.v3');
 const { validateRequestWithOpenAPI } = require('../../../src/middleware/validator/openapi');
 
 describe('routes/documentsV3', () => {
@@ -12,10 +11,7 @@ describe('routes/documentsV3', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(post).toHaveBeenCalledWith(
-			'',
-			validateRequestWithOpenAPI,
-			documentsController.getDocuments
-		);
+		expect(post).toHaveBeenCalledWith('', validateRequestWithOpenAPI, expect.any(Function));
+		expect(post.mock.calls[0][2].name).toEqual('getDocumentsRoute');
 	});
 });

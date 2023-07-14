@@ -39,6 +39,12 @@ function getVerticalTabs(projectName, caseRef, hasOpenTimetables, eventsEligible
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
+			hidden: featureFlag.allowGetUpdates != true,
+			id: 'project-updates',
+			name: 'Get Updates',
+			url: '/projects/' + caseRef + '/get-updates/start'
+		},
+		{
 			hidden: featureHideLink.hideAllExaminationDocumentsLink,
 			id: 'all-examination-documents',
 			name: 'All Examination documents',

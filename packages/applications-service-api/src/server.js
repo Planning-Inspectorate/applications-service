@@ -3,7 +3,6 @@
  */
 
 const http = require('http');
-require('express-async-errors');
 
 const config = require('./lib/config');
 const logger = require('./lib/logger');

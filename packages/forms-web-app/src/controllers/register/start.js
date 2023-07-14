@@ -17,10 +17,12 @@ exports.getStart = async (req, res) => {
 		const closeDate = req.session.appData.DateOfRelevantRepresentationClose;
 		const periodOpen = moment(new Date()).add(-1, 'd').isBefore(closeDate);
 		req.session.isPeriodOpen = periodOpen;
+		req.session.registerJourneyStarted = true;
 		res.render(VIEW.REGISTER.START, {
 			projectName: req.session.projectName,
 			closeDate: closeDate ? formatDate(closeDate) : '',
-			periodOpen
+			periodOpen,
+			baseUrl: `/projects/${req.params.case_ref}`
 		});
 	} else if (response.resp_code === 404) {
 		logger.warn(`No project found with ID ${req.params.case_ref} for registration`);

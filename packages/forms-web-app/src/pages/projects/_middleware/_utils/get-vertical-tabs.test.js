@@ -60,6 +60,12 @@ describe('#getVerticalTabs', () => {
 					},
 					{
 						hidden: true,
+						id: 'project-updates',
+						name: 'Get Updates',
+						url: '/projects/mock case ref/get-updates/start'
+					},
+					{
+						hidden: true,
 						id: 'all-examination-documents',
 						name: 'All Examination documents',
 						url: '/projects/all-examination-documents'
@@ -83,6 +89,7 @@ describe('#getVerticalTabs', () => {
 				featureHideLink.hideAllExaminationDocumentsLink = false;
 				featureFlag.allowSection51 = true;
 				featureFlag.allowHaveYourSay = true;
+				featureFlag.allowGetUpdates = true;
 				result = getVerticalTabs('mock project name', 'mock case ref', false, false);
 			});
 
@@ -123,6 +130,12 @@ describe('#getVerticalTabs', () => {
 						id: 'project-have-your-say',
 						name: 'Have your say',
 						url: '/projects/mock case ref/examination/have-your-say-during-examination'
+					},
+					{
+						hidden: false,
+						id: 'project-updates',
+						name: 'Get Updates',
+						url: '/projects/mock case ref/get-updates/start'
 					},
 					{
 						hidden: false,

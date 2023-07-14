@@ -19,9 +19,10 @@ exports.postRole = (req, res) => {
 
 	req.session.orgRegdata.role = body.role;
 
-	if (req.query.mode === 'edit') {
-		res.redirect(`/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`);
-	} else {
-		res.redirect(`/${VIEW.REGISTER.ORGANISATION.EMAIL}`);
-	}
+	const redirectUrl =
+		req.query.mode === 'edit'
+			? VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS
+			: VIEW.REGISTER.ORGANISATION.EMAIL;
+
+	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
 };

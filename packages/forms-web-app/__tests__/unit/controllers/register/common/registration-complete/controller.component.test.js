@@ -9,13 +9,14 @@ describe('controllers/register/common/registration-complete/controller', () => {
 	describe('#getConfirmation', () => {
 		describe('When getting the registration complete page', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/registration-complete',
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/registration-complete',
 					session: {
 						appData: { Region: 'mock region', ProjectName: 'mock project name' },
 						mySelfRegdata: { email: 'mock email', ipRefNo: 'mock ip ref no' }
@@ -37,7 +38,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/registration-complete',
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/registration-complete',
 					session: {
 						appData: { Region: 'mock region', ProjectName: 'mock project name' },
 						orgRegdata: { email: 'mock email', ipRefNo: 'mock ip ref no' }
@@ -59,7 +60,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/registration-complete',
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/registration-complete',
 					session: {
 						appData: { Region: 'mock region', ProjectName: 'mock project name' },
 						behalfRegdata: { representor: { email: 'mock email' }, ipRefNo: 'mock ip ref no' }
@@ -81,7 +82,11 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			});
 		});
 		describe('and there is an error', () => {
-			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
 				expect(() => getConfirmation(req, res)).toThrowError(

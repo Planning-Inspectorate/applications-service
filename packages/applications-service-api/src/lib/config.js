@@ -17,6 +17,11 @@ module.exports = {
 					process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES
 				)
 			}
+		},
+		documents: {
+			getDocuments: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES)
+			}
 		}
 	},
 	db: {},
@@ -82,16 +87,13 @@ module.exports = {
 				IPRegistrationConfirmationEmailToIP:
 					process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
 				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
-				submissionCompleteEmail: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL
+				submissionCompleteEmail: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
+				subscriptionCreateEmail: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL
 			},
-			preliminaryMeetingUrl:
-				process.env.PRELIMINARY_MEETING_URL ||
-				'https://applications-service-web-app.azurewebsites.net/',
-			havingYourSayUrl:
-				process.env.HAVING_YOUR_SAY_URL ||
-				'https://applications-service-web-app.azurewebsites.net/',
-			magicLinkDomain:
-				process.env.MAGIC_LINK_DOMAIN || 'https://applications-service-web-app.azurewebsites.net/'
+			preliminaryMeetingUrl: process.env.APPLICATIONS_WEB_BASE_URL,
+			havingYourSayUrl: `${process.env.APPLICATIONS_WEB_BASE_URL}/having-your-say-guide`,
+			magicLinkDomain: process.env.APPLICATIONS_WEB_BASE_URL,
+			subscriptionCreateDomain: process.env.APPLICATIONS_WEB_BASE_URL
 		},
 		encryption: {
 			algorithm: 'aes-256-ctr',

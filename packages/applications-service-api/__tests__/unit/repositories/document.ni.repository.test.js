@@ -1,7 +1,7 @@
 const {
 	fetchDocuments,
 	getAvailableFilters
-} = require('../../../src/services/document.v3.service');
+} = require('../../../src/repositories/document.ni.repository');
 const { DB_DOCUMENTS, DB_FILTERS } = require('../../__data__/documents');
 const { Op } = require('sequelize');
 

@@ -15,13 +15,14 @@ describe('controllers/register/common/declaration/controller', () => {
 	describe('#getDeclaration', () => {
 		describe('When getting the declaration', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res)
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/register/myself/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration'
 				};
 				beforeEach(() => {
 					getDeclaration(req, res);
@@ -35,7 +36,7 @@ describe('controllers/register/common/declaration/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/register/organisation/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration'
 				};
 				beforeEach(() => {
 					getDeclaration(req, res);
@@ -49,7 +50,7 @@ describe('controllers/register/common/declaration/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/register/agent/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration'
 				};
 				beforeEach(() => {
 					getDeclaration(req, res);
@@ -63,7 +64,11 @@ describe('controllers/register/common/declaration/controller', () => {
 			});
 		});
 		describe('and there is an error', () => {
-			const res = { render: jest.fn(), status: jest.fn(() => res) };
+			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+				render: jest.fn(),
+				status: jest.fn(() => res)
+			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
 				expect(() => getDeclaration(req, res)).toThrowError(
@@ -76,13 +81,14 @@ describe('controllers/register/common/declaration/controller', () => {
 	describe('#postDeclaration', () => {
 		describe('When posting declaration', () => {
 			const res = {
+				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res),
 				send: jest.fn()
 			};
 			describe('and there is an unrecoverable error', () => {
-				const req = {};
+				const req = { params: { case_ref: 'mock case ref' } };
 				beforeEach(() => {
 					postDeclaration(req, res);
 				});
@@ -94,7 +100,8 @@ describe('controllers/register/common/declaration/controller', () => {
 			describe('and the user has submitted a declaration for myself', () => {
 				describe('and the session has an ipRefNo', () => {
 					const req = {
-						originalUrl: '/register/myself/declaration',
+						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+						params: { case_ref: 'mock case ref' },
 						session: {
 							comment: 'mock comment',
 							mode: 'mock session mode',
@@ -117,12 +124,15 @@ describe('controllers/register/common/declaration/controller', () => {
 						);
 					});
 					it('should redirect to the next page for myself', () => {
-						expect(res.redirect).toHaveBeenCalledWith('/register/myself/registration-complete');
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/myself/registration-complete'
+						);
 					});
 				});
 				describe('and the session does NOT have an ipRefNo', () => {
 					const req = {
-						originalUrl: '/register/myself/declaration',
+						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+						params: { case_ref: 'mock case ref' },
 						session: {
 							comment: 'mock comment',
 							mode: 'mock session mode',
@@ -147,7 +157,9 @@ describe('controllers/register/common/declaration/controller', () => {
 						);
 					});
 					it('should redirect to the next page for myself', () => {
-						expect(res.redirect).toHaveBeenCalledWith('/register/myself/registration-complete');
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/myself/registration-complete'
+						);
 					});
 				});
 			});

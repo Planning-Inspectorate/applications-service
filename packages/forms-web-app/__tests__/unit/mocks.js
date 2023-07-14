@@ -17,7 +17,7 @@ const mockReq = (application = emptyApplication) => ({
 const mockRes = () => ({
 	clearCookie: jest.fn(),
 	cookie: jest.fn(),
-	locals: jest.fn(),
+	locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 	redirect: jest.fn(),
 	render: jest.fn(),
 	sendStatus: jest.fn(),

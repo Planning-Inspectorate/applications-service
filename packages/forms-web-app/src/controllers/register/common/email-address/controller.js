@@ -43,7 +43,7 @@ const postEmailAddress = (req, res) => {
 
 		setSession(session, key, emailAddressKey, body[emailAddressKey]);
 
-		return res.redirect(getRedirectUrl(query, key));
+		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(query, key)}`);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
