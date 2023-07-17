@@ -8,11 +8,15 @@ const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify'
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
 const {
 	createSubscription,
-	confirmSubscription
+	confirmSubscription,
+	deleteSubscription
 } = require('../../../src/controllers/subscriptions');
 const ApiError = require('../../../src/error/apiError');
 const { when } = require('jest-when');
-const { publishNSIPSubscription } = require('../../../src/services/backoffice.publish.service');
+const {
+	publishCreateNSIPSubscription,
+	publishDeleteNSIPSubscription
+} = require('../../../src/services/backoffice.publish.service');
 
 describe('subscriptions controller', () => {
 	const mockTime = new Date('2023-07-06T11:06:00.000Z');
@@ -20,7 +24,7 @@ describe('subscriptions controller', () => {
 
 	beforeEach(() => {
 		jest.spyOn(Date, 'now').mockImplementation(() => mockTime.getTime());
-		mockRes = { send: jest.fn(), status: jest.fn().mockImplementation(() => mockRes) };
+		mockRes = { send: jest.fn() };
 	});
 	afterEach(() => jest.resetAllMocks());
 
@@ -97,7 +101,7 @@ describe('subscriptions controller', () => {
 			}
 		};
 
-		it('given valid subscriptionDetails, invokes publishNSIPSubscription, and returns 200', async () => {
+		it('given valid subscriptionDetails, invokes publishCreateNSIPSubscription, and returns 200', async () => {
 			getApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
@@ -115,11 +119,10 @@ describe('subscriptions controller', () => {
 
 			await confirmSubscription(req, mockRes);
 
-			expect(publishNSIPSubscription).toBeCalledWith('BC0110001', 'user@example.org', [
+			expect(publishCreateNSIPSubscription).toBeCalledWith('BC0110001', 'user@example.org', [
 				'applicationSubmitted',
 				'applicationDecided'
 			]);
-			expect(mockRes.status).toBeCalledWith(200);
 			expect(mockRes.send).toBeCalled();
 		});
 
@@ -156,7 +159,7 @@ describe('subscriptions controller', () => {
 			await expect(() => confirmSubscription(req, mockRes)).rejects.toEqual(expectedError);
 		});
 
-		it('throws error if publishNSIPSubscription fails', async () => {
+		it('throws error if publishCreateNSIPSubscription fails', async () => {
 			getApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
@@ -171,11 +174,61 @@ describe('subscriptions controller', () => {
 						date: mockTime
 					})
 				);
-			publishNSIPSubscription.mockRejectedValueOnce(new Error('some publishing error'));
+			publishCreateNSIPSubscription.mockRejectedValueOnce(new Error('some publishing error'));
 
 			await expect(() => confirmSubscription(req, mockRes)).rejects.toThrow(
 				'some publishing error'
 			);
+		});
+	});
+
+	describe('deleteSubscription', () => {
+		const req = {
+			params: {
+				caseReference: 'BC0110001',
+			},
+			query: {
+				email: 'some_encrypted_string'
+			}
+		};
+
+		it('given valid encrypted email, invokes publishDeleteNSIPSubscription, and returns 200', async () => {
+			getApplication.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseRef: 'BC0110001'
+			});
+			when(decrypt)
+				.calledWith('some_encrypted_string')
+				.mockReturnValue('user@example.org');
+
+			await deleteSubscription(req, mockRes);
+
+			expect(publishDeleteNSIPSubscription).toBeCalledWith('BC0110001', 'user@example.org');
+			expect(mockRes.send).toBeCalled();
+		});
+
+		it('throws not found error if project with case reference does not exist', async () => {
+			getApplication.mockResolvedValueOnce(null);
+
+			const expectedError = new ApiError(404, {
+				errors: ['Project with case reference BC0110001 not found']
+			});
+
+			await expect(() => deleteSubscription(req, mockRes)).rejects.toEqual(expectedError);
+		});
+
+		it('throws error if publishDeleteNSIPSubscription fails', async () => {
+			getApplication.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseRef: 'BC0110001'
+			});
+			when(decrypt).calledWith('some_encrypted_string').mockReturnValue('user@example.org');
+
+			publishDeleteNSIPSubscription.mockRejectedValueOnce(new Error('some publishing error'));
+
+			await expect(() => deleteSubscription(req, mockRes)).rejects.toThrow('some publishing error');
 		});
 	});
 });

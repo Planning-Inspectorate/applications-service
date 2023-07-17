@@ -177,4 +177,65 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 			});
 		});
 	});
+
+	describe('DELETE', () => {
+		const encryptedEmail = encrypt('test@example.org');
+
+		it('given valid encrypted email and caseReference that exists, returns 200', async () => {
+			mockFindUnique.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseReference: 'BC0110001'
+			});
+
+			const response = await request
+				.delete('/api/v1/subscriptions/AA0000000')
+				.query({ email: encryptedEmail })
+				.send();
+
+			expect(response.status).toEqual(200);
+		});
+
+		it('given missing email, returns 400', async () => {
+			const response = await request.delete('/api/v1/subscriptions/BC0110001').send();
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				code: 400,
+				errors: ["must have required property 'email'"]
+			});
+		});
+
+		it('returns 404 if project is not found', async () => {
+			mockFindUnique.mockResolvedValueOnce(null);
+
+			const response = await request
+				.delete('/api/v1/subscriptions/XX0000000')
+				.query({ email: encryptedEmail })
+				.send();
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toEqual({
+				code: 404,
+				errors: ['Project with case reference XX0000000 not found']
+			});
+		});
+
+		it('given invalid encrypted email, returns 500', async () => {
+			mockFindUnique.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseReference: 'BC0110001'
+			});
+
+			const response = await request
+				.delete('/api/v1/subscriptions/BC0110001')
+				.query({
+					email: 'bad_encrypted_email'
+				})
+				.send();
+
+			expect(response.status).toEqual(500);
+		});
+	});
 });

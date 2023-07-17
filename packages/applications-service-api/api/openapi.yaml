@@ -591,6 +591,44 @@ paths:
                 $ref: '#/components/schemas/NotFoundError'
         '500':
           description: Internal server error
+    delete:
+      description: Delete an email update subscription
+      tags:
+        - Subscription
+      parameters:
+        - in: path
+          name: caseReference
+          example: 'EN010116'
+          required: true
+          schema:
+            type: string
+            minLength: 8
+            maxLength: 10
+            pattern: '^[A-Za-z]{2}\d{6,8}$'
+          description: Case / Project unique identifier
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+            description: encrypted string of email address
+      responses:
+        '200':
+          description: Successfully deleted subscription
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
 
   '/api/v1/advice':
     get:
