@@ -8,6 +8,7 @@ const documents = new PO_Documents();
 
 describe('User navigates to the documents page and can filter or search project documents', () => {
 	it('Navigates to a project documents page', () => {
+		cy.clearCookies();
 		cy.visit('/project-search/');
 		projectSearch.findAndClickLink('A30 Temple to Higher Carblake Improvement');
 		projectPage.findAndClickSidebarLinkLeft('Documents');
