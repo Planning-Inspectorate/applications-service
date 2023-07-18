@@ -22,6 +22,13 @@ module.exports = {
 			getDocuments: {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES)
 			}
+		},
+		serviceBus: {
+			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
+			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
+			topics: {
+				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription'
+			}
 		}
 	},
 	db: {},
