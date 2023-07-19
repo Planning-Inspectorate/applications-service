@@ -5,7 +5,10 @@ Monorepo for all Applications Service services and infrastructure
 ## TL;DR
 
 - `npm i`
-- `npm run prisma:generate` (on first set up only, or after upgrading `prisma`)
+- create a `.env` file in `./packages/applications-service-api`. Copy the values from `.env.development`
+- `npm run db:generate` to create database
+- `npm run db:migrate:dev` to create tables
+- `npm run db:seed` to populate tables with some data 
 - `npm run dev`
 - Go to [localhost:9004](http://localhost:9004)
 
@@ -104,6 +107,30 @@ Other tips:
    npm run dev:api -- sh
    ```
 
+### Database
+
+Initially, the Applications service used MySQL as a data store which is due to be phased out and replaced with SQL Server. Data will be migrated from one to the other, but during the transition period we will run both with only new data being retrieved from SQL Server. Locally, both are run in Docker containers.
+
+#### SQL Server
+
+First, make sure you have a `.env` file in `./packages/applications-service-api` and it has a `DATABASE_URL` environment variable defined with details pointing to your local database server (`mssql` Docker container);
+
+To set up the SQL Server with tables and some data, you will need to run the following commands (whilst the SQL Server Docker container is running):
+
+```shell
+npm run db:generate
+npm run db:migrate:dev
+npm run db:seed 
+```
+
+The ORM used by the application to access SQL Server is [Prisma](https://www.prisma.io/). The schema is defined in [schema.prisma](./packages/applications-service-api/prisma/schema.prisma). 
+
+**Note:** If the `prisma.schema` file has been updated, don't forget to run `npm run db:migrate:dev` to apply the changes.
+
+#### MySQL
+
+The local MySQL database is bootstrapped from sql scripts located in the `./init` directory. Simply running the Docker container should be all the setup needed for running the MySQL database.
+
 ### Troubleshooting
 
 On (**npm run dev**), you may get the following error:
@@ -172,7 +199,7 @@ In case this error is unexpected for you, please report it in https://github.com
   at exports.createPrismaClient (/opt/app/packages/applications-service-api/src/lib/prisma.js:7:26)
 ```
     
-- Run `npm run prisma:generate` to re-generate the Prisma client. This should only be necessary on your first setup, after removing `node_modules`, or upgrading the Prisma version.
+- Run `npm run db:generate` to re-generate the Prisma client. This should only be necessary on your first setup, after removing `node_modules`, or upgrading the Prisma version.
 
 ```shell
 PrismaClientInitializationError: Query engine library for current platform "linux-musl" could not be found.
@@ -182,7 +209,7 @@ This probably happens, because you built Prisma Client on a different platform.
 (Prisma Client looked in "/opt/app/node_modules/@prisma/client/runtime/libquery_engine-linux-musl.so.node")
 ```
 
-- Add the platform (in this case `"linux-musl"`) to `binaryTargets` in `prisma.schema` then run `npm run prisma:generate` 
+- Add the platform (in this case `"linux-musl"`) to `binaryTargets` in `prisma.schema` then run `npm run db:generate` 
 
 ## Branching
 

@@ -1,5 +1,6 @@
 {
 	"name": "@pins/applications-service-api",
+	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
 	"version": "0.0.0",
 	"private": true,
 	"engines": {
@@ -8,6 +9,8 @@
 	"main": "src/main.js",
 	"scripts": {
 		"db:migrate:dev": "npx prisma migrate dev",
+		"db:generate": "npx prisma generate",
+		"db:seed": "npx prisma db seed",
 		"db:migrate:deploy": "npx prisma migrate deploy",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
@@ -18,7 +21,9 @@
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
-	"author": "Planning Inspectorate <github.com/Planning-Inspectorate>",
+	"prisma": {
+		"seed": "node ./prisma/seed.js"
+	},
 	"dependencies": {
 		"@azure/identity": "^3.2.3",
 		"@azure/service-bus": "^7.9.0",
