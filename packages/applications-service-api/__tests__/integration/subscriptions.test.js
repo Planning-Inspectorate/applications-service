@@ -134,7 +134,7 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 				subscriptionDetails: validPayload
 			});
 
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(204);
 		});
 
 		it('given expired payload, returns 400', async () => {
@@ -193,7 +193,7 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 				.query({ email: encryptedEmail })
 				.send();
 
-			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(204);
 		});
 
 		it('given missing email, returns 400', async () => {

@@ -536,6 +536,15 @@ paths:
       responses:
         '200':
           description: Successfully created subscription
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscriptionDetails:
+                    type: string
+                    description: encrypted string containing subscription details
+                    example: 60492abe2c6eed5eb43695f8eda5a14a57a44178d28c641772db0723685b4501
         '400':
           description: Invalid request
           content:
@@ -575,7 +584,7 @@ paths:
                   type: string
                   description: encrypted string containing 'email', 'subscriptionTypes' and 'date'
       responses:
-        '200':
+        '204':
           description: Successfully confirmed subscription
         '400':
           description: Invalid request
@@ -613,7 +622,7 @@ paths:
             type: string
             description: encrypted string of email address
       responses:
-        '200':
+        '204':
           description: Successfully deleted subscription
         '400':
           description: Invalid request

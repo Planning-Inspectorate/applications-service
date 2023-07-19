@@ -50,7 +50,7 @@ const confirmSubscription = async (req, res) => {
 
 	await publishCreateNSIPSubscription(caseReference, email, subscriptionTypes);
 
-	res.send();
+	res.status(204).send();
 };
 
 const deleteSubscription = async (req, res) => {
@@ -63,13 +63,13 @@ const deleteSubscription = async (req, res) => {
 
 	await publishDeleteNSIPSubscription(caseReference, decryptedEmail);
 
-	res.send();
+	res.status(204).send();
 };
 
 const validateCaseReference = async (caseReference) => {
 	const project = await getApplication(caseReference);
 	if (!project) throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
-}
+};
 
 const validateSubscriptionDate = (subscriptionCreatedAt) => {
 	const expiryTime = moment(subscriptionCreatedAt).add(48, 'hours');
