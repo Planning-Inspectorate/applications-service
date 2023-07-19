@@ -159,8 +159,6 @@ services:
     hostname: mssql
     volumes:
       - ./init/mssql:/var/opt/mssql
-    profiles:
-      - next
 
 #  redis-commander:
 #    container_name: redis-commander
