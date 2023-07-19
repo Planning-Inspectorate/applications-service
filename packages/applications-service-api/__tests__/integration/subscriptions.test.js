@@ -163,6 +163,16 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 			});
 		});
 
+		it('given missing payload, returns 400', async () => {
+			const response = await request.put('/api/v1/subscriptions/BC0110001').send({});
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				code: 400,
+				errors: ["must have required property 'subscriptionDetails'"]
+			});
+		});
+
 		it('returns 404 if project is not found', async () => {
 			mockFindUnique.mockResolvedValueOnce(null);
 
