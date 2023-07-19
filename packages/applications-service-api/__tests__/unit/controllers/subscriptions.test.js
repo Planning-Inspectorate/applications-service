@@ -24,7 +24,7 @@ describe('subscriptions controller', () => {
 
 	beforeEach(() => {
 		jest.spyOn(Date, 'now').mockImplementation(() => mockTime.getTime());
-		mockRes = { send: jest.fn() };
+		mockRes = { send: jest.fn(), status: jest.fn().mockImplementation(() => mockRes) };
 	});
 	afterEach(() => jest.resetAllMocks());
 
@@ -123,6 +123,7 @@ describe('subscriptions controller', () => {
 				'applicationSubmitted',
 				'applicationDecided'
 			]);
+			expect(mockRes.status).toBeCalledWith(204);
 			expect(mockRes.send).toBeCalled();
 		});
 
@@ -185,7 +186,7 @@ describe('subscriptions controller', () => {
 	describe('deleteSubscription', () => {
 		const req = {
 			params: {
-				caseReference: 'BC0110001',
+				caseReference: 'BC0110001'
 			},
 			query: {
 				email: 'some_encrypted_string'
@@ -198,13 +199,12 @@ describe('subscriptions controller', () => {
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'
 			});
-			when(decrypt)
-				.calledWith('some_encrypted_string')
-				.mockReturnValue('user@example.org');
+			when(decrypt).calledWith('some_encrypted_string').mockReturnValue('user@example.org');
 
 			await deleteSubscription(req, mockRes);
 
 			expect(publishDeleteNSIPSubscription).toBeCalledWith('BC0110001', 'user@example.org');
+			expect(mockRes.status).toBeCalledWith(204);
 			expect(mockRes.send).toBeCalled();
 		});
 
