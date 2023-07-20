@@ -66,11 +66,16 @@ describe('scripts/sw', () => {
 				clone: () => ({
 					url: 'http://example.com/example',
 					formData: jest.fn().mockResolvedValue({
-						entries: () =>
-							new Map([
-								['first', 'one'],
-								['second', 'two']
-							])
+						keys: () => ['first', 'second', 'third', 'third'].values(),
+						getAll: (key) => {
+							const keyValues = {
+								first: 'one',
+								second: 'two',
+								third: ['three', 'four']
+							};
+
+							return keyValues[key];
+						}
 					})
 				})
 			},
@@ -85,7 +90,7 @@ describe('scripts/sw', () => {
 			headers: {
 				'content-type': 'application/json'
 			},
-			body: '{"first":"one","second":"two"}'
+			body: '{"first":"one","second":"two","third":["three","four"]}'
 		});
 	});
 
@@ -104,11 +109,15 @@ describe('scripts/sw', () => {
 				clone: () => ({
 					url: 'http://example.com/example',
 					formData: jest.fn().mockResolvedValue({
-						entries: () =>
-							new Map([
-								['first', 'one'],
-								['second', 'two']
-							])
+						keys: () => ['first', 'second'].values(),
+						getAll: (key) => {
+							const keyValues = {
+								first: 'one',
+								second: 'two'
+							};
+
+							return keyValues[key];
+						}
 					})
 				})
 			},
@@ -135,11 +144,15 @@ describe('scripts/sw', () => {
 				clone: () => ({
 					url: 'http://example.com/example',
 					formData: jest.fn().mockResolvedValue({
-						entries: () =>
-							new Map([
-								['first', 'one'],
-								['second', 'two']
-							])
+						keys: () => ['first', 'second'].values(),
+						getAll: (key) => {
+							const keyValues = {
+								first: 'one',
+								second: 'two'
+							};
+
+							return keyValues[key];
+						}
 					})
 				})
 			},
@@ -166,11 +179,15 @@ describe('scripts/sw', () => {
 				clone: () => ({
 					url: 'http://not.example.com/example',
 					formData: jest.fn().mockResolvedValue({
-						entries: () =>
-							new Map([
-								['first', 'one'],
-								['second', 'two']
-							])
+						keys: () => ['first', 'second'].values(),
+						getAll: (key) => {
+							const keyValues = {
+								first: 'one',
+								second: 'two'
+							};
+
+							return keyValues[key];
+						}
 					})
 				})
 			},
