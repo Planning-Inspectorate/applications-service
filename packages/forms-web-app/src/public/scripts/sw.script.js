@@ -25,7 +25,13 @@ function handleFormPost(event) {
 			try {
 				const request = event.request.clone();
 				const formData = await request.formData();
-				const formDataValues = Object.fromEntries(formData.entries());
+
+				let formDataValues = {}
+
+				for (const formDataKey of formData.keys()) {
+					const allFormDataNameValues = formData.getAll(formDataKey)
+					formDataValues[formDataKey] = allFormDataNameValues.length === 1 ? allFormDataNameValues[0] : allFormDataNameValues
+				}
 
 				return fetch(request.url, {
 					method: 'POST',
