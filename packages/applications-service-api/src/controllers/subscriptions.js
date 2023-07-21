@@ -7,6 +7,7 @@ const {
 	publishCreateNSIPSubscription,
 	publishDeleteNSIPSubscription
 } = require('../services/backoffice.publish.service');
+const logger = require('../lib/logger');
 
 const createSubscription = async (req, res) => {
 	const { email, subscriptionTypes } = req.body;
@@ -44,7 +45,9 @@ const confirmSubscription = async (req, res) => {
 
 	await validateCaseReference(caseReference);
 
-	const { email, subscriptionTypes, date } = JSON.parse(decrypt(encryptedSubscriptionDetails));
+	const { email, subscriptionTypes, date } = decryptSubscriptionDetails(
+		encryptedSubscriptionDetails
+	);
 
 	validateSubscriptionDate(date);
 
@@ -74,6 +77,28 @@ const validateCaseReference = async (caseReference) => {
 const validateSubscriptionDate = (subscriptionCreatedAt) => {
 	const expiryTime = moment(subscriptionCreatedAt).add(48, 'hours');
 	if (moment().isAfter(expiryTime)) throw ApiError.badRequest('Subscription details have expired');
+};
+
+const decryptSubscriptionDetails = (encryptedSubscriptionDetails) => {
+	let subscriptionDetails;
+
+	try {
+		subscriptionDetails = JSON.parse(decrypt(encryptedSubscriptionDetails));
+	} catch (e) {
+		logger.error(e);
+		throw ApiError.internalServerError('Failed to decrypt subscriptionDetails');
+	}
+
+	if (!subscriptionDetails.email)
+		throw ApiError.internalServerError(
+			'encrypted subscriptionDetails must contain `email` property'
+		);
+	if (!subscriptionDetails.subscriptionTypes)
+		throw ApiError.internalServerError(
+			'encrypted subscriptionDetails must contain `subscriptionTypes` property'
+		);
+
+	return subscriptionDetails;
 };
 
 module.exports = { createSubscription, confirmSubscription, deleteSubscription };
