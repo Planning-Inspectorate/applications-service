@@ -59,6 +59,36 @@ const main = async () => {
 			modifiedAt: new Date()
 		}
 	});
+
+	await prismaClient.projectUpdate.upsert({
+		where: { projectUpdateId: 1 },
+		update: {},
+		create: {
+			projectUpdateId: 1,
+			caseReference: 'BC0110001',
+			updateDate: '2023-06-10',
+			updateName: 'Case update',
+			updateContentEnglish: 'The application has been accepted for examination.',
+			updateContentWelsh: 'Mae’r cais wedi’i dderbyn i’w archwilio.',
+			updateStatus: 'Published'
+		}
+	});
+
+	await prismaClient.projectUpdate.upsert({
+		where: { projectUpdateId: 2 },
+		update: {},
+		create: {
+			projectUpdateId: 2,
+			caseReference: 'BC0110001',
+			updateDate: '2023-07-21',
+			updateName: 'Case update',
+			updateContentEnglish:
+				'The applicant has agreed that all application documents can be published as soon as practicable to help everyone become familiar with the detail of what is being proposed in this application. The Planning Inspectorate will therefore make the application documents available as soon as practicable. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.',
+			updateContentWelsh:
+				'Mae’r ymgeisydd wedi cytuno y gellir cyhoeddi’r holl ddogfennau cais cyn gynted ag y bo’n ymarferol er mwyn helpu pawb i ddod yn gyfarwydd â manylion yr hyn a gynigir yn y cais hwn. Bydd yr Arolygiaeth Gynllunio felly yn sicrhau bod dogfennau’r cais ar gael cyn gynted ag y bo’n ymarferol. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.',
+			updateStatus: 'Published'
+		}
+	});
 };
 
 main()
