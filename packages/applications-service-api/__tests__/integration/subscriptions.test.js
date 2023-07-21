@@ -186,6 +186,74 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 				errors: ['Project with case reference XX0000000 not found']
 			});
 		});
+
+		it('given payload with missing email, returns 500', async () => {
+			const missingEmailPayload = encrypt(
+				JSON.stringify({
+					subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
+					date: new Date()
+				})
+			);
+
+			mockFindUnique.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseReference: 'BC0110001'
+			});
+
+			const response = await request.put('/api/v1/subscriptions/BC0110001').send({
+				subscriptionDetails: missingEmailPayload
+			});
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toEqual({
+				code: 500,
+				errors: ['encrypted subscriptionDetails must contain `email` property']
+			});
+		});
+
+		it('given payload with missing subscriptionTypes, returns 500', async () => {
+			const missingSubscriptionTypesPayload = encrypt(
+				JSON.stringify({
+					email: 'test@example.org',
+					date: new Date()
+				})
+			);
+
+			mockFindUnique.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseReference: 'BC0110001'
+			});
+
+			const response = await request.put('/api/v1/subscriptions/BC0110001').send({
+				subscriptionDetails: missingSubscriptionTypesPayload
+			});
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toEqual({
+				code: 500,
+				errors: ['encrypted subscriptionDetails must contain `subscriptionTypes` property']
+			});
+		});
+
+		it('given invalid payload that cannot be decrypted, returns 500', async () => {
+			mockFindUnique.mockResolvedValueOnce({
+				projectName: 'drax',
+				projectEmailAddress: 'drax@example.org',
+				caseReference: 'BC0110001'
+			});
+
+			const response = await request.put('/api/v1/subscriptions/BC0110001').send({
+				subscriptionDetails: 'BAD_PAYLOAD'
+			});
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toEqual({
+				code: 500,
+				errors: ['Failed to decrypt subscriptionDetails']
+			});
+		});
 	});
 
 	describe('DELETE', () => {

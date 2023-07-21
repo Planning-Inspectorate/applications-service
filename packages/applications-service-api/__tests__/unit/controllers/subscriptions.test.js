@@ -181,6 +181,39 @@ describe('subscriptions controller', () => {
 				'some publishing error'
 			);
 		});
+
+		it.each([
+			[
+				'email',
+				{
+					subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
+					date: mockTime
+				}
+			],
+			[
+				'subscriptionTypes',
+				{
+					email: 'test@example.org',
+					date: mockTime
+				}
+			]
+		])(
+			'throws error if required property is missing from subscriptionDetails',
+			async (missingPropertyName, payload) => {
+				getApplication.mockResolvedValueOnce({
+					projectName: 'drax',
+					projectEmailAddress: 'drax@example.org',
+					caseRef: 'BC0110001'
+				});
+				when(decrypt).calledWith('some_encrypted_string').mockReturnValue(JSON.stringify(payload));
+
+				const expectedError = new ApiError(500, {
+					errors: [`encrypted subscriptionDetails must contain \`${missingPropertyName}\` property`]
+				});
+
+				await expect(() => confirmSubscription(req, mockRes)).rejects.toEqual(expectedError);
+			}
+		);
 	});
 
 	describe('deleteSubscription', () => {
