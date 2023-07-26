@@ -13,6 +13,7 @@ const excludedProperties = [
 ];
 
 module.exports = async (context, message) => {
+	context.log(`invoking nsip-project function with message: ${JSON.stringify(message)}`);
 	context.bindings.project = parseMessage(message);
 };
 
