@@ -21,8 +21,6 @@ describe('projects/project-updates/email/controller', () => {
 			it('should render the page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/project-updates/email/view.njk', {
 					pageTitle: 'What is your email address?',
-					privacyNoticeUrl:
-						'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
 					backLinkUrl: 'start'
 				});
 			});
@@ -84,8 +82,6 @@ describe('projects/project-updates/email/controller', () => {
 				it('should show error if no email entered', async () => {
 					expect(res.render).toHaveBeenCalledWith('projects/project-updates/email/view.njk', {
 						pageTitle: 'What is your email address?',
-						privacyNoticeUrl:
-							'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
 						backLinkUrl: 'start',
 						email: '',
 						errors: {

@@ -66,6 +66,8 @@ module.exports = {
 		enquiriesEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
 		supportTeamPhoneNumber: '0303 444 5000'
 	},
+	pinsPrivacyNoticeUrl:
+		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
 	sessionStorage: {
 		examination: {
 			name: 'examination',
