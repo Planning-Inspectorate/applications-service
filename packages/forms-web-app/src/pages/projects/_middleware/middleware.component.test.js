@@ -54,7 +54,7 @@ describe('projects _middleware', () => {
 					{
 						hidden: false,
 						id: 'representations',
-						name: 'Relevant Representations (Registration comments)',
+						name: 'Relevant representations (Registration comments)',
 						url: '/projects/mock-case-ref/representations'
 					},
 					{
@@ -72,7 +72,7 @@ describe('projects _middleware', () => {
 					{
 						hidden: true,
 						id: 'project-updates',
-						name: 'Get Updates',
+						name: 'Get updates',
 						url: '/projects/mock-case-ref/get-updates/start'
 					},
 					{

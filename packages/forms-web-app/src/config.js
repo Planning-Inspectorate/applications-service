@@ -62,6 +62,10 @@ module.exports = {
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
+	pinsContactDetails: {
+		enquiriesEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
+		supportTeamPhoneNumber: '0303 444 5000'
+	},
 	sessionStorage: {
 		examination: {
 			name: 'examination',

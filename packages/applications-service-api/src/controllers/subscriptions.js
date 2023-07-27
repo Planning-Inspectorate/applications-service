@@ -41,6 +41,7 @@ const createSubscription = async (req, res) => {
 
 const confirmSubscription = async (req, res) => {
 	const encryptedSubscriptionDetails = req.body.subscriptionDetails;
+
 	const { caseReference } = req.params;
 
 	await validateCaseReference(caseReference);

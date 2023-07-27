@@ -27,13 +27,29 @@ const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
-const { getProjectUpdates } = require('./project-updates/controller');
+const { getProjectUpdatesStart } = require('./project-updates/start/controller');
 const {
 	getProjectUpdatesEmail,
 	postProjectUpdatesEmail
-} = require('./project-updates/project-updates-email/project-updates-email.controller');
+} = require('./project-updates/email/controller');
+const {
+	getProjectUpdatesHowOften,
+	postProjectUpdatesHowOften
+} = require('./project-updates/how-often/controller');
+const {
+	getProjectUpdatesConfirmYourEmail
+} = require('./project-updates/confirm-your-email/controller');
+const { getProjectUpdatesSubscribed } = require('./project-updates/subscribed/controller');
+const {
+	getProjectUpdatesUnsubscribe,
+	postProjectUpdatesUnsubscribe
+} = require('./project-updates/unsubscribe/controller');
+const { getProjectUpdatesUnsubscribed } = require('./project-updates/unsubscribed/controller');
 const { emailValidationRules } = require('../../validators/shared/email-address');
+const { howOftenValidationRules } = require('./project-updates/how-often/validator');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const { projectUpdatesRoutes } = require('./project-updates/_utils/project-updates-routes');
+
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
 	router.get('/:case_ref', middleware, projectsController.getExamination);
@@ -73,14 +89,54 @@ if (allowRepresentation) {
 }
 
 if (allowGetUpdates) {
-	router.get('/:case_ref/get-updates/start', middleware, getProjectUpdates);
-	router.get('/:case_ref/get-updates/email', middleware, getProjectUpdatesEmail);
-	router.post(
-		'/:case_ref/get-updates/email',
+	router.get(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.start}`,
 		middleware,
+		getProjectUpdatesStart
+	);
+
+	router.get(`/:case_ref/get-updates/${projectUpdatesRoutes.email}`, getProjectUpdatesEmail);
+	router.post(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.email}`,
 		emailValidationRules(),
 		validationErrorHandler,
 		postProjectUpdatesEmail
+	);
+
+	router.get(`/:case_ref/get-updates/${projectUpdatesRoutes.howOften}`, getProjectUpdatesHowOften);
+	router.post(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.howOften}`,
+		howOftenValidationRules(),
+		validationErrorHandler,
+		postProjectUpdatesHowOften
+	);
+
+	router.get(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.confirm}`,
+		middleware,
+		getProjectUpdatesConfirmYourEmail
+	);
+
+	router.get(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.subscribed}`,
+		middleware,
+		getProjectUpdatesSubscribed
+	);
+
+	router.get(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.unsubscribe}`,
+		middleware,
+		getProjectUpdatesUnsubscribe
+	);
+	router.post(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.unsubscribe}`,
+		postProjectUpdatesUnsubscribe
+	);
+
+	router.get(
+		`/:case_ref/get-updates/${projectUpdatesRoutes.unsubscribed}`,
+		middleware,
+		getProjectUpdatesUnsubscribed
 	);
 }
 

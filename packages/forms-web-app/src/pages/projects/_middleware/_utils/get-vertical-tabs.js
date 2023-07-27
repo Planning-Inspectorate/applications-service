@@ -23,7 +23,7 @@ function getVerticalTabs(projectName, caseRef, hasOpenTimetables, eventsEligible
 		{
 			hidden: false,
 			id: 'representations',
-			name: 'Relevant Representations (Registration comments)',
+			name: 'Relevant representations (Registration comments)',
 			url: '/projects/' + caseRef + '/representations'
 		},
 		{
@@ -41,7 +41,7 @@ function getVerticalTabs(projectName, caseRef, hasOpenTimetables, eventsEligible
 		{
 			hidden: featureFlag.allowGetUpdates != true,
 			id: 'project-updates',
-			name: 'Get Updates',
+			name: 'Get updates',
 			url: '/projects/' + caseRef + '/get-updates/start'
 		},
 		{
