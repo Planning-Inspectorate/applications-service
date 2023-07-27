@@ -27,7 +27,7 @@
 					},
 					id: "email",
 					name: "email",
-					value: errors["email"] and errors["email"].value,
+					value: email,
 					errorMessage: errors["email"] and {
 						text: errors["email"].msg
 					}
@@ -44,7 +44,8 @@
 							<li>sell or rent your information to third parties</li>
 							<li>share your information with third parties for marketing purposes</li>
 						</ul>
-						<p>You can read the <a href=" + privacyNoticeUrl + ">full privacy notice</a> for more detail on how your information is stored, shared and used.</p>"
+						<p>You can read the <a class='govuk-link' href=" + privacyNoticeUrl + ">full privacy notice</a> for more detail on how your information is stored, shared and used.</p>
+					"
 				}) }}
 
 				{{ govukButton({

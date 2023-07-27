@@ -43,7 +43,7 @@ describe('#getVerticalTabs', () => {
 					{
 						hidden: false,
 						id: 'representations',
-						name: 'Relevant Representations (Registration comments)',
+						name: 'Relevant representations (Registration comments)',
 						url: '/projects/mock case ref/representations'
 					},
 					{
@@ -61,7 +61,7 @@ describe('#getVerticalTabs', () => {
 					{
 						hidden: true,
 						id: 'project-updates',
-						name: 'Get Updates',
+						name: 'Get updates',
 						url: '/projects/mock case ref/get-updates/start'
 					},
 					{
@@ -116,7 +116,7 @@ describe('#getVerticalTabs', () => {
 					{
 						hidden: false,
 						id: 'representations',
-						name: 'Relevant Representations (Registration comments)',
+						name: 'Relevant representations (Registration comments)',
 						url: '/projects/mock case ref/representations'
 					},
 					{
@@ -134,7 +134,7 @@ describe('#getVerticalTabs', () => {
 					{
 						hidden: false,
 						id: 'project-updates',
-						name: 'Get Updates',
+						name: 'Get updates',
 						url: '/projects/mock case ref/get-updates/start'
 					},
 					{

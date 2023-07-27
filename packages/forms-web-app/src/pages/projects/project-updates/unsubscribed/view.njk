@@ -1,0 +1,28 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: pageHeading,
+        text: "You have unsubscribed from updates about " + projectName + ""
+      }) }}
+
+      <h2 class="govuk-heading-m">
+        What happens next
+      </h2>
+
+      <p class="govuk-body">
+        You will no longer be sent updates about {{ projectName }}
+      </p>
+
+      <a href="/projects/{{ caseRef }}" class="govuk-link">
+        View {{ projectName }} overview
+      </a>
+    </div>
+  </div>
+
+{% endblock %}
