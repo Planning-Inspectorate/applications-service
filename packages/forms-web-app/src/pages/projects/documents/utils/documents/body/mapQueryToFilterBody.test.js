@@ -1,7 +1,11 @@
 const { mapQueryToFilterBody } = require('./mapQueryToFilterBody');
 describe('When mapping the query params to a filter body for v3 api request', () => {
 	describe('and there are values', () => {
-		const mockQuery = { 'stage-1': 'Fella', 'stage-2': ['fella 1', 'fella 2'] };
+		const mockQuery = {
+			'stage-1': 'Fella',
+			'stage-2': ['fella 1', 'fella 2'],
+			'stage-pre-examination': 'baz'
+		};
 		const result = mapQueryToFilterBody(mockQuery);
 		it('should return the filters mapped to the body object', () => {
 			expect(result).toEqual([
@@ -25,6 +29,11 @@ describe('When mapping the query params to a filter body for v3 api request', ()
 						}
 					],
 					value: '2'
+				},
+				{
+					name: 'stage',
+					type: [{ value: 'baz' }],
+					value: 'pre-examination'
 				}
 			]);
 		});
