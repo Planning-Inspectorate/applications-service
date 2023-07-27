@@ -57,6 +57,22 @@ describe('document repository', () => {
 			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].AND[0].stage).toEqual('examination');
 			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].AND[0].stage).toEqual('examination');
 		});
+
+		it('calls findMany and count with filters including type if provided', async () => {
+			await getDocuments({
+				caseReference: caseReference,
+				filters: [
+					{ name: 'stage', value: 'examination', type: [{ value: 'Additional Submissions' }] }
+				]
+			});
+
+			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].AND[1].filter1['in'][0]).toEqual(
+				'Additional Submissions'
+			);
+			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].AND[1].filter1['in'][0]).toEqual(
+				'Additional Submissions'
+			);
+		});
 	});
 
 	describe('getFilters', () => {

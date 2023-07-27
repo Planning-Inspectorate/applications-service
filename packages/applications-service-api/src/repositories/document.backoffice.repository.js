@@ -47,7 +47,7 @@ const getDocuments = async (query) => {
 			}
 
 			if (filter.type && filter.type.length > 0)
-				filterStatement['AND']['filter1'] = filter.type.map((type) => type.value);
+				filterStatement['AND'].push({ filter1: { in: filter.type.map((type) => type.value) } });
 
 			filters.push(filterStatement);
 		});
