@@ -4,10 +4,9 @@ const expectedFromDateIsBeforeToDateDatesFilterObj = {
 			label: 'Date from',
 			tags: [
 				{
-					alt: 'Remove documents published before 1 January 2023 filter',
 					icon: 'close',
 					link: '?date-to-day=2&date-to-month=1&date-to-year=2023',
-					text: '1 January 2023'
+					textHtml: `<span class="govuk-visually-hidden">Remove documents published before</span> 1 January 2023 <span class="govuk-visually-hidden">filter</span>`
 				}
 			]
 		},
@@ -15,10 +14,9 @@ const expectedFromDateIsBeforeToDateDatesFilterObj = {
 			label: 'Date to',
 			tags: [
 				{
-					alt: 'Remove documents published after 2 January 2023 filter',
 					icon: 'close',
 					link: '?date-from-day=1&date-from-month=1&date-from-year=2023',
-					text: '2 January 2023'
+					textHtml: `<span class="govuk-visually-hidden">Remove documents published after</span> 2 January 2023 <span class="govuk-visually-hidden">filter</span>`
 				}
 			]
 		}
