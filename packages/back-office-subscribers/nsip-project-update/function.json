@@ -1,0 +1,21 @@
+{
+	"bindings": [
+		{
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"name": "message",
+			"topicName": "nsip-project-update",
+			"subscriptionName": "applications-nsip-project-update-subscription",
+			"connection": "ServiceBusConnection",
+			"accessRights": "listen"
+		},
+		{
+			"name": "projectUpdate",
+			"type": "sql",
+			"direction": "out",
+			"commandText": "dbo.ProjectUpdate",
+			"connectionStringSetting": "SqlConnectionString"
+		}
+	],
+	"disabled": false
+}

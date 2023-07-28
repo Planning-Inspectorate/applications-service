@@ -107,7 +107,7 @@ model Document {
 
 model ProjectUpdate {
   id                   Int       @unique @default(autoincrement())
-  projectUpdateId      Int       @unique
+  projectUpdateId      Int       @id
   caseReference        String
   updateDate           String
   updateName           String?

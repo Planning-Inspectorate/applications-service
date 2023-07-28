@@ -1,8 +1,6 @@
 const subject = require('../index');
 
 describe('nsip-documents', () => {
-	const mockLog = jest.fn();
-
 	const message = {
 		documentId: '100000',
 		caseRef: 'EN010120',
@@ -46,7 +44,7 @@ describe('nsip-documents', () => {
 			jest.setSystemTime(dateNow);
 
 			const mockContext = {
-				log: mockLog,
+				log: jest.fn(),
 				bindingData: {
 					enqueuedTimeUtc: 1,
 					deliveryCount: 1,
@@ -65,6 +63,9 @@ describe('nsip-documents', () => {
 			};
 
 			expect(mockContext.bindings.document).toEqual(expectedDocument);
+			expect(mockContext.log).toBeCalledWith(
+				`invoking nsip-documents function with message: ${JSON.stringify(message)}`
+			);
 		});
 	});
 });
