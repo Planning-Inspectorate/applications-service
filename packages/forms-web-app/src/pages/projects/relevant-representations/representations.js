@@ -4,9 +4,10 @@ const { titleCase } = require('../../../utils/string-case');
 const { searchRepresentations } = require('../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
 const { getRepresentation } = require('../../../services/representation.service');
-const { featureHideLink } = require('../../../config');
-
-const { hideProjectInformationLink, hideAllExaminationDocumentsLink } = featureHideLink;
+const {
+	featureHideLink: { hideAllExaminationDocumentsLink },
+	featureFlag: { allowProjectInformation }
+} = require('../../../config');
 
 const representationsView = 'projects/relevant-representations/representations.njk';
 const representationView = 'projects/relevant-representations/representation.njk';
@@ -62,7 +63,7 @@ exports.getRepresentations = async (req, res) => {
 	res.render(representationsView, {
 		projectName: applicationResponse.data.ProjectName,
 		caseRef: applicationResponse.data.CaseReference,
-		hideProjectInformationLink,
+		allowProjectInformation,
 		hideAllExaminationDocumentsLink,
 		representations,
 		paginationData,
@@ -85,7 +86,7 @@ exports.getRepresentation = async (req, res) => {
 		backLinkUrl: req.get('Referrer'),
 		projectName: applicationResponse.data.ProjectName,
 		caseRef: applicationResponse.data.CaseReference,
-		hideProjectInformationLink,
+		allowProjectInformation,
 		hideAllExaminationDocumentsLink,
 		RepFrom: titleCase(representationResponse.data.RepFrom),
 		PersonalName: representationResponse.data.PersonalName,

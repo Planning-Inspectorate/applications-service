@@ -3,7 +3,7 @@ const { featureHideLink, featureFlag } = require('../../../../config');
 function getVerticalTabs(projectName, caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
 	return [
 		{
-			hidden: featureHideLink.hideProjectInformationLink,
+			hidden: featureFlag.allowProjectInformation != true,
 			id: 'examination',
 			name: '' + projectName + ' project information',
 			url: '/projects/' + caseRef + ''

@@ -3,7 +3,7 @@ const { getProjectData, searchRepresentations } = require('../../../lib/applicat
 const { getRepresentation } = require('../../../services/representation.service');
 const { featureHideLink } = require('../../../config');
 
-const { hideProjectInformationLink, hideAllExaminationDocumentsLink } = featureHideLink;
+const { hideAllExaminationDocumentsLink } = featureHideLink;
 
 jest.mock('../../../lib/application-api-wrapper');
 jest.mock('../../../services/representation.service');
@@ -104,7 +104,7 @@ describe('controllers/projects/representations', () => {
 				searchTerm: undefined,
 				queryUrl: '',
 				commentsTypeFilterItems: [],
-				hideProjectInformationLink,
+				allowProjectInformation: false,
 				hideAllExaminationDocumentsLink
 			}
 		);
@@ -129,7 +129,7 @@ describe('controllers/projects/representations', () => {
 			{
 				projectName: 'ABC',
 				caseRef,
-				hideProjectInformationLink,
+				allowProjectInformation: false,
 				hideAllExaminationDocumentsLink,
 				RepFrom: 'Members of the public/businesses',
 				PersonalName: 'Test (Test)',
