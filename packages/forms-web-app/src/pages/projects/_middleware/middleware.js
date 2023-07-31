@@ -8,21 +8,19 @@ async function middleware(req, res, next) {
 	try {
 		const { params, baseUrl, path } = req;
 		const { case_ref } = params;
-		const { projectName, dateOfNonAcceptance, proposal, summary, webAddress } =
-			await getApplicationData(case_ref);
+		const applicationData = await getApplicationData(case_ref);
 		const hasOpenTimetables = await getHasOpenTimetables(case_ref);
-		const eventsEligibleForDisplay = areEventsEligibleForDisplay(dateOfNonAcceptance);
+		const eventsEligibleForDisplay = areEventsEligibleForDisplay(
+			applicationData.dateOfNonAcceptance
+		);
 
-		res.locals.projectName = projectName;
+		res.locals.projectName = applicationData.projectName;
 		res.locals.caseRef = case_ref;
-		res.locals.summary = summary;
-		res.locals.webAddress = webAddress;
-		res.locals.proposal = proposal;
+		res.locals.applicationData = applicationData;
 		res.locals.baseUrl = baseUrl;
 		res.locals.path = path;
 		res.locals.hasOpenTimetables = hasOpenTimetables;
 		res.locals.verticalTabs = getVerticalTabs(
-			projectName,
 			case_ref,
 			hasOpenTimetables,
 			eventsEligibleForDisplay

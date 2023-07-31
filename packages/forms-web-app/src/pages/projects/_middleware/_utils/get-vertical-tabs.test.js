@@ -17,15 +17,15 @@ describe('#getVerticalTabs', () => {
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
-				result = getVerticalTabs('mock project name', 'mock case ref', true, true);
+				result = getVerticalTabs('mock case ref', true, true);
 			});
 
 			it('should return the vertical tabs', () => {
 				expect(result).toEqual([
 					{
 						hidden: true,
-						id: 'examination',
-						name: 'mock project name project information',
+						id: 'project-information',
+						name: 'Project information',
 						url: '/projects/mock case ref'
 					},
 					{
@@ -90,15 +90,15 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowSection51 = true;
 				featureFlag.allowHaveYourSay = true;
 				featureFlag.allowGetUpdates = true;
-				result = getVerticalTabs('mock project name', 'mock case ref', false, false);
+				result = getVerticalTabs('mock case ref', false, false);
 			});
 
 			it('should return the vertical tabs', () => {
 				expect(result).toEqual([
 					{
 						hidden: false,
-						id: 'examination',
-						name: 'mock project name project information',
+						id: 'project-information',
+						name: 'Project information',
 						url: '/projects/mock case ref'
 					},
 					{

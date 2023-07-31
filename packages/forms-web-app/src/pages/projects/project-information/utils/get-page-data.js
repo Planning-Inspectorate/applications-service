@@ -14,5 +14,6 @@ const getPageData = ({ projectName, summary, webAddress, proposal }) => ({
 });
 
 module.exports = {
+	stripPrefixFromProposalType,
 	getPageData
 };

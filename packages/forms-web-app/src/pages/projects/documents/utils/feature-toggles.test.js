@@ -5,7 +5,11 @@ describe('#featureToggles', () => {
 		it('should return the config variables', () => {
 			expect(response).toEqual({
 				hideAllExaminationDocumentsLink: true,
+<<<<<<< HEAD
 				allowProjectInformation: false
+=======
+				hideProjectInformationLink: false
+>>>>>>> 1f002a41 (feat(projects): attach applicationData to locals; add and fix tests)
 			});
 		});
 	});

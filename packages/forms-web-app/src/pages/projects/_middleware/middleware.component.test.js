@@ -27,6 +27,9 @@ describe('projects _middleware', () => {
 		});
 		it('should set the locals', () => {
 			expect(res.locals).toEqual({
+				applicationData: {
+					projectName: 'mock project name'
+				},
 				baseUrl: 'mock base url',
 				caseRef: 'mock-case-ref',
 				path: 'mock path',
@@ -34,9 +37,9 @@ describe('projects _middleware', () => {
 				hasOpenTimetables: true,
 				verticalTabs: [
 					{
-						hidden: true,
-						id: 'examination',
-						name: 'mock project name project information',
+						hidden: false,
+						id: 'project-information',
+						name: 'Project information',
 						url: '/projects/mock-case-ref'
 					},
 					{
