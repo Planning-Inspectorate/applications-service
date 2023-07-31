@@ -255,7 +255,7 @@ describe('#getApplicationDocuments', () => {
 					],
 					activeFilters: [],
 					hideAllExaminationDocumentsLink: true,
-					hideProjectInformationLink: true,
+					allowProjectInformation: false,
 					pageOptions: [1, 2, 3, '...', 5, 'next'],
 					pageUrl: 'documents',
 					paginationData: {

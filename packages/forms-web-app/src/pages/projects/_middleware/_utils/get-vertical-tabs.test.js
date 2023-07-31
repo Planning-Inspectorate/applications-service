@@ -10,7 +10,7 @@ describe('#getVerticalTabs', () => {
 		describe('and not feature flags are set', () => {
 			let result;
 			beforeEach(() => {
-				featureHideLink.hideProjectInformationLink = true;
+				featureFlag.allowProjectInformation = false;
 				featureFlag.hideProjectTimelineLink = false;
 				featureFlag.allowDocumentLibrary = false;
 				featureFlag.allowExaminationTimetable = false;
@@ -82,7 +82,7 @@ describe('#getVerticalTabs', () => {
 		describe('and feature flags are set', () => {
 			let result;
 			beforeEach(() => {
-				featureHideLink.hideProjectInformationLink = false;
+				featureFlag.allowProjectInformation = true;
 				featureFlag.hideProjectTimelineLink = true;
 				featureFlag.allowDocumentLibrary = true;
 				featureFlag.allowExaminationTimetable = true;

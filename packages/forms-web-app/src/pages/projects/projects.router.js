@@ -14,7 +14,8 @@ const {
 		allowExaminationTimetable,
 		allowRepresentation,
 		usePrivateBetaV1RoutesOnly,
-		allowGetUpdates
+		allowGetUpdates,
+		allowProjectInformation
 	}
 } = config;
 
@@ -52,6 +53,9 @@ const { projectUpdatesRoutes } = require('./project-updates/_utils/project-updat
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
+}
+
+if (allowProjectInformation) {
 	router.get('/:case_ref', middleware, projectsController.getExamination);
 }
 
