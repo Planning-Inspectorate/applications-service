@@ -5,6 +5,9 @@ const getApplicationData = async (case_ref) => {
 
 	return {
 		projectName: data.ProjectName,
+		proposal: data.Proposal,
+		summary: data.Summary,
+		webAddress: data.WebAddress,
 		dateOfNonAcceptance: data.dateOfNonAcceptance
 	};
 };

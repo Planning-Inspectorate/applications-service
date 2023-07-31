@@ -23,7 +23,7 @@ const router = express.Router();
 const projectSearchController = require('./project-search/project-search');
 const representationsController = require('./relevant-representations/representations');
 const examinationTimetable = require('./examination-timetable/controller');
-const projectsController = require('./examination/examination');
+const { getProjectOverview } = require('./project-information/controller');
 const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
@@ -32,10 +32,14 @@ const { getUpdatesRouter } = require('./get-updates/router');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
+<<<<<<< HEAD
 }
 
 if (allowProjectInformation) {
 	router.get('/:case_ref', middleware, projectsController.getExamination);
+=======
+	router.get('/:case_ref', middleware, getProjectOverview);
+>>>>>>> 9924e3f2 (feat(projects): first stage of new projects information page)
 }
 
 if (allowDocumentLibrary) {
