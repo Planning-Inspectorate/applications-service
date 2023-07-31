@@ -1,0 +1,16 @@
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-one-third">
+			{% set activeId = "project-information" %}
+
+			{% include "projects/components/vertical-tabs-wrapper.njk" %}
+		</div>
+
+		<div class="govuk-grid-column-two-thirds">
+			{% include "projects/project-information/includes/about.njk" %}
+			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
+		</div>
+	</div>
+{% endblock %}
