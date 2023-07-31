@@ -1,6 +1,6 @@
 const { featureHideLink, featureFlag } = require('../../../../config');
 
-function getVerticalTabs(projectName, caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
+function getVerticalTabs(caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
 	return [
 		{
 <<<<<<< HEAD
