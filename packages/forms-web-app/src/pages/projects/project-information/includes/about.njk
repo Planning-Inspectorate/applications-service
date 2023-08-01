@@ -1,13 +1,13 @@
 <div>
-    <span class="govuk-caption-l">{{ projectName }}</span>
+    <span class="govuk-caption-l">{{ applicationData.projectName }}</span>
 
     <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
 
     <h2 class="govuk-heading-m"> About the project</h2>
     <p class="govuk-body">Type of application: <b>{{proposal}}</b></p>
-    <p class="govuk-body">{{ summary }}</p>
+    <p class="govuk-body">{{ applicationData.summary }}</p>
 
-    {% if webAddress %}
-        <a class="govuk-link" href="{{webAddress}}">View the developer’s website</a>
+    {% if applicationData.webAddress %}
+        <a class="govuk-link" href="{{ applicationData.webAddress }}">View the developer's website</a>
     {% endif %}
 </div>

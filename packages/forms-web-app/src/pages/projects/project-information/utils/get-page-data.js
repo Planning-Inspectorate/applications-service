@@ -5,12 +5,8 @@ const stripPrefixFromProposalType = (proposalType = '') => {
 	return proposalType.replace(prefixPattern, '');
 };
 
-const getPageData = ({ projectName, summary, webAddress, proposal }) => ({
-	pageHeading: `Project Information`,
-	pageTitle: `${projectName} - Project Information`,
-	proposal: stripPrefixFromProposalType(proposal),
-	summary,
-	webAddress
+const getPageData = ({ proposal }) => ({
+	proposal: stripPrefixFromProposalType(proposal)
 });
 
 module.exports = {
