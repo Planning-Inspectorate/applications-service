@@ -20,10 +20,6 @@ describe('projects/project-information/controller', () => {
 
 			await getProjectOverview(req, res, next);
 			expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
-				pageHeading: `Project Information`,
-				pageTitle: `Mock project name - Project Information`,
-				summary: 'Mock case summary',
-				webAddress: 'www.mock.com',
 				proposal: 'Generating Stations'
 			});
 		});
