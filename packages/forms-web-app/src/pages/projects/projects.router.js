@@ -28,23 +28,7 @@ const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
-const { getGetUpdatesStart } = require('./get-updates/start/controller');
-const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./get-updates/email/controller');
-const {
-	getGetUpdatesHowOften,
-	postGetUpdatesHowOften
-} = require('./get-updates/how-often/controller');
-const { getGetUpdatesConfirmYourEmail } = require('./get-updates/confirm-your-email/controller');
-const { getGetUpdatesSubscribed } = require('./get-updates/subscribed/controller');
-const {
-	getGetUpdatesUnsubscribe,
-	postGetUpdatesUnsubscribe
-} = require('./get-updates/unsubscribe/controller');
-const { getGetUpdatesUnsubscribed } = require('./get-updates/unsubscribed/controller');
-const { emailValidationRules } = require('../../validators/shared/email-address');
-const { howOftenValidationRules } = require('./get-updates/how-often/validator');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
-const { getUpdatesRoutes } = require('./get-updates/_utils/get-updates-routes');
+const { getUpdatesRouter } = require('./get-updates/router');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -87,50 +71,7 @@ if (allowRepresentation) {
 	);
 }
 
-if (allowGetUpdates) {
-	router.get(`/:case_ref/get-updates/${getUpdatesRoutes.start}`, middleware, getGetUpdatesStart);
-
-	router.get(`/:case_ref/get-updates/${getUpdatesRoutes.email}`, getGetUpdatesEmail);
-	router.post(
-		`/:case_ref/get-updates/${getUpdatesRoutes.email}`,
-		emailValidationRules(),
-		validationErrorHandler,
-		postGetUpdatesEmail
-	);
-
-	router.get(`/:case_ref/get-updates/${getUpdatesRoutes.howOften}`, getGetUpdatesHowOften);
-	router.post(
-		`/:case_ref/get-updates/${getUpdatesRoutes.howOften}`,
-		howOftenValidationRules(),
-		validationErrorHandler,
-		postGetUpdatesHowOften
-	);
-
-	router.get(
-		`/:case_ref/get-updates/${getUpdatesRoutes.confirm}`,
-		middleware,
-		getGetUpdatesConfirmYourEmail
-	);
-
-	router.get(
-		`/:case_ref/get-updates/${getUpdatesRoutes.subscribed}`,
-		middleware,
-		getGetUpdatesSubscribed
-	);
-
-	router.get(
-		`/:case_ref/get-updates/${getUpdatesRoutes.unsubscribe}`,
-		middleware,
-		getGetUpdatesUnsubscribe
-	);
-	router.post(`/:case_ref/get-updates/${getUpdatesRoutes.unsubscribe}`, postGetUpdatesUnsubscribe);
-
-	router.get(
-		`/:case_ref/get-updates/${getUpdatesRoutes.unsubscribed}`,
-		middleware,
-		getGetUpdatesUnsubscribed
-	);
-}
+if (allowGetUpdates) router.use(getUpdatesRouter);
 
 // Section 51
 if (featureFlag.allowSection51) {
