@@ -8,6 +8,7 @@ const {
 	featureHideLink: { hideAllExaminationDocumentsLink },
 	featureFlag: { allowProjectInformation }
 } = require('../../../config');
+const { isDateAfterTodaysDate } = require('./_utils/is-date-after-todays-date');
 
 const representationsView = 'projects/relevant-representations/representations.njk';
 const representationView = 'projects/relevant-representations/representation.njk';
@@ -70,7 +71,8 @@ exports.getRepresentations = async (req, res) => {
 		pageOptions,
 		searchTerm,
 		queryUrl,
-		commentsTypeFilterItems
+		commentsTypeFilterItems,
+		showReps: isDateAfterTodaysDate(applicationResponse.DateRRepAppearOnWebsite)
 	});
 };
 
