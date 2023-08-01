@@ -327,6 +327,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
 
+  '/api/v1/project-updates/{caseReference}':
+    get:
+      summary: Returns project updates for a case
+      description: Returns project updates for a case
+      tags:
+        - Project Updates
+      parameters:
+        - in: path
+          name: caseReference
+          example: EN020021
+          required: true
+          schema:
+            type: string
+            minLength: 8
+            maxLength: 10
+            pattern: '^[A-Za-z]{2}\d{6,8}$'
+          description: Case / Project unique identifier
+      responses:
+        '200':
+          description: list of project updates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        updateDate:
+                          type: string
+                          example: "2020-02-19"
+                        updateName:
+                          type: string
+                          example: "Project accepted"
+                        updateContentEnglish:
+                          type: string
+                          example: "Case was accepted"
+                        updateContentWelsh:
+                          type: string
+                          example: "Derbyniwyd yr achos"
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+
   '/api/v1/representations':
     get:
       summary: Returns project representations
@@ -1769,4 +1820,4 @@ components:
           type: array
           items:
             type: string
-            example: Submission not found
+            example: "{entityName} not found"
