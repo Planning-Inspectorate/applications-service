@@ -60,7 +60,7 @@ describe('#getVerticalTabs', () => {
 					},
 					{
 						hidden: true,
-						id: 'project-updates',
+						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock case ref/get-updates/start'
 					},
@@ -133,7 +133,7 @@ describe('#getVerticalTabs', () => {
 					},
 					{
 						hidden: false,
-						id: 'project-updates',
+						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock case ref/get-updates/start'
 					},

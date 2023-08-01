@@ -28,28 +28,23 @@ const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
-const { getProjectUpdatesStart } = require('./project-updates/start/controller');
+const { getGetUpdatesStart } = require('./get-updates/start/controller');
+const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./get-updates/email/controller');
 const {
-	getProjectUpdatesEmail,
-	postProjectUpdatesEmail
-} = require('./project-updates/email/controller');
+	getGetUpdatesHowOften,
+	postGetUpdatesHowOften
+} = require('./get-updates/how-often/controller');
+const { getGetUpdatesConfirmYourEmail } = require('./get-updates/confirm-your-email/controller');
+const { getGetUpdatesSubscribed } = require('./get-updates/subscribed/controller');
 const {
-	getProjectUpdatesHowOften,
-	postProjectUpdatesHowOften
-} = require('./project-updates/how-often/controller');
-const {
-	getProjectUpdatesConfirmYourEmail
-} = require('./project-updates/confirm-your-email/controller');
-const { getProjectUpdatesSubscribed } = require('./project-updates/subscribed/controller');
-const {
-	getProjectUpdatesUnsubscribe,
-	postProjectUpdatesUnsubscribe
-} = require('./project-updates/unsubscribe/controller');
-const { getProjectUpdatesUnsubscribed } = require('./project-updates/unsubscribed/controller');
+	getGetUpdatesUnsubscribe,
+	postGetUpdatesUnsubscribe
+} = require('./get-updates/unsubscribe/controller');
+const { getGetUpdatesUnsubscribed } = require('./get-updates/unsubscribed/controller');
 const { emailValidationRules } = require('../../validators/shared/email-address');
-const { howOftenValidationRules } = require('./project-updates/how-often/validator');
+const { howOftenValidationRules } = require('./get-updates/how-often/validator');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
-const { projectUpdatesRoutes } = require('./project-updates/_utils/project-updates-routes');
+const { getUpdatesRoutes } = require('./get-updates/_utils/get-updates-routes');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -93,54 +88,47 @@ if (allowRepresentation) {
 }
 
 if (allowGetUpdates) {
-	router.get(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.start}`,
-		middleware,
-		getProjectUpdatesStart
-	);
+	router.get(`/:case_ref/get-updates/${getUpdatesRoutes.start}`, middleware, getGetUpdatesStart);
 
-	router.get(`/:case_ref/get-updates/${projectUpdatesRoutes.email}`, getProjectUpdatesEmail);
+	router.get(`/:case_ref/get-updates/${getUpdatesRoutes.email}`, getGetUpdatesEmail);
 	router.post(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.email}`,
+		`/:case_ref/get-updates/${getUpdatesRoutes.email}`,
 		emailValidationRules(),
 		validationErrorHandler,
-		postProjectUpdatesEmail
+		postGetUpdatesEmail
 	);
 
-	router.get(`/:case_ref/get-updates/${projectUpdatesRoutes.howOften}`, getProjectUpdatesHowOften);
+	router.get(`/:case_ref/get-updates/${getUpdatesRoutes.howOften}`, getGetUpdatesHowOften);
 	router.post(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.howOften}`,
+		`/:case_ref/get-updates/${getUpdatesRoutes.howOften}`,
 		howOftenValidationRules(),
 		validationErrorHandler,
-		postProjectUpdatesHowOften
+		postGetUpdatesHowOften
 	);
 
 	router.get(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.confirm}`,
+		`/:case_ref/get-updates/${getUpdatesRoutes.confirm}`,
 		middleware,
-		getProjectUpdatesConfirmYourEmail
+		getGetUpdatesConfirmYourEmail
 	);
 
 	router.get(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.subscribed}`,
+		`/:case_ref/get-updates/${getUpdatesRoutes.subscribed}`,
 		middleware,
-		getProjectUpdatesSubscribed
+		getGetUpdatesSubscribed
 	);
 
 	router.get(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.unsubscribe}`,
+		`/:case_ref/get-updates/${getUpdatesRoutes.unsubscribe}`,
 		middleware,
-		getProjectUpdatesUnsubscribe
+		getGetUpdatesUnsubscribe
 	);
-	router.post(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.unsubscribe}`,
-		postProjectUpdatesUnsubscribe
-	);
+	router.post(`/:case_ref/get-updates/${getUpdatesRoutes.unsubscribe}`, postGetUpdatesUnsubscribe);
 
 	router.get(
-		`/:case_ref/get-updates/${projectUpdatesRoutes.unsubscribed}`,
+		`/:case_ref/get-updates/${getUpdatesRoutes.unsubscribed}`,
 		middleware,
-		getProjectUpdatesUnsubscribed
+		getGetUpdatesUnsubscribed
 	);
 }
 
