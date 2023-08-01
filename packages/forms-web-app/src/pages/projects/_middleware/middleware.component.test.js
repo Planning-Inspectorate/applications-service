@@ -37,7 +37,7 @@ describe('projects _middleware', () => {
 				hasOpenTimetables: true,
 				verticalTabs: [
 					{
-						hidden: false,
+						hidden: true,
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'
