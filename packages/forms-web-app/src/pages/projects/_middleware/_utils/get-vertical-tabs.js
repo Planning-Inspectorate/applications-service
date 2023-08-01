@@ -40,7 +40,7 @@ function getVerticalTabs(projectName, caseRef, hasOpenTimetables, eventsEligible
 		},
 		{
 			hidden: featureFlag.allowGetUpdates != true,
-			id: 'project-updates',
+			id: 'get-updates',
 			name: 'Get updates',
 			url: '/projects/' + caseRef + '/get-updates/start'
 		},

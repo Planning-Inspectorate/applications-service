@@ -184,25 +184,25 @@ exports.wrappedPostSubmissionComplete = async (submissionId) => {
 	return handler('postSubmissionComplete', URL, method, {});
 };
 
-exports.postProjectUpdatesSubscription = async (caseRef, payload) => {
+exports.postGetUpdatesSubscription = async (caseRef, payload) => {
 	const URL = `/api/v1/subscriptions/${caseRef}`;
 	const method = 'POST';
 
-	return handler('postUpdatesSubscription', URL, method, { body: JSON.stringify(payload) });
+	return handler('postGetUpdatesSubscription', URL, method, { body: JSON.stringify(payload) });
 };
 
-exports.putProjectUpdatesSubscription = async (caseReference, subscriptionDetails) => {
+exports.putGetUpdatesSubscription = async (caseReference, subscriptionDetails) => {
 	const URL = `/api/v1/subscriptions/${caseReference}`;
 	const method = 'PUT';
 
-	return handler('putProjectUpdatesSubscription', URL, method, {
+	return handler('putGetUpdatesSubscription', URL, method, {
 		body: JSON.stringify({ subscriptionDetails })
 	});
 };
 
-exports.deleteProjectUpdatesSubscription = async (caseReference, email) => {
+exports.deleteGetUpdatesSubscription = async (caseReference, email) => {
 	const URL = `/api/v1/subscriptions/${caseReference}?email=${email}`;
 	const method = 'DELETE';
 
-	return handler('deleteProjectUpdatesSubscription', URL, method, {});
+	return handler('deleteGetUpdatesSubscription', URL, method, {});
 };
