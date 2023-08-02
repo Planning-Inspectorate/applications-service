@@ -8,7 +8,8 @@ const getApplicationData = async (case_ref) => {
 		proposal: data.Proposal,
 		summary: data.Summary,
 		webAddress: data.WebAddress,
-		dateOfNonAcceptance: data.dateOfNonAcceptance
+		dateOfNonAcceptance: data.dateOfNonAcceptance,
+		contactEmailAddress: data.ProjectEmailAddress
 	};
 };
 
