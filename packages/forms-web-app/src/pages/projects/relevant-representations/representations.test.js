@@ -102,6 +102,7 @@ describe('controllers/projects/representations', () => {
 				paginationData,
 				pageOptions,
 				searchTerm: undefined,
+				showReps: false,
 				queryUrl: '',
 				commentsTypeFilterItems: [],
 				allowProjectInformation: false,
