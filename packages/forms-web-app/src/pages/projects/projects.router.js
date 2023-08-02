@@ -32,14 +32,10 @@ const { getUpdatesRouter } = require('./get-updates/router');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
-<<<<<<< HEAD
 }
 
 if (allowProjectInformation) {
-	router.get('/:case_ref', middleware, projectsController.getExamination);
-=======
 	router.get('/:case_ref', middleware, getProjectOverview);
->>>>>>> 9924e3f2 (feat(projects): first stage of new projects information page)
 }
 
 if (allowDocumentLibrary) {
