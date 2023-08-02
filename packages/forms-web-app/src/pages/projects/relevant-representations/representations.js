@@ -72,7 +72,7 @@ exports.getRepresentations = async (req, res) => {
 		searchTerm,
 		queryUrl,
 		commentsTypeFilterItems,
-		showReps: isDateAfterTodaysDate(applicationResponse?.DateRRepAppearOnWebsite)
+		showReps: isDateAfterTodaysDate(applicationResponse.data?.DateRRepAppearOnWebsite)
 	});
 };
 
