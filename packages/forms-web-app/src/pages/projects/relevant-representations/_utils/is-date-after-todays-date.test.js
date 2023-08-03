@@ -3,6 +3,9 @@ describe('#isDateAfterTodaysDate', () => {
 	beforeAll(() => {
 		jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
 	});
+	it('should return false if date is null', () => {
+		expect(isDateAfterTodaysDate(null)).toEqual(false);
+	});
 	it('should return false if no date supplied', () => {
 		expect(isDateAfterTodaysDate()).toEqual(false);
 	});
