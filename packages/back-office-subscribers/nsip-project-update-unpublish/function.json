@@ -1,0 +1,14 @@
+{
+	"bindings": [
+		{
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"name": "message",
+			"topicName": "nsip-project-update",
+			"subscriptionName": "applications-nsip-project-update-unpublish",
+			"connection": "ServiceBusConnection",
+			"accessRights": "listen"
+		}
+	],
+	"disabled": false
+}
