@@ -4,6 +4,7 @@ const getApplicationData = async (case_ref) => {
 	if (resp_code !== 200) throw new Error('Application response status not 200');
 
 	return {
+		caseRef: data.CaseReference,
 		projectName: data.ProjectName,
 		proposal: data.Proposal,
 		summary: data.Summary,

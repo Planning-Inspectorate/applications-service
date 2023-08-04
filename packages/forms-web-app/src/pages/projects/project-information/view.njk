@@ -1,5 +1,7 @@
 {% extends "layouts/default.njk" %}
 
+{% from "./components/latest-update.njk" import getLatestUpdate %}
+
 {% set activeId = "project-information" %}
 
 {% set pageTitle = projectName + " - Project Information" %}
@@ -12,6 +14,9 @@
 		</div>
 
 		<div class="govuk-grid-column-two-thirds">
+			<span class="govuk-caption-l">{{ applicationData.projectName }}</span>
+    		<h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+			{{ getLatestUpdate(latestUpdate, caseRef) }}
 			{% include "projects/project-information/includes/about.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
