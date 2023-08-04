@@ -1,16 +1,18 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
 
-{% macro latestUpdate(date, content) %}
+{% macro getLatestUpdate(latestUpdateData, caseRef) %}
+    {% if latestUpdateData %}
+        {% set bannerHtml %}
+            <p class="govuk-body">{{ latestUpdateData.updateContentEnglish | safe }}</p>
+            <a class="govuk-notification-banner__link" href="{{ caseRef }}/project-updates">View all updates</a>.
+        {% endset %}
+    <section>
 
-    {% set bannerHtml %}
-    <p class="govuk-body">{{ content }}</p>
-    <a class="govuk-notification-banner__link" href="{{ caseRef }}/project-updates">View all updates</a>.
-    {% endset %}
-
-    {{ govukNotificationBanner({
-        titleText: "Latest update - " + date,
-        html: bannerHtml
-    }) }}
-    
+        {{ govukNotificationBanner({
+            titleText: "Latest update - " + latestUpdateData.updateDate,
+            html: bannerHtml
+        }) }}
+    </section>
+    {% endif %}
 {% endmacro %}

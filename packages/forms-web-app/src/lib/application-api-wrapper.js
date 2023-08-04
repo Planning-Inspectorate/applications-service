@@ -208,5 +208,5 @@ exports.deleteGetUpdatesSubscription = async (caseReference, email) => {
 };
 
 exports.getProjectUpdates = async (caseReference) => {
-	return handler('getProjectUpdates', `api/v1/project-updates/${caseReference}`);
+	return handler('getProjectUpdates', `/api/v1/project-updates/${caseReference}`);
 };
