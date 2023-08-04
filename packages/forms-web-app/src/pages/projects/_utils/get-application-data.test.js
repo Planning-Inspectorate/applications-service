@@ -11,7 +11,8 @@ const commonMockData = {
 	WebAddress: 'mock-web-address',
 	dateOfNonAcceptance: '2020-01-01',
 	AnticipatedDateOfSubmission: '2020-01-01',
-	ProjectEmailAddress: 'mock@email.com'
+	ProjectEmailAddress: 'mock@email.com',
+	DateOfDCOSubmission: '2020-01-01'
 };
 
 describe('#getApplicationData', () => {
@@ -35,6 +36,7 @@ describe('#getApplicationData', () => {
 					dateOfNonAcceptance: '2020-01-01',
 					projectName: 'mock project name',
 					proposal: 'I am the proposal',
+					DateOfDCOSubmission: '2020-01-29T00:00:00.000Z',
 					status: {
 						number: 1,
 						text: 'Pre-application'
@@ -42,6 +44,10 @@ describe('#getApplicationData', () => {
 					summary: 'I am the project summary data',
 					webAddress: 'mock-web-address'
 				});
+			});
+
+			it('should add 28 days to the DateOfDCOSubmission (2020-01-01)', () => {
+				expect(response.DateOfDCOSubmission).toEqual('2020-01-29T00:00:00.000Z');
 			});
 		});
 		describe('and the status code is not 200', () => {

@@ -456,11 +456,9 @@ exports[`projects/project-information/controller #getProjectOverview Stages - te
 	
 
 	
-		
-	<p class=\\"govuk-body\\">
-		The decision whether to accept the application for examination will be made by 02 January 2020.
-	</p>
-
+		<p class=\\"govuk-body\\">
+	The decision whether to accept the application for examination will be made by 29 January 2020.
+</p>
 
 <p class=\\"govuk-body\\">
 	If the application is accepted, we will publish:
@@ -1168,7 +1166,9 @@ exports[`projects/project-information/controller #getProjectOverview Stages - te
 	
 
 	
-		
+		<p class=\\"govuk-body\\">
+	The decision whether to accept the application for examination will be made by .
+</p>
 
 <p class=\\"govuk-body\\">
 	If the application is accepted, we will publish:

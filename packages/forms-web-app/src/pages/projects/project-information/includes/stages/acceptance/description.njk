@@ -1,8 +1,6 @@
-{% if applicationData.DateOfDCOAcceptance_NonAcceptance %}
-	<p class="govuk-body">
-		The decision whether to accept the application for examination will be made by {{ applicationData.DateOfDCOAcceptance_NonAcceptance | date }}.
-	</p>
-{% endif %}
+<p class="govuk-body">
+	The decision whether to accept the application for examination will be made by {% if applicationData.DateOfDCOSubmission %}{{ applicationData.DateOfDCOSubmission | date }}{% endif %}.
+</p>
 
 <p class="govuk-body">
 	If the application is accepted, we will publish:

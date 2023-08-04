@@ -86,7 +86,7 @@ describe('projects/project-information/controller', () => {
 								json: () =>
 									Promise.resolve({
 										...commonMockData,
-										DateOfDCOAcceptance_NonAcceptance: '2020-01-02',
+										DateOfDCOSubmission: '2020-01-01',
 										Stage: 2
 									})
 							})
@@ -101,8 +101,9 @@ describe('projects/project-information/controller', () => {
 					const response = await request.get('/projects/EN010085');
 
 					expect(response.status).toEqual(200);
+					//  Add 28 days to DateOfDCOSubmission
 					expect(response.text).toContain(
-						'The decision whether to accept the application for examination will be made by 02 January 2020.'
+						'The decision whether to accept the application for examination will be made by 29 January 2020.'
 					);
 					expect(response.text).toMatchSnapshot();
 				});
@@ -116,7 +117,7 @@ describe('projects/project-information/controller', () => {
 								json: () =>
 									Promise.resolve({
 										...commonMockData,
-										DateOfDCOAcceptance_NonAcceptance: null,
+										DateOfDCOSubmission: null,
 										Stage: 2
 									})
 							})
