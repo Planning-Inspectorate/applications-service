@@ -1,16 +1,21 @@
 {% extends "layouts/default.njk" %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
 {% if h1Style %}
-{% set h1Style = h1Style %}
+
+  {% set h1Style = h1Style %}
+
 {% else %}
-{% set h1Style = 'govuk-heading-xl' %}
+
+  {% set h1Style = 'govuk-heading-xl' %}
+
 {% endif %}
 
-
 {% block content %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
       {% include "projects/components/vertical-tabs-wrapper.njk" %}
@@ -18,14 +23,28 @@
 
     <div class="govuk-grid-column-two-thirds">
       {% if breadcrumbsItems %}
-      {{ govukBreadcrumbs({
-        classes: 'govuk-!-margin-top-0',
-        items: breadcrumbsItems
-      }) }}
+
+        {{ govukBreadcrumbs({
+          classes: 'govuk-!-margin-top-0',
+          items: breadcrumbsItems
+        }) }}
+
+      {% endif %}
+
+      {% if contentBackLinkUrl %}
+
+        {{ govukBackLink({
+          classes: 'govuk-!-margin-top-0',
+          href: contentBackLinkUrl,
+          text: "Back"
+        }) }}
+
       {% endif %}
 
       <h1 class="{{ h1Style }}">
-        <span class="govuk-caption-l">{{ projectName }}</span>
+        <span class="govuk-caption-l">
+          {{ projectName }}
+        </span>
 
         {{ title }}
       </h1>
@@ -39,4 +58,5 @@
       {{ relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--tablet"]) }}
     </div>
   </div>
+
 {% endblock %}
