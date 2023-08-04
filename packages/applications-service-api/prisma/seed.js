@@ -89,6 +89,30 @@ const main = async () => {
 			updateStatus: 'Published'
 		}
 	});
+
+	await prismaClient.projectUpdate.upsert({
+		where: { projectUpdateId: 3 },
+		update: {},
+		create: {
+			projectUpdateId: 3,
+			caseReference: 'BC0110001',
+			updateDate: '2023-08-04',
+			updateName: 'Case update',
+			updateContentEnglish: `this is a test of the html project update that should be able to handle:
+				<ul>
+					<li>unordered lists</li>
+					<li><b>bold text</b></li>
+					<li>and <a href="#">links</a></li>
+				</ul>`,
+			updateContentWelsh: `WELSH: this is a test of the html project update that should be able to handle:
+				<ul>
+					<li>unordered lists</li>
+					<li><b>bold text</b></li>
+					<li>and <a href="#">links</a></li>
+				</ul>`,
+			updateStatus: 'Published'
+		}
+	});
 };
 
 main()
