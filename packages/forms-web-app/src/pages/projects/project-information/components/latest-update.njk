@@ -4,9 +4,13 @@
     {% if latestUpdateData %}
 
     {% set bannerHtml %}
-        <p class="govuk-body">{{ latestUpdateData.content | safe }}</p>
+        <div class="pins-rte">
+            {{ latestUpdateData.content | safe }}
+        </div>
 
-        <a class="govuk-notification-banner__link" href="{{ caseRef }}/project-updates">View all updates</a>.
+        <p class="govuk-body govuk-!-margin-top-4">
+            <a class="govuk-notification-banner__link" href="{{ caseRef }}/project-updates">View all updates</a>.
+        </p>
     {% endset %}
 
     <section>

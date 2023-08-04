@@ -2,9 +2,8 @@
 @import './pins-customised-govuk-frontend/font-family.scss';
 
 /* package */
-@import '../../../../node_modules/govuk-frontend/govuk/all';
-@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/pagination/pagination';
-@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload';
+@import 'node_modules/govuk-frontend/govuk/all';
+@import 'node_modules/@ministryofjustice/frontend/moj/all';
 
 /* extended */
 @import './extended/max-width.scss';
@@ -12,6 +11,7 @@
 /* page */
 @import './page/body.scss';
 @import './page/type.scss';
+@import './page/rte.scss';
 @import './page/button.scss';
 
 /* app */

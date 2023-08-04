@@ -9,7 +9,7 @@
 		"build": "npm run build:client && npm run build:sass && npm run build:app",
 		"build:app": "cp -Rf ./src ./dist",
 		"build:client": "webpack --config webpack.config.js",
-		"build:sass": "sass src/sass/main.scss:src/public/stylesheets/main.css --style=compressed --load-path=./ --no-source-map",
+		"build:sass": "sass src/sass/main.scss:src/public/stylesheets/main.css --style=compressed --load-path=../../ --no-source-map",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"prebuild": "rm -Rf ./dist",

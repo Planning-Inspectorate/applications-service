@@ -1,0 +1,29 @@
+{% extends "projects/components/project-pages-template.njk" %}
+
+{% block pageContent %}
+
+  {% if updates | length > 0 %}
+
+    <div class="moj-timeline">
+
+      {% for update in updates %}
+
+        <div class="moj-timeline__item">
+          <div class="moj-timeline__header">
+            <h2 class="moj-timeline__title">
+              {{ update.date }}
+            </h2>
+          </div>
+
+          <div class="moj-timeline__description pins-rte">
+            {{ update.content | safe }}
+          </div>
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  {% endif %}
+
+{% endblock %}

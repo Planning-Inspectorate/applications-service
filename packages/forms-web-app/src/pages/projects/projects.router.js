@@ -29,6 +29,7 @@ const section51Router = require('./section-51/section-51.router');
 const { middleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
 const { getUpdatesRouter } = require('./get-updates/router');
+const { getProjectUpdatesController } = require('./project-updates/controller');
 
 if (!usePrivateBetaV1RoutesOnly) {
 	router.get('/', projectSearchController.getProjectList);
@@ -36,6 +37,7 @@ if (!usePrivateBetaV1RoutesOnly) {
 
 if (allowProjectInformation) {
 	router.get('/:case_ref', middleware, getProjectInformation);
+	router.get('/:case_ref/project-updates', middleware, getProjectUpdatesController);
 }
 
 if (allowDocumentLibrary) {
