@@ -13,6 +13,7 @@ const commonMockData = {
 	AnticipatedDateOfSubmission: '2020-01-01',
 	ProjectEmailAddress: 'mock@email.com'
 };
+
 describe('#getApplicationData', () => {
 	describe('When getting the application data', () => {
 		describe('and the response is 200', () => {

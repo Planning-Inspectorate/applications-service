@@ -1,12 +1,12 @@
 const { getAppData } = require('../../../services/application.service');
-const { projectStages } = require('../../../utils/project-stages');
+const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const getApplicationData = async (case_ref) => {
 	const { data, resp_code } = await getAppData(case_ref);
 	if (resp_code !== 200) throw new Error('Application response status not 200');
 
 	const status = {
 		number: data.Stage,
-		text: projectStages[data.Stage]
+		text: projectInfoProjectStages[data.Stage]
 	};
 
 	return {
@@ -17,7 +17,8 @@ const getApplicationData = async (case_ref) => {
 		dateOfNonAcceptance: data.dateOfNonAcceptance,
 		status,
 		anticipatedDateOfSubmission: data.AnticipatedDateOfSubmission,
-		contactEmailAddress: data.ProjectEmailAddress
+		contactEmailAddress: data.ProjectEmailAddress,
+		DateOfDCOAcceptance_NonAcceptance: data.DateOfDCOAcceptance_NonAcceptance
 	};
 };
 

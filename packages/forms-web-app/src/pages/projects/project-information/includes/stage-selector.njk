@@ -7,9 +7,14 @@
 		{% include "projects/project-information/includes/stages/pre-application/description.njk" %}
 	{% endif %}
 
+	{% if applicationData.status.text === projectStages[2] %}
+		{% include "projects/project-information/includes/stages/acceptance/description.njk" %}
+	{% endif %}
+
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-three-quarters">
 			{% include "projects/project-information/includes/stages/pre-application/details.njk" %}
+			{% include "projects/project-information/includes/stages/acceptance/details.njk" %}
 		</div>
 		<div class="govuk-grid-column-one-quarter">
 

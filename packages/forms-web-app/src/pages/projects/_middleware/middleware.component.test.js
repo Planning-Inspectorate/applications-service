@@ -36,7 +36,7 @@ describe('projects _middleware', () => {
 				projectName: 'mock project name',
 				projectStages: {
 					1: 'Pre-application',
-					2: 'Acceptance (review of the application)',
+					2: 'Acceptance',
 					3: 'Pre-examination',
 					4: 'Examination',
 					5: 'Recommendation',

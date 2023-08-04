@@ -77,7 +77,7 @@ describe('projects/project-information/controller', () => {
 				});
 			});
 			describe('acceptance', () => {
-				it('should render the page for Acceptance (stage 2)', async () => {
+				it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
 					fetch
 						.mockImplementationOnce(() =>
 							Promise.resolve({
@@ -86,6 +86,7 @@ describe('projects/project-information/controller', () => {
 								json: () =>
 									Promise.resolve({
 										...commonMockData,
+										DateOfDCOAcceptance_NonAcceptance: '2020-01-02',
 										Stage: 2
 									})
 							})
@@ -100,6 +101,39 @@ describe('projects/project-information/controller', () => {
 					const response = await request.get('/projects/EN010085');
 
 					expect(response.status).toEqual(200);
+					expect(response.text).toContain(
+						'The decision whether to accept the application for examination will be made by 02 January 2020.'
+					);
+					expect(response.text).toMatchSnapshot();
+				});
+
+				it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										DateOfDCOAcceptance_NonAcceptance: null,
+										Stage: 2
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						);
+					const response = await request.get('/projects/EN010085');
+
+					expect(response.status).toEqual(200);
+					expect(response.text).not.toContain(
+						'The decision whether to accept the application for examination will be made by 02 January 2020.'
+					);
 					expect(response.text).toMatchSnapshot();
 				});
 			});
