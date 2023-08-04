@@ -1,22 +1,45 @@
 const { getApplicationData } = require('./get-application-data');
-const { getAppData } = require('../../../../services/application.service');
-jest.mock('../../../../services/application.service', () => ({
+const { getAppData } = require('../../../services/application.service');
+jest.mock('../../../services/application.service', () => ({
 	getAppData: jest.fn()
 }));
+
+const commonMockData = {
+	ProjectName: 'mock project name',
+	Proposal: 'I am the proposal',
+	Summary: 'I am the project summary data',
+	WebAddress: 'mock-web-address',
+	dateOfNonAcceptance: '2020-01-01',
+	AnticipatedDateOfSubmission: '2020-01-01',
+	ProjectEmailAddress: 'mock@email.com'
+};
 describe('#getApplicationData', () => {
 	describe('When getting the application data', () => {
 		describe('and the response is 200', () => {
 			let response;
 			beforeEach(async () => {
 				getAppData.mockReturnValue({
-					data: { ProjectName: 'mock project name' },
+					data: {
+						...commonMockData,
+						Stage: 1
+					},
 					resp_code: 200
 				});
 				response = await getApplicationData('mock case ref');
 			});
 			it('should return the project name in an obejct', () => {
 				expect(response).toEqual({
-					projectName: 'mock project name'
+					anticipatedDateOfSubmission: '2020-01-01',
+					contactEmailAddress: 'mock@email.com',
+					dateOfNonAcceptance: '2020-01-01',
+					projectName: 'mock project name',
+					proposal: 'I am the proposal',
+					status: {
+						number: 1,
+						text: 'Pre-application'
+					},
+					summary: 'I am the project summary data',
+					webAddress: 'mock-web-address'
 				});
 			});
 		});

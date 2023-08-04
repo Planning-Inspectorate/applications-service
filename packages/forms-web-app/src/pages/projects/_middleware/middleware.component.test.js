@@ -1,9 +1,9 @@
 const { middleware } = require('./middleware');
-const { getApplicationData } = require('../documents/utils/get-application-data');
+const { getApplicationData } = require('../_utils/get-application-data');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
 
-jest.mock('../documents/utils/get-application-data', () => ({
+jest.mock('../_utils/get-application-data', () => ({
 	getApplicationData: jest.fn()
 }));
 jest.mock('../../../lib/application-api-wrapper', () => ({
@@ -34,10 +34,19 @@ describe('projects _middleware', () => {
 				caseRef: 'mock-case-ref',
 				path: 'mock path',
 				projectName: 'mock project name',
+				projectStages: {
+					1: 'Pre-application',
+					2: 'Acceptance (review of the application)',
+					3: 'Pre-examination',
+					4: 'Examination',
+					5: 'Recommendation',
+					6: 'Decision',
+					7: 'Decided'
+				},
 				hasOpenTimetables: true,
 				verticalTabs: [
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'

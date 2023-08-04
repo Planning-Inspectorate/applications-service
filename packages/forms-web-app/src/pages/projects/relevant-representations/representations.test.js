@@ -106,7 +106,7 @@ describe('controllers/projects/representations', () => {
 				showReps: false,
 				queryUrl: '',
 				commentsTypeFilterItems: [],
-				allowProjectInformation: false,
+				allowProjectInformation: true,
 				hideAllExaminationDocumentsLink
 			}
 		);
@@ -131,7 +131,7 @@ describe('controllers/projects/representations', () => {
 			{
 				projectName: 'ABC',
 				caseRef,
-				allowProjectInformation: false,
+				allowProjectInformation: true,
 				hideAllExaminationDocumentsLink,
 				RepFrom: 'Members of the public/businesses',
 				PersonalName: 'Test (Test)',

@@ -1,0 +1,18 @@
+<section>
+	<h2 class="govuk-heading-m">Project stage</h2>
+
+	<p>This project is at the <strong>{{ applicationData.status.text | lower }}</strong> stage</p>
+
+	{% if applicationData.status.text === projectStages[1] %}
+		{% include "projects/project-information/includes/stages/pre-application/description.njk" %}
+	{% endif %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-three-quarters">
+			{% include "projects/project-information/includes/stages/pre-application/details.njk" %}
+		</div>
+		<div class="govuk-grid-column-one-quarter">
+
+		</div>
+	</div>
+</section>
