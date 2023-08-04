@@ -1,6 +1,6 @@
-const { stripPrefixFromProposalType } = require('./get-page-data');
+const { stripPrefixFromProposalType } = require('./strip-prefix-from-proposal-type');
 
-describe('projects/project-information/utils/get-page-data', () => {
+describe('projects/project-information/utils/strip-prefix-from-proposal-type', () => {
 	describe('#stripPrefixFromProposalType', () => {
 		it("should return unchanged string if prefix doesn't match the pattern", async () => {
 			const test1 = stripPrefixFromProposalType('TRA04 - Railways');

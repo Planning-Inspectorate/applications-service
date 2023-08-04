@@ -1,19 +1,19 @@
 const logger = require('../../../lib/logger');
 const { getPageData } = require('./utils/get-page-data');
-const { getProjectUpdates } = require('../documents/utils/get-project-updates-data');
+const { getProjectUpdatesData } = require('../../services');
 
 const view = 'projects/project-information/view.njk';
 
-const getProjectOverview = async (req, res, next) => {
+const getProjectInformation = async (req, res, next) => {
 	try {
 		const {
 			locals: { applicationData }
 		} = res;
 		const { caseRef } = applicationData;
 
-		const latestUpdates = await getProjectUpdates(caseRef);
+		const projectUpdates = await getProjectUpdatesData(caseRef);
 
-		return res.render(view, getPageData(applicationData, latestUpdates));
+		return res.render(view, getPageData(applicationData, projectUpdates));
 	} catch (error) {
 		logger.error(error);
 		next(error);
@@ -21,5 +21,5 @@ const getProjectOverview = async (req, res, next) => {
 };
 
 module.exports = {
-	getProjectOverview
+	getProjectInformation
 };
