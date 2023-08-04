@@ -378,6 +378,32 @@ paths:
         '500':
           description: Internal server error
 
+  '/api/v1/project-updates/{projectUpdateId}':
+    delete:
+      summary: Deletes a project update
+      description: Deletes a project update by projectUpdateId
+      tags:
+        - Project Updates
+      parameters:
+        - in: path
+          name: projectUpdateId
+          example: 123
+          required: true
+          schema:
+            type: number
+          description: Project Update unique identifier
+      responses:
+        '204':
+          description: Project Update has been successfully deleted
+        '404':
+          description: Project Update not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+
   '/api/v1/representations':
     get:
       summary: Returns project representations
