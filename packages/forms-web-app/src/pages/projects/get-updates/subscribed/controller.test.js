@@ -13,7 +13,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 				case_ref: 'mock case ref'
 			},
 			query: {
-				subscription: 'mock subscription'
+				subscriptionDetails: 'mock subscription details'
 			}
 		};
 		const res = {

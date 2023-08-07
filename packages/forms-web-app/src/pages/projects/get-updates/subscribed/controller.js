@@ -8,9 +8,9 @@ const getGetUpdatesSubscribed = async (req, res) => {
 	try {
 		const { params, query } = req;
 		const { case_ref } = params;
-		const { subscription } = query;
+		const { subscriptionDetails } = query;
 
-		await putGetUpdatesSubscription(case_ref, subscription);
+		await putGetUpdatesSubscription(case_ref, subscriptionDetails);
 
 		return res.render(view, getPageData(204));
 	} catch (error) {
