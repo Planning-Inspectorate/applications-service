@@ -1,0 +1,15 @@
+{% if applicationData.anticipatedDateOfSubmission %}
+	<p class="govuk-body">
+		The application is expected to be submitted on {{ applicationData.anticipatedDateOfSubmission | date }}.
+	</p>
+{% endif %}
+
+<p class="govuk-body">
+	When we receive the application, we have 28 days to decide whether to accept it for examination.
+</p>
+
+<p class="govuk-body">
+	If we accept the application, you will then be able to register to have your say and view all the application
+	documents.
+</p>
+

@@ -1,102 +1,171 @@
-const { getProjectInformation } = require('./controller');
+const supertest = require('supertest');
+const fetch = require('node-fetch');
+const app = require('../../../app');
+const request = supertest(app);
 
-const { getProjectUpdates } = require('../../../lib/application-api-wrapper');
+const { getProjectUpdatesSuccessfulFixture } = require('../../_fixtures');
 
-jest.mock('../../../lib/application-api-wrapper', () => ({
-	getProjectUpdates: jest.fn()
-}));
+jest.mock('node-fetch');
 
-const {
-	getProjectUpdatesSuccessfulFixture,
-	getProjectUpdatesSuccessfulNoUpdatesFixture,
-	getProjectUpdatesUnsuccessfulFixture
-} = require('../../_fixtures');
-
+const commonMockData = {
+	ProjectName: 'Test project name',
+	Proposal: 'I am the proposal',
+	Summary: 'I am the project summary data',
+	WebAddress: 'mock-web-address',
+	dateOfNonAcceptance: '2020-01-01',
+	AnticipatedDateOfSubmission: '2020-01-01',
+	ProjectEmailAddress: 'mock@email.com'
+};
 describe('projects/project-information/controller', () => {
 	describe('#getProjectInformation', () => {
-		describe('When no project updates are found', () => {
-			const req = {};
-			const res = {
-				render: jest.fn(),
-				locals: {
-					applicationData: {
-						projectName: 'Mock project name',
-						caseRef: 'EN010085',
-						summary: 'Mock case summary',
-						webAddress: 'www.mock.com',
-						proposal: 'EN01 - Generating Stations'
-					}
-				}
-			};
-			const next = jest.fn();
+		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
+			describe('pre application ', () => {
+				it('should render the page for pre application (stage 1) - with anticipatedDateOfSubmission', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										Stage: 1
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
 
-			beforeEach(async () => {
-				getProjectUpdates.mockImplementation(() => getProjectUpdatesUnsuccessfulFixture);
-				await getProjectInformation(req, res, next);
-			});
+					expect(response.status).toEqual(200);
+					expect(response.text).toContain(
+						'The application is expected to be submitted on 01 January 2020.'
+					);
+					expect(response.text).toMatchSnapshot();
+				});
+				it('should render the page for pre application (stage 1) - without anticipatedDateOfSubmission', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										AnticipatedDateOfSubmission: null,
+										Stage: 1
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
 
-			it('should throw an error', () => {
-				expect(next).toHaveBeenCalledWith(new Error('Project updates response status not 200'));
-			});
-		});
-
-		describe('When there are project updates', () => {
-			const req = {};
-			const res = {
-				render: jest.fn(),
-				locals: {
-					applicationData: {
-						projectName: 'Mock project name',
-						caseRef: 'EN010085',
-						summary: 'Mock case summary',
-						webAddress: 'www.mock.com',
-						proposal: 'EN01 - Generating Stations'
-					}
-				}
-			};
-			const next = jest.fn();
-
-			beforeEach(async () => {
-				getProjectUpdates.mockImplementation(() => getProjectUpdatesSuccessfulFixture);
-				await getProjectInformation(req, res, next);
-			});
-
-			it('should render the page with the latest update', () => {
-				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
-					latestUpdate: {
-						content: 'mock english content update 1',
-						date: '1 January 2021'
-					},
-					proposal: 'Generating Stations'
+					expect(response.status).toEqual(200);
+					expect(response.text).not.toContain(
+						'The application is expected to be submitted on 01 January 2021.'
+					);
+					expect(response.text).toMatchSnapshot();
 				});
 			});
-		});
+			describe('acceptance', () => {
+				it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										DateOfDCOSubmission: '2020-01-01',
+										Stage: 2
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
 
-		describe('When there are project updates', () => {
-			const req = {};
-			const res = {
-				render: jest.fn(),
-				locals: {
-					applicationData: {
-						projectName: 'Mock project name',
-						caseRef: 'EN010085',
-						summary: 'Mock case summary',
-						webAddress: 'www.mock.com',
-						proposal: 'EN01 - Generating Stations'
-					}
-				}
-			};
-			const next = jest.fn();
+					expect(response.status).toEqual(200);
+					//  Add 28 days to DateOfDCOSubmission
+					expect(response.text).toContain(
+						'The decision whether to accept the application for examination will be made by 29 January 2020.'
+					);
+					expect(response.text).toMatchSnapshot();
+				});
 
-			beforeEach(async () => {
-				getProjectUpdates.mockImplementation(() => getProjectUpdatesSuccessfulNoUpdatesFixture);
-				await getProjectInformation(req, res, next);
-			});
+				it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										DateOfDCOSubmission: null,
+										Stage: 2
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
 
-			it('should render the page with NO latest update', () => {
-				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
-					latestUpdate: null,
-					proposal: 'Generating Stations'
+					expect(response.status).toEqual(200);
+					expect(response.text).not.toContain(
+						'The decision whether to accept the application for examination will be made by 02 January 2020.'
+					);
+					expect(response.text).toMatchSnapshot();
 				});
 			});
 		});
