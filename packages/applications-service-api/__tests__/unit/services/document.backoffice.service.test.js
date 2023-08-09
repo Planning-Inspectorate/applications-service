@@ -3,7 +3,8 @@ jest.mock('../../../src/utils/document.mapper');
 
 const {
 	getDocuments,
-	getFilters
+	getFilters,
+	getDocumentsByType
 } = require('../../../src/repositories/document.backoffice.repository');
 const {
 	BACK_OFFICE_DB_DOCUMENTS,
@@ -13,7 +14,8 @@ const {
 } = require('../../__data__/documents');
 const {
 	fetchBackOfficeDocuments,
-	fetchBackOfficeDocumentFilters
+	fetchBackOfficeDocumentFilters,
+	fetchBackOfficeDocumentsByType
 } = require('../../../src/services/document.backoffice.service');
 const { mapBackOfficeDocuments, mapFilters } = require('../../../src/utils/document.mapper');
 
@@ -47,6 +49,17 @@ describe('document back office service', () => {
 
 			expect(mapFilters).toBeCalledWith(DB_FILTERS);
 			expect(result).toEqual(RESPONSE_FILTERS);
+		});
+	});
+
+	describe('fetchBackOfficeDocumentsByType', () => {
+		it('calls fetchBackOfficeDocumentsByType then passes result to repository', async () => {
+			getDocumentsByType.mockResolvedValueOnce('mock data');
+
+			const result = await fetchBackOfficeDocumentsByType('mock query');
+
+			expect(getDocumentsByType).toBeCalledWith('mock query');
+			expect(result).toEqual({ data: 'mock data' });
 		});
 	});
 });

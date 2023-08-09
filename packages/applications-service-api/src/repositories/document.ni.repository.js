@@ -120,8 +120,23 @@ const getDocumentsByDataId = (dataIds) =>
 		}
 	});
 
+const fetchDocumentsByDocumentType = async (requestQuery) => {
+	const where = {
+		case_reference: requestQuery.caseReference,
+		type: requestQuery.type
+	};
+
+	const dbQuery = {
+		where,
+		order: [['date_created', 'desc']]
+	};
+
+	return await db.Document.findOne(dbQuery);
+};
+
 module.exports = {
 	fetchDocuments,
 	getAvailableFilters,
-	getDocumentsByDataId
+	getDocumentsByDataId,
+	fetchDocumentsByDocumentType
 };

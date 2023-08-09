@@ -4,8 +4,17 @@ const documentsV3Controller = require('../controllers/documents.v3');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
 const config = require('../lib/config');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
+const {
+	validateGetDocumentWithTypeRequestOpenAPI
+} = require('../middleware/validator/validateGetDocumentWithTypeRequestOpenAPI');
 
 const router = express.Router();
+
+router.get(
+	'/:caseReference',
+	validateGetDocumentWithTypeRequestOpenAPI,
+	asyncRoute(documentsV3Controller.getDocumentByCaseReference)
+);
 
 const getDocumentsRoute = (req, res, next) => {
 	const backOfficeCaseReferences =

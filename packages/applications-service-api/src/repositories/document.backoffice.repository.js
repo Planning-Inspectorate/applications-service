@@ -3,12 +3,12 @@ const { prismaClient } = require('../lib/prisma');
 
 const getFilters = (caseReference) => {
 	const sql = Prisma.sql`
-        SELECT DISTINCT(stage), filter1, count(id) as total
-        FROM Document
-        WHERE caseRef = ${caseReference}
-          AND (stage is not null and stage <> 'draft')
-          AND filter1 is not null
-        GROUP BY stage, filter1`;
+		SELECT DISTINCT(stage), filter1, count(id) as total
+		FROM Document
+		WHERE caseRef = ${caseReference}
+			AND (stage is not null and stage <> 'draft')
+			AND filter1 is not null
+		GROUP BY stage, filter1`;
 
 	return prismaClient.$queryRaw(sql);
 };
@@ -67,7 +67,20 @@ const getDocuments = async (query) => {
 	return { rows, count };
 };
 
+const getDocumentsByType = async (queryData) =>
+	await prismaClient.document.findFirst({
+		where: {
+			caseRef: queryData.caseReference,
+			documentType: queryData.type
+		},
+		orderBy: {
+			createdAt: 'desc'
+		},
+		take: 1
+	});
+
 module.exports = {
 	getDocuments,
-	getFilters
+	getFilters,
+	getDocumentsByType
 };
