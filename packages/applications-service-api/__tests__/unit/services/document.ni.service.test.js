@@ -3,7 +3,8 @@ jest.mock('../../../src/utils/document.mapper');
 
 const {
 	fetchDocuments,
-	getAvailableFilters
+	getAvailableFilters,
+	fetchDocumentsByDocumentType
 } = require('../../../src/repositories/document.ni.repository');
 const {
 	DB_DOCUMENTS,
@@ -14,7 +15,8 @@ const {
 const { mapDocuments, mapFilters } = require('../../../src/utils/document.mapper');
 const {
 	fetchNIDocuments,
-	fetchNIDocumentFilters
+	fetchNIDocumentFilters,
+	fetchNIDocumentsByType
 } = require('../../../src/services/document.ni.service');
 
 describe('document ni service', () => {
@@ -47,6 +49,17 @@ describe('document ni service', () => {
 
 			expect(mapFilters).toBeCalledWith(DB_FILTERS);
 			expect(result).toEqual(RESPONSE_FILTERS);
+		});
+	});
+
+	describe('fetchNIDocumentsByType', () => {
+		it('calls fetchNIDocumentsByType then passes result to repository', async () => {
+			fetchDocumentsByDocumentType.mockResolvedValueOnce('mock data');
+
+			const result = await fetchNIDocumentsByType('mock query');
+
+			expect(fetchDocumentsByDocumentType).toBeCalledWith('mock query');
+			expect(result).toEqual({ data: 'mock data' });
 		});
 	});
 });

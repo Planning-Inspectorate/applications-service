@@ -1,9 +1,19 @@
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
-const { getNIDocuments } = require('../../../src/controllers/documents.v3');
+const {
+	getNIDocuments,
+	getDocumentByCaseReference
+} = require('../../../src/controllers/documents.v3');
 const { RESPONSE_FILTERS, RESPONSE_DOCUMENTS } = require('../../__data__/documents');
+const {
+	fetchBackOfficeDocumentsByType
+} = require('../../../src/services/document.backoffice.service');
+const { fetchNIDocumentsByType } = require('../../../src/services/document.ni.service');
+const config = require('../../../src/lib/config');
 
+jest.mock('../../../src/lib/config');
 jest.mock('../../../src/services/document.ni.service');
+jest.mock('../../../src/services/document.backoffice.service');
 const fetchNIDocumentsMock = require('../../../src/services/document.ni.service').fetchNIDocuments;
 const fetchNIDocumentFiltersMock =
 	require('../../../src/services/document.ni.service').fetchNIDocumentFilters;
@@ -180,6 +190,68 @@ describe('documentsV3 controller', () => {
 				itemsPerPage: 2,
 				totalPages: 2,
 				currentPage: 2
+			});
+		});
+	});
+
+	describe('getDocumentByCaseReference', () => {
+		describe('NI', () => {
+			it('returns a NI document for the case ref and type (Rule 6 Letter)', async () => {
+				fetchNIDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
+				await getDocumentByCaseReference(
+					{
+						params: { caseReference: 'EN000001' },
+						query: { type: 'Rule 6 letter' }
+					},
+					res
+				);
+				expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
+					caseReference: 'EN000001',
+					type: 'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
+				});
+
+				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+				expect(res._getData()).toEqual({ data: 'mock document' });
+			});
+
+			it('returns a NI document for the case ref and type (Rule 8 Letter)', async () => {
+				fetchNIDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
+				await getDocumentByCaseReference(
+					{
+						params: { caseReference: 'EN000001' },
+						query: { type: 'Rule 8 letter' }
+					},
+					res
+				);
+				expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
+					caseReference: 'EN000001',
+					type: 'Rule 8 letter - notification of timetable for the examination'
+				});
+
+				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+				expect(res._getData()).toEqual({ data: 'mock document' });
+			});
+		});
+		describe('BO', () => {
+			it('returns a BO document for the case ref and type', async () => {
+				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
+
+				config.backOfficeIntegration.documents.getDocuments.caseReferences = ['BC0110001'];
+				await getDocumentByCaseReference(
+					{
+						params: { caseReference: 'BC0110001' },
+						query: { type: 'Rule 6 letter' }
+					},
+					res
+				);
+
+				expect(fetchBackOfficeDocumentsByType).toHaveBeenCalledWith({
+					caseReference: 'BC0110001',
+					type: 'Rule 6 letter'
+				});
+
+				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+				expect(res._getData()).toEqual({ data: 'mock document' });
 			});
 		});
 	});

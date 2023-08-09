@@ -1,4 +1,8 @@
-const { getDocuments, getFilters } = require('../repositories/document.backoffice.repository');
+const {
+	getDocuments,
+	getFilters,
+	getDocumentsByType
+} = require('../repositories/document.backoffice.repository');
 const { mapFilters, mapBackOfficeDocuments } = require('../utils/document.mapper');
 
 const fetchBackOfficeDocuments = async (filters) => {
@@ -9,6 +13,13 @@ const fetchBackOfficeDocuments = async (filters) => {
 	};
 };
 
+const fetchBackOfficeDocumentsByType = async (queryData) => {
+	const document = await getDocumentsByType(queryData);
+	return {
+		data: document
+	};
+};
+
 const fetchBackOfficeDocumentFilters = async (caseReference) => {
 	const availableFilters = await getFilters(caseReference);
 	return mapFilters(availableFilters);
@@ -16,5 +27,6 @@ const fetchBackOfficeDocumentFilters = async (caseReference) => {
 
 module.exports = {
 	fetchBackOfficeDocuments,
-	fetchBackOfficeDocumentFilters
+	fetchBackOfficeDocumentFilters,
+	fetchBackOfficeDocumentsByType
 };
