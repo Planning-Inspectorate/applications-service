@@ -196,30 +196,6 @@ describe('documentsV3 controller', () => {
 
 	describe('getDocumentByCaseReference', () => {
 		describe('NI', () => {
-			describe('when document type is in wrong letter case for NI', () => {
-				test.each`
-					type                         | expectedResult
-					${'RULE_6_LETTER'}           | ${'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'}
-					${'RULE_8_LETTER'}           | ${'Rule 8 letter - notification of timetable for the examination'}
-					${'EXAMINATION_LIBRARY'}     | ${'Examination library'}
-					${'DECISION_LETTER_APPROVE'} | ${'DCO decision letter (SoS)(approve)'}
-					${'DECISION_LETTER_REFUSE'}  | ${'DCO decision letter (SoS)(refuse)'}
-				`('"$type" should map to "$expectedResult"', async ({ type, expectedResult }) => {
-					fetchNIDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
-					await getDocumentByCaseReference(
-						{
-							params: { caseReference: 'EN000001' },
-							query: { type }
-						},
-						res
-					);
-
-					expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
-						caseReference: 'EN000001',
-						type: expectedResult
-					});
-				});
-			});
 			it('returns a NI document for the case ref and type (Rule 6 Letter)', async () => {
 				fetchNIDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
 				await getDocumentByCaseReference(
@@ -231,7 +207,7 @@ describe('documentsV3 controller', () => {
 				);
 				expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
 					caseReference: 'EN000001',
-					type: 'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
+					type: 'RULE_6_LETTER'
 				});
 
 				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
@@ -249,7 +225,7 @@ describe('documentsV3 controller', () => {
 				);
 				expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
 					caseReference: 'EN000001',
-					type: 'Rule 8 letter - notification of timetable for the examination'
+					type: 'RULE_8_LETTER'
 				});
 
 				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
@@ -257,33 +233,6 @@ describe('documentsV3 controller', () => {
 			});
 		});
 		describe('BO', () => {
-			describe('when document type is in wrong letter case for BO', () => {
-				test.each`
-					type                         | expectedResult
-					${'RULE_6_LETTER'}           | ${'Rule 6 letter'}
-					${'RULE_8_LETTER'}           | ${'Rule 8 letter'}
-					${'EXAMINATION_LIBRARY'}     | ${'Examination library'}
-					${'DECISION_LETTER_APPROVE'} | ${'DCO decision letter (SoS)(approve)'}
-					${'DECISION_LETTER_REFUSE'}  | ${'DCO decision letter (SoS)(refuse)'}
-				`('"$type" should map to "$expectedResult"', async ({ type, expectedResult }) => {
-					fetchBackOfficeDocumentsByType.mockResolvedValueOnce({
-						data: 'mock data'
-					});
-					config.backOfficeIntegration.documents.getDocuments.caseReferences = ['BC0110001'];
-					await getDocumentByCaseReference(
-						{
-							params: { caseReference: 'BC0110001' },
-							query: { type }
-						},
-						res
-					);
-
-					expect(fetchBackOfficeDocumentsByType).toHaveBeenCalledWith({
-						caseReference: 'BC0110001',
-						type: expectedResult
-					});
-				});
-			});
 			it('returns a BO document for the case ref and type', async () => {
 				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
 
@@ -298,7 +247,7 @@ describe('documentsV3 controller', () => {
 
 				expect(fetchBackOfficeDocumentsByType).toHaveBeenCalledWith({
 					caseReference: 'BC0110001',
-					type: 'Rule 6 letter'
+					type: 'RULE_6_LETTER'
 				});
 
 				expect(res._getStatusCode()).toEqual(StatusCodes.OK);

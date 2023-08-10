@@ -4,6 +4,7 @@ const {
 	getAvailableFilters,
 	fetchDocumentsByDocumentType
 } = require('../repositories/document.ni.repository');
+const { documentTypeDict } = require('../docType');
 
 const fetchNIDocuments = async (requestQuery) => {
 	const documents = await fetchDocuments(requestQuery);
@@ -13,8 +14,11 @@ const fetchNIDocuments = async (requestQuery) => {
 	};
 };
 
-const fetchNIDocumentsByType = async (requestQuery) => {
-	const { dataValues } = await fetchDocumentsByDocumentType(requestQuery);
+const fetchNIDocumentsByType = async ({ caseReference, type }) => {
+	const { dataValues } = await fetchDocumentsByDocumentType({
+		caseReference,
+		type: documentTypeDict[type.toUpperCase()].ni
+	});
 	const [data] = mapDocuments([dataValues]);
 
 	return {
