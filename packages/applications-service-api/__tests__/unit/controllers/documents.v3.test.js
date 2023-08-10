@@ -4,12 +4,7 @@ const {
 	getNIDocuments,
 	getDocumentByCaseReference
 } = require('../../../src/controllers/documents.v3');
-const {
-	RESPONSE_FILTERS,
-	RESPONSE_DOCUMENTS,
-	DB_DOCUMENTS,
-	BACK_OFFICE_DB_DOCUMENTS
-} = require('../../__data__/documents');
+const { RESPONSE_FILTERS, RESPONSE_DOCUMENTS } = require('../../__data__/documents');
 const {
 	fetchBackOfficeDocumentsByType
 } = require('../../../src/services/document.backoffice.service');
@@ -226,7 +221,7 @@ describe('documentsV3 controller', () => {
 				});
 			});
 			it('returns a NI document for the case ref and type (Rule 6 Letter)', async () => {
-				fetchNIDocumentsByType.mockResolvedValueOnce({ data: DB_DOCUMENTS[0] });
+				fetchNIDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
 				await getDocumentByCaseReference(
 					{
 						params: { caseReference: 'EN000001' },
@@ -244,7 +239,7 @@ describe('documentsV3 controller', () => {
 			});
 
 			it('returns a NI document for the case ref and type (Rule 8 Letter)', async () => {
-				fetchNIDocumentsByType.mockResolvedValueOnce({ data: DB_DOCUMENTS[0] });
+				fetchNIDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
 				await getDocumentByCaseReference(
 					{
 						params: { caseReference: 'EN000001' },
@@ -290,7 +285,7 @@ describe('documentsV3 controller', () => {
 				});
 			});
 			it('returns a BO document for the case ref and type', async () => {
-				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: BACK_OFFICE_DB_DOCUMENTS[0] });
+				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
 
 				config.backOfficeIntegration.documents.getDocuments.caseReferences = ['BC0110001'];
 				await getDocumentByCaseReference(
@@ -307,25 +302,7 @@ describe('documentsV3 controller', () => {
 				});
 
 				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-				expect(res._getData()).toEqual({
-					author: null,
-					caseReference: 'EN010009',
-					dataId: null,
-					dateCreated: '2023-06-19 10:50:31.8860000',
-					datePublished: '2023-03-26T00:00:00.000',
-					description: '',
-					docReference: null,
-					filter1: 'CR-1234-A',
-					filter2: '',
-					id: 1,
-					lastModified: '2023-06-19 10:50:31.8860000',
-					mime: 'application/pdf',
-					path: 'https://example.org/file.pdf',
-					representative: '',
-					size: 412846,
-					stage: 'pre-application',
-					type: 'Dave'
-				});
+				expect(res._getData()).toEqual(RESPONSE_DOCUMENTS[0]);
 			});
 		});
 	});

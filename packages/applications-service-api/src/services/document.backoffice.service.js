@@ -15,8 +15,10 @@ const fetchBackOfficeDocuments = async (filters) => {
 
 const fetchBackOfficeDocumentsByType = async (queryData) => {
 	const document = await getDocumentsByType(queryData);
+
+	const [data] = mapBackOfficeDocuments([document]);
 	return {
-		data: document
+		data
 	};
 };
 

@@ -54,12 +54,12 @@ describe('document back office service', () => {
 
 	describe('fetchBackOfficeDocumentsByType', () => {
 		it('calls fetchBackOfficeDocumentsByType then passes result to repository', async () => {
-			getDocumentsByType.mockResolvedValueOnce('mock data');
-
+			getDocumentsByType.mockResolvedValueOnce(BACK_OFFICE_DB_DOCUMENTS[0]);
+			mapBackOfficeDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
 			const result = await fetchBackOfficeDocumentsByType('mock query');
 
 			expect(getDocumentsByType).toBeCalledWith('mock query');
-			expect(result).toEqual({ data: 'mock data' });
+			expect(result).toEqual({ data: RESPONSE_DOCUMENTS[0] });
 		});
 	});
 });

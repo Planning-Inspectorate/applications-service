@@ -54,12 +54,14 @@ describe('document ni service', () => {
 
 	describe('fetchNIDocumentsByType', () => {
 		it('calls fetchNIDocumentsByType then passes result to repository', async () => {
-			fetchDocumentsByDocumentType.mockResolvedValueOnce({ dataValues: 'mock data' });
-
+			fetchDocumentsByDocumentType.mockResolvedValueOnce({ dataValues: DB_DOCUMENTS[0] });
+			mapDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
 			const result = await fetchNIDocumentsByType('mock query');
 
 			expect(fetchDocumentsByDocumentType).toBeCalledWith('mock query');
-			expect(result).toEqual({ data: 'mock data' });
+			expect(result).toEqual({
+				data: RESPONSE_DOCUMENTS[0]
+			});
 		});
 	});
 });
