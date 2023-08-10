@@ -198,12 +198,12 @@ describe('documentsV3 controller', () => {
 		describe('NI', () => {
 			describe('when document type is in wrong letter case for NI', () => {
 				test.each`
-					type                                    | expectedResult
-					${'Rule 6 leTTer'}                      | ${'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'}
-					${'Rule 8 LeTter'}                      | ${'Rule 8 letter - notification of timetable for the examination'}
-					${'ExaminatION library'}                | ${'Examination library'}
-					${'dco decision letter (SoS)(approve)'} | ${'DCO decision letter (SoS)(approve)'}
-					${'dco decision letter (SoS)(refuse)'}  | ${'DCO decision letter (SoS)(refuse)'}
+					type                         | expectedResult
+					${'RULE_6_LETTER'}           | ${'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'}
+					${'RULE_8_LETTER'}           | ${'Rule 8 letter - notification of timetable for the examination'}
+					${'EXAMINATION_LIBRARY'}     | ${'Examination library'}
+					${'DECISION_LETTER_APPROVE'} | ${'DCO decision letter (SoS)(approve)'}
+					${'DECISION_LETTER_REFUSE'}  | ${'DCO decision letter (SoS)(refuse)'}
 				`('"$type" should map to "$expectedResult"', async ({ type, expectedResult }) => {
 					fetchNIDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
 					await getDocumentByCaseReference(
@@ -225,7 +225,7 @@ describe('documentsV3 controller', () => {
 				await getDocumentByCaseReference(
 					{
 						params: { caseReference: 'EN000001' },
-						query: { type: 'Rule 6 letter' }
+						query: { type: 'RULE_6_LETTER' }
 					},
 					res
 				);
@@ -243,7 +243,7 @@ describe('documentsV3 controller', () => {
 				await getDocumentByCaseReference(
 					{
 						params: { caseReference: 'EN000001' },
-						query: { type: 'Rule 8 letter' }
+						query: { type: 'RULE_8_LETTER' }
 					},
 					res
 				);
@@ -259,12 +259,12 @@ describe('documentsV3 controller', () => {
 		describe('BO', () => {
 			describe('when document type is in wrong letter case for BO', () => {
 				test.each`
-					type                                    | expectedResult
-					${'Rule 6 leTTer'}                      | ${'Rule 6 letter'}
-					${'Rule 8 LeTter'}                      | ${'Rule 8 letter'}
-					${'ExaminatION library'}                | ${'Examination library'}
-					${'dco decision letter (SoS)(approve)'} | ${'DCO decision letter (SoS)(approve)'}
-					${'dco decision letter (SoS)(refuse)'}  | ${'DCO decision letter (SoS)(refuse)'}
+					type                         | expectedResult
+					${'RULE_6_LETTER'}           | ${'Rule 6 letter'}
+					${'RULE_8_LETTER'}           | ${'Rule 8 letter'}
+					${'EXAMINATION_LIBRARY'}     | ${'Examination library'}
+					${'DECISION_LETTER_APPROVE'} | ${'DCO decision letter (SoS)(approve)'}
+					${'DECISION_LETTER_REFUSE'}  | ${'DCO decision letter (SoS)(refuse)'}
 				`('"$type" should map to "$expectedResult"', async ({ type, expectedResult }) => {
 					fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
 					config.backOfficeIntegration.documents.getDocuments.caseReferences = ['BC0110001'];
@@ -289,7 +289,7 @@ describe('documentsV3 controller', () => {
 				await getDocumentByCaseReference(
 					{
 						params: { caseReference: 'BC0110001' },
-						query: { type: 'Rule 6 letter' }
+						query: { type: 'RULE_6_LETTER' }
 					},
 					res
 				);

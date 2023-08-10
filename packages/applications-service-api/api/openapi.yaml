@@ -321,11 +321,11 @@ paths:
           schema:
             type: string
             enum: [
-              'RULE 6 LETTER',
-              'RULE 8 LETTER',
-              'EXAMINATION LIBRARY',
-              'DCO DECISION LETTER (SOS)(APPROVE)',
-              'DCO DECISION LETTER (SOS)(REFUSE)'
+              'RULE_6_LETTER',
+              'RULE_8_LETTER',
+              'EXAMINATION_LIBRARY',
+              'DECISION_LETTER_APPROVE',
+              'DECISION_LETTER_REFUSE'
             ]
       responses:
         '200':
