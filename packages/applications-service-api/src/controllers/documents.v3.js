@@ -10,7 +10,6 @@ const {
 	fetchBackOfficeDocumentsByType
 } = require('../services/document.backoffice.service');
 const config = require('../lib/config');
-const { mapBackOfficeDocuments, mapDocuments } = require('../utils/document.mapper');
 
 const getBackOfficeDocuments = (req, res) =>
 	getDocuments(req, res, fetchBackOfficeDocuments, fetchBackOfficeDocumentFilters);
@@ -85,14 +84,13 @@ const getDocumentByCaseReference = async (req, res) => {
 			type: documentTypeDict[capType].bo
 		});
 
-		[response] = mapBackOfficeDocuments([data]);
+		response = data;
 	} else {
 		const { data } = await fetchNIDocumentsByType({
 			caseReference,
 			type: documentTypeDict[capType].ni
 		});
-
-		[response] = mapDocuments([data]);
+		response = data;
 	}
 
 	if (!response)
