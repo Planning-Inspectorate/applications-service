@@ -10,6 +10,7 @@ const {
 	fetchBackOfficeDocumentsByType
 } = require('../services/document.backoffice.service');
 const config = require('../lib/config');
+const { mapBackOfficeDocuments, mapDocuments } = require('../utils/document.mapper');
 
 const getBackOfficeDocuments = (req, res) =>
 	getDocuments(req, res, fetchBackOfficeDocuments, fetchBackOfficeDocumentFilters);
@@ -79,23 +80,27 @@ const getDocumentByCaseReference = async (req, res) => {
 	const capType = type.toUpperCase();
 
 	if (backOfficeCaseReferences.includes(caseReference)) {
-		response = await fetchBackOfficeDocumentsByType({
+		const { data } = await fetchBackOfficeDocumentsByType({
 			caseReference,
 			type: documentTypeDict[capType].bo
 		});
+
+		[response] = mapBackOfficeDocuments([data]);
 	} else {
-		response = await fetchNIDocumentsByType({
+		const { data } = await fetchNIDocumentsByType({
 			caseReference,
 			type: documentTypeDict[capType].ni
 		});
+
+		[response] = mapDocuments([data]);
 	}
 
-	if (!response.data)
+	if (!response)
 		return res
 			.status(StatusCodes.NOT_FOUND)
 			.json({ message: `No document found for ${caseReference} with type ${type}` });
 
-	return res.status(StatusCodes.OK).send({ ...response });
+	return res.status(StatusCodes.OK).send(response);
 };
 
 module.exports = {
