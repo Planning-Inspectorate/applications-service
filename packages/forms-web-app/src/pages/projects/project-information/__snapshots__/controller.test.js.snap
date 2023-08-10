@@ -532,7 +532,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
             
         
 
-    <strong class=\\"govuk-tag \\">Completed</strong>
+    <strong class=\\"govuk-tag  -white-space--nowrap\\">Completed</strong>
     
 
 			</dd>
@@ -575,7 +575,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -1289,7 +1289,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
             
         
 
-    <strong class=\\"govuk-tag \\">Completed</strong>
+    <strong class=\\"govuk-tag  -white-space--nowrap\\">Completed</strong>
     
 
 			</dd>
@@ -1332,7 +1332,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -2036,7 +2036,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -2079,7 +2079,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--grey\\">Not started</strong>
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
     
 
 			</dd>
@@ -2779,7 +2779,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -2822,7 +2822,7 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--grey\\">Not started</strong>
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
     
 
 			</dd>
