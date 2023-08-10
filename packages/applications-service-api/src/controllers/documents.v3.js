@@ -47,28 +47,6 @@ const buildFilters = (req) => ({
 	datePublishedTo: req.body.datePublishedTo
 });
 
-const documentTypeDict = {
-	RULE_6_LETTER: {
-		bo: 'Rule 6 letter',
-		ni: 'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
-	},
-	RULE_8_LETTER: {
-		bo: 'Rule 8 letter',
-		ni: 'Rule 8 letter - notification of timetable for the examination'
-	},
-	EXAMINATION_LIBRARY: {
-		bo: 'Examination library',
-		ni: 'Examination library'
-	},
-	DECISION_LETTER_APPROVE: {
-		bo: 'DCO decision letter (SoS)(approve)',
-		ni: 'DCO decision letter (SoS)(approve)'
-	},
-	DECISION_LETTER_REFUSE: {
-		bo: 'DCO decision letter (SoS)(refuse)',
-		ni: 'DCO decision letter (SoS)(refuse)'
-	}
-};
 const getDocumentByCaseReference = async (req, res) => {
 	const backOfficeCaseReferences =
 		config.backOfficeIntegration.documents.getDocuments.caseReferences || [];
@@ -76,19 +54,18 @@ const getDocumentByCaseReference = async (req, res) => {
 	let response;
 	const { caseReference } = req.params;
 	let { type } = req.query;
-	const capType = type.toUpperCase();
 
 	if (backOfficeCaseReferences.includes(caseReference)) {
 		const { data } = await fetchBackOfficeDocumentsByType({
 			caseReference,
-			type: documentTypeDict[capType].bo
+			type
 		});
 
 		response = data;
 	} else {
 		const { data } = await fetchNIDocumentsByType({
 			caseReference,
-			type: documentTypeDict[capType].ni
+			type
 		});
 		response = data;
 	}

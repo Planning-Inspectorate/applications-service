@@ -4,6 +4,7 @@ const {
 	getDocumentsByType
 } = require('../repositories/document.backoffice.repository');
 const { mapFilters, mapBackOfficeDocuments } = require('../utils/document.mapper');
+const { documentTypeDict } = require('../docType');
 
 const fetchBackOfficeDocuments = async (filters) => {
 	const docs = await getDocuments(filters);
@@ -13,8 +14,11 @@ const fetchBackOfficeDocuments = async (filters) => {
 	};
 };
 
-const fetchBackOfficeDocumentsByType = async (queryData) => {
-	const document = await getDocumentsByType(queryData);
+const fetchBackOfficeDocumentsByType = async ({ caseReference, type }) => {
+	const document = await getDocumentsByType({
+		caseReference,
+		type: documentTypeDict[type.toUpperCase()].bo
+	});
 
 	const [data] = mapBackOfficeDocuments([document]);
 	return {
