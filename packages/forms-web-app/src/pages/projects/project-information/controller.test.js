@@ -12,7 +12,7 @@ const commonMockData = {
 	Proposal: 'I am the proposal',
 	Summary: 'I am the project summary data',
 	WebAddress: 'mock-web-address',
-	dateOfNonAcceptance: '2020-01-01',
+	DateOfNonAcceptance: '2020-01-01',
 	AnticipatedDateOfSubmission: '2020-01-01',
 	ProjectEmailAddress: 'mock@email.com'
 };
