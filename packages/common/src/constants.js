@@ -1,4 +1,4 @@
-const documentTypeDict = {
+const documentTypeDictionary = {
 	RULE_6_LETTER: {
 		bo: 'Rule 6 letter',
 		ni: 'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
@@ -8,7 +8,7 @@ const documentTypeDict = {
 		ni: 'Rule 8 letter - notification of timetable for the examination'
 	},
 	EXAMINATION_LIBRARY: {
-		bo: 'Examination library',
+		bo: 'Exam library',
 		ni: 'Examination library'
 	},
 	DECISION_LETTER_APPROVE: {
@@ -22,5 +22,5 @@ const documentTypeDict = {
 };
 
 module.exports = {
-	documentTypeDict
+	documentTypeDictionary
 };
