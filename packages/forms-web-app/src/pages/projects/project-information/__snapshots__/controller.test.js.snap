@@ -488,11 +488,13 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
 	
 
-	<div class=\\"govuk-grid-row\\">
-		<div class=\\"govuk-grid-column-three-quarters\\">
-			
+	<dl class=\\"govuk-summary-list\\">
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\">
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Pre-application
@@ -516,9 +518,31 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-			
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\" open>
+        
+
+        
+
+        
+            
+            
+        
+
+    <strong class=\\"govuk-tag \\">Completed</strong>
+    
+
+			</dd>
+		</div>
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Acceptance
@@ -537,11 +561,26 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-		</div>
-		<div class=\\"govuk-grid-column-one-quarter\\">
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
+        
+
+        
+            
+            
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    
+
+			</dd>
 		</div>
-	</div>
+	</dl>
 </section>
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
@@ -609,7 +648,6 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 </section>
 
 
-			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\"/>
 		</div>
 	</div>
 
@@ -1207,11 +1245,13 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
 	
 
-	<div class=\\"govuk-grid-row\\">
-		<div class=\\"govuk-grid-column-three-quarters\\">
-			
+	<dl class=\\"govuk-summary-list\\">
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\">
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Pre-application
@@ -1235,9 +1275,31 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-			
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\" open>
+        
+
+        
+
+        
+            
+            
+        
+
+    <strong class=\\"govuk-tag \\">Completed</strong>
+    
+
+			</dd>
+		</div>
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Acceptance
@@ -1256,11 +1318,26 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-		</div>
-		<div class=\\"govuk-grid-column-one-quarter\\">
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
+        
+
+        
+            
+            
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    
+
+			</dd>
 		</div>
-	</div>
+	</dl>
 </section>
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
@@ -1328,7 +1405,6 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 </section>
 
 
-			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\"/>
 		</div>
 	</div>
 
@@ -1916,11 +1992,13 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
 	
 
-	<div class=\\"govuk-grid-row\\">
-		<div class=\\"govuk-grid-column-three-quarters\\">
-			
+	<dl class=\\"govuk-summary-list\\">
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\" open>
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Pre-application
@@ -1944,9 +2022,31 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-			
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\">
+        
+
+        
+            
+            
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    
+
+			</dd>
+		</div>
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Acceptance
@@ -1965,11 +2065,26 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-		</div>
-		<div class=\\"govuk-grid-column-one-quarter\\">
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
+        
+            
+            
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey\\">Not started</strong>
+    
+
+			</dd>
 		</div>
-	</div>
+	</dl>
 </section>
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
@@ -2037,7 +2152,6 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 </section>
 
 
-			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\"/>
 		</div>
 	</div>
 
@@ -2621,11 +2735,13 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 
 	
 
-	<div class=\\"govuk-grid-row\\">
-		<div class=\\"govuk-grid-column-three-quarters\\">
-			
+	<dl class=\\"govuk-summary-list\\">
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\" open>
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Pre-application
@@ -2649,9 +2765,31 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-			
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
-<details class=\\"govuk-details\\" data-module=\\"govuk-details\\">
+        
+
+        
+            
+            
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--blue\\">In progress</strong>
+    
+
+			</dd>
+		</div>
+		<div class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				<div class=\\"govuk-grid-row\\">
+					
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
       Acceptance
@@ -2670,11 +2808,26 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
   </div>
 </details>
 
-		</div>
-		<div class=\\"govuk-grid-column-one-quarter\\">
+				</div>
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
 
+        
+            
+            
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey\\">Not started</strong>
+    
+
+			</dd>
 		</div>
-	</div>
+	</dl>
 </section>
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
@@ -2742,7 +2895,6 @@ exports[`projects/project-information/controller #getProjectInformation Stages -
 </section>
 
 
-			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\"/>
 		</div>
 	</div>
 

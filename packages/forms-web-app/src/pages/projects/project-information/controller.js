@@ -13,6 +13,7 @@ const getProjectInformation = async (req, res, next) => {
 
 		const projectUpdates = await getProjectUpdatesData(caseRef);
 
+		console.log('APPDATA :>> ', applicationData);
 		return res.render(view, getPageData(applicationData, projectUpdates));
 	} catch (error) {
 		logger.error(error);
