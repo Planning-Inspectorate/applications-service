@@ -1,4 +1,5 @@
 const supertest = require('supertest');
+const HTMLParser = require('node-html-parser');
 const fetch = require('node-fetch');
 const app = require('../../../app');
 const request = supertest(app);
@@ -12,11 +13,11 @@ const commonMockData = {
 	Proposal: 'I am the proposal',
 	Summary: 'I am the project summary data',
 	WebAddress: 'mock-web-address',
-	DateOfNonAcceptance: '2020-01-01',
+	dateOfNonAcceptance: '2020-01-01',
 	AnticipatedDateOfSubmission: '2020-01-01',
 	ProjectEmailAddress: 'mock@email.com'
 };
-describe('projects/project-information/controller', () => {
+describe('projects/project-information/controller.component', () => {
 	describe('#getProjectInformation', () => {
 		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
 			describe('pre application ', () => {
@@ -165,6 +166,128 @@ describe('projects/project-information/controller', () => {
 					expect(response.text).not.toContain(
 						'The decision whether to accept the application for examination will be made by 02 January 2020.'
 					);
+					expect(response.text).toMatchSnapshot();
+				});
+			});
+		});
+		describe('Stage progress tag - test the stage progress tag has correct value depending on stage progress', () => {
+			describe('Not started', () => {
+				it('should render the pre application stage with correct project progress tag text', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										AnticipatedDateOfSubmission: null,
+										Stage: 1
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
+					const element = HTMLParser.parse(response.text);
+					const preApplicationStageTag = element.querySelector(
+						'#project-stage-acceptance .govuk-tag'
+					);
+
+					expect(response.status).toEqual(200);
+					expect(preApplicationStageTag.innerHTML).toContain('Not started');
+					expect(response.text).toMatchSnapshot();
+				});
+			});
+			describe('In progress', () => {
+				it('should render the pre application stage with correct project progress tag text', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										AnticipatedDateOfSubmission: null,
+										Stage: 1
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
+					const element = HTMLParser.parse(response.text);
+					const preApplicationStageTag = element.querySelector(
+						'#project-stage-pre-application .govuk-tag'
+					);
+
+					expect(response.status).toEqual(200);
+					expect(preApplicationStageTag.innerHTML).toContain('In progress');
+					expect(response.text).toMatchSnapshot();
+				});
+			});
+			describe('Completed', () => {
+				it('should render the pre application stage with correct project progress tag text', async () => {
+					fetch
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () =>
+									Promise.resolve({
+										...commonMockData,
+										AnticipatedDateOfSubmission: null,
+										Stage: 3
+									})
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve({ message: 'ignore this mock' })
+							})
+						)
+						.mockImplementationOnce(() =>
+							Promise.resolve({
+								ok: true,
+								status: 200,
+								json: () => Promise.resolve(getProjectUpdatesSuccessfulFixture)
+							})
+						);
+					const response = await request.get('/projects/EN010085');
+					const element = HTMLParser.parse(response.text);
+					const preApplicationStageTag = element.querySelector(
+						'#project-stage-pre-application .govuk-tag'
+					);
+
+					expect(response.status).toEqual(200);
+					expect(preApplicationStageTag.innerHTML).toContain('Completed');
 					expect(response.text).toMatchSnapshot();
 				});
 			});
