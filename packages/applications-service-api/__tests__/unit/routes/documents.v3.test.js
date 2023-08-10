@@ -1,8 +1,5 @@
 const { post, get } = require('./router-mock');
 const { validateRequestWithOpenAPI } = require('../../../src/middleware/validator/openapi');
-const {
-	validateGetDocumentWithTypeRequestOpenAPI
-} = require('../../../src/middleware/validator/validateGetDocumentWithTypeRequestOpenAPI');
 
 describe('routes/documentsV3', () => {
 	beforeEach(() => {
@@ -18,7 +15,7 @@ describe('routes/documentsV3', () => {
 		expect(post.mock.calls[0][2].name).toEqual('getDocumentsRoute');
 		expect(get).toHaveBeenCalledWith(
 			'/:caseReference',
-			validateGetDocumentWithTypeRequestOpenAPI,
+			validateRequestWithOpenAPI,
 			expect.any(Function)
 		);
 	});

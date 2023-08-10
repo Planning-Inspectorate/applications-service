@@ -48,23 +48,23 @@ const buildFilters = (req) => ({
 });
 
 const documentTypeDict = {
-	'RULE 6 LETTER': {
+	RULE_6_LETTER: {
 		bo: 'Rule 6 letter',
 		ni: 'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
 	},
-	'RULE 8 LETTER': {
+	RULE_8_LETTER: {
 		bo: 'Rule 8 letter',
 		ni: 'Rule 8 letter - notification of timetable for the examination'
 	},
-	'EXAMINATION LIBRARY': {
+	EXAMINATION_LIBRARY: {
 		bo: 'Examination library',
 		ni: 'Examination library'
 	},
-	'DCO DECISION LETTER (SOS)(APPROVE)': {
+	DECISION_LETTER_APPROVE: {
 		bo: 'DCO decision letter (SoS)(approve)',
 		ni: 'DCO decision letter (SoS)(approve)'
 	},
-	'DCO DECISION LETTER (SOS)(REFUSE)': {
+	DECISION_LETTER_REFUSE: {
 		bo: 'DCO decision letter (SoS)(refuse)',
 		ni: 'DCO decision letter (SoS)(refuse)'
 	}
