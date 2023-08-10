@@ -303,8 +303,8 @@ paths:
 
   '/api/v3/documents/{caseReference}':
     get:
-      summary: Returns project documents
-      description: Returns project documents
+      summary: Returns project document
+      description: Returns project document
       tags:
         - Documents
       parameters:
@@ -329,11 +329,11 @@ paths:
             ]
       responses:
         '200':
-          description: Returns list of documents
+          description: Returns a document
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentListWrapper'
+                $ref: '#/components/schemas/DocumentV3'
         '404':
           description: No documents found
 

@@ -14,9 +14,10 @@ const fetchNIDocuments = async (requestQuery) => {
 };
 
 const fetchNIDocumentsByType = async (requestQuery) => {
-	const result = await fetchDocumentsByDocumentType(requestQuery);
+	const { dataValues } = await fetchDocumentsByDocumentType(requestQuery);
+
 	return {
-		data: result
+		data: dataValues
 	};
 };
 

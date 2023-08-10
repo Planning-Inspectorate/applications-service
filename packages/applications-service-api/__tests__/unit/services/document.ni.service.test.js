@@ -54,7 +54,7 @@ describe('document ni service', () => {
 
 	describe('fetchNIDocumentsByType', () => {
 		it('calls fetchNIDocumentsByType then passes result to repository', async () => {
-			fetchDocumentsByDocumentType.mockResolvedValueOnce('mock data');
+			fetchDocumentsByDocumentType.mockResolvedValueOnce({ dataValues: 'mock data' });
 
 			const result = await fetchNIDocumentsByType('mock query');
 
