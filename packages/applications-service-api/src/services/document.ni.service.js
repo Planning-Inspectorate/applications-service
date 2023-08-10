@@ -4,7 +4,7 @@ const {
 	getAvailableFilters,
 	fetchDocumentsByDocumentType
 } = require('../repositories/document.ni.repository');
-const { documentTypeDict } = require('../docType');
+const { documentTypeDictionary } = require('@pins/common/src/constants');
 
 const fetchNIDocuments = async (requestQuery) => {
 	const documents = await fetchDocuments(requestQuery);
@@ -15,11 +15,13 @@ const fetchNIDocuments = async (requestQuery) => {
 };
 
 const fetchNIDocumentsByType = async ({ caseReference, type }) => {
-	const { dataValues } = await fetchDocumentsByDocumentType({
+	const response = await fetchDocumentsByDocumentType({
 		caseReference,
-		type: documentTypeDict[type.toUpperCase()].ni
+		type: documentTypeDictionary[type.toUpperCase()].ni
 	});
-	const [data] = mapDocuments([dataValues]);
+
+	let data;
+	if (response?.dataValues) [data] = mapDocuments([response.dataValues]);
 
 	return {
 		data

@@ -58,7 +58,7 @@ describe('document back office service', () => {
 				type                         | expectedResult
 				${'RULE_6_LETTER'}           | ${'Rule 6 letter'}
 				${'RULE_8_LETTER'}           | ${'Rule 8 letter'}
-				${'EXAMINATION_LIBRARY'}     | ${'Examination library'}
+				${'EXAMINATION_LIBRARY'}     | ${'Exam library'}
 				${'DECISION_LETTER_APPROVE'} | ${'DCO decision letter (SoS)(approve)'}
 				${'DECISION_LETTER_REFUSE'}  | ${'DCO decision letter (SoS)(refuse)'}
 			`('"$type" should map to "$expectedResult"', async ({ type, expectedResult }) => {

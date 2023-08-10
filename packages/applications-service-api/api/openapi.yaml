@@ -317,6 +317,7 @@ paths:
           description: Case reference
         - in: query
           name: type
+          required: true
           description: Type of document
           schema:
             type: string
