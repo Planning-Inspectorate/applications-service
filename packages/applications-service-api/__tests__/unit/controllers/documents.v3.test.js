@@ -196,6 +196,32 @@ describe('documentsV3 controller', () => {
 
 	describe('getDocumentByCaseReference', () => {
 		describe('NI', () => {
+			describe('dict test', () => {
+				test.each([
+					[
+						'Rule 6 leTTer',
+						'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
+					],
+					['Rule 8 LeTTer', 'Rule 8 letter - notification of timetable for the examination'],
+					['ExaminatION library', 'Examination library'],
+					['dco decision letter (SoS)(approve)', 'DCO decision letter (SoS)(approve)'],
+					['dco decision letter (SoS)(refuse)', 'DCO decision letter (SoS)(refuse)']
+				])('.add(%i, %i)', async (type, expected) => {
+					fetchNIDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
+					await getDocumentByCaseReference(
+						{
+							params: { caseReference: 'EN000001' },
+							query: { type }
+						},
+						res
+					);
+
+					expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
+						caseReference: 'EN000001',
+						type: expected
+					});
+				});
+			});
 			it('returns a NI document for the case ref and type (Rule 6 Letter)', async () => {
 				fetchNIDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
 				await getDocumentByCaseReference(
@@ -233,6 +259,30 @@ describe('documentsV3 controller', () => {
 			});
 		});
 		describe('BO', () => {
+			describe('dict test', () => {
+				test.each([
+					['Rule 6 leTTer', 'Rule 6 letter'],
+					['Rule 8 LeTTer', 'Rule 8 letter'],
+					['ExaminatION library', 'Examination library'],
+					['dco decision letter (SoS)(approve)', 'DCO decision letter (SoS)(approve)'],
+					['dco decision letter (SoS)(refuse)', 'DCO decision letter (SoS)(refuse)']
+				])('.add(%i, %i)', async (type, expected) => {
+					fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
+					config.backOfficeIntegration.documents.getDocuments.caseReferences = ['BC0110001'];
+					await getDocumentByCaseReference(
+						{
+							params: { caseReference: 'BC0110001' },
+							query: { type }
+						},
+						res
+					);
+
+					expect(fetchBackOfficeDocumentsByType).toHaveBeenCalledWith({
+						caseReference: 'BC0110001',
+						type: expected
+					});
+				});
+			});
 			it('returns a BO document for the case ref and type', async () => {
 				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: 'mock document' });
 
