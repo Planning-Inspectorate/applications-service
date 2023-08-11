@@ -52,7 +52,6 @@ const postDeclaration = async (req, res) => {
 
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
-		console.log(e);
 		logger.error(`Could not Post declaration, internal error occurred ${e}`);
 		return res.status(500).render('error/unhandled-exception');
 	}

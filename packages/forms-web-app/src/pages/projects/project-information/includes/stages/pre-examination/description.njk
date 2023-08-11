@@ -1,0 +1,78 @@
+{% set preRepsDescText %}
+	At this stage you can register to have your say about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
+	<br>
+	<br>
+	Registration closes on {{ applicationData.DateOfRepresentationPeriodOpen | date }} at 23:59
+	<br>
+	<br>
+	Once the applicant has published and notified people of an accepted application, we have approximately 3 months to prepare for the examination. You will be able to register to have your say and become an “interested party” by making a “relevant representation”. You will always have at least 28 days to register with us.
+	<br>
+	<br>
+	An examining authority will now be appointed to examine the application. All interested parties and other statutory bodies will be notified of the appointment after it has been made.
+	<br>
+	<br>
+	<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">
+		Find out more about registering to have your say.
+	</a>
+{% endset %}
+
+{% set repsOpenDescText %}
+	If you want to comment on this proposed project, you can now register to have your say. {% if applicationData.DateOfRelevantRepresentationClose %}Registration closes on {{ applicationData.DateOfRelevantRepresentationClose | date }} at 23:59  {% endif %}
+	<br>
+	<br>
+	<a href=' /projects/{{ caseRef }}/register/register-have-your-say' class="govuk-button">
+		Register to have your say
+	</a>
+{% endset %}
+
+{% set repsClosedDescText %}
+	The registration period to have your say about this project has closed.
+	If you are not registered and you submit information during the examination stage, this may not be included.
+	<br>
+	<br>
+	Contact the project case team to find out more about how to get involved if you are not registered.
+{% endset %}
+
+ {% set repsPublishedDescText %}
+	 We have now published all registration comments.
+
+	 <br>
+	 <br>
+	 You can <a href='/projects/{{ caseRef }}/representations' class="govuk-link">
+	 view comments from other people who registered.
+ </a>
+ {% endset %}
+
+ {% set preLimDescText %}
+	 {% if applicationData.DateOfPreliminaryMeeting %}
+		 The preliminary meeting for this project is on: {{ applicationData.DateOfPreliminaryMeeting  | date }}
+		 <br>
+		 <br>
+	 {% endif %}
+	 
+	 You can check the
+	 <a href='{{ rule6Document.path }}' target="_blank">
+		 Rule 6 letter
+	 </a> to find out how to get involved.
+	 <br>
+	 <br>
+	 In this meeting, the examining authority sets out how they examine the application. This includes the examination timetable and the issues they will focus on during examination.
+ {% endset %}
+
+<p class="govuk-body">
+	{% if preExamSubStages.PRE_REPS %}
+		{{ preRepsDescText | safe }}
+	{% elseif preExamSubStages.OPEN_REPS %}
+		{{ repsOpenDescText | safe }}
+	{% elseif preExamSubStages.CLOSED_REPS %}
+		{{ repsClosedDescText | safe }}
+	{% elseif preExamSubStages.PUBLISHED_REPS %}
+		{{ repsPublishedDescText | safe }}
+	{% elseif preExamSubStages.RULE_6_PUBLISHED_REPS %}
+		{{ preLimDescText | safe }}
+	{% endif %}
+</p>
+
+
+
+

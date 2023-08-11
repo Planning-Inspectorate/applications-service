@@ -1,9 +1,10 @@
 const { getProjectInformation } = require('./controller');
 
-const { getProjectUpdates } = require('../../../lib/application-api-wrapper');
+const { getProjectUpdates, getDocumentByType } = require('../../../lib/application-api-wrapper');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
-	getProjectUpdates: jest.fn()
+	getProjectUpdates: jest.fn(),
+	getDocumentByType: jest.fn()
 }));
 
 const {
@@ -13,6 +14,11 @@ const {
 } = require('../../_fixtures');
 
 describe('projects/project-information/controller.unit', () => {
+	const today = '2020-01-01';
+	beforeAll(() => {
+		jest.useFakeTimers().setSystemTime(new Date(today));
+	});
+
 	describe('#getProjectInformation', () => {
 		describe('When project updates are NOT found', () => {
 			const req = {};
@@ -32,6 +38,7 @@ describe('projects/project-information/controller.unit', () => {
 
 			beforeEach(async () => {
 				getProjectUpdates.mockImplementation(() => getProjectUpdatesUnsuccessfulFixture);
+				getDocumentByType.mockResolvedValue({});
 				await getProjectInformation(req, res, next);
 			});
 
@@ -58,6 +65,7 @@ describe('projects/project-information/controller.unit', () => {
 
 			beforeEach(async () => {
 				getProjectUpdates.mockImplementation(() => getProjectUpdatesSuccessfulFixture);
+				getDocumentByType.mockResolvedValue({});
 				await getProjectInformation(req, res, next);
 			});
 
@@ -67,7 +75,15 @@ describe('projects/project-information/controller.unit', () => {
 						content: 'mock english content update 1',
 						date: '1 January 2021'
 					},
-					proposal: 'Generating Stations'
+					proposal: 'Generating Stations',
+					rule6Document: undefined,
+					preExamSubStages: {
+						CLOSED_REPS: false,
+						OPEN_REPS: false,
+						PRE_REPS: false,
+						PUBLISHED_REPS: false,
+						RULE_6_PUBLISHED_REPS: false
+					}
 				});
 			});
 		});
@@ -90,13 +106,22 @@ describe('projects/project-information/controller.unit', () => {
 
 			beforeEach(async () => {
 				getProjectUpdates.mockImplementation(() => getProjectUpdatesSuccessfulNoUpdatesFixture);
+				getDocumentByType.mockResolvedValue({});
 				await getProjectInformation(req, res, next);
 			});
 
 			it('should render the page with NO latest update', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
 					latestUpdate: null,
-					proposal: 'Generating Stations'
+					proposal: 'Generating Stations',
+					rule6Document: undefined,
+					preExamSubStages: {
+						CLOSED_REPS: false,
+						OPEN_REPS: false,
+						PRE_REPS: false,
+						PUBLISHED_REPS: false,
+						RULE_6_PUBLISHED_REPS: false
+					}
 				});
 			});
 		});

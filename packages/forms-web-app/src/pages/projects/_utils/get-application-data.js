@@ -24,7 +24,11 @@ const getApplicationData = async (case_ref) => {
 		status,
 		anticipatedDateOfSubmission: data.AnticipatedDateOfSubmission,
 		contactEmailAddress: data.ProjectEmailAddress,
-		DateOfDCOSubmission
+		DateOfDCOSubmission,
+		DateOfRepresentationPeriodOpen: data.DateOfRepresentationPeriodOpen,
+		DateOfRelevantRepresentationClose: data.DateOfRelevantRepresentationClose,
+		DateRRepAppearOnWebsite: data.DateRRepAppearOnWebsite,
+		DateOfPreliminaryMeeting: data.DateOfPreliminaryMeeting
 	};
 };
 

@@ -1,4 +1,4 @@
-const { getProjectUpdates } = require('../lib/application-api-wrapper');
+const { getProjectUpdates, getDocumentByType } = require('../lib/application-api-wrapper');
 
 const getProjectUpdatesData = async (caseRef) => {
 	const response = await getProjectUpdates(caseRef);
@@ -8,6 +8,12 @@ const getProjectUpdatesData = async (caseRef) => {
 	return response.data.updates;
 };
 
+const getRule6DocumentType = async (case_ref) => {
+	const { data, resp_code } = await getDocumentByType(case_ref, 'RULE_6_LETTER');
+	return resp_code === 200 ? data : undefined;
+};
+
 module.exports = {
-	getProjectUpdatesData
+	getProjectUpdatesData,
+	getRule6DocumentType
 };
