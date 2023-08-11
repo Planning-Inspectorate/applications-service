@@ -505,7 +505,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
         
 
-    <strong class=\\"govuk-tag  -white-space--nowrap\\">Completed</strong>
+        
+
+    <strong class=\\"govuk-tag -white-space--nowrap\\">Completed</strong>
     
 
 			</dd>
@@ -548,7 +550,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
         
 
-    <strong class=\\"govuk-tag  -white-space--nowrap\\">Completed</strong>
+        
+
+    <strong class=\\"govuk-tag -white-space--nowrap\\">Completed</strong>
     
 
 			</dd>
@@ -1248,7 +1252,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+        
+
+    <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -1285,6 +1291,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
             
             
+        
+
         
 
         
@@ -1991,7 +1999,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+        
+
+    <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -2028,6 +2038,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
             
             
+        
+
         
 
         
@@ -2748,7 +2760,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
         
 
-    <strong class=\\"govuk-tag  -white-space--nowrap\\">Completed</strong>
+        
+
+    <strong class=\\"govuk-tag -white-space--nowrap\\">Completed</strong>
     
 
 			</dd>
@@ -2791,7 +2805,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+        
+
+    <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -3505,7 +3521,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
         
 
-    <strong class=\\"govuk-tag  -white-space--nowrap\\">Completed</strong>
+        
+
+    <strong class=\\"govuk-tag -white-space--nowrap\\">Completed</strong>
     
 
 			</dd>
@@ -3548,7 +3566,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+        
+
+    <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -4252,7 +4272,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+        
+
+    <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -4289,6 +4311,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
             
             
+        
+
         
 
         
@@ -4995,7 +5019,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
         
 
-    <strong class=\\"govuk-tag govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+        
+
+    <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
     
 
 			</dd>
@@ -5032,6 +5058,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
             
             
+        
+
         
 
         
