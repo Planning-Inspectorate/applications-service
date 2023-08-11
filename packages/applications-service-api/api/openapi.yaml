@@ -238,7 +238,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
-          description: No documents found
+          description: No document found
 
   '/api/v2/documents':
     get:
@@ -298,6 +298,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: No documents found
+
+  '/api/v3/documents/{caseReference}':
+    get:
+      summary: Returns project document
+      description: Returns project document
+      tags:
+        - Documents
+      parameters:
+        - in: path
+          name: caseReference
+          example: 'TR040009'
+          required: true
+          schema:
+            type: string
+          description: Case reference
+        - in: query
+          name: type
+          required: true
+          description: Type of document
+          schema:
+            type: string
+            enum: [
+              'RULE_6_LETTER',
+              'RULE_8_LETTER',
+              'EXAMINATION_LIBRARY',
+              'DECISION_LETTER_APPROVE',
+              'DECISION_LETTER_REFUSE'
+            ]
+      responses:
+        '200':
+          description: Returns a document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentV3'
         '404':
           description: No documents found
 
@@ -879,7 +916,7 @@ components:
           type: array
           items:
             type: string
-            example: ['-0.70283147423378', '53.620078025496']
+            example: [ '-0.70283147423378', '53.620078025496' ]
         AnticipatedDateOfSubmission:
           type: string
           example: ''
@@ -1190,7 +1227,7 @@ components:
       properties:
         name:
           type: string
-          enum: [stage, category]
+          enum: [ stage, category ]
           example: stage
           description: Name of property to filter by
         value:
@@ -1234,7 +1271,7 @@ components:
       properties:
         name:
           type: string
-          enum: [stage, category]
+          enum: [ stage, category ]
           example: stage
           description: Name of property to filter by
         value:

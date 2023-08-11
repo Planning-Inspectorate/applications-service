@@ -1,9 +1,15 @@
 const { StatusCodes } = require('http-status-codes');
-const { fetchNIDocuments, fetchNIDocumentFilters } = require('../services/document.ni.service');
+const {
+	fetchNIDocuments,
+	fetchNIDocumentFilters,
+	fetchNIDocumentsByType
+} = require('../services/document.ni.service');
 const {
 	fetchBackOfficeDocuments,
-	fetchBackOfficeDocumentFilters
+	fetchBackOfficeDocumentFilters,
+	fetchBackOfficeDocumentsByType
 } = require('../services/document.backoffice.service');
+const config = require('../lib/config');
 
 const getBackOfficeDocuments = (req, res) =>
 	getDocuments(req, res, fetchBackOfficeDocuments, fetchBackOfficeDocumentFilters);
@@ -41,7 +47,39 @@ const buildFilters = (req) => ({
 	datePublishedTo: req.body.datePublishedTo
 });
 
+const getDocumentByCaseReference = async (req, res) => {
+	const backOfficeCaseReferences =
+		config.backOfficeIntegration.documents.getDocuments.caseReferences || [];
+
+	let response;
+	const { caseReference } = req.params;
+	let { type } = req.query;
+
+	if (backOfficeCaseReferences.includes(caseReference)) {
+		const { data } = await fetchBackOfficeDocumentsByType({
+			caseReference,
+			type
+		});
+
+		response = data;
+	} else {
+		const { data } = await fetchNIDocumentsByType({
+			caseReference,
+			type
+		});
+		response = data;
+	}
+
+	if (!response)
+		return res
+			.status(StatusCodes.NOT_FOUND)
+			.json({ message: `No document found for ${caseReference} with type ${type}` });
+
+	return res.status(StatusCodes.OK).send(response);
+};
+
 module.exports = {
 	getNIDocuments,
-	getBackOfficeDocuments
+	getBackOfficeDocuments,
+	getDocumentByCaseReference
 };

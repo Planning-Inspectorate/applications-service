@@ -1,16 +1,19 @@
 const {
 	fetchDocuments,
-	getAvailableFilters
+	getAvailableFilters,
+	fetchDocumentsByDocumentType
 } = require('../../../src/repositories/document.ni.repository');
 const { DB_DOCUMENTS, DB_FILTERS } = require('../../__data__/documents');
 const { Op } = require('sequelize');
 
 const mockFindAndCountAll = jest.fn();
 const mockFindAll = jest.fn();
+const mockFindOne = jest.fn();
 jest.mock('../../../src/models', () => ({
 	Document: {
 		findAndCountAll: (query) => mockFindAndCountAll(query),
-		findAll: (query) => mockFindAll(query)
+		findAll: (query) => mockFindAll(query),
+		findOne: (query) => mockFindOne(query)
 	}
 }));
 
@@ -287,6 +290,25 @@ describe('documentV3 service', () => {
 			});
 
 			expect(result).toEqual(DB_FILTERS);
+		});
+	});
+
+	describe('fetchDocumentsByDocumentType', () => {
+		it('calls query api with correct params and returns document that matches the type', async () => {
+			mockFindOne.mockReturnValue({ data: 'mock data' });
+			const result = await fetchDocumentsByDocumentType({
+				caseReference: 'mock case ref',
+				type: 'mock type'
+			});
+
+			expect(mockFindOne).toHaveBeenCalledWith({
+				order: [['date_created', 'desc']],
+				where: {
+					case_reference: 'mock case ref',
+					type: 'mock type'
+				}
+			});
+			expect(result).toEqual({ data: 'mock data' });
 		});
 	});
 });

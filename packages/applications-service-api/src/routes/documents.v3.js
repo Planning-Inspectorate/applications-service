@@ -7,6 +7,12 @@ const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router();
 
+router.get(
+	'/:caseReference',
+	validateRequestWithOpenAPI,
+	asyncRoute(documentsV3Controller.getDocumentByCaseReference)
+);
+
 const getDocumentsRoute = (req, res, next) => {
 	const backOfficeCaseReferences =
 		config.backOfficeIntegration.documents.getDocuments.caseReferences || [];
