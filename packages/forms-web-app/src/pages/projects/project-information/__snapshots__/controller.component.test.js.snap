@@ -464,8 +464,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -491,11 +490,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -514,8 +512,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -536,11 +533,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -1211,8 +1207,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
@@ -1238,11 +1233,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -1261,8 +1255,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -1283,11 +1276,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
             
             
@@ -1958,8 +1950,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
@@ -1985,11 +1976,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -2008,8 +1998,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -2030,11 +2019,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
             
             
@@ -2719,8 +2707,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -2746,11 +2733,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -2769,8 +2755,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
@@ -2791,11 +2776,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -3480,8 +3464,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -3507,11 +3490,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -3530,8 +3512,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
@@ -3552,11 +3533,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -4231,8 +4211,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
@@ -4258,11 +4237,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -4281,8 +4259,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -4303,11 +4280,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
             
             
@@ -4978,8 +4954,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\" open>
   <summary class=\\"govuk-details__summary\\">
@@ -5005,11 +4980,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
 
         
@@ -5028,8 +5002,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 		</div>
 		<div id=\\"project-stage-acceptance\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
-				<div class=\\"govuk-grid-row\\">
-					
+				
 
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
@@ -5050,11 +5023,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
-				</div>
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
 				
-
+        
         
             
             

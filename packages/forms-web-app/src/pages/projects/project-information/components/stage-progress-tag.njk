@@ -1,5 +1,5 @@
 {% macro stageProgressTag(status, trigger) %}
-
+        
         {% if status < trigger %}
             {% set progressTagColorClass = 'govuk-tag govuk-tag--grey' %}
             {% set progressLabel = 'Not started' %}
@@ -15,7 +15,7 @@
             {% set progressLabel = 'Completed' %}
         {% endif %}
 
-        {% if status == 7 %}
+        {% if status == trigger and status == 7 %}
             {% set progressTagColorClass = '' %}
             {% set progressLabel = '' %}
         {% endif %}
