@@ -14,9 +14,7 @@
 	<dl class="govuk-summary-list pins-modded-last-item-border-none">
 		<div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				<div class="govuk-grid-row">
-					{% include "projects/project-information/includes/stages/pre-application/details.njk" %}
-				</div>
+				{% include "projects/project-information/includes/stages/pre-application/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 1) }}
@@ -24,9 +22,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[2] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				<div class="govuk-grid-row">
-					{% include "projects/project-information/includes/stages/acceptance/details.njk" %}
-				</div>
+				{% include "projects/project-information/includes/stages/acceptance/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 2) }}
