@@ -101,6 +101,10 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 	});
 };
 
+exports.getDocumentByType = async (case_ref, type) => {
+	return handler('getDocumentByType', `/api/v3/documents/${case_ref}?type=${type}`);
+};
+
 exports.searchRepresentations = async (params) => {
 	const queryString = Object.keys(params)
 		.map((key) => `${key}=${params[key]}`)
