@@ -3,7 +3,9 @@ const { featureHideLink, featureFlag } = require('../../../../config');
 function getVerticalTabs(caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
 	return [
 		{
-			hidden: featureFlag.allowProjectInformation != true,
+			hidden:
+				featureFlag.allowProjectInformation != true ||
+				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
 			id: 'project-information',
 			name: 'Project information',
 			url: '/projects/' + caseRef
@@ -39,7 +41,9 @@ function getVerticalTabs(caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
-			hidden: featureFlag.allowGetUpdates != true,
+			hidden:
+				featureFlag.allowGetUpdates != true ||
+				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
 			id: 'get-updates',
 			name: 'Get updates',
 			url: '/projects/' + caseRef + '/get-updates/start'

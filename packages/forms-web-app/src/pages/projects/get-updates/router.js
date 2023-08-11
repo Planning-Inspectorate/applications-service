@@ -2,7 +2,7 @@ const express = require('express');
 
 const getUpdatesRouter = express.Router();
 
-const { middleware } = require('../_middleware/middleware');
+const { middleware, projectMigrationMiddleware } = require('../_middleware/middleware');
 const { getUpdatesRoutes } = require('./_utils/get-updates-routes');
 const { getGetUpdatesStart } = require('./start/controller');
 const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./email/controller');
@@ -17,7 +17,11 @@ const { getGetUpdatesUnsubscribed } = require('./unsubscribed/controller');
 
 const baseUrl = '/:case_ref/get-updates/';
 
-getUpdatesRouter.get(`${baseUrl}${getUpdatesRoutes.start}`, middleware, getGetUpdatesStart);
+getUpdatesRouter.get(
+	`${baseUrl}${getUpdatesRoutes.start}`,
+	[middleware, projectMigrationMiddleware],
+	getGetUpdatesStart
+);
 
 getUpdatesRouter.get(`${baseUrl}${getUpdatesRoutes.email}`, getGetUpdatesEmail);
 getUpdatesRouter.post(
