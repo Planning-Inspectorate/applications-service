@@ -1,18 +1,11 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
 {{ govukPanel({
-  titleText: pageHeading,
-  text: "You have subscribed to emails about " + projectName + " overview"
+  titleText: "Success",
+  text: "You have subscribed to emails about this project",
+  classes: "govuk-!-margin-bottom-8"
 }) }}
 
-<h2 class="govuk-heading-m">
-  What happens next
-</h2>
-
-<p class="govuk-body">
-  You will be sent an email each time we update the project
-</p>
-
 <a href="/projects/{{ caseRef }}" class="govuk-link">
-  View {{ projectName }} overview
+  View {{ projectName }} project information
 </a>
