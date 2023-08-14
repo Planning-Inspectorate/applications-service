@@ -1,4 +1,4 @@
-const { middleware } = require('./middleware');
+const { middleware, projectMigrationMiddleware } = require('./middleware');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
@@ -9,6 +9,16 @@ jest.mock('../_utils/get-application-data', () => ({
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
 }));
+jest.mock('../../../config', () => {
+	const originalConfig = jest.requireActual('../../../config');
+	return {
+		...originalConfig,
+		featureFlag: {
+			...originalConfig.featureFlag,
+			projectMigrationCaseReferences: ['mock-case-ref-in-config']
+		}
+	};
+});
 
 describe('projects _middleware', () => {
 	describe('#_middleware', () => {
@@ -106,6 +116,29 @@ describe('projects _middleware', () => {
 			expect(next).toHaveBeenCalled();
 		});
 	});
-});
+	describe('#projectMigrationMiddleware', () => {
+		const next = jest.fn();
+		const res = {};
 
-// TODO add test here for project middleware
+		describe('when the project case-ref is in config.featureFlag.projectMigrationCaseReferences', () => {
+			it('should call next() without any errors', () => {
+				const req = {
+					params: { case_ref: 'mock-case-ref-in-config' }
+				};
+				projectMigrationMiddleware(req, res, next);
+				expect(next).toHaveBeenCalledWith();
+			});
+		});
+		describe('when the project case-ref is not in config.featureFlag.projectMigrationCaseReferences', () => {
+			it('should call next with an error', () => {
+				const req = {
+					params: { case_ref: 'mock-case-ref-not-in-config' }
+				};
+				projectMigrationMiddleware(req, res, next);
+				expect(next).toHaveBeenCalledWith(
+					new Error('Project migration feature flag not enabled for this project')
+				);
+			});
+		});
+	});
+});

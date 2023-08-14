@@ -2,10 +2,20 @@ const supertest = require('supertest');
 const fetch = require('node-fetch');
 const app = require('../../../app');
 const request = supertest(app);
-
 const { getProjectUpdatesSuccessfulFixture } = require('../../_fixtures');
 
 jest.mock('node-fetch');
+
+jest.mock('../../../config', () => {
+	const originalConfig = jest.requireActual('../../../config');
+	return {
+		...originalConfig,
+		featureFlag: {
+			...originalConfig.featureFlag,
+			projectMigrationCaseReferences: ['EN010085']
+		}
+	};
+});
 
 const commonMockData = {
 	ProjectName: 'Test project name',
