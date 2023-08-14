@@ -9,7 +9,8 @@
 {% endset %}
 
 {{ govukDetails({
-  summaryText: "Acceptance",
-  html: acceptanceHtml,
-  open: applicationData.status.text === projectStages[2]
+	summaryText: "Acceptance",
+	html: acceptanceHtml,
+	open: applicationData.status.text === projectStages[2],
+	classes: 'govuk-!-margin-bottom-1'
 }) }}

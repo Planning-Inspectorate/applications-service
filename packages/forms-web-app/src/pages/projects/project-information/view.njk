@@ -1,6 +1,8 @@
 {% extends "layouts/default.njk" %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "./components/latest-update.njk" import getLatestUpdate %}
+{% from "./components/stage-progress-tag.njk" import stageProgressTag %}
+
 
 {% set activeId = "project-information" %}
 
@@ -23,7 +25,7 @@
 			{% include "projects/project-information/includes/about.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
-			{% include "projects/project-information/includes/stage-selector.njk" %}
+			{% include "projects/project-information/includes/project-stage.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
 			{% include "projects/project-information/includes/get-updates.njk" %}
@@ -31,7 +33,6 @@
 
 			{% include "projects/project-information/includes/contact.njk" %}
 
-			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 		</div>
 	</div>
 {% endblock %}

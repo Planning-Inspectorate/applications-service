@@ -14,7 +14,8 @@
 {% endset %}
 
 {{ govukDetails({
-  summaryText: "Pre-application",
-  html: preApplicationHtml,
-  open: applicationData.status.text === projectStages[1]
+	summaryText: "Pre-application",
+	html: preApplicationHtml,
+	open: applicationData.status.text === projectStages[1],
+	classes: 'govuk-!-margin-bottom-1'
 }) }}

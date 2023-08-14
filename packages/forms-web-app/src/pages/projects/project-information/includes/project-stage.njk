@@ -1,0 +1,32 @@
+<section>
+	<h2 class="govuk-heading-m">Project stage</h2>
+
+	<p>This project is at the <strong>{{ applicationData.status.text | lower }}</strong> stage</p>
+
+	{% if applicationData.status.text === projectStages[1] %}
+		{% include "projects/project-information/includes/stages/pre-application/description.njk" %}
+	{% endif %}
+
+	{% if applicationData.status.text === projectStages[2] %}
+		{% include "projects/project-information/includes/stages/acceptance/description.njk" %}
+	{% endif %}
+
+	<dl class="govuk-summary-list pins-modded-last-item-border-none">
+		<div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-summary-list__row">
+			<dt class="govuk-summary-list__value">
+				{% include "projects/project-information/includes/stages/pre-application/details.njk" %}
+			</dt>
+			<dd class="govuk-summary-list__actions">
+				{{ stageProgressTag( applicationData.status.number, 1) }}
+			</dd>
+		</div>
+		<div id="project-stage-{{ projectStages[2] | lower }}" class="govuk-summary-list__row">
+			<dt class="govuk-summary-list__value">
+				{% include "projects/project-information/includes/stages/acceptance/details.njk" %}
+			</dt>
+			<dd class="govuk-summary-list__actions">
+				{{ stageProgressTag( applicationData.status.number, 2) }}
+			</dd>
+		</div>
+	</dl>
+</section>
