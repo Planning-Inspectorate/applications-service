@@ -7,20 +7,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {{ govukPanel({
-        titleText: pageHeading,
-        text: "You have unsubscribed from updates about " + projectName + ""
+        titleText: "Success",
+        text: "You have unsubscribed from emails about this project",
+        classes: "govuk-!-margin-bottom-8"
       }) }}
 
-      <h2 class="govuk-heading-m">
-        What happens next
-      </h2>
-
-      <p class="govuk-body">
-        You will no longer be sent updates about {{ projectName }}
-      </p>
-
       <a href="/projects/{{ caseRef }}" class="govuk-link">
-        View {{ projectName }} overview
+        View {{ projectName }} project information
       </a>
     </div>
   </div>
