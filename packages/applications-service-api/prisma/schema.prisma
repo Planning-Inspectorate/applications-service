@@ -15,6 +15,7 @@ model Document {
   id                     Int       @unique @default(autoincrement())
   documentId             String    @id
   caseRef                String?
+  representationId       Int?
   documentReference      String?
   version                String
   examinationRefNo       String?
@@ -48,6 +49,7 @@ model Document {
   modifiedAt             DateTime? @default(now())
 
   @@index([caseRef])
+  @@index([representationId])
 }
 
 model Representation {
