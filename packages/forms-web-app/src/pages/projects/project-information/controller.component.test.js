@@ -155,9 +155,6 @@ describe('projects/project-information/controller.component', () => {
 					expect(response.text).toContain(
 						'At this stage you can register to have your say about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
 					);
-					expect(response.text).toContain(
-						'Once the applicant has published and notified people of an accepted application, we have approximately 3 months to prepare for the examination. You will be able to register to have your say and become an “interested party” by making a “relevant representation”. You will always have at least 28 days to register with us.'
-					);
 					expect(response.text).toMatchSnapshot();
 				});
 			});

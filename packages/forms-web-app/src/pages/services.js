@@ -1,4 +1,5 @@
 const { getProjectUpdates, getDocumentByType } = require('../lib/application-api-wrapper');
+const { documentTypes } = require('@pins/common/src/constants');
 
 const getProjectUpdatesData = async (caseRef) => {
 	const response = await getProjectUpdates(caseRef);
@@ -9,7 +10,7 @@ const getProjectUpdatesData = async (caseRef) => {
 };
 
 const getRule6DocumentType = async (case_ref) => {
-	const { data, resp_code } = await getDocumentByType(case_ref, 'RULE_6_LETTER');
+	const { data, resp_code } = await getDocumentByType(case_ref, documentTypes.RULE_6_LETTER);
 	return resp_code === 200 ? data : undefined;
 };
 
