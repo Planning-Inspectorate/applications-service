@@ -1,26 +1,35 @@
+const documentTypes = {
+	RULE_6_LETTER: 'RULE_6_LETTER',
+	RULE_8_LETTER: 'RULE_8_LETTER',
+	EXAMINATION_LIBRARY: 'EXAMINATION_LIBRARY',
+	DECISION_LETTER_APPROVE: 'DECISION_LETTER_APPROVE',
+	DECISION_LETTER_REFUSE: 'DECISION_LETTER_REFUSE'
+};
+
 const documentTypeDictionary = {
-	RULE_6_LETTER: {
+	[documentTypes.RULE_6_LETTER]: {
 		bo: 'Rule 6 letter',
 		ni: 'Rule 6 letter - Notification of the preliminary meeting and matters to be discussed'
 	},
-	RULE_8_LETTER: {
+	[documentTypes.RULE_8_LETTER]: {
 		bo: 'Rule 8 letter',
 		ni: 'Rule 8 letter - notification of timetable for the examination'
 	},
-	EXAMINATION_LIBRARY: {
+	[documentTypes.EXAMINATION_LIBRARY]: {
 		bo: 'Exam library',
 		ni: 'Examination library'
 	},
-	DECISION_LETTER_APPROVE: {
+	[documentTypes.DECISION_LETTER_APPROVE]: {
 		bo: 'DCO decision letter (SoS)(approve)',
 		ni: 'DCO decision letter (SoS)(approve)'
 	},
-	DECISION_LETTER_REFUSE: {
+	[documentTypes.DECISION_LETTER_REFUSE]: {
 		bo: 'DCO decision letter (SoS)(refuse)',
 		ni: 'DCO decision letter (SoS)(refuse)'
 	}
 };
 
 module.exports = {
+	documentTypes,
 	documentTypeDictionary
 };

@@ -15,14 +15,14 @@ function getPreExaminationSubStage(openDate, closedDate, websiteDate, rule6 = fa
 	};
 
 	if (dayToday.isBefore(dayOpenDate) || openDate === null) subStages.PRE_REPS = true;
-
-	if (dayToday.isAfter(dayOpenDate) && (dayToday.isBefore(dayClosedDate) || closedDate === null))
+	else if (
+		dayToday.isAfter(dayOpenDate) &&
+		(dayToday.isBefore(dayClosedDate) || closedDate === null)
+	)
 		subStages.OPEN_REPS = true;
-
-	if (dayToday.isAfter(dayClosedDate) && dayToday.isBefore(dayWebsiteDate))
+	else if (dayToday.isAfter(dayClosedDate) && dayToday.isBefore(dayWebsiteDate))
 		subStages.CLOSED_REPS = true;
-
-	if (rule6) {
+	else if (rule6) {
 		if (dayToday.isAfter(dayWebsiteDate) && rule6) subStages.RULE_6_PUBLISHED_REPS = true;
 	} else {
 		if (dayToday.isAfter(dayWebsiteDate)) subStages.PUBLISHED_REPS = true;
