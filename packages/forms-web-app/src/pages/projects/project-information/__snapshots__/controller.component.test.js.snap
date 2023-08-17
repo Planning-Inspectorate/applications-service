@@ -482,6 +482,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -619,6 +621,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
 
     <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
     
 
 			</dd>
@@ -1276,6 +1320,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -1396,6 +1442,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
 
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
@@ -2070,6 +2158,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -2190,6 +2280,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
 
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
@@ -2878,6 +3010,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -2998,6 +3132,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
 
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
@@ -3686,6 +3862,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -3806,6 +3984,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
 
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
@@ -4484,6 +4704,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -4604,6 +4826,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
 
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
@@ -5278,6 +5542,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -5398,6 +5664,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </div>
 </details>
 
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
 
 			</dt>
 			<dd class=\\"govuk-summary-list__actions\\">
@@ -6089,6 +6397,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -6226,6 +6536,48 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
 
     <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Post-decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class=\\"govuk-link\\">
+		What you can do after the decision has been made
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
     
 
 			</dd>

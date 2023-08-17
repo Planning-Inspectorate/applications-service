@@ -2,43 +2,39 @@ const { getProjectInformation } = require('./controller');
 
 const { getProjectUpdates, getDocumentByType } = require('../../../lib/application-api-wrapper');
 
+const {
+	getProjectUpdatesUnsuccessfulFixture,
+	applicationDataFixture,
+	getProjectUpdatesSuccessfulFixture,
+	getApplicationApprovalDocumentFixture,
+	getProjectUpdatesSuccessfulNoUpdatesFixture
+} = require('../../_fixtures');
+
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getProjectUpdates: jest.fn(),
 	getDocumentByType: jest.fn()
 }));
 
-const {
-	getProjectUpdatesSuccessfulFixture,
-	getProjectUpdatesSuccessfulNoUpdatesFixture,
-	getProjectUpdatesUnsuccessfulFixture
-} = require('../../_fixtures');
-
-describe('projects/project-information/controller.unit', () => {
-	const today = '2020-01-01';
-	beforeAll(() => {
-		jest.useFakeTimers().setSystemTime(new Date(today));
-	});
-
+describe('projects/project-information/controller', () => {
 	describe('#getProjectInformation', () => {
+		const today = '2020-01-01';
+
+		beforeAll(() => {
+			jest.useFakeTimers().setSystemTime(new Date(today));
+		});
+
 		describe('When project updates are NOT found', () => {
 			const req = {};
 			const res = {
 				render: jest.fn(),
 				locals: {
-					applicationData: {
-						projectName: 'Mock project name',
-						caseRef: 'EN010085',
-						summary: 'Mock case summary',
-						webAddress: 'www.mock.com',
-						proposal: 'EN01 - Generating Stations'
-					}
+					applicationData: applicationDataFixture
 				}
 			};
 			const next = jest.fn();
 
 			beforeEach(async () => {
-				getProjectUpdates.mockImplementation(() => getProjectUpdatesUnsuccessfulFixture);
-				getDocumentByType.mockResolvedValue({});
+				getProjectUpdates.mockReturnValue(getProjectUpdatesUnsuccessfulFixture);
 				await getProjectInformation(req, res, next);
 			});
 
@@ -52,76 +48,69 @@ describe('projects/project-information/controller.unit', () => {
 			const res = {
 				render: jest.fn(),
 				locals: {
-					applicationData: {
-						projectName: 'Mock project name',
-						caseRef: 'EN010085',
-						summary: 'Mock case summary',
-						webAddress: 'www.mock.com',
-						proposal: 'EN01 - Generating Stations'
-					}
+					applicationData: applicationDataFixture
 				}
 			};
 			const next = jest.fn();
 
 			beforeEach(async () => {
-				getProjectUpdates.mockImplementation(() => getProjectUpdatesSuccessfulFixture);
-				getDocumentByType.mockResolvedValue({});
+				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulFixture);
+				getDocumentByType
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+
 				await getProjectInformation(req, res, next);
 			});
 
 			it('should render the page with the latest update', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
-					latestUpdate: {
-						content: 'mock english content update 1',
-						date: '1 January 2021'
-					},
-					proposal: 'Generating Stations',
-					rule6Document: undefined,
+					applicationDecision: 'granted',
+					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
 					preExamSubStages: {
 						CLOSED_REPS: false,
 						OPEN_REPS: false,
 						PRE_REPS: false,
 						PUBLISHED_REPS: false,
 						RULE_6_PUBLISHED_REPS: false
-					}
+					},
+					proposal: 'Generating Stations',
+					rule6Document: undefined
 				});
 			});
 		});
 
-		describe('When there are project updates', () => {
+		describe('When there are NO project updates', () => {
 			const req = {};
 			const res = {
 				render: jest.fn(),
 				locals: {
-					applicationData: {
-						projectName: 'Mock project name',
-						caseRef: 'EN010085',
-						summary: 'Mock case summary',
-						webAddress: 'www.mock.com',
-						proposal: 'EN01 - Generating Stations'
-					}
+					applicationData: applicationDataFixture
 				}
 			};
 			const next = jest.fn();
 
 			beforeEach(async () => {
-				getProjectUpdates.mockImplementation(() => getProjectUpdatesSuccessfulNoUpdatesFixture);
-				getDocumentByType.mockResolvedValue({});
+				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulNoUpdatesFixture);
+				getDocumentByType
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+
 				await getProjectInformation(req, res, next);
 			});
 
 			it('should render the page with NO latest update', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
+					applicationDecision: 'granted',
 					latestUpdate: null,
-					proposal: 'Generating Stations',
-					rule6Document: undefined,
 					preExamSubStages: {
 						CLOSED_REPS: false,
 						OPEN_REPS: false,
 						PRE_REPS: false,
 						PUBLISHED_REPS: false,
 						RULE_6_PUBLISHED_REPS: false
-					}
+					},
+					proposal: 'Generating Stations',
+					rule6Document: undefined
 				});
 			});
 		});

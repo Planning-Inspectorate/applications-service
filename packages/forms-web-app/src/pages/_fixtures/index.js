@@ -1,3 +1,5 @@
+const { applicationDataFixture } = require('./application-data');
+const { getApplicationApprovalDocumentFixture } = require('./project-documents');
 const {
 	getProjectUpdatesSuccessfulFixture,
 	getProjectUpdatesSuccessfulNoUpdatesFixture,
@@ -5,6 +7,8 @@ const {
 } = require('./project-updates');
 
 module.exports = {
+	applicationDataFixture,
+	getApplicationApprovalDocumentFixture,
 	getProjectUpdatesSuccessfulFixture,
 	getProjectUpdatesSuccessfulNoUpdatesFixture,
 	getProjectUpdatesUnsuccessfulFixture
