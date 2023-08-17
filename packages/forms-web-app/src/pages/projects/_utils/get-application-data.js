@@ -19,6 +19,7 @@ const getApplicationData = async (case_ref) => {
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
 		summary: data.Summary,
+		confirmedDateOfDecision: data.ConfirmedDateOfDecision,
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: data.dateOfNonAcceptance,
 		status,

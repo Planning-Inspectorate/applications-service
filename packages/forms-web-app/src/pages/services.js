@@ -9,12 +9,38 @@ const getProjectUpdatesData = async (caseRef) => {
 	return response.data.updates;
 };
 
-const getRule6DocumentType = async (case_ref) => {
-	const { data, resp_code } = await getDocumentByType(case_ref, documentTypes.RULE_6_LETTER);
+const getRule6DocumentType = async (caseRef) => {
+	const { data, resp_code } = await getDocumentByType(caseRef, documentTypes.RULE_6_LETTER);
 	return resp_code === 200 ? data : undefined;
+};
+
+const getProjectDecisionDocument = async (caseRef) => {
+	let response = null;
+
+	const getApprovalDocument = await getDocumentByType(
+		caseRef,
+		documentTypes.DECISION_LETTER_APPROVE
+	);
+
+	if (getApprovalDocument.resp_code === 200 || getApprovalDocument.resp_code === 404) {
+		if (getApprovalDocument.data?.id) return (response = getApprovalDocument.data);
+	} else {
+		throw new Error(`${getApprovalDocument.resp_code}: Error fetching project document`);
+	}
+
+	const getRefusalDocument = await getDocumentByType(caseRef, documentTypes.DECISION_LETTER_REFUSE);
+
+	if (getRefusalDocument.resp_code === 200 || getRefusalDocument.resp_code === 404) {
+		if (getRefusalDocument.data?.id) return (response = getRefusalDocument.data);
+	} else {
+		throw new Error(`${getRefusalDocument.resp_code}: Error fetching project document`);
+	}
+
+	return response;
 };
 
 module.exports = {
 	getProjectUpdatesData,
-	getRule6DocumentType
+	getRule6DocumentType,
+	getProjectDecisionDocument
 };

@@ -15,6 +15,10 @@
 		{% include "projects/project-information/includes/stages/pre-examination/description.njk" %}
 	{% endif %}
 
+	{% if applicationData.status.text === projectStages[7] %}
+		{% include "projects/project-information/includes/stages/post-decision/description.njk" %}
+	{% endif %}
+
 	<dl class="govuk-summary-list pins-modded-last-item-border-none">
 		<div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
@@ -38,6 +42,14 @@
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 3) }}
+			</dd>
+		</div>
+		<div id="project-stage-{{ projectStages[7] | lower }}" class="govuk-summary-list__row">
+			<dt class="govuk-summary-list__value">
+				{% include "projects/project-information/includes/stages/post-decision/details.njk" %}
+			</dt>
+			<dd class="govuk-summary-list__actions">
+				{{ stageProgressTag( applicationData.status.number, 7) }}
 			</dd>
 		</div>
 	</dl>
