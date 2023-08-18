@@ -57,6 +57,7 @@ describe('projects/project-information/controller', () => {
 				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulFixture);
 				getDocumentByType
 					.mockReturnValueOnce({})
+					.mockReturnValueOnce({})
 					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
 
 				await getProjectInformation(req, res, next);
@@ -92,6 +93,7 @@ describe('projects/project-information/controller', () => {
 			beforeEach(async () => {
 				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulNoUpdatesFixture);
 				getDocumentByType
+					.mockReturnValueOnce({})
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
 
