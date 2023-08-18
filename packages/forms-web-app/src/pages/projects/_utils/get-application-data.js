@@ -19,12 +19,17 @@ const getApplicationData = async (case_ref) => {
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
 		summary: data.Summary,
+		confirmedDateOfDecision: data.ConfirmedDateOfDecision,
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: data.dateOfNonAcceptance,
 		status,
 		anticipatedDateOfSubmission: data.AnticipatedDateOfSubmission,
 		contactEmailAddress: data.ProjectEmailAddress,
-		DateOfDCOSubmission
+		DateOfDCOSubmission,
+		DateOfRepresentationPeriodOpen: data.DateOfRepresentationPeriodOpen,
+		DateOfRelevantRepresentationClose: data.DateOfRelevantRepresentationClose,
+		DateRRepAppearOnWebsite: data.DateRRepAppearOnWebsite,
+		DateOfPreliminaryMeeting: data.DateOfPreliminaryMeeting
 	};
 };
 

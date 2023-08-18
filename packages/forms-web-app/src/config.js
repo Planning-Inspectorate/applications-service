@@ -1,6 +1,7 @@
 const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
 
 const httpPort = Number(process.env.PORT || 3000);
+const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
 	application: {
@@ -54,6 +55,9 @@ module.exports = {
 		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true',
 		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
+		projectMigrationCaseReferences: splitStringToArray(
+			process.env.PROJECT_MIGRATION_CASE_REFERENCES
+		),
 		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
 	},
 	featureHideLink: {

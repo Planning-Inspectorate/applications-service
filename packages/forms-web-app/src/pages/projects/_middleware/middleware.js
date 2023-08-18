@@ -4,6 +4,7 @@ const logger = require('../../../lib/logger');
 const { getHasOpenTimetables } = require('../../../utils/timetables/get-timetables-state');
 const { areEventsEligibleForDisplay } = require('../examination-timetable/utils/events/get-events');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
+const config = require('../../../config');
 
 async function middleware(req, res, next) {
 	try {
@@ -34,6 +35,15 @@ async function middleware(req, res, next) {
 	}
 }
 
+const projectMigrationMiddleware = (req, res, next) => {
+	if (config.featureFlag.projectMigrationCaseReferences.includes(req.params.case_ref)) {
+		next();
+	} else {
+		next(new Error('Project migration feature flag not enabled for this project'));
+	}
+};
+
 module.exports = {
-	middleware
+	middleware,
+	projectMigrationMiddleware
 };

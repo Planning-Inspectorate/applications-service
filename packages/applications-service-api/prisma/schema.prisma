@@ -11,6 +11,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Document {
+  id                     Int       @unique @default(autoincrement())
+  documentId             String    @id
+  caseRef                String?
+  representationId       Int?
+  documentReference      String?
+  version                String
+  examinationRefNo       String?
+  filename               String
+  originalFilename       String
+  size                   Int
+  mime                   String?
+  documentURI            String
+  path                   String?
+  virusCheckStatus       String?
+  fileMD5                String?
+  dateCreated            String
+  lastModified           String?
+  caseType               String?
+  documentStatus         String?
+  redactedStatus         String?
+  publishedStatus        String?
+  datePublished          String?
+  documentType           String?
+  securityClassification String?
+  sourceSystem           String?
+  origin                 String?
+  owner                  String?
+  author                 String?
+  representative         String?
+  description            String?
+  stage                  String?
+  filter1                String?
+  filter2                String?
+  createdAt              DateTime? @default(now())
+  modifiedAt             DateTime? @default(now())
+
+  @@index([caseRef])
+  @@index([representationId])
+}
+
+model Representation {
+  id                             Int       @unique @default(autoincrement())
+  representationId               Int       @id
+  caseReference                  String
+  caseId                         Int
+  referenceId                    String?
+  status                         String?
+  dateReceived                   DateTime?
+  originalRepresentation         String    @db.NText
+  redacted                       Boolean   @default(false)
+  redactedRepresentation         String?   @db.NText
+  redactedBy                     String?
+  redactedNotes                  String?   @db.NText
+  representationFrom             String?
+  representationType             String?
+  registerFor                    String?
+  // represented person details
+  representedFirstName           String?
+  representedLastName            String?
+  representedUnder18             Boolean?
+  representedJobTitle            String?
+  representedOrganisationName    String?
+  representedContactMethod       String?
+  representedEmailAddress        String?
+  representedTelephone           String?
+  representedAddressLine1        String?
+  representedAddressLine2        String?
+  representedTown                String?
+  representedPostcode            String?
+  // representative details
+  representativeFirstName        String?
+  representativeLastName         String?
+  representativeUnder18          Boolean?
+  representativeOrganisationName String?
+  representativeContactMethod    String?
+  representativeEmailAddress     String?
+  representativeTelephone        String?
+  representativeAddressLine1     String?
+  representativeAddressLine2     String?
+  representativeTown             String?
+  representativePostcode         String?
+  hasAttachments                 Boolean?
+  createdAt                      DateTime? @default(now())
+  modifiedAt                     DateTime? @default(now())
+
+  @@index([caseReference])
+}
+
 model Project {
   id                                          Int       @unique @default(autoincrement())
   caseId                                      Int       @unique
@@ -64,45 +153,6 @@ model Project {
   examinationTimetableId                      Int?
   createdAt                                   DateTime? @default(now())
   modifiedAt                                  DateTime? @default(now())
-}
-
-model Document {
-  id                     Int       @unique @default(autoincrement())
-  documentId             String    @id
-  caseRef                String?
-  documentReference      String?
-  version                String
-  examinationRefNo       String?
-  filename               String
-  originalFilename       String
-  size                   Int
-  mime                   String?
-  documentURI            String
-  path                   String?
-  virusCheckStatus       String?
-  fileMD5                String?
-  dateCreated            String
-  lastModified           String?
-  caseType               String?
-  documentStatus         String?
-  redactedStatus         String?
-  publishedStatus        String?
-  datePublished          String?
-  documentType           String?
-  securityClassification String?
-  sourceSystem           String?
-  origin                 String?
-  owner                  String?
-  author                 String?
-  representative         String?
-  description            String?
-  stage                  String?
-  filter1                String?
-  filter2                String?
-  createdAt              DateTime? @default(now())
-  modifiedAt             DateTime? @default(now())
-
-  @@index([caseRef])
 }
 
 model ProjectUpdate {
