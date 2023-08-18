@@ -3,6 +3,7 @@ const { getPageData } = require('./utils/get-page-data');
 const {
 	getProjectDecisionDocument,
 	getRule6DocumentType,
+	getRule8DocumentType,
 	getProjectUpdatesData
 } = require('../../services');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
@@ -33,8 +34,11 @@ const getProjectInformation = async (req, res, next) => {
 			locals: { applicationData }
 		} = res;
 		const { caseRef } = applicationData;
+
 		const projectUpdates = await getProjectUpdatesData(caseRef);
 		const rule6Document = await getRule6DocumentType(caseRef);
+		const rule8Document = await getRule8DocumentType(caseRef);
+
 		const preExamSubStages = getPreExaminationSubStage(
 			applicationData.DateOfRepresentationPeriodOpen,
 			applicationData.DateOfRelevantRepresentationClose,
@@ -46,8 +50,9 @@ const getProjectInformation = async (req, res, next) => {
 		return res.render(view, {
 			...getPageData(applicationData, projectUpdates),
 			preExamSubStages,
+			applicationDecision,
 			rule6Document,
-			applicationDecision
+			rule8Document
 		});
 	} catch (error) {
 		logger.error(error);

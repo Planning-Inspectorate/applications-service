@@ -1,5 +1,11 @@
-const { getProjectUpdatesData, getProjectDecisionDocument } = require('./services');
+const {
+	getProjectUpdatesData,
+	getProjectDecisionDocument,
+	getRule8DocumentType,
+	getRule6DocumentType
+} = require('./services');
 const { getProjectUpdates, getDocumentByType } = require('../lib/application-api-wrapper');
+const { documentTypes } = require('@pins/common/src/constants');
 
 jest.mock('../lib/application-api-wrapper', () => ({
 	getProjectUpdates: jest.fn(),
@@ -138,6 +144,52 @@ describe('/services', () => {
 			await expect(getProjectDecisionDocument).rejects.toThrow(
 				'500: Error fetching project document'
 			);
+		});
+	});
+
+	describe('#getRuleDocumentType', () => {
+		describe.each([
+			['getRule6DocumentType', getRule6DocumentType, documentTypes.RULE_6_LETTER],
+			['getRule8DocumentType', getRule8DocumentType, documentTypes.RULE_8_LETTER]
+		])('#%s', (ruleName, getRuleDocumentTypeFn, documentType) => {
+			it(`should call getDocumentByType with ${documentType}`, async () => {
+				//arrange
+				const mockCaseRef = 'mock case ref';
+				// act
+				await getRuleDocumentTypeFn(mockCaseRef);
+				// assert
+				expect(getDocumentByType).toHaveBeenCalledWith(mockCaseRef, documentType);
+			});
+			describe('when getDocumentByType returns a resp_code 200', () => {
+				it('should return the data', async () => {
+					// arrange
+					const mockResponse = {
+						resp_code: 200,
+						data: {
+							mock: 'data'
+						}
+					};
+					getDocumentByType.mockResolvedValue(mockResponse);
+					// act
+					const response = await getRuleDocumentTypeFn('mock case ref');
+					// assert
+					expect(response).toEqual(mockResponse.data);
+				});
+			});
+			describe('when getDocumentByType does not return a resp_code 200', () => {
+				it('should return undefined', async () => {
+					// arrange
+					const mockResponse = {
+						resp_code: 404,
+						data: {}
+					};
+					getDocumentByType.mockResolvedValue(mockResponse);
+					// act
+					const response = await getRuleDocumentTypeFn('mock case ref');
+					// assert
+					expect(response).toBeUndefined();
+				});
+			});
 		});
 	});
 });
