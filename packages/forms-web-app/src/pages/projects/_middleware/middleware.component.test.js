@@ -118,10 +118,13 @@ describe('projects _middleware', () => {
 	});
 	describe('#projectMigrationMiddleware', () => {
 		const next = jest.fn();
-		const res = {};
+		const res = {
+			status: jest.fn().mockReturnThis(),
+			render: jest.fn()
+		};
 
 		describe('when the project case-ref is in config.featureFlag.projectMigrationCaseReferences', () => {
-			it('should call next() without any errors', () => {
+			it('should call next()', () => {
 				const req = {
 					params: { case_ref: 'mock-case-ref-in-config' }
 				};
@@ -130,14 +133,13 @@ describe('projects _middleware', () => {
 			});
 		});
 		describe('when the project case-ref is not in config.featureFlag.projectMigrationCaseReferences', () => {
-			it('should call next with an error', () => {
+			it('should call res.status(404).render("error/not-found")', () => {
 				const req = {
 					params: { case_ref: 'mock-case-ref-not-in-config' }
 				};
 				projectMigrationMiddleware(req, res, next);
-				expect(next).toHaveBeenCalledWith(
-					new Error('Project migration feature flag not enabled for this project')
-				);
+				expect(res.status).toHaveBeenCalledWith(404);
+				expect(res.render).toHaveBeenCalledWith('error/not-found');
 			});
 		});
 	});

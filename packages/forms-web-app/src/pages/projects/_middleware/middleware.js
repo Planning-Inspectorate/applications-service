@@ -39,7 +39,7 @@ const projectMigrationMiddleware = (req, res, next) => {
 	if (config.featureFlag.projectMigrationCaseReferences.includes(req.params.case_ref)) {
 		next();
 	} else {
-		next(new Error('Project migration feature flag not enabled for this project'));
+		res.status(404).render('error/not-found');
 	}
 };
 

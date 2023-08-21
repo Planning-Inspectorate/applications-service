@@ -12,7 +12,11 @@ const commonMockData = {
 	dateOfNonAcceptance: '2020-01-01',
 	AnticipatedDateOfSubmission: '2020-01-01',
 	ProjectEmailAddress: 'mock@email.com',
-	DateOfDCOSubmission: '2020-01-01'
+	DateOfDCOSubmission: '2020-01-01',
+	DateOfRepresentationPeriodOpen: '2020-01-01',
+	DateOfRelevantRepresentationClose: '2020-01-01',
+	DateRRepAppearOnWebsite: '2020-01-01',
+	DateOfPreliminaryMeeting: '2020-01-01'
 };
 
 describe('#getApplicationData', () => {
@@ -41,6 +45,10 @@ describe('#getApplicationData', () => {
 						number: 1,
 						text: 'Pre-application'
 					},
+					DateOfPreliminaryMeeting: '2020-01-01',
+					DateOfRelevantRepresentationClose: '2020-01-01',
+					DateOfRepresentationPeriodOpen: '2020-01-01',
+					DateRRepAppearOnWebsite: '2020-01-01',
 					summary: 'I am the project summary data',
 					webAddress: 'mock-web-address'
 				});
@@ -48,6 +56,46 @@ describe('#getApplicationData', () => {
 
 			it('should add 28 days to the DateOfDCOSubmission (2020-01-01)', () => {
 				expect(response.DateOfDCOSubmission).toEqual('2020-01-29T00:00:00.000Z');
+			});
+		});
+		describe('and the dates are 0000-00-00', () => {
+			let response;
+			beforeEach(async () => {
+				getAppData.mockReturnValue({
+					data: {
+						...commonMockData,
+						dateOfNonAcceptance: '0000-00-00',
+						AnticipatedDateOfSubmission: '0000-00-00',
+						DateOfDCOSubmission: '0000-00-00',
+						DateOfRepresentationPeriodOpen: '0000-00-00',
+						DateOfRelevantRepresentationClose: '0000-00-00',
+						DateRRepAppearOnWebsite: '0000-00-00',
+						DateOfPreliminaryMeeting: '0000-00-00',
+						Stage: 1
+					},
+					resp_code: 200
+				});
+				response = await getApplicationData('mock case ref');
+			});
+			it('should return the project name in an obejct', () => {
+				expect(response).toEqual({
+					anticipatedDateOfSubmission: null,
+					contactEmailAddress: 'mock@email.com',
+					dateOfNonAcceptance: null,
+					projectName: 'mock project name',
+					proposal: 'I am the proposal',
+					DateOfDCOSubmission: null,
+					DateOfPreliminaryMeeting: null,
+					DateOfRelevantRepresentationClose: null,
+					DateOfRepresentationPeriodOpen: null,
+					DateRRepAppearOnWebsite: null,
+					status: {
+						number: 1,
+						text: 'Pre-application'
+					},
+					summary: 'I am the project summary data',
+					webAddress: 'mock-web-address'
+				});
 			});
 		});
 		describe('and the status code is not 200', () => {

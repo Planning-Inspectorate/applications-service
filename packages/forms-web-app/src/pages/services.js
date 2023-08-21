@@ -14,6 +14,11 @@ const getRule6DocumentType = async (caseRef) => {
 	return resp_code === 200 ? data : undefined;
 };
 
+const getRule8DocumentType = async (case_ref) => {
+	const { data, resp_code } = await getDocumentByType(case_ref, documentTypes.RULE_8_LETTER);
+	return resp_code === 200 ? data : undefined;
+};
+
 const getProjectDecisionDocument = async (caseRef) => {
 	let response = null;
 
@@ -42,5 +47,6 @@ const getProjectDecisionDocument = async (caseRef) => {
 module.exports = {
 	getProjectUpdatesData,
 	getRule6DocumentType,
+	getRule8DocumentType,
 	getProjectDecisionDocument
 };

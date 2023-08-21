@@ -484,6 +484,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -550,7 +552,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -621,6 +623,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
 
     <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
     
 
 			</dd>
@@ -1322,6 +1367,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -1388,7 +1435,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -1437,6 +1484,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<a href='/decision-making-process-guide/pre-examination' class=\\"govuk-link\\">
 		What happens during the pre-examination stage.
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
 	</a>
 
   </div>
@@ -2160,6 +2250,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -2226,7 +2318,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -2275,6 +2367,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<a href='/decision-making-process-guide/pre-examination' class=\\"govuk-link\\">
 		What happens during the pre-examination stage.
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
 	</a>
 
   </div>
@@ -3012,6 +3147,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -3078,7 +3215,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -3127,6 +3264,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<a href='/decision-making-process-guide/pre-examination' class=\\"govuk-link\\">
 		What happens during the pre-examination stage.
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
 	</a>
 
   </div>
@@ -3864,6 +4044,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -3930,7 +4112,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -3979,6 +4161,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<a href='/decision-making-process-guide/pre-examination' class=\\"govuk-link\\">
 		What happens during the pre-examination stage.
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
 	</a>
 
   </div>
@@ -4706,6 +4931,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -4772,7 +4999,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -4821,6 +5048,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<a href='/decision-making-process-guide/pre-examination' class=\\"govuk-link\\">
 		What happens during the pre-examination stage.
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
 	</a>
 
   </div>
@@ -5544,6 +5814,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -5610,7 +5882,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -5659,6 +5931,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<a href='/decision-making-process-guide/pre-examination' class=\\"govuk-link\\">
 		What happens during the pre-examination stage.
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
 	</a>
 
   </div>
@@ -6399,6 +6714,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 	
 
+	
+
 	<dl class=\\"govuk-summary-list pins-modded-last-item-border-none\\">
 		<div id=\\"project-stage-pre-application\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
@@ -6465,7 +6782,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	<br>
 	<br>
 	<a href='/decision-making-process-guide/review-of-the-application' class=\\"govuk-link\\">
-		How the acceptance stageworks and what happens next.
+		How the acceptance stage works and what happens next.
 	</a>
 
   </div>
@@ -6536,6 +6853,49 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
 
     <strong class=\\"govuk-tag  govuk-tag--blue -white-space--nowrap\\">In progress</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-examination\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Examination
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class=\\"govuk-link\\">
+		What happens at the Examination of the application
+	</a>
+
+  </div>
+</details>
+
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
     
 
 			</dd>
