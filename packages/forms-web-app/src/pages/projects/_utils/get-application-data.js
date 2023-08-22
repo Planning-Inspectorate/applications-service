@@ -31,7 +31,13 @@ const getApplicationData = async (case_ref) => {
 		DateOfRepresentationPeriodOpen: badDateToNull(data.DateOfRepresentationPeriodOpen),
 		DateOfRelevantRepresentationClose: badDateToNull(data.DateOfRelevantRepresentationClose),
 		DateRRepAppearOnWebsite: badDateToNull(data.DateRRepAppearOnWebsite),
-		DateOfPreliminaryMeeting: badDateToNull(data.DateOfPreliminaryMeeting)
+		DateOfPreliminaryMeeting: badDateToNull(data.DateOfPreliminaryMeeting),
+		dateTimeExaminationEnds: badDateToNull(data.DateTimeExaminationEnds),
+		stage5ExtensionToRecommendationDeadline: badDateToNull(
+			data.stage5ExtensionToRecommendationDeadline
+		),
+		dateOfRecommendations: badDateToNull(data.DateOfRecommendations),
+		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline)
 	};
 };
 

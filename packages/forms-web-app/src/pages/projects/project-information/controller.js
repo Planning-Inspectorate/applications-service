@@ -11,6 +11,9 @@ const { getApplicationDecision } = require('./utils/get-application-decision');
 const { documentTypes, documentTypeDictionary } = require('@pins/common/src/constants');
 const { getPreExaminationSubStage } = require('./utils/pre-examination-sub-stages');
 const { formatProjectStagesToLowerCase } = require('./utils/formatters');
+const {
+	getExaminationOrDecisionCompletedDate
+} = require('./utils/examination-or-decision-completed-date');
 
 const view = 'projects/project-information/view.njk';
 
@@ -45,6 +48,14 @@ const getProjectInformation = async (req, res, next) => {
 			applicationData.DateRRepAppearOnWebsite,
 			rule6Document
 		);
+		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
+			applicationData.dateTimeExaminationEnds,
+			applicationData.stage5ExtensionToRecommendationDeadline
+		);
+		const decisionCompletedDate = getExaminationOrDecisionCompletedDate(
+			applicationData.dateOfRecommendations,
+			applicationData.stage5ExtensionToDecisionDeadline
+		);
 		const applicationDecision = await getMiscDataByStageName(applicationData.status.text, caseRef);
 
 		return res.render(view, {
@@ -52,7 +63,9 @@ const getProjectInformation = async (req, res, next) => {
 			preExamSubStages,
 			applicationDecision,
 			rule6Document,
-			rule8Document
+			rule8Document,
+			recommendationCompletedDate,
+			decisionCompletedDate
 		});
 	} catch (error) {
 		logger.error(error);

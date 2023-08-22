@@ -75,7 +75,10 @@ describe('projects/project-information/controller', () => {
 						RULE_6_PUBLISHED_REPS: false
 					},
 					proposal: 'Generating Stations',
-					rule6Document: undefined
+					recommendationCompletedDate: null,
+					decisionCompletedDate: null,
+					rule6Document: undefined,
+					rule8Document: undefined
 				});
 			});
 		});
@@ -112,7 +115,10 @@ describe('projects/project-information/controller', () => {
 						RULE_6_PUBLISHED_REPS: false
 					},
 					proposal: 'Generating Stations',
-					rule6Document: undefined
+					recommendationCompletedDate: null,
+					decisionCompletedDate: null,
+					rule6Document: undefined,
+					rule8Document: undefined
 				});
 			});
 		});

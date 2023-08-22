@@ -483,6 +483,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -670,6 +674,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -677,7 +767,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -1366,6 +1456,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -1553,6 +1647,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -1560,7 +1740,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -2249,6 +2429,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -2436,6 +2620,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -2443,7 +2713,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -3146,6 +3416,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -3333,6 +3607,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -3340,7 +3700,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -4043,6 +4403,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -4230,6 +4594,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -4237,7 +4687,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -4930,6 +5380,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -5117,6 +5571,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -5124,7 +5664,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -5813,6 +6353,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -6000,6 +6544,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -6007,7 +6637,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
@@ -6713,6 +7343,10 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 	
+	
+	
+
+	
 
 	
 
@@ -6900,6 +7534,92 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
+		<div id=\\"project-stage-recommendation\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Recommendation
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
+		<div id=\\"project-stage-decision\\" class=\\"govuk-summary-list__row\\">
+			<dt class=\\"govuk-summary-list__value\\">
+				
+
+
+<details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
+  <summary class=\\"govuk-details__summary\\">
+    <span class=\\"govuk-details__summary-text\\">
+      Decision
+    </span>
+  </summary>
+  <div class=\\"govuk-details__text\\">
+    
+	The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/recommendation-and-decision' class=\\"govuk-link\\">
+		Making a recommendation and who makes the final decision.
+	</a>
+
+  </div>
+</details>
+
+			</dt>
+			<dd class=\\"govuk-summary-list__actions\\">
+				
+        
+        
+            
+            
+        
+
+        
+
+        
+
+        
+
+    <strong class=\\"govuk-tag govuk-tag--grey -white-space--nowrap\\">Not started</strong>
+    
+
+			</dd>
+		</div>
 		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
@@ -6907,7 +7627,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <details class=\\"govuk-details govuk-!-margin-bottom-1\\" data-module=\\"govuk-details\\">
   <summary class=\\"govuk-details__summary\\">
     <span class=\\"govuk-details__summary-text\\">
-      Post-decision
+      After the decision is made
     </span>
   </summary>
   <div class=\\"govuk-details__text\\">
