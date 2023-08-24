@@ -9,7 +9,6 @@
 {% set backLink = 'show' %}
 
 {% block content %}
-<h1 class="govuk-heading-l">All Projects</h1>
 
 <div class="govuk-grid-row">
 	<section class="ui-side-search govuk-grid-column-one-quarter">
@@ -165,26 +164,17 @@
 	</section>
 
 	<section class="govuk-grid-column-three-quarters">
-      <span class="govuk-heading-s">
-        {{ projectList | length }} projects
-      </span>
-
+		<h1 class="govuk-heading-l">Projects</h1>
+		<p class="govuk-body">
+			This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
+		</p>
 		<div>
-			<label class="govuk-label" for="document-results-sort">Sort by
-
-				<select id="document-results-sort" class="govuk-select" style="margin-left: 10px;">
-					<option selected>Alphabetical A-Z</option>
-				</select>
-			</label>
-
-			<hr />
-
 			<table class="govuk-table">
 				<thead class="govuk-table__head">
 				<tr class="govuk-table__row">
 					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Project name</th>
-					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Developer name</th>
-					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Status</th>
+					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Applicant</th>
+					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Stage</th>
 				</tr>
 				</thead>
 				<tbody class="govuk-table__body">
@@ -196,7 +186,7 @@
 						</td>
 						<td class="govuk-table__cell">{{ project.promoterName }}</td>
 						<td class="govuk-table__cell">
-							<strong class="govuk-tag govuk-tag--blue">{{ project.stage }}</strong>
+							{{ project.stage }}
 						</td>
 					</tr>
 				{% endfor %}
