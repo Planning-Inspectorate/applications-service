@@ -1,5 +1,6 @@
 const {
 	isBeforeNowUTC,
+	isBeforeTodayUTC,
 	getDateTimeExaminationEnds,
 	getConfirmedStartOfExamination
 } = require('../../../src/utils/is-before-or-after-date');
@@ -51,6 +52,27 @@ describe('#utils/is-before-or-after-date', () => {
 		});
 	});
 
+	describe('#isBeforeTodayUTC', () => {
+		describe('When given datetime is today 09:00:00', () => {
+			describe('and the current datetime is today 12:00:00', () => {
+				it('should return false', () => {
+					jest.useFakeTimers().setSystemTime(new Date('2020-01-01 12:00:00'));
+					const result = isBeforeTodayUTC('2020-01-01 09:00:00');
+					expect(result).toEqual(false);
+				});
+			});
+		});
+		// today 00:00:00 should be treated as 23:59:59
+		describe('When given datetime is today 00:00:00', () => {
+			describe('and the current datetime is today 12:00:00', () => {
+				it('should return true', () => {
+					jest.useFakeTimers().setSystemTime(new Date('2020-01-01 12:00:00'));
+					const result = isBeforeTodayUTC('2020-01-01 00:00:00');
+					expect(result).toEqual(true);
+				});
+			});
+		});
+	});
 	describe('#getDateTimeExaminationEnds', () => {
 		describe('When getting the correct sentence if a date is before or after today`s date', () => {
 			describe('and the date is before today', () => {
