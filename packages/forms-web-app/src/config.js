@@ -101,5 +101,9 @@ module.exports = {
 			tempFileDir: `../../../uploads`,
 			abortOnLimit: true
 		}
+	},
+	maps: {
+		osMapsApiKey: process.env.OS_MAPS_API_KEY,
+		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
 	}
 };

@@ -1,6 +1,7 @@
 const { getProjectInformation } = require('./controller');
 
 const { getProjectUpdates, getDocumentByType } = require('../../../lib/application-api-wrapper');
+const { getMapAccessToken } = require('../../_services');
 
 const {
 	getProjectUpdatesUnsuccessfulFixture,
@@ -13,6 +14,10 @@ const {
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getProjectUpdates: jest.fn(),
 	getDocumentByType: jest.fn()
+}));
+
+jest.mock('../../_services', () => ({
+	getMapAccessToken: jest.fn()
 }));
 
 describe('projects/project-information/controller', () => {
@@ -59,6 +64,7 @@ describe('projects/project-information/controller', () => {
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+				getMapAccessToken.mockReturnValue('mock map access token');
 
 				await getProjectInformation(req, res, next);
 			});
@@ -78,7 +84,8 @@ describe('projects/project-information/controller', () => {
 					recommendationCompletedDate: null,
 					decisionCompletedDate: null,
 					rule6Document: undefined,
-					rule8Document: undefined
+					rule8Document: undefined,
+					mapAccessToken: 'mock map access token'
 				});
 			});
 		});
@@ -118,7 +125,8 @@ describe('projects/project-information/controller', () => {
 					recommendationCompletedDate: null,
 					decisionCompletedDate: null,
 					rule6Document: undefined,
-					rule8Document: undefined
+					rule8Document: undefined,
+					mapAccessToken: 'mock map access token'
 				});
 			});
 		});

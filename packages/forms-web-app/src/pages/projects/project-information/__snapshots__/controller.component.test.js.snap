@@ -44,6 +44,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
+
 
     
     
@@ -807,6 +812,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -868,7 +900,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -952,9 +983,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -1023,6 +1056,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
+
 
     
     
@@ -1780,6 +1818,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -1841,7 +1906,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -1925,9 +1989,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -1996,6 +2062,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
+
 
     
     
@@ -2753,6 +2824,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -2814,7 +2912,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -2898,9 +2995,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -2968,6 +3067,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 
+
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
 
 
     
@@ -3740,6 +3844,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -3801,7 +3932,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -3885,9 +4015,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -3955,6 +4087,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 
+
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
 
 
     
@@ -4727,6 +4864,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -4788,7 +4952,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -4872,9 +5035,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -4942,6 +5107,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 
+
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
 
 
     
@@ -5704,6 +5874,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -5765,7 +5962,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -5849,9 +6045,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -5919,6 +6117,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 
+
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
 
 
     
@@ -6677,6 +6880,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -6738,7 +6968,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -6822,9 +7051,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 
@@ -6892,6 +7123,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	
 
 
+
+	
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css\\" />
+		<link rel=\\"stylesheet\\" href=\\"https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css\\" />
+	
 
 
     
@@ -7667,6 +7903,33 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
+			
+
+				<h2 class=\\"govuk-heading-m\\">
+  Project location
+</h2>
+
+
+
+  <p class=\\"govuk-body\\">
+    At, and in the vicinity of, mock project location
+  </p>
+
+
+
+
+
+  <div class=\\"pins-map\\">
+    <div class=\\"pins-map__container\\">
+      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+    </div>
+  </div>
+
+
+				<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
+
+			
+
 			<section>
 	<h2 class=\\"govuk-heading-m\\">
 		Get updates
@@ -7728,7 +7991,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 </section>
-
 
 		</div>
 	</div>
@@ -7812,9 +8074,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
     
 	
+		
+	
 
 	<script >
-	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"}]
+	var initiateScriptsConfig = [{\\"src\\":\\"/public/scripts/index.script.js\\"},{\\"src\\":\\"https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js\\"},{\\"callback\\":\\"var map = new appScripts.map.default(); map.initiate('mock map access token', 'map', [-0.118092,51.509865], 5);\\",\\"src\\":\\"/public/scripts/map.script.js\\"}]
 </script>
 
 

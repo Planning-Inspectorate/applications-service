@@ -10,6 +10,7 @@ const {
 	getProjectUpdates,
 	getDocumentByType
 } = require('../../../lib/application-api-wrapper');
+const { getMapAccessToken } = require('../../_services');
 
 jest.mock('../../../config', () => {
 	const originalConfig = jest.requireActual('../../../config');
@@ -32,6 +33,10 @@ jest.mock('../../../services/application.service', () => ({
 	getAppData: jest.fn()
 }));
 
+jest.mock('../../_services', () => ({
+	getMapAccessToken: jest.fn()
+}));
+
 const commonMockData = {
 	ProjectName: 'Test project name',
 	Proposal: 'I am the proposal',
@@ -39,7 +44,10 @@ const commonMockData = {
 	WebAddress: 'mock-web-address',
 	dateOfNonAcceptance: '2020-01-01',
 	AnticipatedDateOfSubmission: '2020-01-01',
-	ProjectEmailAddress: 'mock@email.com'
+	ProjectEmailAddress: 'mock@email.com',
+	LongLat: ['-0.118092', '51.509865'],
+	MapZoomLevel: 5,
+	ProjectLocation: 'mock project location'
 };
 
 describe('projects/project-information/controller.component', () => {
@@ -59,6 +67,7 @@ describe('projects/project-information/controller.component', () => {
 				resp_code: 200
 			});
 			getDocumentByType.mockResolvedValue({});
+			getMapAccessToken.mockResolvedValue('mock map access token');
 		});
 		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
 			describe('pre application ', () => {
