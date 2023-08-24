@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
 
 const httpPort = Number(process.env.PORT || 3000);
