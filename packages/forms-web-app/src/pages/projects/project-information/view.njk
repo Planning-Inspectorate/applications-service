@@ -3,11 +3,31 @@
 {% from "./components/latest-update.njk" import getLatestUpdate %}
 {% from "./components/stage-progress-tag.njk" import stageProgressTag %}
 
-
 {% set activeId = "project-information" %}
 
 {% set pageTitle = projectName + " - Project Information" %}
 {% set pageHeading = "Project Information" %}
+
+{% if mapAccessToken %}
+
+	{% block stylesheet %}
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
+	{% endblock %}
+
+	{% block script %}
+		{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+			{
+				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
+			},
+			{
+				callback: "var map = new appScripts.map.default(); map.initiate('" + mapAccessToken + "', 'map', [" + applicationData.longLat + "], " + applicationData.mapZoomLevel + ");",
+				src: "/public/scripts/map.script.js"
+			}
+	), initiateScriptsConfig) %}
+	{% endblock %}
+
+{% endif %}
 
 {% block content %}
 	<div class="govuk-grid-row">
@@ -28,11 +48,17 @@
 			{% include "projects/project-information/includes/project-stage.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
+			{% if applicationData.projectLocation or mapAccessToken %}
+
+				{% include "./includes/location.njk" %}
+				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+
+			{% endif %}
+
 			{% include "projects/project-information/includes/get-updates.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
 			{% include "projects/project-information/includes/contact.njk" %}
-
 		</div>
 	</div>
 {% endblock %}
