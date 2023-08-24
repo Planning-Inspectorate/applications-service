@@ -32,7 +32,8 @@ const projectStages = {
 	4: 'Examination',
 	5: 'Recommendation',
 	6: 'Decision',
-	7: 'Decided'
+	7: 'Decided',
+	8: 'Withdrawn'
 };
 
 const projectInfoProjectStages = {

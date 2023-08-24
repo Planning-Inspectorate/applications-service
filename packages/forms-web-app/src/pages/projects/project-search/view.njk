@@ -166,7 +166,7 @@
 
 	<section class="govuk-grid-column-three-quarters">
       <span class="govuk-heading-s">
-        {{ noOfProjects }} projects
+        {{ projectList | length }} projects
       </span>
 
 		<div>
@@ -189,14 +189,14 @@
 				</thead>
 				<tbody class="govuk-table__body">
 
-				{% for list in appList %}
+				{% for project in projectList %}
 					<tr class="govuk-table__row">
 						<td class="govuk-table__cell">
-							<a class="govuk-link" href="/projects/{{ list.CaseReference }}">{{ list.ProjectName }}</a>
+							<a class="govuk-link" href="/projects/{{ project.caseRef }}">{{ project.projectName }}</a>
 						</td>
-						<td class="govuk-table__cell">{{ list.PromoterName }}</td>
+						<td class="govuk-table__cell">{{ project.promoterName }}</td>
 						<td class="govuk-table__cell">
-							<strong class="govuk-tag govuk-tag--blue">{{ list.Stage }}</strong>
+							<strong class="govuk-tag govuk-tag--blue">{{ project.stage }}</strong>
 						</td>
 					</tr>
 				{% endfor %}
