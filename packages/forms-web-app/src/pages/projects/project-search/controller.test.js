@@ -1,4 +1,4 @@
-const projectSearchController = require('./project-search');
+const { getProjectSearch } = require('./controller');
 const { getAllProjectList } = require('../../../lib/application-api-wrapper');
 
 jest.mock('../../../lib/application-api-wrapper');
@@ -28,17 +28,16 @@ describe('controllers/project-search', () => {
 					]
 				})
 			);
-			await projectSearchController.getProjectList(req, res);
-			expect(res.render).toHaveBeenCalledWith('projects/project-search/index.njk', {
-				appList: [
+			await getProjectSearch(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/project-search/view.njk', {
+				projectList: [
 					{
-						CaseReference: 'test',
-						ProjectName: 'test',
-						PromoterName: 'test',
-						Stage: 'Pre-application'
+						caseRef: 'test',
+						projectName: 'test',
+						promoterName: 'test',
+						stage: 'Pre-application'
 					}
-				],
-				noOfProjects: 1
+				]
 			});
 		});
 	});

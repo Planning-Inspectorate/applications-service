@@ -13,14 +13,12 @@ const {
 		allowDocumentLibrary,
 		allowExaminationTimetable,
 		allowRepresentation,
-		usePrivateBetaV1RoutesOnly,
 		allowGetUpdates,
 		allowProjectInformation
 	}
 } = config;
 
 const router = express.Router();
-const projectSearchController = require('./project-search/project-search');
 const representationsController = require('./relevant-representations/representations');
 const examinationTimetable = require('./examination-timetable/controller');
 const { getProjectInformation } = require('./project-information/controller');
@@ -30,10 +28,6 @@ const { middleware, projectMigrationMiddleware } = require('./_middleware/middle
 const { featureFlag } = require('../../config');
 const { getUpdatesRouter } = require('./get-updates/router');
 const { getProjectUpdatesController } = require('./project-updates/controller');
-
-if (!usePrivateBetaV1RoutesOnly) {
-	router.get('/', projectSearchController.getProjectList);
-}
 
 if (allowProjectInformation) {
 	router.get('/:case_ref', [middleware, projectMigrationMiddleware], getProjectInformation);
