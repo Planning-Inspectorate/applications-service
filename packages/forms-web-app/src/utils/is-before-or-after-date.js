@@ -7,6 +7,24 @@ const isBeforeNowUTC = (date) => {
 	return new Date() < new Date(date);
 };
 
+/**
+ * Similar to isBeforeNowUTC but if time is not set (00:00:00) on the given date, it will be set to the end of the day
+ * @param date
+ * @returns {boolean}
+ */
+const isBeforeTodayUTC = (date) => {
+	if (!date || typeof date !== 'string') return;
+
+	const currentDate = new Date();
+	const givenDate = new Date(date);
+
+	// if no time was set on the given date, set it to the end of the day
+	if (givenDate.getHours() === 0 && givenDate.getMinutes() === 0 && givenDate.getSeconds() === 0) {
+		givenDate.setHours(23, 59, 59, 999);
+	}
+	return currentDate < givenDate;
+};
+
 const getConfirmedStartOfExamination = (date) => {
 	const formattedDate = formatDate(date);
 
@@ -25,7 +43,7 @@ const isInvalidDate = (date) =>
 	date === '0000-00-00 00:00:00' || date === '0000-00-00' || date === null;
 
 const isBeforeOrAfterSentence = (date) =>
-	isBeforeNowUTC(date)
+	isBeforeTodayUTC(date)
 		? `The examination is expected to close on ${formatDate(date)}`
 		: `The examination closed on ${formatDate(date)}`;
 
@@ -42,5 +60,6 @@ const getDateTimeExaminationEnds = (closeDate, extensionCloseDate, startDate) =>
 module.exports = {
 	isBeforeNowUTC,
 	getConfirmedStartOfExamination,
-	getDateTimeExaminationEnds
+	getDateTimeExaminationEnds,
+	isBeforeTodayUTC
 };
