@@ -22,10 +22,43 @@ const getApplication = async (req, res) => {
 	res.status(StatusCodes.OK).send(applicationResponse);
 };
 
+const sortByFromQuery = (queryStr) => {
+	let sortBy = ['projectName', 'ASC'];
+
+	if (typeof queryStr !== 'string' || queryStr === '') return sortBy;
+
+	let field = queryStr;
+	let direction = 'ASC';
+
+	switch (queryStr.charAt(0)) {
+		case '-':
+			direction = 'DESC';
+			field = field.substring(1);
+			break;
+
+		case '+':
+			direction = 'ASC';
+			field = field.substring(1);
+			break;
+	}
+
+	sortBy = [field, direction];
+
+	return sortBy;
+};
+
 const getAllApplications = async (req, res) => {
 	logger.debug(`Retrieving all applications ...`);
 
-	const applications = await getAllApplicationsFromApplicationApiService();
+	const { query } = req;
+
+	const sortBy = sortByFromQuery(query.sortBy);
+
+	const options = {
+		order: [sortBy]
+	};
+
+	const applications = await getAllApplicationsFromApplicationApiService(options);
 
 	if (!applications.length) throw ApiError.noApplicationsFound();
 

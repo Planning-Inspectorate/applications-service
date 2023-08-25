@@ -5,8 +5,8 @@ const getApplication = async (id) => {
 	return project;
 };
 
-const getAllApplications = async () => {
-	const projects = await db.Project.findAll();
+const getAllApplications = async (options = {}) => {
+	const projects = await db.Project.findAll(options);
 	return projects;
 };
 
