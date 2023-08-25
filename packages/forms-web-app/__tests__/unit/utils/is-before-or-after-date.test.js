@@ -72,6 +72,12 @@ describe('#utils/is-before-or-after-date', () => {
 				});
 			});
 		});
+		describe('When date is invalid', () => {
+			it('should return undefined', () => {
+				const result = isBeforeTodayUTC();
+				expect(result).toBeUndefined();
+			});
+		});
 	});
 	describe('#getDateTimeExaminationEnds', () => {
 		describe('When getting the correct sentence if a date is before or after today`s date', () => {
