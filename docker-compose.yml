@@ -142,7 +142,7 @@ services:
     image: mockserver/mockserver:5.14.0
     container_name: api-mock-server
     environment:
-      MOCKSERVER_WATCH_INITIALIZATION_JSON: "true"
+      MOCKSERVER_WATCH_INITIALIZATION_JSON: 'true'
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/init.json
     ports:
       - 1080:1080
@@ -152,17 +152,16 @@ services:
   mssql:
     image: mcr.microsoft.com/azure-sql-edge:latest
     container_name: mssql
-    cap_add: [ 'SYS_PTRACE' ]
+    cap_add: ['SYS_PTRACE']
     environment:
-      - "ACCEPT_EULA=1"
-      - "MSSQL_SA_PASSWORD=dbPASSw0_rd"
+      - 'ACCEPT_EULA=1'
+      - 'MSSQL_SA_PASSWORD=dbPASSw0_rd'
     ports:
       - 1433:1433
     hostname: mssql
     volumes:
       - ./init/mssql/mssql.conf:/var/opt/mssql/mssql.conf
       - ./init/mssql/data:/var/opt/mssql/data
-
 #  redis-commander:
 #    container_name: redis-commander
 #    hostname: redis-commander

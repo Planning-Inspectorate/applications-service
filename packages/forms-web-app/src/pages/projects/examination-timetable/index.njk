@@ -48,7 +48,7 @@
 	{% if examination.closeDate %}
 		<p>{{ examination.closeDate }}</p>
 	{% endif %}
-	
+
 	{% if hasOpenTimetables and featureFlag.allowHaveYourSay == true %}
 		<a class="govuk-button" href='{{ baseUrl }}/{{ caseRef }}/examination/have-your-say-during-examination'> Have your
 			say </a>

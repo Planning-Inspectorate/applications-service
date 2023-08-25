@@ -36,6 +36,7 @@ const configAppScripts = {
 	...config,
 	entry: {
 		initiate: `${entryPath}/initiate.js`,
+		map: `${entryPath}/map`,
 		modal: `${entryPath}/modal`,
 		simulateUserAction: `${entryPath}/simulate-user-action.js`,
 		stepByStep: `${entryPath}/step-by-step.js`

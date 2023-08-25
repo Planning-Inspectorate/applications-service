@@ -1,0 +1,21 @@
+<h2 class="govuk-heading-m">
+  Project location
+</h2>
+
+{% if applicationData.projectLocation %}
+
+  <p class="govuk-body">
+    At, and in the vicinity of, {{ applicationData.projectLocation }}
+  </p>
+
+{% endif %}
+
+{% if mapAccessToken %}
+
+  <div class="pins-map">
+    <div class="pins-map__container">
+      <div id="map" class="pins-map__content"></div>
+    </div>
+  </div>
+
+{% endif %}

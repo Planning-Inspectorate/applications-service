@@ -37,7 +37,10 @@ const getApplicationData = async (case_ref) => {
 			data.stage5ExtensionToRecommendationDeadline
 		),
 		dateOfRecommendations: badDateToNull(data.DateOfRecommendations),
-		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline)
+		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline),
+		longLat: data.LongLat,
+		mapZoomLevel: data.MapZoomLevel,
+		projectLocation: data.ProjectLocation
 	};
 };
 

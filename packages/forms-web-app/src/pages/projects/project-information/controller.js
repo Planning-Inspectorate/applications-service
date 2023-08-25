@@ -14,6 +14,7 @@ const { formatProjectStagesToLowerCase } = require('./utils/formatters');
 const {
 	getExaminationOrDecisionCompletedDate
 } = require('./utils/examination-or-decision-completed-date');
+const { getMapAccessToken } = require('../../_services');
 
 const view = 'projects/project-information/view.njk';
 
@@ -58,6 +59,8 @@ const getProjectInformation = async (req, res, next) => {
 		);
 		const applicationDecision = await getMiscDataByStageName(applicationData.status.text, caseRef);
 
+		const mapAccessToken = applicationData.longLat ? await getMapAccessToken() : null;
+
 		return res.render(view, {
 			...getPageData(applicationData, projectUpdates),
 			preExamSubStages,
@@ -65,7 +68,8 @@ const getProjectInformation = async (req, res, next) => {
 			rule6Document,
 			rule8Document,
 			recommendationCompletedDate,
-			decisionCompletedDate
+			decisionCompletedDate,
+			mapAccessToken
 		});
 	} catch (error) {
 		logger.error(error);
