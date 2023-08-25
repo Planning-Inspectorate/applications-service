@@ -72,6 +72,16 @@ describe('#utils/is-before-or-after-date', () => {
 				});
 			});
 		});
+		// no datetime is same as 00:00:00 so should be treated as 23:59:59
+		describe('When given datetime does not have a time', () => {
+			describe('and the current datetime is today 12:00:00', () => {
+				it('should return true', () => {
+					jest.useFakeTimers().setSystemTime(new Date('2020-01-01 12:00:00'));
+					const result = isBeforeTodayUTC('2020-01-01');
+					expect(result).toEqual(true);
+				});
+			});
+		});
 		describe('When date is invalid', () => {
 			it('should return undefined', () => {
 				const result = isBeforeTodayUTC();
