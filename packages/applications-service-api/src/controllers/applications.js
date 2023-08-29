@@ -25,15 +25,20 @@ const getApplication = async (req, res) => {
 const getAllApplications = async (req, res) => {
 	logger.debug(`Retrieving all applications ...`);
 
-	const applications = await getAllApplicationsFromApplicationApiService();
+	const { applications, totalItems, currentPage, itemsPerPage, totalPages } =
+		await getAllApplicationsFromApplicationApiService(req.query);
 
-	if (!applications.length) throw ApiError.noApplicationsFound();
+	if (!totalItems) throw ApiError.noApplicationsFound();
 
-	res.status(StatusCodes.OK).send(
-		applications.map((document) => {
-			return addMapZoomLvlAndLongLat(document.dataValues);
-		})
-	);
+	const response = {
+		applications: applications.map((document) => addMapZoomLvlAndLongLat(document.dataValues)),
+		totalItems,
+		currentPage,
+		itemsPerPage,
+		totalPages
+	};
+
+	res.status(StatusCodes.OK).send(response);
 };
 
 const addMapZoomLvlAndLongLat = (document) => {
