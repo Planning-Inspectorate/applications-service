@@ -1,12 +1,19 @@
-{% extends "layouts/layout.njk" %}
+{% extends "layouts/default.njk" %}
 
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% block script %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push(
+	{
+      callback: "window.GOVUKFrontend.initAll();",
+      src: "/assets/govuk/all.js"
+    }
+	), initiateScriptsConfig) %}
+{% endblock %}
 
 {% block pageTitle %}
 	Project search
 {% endblock %}
-
-{% set backLink = 'show' %}
 
 {% block content %}
 
