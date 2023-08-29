@@ -46,7 +46,7 @@ const mapDocuments = (documents) => {
 		Object.keys(document).reduce((memo, key) => {
 			let value = document[key];
 
-			if (key === 'path') value = config.documentsHost.concat(value);
+			if (key === 'path' && value) value = config.documentsHost.concat(value);
 
 			memo[toCamelCase(key)] = value;
 
