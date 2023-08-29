@@ -46,15 +46,47 @@ paths:
       description: Returns all existing applications (Projects)
       tags:
         - Applications
+      parameters:
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
+        - in: query
+          name: size
+          example: 25
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Page size for results
       responses:
         '200':
           description: Returns all applications
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Application'
+                type: object
+                properties:
+                  applications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Application'
+                  totalItems:
+                    type: number
+                    example: 1
+                  itemsPerPage:
+                    type: number
+                    example: 1
+                  totalPages:
+                    type: number
+                    example: 1
+                  currentPage:
+                    type: number
+                    example: 1
         '404':
           description: No applications found
 
