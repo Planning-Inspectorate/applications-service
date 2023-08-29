@@ -3,7 +3,7 @@ const { getProjectData, getAllProjectList } = require('../lib/application-api-wr
 const getProjectList = async () => {
 	const response = await getAllProjectList();
 
-	if (response.resp_code !== 200) throw new Error('Application list response status not 200');
+	if (response.resp_code !== 200) throw new Error('Project list response status not 200');
 
 	return response.data;
 };
