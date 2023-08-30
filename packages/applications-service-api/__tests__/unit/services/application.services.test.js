@@ -37,73 +37,133 @@ describe('application.service', () => {
 			db.Project.count.mockResolvedValueOnce(mockCount);
 			db.Project.findAll.mockResolvedValueOnce(mockApplications);
 		});
-		describe('when page num', () => {
-			describe('is provided', () => {
-				it('calls findAll with offset', async () => {
-					// Arrange
-					const mockPageNum = 2;
-					const mockPageSize = 25;
+		describe('pagination', () => {
+			describe('when page num', () => {
+				describe('is provided', () => {
+					it('calls findAll with offset', async () => {
+						// Arrange
+						const mockPageNum = 2;
+						const mockPageSize = 25;
 
-					// Act
-					await getAllApplications({ page: mockPageNum, size: mockPageSize });
-					// Assert
-					expect(db.Project.findAll).toHaveBeenCalledWith({
-						offset: mockPageSize * (mockPageNum - 1),
-						limit: mockPageSize
+						// Act
+						await getAllApplications({ page: mockPageNum, size: mockPageSize });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: mockPageSize * (mockPageNum - 1),
+							limit: mockPageSize,
+							order: [['ProjectName', 'ASC']]
+						});
+					});
+				});
+				describe('is not provided', () => {
+					it('calls findAll with offset 0', async () => {
+						// Arrange
+						const mockPageSize = 25;
+						// Act
+						await getAllApplications({ size: mockPageSize });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: mockPageSize,
+							order: [['ProjectName', 'ASC']]
+						});
 					});
 				});
 			});
-			describe('is not provided', () => {
-				it('calls findAll with offset 0', async () => {
-					// Arrange
-					const mockPageSize = 25;
-					// Act
-					await getAllApplications({ size: mockPageSize });
-					// Assert
-					expect(db.Project.findAll).toHaveBeenCalledWith({
-						offset: 0,
-						limit: mockPageSize
+			describe('when page size', () => {
+				describe('is provided under 100', () => {
+					it('calls findAll with limit', async () => {
+						// Arrange
+						const mockPageSize = 25;
+						// Act
+						await getAllApplications({ size: mockPageSize });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: mockPageSize,
+							order: [['ProjectName', 'ASC']]
+						});
+					});
+				});
+				describe('is provided over 100', () => {
+					it('calls findAll with limit 100', async () => {
+						// Act
+						await getAllApplications({ size: 101 });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: 100,
+							order: [['ProjectName', 'ASC']]
+						});
+					});
+				});
+				describe('is not provided', () => {
+					it('calls findAll with default limit 25', async () => {
+						// Act
+						await getAllApplications({});
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: 25,
+							order: [['ProjectName', 'ASC']]
+						});
 					});
 				});
 			});
 		});
-		describe('when page size', () => {
-			describe('is provided under 100', () => {
-				it('calls findAll with limit', async () => {
-					// Arrange
-					const mockPageSize = 25;
-					// Act
-					await getAllApplications({ size: mockPageSize });
-					// Assert
-					expect(db.Project.findAll).toHaveBeenCalledWith({
-						offset: 0,
-						limit: mockPageSize
+
+		describe('sorting', () => {
+			describe('when sort is provided', () => {
+				describe('when sort key is valid', () => {
+					it.each([
+						['+ProjectName', [['ProjectName', 'ASC']]],
+						['-ProjectName', [['ProjectName', 'DESC']]],
+						['+PromoterName', [['PromoterName', 'ASC']]],
+						['-PromoterName', [['PromoterName', 'DESC']]],
+						['+DateOfDCOSubmission', [['DateOfDCOSubmission', 'ASC']]],
+						['-DateOfDCOSubmission', [['DateOfDCOSubmission', 'DESC']]],
+						['+ConfirmedDateOfDecision', [['ConfirmedDateOfDecision', 'ASC']]],
+						['-ConfirmedDateOfDecision', [['ConfirmedDateOfDecision', 'DESC']]],
+						['+Stage', [['Stage', 'ASC']]],
+						['-Stage', [['Stage', 'DESC']]]
+					])('calls findAll with order', async (sort, order) => {
+						// Act
+						await getAllApplications({ sort });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: 25,
+							order
+						});
+					});
+				});
+				describe('when sort key is invalid', () => {
+					it('calls findAll with default order', async () => {
+						// Act
+						await getAllApplications({ sort: 'foo' });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: 25,
+							order: [['ProjectName', 'ASC']]
+						});
 					});
 				});
 			});
-			describe('is provided over 100', () => {
-				it('calls findAll with limit 100', async () => {
-					// Act
-					await getAllApplications({ size: 101 });
-					// Assert
-					expect(db.Project.findAll).toHaveBeenCalledWith({
-						offset: 0,
-						limit: 100
-					});
-				});
-			});
-			describe('is not provided', () => {
-				it('calls findAll with default limit 25', async () => {
+			describe('when sort is not provided', () => {
+				it('calls findAll with default order', async () => {
 					// Act
 					await getAllApplications({});
 					// Assert
 					expect(db.Project.findAll).toHaveBeenCalledWith({
 						offset: 0,
-						limit: 25
+						limit: 25,
+						order: [['ProjectName', 'ASC']]
 					});
 				});
 			});
 		});
+
 		it('calls db.Project.count', async () => {
 			// Act
 			await getAllApplications({});
