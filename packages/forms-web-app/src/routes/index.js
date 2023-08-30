@@ -20,6 +20,7 @@ const {
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
+
 if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
 	router.use('/project-search', projectSearchRouter);
 }

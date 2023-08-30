@@ -13,7 +13,7 @@ describe('controllers/project-search', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getProjectList', () => {
+	describe('getApplications', () => {
 		it('should call the correct template', async () => {
 			getAllProjectList.mockImplementation(() =>
 				Promise.resolve({

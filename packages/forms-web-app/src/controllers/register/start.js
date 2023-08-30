@@ -1,7 +1,7 @@
 const moment = require('moment');
 const { VIEW } = require('../../lib/views');
 const { formatDate } = require('../../utils/date-utils');
-const { getAppData } = require('../../services/application.service');
+const { getAppData } = require('../../services/applications.service');
 const logger = require('../../lib/logger');
 
 exports.getStart = async (req, res) => {

@@ -1,18 +1,15 @@
-const { projectStages } = require('../../../../utils/project-stages');
+const { buildPaginationQueryString } = require('../../../_utils/build-pagination-query-string');
+const { mappedApplications } = require('../../_utils/mapped-applications');
+const { documentsPerPage } = require('../../utils/pagination/documentsPerPage');
+const { getPagination } = require('../../utils/pagination/pagination');
+const { getProjectSearchSortByLinks } = require('./get-project-search-sort-by-links');
 
-projectStages;
-
-const projectListMapper = (projectList) => {
-	return projectList.map((project) => ({
-		caseRef: project.CaseReference,
-		projectName: project.ProjectName,
-		promoterName: project.PromoterName,
-		stage: projectStages[project.Stage]
-	}));
-};
-
-const getPageData = (projectList) => ({
-	projectList: projectListMapper(projectList)
+const getPageData = (query, applications, pagination) => ({
+	applications: mappedApplications(applications),
+	pagination: getPagination(pagination),
+	paginationQueryString: buildPaginationQueryString(query),
+	resultsPerPage: documentsPerPage(query),
+	sortByLinks: getProjectSearchSortByLinks(query)
 });
 
 module.exports = {

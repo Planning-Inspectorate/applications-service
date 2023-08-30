@@ -90,7 +90,6 @@ paths:
         '404':
           description: No applications found
 
-
   '/api/v1/interested-party':
     post:
       summary: Creates an interested party
@@ -353,13 +352,14 @@ paths:
           description: Type of document
           schema:
             type: string
-            enum: [
-              'RULE_6_LETTER',
-              'RULE_8_LETTER',
-              'EXAMINATION_LIBRARY',
-              'DECISION_LETTER_APPROVE',
-              'DECISION_LETTER_REFUSE'
-            ]
+            enum:
+              [
+                'RULE_6_LETTER',
+                'RULE_8_LETTER',
+                'EXAMINATION_LIBRARY',
+                'DECISION_LETTER_APPROVE',
+                'DECISION_LETTER_REFUSE'
+              ]
       responses:
         '200':
           description: Returns a document
@@ -428,16 +428,16 @@ paths:
                       properties:
                         updateDate:
                           type: string
-                          example: "2020-02-19"
+                          example: '2020-02-19'
                         updateName:
                           type: string
-                          example: "Project accepted"
+                          example: 'Project accepted'
                         updateContentEnglish:
                           type: string
-                          example: "Case was accepted"
+                          example: 'Case was accepted'
                         updateContentWelsh:
                           type: string
-                          example: "Derbyniwyd yr achos"
+                          example: 'Derbyniwyd yr achos'
         '404':
           description: Case not found
           content:
@@ -948,7 +948,7 @@ components:
           type: array
           items:
             type: string
-            example: [ '-0.70283147423378', '53.620078025496' ]
+            example: ['-0.70283147423378', '53.620078025496']
         AnticipatedDateOfSubmission:
           type: string
           example: ''
@@ -1259,7 +1259,7 @@ components:
       properties:
         name:
           type: string
-          enum: [ stage, category ]
+          enum: [stage, category]
           example: stage
           description: Name of property to filter by
         value:
@@ -1303,7 +1303,7 @@ components:
       properties:
         name:
           type: string
-          enum: [ stage, category ]
+          enum: [stage, category]
           example: stage
           description: Name of property to filter by
         value:
@@ -1647,39 +1647,39 @@ components:
           example: 1
         uniqueId:
           type: string
-          example: "WS010006-34601"
+          example: 'WS010006-34601'
         caseReference:
           type: string
-          example: "EN010009"
+          example: 'EN010009'
         title:
           type: string
-          example: "Deadline 1A"
+          example: 'Deadline 1A'
         description:
           type: string
-          example: "The ExA is under a duty to complete the Examination of the application by the end of the period of six months"
+          example: 'The ExA is under a duty to complete the Examination of the application by the end of the period of six months'
         dateOfEvent:
           type: string
-          example: "2020-02-19 11:21:42"
+          example: '2020-02-19 11:21:42'
         timetableType:
           type: string
-          example: "Exams"
+          example: 'Exams'
         typeOfEvent:
           type: string
-          example: "Deadline"
+          example: 'Deadline'
         location:
           type: string
         dateCreated:
           type: string
-          example: "2020-02-16 11:21:42"
+          example: '2020-02-16 11:21:42'
         dateLastModified:
           type: string
-          example: "2020-04-16 15:44:52"
+          example: '2020-04-16 15:44:52'
         dateTimeDeadlineStart:
           type: string
-          example: "2020-05-16 15:44:52"
+          example: '2020-05-16 15:44:52'
         sourceSystem:
           type: string
-          example: "Horizon"
+          example: 'Horizon'
 
     Timetables:
       type: object
@@ -1915,4 +1915,4 @@ components:
           type: array
           items:
             type: string
-            example: "{entityName} not found"
+            example: '{entityName} not found'
