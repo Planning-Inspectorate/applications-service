@@ -114,7 +114,25 @@ describe('application.service', () => {
 
 		describe('sorting', () => {
 			describe('when sort is provided', () => {
-				describe('when sort key is valid', () => {
+				describe('when sort has key but no direction', () => {
+					it.each([
+						['ProjectName'],
+						['PromoterName'],
+						['DateOfDCOSubmission'],
+						['ConfirmedDateOfDecision'],
+						['Stage']
+					])('calls findAll with order: [[key, ASC]]', async (sort) => {
+						// Act
+						await getAllApplications({ sort });
+						// Assert
+						expect(db.Project.findAll).toHaveBeenCalledWith({
+							offset: 0,
+							limit: 25,
+							order: [[sort, 'ASC']]
+						});
+					});
+				});
+				describe('when sort has key and direction', () => {
 					it.each([
 						['+ProjectName', [['ProjectName', 'ASC']]],
 						['-ProjectName', [['ProjectName', 'DESC']]],
