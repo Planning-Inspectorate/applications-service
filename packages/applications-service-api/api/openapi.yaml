@@ -72,14 +72,19 @@ paths:
             enum:
               - +ProjectName
               - -ProjectName
+              - ProjectName
               - +PromoterName
               - -PromoterName
+              - PromoterName
               - +DateOfDCOSubmission
               - -DateOfDCOSubmission
+              - DateOfDCOSubmission
               - +ConfirmedDateOfDecision
-              - -confirmedDateOfDecision
+              - -ConfirmedDateOfDecision
+              - ConfirmedDateOfDecision
               - +Stage
               - -Stage
+              - Stage
 
       responses:
         '200':

@@ -7,7 +7,9 @@ const getApplication = async (id) => {
 const createQueryFilters = (query) => {
 	// Pagination
 	const pageNo = parseInt(query?.page) || 1;
-	const size = Math.min(parseInt(query?.size) || 25, 100);
+	const defaultSize = 25;
+	const maxSize = 100;
+	const size = Math.min(parseInt(query?.size) || defaultSize, maxSize);
 
 	// Sorting
 	const allowedSortFieldsWithDirection = [
@@ -16,9 +18,10 @@ const createQueryFilters = (query) => {
 		'DateOfDCOSubmission',
 		'ConfirmedDateOfDecision',
 		'Stage'
-	].flatMap((field) => [`+${field}`, `-${field}`]);
+	].flatMap((field) => [field, `+${field}`, `-${field}`]);
 
-	const sort = allowedSortFieldsWithDirection.includes(query?.sort) ? query?.sort : '+ProjectName';
+	const defaultSort = '+ProjectName';
+	const sort = allowedSortFieldsWithDirection.includes(query?.sort) ? query?.sort : defaultSort;
 	const sortDirection = sort?.startsWith('-') ? 'DESC' : 'ASC';
 	const sortFieldName = sort?.replace(/^[+-]/, '');
 
