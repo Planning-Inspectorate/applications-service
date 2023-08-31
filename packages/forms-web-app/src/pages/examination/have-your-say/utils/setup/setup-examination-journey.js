@@ -1,4 +1,4 @@
-const { getAppData } = require('../../../../../services/application.service');
+const { getAppData } = require('../../../../../services/applications.service');
 const { setupHasComeDirect } = require('./setup-has-come-direct');
 const {
 	getExaminationTimetableId,

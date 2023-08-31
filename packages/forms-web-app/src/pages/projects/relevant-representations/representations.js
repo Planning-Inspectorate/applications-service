@@ -1,4 +1,4 @@
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const { formatDate } = require('../../../utils/date-utils');
 const { titleCase } = require('../../../utils/string-case');
 const { searchRepresentations } = require('../../../lib/application-api-wrapper');
