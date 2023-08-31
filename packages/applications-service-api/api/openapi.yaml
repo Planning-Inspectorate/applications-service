@@ -63,6 +63,29 @@ paths:
             minimum: 1
             maximum: 100
           description: Page size for results
+        - in: query
+          name: sort
+          example: +ProjectName
+          required: false
+          schema:
+            type: string
+            enum:
+              - +ProjectName
+              - -ProjectName
+              - ProjectName
+              - +PromoterName
+              - -PromoterName
+              - PromoterName
+              - +DateOfDCOSubmission
+              - -DateOfDCOSubmission
+              - DateOfDCOSubmission
+              - +ConfirmedDateOfDecision
+              - -ConfirmedDateOfDecision
+              - ConfirmedDateOfDecision
+              - +Stage
+              - -Stage
+              - Stage
+
       responses:
         '200':
           description: Returns all applications
