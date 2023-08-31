@@ -1,5 +1,6 @@
 const { getProjectSearch } = require('./controller');
 const { getApplications } = require('../../../services/applications.service');
+const { applicationsDataFixture } = require('../../_fixtures');
 
 jest.mock('../../../lib/application-api-wrapper');
 
@@ -14,7 +15,7 @@ describe('controllers/project-search', () => {
 
 	beforeEach(() => {
 		req = {
-			query: 'test-query'
+			query: { sortBy: '-applicant', itemsPerPage: '25' }
 		};
 		res = { render: jest.fn() };
 		next = jest.fn;
@@ -24,7 +25,7 @@ describe('controllers/project-search', () => {
 	describe('#ProjectSearch', () => {
 		it('should call the correct template', async () => {
 			getApplications.mockResolvedValue({
-				applications: [],
+				applications: applicationsDataFixture,
 				pagination: {
 					totalItems: 1,
 					currentPage: 1,
@@ -34,7 +35,20 @@ describe('controllers/project-search', () => {
 			});
 			await getProjectSearch(req, res, next);
 			expect(res.render).toHaveBeenCalledWith('projects/project-search/view.njk', {
-				applications: [],
+				applications: [
+					{
+						applicant: 'EDF',
+						pageURL: '/projects/TR010001',
+						projectName: 'Accessibility Test',
+						stage: 'Examination'
+					},
+					{
+						applicant: 'John Agent Burke',
+						pageURL: '/projects/TR023024',
+						projectName: 'April 7 2020',
+						stage: 'Pre-application'
+					}
+				],
 				pagination: {
 					pageOptions: [1],
 					paginationData: {
@@ -46,20 +60,40 @@ describe('controllers/project-search', () => {
 						totalPages: 1
 					}
 				},
-				paginationQueryString: '?',
+				paginationQueryString: '?sortBy=-applicant&itemsPerPage=25&page=:page',
 				resultsPerPage: {
-					fifty: { active: false, link: '?0=t&1=e&2=s&3=t&4=-&5=q&6=u&7=e&8=r&9=y', size: 50 },
+					fifty: {
+						active: false,
+						link: '?sortBy=-applicant&itemsPerPage=50',
+						size: 50
+					},
 					oneHundred: {
 						active: false,
-						link: '?0=t&1=e&2=s&3=t&4=-&5=q&6=u&7=e&8=r&9=y',
+						link: '?sortBy=-applicant&itemsPerPage=100',
 						size: 100
 					},
-					twentyFive: { active: true, link: '?0=t&1=e&2=s&3=t&4=-&5=q&6=u&7=e&8=r&9=y', size: 25 }
+					twentyFive: {
+						active: true,
+						link: '?sortBy=-applicant&itemsPerPage=25',
+						size: 25
+					}
 				},
 				sortByLinks: [
-					{ link: '?', name: 'Project name', sort: 'none' },
-					{ link: '?', name: 'Applicant', sort: 'none' },
-					{ link: '?', name: 'Stage', sort: 'none' }
+					{
+						link: '?sortBy=%2BprojectName&itemsPerPage=25',
+						name: 'Project name',
+						sort: 'none'
+					},
+					{
+						link: '?sortBy=%2Bapplicant&itemsPerPage=25',
+						name: 'Applicant',
+						sort: 'descending'
+					},
+					{
+						link: '?sortBy=%2Bstage&itemsPerPage=25',
+						name: 'Stage',
+						sort: 'none'
+					}
 				]
 			});
 		});
