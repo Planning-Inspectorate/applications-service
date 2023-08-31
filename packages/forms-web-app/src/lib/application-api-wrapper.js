@@ -89,7 +89,7 @@ exports.getProjectData = async (case_ref) => {
 	return handler('getProjectData', `/api/v1/applications/${case_ref}`);
 };
 
-exports.getAllProjectList = async (queryString) =>
+exports.getAllProjectList = async (queryString = '') =>
 	handler('getAllProjectList', `/api/v1/applications${queryString}`);
 
 exports.searchDocumentList = async (case_ref, search_data) => {

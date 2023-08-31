@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { Status } = require('../../../utils/status');
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const { formatDate } = require('../../../utils/date-utils');
 const config = require('../../../config');
 const logger = require('../../../lib/logger');
