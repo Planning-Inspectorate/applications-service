@@ -1,7 +1,13 @@
-const db = require('../models');
-
+const {
+	getApplication: getApplicationFromApplicationRepository,
+	getAllApplications: getAllApplicationsFromApplicationRepository,
+	getAllApplicationsCount: getAllApplicationsCountFromApplicationRepository
+} = require('../repositories/project.ni.repository');
+const addMapZoomLvlAndLongLat =
+	require('../utils/add-map-zoom-and-longlat').addMapZoomLvlAndLongLat;
 const getApplication = async (id) => {
-	return await db.Project.findOne({ where: { CaseReference: id } });
+	const application = await getApplicationFromApplicationRepository(id);
+	return addMapZoomLvlAndLongLat(application.dataValues);
 };
 const createQueryFilters = (query) => {
 	// Pagination
@@ -35,15 +41,15 @@ const createQueryFilters = (query) => {
 const getAllApplications = async (query) => {
 	const { pageNo, size, offset, order } = createQueryFilters(query);
 
-	const count = await db.Project.count();
-	const applications = await db.Project.findAll({
+	const count = await getAllApplicationsCountFromApplicationRepository();
+	const applications = await getAllApplicationsFromApplicationRepository({
 		offset,
 		limit: size,
 		order
 	});
 
 	return {
-		applications,
+		applications: applications.map((document) => addMapZoomLvlAndLongLat(document.dataValues)),
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),
@@ -51,14 +57,43 @@ const getAllApplications = async (query) => {
 	};
 };
 
-const getAllApplicationsDownload = async () => {
-	return db.Project.findAll({
-		order: [['ProjectName', 'ASC']]
-	});
+const getAllApplicationsDownloadInBatches = async (readableStream) => {
+	const batchSize = 100;
+	let skip = 0;
+	let hasMore = true;
+	let isFirstBatch = true;
+
+	while (hasMore) {
+		const applications = await getAllApplicationsFromApplicationRepository({
+			offset: skip,
+			limit: batchSize,
+			order: [['ProjectName', 'ASC']]
+		});
+
+		if (skip === 0) isFirstBatch = true;
+		skip += batchSize;
+		hasMore = applications.length === batchSize;
+
+		if (applications.length > 0) {
+			const mappedApplications = applications.map((item) =>
+				addMapZoomLvlAndLongLat(item.dataValues)
+			);
+			// Set the CSV Header key to toggle the first csv string to capture headers
+			if (isFirstBatch) {
+				mappedApplications.setCSVHeader = true;
+				isFirstBatch = false;
+			}
+			// Push the batch of items to the readable stream
+			readableStream.push(mappedApplications);
+		}
+	}
+
+	// Signal the end of the stream
+	readableStream.push(null);
 };
 
 module.exports = {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsDownload
+	getAllApplicationsDownloadInBatches
 };
