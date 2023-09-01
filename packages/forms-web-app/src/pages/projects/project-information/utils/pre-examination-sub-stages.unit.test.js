@@ -67,7 +67,18 @@ describe('#getPreExaminationSubStage', () => {
 				RULE_6_PUBLISHED_REPS: false
 			});
 		});
+		it('when today is after closed date and websiteDate is null - should return sub stages CLOSED_REPS: true', () => {
+			const response = getPreExaminationSubStage(openDatePast, closedDatePast, null);
+			expect(response).toEqual({
+				PRE_REPS: false,
+				OPEN_REPS: false,
+				CLOSED_REPS: true,
+				PUBLISHED_REPS: false,
+				RULE_6_PUBLISHED_REPS: false
+			});
+		});
 	});
+
 	describe('Reps published', () => {
 		it('when today is after website publish date - should return sub stages PUBLISHED_REPS: true', () => {
 			const response = getPreExaminationSubStage(openDatePast, closedDatePast, websiteDatePast);

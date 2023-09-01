@@ -20,7 +20,10 @@ function getPreExaminationSubStage(openDate, closedDate, websiteDate, rule6 = fa
 		(dayToday.isBefore(dayClosedDate) || closedDate === null)
 	)
 		subStages.OPEN_REPS = true;
-	else if (dayToday.isAfter(dayClosedDate) && dayToday.isBefore(dayWebsiteDate))
+	else if (
+		dayToday.isAfter(dayClosedDate) &&
+		(dayToday.isBefore(dayWebsiteDate) || websiteDate === null)
+	)
 		subStages.CLOSED_REPS = true;
 	else if (rule6) {
 		if (dayToday.isAfter(dayWebsiteDate) && rule6) subStages.RULE_6_PUBLISHED_REPS = true;
