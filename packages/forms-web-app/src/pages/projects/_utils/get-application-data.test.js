@@ -1,6 +1,6 @@
 const { getApplicationData } = require('./get-application-data');
-const { getAppData } = require('../../../services/application.service');
-jest.mock('../../../services/application.service', () => ({
+const { getAppData } = require('../../../services/applications.service');
+jest.mock('../../../services/applications.service', () => ({
 	getAppData: jest.fn()
 }));
 

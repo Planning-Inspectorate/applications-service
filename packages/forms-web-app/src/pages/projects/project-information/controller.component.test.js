@@ -4,7 +4,7 @@ const HTMLParser = require('node-html-parser');
 const app = require('../../../app');
 const request = supertest(app);
 const { getProjectUpdatesSuccessfulFixture } = require('../../_fixtures');
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const {
 	getTimetables,
 	getProjectUpdates,
@@ -29,7 +29,7 @@ jest.mock('../../../lib/application-api-wrapper', () => ({
 	getDocumentByType: jest.fn()
 }));
 
-jest.mock('../../../services/application.service', () => ({
+jest.mock('../../../services/applications.service', () => ({
 	getAppData: jest.fn()
 }));
 
