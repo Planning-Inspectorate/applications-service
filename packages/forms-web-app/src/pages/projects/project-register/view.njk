@@ -1,0 +1,30 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% block script %}
+  {% set initiateScriptsConfig = (initiateScriptsConfig.push(
+	{
+      callback: "window.GOVUKFrontend.initAll();",
+      src: "/assets/govuk/all.js"
+    }
+	), initiateScriptsConfig) %}
+{% endblock %}
+
+{% block pageTitle %}
+	Register of applicants
+{% endblock %}
+
+{% block content %}
+	<section>
+		<h1 class="govuk-heading-l">Register of applicants</h1>
+		<p class="govuk-body">
+			Below is a list of all applications submitted since 2008. This complies with Section 39 of the Planning Act 2008.
+		</p>
+		<p class="govuk-body">
+			Search by project name or applicant.
+		</p>
+		{% include "./includes/applications-table.njk" %}
+	</section>
+
+{% endblock %}
