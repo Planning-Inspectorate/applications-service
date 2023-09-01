@@ -1,8 +1,10 @@
 const { StatusCodes } = require('http-status-codes');
 const logger = require('../lib/logger');
+const { mapApplicationsToCSV } = require('../utils/map-to-csv');
 const {
 	getApplication: getApplicationFromApplicationApiService,
-	getAllApplications: getAllApplicationsFromApplicationApiService
+	getAllApplications: getAllApplicationsFromApplicationApiService,
+	getAllApplicationsDownload: getAllApplicationsDownloadFromApplicationApiService
 } = require('../services/application.service');
 const ApiError = require('../error/apiError');
 
@@ -41,6 +43,24 @@ const getAllApplications = async (req, res) => {
 	res.status(StatusCodes.OK).send(response);
 };
 
+const getAllApplicationsDownload = async (req, res) => {
+	logger.debug(`Retrieving all applications for download ...`);
+
+	const applications = await getAllApplicationsDownloadFromApplicationApiService(req.query);
+
+	if (!applications) throw ApiError.noApplicationsFound();
+
+	const mappedApplications = applications.map((document) =>
+		addMapZoomLvlAndLongLat(document.dataValues)
+	);
+
+	const response = mapApplicationsToCSV(mappedApplications);
+
+	res.setHeader('Content-Type', 'text/csv');
+	res.setHeader('Content-Disposition', 'attachment; filename=applications.csv');
+	res.status(StatusCodes.OK).send(response);
+};
+
 const addMapZoomLvlAndLongLat = (document) => {
 	const area = ['COUNTRY', 'REGION', 'COUNTY', 'BOROUGH', 'DISTRICT', 'CITY', 'TOWN', 'JUNCTION'];
 	const MAPZOOMLVL_OFFSET = 5;
@@ -66,5 +86,6 @@ const addMapZoomLvlAndLongLat = (document) => {
 
 module.exports = {
 	getApplication,
-	getAllApplications
+	getAllApplications,
+	getAllApplicationsDownload
 };

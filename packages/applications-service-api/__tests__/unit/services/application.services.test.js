@@ -1,4 +1,8 @@
-const { getApplication, getAllApplications } = require('../../../src/services/application.service');
+const {
+	getApplication,
+	getAllApplications,
+	getAllApplicationsDownload
+} = require('../../../src/services/application.service');
 const db = require('../../../src/models');
 
 jest.mock('../../../src/models', () => ({
@@ -199,6 +203,25 @@ describe('application.service', () => {
 				totalPages: 4,
 				currentPage: 1
 			});
+		});
+	});
+	describe('getAllApplicationsDownload', () => {
+		it('calls db.Project.findAll', async () => {
+			// Act
+			await getAllApplicationsDownload();
+			// Assert
+			expect(db.Project.findAll).toHaveBeenCalledWith({
+				order: [['ProjectName', 'ASC']]
+			});
+		});
+		it('returns result', async () => {
+			// Arrange
+			const mockApplications = [{ foo: 'bar' }];
+			db.Project.findAll.mockResolvedValueOnce(mockApplications);
+			// Act
+			const result = await getAllApplicationsDownload();
+			// Assert
+			expect(result).toEqual(mockApplications);
 		});
 	});
 });

@@ -19,6 +19,7 @@ const getApplicationsRoute = (req, res, next) => {
 	return asyncRoute(route)(req, res, next);
 };
 
+router.get('/download', applicationsController.getAllApplicationsDownload);
 router.get('/:caseReference', validateRequestWithOpenAPI, getApplicationsRoute);
 router.get('/', applicationsController.getAllApplications);
 

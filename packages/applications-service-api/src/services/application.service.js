@@ -3,7 +3,6 @@ const db = require('../models');
 const getApplication = async (id) => {
 	return await db.Project.findOne({ where: { CaseReference: id } });
 };
-
 const createQueryFilters = (query) => {
 	// Pagination
 	const pageNo = parseInt(query?.page) || 1;
@@ -52,7 +51,14 @@ const getAllApplications = async (query) => {
 	};
 };
 
+const getAllApplicationsDownload = async () => {
+	return db.Project.findAll({
+		order: [['ProjectName', 'ASC']]
+	});
+};
+
 module.exports = {
 	getApplication,
-	getAllApplications
+	getAllApplications,
+	getAllApplicationsDownload
 };

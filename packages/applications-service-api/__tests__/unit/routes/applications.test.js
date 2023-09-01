@@ -13,12 +13,19 @@ describe('routes/applications', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(get).toHaveBeenCalledWith(
+		expect(get.mock.calls.length).toBe(3);
+
+		expect(get.mock.calls[0][0]).toBe(
+			'/download',
+			applicationsController.getAllApplicationsDownload
+		);
+
+		expect(get.mock.calls[1][0]).toBe(
 			'/:caseReference',
 			validateRequestWithOpenAPI,
-			expect.any(Function)
+			applicationsController.getApplication
 		);
-		expect(get.mock.calls[0][2].name).toEqual('getApplicationsRoute');
-		expect(get).toHaveBeenCalledWith('/', applicationsController.getAllApplications);
+
+		expect(get.mock.calls[2][0]).toBe('/', applicationsController.getAllApplications);
 	});
 });
