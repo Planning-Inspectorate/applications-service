@@ -38,12 +38,18 @@ describe('controllers/project-search', () => {
 				applications: [
 					{
 						applicant: 'EDF',
+						applicationDate: '01 Jan 2020',
+						decisionDate: '',
+						location: 'Somerset - Monday PM 23/12',
 						pageURL: '/projects/TR010001',
 						projectName: 'Accessibility Test',
 						stage: 'Examination'
 					},
 					{
 						applicant: 'John Agent Burke',
+						applicationDate: '',
+						decisionDate: '',
+						location: 'Bristol',
 						pageURL: '/projects/TR023024',
 						projectName: 'April 7 2020',
 						stage: 'Pre-application'
@@ -80,17 +86,17 @@ describe('controllers/project-search', () => {
 				},
 				sortByLinks: [
 					{
-						link: '?sortBy=%2BprojectName&itemsPerPage=25',
+						link: '?sortBy=%2BprojectName&itemsPerPage=25&page=1',
 						name: 'Project name',
 						sort: 'none'
 					},
 					{
-						link: '?sortBy=%2Bapplicant&itemsPerPage=25',
+						link: '?sortBy=%2Bapplicant&itemsPerPage=25&page=1',
 						name: 'Applicant',
 						sort: 'descending'
 					},
 					{
-						link: '?sortBy=%2Bstage&itemsPerPage=25',
+						link: '?sortBy=%2Bstage&itemsPerPage=25&page=1',
 						name: 'Stage',
 						sort: 'none'
 					}

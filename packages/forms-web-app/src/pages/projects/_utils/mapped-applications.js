@@ -1,7 +1,7 @@
 const dayjs = require('dayjs');
 const { projectStages } = require('../../../utils/project-stages');
 
-const formatDate = (date, format = 'DD MMM YYYY') => dayjs(date).format(format);
+const formatDate = (date, format = 'DD MMM YYYY') => (date ? dayjs(date).format(format) : '');
 
 const mappedApplications = (applications) =>
 	applications.map((application) => ({

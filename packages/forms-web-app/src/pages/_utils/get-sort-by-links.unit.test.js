@@ -1,6 +1,6 @@
 const { getSortByLinks } = require('./get-sort-by-links');
 
-const sampleQuery1 = { sortBy: '+stage', itemsPerPage: '10', page: '1' };
+const sampleQuery1 = { sortBy: '+stage', itemsPerPage: '10' };
 const sampleQuery2 = { sortBy: '-applicant', itemsPerPage: '25' };
 
 const labels1 = [
@@ -48,9 +48,17 @@ describe('pages/_utils', () => {
 			]);
 
 			expect(result2).toEqual([
-				{ link: '?sortBy=%2BprojectName&itemsPerPage=25', name: 'Project name', sort: 'none' },
-				{ link: '?sortBy=%2Bapplicant&itemsPerPage=25', name: 'Applicant', sort: 'descending' },
-				{ link: '?sortBy=%2Bstage&itemsPerPage=25', name: 'Stage', sort: 'none' }
+				{
+					link: '?sortBy=%2BprojectName&itemsPerPage=25&page=1',
+					name: 'Project name',
+					sort: 'none'
+				},
+				{
+					link: '?sortBy=%2Bapplicant&itemsPerPage=25&page=1',
+					name: 'Applicant',
+					sort: 'descending'
+				},
+				{ link: '?sortBy=%2Bstage&itemsPerPage=25&page=1', name: 'Stage', sort: 'none' }
 			]);
 		});
 

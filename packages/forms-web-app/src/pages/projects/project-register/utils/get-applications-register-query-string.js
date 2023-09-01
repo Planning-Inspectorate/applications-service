@@ -1,6 +1,6 @@
 const { buildQueryString } = require('../../../_utils/build-query-string');
 
-const getProjectSearchQueryString = ({ page, pageSize, sortBy }) =>
-	buildQueryString({ page, pageSize, sortBy });
+const getApplicationsRegisterQueryString = ({ page = 1, itemsPerPage: size = 25, sortBy }) =>
+	buildQueryString({ page, size, sortBy });
 
-module.exports = { getProjectSearchQueryString };
+module.exports = { getApplicationsRegisterQueryString };

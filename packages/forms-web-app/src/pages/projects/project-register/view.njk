@@ -1,7 +1,5 @@
 {% extends "layouts/default.njk" %}
 
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-
 {% block script %}
   {% set initiateScriptsConfig = (initiateScriptsConfig.push(
 	{
@@ -24,7 +22,9 @@
 		<p class="govuk-body">
 			Search by project name or applicant.
 		</p>
+		{% include "./includes/results-per-page.njk" %}
 		{% include "./includes/applications-table.njk" %}
+		{% include "./includes/pagination.njk" %}
 	</section>
 
 {% endblock %}

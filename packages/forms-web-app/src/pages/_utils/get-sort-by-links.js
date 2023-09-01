@@ -30,6 +30,7 @@ const getSortByLink = (query, { name, value }) => {
 		const { direction, sort } = getDirectionAndSort(localQuery.sortBy, value);
 
 		localQuery.sortBy = `${direction}${value}`;
+		localQuery.page = 1;
 
 		sortByLink.link = buildQueryString(localQuery);
 		sortByLink.sort = sort;
