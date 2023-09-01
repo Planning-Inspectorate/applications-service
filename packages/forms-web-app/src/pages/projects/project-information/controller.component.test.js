@@ -162,7 +162,7 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).toContain(
-						'At this stage you can register to have your say about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
+						'This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
 					);
 					expect(response.text).toMatchSnapshot();
 				});

@@ -1,5 +1,7 @@
 {% set preRepsDescText %}
-	At this stage you can register to have your say about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
+	At this stage you can
+	<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">
+		register to have your say</a> about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
 	<br>
 	<br>
 	<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">
@@ -10,7 +12,10 @@
 {% endset %}
 
 {% set repsOpenDescText %}
-	If you want to comment on this proposed project, you can now register to have your say. {% if applicationData.DateOfRelevantRepresentationClose %}Registration closes on {{ applicationData.DateOfRelevantRepresentationClose | date }} at 23:59  {% endif %}
+	If you want to comment on this proposed project, you can now
+  <a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">
+		register to have your say.</a>
+  {% if applicationData.DateOfRelevantRepresentationClose %}Registration closes on {{ applicationData.DateOfRelevantRepresentationClose | date }} at 23:59  {% endif %}
 	<br>
 	<br>
 	<a href=' /projects/{{ caseRef }}/register/register-have-your-say' class="govuk-button">
@@ -50,6 +55,11 @@
 	 <br>
 	 <br>
 	 In this meeting, the examining authority sets out how they examine the application. This includes the examination timetable and the issues they will focus on during examination.
+   <br>
+   <br>
+   <a href='/having-your-say-guide/get-involved-preliminary-meeting' class="govuk-link">
+		 Find out more about getting involved in the preliminary meeting.
+   </a>
  {% endset %}
 
 <p class="govuk-body">
