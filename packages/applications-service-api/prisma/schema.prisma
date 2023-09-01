@@ -60,11 +60,11 @@ model Representation {
   referenceId                    String?
   status                         String?
   dateReceived                   DateTime?
-  originalRepresentation         String    @db.NText
+  originalRepresentation         String    @db.NVarChar(4000)
   redacted                       Boolean   @default(false)
-  redactedRepresentation         String?   @db.NText
+  redactedRepresentation         String?   @db.NVarChar(4000)
   redactedBy                     String?
-  redactedNotes                  String?   @db.NText
+  redactedNotes                  String?   @db.NVarChar(4000)
   representationFrom             String?
   representationType             String?
   registerFor                    String?
