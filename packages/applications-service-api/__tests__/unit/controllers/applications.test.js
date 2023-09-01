@@ -143,7 +143,6 @@ describe('getAllApplicationsDownload', () => {
 
 		const applicationsCSV = res._getData();
 
-		console.log({ applicationsCSV });
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 		const applicationsCSVArray = applicationsCSV.split('\n');
 		expect(applicationsCSVArray.length).toBe(3);
