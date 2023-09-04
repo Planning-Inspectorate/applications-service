@@ -17,17 +17,17 @@ model Document {
   caseRef                String?
   representationId       Int?
   documentReference      String?
-  version                String
+  version                String?
   examinationRefNo       String?
-  filename               String
-  originalFilename       String
-  size                   Int
+  filename               String?
+  originalFilename       String?
+  size                   Int?
   mime                   String?
-  documentURI            String
+  documentURI            String?
   path                   String?
   virusCheckStatus       String?
   fileMD5                String?
-  dateCreated            String
+  dateCreated            String?
   lastModified           String?
   caseType               String?
   documentStatus         String?
