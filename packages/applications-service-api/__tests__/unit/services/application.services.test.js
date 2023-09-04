@@ -1,13 +1,14 @@
 const {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsDownloadInBatches
+	getAllApplicationsDownload
 } = require('../../../src/services/application.service');
 const {
 	getApplication: getApplicationRepository,
 	getAllApplications: getAllApplicationsRepository,
 	getAllApplicationsCount: getAllApplicationsCountRepository
 } = require('../../../src/repositories/project.ni.repository');
+const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const { APPLICATION_FO } = require('../../__data__/application');
 
 jest.mock('../../../src/repositories/project.ni.repository', () => ({
@@ -15,6 +16,8 @@ jest.mock('../../../src/repositories/project.ni.repository', () => ({
 	getAllApplications: jest.fn(),
 	getAllApplicationsCount: jest.fn()
 }));
+
+jest.mock('../../../src/utils/map-applications-to-csv', () => jest.fn());
 
 describe('application.service', () => {
 	describe('getApplication', () => {
@@ -220,15 +223,14 @@ describe('application.service', () => {
 		});
 	});
 	describe('getAllApplicationsDownload', () => {
-		const mockReadableStream = {
-			push: jest.fn()
-		};
+		const mockResult = 'csv-foo';
 		beforeEach(() => {
 			getAllApplicationsRepository.mockResolvedValueOnce([{ dataValues: APPLICATION_FO }]);
+			mapApplicationsToCSV.mockResolvedValueOnce(mockResult);
 		});
 		it('calls getAllApplicationsRepository', async () => {
 			// Act
-			await getAllApplicationsDownloadInBatches(mockReadableStream);
+			await getAllApplicationsDownload();
 			// Assert
 			expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 				offset: 0,
@@ -236,11 +238,24 @@ describe('application.service', () => {
 				order: [['ProjectName', 'ASC']]
 			});
 		});
+		it('calls mapApplicationsToCSV with applications', async () => {
+			// Act
+			await getAllApplicationsDownload();
+			// Assert
+			expect(mapApplicationsToCSV).toHaveBeenCalledWith([
+				{
+					...APPLICATION_FO,
+					MapZoomLevel: 6,
+					LatLong: undefined,
+					LongLat: ['-0.70283147423378', '53.620078025496']
+				}
+			]);
+		});
 		it('returns result', async () => {
 			// Act
-			await getAllApplicationsDownloadInBatches(mockReadableStream);
+			const result = await getAllApplicationsDownload();
 			// Assert
-			expect(mockReadableStream.push).toHaveBeenCalled();
+			expect(result).toEqual(mockResult);
 		});
 	});
 });

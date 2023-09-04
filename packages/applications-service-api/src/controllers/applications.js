@@ -3,11 +3,9 @@ const logger = require('../lib/logger');
 const {
 	getApplication: getApplicationFromApplicationApiService,
 	getAllApplications: getAllApplicationsFromApplicationApiService,
-	getAllApplicationsDownloadInBatches: getAllApplicationsDownloadInBatchesApiService
+	getAllApplicationsDownload: getAllApplicationsDownloadApiService
 } = require('../services/application.service');
 const ApiError = require('../error/apiError');
-const TransformToCSV = require('../utils/stream-applications-to-csv');
-const { Readable } = require('stream');
 
 const getApplication = async (req, res) => {
 	const { caseReference } = req.params;
@@ -45,15 +43,12 @@ const getAllApplications = async (req, res) => {
 const getAllApplicationsDownload = async (req, res) => {
 	logger.debug(`Retrieving all applications for download ...`);
 
-	const readableStream = new Readable({ objectMode: true });
-	readableStream._read = () => {};
-	const transformToCSV = new TransformToCSV({ objectMode: true });
-
 	res.setHeader('Content-Type', 'text/csv');
 	res.setHeader('Content-Disposition', 'attachment; filename=applications.csv');
 
-	getAllApplicationsDownloadInBatchesApiService(readableStream);
-	readableStream.pipe(transformToCSV).pipe(res);
+	const response = await getAllApplicationsDownloadApiService();
+
+	res.status(StatusCodes.OK).send(response);
 };
 
 module.exports = {

@@ -3,6 +3,7 @@ const {
 	getAllApplications: getAllApplicationsFromApplicationRepository,
 	getAllApplicationsCount: getAllApplicationsCountFromApplicationRepository
 } = require('../repositories/project.ni.repository');
+const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const addMapZoomLvlAndLongLat =
 	require('../utils/add-map-zoom-and-longlat').addMapZoomLvlAndLongLat;
 const getApplication = async (id) => {
@@ -57,43 +58,16 @@ const getAllApplications = async (query) => {
 	};
 };
 
-const getAllApplicationsDownloadInBatches = async (readableStream) => {
-	const batchSize = 100;
-	let skip = 0;
-	let hasMore = true;
-	let isFirstBatch = true;
-
-	while (hasMore) {
-		const applications = await getAllApplicationsFromApplicationRepository({
-			offset: skip,
-			limit: batchSize,
-			order: [['ProjectName', 'ASC']]
-		});
-
-		if (skip === 0) isFirstBatch = true;
-		skip += batchSize;
-		hasMore = applications.length === batchSize;
-
-		if (applications.length > 0) {
-			const mappedApplications = applications.map((item) =>
-				addMapZoomLvlAndLongLat(item.dataValues)
-			);
-			// Set the CSV Header key to toggle the first csv string to capture headers
-			if (isFirstBatch) {
-				mappedApplications.setCSVHeader = true;
-				isFirstBatch = false;
-			}
-			// Push the batch of items to the readable stream
-			readableStream.push(mappedApplications);
-		}
-	}
-
-	// Signal the end of the stream
-	readableStream.push(null);
+const getAllApplicationsDownload = async () => {
+	const applications = await getAllApplicationsFromApplicationRepository();
+	const applicationsWithMapZoomLvlAndLongLat = applications.map((document) =>
+		addMapZoomLvlAndLongLat(document.dataValues)
+	);
+	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
 };
 
 module.exports = {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsDownloadInBatches
+	getAllApplicationsDownload
 };
