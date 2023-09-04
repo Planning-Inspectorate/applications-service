@@ -7,7 +7,7 @@ const addMapZoomLvlAndLongLat =
 	require('../utils/add-map-zoom-and-longlat').addMapZoomLvlAndLongLat;
 const getApplication = async (id) => {
 	const application = await getApplicationFromApplicationRepository(id);
-	return addMapZoomLvlAndLongLat(application.dataValues);
+	return application?.dataValues ? addMapZoomLvlAndLongLat(application.dataValues) : null;
 };
 const createQueryFilters = (query) => {
 	// Pagination

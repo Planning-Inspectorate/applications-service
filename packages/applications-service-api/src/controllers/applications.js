@@ -49,11 +49,10 @@ const getAllApplicationsDownload = async (req, res) => {
 	readableStream._read = () => {};
 	const transformToCSV = new TransformToCSV({ objectMode: true });
 
-	getAllApplicationsDownloadInBatchesApiService(readableStream);
-
 	res.setHeader('Content-Type', 'text/csv');
 	res.setHeader('Content-Disposition', 'attachment; filename=applications.csv');
 
+	getAllApplicationsDownloadInBatchesApiService(readableStream);
 	readableStream.pipe(transformToCSV).pipe(res);
 };
 

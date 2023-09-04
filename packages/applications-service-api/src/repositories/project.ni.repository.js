@@ -5,11 +5,11 @@ const getApplication = async (id) => {
 };
 
 const getAllApplications = async (options) => {
-	return db.Project.findAll(options);
+	return await db.Project.findAll(options);
 };
 
 const getAllApplicationsCount = async () => {
-	return db.Project.count();
+	return await db.Project.count();
 };
 
 module.exports = {

@@ -1,45 +1,52 @@
 const {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsDownload
+	getAllApplicationsDownloadInBatches
 } = require('../../../src/services/application.service');
-const db = require('../../../src/models');
+const {
+	getApplication: getApplicationRepository,
+	getAllApplications: getAllApplicationsRepository,
+	getAllApplicationsCount: getAllApplicationsCountRepository
+} = require('../../../src/repositories/project.ni.repository');
+const { APPLICATION_FO } = require('../../__data__/application');
 
-jest.mock('../../../src/models', () => ({
-	Project: {
-		findOne: jest.fn(),
-		findAll: jest.fn(),
-		count: jest.fn()
-	}
+jest.mock('../../../src/repositories/project.ni.repository', () => ({
+	getApplication: jest.fn(),
+	getAllApplications: jest.fn(),
+	getAllApplicationsCount: jest.fn()
 }));
+
 describe('application.service', () => {
 	describe('getApplication', () => {
 		const mockCaseReference = 'EN000001';
-		it('calls db.Project.findOne with caseReference id', async () => {
+		it('calls getApplicationRepository with caseReference id', async () => {
+			// Arrange
+			getApplicationRepository.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 			// Act
 			await getApplication(mockCaseReference);
 			// Assert
-			expect(db.Project.findOne).toHaveBeenCalledWith({
-				where: { CaseReference: mockCaseReference }
-			});
+			expect(getApplicationRepository).toHaveBeenCalledWith(mockCaseReference);
 		});
 
 		it('returns result', async () => {
 			// Arrange
-			const mockProject = { foo: 'bar' };
-			db.Project.findOne.mockResolvedValueOnce(mockProject);
+			getApplicationRepository.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 			// Act
 			const result = await getApplication(mockCaseReference);
 			// Assert
-			expect(result).toEqual(mockProject);
+			expect(result).toEqual({
+				...APPLICATION_FO,
+				MapZoomLevel: 6,
+				LatLong: undefined,
+				LongLat: ['-0.70283147423378', '53.620078025496']
+			});
 		});
 	});
 	describe('getAllApplications', () => {
 		const mockCount = 100;
-		const mockApplications = [{ foo: 'bar' }];
 		beforeEach(() => {
-			db.Project.count.mockResolvedValueOnce(mockCount);
-			db.Project.findAll.mockResolvedValueOnce(mockApplications);
+			getAllApplicationsCountRepository.mockResolvedValueOnce(mockCount);
+			getAllApplicationsRepository.mockResolvedValueOnce([{ dataValues: APPLICATION_FO }]);
 		});
 		describe('pagination', () => {
 			describe('when page num', () => {
@@ -52,7 +59,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ page: mockPageNum, size: mockPageSize });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: mockPageSize * (mockPageNum - 1),
 							limit: mockPageSize,
 							order: [['ProjectName', 'ASC']]
@@ -66,7 +73,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ size: mockPageSize });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: mockPageSize,
 							order: [['ProjectName', 'ASC']]
@@ -82,7 +89,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ size: mockPageSize });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: mockPageSize,
 							order: [['ProjectName', 'ASC']]
@@ -94,7 +101,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ size: 101 });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: 100,
 							order: [['ProjectName', 'ASC']]
@@ -106,7 +113,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({});
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: 25,
 							order: [['ProjectName', 'ASC']]
@@ -129,7 +136,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ sort });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: 25,
 							order: [[sort, 'ASC']]
@@ -152,7 +159,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ sort });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: 25,
 							order
@@ -164,7 +171,7 @@ describe('application.service', () => {
 						// Act
 						await getAllApplications({ sort: 'foo' });
 						// Assert
-						expect(db.Project.findAll).toHaveBeenCalledWith({
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 							offset: 0,
 							limit: 25,
 							order: [['ProjectName', 'ASC']]
@@ -177,7 +184,7 @@ describe('application.service', () => {
 					// Act
 					await getAllApplications({});
 					// Assert
-					expect(db.Project.findAll).toHaveBeenCalledWith({
+					expect(getAllApplicationsRepository).toHaveBeenCalledWith({
 						offset: 0,
 						limit: 25,
 						order: [['ProjectName', 'ASC']]
@@ -186,18 +193,25 @@ describe('application.service', () => {
 			});
 		});
 
-		it('calls db.Project.count', async () => {
+		it('calls getAllApplicationsCountRepository', async () => {
 			// Act
 			await getAllApplications({});
 			// Assert
-			expect(db.Project.count).toHaveBeenCalled();
+			expect(getAllApplicationsCountRepository).toHaveBeenCalled();
 		});
 		it('returns result', async () => {
 			// Act
 			const result = await getAllApplications({});
 			// Assert
 			expect(result).toEqual({
-				applications: mockApplications,
+				applications: [
+					{
+						...APPLICATION_FO,
+						MapZoomLevel: 6,
+						LatLong: undefined,
+						LongLat: ['-0.70283147423378', '53.620078025496']
+					}
+				],
 				totalItems: mockCount,
 				itemsPerPage: 25,
 				totalPages: 4,
@@ -206,22 +220,27 @@ describe('application.service', () => {
 		});
 	});
 	describe('getAllApplicationsDownload', () => {
-		it('calls db.Project.findAll', async () => {
+		const mockReadableStream = {
+			push: jest.fn()
+		};
+		beforeEach(() => {
+			getAllApplicationsRepository.mockResolvedValueOnce([{ dataValues: APPLICATION_FO }]);
+		});
+		it('calls getAllApplicationsRepository', async () => {
 			// Act
-			await getAllApplicationsDownload();
+			await getAllApplicationsDownloadInBatches(mockReadableStream);
 			// Assert
-			expect(db.Project.findAll).toHaveBeenCalledWith({
+			expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+				offset: 0,
+				limit: 100,
 				order: [['ProjectName', 'ASC']]
 			});
 		});
 		it('returns result', async () => {
-			// Arrange
-			const mockApplications = [{ foo: 'bar' }];
-			db.Project.findAll.mockResolvedValueOnce(mockApplications);
 			// Act
-			const result = await getAllApplicationsDownload();
+			await getAllApplicationsDownloadInBatches(mockReadableStream);
 			// Assert
-			expect(result).toEqual(mockApplications);
+			expect(mockReadableStream.push).toHaveBeenCalled();
 		});
 	});
 });
