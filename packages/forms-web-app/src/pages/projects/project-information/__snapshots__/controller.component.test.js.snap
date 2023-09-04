@@ -7560,7 +7560,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 <p class=\\"govuk-body\\">
 	
 		
-	At this stage you can register to have your say about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
+	At this stage you can
+	<a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">
+		register to have your say</a> about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
 	<br>
 	<br>
 	<a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">
