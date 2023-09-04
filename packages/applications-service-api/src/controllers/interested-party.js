@@ -91,7 +91,7 @@ module.exports = {
 			}
 
 			const { DateOfRelevantRepresentationClose, Region, ProjectName, ProjectEmailAddress } =
-				project.dataValues;
+				project;
 			const projectData = { Region, ProjectName, ProjectEmailAddress };
 
 			const repCloseDate = new Date(DateOfRelevantRepresentationClose);

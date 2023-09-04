@@ -3,6 +3,7 @@ const {
 	updateSubmission,
 	completeSubmission
 } = require('../../../src/services/submission.service');
+const { APPLICATION_FO } = require('../../__data__/application');
 
 jest.mock('../../../src/lib/notify');
 const sendSubmissionNotificationMock =
@@ -168,13 +169,9 @@ describe('submission service', () => {
 				email: 'someone@example.com',
 				caseReference: 'EN010116'
 			};
-			const projectData = {
-				ProjectName: 'some project',
-				ProjectEmailAddress: 'project@example.com'
-			};
 
 			mockSubmissionFindOne.mockResolvedValueOnce(submissionData);
-			mockProjectFindOne.mockResolvedValueOnce(projectData);
+			mockProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 
 			const mockTime = new Date('2022-12-09 13:30:00');
 
@@ -192,8 +189,8 @@ describe('submission service', () => {
 				submissionId: submissionId,
 				email: 'someone@example.com',
 				project: {
-					name: 'some project',
-					email: 'project@example.com'
+					name: APPLICATION_FO.ProjectName,
+					email: APPLICATION_FO.ProjectEmailAddress
 				}
 			});
 		});

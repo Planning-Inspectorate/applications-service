@@ -1,9 +1,15 @@
-const db = require('../models');
-
+const {
+	getApplication: getApplicationFromApplicationRepository,
+	getAllApplications: getAllApplicationsFromApplicationRepository,
+	getAllApplicationsCount: getAllApplicationsCountFromApplicationRepository
+} = require('../repositories/project.ni.repository');
+const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
+const addMapZoomLvlAndLongLat =
+	require('../utils/add-map-zoom-and-longlat').addMapZoomLvlAndLongLat;
 const getApplication = async (id) => {
-	return await db.Project.findOne({ where: { CaseReference: id } });
+	const application = await getApplicationFromApplicationRepository(id);
+	return application?.dataValues ? addMapZoomLvlAndLongLat(application.dataValues) : null;
 };
-
 const createQueryFilters = (query) => {
 	// Pagination
 	const pageNo = parseInt(query?.page) || 1;
@@ -36,15 +42,15 @@ const createQueryFilters = (query) => {
 const getAllApplications = async (query) => {
 	const { pageNo, size, offset, order } = createQueryFilters(query);
 
-	const count = await db.Project.count();
-	const applications = await db.Project.findAll({
+	const count = await getAllApplicationsCountFromApplicationRepository();
+	const applications = await getAllApplicationsFromApplicationRepository({
 		offset,
 		limit: size,
 		order
 	});
 
 	return {
-		applications,
+		applications: applications.map((document) => addMapZoomLvlAndLongLat(document.dataValues)),
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),
@@ -52,7 +58,16 @@ const getAllApplications = async (query) => {
 	};
 };
 
+const getAllApplicationsDownload = async () => {
+	const applications = await getAllApplicationsFromApplicationRepository();
+	const applicationsWithMapZoomLvlAndLongLat = applications.map((document) =>
+		addMapZoomLvlAndLongLat(document.dataValues)
+	);
+	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
+};
+
 module.exports = {
 	getApplication,
-	getAllApplications
+	getAllApplications,
+	getAllApplicationsDownload
 };

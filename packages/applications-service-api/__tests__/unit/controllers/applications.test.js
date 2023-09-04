@@ -1,7 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
-const { getApplication, getAllApplications } = require('../../../src/controllers/applications');
+const {
+	getApplication,
+	getAllApplications,
+	getAllApplicationsDownload
+} = require('../../../src/controllers/applications');
 const { APPLICATION_FO } = require('../../__data__/application');
 
 jest.mock('../../../src/services/application.service');
@@ -11,6 +15,9 @@ const mockGetApplicationService =
 jest.mock('../../../src/services/application.service');
 const mockGetAllApplications =
 	require('../../../src/services/application.service').getAllApplications;
+
+const mockGetAllApplicationsDownload =
+	require('../../../src/services/application.service').getAllApplicationsDownload;
 
 const project = {
 	CaseReference: 'EN010116',
@@ -56,7 +63,10 @@ describe('getApplication', () => {
 
 	it('should get application from mock', async () => {
 		mockGetApplicationService.mockResolvedValueOnce({
-			dataValues: APPLICATION_FO
+			...APPLICATION_FO,
+			MapZoomLevel: 6,
+			LatLong: undefined,
+			LongLat: ['-0.70283147423378', '53.620078025496']
 		});
 
 		const req = httpMocks.createRequest({
@@ -99,14 +109,21 @@ describe('getAllApplications', () => {
 
 	it('should get all applications from mock', async () => {
 		mockGetAllApplications.mockResolvedValue({
-			applications: [{ dataValues: APPLICATION_FO }],
+			applications: [
+				{
+					...APPLICATION_FO,
+					MapZoomLevel: 6,
+					LatLong: undefined,
+					LongLat: ['-0.70283147423378', '53.620078025496']
+				}
+			],
 			totalItems: 1,
 			currentPage: 1,
 			itemsPerPage: 25,
 			totalPages: 1
 		});
 
-		const req = httpMocks.createRequest({});
+		const req = httpMocks.createRequest();
 		const res = httpMocks.createResponse();
 
 		await getAllApplications(req, res);
@@ -120,5 +137,21 @@ describe('getAllApplications', () => {
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 		expect(applications.length).toBe(1);
 		expect(dataValue).toEqual({ ...project });
+	});
+});
+
+describe('getAllApplicationsDownload', () => {
+	afterEach(() => mockGetApplicationService.mockClear());
+
+	it('should get all applications from mock', async () => {
+		mockGetAllApplicationsDownload.mockResolvedValue('csv-foo');
+
+		const req = httpMocks.createRequest();
+		const res = httpMocks.createResponse();
+
+		await getAllApplicationsDownload(req, res);
+
+		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+		expect(res._getData()).toEqual('csv-foo');
 	});
 });
