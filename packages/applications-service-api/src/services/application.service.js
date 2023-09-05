@@ -4,12 +4,13 @@ const {
 	getAllApplicationsCount: getAllApplicationsCountFromApplicationRepository
 } = require('../repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
-const addMapZoomLvlAndLongLat =
-	require('../utils/add-map-zoom-and-longlat').addMapZoomLvlAndLongLat;
+const { addMapZoomLvlAndLongLat } = require('../utils/add-map-zoom-and-longlat');
+
 const getApplication = async (id) => {
 	const application = await getApplicationFromApplicationRepository(id);
 	return application?.dataValues ? addMapZoomLvlAndLongLat(application.dataValues) : null;
 };
+
 const createQueryFilters = (query) => {
 	// Pagination
 	const pageNo = parseInt(query?.page) || 1;
