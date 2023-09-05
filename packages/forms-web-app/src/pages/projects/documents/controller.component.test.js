@@ -1,11 +1,11 @@
 const { getApplicationDocuments } = require('./controller');
 const { searchDocumentsV3 } = require('../../../services/document.service');
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const {
 	searchExaminationLibraryDocument
 } = require('./utils/documents/search-examination-library-document');
 
-jest.mock('../../../services/application.service', () => ({
+jest.mock('../../../services/applications.service', () => ({
 	getAppData: jest.fn()
 }));
 jest.mock('../../../services/document.service', () => ({

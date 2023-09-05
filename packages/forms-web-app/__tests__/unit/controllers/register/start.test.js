@@ -1,10 +1,10 @@
 const startController = require('../../../../src/controllers/register/start');
-const { getAppData } = require('../../../../src/services/application.service');
+const { getAppData } = require('../../../../src/services/applications.service');
 const { mockReq, mockRes } = require('../../mocks');
 
 jest.mock('../../../../src/lib/logger');
 
-jest.mock('../../../../src/services/application.service');
+jest.mock('../../../../src/services/applications.service');
 
 describe('controllers/register/start', () => {
 	let res;

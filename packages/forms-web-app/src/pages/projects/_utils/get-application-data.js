@@ -1,10 +1,11 @@
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const dayjs = require('dayjs');
 
 const badDateToNull = (date) => (date === '0000-00-00' ? null : date);
 
 const add28DaysToDate = (date) => (date ? dayjs(date).add(28, 'days').toISOString() : null);
+
 const getApplicationData = async (case_ref) => {
 	const { data, resp_code } = await getAppData(case_ref);
 	if (resp_code !== 200) throw new Error('Application response status not 200');
