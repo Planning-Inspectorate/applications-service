@@ -36,8 +36,10 @@ describe('lib/application-api-wrapper', () => {
 	describe('getAllProjectList', () => {
 		it(`should call the expected URL`, async () => {
 			fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
-			await getAllProjectList();
-			expect(fetch.mock.calls[0][0]).toEqual('http://fake.url/api/v1/applications');
+			await getAllProjectList('?sortBy=-projectName');
+			expect(fetch.mock.calls[0][0]).toEqual(
+				'http://fake.url/api/v1/applications?sortBy=-projectName'
+			);
 		});
 	});
 

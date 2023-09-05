@@ -1,9 +1,9 @@
 const { setupExaminationJourney } = require('./setup-examination-journey');
+const { getAppData } = require('../../../../../services/applications.service');
 
-const { getAppData } = require('../../../../../services/application.service');
 const { getTimetables } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('../../../../../services/application.service', () => ({
+jest.mock('../../../../../services/applications.service', () => ({
 	getAppData: jest.fn()
 }));
 jest.mock('../../../../../lib/application-api-wrapper', () => ({

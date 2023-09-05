@@ -1,0 +1,7 @@
+{% from "macros/pagination-bar.njk" import paginationBar %}
+
+{{ paginationBar(
+  pagination.pageOptions,
+  pagination.paginationData,
+  paginationQueryString
+) }}

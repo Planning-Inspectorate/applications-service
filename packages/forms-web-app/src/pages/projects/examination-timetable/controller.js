@@ -1,5 +1,5 @@
 const logger = require('../../../lib/logger');
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const { getPageData } = require('./utils/get-page-data');
 const {
 	routesConfig: {

@@ -172,41 +172,15 @@
 
 	<section class="govuk-grid-column-three-quarters">
 		<h1 class="govuk-heading-l">Projects</h1>
+
 		<p class="govuk-body">
 			This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
 		</p>
-		<div>
-			<table class="govuk-table">
-				<thead class="govuk-table__head">
-				<tr class="govuk-table__row">
-					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Project name</th>
-					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Applicant</th>
-					<th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Stage</th>
-				</tr>
-				</thead>
-				<tbody class="govuk-table__body">
 
-				{% for project in projectList %}
-					<tr class="govuk-table__row">
-						<td class="govuk-table__cell">
-							<a class="govuk-link" href="/projects/{{ project.caseRef }}">{{ project.projectName }}</a>
-						</td>
-						<td class="govuk-table__cell">{{ project.promoterName }}</td>
-						<td class="govuk-table__cell">
-							{{ project.stage }}
-						</td>
-					</tr>
-				{% endfor %}
+		{% include "./includes/results-per-page.njk" %}
 
-				</tbody>
-			</table>
-		</div>
+		{% include "./includes/projects.njk" %}
 
-		<p class="govuk-body govuk-!-font-weight-bold">Displaying 1-12 of {{ noOfProjects }}</p>
-
-		<div>
-			<a href="#" class="govuk-link govuk-link--no-underline">1</a>
-			<a href="#" class="govuk-link" style="margin-left: 10px;">2</a>
-			<a href="#" class="govuk-link" style="margin-left: 10px;">Next</a>
-		</div>
+		{% include "./includes/pagination.njk" %}
+	</section>
 {% endblock %}
