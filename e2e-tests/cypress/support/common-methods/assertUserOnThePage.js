@@ -63,11 +63,11 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/register-have-your-say');
 			break;
 		case 'north lincolnshire green energy park project information':
-			cy.title().should('eq', 'North Lincolnshire Green Energy Park project overview');
+			cy.title().should('eq', 'North Lincolnshire Green Energy Park - Project Information');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('North Lincolnshire Green Energy Park');
+					expect(text).to.contain('Project Information');
 				});
 			cy.url().should('include', '/projects/EN010116');
 			break;

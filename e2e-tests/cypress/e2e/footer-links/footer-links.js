@@ -23,9 +23,6 @@ And('I click on {string} footer link', (linkType) => {
 		case 'Cookies':
 			cy.get('[data-cy="Cookies"]').click();
 			break;
-		case 'The Planning Inspectorate':
-			cy.clickOnHref('http://planninginspectorate.gov.uk/');
-			break;
 	}
 });
 
