@@ -75,6 +75,8 @@ describe('project-search/controller', () => {
 							stage: 'Acceptance (review of the application)'
 						}
 					],
+					pageHeading: 'Projects',
+					pageTitle: 'Project search',
 					pagination: {
 						pageOptions: [1],
 						paginationData: {
@@ -87,6 +89,7 @@ describe('project-search/controller', () => {
 						}
 					},
 					paginationQueryString: '?page=:page',
+					query: {},
 					resultsPerPage: {
 						twentyFive: {
 							active: true,
