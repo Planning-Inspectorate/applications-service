@@ -5,6 +5,7 @@ const applicationsControllerV2 = require('../controllers/applications.v2');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const config = require('../lib/config');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
+const { normaliseArrayQueryParams } = require('../middleware/normaliseArrayQueryParams');
 
 const router = express.Router();
 
@@ -21,6 +22,11 @@ const getApplicationsRoute = (req, res, next) => {
 
 router.get('/download', applicationsController.getAllApplicationsDownload);
 router.get('/:caseReference', validateRequestWithOpenAPI, getApplicationsRoute);
-router.get('/', applicationsController.getAllApplications);
+router.get(
+	'',
+	normaliseArrayQueryParams(['stage', 'region', 'sector']),
+	validateRequestWithOpenAPI,
+	applicationsController.getAllApplications
+);
 
 module.exports = router;

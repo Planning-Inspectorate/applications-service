@@ -34,6 +34,7 @@ describe('project ni repository', () => {
 			expect(result).toEqual(mockProject);
 		});
 	});
+
 	describe('getAllApplications', () => {
 		const mockProjects = [
 			{
@@ -47,7 +48,8 @@ describe('project ni repository', () => {
 		];
 		const mockOptions = {
 			offset: 0,
-			limit: 10
+			limit: 10,
+			raw: true
 		};
 		beforeAll(() => {
 			// Arrange
@@ -66,6 +68,7 @@ describe('project ni repository', () => {
 			expect(result).toEqual(mockProjects);
 		});
 	});
+
 	describe('getAllApplicationsCount', () => {
 		const mockCount = 10;
 		beforeAll(() => {

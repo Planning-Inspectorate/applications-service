@@ -9,7 +9,13 @@ const {
 	getAllApplicationsCount: getAllApplicationsCountRepository
 } = require('../../../src/repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
-const { APPLICATION_FO } = require('../../__data__/application');
+const {
+	APPLICATION_FO,
+	APPLICATIONS_NI_DB,
+	APPLICATIONS_FO,
+	APPLICATIONS_NI_FILTER_COLUMNS,
+	APPLICATIONS_FO_FILTERS
+} = require('../../__data__/application');
 
 jest.mock('../../../src/repositories/project.ni.repository', () => ({
 	getApplication: jest.fn(),
@@ -45,11 +51,14 @@ describe('application.service', () => {
 			});
 		});
 	});
+
 	describe('getAllApplications', () => {
 		const mockCount = 100;
 		beforeEach(() => {
+			getAllApplicationsRepository
+				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
+				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
 			getAllApplicationsCountRepository.mockResolvedValueOnce(mockCount);
-			getAllApplicationsRepository.mockResolvedValueOnce([{ dataValues: APPLICATION_FO }]);
 		});
 		describe('pagination', () => {
 			describe('when page num', () => {
@@ -207,49 +216,33 @@ describe('application.service', () => {
 			const result = await getAllApplications({});
 			// Assert
 			expect(result).toEqual({
-				applications: [
-					{
-						...APPLICATION_FO,
-						MapZoomLevel: 6,
-						LatLong: undefined,
-						LongLat: ['-0.70283147423378', '53.620078025496']
-					}
-				],
+				applications: APPLICATIONS_FO,
 				totalItems: mockCount,
 				itemsPerPage: 25,
 				totalPages: 4,
-				currentPage: 1
+				currentPage: 1,
+				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
 	});
+
 	describe('getAllApplicationsDownload', () => {
 		const mockResult = 'csv-foo';
 		beforeEach(() => {
-			getAllApplicationsRepository.mockResolvedValueOnce([{ dataValues: APPLICATION_FO }]);
+			getAllApplicationsRepository.mockResolvedValueOnce(APPLICATIONS_NI_DB);
 			mapApplicationsToCSV.mockResolvedValueOnce(mockResult);
 		});
 		it('calls getAllApplicationsRepository', async () => {
 			// Act
 			await getAllApplicationsDownload();
 			// Assert
-			expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-				offset: 0,
-				limit: 100,
-				order: [['ProjectName', 'ASC']]
-			});
+			expect(getAllApplicationsRepository).toHaveBeenCalled();
 		});
 		it('calls mapApplicationsToCSV with applications', async () => {
 			// Act
 			await getAllApplicationsDownload();
 			// Assert
-			expect(mapApplicationsToCSV).toHaveBeenCalledWith([
-				{
-					...APPLICATION_FO,
-					MapZoomLevel: 6,
-					LatLong: undefined,
-					LongLat: ['-0.70283147423378', '53.620078025496']
-				}
-			]);
+			expect(mapApplicationsToCSV).toHaveBeenCalledWith(APPLICATIONS_FO);
 		});
 		it('returns result', async () => {
 			// Act

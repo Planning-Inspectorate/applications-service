@@ -1,4 +1,10 @@
-const { APPLICATION_DB, APPLICATION_FO } = require('../__data__/application');
+const {
+	APPLICATION_BO_DB,
+	APPLICATIONS_NI_DB,
+	APPLICATIONS_NI_FILTER_COLUMNS,
+	APPLICATIONS_FO,
+	APPLICATIONS_FO_FILTERS
+} = require('../__data__/application');
 const { request } = require('../__data__/supertest');
 
 const mockFindUnique = jest.fn();
@@ -25,7 +31,7 @@ describe('/api/v1/applications', () => {
 
 		describe('Back Office case', () => {
 			it('given case with caseReference exists, returns 200', async () => {
-				mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
+				mockFindUnique.mockResolvedValueOnce(APPLICATION_BO_DB);
 
 				const response = await request.get('/api/v1/applications/EN0110004');
 
@@ -81,27 +87,25 @@ describe('/api/v1/applications', () => {
 			});
 		});
 	});
+
 	describe('get all applications', () => {
 		it('happy path', async () => {
-			mockFindAll.mockResolvedValueOnce([{ dataValues: APPLICATION_FO }]);
-			mockCount.mockResolvedValueOnce(1);
+			mockFindAll
+				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
+				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
+
+			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
 
 			const response = await request.get('/api/v1/applications');
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				applications: [
-					{
-						...APPLICATION_FO,
-						LatLong: undefined,
-						LongLat: APPLICATION_FO.LatLong.split(',').reverse(),
-						MapZoomLevel: 6
-					}
-				],
+				applications: APPLICATIONS_FO,
 				currentPage: 1,
 				itemsPerPage: 25,
-				totalItems: 1,
-				totalPages: 1
+				totalItems: 5,
+				totalPages: 1,
+				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
 	});

@@ -1,5 +1,5 @@
 const config = require('../lib/config');
-const toCamelCase = require('lodash.camelcase');
+const toCamelCase = require('lodash').camelCase;
 
 const LABEL_MAPPING = {
 	stage: {
