@@ -1,7 +1,6 @@
 {% extends "layouts/default.njk" %}
 
 {% block content %}
-
 	<section>
 		<h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
@@ -13,11 +12,14 @@
 			Search by project name or applicant.
 		</p>
 
-		{% include "./includes/results-per-page.njk" %}
+		{% include "./includes/search.njk" %}
 
-		{% include "./includes/applications-table.njk" %}
-
-		{% include "./includes/pagination.njk" %}
+		{% if applications | length %}
+			{% include "./includes/results-per-page.njk" %}
+			{% include "./includes/applications-table.njk" %}
+			{% include "./includes/pagination.njk" %}
+		{% else %}
+			{% include "./includes/no-matching-results.njk" %}
+		{% endif %}
 	</section>
-
 {% endblock %}

@@ -13,7 +13,9 @@ describe('register-of-applications/utils/get-register-of-applications-query-stri
 				});
 
 				it('should return the default register of applications query string', () => {
-					expect(registerOfApplicationsQueryString).toEqual('?page=1&size=25&sort=');
+					expect(registerOfApplicationsQueryString).toEqual(
+						'?page=1&searchTerm=&size=25&sort=ProjectName'
+					);
 				});
 			});
 
@@ -30,7 +32,7 @@ describe('register-of-applications/utils/get-register-of-applications-query-stri
 
 				it('should return the default register of applications query string', () => {
 					expect(registerOfApplicationsQueryString).toEqual(
-						'?page=2&size=50&sort=mock%20sort%20by'
+						'?page=2&searchTerm=&size=50&sort=mock%20sort%20by'
 					);
 				});
 			});
