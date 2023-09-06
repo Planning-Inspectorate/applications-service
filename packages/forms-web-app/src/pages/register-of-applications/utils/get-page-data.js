@@ -16,7 +16,8 @@ const getPageData = (applications, query, pagination) => ({
 	pagination: getPagination(pagination),
 	paginationQueryString: buildPaginationQueryString(query),
 	sortByLinks: getRegisterOfApplicationsSortByLinks(query),
-	resultsPerPage: documentsPerPage(query)
+	resultsPerPage: documentsPerPage(query),
+	query
 });
 
 module.exports = {

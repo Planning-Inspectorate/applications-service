@@ -80,6 +80,7 @@ describe('register-of-applications/controller', () => {
 						}
 					},
 					paginationQueryString: '?page=:page',
+					query: {},
 					resultsPerPage: {
 						fifty: { active: false, link: '?itemsPerPage=50', size: 50 },
 						oneHundred: { active: false, link: '?itemsPerPage=100', size: 100 },
