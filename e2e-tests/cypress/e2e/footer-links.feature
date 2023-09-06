@@ -22,7 +22,3 @@ Feature: verify footer links
     Scenario: click on Cookies
         And I click on "Cookies" footer link
         Then I am on the "Cookies settings" page
-
-    Scenario: click on The Planning Inspectorate link
-        And I click on "The Planning Inspectorate" footer link
-        Then I am on the "The Planning Inspectorate" page

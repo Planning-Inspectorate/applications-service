@@ -37,4 +37,4 @@ Feature: Overview page
 
     Scenario: click on Find out more about registering to have your say
         And I click on Find out more about registering to have your say
-        Then I am on the "Having your say about a national infrastructure project" page
+        Then I am on the "registering to have your say about a national infrastructure project" page
