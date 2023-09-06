@@ -1,0 +1,8 @@
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+
+<form method="get">
+  {{ uiSearchBar('project-search-search-bar', 'searchTerm', query.searchTerm, 'Search projects') }}
+
+  <input type="hidden" name="itemsPerPage" value="{{ query.itemsPerPage }}">
+  <input type="hidden" name="sortBy" value="{{ query.sortBy }}">
+</form>

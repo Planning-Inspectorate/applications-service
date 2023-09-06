@@ -11,7 +11,7 @@ describe('project-search/utils/get-project-search-query-string', () => {
 				});
 
 				it('should return the default project search query string', () => {
-					expect(projectSearchQueryString).toEqual('?page=1&size=25&sort=');
+					expect(projectSearchQueryString).toEqual('?page=1&searchTerm=&size=25&sort=ProjectName');
 				});
 			});
 
@@ -27,7 +27,9 @@ describe('project-search/utils/get-project-search-query-string', () => {
 				});
 
 				it('should return the default project search query string', () => {
-					expect(projectSearchQueryString).toEqual('?page=2&size=50&sort=mock%20sort%20by');
+					expect(projectSearchQueryString).toEqual(
+						'?page=2&searchTerm=&size=50&sort=mock%20sort%20by'
+					);
 				});
 			});
 		});
