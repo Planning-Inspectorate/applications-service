@@ -32,7 +32,7 @@ The monorepo comprises of several packages:
   - depends on `redis` for storing session data
 - **applications-service-api**: Web API serving data to the website
   - depends on `mysql` (NI database), and `mssql` (local Back Office database projection)
-- **back-office-subscribers**: Azure Function App for publishing and consuming Service Bus events on various topics
+- **back-office-subscribers**: Azure Function App for publishing and consuming Service Bus events on various topics. Mainly uses [output bindings](https://github.com/Azure/azure-functions-sql-extension#azure-sql-bindings-for-azure-functions---preview) to insert/update data into the SQL Server database.
 - **e2e_tests**: Cypress test suite
 
 ## Pre-requisites

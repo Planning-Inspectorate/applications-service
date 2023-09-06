@@ -11,10 +11,6 @@
 	), initiateScriptsConfig) %}
 {% endblock %}
 
-{% block pageTitle %}
-	Project search
-{% endblock %}
-
 {% block content %}
 
 <div class="govuk-grid-row">
@@ -171,16 +167,26 @@
 	</section>
 
 	<section class="govuk-grid-column-three-quarters">
-		<h1 class="govuk-heading-l">Projects</h1>
+		<h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
 		<p class="govuk-body">
 			This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
 		</p>
 
-		{% include "./includes/results-per-page.njk" %}
+		{% include "./includes/search.njk" %}
 
-		{% include "./includes/projects.njk" %}
+		{% if applications | length %}
 
-		{% include "./includes/pagination.njk" %}
+			{% include "./includes/results-per-page.njk" %}
+
+			{% include "./includes/projects.njk" %}
+
+			{% include "./includes/pagination.njk" %}
+
+		{% else %}
+
+			{% include "./includes/no-matching-results.njk" %}
+
+		{% endif %}
 	</section>
 {% endblock %}
