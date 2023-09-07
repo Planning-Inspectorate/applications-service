@@ -173,6 +173,12 @@
 			This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
 		</p>
 
+		{% if applications | length %}
+			<p class="govuk-body">
+				<a class="govuk-link" href="/api/v1/applications/download">Download a table containing a complete list of all {{ applications | length }} projects (CSV)</a>
+			</p>
+		{% endif %}
+
 		{% include "./includes/search.njk" %}
 
 		{% if applications | length %}
