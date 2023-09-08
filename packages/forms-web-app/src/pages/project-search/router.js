@@ -1,8 +1,9 @@
 const express = require('express');
 const { getProjectSearch } = require('./controller');
 
+const projectSearchRoute = 'project-search';
 const projectSearchRouter = express.Router();
 
-projectSearchRouter.get('/project-search', getProjectSearch);
+projectSearchRouter.get(`/${projectSearchRoute}`, getProjectSearch);
 
-module.exports = { projectSearchRouter };
+module.exports = { projectSearchRoute, projectSearchRouter };

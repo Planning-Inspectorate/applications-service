@@ -1,8 +1,9 @@
 const express = require('express');
 const { getRegisterOfApplications } = require('./controller');
 
+const registerOfApplicationsRoute = 'register-of-applications';
 const registerOfApplicationsRouter = express.Router();
 
-registerOfApplicationsRouter.get('/register-of-applications', getRegisterOfApplications);
+registerOfApplicationsRouter.get(`/${registerOfApplicationsRoute}`, getRegisterOfApplications);
 
-module.exports = { registerOfApplicationsRouter };
+module.exports = { registerOfApplicationsRoute, registerOfApplicationsRouter };
