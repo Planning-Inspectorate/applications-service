@@ -1,5 +1,5 @@
 const {
-	APPLICATION_BO_DB,
+	APPLICATION_DB,
 	APPLICATIONS_NI_DB,
 	APPLICATIONS_NI_FILTER_COLUMNS,
 	APPLICATIONS_FO,
@@ -31,7 +31,7 @@ describe('/api/v1/applications', () => {
 
 		describe('Back Office case', () => {
 			it('given case with caseReference exists, returns 200', async () => {
-				mockFindUnique.mockResolvedValueOnce(APPLICATION_BO_DB);
+				mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
 
 				const response = await request.get('/api/v1/applications/EN0110004');
 

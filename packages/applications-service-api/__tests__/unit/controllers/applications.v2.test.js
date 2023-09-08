@@ -6,7 +6,7 @@ const {
 	getApplication: getApplicationService
 } = require('../../../src/services/application.v2.service');
 const { getApplication } = require('../../../src/controllers/applications.v2');
-const { APPLICATION_BO_DB } = require('../../__data__/application');
+const { APPLICATION_DB } = require('../../__data__/application');
 
 describe('applications v2 controller', () => {
 	let res;
@@ -24,7 +24,7 @@ describe('applications v2 controller', () => {
 			};
 
 			it('given application data, returns correct field mapping', async () => {
-				getApplicationService.mockResolvedValueOnce(APPLICATION_BO_DB);
+				getApplicationService.mockResolvedValueOnce(APPLICATION_DB);
 
 				await getApplication(req, res);
 				const responseBody = res._getData();

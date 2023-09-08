@@ -25,6 +25,7 @@ const NI_MAPPING = {
 const mapFilterLabelToApi = (name, value) => {
 	switch (name) {
 		case 'stage':
+			return NI_MAPPING[name].find((field) => field.ni === Number(value))?.label;
 		case 'sector':
 			return NI_MAPPING[name].find((field) => field.ni === value)?.label;
 		case 'region':
@@ -35,6 +36,7 @@ const mapFilterLabelToApi = (name, value) => {
 const mapFilterValueToApi = (name, value) => {
 	switch (name) {
 		case 'stage':
+			return NI_MAPPING[name].find((field) => field.ni === Number(value))?.api;
 		case 'sector':
 			return NI_MAPPING[name].find((field) => field.ni === value)?.api;
 		case 'region':

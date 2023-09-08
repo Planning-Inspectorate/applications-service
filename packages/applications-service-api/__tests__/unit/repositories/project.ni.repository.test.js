@@ -1,7 +1,8 @@
 const {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsCount
+	getAllApplicationsCount,
+	GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
 } = require('../../../src/repositories/project.ni.repository');
 const db = require('../../../src/models');
 
@@ -59,7 +60,10 @@ describe('project ni repository', () => {
 			// Act
 			await getAllApplications(mockOptions);
 			// Assert
-			expect(db.Project.findAll).toBeCalledWith(mockOptions);
+			expect(db.Project.findAll).toBeCalledWith({
+				...mockOptions,
+				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
+			});
 		});
 		it('returns the result of findAll', async () => {
 			// Act
