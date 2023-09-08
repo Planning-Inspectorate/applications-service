@@ -1,3 +1,5 @@
+const { parseInteger } = require('../utils/parse');
+
 /**
  * coerce non-array query param value into array
  * @param {string[]} paramNames
@@ -11,4 +13,12 @@ const normaliseArrayQueryParams = (paramNames) => (req, res, next) => {
 	next();
 };
 
-module.exports = { normaliseArrayQueryParams };
+const parseIntegerQueryParams = (paramNames) => (req, res, next) => {
+	paramNames.forEach((paramName) => {
+		const paramValue = req.query[paramName];
+		if (req.query && paramValue) req.query[paramName] = parseInteger(paramValue);
+	});
+	next();
+};
+
+module.exports = { normaliseArrayQueryParams, parseIntegerQueryParams };
