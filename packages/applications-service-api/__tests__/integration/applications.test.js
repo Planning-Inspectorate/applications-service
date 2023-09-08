@@ -6,6 +6,7 @@ const {
 	APPLICATIONS_FO_FILTERS
 } = require('../__data__/application');
 const { request } = require('../__data__/supertest');
+const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
 const mockFindAll = jest.fn();
@@ -97,6 +98,49 @@ describe('/api/v1/applications', () => {
 			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
 
 			const response = await request.get('/api/v1/applications');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				applications: APPLICATIONS_FO,
+				currentPage: 1,
+				itemsPerPage: 25,
+				totalItems: 5,
+				totalPages: 1,
+				filters: APPLICATIONS_FO_FILTERS
+			});
+		});
+
+		it('with filters applied', async () => {
+			mockFindAll
+				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
+				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
+
+			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
+
+			const queryString = [
+				'stage=acceptance',
+				'stage=recommendation',
+				'region=eastern',
+				'region=north_west',
+				'sector=energy',
+				'sector=transport'
+			].join('&');
+
+			const response = await request.get(`/api/v1/applications?${queryString}`);
+
+			expect(mockFindAll).toBeCalledWith(
+				expect.objectContaining({
+					where: {
+						[Op.and]: [
+							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
+							{ Stage: { [Op.in]: [2, 5] } },
+							{
+								[Op.or]: [{ Proposal: { [Op.like]: 'EN%' } }, { Proposal: { [Op.like]: 'TR%' } }]
+							}
+						]
+					}
+				})
+			);
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({

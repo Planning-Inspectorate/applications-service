@@ -12,9 +12,7 @@ const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv
 const {
 	APPLICATION_FO,
 	APPLICATIONS_NI_DB,
-	APPLICATIONS_FO,
-	APPLICATIONS_NI_FILTER_COLUMNS,
-	APPLICATIONS_FO_FILTERS
+	APPLICATIONS_FO
 } = require('../../__data__/application');
 
 jest.mock('../../../src/repositories/project.ni.repository', () => ({
@@ -54,9 +52,10 @@ describe('application.service', () => {
 
 	describe('getAllApplications', () => {
 		const mockCount = 100;
+		let availableFilters = [];
 		beforeEach(() => {
 			getAllApplicationsRepository
-				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
+				.mockResolvedValueOnce(availableFilters)
 				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
 			getAllApplicationsCountRepository.mockResolvedValueOnce(mockCount);
 		});
@@ -205,6 +204,27 @@ describe('application.service', () => {
 			});
 		});
 
+		describe('filtering', () => {
+			it('passes applied filters to repository in format for NI database', async () => {
+				await getAllApplications({
+					stage: ['pre_application', 'acceptance'],
+					region: ['eastern'],
+					sector: ['transport', 'energy']
+				});
+
+				expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+					offset: 0,
+					limit: 25,
+					order: [['ProjectName', 'ASC']],
+					filters: {
+						stage: [1, 2],
+						region: ['Eastern'],
+						sector: ['TR', 'EN']
+					}
+				});
+			});
+		});
+
 		it('calls getAllApplicationsCountRepository', async () => {
 			// Act
 			await getAllApplications({});
@@ -221,7 +241,7 @@ describe('application.service', () => {
 				itemsPerPage: 25,
 				totalPages: 4,
 				currentPage: 1,
-				filters: APPLICATIONS_FO_FILTERS
+				filters: availableFilters
 			});
 		});
 	});

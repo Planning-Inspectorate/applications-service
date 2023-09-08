@@ -81,8 +81,8 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	);
 
 	const filters = [];
-	for (let [field, filterValues] of Object.entries(mappedFilters)) {
-		for (let [value, count] of Object.entries(filterValues)) {
+	for (const [field, filterValues] of Object.entries(mappedFilters)) {
+		for (const [value, count] of Object.entries(filterValues)) {
 			const filter = {
 				name: field,
 				value: mapFilterValueToApi(field, value),
