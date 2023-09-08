@@ -1,14 +1,53 @@
 const {
-	getApplication: getApplicationFromApplicationRepository,
-	getAllApplications: getAllApplicationsFromApplicationRepository,
-	getAllApplicationsCount: getAllApplicationsCountFromApplicationRepository
+	getApplication: getApplicationRepository,
+	getAllApplications: getAllApplicationsRepository,
+	getAllApplicationsCount: getAllApplicationsCountRepository
 } = require('../repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const { addMapZoomLvlAndLongLat } = require('../utils/add-map-zoom-and-longlat');
+const {
+	buildApiFiltersFromNIApplications,
+	mapApplicationFiltersToNI
+} = require('../utils/application.mapper');
+const { isEmpty } = require('lodash');
 
 const getApplication = async (id) => {
-	const application = await getApplicationFromApplicationRepository(id);
+	const application = await getApplicationRepository(id);
 	return application?.dataValues ? addMapZoomLvlAndLongLat(application.dataValues) : null;
+};
+
+const getAllApplications = async (query) => {
+	const { pageNo, size, offset, order } = createQueryFilters(query);
+
+	const availableFilters = await getAvailableFilters();
+	const count = await getAllApplicationsCountRepository();
+
+	const repositoryOptions = {
+		offset,
+		limit: size,
+		order
+	};
+	const appliedFilters = mapApplicationFiltersToNI(query);
+	if (!isEmpty(appliedFilters)) repositoryOptions.filters = appliedFilters;
+
+	const applications = await getAllApplicationsRepository(repositoryOptions);
+
+	return {
+		applications: applications.map((document) => addMapZoomLvlAndLongLat(document)),
+		totalItems: count,
+		itemsPerPage: size,
+		totalPages: Math.ceil(Math.max(1, count) / size),
+		currentPage: pageNo,
+		filters: availableFilters
+	};
+};
+
+const getAllApplicationsDownload = async () => {
+	const applications = await getAllApplicationsRepository();
+	const applicationsWithMapZoomLvlAndLongLat = applications.map((document) =>
+		addMapZoomLvlAndLongLat(document)
+	);
+	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
 };
 
 const createQueryFilters = (query) => {
@@ -40,31 +79,11 @@ const createQueryFilters = (query) => {
 	};
 };
 
-const getAllApplications = async (query) => {
-	const { pageNo, size, offset, order } = createQueryFilters(query);
-
-	const count = await getAllApplicationsCountFromApplicationRepository();
-	const applications = await getAllApplicationsFromApplicationRepository({
-		offset,
-		limit: size,
-		order
+const getAvailableFilters = async () => {
+	const applications = await getAllApplicationsRepository({
+		attributes: ['Stage', 'Region', 'Proposal']
 	});
-
-	return {
-		applications: applications.map((document) => addMapZoomLvlAndLongLat(document.dataValues)),
-		totalItems: count,
-		itemsPerPage: size,
-		totalPages: Math.ceil(Math.max(1, count) / size),
-		currentPage: pageNo
-	};
-};
-
-const getAllApplicationsDownload = async () => {
-	const applications = await getAllApplicationsFromApplicationRepository();
-	const applicationsWithMapZoomLvlAndLongLat = applications.map((document) =>
-		addMapZoomLvlAndLongLat(document.dataValues)
-	);
-	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
+	return buildApiFiltersFromNIApplications(applications);
 };
 
 module.exports = {

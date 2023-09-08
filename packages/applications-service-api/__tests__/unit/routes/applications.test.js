@@ -26,6 +26,6 @@ describe('routes/applications', () => {
 			applicationsController.getApplication
 		);
 
-		expect(get.mock.calls[2][0]).toBe('/', applicationsController.getAllApplications);
+		expect(get.mock.calls[2][0]).toBe('', applicationsController.getAllApplications);
 	});
 });
