@@ -14,7 +14,7 @@ const getRegisterOfApplications = async (req, res, next) => {
 		const { applications, pagination } = await getApplications(
 			getRegisterOfApplicationsQueryString(query)
 		);
-
+		console.log('pageDATA;::>', getPageData(applications, query, pagination));
 		res.render(view, getPageData(applications, query, pagination));
 	} catch (error) {
 		logger.error(error);
