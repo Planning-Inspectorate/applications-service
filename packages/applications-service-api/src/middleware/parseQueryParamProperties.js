@@ -7,7 +7,7 @@ const { parseInteger } = require('../utils/parse');
  */
 const normaliseArrayQueryParams = (paramNames) => (req, res, next) => {
 	paramNames.forEach((paramName) => {
-		const paramValue = req.query[paramName];
+		const paramValue = req.query?.[paramName];
 		if (paramValue) req.query[paramName] = Array.isArray(paramValue) ? paramValue : [paramValue];
 	});
 	next();
@@ -15,8 +15,8 @@ const normaliseArrayQueryParams = (paramNames) => (req, res, next) => {
 
 const parseIntegerQueryParams = (paramNames) => (req, res, next) => {
 	paramNames.forEach((paramName) => {
-		const paramValue = req.query[paramName];
-		if (req.query && paramValue) req.query[paramName] = parseInteger(paramValue);
+		const paramValue = req.query?.[paramName];
+		if (paramValue) req.query[paramName] = parseInteger(paramValue);
 	});
 	next();
 };
