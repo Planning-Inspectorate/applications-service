@@ -10,7 +10,7 @@ const getProjectSearch = async (req, res, next) => {
 		const { query } = req;
 
 		const { applications, pagination } = await getApplications(getProjectSearchQueryString(query));
-		console.log('pageData SEARCH:: >:', getPageData(query, applications, pagination));
+
 		res.render(view, getPageData(query, applications, pagination));
 	} catch (error) {
 		logger.error(error);
