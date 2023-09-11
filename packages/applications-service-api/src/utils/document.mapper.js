@@ -1,5 +1,5 @@
 const config = require('../lib/config');
-const toCamelCase = require('lodash.camelcase');
+const toCamelCase = require('lodash').camelCase;
 
 const LABEL_MAPPING = {
 	stage: {
@@ -9,7 +9,7 @@ const LABEL_MAPPING = {
 		3: 'Pre-examination',
 		4: 'Examination',
 		5: 'Recommendation',
-		6: 'Recommendation and Decision',
+		6: 'Decision',
 		7: 'Post-decision',
 
 		// back office mapping

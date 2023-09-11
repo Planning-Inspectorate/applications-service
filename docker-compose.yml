@@ -62,7 +62,7 @@ services:
       - ./packages/common:/opt/app/packages/common
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
       - ./uploads:/opt/app/uploads
-    #    command: npm run start:dev:debug --workspace=packages/applications-service-api
+#    command: npm run start:dev:debug --workspace=packages/applications-service-api
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:

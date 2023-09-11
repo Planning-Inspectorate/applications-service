@@ -1,7 +1,8 @@
 const {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsCount
+	getAllApplicationsCount,
+	GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
 } = require('../../../src/repositories/project.ni.repository');
 const db = require('../../../src/models');
 
@@ -34,6 +35,7 @@ describe('project ni repository', () => {
 			expect(result).toEqual(mockProject);
 		});
 	});
+
 	describe('getAllApplications', () => {
 		const mockProjects = [
 			{
@@ -47,7 +49,8 @@ describe('project ni repository', () => {
 		];
 		const mockOptions = {
 			offset: 0,
-			limit: 10
+			limit: 10,
+			raw: true
 		};
 		beforeAll(() => {
 			// Arrange
@@ -57,7 +60,10 @@ describe('project ni repository', () => {
 			// Act
 			await getAllApplications(mockOptions);
 			// Assert
-			expect(db.Project.findAll).toBeCalledWith(mockOptions);
+			expect(db.Project.findAll).toBeCalledWith({
+				...mockOptions,
+				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
+			});
 		});
 		it('returns the result of findAll', async () => {
 			// Act
@@ -66,6 +72,7 @@ describe('project ni repository', () => {
 			expect(result).toEqual(mockProjects);
 		});
 	});
+
 	describe('getAllApplicationsCount', () => {
 		const mockCount = 10;
 		beforeAll(() => {
