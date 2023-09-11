@@ -55,6 +55,10 @@ describe('project-search/controller', () => {
 
 			it('should call the correct template', async () => {
 				expect(res.render).toHaveBeenCalledWith('project-search/view.njk', {
+					allProjectsSubNavigationRoutes: {
+						projectSearch: '/project-search',
+						registerOfApplications: '/register-of-applications'
+					},
 					applications: [
 						{
 							applicant: 'mock promoter first name 1 mock promoter last name 1',
