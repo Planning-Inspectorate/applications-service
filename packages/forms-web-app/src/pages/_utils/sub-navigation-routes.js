@@ -1,5 +1,5 @@
-const { projectSearchRoute } = require('../project-search/router');
-const { registerOfApplicationsRoute } = require('../register-of-applications/router');
+const { projectSearchRoute } = require('../project-search/config');
+const { registerOfApplicationsRoute } = require('../register-of-applications/config');
 
 const allProjectsSubNavigationRoutes = {
 	projectSearch: `/${projectSearchRoute}`,
