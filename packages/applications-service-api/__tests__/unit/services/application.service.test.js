@@ -225,6 +225,20 @@ describe('application.service', () => {
 			});
 		});
 
+		describe('searching', () => {
+			it('passes search term to repository', async () => {
+				// Act
+				await getAllApplications({ searchTerm: 'foo' });
+				// Assert
+				expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+					offset: 0,
+					limit: 25,
+					order: [['ProjectName', 'ASC']],
+					searchTerm: 'foo'
+				});
+			});
+		});
+
 		it('calls getAllApplicationsCountRepository', async () => {
 			// Act
 			await getAllApplications({});

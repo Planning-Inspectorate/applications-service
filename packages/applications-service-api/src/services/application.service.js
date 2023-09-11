@@ -25,7 +25,8 @@ const getAllApplications = async (query) => {
 	const repositoryOptions = {
 		offset,
 		limit: size,
-		order
+		order,
+		searchTerm: query?.searchTerm
 	};
 	const appliedFilters = mapApplicationFiltersToNI(query);
 	if (!isEmpty(appliedFilters)) repositoryOptions.filters = appliedFilters;
