@@ -23,7 +23,6 @@ const mapApplicationsToCSV = (applications) => {
 		'Date of decision': application.ConfirmedDateOfDecision,
 		'Date withdrawn': application.DateProjectWithdrawn
 	}));
-
 	return stringify(mappedApplications, {
 		header: true,
 		escape_formulas: true,
