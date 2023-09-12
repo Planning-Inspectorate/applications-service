@@ -10,7 +10,7 @@ const mapApplicationsToCSV = (applications) => {
 		Location: application.ProjectLocation,
 		'Grid reference - Easting': application.AnticipatedGridRefEasting,
 		'Grid reference - Northing:': application.AnticipatedGridRefNorthing,
-		'GPS co-ordinates': application.LongLat.join(', '),
+		'GPS co-ordinates': application.LongLat?.join(', ') || '',
 		Stage: application.Stage,
 		Description: application.Summary,
 		'Anticipated submission date': application.AnticipatedDateOfSubmission,
