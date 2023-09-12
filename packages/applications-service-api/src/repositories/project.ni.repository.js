@@ -43,7 +43,7 @@ const GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES = [
 
 const getApplication = async (id) => db.Project.findOne({ where: { CaseReference: id } });
 
-const getAllApplications = async (options) => {
+const getAllApplications = async (options = {}) => {
 	const { filters, searchTerm } = options;
 	let findAllOptions = pick(options, ['offset', 'limit', 'order']);
 	findAllOptions.attributes = options.attributes || GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES;
