@@ -6,8 +6,7 @@ const config = require('../lib/config');
 
 const {
 	getRepresentationsForApplication,
-	getRepresentationById,
-	getFilters
+	getRepresentationById
 } = require('../services/representation.service');
 
 const { getDocumentsByDataId } = require('../repositories/document.ni.repository');
@@ -16,41 +15,22 @@ const ApiError = require('../error/apiError');
 
 module.exports = {
 	async getRepresentationsForApplication(req, res) {
-		const { applicationId, page, searchTerm, type } = req.query;
-		let types = [];
-		if (type) {
-			types = type instanceof Array ? [...type] : type.split(',');
-		}
-		const selectedPage = page || 1;
-		logger.debug(`Retrieving representations for application ref ${applicationId}`);
 		try {
-			const representations = await getRepresentationsForApplication(
-				applicationId,
-				selectedPage,
-				searchTerm,
-				types
-			);
+			logger.debug(`Retrieving all representations ...`);
 
-			const typeFilters = await getFilters('RepFrom', applicationId);
-			const { itemsPerPage } = config;
-			const totalItems = representations.count;
-			const wrapper = {
-				representations: representations.rows,
+			const { representations, totalItems, currentPage, itemsPerPage, totalPages, filters } =
+				await getRepresentationsForApplication(req.query);
+
+			const response = {
+				representations,
 				totalItems,
+				currentPage,
 				itemsPerPage,
-				totalPages: Math.ceil(Math.max(totalItems, 1) / itemsPerPage),
-				currentPage: selectedPage,
-				filters: {
-					typeFilters: typeFilters
-						? typeFilters.map((f) => ({
-								name: f.dataValues.RepFrom,
-								count: f.dataValues.count
-						  }))
-						: []
-				}
+				totalPages,
+				filters
 			};
 
-			res.status(StatusCodes.OK).send(wrapper);
+			res.status(StatusCodes.OK).send(response);
 		} catch (e) {
 			if (e instanceof ApiError) {
 				logger.debug(e.message);
