@@ -4,7 +4,7 @@ const formatProjectStagesToLowerCase = (projectStages) => {
 		const element = projectStages[key];
 
 		if (typeof element === 'string') {
-			result[key] = element.toLocaleLowerCase();
+			result[key] = element.toLowerCase();
 		}
 	}
 

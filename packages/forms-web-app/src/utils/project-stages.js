@@ -43,7 +43,7 @@ const projectInfoProjectStages = {
 	4: 'Examination',
 	5: 'Recommendation',
 	6: 'Decision',
-	7: 'Decided'
+	7: 'Post-decision'
 };
 
 module.exports = {
