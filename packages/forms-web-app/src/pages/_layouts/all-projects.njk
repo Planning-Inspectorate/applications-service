@@ -1,0 +1,25 @@
+{% extends "layouts/default.njk" %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% block header %}
+{{super()}}
+
+  <div class="govuk-width-container">
+    {{ mojSubNavigation({
+      label: 'All projects secondary navigation',
+      items: [
+        {
+          text: 'Projects',
+          href: allProjectsSubNavigationRoutes.projectSearch,
+          active: pageTitle === 'Project search'
+        }, 
+        {
+          text: 'Register of applications',
+          href: allProjectsSubNavigationRoutes.registerOfApplications,
+          active: pageTitle === 'Register of applications'
+        }
+      ]
+
+  }) }}
+  </div>
+{% endblock %}

@@ -130,6 +130,13 @@ paths:
                 - water
                 - waste
                 - waste_water
+        - in: query
+          name: searchTerm
+          example: 'St James Barton'
+          required: false
+          schema:
+            type: string
+          description: Searches for project name and promoter name
 
       responses:
         '200':

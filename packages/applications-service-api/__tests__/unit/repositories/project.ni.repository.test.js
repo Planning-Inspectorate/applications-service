@@ -5,6 +5,7 @@ const {
 	GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
 } = require('../../../src/repositories/project.ni.repository');
 const db = require('../../../src/models');
+const { Op } = require('sequelize');
 
 jest.mock('../../../src/models', () => ({
 	Project: {
@@ -62,7 +63,29 @@ describe('project ni repository', () => {
 			// Assert
 			expect(db.Project.findAll).toBeCalledWith({
 				...mockOptions,
-				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
+				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES,
+				where: {}
+			});
+		});
+
+		it('calls findAll with searchTerm is where clause', async () => {
+			// Arrange
+			const mockOptionsWithSearchTerm = {
+				...mockOptions,
+				searchTerm: 'foo'
+			};
+			// Act
+			await getAllApplications(mockOptionsWithSearchTerm);
+			// Assert
+			expect(db.Project.findAll).toBeCalledWith({
+				...mockOptions,
+				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES,
+				where: {
+					[Op.or]: [
+						{ ProjectName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },
+						{ PromoterName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } }
+					]
+				}
 			});
 		});
 		it('returns the result of findAll', async () => {
