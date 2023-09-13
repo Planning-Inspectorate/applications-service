@@ -9,9 +9,11 @@ const getProjectSearch = async (req, res, next) => {
 	try {
 		const { query } = req;
 
-		const { applications, pagination } = await getApplications(getProjectSearchQueryString(query));
+		const { applications, filters, pagination } = await getApplications(
+			getProjectSearchQueryString(query)
+		);
 
-		res.render(view, getPageData(query, applications, pagination));
+		res.render(view, getPageData(query, applications, filters, pagination));
 	} catch (error) {
 		logger.error(error);
 		next(error);
