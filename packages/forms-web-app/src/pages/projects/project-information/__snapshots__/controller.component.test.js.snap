@@ -765,7 +765,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -1771,7 +1771,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -2777,7 +2777,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -3797,7 +3797,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -4817,7 +4817,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -5827,7 +5827,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -6833,7 +6833,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
@@ -7858,7 +7858,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 			</dd>
 		</div>
-		<div id=\\"project-stage-decided\\" class=\\"govuk-summary-list__row\\">
+		<div id=\\"project-stage-post-decision\\" class=\\"govuk-summary-list__row\\">
 			<dt class=\\"govuk-summary-list__value\\">
 				
 
