@@ -1,9 +1,13 @@
 const db = require('../models');
 const { pick } = require('lodash');
 const { Op } = require('sequelize');
-const getRepresentations = async (options) => {
+
+const getRepresentationById = async (ID) => {
+	return db.Representation.findOne({ where: { ID } });
+};
+const getRepresentationsWithCount = async (options = {}) => {
 	let findOptions = pick(options, ['offset', 'limit', 'order']);
-	findOptions.where = {};
+	findOptions.where = { [Op.and]: [{ CaseReference: options.applicationId }] };
 
 	// types
 	let types = [];
@@ -21,8 +25,8 @@ const getRepresentations = async (options) => {
 	if (options.searchTerm) {
 		const orOptions = [
 			{ PersonalName: { [Op.like]: `%${options.searchTerm}%` } },
-			{ OrganisationName: { [Op.like]: `%${options.searchTerm}%` } },
-			{ RepFrom: { [Op.like]: `%${options.searchTerm}%` } }
+			{ RepresentationRedacted: { [Op.like]: `%${options.searchTerm}%` } },
+			{ Representative: { [Op.like]: `%${options.searchTerm}%` } }
 		];
 
 		findOptions.where[Op.and].push({
@@ -31,14 +35,16 @@ const getRepresentations = async (options) => {
 	}
 
 	const { rows, count } = await db.Representation.findAndCountAll(findOptions);
+
 	return { count, representations: rows };
 };
 
-const getRepresentationById = async (ID) => {
-	return db.Representation.findOne({ where: { ID } });
+const getRepresentations = async (options = {}) => {
+	return db.Representation.findAll(options);
 };
 
 module.exports = {
+	getRepresentationsWithCount,
 	getRepresentations,
 	getRepresentationById
 };

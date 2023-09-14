@@ -21,16 +21,14 @@ module.exports = {
 			const { representations, totalItems, currentPage, itemsPerPage, totalPages, filters } =
 				await getRepresentationsForApplication(req.query);
 
-			const response = {
+			res.status(StatusCodes.OK).send({
 				representations,
 				totalItems,
 				currentPage,
 				itemsPerPage,
 				totalPages,
 				filters
-			};
-
-			res.status(StatusCodes.OK).send(response);
+			});
 		} catch (e) {
 			if (e instanceof ApiError) {
 				logger.debug(e.message);

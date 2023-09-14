@@ -1,6 +1,10 @@
 const { Op } = require('sequelize');
 const db = require('../models');
-const { getRepresentations } = require('../repositories/representation.ni.repository');
+const {
+	getRepresentationsWithCount: getRepresentationsWithCountRepository,
+	getRepresentations: getRepresentationsRepository,
+	getRepresentationById: getRepresentationByIdRepository
+} = require('../repositories/representation.ni.repository');
 
 const createQueryFilters = (query) => {
 	// Pagination
@@ -21,6 +25,7 @@ const getRepresentationsForApplication = async (query) => {
 	const { pageNo, size, offset, order } = createQueryFilters(query);
 
 	const repositoryOptions = {
+		applicationId: query?.applicationId,
 		offset,
 		limit: size,
 		order,
@@ -28,7 +33,7 @@ const getRepresentationsForApplication = async (query) => {
 		searchTerm: query?.searchTerm
 	};
 
-	const { count, representations } = getRepresentations(repositoryOptions);
+	const { count, representations } = await getRepresentationsWithCountRepository(repositoryOptions);
 	const typeFilters = await getFilters('RepFrom', query?.applicationId);
 
 	return {
@@ -49,7 +54,7 @@ const getRepresentationsForApplication = async (query) => {
 };
 
 const getRepresentationById = async (ID) => {
-	return db.Representation.findOne({ where: { ID } });
+	return getRepresentationByIdRepository(ID);
 };
 
 const getFilters = async (filter, applicationId) => {
@@ -59,7 +64,7 @@ const getFilters = async (filter, applicationId) => {
 		where = { CaseReference: applicationId, RepFrom: { [Op.ne]: null } };
 	}
 
-	return db.Representation.findAll({
+	return getRepresentationsRepository({
 		where,
 		attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
 		group: [filter]
