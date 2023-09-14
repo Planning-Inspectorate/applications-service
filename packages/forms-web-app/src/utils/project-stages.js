@@ -43,11 +43,22 @@ const projectInfoProjectStages = {
 	4: 'Examination',
 	5: 'Recommendation',
 	6: 'Decision',
-	7: 'Decided'
+	7: 'Post-decision'
 };
+
+const registerOfApplicationsStages = [
+	'acceptance',
+	'pre_examination',
+	'examination',
+	'recommendation',
+	'decision',
+	'post_decision',
+	'withdrawn'
+];
 
 module.exports = {
 	documentProjectStages,
 	projectStages,
-	projectInfoProjectStages
+	projectInfoProjectStages,
+	registerOfApplicationsStages
 };

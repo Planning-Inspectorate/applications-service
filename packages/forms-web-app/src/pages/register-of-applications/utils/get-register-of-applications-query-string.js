@@ -1,10 +1,13 @@
+const { registerOfApplicationsStages } = require('../../../utils/project-stages');
 const { buildQueryString } = require('../../_utils/build-query-string');
 
-const getRegisterOfApplicationsQueryString = ({
-	page = 1,
-	searchTerm = '',
-	itemsPerPage: size = 25,
-	sortBy: sort = 'ProjectName'
-}) => buildQueryString({ page, searchTerm, size, sort });
+const getRegisterOfApplicationsQueryString = ({ page, searchTerm, itemsPerPage, sortBy }) =>
+	buildQueryString({
+		page: page || 1,
+		searchTerm: searchTerm || '',
+		size: itemsPerPage || 25,
+		sort: sortBy || '+ProjectName',
+		stage: registerOfApplicationsStages
+	});
 
 module.exports = { getRegisterOfApplicationsQueryString };

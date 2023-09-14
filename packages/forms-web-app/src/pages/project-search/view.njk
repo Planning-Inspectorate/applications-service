@@ -1,198 +1,60 @@
 {% extends "../_layouts/all-projects.njk" %}
 
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-
 {% block script %}
-  {% set initiateScriptsConfig = (initiateScriptsConfig.push(
-	{
-      callback: "window.GOVUKFrontend.initAll();",
-      src: "/assets/govuk/all.js"
-    }
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
+		{
+			callback: "var modal = new appScripts.modal(); modal.initiate('#project-search-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#project-search-page-search-bar', 'Show filters', 'tablet');",
+			src: "/public/scripts/modal.script.js"
+		}
 	), initiateScriptsConfig) %}
 {% endblock %}
 
 {% block content %}
+	<form method="get">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-one-third">
 
-<div class="govuk-grid-row">
-	<section class="ui-side-search govuk-grid-column-one-quarter">
-		<label class="pins-label-small" for="search_documents">
-			Search
-		</label>
+				{% include "./includes/filters.njk" %}
 
-		<div class="ui-side-search-wrapper">
-			<input class="search-documents-input" type="text" name="search" id="search_documents">
-			<button class="search-documents-submit" type="submit" value="Search">Search</button>
-		</div>
-
-		<div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
-        <span class="govuk-heading-s">
-          Filters
-        </span>
-
-			<div class="govuk-accordion__section">
-				<div class="govuk-accordion__section-header">
-            <span class="govuk-accordion__section-heading">
-              <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                Location
-              </span>
-            </span>
-				</div>
-
-				<div id="accordion-default-content-1" class="govuk-accordion__section-content"
-						 aria-labelledby="accordion-default-heading-1">
-					{{ govukCheckboxes({
-						idPrefix: "location",
-						name: "location",
-						classes: "govuk-checkboxes--small -extended-checkboxes--x-small",
-						items: [
-							{
-								value: "east-midlands",
-								text: "East Midlands (10)"
-							},
-							{
-								value: "eastern",
-								text: "Eastern (39)"
-							},
-							{
-								value: "london",
-								text: "London (7)"
-							},
-							{
-								value: "north-east",
-								text: "North East (14)"
-							},
-							{
-								value: "north-west",
-								text: "North West (17)"
-							},
-							{
-								value: "south-east",
-								text: "South East (29)"
-							},
-							{
-								value: "south-west",
-								text: "South West (15)"
-							},
-							{
-								value: "yorkshire-and-the-humber",
-								text: "Yorkshire and the Humber (29)"
-							}
-						]
-					}) }}
-				</div>
 			</div>
 
-			<div class="govuk-accordion__section">
-				<div class="govuk-accordion__section-header">
-					<h2 class="govuk-accordion__section-heading">
-              <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-                Project type
-              </span>
-					</h2>
-				</div>
+			<div class="govuk-grid-column-two-thirds">
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ pageHeading }}</h1>
 
-				<div id="accordion-default-content-2" class="govuk-accordion__section-content"
-						 aria-labelledby="accordion-default-heading-2">
-					{{ govukCheckboxes({
-						idPrefix: " project-type",
-						name: "project-type",
-						classes: "govuk-checkboxes--small",
-						items: [
-							{
-								value: "business-and-commercial",
-								text: "Business and commercial (2)"
-							},
-							{
-								value: "energy",
-								text: "Energy (109)"
-							},
-							{
-								value: "transport",
-								text: "Transport (67)"
-							},
-							{
-								value: "waste",
-								text: "Waste (7)"
-							},
-							{
-								value: "water",
-								text: "Water (1)"
-							}
-						]
-					}) }}
-				</div>
-			</div>
+				<p class="govuk-body">
+					This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
+				</p>
 
-			<div class="govuk-accordion__section">
-				<div class="govuk-accordion__section-header">
-					<h2 class="govuk-accordion__section-heading">
-              <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-                Status
-              </span>
-					</h2>
-				</div>
+				{% if applications | length %}
 
-				<div id="accordion-default-content-3" class="govuk-accordion__section-content"
-						 aria-labelledby="accordion-default-heading-3">
-					{{ govukCheckboxes({
-						idPrefix: " status",
-						name: "status",
-						classes: "govuk-checkboxes--small",
-						items: [
-							{
-								value: "pre-application",
-								text: "Pre-application (60)"
-							},
-							{
-								value: "acceptance-and-application",
-								text: "Acceptance and application (3)"
-							},
-							{
-								value: "pre-examination",
-								text: "Pre-examination (6)"
-							},
-							{
-								value: "examination",
-								text: "Examination (8)"
-							},
-							{
-								value: "decision",
-								text: "Decision (105)"
-							}
-						]
-					}) }}
-				</div>
+					<p class="govuk-body">
+						<a class="govuk-link" href="/api/v1/applications/download">Download a table containing a complete list of all {{ applications | length }} projects (CSV)</a>
+					</p>
+
+				{% endif %}
+
+				{% include "./includes/search.njk" %}
+
+				{% include "./includes/active-filters.njk" %}
+
+				{% if applications | length %}
+
+					{% include "./includes/results-per-page.njk" %}
+
+					{% include "./includes/projects.njk" %}
+
+					{% include "./includes/pagination.njk" %}
+
+				{% else %}
+
+					{% include "./includes/no-matching-results.njk" %}
+
+				{% endif %}
 			</div>
 		</div>
-	</section>
 
-	<section class="govuk-grid-column-three-quarters">
-		<h1 class="govuk-heading-l">{{ pageHeading }}</h1>
-
-		<p class="govuk-body">
-			This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
-		</p>
-
-		{% if applications | length %}
-			<p class="govuk-body">
-				<a class="govuk-link" href="/api/v1/applications/download">Download a table containing a complete list of all {{ applications | length }} projects (CSV)</a>
-			</p>
-		{% endif %}
-
-		{% include "./includes/search.njk" %}
-
-		{% if applications | length %}
-
-			{% include "./includes/results-per-page.njk" %}
-
-			{% include "./includes/projects.njk" %}
-
-			{% include "./includes/pagination.njk" %}
-
-		{% else %}
-
-			{% include "./includes/no-matching-results.njk" %}
-
-		{% endif %}
-	</section>
+		<input type="hidden" name="itemsPerPage" value="{{ query.itemsPerPage }}">
+		<input type="hidden" name="sortBy" value="{{ query.sortBy }}">
+	</form>
 {% endblock %}

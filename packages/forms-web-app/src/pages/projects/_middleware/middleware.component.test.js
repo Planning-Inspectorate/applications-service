@@ -51,7 +51,7 @@ describe('projects _middleware', () => {
 					4: 'Examination',
 					5: 'Recommendation',
 					6: 'Decision',
-					7: 'Decided'
+					7: 'Post-decision'
 				},
 				hasOpenTimetables: true,
 				verticalTabs: [

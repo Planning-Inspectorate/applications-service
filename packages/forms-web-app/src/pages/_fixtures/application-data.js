@@ -4,7 +4,7 @@ const applicationDataFixture = {
 	summary: 'Mock case summary',
 	webAddress: 'www.mock.com',
 	proposal: 'EN01 - Generating Stations',
-	status: { number: 7, text: 'Decided' },
+	status: { number: 7, text: 'Post-decision' },
 	confirmedDateOfDecision: '2011-10-13',
 	longLat: ['-0.118092', '51.509865'],
 	mapZoomLevel: 5,

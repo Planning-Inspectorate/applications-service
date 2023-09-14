@@ -1,11 +1,11 @@
 const { getRegisterOfApplications } = require('./controller');
-const { getApplications } = require('../../services/applications.service');
-const { applicationsDataFixture } = require('../_fixtures');
 
-jest.mock('../../lib/application-api-wrapper');
+const { getAllProjectList } = require('../../lib/application-api-wrapper');
 
-jest.mock('../../services/applications.service', () => ({
-	getApplications: jest.fn()
+const { getApplicationsFixture } = require('../_fixtures');
+
+jest.mock('../../lib/application-api-wrapper', () => ({
+	getAllProjectList: jest.fn()
 }));
 
 describe('register-of-applications/controller', () => {
@@ -27,29 +27,18 @@ describe('register-of-applications/controller', () => {
 		describe('When calling the get register of applications controller', () => {
 			describe('and there is an issue', () => {
 				beforeEach(async () => {
-					await getApplications.mockImplementation(() => {
-						throw new Error('something went wrong');
-					});
-
+					await getAllProjectList.mockResolvedValue({ resp_code: 500 });
 					await getRegisterOfApplications(req, res, next);
 				});
 				it('should render the error page', () => {
-					expect(next).toHaveBeenCalledWith(new Error('something went wrong'));
+					expect(next).toHaveBeenCalledWith(new Error('Applications response status not 200'));
 				});
 			});
 		});
 
 		describe('and there are no issues', () => {
 			beforeEach(async () => {
-				getApplications.mockResolvedValue({
-					applications: applicationsDataFixture,
-					pagination: {
-						totalItems: 1,
-						currentPage: 1,
-						itemsPerPage: 25,
-						totalPages: 1
-					}
-				});
+				await getAllProjectList.mockResolvedValue(getApplicationsFixture);
 				await getRegisterOfApplications(req, res, next);
 			});
 
@@ -61,26 +50,44 @@ describe('register-of-applications/controller', () => {
 					},
 					applications: [
 						{
-							applicant: 'mock promoter first name 2 mock promoter last name 2',
+							applicant: 'EDF',
+							applicationDate: '01 Jan 2018',
+							decisionDate: '',
+							location: 'Somerset - Monday PM 23/12',
+							pageURL: '/projects/TR010001',
+							projectName: 'Accessibility Test',
+							stage: 'Examination'
+						},
+						{
+							applicant: 'John Agent Burke',
 							applicationDate: '',
 							decisionDate: '',
-							location: 'mock project location 2',
-							pageURL: '/projects/mock case reference 2',
-							projectName: 'mock project name 2',
+							location: 'Bristol',
+							pageURL: '/projects/TR023024',
+							projectName: 'April 7 2020',
+							stage: 'Pre-application'
+						},
+						{
+							applicant: 'EDF',
+							applicationDate: '01 Jan 2018',
+							decisionDate: '',
+							location: 'Somerset - cache test 03-02 15:44',
+							pageURL: '/projects/tr033005',
+							projectName: 'Azure Performance Test',
 							stage: 'Acceptance (review of the application)'
 						}
 					],
 					pageHeading: 'Register of applications',
 					pageTitle: 'Register of applications',
 					pagination: {
-						pageOptions: [1],
+						pageOptions: [1, 2, 3, '...', 7, 'next'],
 						paginationData: {
 							currentPage: 1,
 							fromRange: 1,
-							itemsPerPage: 25,
-							toRange: 1,
-							totalItems: 1,
-							totalPages: 1
+							itemsPerPage: 3,
+							toRange: 3,
+							totalItems: 21,
+							totalPages: 7
 						}
 					},
 					paginationQueryString: '?page=:page',
