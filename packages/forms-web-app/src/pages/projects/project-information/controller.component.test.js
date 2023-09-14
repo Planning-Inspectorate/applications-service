@@ -44,6 +44,7 @@ const commonMockData = {
 	WebAddress: 'mock-web-address',
 	dateOfNonAcceptance: '2020-01-01',
 	AnticipatedDateOfSubmission: '2020-01-01',
+	AnticipatedSubmissionDateNonSpecific: 'Q4 2023',
 	ProjectEmailAddress: 'mock@email.com',
 	LongLat: ['-0.118092', '51.509865'],
 	MapZoomLevel: 5,
@@ -83,16 +84,15 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).toContain(
-						'The application is expected to be submitted on 01 January 2020.'
+						'The application is expected to be submitted on 01 January 2020'
 					);
 					expect(response.text).toMatchSnapshot();
 				});
-				it('should render the page for pre application (stage 1) - without anticipatedDateOfSubmission', async () => {
+				it('should render the page for pre application (stage 1) - with anticipatedSubmissionDateNonSpecific if anticipatedDateOfSubmission id not available', async () => {
 					getAppData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							AnticipatedDateOfSubmission: null,
-
 							Stage: 1
 						},
 						resp_code: 200
@@ -100,9 +100,23 @@ describe('projects/project-information/controller.component', () => {
 					const response = await request.get('/projects/EN010085');
 
 					expect(response.status).toEqual(200);
-					expect(response.text).not.toContain(
-						'The application is expected to be submitted on 01 January 2021.'
-					);
+					expect(response.text).toContain('The application is expected to be submitted in Q4 2023');
+					expect(response.text).toMatchSnapshot();
+				});
+				it('should render the page for pre application (stage 1) - without the time period section if both anticipatedDateOfSubmission AND anticipatedSubmissionDateNonSpecific are not available', async () => {
+					getAppData.mockResolvedValue({
+						data: {
+							...commonMockData,
+							AnticipatedDateOfSubmission: null,
+							AnticipatedSubmissionDateNonSpecific: null,
+							Stage: 1
+						},
+						resp_code: 200
+					});
+					const response = await request.get('/projects/EN010085');
+
+					expect(response.status).toEqual(200);
+					expect(response.text).not.toContain('The application is expected to be submitted');
 					expect(response.text).toMatchSnapshot();
 				});
 			});
