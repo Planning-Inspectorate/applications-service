@@ -59,6 +59,15 @@ describe('register-of-applications/controller', () => {
 							stage: 'Examination'
 						},
 						{
+							applicant: 'John Agent Burke',
+							applicationDate: '',
+							decisionDate: '',
+							location: 'Bristol',
+							pageURL: '/projects/TR023024',
+							projectName: 'April 7 2020',
+							stage: 'Pre-application'
+						},
+						{
 							applicant: 'EDF',
 							applicationDate: '01 Jan 2018',
 							decisionDate: '',

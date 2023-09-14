@@ -8,13 +8,10 @@ const {
 	getRegisterOfApplicationsSortByLinks
 } = require('./get-register-of-applications-sort-by-links');
 
-const filteredApplications = (applications) =>
-	applications.filter((application) => application.stage.toLowerCase() !== 'pre-application');
-
 const getPageData = (applications, query, pagination) => ({
 	...mapTitles('Register of applications', 'Register of applications'),
 	allProjectsSubNavigationRoutes,
-	applications: filteredApplications(mapApplications(applications)),
+	applications: mapApplications(applications),
 	pagination: getPagination(pagination),
 	paginationQueryString: buildPaginationQueryString(query),
 	sortByLinks: getRegisterOfApplicationsSortByLinks(query),
