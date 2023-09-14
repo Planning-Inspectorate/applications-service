@@ -73,10 +73,15 @@ const getAllApplications = async (options = {}) => {
 	if (searchTermStatements.length > 0)
 		findAllOptions.where = { ...findAllOptions.where, [Op.or]: searchTermStatements };
 
-	return db.Project.findAll({
+	const applications = await db.Project.findAll({
 		...findAllOptions,
 		raw: true
 	});
+
+	const count = await db.Project.count({
+		where: findAllOptions.where
+	});
+	return { applications, count };
 };
 
 const getAllApplicationsCount = async () => db.Project.count();

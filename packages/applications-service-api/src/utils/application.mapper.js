@@ -60,7 +60,7 @@ const mapFilterValueToNI = (name, value) => {
  * @param {{ Stage: number, Region: string, Proposal: string }[]} applications
  * @returns {{name: string, value: string, label: string, count: number}[]}
  */
-const buildApiFiltersFromNIApplications = (applications) => {
+const buildApiFiltersFromNIApplications = (applications = []) => {
 	const mappedFilters = applications.reduce(
 		(memo, application) => {
 			const stageValue = application.Stage;
@@ -81,15 +81,18 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	);
 
 	const filters = [];
-	for (const [field, filterValues] of Object.entries(mappedFilters)) {
-		for (const [value, count] of Object.entries(filterValues)) {
-			const filter = {
-				name: field,
-				value: mapFilterValueToApi(field, value),
-				label: mapFilterLabelToApi(field, value),
-				count: count
-			};
-			filters.push(filter);
+	console.log({ mappedFilters }})
+	if (mappedFilters) {
+		for (const [field, filterValues] of Object.entries(mappedFilters)) {
+			for (const [value, count] of Object.entries(filterValues)) {
+				const filter = {
+					name: field,
+					value: mapFilterValueToApi(field, value),
+					label: mapFilterLabelToApi(field, value),
+					count: count
+				};
+				filters.push(filter);
+			}
 		}
 	}
 
