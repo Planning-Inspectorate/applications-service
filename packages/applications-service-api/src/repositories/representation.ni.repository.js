@@ -3,10 +3,11 @@ const { pick } = require('lodash');
 const { Op } = require('sequelize');
 
 const getRepresentationById = async (ID) => {
-	return db.Representation.findOne({ where: { ID } });
+	return db.Representation.findOne({ where: { ID }, raw: true });
 };
 const getRepresentationsWithCount = async (options = {}) => {
 	let findOptions = pick(options, ['offset', 'limit', 'order']);
+	findOptions.raw = true;
 	findOptions.where = { [Op.and]: [{ CaseReference: options.applicationId }] };
 
 	// types
@@ -40,7 +41,7 @@ const getRepresentationsWithCount = async (options = {}) => {
 };
 
 const getRepresentations = async (options = {}) => {
-	return db.Representation.findAll(options);
+	return db.Representation.findAll({ ...options, raw: true });
 };
 
 module.exports = {

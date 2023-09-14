@@ -49,7 +49,6 @@ module.exports = {
 			if (!representation) {
 				throw ApiError.representationNotFound(id);
 			}
-
 			const { documentsHost } = config;
 
 			const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
@@ -68,8 +67,8 @@ module.exports = {
 					path: att.dataValues.path != null ? `${documentsHost}${att.dataValues.path}` : null
 				}));
 			}
+			representation.attachments = Object.values(attachments);
 
-			representation.dataValues.attachments = Object.values(attachments);
 			res.status(StatusCodes.OK).send(representation);
 		} catch (e) {
 			if (e instanceof ApiError) {

@@ -117,7 +117,7 @@ getRepresentationsForApplication.mockImplementation(({ applicationId }) => {
 
 getRepresentationById.mockImplementation((id) => {
 	if (id === 2) {
-		return Promise.resolve({ dataValues: mockData.representations[0] });
+		return Promise.resolve(mockData.representations[0]);
 	}
 	return Promise.resolve(null);
 });
@@ -186,7 +186,7 @@ describe('getRepresentationById', () => {
 		await getRepresentation(req, res);
 		const data = res._getData();
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data.dataValues).toEqual({ ...returnData.representations[0], attachments: [{}] });
+		expect(data).toEqual({ ...returnData.representations[0], attachments: [{}] });
 	});
 
 	it('should return representation not found', async () => {

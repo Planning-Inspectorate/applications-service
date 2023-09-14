@@ -44,9 +44,9 @@ const getRepresentationsForApplication = async (query) => {
 		currentPage: pageNo,
 		filters: {
 			typeFilters: typeFilters
-				? typeFilters.map((f) => ({
-						name: f.dataValues.RepFrom,
-						count: f.dataValues.count
+				? typeFilters.map((filter) => ({
+						name: filter.RepFrom,
+						count: filter.count
 				  }))
 				: []
 		}

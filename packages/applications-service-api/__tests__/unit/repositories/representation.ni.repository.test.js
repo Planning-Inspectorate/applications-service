@@ -43,7 +43,7 @@ describe('representation ni repository', () => {
 			// Act
 			await getRepresentationById(mockId);
 			// Assert
-			expect(db.Representation.findOne).toBeCalledWith({ where: { ID: mockId } });
+			expect(db.Representation.findOne).toBeCalledWith({ where: { ID: mockId }, raw: true });
 		});
 		it('returns the result of findOne', async () => {
 			// Act
@@ -68,6 +68,7 @@ describe('representation ni repository', () => {
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				applicationId: undefined,
+				raw: true,
 				where: { [Op.and]: [{ CaseReference: mockOptions.applicationId }] }
 			});
 		});
@@ -83,6 +84,7 @@ describe('representation ni repository', () => {
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				applicationId: undefined,
+				raw: true,
 				where: {
 					[Op.and]: [
 						{ CaseReference: mockOptionsWithType.applicationId },
@@ -104,6 +106,7 @@ describe('representation ni repository', () => {
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				applicationId: undefined,
+				raw: true,
 				where: {
 					[Op.and]: [
 						{ CaseReference: mockOptionsWithSearchTerm.applicationId },
@@ -136,7 +139,7 @@ describe('representation ni repository', () => {
 			// Act
 			await getRepresentations(mockOptions);
 			// Assert
-			expect(db.Representation.findAll).toBeCalledWith(mockOptions);
+			expect(db.Representation.findAll).toBeCalledWith({ ...mockOptions, raw: true });
 		});
 		it('returns the result of findAll', async () => {
 			// Arrange
