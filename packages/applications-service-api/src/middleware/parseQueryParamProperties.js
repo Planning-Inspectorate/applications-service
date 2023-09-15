@@ -8,7 +8,10 @@ const { parseInteger } = require('../utils/parse');
 const normaliseArrayQueryParams = (paramNames) => (req, res, next) => {
 	paramNames.forEach((paramName) => {
 		const paramValue = req.query?.[paramName];
+		// convert non-array to array
 		if (paramValue) req.query[paramName] = Array.isArray(paramValue) ? paramValue : [paramValue];
+		// convert empty string to empty array
+		if (paramValue === '') req.query[paramName] = [];
 	});
 	next();
 };
