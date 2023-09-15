@@ -23,8 +23,8 @@ describe('examination/enter-comment/utils/get-page-data', () => {
 			backLinkUrl: mockBackLinkUrlValue,
 			comment: '',
 			id: 'examination-enter-comment',
-			pageTitle: 'Your comment',
-			title: 'Your comment',
+			pageTitle: 'Make a comment',
+			title: 'Make a comment',
 			url: 'enter-a-comment',
 			sessionId: 'comment',
 			view: 'examination/enter-comment/view.njk'
