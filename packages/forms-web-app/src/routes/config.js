@@ -94,7 +94,7 @@ const routesConfig = {
 					},
 					3: {
 						value: 'both',
-						text: 'Both'
+						text: 'Make a comment and upload files'
 					}
 				},
 				route: 'select-upload-evidence-or-comment',

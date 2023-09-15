@@ -63,7 +63,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 								]
 							},
 							key: { text: "How you've submitted your representation" },
-							value: { html: 'Both' }
+							value: { html: 'Make a comment and upload files' }
 						});
 					});
 				});
