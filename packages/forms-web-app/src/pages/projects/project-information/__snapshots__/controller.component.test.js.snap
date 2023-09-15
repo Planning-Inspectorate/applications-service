@@ -370,6 +370,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
               >
                 Relevant representations (Registration comments)
@@ -478,6 +491,18 @@ exports[`projects/project-information/controller.component #getProjectInformatio
  
 
 <p class=\\"govuk-body\\">
+	
+		
+	If you want to comment on this proposed project, you can now
+  <a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">
+		register to have your say.</a>
+  
+	<br>
+	<br>
+	<a href=' /projects/EN010085/register/register-have-your-say' class=\\"govuk-button\\">
+		Register to have your say
+	</a>
+
 	
 </p>
 
@@ -1375,6 +1400,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
       
         
       
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
         
       
         
@@ -2399,6 +2437,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
               >
                 Relevant representations (Registration comments)
@@ -3409,6 +3460,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
       
         
       
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
         
       
         
@@ -4436,6 +4500,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
               >
                 Relevant representations (Registration comments)
@@ -5449,6 +5526,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
       
         
       
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
         
       
         
@@ -6473,6 +6563,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
               >
                 Relevant representations (Registration comments)
@@ -7490,6 +7593,19 @@ exports[`projects/project-information/controller.component #getProjectInformatio
             
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/projects/EN010085/register/register-have-your-say\\"
+              >
+                Register to have your say
+              </a>
+            
+          </li>
+        
+      
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
               >
                 Relevant representations (Registration comments)
@@ -8494,6 +8610,8 @@ exports[`projects/project-information/controller.component #getProjectInformatio
               </span>
             
           </li>
+        
+      
         
       
         

@@ -8,7 +8,9 @@ const applicationDataFixture = {
 	confirmedDateOfDecision: '2011-10-13',
 	longLat: ['-0.118092', '51.509865'],
 	mapZoomLevel: 5,
-	projectLocation: 'mock project location'
+	projectLocation: 'mock project location',
+	DateOfRepresentationPeriodOpen: '2023-01-01',
+	DateOfRelevantRepresentationClose: '2023-01-03'
 };
 
 module.exports = { applicationDataFixture };

@@ -26,7 +26,8 @@ async function middleware(req, res, next) {
 		res.locals.verticalTabs = getVerticalTabs(
 			case_ref,
 			hasOpenTimetables,
-			eventsEligibleForDisplay
+			eventsEligibleForDisplay,
+			applicationData
 		);
 		next();
 	} catch (e) {
