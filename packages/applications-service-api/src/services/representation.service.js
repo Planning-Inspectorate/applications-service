@@ -1,54 +1,60 @@
 const { Op } = require('sequelize');
 const db = require('../models');
-const config = require('../lib/config');
+const {
+	getRepresentationsWithCount: getRepresentationsWithCountRepository,
+	getRepresentations: getRepresentationsRepository,
+	getRepresentationById: getRepresentationByIdRepository
+} = require('../repositories/representation.ni.repository');
 
-const getRepresentationsForApplication = async (applicationId, page, searchTerm, types) => {
-	const { itemsPerPage: limit } = config;
-	const offset = (page - 1) * limit;
-	const where = { [Op.and]: [{ CaseReference: applicationId }] };
+const createQueryFilters = (query) => {
+	// Pagination
+	const pageNo = parseInt(query?.page) || 1;
+	const defaultSize = 25;
+	const maxSize = 100;
+	const size = Math.min(parseInt(query?.size) || defaultSize, maxSize);
 
-	if (types && types.length > 0) {
-		where[Op.and].push({
-			RepFrom: { [Op.in]: types }
-		});
-	}
+	return {
+		pageNo,
+		size,
+		offset: size * (pageNo - 1),
+		order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
+	};
+};
 
-	if (searchTerm) {
-		const orOptions = [
-			{
-				PersonalName: {
-					[Op.like]: `%${searchTerm}%`
-				}
-			},
-			{
-				RepresentationRedacted: {
-					[Op.like]: `%${searchTerm}%`
-				}
-			},
-			{
-				Representative: {
-					[Op.like]: `%${searchTerm}%`
-				}
-			}
-		];
+const getRepresentationsForApplication = async (query) => {
+	const { pageNo, size, offset, order } = createQueryFilters(query);
 
-		where[Op.and].push({
-			[Op.or]: orOptions
-		});
-	}
-
-	const representations = await db.Representation.findAndCountAll({
-		where,
+	const repositoryOptions = {
+		applicationId: query?.applicationId,
 		offset,
-		order: [['DateRrepReceived', 'ASC'], ['PersonalName']],
-		limit
-	});
+		limit: size,
+		order,
+		type: query?.type,
+		searchTerm: query?.searchTerm
+	};
 
-	return representations;
+	const { count, representations } = await getRepresentationsWithCountRepository(repositoryOptions);
+	const typeFilters = await getFilters('RepFrom', query?.applicationId);
+
+	return {
+		representations,
+		totalItems: count,
+		itemsPerPage: size,
+		totalPages: Math.ceil(Math.max(1, count) / size),
+		currentPage: pageNo,
+		filters: {
+			typeFilters: typeFilters
+				? typeFilters.map((filter) => ({
+						name: filter.RepFrom,
+						count: filter.count
+				  }))
+				: []
+		}
+	};
 };
 
 const getRepresentationById = async (ID) => {
-	return db.Representation.findOne({ where: { ID } });
+	return getRepresentationByIdRepository(ID);
 };
 
 const getFilters = async (filter, applicationId) => {
@@ -58,13 +64,11 @@ const getFilters = async (filter, applicationId) => {
 		where = { CaseReference: applicationId, RepFrom: { [Op.ne]: null } };
 	}
 
-	const filters = await db.Representation.findAll({
+	return getRepresentationsRepository({
 		where,
 		attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
 		group: [filter]
 	});
-
-	return filters;
 };
 
 module.exports = {
