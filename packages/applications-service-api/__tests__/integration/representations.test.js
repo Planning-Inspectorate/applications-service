@@ -74,7 +74,7 @@ describe('api/v1/representations', () => {
 			// Arrange
 			const queryParameters = ['applicationId=1', 'page=2', 'size=10'].join('&');
 			mockFindAll.mockResolvedValue([]);
-			mockFindAndCountAll.mockResolvedValue({ rows: REPRESENTATION_NI_DB, count: 1 });
+			mockFindAndCountAll.mockResolvedValue({ rows: REPRESENTATION_NI_DB, count: 11 });
 			// Act
 			const response = await request.get(`/api/v1/representations?${queryParameters}`);
 			// Assert
@@ -89,9 +89,9 @@ describe('api/v1/representations', () => {
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				representations: [...REPRESENTATION_NI_DB],
-				totalItems: 1,
+				totalItems: 11,
 				itemsPerPage: 10,
-				totalPages: 1,
+				totalPages: 2,
 				currentPage: 2,
 				filters: {
 					typeFilters: []
