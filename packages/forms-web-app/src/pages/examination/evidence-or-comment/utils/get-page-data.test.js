@@ -34,7 +34,7 @@ const pageData = {
 			value: 'upload'
 		},
 		{
-			text: 'Both',
+			text: 'Make a comment and upload files',
 			value: 'both'
 		}
 	],
