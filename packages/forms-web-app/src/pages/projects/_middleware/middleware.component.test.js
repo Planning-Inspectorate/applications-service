@@ -31,13 +31,19 @@ describe('projects _middleware', () => {
 		const res = { locals: {} };
 		beforeEach(() => {
 			jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
-			getApplicationData.mockReturnValue({ projectName: 'mock project name' });
+			getApplicationData.mockReturnValue({
+				projectName: 'mock project name',
+				DateOfRepresentationPeriodOpen: '2023-01-03',
+				DateOfRelevantRepresentationClose: '2023-01-04'
+			});
 			getTimetables.mockReturnValue(fixturesTimetableResponse);
 			middleware(req, res, next);
 		});
 		it('should set the locals', () => {
 			expect(res.locals).toEqual({
 				applicationData: {
+					DateOfRepresentationPeriodOpen: '2023-01-03',
+					DateOfRelevantRepresentationClose: '2023-01-04',
 					projectName: 'mock project name'
 				},
 				baseUrl: 'mock base url',
@@ -72,6 +78,12 @@ describe('projects _middleware', () => {
 						id: 'project-documents',
 						name: 'Documents',
 						url: '/projects/mock-case-ref/documents'
+					},
+					{
+						hidden: true,
+						id: 'register-index',
+						name: 'Register to have your say',
+						url: '/projects/mock-case-ref/register/register-have-your-say'
 					},
 					{
 						hidden: false,

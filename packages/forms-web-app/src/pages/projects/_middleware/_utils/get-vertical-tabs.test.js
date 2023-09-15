@@ -5,10 +5,20 @@ jest.mock('../../../../config', () => ({
 	featureFlag: {},
 	featureHideLink: {}
 }));
+
 describe('#getVerticalTabs', () => {
 	describe('When getting the vertical tabs for the projects layout', () => {
-		describe('and not feature flags are set', () => {
+		const mockApplicationData = {
+			DateOfRepresentationPeriodOpen: '2023-01-03',
+			DateOfRelevantRepresentationClose: null
+		};
+
+		beforeEach(() => {
+			jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
+		});
+		describe('and no feature flags are set', () => {
 			let result;
+
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = false;
 				featureFlag.hideProjectTimelineLink = false;
@@ -17,7 +27,8 @@ describe('#getVerticalTabs', () => {
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
-				result = getVerticalTabs('mock case ref', true, true);
+
+				result = getVerticalTabs('mock case ref', true, true, mockApplicationData);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -39,6 +50,12 @@ describe('#getVerticalTabs', () => {
 						id: 'project-documents',
 						name: 'Documents',
 						url: '/projects/mock case ref/documents'
+					},
+					{
+						hidden: true,
+						id: 'register-index',
+						name: 'Register to have your say',
+						url: '/projects/mock case ref/register/register-have-your-say'
 					},
 					{
 						hidden: false,
@@ -94,7 +111,7 @@ describe('#getVerticalTabs', () => {
 
 			describe('and case id is in the projectMigrationCaseReferences', () => {
 				it('should return the vertical tabs', () => {
-					const result = getVerticalTabs('mock case ref', false, false);
+					const result = getVerticalTabs('mock case ref', false, false, mockApplicationData);
 					expect(result).toEqual([
 						{
 							hidden: false,
@@ -113,6 +130,12 @@ describe('#getVerticalTabs', () => {
 							id: 'project-documents',
 							name: 'Documents',
 							url: '/projects/mock case ref/documents'
+						},
+						{
+							hidden: true,
+							id: 'register-index',
+							name: 'Register to have your say',
+							url: '/projects/mock case ref/register/register-have-your-say'
 						},
 						{
 							hidden: false,
@@ -156,7 +179,7 @@ describe('#getVerticalTabs', () => {
 
 			describe('and case id is not in the projectMigrationCaseReferences', () => {
 				it('should return the vertical tabs excluding "get-updates" and "project-information', () => {
-					const result = getVerticalTabs('migrated-case-ref', false, false);
+					const result = getVerticalTabs('migrated-case-ref', false, false, mockApplicationData);
 					expect(result).toEqual([
 						{
 							hidden: true,
@@ -175,6 +198,12 @@ describe('#getVerticalTabs', () => {
 							id: 'project-documents',
 							name: 'Documents',
 							url: '/projects/migrated-case-ref/documents'
+						},
+						{
+							hidden: true,
+							id: 'register-index',
+							name: 'Register to have your say',
+							url: '/projects/migrated-case-ref/register/register-have-your-say'
 						},
 						{
 							hidden: false,
