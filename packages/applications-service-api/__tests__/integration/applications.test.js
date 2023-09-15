@@ -9,8 +9,7 @@ const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
-const mockFindAll = jest.fn();
-const mockCount = jest.fn();
+const mockFindAndCountAll = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
@@ -21,8 +20,7 @@ jest.mock('../../src/lib/prisma', () => ({
 
 jest.mock('../../src/models', () => ({
 	Project: {
-		findAll: (query) => mockFindAll(query),
-		count: () => mockCount()
+		findAndCountAll: (query) => mockFindAndCountAll(query)
 	}
 }));
 
@@ -90,13 +88,15 @@ describe('/api/v1/applications', () => {
 	});
 
 	describe('get all applications', () => {
+		beforeEach(() => {
+			mockFindAndCountAll
+				.mockResolvedValueOnce({ rows: APPLICATIONS_NI_FILTER_COLUMNS })
+				.mockResolvedValueOnce({
+					rows: APPLICATIONS_NI_DB,
+					count: APPLICATIONS_NI_DB.length
+				});
+		});
 		it('happy path', async () => {
-			mockFindAll
-				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
-				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
-
-			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
-
 			const response = await request.get('/api/v1/applications');
 
 			expect(response.status).toEqual(200);
@@ -111,12 +111,6 @@ describe('/api/v1/applications', () => {
 		});
 
 		it('with filters applied', async () => {
-			mockFindAll
-				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
-				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
-
-			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
-
 			const queryString = [
 				'stage=acceptance',
 				'stage=recommendation',
@@ -128,7 +122,7 @@ describe('/api/v1/applications', () => {
 
 			const response = await request.get(`/api/v1/applications?${queryString}`);
 
-			expect(mockFindAll).toBeCalledWith(
+			expect(mockFindAndCountAll).toBeCalledWith(
 				expect.objectContaining({
 					where: {
 						[Op.and]: [
@@ -154,15 +148,9 @@ describe('/api/v1/applications', () => {
 		});
 
 		it('with search term applied', async () => {
-			mockFindAll
-				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
-				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
-
-			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
-
 			const response = await request.get('/api/v1/applications?searchTerm=foo');
 
-			expect(mockFindAll).toBeCalledWith(
+			expect(mockFindAndCountAll).toBeCalledWith(
 				expect.objectContaining({
 					where: {
 						[Op.or]: [
@@ -184,12 +172,6 @@ describe('/api/v1/applications', () => {
 			});
 		});
 		it('with search term and filters applied', async () => {
-			mockFindAll
-				.mockResolvedValueOnce(APPLICATIONS_NI_FILTER_COLUMNS)
-				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
-
-			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
-
 			const queryString = [
 				'stage=acceptance',
 				'stage=recommendation',
@@ -202,7 +184,7 @@ describe('/api/v1/applications', () => {
 
 			const response = await request.get(`/api/v1/applications?${queryString}`);
 
-			expect(mockFindAll).toBeCalledWith(
+			expect(mockFindAndCountAll).toBeCalledWith(
 				expect.objectContaining({
 					where: {
 						[Op.and]: [
