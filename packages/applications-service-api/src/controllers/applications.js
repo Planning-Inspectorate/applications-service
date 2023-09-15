@@ -27,8 +27,6 @@ const getAllApplications = async (req, res) => {
 	const { applications, totalItems, currentPage, itemsPerPage, totalPages, filters } =
 		await getAllApplicationsFromApplicationApiService(req.query);
 
-	if (!totalItems) throw ApiError.noApplicationsFound();
-
 	const response = {
 		applications,
 		totalItems,

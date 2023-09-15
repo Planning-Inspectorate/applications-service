@@ -1,7 +1,6 @@
 const {
 	getApplication,
 	getAllApplications,
-	getAllApplicationsCount,
 	GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
 } = require('../../../src/repositories/project.ni.repository');
 const db = require('../../../src/models');
@@ -10,8 +9,7 @@ const { Op } = require('sequelize');
 jest.mock('../../../src/models', () => ({
 	Project: {
 		findOne: jest.fn(),
-		findAll: jest.fn(),
-		count: jest.fn()
+		findAndCountAll: jest.fn()
 	}
 }));
 describe('project ni repository', () => {
@@ -55,20 +53,23 @@ describe('project ni repository', () => {
 		};
 		beforeAll(() => {
 			// Arrange
-			db.Project.findAll.mockResolvedValue(mockProjects);
+			db.Project.findAndCountAll.mockResolvedValue({
+				rows: mockProjects,
+				count: mockProjects.length
+			});
 		});
-		it('calls findAll with options', async () => {
+		it('calls findAndCountAll with options', async () => {
 			// Act
 			await getAllApplications(mockOptions);
 			// Assert
-			expect(db.Project.findAll).toBeCalledWith({
+			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES,
 				where: {}
 			});
 		});
 
-		it('calls findAll with searchTerm is where clause', async () => {
+		it('calls findAndCountAll with searchTerm is where clause', async () => {
 			// Arrange
 			const mockOptionsWithSearchTerm = {
 				...mockOptions,
@@ -77,7 +78,7 @@ describe('project ni repository', () => {
 			// Act
 			await getAllApplications(mockOptionsWithSearchTerm);
 			// Assert
-			expect(db.Project.findAll).toBeCalledWith({
+			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES,
 				where: {
@@ -88,31 +89,11 @@ describe('project ni repository', () => {
 				}
 			});
 		});
-		it('returns the result of findAll', async () => {
+		it('returns the result of findAndCountAll', async () => {
 			// Act
 			const result = await getAllApplications(mockOptions);
 			// Assert
-			expect(result).toEqual(mockProjects);
-		});
-	});
-
-	describe('getAllApplicationsCount', () => {
-		const mockCount = 10;
-		beforeAll(() => {
-			// Arrange
-			db.Project.count.mockResolvedValue(mockCount);
-		});
-		it('calls count', async () => {
-			// Act
-			await getAllApplicationsCount();
-			// Assert
-			expect(db.Project.count).toBeCalled();
-		});
-		it('returns the result of count', async () => {
-			// Act
-			const result = await getAllApplicationsCount();
-			// Assert
-			expect(result).toEqual(mockCount);
+			expect(result).toEqual({ applications: mockProjects, count: mockProjects.length });
 		});
 	});
 });

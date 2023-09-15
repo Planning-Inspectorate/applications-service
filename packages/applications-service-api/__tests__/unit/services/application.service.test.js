@@ -5,8 +5,7 @@ const {
 } = require('../../../src/services/application.service');
 const {
 	getApplication: getApplicationRepository,
-	getAllApplications: getAllApplicationsRepository,
-	getAllApplicationsCount: getAllApplicationsCountRepository
+	getAllApplications: getAllApplicationsRepository
 } = require('../../../src/repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const {
@@ -17,8 +16,7 @@ const {
 
 jest.mock('../../../src/repositories/project.ni.repository', () => ({
 	getApplication: jest.fn(),
-	getAllApplications: jest.fn(),
-	getAllApplicationsCount: jest.fn()
+	getAllApplications: jest.fn()
 }));
 
 jest.mock('../../../src/utils/map-applications-to-csv', () => jest.fn());
@@ -51,13 +49,14 @@ describe('application.service', () => {
 	});
 
 	describe('getAllApplications', () => {
-		const mockCount = 100;
 		let availableFilters = [];
 		beforeEach(() => {
 			getAllApplicationsRepository
-				.mockResolvedValueOnce(availableFilters)
-				.mockResolvedValueOnce(APPLICATIONS_NI_DB);
-			getAllApplicationsCountRepository.mockResolvedValueOnce(mockCount);
+				.mockResolvedValueOnce({ applications: availableFilters })
+				.mockResolvedValueOnce({
+					applications: APPLICATIONS_NI_DB,
+					count: APPLICATIONS_NI_DB.length
+				});
 		});
 		describe('pagination', () => {
 			describe('when page num', () => {
@@ -239,21 +238,15 @@ describe('application.service', () => {
 			});
 		});
 
-		it('calls getAllApplicationsCountRepository', async () => {
-			// Act
-			await getAllApplications({});
-			// Assert
-			expect(getAllApplicationsCountRepository).toHaveBeenCalled();
-		});
 		it('returns result', async () => {
 			// Act
 			const result = await getAllApplications({});
 			// Assert
 			expect(result).toEqual({
 				applications: APPLICATIONS_FO,
-				totalItems: mockCount,
+				totalItems: APPLICATIONS_FO.length,
 				itemsPerPage: 25,
-				totalPages: 4,
+				totalPages: 1,
 				currentPage: 1,
 				filters: availableFilters
 			});
@@ -263,7 +256,7 @@ describe('application.service', () => {
 	describe('getAllApplicationsDownload', () => {
 		const mockResult = 'csv-foo';
 		beforeEach(() => {
-			getAllApplicationsRepository.mockResolvedValueOnce(APPLICATIONS_NI_DB);
+			getAllApplicationsRepository.mockResolvedValueOnce({ applications: APPLICATIONS_NI_DB });
 			mapApplicationsToCSV.mockResolvedValueOnce(mockResult);
 		});
 		it('calls getAllApplicationsRepository', async () => {
