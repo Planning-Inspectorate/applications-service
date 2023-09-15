@@ -76,7 +76,7 @@ describe('projects/project-information/controller', () => {
 					preExamSubStages: {
 						CLOSED_REPS: false,
 						OPEN_REPS: false,
-						PRE_REPS: false,
+						PRE_REPS: true,
 						PUBLISHED_REPS: false,
 						RULE_6_PUBLISHED_REPS: false
 					},
@@ -117,7 +117,7 @@ describe('projects/project-information/controller', () => {
 					preExamSubStages: {
 						CLOSED_REPS: false,
 						OPEN_REPS: false,
-						PRE_REPS: false,
+						PRE_REPS: true,
 						PUBLISHED_REPS: false,
 						RULE_6_PUBLISHED_REPS: false
 					},

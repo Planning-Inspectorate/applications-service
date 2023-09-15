@@ -1,6 +1,13 @@
 const { featureHideLink, featureFlag } = require('../../../../config');
+const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
+const { registerRoute } = require('../../register/index/config');
 
-function getVerticalTabs(caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
+function getVerticalTabs(
+	caseRef,
+	hasOpenTimetables,
+	eventsEligibleForDisplay,
+	{ DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose }
+) {
 	return [
 		{
 			hidden:
@@ -21,6 +28,15 @@ function getVerticalTabs(caseRef, hasOpenTimetables, eventsEligibleForDisplay) {
 			id: 'project-documents',
 			name: 'Documents',
 			url: '/projects/' + caseRef + '/documents'
+		},
+		{
+			hidden: !isRegistrationOpen(
+				DateOfRepresentationPeriodOpen,
+				DateOfRelevantRepresentationClose
+			),
+			id: 'register-index',
+			name: 'Register to have your say',
+			url: `/projects/${caseRef}/register/${registerRoute}`
 		},
 		{
 			hidden: false,

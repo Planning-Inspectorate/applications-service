@@ -81,15 +81,17 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	);
 
 	const filters = [];
-	for (const [field, filterValues] of Object.entries(mappedFilters)) {
-		for (const [value, count] of Object.entries(filterValues)) {
-			const filter = {
-				name: field,
-				value: mapFilterValueToApi(field, value),
-				label: mapFilterLabelToApi(field, value),
-				count: count
-			};
-			filters.push(filter);
+	if (mappedFilters) {
+		for (const [field, filterValues] of Object.entries(mappedFilters)) {
+			for (const [value, count] of Object.entries(filterValues)) {
+				const filter = {
+					name: field,
+					value: mapFilterValueToApi(field, value),
+					label: mapFilterLabelToApi(field, value),
+					count: count
+				};
+				filters.push(filter);
+			}
 		}
 	}
 

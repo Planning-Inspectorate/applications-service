@@ -1,12 +1,13 @@
-const startController = require('../../../../src/controllers/register/start');
-const { getAppData } = require('../../../../src/services/applications.service');
-const { mockReq, mockRes } = require('../../mocks');
+const { getRegister } = require('./controller');
 
-jest.mock('../../../../src/lib/logger');
+const { getAppData } = require('../../../../services/applications.service');
+const { mockReq, mockRes } = require('../../../../../__tests__/unit/mocks');
 
-jest.mock('../../../../src/services/applications.service');
+jest.mock('../../../../lib/logger');
 
-describe('controllers/register/start', () => {
+jest.mock('../../../../services/applications.service');
+
+describe('projects/register/index/controller', () => {
 	let res;
 	let responseWithStatus;
 
@@ -15,31 +16,38 @@ describe('controllers/register/start', () => {
 		res = mockRes();
 		responseWithStatus = mockRes();
 		res.status.mockImplementation(() => responseWithStatus);
+		jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
 	});
 
-	describe('getStart', () => {
+	describe('#getRegister', () => {
 		it('should load project data and return register start view', async () => {
 			getAppData.mockImplementation(() =>
 				Promise.resolve({
 					resp_code: 200,
 					data: {
 						ProjectName: 'St James Barton Giant Wind Turbine',
-						DateOfRelevantRepresentationClose: '2024-09-01'
+						DateOfRelevantRepresentationClose: '2023-01-02'
 					}
 				})
 			);
+
 			const req = {
 				...mockReq(),
 				params: {
 					case_ref: 'ABC123'
 				}
 			};
-			await startController.getStart(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/start', {
-				projectName: 'St James Barton Giant Wind Turbine',
-				periodOpen: true,
-				closeDate: '1 September 2024',
-				baseUrl: '/projects/ABC123'
+
+			await getRegister(req, res);
+
+			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
+				activeId: 'register-index',
+				closeDate: '2 January 2023',
+				headerTitle: 'Register to have your say about a national infrastructure project',
+				pageHeading: 'Register to have your say about a national infrastructure project',
+				pageTitle:
+					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
+				periodOpen: true
 			});
 		});
 		it('should load project data and return register start view even when existing project in session  ', async () => {
@@ -48,7 +56,7 @@ describe('controllers/register/start', () => {
 					resp_code: 200,
 					data: {
 						ProjectName: 'St James Barton Giant Wind Turbine',
-						DateOfRelevantRepresentationClose: '2024-09-01'
+						DateOfRelevantRepresentationClose: '2023-01-02'
 					}
 				})
 			);
@@ -65,12 +73,15 @@ describe('controllers/register/start', () => {
 					}
 				}
 			};
-			await startController.getStart(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/start', {
-				projectName: 'St James Barton Giant Wind Turbine',
-				periodOpen: true,
-				closeDate: '1 September 2024',
-				baseUrl: '/projects/ABC123'
+			await getRegister(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
+				activeId: 'register-index',
+				closeDate: '2 January 2023',
+				headerTitle: 'Register to have your say about a national infrastructure project',
+				pageHeading: 'Register to have your say about a national infrastructure project',
+				pageTitle:
+					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
+				periodOpen: true
 			});
 		});
 		it('should redirect to not found route if project not found for caseRef provided', async () => {
@@ -85,7 +96,7 @@ describe('controllers/register/start', () => {
 					case_ref: 'ABC100'
 				}
 			};
-			await startController.getStart(req, res);
+			await getRegister(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);
 			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});
@@ -99,7 +110,7 @@ describe('controllers/register/start', () => {
 				...mockReq(),
 				session: {}
 			};
-			await startController.getStart(req, res);
+			await getRegister(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);
 			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});

@@ -45,6 +45,20 @@ describe('parseQueryParamProperties middleware', () => {
 				}
 			});
 		});
+
+		it('converts empty string to empty array', () => {
+			const req = {
+				query: {
+					foo: ''
+				}
+			};
+			normaliseArrayQueryParams(['foo'])(req, {}, jest.fn());
+			expect(req).toEqual({
+				query: {
+					foo: []
+				}
+			});
+		});
 	});
 
 	describe('parseIntegerQueryParams', () => {

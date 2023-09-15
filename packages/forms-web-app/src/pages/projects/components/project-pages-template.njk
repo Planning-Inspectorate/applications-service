@@ -42,9 +42,13 @@
       {% endif %}
 
       <h1 class="{{ h1Style }}">
-        <span class="govuk-caption-l">
-          {{ projectName }}
-        </span>
+        {% if preTitle %}
+
+          <span class="govuk-caption-l">
+            {{ preTitle }}
+          </span>
+
+        {% endif %}
 
         {{ title }}
       </h1>

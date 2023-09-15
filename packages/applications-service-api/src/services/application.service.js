@@ -1,7 +1,6 @@
 const {
 	getApplication: getApplicationRepository,
-	getAllApplications: getAllApplicationsRepository,
-	getAllApplicationsCount: getAllApplicationsCountRepository
+	getAllApplications: getAllApplicationsRepository
 } = require('../repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const { addMapZoomLvlAndLongLat } = require('../utils/add-map-zoom-and-longlat');
@@ -20,7 +19,6 @@ const getAllApplications = async (query) => {
 	const { pageNo, size, offset, order } = createQueryFilters(query);
 
 	const availableFilters = await getAvailableFilters();
-	const count = await getAllApplicationsCountRepository();
 
 	const repositoryOptions = {
 		offset,
@@ -31,7 +29,7 @@ const getAllApplications = async (query) => {
 	const appliedFilters = mapApplicationFiltersToNI(query);
 	if (!isEmpty(appliedFilters)) repositoryOptions.filters = appliedFilters;
 
-	const applications = await getAllApplicationsRepository(repositoryOptions);
+	const { applications, count } = await getAllApplicationsRepository(repositoryOptions);
 
 	return {
 		applications: applications.map((document) => addMapZoomLvlAndLongLat(document)),
@@ -44,7 +42,7 @@ const getAllApplications = async (query) => {
 };
 
 const getAllApplicationsDownload = async () => {
-	const applications = await getAllApplicationsRepository();
+	const { applications } = await getAllApplicationsRepository();
 	const applicationsWithMapZoomLvlAndLongLat = applications.map((document) =>
 		addMapZoomLvlAndLongLat(document)
 	);
@@ -81,7 +79,7 @@ const createQueryFilters = (query) => {
 };
 
 const getAvailableFilters = async () => {
-	const applications = await getAllApplicationsRepository({
+	const { applications } = await getAllApplicationsRepository({
 		attributes: ['Stage', 'Region', 'Proposal']
 	});
 	return buildApiFiltersFromNIApplications(applications);
