@@ -26,12 +26,16 @@
 				{{ activeSubmissionItemTitle }}
 			</span>
 			<h1 class="govuk-heading-l">Upload files</h1>
-			<p class="govuk-body">Your file must be PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS or XSLX. </p>
-			<p class="govuk-body">All files must be:</p>
+			<p class="govuk-body">Your files need to be:</p>
 			<ul class="govuk-list govuk-list--bullet">
+				<li>PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS or XSLX</li>
 				<li>a single document</li>
 				<li>smaller than {{ maxFileSizeInMb }}mb</li>
 			</ul>
+
+			<div class="govuk-inset-text">
+				You cannot submit the same file against multiple deadline items.
+			</div>
 
 			<form
 				name="fileUploadForm"
@@ -39,8 +43,8 @@
 				method="post"
 				enctype="multipart/form-data"
 			>
-				<h2 class="govuk-heading-m">
-					Files added
+				<h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+					Upload files
 				</h2>
 
 				<dl class="govuk-summary-list">
@@ -111,7 +115,7 @@
 				</noscript>
 
 				<div class="visible-on visible-on--js-enabled">
-					<div class="moj-multi-file-upload__dropzone">
+					<div class="moj-multi-file-upload__dropzone pins-modded-file-upload-zone">
 						<input type="hidden" id="upload" name="upload" value="true">
 						<p>Drag and drop files here or</p>
 						<input
@@ -126,7 +130,7 @@
 							for="file-upload"
 							class="govuk-button govuk-button--secondary ui-file-upload__label"
 						>
-							Choose files
+							Select files
 						</label>
 					</div>
 				</div>
