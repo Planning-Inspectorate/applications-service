@@ -19,6 +19,9 @@
           attributes: { "data-cy": id },
           idPrefix: id,
           name: id,
+          hint: {
+            text: "You've not registered as an interested party. You can still submit comments, but we may not accept them." if not interestedPartyNumber
+          },
           errorMessage: errors[id] and {
             text: errors[id].msg
           },
