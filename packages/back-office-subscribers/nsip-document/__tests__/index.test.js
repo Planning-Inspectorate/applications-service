@@ -1,18 +1,19 @@
 const subject = require('../index');
 
-describe('nsip-documents', () => {
+describe('nsip-document', () => {
 	const message = {
-		documentId: '100000',
+		documentId: '130ce4ec-e790-43e0-ae25-0703c81cb9b2',
+		caseId: 1,
 		caseRef: 'EN010120',
 		documentReference: 'abcdef',
-		version: '1',
+		version: 1,
 		examinationRefNo: 'dunno',
 		filename: 'a.pdf',
 		originalFilename: 'a.pdf',
 		size: 1,
 		mime: 'application/pdf',
 		documentURI: 'https://example.org/a.pdf',
-		path: '/a.pdf',
+		publishedDocumentURI: 'https://example.org/published/a.pdf',
 		virusCheckStatus: 'looks legit',
 		fileMD5: 'b57987f7594c89366f7183ee9b7ae6b2',
 		dateCreated: '2023-03-26T00:00:00.000',
@@ -64,7 +65,7 @@ describe('nsip-documents', () => {
 
 			expect(mockContext.bindings.document).toEqual(expectedDocument);
 			expect(mockContext.log).toBeCalledWith(
-				`invoking nsip-documents function with message: ${JSON.stringify(message)}`
+				`invoking nsip-document function with message: ${JSON.stringify(message)}`
 			);
 		});
 	});

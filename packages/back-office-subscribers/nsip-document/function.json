@@ -5,7 +5,7 @@
 			"direction": "in",
 			"name": "message",
 			"topicName": "nsip-document",
-			"subscriptionName": "applications-nsip-documents-subscription",
+			"subscriptionName": "applications-nsip-document-subscription",
 			"connection": "ServiceBusConnection",
 			"accessRights": "listen"
 		},
