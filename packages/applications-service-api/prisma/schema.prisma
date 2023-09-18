@@ -14,17 +14,18 @@ datasource db {
 model Document {
   id                     Int       @unique @default(autoincrement())
   documentId             String    @id
+  caseId                 Int?
   caseRef                String?
   representationId       Int?
   documentReference      String?
-  version                String?
+  version                Int?
   examinationRefNo       String?
   filename               String?
   originalFilename       String?
   size                   Int?
   mime                   String?
   documentURI            String?
-  path                   String?
+  publishedDocumentURI   String?
   virusCheckStatus       String?
   fileMD5                String?
   dateCreated            String?
