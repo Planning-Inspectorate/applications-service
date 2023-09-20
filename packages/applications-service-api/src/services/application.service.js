@@ -1,6 +1,7 @@
 const {
 	getApplication: getApplicationRepository,
-	getAllApplications: getAllApplicationsRepository
+	getAllApplications: getAllApplicationsRepository,
+	getAllApplicationsCount
 } = require('../repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const { addMapZoomLvlAndLongLat } = require('../utils/add-map-zoom-and-longlat');
@@ -30,6 +31,7 @@ const getAllApplications = async (query) => {
 	if (!isEmpty(appliedFilters)) repositoryOptions.filters = appliedFilters;
 
 	const { applications, count } = await getAllApplicationsRepository(repositoryOptions);
+	const totalItemsWithoutFilters = await getAllApplicationsCount();
 
 	return {
 		applications: applications.map((document) => addMapZoomLvlAndLongLat(document)),
@@ -37,6 +39,7 @@ const getAllApplications = async (query) => {
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),
 		currentPage: pageNo,
+		totalItemsWithoutFilters,
 		filters: availableFilters
 	};
 };
