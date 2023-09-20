@@ -2,6 +2,8 @@
 
 {% from "../components/ui/next-step.njk" import uiNextStep %}
 
+{% set currentDefaultStep = 3 %}
+
 {% block pageTitle %}
 	Pre-examination
 {% endblock %}
@@ -96,10 +98,8 @@
 		</div>
 
 		<div class="govuk-grid-column-one-third">
-			{% set currentDefaultStep = 1 %}
 			{% include "../includes/dco-step-by-step-navigation.njk" %}
 		</div>
-
 	</div>
 
 {% endblock %}

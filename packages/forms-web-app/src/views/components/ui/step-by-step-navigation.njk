@@ -1,0 +1,97 @@
+{% macro stepByStepNavigation(params, activeStep, template, state) %}
+  {% set navigationSize = "" %}
+
+  {% if template === "main" %}
+    {% set navigationSize = "app-step-nav--large" %}
+  {% endif %}
+
+  {% set navigationState = "" %}
+
+  {% if state === "dynamic" %}
+    {% set navigationState = "js-hidden" %}
+  {% endif %}
+
+  {% if params.pretitle or params.title %}
+
+    <div class="app-step-nav-related app-step-nav-related--singular">
+      <h2 class="app-step-nav-related__heading">
+        {% if params.pretitle %}
+
+          <span class="app-step-nav-related__pretitle">
+            {{ params.pretitle }}
+          </span>
+
+        {% endif %}
+
+        {% if params.title and params.url %}
+
+          <a class="govuk-link" href="{{ params.url }}">
+            {{ params.title }}
+          </a>
+
+        {% elseif params.title %}
+
+          {{ params.title }}
+
+        {% endif %}
+      </h2>
+    </div>
+
+  {% endif %}
+
+  <div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all steps" data-hide-all-text="Hide all steps">
+    <ol class="app-step-nav__steps">
+
+      {% for step in params.steps %}
+
+        {% set primaryLoopIndex = loop.index %}
+
+        <li class="app-step-nav__step {% if activeStep === loop.index %} app-step-nav__step--active {% endif %} js-step">
+          <div class="app-step-nav__header js-toggle-panel" data-position="{{ primaryLoopIndex.index }}">
+
+            <h2 class="app-step-nav__title">
+              <span class="app-step-nav__circle app-step-nav__circle--number">
+                <span class="app-step-nav__circle-inner">
+                  <span class="app-step-nav__circle-background">
+                    <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span> {{ loop.index }}<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                  </span>
+                </span>
+              </span>
+
+              <span class="js-step-title">
+                {{ step.heading.text }}
+              </span>
+            </h2>
+
+          </div>
+
+          <div class="app-step-nav__panel js-panel" id="app-step-nav__panel--{{ loop.index }}">
+              {% for text in [step.content.text].flat() %}
+
+                <p class="app-step-nav__paragraph">
+                  {{ text }}
+                </p>
+
+              {% endfor %}
+
+            {% if step.subList | length %}
+              <ol class="app-step-nav__list" data-length="{{ step.subList | length }}">
+                {% for item in step.subList %}
+
+                  <li class="app-step-nav__list-item js-list-item">
+                    <a data-position="{{ primaryLoopIndex }}.{{ loop.index }}" class="app-step-nav__link js-link" href="{{ item.href }}">
+                      {{ item.text }}
+                    </a>
+                  </li>
+
+                {% endfor %}
+              </ol>
+            {% endif %}
+          </div>
+        </li>
+
+      {% endfor %}
+
+    </ol>
+  </div>
+{% endmacro %}

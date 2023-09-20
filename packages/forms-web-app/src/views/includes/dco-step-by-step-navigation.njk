@@ -1,103 +1,113 @@
-{{ pinsStepByStepNavigation({
-    id: "ip-step-by-step-one",
-            useIPDefaultStepByStep: true,
-            currentDefaultStep: currentDefaultStep,
-            heading: "The decision-making process for National Infrastructure Projects",
-            headingContainsLink: true,
-            headingLink: "../decision-making-process-guide",
-            steps: [
-              {
-                  heading: {
-                    text: "Pre-application"
-                  },
-                  content: {
-                    text: [
-                      "This is where the developer creates their application. They must also begin to consult with organisations and people living in the area. They must also create detailed documents about the impact the project could have on the environment.",
-                      "It is important to get involved at this stage to influence the application before the developer sends it to the planning inspectorate."
-                    ]
-                  },
-                  subList: [
-                    {
-                      text: "Find out what you can do at this stage and check our detailed guides",
-                      href: "pre-application",
-                      isActive: true
-                    }
-                  ]
-              },
-              {
-                  heading: {
-                    text: "Acceptance of the application"
-                  },
-                  content: {
-                    text: "This is when the developer sends us their application documents. We check if we can accept the application for examination. We have 28 days to make this decision."
-                  },
-                  subList: [
-                    {
-                      text: "How the acceptance stage works and what happens next",
-                      href: "review-of-the-application",
-                      isActive: true
-                    }
-                  ]
-              },
-              {
-                  heading: {
-                    text: "Pre-examination"
-                  },
-                  content: {
-                    text: [
-                      "The examining authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say will be able to register at this stage",
-                      "The developer must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the developer but must be no less than 28 days",
-                      "The pre-examination stage usually takes about 3 months."
-                    ]
-                  },
-                  subList: [
-                    {
-                      text: "What happens during the pre-examination stage",
-                      href: "pre-examination",
-                      isActive: true
-                    }
-                  ]
-              },
-              {
-                  heading: {
-                    text: "Examination of the application"
-                  },
-                  content: {
-                    text: "The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months."
-                  },
-                  subList: [
-                    {
-                      text: "What happens at the examination of the application",
-                      href: "examination-of-the-application",
-                      isActive: true
-                    }
-                  ]
-              },
-              {
-                  heading: {
-                    text: "Recommendation and decision"
-                  },
-                  content: {
-                    text: [
-                      "The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.",
-                      "The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision."
-                    ]
-                  },
-                  subList: [
-                    {
-                      text: "Making a recommendation and who makes the final decision",
-                      href: "recommendation-and-decision",
-                      isActive: true
-                    }
-                  ]
-              },
-              {
-                  heading: {
-                    text: "What happens after a decision is made"
-                  },
-                  content: {
-                    text: "Once the Secretary of State has made a decision, there is a 6-week period where people can challenge the decision in the high court. This is called a judicial review."
-                  }
-              }
+{% from "components/ui/step-by-step-navigation.njk" import stepByStepNavigation %}
+
+{% set params =
+  {
+    steps: [
+      {
+          heading: {
+            text: "Pre-application"
+          },
+          content: {
+            text: [
+              "This is where the developer creates their application. They must also begin to consult with organisations and people living in the area. They must also create detailed documents about the impact the project could have on the environment.",
+              "It is important to get involved at this stage to influence the application before the developer sends it to the planning inspectorate."
             ]
-        }) }}
+          },
+          subList: [
+            {
+              text: "Find out what you can do at this stage and check our detailed guides",
+              href: "/decision-making-process-guide/pre-application"
+            }
+          ]
+      },
+      {
+          heading: {
+            text: "Acceptance of the application"
+          },
+          content: {
+            text: "This is when the developer sends us their application documents. We check if we can accept the application for examination. We have 28 days to make this decision."
+          },
+          subList: [
+            {
+              text: "How the acceptance stage works and what happens next",
+              href: "/decision-making-process-guide/review-of-the-application"
+            }
+          ]
+      },
+      {
+          heading: {
+            text: "Pre-examination"
+          },
+          content: {
+            text: [
+              "The examining authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say will be able to register at this stage",
+              "The developer must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the developer but must be no less than 28 days",
+              "The pre-examination stage usually takes about 3 months."
+            ]
+          },
+          subList: [
+            {
+              text: "What happens during the pre-examination stage",
+              href: "/decision-making-process-guide/pre-examination"
+            }
+          ]
+      },
+      {
+          heading: {
+            text: "Examination of the application"
+          },
+          content: {
+            text: "The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months."
+          },
+          subList: [
+            {
+              text: "What happens at the examination of the application",
+              href: "/decision-making-process-guide/examination-of-the-application"
+            }
+          ]
+      },
+      {
+          heading: {
+            text: "Recommendation and decision"
+          },
+          content: {
+            text: [
+              "The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.",
+              "The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision."
+            ]
+          },
+          subList: [
+            {
+              text: "Making a recommendation and who makes the final decision",
+              href: "/decision-making-process-guide/recommendation-and-decision"
+            }
+          ]
+      },
+      {
+          heading: {
+            text: "What happens after a decision is made"
+          },
+          content: {
+            text: "Once the Secretary of State has made a decision, there is a 6-week period where people can challenge the decision in the high court. This is called a judicial review."
+          }
+      }
+    ]
+  }
+%}
+
+{% if templateID !== 'main' %}
+  {% set params = {
+    pretitle: "Part of",
+    title: "The decision-making process for National Infrastructure Projects",
+    url: "/decision-making-process-guide",
+    steps: params.steps
+  } %}
+{% endif %}
+
+{% set state = 'static' %}
+
+{% if templateID === 'main' %}
+  {% set state = 'dynamic' %}
+{% endif %}
+
+{{ stepByStepNavigation(params, currentDefaultStep, templateID, state) }}
