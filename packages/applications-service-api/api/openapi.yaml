@@ -150,6 +150,33 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Application'
+                  filters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          enum:
+                            - stage
+                            - region
+                            - sector
+                          example: stage
+                          description: Name of property to filter by
+                        value:
+                          oneOf:
+                            - type: string
+                            - type: number
+                          example: 1
+                          description: Value of property to filter by
+                        label:
+                          type: string
+                          example: Pre-application
+                          description: Display name for the filter value
+                        count:
+                          type: number
+                          example: 5
+                          description: Number of documents matching the filter
                   totalItems:
                     type: number
                     example: 1
