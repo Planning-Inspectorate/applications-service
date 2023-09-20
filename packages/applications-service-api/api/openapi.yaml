@@ -179,6 +179,7 @@ paths:
                           description: Number of documents matching the filter
                   totalItems:
                     type: number
+                    description: Count of items with provided filters applied
                     example: 1
                   itemsPerPage:
                     type: number
@@ -189,6 +190,10 @@ paths:
                   currentPage:
                     type: number
                     example: 1
+                  totalItemsWithoutFilters:
+                    type: number
+                    description: Count of items with no filters applied
+                    example: 10
         '404':
           description: No applications found
 

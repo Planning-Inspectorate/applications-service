@@ -5,7 +5,8 @@ const {
 } = require('../../../src/services/application.service');
 const {
 	getApplication: getApplicationRepository,
-	getAllApplications: getAllApplicationsRepository
+	getAllApplications: getAllApplicationsRepository,
+	getAllApplicationsCount: getAllApplicationsCountRepository
 } = require('../../../src/repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const {
@@ -16,7 +17,8 @@ const {
 
 jest.mock('../../../src/repositories/project.ni.repository', () => ({
 	getApplication: jest.fn(),
-	getAllApplications: jest.fn()
+	getAllApplications: jest.fn(),
+	getAllApplicationsCount: jest.fn()
 }));
 
 jest.mock('../../../src/utils/map-applications-to-csv', () => jest.fn());
@@ -57,6 +59,7 @@ describe('application.service', () => {
 					applications: APPLICATIONS_NI_DB,
 					count: APPLICATIONS_NI_DB.length
 				});
+			getAllApplicationsCountRepository.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
 		});
 		describe('pagination', () => {
 			describe('when page num', () => {
@@ -248,6 +251,7 @@ describe('application.service', () => {
 				itemsPerPage: 25,
 				totalPages: 1,
 				currentPage: 1,
+				totalItemsWithoutFilters: APPLICATIONS_FO.length,
 				filters: availableFilters
 			});
 		});

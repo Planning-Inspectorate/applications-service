@@ -22,10 +22,15 @@ const getApplication = async (req, res) => {
 };
 
 const getAllApplications = async (req, res) => {
-	logger.debug(`Retrieving all applications ...`);
-
-	const { applications, totalItems, currentPage, itemsPerPage, totalPages, filters } =
-		await getAllApplicationsFromApplicationApiService(req.query);
+	const {
+		applications,
+		totalItems,
+		currentPage,
+		itemsPerPage,
+		totalPages,
+		filters,
+		totalItemsWithoutFilters
+	} = await getAllApplicationsFromApplicationApiService(req.query);
 
 	const response = {
 		applications,
@@ -33,6 +38,7 @@ const getAllApplications = async (req, res) => {
 		currentPage,
 		itemsPerPage,
 		totalPages,
+		totalItemsWithoutFilters,
 		filters
 	};
 

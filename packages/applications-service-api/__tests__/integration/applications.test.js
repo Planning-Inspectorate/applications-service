@@ -10,6 +10,7 @@ const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
 const mockFindAndCountAll = jest.fn();
+const mockCount = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
@@ -20,7 +21,8 @@ jest.mock('../../src/lib/prisma', () => ({
 
 jest.mock('../../src/models', () => ({
 	Project: {
-		findAndCountAll: (query) => mockFindAndCountAll(query)
+		findAndCountAll: (query) => mockFindAndCountAll(query),
+		count: () => mockCount()
 	}
 }));
 
@@ -89,14 +91,15 @@ describe('/api/v1/applications', () => {
 
 	describe('get all applications', () => {
 		beforeEach(() => {
-			mockFindAndCountAll
-				.mockResolvedValueOnce({ rows: APPLICATIONS_NI_FILTER_COLUMNS })
-				.mockResolvedValueOnce({
-					rows: APPLICATIONS_NI_DB,
-					count: APPLICATIONS_NI_DB.length
-				});
+			mockFindAndCountAll.mockResolvedValueOnce({ rows: APPLICATIONS_NI_FILTER_COLUMNS });
+			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
 		});
 		it('happy path', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: APPLICATIONS_NI_DB,
+				count: APPLICATIONS_NI_DB.length
+			});
+
 			const response = await request.get('/api/v1/applications');
 
 			expect(response.status).toEqual(200);
@@ -106,11 +109,19 @@ describe('/api/v1/applications', () => {
 				itemsPerPage: 25,
 				totalItems: 5,
 				totalPages: 1,
+				totalItemsWithoutFilters: 5,
 				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
 
 		it('with filters applied', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: [APPLICATIONS_NI_DB[2], APPLICATIONS_NI_DB[3], APPLICATIONS_NI_DB[4]],
+				count: 3
+			});
+
+			const filteredApplications = [APPLICATIONS_FO[2], APPLICATIONS_FO[3], APPLICATIONS_FO[4]];
+
 			const queryString = [
 				'stage=acceptance',
 				'stage=recommendation',
@@ -138,24 +149,31 @@ describe('/api/v1/applications', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				applications: APPLICATIONS_FO,
+				applications: filteredApplications,
 				currentPage: 1,
 				itemsPerPage: 25,
-				totalItems: 5,
+				totalItems: 3,
 				totalPages: 1,
+				totalItemsWithoutFilters: 5,
 				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
 
 		it('with search term applied', async () => {
-			const response = await request.get('/api/v1/applications?searchTerm=foo');
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: [APPLICATIONS_NI_DB[0]],
+				count: 1
+			});
+			const filteredApplications = [APPLICATIONS_FO[0]];
+
+			const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
 
 			expect(mockFindAndCountAll).toBeCalledWith(
 				expect.objectContaining({
 					where: {
 						[Op.or]: [
-							{ ProjectName: { [Op.like]: '%foo%' } },
-							{ PromoterName: { [Op.like]: '%foo%' } }
+							{ ProjectName: { [Op.like]: '%London Resort%' } },
+							{ PromoterName: { [Op.like]: '%London Resort%' } }
 						]
 					}
 				})
@@ -163,15 +181,23 @@ describe('/api/v1/applications', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				applications: APPLICATIONS_FO,
+				applications: filteredApplications,
 				currentPage: 1,
 				itemsPerPage: 25,
-				totalItems: 5,
+				totalItems: 1,
 				totalPages: 1,
+				totalItemsWithoutFilters: 5,
 				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
+
 		it('with search term and filters applied', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: [APPLICATIONS_NI_DB[2], APPLICATIONS_NI_DB[3]],
+				count: 2
+			});
+			const filteredApplications = [APPLICATIONS_FO[2], APPLICATIONS_FO[3]];
+
 			const queryString = [
 				'stage=acceptance',
 				'stage=recommendation',
@@ -179,7 +205,7 @@ describe('/api/v1/applications', () => {
 				'region=north_west',
 				'sector=energy',
 				'sector=transport',
-				'searchTerm=foo'
+				'searchTerm=Nuclear'
 			].join('&');
 
 			const response = await request.get(`/api/v1/applications?${queryString}`);
@@ -195,8 +221,8 @@ describe('/api/v1/applications', () => {
 							}
 						],
 						[Op.or]: [
-							{ ProjectName: { [Op.like]: '%foo%' } },
-							{ PromoterName: { [Op.like]: '%foo%' } }
+							{ ProjectName: { [Op.like]: '%Nuclear%' } },
+							{ PromoterName: { [Op.like]: '%Nuclear%' } }
 						]
 					}
 				})
@@ -204,10 +230,11 @@ describe('/api/v1/applications', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				applications: APPLICATIONS_FO,
+				applications: filteredApplications,
 				currentPage: 1,
 				itemsPerPage: 25,
-				totalItems: 5,
+				totalItems: 2,
+				totalItemsWithoutFilters: 5,
 				totalPages: 1,
 				filters: APPLICATIONS_FO_FILTERS
 			});
