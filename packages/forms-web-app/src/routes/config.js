@@ -73,7 +73,7 @@ const routesConfig = {
 				},
 				route: 'enter-a-comment',
 				sessionId: 'comment',
-				title: 'Your comment',
+				title: 'Make a comment',
 				view: 'pages/examination/enter-comment'
 			},
 			evidenceOrComment: {
