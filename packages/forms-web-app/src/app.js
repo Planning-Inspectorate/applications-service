@@ -38,7 +38,6 @@ app.use(
 
 if (config.featureFlag.contentSecurityPolicy) configureCSP(app);
 
-const jQueryFrontendRoot = path.resolve(require.resolve('jquery'), '../..');
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 
 const nunjucksEnv = nunjucksConfigure(app);
@@ -67,10 +66,6 @@ app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
-app.use(
-	'/assets/jquery.js',
-	express.static(path.join(jQueryFrontendRoot, 'dist', 'jquery.min.js'))
-);
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
 

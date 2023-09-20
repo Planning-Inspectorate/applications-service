@@ -19,9 +19,6 @@
 @import './page/rte.scss';
 @import './page/button.scss';
 
-/* app */
-@import './app/app-step-nav.scss';
-
 /* components */
 @import './components/core/pins-header.scss';
 @import './components/layout/slots.scss';
@@ -32,6 +29,7 @@
 @import './components/style/canvas-background.scss';
 @import './components/style/vertical-tabs.scss';
 @import './components/text/centred-title-subtitle.scss';
+@import './components/ui/step-by-step-navigation/index.scss';
 @import './components/ui/checkbox-accordion.scss';
 @import './components/ui/link-button.scss';
 @import './components/ui/map.scss';

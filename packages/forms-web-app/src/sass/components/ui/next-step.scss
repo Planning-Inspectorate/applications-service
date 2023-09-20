@@ -1,27 +1,28 @@
 .ui-next-step {
-  border-top: 1px solid #707070;
-  padding-top: 20px;
-  padding-left: 2em;
-  position: relative;
+	border-top: 1px solid #707070;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 2em;
+	position: relative;
 
-  a {
-    text-decoration: none;
+	a {
+		text-decoration: none;
 
-    span {
-      text-decoration: underline;
-    }
+		span {
+			text-decoration: underline;
+		}
 
-    strong {
-      display: block;
-      margin-bottom: .5em;
-    }
-  }
+		strong {
+			display: block;
+			margin-bottom: 0.5em;
+		}
+	}
 
-  &__icon {
-    position: absolute;
-    top: 22px;
-    left: 0;
-    width: 20px;
-    overflow: hidden;
-  }
+	&__icon {
+		position: absolute;
+		top: 22px;
+		left: 0;
+		width: 20px;
+		overflow: hidden;
+	}
 }

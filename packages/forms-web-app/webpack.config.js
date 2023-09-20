@@ -38,8 +38,7 @@ const configAppScripts = {
 		initiate: `${entryPath}/initiate.js`,
 		map: `${entryPath}/map`,
 		modal: `${entryPath}/modal`,
-		simulateUserAction: `${entryPath}/simulate-user-action.js`,
-		stepByStep: `${entryPath}/step-by-step.js`
+		simulateUserAction: `${entryPath}/simulate-user-action.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,
@@ -53,7 +52,8 @@ const configPageScripts = {
 	entry: {
 		'checkbox-accordion': `${entryPath}/checkbox-accordion`,
 		index: `${entryPath}/index.js`,
-		cookiePreferences: `${entryPath}/cookie-preferences-page.js`
+		cookiePreferences: `${entryPath}/cookie-preferences-page.js`,
+		'step-by-step-navigation': `${entryPath}/step-by-step-navigation.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,

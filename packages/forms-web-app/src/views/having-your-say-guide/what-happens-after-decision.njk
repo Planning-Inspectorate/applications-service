@@ -1,5 +1,7 @@
 {% extends "layouts/layout.njk" %}
 
+{% set currentDefaultStep = 5 %}
+
 {% block pageTitle %}
 	What you can do after the decision has been made - National Infrastructure Planning
 {% endblock %}
@@ -29,7 +31,6 @@
 		</div>
 
 		<div class="govuk-grid-column-one-third">
-			{% set currentDefaultStep = 5 %}
 			{% include "../includes/step-by-step-navigation.njk" %}
 		</div>
 
