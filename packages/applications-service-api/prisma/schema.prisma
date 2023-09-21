@@ -162,8 +162,8 @@ model ProjectUpdate {
   caseReference        String
   updateDate           String
   updateName           String?
-  updateContentEnglish String
-  updateContentWelsh   String?
+  updateContentEnglish String    @db.VarChar(8000)
+  updateContentWelsh   String?   @db.VarChar(8000)
   updateStatus         String
   createdAt            DateTime? @default(now())
   modifiedAt           DateTime? @default(now())
