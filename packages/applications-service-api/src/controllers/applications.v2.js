@@ -1,21 +1,22 @@
-const { getApplication: getApplicationService } = require('../services/application.v2.service');
+const { getApplication: getApplicationFromService } = require('../services/application.service');
 const { StatusCodes } = require('http-status-codes');
 const ApiError = require('../error/apiError');
-const OSPoint = require('ospoint');
 
 const getApplication = async (req, res) => {
 	const { caseReference } = req.params;
 
-	const application = await getApplicationService(caseReference);
+	const application = await getApplicationFromService(caseReference);
 
 	if (!application) throw ApiError.applicationNotFound(caseReference);
 
-	const applicationResponse = mapResponse(application);
+	const applicationResponse = mapResponseBackToNILegacyFormat(application);
 
 	res.status(StatusCodes.OK).send(applicationResponse);
 };
 
-const mapResponse = (application) => ({
+// map application data from API format back to NI format, for backward compatibility purposes
+// TODO remove this mapping and return the new data in new api format directly (breaking change for frontend)
+const mapResponseBackToNILegacyFormat = (application) => ({
 	CaseReference: application.caseReference,
 	ProjectName: application.projectName,
 	Proposal: application.projectType,
@@ -28,15 +29,15 @@ const mapResponse = (application) => ({
 	ApplicantPhoneNumber: 'TBC', // TODO: populate from Service User data
 	WebAddress: 'TBC', // TODO: populate from Service User data
 	ProjectEmailAddress: application.projectEmailAddress,
-	Region: application.regions,
+	Region: application.regions?.map(region => regionMap[region]).join(','),
 	ProjectLocation: application.projectLocation,
 	AnticipatedGridRefEasting: application.easting,
 	AnticipatedGridRefNorthing: application.northing,
-	MapZoomLevel: mapZoomLevel(application.mapZoomLevel),
+	MapZoomLevel: application.mapZoomLevel,
 	AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
 	AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
 	DateOfDCOSubmission: application.dateOfDCOSubmission,
-	DateOfDCOAcceptance_NonAcceptance: application.dateOfDCOAcceptance, // TODO: confirm this mapping is correct
+	DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
 	DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
 	ConfirmedStartOfExamination: application.confirmedStartOfExamination,
 	DateTimeExaminationEnds: application.dateTimeExaminationEnds,
@@ -50,8 +51,8 @@ const mapResponse = (application) => ({
 	ConfirmedDateOfDecision: application.confirmedDateOfDecision,
 	DateProjectWithdrawn: application.dateProjectWithdrawn,
 	sourceSystem: application.sourceSystem,
-	dateOfNonAcceptance: application.dateOfNonAcceptance, // TODO: deprecate this attribute
-	LongLat: mapLongLat(application.northing, application.easting)
+	dateOfNonAcceptance: application.dateOfNonAcceptance,
+	LongLat: application.longLat
 });
 
 const stageMap = {
@@ -66,29 +67,18 @@ const stageMap = {
 	withdrawn: 8
 };
 
-const mapLongLat = (northing, easting) => {
-	const point = new OSPoint(northing, easting);
-	const coordinates = point.toWGS84();
-	return [coordinates.longitude, coordinates.latitude];
-};
-
-const mapZoomLevel = (zoomLevel) => {
-	const ZOOM_LEVELS = [
-		'COUNTRY',
-		'REGION',
-		'COUNTY',
-		'BOROUGH',
-		'DISTRICT',
-		'CITY',
-		'TOWN',
-		'JUNCTION'
-	];
-	const ZOOM_LEVEL_OFFSET = 5;
-	const DEFAULT_ZOOM_LEVEL = 9;
-	return zoomLevel
-		? ZOOM_LEVEL_OFFSET + ZOOM_LEVELS.indexOf(zoomLevel.toUpperCase())
-		: ZOOM_LEVEL_OFFSET + DEFAULT_ZOOM_LEVEL;
-};
+const regionMap = {
+	east_midlands: 'East Midlands',
+	eastern: 'Eastern',
+	london: 'London',
+	north_east: 'North East',
+	north_west: 'North West',
+	south_east: 'South East',
+	south_west: 'South West',
+	wales: 'Wales',
+	west_midlands: 'West Midlands',
+	yorkshire_and_the_humber: 'Yorkshire and the Humber'
+}
 
 module.exports = {
 	getApplication

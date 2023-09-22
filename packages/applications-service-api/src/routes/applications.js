@@ -16,6 +16,7 @@ const getApplicationsRoute = (req, res, next) => {
 	const backOfficeCaseReferences =
 		config.backOfficeIntegration.applications.getApplication.caseReferences || [];
 
+	// TODO combine the two controllers into one, and have new single controller invoke getApplication from application.service, then remove this middleware
 	const route = backOfficeCaseReferences.includes(req.params.caseReference)
 		? applicationsControllerV2.getApplication
 		: applicationsController.getApplication;
