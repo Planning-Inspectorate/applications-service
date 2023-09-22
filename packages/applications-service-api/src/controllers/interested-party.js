@@ -11,8 +11,8 @@ const {
 	getInterestedPartyById: getInterestedPartyFromInterestedPartyApiServiceById
 } = require('../services/interested-party.service');
 const {
-	getApplication: getApplicationFromApplicationApiService
-} = require('../services/application.service');
+	getNIApplication
+} = require('../services/application.ni.service');
 const ApiError = require('../error/apiError');
 
 module.exports = {
@@ -84,7 +84,7 @@ module.exports = {
 			if (email !== ipMail) {
 				throw ApiError.interestedPartyNotFoundByID(ID);
 			}
-			const project = await getApplicationFromApplicationApiService(caseref);
+			const project = await getNIApplication(caseref);
 
 			if (project === null) {
 				throw ApiError.applicationNotFound(caseref);

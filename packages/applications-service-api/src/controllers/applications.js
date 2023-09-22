@@ -1,10 +1,10 @@
 const { StatusCodes } = require('http-status-codes');
 const logger = require('../lib/logger');
 const {
-	getApplication: getApplicationFromApplicationApiService,
-	getAllApplications: getAllApplicationsFromApplicationApiService,
-	getAllApplicationsDownload: getAllApplicationsDownloadApiService
-} = require('../services/application.service');
+	getNIApplication,
+	getAllNIApplications,
+	getAllNIApplicationsDownload
+} = require('../services/application.ni.service');
 const ApiError = require('../error/apiError');
 
 const getApplication = async (req, res) => {
@@ -12,7 +12,7 @@ const getApplication = async (req, res) => {
 
 	logger.debug(`Retrieving application ${caseReference} ...`);
 
-	const application = await getApplicationFromApplicationApiService(caseReference);
+	const application = await getNIApplication(caseReference);
 
 	if (!application) throw ApiError.applicationNotFound(caseReference);
 
@@ -30,7 +30,7 @@ const getAllApplications = async (req, res) => {
 		totalPages,
 		filters,
 		totalItemsWithoutFilters
-	} = await getAllApplicationsFromApplicationApiService(req.query);
+	} = await getAllNIApplications(req.query);
 
 	const response = {
 		applications,
@@ -51,7 +51,7 @@ const getAllApplicationsDownload = async (req, res) => {
 	res.setHeader('Content-Type', 'text/csv');
 	res.setHeader('Content-Disposition', 'attachment; filename=applications.csv');
 
-	const response = await getAllApplicationsDownloadApiService();
+	const response = await getAllNIApplicationsDownload();
 
 	res.status(StatusCodes.OK).send(response);
 };

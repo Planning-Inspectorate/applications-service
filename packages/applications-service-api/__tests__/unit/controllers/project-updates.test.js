@@ -1,4 +1,4 @@
-jest.mock('../../../src/services/application.v2.service');
+jest.mock('../../../src/services/application.service');
 jest.mock('../../../src/repositories/projectUpdate.repository');
 
 const {
