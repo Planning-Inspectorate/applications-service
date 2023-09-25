@@ -3,7 +3,6 @@ const getApplicationsFixture = {
 	data: {
 		applications: [
 			{
-				AnticipatedDateOfSubmission: '2020-01-01',
 				AnticipatedGridRefEasting: 594934,
 				AnticipatedGridRefNorthing: 5636170,
 				AnticipatedSubmissionDateNonSpecific: '',
@@ -41,7 +40,6 @@ const getApplicationsFixture = {
 				LongLat: ['-11.543792740342', '100.58954279911']
 			},
 			{
-				AnticipatedDateOfSubmission: null,
 				AnticipatedGridRefEasting: 64756,
 				AnticipatedGridRefNorthing: 745764,
 				AnticipatedSubmissionDateNonSpecific: null,
@@ -79,7 +77,6 @@ const getApplicationsFixture = {
 				LongLat: ['-7.4472854473807', '56.484360139339']
 			},
 			{
-				AnticipatedDateOfSubmission: '2020-01-01',
 				AnticipatedGridRefEasting: 594934,
 				AnticipatedGridRefNorthing: 5636170,
 				AnticipatedSubmissionDateNonSpecific: '',

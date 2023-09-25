@@ -10,7 +10,6 @@ const commonMockData = {
 	Summary: 'I am the project summary data',
 	WebAddress: 'mock-web-address',
 	dateOfNonAcceptance: '2020-01-01',
-	AnticipatedDateOfSubmission: '2020-01-01',
 	ProjectEmailAddress: 'mock@email.com',
 	DateOfDCOSubmission: '2020-01-01',
 	DateOfRepresentationPeriodOpen: '2020-01-01',
@@ -35,7 +34,6 @@ describe('#getApplicationData', () => {
 			});
 			it('should return the project name in an obejct', () => {
 				expect(response).toEqual({
-					anticipatedDateOfSubmission: '2020-01-01',
 					contactEmailAddress: 'mock@email.com',
 					dateOfNonAcceptance: '2020-01-01',
 					projectName: 'mock project name',
@@ -65,7 +63,6 @@ describe('#getApplicationData', () => {
 					data: {
 						...commonMockData,
 						dateOfNonAcceptance: '0000-00-00',
-						AnticipatedDateOfSubmission: '0000-00-00',
 						DateOfDCOSubmission: '0000-00-00',
 						DateOfRepresentationPeriodOpen: '0000-00-00',
 						DateOfRelevantRepresentationClose: '0000-00-00',
@@ -79,7 +76,6 @@ describe('#getApplicationData', () => {
 			});
 			it('should return the project name in an obejct', () => {
 				expect(response).toEqual({
-					anticipatedDateOfSubmission: null,
 					contactEmailAddress: 'mock@email.com',
 					dateOfNonAcceptance: null,
 					projectName: 'mock project name',
