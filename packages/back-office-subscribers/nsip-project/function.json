@@ -15,6 +15,13 @@
 			"direction": "out",
 			"commandText": "dbo.Project",
 			"connectionStringSetting": "SqlConnectionString"
+		},
+		{
+			"name": "projectRegion",
+			"type": "sql",
+			"direction": "out",
+			"commandText": "dbo.ProjectRegion",
+			"connectionStringSetting": "SqlConnectionString"
 		}
 	],
 	"disabled": false

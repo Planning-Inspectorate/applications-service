@@ -22,8 +22,7 @@ describe('nsip-project', () => {
 		projectName: 'some case',
 		projectDescription: 'some desc',
 		publishStatus: 'published',
-		sourceSystem: 'ODT',
-		regions: 'a,b'
+		sourceSystem: 'ODT'
 	};
 
 	beforeAll(() => jest.useFakeTimers());
