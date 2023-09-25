@@ -1,4 +1,4 @@
-const { startCase, toLower, snakeCase, pick } = require('lodash');
+const { startCase, toLower, snakeCase, pick, omit } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
 
 const NI_MAPPING = {
@@ -118,52 +118,63 @@ const mapApplicationFiltersToNI = (query) => {
  * Map Application object from NI database to API format
  * @param application
  */
-const mapNIApplicationToApi = (application) => ({
-	caseReference: application.CaseReference,
-	projectName: application.ProjectName,
-	projectType: application.Proposal,
-	projectDescription: application.Summary,
-	projectLocation: application.ProjectLocation,
-	projectEmailAddress: application.ProjectEmailAddress,
-	applicantName: application.PromoterName,
-	applicantFirstName: application.PromoterFirstName,
-	applicantLastName: application.PromoterLastName,
-	applicantPhoneNumber: application.ApplicantPhoneNumber,
-	applicantWebsite: application.WebAddress,
-	easting: application.AnticipatedGridRefEasting,
-	northing: application.AnticipatedGridRefNorthing,
-	longLat: mapLongLat(application.LatLong),
-	mapZoomLevel: mapZoomLevel(application.MapZoomLevel),
-	regions: [mapColumnValueToApi('region', application.Region)],
-	sector: mapColumnValueToApi('sector', application.Proposal?.substring(0, 2)),
-	stage: mapColumnValueToApi('stage', application.Stage),
-	anticipatedDateOfSubmission: application.AnticipatedDateOfSubmission,
-	anticipatedSubmissionDateNonSpecific: application.AnticipatedSubmissionDateNonSpecific,
-	confirmedDateOfDecision: application.ConfirmedDateOfDecision,
-	confirmedStartOfExamination: application.ConfirmedStartOfExamination,
-	dateOfDCOAcceptance: null, // field is in NI but we don't include it in query
-	dateOfDCOSubmission: application.DateOfDCOSubmission,
-	dateOfNonAcceptance: application.dateOfNonAcceptance,
-	dateOfRecommendations: application.DateOfRecommendations,
-	dateOfRelevantRepresentationClose: application.DateOfRelevantRepresentationClose,
-	dateOfRepresentationPeriodOpen: application.DateOfRepresentationPeriodOpen,
-	dateProjectAppearsOnWebsite: null, // TODO is there NI equivalent for this?
-	dateProjectWithdrawn: application.DateProjectWithdrawn,
-	dateRRepAppearOnWebsite: application.DateRRepAppearOnWebsite,
-	dateTimeExaminationEnds: application.DateTimeExaminationEnds,
-	deadlineForAcceptanceDecision: null, // TODO is there NI equivalent for this?
-	preliminaryMeetingStartDate: application.DateOfPreliminaryMeeting,
-	sourceSystem: application.sourceSystem,
-	stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
-	stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
-	stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline
-});
+const mapNIApplicationToApi = (application) => {
+	if (!application) return;
+
+	const longLat = application.LongLat || mapLongLat(application.LatLong);
+	const zoomLevel = Number.isInteger(application.MapZoomLevel)
+		? application.MapZoomLevel
+		: mapZoomLevel(application.MapZoomLevel);
+
+	return {
+		caseReference: application.CaseReference,
+		projectName: application.ProjectName,
+		projectType: application.Proposal,
+		projectDescription: application.Summary,
+		projectLocation: application.ProjectLocation,
+		projectEmailAddress: application.ProjectEmailAddress,
+		applicantName: application.PromoterName,
+		applicantFirstName: application.PromoterFirstName,
+		applicantLastName: application.PromoterLastName,
+		applicantPhoneNumber: application.ApplicantPhoneNumber,
+		applicantEmailAddress: application.ApplicantEmailAddress,
+		applicantWebsite: application.WebAddress,
+		easting: application.AnticipatedGridRefEasting,
+		northing: application.AnticipatedGridRefNorthing,
+		longLat: longLat,
+		mapZoomLevel: zoomLevel,
+		regions: [mapColumnValueToApi('region', application.Region)],
+		sector: mapColumnValueToApi('sector', application.Proposal?.substring(0, 2)),
+		stage: mapColumnValueToApi('stage', application.Stage),
+		anticipatedDateOfSubmission: application.AnticipatedDateOfSubmission,
+		anticipatedSubmissionDateNonSpecific: application.AnticipatedSubmissionDateNonSpecific,
+		confirmedDateOfDecision: application.ConfirmedDateOfDecision,
+		confirmedStartOfExamination: application.ConfirmedStartOfExamination,
+		dateOfDCOAcceptance: null, // field is in NI but we don't include it in query
+		dateOfDCOSubmission: application.DateOfDCOSubmission,
+		dateOfNonAcceptance: application.dateOfNonAcceptance,
+		dateOfRecommendations: application.DateOfRecommendations,
+		dateOfRelevantRepresentationClose: application.DateOfRelevantRepresentationClose,
+		dateOfRepresentationPeriodOpen: application.DateOfRepresentationPeriodOpen,
+		dateProjectAppearsOnWebsite: null, // TODO is there NI equivalent for this?
+		dateProjectWithdrawn: application.DateProjectWithdrawn,
+		dateRRepAppearOnWebsite: application.DateRRepAppearOnWebsite,
+		dateTimeExaminationEnds: application.DateTimeExaminationEnds,
+		deadlineForAcceptanceDecision: null, // TODO is there NI equivalent for this?
+		preliminaryMeetingStartDate: application.DateOfPreliminaryMeeting,
+		sourceSystem: application.sourceSystem,
+		stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
+		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
+		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline
+	};
+};
 
 /**
  * Map Application object from Back Office to API format
  * @param application
  */
 const mapBackOfficeApplicationToApi = (application) => {
+	if (!application) return;
 	const data = pick(application, [
 		'caseReference',
 		'projectName',
@@ -211,9 +222,24 @@ const mapBackOfficeApplicationToApi = (application) => {
 	};
 };
 
+/**
+ * Adds MapZoomLevel and LongLat properties to NI Application
+ * @params application
+ * @return application
+ */
+const addMapZoomLevelAndLongLat = (application) => {
+	if (!application) return application;
+	return {
+		...omit(application, ['LatLong', 'MapZoomLevel']),
+		LongLat: mapLongLat(application.LatLong),
+		MapZoomLevel: mapZoomLevel(application.MapZoomLevel)
+	};
+};
+
 module.exports = {
 	buildApiFiltersFromNIApplications,
 	mapApplicationFiltersToNI,
 	mapNIApplicationToApi,
-	mapBackOfficeApplicationToApi
+	mapBackOfficeApplicationToApi,
+	addMapZoomLevelAndLongLat
 };

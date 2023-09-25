@@ -2,7 +2,8 @@ const {
 	buildApiFiltersFromNIApplications,
 	mapApplicationFiltersToNI,
 	mapNIApplicationToApi,
-	mapBackOfficeApplicationToApi
+	mapBackOfficeApplicationToApi,
+	addMapZoomLevelAndLongLat
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
@@ -50,6 +51,30 @@ describe('application.mapper', () => {
 				})
 			);
 		});
+
+		it('does not map zoom level and longlat if already mapped', () => {
+			const applicationAlreadyMappedLocationAttributes = {
+				...APPLICATION_FO,
+				LongLat: ['-0.7123', '53.6123'],
+				MapZoomLevel: 6
+			};
+			delete applicationAlreadyMappedLocationAttributes.LatLong;
+
+			expect(mapNIApplicationToApi(applicationAlreadyMappedLocationAttributes)).toEqual(
+				expect.objectContaining({
+					...APPLICATION_API,
+					longLat: ['-0.7123', '53.6123'],
+					mapZoomLevel: 6,
+					dateOfDCOAcceptance: null,
+					deadlineForAcceptanceDecision: null,
+					sourceSystem: 'HORIZON'
+				})
+			);
+		});
+
+		it('returns undefined if no application provided', () => {
+			expect(mapNIApplicationToApi(undefined)).toEqual(undefined);
+		});
 	});
 
 	describe('mapBackOfficeApplicationToApi', () => {
@@ -66,6 +91,40 @@ describe('application.mapper', () => {
 					sourceSystem: 'ODT'
 				})
 			);
+		});
+
+		it('returns undefined if no application provided', () => {
+			expect(mapBackOfficeApplicationToApi(undefined)).toEqual(undefined);
+		});
+	});
+
+	describe('addMapZoomLevelAndLongLat', () => {
+		it.each([
+			[
+				{ LatLong: '53.620, -0.702', MapZoomLevel: 'Region' },
+				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 6 }
+			],
+			[
+				{ LatLong: '   53.620   , -0.702   ', MapZoomLevel: 'Region' },
+				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 6 }
+			],
+			[{ LatLong: '53.620, -0.702' }, { LongLat: ['-0.702', '53.620'], MapZoomLevel: 5 }],
+			[{ MapZoomLevel: 'Region' }, { LongLat: [], MapZoomLevel: 6 }]
+		])('adds LongLat and MapZoomLevel to NI application', (input, output) => {
+			const inputApplication = {
+				...APPLICATION_FO,
+				LatLong: input.LatLong,
+				MapZoomLevel: input.MapZoomLevel
+			};
+
+			const outputApplication = {
+				...APPLICATION_FO,
+				LongLat: output.LongLat,
+				MapZoomLevel: output.MapZoomLevel
+			};
+			delete outputApplication.LatLong;
+
+			expect(addMapZoomLevelAndLongLat(inputApplication)).toEqual(outputApplication);
 		});
 	});
 });

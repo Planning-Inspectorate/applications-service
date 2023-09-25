@@ -1,28 +1,10 @@
 const {
-	addMapZoomLvlAndLongLat,
 	mapZoomLevel,
 	mapNorthingEastingToLongLat,
 	mapLongLat
 } = require('../../../src/utils/mapLocation');
 
 describe('map and location utils', () => {
-	describe('addMapZoomLvlAndLongLat', () => {
-		it.each([
-			[
-				{ LatLong: '53.620, -0.702', MapZoomLevel: 'Region' },
-				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 6 }
-			],
-			[
-				{ LatLong: '   53.620   , -0.702   ', MapZoomLevel: 'Region' },
-				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 6 }
-			],
-			[{ LatLong: '53.620, -0.702' }, { LongLat: ['-0.702', '53.620'], MapZoomLevel: 5 }],
-			[{ MapZoomLevel: 'Region' }, { MapZoomLevel: 6 }]
-		])('adds LongLat and MapZoomLevel', (input, expectedOutput) => {
-			expect(addMapZoomLvlAndLongLat(input)).toEqual(expectedOutput);
-		});
-	});
-
 	describe('mapLongLat', () => {
 		it.each([
 			[undefined, []],
@@ -38,8 +20,8 @@ describe('map and location utils', () => {
 			['borough', 8],
 			['COUNTRY', 5],
 			['JUNCTION', 12],
-			['unknown', 14],
-			[undefined, 14]
+			['unknown', 5],
+			[undefined, 5]
 		])('maps lat/long string to long/lat array', (input, expectedOutput) => {
 			expect(mapZoomLevel(input)).toEqual(expectedOutput);
 		});
