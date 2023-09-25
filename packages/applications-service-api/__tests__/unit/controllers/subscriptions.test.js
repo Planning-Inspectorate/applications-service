@@ -1,9 +1,9 @@
-jest.mock('../../../src/services/application.v2.service');
+jest.mock('../../../src/services/application.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/lib/crypto');
 jest.mock('../../../src/services/backoffice.publish.service');
 
-const { getApplication } = require('../../../src/services/application.v2.service');
+const { getBackOfficeApplication } = require('../../../src/services/application.service');
 const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify');
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
 const {
@@ -40,7 +40,7 @@ describe('subscriptions controller', () => {
 		};
 
 		it('invokes notify with correct project and subscription details', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseReference: 'BC0110001'
@@ -67,7 +67,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws not found error if project with case reference does not exist', async () => {
-			getApplication.mockResolvedValueOnce(null);
+			getBackOfficeApplication.mockResolvedValueOnce(null);
 
 			const expectedError = new ApiError(404, {
 				errors: ['Project with case reference BC0110001 not found']
@@ -77,7 +77,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws error if notify fails', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'
@@ -102,7 +102,7 @@ describe('subscriptions controller', () => {
 		};
 
 		it('given valid subscriptionDetails, invokes publishCreateNSIPSubscription, and returns 200', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'
@@ -128,7 +128,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws not found error if project with case reference does not exist', async () => {
-			getApplication.mockResolvedValueOnce(null);
+			getBackOfficeApplication.mockResolvedValueOnce(null);
 
 			const expectedError = new ApiError(404, {
 				errors: ['Project with case reference BC0110001 not found']
@@ -138,7 +138,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws bad request error if subscriptionDetails have expired', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'
@@ -161,7 +161,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws error if publishCreateNSIPSubscription fails', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'
@@ -200,7 +200,7 @@ describe('subscriptions controller', () => {
 		])(
 			'throws error if required property is missing from subscriptionDetails',
 			async (missingPropertyName, payload) => {
-				getApplication.mockResolvedValueOnce({
+				getBackOfficeApplication.mockResolvedValueOnce({
 					projectName: 'drax',
 					projectEmailAddress: 'drax@example.org',
 					caseRef: 'BC0110001'
@@ -227,7 +227,7 @@ describe('subscriptions controller', () => {
 		};
 
 		it('given valid encrypted email, invokes publishDeleteNSIPSubscription, and returns 200', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'
@@ -242,7 +242,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws not found error if project with case reference does not exist', async () => {
-			getApplication.mockResolvedValueOnce(null);
+			getBackOfficeApplication.mockResolvedValueOnce(null);
 
 			const expectedError = new ApiError(404, {
 				errors: ['Project with case reference BC0110001 not found']
@@ -252,7 +252,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws error if publishDeleteNSIPSubscription fails', async () => {
-			getApplication.mockResolvedValueOnce({
+			getBackOfficeApplication.mockResolvedValueOnce({
 				projectName: 'drax',
 				projectEmailAddress: 'drax@example.org',
 				caseRef: 'BC0110001'

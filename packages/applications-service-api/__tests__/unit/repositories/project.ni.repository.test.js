@@ -1,7 +1,6 @@
 const {
 	getApplication,
-	getAllApplications,
-	GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES
+	getAllApplications
 } = require('../../../src/repositories/project.ni.repository');
 const db = require('../../../src/models');
 const { Op } = require('sequelize');
@@ -64,7 +63,6 @@ describe('project ni repository', () => {
 			// Assert
 			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
-				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES,
 				where: {}
 			});
 		});
@@ -80,7 +78,6 @@ describe('project ni repository', () => {
 			// Assert
 			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
-				attributes: GET_ALL_APPLICATIONS_DEFAULT_ATTRIBUTES,
 				where: {
 					[Op.or]: [
 						{ ProjectName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },

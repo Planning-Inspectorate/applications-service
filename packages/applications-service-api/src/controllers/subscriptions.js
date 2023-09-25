@@ -1,6 +1,6 @@
 const { encrypt, decrypt } = require('../lib/crypto');
 const { sendSubscriptionCreateNotification } = require('../lib/notify');
-const { getApplication } = require('../services/application.v2.service');
+const { getBackOfficeApplication } = require('../services/application.service');
 const ApiError = require('../error/apiError');
 const moment = require('moment');
 const {
@@ -13,7 +13,7 @@ const createSubscription = async (req, res) => {
 	const { email, subscriptionTypes } = req.body;
 	const { caseReference } = req.params;
 
-	const project = await getApplication(caseReference);
+	const project = await getBackOfficeApplication(caseReference);
 	if (!project) throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
 
 	const subscriptionDetails = encrypt(
@@ -71,7 +71,7 @@ const deleteSubscription = async (req, res) => {
 };
 
 const validateCaseReference = async (caseReference) => {
-	const project = await getApplication(caseReference);
+	const project = await getBackOfficeApplication(caseReference);
 	if (!project) throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
 };
 
