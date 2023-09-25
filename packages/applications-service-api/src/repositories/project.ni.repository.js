@@ -2,7 +2,8 @@ const db = require('../models');
 const { Op } = require('sequelize');
 const { pick } = require('lodash');
 
-const getApplication = async (caseReference) => db.Project.findOne({ where: { CaseReference: caseReference } });
+const getApplication = async (caseReference) =>
+	db.Project.findOne({ where: { CaseReference: caseReference } });
 
 const getAllApplications = async (options = {}) => {
 	const { filters, searchTerm } = options;

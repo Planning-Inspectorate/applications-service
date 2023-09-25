@@ -46,7 +46,7 @@ describe('application.mapper', () => {
 					...APPLICATION_API,
 					dateOfDCOAcceptance: null,
 					deadlineForAcceptanceDecision: null,
-					sourceSystem: "HORIZON"
+					sourceSystem: 'HORIZON'
 				})
 			);
 		});
@@ -63,7 +63,7 @@ describe('application.mapper', () => {
 					applicantEmailAddress: 'TBC',
 					applicantPhoneNumber: 'TBC',
 					applicantWebsite: 'TBC',
-					sourceSystem: "ODT"
+					sourceSystem: 'ODT'
 				})
 			);
 		});

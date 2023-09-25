@@ -29,7 +29,7 @@ const mapResponseBackToNILegacyFormat = (application) => ({
 	ApplicantPhoneNumber: 'TBC', // TODO: populate from Service User data
 	WebAddress: 'TBC', // TODO: populate from Service User data
 	ProjectEmailAddress: application.projectEmailAddress,
-	Region: application.regions?.map(region => regionMap[region]).join(','),
+	Region: application.regions?.map((region) => regionMap[region]).join(','),
 	ProjectLocation: application.projectLocation,
 	AnticipatedGridRefEasting: application.easting,
 	AnticipatedGridRefNorthing: application.northing,
@@ -78,7 +78,7 @@ const regionMap = {
 	wales: 'Wales',
 	west_midlands: 'West Midlands',
 	yorkshire_and_the_humber: 'Yorkshire and the Humber'
-}
+};
 
 module.exports = {
 	getApplication

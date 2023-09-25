@@ -10,9 +10,7 @@ const {
 	updateInterestedPartyComments,
 	getInterestedPartyById: getInterestedPartyFromInterestedPartyApiServiceById
 } = require('../services/interested-party.service');
-const {
-	getNIApplication
-} = require('../services/application.ni.service');
+const { getNIApplication } = require('../services/application.ni.service');
 const ApiError = require('../error/apiError');
 
 module.exports = {

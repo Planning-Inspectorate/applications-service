@@ -73,11 +73,15 @@ const createQueryFilters = (query) => {
 	const sortDirection = sort?.startsWith('-') ? 'DESC' : 'ASC';
 	const sortFieldName = sort?.replace(/^[+-]/, '');
 
+	const order = [[sortFieldName, sortDirection]];
+	if (sortFieldName === 'Stage') {
+		order.push(['ProjectName', 'ASC']);
+	}
 	return {
 		pageNo,
 		size,
 		offset: size * (pageNo - 1),
-		order: [[sortFieldName, sortDirection]]
+		order
 	};
 };
 

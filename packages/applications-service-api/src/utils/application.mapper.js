@@ -1,9 +1,5 @@
 const { startCase, toLower, snakeCase, pick } = require('lodash');
-const {
-	mapZoomLevel,
-	mapLongLat,
-	mapNorthingEastingToLongLat
-} = require('./mapLocation');
+const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
 
 const NI_MAPPING = {
 	sector: [

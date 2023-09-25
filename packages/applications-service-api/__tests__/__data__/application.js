@@ -105,7 +105,7 @@ const APPLICATION_API_LEGACY = {
 	...omit(APPLICATION_FO, ['LatLong']),
 	LongLat: ['-0.7028315466694124', '53.620079146110655'],
 	MapZoomLevel: 6,
-	Region: 'Yorkshire and the Humber',
+	Region: 'Yorkshire and the Humber'
 };
 
 // application data in generalised format, to be returned by api

@@ -6,7 +6,7 @@ jest.mock('../../../src/services/application.service');
 const mockGetApplication = require('../../../src/services/application.service').getApplication;
 
 const { getApplication } = require('../../../src/controllers/applications.v2');
-const { APPLICATION_API, APPLICATION_API_LEGACY} = require('../../__data__/application');
+const { APPLICATION_API, APPLICATION_API_LEGACY } = require('../../__data__/application');
 
 describe('applications v2 controller', () => {
 	let res;
@@ -42,7 +42,7 @@ describe('applications v2 controller', () => {
 					PromoterName: 'TBC',
 					WebAddress: 'TBC',
 					sourceSystem: 'ODT'
-				})
+				});
 			});
 		});
 	});
