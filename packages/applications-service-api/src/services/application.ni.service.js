@@ -4,16 +4,16 @@ const {
 	getAllApplicationsCount
 } = require('../repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
-const { addMapZoomLvlAndLongLat } = require('../utils/mapLocation');
 const {
 	buildApiFiltersFromNIApplications,
-	mapApplicationFiltersToNI
+	mapApplicationFiltersToNI,
+	addMapZoomLevelAndLongLat
 } = require('../utils/application.mapper');
 const { isEmpty } = require('lodash');
 
 const getNIApplication = async (caseReference) => {
 	const application = await getApplicationRepository(caseReference);
-	return application?.dataValues ? addMapZoomLvlAndLongLat(application.dataValues) : null;
+	return addMapZoomLevelAndLongLat(application?.dataValues);
 };
 
 const getAllNIApplications = async (query) => {
@@ -34,7 +34,7 @@ const getAllNIApplications = async (query) => {
 	const totalItemsWithoutFilters = await getAllApplicationsCount();
 
 	return {
-		applications: applications.map((document) => addMapZoomLvlAndLongLat(document)),
+		applications: applications.map(addMapZoomLevelAndLongLat),
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),
@@ -46,9 +46,7 @@ const getAllNIApplications = async (query) => {
 
 const getAllNIApplicationsDownload = async () => {
 	const { applications } = await getAllApplicationsRepository();
-	const applicationsWithMapZoomLvlAndLongLat = applications.map((document) =>
-		addMapZoomLvlAndLongLat(document)
-	);
+	const applicationsWithMapZoomLvlAndLongLat = applications.map(addMapZoomLevelAndLongLat);
 	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
 };
 

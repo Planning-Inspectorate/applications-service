@@ -69,7 +69,7 @@ const APPLICATION_FO = {
 	PromoterName: 'North Lincolnshire Green Energy Park Limited',
 	PromoterFirstName: 'Joe',
 	PromoterLastName: 'Bloggs',
-	ApplicantEmailAddress: 'chris.bungay@planninginspectorate.gov.uk',
+	ApplicantEmailAddress: 'joe.bloggs@planninginspectorate.gov.uk',
 	ApplicantPhoneNumber: '01314960000',
 	WebAddress: 'https://northlincolnshiregreenenergypark.co.uk/',
 	ProjectEmailAddress: 'webteam@planninginspectorate.gov.uk',
@@ -101,7 +101,7 @@ const APPLICATION_FO = {
 
 // application data as currently returned by /applications/{caseReference} endpoints.
 // To be deprecated in favour of new format as seen below in APPLICATION_API
-const APPLICATION_API_LEGACY = {
+const APPLICATION_API_V1 = {
 	...omit(APPLICATION_FO, ['LatLong']),
 	LongLat: ['-0.7028315466694124', '53.620079146110655'],
 	MapZoomLevel: 6,
@@ -120,6 +120,7 @@ const APPLICATION_API = {
 	applicantName: 'North Lincolnshire Green Energy Park Limited',
 	applicantFirstName: 'Joe',
 	applicantLastName: 'Bloggs',
+	applicantEmailAddress: 'joe.bloggs@planninginspectorate.gov.uk',
 	applicantPhoneNumber: '01314960000',
 	applicantWebsite: 'https://northlincolnshiregreenenergypark.co.uk/',
 	easting: 485899,
@@ -572,6 +573,6 @@ module.exports = {
 	APPLICATIONS_NI_FILTER_COLUMNS,
 	APPLICATIONS_FO,
 	APPLICATIONS_FO_FILTERS,
-	APPLICATION_API_LEGACY,
+	APPLICATION_API_V1,
 	APPLICATION_API
 };
