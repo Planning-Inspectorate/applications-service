@@ -1,7 +1,4 @@
-const {
-	getBackOfficeApplication,
-	getApplication
-} = require('../../../src/services/application.service');
+const { getApplication } = require('../../../src/services/application.service');
 
 jest.mock('../../../src/repositories/project.repository');
 const { getByCaseReference } = require('../../../src/repositories/project.repository');
@@ -47,16 +44,6 @@ describe('application.service', () => {
 
 			expect(getNIApplication).toHaveBeenCalledWith('EN010009');
 			expect(mapNIApplicationToApi).toHaveBeenCalledWith(APPLICATION_FO);
-		});
-	});
-
-	describe('getBackOfficeApplication', () => {
-		it('invokes repository', async () => {
-			const caseReference = 'EN010009';
-
-			await getBackOfficeApplication(caseReference);
-
-			expect(getByCaseReference).toBeCalledWith(caseReference);
 		});
 	});
 });

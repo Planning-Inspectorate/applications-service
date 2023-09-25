@@ -1,4 +1,6 @@
-const { getByCaseReference } = require('../repositories/project.repository');
+const {
+	getByCaseReference: getBackOfficeApplication
+} = require('../repositories/project.repository');
 const { getNIApplication } = require('./application.ni.service');
 const config = require('../lib/config');
 const {
@@ -14,9 +16,6 @@ const getApplication = async (caseReference) =>
 const isBackOfficeApplication = (caseReference) =>
 	config.backOfficeIntegration.applications.getApplication.caseReferences.includes(caseReference);
 
-const getBackOfficeApplication = (caseReference) => getByCaseReference(caseReference);
-
 module.exports = {
-	getApplication,
-	getBackOfficeApplication
+	getApplication
 };
