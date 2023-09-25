@@ -1,10 +1,7 @@
 {% set preApplicationText %}
-		{% if applicationData.anticipatedDateOfSubmission %}
-			The application is expected to be submitted on {{ applicationData.anticipatedDateOfSubmission | date }}.
-		{% endif %}
-		{% if not applicationData.anticipatedDateOfSubmission and applicationData.anticipatedSubmissionDateNonSpecific %}
-			The application is expected to be submitted in {{ applicationData.anticipatedSubmissionDateNonSpecific }}.
-		{% endif %}
+	{% if applicationData.anticipatedSubmissionDateNonSpecific %}
+		The application is expected to be submitted in {{ applicationData.anticipatedSubmissionDateNonSpecific }}.
+	{% endif %}
 {% endset %}
 
 {% if preApplicationText | length %}

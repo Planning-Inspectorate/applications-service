@@ -43,7 +43,6 @@ const commonMockData = {
 	Summary: 'I am the project summary data',
 	WebAddress: 'mock-web-address',
 	dateOfNonAcceptance: '2020-01-01',
-	AnticipatedDateOfSubmission: '2020-01-01',
 	AnticipatedSubmissionDateNonSpecific: 'Q4 2023',
 	ProjectEmailAddress: 'mock@email.com',
 	LongLat: ['-0.118092', '51.509865'],
@@ -72,27 +71,10 @@ describe('projects/project-information/controller.component', () => {
 		});
 		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
 			describe('pre application ', () => {
-				it('should render the page for pre application (stage 1) - with anticipatedDateOfSubmission', async () => {
+				it('should render the page for pre application (stage 1) - with anticipatedSubmissionDateNonSpecific', async () => {
 					getAppData.mockResolvedValue({
 						data: {
 							...commonMockData,
-							Stage: 1
-						},
-						resp_code: 200
-					});
-					const response = await request.get('/projects/EN010085');
-
-					expect(response.status).toEqual(200);
-					expect(response.text).toContain(
-						'The application is expected to be submitted on 01 January 2020'
-					);
-					expect(response.text).toMatchSnapshot();
-				});
-				it('should render the page for pre application (stage 1) - with anticipatedSubmissionDateNonSpecific if anticipatedDateOfSubmission id not available', async () => {
-					getAppData.mockResolvedValue({
-						data: {
-							...commonMockData,
-							AnticipatedDateOfSubmission: null,
 							Stage: 1
 						},
 						resp_code: 200
@@ -103,11 +85,10 @@ describe('projects/project-information/controller.component', () => {
 					expect(response.text).toContain('The application is expected to be submitted in Q4 2023');
 					expect(response.text).toMatchSnapshot();
 				});
-				it('should render the page for pre application (stage 1) - without the time period section if both anticipatedDateOfSubmission AND anticipatedSubmissionDateNonSpecific are not available', async () => {
+				it('should render the page for pre application (stage 1) - without the time period section if anticipatedSubmissionDateNonSpecific is not available', async () => {
 					getAppData.mockResolvedValue({
 						data: {
 							...commonMockData,
-							AnticipatedDateOfSubmission: null,
 							AnticipatedSubmissionDateNonSpecific: null,
 							Stage: 1
 						},
@@ -188,7 +169,6 @@ describe('projects/project-information/controller.component', () => {
 					getAppData.mockResolvedValue({
 						data: {
 							...commonMockData,
-							AnticipatedDateOfSubmission: null,
 							Stage: 1
 						},
 						resp_code: 200
@@ -210,7 +190,6 @@ describe('projects/project-information/controller.component', () => {
 					getAppData.mockResolvedValue({
 						data: {
 							...commonMockData,
-							AnticipatedDateOfSubmission: null,
 							Stage: 1
 						},
 						resp_code: 200
@@ -232,7 +211,6 @@ describe('projects/project-information/controller.component', () => {
 					getAppData.mockResolvedValue({
 						data: {
 							...commonMockData,
-							AnticipatedDateOfSubmission: null,
 							Stage: 3
 						},
 						resp_code: 200
