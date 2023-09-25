@@ -1,7 +1,7 @@
 const db = require('../models');
 const ApiError = require('../error/apiError');
 const { sendSubmissionNotification } = require('../lib/notify');
-const { getApplication } = require('./application.service');
+const { getNIApplication } = require('./application.ni.service');
 
 const PLACEHOLDER_SUBMISSION_ID = 0;
 
@@ -72,7 +72,7 @@ const completeSubmission = async (submissionId) => {
 	const submission = await getSubmission(submissionId);
 	if (!submission) throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
 
-	const project = await getApplication(submission.caseReference);
+	const project = await getNIApplication(submission.caseReference);
 	if (!project)
 		throw ApiError.notFound(`Project with case reference ${submission.caseReference} not found`);
 
