@@ -143,8 +143,7 @@ describe('application.service', () => {
 						['ProjectName'],
 						['PromoterName'],
 						['DateOfDCOSubmission'],
-						['ConfirmedDateOfDecision'],
-						['Stage']
+						['ConfirmedDateOfDecision']
 					])('calls findAll with order: [[key, ASC]]', async (sort) => {
 						// Act
 						await getAllApplications({ sort });
@@ -153,6 +152,20 @@ describe('application.service', () => {
 							offset: 0,
 							limit: 25,
 							order: [[sort, 'ASC']]
+						});
+					});
+
+					it('when sort key is stage, calls findAll with secondary sort projectName', async () => {
+						// Act
+						await getAllApplications({ sort: 'Stage' });
+						// Assert
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+							offset: 0,
+							limit: 25,
+							order: [
+								['Stage', 'ASC'],
+								['ProjectName', 'ASC']
+							]
 						});
 					});
 				});
@@ -166,8 +179,20 @@ describe('application.service', () => {
 						['-DateOfDCOSubmission', [['DateOfDCOSubmission', 'DESC']]],
 						['+ConfirmedDateOfDecision', [['ConfirmedDateOfDecision', 'ASC']]],
 						['-ConfirmedDateOfDecision', [['ConfirmedDateOfDecision', 'DESC']]],
-						['+Stage', [['Stage', 'ASC']]],
-						['-Stage', [['Stage', 'DESC']]]
+						[
+							'+Stage',
+							[
+								['Stage', 'ASC'],
+								['ProjectName', 'ASC']
+							]
+						],
+						[
+							'-Stage',
+							[
+								['Stage', 'DESC'],
+								['ProjectName', 'ASC']
+							]
+						]
 					])('calls findAll with order', async (sort, order) => {
 						// Act
 						await getAllApplications({ sort });
