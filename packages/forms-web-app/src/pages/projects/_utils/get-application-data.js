@@ -26,7 +26,6 @@ const getApplicationData = async (case_ref) => {
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),
 		status,
-		anticipatedDateOfSubmission: badDateToNull(data.AnticipatedDateOfSubmission),
 		anticipatedSubmissionDateNonSpecific: data.AnticipatedSubmissionDateNonSpecific,
 		contactEmailAddress: data.ProjectEmailAddress,
 		DateOfDCOSubmission: add28DaysToDate(DateOfDCOSubmission),
