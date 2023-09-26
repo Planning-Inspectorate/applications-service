@@ -14,7 +14,6 @@ COPY turbo.json ./
 COPY packages/common ./packages/common
 COPY packages/applications-service-api/api ./packages/applications-service-api/api
 COPY packages/applications-service-api/data ./packages/applications-service-api/data
-COPY packages/applications-service-api/prisma ./packages/applications-service-api/prisma
 COPY packages/applications-service-api/src ./packages/applications-service-api/src
 COPY packages/applications-service-api/package.json ./packages/applications-service-api/package.json
 COPY packages/applications-service-api/.sequelizerc ./packages/applications-service-api/.sequelizerc
@@ -30,10 +29,7 @@ FROM build AS app
 WORKDIR /opt/app
 
 RUN npm prune --production
-
-WORKDIR /opt/app/packages/applications-service-api
-
-RUN npx prisma generate
+RUN npm run db:generate
 
 EXPOSE 3000
 

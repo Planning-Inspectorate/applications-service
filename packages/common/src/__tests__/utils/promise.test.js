@@ -1,4 +1,4 @@
-const util = require('./utils');
+const { promiseTimeout } = require('../../utils/promise');
 
 describe('Utils test', () => {
 	describe('#promiseTimeout', () => {
@@ -8,7 +8,7 @@ describe('Utils test', () => {
 
 			const promise = async () => response;
 
-			await expect(util.promiseTimeout(timeout, promise())).resolves.toEqual(response);
+			await expect(promiseTimeout(timeout, promise())).resolves.toEqual(response);
 		});
 
 		it('should reject a promise that is settled within the timeout', async () => {
@@ -19,7 +19,7 @@ describe('Utils test', () => {
 				throw err;
 			};
 
-			await expect(util.promiseTimeout(timeout, promise())).rejects.toEqual(err);
+			await expect(promiseTimeout(timeout, promise())).rejects.toEqual(err);
 		});
 
 		it('should reject a promise that exceeds the timeout', async () => {
@@ -29,7 +29,7 @@ describe('Utils test', () => {
 				return 'hooray';
 			};
 
-			await expect(util.promiseTimeout(timeout, promise())).rejects.toEqual(new Error('timeout'));
+			await expect(promiseTimeout(timeout, promise())).rejects.toEqual(new Error('timeout'));
 		});
 	});
 });

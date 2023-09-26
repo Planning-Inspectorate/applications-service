@@ -4,7 +4,7 @@ const { request } = require('../__data__/supertest');
 const { APPLICATION_DB, APPLICATION_FO } = require('../__data__/application');
 
 const mockFindUnique = jest.fn();
-jest.mock('../../src/lib/prisma', () => ({
+jest.mock('@pins/common/src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
 			findUnique: (query) => mockFindUnique(query)

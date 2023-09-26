@@ -8,10 +8,6 @@
 	},
 	"main": "src/main.js",
 	"scripts": {
-		"db:migrate:dev": "npx prisma migrate dev",
-		"db:generate": "npx prisma generate",
-		"db:seed": "npx prisma db seed",
-		"db:migrate:deploy": "npx prisma migrate deploy",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"start": "node ./",
@@ -21,15 +17,11 @@
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
-	"prisma": {
-		"seed": "node ./prisma/seed.js"
-	},
 	"dependencies": {
 		"@azure/identity": "^3.2.3",
 		"@azure/service-bus": "^7.9.0",
 		"@pins/common": "file:../common",
 		"@planning-inspectorate/pins-notify": "^1.0.2",
-		"@prisma/client": "^4.16.2",
 		"axios": "^1.0.0",
 		"axios-logger": "^2.6.1",
 		"body-parser": "^1.19.0",
@@ -49,7 +41,6 @@
 		"openapi-request-validator": "^12.0.2",
 		"ospoint": "^0.2.1",
 		"pino": "^6.13.2",
-		"prisma": "^4.16.2",
 		"ramda": "^0.27.1",
 		"sequelize": "~5.22.4",
 		"swagger-ui-express": "^4.1.6",

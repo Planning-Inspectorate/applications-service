@@ -1,4 +1,4 @@
-const { parseRedisConnectionString } = require('./redis');
+const { parseRedisConnectionString } = require('../../utils/redis');
 
 describe('redis utils', () => {
 	describe('parseRedisConnectionString', () => {

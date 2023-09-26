@@ -5,7 +5,7 @@ const {
 
 const mockFindMany = jest.fn();
 const mockDelete = jest.fn();
-jest.mock('../../../src/lib/prisma', () => ({
+jest.mock('@pins/common/src/lib/prisma', () => ({
 	prismaClient: {
 		projectUpdate: {
 			findMany: (query) => mockFindMany(query),

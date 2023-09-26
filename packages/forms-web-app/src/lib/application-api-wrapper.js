@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
-const { utils } = require('@pins/common');
+const { promiseTimeout } = require('@pins/common/src/utils/promise');
 const { queryStringBuilder } = require('../utils/query-string-builder');
 const config = require('../config');
 const parentLogger = require('./logger');
@@ -23,7 +23,7 @@ async function handler(
 
 	try {
 		logger.debug({ url, method, opts, headers }, 'New call');
-		return await utils.promiseTimeout(
+		return await promiseTimeout(
 			config.applications.timeout,
 			Promise.resolve().then(async () => {
 				const apiResponse = await fetch(url, {

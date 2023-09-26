@@ -33,7 +33,7 @@ extends:
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
-              script: cd packages/applications-service-api && npx prisma generate
+              script: npm run db:generate
           - template: ../steps/node_script.yml
             parameters:
               condition: ne(variables['Build.SourceBranchName'], 'main')

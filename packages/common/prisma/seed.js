@@ -1,4 +1,4 @@
-const { prismaClient } = require('../src/lib/prisma');
+const { prismaClient } = require('packages/common/src/lib/prisma');
 
 const main = async () => {
 	await prismaClient.project.upsert({

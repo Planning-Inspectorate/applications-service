@@ -17,5 +17,6 @@ module.exports = {
 			serviceId: process.env.SRV_NOTIFY_SERVICE_ID,
 			apiKey: process.env.SRV_NOTIFY_API_KEY
 		}
-	}
+	},
+	isProduction: process.env.NODE_ENV === 'production'
 };

@@ -9,7 +9,7 @@ const mockCount = jest.fn();
 const mockQueryRaw = jest.fn();
 const mockFindFirst = jest.fn();
 
-jest.mock('../../../src/lib/prisma', () => ({
+jest.mock('@pins/common/src/lib/prisma', () => ({
 	prismaClient: {
 		document: {
 			findMany: (query) => mockFindMany(query),

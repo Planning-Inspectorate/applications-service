@@ -1,7 +1,7 @@
 jest.mock('prom-client');
 
 const promClient = require('prom-client');
-const prometheus = require('./prometheus');
+const prometheus = require('../../lib/prometheus');
 
 describe('prometheus', () => {
 	const oldEnv = process.env;

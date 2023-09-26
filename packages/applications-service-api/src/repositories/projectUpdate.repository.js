@@ -1,4 +1,4 @@
-const { prismaClient } = require('../lib/prisma');
+const { prismaClient } = require('@pins/common/src/lib/prisma');
 
 const getProjectUpdates = async (caseReference) =>
 	prismaClient.projectUpdate.findMany({

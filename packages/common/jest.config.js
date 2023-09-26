@@ -4,7 +4,7 @@ module.exports = {
 	...sharedConfig,
 	clearMocks: true,
 	collectCoverageFrom: ['./src/**/*.js'],
-	coveragePathIgnorePatterns: ['./src/index.js', './src/config.js'],
+	coveragePathIgnorePatterns: ['./src/index.js', './src/config.js', './src/constants.js'],
 	coverageThreshold: {
 		global: {
 			branches: 80,

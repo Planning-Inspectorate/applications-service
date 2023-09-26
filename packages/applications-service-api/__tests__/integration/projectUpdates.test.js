@@ -3,7 +3,7 @@ const { PROJECT_UPDATE_DB, PROJECT_UPDATE_RESPONSE } = require('../__data__/proj
 
 const mockProjectUpdateFindMany = jest.fn();
 const mockProjectUpdateDelete = jest.fn();
-jest.mock('../../src/lib/prisma', () => ({
+jest.mock('@pins/common/src/lib/prisma', () => ({
 	prismaClient: {
 		projectUpdate: {
 			findMany: (query) => mockProjectUpdateFindMany(query),

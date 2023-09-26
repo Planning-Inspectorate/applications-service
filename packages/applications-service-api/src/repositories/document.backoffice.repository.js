@@ -1,5 +1,5 @@
 const { Prisma } = require('@prisma/client');
-const { prismaClient } = require('../lib/prisma');
+const { prismaClient } = require('@pins/common/src/lib/prisma');
 
 const getFilters = (caseReference) => {
 	const sql = Prisma.sql`

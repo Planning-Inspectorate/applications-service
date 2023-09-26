@@ -11,7 +11,7 @@ const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
-jest.mock('../../src/lib/prisma', () => ({
+jest.mock('@pins/common/src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
 			findUnique: (query) => mockFindUnique(query)

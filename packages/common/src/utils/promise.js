@@ -1,7 +1,3 @@
-/**
- * Utility methods
- */
-
 module.exports = {
 	/**
 	 * Promise Timeout

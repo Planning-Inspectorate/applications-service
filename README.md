@@ -5,7 +5,7 @@ Monorepo for all Applications Service services and infrastructure
 ## TL;DR
 
 - `npm i`
-- create a `.env` file in `./packages/applications-service-api`. Copy the values from `.env.development`
+- create a `.env` file in `./packages/common`. Copy the values from `.env.development`
 - `npm run db:generate` to create database
 - `npm run db:migrate:dev` to create tables
 - `npm run db:seed` to populate tables with some data 
@@ -33,6 +33,7 @@ The monorepo comprises of several packages:
 - **applications-service-api**: Web API serving data to the website
   - depends on `mysql` (NI database), and `mssql` (local Back Office database projection)
 - **back-office-subscribers**: Azure Function App for publishing and consuming Service Bus events on various topics. Mainly uses [output bindings](https://github.com/Azure/azure-functions-sql-extension#azure-sql-bindings-for-azure-functions---preview) to insert/update data into the SQL Server database.
+- **common** contains the Prisma (SQL Server) library, schema and migration files. Also has  some code reused between packages
 - **e2e_tests**: Cypress test suite
 
 ## Pre-requisites
@@ -113,9 +114,9 @@ Initially, the Applications service used MySQL as a data store which is due to b
 
 #### SQL Server
 
-First, make sure you have a `.env` file in `./packages/applications-service-api` and it has a `DATABASE_URL` environment variable defined with details pointing to your local database server (`mssql` Docker container);
+First, make sure you have a `.env` file in `./packages/common` and it has a `DATABASE_URL` environment variable defined with details pointing to your local database server (`mssql` Docker container);
 
-To set up the SQL Server with tables and some data, you will need to run the following commands (whilst the SQL Server Docker container is running):
+To set up the SQL Server with tables and some data, you will need to run the following commands, from the project root directory (whilst the SQL Server Docker container is running):
 
 ```shell
 npm run db:generate
@@ -123,7 +124,7 @@ npm run db:migrate:dev
 npm run db:seed 
 ```
 
-The ORM used by the application to access SQL Server is [Prisma](https://www.prisma.io/). The schema is defined in [schema.prisma](./packages/applications-service-api/prisma/schema.prisma). 
+The ORM used by the application to access SQL Server is [Prisma](https://www.prisma.io/). The schema is defined in [schema.prisma](packages/common/prisma/schema.prisma). 
 
 **Note:** If the `prisma.schema` file has been updated, don't forget to run `npm run db:migrate:dev` to apply the changes.
 
@@ -196,7 +197,7 @@ Prisma errors
 Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
 In case this error is unexpected for you, please report it in https://github.com/prisma/prisma/issues
   at new PrismaClient (/opt/app/node_modules/.prisma/client/index.js:3:11)
-  at exports.createPrismaClient (/opt/app/packages/applications-service-api/src/lib/prisma.js:7:26)
+  at exports.createPrismaClient (/opt/app/packages/common/src/lib/prisma.js:7:26)
 ```
     
 - Run `npm run db:generate` to re-generate the Prisma client. This should only be necessary on your first setup, after removing `node_modules`, or upgrading the Prisma version.
