@@ -39,6 +39,7 @@ jest.mock('../../_services', () => ({
 
 const commonMockData = {
 	ProjectName: 'Test project name',
+	PromoterName: 'Test promoter name',
 	Proposal: 'I am the proposal',
 	Summary: 'I am the project summary data',
 	WebAddress: 'mock-web-address',
