@@ -460,13 +460,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -1497,13 +1501,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -2526,13 +2534,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -3555,13 +3567,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -4588,13 +4604,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -5621,13 +5641,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -6650,13 +6674,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
@@ -7666,13 +7694,17 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 			<section>
-    <h2 class=\\"govuk-heading-m\\"> About the project</h2>
-    <p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
-    <p class=\\"govuk-body\\">I am the project summary data</p>
+	<h2 class=\\"govuk-heading-m\\">About the project</h2>
 
-    
-        <a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
-    
+	<p class=\\"govuk-body\\">Type of application: <b>I am the proposal</b></p>
+
+	<p class=\\"govuk-body\\">Name of applicant: <b>Test promoter name</b></p>
+
+	<p class=\\"govuk-body\\">I am the project summary data</p>
+
+	
+		<a class=\\"govuk-link\\" href=\\"mock-web-address\\">View the developer's website</a>
+	
 </section>
 			<hr class=\\"govuk-section-break govuk-section-break--xl govuk-section-break--visible\\" />
 
