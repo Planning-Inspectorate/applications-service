@@ -8,11 +8,16 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@pins/common": "file:../common",
 		"axios": "^1.4.0",
 		"lodash.pick": "^4.4.0"
 	},
 	"devDependencies": {
 		"azure-functions-core-tools": "^4.x",
-		"azurite": "^3.26.0"
+		"azurite": "^3.26.0",
+		"eslint": "^8.17.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-jest": "^24.4.0",
+		"jest": "^28.1.1"
 	}
 }

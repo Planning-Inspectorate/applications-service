@@ -8,20 +8,6 @@
 			"subscriptionName": "applications-nsip-project-subscription",
 			"connection": "ServiceBusConnection",
 			"accessRights": "listen"
-		},
-		{
-			"name": "project",
-			"type": "sql",
-			"direction": "out",
-			"commandText": "dbo.Project",
-			"connectionStringSetting": "SqlConnectionString"
-		},
-		{
-			"name": "projectRegion",
-			"type": "sql",
-			"direction": "out",
-			"commandText": "dbo.ProjectRegion",
-			"connectionStringSetting": "SqlConnectionString"
 		}
 	],
 	"disabled": false
