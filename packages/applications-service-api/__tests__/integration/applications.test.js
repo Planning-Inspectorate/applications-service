@@ -4,14 +4,13 @@ const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
 	APPLICATIONS_FO,
 	APPLICATIONS_FO_FILTERS,
-	APPLICATION_API_LEGACY
+	APPLICATION_API_V1,
+	APPLICATION_FO
 } = require('../__data__/application');
 const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
-const mockFindAndCountAll = jest.fn();
-const mockCount = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
@@ -20,45 +19,66 @@ jest.mock('../../src/lib/prisma', () => ({
 	}
 }));
 
+const mockFindAndCountAll = jest.fn();
+const mockCount = jest.fn();
+const mockProjectFindOne = jest.fn();
 jest.mock('../../src/models', () => ({
 	Project: {
 		findAndCountAll: (query) => mockFindAndCountAll(query),
-		count: () => mockCount()
+		count: () => mockCount(),
+		findOne: (attributes) => mockProjectFindOne(attributes)
 	}
 }));
 
+const config = require('../../src/lib/config');
+
 describe('/api/v1/applications', () => {
 	describe('get single application', () => {
-		afterEach(() => mockFindUnique.mockClear());
+		afterEach(() => {
+			mockFindUnique.mockClear();
+			mockProjectFindOne.mockClear();
+		});
 
-		describe('Back Office case', () => {
-			it('given case with caseReference exists, returns 200', async () => {
-				mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
+		it('given NI case with caseReference exists, returns 200', async () => {
+			config.backOfficeIntegration.applications.getApplication.caseReferences = [];
+			mockProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 
-				const response = await request.get('/api/v1/applications/EN0110004');
+			const response = await request.get('/api/v1/applications/EN010116');
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					...APPLICATION_API_LEGACY,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					ApplicantEmailAddress: 'TBC',
-					ApplicantPhoneNumber: 'TBC',
-					PromoterFirstName: 'TBC',
-					PromoterLastName: 'TBC',
-					PromoterName: 'TBC',
-					WebAddress: 'TBC',
-					sourceSystem: 'ODT'
-				});
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				...APPLICATION_API_V1,
+				sourceSystem: 'HORIZON'
 			});
+		});
 
-			it('returns 400 if caseReference is in invalid format', async () => {
-				const response = await request.get('/api/v1/applications/bad_format');
+		it('given Back Office case with caseReference exists, returns 200', async () => {
+			config.backOfficeIntegration.applications.getApplication.caseReferences = ['EN010116'];
+			mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					code: 400,
-					errors: ['\'caseReference\' must match pattern "^[A-Za-z]{2}\\d{6,8}$"']
-				});
+			const response = await request.get('/api/v1/applications/EN010116');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				...APPLICATION_API_V1,
+				DateOfDCOAcceptance_NonAcceptance: null,
+				ApplicantEmailAddress: 'TBC',
+				ApplicantPhoneNumber: 'TBC',
+				PromoterFirstName: 'TBC',
+				PromoterLastName: 'TBC',
+				PromoterName: 'TBC',
+				WebAddress: 'TBC',
+				sourceSystem: 'ODT'
+			});
+		});
+
+		it('returns 400 if caseReference is in invalid format', async () => {
+			const response = await request.get('/api/v1/applications/bad_format');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				code: 400,
+				errors: ['\'caseReference\' must match pattern "^[A-Za-z]{2}\\d{6,8}$"']
 			});
 		});
 	});

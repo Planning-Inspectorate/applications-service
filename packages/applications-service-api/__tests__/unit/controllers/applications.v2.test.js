@@ -6,7 +6,7 @@ jest.mock('../../../src/services/application.service');
 const mockGetApplication = require('../../../src/services/application.service').getApplication;
 
 const { getApplication } = require('../../../src/controllers/applications.v2');
-const { APPLICATION_API, APPLICATION_API_LEGACY } = require('../../__data__/application');
+const { APPLICATION_API, APPLICATION_API_V1 } = require('../../__data__/application');
 
 describe('applications v2 controller', () => {
 	let res;
@@ -19,7 +19,7 @@ describe('applications v2 controller', () => {
 		describe('parsing regions', () => {
 			const req = {
 				params: {
-					caseReference: 'EN0110004'
+					caseReference: 'BC0110001'
 				}
 			};
 
@@ -33,7 +33,7 @@ describe('applications v2 controller', () => {
 				const responseBody = res._getData();
 
 				expect(responseBody).toEqual({
-					...APPLICATION_API_LEGACY,
+					...APPLICATION_API_V1,
 					DateOfDCOAcceptance_NonAcceptance: null,
 					ApplicantEmailAddress: 'TBC',
 					ApplicantPhoneNumber: 'TBC',
