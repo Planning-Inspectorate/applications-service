@@ -21,14 +21,14 @@
 		"seed": "node ./prisma/seed.js"
 	},
 	"dependencies": {
+		"@prisma/client": "^4.16.2",
 		"pino": "^6.11.3",
 		"prom-client": "^13.0.0"
 	},
 	"devDependencies": {
-		"@prisma/client": "^4.16.2",
 		"eslint": "^8.17.0",
 		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-jest": "^24.1.0",
+		"eslint-plugin-jest": "^27.4.0",
 		"jest": "^28.1.1",
 		"jest-junit": "^13.2.0",
 		"prisma": "^4.16.2"
