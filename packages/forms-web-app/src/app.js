@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
-const { prometheus } = require('@pins/common');
 const { configureSessionStore } = require('./lib/session');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
@@ -26,8 +25,6 @@ const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
 
 const app = express();
-
-prometheus.init(app);
 
 app.use(
 	pinoExpress({
