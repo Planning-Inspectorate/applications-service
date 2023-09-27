@@ -136,18 +136,28 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 16
-              script: npm ci --omit=dev --workspace=@pins/back-office-subscribers
+              script: npm ci
               workingDirectory: $(Build.Repository.LocalPath)
-          - script: mv node_modules/* packages/back-office-subscribers/node_modules
+          - template: ../steps/node_script.yml
+            parameters:
+              script: npm run db:generate
+              workingDirectory: $(Build.Repository.LocalPath)
+          - script: |
+              mv node_modules/* packages/back-office-subscribers/node_modules
+              cp -r packages/common packages/back-office-subscribers/node_modules/@pins/common
             workingDirectory: $(Build.Repository.LocalPath)
             displayName: merge node_modules
-          - task: ArchiveFiles@2
+          - script: |
+              zip -r function.zip .
+            workingDirectory: $(Build.Repository.LocalPath)/packages/back-office-subscribers
             displayName: Package files
-            inputs:
-              rootFolderOrFile: $(Build.Repository.LocalPath)/packages/back-office-subscribers
-              includeRootFolder: false
-              archiveFile: $(System.DefaultWorkingDirectory)/functions.zip
-              verbose: true
+#          - task: ArchiveFiles@2
+#            displayName: Package files
+#            inputs:
+#              rootFolderOrFile: $(Build.Repository.LocalPath)/packages/back-office-subscribers
+#              includeRootFolder: false
+#              archiveFile: $(System.DefaultWorkingDirectory)/functions.zip
+#              verbose: true
           - publish: $(System.DefaultWorkingDirectory)/functions.zip
             artifact: back-office-subscribers
             displayName: Publish Functions Artifact
