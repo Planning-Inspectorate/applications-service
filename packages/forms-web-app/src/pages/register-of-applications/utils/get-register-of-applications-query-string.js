@@ -6,7 +6,7 @@ const getRegisterOfApplicationsQueryString = ({ page, searchTerm, itemsPerPage, 
 		page: page || 1,
 		searchTerm: searchTerm || '',
 		size: itemsPerPage || 25,
-		sort: sortBy || '+ProjectName',
+		sort: sortBy || '+DateOfDCOSubmission',
 		stage: registerOfApplicationsStages
 	});
 
