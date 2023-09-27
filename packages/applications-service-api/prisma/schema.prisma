@@ -102,58 +102,64 @@ model Representation {
 }
 
 model Project {
-  id                                          Int       @unique @default(autoincrement())
-  caseId                                      Int       @unique
-  caseReference                               String    @id
-  projectName                                 String?
-  projectDescription                          String?
-  publishStatus                               String?
-  sector                                      String?
-  projectType                                 String?
-  sourceSystem                                String
-  stage                                       String?
-  projectLocation                             String?
-  projectEmailAddress                         String?
-  regions                                     String?
-  transboundary                               Boolean?
-  easting                                     Int?
-  northing                                    Int?
-  welshLanguage                               Boolean?
-  mapZoomLevel                                String?
-  secretaryOfState                            String?
-  dateProjectAppearsOnWebsite                 DateTime?
-  dateOfDCOAcceptance                         DateTime?
-  anticipatedDateOfSubmission                 DateTime?
-  anticipatedSubmissionDateNonSpecific        String?
-  dateOfDCOSubmission                         DateTime?
-  dateOfRepresentationPeriodOpen              DateTime?
-  dateOfRelevantRepresentationClose           DateTime?
-  dateRRepAppearOnWebsite                     DateTime?
-  confirmedStartOfExamination                 DateTime?
-  dateTimeExaminationEnds                     DateTime?
-  stage4ExtensionToExamCloseDate              DateTime?
-  stage5ExtensionToRecommendationDeadline     DateTime?
-  dateOfRecommendations                       DateTime?
-  confirmedDateOfDecision                     DateTime?
-  stage5ExtensionToDecisionDeadline           DateTime?
-  dateProjectWithdrawn                        DateTime?
-  section46Notification                       DateTime?
-  datePINSFirstNotifiedOfProject              DateTime?
-  screeningOpinionSought                      DateTime?
-  screeningOpinionIssued                      DateTime?
-  scopingOpinionSought                        DateTime?
-  scopingOpinionIssued                        DateTime?
-  deadlineForAcceptanceDecision               DateTime?
-  dateSection58NoticeReceived                 DateTime?
-  preliminaryMeetingStartDate                 DateTime?
-  deadlineForCloseOfExamination               DateTime?
-  deadlineForSubmissionOfRecommendation       DateTime?
-  deadlineForDecision                         DateTime?
-  jRPeriodEndDate                             DateTime?
-  extensionToDateRelevantRepresentationsClose DateTime?
-  examinationTimetableId                      Int?
-  createdAt                                   DateTime? @default(now())
-  modifiedAt                                  DateTime? @default(now())
+  id                                                Int             @unique @default(autoincrement())
+  caseId                                            Int             @unique
+  caseReference                                     String          @id
+  projectName                                       String?
+  projectDescription                                String?
+  publishStatus                                     String?
+  sector                                            String?
+  projectType                                       String?
+  sourceSystem                                      String?
+  stage                                             String?
+  projectLocation                                   String?
+  projectEmailAddress                               String?
+  regions                                           String?
+  transboundary                                     Boolean?
+  easting                                           Int?
+  northing                                          Int?
+  welshLanguage                                     Boolean?
+  mapZoomLevel                                      String?
+  secretaryOfState                                  String?
+  dateProjectAppearsOnWebsite                       DateTime?       @db.Date
+  dateOfDCOAcceptance                               DateTime?       @db.Date
+  dateOfNonAcceptance                               DateTime?       @db.Date
+  dateIAPIDue                                       DateTime?       @db.Date
+  notificationDateForEventsDeveloper                DateTime?       @db.Date
+  notificationDateForPMAndEventsDirectlyFollowingPM DateTime?       @db.Date
+  rule6LetterPublishDate                            DateTime?       @db.Date
+  rule8LetterPublishDate                            DateTime?       @db.Date
+  anticipatedDateOfSubmission                       DateTime?       @db.Date
+  anticipatedSubmissionDateNonSpecific              String?
+  dateOfDCOSubmission                               DateTime?       @db.Date
+  dateOfRepresentationPeriodOpen                    DateTime?       @db.Date
+  dateOfRelevantRepresentationClose                 DateTime?       @db.Date
+  dateRRepAppearOnWebsite                           DateTime?       @db.Date
+  confirmedStartOfExamination                       DateTime?       @db.Date
+  dateTimeExaminationEnds                           DateTime?       @db.Date
+  stage4ExtensionToExamCloseDate                    DateTime?       @db.Date
+  stage5ExtensionToRecommendationDeadline           DateTime?       @db.Date
+  dateOfRecommendations                             DateTime?       @db.Date
+  confirmedDateOfDecision                           DateTime?       @db.Date
+  stage5ExtensionToDecisionDeadline                 DateTime?       @db.Date
+  dateProjectWithdrawn                              DateTime?       @db.Date
+  section46Notification                             DateTime?       @db.Date
+  datePINSFirstNotifiedOfProject                    DateTime?       @db.Date
+  screeningOpinionSought                            DateTime?       @db.Date
+  screeningOpinionIssued                            DateTime?       @db.Date
+  scopingOpinionSought                              DateTime?       @db.Date
+  scopingOpinionIssued                              DateTime?       @db.Date
+  deadlineForAcceptanceDecision                     DateTime?       @db.Date
+  dateSection58NoticeReceived                       DateTime?       @db.Date
+  preliminaryMeetingStartDate                       DateTime?       @db.Date
+  deadlineForCloseOfExamination                     DateTime?       @db.Date
+  deadlineForSubmissionOfRecommendation             DateTime?       @db.Date
+  deadlineForDecision                               DateTime?       @db.Date
+  jRPeriodEndDate                                   DateTime?       @db.Date
+  extensionToDateRelevantRepresentationsClose       DateTime?       @db.Date
+  examinationTimetableId                            Int?
+  createdAt                                         DateTime?       @default(now())
+  modifiedAt                                        DateTime?       @default(now())
 }
 
 model ProjectUpdate {
