@@ -490,28 +490,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
- 
 
- 
 
-<p class=\\"govuk-body\\">
+
+
+
 	
+	<p class=\\"govuk-body\\">
+		If you want to comment on this proposed project, you can now <a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">register to have your say</a>.
 		
-	If you want to comment on this proposed project, you can now
-  <a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">
-		register to have your say.</a>
-  
-	<br>
-	<br>
-	<a href=' /projects/EN010085/register/register-have-your-say' class=\\"govuk-button\\">
+	</p>
+
+	<a href='/projects/EN010085/register/register-have-your-say' class=\\"govuk-button\\">
 		Register to have your say
 	</a>
-
-	
-</p>
-
-
-
 
 
 	
@@ -913,7 +905,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -1946,7 +1938,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -2979,7 +2971,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -4016,7 +4008,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -5053,7 +5045,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -6086,7 +6078,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -7117,7 +7109,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
@@ -7724,29 +7716,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
- 
 
- 
 
-<p class=\\"govuk-body\\">
+
+
+
 	
-		
-	At this stage you can
-	<a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">
-		register to have your say</a> about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
-	<br>
-	<br>
+	<p class=\\"govuk-body\\">
+		At this stage you can <a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">register to have your say</a> about the proposed project.
+		This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
+	</p>
+
 	<a href='/having-your-say-guide/registering-have-your-say' class=\\"govuk-link\\">
 		Find out more about registering to have your say.
 	</a>
-
-
-
-	
-</p>
-
-
-
 
 
 	
@@ -8148,7 +8131,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 	</h3>
 
 	<p class=\\"govuk-body\\">
-		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\"> mock@email.com </a>.
+		<a class=\\"govuk-link\\" href=\\"mailto:mock@email.com\\">mock@email.com</a>.
 	</p>
 
 
