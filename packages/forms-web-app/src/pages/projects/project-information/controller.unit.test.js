@@ -72,6 +72,7 @@ describe('projects/project-information/controller', () => {
 			it('should render the page with the latest update', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
 					applicationDecision: 'granted',
+					contactEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
 					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
 					preExamSubStages: {
 						CLOSED_REPS: false,
@@ -95,7 +96,10 @@ describe('projects/project-information/controller', () => {
 			const res = {
 				render: jest.fn(),
 				locals: {
-					applicationData: applicationDataFixture
+					applicationData: {
+						...applicationDataFixture,
+						contactEmailAddress: 'mock@email.com'
+					}
 				}
 			};
 			const next = jest.fn();
@@ -113,6 +117,7 @@ describe('projects/project-information/controller', () => {
 			it('should render the page with NO latest update', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
 					applicationDecision: 'granted',
+					contactEmailAddress: 'mock@email.com',
 					latestUpdate: null,
 					preExamSubStages: {
 						CLOSED_REPS: false,
