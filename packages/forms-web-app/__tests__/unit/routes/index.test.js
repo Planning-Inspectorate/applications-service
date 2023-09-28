@@ -7,6 +7,7 @@ const {
 	registerOfApplicationsRouter
 } = require('../../../src/pages/register-of-applications/router');
 const { projectSearchRouter } = require('../../../src/pages/project-search/router');
+const { apiRouter } = require('../../../src/api/router');
 
 describe('routes/index', () => {
 	beforeEach(() => {
@@ -25,6 +26,7 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith('/', registerOfApplicationsRouter);
 		expect(use).toHaveBeenCalledWith(interestedPartyRouter);
 		expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
-		expect(use.mock.calls.length).toBe(36);
+		expect(use).toHaveBeenCalledWith('/api', apiRouter);
+		expect(use.mock.calls.length).toBe(37);
 	});
 });

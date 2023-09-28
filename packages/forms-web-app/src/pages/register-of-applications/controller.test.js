@@ -48,6 +48,8 @@ describe('register-of-applications/controller', () => {
 						projectSearch: '/project-search',
 						registerOfApplications: '/register-of-applications'
 					},
+					applicationsDownloadUrl: '/api/applications-download',
+					totalApplicationsWithoutFilters: 21,
 					applications: [
 						{
 							applicant: 'EDF',
