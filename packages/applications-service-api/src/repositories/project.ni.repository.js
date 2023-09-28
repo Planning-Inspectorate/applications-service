@@ -42,10 +42,7 @@ const getAllApplications = async (options = {}) => {
 	return { applications: rows, count };
 };
 
-const getAllApplicationsCount = async () => db.Project.count();
-
 module.exports = {
 	getApplication,
-	getAllApplications,
-	getAllApplicationsCount
+	getAllApplications
 };
