@@ -15,10 +15,13 @@ const examinationRouter = require('../pages/examination/exmaination.router');
 const projectsRouter = require('../pages/projects/projects.router');
 const { projectSearchRouter } = require('../pages/project-search/router');
 const { registerOfApplicationsRouter } = require('../pages/register-of-applications/router');
+const { apiRouter } = require('../api/router');
 const {
 	isProcessingSubmission
 } = require('../pages/examination/_middleware/submission.middleware');
+
 const { registerSubdirectory } = require('../pages/projects/register/config');
+const { apiSubdirectory } = require('../api/config');
 
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
@@ -40,5 +43,7 @@ router.use(
 router.use(interestedPartyRouter);
 router.use(decisionMakingProcessGuideRouter);
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
+
+router.use(`/${apiSubdirectory}`, apiRouter);
 
 module.exports = router;
