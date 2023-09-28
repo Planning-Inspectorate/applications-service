@@ -1,7 +1,6 @@
 const {
 	getApplication: getApplicationRepository,
-	getAllApplications: getAllApplicationsRepository,
-	getAllApplicationsCount
+	getAllApplications: getAllApplicationsRepository
 } = require('../repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const {
@@ -19,7 +18,9 @@ const getNIApplication = async (caseReference) => {
 const getAllNIApplications = async (query) => {
 	const { pageNo, size, offset, order } = createQueryFilters(query);
 
-	const availableFilters = await getAvailableFilters();
+	const { applications: allApplications, count: totalItemsWithoutFilters } =
+		await getAllApplicationsRepository();
+	const availableFilters = buildApiFiltersFromNIApplications(allApplications);
 
 	const repositoryOptions = {
 		offset,
@@ -31,7 +32,6 @@ const getAllNIApplications = async (query) => {
 	if (!isEmpty(appliedFilters)) repositoryOptions.filters = appliedFilters;
 
 	const { applications, count } = await getAllApplicationsRepository(repositoryOptions);
-	const totalItemsWithoutFilters = await getAllApplicationsCount();
 
 	return {
 		applications: applications.map(addMapZoomLevelAndLongLat),
@@ -81,13 +81,6 @@ const createQueryFilters = (query) => {
 		offset: size * (pageNo - 1),
 		order
 	};
-};
-
-const getAvailableFilters = async () => {
-	const { applications } = await getAllApplicationsRepository({
-		attributes: ['Stage', 'Region', 'Proposal']
-	});
-	return buildApiFiltersFromNIApplications(applications);
 };
 
 module.exports = {
