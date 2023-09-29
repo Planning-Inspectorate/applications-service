@@ -19,7 +19,7 @@ module.exports = (pageName) => {
 			cy.clickOnHref('/having-your-say-guide/what-happens-after-decision');
 			break;
 		case 'the nationally significant infrastructure planning process step by step':
-			cy.clickOnHref('/having-your-say-guide/index');
+			cy.clickOnHref('/having-your-say-guide');
 			break;
 		case 'find out more about the decision making process for national infrastructure projects':
 			cy.clickOnHref('/decision-making-process-guide');

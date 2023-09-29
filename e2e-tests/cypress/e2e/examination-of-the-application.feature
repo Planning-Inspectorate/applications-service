@@ -1,4 +1,4 @@
-@testSuite @failing
+@testSuite
 Feature: Examination of the application page
     As a Test user
     I want to navigate to Examination of the application page

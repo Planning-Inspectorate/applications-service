@@ -1,4 +1,4 @@
-@testSuite @failing
+@testSuite
 Feature: Decision making process guide page
     As a Test user
     I want to navigate to Decision making process guide page
