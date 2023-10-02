@@ -4,11 +4,12 @@ const submissionsController = require('../../../src/controllers/submissions');
 const config = require('../../../src/lib/config');
 const { validateCreateSubmissionRequest } = require('../../../src/middleware/validator/submission');
 const { normaliseRequestFileData } = require('../../../src/middleware/normaliseRequestFileData');
-const {validateRequestWithOpenAPI} = require("../../../src/middleware/validator/openapi");
+const { validateRequestWithOpenAPI } = require('../../../src/middleware/validator/openapi');
 
 jest.mock('express-fileupload');
 jest.mock('../../../src/middleware/fileUploadLimitHandler');
 jest.mock('../../../src/middleware/parseFormDataProperties');
+jest.mock('@pins/common/src/utils/async-route');
 
 const fileUploadLimitHandlerMock =
 	require('../../../src/middleware/fileUploadLimitHandler').fileUploadLimitHandler;
@@ -18,13 +19,18 @@ const parseFormDataPropertiesMock =
 	require('../../../src/middleware/parseFormDataProperties').parseFormDataProperties;
 const parseFormDataPropertiesMockValue = jest.fn();
 
-const parseIntegerParamMock = require('../../../src/middleware/parseFormDataProperties').parseIntegerParam;
+const parseIntegerParamMock =
+	require('../../../src/middleware/parseFormDataProperties').parseIntegerParam;
 const parseIntegerParamMockValue = jest.fn();
+
+const asyncRouteMock = require('@pins/common/src/utils/async-route').asyncRoute;
+const asyncRouteMockValue = jest.fn();
 
 describe('routes/submissions', () => {
 	fileUpload.mockImplementation(() => fileUploadMockValue);
 	parseFormDataPropertiesMock.mockImplementation(() => parseFormDataPropertiesMockValue);
 	parseIntegerParamMock.mockImplementation(() => parseIntegerParamMockValue);
+	asyncRouteMock.mockImplementation((fn) => asyncRouteMockValue(fn));
 
 	beforeEach(() => {
 		// eslint-disable-next-line global-require
@@ -42,10 +48,11 @@ describe('routes/submissions', () => {
 			limitHandler: fileUploadLimitHandlerMock
 		});
 
-		expect(parseFormDataPropertiesMock).toBeCalledWith(
-			['interestedParty', 'sensitiveData', 'lateSubmission'],
-			['submissionId']
-		);
+		expect(parseFormDataPropertiesMock).toBeCalledWith([
+			'interestedParty',
+			'sensitiveData',
+			'lateSubmission'
+		]);
 
 		expect(post).toHaveBeenCalledWith(
 			'/:caseReference',
@@ -53,8 +60,9 @@ describe('routes/submissions', () => {
 			normaliseRequestFileData,
 			parseFormDataPropertiesMockValue,
 			validateCreateSubmissionRequest,
-			submissionsController.createSubmission
+			asyncRouteMock(submissionsController.createSubmission)
 		);
+		expect(asyncRouteMockValue).toHaveBeenCalledWith(submissionsController.createSubmission);
 
 		expect(parseIntegerParamMock).toBeCalledWith('submissionId');
 

@@ -9,14 +9,13 @@ const {
 	RESPONSE_FILE_DATA
 } = require('../../__data__/file');
 
-jest.mock('../../../src/services/submission.service');
+jest.mock('../../../src/repositories/submission.ni.repository');
 jest.mock('../../../src/services/ni.api.service');
 jest.mock('../../../src/utils/pdf');
 
 const uploadFileService = require('../../../src/services/ni.api.service').uploadFile;
-const updateSubmissionService =
-	require('../../../src/services/submission.service').updateSubmission;
 const textToPdfUtil = require('../../../src/utils/pdf').textToPdf;
+const updateSubmissionRepository = require('../../../src/repositories/submission.ni.repository').updateSubmission;
 
 describe('ni file service', () => {
 	describe('submitUserUploadedFile', () => {
@@ -24,9 +23,11 @@ describe('ni file service', () => {
 			const submissionData = await submitUserUploadedFile(SUBMISSION_DATA, REQUEST_FILE_DATA);
 
 			expect(uploadFileService).toBeCalledWith(FILE_DATA);
-			expect(updateSubmissionService).toBeCalledWith({
-				id: 123,
-				file: FILE_DATA
+			expect(updateSubmissionRepository).toBeCalledWith(123, {
+				filenameOriginal: FILE_DATA.originalName,
+				filename: FILE_DATA.name,
+				fileSize: FILE_DATA.size,
+				fileMD5: FILE_DATA.md5
 			});
 			expect(submissionData).toEqual({
 				...SUBMISSION_DATA,

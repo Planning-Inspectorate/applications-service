@@ -1,19 +1,18 @@
 const httpMocks = require('node-mocks-http');
 
-const { ORIGINAL_REQUEST_FILE_DATA, SUBMISSION_DATA, FILE_DATA } = require('../../__data__/file');
+const { REQUEST_FILE_DATA } = require('../../__data__/file');
 const { createSubmission, completeSubmission } = require('../../../src/controllers/submissions');
 
 jest.mock('../../../src/services/submission.service');
+jest.mock('../../../src/services/submission.ni.service');
 jest.mock('../../../src/services/ni.file.service');
+jest.mock('../../../src/utils/date-utils');
 
-const createSubmissionService =
-	require('../../../src/services/submission.service').createSubmission;
-const completeSubmissionService =
-	require('../../../src/services/submission.service').completeSubmission;
-const submitUserUploadedFileService =
-	require('../../../src/services/ni.file.service').submitUserUploadedFile;
-const submitRepresentationFileService =
-	require('../../../src/services/ni.file.service').submitRepresentationFile;
+const { getDate } = require('../../../src/utils/date-utils');
+const {
+	createSubmission: createSubmissionService,
+	completeSubmission: completeSubmissionService
+} = require('../../../src/services/submission.service');
 
 describe('submissions controller', () => {
 	describe('createSubmission', () => {
@@ -40,7 +39,7 @@ describe('submissions controller', () => {
 
 		const requestWithFile = {
 			...request,
-			file: ORIGINAL_REQUEST_FILE_DATA
+			file: REQUEST_FILE_DATA
 		};
 
 		const requestWithComment = {
@@ -51,47 +50,67 @@ describe('submissions controller', () => {
 			}
 		};
 
+		const mockDate = new Date('2022-12-09 13:30:00');
+
+		beforeEach(() => getDate.mockReturnValueOnce(mockDate));
 		afterEach(() => jest.resetAllMocks());
 
-		it('should return file name including submissionId and sequence number if file uploaded', async () => {
+		it('should invoke service with metadata and file for submission with file', async () => {
 			const res = httpMocks.createResponse();
-			const submissionDataWithFile = {
-				...SUBMISSION_DATA,
-				file: FILE_DATA
-			};
 
-			createSubmissionService.mockResolvedValueOnce(SUBMISSION_DATA);
-			submitUserUploadedFileService.mockResolvedValueOnce(submissionDataWithFile);
+			createSubmissionService.mockResolvedValueOnce({ submissionId: 123 });
 
 			await createSubmission(requestWithFile, res);
 
-			expect(submitUserUploadedFileService).toBeCalledWith(
-				SUBMISSION_DATA,
-				ORIGINAL_REQUEST_FILE_DATA
-			);
-			expect(submitRepresentationFileService).not.toBeCalled();
-
+			expect(createSubmissionService).toBeCalledWith({
+				metadata: {
+					caseReference: 'EN010009',
+					dateSubmitted: mockDate,
+					deadline: 'Deadline 1',
+					email: 'joe@example.org',
+					interestedParty: true,
+					ipReference: '999999999',
+					lateSubmission: undefined,
+					name: 'Joe Bloggs',
+					representation: undefined,
+					sensitiveData: undefined,
+					submissionId: 123,
+					submissionType: 'Some Type'
+				},
+				file: requestWithFile.file
+			});
 			expect(res._getStatusCode()).toEqual(201);
-			expect(res._getData()).toEqual(submissionDataWithFile);
+			expect(res._getData()).toEqual({
+				submissionId: 123
+			});
 		});
 
-		it('should return representation and generated pdf file if comment submitted', async () => {
+		it('should invoke service with metadata only for submission with comment', async () => {
 			const res = httpMocks.createResponse();
-			const submissionDataWithRepresentation = {
-				...SUBMISSION_DATA,
-				representation: 'Some comment'
-			};
 
-			createSubmissionService.mockResolvedValueOnce(submissionDataWithRepresentation);
-			submitRepresentationFileService.mockResolvedValueOnce(Promise.resolve());
+			createSubmissionService.mockResolvedValueOnce({ submissionId: 123 });
 
 			await createSubmission(requestWithComment, res);
 
-			expect(submitUserUploadedFileService).not.toBeCalled();
-			expect(submitRepresentationFileService).toBeCalledWith(submissionDataWithRepresentation);
-
+			expect(createSubmissionService).toBeCalledWith({
+				metadata: {
+					caseReference: 'EN010009',
+					dateSubmitted: mockDate,
+					deadline: 'Deadline 1',
+					email: 'joe@example.org',
+					interestedParty: true,
+					ipReference: '999999999',
+					lateSubmission: undefined,
+					name: 'Joe Bloggs',
+					representation: 'Some comment',
+					sensitiveData: undefined,
+					submissionId: 123,
+					submissionType: 'Some Type'
+				},
+				file: undefined
+			});
 			expect(res._getStatusCode()).toEqual(201);
-			expect(res._getData()).toEqual(submissionDataWithRepresentation);
+			expect(res._getData()).toEqual({ submissionId: 123 });
 		});
 	});
 

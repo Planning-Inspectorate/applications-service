@@ -1,6 +1,6 @@
 const { parseBoolean, parseInteger } = require('../utils/parse');
 
-const parseFormDataProperties = (booleanProperties, integerProperties) => {
+const parseFormDataProperties = (booleanProperties = [], integerProperties = []) => {
 	return (req, res, next) => {
 		if (req.body) {
 			const parseProperty = (property, parseFunction) => {
