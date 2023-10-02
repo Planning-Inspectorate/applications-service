@@ -1,4 +1,9 @@
-const { generateRepresentationPDF } = require('../../../src/utils/file');
+jest.mock('../../../src/lib/blobStorage');
+jest.mock('uuid');
+const { upload } = require('../../../src/lib/blobStorage');
+const uuid = require('uuid');
+
+const { generateRepresentationPDF, uploadToBlobStorage } = require('../../../src/utils/file');
 
 describe('file utils', () => {
 	describe('generateRepresentationPDF', () => {
@@ -13,9 +18,17 @@ describe('file utils', () => {
 	});
 
 	describe('uploadToBlobStorage', () => {
-		it('invokes blob storage client with file', () => {
-			// TODO: ASB-1830 - upload file data
-			expect(1).toEqual(1);
+		it('invokes blob storage client with file', async () => {
+			uuid.v4.mockReturnValue('some-uuid');
+			const fileData = {
+				originalName: 'Test.pdf',
+				buffer: Buffer.from([]),
+				mimeType: 'application/pdf'
+			};
+
+			await uploadToBlobStorage(fileData);
+
+			expect(upload).toBeCalledWith(fileData.buffer, fileData.mimeType, 'some-uuid/Test.pdf');
 		});
 	});
 });
