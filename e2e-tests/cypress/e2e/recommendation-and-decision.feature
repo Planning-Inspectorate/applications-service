@@ -1,4 +1,4 @@
-@testSuite @failing
+@testSuite
 Feature: Recommendation and Decision page
     As a Test user
     I want to navigate to Recommendation and Decision page
@@ -14,7 +14,7 @@ Feature: Recommendation and Decision page
         Then I am on the "recommendation and decision" page
         And I verify below links present on Recommendation and Decision page
             | Links                                                          |
-            | About recommendation and final decision                        | 
+            | About recommendation and final decision                        |
         And I click on "Find out what you can do at this stage and check our detailed guides" link
         Then I am on the "Pre-application" page
 
