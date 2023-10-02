@@ -13,6 +13,8 @@ jest.mock('../../src/lib/prisma', () => ({
 }));
 
 describe('/api/v1/project-updates', () => {
+	afterEach(() => jest.resetAllMocks());
+
 	describe('GET /{{caseReference}}', () => {
 		it('returns project updates when case has some', async () => {
 			mockProjectUpdateFindMany.mockResolvedValueOnce([PROJECT_UPDATE_DB]);
