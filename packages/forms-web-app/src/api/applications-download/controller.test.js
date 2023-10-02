@@ -23,7 +23,7 @@ describe('api/applications-download/controller', () => {
 				});
 				it('should throw an error', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
-					expect(res.send).toHaveBeenCalledWith(new Error('something went wrong'));
+					expect(res.send).toHaveBeenCalledWith('Failed to download Applications CSV');
 				});
 			});
 

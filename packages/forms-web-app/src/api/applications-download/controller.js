@@ -8,7 +8,7 @@ const getApplicationsDownload = async (req, res) => {
 		return res.attachment('applications.csv').send(applicationsCSV);
 	} catch (error) {
 		logger.error(error);
-		return res.status(500).send(error);
+		return res.status(500).send('Failed to download Applications CSV');
 	}
 };
 
