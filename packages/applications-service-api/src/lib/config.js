@@ -28,6 +28,11 @@ module.exports = {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES)
 			}
 		},
+		submissions: {
+			postSubmission: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES)
+			}
+		},
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,

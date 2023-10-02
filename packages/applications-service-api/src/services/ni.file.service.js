@@ -1,6 +1,6 @@
 const Path = require('path');
 const { uploadFile } = require('./ni.api.service');
-const { updateSubmission } = require('./submission.service');
+const { updateSubmission: updateSubmissionRepository } = require('../repositories/submission.ni.repository');
 const { md5 } = require('../utils/md5');
 const { textToPdf } = require('../utils/pdf');
 
@@ -24,10 +24,12 @@ const submitRepresentationFile = async (submission) => {
 const submitFile = async (submission, fileData) => {
 	await uploadFile(fileData);
 
-	await updateSubmission({
-		id: submission.id,
-		file: fileData
-	});
+	await updateSubmissionRepository(submission.id, {
+		filenameOriginal: fileData.originalName,
+		filename: fileData.name,
+		fileSize: fileData.size,
+		fileMD5: fileData.md5
+	})
 
 	return {
 		...submission,
