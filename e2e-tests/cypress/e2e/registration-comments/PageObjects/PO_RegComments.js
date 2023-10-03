@@ -47,12 +47,12 @@ class PO_RegComments {
 	verifyCommentsDisplayedinDescendingOrder(table) {
 		const contents = table.hashes();
 		cy.get('[data-cy="published-date"]').each(($e1, index) => {
-			const actualText = $e1.text();
+			const actualText = $e1.text().trim();
 			const expectedText = contents[index].Date;
 			expect(actualText).to.contain(expectedText);
 		});
 		cy.get('[data-cy="published-stage"]').each(($e1, index) => {
-			const actualText = $e1.text();
+			const actualText = $e1.text().trim();
 			const expectedText = contents[index].Stage;
 			expect(actualText).to.contain(expectedText);
 		});
