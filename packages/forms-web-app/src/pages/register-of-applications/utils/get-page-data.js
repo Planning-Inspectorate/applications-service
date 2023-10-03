@@ -1,3 +1,4 @@
+const { applicationsDownloadURL } = require('../../../api/applications-download/config');
 const { buildPaginationQueryString } = require('../../_utils/build-pagination-query-string');
 const { mapApplications } = require('../../_utils/map-applications');
 const { mapTitles } = require('../../_utils/map-titles');
@@ -7,13 +8,12 @@ const { getPagination } = require('../../projects/utils/pagination/pagination');
 const {
 	getRegisterOfApplicationsSortByLinks
 } = require('./get-register-of-applications-sort-by-links');
-const { getApplicationsDownloadURL } = require('../../../api/_utils/get-url');
 
 const getPageData = (applications, query, pagination) => ({
 	...mapTitles('Register of applications', 'Register of applications'),
 	allProjectsSubNavigationRoutes,
 	applications: mapApplications(applications),
-	applicationsDownloadUrl: getApplicationsDownloadURL,
+	applicationsDownloadURL,
 	totalApplicationsWithoutFilters: pagination.totalItemsWithoutFilters,
 	pagination: getPagination(pagination),
 	paginationQueryString: buildPaginationQueryString(query),
