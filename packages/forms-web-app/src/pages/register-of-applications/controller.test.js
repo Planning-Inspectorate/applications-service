@@ -48,7 +48,7 @@ describe('register-of-applications/controller', () => {
 						projectSearch: '/project-search',
 						registerOfApplications: '/register-of-applications'
 					},
-					applicationsDownloadUrl: '/api/applications-download',
+					applicationsDownloadURL: '/api/applications-download',
 					totalApplicationsWithoutFilters: 21,
 					applications: [
 						{
