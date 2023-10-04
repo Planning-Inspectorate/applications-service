@@ -6,7 +6,7 @@
 		"postinstall": "patch-package",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
-		"test:open": "cypress open",
+		"test:open": "demoDelay=1000 cypress open",
 		"test:e2e": "npx cypress-tags run -b chrome --env TAGS=\"not (@wip or @ignore)\"",
 		"test:e2e:demo": "cypress-tags run --headed -b chrome --env TAGS=\"not (@wip or @ignore)\",demoDelay=1000",
 		"test:e2e:postprocess": "node ./reporter.js",
