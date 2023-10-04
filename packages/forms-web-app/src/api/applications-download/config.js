@@ -1,3 +1,7 @@
+const { apiSubdirectory } = require('../config');
+
 const applicationsDownloadRoute = 'applications-download';
 
-module.exports = { applicationsDownloadRoute };
+const applicationsDownloadURL = `/${apiSubdirectory}/${applicationsDownloadRoute}`;
+
+module.exports = { applicationsDownloadRoute, applicationsDownloadURL };

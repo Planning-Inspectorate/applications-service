@@ -1,4 +1,4 @@
-const { getApplicationsDownloadURL } = require('../../../api/_utils/get-url');
+const { applicationsDownloadURL } = require('../../../api/applications-download/config');
 const { buildPaginationQueryString } = require('../../_utils/build-pagination-query-string');
 const { mapApplications } = require('../../_utils/map-applications');
 const { mapTitles } = require('../../_utils/map-titles');
@@ -13,7 +13,7 @@ const getPageData = (query, applications, filters, pagination) => ({
 	...getFilters(query, filters),
 	allProjectsSubNavigationRoutes,
 	applications: mapApplications(applications),
-	applicationsDownloadUrl: getApplicationsDownloadURL,
+	applicationsDownloadURL,
 	totalApplicationsWithoutFilters: pagination.totalItemsWithoutFilters,
 	pagination: getPagination(pagination),
 	paginationQueryString: buildPaginationQueryString(query),
