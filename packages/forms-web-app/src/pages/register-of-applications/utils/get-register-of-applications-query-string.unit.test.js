@@ -14,7 +14,7 @@ describe('register-of-applications/utils/get-register-of-applications-query-stri
 
 				it('should return the default register of applications query string', () => {
 					expect(registerOfApplicationsQueryString).toEqual(
-						'?page=1&searchTerm=&size=25&sort=%2BDateOfDCOSubmission&stage=acceptance&stage=pre_examination&stage=examination&stage=recommendation&stage=decision&stage=post_decision&stage=withdrawn'
+						'?page=1&searchTerm=&size=25&sort=-DateOfDCOSubmission&stage=acceptance&stage=pre_examination&stage=examination&stage=recommendation&stage=decision&stage=post_decision&stage=withdrawn'
 					);
 				});
 			});
