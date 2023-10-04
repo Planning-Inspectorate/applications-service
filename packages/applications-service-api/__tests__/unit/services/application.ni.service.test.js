@@ -5,20 +5,19 @@ const {
 } = require('../../../src/services/application.ni.service');
 const {
 	getApplication: getApplicationRepository,
-	getAllApplications: getAllApplicationsRepository,
-	getAllApplicationsCount: getAllApplicationsCountRepository
+	getAllApplications: getAllApplicationsRepository
 } = require('../../../src/repositories/project.ni.repository');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const {
 	APPLICATION_FO,
 	APPLICATIONS_NI_DB,
-	APPLICATIONS_FO
+	APPLICATIONS_FO,
+	APPLICATIONS_FO_FILTERS
 } = require('../../__data__/application');
 
 jest.mock('../../../src/repositories/project.ni.repository', () => ({
 	getApplication: jest.fn(),
-	getAllApplications: jest.fn(),
-	getAllApplicationsCount: jest.fn()
+	getAllApplications: jest.fn()
 }));
 
 jest.mock('../../../src/utils/map-applications-to-csv', () => jest.fn());
@@ -50,15 +49,16 @@ describe('application.ni.service', () => {
 	});
 
 	describe('getAllApplications', () => {
-		let availableFilters = [];
 		beforeEach(() => {
 			getAllApplicationsRepository
-				.mockResolvedValueOnce({ applications: availableFilters })
+				.mockResolvedValueOnce({
+					applications: APPLICATIONS_NI_DB,
+					count: APPLICATIONS_NI_DB.length
+				})
 				.mockResolvedValueOnce({
 					applications: APPLICATIONS_NI_DB,
 					count: APPLICATIONS_NI_DB.length
 				});
-			getAllApplicationsCountRepository.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
 		});
 
 		describe('pagination', () => {
@@ -272,7 +272,7 @@ describe('application.ni.service', () => {
 				totalPages: 1,
 				currentPage: 1,
 				totalItemsWithoutFilters: APPLICATIONS_FO.length,
-				filters: availableFilters
+				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
 	});

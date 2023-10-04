@@ -20,12 +20,10 @@ jest.mock('../../src/lib/prisma', () => ({
 }));
 
 const mockFindAndCountAll = jest.fn();
-const mockCount = jest.fn();
 const mockProjectFindOne = jest.fn();
 jest.mock('../../src/models', () => ({
 	Project: {
 		findAndCountAll: (query) => mockFindAndCountAll(query),
-		count: () => mockCount(),
 		findOne: (attributes) => mockProjectFindOne(attributes)
 	}
 }));
@@ -85,8 +83,10 @@ describe('/api/v1/applications', () => {
 
 	describe('get all applications', () => {
 		beforeEach(() => {
-			mockFindAndCountAll.mockResolvedValueOnce({ rows: APPLICATIONS_NI_FILTER_COLUMNS });
-			mockCount.mockResolvedValueOnce(APPLICATIONS_NI_DB.length);
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: APPLICATIONS_NI_FILTER_COLUMNS,
+				count: APPLICATIONS_NI_DB.length
+			});
 		});
 		it('happy path', async () => {
 			mockFindAndCountAll.mockResolvedValueOnce({
