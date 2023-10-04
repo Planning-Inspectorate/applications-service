@@ -22,6 +22,7 @@ const {
 
 const { registerSubdirectory } = require('../pages/projects/register/config');
 const { apiSubdirectory } = require('../api/config');
+const { processGuideRouter } = require('../pages/process-guide/router');
 
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
@@ -40,9 +41,14 @@ router.use(
 	isProcessingSubmission,
 	examinationRouter
 );
+
 router.use(interestedPartyRouter);
-router.use(decisionMakingProcessGuideRouter);
+
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
+
+router.use(processGuideRouter);
+
+router.use(decisionMakingProcessGuideRouter);
 
 router.use(`/${apiSubdirectory}`, apiRouter);
 
