@@ -7,8 +7,12 @@
 		"lint": "eslint ./",
 		"test": "jest"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"axios": "^1.4.0",
+		"lodash.pick": "^4.4.0"
+	},
 	"devDependencies": {
-		"azure-functions-core-tools": "^4.x"
+		"azure-functions-core-tools": "^4.0.5390",
+		"azurite": "^3.26.0"
 	}
 }

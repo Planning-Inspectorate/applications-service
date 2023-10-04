@@ -73,7 +73,7 @@ const routesConfig = {
 				},
 				route: 'enter-a-comment',
 				sessionId: 'comment',
-				title: 'Your comment',
+				title: 'Make a comment',
 				view: 'pages/examination/enter-comment'
 			},
 			evidenceOrComment: {
@@ -94,7 +94,7 @@ const routesConfig = {
 					},
 					3: {
 						value: 'both',
-						text: 'Both'
+						text: 'Make a comment and upload files'
 					}
 				},
 				route: 'select-upload-evidence-or-comment',

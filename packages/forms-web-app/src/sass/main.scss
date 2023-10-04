@@ -2,20 +2,22 @@
 @import './pins-customised-govuk-frontend/font-family.scss';
 
 /* package */
-@import '../../../../node_modules/govuk-frontend/govuk/all';
-@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/pagination/pagination';
-@import '../../../../node_modules/@ministryofjustice/frontend/moj/components/multi-file-upload/multi-file-upload';
+@import 'node_modules/govuk-frontend/govuk/all';
+@import 'node_modules/@ministryofjustice/frontend/moj/all';
 
 /* extended */
 @import './extended/max-width.scss';
 
+/* modded */
+@import './modded/govuk-file-upload.scss';
+@import './modded/govuk-list-summary.scss';
+@import './modded/govuk-table.scss';
+
 /* page */
 @import './page/body.scss';
 @import './page/type.scss';
+@import './page/rte.scss';
 @import './page/button.scss';
-
-/* app */
-@import './app/app-step-nav.scss';
 
 /* components */
 @import './components/core/pins-header.scss';
@@ -27,13 +29,13 @@
 @import './components/style/canvas-background.scss';
 @import './components/style/vertical-tabs.scss';
 @import './components/text/centred-title-subtitle.scss';
+@import './components/ui/step-by-step-navigation/index.scss';
 @import './components/ui/checkbox-accordion.scss';
 @import './components/ui/link-button.scss';
 @import './components/ui/map.scss';
 @import './components/ui/next-step.scss';
 @import './components/ui/results-list.scss';
 @import './components/ui/search-bar.scss';
-@import './components/ui/side-search.scss';
 @import './components/ui/step-nav.scss';
 @import './components/ui/tag-link.scss';
 @import './components/ui/tag-link-list.scss';

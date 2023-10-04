@@ -1,0 +1,11 @@
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{{ govukPanel({
+  titleText: "Success",
+  text: "You have subscribed to emails about this project",
+  classes: "govuk-!-margin-bottom-8"
+}) }}
+
+<a href="/projects/{{ caseRef }}" class="govuk-link">
+  View {{ projectName }} project information
+</a>

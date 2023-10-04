@@ -1,20 +1,14 @@
 {% extends "layouts/layout.njk" %}
 
-{% block script %}
-	{% set initiatePageConfig = [{
-		callback: "
-				var initiateStepByStep = new appScripts.stepByStep();
-				initiateStepByStep.start('#step-by-step-navigation');
-			",
-		src: "/public/scripts/stepByStep.script.js"
-	}] %}
+{% set templateID = 'main' %}
 
+{% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
 		callback: "
- var initiatePage = new appScripts.initiate();
-    initiatePage.scripts(" + initiatePageConfig | dump | safe + ");
+			var $element = document.querySelector('#step-by-step-navigation')
+    	var stepByStepNavigation = new GOVUK.Modules.AppStepNav($element).init()
     ",
-		src: "/assets/jquery.js"
+		src: "/public/scripts/step-by-step-navigation.script.js"
 	}), initiateScriptsConfig) %}
 {% endblock %}
 
@@ -29,11 +23,17 @@
 			<h1 class="govuk-heading-xl">
 				Having your say about a national infrastructure project
 			</h1>
+
 			<p class="govuk-body">This guide is for individuals and organisations who want to have their say about a
-				project.</p>
-			<p class="govuk-body">National infrastructure projects are also called Nationally Significant Infrastructure
+				project.
+			</p>
+
+			<p class="govuk-body">
+				National infrastructure projects are also called Nationally Significant Infrastructure
 				Projects (NSIP). They are large developments which cross the threshold from a normal planning application
-				because of the impact they may have. This can be developments like:</p>
+				because of the impact they may have. This can be developments like:
+			</p>
+
 			<ul class="govuk-list govuk-list--bullet">
 				<li>offshore wind farms</li>
 				<li>power stations and electric lines</li>
@@ -41,18 +41,21 @@
 				<li>railways</li>
 				<li>gas pipelines</li>
 			</ul>
-			<p class="govuk-body">The process for national infrastructure projects is to decide if a Development Consent Order
+
+			<p class="govuk-body">
+				The process for national infrastructure projects is to decide if a Development Consent Order
 				(DCO) can be granted. A DCO is a legal document that allows a developer to build their proposed project. The
 				developer submits an application for a proposed development to the Planning Inspectorate. A panel of independent
 				inspectors examine the project and make a recommendation to the Secretary of State about if the project should
-				go ahead.</p>
-			<p class="govuk-body">As part of this process, anyone can have their say about the project and tell us why they
-				think it should or should not go ahead.</p>
+				go ahead.
+			</p>
 
-			{% set currentDefaultStep = 1 %}
-			{% set templateID = 'main' %}
+			<p class="govuk-body">
+				As part of this process, anyone can have their say about the project and tell us why they
+				think it should or should not go ahead.
+			</p>
+
 			{% include "../includes/step-by-step-navigation.njk" %}
-
 		</div>
 	</div>
 {% endblock %}

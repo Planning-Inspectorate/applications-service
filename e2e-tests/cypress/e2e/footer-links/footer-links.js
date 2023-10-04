@@ -15,16 +15,13 @@ And('I click on {string} footer link', (linkType) => {
 			cy.get('[data-cy="Terms and conditions"]').click();
 			break;
 		case 'Accessibility':
-			cy.get('[data-cy="Accessibility"]').click();
+			cy.get('[data-cy="Accessibility statement"]').click();
 			break;
 		case 'Privacy Notice':
-			cy.get('[data-cy="Privacy Notice (on GOV.UK)"]').click();
+			cy.get('[data-cy="Privacy"]').click();
 			break;
 		case 'Cookies':
 			cy.get('[data-cy="Cookies"]').click();
-			break;
-		case 'The Planning Inspectorate':
-			cy.clickOnHref('http://planninginspectorate.gov.uk/');
 			break;
 	}
 });

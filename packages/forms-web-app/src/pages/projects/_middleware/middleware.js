@@ -1,27 +1,33 @@
-const { getApplicationData } = require('../documents/utils/get-application-data');
+const { getApplicationData } = require('../_utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
 const { getHasOpenTimetables } = require('../../../utils/timetables/get-timetables-state');
 const { areEventsEligibleForDisplay } = require('../examination-timetable/utils/events/get-events');
+const { projectInfoProjectStages } = require('../../../utils/project-stages');
+const config = require('../../../config');
 
 async function middleware(req, res, next) {
 	try {
 		const { params, baseUrl, path } = req;
 		const { case_ref } = params;
-		const { projectName, dateOfNonAcceptance } = await getApplicationData(case_ref);
+		const applicationData = await getApplicationData(case_ref);
 		const hasOpenTimetables = await getHasOpenTimetables(case_ref);
-		const eventsEligibleForDisplay = areEventsEligibleForDisplay(dateOfNonAcceptance);
+		const eventsEligibleForDisplay = areEventsEligibleForDisplay(
+			applicationData.dateOfNonAcceptance
+		);
 
-		res.locals.projectName = projectName;
+		res.locals.projectName = applicationData.projectName;
 		res.locals.caseRef = case_ref;
+		res.locals.applicationData = applicationData;
 		res.locals.baseUrl = baseUrl;
 		res.locals.path = path;
+		res.locals.projectStages = projectInfoProjectStages;
 		res.locals.hasOpenTimetables = hasOpenTimetables;
 		res.locals.verticalTabs = getVerticalTabs(
-			projectName,
 			case_ref,
 			hasOpenTimetables,
-			eventsEligibleForDisplay
+			eventsEligibleForDisplay,
+			applicationData
 		);
 		next();
 	} catch (e) {
@@ -30,6 +36,15 @@ async function middleware(req, res, next) {
 	}
 }
 
+const projectMigrationMiddleware = (req, res, next) => {
+	if (config.featureFlag.projectMigrationCaseReferences.includes(req.params.case_ref)) {
+		next();
+	} else {
+		res.status(404).render('error/not-found');
+	}
+};
+
 module.exports = {
-	middleware
+	middleware,
+	projectMigrationMiddleware
 };

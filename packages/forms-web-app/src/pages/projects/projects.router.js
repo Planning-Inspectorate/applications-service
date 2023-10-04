@@ -13,30 +13,25 @@ const {
 		allowDocumentLibrary,
 		allowExaminationTimetable,
 		allowRepresentation,
-		usePrivateBetaV1RoutesOnly,
-		allowGetUpdates
+		allowGetUpdates,
+		allowProjectInformation
 	}
 } = config;
 
 const router = express.Router();
-const projectSearchController = require('./project-search/project-search');
 const representationsController = require('./relevant-representations/representations');
 const examinationTimetable = require('./examination-timetable/controller');
-const projectsController = require('./examination/examination');
+const { getProjectInformation } = require('./project-information/controller');
 const aboutTheApplicationController = require('./documents/controller');
 const section51Router = require('./section-51/section-51.router');
-const { middleware } = require('./_middleware/middleware');
+const { middleware, projectMigrationMiddleware } = require('./_middleware/middleware');
 const { featureFlag } = require('../../config');
-const { getProjectUpdates } = require('./project-updates/controller');
-const {
-	getProjectUpdatesEmail,
-	postProjectUpdatesEmail
-} = require('./project-updates/project-updates-email/project-updates-email.controller');
-const { emailValidationRules } = require('../../validators/shared/email-address');
-const { validationErrorHandler } = require('../../validators/validation-error-handler');
-if (!usePrivateBetaV1RoutesOnly) {
-	router.get('/', projectSearchController.getProjectList);
-	router.get('/:case_ref', middleware, projectsController.getExamination);
+const { getUpdatesRouter } = require('./get-updates/router');
+const { getProjectUpdatesController } = require('./project-updates/controller');
+
+if (allowProjectInformation) {
+	router.get('/:case_ref', [middleware, projectMigrationMiddleware], getProjectInformation);
+	router.get('/:case_ref/project-updates', middleware, getProjectUpdatesController);
 }
 
 if (allowDocumentLibrary) {
@@ -72,17 +67,7 @@ if (allowRepresentation) {
 	);
 }
 
-if (allowGetUpdates) {
-	router.get('/:case_ref/get-updates/start', middleware, getProjectUpdates);
-	router.get('/:case_ref/get-updates/email', middleware, getProjectUpdatesEmail);
-	router.post(
-		'/:case_ref/get-updates/email',
-		middleware,
-		emailValidationRules(),
-		validationErrorHandler,
-		postProjectUpdatesEmail
-	);
-}
+if (allowGetUpdates) router.use(getUpdatesRouter);
 
 // Section 51
 if (featureFlag.allowSection51) {

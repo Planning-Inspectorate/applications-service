@@ -10,9 +10,7 @@ const {
 	updateInterestedPartyComments,
 	getInterestedPartyById: getInterestedPartyFromInterestedPartyApiServiceById
 } = require('../services/interested-party.service');
-const {
-	getApplication: getApplicationFromApplicationApiService
-} = require('../services/application.service');
+const { getNIApplication } = require('../services/application.ni.service');
 const ApiError = require('../error/apiError');
 
 module.exports = {
@@ -84,14 +82,14 @@ module.exports = {
 			if (email !== ipMail) {
 				throw ApiError.interestedPartyNotFoundByID(ID);
 			}
-			const project = await getApplicationFromApplicationApiService(caseref);
+			const project = await getNIApplication(caseref);
 
 			if (project === null) {
 				throw ApiError.applicationNotFound(caseref);
 			}
 
 			const { DateOfRelevantRepresentationClose, Region, ProjectName, ProjectEmailAddress } =
-				project.dataValues;
+				project;
 			const projectData = { Region, ProjectName, ProjectEmailAddress };
 
 			const repCloseDate = new Date(DateOfRelevantRepresentationClose);

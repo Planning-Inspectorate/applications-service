@@ -2,6 +2,7 @@ const get = jest.fn();
 const post = jest.fn();
 const put = jest.fn();
 const patch = jest.fn();
+const deleteFn = jest.fn();
 const use = jest.fn();
 jest.doMock('express', () => ({
 	Router: () => ({
@@ -9,6 +10,7 @@ jest.doMock('express', () => ({
 		post,
 		patch,
 		put,
+		delete: deleteFn,
 		use
 	})
 }));
@@ -18,5 +20,6 @@ module.exports = {
 	post,
 	put,
 	patch,
+	delete: deleteFn,
 	use
 };

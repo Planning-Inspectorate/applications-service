@@ -1,9 +1,7 @@
 const subject = require('../index');
 
 describe('nsip-project', () => {
-	const mockLog = jest.fn();
-
-	const projectMessage = {
+	const message = {
 		caseId: 1,
 		caseReference: 'ABC',
 		projectName: 'some case',
@@ -24,8 +22,8 @@ describe('nsip-project', () => {
 		projectName: 'some case',
 		projectDescription: 'some desc',
 		publishStatus: 'published',
-		sourceSystem: 'ODT',
-		regions: 'a,b'
+		regions: '["a","b"]',
+		sourceSystem: 'ODT'
 	};
 
 	beforeAll(() => jest.useFakeTimers());
@@ -37,7 +35,7 @@ describe('nsip-project', () => {
 			jest.setSystemTime(dateNow);
 
 			const mockContext = {
-				log: mockLog,
+				log: jest.fn(),
 				bindingData: {
 					enqueuedTimeUtc: 1,
 					deliveryCount: 1,
@@ -48,7 +46,7 @@ describe('nsip-project', () => {
 				}
 			};
 
-			await subject(mockContext, projectMessage);
+			await subject(mockContext, message);
 
 			const expectedProject = {
 				...project,
@@ -56,6 +54,9 @@ describe('nsip-project', () => {
 			};
 
 			expect(mockContext.bindings.project).toEqual(expectedProject);
+			expect(mockContext.log).toBeCalledWith(
+				`invoking nsip-project function with message: ${JSON.stringify(message)}`
+			);
 		});
 	});
 });

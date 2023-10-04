@@ -70,6 +70,7 @@ module.exports = {
 			baseUrl: process.env.APP_APPLICATIONS_BASE_URL
 		}
 	},
+	isProduction: process.env.NODE_ENV === 'production',
 	itemsPerPage: Number(process.env.DOCUMENTS_PER_PAGE || 20),
 	timetableItemsPerPage: 100,
 	documentsHost:

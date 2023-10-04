@@ -1,6 +1,9 @@
+require('dotenv').config();
+
 const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
 
 const httpPort = Number(process.env.PORT || 3000);
+const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
 	application: {
@@ -53,15 +56,24 @@ module.exports = {
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
 		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true',
 		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
+		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
+		projectMigrationCaseReferences: splitStringToArray(
+			process.env.PROJECT_MIGRATION_CASE_REFERENCES
+		),
 		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true,
-		hideDecisionMakingProcessGuideLink: true,
-		hideProjectInformationLink: true
+		hideDecisionMakingProcessGuideLink: true
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
+	pinsContactDetails: {
+		enquiriesEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
+		supportTeamPhoneNumber: '0303 444 5000'
+	},
+	pinsPrivacyNoticeUrl:
+		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
 	sessionStorage: {
 		examination: {
 			name: 'examination',
@@ -91,5 +103,9 @@ module.exports = {
 			tempFileDir: `../../../uploads`,
 			abortOnLimit: true
 		}
+	},
+	maps: {
+		osMapsApiKey: process.env.OS_MAPS_API_KEY,
+		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
 	}
 };

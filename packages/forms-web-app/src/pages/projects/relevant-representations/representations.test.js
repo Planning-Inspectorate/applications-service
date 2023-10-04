@@ -3,7 +3,7 @@ const { getProjectData, searchRepresentations } = require('../../../lib/applicat
 const { getRepresentation } = require('../../../services/representation.service');
 const { featureHideLink } = require('../../../config');
 
-const { hideProjectInformationLink, hideAllExaminationDocumentsLink } = featureHideLink;
+const { hideAllExaminationDocumentsLink } = featureHideLink;
 
 jest.mock('../../../lib/application-api-wrapper');
 jest.mock('../../../services/representation.service');
@@ -53,6 +53,7 @@ describe('controllers/projects/representations', () => {
 			OpenFloorHearings: null,
 			IssuesSpecificHearings: null,
 			DateRrepReceived: '2020-02-19T00:00:00.000Z',
+			DateRRepAppearOnWebsite: '2020-01-01',
 			DoNotPublish: null,
 			Attachments: 'WS010006-000002',
 			attachments: []
@@ -102,9 +103,10 @@ describe('controllers/projects/representations', () => {
 				paginationData,
 				pageOptions,
 				searchTerm: undefined,
+				showReps: false,
 				queryUrl: '',
 				commentsTypeFilterItems: [],
-				hideProjectInformationLink,
+				allowProjectInformation: true,
 				hideAllExaminationDocumentsLink
 			}
 		);
@@ -129,7 +131,7 @@ describe('controllers/projects/representations', () => {
 			{
 				projectName: 'ABC',
 				caseRef,
-				hideProjectInformationLink,
+				allowProjectInformation: true,
 				hideAllExaminationDocumentsLink,
 				RepFrom: 'Members of the public/businesses',
 				PersonalName: 'Test (Test)',

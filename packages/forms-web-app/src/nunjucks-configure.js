@@ -6,7 +6,7 @@ const fileSizeDisplayHelper = require('./lib/file-size-display-helper');
 const fileTypeDisplayHelper = require('./lib/file-type-display-helper');
 const filterByKey = require('./lib/filter-by-key');
 const renderTemplateFilter = require('./lib/render-template-filter');
-const { Status: projectStageNames } = require('./utils/status');
+const { projectStageNames } = require('./utils/project-stages');
 const { routesConfig } = require('./routes/config');
 const path = require('path');
 const { getYearNow } = require('./utils/date-utils');
@@ -55,6 +55,8 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addGlobal('projectStageNames', projectStageNames);
 	nunjucksEnv.addGlobal('routes', routesConfig);
 	nunjucksEnv.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
+	nunjucksEnv.addGlobal('pinsContactDetails', config.pinsContactDetails);
+	nunjucksEnv.addGlobal('pinsPrivacyNoticeUrl', config.pinsPrivacyNoticeUrl);
 	nunjucksEnv.addGlobal('yearNow', getYearNow());
 
 	return nunjucksEnv;

@@ -1,16 +1,21 @@
-const db = require('../models');
+const {
+	getByCaseReference: getBackOfficeApplication
+} = require('../repositories/project.repository');
+const { getNIApplication } = require('./application.ni.service');
+const config = require('../lib/config');
+const {
+	mapNIApplicationToApi,
+	mapBackOfficeApplicationToApi
+} = require('../utils/application.mapper');
 
-const getApplication = async (id) => {
-	const project = await db.Project.findOne({ where: { CaseReference: id } });
-	return project;
-};
+const getApplication = async (caseReference) =>
+	isBackOfficeApplication(caseReference)
+		? mapBackOfficeApplicationToApi(await getBackOfficeApplication(caseReference))
+		: mapNIApplicationToApi(await getNIApplication(caseReference));
 
-const getAllApplications = async () => {
-	const projects = await db.Project.findAll();
-	return projects;
-};
+const isBackOfficeApplication = (caseReference) =>
+	config.backOfficeIntegration.applications.getApplication.caseReferences.includes(caseReference);
 
 module.exports = {
-	getApplication,
-	getAllApplications
+	getApplication
 };

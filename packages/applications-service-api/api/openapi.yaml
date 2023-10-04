@@ -46,17 +46,178 @@ paths:
       description: Returns all existing applications (Projects)
       tags:
         - Applications
+      parameters:
+        - in: query
+          name: page
+          example: 1
+          required: false
+          schema:
+            type: integer
+          description: Page number
+        - in: query
+          name: size
+          example: 25
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Page size for results
+        - in: query
+          name: sort
+          example: +ProjectName
+          required: false
+          schema:
+            type: string
+            enum:
+              - +ProjectName
+              - -ProjectName
+              - ProjectName
+              - +PromoterName
+              - -PromoterName
+              - PromoterName
+              - +DateOfDCOSubmission
+              - -DateOfDCOSubmission
+              - DateOfDCOSubmission
+              - +ConfirmedDateOfDecision
+              - -ConfirmedDateOfDecision
+              - ConfirmedDateOfDecision
+              - +Stage
+              - -Stage
+              - Stage
+        - in: query
+          name: stage
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - pre_application
+                - acceptance
+                - pre_examination
+                - examination
+                - recommendation
+                - decision
+                - post_decision
+                - withdrawn
+        - in: query
+          name: region
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - east_midlands
+                - eastern
+                - london
+                - north_east
+                - north_west
+                - south_east
+                - south_west
+                - wales
+                - west_midlands
+                - yorkshire_and_the_humber
+        - in: query
+          name: sector
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - business_and_commercial
+                - energy
+                - transport
+                - water
+                - waste
+                - waste_water
+        - in: query
+          name: searchTerm
+          example: 'St James Barton'
+          required: false
+          schema:
+            type: string
+          description: Searches for project name and promoter name
+
       responses:
         '200':
           description: Returns all applications
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Application'
+                type: object
+                properties:
+                  applications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Application'
+                  filters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          enum:
+                            - stage
+                            - region
+                            - sector
+                          example: stage
+                          description: Name of property to filter by
+                        value:
+                          oneOf:
+                            - type: string
+                            - type: number
+                          example: 1
+                          description: Value of property to filter by
+                        label:
+                          type: string
+                          example: Pre-application
+                          description: Display name for the filter value
+                        count:
+                          type: number
+                          example: 5
+                          description: Number of documents matching the filter
+                  totalItems:
+                    type: number
+                    description: Count of items with provided filters applied
+                    example: 1
+                  itemsPerPage:
+                    type: number
+                    example: 1
+                  totalPages:
+                    type: number
+                    example: 1
+                  currentPage:
+                    type: number
+                    example: 1
+                  totalItemsWithoutFilters:
+                    type: number
+                    description: Count of items with no filters applied
+                    example: 10
         '404':
           description: No applications found
+
+  '/api/v1/applications/download':
+    get:
+      summary: Returns a CSV file of all applications
+      description: Returns a CSV file of all applications
+      tags:
+          - Applications
+          - CSV
+      responses:
+        '200':
+          description: Returns a CSV file of all applications
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+                example: |
+                  "Project reference","Project name","Applicant name","Application type","Region","Location","Grid reference - Easting","Grid reference - Northing:","GPS co-ordinates","Stage","Description","Anticipated submission date","Anticipated submission period","Date of application","Date application accepted","Date Examination started","Date Examination closed","Date of recommendation","Date of decision","Date withdrawn"
+                  "TR010001","Accessibility Test","EDF","EN01 - Generating Stations","South West","Somerset - Monday PM 23/12",594934,5636170," -11.543792740342, 100.58954279911",4,"MC 5 09-01-2019 part 3","2020-01-01","","2018-01-01","2019-06-06",,,,,
+
+        '404':
+            description: No applications found
 
 
   '/api/v1/interested-party':
@@ -238,7 +399,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentListWrapper'
         '404':
-          description: No documents found
+          description: No document found
 
   '/api/v2/documents':
     get:
@@ -301,6 +462,43 @@ paths:
         '404':
           description: No documents found
 
+  '/api/v3/documents/{caseReference}':
+    get:
+      summary: Returns project document
+      description: Returns project document
+      tags:
+        - Documents
+      parameters:
+        - in: path
+          name: caseReference
+          example: 'TR040009'
+          required: true
+          schema:
+            type: string
+          description: Case reference
+        - in: query
+          name: type
+          required: true
+          description: Type of document
+          schema:
+            type: string
+            enum: [
+              'RULE_6_LETTER',
+              'RULE_8_LETTER',
+              'EXAMINATION_LIBRARY',
+              'DECISION_LETTER_APPROVE',
+              'DECISION_LETTER_REFUSE'
+            ]
+      responses:
+        '200':
+          description: Returns a document
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentV3'
+        '404':
+          description: No documents found
+
   '/api/v3/documents':
     post:
       summary: Returns project documents
@@ -327,6 +525,83 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
 
+  '/api/v1/project-updates/{caseReference}':
+    get:
+      summary: Returns project updates for a case
+      description: Returns project updates for a case
+      tags:
+        - Project Updates
+      parameters:
+        - in: path
+          name: caseReference
+          example: EN020021
+          required: true
+          schema:
+            type: string
+            minLength: 8
+            maxLength: 10
+            pattern: '^[A-Za-z]{2}\d{6,8}$'
+          description: Case / Project unique identifier
+      responses:
+        '200':
+          description: list of project updates
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        updateDate:
+                          type: string
+                          example: "2020-02-19"
+                        updateName:
+                          type: string
+                          example: "Project accepted"
+                        updateContentEnglish:
+                          type: string
+                          example: "Case was accepted"
+                        updateContentWelsh:
+                          type: string
+                          example: "Derbyniwyd yr achos"
+        '404':
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+
+  '/api/v1/project-updates/{projectUpdateId}':
+    delete:
+      summary: Deletes a project update
+      description: Deletes a project update by projectUpdateId
+      tags:
+        - Project Updates
+      parameters:
+        - in: path
+          name: projectUpdateId
+          example: 123
+          required: true
+          schema:
+            type: number
+          description: Project Update unique identifier
+      responses:
+        '204':
+          description: Project Update has been successfully deleted
+        '404':
+          description: Project Update not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+
   '/api/v1/representations':
     get:
       summary: Returns project representations
@@ -348,6 +623,15 @@ paths:
           schema:
             type: integer
           description: Page number
+        - in: query
+          name: size
+          example: 25
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Page size for results
         - in: query
           name: searchTerm
           example: 'Frosty'
@@ -802,7 +1086,7 @@ components:
           type: array
           items:
             type: string
-            example: ['-0.70283147423378', '53.620078025496']
+            example: [ '-0.70283147423378', '53.620078025496' ]
         AnticipatedDateOfSubmission:
           type: string
           example: ''
@@ -1113,7 +1397,7 @@ components:
       properties:
         name:
           type: string
-          enum: [stage, category]
+          enum: [ stage, category ]
           example: stage
           description: Name of property to filter by
         value:
@@ -1157,7 +1441,7 @@ components:
       properties:
         name:
           type: string
-          enum: [stage, category]
+          enum: [ stage, category ]
           example: stage
           description: Name of property to filter by
         value:
@@ -1769,4 +2053,4 @@ components:
           type: array
           items:
             type: string
-            example: Submission not found
+            example: "{entityName} not found"

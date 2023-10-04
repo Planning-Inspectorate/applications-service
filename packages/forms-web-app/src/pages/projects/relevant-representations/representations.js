@@ -1,12 +1,14 @@
-const { getAppData } = require('../../../services/application.service');
+const { getAppData } = require('../../../services/applications.service');
 const { formatDate } = require('../../../utils/date-utils');
 const { titleCase } = require('../../../utils/string-case');
 const { searchRepresentations } = require('../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
 const { getRepresentation } = require('../../../services/representation.service');
-const { featureHideLink } = require('../../../config');
-
-const { hideProjectInformationLink, hideAllExaminationDocumentsLink } = featureHideLink;
+const {
+	featureHideLink: { hideAllExaminationDocumentsLink },
+	featureFlag: { allowProjectInformation }
+} = require('../../../config');
+const { isDateAfterTodaysDate } = require('./_utils/is-date-after-todays-date');
 
 const representationsView = 'projects/relevant-representations/representations.njk';
 const representationView = 'projects/relevant-representations/representation.njk';
@@ -62,14 +64,15 @@ exports.getRepresentations = async (req, res) => {
 	res.render(representationsView, {
 		projectName: applicationResponse.data.ProjectName,
 		caseRef: applicationResponse.data.CaseReference,
-		hideProjectInformationLink,
+		allowProjectInformation,
 		hideAllExaminationDocumentsLink,
 		representations,
 		paginationData,
 		pageOptions,
 		searchTerm,
 		queryUrl,
-		commentsTypeFilterItems
+		commentsTypeFilterItems,
+		showReps: isDateAfterTodaysDate(applicationResponse.data?.DateRRepAppearOnWebsite)
 	});
 };
 
@@ -85,7 +88,7 @@ exports.getRepresentation = async (req, res) => {
 		backLinkUrl: req.get('Referrer'),
 		projectName: applicationResponse.data.ProjectName,
 		caseRef: applicationResponse.data.CaseReference,
-		hideProjectInformationLink,
+		allowProjectInformation,
 		hideAllExaminationDocumentsLink,
 		RepFrom: titleCase(representationResponse.data.RepFrom),
 		PersonalName: representationResponse.data.PersonalName,

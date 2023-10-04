@@ -29,7 +29,7 @@ Feature: Registering to have your say about a national infrastructure project pa
         And I have selected the "Have your say" link from the related guides section
         When I select the "How to register link"
         Then I am on the "registering to have your say about a national infrastructure project" page
-        And the page includes a link to the project
+        And the page does not include a link to a project
 
     Scenario: click taking part in the pre-application stage link
         When I click on "taking part in the pre-application stage" link

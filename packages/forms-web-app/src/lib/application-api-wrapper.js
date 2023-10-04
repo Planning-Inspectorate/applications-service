@@ -89,9 +89,8 @@ exports.getProjectData = async (case_ref) => {
 	return handler('getProjectData', `/api/v1/applications/${case_ref}`);
 };
 
-exports.getAllProjectList = async () => {
-	return handler('getAllProjectList', '/api/v1/applications');
-};
+exports.getAllProjectList = async (queryString = '') =>
+	handler('getAllProjectList', `/api/v1/applications${queryString}`);
 
 exports.searchDocumentList = async (case_ref, search_data) => {
 	const documentServiceApiUrl = `/api/v1/documents/${case_ref}`;
@@ -99,6 +98,10 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 	return handler('searchDocumentList', documentServiceApiUrl, method, {
 		body: search_data
 	});
+};
+
+exports.getDocumentByType = async (case_ref, type) => {
+	return handler('getDocumentByType', `/api/v3/documents/${case_ref}?type=${type}`);
 };
 
 exports.searchRepresentations = async (params) => {
@@ -183,3 +186,29 @@ exports.wrappedPostSubmissionComplete = async (submissionId) => {
 	const method = 'POST';
 	return handler('postSubmissionComplete', URL, method, {});
 };
+
+exports.postGetUpdatesSubscription = async (caseRef, payload) => {
+	const URL = `/api/v1/subscriptions/${caseRef}`;
+	const method = 'POST';
+
+	return handler('postGetUpdatesSubscription', URL, method, { body: JSON.stringify(payload) });
+};
+
+exports.putGetUpdatesSubscription = async (caseReference, subscriptionDetails) => {
+	const URL = `/api/v1/subscriptions/${caseReference}`;
+	const method = 'PUT';
+
+	return handler('putGetUpdatesSubscription', URL, method, {
+		body: JSON.stringify({ subscriptionDetails })
+	});
+};
+
+exports.deleteGetUpdatesSubscription = async (caseReference, email) => {
+	const URL = `/api/v1/subscriptions/${caseReference}?email=${email}`;
+	const method = 'DELETE';
+
+	return handler('deleteGetUpdatesSubscription', URL, method, {});
+};
+
+exports.getProjectUpdates = async (caseReference) =>
+	handler('getProjectUpdates', `/api/v1/project-updates/${caseReference}`);

@@ -1,0 +1,60 @@
+{% extends "../_layouts/all-projects.njk" %}
+
+{% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
+		{
+			callback: "var modal = new appScripts.modal(); modal.initiate('#project-search-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#project-search-page-search-bar', 'Show filters', 'tablet');",
+			src: "/public/scripts/modal.script.js"
+		}
+	), initiateScriptsConfig) %}
+{% endblock %}
+
+{% block content %}
+	<form method="get">
+		<div class="govuk-grid-row">
+			<div class="govuk-grid-column-one-third">
+
+				{% include "./includes/filters.njk" %}
+
+			</div>
+
+			<div class="govuk-grid-column-two-thirds">
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ pageHeading }}</h1>
+
+				<p class="govuk-body">
+					This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
+				</p>
+
+				{% if applications | length %}
+
+					<p class="govuk-body">
+						<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>Download a table containing a complete list of all {{ totalApplicationsWithoutFilters }} projects (CSV)</a>
+					</p>
+
+				{% endif %}
+
+				{% include "./includes/search.njk" %}
+
+				{% include "./includes/active-filters.njk" %}
+
+				{% if applications | length %}
+
+					{% include "./includes/results-per-page.njk" %}
+
+					{% include "./includes/projects.njk" %}
+
+					{% include "./includes/pagination.njk" %}
+
+				{% else %}
+
+					{% include "./includes/no-matching-results.njk" %}
+
+				{% endif %}
+			</div>
+		</div>
+
+		<input type="hidden" name="itemsPerPage" value="{{ query.itemsPerPage }}">
+		<input type="hidden" name="sortBy" value="{{ query.sortBy }}">
+	</form>
+{% endblock %}

@@ -10,26 +10,24 @@ const getActiveDateFilters = (query) => {
 	const { datePublishedFrom, datePublishedTo } = getDatesFilterPublishedDates(query);
 
 	if (datePublishedFrom) {
-		const formattedDatePublishedFrom = formatDate(datePublishedFrom);
 		activeFilterDatesArray.push(
 			getActiveDateFilterViewModel(
 				query,
 				'Date from',
-				`Remove documents published before ${formattedDatePublishedFrom} filter`,
-				formattedDatePublishedFrom,
+				`documents published before`,
+				formatDate(datePublishedFrom),
 				datesFilterFormGroupsConfig.from.name
 			)
 		);
 	}
 
 	if (datePublishedTo) {
-		const formattedDatePublishedTo = formatDate(datePublishedTo);
 		activeFilterDatesArray.push(
 			getActiveDateFilterViewModel(
 				query,
 				'Date to',
-				`Remove documents published after ${formattedDatePublishedTo} filter`,
-				formattedDatePublishedTo,
+				`documents published after`,
+				formatDate(datePublishedTo),
 				datesFilterFormGroupsConfig.to.name
 			)
 		);

@@ -1,0 +1,15 @@
+{% set postDecisionHtml %}
+    Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.
+	<br>
+	<br>
+    <a href='/decision-making-process-guide/what-happens-after-the-decision-is-made' class="govuk-link">
+		What you can do after the decision has been made
+	</a>
+{% endset %}
+
+{{ govukDetails({
+	summaryText: "After the decision is made",
+	html: postDecisionHtml,
+	open: applicationData.status.text === projectStages[7],
+	classes: 'govuk-!-margin-bottom-1'
+}) }}

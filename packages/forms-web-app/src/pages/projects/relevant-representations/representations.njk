@@ -42,7 +42,7 @@
 				<div class="govuk-grid-row">
 					<div class="govuk-grid-column-two-thirds">
 						<div class="govuk-grid-row">
-							{% if representations.length > 0 %}
+							{% if representations.length > 0 and showReps %}
 								<p class="hmcts-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to
 									<b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> comments, newest first.
 								</p>
@@ -102,18 +102,15 @@
 										search and
 										filters</a>
 								</p>
-							{% elseif representations.length == 0 %}
+							{% else %}
 								<p class="govuk-body" data-cy="no-comments-available">There are no registration comments to display.
 									Registration
 									comments will be published after the registration period has closed.</p>
-								<p class="govuk-body">
-									<a href="/projects/{{ caseRef }}" class="govuk-link">Return to the project overview</a>
-								</p>
 							{% endif %}
 						</div>
 					</div>
 					<div class="govuk-grid-column-one-third">
-						{% if representations.length != 0 %}
+						{% if representations.length > 0 and showReps %}
 							<div class="govuk-grid-row govuk-!-margin-left-3 govuk-!-margin-right-3">
 								<div class="StyleCanvasBackground">
 									{{ govukCheckboxes({

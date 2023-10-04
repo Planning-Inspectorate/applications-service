@@ -1,0 +1,21 @@
+{% set preApplicationHtml %}
+	This is where the developer starts to create their application. This is where the developer must run a consultation
+	and engage with people and organisations in the area. They must also create detailed documents about the impact the
+	project could have on the environment.
+	<br>
+	<br>
+	This stage is your opportunity to get involved and influence the application before the developer sends it to the
+	Planning Inspectorate.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/pre-application' class="govuk-link">
+		Find out what you can do at this stage and check our detailed guides.
+	</a>
+{% endset %}
+
+{{ govukDetails({
+	summaryText: "Pre-application",
+	html: preApplicationHtml,
+	open: applicationData.status.text === projectStages[1],
+	classes: 'govuk-!-margin-bottom-1'
+}) }}

@@ -1,9 +1,9 @@
-jest.mock('../../../src/services/application.v2.service');
+jest.mock('../../../src/services/application.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/lib/crypto');
 jest.mock('../../../src/services/backoffice.publish.service');
 
-const { getApplication } = require('../../../src/services/application.v2.service');
+const { getApplication } = require('../../../src/services/application.service');
 const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify');
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
 const {
@@ -17,6 +17,7 @@ const {
 	publishCreateNSIPSubscription,
 	publishDeleteNSIPSubscription
 } = require('../../../src/services/backoffice.publish.service');
+const { APPLICATION_API } = require('../../__data__/application');
 
 describe('subscriptions controller', () => {
 	const mockTime = new Date('2023-07-06T11:06:00.000Z');
@@ -40,11 +41,7 @@ describe('subscriptions controller', () => {
 		};
 
 		it('invokes notify with correct project and subscription details', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseReference: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			encrypt.mockReturnValueOnce('some_encrypted_string');
 
 			await createSubscription(req, mockRes);
@@ -56,9 +53,9 @@ describe('subscriptions controller', () => {
 				email: 'user@example.org',
 				subscriptionDetails: 'some_encrypted_string',
 				project: {
-					email: 'drax@example.org',
-					name: 'drax',
-					caseReference: 'BC0110001'
+					email: 'webteam@planninginspectorate.gov.uk',
+					name: 'North Lincolnshire Green Energy Park',
+					caseReference: 'EN010116'
 				}
 			});
 			expect(mockRes.send).toBeCalledWith({
@@ -77,11 +74,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws error if notify fails', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseRef: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			encrypt.mockReturnValueOnce('some_encrypted_string');
 
 			const expectedError = new Error('some error');
@@ -102,11 +95,7 @@ describe('subscriptions controller', () => {
 		};
 
 		it('given valid subscriptionDetails, invokes publishCreateNSIPSubscription, and returns 200', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseRef: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			when(decrypt)
 				.calledWith('some_encrypted_string')
 				.mockReturnValue(
@@ -138,11 +127,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws bad request error if subscriptionDetails have expired', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseRef: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			when(decrypt)
 				.calledWith('some_encrypted_string')
 				.mockReturnValue(
@@ -161,11 +146,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws error if publishCreateNSIPSubscription fails', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseRef: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			when(decrypt)
 				.calledWith('some_encrypted_string')
 				.mockReturnValue(
@@ -200,11 +181,7 @@ describe('subscriptions controller', () => {
 		])(
 			'throws error if required property is missing from subscriptionDetails',
 			async (missingPropertyName, payload) => {
-				getApplication.mockResolvedValueOnce({
-					projectName: 'drax',
-					projectEmailAddress: 'drax@example.org',
-					caseRef: 'BC0110001'
-				});
+				getApplication.mockResolvedValueOnce(APPLICATION_API);
 				when(decrypt).calledWith('some_encrypted_string').mockReturnValue(JSON.stringify(payload));
 
 				const expectedError = new ApiError(500, {
@@ -227,11 +204,7 @@ describe('subscriptions controller', () => {
 		};
 
 		it('given valid encrypted email, invokes publishDeleteNSIPSubscription, and returns 200', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseRef: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			when(decrypt).calledWith('some_encrypted_string').mockReturnValue('user@example.org');
 
 			await deleteSubscription(req, mockRes);
@@ -252,11 +225,7 @@ describe('subscriptions controller', () => {
 		});
 
 		it('throws error if publishDeleteNSIPSubscription fails', async () => {
-			getApplication.mockResolvedValueOnce({
-				projectName: 'drax',
-				projectEmailAddress: 'drax@example.org',
-				caseRef: 'BC0110001'
-			});
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			when(decrypt).calledWith('some_encrypted_string').mockReturnValue('user@example.org');
 
 			publishDeleteNSIPSubscription.mockRejectedValueOnce(new Error('some publishing error'));

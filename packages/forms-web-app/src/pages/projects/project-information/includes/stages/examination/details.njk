@@ -1,0 +1,15 @@
+{% set examinationHtml %}
+	The examining authority will ask questions about the proposed development. The developer and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/examination-of-the-application' class="govuk-link">
+		What happens at the Examination of the application
+	</a>
+{% endset %}
+
+{{ govukDetails({
+	summaryText: "Examination",
+	html: examinationHtml,
+	open: applicationData.status.text === projectStages[4],
+	classes: 'govuk-!-margin-bottom-1'
+}) }}

@@ -1,5 +1,5 @@
 const { configureSessionStore } = require('../../../src/lib/session');
-
+const realConfig = require('../../../src/config');
 const { createClient } = require('redis');
 const session = require('express-session');
 
@@ -24,6 +24,7 @@ describe('lib/session', () => {
 		});
 
 		it('should throw if unable to find the session secret', () => {
+			delete realConfig.server.sessionSecret;
 			expect(() => configureSessionStore(session)).toThrow('Session secret must be set');
 		});
 

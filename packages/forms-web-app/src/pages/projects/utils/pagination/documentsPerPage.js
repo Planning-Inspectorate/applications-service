@@ -3,10 +3,13 @@ const { buildQueryString } = require('../../documents/utils/common/buildQuerySri
 const defaultDocumentsPerPage = 25;
 
 const isItemsPerPageEqualToSize = (query, size) => Number(query.itemsPerPage) === size;
+
 const isDefaultItemsPerPage = (query, size) =>
 	!query.itemsPerPage && size === defaultDocumentsPerPage;
+
 const getActive = (query, size) =>
 	isItemsPerPageEqualToSize(query, size) || isDefaultItemsPerPage(query, size);
+
 const getDocumentsPerPage = (query, size) => {
 	const localQuery = JSON.parse(JSON.stringify(query));
 	const active = getActive(localQuery, size);
@@ -18,6 +21,7 @@ const getDocumentsPerPage = (query, size) => {
 		active
 	};
 };
+
 const documentsPerPage = (query) => ({
 	twentyFive: getDocumentsPerPage(query, 25),
 	fifty: getDocumentsPerPage(query, 50),

@@ -1,0 +1,16 @@
+{% set acceptanceHtml %}
+	This is when the developer sends us their application documents. We check if we can accept the application for
+	examination. We have 28 days to make this decision.
+	<br>
+	<br>
+	<a href='/decision-making-process-guide/review-of-the-application' class="govuk-link">
+		How the acceptance stage works and what happens next.
+	</a>
+{% endset %}
+
+{{ govukDetails({
+	summaryText: "Acceptance",
+	html: acceptanceHtml,
+	open: applicationData.status.text === projectStages[2],
+	classes: 'govuk-!-margin-bottom-1'
+}) }}

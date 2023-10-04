@@ -1,0 +1,23 @@
+{% extends "layouts/default.njk" %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% block beforeContent %}
+  {{ super() }}
+
+  {{ mojSubNavigation({
+    classes: "govuk-!-margin-0",
+    label: "All projects secondary navigation",
+    items: [
+      {
+        text: "Projects",
+        href: allProjectsSubNavigationRoutes.projectSearch,
+        active: pageTitle === "Project search"
+      },
+      {
+        text: "Register of applications",
+        href: allProjectsSubNavigationRoutes.registerOfApplications,
+        active: pageTitle === "Register of applications"
+      }
+    ]
+  }) }}
+{% endblock %}

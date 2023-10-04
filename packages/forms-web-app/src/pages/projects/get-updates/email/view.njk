@@ -1,0 +1,58 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+
+{% block content %}
+
+	{% if errorSummary %}
+		{{ govukErrorSummary({
+			titleText: "There is a problem",
+			errorList: errorSummary
+		}) }}
+	{% endif %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<form method="post" novalidate>
+				{{ govukInput({
+					label: {
+						text: pageTitle,
+						classes: "govuk-label--l",
+						isPageHeading: true
+					},
+					id: "email",
+					name: "email",
+					value: email,
+					errorMessage: errors["email"] and {
+						text: errors["email"].msg
+					}
+				}) }}
+
+
+				{{ govukDetails({
+					summaryText: "How we use your information",
+					html: "
+						<p>Planning Inspectorate email updates will only store information you have provided.</p>
+						<p>You can access, update or permanently delete your email updates and the information associated with them at any time.</p>
+						<p>We will never:</p>
+						<ul>
+							<li>sell or rent your information to third parties</li>
+							<li>share your information with third parties for marketing purposes</li>
+						</ul>
+						<p>You can read the <a class='govuk-link' href=" + pinsPrivacyNoticeUrl + ">full privacy notice</a> for more detail on how your information is stored, shared and used.</p>
+					"
+				}) }}
+
+				{{ govukButton({
+					text: "Continue"
+				}) }}
+
+			</div>
+		</div>
+	</form>
+{% endblock %}

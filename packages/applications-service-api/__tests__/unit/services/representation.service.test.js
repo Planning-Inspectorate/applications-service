@@ -4,10 +4,17 @@ const {
 	getRepresentationsForApplication,
 	getRepresentationById
 } = require('../../../src/services/representation.service');
+const {
+	getRepresentationsWithCount: getRepresentationsWithCountRepository,
+	getRepresentations: getRepresentationsRepository,
+	getRepresentationById: getRepresentationByIdRepository
+} = require('../../../src/repositories/representation.ni.repository');
+const { Op } = require('sequelize');
+const db = require('../../../src/models');
 
 const repMockData = {
 	count: 2,
-	rows: [
+	representations: [
 		{
 			ID: 21,
 			ProjectName: 'Auto_Test',
@@ -70,60 +77,94 @@ const filtersMockData = [
 	{ RepFrom: 'Parish Councils', count: 2 }
 ];
 
-jest.mock('../../../src/models', () => {
-	// eslint-disable-next-line global-require
-	const SequelizeMock = require('sequelize-mock');
-	const dbMock = new SequelizeMock();
-	const Representation = dbMock.define('Representation');
-
-	Representation.$queryInterface.$useHandler((query) => {
-		if (query === 'findAndCountAll') {
-			return Representation.build({ ...repMockData });
-		}
-		if (query === 'findOne') {
-			return Representation.build({ ...repMockData.rows[0] });
-		}
-		if (query === 'findAll') {
-			return Representation.build({ ...filtersMockData });
-		}
-	});
-
-	const db = {
-		Representation,
-		sequelize: { fn: jest.fn(), col: jest.fn() }
+jest.mock('../../../src/repositories/representation.ni.repository', () => {
+	return {
+		getRepresentationsWithCount: jest.fn().mockResolvedValue(repMockData),
+		getRepresentations: jest.fn(),
+		getRepresentationById: jest.fn().mockResolvedValue(repMockData.representations[0])
 	};
-	return db;
 });
 
 describe('getRepresentationsForApplication', () => {
-	it('should get representations for application from mock', async () => {
-		const data = await getRepresentationsForApplication('EN010009', 1, 'Frosty', 'Parish Councils');
-		const result = { ...data.dataValues };
-		delete result.id;
-		delete result.createdAt;
-		delete result.updatedAt;
-		expect(result).toEqual(repMockData);
+	beforeAll(() => {
+		// Arrange
+		getRepresentationsRepository.mockResolvedValue([]);
+	});
+	it('should call getRepresentationsWithCountRepository with correct params', async () => {
+		// Act
+		await getRepresentationsForApplication({
+			applicationId: 'EN010009',
+			page: 1,
+			size: 25,
+			type: 'Members of the Public/Businesses',
+			searchTerm: 'Frosty'
+		});
+		// Assert
+		expect(getRepresentationsWithCountRepository).toBeCalledWith({
+			applicationId: 'EN010009',
+			offset: 0,
+			limit: 25,
+			order: [['DateRrepReceived', 'ASC'], ['PersonalName']],
+			type: 'Members of the Public/Businesses',
+			searchTerm: 'Frosty'
+		});
+	});
+	it('should return representations', async () => {
+		// Act
+		const data = await getRepresentationsForApplication({
+			applicationId: 'EN010009',
+			page: 1,
+			size: 25,
+			type: 'Members of the Public/Businesses',
+			searchTerm: 'Frosty'
+		});
+		// Assert
+		expect(data).toEqual({
+			representations: repMockData.representations,
+			totalItems: 2,
+			itemsPerPage: 25,
+			totalPages: 1,
+			currentPage: 1,
+			filters: {
+				typeFilters: []
+			}
+		});
 	});
 });
 
 describe('getRepresentationById', () => {
-	it('should get representation', async () => {
+	it('should call getRepresentationByIdRepository', async () => {
+		// Act
+		await getRepresentationById(21);
+		// Assert
+		expect(getRepresentationByIdRepository).toBeCalledWith(21);
+	});
+	it('should return representation', async () => {
+		// Act
 		const data = await getRepresentationById(21);
-		const result = { ...data.dataValues };
-		delete result.id;
-		delete result.createdAt;
-		delete result.updatedAt;
-		expect(result).toEqual(repMockData.rows[0]);
+		// Assert
+		expect(data).toEqual(repMockData.representations[0]);
 	});
 });
 
 describe('getFilters', () => {
-	it('should get filters', async () => {
+	beforeAll(() => {
+		getRepresentationsRepository.mockResolvedValue(filtersMockData);
+	});
+	it('should call getRepresentationsRepository with correct params', async () => {
+		// Act
+		await getFilters('RepFrom', 'EN010009');
+		// Assert
+		expect(getRepresentationsRepository).toBeCalledWith({
+			where: { CaseReference: 'EN010009', RepFrom: { [Op.ne]: null } },
+			attributes: ['RepFrom', [db.sequelize.fn('COUNT', db.sequelize.col('RepFrom')), 'count']],
+			group: ['RepFrom']
+		});
+	});
+	it('should return filters', async () => {
+		// Act
 		const data = await getFilters('RepFrom', 'EN010009');
-		const result = { ...data.dataValues };
-		delete result.id;
-		delete result.createdAt;
-		delete result.updatedAt;
-		expect(Object.values(result)).toEqual(filtersMockData);
+		// Assert
+		expect(data).toEqual(filtersMockData);
 	});
 });

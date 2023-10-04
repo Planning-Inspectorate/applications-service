@@ -1,5 +1,14 @@
-const { APPLICATION_DB } = require('../__data__/application');
+const {
+	APPLICATION_DB,
+	APPLICATIONS_NI_DB,
+	APPLICATIONS_NI_FILTER_COLUMNS,
+	APPLICATIONS_FO,
+	APPLICATIONS_FO_FILTERS,
+	APPLICATION_API_V1,
+	APPLICATION_FO
+} = require('../__data__/application');
 const { request } = require('../__data__/supertest');
+const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
@@ -10,53 +19,54 @@ jest.mock('../../src/lib/prisma', () => ({
 	}
 }));
 
+const mockFindAndCountAll = jest.fn();
+const mockProjectFindOne = jest.fn();
+jest.mock('../../src/models', () => ({
+	Project: {
+		findAndCountAll: (query) => mockFindAndCountAll(query),
+		findOne: (attributes) => mockProjectFindOne(attributes)
+	}
+}));
+
+const config = require('../../src/lib/config');
+
 describe('/api/v1/applications', () => {
-	afterEach(() => mockFindUnique.mockClear());
+	describe('get single application', () => {
+		afterEach(() => {
+			mockFindUnique.mockClear();
+			mockProjectFindOne.mockClear();
+		});
 
-	describe('Back Office case', () => {
-		it('given case with caseReference exists, returns 200', async () => {
-			mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
+		it('given NI case with caseReference exists, returns 200', async () => {
+			config.backOfficeIntegration.applications.getApplication.caseReferences = [];
+			mockProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 
-			const response = await request.get('/api/v1/applications/EN0110004');
+			const response = await request.get('/api/v1/applications/EN010116');
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				AnticipatedDateOfSubmission: '2023-09-01 00:00:00.0000000',
-				AnticipatedGridRefEasting: 485899,
-				AnticipatedGridRefNorthing: 414508,
-				AnticipatedSubmissionDateNonSpecific: 'Q3 2023',
+				...APPLICATION_API_V1,
+				sourceSystem: 'HORIZON'
+			});
+		});
+
+		it('given Back Office case with caseReference exists, returns 200', async () => {
+			config.backOfficeIntegration.applications.getApplication.caseReferences = ['EN010116'];
+			mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
+
+			const response = await request.get('/api/v1/applications/EN010116');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				...APPLICATION_API_V1,
+				DateOfDCOAcceptance_NonAcceptance: null,
 				ApplicantEmailAddress: 'TBC',
 				ApplicantPhoneNumber: 'TBC',
-				CaseReference: 'EN0110004',
-				ConfirmedDateOfDecision: null,
-				ConfirmedStartOfExamination: null,
-				DateOfDCOAcceptance_NonAcceptance: null,
-				DateOfDCOSubmission: null,
-				DateOfPreliminaryMeeting: null,
-				DateOfRecommendations: null,
-				DateOfRelevantRepresentationClose: null,
-				DateOfRepresentationPeriodOpen: null,
-				DateProjectWithdrawn: null,
-				DateRRepAppearOnWebsite: null,
-				DateTimeExaminationEnds: null,
-				LongLat: [-0.7028315466694124, 53.620079146110655],
-				MapZoomLevel: 6,
-				ProjectEmailAddress: 'drax.project.email@example.org',
-				ProjectLocation: 'Drax Power Station, North Yorkshire',
-				ProjectName: 'Drax Bioenergy with Carbon Capture and Storage Project',
 				PromoterFirstName: 'TBC',
 				PromoterLastName: 'TBC',
 				PromoterName: 'TBC',
-				Proposal: 'EN01 - Generating Stations',
-				Region: 'yorkshire_and_the_humber',
-				Stage: 1,
-				Stage4ExtensiontoExamCloseDate: null,
-				Stage5ExtensiontoDecisionDeadline: null,
-				Summary:
-					'Drax Power Limited proposes to install post-combustion capture technology that would capture carbon dioxide emissions from up to two of the existing biomass units at Drax Power Station. The proposal includes the construction and operation of carbon capture technology and associated equipment, and the integration of the units into the existing Common Services at Drax Power Station. The proposal includes associated development.',
 				WebAddress: 'TBC',
-				sourceSystem: 'ODT',
-				stage5ExtensionToRecommendationDeadline: null
+				sourceSystem: 'ODT'
 			});
 		});
 
@@ -66,9 +76,161 @@ describe('/api/v1/applications', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				code: 400,
-				errors: [
-					"'caseReference' must match pattern \"^[A-Za-z]{2}\\d{6,8}$\""
-				]
+				errors: ['\'caseReference\' must match pattern "^[A-Za-z]{2}\\d{6,8}$"']
+			});
+		});
+	});
+
+	describe('get all applications', () => {
+		beforeEach(() => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: APPLICATIONS_NI_FILTER_COLUMNS,
+				count: APPLICATIONS_NI_DB.length
+			});
+		});
+		it('happy path', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: APPLICATIONS_NI_DB,
+				count: APPLICATIONS_NI_DB.length
+			});
+
+			const response = await request.get('/api/v1/applications');
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				applications: APPLICATIONS_FO,
+				currentPage: 1,
+				itemsPerPage: 25,
+				totalItems: 5,
+				totalPages: 1,
+				totalItemsWithoutFilters: 5,
+				filters: APPLICATIONS_FO_FILTERS
+			});
+		});
+
+		it('with filters applied', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: [APPLICATIONS_NI_DB[2], APPLICATIONS_NI_DB[3], APPLICATIONS_NI_DB[4]],
+				count: 3
+			});
+
+			const filteredApplications = [APPLICATIONS_FO[2], APPLICATIONS_FO[3], APPLICATIONS_FO[4]];
+
+			const queryString = [
+				'stage=acceptance',
+				'stage=recommendation',
+				'region=eastern',
+				'region=north_west',
+				'sector=energy',
+				'sector=transport'
+			].join('&');
+
+			const response = await request.get(`/api/v1/applications?${queryString}`);
+
+			expect(mockFindAndCountAll).toBeCalledWith(
+				expect.objectContaining({
+					where: {
+						[Op.and]: [
+							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
+							{ Stage: { [Op.in]: [2, 5] } },
+							{
+								[Op.or]: [{ Proposal: { [Op.like]: 'EN%' } }, { Proposal: { [Op.like]: 'TR%' } }]
+							}
+						]
+					}
+				})
+			);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				applications: filteredApplications,
+				currentPage: 1,
+				itemsPerPage: 25,
+				totalItems: 3,
+				totalPages: 1,
+				totalItemsWithoutFilters: 5,
+				filters: APPLICATIONS_FO_FILTERS
+			});
+		});
+
+		it('with search term applied', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: [APPLICATIONS_NI_DB[0]],
+				count: 1
+			});
+			const filteredApplications = [APPLICATIONS_FO[0]];
+
+			const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
+
+			expect(mockFindAndCountAll).toBeCalledWith(
+				expect.objectContaining({
+					where: {
+						[Op.or]: [
+							{ ProjectName: { [Op.like]: '%London Resort%' } },
+							{ PromoterName: { [Op.like]: '%London Resort%' } }
+						]
+					}
+				})
+			);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				applications: filteredApplications,
+				currentPage: 1,
+				itemsPerPage: 25,
+				totalItems: 1,
+				totalPages: 1,
+				totalItemsWithoutFilters: 5,
+				filters: APPLICATIONS_FO_FILTERS
+			});
+		});
+
+		it('with search term and filters applied', async () => {
+			mockFindAndCountAll.mockResolvedValueOnce({
+				rows: [APPLICATIONS_NI_DB[2], APPLICATIONS_NI_DB[3]],
+				count: 2
+			});
+			const filteredApplications = [APPLICATIONS_FO[2], APPLICATIONS_FO[3]];
+
+			const queryString = [
+				'stage=acceptance',
+				'stage=recommendation',
+				'region=eastern',
+				'region=north_west',
+				'sector=energy',
+				'sector=transport',
+				'searchTerm=Nuclear'
+			].join('&');
+
+			const response = await request.get(`/api/v1/applications?${queryString}`);
+
+			expect(mockFindAndCountAll).toBeCalledWith(
+				expect.objectContaining({
+					where: {
+						[Op.and]: [
+							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
+							{ Stage: { [Op.in]: [2, 5] } },
+							{
+								[Op.or]: [{ Proposal: { [Op.like]: 'EN%' } }, { Proposal: { [Op.like]: 'TR%' } }]
+							}
+						],
+						[Op.or]: [
+							{ ProjectName: { [Op.like]: '%Nuclear%' } },
+							{ PromoterName: { [Op.like]: '%Nuclear%' } }
+						]
+					}
+				})
+			);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				applications: filteredApplications,
+				currentPage: 1,
+				itemsPerPage: 25,
+				totalItems: 2,
+				totalItemsWithoutFilters: 5,
+				totalPages: 1,
+				filters: APPLICATIONS_FO_FILTERS
 			});
 		});
 	});

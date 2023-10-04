@@ -10,12 +10,11 @@ const {
 	getRepresentationsForApplication,
 	getRepresentationById
 } = require('../../../src/services/representation.service');
-
 const { getDocumentsByDataId } = require('../../../src/repositories/document.ni.repository');
 
 const mockData = {
-	count: 1,
-	rows: [
+	totalItems: 1,
+	representations: [
 		{
 			ID: 2,
 			ProjectName: 'SPT Feb 2020',
@@ -43,7 +42,11 @@ const mockData = {
 			DoNotPublish: null,
 			Attachments: 'WS010006-000002'
 		}
-	]
+	],
+	currentPage: 1,
+	itemsPerPage: 3,
+	totalPages: 1,
+	filters: { typeFilters: [] }
 };
 
 const returnData = {
@@ -86,8 +89,7 @@ const returnData = {
 jest.mock('../../../src/lib/config.js', () => ({
 	logger: {
 		level: process.env.LOGGER_LEVEL || 'info'
-	},
-	itemsPerPage: 3
+	}
 }));
 
 jest.mock('../../../src/services/representation.service');
@@ -95,19 +97,27 @@ jest.mock('../../../src/repositories/document.ni.repository');
 
 getFilters.mockImplementation(() => Promise.resolve([]));
 
-getRepresentationsForApplication.mockImplementation((applicationId) => {
+getRepresentationsForApplication.mockImplementation(({ applicationId }) => {
 	if (applicationId === 'EN010009') {
 		return Promise.resolve(mockData);
 	}
 	if (applicationId === 'EN000000') {
-		return Promise.resolve({ count: 0, rows: [] });
+		return Promise.resolve({
+			count: 0,
+			representations: [],
+			currentPage: 1,
+			itemsPerPage: 3,
+			totalPages: 1,
+			totalItems: 0,
+			filters: { typeFilters: [] }
+		});
 	}
 	return Promise.resolve(null);
 });
 
 getRepresentationById.mockImplementation((id) => {
 	if (id === 2) {
-		return Promise.resolve({ dataValues: mockData.rows[0] });
+		return Promise.resolve(mockData.representations[0]);
 	}
 	return Promise.resolve(null);
 });
@@ -176,7 +186,7 @@ describe('getRepresentationById', () => {
 		await getRepresentation(req, res);
 		const data = res._getData();
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data.dataValues).toEqual({ ...returnData.representations[0], attachments: [{}] });
+		expect(data).toEqual({ ...returnData.representations[0], attachments: [{}] });
 	});
 
 	it('should return representation not found', async () => {

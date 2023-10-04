@@ -1,6 +1,6 @@
 const { encrypt, decrypt } = require('../lib/crypto');
 const { sendSubscriptionCreateNotification } = require('../lib/notify');
-const { getApplication } = require('../services/application.v2.service');
+const { getApplication } = require('../services/application.service');
 const ApiError = require('../error/apiError');
 const moment = require('moment');
 const {
@@ -13,8 +13,7 @@ const createSubscription = async (req, res) => {
 	const { email, subscriptionTypes } = req.body;
 	const { caseReference } = req.params;
 
-	const project = await getApplication(caseReference);
-	if (!project) throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
+	const project = await getApplicationOrThrow(caseReference);
 
 	const subscriptionDetails = encrypt(
 		JSON.stringify({
@@ -28,7 +27,7 @@ const createSubscription = async (req, res) => {
 		email: email,
 		subscriptionDetails: subscriptionDetails,
 		project: {
-			email: project.projectEmailAddress,
+			email: project.projectEmailAddress || 'NIEnquiries@planninginspectorate.gov.uk',
 			name: project.projectName,
 			caseReference: project.caseReference
 		}
@@ -41,9 +40,10 @@ const createSubscription = async (req, res) => {
 
 const confirmSubscription = async (req, res) => {
 	const encryptedSubscriptionDetails = req.body.subscriptionDetails;
+
 	const { caseReference } = req.params;
 
-	await validateCaseReference(caseReference);
+	await getApplicationOrThrow(caseReference);
 
 	const { email, subscriptionTypes, date } = decryptSubscriptionDetails(
 		encryptedSubscriptionDetails
@@ -60,7 +60,7 @@ const deleteSubscription = async (req, res) => {
 	const { caseReference } = req.params;
 	const { email } = req.query;
 
-	await validateCaseReference(caseReference);
+	await getApplicationOrThrow(caseReference);
 
 	const decryptedEmail = decrypt(email);
 
@@ -69,9 +69,11 @@ const deleteSubscription = async (req, res) => {
 	res.status(204).send();
 };
 
-const validateCaseReference = async (caseReference) => {
-	const project = await getApplication(caseReference);
-	if (!project) throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
+const getApplicationOrThrow = async (caseReference) => {
+	const application = await getApplication(caseReference);
+	if (!application)
+		throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
+	return application;
 };
 
 const validateSubscriptionDate = (subscriptionCreatedAt) => {

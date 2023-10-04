@@ -24,7 +24,7 @@
 	{% set pastEventsHtml = events.past.noEventsHtml %}
 {% endif %}
 
-{% set projectName = title %}
+{% set preTitle = title %}
 {% set title = subtitle %}
 {% set activeId = 'project-examination-timetable' %}
 
@@ -48,7 +48,7 @@
 	{% if examination.closeDate %}
 		<p>{{ examination.closeDate }}</p>
 	{% endif %}
-	
+
 	{% if hasOpenTimetables and featureFlag.allowHaveYourSay == true %}
 		<a class="govuk-button" href='{{ baseUrl }}/{{ caseRef }}/examination/have-your-say-during-examination'> Have your
 			say </a>
