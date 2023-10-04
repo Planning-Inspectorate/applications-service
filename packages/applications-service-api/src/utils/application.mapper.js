@@ -1,4 +1,4 @@
-const { startCase, toLower, snakeCase, pick, omit } = require('lodash');
+const { pick, omit } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
 
 const NI_MAPPING = {
@@ -20,41 +20,48 @@ const NI_MAPPING = {
 		{ ni: 6, api: 'decision', label: 'Decision' },
 		{ ni: 7, api: 'post_decision', label: 'Post-decision' },
 		{ ni: 8, api: 'withdrawn', label: 'Withdrawn' }
+	],
+	region: [
+		{ ni: 'East Midlands', api: 'east_midlands', label: 'East Midlands' },
+		{ ni: 'Eastern', api: 'eastern', label: 'Eastern' },
+		{ ni: 'London', api: 'london', label: 'London' },
+		{ ni: 'North East', api: 'north_east', label: 'North East' },
+		{ ni: 'North West', api: 'north_west', label: 'North West' },
+		{ ni: 'South East', api: 'south_east', label: 'South East' },
+		{ ni: 'South West', api: 'south_west', label: 'South West' },
+		{ ni: 'Wales', api: 'wales', label: 'Wales' },
+		{ ni: 'West Midlands', api: 'west_midlands', label: 'West Midlands' },
+		{
+			ni: 'Yorkshire and the Humber',
+			api: 'yorkshire_and_the_humber',
+			label: 'Yorkshire and the Humber'
+		}
 	]
 };
 
 const mapColumnLabelToApi = (name, value) => {
 	switch (name) {
 		case 'stage':
-			return NI_MAPPING[name].find((field) => field.ni === Number(value))?.label;
-		case 'sector':
-			return NI_MAPPING[name].find((field) => field.ni === value)?.label;
-		case 'region':
-			return value;
+			return NI_MAPPING[name].find((mapping) => mapping.ni === Number(value))?.label;
+		default:
+			return NI_MAPPING[name].find((mapping) => mapping.ni === value)?.label;
 	}
 };
 
 const mapColumnValueToApi = (name, value) => {
 	switch (name) {
 		case 'stage':
-			return NI_MAPPING[name].find((field) => field.ni === Number(value))?.api;
-		case 'sector':
-			return NI_MAPPING[name].find((field) => field.ni === value)?.api;
-		case 'region':
-			return snakeCase(value);
+			return NI_MAPPING[name].find((mapping) => mapping.ni === Number(value))?.api;
+		default:
+			return NI_MAPPING[name].find((mapping) => mapping.ni === value)?.api;
 	}
 };
 
-const mapFilterValueToNI = (name, value) => {
-	switch (name) {
-		case 'stage':
-		case 'sector':
-			return NI_MAPPING[name].find((field) => field.api === value)?.ni;
-		default:
-			// from snake case to title case: south_west -> South West
-			return startCase(toLower(value));
-	}
-};
+const mapFilterValueToNI = (name, value) =>
+	NI_MAPPING[name].find((mapping) => mapping.api === value)?.ni;
+
+const isValidNIColumnValue = (name, value) =>
+	NI_MAPPING[name]?.some((mapping) => mapping.ni === value);
 
 /**
  * Build Applications API filters from list of Applications from NI database
@@ -68,9 +75,12 @@ const buildApiFiltersFromNIApplications = (applications) => {
 			const regionValue = application.Region;
 			const sectorValue = application.Proposal?.substring(0, 2);
 
-			if (stageValue) memo['stage'][stageValue] = memo['stage'][stageValue] + 1 || 1;
-			if (regionValue) memo['region'][regionValue] = memo['region'][regionValue] + 1 || 1;
-			if (sectorValue) memo['sector'][sectorValue] = memo['sector'][sectorValue] + 1 || 1;
+			if (isValidNIColumnValue('stage', stageValue))
+				memo.stage[stageValue] = memo.stage[stageValue] + 1 || 1;
+			if (isValidNIColumnValue('region', regionValue))
+				memo.region[regionValue] = memo.region[regionValue] + 1 || 1;
+			if (isValidNIColumnValue('sector', sectorValue))
+				memo.sector[sectorValue] = memo.sector[sectorValue] + 1 || 1;
 
 			return memo;
 		},
@@ -82,17 +92,15 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	);
 
 	const filters = [];
-	if (mappedFilters) {
-		for (const [field, filterValues] of Object.entries(mappedFilters)) {
-			for (const [value, count] of Object.entries(filterValues)) {
-				const filter = {
-					name: field,
-					value: mapColumnValueToApi(field, value),
-					label: mapColumnLabelToApi(field, value),
-					count: count
-				};
-				filters.push(filter);
-			}
+	for (const [field, filterValues] of Object.entries(mappedFilters)) {
+		for (const [value, count] of Object.entries(filterValues)) {
+			const filter = {
+				name: field,
+				value: mapColumnValueToApi(field, value),
+				label: mapColumnLabelToApi(field, value),
+				count: count
+			};
+			filters.push(filter);
 		}
 	}
 

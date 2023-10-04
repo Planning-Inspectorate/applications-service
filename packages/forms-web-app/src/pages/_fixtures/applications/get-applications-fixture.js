@@ -115,6 +115,7 @@ const getApplicationsFixture = {
 			}
 		],
 		totalItems: 21,
+		totalItemsWithoutFilters: 21,
 		currentPage: 1,
 		itemsPerPage: 3,
 		totalPages: 7,
