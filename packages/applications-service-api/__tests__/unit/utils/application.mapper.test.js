@@ -20,6 +20,48 @@ describe('application.mapper', () => {
 
 			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
 		});
+
+		it('excludes undefined values from filter counts', () => {
+			const result = buildApiFiltersFromNIApplications([
+				{ Stage: 1, Region: 'South East', Proposal: 'BC08 - Leisure' },
+				{ Stage: null, Region: 'North East', Proposal: 'EN01 - Generating Stations' },
+				{ Stage: 2, Region: null, Proposal: 'BC08 - Leisure' },
+				{ Stage: 2, Region: 'South East', Proposal: null }
+			]);
+
+			expect(result).toEqual([
+				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
+				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
+				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
+				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					value: 'business_and_commercial',
+					count: 2
+				},
+				{ name: 'sector', label: 'Energy', value: 'energy', count: 1 }
+			]);
+		});
+
+		it('excludes invalid values from filter counts', () => {
+			const result = buildApiFiltersFromNIApplications([
+				{ Stage: 1, Region: 'NOT A REGION', Proposal: 'BC08 - Leisure' },
+				{ Stage: null, Region: 'North East', Proposal: 'NOT A PROPOSAL' },
+				{ Stage: 200, Region: null, Proposal: 'BC08 - Leisure' }
+			]);
+
+			expect(result).toEqual([
+				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
+				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					value: 'business_and_commercial',
+					count: 2
+				}
+			]);
+		});
 	});
 
 	describe('mapApplicationFiltersToNI', () => {

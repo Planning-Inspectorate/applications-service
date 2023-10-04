@@ -49,6 +49,8 @@ describe('project-search/controller', () => {
 						projectSearch: '/project-search',
 						registerOfApplications: '/register-of-applications'
 					},
+					applicationsDownloadURL: '/api/applications-download',
+					totalApplicationsWithoutFilters: 21,
 					applications: [
 						{
 							applicant: 'EDF',
