@@ -68,7 +68,7 @@ describe('User registers as themselves to have their say against the examination
 			'Testing.pdf',
 			'This is a test comment',
 			'Yes',
-			'Testing.pdf'
+			'<ul><li>Mycomment</li><li>dummy (1).pdf</li<</ul>'
 		]);
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.findAndSelectRadioOption('no');
