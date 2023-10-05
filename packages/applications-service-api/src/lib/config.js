@@ -30,14 +30,17 @@ module.exports = {
 		},
 		submissions: {
 			postSubmission: {
-				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES)
+				caseReferences: parseCSV(
+					process.env.BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES
+				)
 			}
 		},
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
 			topics: {
-				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription'
+				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription',
+				DEADLINE_SUBMISSION: 'deadline-submission-topic'
 			}
 		}
 	},
