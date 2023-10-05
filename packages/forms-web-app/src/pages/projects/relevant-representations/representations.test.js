@@ -8,7 +8,7 @@ const { hideAllExaminationDocumentsLink } = featureHideLink;
 jest.mock('../../../lib/application-api-wrapper');
 jest.mock('../../../services/representation.service');
 
-describe('controllers/projects/representations', () => {
+describe('pages/projects/relevant-representations/representations', () => {
 	let req;
 	let res;
 
@@ -25,7 +25,14 @@ describe('controllers/projects/representations', () => {
 				page: '1'
 			}
 		};
-		res = { render: jest.fn() };
+		res = {
+			locals: {
+				applicationData: {
+					projectName: 'mock project name'
+				}
+			},
+			render: jest.fn()
+		};
 	});
 
 	const representations = [
@@ -60,17 +67,6 @@ describe('controllers/projects/representations', () => {
 		}
 	];
 
-	const paginationData = {
-		totalItems: 1,
-		itemsPerPage: 20,
-		totalPages: 1,
-		currentPage: 1,
-		fromRange: 1,
-		toRange: 1
-	};
-
-	const pageOptions = [1];
-
 	it('should getRepresentations and return the correct template', async () => {
 		getProjectData.mockImplementation((applicationCaseRef) =>
 			Promise.resolve({
@@ -97,17 +93,60 @@ describe('controllers/projects/representations', () => {
 		expect(res.render).toHaveBeenCalledWith(
 			'projects/relevant-representations/representations.njk',
 			{
-				projectName: 'ABC',
-				caseRef,
-				representations,
-				paginationData,
-				pageOptions,
-				searchTerm: undefined,
-				showReps: false,
-				queryUrl: '',
-				commentsTypeFilterItems: [],
 				allowProjectInformation: true,
-				hideAllExaminationDocumentsLink
+				caseRef: 'EN010009',
+				commentsTypeFilterItems: [],
+				hideAllExaminationDocumentsLink: true,
+				pageOptions: [1],
+				paginationData: {
+					currentPage: 1,
+					fromRange: 1,
+					itemsPerPage: 20,
+					toRange: 1,
+					totalItems: 1,
+					totalPages: 1
+				},
+				paginationQueryString: '?page=:page',
+				projectName: 'mock project name',
+				querySearchOrTypePresent: false,
+				representations: [
+					{
+						AgentOrgOnBhalfContactName: null,
+						Attachments: 'WS010006-000002',
+						CaseReference: 'EN010009',
+						CompulsoryAcquisitionHearing: null,
+						DataID: null,
+						DateRRepAppearOnWebsite: '2020-01-01',
+						DateRrepReceived: '19 February 2020',
+						DoNotPublish: null,
+						ID: 2,
+						IndvdlOnBhalfName: null,
+						InterestInLand: null,
+						IssuesSpecificHearings: null,
+						OpenFloorHearings: null,
+						OrgOnBhalfName: null,
+						PersonalName: 'Test (Test)',
+						PreliminaryMeeting: null,
+						ProjectName: 'SPT Feb 2020',
+						RelevantOrNot: null,
+						RepFrom: 'Members of the public/businesses',
+						RepresentationOriginal: null,
+						RepresentationRedacted: 'Some comments',
+						Representative: null,
+						SpecifyOther: null,
+						SubmitFurtherWrittenReps: null,
+						UniqueReference: 'WS010006-34601',
+						WebReference: null,
+						attachments: []
+					}
+				],
+				resultsPerPage: {
+					fifty: { active: false, link: '?itemsPerPage=50', size: 50 },
+					oneHundred: { active: false, link: '?itemsPerPage=100', size: 100 },
+					twentyFive: { active: true, link: '?itemsPerPage=25', size: 25 }
+				},
+				searchTerm: undefined,
+				showReps: false
 			}
 		);
 	});

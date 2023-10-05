@@ -27,6 +27,6 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith(interestedPartyRouter);
 		expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
 		expect(use).toHaveBeenCalledWith('/api', apiRouter);
-		expect(use.mock.calls.length).toBe(37);
+		expect(use.mock.calls.length).toBe(38);
 	});
 });

@@ -63,8 +63,7 @@ module.exports = {
 		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
 	},
 	featureHideLink: {
-		hideAllExaminationDocumentsLink: true,
-		hideDecisionMakingProcessGuideLink: true
+		hideAllExaminationDocumentsLink: true
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
