@@ -29,6 +29,11 @@ Feature: Relevant Representations (Registration comments) page
             | 18 February 2021 | Members of the public/businesses - 2 |
             | 19 February 2021 | Members of the public/businesses - 1 |
             | 19 February 2021 | Members of the public/businesses - 100 |
+            | 19 February 2021 | Members of the public/businesses - 101 |
+            | 19 February 2021 | Members of the public/businesses - 102 |
+            | 19 February 2021 | Members of the public/businesses - 103 |
+            | 19 February 2021 | Members of the public/businesses - 104 |
+            | 19 February 2021 | Members of the public/businesses - 105 |
 
     Scenario: No Registration comments available for project
         Given I navigate to "Cleve Hill Solar Park" project Overview page
@@ -49,22 +54,22 @@ Feature: Relevant Representations (Registration comments) page
             | 2                 |
             | 3                 |
             | ...               |
-            | 11                |
+            | 9                |
             | Next set of pages |
-        Then I verify text "Showing 1 to 20 of 204 results" is present on the page
-        Then I verify that only "20" results present on each page
-        When I navigate to page "11" of the results
+        Then I verify text "Showing 1 to 25 of 204 results" is present on the page
+        Then I verify that only "25" results present on each page
+        When I navigate to page "9" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
             | 1                     |
             | ...                   |
-            | 9                     |
-            | 10                    |
-            | 11                    |
+            | 7                     |
+            | 8                    |
+            | 9                    |
         Then I verify text "Showing 201 to 204 of 204 results" is present on the page
         Then I verify that only "4" results present on each page
-
+#
     Scenario: When current page within first three, show only those page links and When current page within last three, show only those page links
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
         When I click on "Registration comments" link
@@ -77,24 +82,24 @@ Feature: Relevant Representations (Registration comments) page
             | 3                     |
             | 4                     |
             | ...                   |
-            | 11                    |
+            | 9                    |
             | Next set of pages     |
-        Then I verify text "Showing 41 to 60 of 204 results" is present on the page
-        Then I verify that only "20" results present on each page
-        When I navigate to page "11" of the results
+        Then I verify text "Showing 51 to 75 of 204 results" is present on the page
+        Then I verify that only "25" results present on each page
         When I navigate to page "9" of the results
+        When I navigate to page "7" of the results
         Then I verify below pagination is present on the page
             | Data                  |
             | Previous set of pages |
             | 1                     |
             | ...                   |
-            | 8                     |
-            | 9                     |
-            | 10                    |
-            | 11                    |
+            | 6                     |
+            | 7                     |
+            | 8                    |
+            | 9                    |
             | Next set of pages     |
-        Then I verify text "Showing 161 to 180 of 204 results" is present on the page
-        Then I verify that only "20" results present on each page
+        Then I verify text "Showing 151 to 175 of 204 results" is present on the page
+        Then I verify that only "25" results present on each page
 
     Scenario: When current page between first and last, show one page link either side, Always show first and last page links
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
@@ -111,10 +116,10 @@ Feature: Relevant Representations (Registration comments) page
             | 5                     |
             | 6                     |
             | ...                   |
-            | 11                    |
+            | 9                    |
             | Next set of pages     |
-        Then I verify text "Showing 81 to 100 of 204 results" is present on the page
-        Then I verify that only "20" results present on each page
+        Then I verify text "Showing 101 to 125 of 204 results" is present on the page
+        Then I verify that only "25" results present on each page
 
     #ASB-289
     #Feature: Search registration comments
@@ -186,7 +191,7 @@ Feature: Relevant Representations (Registration comments) page
             | Data                                                                                                                                                                                                                                                                                                                                    |
 						| Representation by Test (Test) Some comment which exceeds the character limit. Clearly there is much to be said which must not be left unsaid. Even if it turns out I'm the only one to have said, no-one will be able to exclaim "You should have said!" 19 February 2020Members of the public/businesses                               |
         And I click on back link
-        Then I verify text "Showing 1 to 20 of 48 results" is present on the page
+        Then I verify text "Showing 1 to 25 of 48 results" is present on the page
 
     Scenario: navigate back to registration comments page after applying filters
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page

@@ -10,7 +10,7 @@ module.exports = (pageName) => {
 				.then((text) => {
 					expect(text).to.contain('Who are you registering for?');
 				});
-			cy.url().should('include', '/register/who-registering-for');
+			cy.url().should('include', 'who-registering-for');
 			break;
 		case 'what is your full name? organisation':
 			cy.title().should(
