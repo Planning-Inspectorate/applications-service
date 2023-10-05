@@ -1,19 +1,58 @@
 jest.mock('../../../src/lib/eventClient');
+jest.mock('../../../src/utils/date-utils');
 
 const { sendMessages } = require('../../../src/lib/eventClient');
+const { getDate } = require('../../../src/utils/date-utils');
 const {
 	publishCreateNSIPSubscription,
-	publishDeleteNSIPSubscription
+	publishDeleteNSIPSubscription,
+	publishDeadlineSubmission
 } = require('../../../src/services/backoffice.publish.service');
+const { SUBMISSION_DATA } = require('../../__data__/submission');
+const { REQUEST_FILE_DATA } = require('../../__data__/file');
 
 describe('back office publish service', () => {
 	afterEach(() => jest.resetAllMocks());
+
+	describe('publishDeadlineSubmission', () => {
+		it('invokes event client with correct message', async () => {
+			const mockGuid = 'd3ae5a1c-6b97-4708-a61f-217670ebaba1';
+
+			await publishDeadlineSubmission(
+				{
+					...SUBMISSION_DATA,
+					file: REQUEST_FILE_DATA
+				},
+				mockGuid
+			);
+			expect(sendMessages).toBeCalledWith('deadline-submission-topic', [
+				{
+					body: {
+						caseReference: 'EN010120',
+						name: 'Joe Bloggs',
+						email: 'joe@example.org',
+						interestedParty: true,
+						interestedPartyReference: '999999999',
+						deadline: 'Deadline 1',
+						submissionType: 'Some Type',
+						sensitiveData: undefined,
+						lateSubmission: undefined,
+						submissionId: 123,
+						blobGuid: mockGuid,
+						documentName: 'Test.png'
+					},
+					contentType: 'application/json',
+					applicationProperties: {}
+				}
+			]);
+		});
+	});
 
 	describe('publishCreateNSIPSubscription', () => {
 		const mockTime = new Date('2023-07-06T11:06:00.000Z');
 
 		it('invokes event client with correct message', async () => {
-			jest.spyOn(Date, 'now').mockImplementation(() => mockTime.getTime());
+			getDate.mockReturnValueOnce(mockTime);
 
 			await publishCreateNSIPSubscription('BC0110001', 'foo@example.org', [
 				'applicationDecided',
@@ -49,7 +88,7 @@ describe('back office publish service', () => {
 					body: {
 						nsipSubscription: {
 							caseReference: 'BC0110001',
-							emailAddress: 'foo@example.org',
+							emailAddress: 'foo@example.org'
 						}
 					},
 					contentType: 'application/json',
