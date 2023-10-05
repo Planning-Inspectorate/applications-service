@@ -1,4 +1,4 @@
-{% extends "layouts/layout.njk" %}
+{% extends "layouts/default.njk" %}
 
 {% set templateID = 'main' %}
 
@@ -12,19 +12,22 @@
 	}), initiateScriptsConfig) %}
 {% endblock %}
 
-{% block pageTitle %}
-	The process for nationally significant infrastructure projects (NSIPs)
-{% endblock %}
-
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+        {{ pageHeading }}
+      </h1>
 
-			<h1 class="govuk-heading-xl">The process for nationally significant infrastructure projects (NSIPs)</h1>
-			<p class="govuk-body">Nationally significant infrastructure projects are submitted to the planning inspectorate
-				who examines the proposal.</p>
-			<p class="govuk-body">Anyone can get involved:
+      <p class="govuk-body">
+        Nationally significant infrastructure projects are submitted to the planning inspectorate
+				who examines the proposal.
+      </p>
+
+			<p class="govuk-body">
+        Anyone can get involved:
 			</p>
+
 			<ul class="govuk-list govuk-list--bullet">
 				<li>developers</li>
 				<li>members of the public</li>
@@ -32,9 +35,12 @@
 				<li>charities</li>
 				<li>local authorities</li>
 			</ul>
-			<p class="govuk-body">A developer submits an application for a development consent order to the planning
+
+			<p class="govuk-body">
+        A developer submits an application for a development consent order to the planning
 				inspectorate. These can be developments like:
 			</p>
+
 			<ul class="govuk-list govuk-list--bullet">
 				<li>offshore wind farms</li>
 				<li>power stations and electric lines</li>
@@ -42,28 +48,38 @@
 				<li>railways</li>
 				<li>gas pipelines</li>
 			</ul>
-			<p>The planning inspectorate is a government agency. Independent inspectors make a recommendation to the relevant
+
+			<p class="govuk-body">
+        The planning inspectorate is a government agency. Independent inspectors make a recommendation to the relevant
 				Secretary of State about if permission for a proposed development should be granted. The relevant Secretary of
 				State makes the final decision.
 			</p>
-			<p class="govuk-body">There are several stages in the process for considering whether a national infrastructure
+
+			<p class="govuk-body">
+        There are several stages in the process for considering whether a national infrastructure
 				project should receive consent. The whole process can take around 18 months.
 			</p>
 
-			<h2 class="govuk-heading-m">Guide for people or organisations who want to have their say</h2>
+			<h2 class="govuk-heading-m">
+        Guide for people or organisations who want to have their say
+      </h2>
 
-			<p class="govuk-body">You can get involved at the pre-application stage by contacting the developer before they
+			<p class="govuk-body">
+        You can get involved at the pre-application stage by contacting the developer before they
 				submit their application to the planning inspectorate.
 			</p>
-			<p class="govuk-body">If you want to register to have your say about a national infrastructure project, you can
+
+			<p class="govuk-body">
+        If you want to register to have your say about a national infrastructure project, you can
 				register during the pre-examination stage.
 			</p>
-			<p>There is a
-				<a class="govuk-link" href="../having-your-say-guide/">guide</a>
+
+			<p>
+        There is a <a class="govuk-link" href="../having-your-say-guide/">guide</a>
 				with information for people or organisations who want to have their say about a national infrastructure project.
 			</p>
 
-			{% include "../includes/dco-step-by-step-navigation.njk" %}
+			{% include "../../views/includes/dco-step-by-step-navigation.njk" %}
 		</div>
 	</div>
 {% endblock %}

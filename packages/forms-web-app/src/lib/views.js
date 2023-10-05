@@ -92,7 +92,6 @@ const VIEW = {
 		AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision'
 	},
 	DCO_PROCESS_GUIDE: {
-		DECISION_MAKINH_PROCESS_GUIDE: 'decision-making-process-guide/decision-making-process-guide',
 		PRE_APPLICATION: 'decision-making-process-guide/pre-application',
 		EXAMINATION_OF_THE_APPLICATION: 'decision-making-process-guide/examination-of-the-application',
 		REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
