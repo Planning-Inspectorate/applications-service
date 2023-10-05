@@ -9,34 +9,25 @@ const {
 	featureFlag: { allowProjectInformation }
 } = require('../../../config');
 const { isDateAfterTodaysDate } = require('./_utils/is-date-after-todays-date');
+const { getRelevantRepresentationsQuery } = require('./_utils/get-relevant-representations-query');
+const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
+const { buildPaginationQueryString } = require('../../_utils/build-pagination-query-string');
+const { isQuerySearchOrTypePresent } = require('./_utils/is-query-search-or-type-present');
 
 const representationsView = 'projects/relevant-representations/representations.njk';
 const representationView = 'projects/relevant-representations/representation.njk';
 
 exports.getRepresentations = async (req, res) => {
-	const { searchTerm, type } = req.query;
-	const applicationResponse = await getAppData(req.params.case_ref);
+	const { params, query } = req;
+	const { case_ref } = params;
+	const { searchTerm, type } = query;
+	const { locals } = res;
+	const { applicationData } = locals;
 
-	if (applicationResponse.resp_code === 404) {
-		return res.status(404).render('error/not-found');
-	}
+	const representationsResponse = await searchRepresentations(
+		getRelevantRepresentationsQuery(params, query)
+	);
 
-	const commentsTypeFilterItems = [];
-
-	const params = {
-		applicationId: req.params.case_ref,
-		page: '1',
-		...req.query
-	};
-	let queryUrl = '';
-	if (params.searchTerm) {
-		queryUrl = `&searchTerm=${params.searchTerm}`;
-	}
-	if (params.type) {
-		const typeQueryParams = params.type instanceof Array ? [...params.type] : [params.type];
-		queryUrl = `${queryUrl}&type=${typeQueryParams.join('&type=')}`;
-	}
-	const representationsResponse = await searchRepresentations(params);
 	if (representationsResponse.resp_code === 404) {
 		return res.status(404).render('error/not-found');
 	}
@@ -46,6 +37,8 @@ exports.getRepresentations = async (req, res) => {
 	const paginationData = getPaginationData(respData);
 	const pageOptions = calculatePageOptions(paginationData);
 	const { typeFilters } = filters;
+
+	const commentsTypeFilterItems = [];
 
 	typeFilters.forEach((typeFilter) => {
 		const typeFilterName = titleCase(typeFilter.name);
@@ -62,17 +55,19 @@ exports.getRepresentations = async (req, res) => {
 	});
 
 	res.render(representationsView, {
-		projectName: applicationResponse.data.ProjectName,
-		caseRef: applicationResponse.data.CaseReference,
+		projectName: applicationData.projectName,
+		caseRef: case_ref,
 		allowProjectInformation,
 		hideAllExaminationDocumentsLink,
 		representations,
 		paginationData,
 		pageOptions,
 		searchTerm,
-		queryUrl,
 		commentsTypeFilterItems,
-		showReps: isDateAfterTodaysDate(applicationResponse.data?.DateRRepAppearOnWebsite)
+		showReps: isDateAfterTodaysDate(applicationData.DateRRepAppearOnWebsite),
+		resultsPerPage: documentsPerPage(query),
+		paginationQueryString: buildPaginationQueryString(query),
+		querySearchOrTypePresent: isQuerySearchOrTypePresent(query)
 	});
 };
 

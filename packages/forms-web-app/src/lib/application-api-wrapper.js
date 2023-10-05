@@ -104,14 +104,8 @@ exports.getDocumentByType = async (case_ref, type) => {
 	return handler('getDocumentByType', `/api/v3/documents/${case_ref}?type=${type}`);
 };
 
-exports.searchRepresentations = async (params) => {
-	const queryString = Object.keys(params)
-		.map((key) => `${key}=${params[key]}`)
-		.join('&');
-	const representationServiceApiUrl = `/api/v1/representations?${queryString}`;
-	const method = 'GET';
-	return handler('searchRepresentations', representationServiceApiUrl, method);
-};
+exports.searchRepresentations = async (query = '') =>
+	handler('searchRepresentations', `/api/v1/representations${query}`);
 
 exports.searchDocumentListV2 = async (params) => {
 	const queryString = queryStringBuilder(params, [
