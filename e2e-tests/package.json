@@ -9,8 +9,8 @@
 		"postinstall": "patch-package",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
-		"test:open": "cypress open",
-		":": "npx cypress-tags run -b chrome --env TAGS=\"not (@wip or @ignore)\"",
+		"test:open": "demoDelay=1000 cypress open",
+		"test:e2e": "npx cypress-tags run -b chrome --env TAGS=\"not (@wip or @ignore)\"",
 		"test:e2e:demo": "cypress-tags run --headed -b chrome --env TAGS=\"not (@wip or @ignore)\",demoDelay=1000",
 		"test:e2e:postprocess": "node ./reporter.js",
 		"test:e2e:smoke": "cypress-tags -b chrome run --env TAGS=\"not (@wip or @ignore) and @smoketest\" --config video=false,baseUrl=$BASEURL"

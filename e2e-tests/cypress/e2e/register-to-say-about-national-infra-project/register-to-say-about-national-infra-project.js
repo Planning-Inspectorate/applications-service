@@ -15,13 +15,13 @@ Given('I have viewed the overview page for a project', () => {
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 });
 
-When('I select the "How to register link"', () => {
+And('I click on show all link', () => {
 	cy.get(
-		'button.ui-step-nav__button.ui-step-nav__button--controls.js-step-controls-button'
+		'*[class^="app-step-nav__button-text app-step-nav__button-text--all js-step-controls-button-text"]'
 	).click();
-	cy.clickLinkTonavigateToPage(
-		'registering to have your say about a national infrastructure project'
-	);
+});
+When('I select the "How to register link"', () => {
+	cy.clickOnHref('/having-your-say-guide/registering-have-your-say');
 });
 
 Then(

@@ -1,16 +1,27 @@
 const helmet = require('helmet');
 const crypto = require('node:crypto');
 
-const ga = 'https://www.google-analytics.com';
-const gar = 'https://region1.google-analytics.com';
-const gas = 'https://ssl.google-analytics.com';
-const gtm = 'https://www.googletagmanager.com';
+const scriptSrc = ['https://*.googletagmanager.com'];
 
-const scriptSrc = [ga, gtm, gas];
+const imgSrc = [
+	'https://*.google-analytics.com',
+	'https://*.analytics.google.com',
+	'https://*.googletagmanager.com',
+	'https://*.g.doubleclick.net',
+	'https://*.google.com',
+	'https://*.google.co.uk',
+	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/'
+];
 
-const connectSrc = [gar, 'https://api.os.uk'];
-
-const imgSrc = ['https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/'];
+const connectSrc = [
+	'https://*.google-analytics.com',
+	'https://*.analytics.google.com',
+	'https://*.googletagmanager.com',
+	'https://*.g.doubleclick.net',
+	'https://*.google.com',
+	'https://*.google.co.uk',
+	'https://api.os.uk'
+];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
 
@@ -26,8 +37,8 @@ function configureCSP(app) {
 			contentSecurityPolicy: {
 				directives: {
 					'script-src': ["'self'", "'unsafe-eval'", ...scriptSrc, addCSPNonce],
-					'connect-src': ["'self'", ...connectSrc],
-					'img-src': ["'self'", ...imgSrc, 'data:']
+					'img-src': ["'self'", ...imgSrc, 'data:'],
+					'connect-src': ["'self'", ...connectSrc]
 				}
 			}
 		})
