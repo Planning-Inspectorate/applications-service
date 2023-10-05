@@ -9,7 +9,10 @@
 	},
 	"dependencies": {
 		"axios": "^1.4.0",
-		"lodash.pick": "^4.4.0"
+		"express": "4.18.2",
+		"lodash.pick": "^4.4.0",
+		"multi-semantic-release": "^2.13.0",
+		"sequelize": "6.33.0"
 	},
 	"devDependencies": {
 		"azure-functions-core-tools": "^4.0.5390",
