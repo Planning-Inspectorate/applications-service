@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"engines": {
-		"node": ">=16.14.0"
+		"node": ">=18.18.0"
 	},
 	"name": "applications-service",
 	"description": "Application - these are utility scripts for the whole repo",
