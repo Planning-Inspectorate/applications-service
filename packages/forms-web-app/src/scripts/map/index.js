@@ -14,6 +14,7 @@ import Icon from 'ol/style/Icon';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { getMapWMTS } from './get-map-wmts';
+import { getControls } from './get-controls';
 
 function map() {
 	this.initiate = async (accessToken, target, center, zoom = 0) => {
@@ -63,6 +64,7 @@ function map() {
 		const centerEpsg27700 = transform(center, 'EPSG:4326', 'EPSG:27700');
 
 		const map = new Map({
+			controls: getControls(),
 			target,
 			layers: [tileLayer],
 			view: new View({
