@@ -78,6 +78,7 @@ const getApplicationOrThrow = async (caseReference) => {
 
 const validateSubscriptionDate = (subscriptionCreatedAt) => {
 	const expiryTime = moment(subscriptionCreatedAt).add(48, 'hours');
+	console.log({ expiryTime, now: moment() });
 	if (moment().isAfter(expiryTime)) throw ApiError.badRequest('Subscription details have expired');
 };
 
