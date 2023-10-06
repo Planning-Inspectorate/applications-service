@@ -60,6 +60,9 @@ module.exports = {
 		projectMigrationCaseReferences: splitStringToArray(
 			process.env.PROJECT_MIGRATION_CASE_REFERENCES
 		),
+		backOfficeIntegrationGetTimetableCaseReferences: splitStringToArray(
+			process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES
+		),
 		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
 	},
 	featureHideLink: {
