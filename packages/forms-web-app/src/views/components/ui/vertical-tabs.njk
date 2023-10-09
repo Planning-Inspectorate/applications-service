@@ -20,15 +20,9 @@
                 </strong>
               </span>
             {% else %}
-              {% set target = "_self" %}
-
-              {% if tab.target %}
-                {% set target = tab.target %}
-              {% endif %}
               <a
                 class="ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link"
                 href="{{ tab.url }}"
-                target="{{ target }}"
               >
                 {{ tab.name }}
               </a>

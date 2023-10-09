@@ -369,13 +369,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -386,13 +382,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -435,15 +427,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -454,13 +440,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -1432,13 +1414,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -1449,13 +1427,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -1498,15 +1472,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -1517,13 +1485,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -2495,13 +2459,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -2512,13 +2472,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -2561,15 +2517,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -2580,13 +2530,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -3558,13 +3504,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -3575,13 +3517,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -3624,15 +3562,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -3643,13 +3575,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -4625,13 +4553,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -4642,13 +4566,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -4691,15 +4611,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -4710,13 +4624,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -5692,13 +5602,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -5709,13 +5615,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -5758,15 +5660,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -5777,13 +5673,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -6755,13 +6647,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/register/register-have-your-say\\"
-                target=\\"_self\\"
               >
                 Register to have your say
               </a>
@@ -6772,13 +6660,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -6821,15 +6705,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -6840,13 +6718,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
@@ -7818,13 +7692,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/projects/EN010085/representations\\"
-                target=\\"_self\\"
               >
                 Relevant representations (Registration comments)
               </a>
@@ -7867,15 +7737,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
-                
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/decision-making-process-guide\\"
-                target=\\"_blank\\"
               >
                 The process for Nationally Significant Infrastructure Projects (NSIPs)
               </a>
@@ -7886,13 +7750,9 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         
           <li class=\\"ui-vertical-tabs__list-item\\">
             
-              
-
-              
               <a
                 class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
                 href=\\"/having-your-say-guide\\"
-                target=\\"_self\\"
               >
                 Having your say about a national infrastructure project
               </a>
