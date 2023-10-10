@@ -23,6 +23,11 @@ module.exports = {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES)
 			}
 		},
+		examinationTimetable: {
+			getExaminationTimetable: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES)
+			}
+		},
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
