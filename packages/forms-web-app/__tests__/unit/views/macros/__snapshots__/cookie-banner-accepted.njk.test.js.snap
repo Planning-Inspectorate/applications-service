@@ -12,8 +12,7 @@ exports[`views/macros/cookie-banner-accepted should allow setting a custom cooki
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -54,8 +53,7 @@ exports[`views/macros/cookie-banner-accepted should allow setting a custom servi
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -96,8 +94,7 @@ exports[`views/macros/cookie-banner-accepted should allow setting all custom att
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -138,8 +135,7 @@ exports[`views/macros/cookie-banner-accepted should have sensible default attrib
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
