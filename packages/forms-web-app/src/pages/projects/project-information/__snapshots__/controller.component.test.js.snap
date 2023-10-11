@@ -80,8 +80,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -136,8 +135,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -175,8 +173,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -347,6 +344,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -420,8 +418,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -441,7 +451,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -841,7 +850,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -851,7 +860,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -1113,8 +1122,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -1169,8 +1177,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -1208,8 +1215,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -1380,6 +1386,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -1453,8 +1460,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -1474,7 +1493,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -1874,7 +1892,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -1884,7 +1902,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -2146,8 +2164,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -2202,8 +2219,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -2241,8 +2257,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -2413,6 +2428,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -2486,8 +2502,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -2507,7 +2535,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -2907,7 +2934,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -2917,7 +2944,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -3179,8 +3206,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -3235,8 +3261,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -3274,8 +3299,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -3446,6 +3470,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -3519,8 +3544,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -3540,7 +3577,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -3944,7 +3980,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -3954,7 +3990,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -4216,8 +4252,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -4272,8 +4307,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -4311,8 +4345,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -4483,6 +4516,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -4556,8 +4590,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -4577,7 +4623,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -4981,7 +5026,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -4991,7 +5036,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -5253,8 +5298,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -5309,8 +5353,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -5348,8 +5391,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -5520,6 +5562,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -5593,8 +5636,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -5614,7 +5669,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -6014,7 +6068,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -6024,7 +6078,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -6286,8 +6340,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -6342,8 +6395,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -6381,8 +6433,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -6553,6 +6604,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -6626,8 +6678,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -6647,7 +6711,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -7045,7 +7108,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -7055,7 +7118,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 
@@ -7317,8 +7380,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -7373,8 +7435,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -7412,8 +7473,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\"
-    >
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
     <div class=\\"govuk-grid-row\\">
       <div class=\\"govuk-grid-column-two-thirds\\">
@@ -7584,6 +7644,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     class=\\"ui-vertical-tabs\\"
   >
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
         
@@ -7646,8 +7707,20 @@ exports[`projects/project-information/controller.component #getProjectInformatio
         Related guides
       </h2>
     
+
     <ul class=\\"ui-vertical-tabs__list\\">
       
+        
+          <li class=\\"ui-vertical-tabs__list-item\\">
+            
+              <a
+                class=\\"ui-vertical-tabs__list-item-text ui-vertical-tabs__list-item-text--link\\"
+                href=\\"/decision-making-process-guide\\"
+              >
+                The process for Nationally Significant Infrastructure Projects (NSIPs)
+              </a>
+            
+          </li>
         
       
         
@@ -7667,7 +7740,6 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   </nav>
 
 	</div>
-
 
 			
 		
@@ -8067,7 +8139,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
 
 
-  <p class=\\"govuk-body\\">
+  <p class=\\"govuk-body\\" id=\\"project-location\\">
     At, and in the vicinity of, mock project location
   </p>
 
@@ -8077,7 +8149,7 @@ exports[`projects/project-information/controller.component #getProjectInformatio
 
   <div class=\\"pins-map\\">
     <div class=\\"pins-map__container\\">
-      <div id=\\"map\\" class=\\"pins-map__content\\"></div>
+      <div id=\\"map\\" class=\\"pins-map__content\\" role=\\"region\\" aria-roledescription=\\"map\\" aria-labelledby=\\"project-location\\"></div>
     </div>
   </div>
 

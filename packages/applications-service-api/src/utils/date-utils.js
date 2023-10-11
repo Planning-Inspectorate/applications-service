@@ -9,6 +9,9 @@ function formatDate(date) {
 	return `${day} ${formattedDate}`;
 }
 
+const getDate = () => new Date();
+
 module.exports = {
-	formatDate
+	formatDate,
+	getDate
 };

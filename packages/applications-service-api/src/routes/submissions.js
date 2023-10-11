@@ -11,6 +11,7 @@ const { fileUploadLimitHandler } = require('../middleware/fileUploadLimitHandler
 const { validateCreateSubmissionRequest } = require('../middleware/validator/submission');
 const { normaliseRequestFileData } = require('../middleware/normaliseRequestFileData');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
+const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router();
 
@@ -22,9 +23,9 @@ router.post(
 		limitHandler: fileUploadLimitHandler
 	}),
 	normaliseRequestFileData,
-	parseFormDataProperties(['interestedParty', 'sensitiveData', 'lateSubmission'], ['submissionId']),
+	parseFormDataProperties(['interestedParty', 'sensitiveData', 'lateSubmission']),
 	validateCreateSubmissionRequest,
-	submissionsController.createSubmission
+	asyncRoute(submissionsController.createSubmission)
 );
 
 router.post(

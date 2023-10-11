@@ -1,105 +1,45 @@
-const db = require('../models');
-const ApiError = require('../error/apiError');
-const { sendSubmissionNotification } = require('../lib/notify');
-const { getNIApplication } = require('./application.ni.service');
+const moment = require('moment');
+const config = require('../lib/config');
+const { createNISubmission, completeNISubmission } = require('./submission.ni.service');
+const { publishDeadlineSubmission } = require('./backoffice.publish.service');
+const { generateRepresentationPDF, uploadToBlobStorage } = require('../utils/file');
+const { getDate } = require('../utils/date-utils');
 
-const PLACEHOLDER_SUBMISSION_ID = 0;
+const createSubmission = async (submission) =>
+	isBackOfficeSubmission(submission.metadata.caseReference)
+		? createBackOfficeSubmission(submission)
+		: createNISubmission(submission);
 
-const createSubmission = async (submission) => {
-	try {
-		const submissionId = submission.submissionId || PLACEHOLDER_SUBMISSION_ID;
+const completeSubmission = async (submissionId) => completeNISubmission(submissionId);
 
-		const dbSubmission = await db.Submission.create({
-			name: submission.name,
-			email: submission.email,
-			interestedParty: submission.interestedParty,
-			iPReference: submission.ipReference,
-			deadline: submission.deadline,
-			submissionType: submission.submissionType,
-			sensitiveData: submission.sensitiveData,
-			lateSubmission: submission.lateSubmission,
-			caseReference: submission.caseReference,
-			dateSubmitted: submission.dateSubmitted,
-			submissionId: submissionId,
-			representation: submission.representation
-		});
+const createBackOfficeSubmission = async (submission) => {
+	const { metadata } = submission;
 
-		if (submissionId === PLACEHOLDER_SUBMISSION_ID) {
-			await updateSubmission({
-				id: dbSubmission.dataValues.id,
-				submissionId: dbSubmission.dataValues.id
-			});
+	if (!metadata.submissionId) metadata.submissionId = generateSubmissionId(metadata.caseReference);
 
-			return {
-				...dbSubmission.dataValues,
-				submissionId: dbSubmission.dataValues.id
-			};
-		}
-
-		return dbSubmission.dataValues;
-	} catch (e) {
-		if (
-			e.name === 'SequelizeDatabaseError' &&
-			e.parent.code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD'
-		) {
-			throw ApiError.badRequest(e.message);
-		} else {
-			throw e;
-		}
-	}
-};
-
-const updateSubmission = async (submission) => {
-	let updateData = {};
-
-	if (submission.submissionId) updateData.submissionId = submission.submissionId;
-
-	if (submission.file) {
-		updateData.filenameOriginal = submission.file.originalName;
-		updateData.filename = submission.file.name;
-		updateData.fileSize = submission.file.size;
-		updateData.fileMD5 = submission.file.md5;
+	if (metadata.representation) {
+		submission.file = generateRepresentationPDF(
+			metadata.submissionId,
+			metadata.representation,
+			`Written-Representation-${metadata.submissionId}.pdf`
+		);
 	}
 
-	return await db.Submission.update(updateData, {
-		where: {
-			id: submission.id
-		}
-	});
+	const blobGuid = await uploadToBlobStorage(submission.file);
+	await publishDeadlineSubmission(submission, blobGuid);
+
+	return {
+		submissionId: metadata.submissionId
+	};
 };
 
-const completeSubmission = async (submissionId) => {
-	const submission = await getSubmission(submissionId);
-	if (!submission) throw ApiError.notFound(`Submission with ID ${submissionId} not found`);
+const generateSubmissionId = (caseReference) =>
+	`${caseReference}-${moment(getDate()).format('DDMMYYHHmmssSSS')}`;
 
-	const project = await getNIApplication(submission.caseReference);
-	if (!project)
-		throw ApiError.notFound(`Project with case reference ${submission.caseReference} not found`);
-
-	await Promise.all([
-		updateSubmissionsBySubmissionId(submissionId, { validated: new Date() }),
-		sendSubmissionNotification({
-			submissionId: submission.id,
-			email: submission.email,
-			project: {
-				name: project.ProjectName,
-				email: project.ProjectEmailAddress
-			}
-		})
-	]);
-};
-
-const updateSubmissionsBySubmissionId = async (submissionId, updateData) =>
-	db.Submission.update(updateData, {
-		where: {
-			submissionId: submissionId
-		}
-	});
-
-const getSubmission = (submissionId) => db.Submission.findOne({ where: { id: submissionId } });
+const isBackOfficeSubmission = (caseReference) =>
+	config.backOfficeIntegration.submissions.postSubmission.caseReferences.includes(caseReference);
 
 module.exports = {
 	createSubmission,
-	updateSubmission,
 	completeSubmission
 };

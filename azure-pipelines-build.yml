@@ -18,7 +18,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.1.1
+      ref: refs/tags/release/3.4.0
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -135,10 +135,10 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 16
+              nodeVersion: 18
               script: npm ci --omit=dev --workspace=@pins/back-office-subscribers
               workingDirectory: $(Build.Repository.LocalPath)
-          - script: mv node_modules/* packages/back-office-subscribers/node_modules
+          - script: mv node_modules packages/back-office-subscribers/node_modules
             workingDirectory: $(Build.Repository.LocalPath)
             displayName: merge node_modules
           - task: ArchiveFiles@2

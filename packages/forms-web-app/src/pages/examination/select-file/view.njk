@@ -4,6 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% block script %}
 	<style>
@@ -12,6 +13,28 @@
 		}
 	</style>
 {% endblock %}
+
+{% set detailsHtml %}
+	<p class="govuk-body">Sensitive information refers to:</p>
+	<ul class="govuk-list govuk-list--bullet">
+		<li>comments from children</li>
+		<li>information relating to children</li>
+		<li>information relating to health</li>
+		<li>information relating to crime</li>
+	</ul>
+	<p class="govuk-body">It also means any information relating to an individual's:</p>
+	<ul class="govuk-list govuk-list--bullet">
+		<li>race</li>
+		<li>ethnic origin</li>
+		<li>politics</li>
+		<li>religion</li>
+		<li>trade union membership</li>
+		<li>genetics</li>
+		<li>physical characteristics</li>
+		<li>sex life</li>
+		<li>sexual orientation</li>
+	</ul>
+{% endset %}
 
 {% block content %}
 	{% if errorSummary.length > 0 %}
@@ -36,6 +59,16 @@
 			<div class="govuk-inset-text">
 				You cannot submit the same file against multiple deadline items.
 			</div>
+
+			<p class="govuk-hint">
+				You should not use racist, inflammatory or abusive language, or include personal information (also called special category information) about yourself or others in your comments.
+			</p>
+
+			
+			{{ govukDetails({
+				summaryText: "Examples of personal information",
+				html: detailsHtml
+			}) }}
 
 			<form
 				name="fileUploadForm"
@@ -135,7 +168,6 @@
 					</div>
 				</div>
 
-				<br>
 				<button
 					id="continue-form-button"
 					class="govuk-button"

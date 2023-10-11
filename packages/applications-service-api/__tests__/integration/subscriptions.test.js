@@ -175,6 +175,7 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 			);
 
 			mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
+			dateSpy.mockReturnValue('2024-07-09');
 
 			const response = await request.put('/api/v1/subscriptions/EN010116').send({
 				subscriptionDetails: expiredPayload

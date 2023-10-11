@@ -6,6 +6,7 @@ Feature: Having your say about a national infrastructure project page
 
     Background: Navigate to page
         Given I navigate to Having your say about a national infrastructure project page
+        And I click on show all link
 
     Scenario: verify page title
         Then I am on the "Having your say about a national infrastructure project" page

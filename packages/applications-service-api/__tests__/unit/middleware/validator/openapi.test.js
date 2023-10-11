@@ -63,7 +63,7 @@ describe('openapi validator', () => {
 			};
 
 			const expectedError = new ApiError(400, {
-				errors: ["'sensitiveData' must be boolean", "'submissionId' must be integer"]
+				errors: ["'sensitiveData' must be boolean"]
 			});
 
 			expect(() => validateRequestWithOpenAPI(request, res, next)).toThrowError(

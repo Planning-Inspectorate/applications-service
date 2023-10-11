@@ -1,6 +1,5 @@
 const { get } = require('./router-mock');
 const {
-	getDecisionMakingProcessGuide,
 	getPreApplication,
 	getExaminationOfTheApplication,
 	getReviewOfTheApplication,
@@ -20,10 +19,6 @@ describe('routes/decision-making-process-guide', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(get).toHaveBeenCalledWith(
-			'/decision-making-process-guide',
-			getDecisionMakingProcessGuide
-		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/pre-application',
 			getPreApplication

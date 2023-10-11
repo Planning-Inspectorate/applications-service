@@ -77,11 +77,12 @@
   }
 %}
 
+{# keep /index for e2e tests #}
 {% if templateID !== 'main' %}
   {% set params = {
     pretitle: "Part of",
     title: "Having your say about a national infrastructure project",
-    url: "/having-your-say-guide",
+    url: "/having-your-say-guide/index",
     steps: params.steps
   } %}
 {% endif %}

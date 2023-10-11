@@ -23,11 +23,24 @@ module.exports = {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES)
 			}
 		},
+		examinationTimetable: {
+			getExaminationTimetable: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES)
+			}
+		},
+		submissions: {
+			postSubmission: {
+				caseReferences: parseCSV(
+					process.env.BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES
+				)
+			}
+		},
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
 			topics: {
-				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription'
+				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription',
+				DEADLINE_SUBMISSION: 'deadline-submission-topic'
 			}
 		}
 	},

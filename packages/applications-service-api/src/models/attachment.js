@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
 	class Attachment extends Model {
 		static async findAllAttachmentsWithCase(caseReference, options = {}) {
 			const tableName = Attachment.getTableName();
-			const attachmentsSql = sequelize.dialect.QueryGenerator.selectQuery(
+			const attachmentsSql = sequelize.dialect.queryGenerator.selectQuery(
 				tableName,
 				{
-					attributes: Object.entries(Attachment.rawAttributes).map(([key, attr]) => [
+					attributes: Object.entries(Attachment.getAttributes()).map(([key, attr]) => [
 						attr.field,
 						key
 					]),
