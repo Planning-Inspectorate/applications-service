@@ -6,11 +6,10 @@ const examinationTimetable = new PO_ExaminationTimetable();
 const projectSearch = new PO_ProjectSearch();
 const projectPage = new PO_ProjectPage();
 
-describe('User registers as themselves to have their say against the examination timetable', () => {
+describe('User makes a submission against a examination timetable deadline item', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
-		cy.visit('/project-search/');
-		projectSearch.findAndClickLink('Drax Bioenergy with Carbon Capture and Storage Project');
+		cy.visit('/projects/EN010120/examination-timetable');
 		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
 		examinationTimetable.clickLink();
 		examinationTimetable.clickStartNowButton();
@@ -64,11 +63,11 @@ describe('User registers as themselves to have their say against the examination
 
 	it('Checks answers are correct and confirm no more submission', () => {
 		examinationTimetable.checkAnswers([
-			'Both',
+			'Make a comment and upload files',
 			'Testing.pdf',
 			'This is a test comment',
 			'Yes',
-			'Testing.pdf'
+			'My commentTesting.pdf'
 		]);
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.findAndSelectRadioOption('no');

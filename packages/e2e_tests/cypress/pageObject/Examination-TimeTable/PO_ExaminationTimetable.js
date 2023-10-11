@@ -54,7 +54,6 @@ export class PO_ExaminationTimetable {
 			cy.wrap(answers)
 				.each((ans) => myAnswers.push(ans.text().trim()))
 				.then(() => {
-					console.log(myAnswers);
 					myAnswers.shift();
 					expect(expectedAnswers).to.deep.eq(myAnswers);
 				});
