@@ -138,7 +138,7 @@ extends:
               nodeVersion: 18
               script: npm ci --omit=dev --workspace=@pins/back-office-subscribers
               workingDirectory: $(Build.Repository.LocalPath)
-          - script: mv node_modules/* packages/back-office-subscribers/node_modules
+          - script: mv node_modules packages/back-office-subscribers/node_modules
             workingDirectory: $(Build.Repository.LocalPath)
             displayName: merge node_modules
           - task: ArchiveFiles@2
