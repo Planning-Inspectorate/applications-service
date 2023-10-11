@@ -15,12 +15,13 @@ services:
       - 6379:6379
 
   applications-service-api:
-    image: node:16-alpine
+    image: node:18-alpine
     user: node
     container_name: applications-service-api
     environment:
       APPLICATIONS_WEB_BASE_URL: http://forms-web-app:9004
       BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES: BC0110001,EN0110004,EN0310004
+      BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES: BC0110001,EN0100085,EN0110004,EN0310004
       BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES: BC0110001,EN0100085,EN0110004,EN0310004
       BACK_OFFICE_SERVICE_BUS_ENABLED: false
       BACK_OFFICE_SERVICE_BUS_HOSTNAME: pins-sb-back-office-dev-ukw-001.servicebus.windows.net
@@ -66,7 +67,7 @@ services:
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
-    image: node:16-alpine
+    image: node:18-alpine
     user: node
     container_name: applications-web-app
     environment:
