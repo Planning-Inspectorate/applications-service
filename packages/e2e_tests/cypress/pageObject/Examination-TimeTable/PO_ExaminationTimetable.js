@@ -55,9 +55,7 @@ export class PO_ExaminationTimetable {
 				.each((ans) => myAnswers.push(ans.text().trim()))
 				.then(() => {
 					myAnswers.shift();
-					console.log({ expectedAnswers, myAnswers });
 					expect(expectedAnswers).to.deep.eq(myAnswers);
-					//expect(expectedAnswersFinal).to.deep.eq(myAnswers);
 				});
 		});
 	}

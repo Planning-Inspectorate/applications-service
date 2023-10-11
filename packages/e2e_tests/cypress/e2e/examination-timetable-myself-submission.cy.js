@@ -6,7 +6,7 @@ const examinationTimetable = new PO_ExaminationTimetable();
 const projectSearch = new PO_ProjectSearch();
 const projectPage = new PO_ProjectPage();
 
-describe('User registers as themselves to have their say against the examination timetable', () => {
+describe('User makes a submission against a examination timetable deadline item', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
 		cy.visit('/projects/EN010120/examination-timetable');
