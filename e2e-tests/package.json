@@ -2,6 +2,9 @@
 	"name": "e2e-tests",
 	"version": "1.0.0",
 	"description": "",
+	"engines": {
+		"node": ">=18.0.0 <19.0.0"
+	},
 	"scripts": {
 		"postinstall": "patch-package",
 		"lint": "eslint ./",
