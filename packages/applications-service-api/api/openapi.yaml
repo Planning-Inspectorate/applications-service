@@ -203,7 +203,6 @@ paths:
       description: Returns a CSV file of all applications
       tags:
           - Applications
-          - CSV
       responses:
         '200':
           description: Returns a CSV file of all applications
@@ -761,7 +760,9 @@ paths:
           example: 1234
           required: true
           schema:
-            type: number
+            oneOf:
+              - type: string
+              - type: number
       responses:
         '204':
           description: Request was successful
@@ -1855,33 +1856,13 @@ components:
         - submissionType
 
     SubmissionResponseBody:
-      allOf:
-        - $ref: '#/components/schemas/SubmissionProperties'
       properties:
-        file:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Modified version of the original file name with submissionId appended
-              example: My-Submission-Document-10809.pdf
-            originalName:
-              type: string
-              example: My Submission Document.pdf
-            size:
-              type: integer
-              description: File size in bytes
-              example: 226022
-            md5:
-              type: string
-              example: b1946ac92492d2347c6235b4d2611184
-        caseReference:
-          type: string
-          example: EN010118
-        dateSubmitted:
-          type: string
-          format: date
-          example: 2022-08-02 08:24:05
+        submissionId:
+          oneOf:
+            - type: string
+            - type: number
+          description: Unique ID for the submission
+          example: 10809
 
     SubmissionProperties:
       type: object
@@ -1916,7 +1897,9 @@ components:
           description: Is this a late submission
           example: false
         submissionId:
-          type: integer
+          oneOf:
+            - type: string
+            - type: number
           description: Unique ID for the submission
           example: 10809
         representation:

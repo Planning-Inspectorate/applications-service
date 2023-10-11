@@ -1,22 +1,12 @@
 const { StatusCodes } = require('http-status-codes');
-const { createSubmission, completeSubmission} = require('../services/submission.service');
-const { submitUserUploadedFile, submitRepresentationFile } = require('../services/ni.file.service');
+const { createSubmission, completeSubmission } = require('../services/submission.service');
+const { getDate } = require('../utils/date-utils');
 
 const createSubmissionController = async (req, res) => {
-	const { caseReference } = req.params;
+	const submissionRequestData = buildSubmissionData(req);
+	const { submissionId } = await createSubmission(submissionRequestData);
 
-	const submissionRequestData = buildSubmissionData(req.body, caseReference);
-	let submission = await createSubmission(submissionRequestData);
-
-	if (req.file) {
-		submission = await submitUserUploadedFile(submission, req.file);
-	}
-
-	if (submission.representation) {
-		await submitRepresentationFile(submission);
-	}
-
-	return res.status(StatusCodes.CREATED).send(submission);
+	return res.status(StatusCodes.CREATED).send({ submissionId });
 };
 
 const completeSubmissionController = async (req, res) => {
@@ -24,20 +14,24 @@ const completeSubmissionController = async (req, res) => {
 	return res.sendStatus(StatusCodes.NO_CONTENT);
 };
 
-const buildSubmissionData = (requestBody, caseReference) => {
+const buildSubmissionData = (request) => {
+	const { params, body, file } = request;
 	return {
-		name: requestBody.name,
-		email: requestBody.email,
-		interestedParty: requestBody.interestedParty,
-		ipReference: requestBody.ipReference,
-		deadline: requestBody.deadline,
-		submissionType: requestBody.submissionType,
-		sensitiveData: requestBody.sensitiveData,
-		lateSubmission: requestBody.lateSubmission,
-		submissionId: requestBody.submissionId,
-		representation: requestBody.representation,
-		caseReference: caseReference,
-		dateSubmitted: new Date()
+		metadata: {
+			name: body.name,
+			email: body.email,
+			interestedParty: body.interestedParty,
+			ipReference: body.ipReference,
+			deadline: body.deadline,
+			submissionType: body.submissionType,
+			sensitiveData: body.sensitiveData,
+			lateSubmission: body.lateSubmission,
+			submissionId: body.submissionId,
+			representation: body.representation,
+			caseReference: params.caseReference,
+			dateSubmitted: getDate()
+		},
+		file
 	};
 };
 
