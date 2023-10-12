@@ -18,7 +18,7 @@ jest.mock('../../../src/lib/config', () => ({
 			preliminaryMeetingUrl: 'somedomain.example.com',
 			havingYourSayUrl: 'somedomain.example.com/having-your-say-guide',
 			magicLinkDomain: 'somedomain.example.com',
-			subscriptionCreateDomain: 'somedomain.example.com',
+			subscriptionCreateDomain: 'somedomain.example.com'
 		}
 	},
 	logger: {
@@ -130,6 +130,25 @@ describe('notify lib', () => {
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('Submission 1');
 			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+		});
+
+		it("should use generic project email if one isn't provided", async () => {
+			const details = {
+				email: 'a@example.com',
+				submissionId: 1,
+				project: {
+					name: 'some project',
+					email: undefined
+				}
+			};
+			await sendSubmissionNotification(details);
+
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				'email address': 'a@example.com',
+				submission_id: 1,
+				project_name: 'some project',
+				project_email: 'NIEnquiries@planninginspectorate.gov.uk'
+			});
 		});
 	});
 

@@ -24,15 +24,26 @@ jest.mock('../../../src/utils/date-utils');
 jest.mock('../../../src/utils/file');
 jest.mock('../../../src/services/submission.ni.service');
 jest.mock('../../../src/services/backoffice.publish.service');
+jest.mock('../../../src/services/application.service');
+jest.mock('../../../src/lib/notify');
 
 const { getDate } = require('../../../src/utils/date-utils');
-const { createNISubmission } = require('../../../src/services/submission.ni.service');
+const {
+	createNISubmission,
+	completeNISubmission
+} = require('../../../src/services/submission.ni.service');
 const { generateRepresentationPDF, uploadToBlobStorage } = require('../../../src/utils/file');
 const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
+const { getApplication } = require('../../../src/services/application.service');
+const { sendSubmissionNotification } = require('../../../src/lib/notify');
 
-const { createSubmission } = require('../../../src/services/submission.service');
+const {
+	createSubmission,
+	completeSubmission
+} = require('../../../src/services/submission.service');
 const { REQUEST_FILE_DATA } = require('../../__data__/file');
 const { SUBMISSION_DATA } = require('../../__data__/submission');
+const { APPLICATION_API } = require('../../__data__/application');
 
 describe('submission.service', () => {
 	describe('createSubmission', () => {
@@ -170,6 +181,78 @@ describe('submission.service', () => {
 				await createSubmission(submission);
 
 				expect(createNISubmission).toBeCalledWith(submission);
+			});
+		});
+	});
+
+	describe('completeSubmission', () => {
+		describe('Back Office case', () => {
+			const submissionDetails = {
+				submissionId: 1,
+				caseReference: BACK_OFFICE_CASE_REFERENCE,
+				email: 'person@example.org'
+			};
+
+			it('sends submission notification', async () => {
+				getApplication.mockResolvedValueOnce(APPLICATION_API);
+
+				await completeSubmission(submissionDetails);
+
+				expect(sendSubmissionNotification).toBeCalledWith({
+					submissionId: 1,
+					email: 'person@example.org',
+					project: {
+						name: APPLICATION_API.projectName,
+						email: APPLICATION_API.projectEmailAddress
+					}
+				});
+			});
+
+			it('throws error if application not found', async () => {
+				getApplication.mockResolvedValueOnce(null);
+
+				await expect(() => completeSubmission(submissionDetails)).rejects.toEqual({
+					code: 404,
+					message: {
+						errors: ['Project with case reference BC0110001 not found']
+					}
+				});
+			});
+
+			it.each([
+				[
+					'submissionId',
+					{
+						caseReference: BACK_OFFICE_CASE_REFERENCE,
+						email: 'person@example.org'
+					}
+				],
+				[
+					'email',
+					{
+						submissionId: 1,
+						caseReference: BACK_OFFICE_CASE_REFERENCE
+					}
+				]
+			])('throws error if %s is missing', async (missingPropertyName, submissionDetails) => {
+				await expect(() => completeSubmission(submissionDetails)).rejects.toEqual({
+					code: 400,
+					message: {
+						errors: [`must have required property '${missingPropertyName}'`]
+					}
+				});
+			});
+		});
+
+		describe('NI case', () => {
+			it('invokes createNISubmission', async () => {
+				await completeSubmission({
+					caseReference: 'EN010120',
+					email: 'person@example.org',
+					submissionId: 1
+				});
+
+				expect(completeNISubmission).toBeCalledWith(1);
 			});
 		});
 	});
