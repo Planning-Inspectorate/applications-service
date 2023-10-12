@@ -11,6 +11,31 @@ jest.mock('@azure/storage-blob', () => ({
 	BlobServiceClient: mockBlobServiceClient
 }));
 
+const mockFindUnique = jest.fn();
+jest.mock('../../src/lib/prisma', () => ({
+	prismaClient: {
+		project: {
+			findUnique: (query) => mockFindUnique(query)
+		}
+	}
+}));
+
+const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
+jest.mock('@planning-inspectorate/pins-notify', () => ({
+	createNotifyClient: {
+		createNotifyClient: jest.fn().mockReturnThis()
+	},
+	notifyBuilder: {
+		reset: jest.fn().mockReturnThis(),
+		setNotifyClient: jest.fn().mockReturnThis(),
+		setTemplateId: jest.fn().mockReturnThis(),
+		setDestinationEmailAddress: jest.fn().mockReturnThis(),
+		setTemplateVariablesFromObject: jest.fn().mockReturnThis(),
+		setReference: jest.fn().mockReturnThis(),
+		sendEmail: jest.fn()
+	}
+}));
+
 jest.mock('../../src/utils/date-utils');
 jest.mock('../../src/lib/eventClient');
 jest.mock('../../src/utils/pdf');
@@ -19,13 +44,16 @@ const { getDate } = require('../../src/utils/date-utils');
 const { sendMessages } = require('../../src/lib/eventClient');
 const { textToPdf } = require('../../src/utils/pdf');
 const uuid = require('uuid');
+const { APPLICATION_DB } = require('../__data__/application');
+
+const BACK_OFFICE_CASE_REFERENCE = 'BC0110001';
 
 const { request } = require('../__data__/supertest');
 const config = require('../../src/lib/config');
 
 const submissionRequest = () =>
 	request
-		.post('/api/v1/submissions/BC0110001')
+		.post(`/api/v1/submissions/${BACK_OFFICE_CASE_REFERENCE}`)
 		.field('name', 'Joe Bloggs')
 		.field('email', 'joe@example.org')
 		.field('interestedParty', 'true')
@@ -36,16 +64,27 @@ const submissionRequest = () =>
 		.field('lateSubmission', 'false');
 
 describe('/api/v1/submissions', () => {
+	const mockTime = new Date('2023-12-30T11:06:13.245Z');
+	const mockUuid = 'eb43f2de-cd51-4f95-a7a3-e04082bdcd8b';
+
+	beforeEach(() => {
+		config.backOfficeIntegration.submissions.postSubmission.caseReferences = [
+			BACK_OFFICE_CASE_REFERENCE
+		];
+		config.backOfficeIntegration.applications.getApplication.caseReferences = [
+			BACK_OFFICE_CASE_REFERENCE
+		];
+		uuid.v4.mockReturnValue(mockUuid);
+	});
+
 	describe('POST /:caseReference', () => {
 		describe('Back Office case reference', () => {
-			const mockTime = new Date('2023-12-30T11:06:13.245Z');
-			const mockUuid = 'eb43f2de-cd51-4f95-a7a3-e04082bdcd8b';
 			const mockFileBuffer = Buffer.from([1, 2, 3]);
 			const mockGeneratedSubmissionId = 'BC0110001-301223110613245'; // timestamp from mockTime
 			const requestSubmissionId = 'BC0110001-101023134030108';
 			const expectedMessage = {
 				blobGuid: mockUuid,
-				caseReference: 'BC0110001',
+				caseReference: BACK_OFFICE_CASE_REFERENCE,
 				deadline: 'Deadline 2',
 				email: 'joe@example.org',
 				interestedParty: true,
@@ -57,8 +96,6 @@ describe('/api/v1/submissions', () => {
 			};
 
 			beforeEach(() => {
-				config.backOfficeIntegration.submissions.postSubmission.caseReferences = ['BC0110001'];
-				uuid.v4.mockReturnValue(mockUuid);
 				textToPdf.mockReturnValue(mockFileBuffer);
 			});
 
@@ -215,6 +252,39 @@ describe('/api/v1/submissions', () => {
 						expect(response.body.submissionId).toEqual(mockGeneratedSubmissionId);
 					});
 				});
+			});
+		});
+	});
+
+	describe('POST /:submissionId/complete', () => {
+		describe('Back Office case reference', () => {
+			const submissionId = '123';
+
+			afterEach(() => mockFindUnique.mockReset());
+
+			it('sends email and returns success response', async () => {
+				mockFindUnique.mockResolvedValueOnce({
+					...APPLICATION_DB,
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					email: 'person@example.org',
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				expect(response.status).toEqual(204);
+
+				expect(notifyBuilder.reset).toHaveBeenCalled();
+				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('person@example.org');
+				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+					'email address': 'person@example.org',
+					submission_id: submissionId,
+					project_name: 'North Lincolnshire Green Energy Park',
+					project_email: 'webteam@planninginspectorate.gov.uk'
+				});
+				expect(notifyBuilder.setReference).toHaveBeenCalledWith(`Submission ${submissionId}`);
+				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
 			});
 		});
 	});

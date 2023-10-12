@@ -19,17 +19,12 @@ const parseFormDataPropertiesMock =
 	require('../../../src/middleware/parseFormDataProperties').parseFormDataProperties;
 const parseFormDataPropertiesMockValue = jest.fn();
 
-const parseIntegerParamMock =
-	require('../../../src/middleware/parseFormDataProperties').parseIntegerParam;
-const parseIntegerParamMockValue = jest.fn();
-
 const asyncRouteMock = require('@pins/common/src/utils/async-route').asyncRoute;
 const asyncRouteMockValue = jest.fn();
 
 describe('routes/submissions', () => {
 	fileUpload.mockImplementation(() => fileUploadMockValue);
 	parseFormDataPropertiesMock.mockImplementation(() => parseFormDataPropertiesMockValue);
-	parseIntegerParamMock.mockImplementation(() => parseIntegerParamMockValue);
 	asyncRouteMock.mockImplementation((fn) => asyncRouteMockValue(fn));
 
 	beforeEach(() => {
@@ -64,13 +59,11 @@ describe('routes/submissions', () => {
 		);
 		expect(asyncRouteMockValue).toHaveBeenCalledWith(submissionsController.createSubmission);
 
-		expect(parseIntegerParamMock).toBeCalledWith('submissionId');
-
 		expect(post).toHaveBeenCalledWith(
 			'/:submissionId/complete',
-			parseIntegerParamMockValue,
 			validateRequestWithOpenAPI,
-			submissionsController.completeSubmission
+			asyncRouteMock(submissionsController.completeSubmission)
 		);
+		expect(asyncRouteMockValue).toHaveBeenCalledWith(submissionsController.completeSubmission);
 	});
 });
