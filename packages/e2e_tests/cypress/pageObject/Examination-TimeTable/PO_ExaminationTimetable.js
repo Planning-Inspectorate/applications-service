@@ -4,12 +4,16 @@ export class PO_ExaminationTimetable {
 		startNow: () => cy.get('a[href*="interested-party-number"]'),
 		radioButton: () => cy.get('[type="radio"]'),
 		continueButton: () => cy.get('[data-cy="button-submit-and-continue"]'),
+		continueButton2: () => cy.get('.govuk-button'),
 		firstDeadline: () => cy.get('#choose-deadline'),
 		firstDeadlineItem: () => cy.get('#examination-select-deadline'),
 		commentTextArea: () => cy.get('#examination-enter-comment'),
 		continueButtonFileUpload: () => cy.get('#continue-form-button'),
 		button: () => cy.get('.govuk-button'),
-		titleText: () => cy.get('.govuk-panel__title')
+		titleText: () => cy.get('.govuk-panel__title'),
+		changeLink: () => cy.get('.govuk-summary-list__actions'),
+		finalAnswers: () => cy.get('.govuk-summary-list__value'),
+		addAnotherDeadline: () => cy.get('#examination-add-another-deadline-item')
 	};
 
 	clickLink() {
@@ -28,12 +32,20 @@ export class PO_ExaminationTimetable {
 		this.elements.continueButton().click();
 	}
 
+	clickContinueButton2() {
+		this.elements.continueButton2().contains('Continue').click();
+	}
+
 	clickContinueUploadFile() {
 		this.elements.continueButtonFileUpload().click();
 	}
 
-	enterTextInField(inputFieldId, text) {
-		cy.get(`#${inputFieldId}`).type(text);
+	enterTextInField(textFieldId, text) {
+		cy.get(`#${textFieldId}`).type(text);
+	}
+
+	clearTextInField(textFieldId) {
+		cy.get(`#${textFieldId}`).clear();
 	}
 
 	checkFirstRadioButton() {
@@ -44,32 +56,42 @@ export class PO_ExaminationTimetable {
 		this.elements.commentTextArea().type(string);
 	}
 
+	changeHowYouSubmit() {
+		this.elements.changeDeadline().click();
+	}
+
+	clickChangeLink(arrayIndex) {
+		this.elements.changeLink().eq(`${arrayIndex}`).children().click();
+	}
+
+	checkRadioWithValue(value) {
+		this.elements.radioButton().check([`${value}`]);
+	}
+
 	getAllAnswers() {
 		return cy.get('.govuk-summary-list__value');
 	}
 
-	checkAnswers(expectedAnswers) {
+	checkAnswersFirstPage(expectedAnswers) {
 		this.getAllAnswers().then((answers) => {
 			const myAnswers = [];
 			cy.wrap(answers)
 				.each((ans) => myAnswers.push(ans.text().trim()))
 				.then(() => {
-					console.log(myAnswers);
 					myAnswers.shift();
 					expect(expectedAnswers).to.deep.eq(myAnswers);
 				});
 		});
 	}
 
-	checkAnswersFinal(expectedAnswersFinal) {
+	checkAnswersSecondtPage(expectedAnswers) {
 		this.getAllAnswers().then((answers) => {
 			const myAnswers = [];
 			cy.wrap(answers)
 				.each((ans) => myAnswers.push(ans.text().trim()))
 				.then(() => {
-					console.log(myAnswers);
 					myAnswers.pop();
-					expect(expectedAnswersFinal).to.deep.eq(myAnswers);
+					expect(expectedAnswers).to.deep.eq(myAnswers);
 				});
 		});
 	}

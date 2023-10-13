@@ -1,16 +1,13 @@
 import { PO_ExaminationTimetable } from '../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
-import { PO_ProjectSearch } from '../pageObject/Search-and-project-pages/PO_ProjectSearch';
 import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
 
 const examinationTimetable = new PO_ExaminationTimetable();
-const projectSearch = new PO_ProjectSearch();
 const projectPage = new PO_ProjectPage();
 
 describe('User registers as themselves to have their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
-		cy.visit('/project-search/');
-		projectSearch.findAndClickLink('Drax Bioenergy with Carbon Capture and Storage Project');
+		cy.visit('/projects/EN010120/examination-timetable');
 		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
 		examinationTimetable.clickLink();
 		examinationTimetable.clickStartNowButton();
@@ -63,12 +60,12 @@ describe('User registers as themselves to have their say against the examination
 	});
 
 	it('Checks answers are correct and confirm no more submission', () => {
-		examinationTimetable.checkAnswers([
-			'Both',
+		examinationTimetable.checkAnswersFirstPage([
+			'Make a comment and upload files',
 			'Testing.pdf',
 			'This is a test comment',
 			'Yes',
-			'Testing.pdf'
+			'My commentTesting.pdf',
 		]);
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.findAndSelectRadioOption('no');
@@ -76,7 +73,7 @@ describe('User registers as themselves to have their say against the examination
 	});
 
 	it('Checks other answers correct and submission can be completed', () => {
-		examinationTimetable.checkAnswersFinal(['No', 'Myself', 'John Tester', 'test@test.com']);
+		examinationTimetable.checkAnswersSecondtPage(['No', 'Myself', 'John Tester', 'test@test.com']);
 		examinationTimetable.clickButton('Submit');
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
 	});

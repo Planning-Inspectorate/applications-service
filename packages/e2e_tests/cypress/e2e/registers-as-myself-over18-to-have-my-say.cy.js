@@ -9,15 +9,7 @@ const projectPage = new PO_ProjectPage();
 describe('User registers to have their say and submits a comment against a project', () => {
 	it('Navigate to projects search page', () => {
 		cy.clearCookies();
-		cy.visit('/project-search/');
-	});
-
-	it('Finds and clicks on a project', () => {
-		projectSearch.findAndClickLink('North Lincolnshire Green Energy Park');
-	});
-
-	it('Clicks to register and have their say', () => {
-		projectPage.findAndClickButton('Register to have your say');
+		cy.visit('/projects/WA020002/register/register-have-your-say');
 	});
 
 	it('Clicks to start the registration journey', () => {

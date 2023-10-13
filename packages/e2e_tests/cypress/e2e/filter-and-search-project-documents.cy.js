@@ -9,8 +9,7 @@ const documents = new PO_Documents();
 describe('User navigates to the documents page and can filter or search project documents', () => {
 	it('Navigates to a project documents page', () => {
 		cy.clearCookies();
-		cy.visit('/project-search/');
-		projectSearch.findAndClickLink('A30 Temple to Higher Carblake Improvement');
+		cy.visit('/projects/EN010120/');
 		projectPage.findAndClickSidebarLinkLeft('Documents');
 	});
 
@@ -22,10 +21,10 @@ describe('User navigates to the documents page and can filter or search project 
 	});
 
 	it('Can search for a document by typing a description', () => {
-		documents.searchDocuments('Correction notice');
+		documents.searchDocuments('Examination Library');
 		documents.clickSearchButton();
 		documents.returnListOfDocuments().should('be.visible');
-		documents.checkFirstResultContainsString('Correction notice');
+		documents.checkFirstResultContainsString('Examination Library');
 	});
 
 	it('Can apply a filter to the list of documents and then remove that filter', () => {
