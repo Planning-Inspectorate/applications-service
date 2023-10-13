@@ -65,7 +65,11 @@ describe('User registers as themselves to have their say against the examination
 			'Testing.pdf',
 			'This is a test comment',
 			'Yes',
+<<<<<<<< HEAD:packages/e2e_tests/cypress/e2e/examination-timetable-myself-submission.cy.js
 			'My commentTesting.pdf',
+========
+			'<ul><li>Mycomment</li><li>dummy (1).pdf</li<</ul>'
+>>>>>>>> e6ae672f8f880f240ed445e603196a99b291fb53:packages/e2e_tests/cypress/e2e/examination-timetable-agent-submission.cy.js
 		]);
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.findAndSelectRadioOption('no');
