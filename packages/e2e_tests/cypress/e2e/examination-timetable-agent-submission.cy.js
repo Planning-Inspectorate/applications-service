@@ -1,17 +1,11 @@
 import { PO_ExaminationTimetable } from '../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
-import { PO_ProjectSearch } from '../pageObject/Search-and-project-pages/PO_ProjectSearch';
-import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
 
 const examinationTimetable = new PO_ExaminationTimetable();
-const projectSearch = new PO_ProjectSearch();
-const projectPage = new PO_ProjectPage();
 
 describe('User registers as themselves to have their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
-		cy.visit('/project-search/');
-		projectSearch.findAndClickLink('Drax Bioenergy with Carbon Capture and Storage Project');
-		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
+		cy.visit('/projects/EN010120/examination-timetable');
 		examinationTimetable.clickLink();
 		examinationTimetable.clickStartNowButton();
 	});
@@ -23,10 +17,10 @@ describe('User registers as themselves to have their say against the examination
 		examinationTimetable.clickContinueButton();
 	});
 
-	it('Selects myself, enters full-name and email addres and continues', () => {
-		examinationTimetable.findAndSelectRadioOption('myself');
+	it('Selects Agent, enters organisation name and email addres and continues', () => {
+		examinationTimetable.findAndSelectRadioOption('agent');
 		examinationTimetable.clickContinueButton();
-		examinationTimetable.enterTextInField('examination-name', 'John Tester');
+		examinationTimetable.enterTextInField('examination-name', 'Testing Organisation');
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.enterTextInField('examination-email', 'test@test.com');
 		examinationTimetable.clickContinueButton();
@@ -62,21 +56,50 @@ describe('User registers as themselves to have their say against the examination
 		examinationTimetable.clickContinueButton();
 	});
 
-	it('Checks answers are correct and confirm no more submission', () => {
-		examinationTimetable.checkAnswers([
-			'Both',
+	it('Checks answers are correct', () => {
+		examinationTimetable.checkAnswersFirstPage([
+			'Make a comment and upload files',
 			'Testing.pdf',
 			'This is a test comment',
 			'Yes',
-			'<ul><li>Mycomment</li><li>dummy (1).pdf</li<</ul>'
+			'My commentTesting.pdf'
+
+
 		]);
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.findAndSelectRadioOption('no');
 		examinationTimetable.clickButton('Continue');
 	});
 
+	it('Checks other answers correct and decides to change answer', () => {
+		examinationTimetable.clickChangeLink(1);
+	});
+
+	it('Changes the organisation name and saves', () => {
+		examinationTimetable.clearTextInField('examination-name');
+		examinationTimetable.enterTextInField('examination-name', 'Test Organisation');
+		examinationTimetable.clickContinueButton();
+	});
+
+	it('Decides to change email address', () => {
+		examinationTimetable.clickChangeLink(2);
+		examinationTimetable.clearTextInField('examination-email');
+		examinationTimetable.enterTextInField('examination-email', 'tester@tester.com');
+		examinationTimetable.clickContinueButton();
+	});
+
+	it('Final check that answers have updates successfully', () => {
+		examinationTimetable.checkAnswersSecondtPage([
+			'No',
+			'On behalf of another person, a family group or another organisation I do not work for',
+			'Test Organisation',
+			'tester@tester.com'
+		]);
+	});
+
+
 	it('Checks other answers correct and submission can be completed', () => {
-		examinationTimetable.checkAnswersFinal(['No', 'Myself', 'John Tester', 'test@test.com']);
+		examinationTimetable.checkAnswersSecondtPage(['No', 'Myself', 'John Tester', 'test@test.com']);
 		examinationTimetable.clickButton('Submit');
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
 	});
