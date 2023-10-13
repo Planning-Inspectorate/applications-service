@@ -1,6 +1,8 @@
+const uuid = require('uuid');
+const logger = require('../lib/logger');
 const { textToPdf } = require('./pdf');
 const { md5 } = require('./md5');
-const uuid = require('uuid');
+const { upload } = require('../lib/blobStorage');
 
 const generateRepresentationPDF = (submissionId, submissionRepresentation, fileName) => {
 	const file = textToPdf(`Submission ID: ${submissionId}\n\n${submissionRepresentation}`);
@@ -15,11 +17,13 @@ const generateRepresentationPDF = (submissionId, submissionRepresentation, fileN
 	};
 };
 
-// TODO: ASB-1830 - upload file data, return guid
 const uploadToBlobStorage = async (file) => {
 	const blobGuid = uuid.v4();
 	const path = `${blobGuid}/${file.originalName}`;
-	console.log(`Not Implemented: Upload file to blob at ${path}`);
+
+	logger.info(`Uploading file to blob storage at path ${path}`);
+	await upload(file.buffer, file.mimeType, path);
+
 	return blobGuid;
 };
 

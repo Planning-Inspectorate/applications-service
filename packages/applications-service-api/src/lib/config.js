@@ -42,6 +42,12 @@ module.exports = {
 				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription',
 				DEADLINE_SUBMISSION: 'deadline-submission-topic'
 			}
+		},
+		blobStorage: {
+			deadlineSubmissions: {
+				url: process.env.BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_URL,
+				container: process.env.BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_CONTAINER
+			}
 		}
 	},
 	db: {},
