@@ -1,16 +1,22 @@
 const moment = require('moment');
 const config = require('../lib/config');
+const ApiError = require('../error/apiError');
 const { createNISubmission, completeNISubmission } = require('./submission.ni.service');
 const { publishDeadlineSubmission } = require('./backoffice.publish.service');
 const { generateRepresentationPDF, uploadToBlobStorage } = require('../utils/file');
 const { getDate } = require('../utils/date-utils');
+const { getApplication } = require('./application.service');
+const { sendSubmissionNotification } = require('../lib/notify');
 
 const createSubmission = async (submission) =>
 	isBackOfficeSubmission(submission.metadata.caseReference)
 		? createBackOfficeSubmission(submission)
 		: createNISubmission(submission);
 
-const completeSubmission = async (submissionId) => completeNISubmission(submissionId);
+const completeSubmission = async (submissionDetails) =>
+	isBackOfficeSubmission(submissionDetails.caseReference)
+		? completeBackOfficeSubmission(submissionDetails)
+		: completeNISubmission(submissionDetails.submissionId);
 
 const createBackOfficeSubmission = async (submission) => {
 	const { metadata } = submission;
@@ -35,6 +41,26 @@ const createBackOfficeSubmission = async (submission) => {
 
 const generateSubmissionId = (caseReference) =>
 	`${caseReference}-${moment(getDate()).format('DDMMYYHHmmssSSS')}`;
+
+const completeBackOfficeSubmission = async (submissionDetails) => {
+	const { submissionId, caseReference, email } = submissionDetails;
+
+	if (!submissionId) throw ApiError.badRequest("must have required property 'submissionId'");
+	if (!email) throw ApiError.badRequest("must have required property 'email'");
+
+	const application = await getApplication(caseReference);
+	if (!application)
+		throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
+
+	await sendSubmissionNotification({
+		submissionId: submissionId,
+		email: email,
+		project: {
+			name: application.projectName,
+			email: application.projectEmailAddress
+		}
+	});
+};
 
 const isBackOfficeSubmission = (caseReference) =>
 	config.backOfficeIntegration.submissions.postSubmission.caseReferences.includes(caseReference);

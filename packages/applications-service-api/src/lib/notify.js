@@ -64,7 +64,7 @@ const sendSubmissionNotification = async (details) => {
 			'email address': details.email,
 			submission_id: details.submissionId,
 			project_name: details.project.name,
-			project_email: details.project.email
+			project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk'
 		})
 		.setReference(`Submission ${details.submissionId}`)
 		.sendEmail();

@@ -178,20 +178,22 @@ model ProjectUpdate {
 }
 
 model ExaminationTimetable {
-  examinationTimetableId        Int                             @unique @default(autoincrement())
-  caseReference                 String
-  eventId                       Int                             @id
-  type                          String
-  eventTitle                    String
-  description                   String
-  eventDeadlineStartDate        DateTime?
-  date                          DateTime?
-  ExaminationTimetableEventItem ExaminationTimetableEventItem[]
+  examinationTimetableId Int                             @unique @default(autoincrement())
+  caseReference          String
+  eventId                Int                             @id
+  type                   String
+  eventTitle             String
+  description            String
+  eventDeadlineStartDate DateTime?
+  date                   DateTime?
+  eventLineItems         ExaminationTimetableEventItem[]
+
+  @@index([caseReference])
 }
 
 model ExaminationTimetableEventItem {
   eventLineItemId          Int                  @unique @default(autoincrement())
-  eventId                  Int                  @id
+  eventId                  Int
   event                    ExaminationTimetable @relation(fields: [eventId], references: [eventId])
   eventLineItemDescription String
 }

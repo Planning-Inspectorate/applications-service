@@ -202,7 +202,7 @@ paths:
       summary: Returns a CSV file of all applications
       description: Returns a CSV file of all applications
       tags:
-          - Applications
+        - Applications
       responses:
         '200':
           description: Returns a CSV file of all applications
@@ -216,7 +216,7 @@ paths:
                   "TR010001","Accessibility Test","EDF","EN01 - Generating Stations","South West","Somerset - Monday PM 23/12",594934,5636170," -11.543792740342, 100.58954279911",4,"MC 5 09-01-2019 part 3","2020-01-01","","2018-01-01","2019-06-06",,,,,
 
         '404':
-            description: No applications found
+          description: No applications found
 
 
   '/api/v1/interested-party':
@@ -245,7 +245,7 @@ paths:
                     line3: 'London'
                     postcode: 'HE127TY'
                     country: 'UK'
-                  email: 'test@test.com'
+                  email: 'person@example.org'
                   telephone: '0132232432'
               organisation:
                 summary: An example of a request body when submitting on behalf of an organisation
@@ -262,7 +262,7 @@ paths:
                     line3: 'London'
                     postcode: 'CO127FE'
                     country: 'UK'
-                  email: 'test@test.com'
+                  email: 'person@example.org'
                   telephone: '0132232432'
               agent:
                 summary: An example of a request body when submitting on behalf of an agent
@@ -279,7 +279,7 @@ paths:
                       line3: 'Little Whinging'
                       postcode: 'RG12 9FG'
                       country: 'UK'
-                    email: 'harry.potter@hogwarts.org.uk'
+                    email: 'person@example.org'
                     telephone: '0132232432'
                   representor:
                     full-name: 'Hermione Granger'
@@ -763,6 +763,22 @@ paths:
             oneOf:
               - type: string
               - type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                caseReference:
+                  type: string
+                  minLength: 8
+                  maxLength: 10
+                  pattern: '^[A-Za-z]{2}\d{6,8}$'
+                  example: 'EN010116'
+                  description: Case / Project unique identifier
+                email:
+                  type: string
+                  example: 'person@example.org'
       responses:
         '204':
           description: Request was successful
@@ -1058,7 +1074,7 @@ components:
           example: 'Pat'
         ApplicantEmailAddress:
           type: string
-          example: 'david.white@pins.gsi.gov.uk'
+          example: 'person@example.org'
         ApplicantPhoneNumber:
           type: string
           example: '1234'
@@ -1067,7 +1083,7 @@ components:
           example: ''
         ProjectEmailAddress:
           type: string
-          example: 'david.white@pins.gsi.gov.uk'
+          example: 'project@example.org'
         Region:
           type: string
           example: 'Wales'
@@ -1178,7 +1194,7 @@ components:
           example: 'United Kingdom'
         memail:
           type: string
-          example: 'david.white@planninginspectorate.gov.uk'
+          example: 'person@example.org'
         mephone:
           type: string
           example: '0303 111 111'
@@ -1646,7 +1662,7 @@ components:
       properties:
         email:
           type: string
-          example: 'elvin.ali@planninginspectorate.gov.uk'
+          example: 'person@example.org'
 
     Filters:
       type: object
@@ -1805,14 +1821,6 @@ components:
         typeOfEvent:
           type: string
           example: "Deadline"
-        location:
-          type: string
-        dateCreated:
-          type: string
-          example: "2020-02-16 11:21:42"
-        dateLastModified:
-          type: string
-          example: "2020-04-16 15:44:52"
         dateTimeDeadlineStart:
           type: string
           example: "2020-05-16 15:44:52"
@@ -1872,7 +1880,7 @@ components:
           example: Joe Bloggs
         email:
           type: string
-          example: joe@example.org
+          example: person@example.org
         interestedParty:
           type: boolean
           description: Is submission on behalf of an interested party

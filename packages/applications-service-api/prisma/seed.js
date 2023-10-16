@@ -113,7 +113,50 @@ const main = async () => {
 			updateStatus: 'Published'
 		}
 	});
+
+	// Delete any existing timetable events
+	await prismaClient.examinationTimetableEventItem.deleteMany();
+	await prismaClient.examinationTimetable.deleteMany();
+
+	// Exam Preliminary Meeting
+	await createExaminationTimetableWithEventItems({
+		eventId: 1,
+		type: 'Preliminary Meeting',
+		eventTitle: 'Example Preliminary Meeting',
+		description: 'A preliminary meeting will be held to discuss the examination process.',
+		startDate: '2023-06-10',
+		eventItemDescriptions: ['Item 1 Preliminary Description', 'Item 2 Preliminary Description']
+	});
+
+	// Exam Deadline
+	await createExaminationTimetableWithEventItems({
+		eventId: 2,
+		type: 'Deadline',
+		eventTitle: 'Deadline Event',
+		description: 'A deadline meeting description',
+		startDate: '2023-05-10',
+		eventItemDescriptions: ['Item 1 Deadline Description', 'Item 2 Deadline Description']
+	});
 };
+
+async function createExaminationTimetableWithEventItems(data) {
+	await prismaClient.examinationTimetable.create({
+		data: {
+			caseReference: 'BC0110001',
+			eventId: data.eventId,
+			type: data.type,
+			eventTitle: data.eventTitle,
+			description: data.description,
+			eventDeadlineStartDate: new Date(data.startDate),
+			date: new Date(data.startDate),
+			eventLineItems: {
+				create: data.eventItemDescriptions.map((description) => ({
+					eventLineItemDescription: description
+				}))
+			}
+		}
+	});
+}
 
 main()
 	.then(async () => {

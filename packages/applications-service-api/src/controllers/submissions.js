@@ -10,7 +10,11 @@ const createSubmissionController = async (req, res) => {
 };
 
 const completeSubmissionController = async (req, res) => {
-	await completeSubmission(req.params.submissionId);
+	await completeSubmission({
+		submissionId: req.params.submissionId,
+		caseReference: req.body?.caseReference,
+		email: req.body?.email
+	});
 	return res.sendStatus(StatusCodes.NO_CONTENT);
 };
 
