@@ -108,7 +108,7 @@ describe('/api/v1/submissions', () => {
 			let response;
 
 			describe('submission with written representation', () => {
-				const generatedPDFFileName = `Written-Representation-${requestSubmissionId}.pdf`;
+				const generatedPDFFileName = `Written-Representation.pdf`;
 
 				describe('request with submissionId provided', () => {
 					beforeEach(async () => {
@@ -145,8 +145,6 @@ describe('/api/v1/submissions', () => {
 				});
 
 				describe('request with no submissionId', () => {
-					const generatedPDFFileName = `Written-Representation-${mockGeneratedSubmissionId}.pdf`;
-
 					beforeEach(async () => {
 						getDate.mockReturnValueOnce(new Date()).mockReturnValueOnce(mockTime);
 						response = await submissionRequest().field(
