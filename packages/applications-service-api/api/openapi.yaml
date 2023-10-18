@@ -1821,14 +1821,6 @@ components:
         typeOfEvent:
           type: string
           example: "Deadline"
-        location:
-          type: string
-        dateCreated:
-          type: string
-          example: "2020-02-16 11:21:42"
-        dateLastModified:
-          type: string
-          example: "2020-04-16 15:44:52"
         dateTimeDeadlineStart:
           type: string
           example: "2020-05-16 15:44:52"
