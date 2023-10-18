@@ -14,9 +14,9 @@ const mapBackOfficeTimetableToApi = (timetables) =>
 const createBackOfficeDescription = (timetableDescription, eventType, eventLineItems) => {
 	let description = timetableDescription;
 	if (eventType === 'Deadline') {
-		description += '\r';
+		description += ' \n';
 		eventLineItems.forEach((item) => {
-			description += '*' + item.eventLineItemDescription + '\r';
+			description += '* ' + item.eventLineItemDescription + ' \n';
 		});
 	}
 	return description;
