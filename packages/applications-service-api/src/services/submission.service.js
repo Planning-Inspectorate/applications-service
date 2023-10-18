@@ -45,9 +45,6 @@ const generateSubmissionId = (caseReference) =>
 const completeBackOfficeSubmission = async (submissionDetails) => {
 	const { submissionId, caseReference, email } = submissionDetails;
 
-	if (!submissionId) throw ApiError.badRequest("must have required property 'submissionId'");
-	if (!email) throw ApiError.badRequest("must have required property 'email'");
-
 	const application = await getApplication(caseReference);
 	if (!application)
 		throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
