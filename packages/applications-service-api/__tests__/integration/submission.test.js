@@ -284,6 +284,22 @@ describe('/api/v1/submissions', () => {
 				expect(notifyBuilder.setReference).toHaveBeenCalledWith(`Submission ${submissionId}`);
 				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
 			});
+
+			it('returns 400 error if email is provided but caseReference is missing', async () => {
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					email: 'person@example.org'
+				});
+
+				expect(response.status).toEqual(400);
+			});
+
+			it('returns 400 error if caseReference is provided but email is missing', async () => {
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				expect(response.status).toEqual(400);
+			});
 		});
 	});
 });

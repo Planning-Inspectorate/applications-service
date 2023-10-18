@@ -135,5 +135,25 @@ describe('submissions controller', () => {
 
 			await expect(completeSubmission(req, res)).rejects.toEqual('some error');
 		});
+
+		it.each([[{ email: 'person@example.org' }], [{ caseReference: 'BC0110001' }]])(
+			'throws error if required request body property is missing',
+			async (body) => {
+				await expect(() =>
+					completeSubmission(
+						{
+							...req,
+							body
+						},
+						res
+					)
+				).rejects.toEqual({
+					code: 400,
+					message: {
+						errors: ["must include both 'email' and 'caseReference'"]
+					}
+				});
+			}
+		);
 	});
 });

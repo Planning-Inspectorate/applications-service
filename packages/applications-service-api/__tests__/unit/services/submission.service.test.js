@@ -225,30 +225,6 @@ describe('submission.service', () => {
 					}
 				});
 			});
-
-			it.each([
-				[
-					'submissionId',
-					{
-						caseReference: BACK_OFFICE_CASE_REFERENCE,
-						email: 'person@example.org'
-					}
-				],
-				[
-					'email',
-					{
-						submissionId: 1,
-						caseReference: BACK_OFFICE_CASE_REFERENCE
-					}
-				]
-			])('throws error if %s is missing', async (missingPropertyName, submissionDetails) => {
-				await expect(() => completeSubmission(submissionDetails)).rejects.toEqual({
-					code: 400,
-					message: {
-						errors: [`must have required property '${missingPropertyName}'`]
-					}
-				});
-			});
 		});
 
 		describe('NI case', () => {
