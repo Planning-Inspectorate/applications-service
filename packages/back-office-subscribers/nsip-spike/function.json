@@ -1,0 +1,44 @@
+{
+	"bindings": [
+		{
+			"name": "message",
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"topicName": "nsip-project-update",
+			"subscriptionName": "applications-nsip-project-update-subscription",
+			"connection": "ServiceBusConnection",
+			"accessRights": "listen"
+		},
+		{
+			"name": "projectUpdate",
+			"type": "sql",
+			"direction": "out",
+			"commandText": "dbo.ProjectUpdate",
+			"connectionStringSetting": "SqlConnectionString"
+		},
+		{
+			"name": "currentProjectUpdate",
+			"type": "sql",
+			"direction": "in",
+			"commandText": "select [modifiedAt] from dbo.ProjectUpdate",
+			"commandType": "Text",
+			"connectionStringSetting": "SqlConnectionString"
+		},
+		{
+			"name": "document",
+			"type": "sql",
+			"direction": "out",
+			"commandText": "dbo.Document",
+			"connectionStringSetting": "SqlConnectionString"
+		},
+		{
+			"name": "currentDocument",
+			"type": "sql",
+			"direction": "in",
+			"commandText": "select [modifiedAt] from dbo.Document WHERE [documentId] = @documentId",
+			"commandType": "Text",
+			"connectionStringSetting": "SqlConnectionString"
+		}
+	],
+	"disabled": false
+}
