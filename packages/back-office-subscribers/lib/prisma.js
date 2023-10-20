@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client'); // We copy node_modules from root here on the pipeline so this should already be available.
+const { PrismaClient } = require('@prisma/client'); // Locally we read node modules from the root. On pipeline, we copy node_modules from root here on the pipeline on azure-pipelines-build.yml
 const isProduction = process.env.NODE_ENV === 'production';
 
 let prismaClientInstance;

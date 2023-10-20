@@ -4,60 +4,58 @@ module.exports = async (context, message) => {
 	context.log(`invoking nsip-project-spike function with message: ${JSON.stringify(message)}`);
 
 	const messageTime = new Date(context.bindingData.enqueuedTimeUtc);
-
-	// Table 1: Project Update
 	const newProjectUpdate = message.projectUpdate;
-
-	const projectUpdateRecord = await prismaClient.projectUpdate.findUnique({
-		where: {
-			projectUpdateId: newProjectUpdate.projectUpdateId
-		}
-	});
-
-	context.log({
-		projectUpdateRecord
-	});
-	// If projectUpdateRecord doesn't exist or messageTime is newer than modifiedAt, then upsert
-	if (!projectUpdateRecord || messageTime > new Date(projectUpdateRecord.modifiedAt)) {
-		await prismaClient.projectUpdate.upsert({
-			where: {
-				projectUpdateId: newProjectUpdate.projectUpdateId
-			},
-			update: {
-				...newProjectUpdate,
-				modifiedAt: messageTime
-			},
-			create: {
-				...newProjectUpdate,
-				modifiedAt: messageTime
-			}
-		});
-	}
-	// Table 2: Document
 	const newDocument = message.document;
 
-	const documentRecord = await prismaClient.document.findUnique({
-		where: {
-			documentId: newDocument.documentId
-		}
-	});
-
-	// If documentRecord doesn't exist or messageTime is newer than modifiedAt, then upsert
-	if (!documentRecord || messageTime > new Date(documentRecord.modifiedAt)) {
-		await prismaClient.document.upsert({
+	// Table 1: Project Update
+	// Using transactions to ensure that both tables are updated or neither are
+	return await prismaClient.$transaction(async (tx) => {
+		const projectUpdateRecord = await tx.projectUpdate.findUnique({
 			where: {
-				documentId: newDocument.documentId
-			},
-			update: {
-				...newDocument,
-				modifiedAt: messageTime
-			},
-			create: {
-				...newDocument,
-				modifiedAt: messageTime
+				projectUpdateId: newProjectUpdate.projectUpdateId
 			}
 		});
-	}
+
+		// If projectUpdateRecord doesn't exist or messageTime is newer than modifiedAt, then upsert
+		if (!projectUpdateRecord || messageTime > new Date(projectUpdateRecord.modifiedAt)) {
+			await tx.projectUpdate.upsert({
+				where: {
+					projectUpdateId: newProjectUpdate.projectUpdateId
+				},
+				update: {
+					...newProjectUpdate,
+					modifiedAt: messageTime
+				},
+				create: {
+					...newProjectUpdate,
+					modifiedAt: messageTime
+				}
+			});
+		}
+		// Table 2: Document
+		const documentRecord = await tx.document.findUnique({
+			where: {
+				documentId: newDocument.documentId
+			}
+		});
+
+		// If documentRecord doesn't exist or messageTime is newer than modifiedAt, then upsert
+		if (!documentRecord || messageTime > new Date(documentRecord.modifiedAt)) {
+			await tx.document.upsert({
+				where: {
+					documentId: newDocument.documentId
+				},
+				update: {
+					...newDocument,
+					modifiedAt: messageTime
+				},
+				create: {
+					...newDocument,
+					modifiedAt: messageTime
+				}
+			});
+		}
+	});
 };
 
 // Run the below to get the payload for request
