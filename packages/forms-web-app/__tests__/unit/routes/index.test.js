@@ -8,6 +8,8 @@ const {
 } = require('../../../src/pages/register-of-applications/router');
 const { projectSearchRouter } = require('../../../src/pages/project-search/router');
 const { apiRouter } = require('../../../src/api/router');
+const { processGuideRouter } = require('../../../src/pages/process-guide/router');
+const { haveYourSayGuideRouter } = require('../../../src/pages/have-your-say-guide/router');
 
 describe('routes/index', () => {
 	beforeEach(() => {
@@ -26,6 +28,8 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith('/', registerOfApplicationsRouter);
 		expect(use).toHaveBeenCalledWith(interestedPartyRouter);
 		expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
+		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);
+		expect(use).toHaveBeenCalledWith(processGuideRouter);
 		expect(use).toHaveBeenCalledWith('/api', apiRouter);
 		expect(use.mock.calls.length).toBe(38);
 	});

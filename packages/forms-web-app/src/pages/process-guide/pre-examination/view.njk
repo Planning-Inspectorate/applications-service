@@ -1,0 +1,145 @@
+{% extends "layouts/default.njk" %}
+
+{% from "components/ui/next-step.njk" import uiNextStep %}
+
+{% block pageTitle %}
+	Pre-examination
+{% endblock %}
+
+{% block content %}
+	<h1 class="govuk-heading-xl">
+		{{ processGuide.activeStep.title }}
+	</h1>
+
+	<h2 class="style-contents-list-title govuk-heading-s">
+		Contents
+	</h2>
+
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#preparing-for-the-examination-stage">Preparing for the examination stage</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#registering-to-have-your-say">Registering to have your say</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#preliminary-meeting">Preliminary meeting</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#what-happens-next">What happens next</a>
+		</li>
+		<li>
+			<a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
+		</li>
+	</ol>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 class="govuk-heading-m" id="preparing-for-the-examination-stage">
+					Preparing for the examination stage
+				</h2>
+
+				<p class="govuk-body">
+					The pre-examination stage is where we prepare for an examination.
+					The examining authority is made up of one or more inspectors who will plan for the examination stage.
+				</p>
+
+				<p class="govuk-body">
+					This involves the examining authority making an initial assessment of the issues which will need to be discussed.
+				</p>
+
+				<p class="govuk-body">
+					The examining authority will:
+				</p>
+
+				<ul class="govuk-list govuk-list--bullet">
+					<li>plan what happens during the examination</li>
+					<li>arrange any hearings</li>
+					<li>set draft deadlines for comment</li>
+				</ul>
+
+				<h2 class="govuk-heading-m" id="registering-to-have-your-say">
+					Registering to have your say
+				</h2>
+
+				<p class="govuk-body">
+					You must register during the pre-examination stage to have your say.
+				</p>
+
+				<p class="govuk-body">
+					The registration for each project will be open for at least 28 days to give you time to register.
+					The deadline for registering will be in the applicant's advert, or you can check the project page of this website.
+				</p>
+
+				<p class="govuk-body">
+					There is a separate guide with more information about the steps in the process for <a class="govuk-link" href="{{ haveYourSayGuideURL }}">people or organisations who want to have their say about a national infrastructure project</a>.
+				</p>
+
+				<h2 class="govuk-heading-m" id="preliminary-meeting">
+					Preliminary meeting
+				</h2>
+
+				<p class="govuk-body">
+					The examining authority will hold a preliminary meeting at some point after the register to have your say period closes.
+				</p>
+
+				<p class="govuk-body">
+					Several weeks before this meeting, the rule 6 letter is sent to everyone registered to have their say, official bodies and people whose land is directly affected.
+					The rule 6 letter tells everyone when and where the meeting will be held.
+					It will also include a draft timetable for the examination.
+				</p>
+
+				<p class="govuk-body">
+					You cannot give your views about the proposed development at this meeting.
+				</p>
+
+				<p class="govuk-body">
+					You can talk about:
+				</p>
+
+				<ul class="govuk-list govuk-list--bullet">
+					<li>
+						anything that may affect your ability to attend hearings or meet deadlines, for example other local events happening at the same time or issues with travel or working patterns
+					</li>
+					<li>
+						if there are any suitable local places to hold any hearings that may be required
+					</li>
+					<li>
+						if there are any groups of people who need a different approach to be able to take part in the process
+					</li>
+					<li>
+						any other matters relating to the draft examination timetable
+					</li>
+				</ul>
+
+				<h2 class="govuk-heading-m" id="what-happens-next">
+					What happens next
+				</h2>
+
+				<p class="govuk-body">
+					We will publish the meeting note and a recording on the project section of this website around a week after the preliminary meeting.
+				</p>
+
+				<p class="govuk-body">
+					The rule 8 letter is sent to everyone who registered, as well as official bodies and people whose land is directly affected.
+					This will have details of the examination including the finalised timetable with all deadlines for examination comments.
+				</p>
+
+				<h2 class="govuk-heading-m" id="more-detailed-advice">
+					More detailed advice
+				</h2>
+
+				<p class="govuk-body">
+					You can find more <a class="govuk-link" href="{{ pinsURL.adviceNotes }}">detailed advice in our advice notes</a>.
+				</p>
+
+				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle) }}
+			</div>
+		</div>
+
+		<div class="govuk-grid-column-one-third">
+			{% include "process-guide/_includes/process-guide-steps.njk" %}
+		</div>
+	</div>
+{% endblock %}
