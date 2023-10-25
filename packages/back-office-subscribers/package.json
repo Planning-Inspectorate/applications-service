@@ -4,6 +4,7 @@
 	"description": "",
 	"scripts": {
 		"start": "func start",
+		"start:dev": "npx func start --functions",
 		"lint": "eslint ./",
 		"test": "jest"
 	},

@@ -19,7 +19,7 @@ CREATE TABLE [dbo].[ExaminationTimetable] (
 
 -- CreateTable
 CREATE TABLE [dbo].[ExaminationTimetableEventItem] (
-    [eventLineItemId] INT NOT NULL IDENTITY(1,1),
+    [eventLineItemId] INT NOT NULL,
     [eventLineItemDescription] NVARCHAR(1000) NOT NULL,
     [eventId] INT NOT NULL,
     CONSTRAINT [ExaminationTimetableEventItem_eventLineItemId_key] UNIQUE NONCLUSTERED ([eventLineItemId])
@@ -29,7 +29,7 @@ CREATE TABLE [dbo].[ExaminationTimetableEventItem] (
 CREATE NONCLUSTERED INDEX [ExaminationTimetable_caseReference_idx] ON [dbo].[ExaminationTimetable]([caseReference]);
 
 -- AddForeignKey
-ALTER TABLE [dbo].[ExaminationTimetableEventItem] ADD CONSTRAINT [ExaminationTimetableEventItem_eventId_fkey] FOREIGN KEY ([eventId]) REFERENCES [dbo].[ExaminationTimetable]([eventId]) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE [dbo].[ExaminationTimetableEventItem] ADD CONSTRAINT [ExaminationTimetableEventItem_eventId_fkey] FOREIGN KEY ([eventId]) REFERENCES [dbo].[ExaminationTimetable]([eventId]) ON DELETE CASCADE ON UPDATE CASCADE;
 
 COMMIT TRAN;
 

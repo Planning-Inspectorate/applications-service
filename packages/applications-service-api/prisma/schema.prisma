@@ -194,8 +194,8 @@ model ExaminationTimetable {
 }
 
 model ExaminationTimetableEventItem {
-  eventLineItemId          Int                   @unique @default(autoincrement())
+  eventLineItemId          Int                   @unique
   eventLineItemDescription String
   eventId                  Int
-  ExaminationTimetable     ExaminationTimetable? @relation(fields: [eventId], references: [eventId])
+  ExaminationTimetable     ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
 }
