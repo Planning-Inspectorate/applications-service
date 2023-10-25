@@ -1,0 +1,57 @@
+{% extends "layouts/default.njk" %}
+
+{% set templateID = 'main' %}
+
+{% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({
+		callback: "
+			var $element = document.querySelector('#step-by-step-navigation')
+    	var stepByStepNavigation = new GOVUK.Modules.AppStepNav($element).init()
+    ",
+		src: "/public/scripts/step-by-step-navigation.script.js"
+	}), initiateScriptsConfig) %}
+{% endblock %}
+
+{% block pageTitle %}
+	Have your say guide - {{ haveYourSayGuide.steps.haveYourSayGuide.title }}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<h1 class="govuk-heading-xl">
+				{{ haveYourSayGuide.steps.haveYourSayGuide.title }}
+			</h1>
+
+			<p class="govuk-body">
+				This guide is for individuals and organisations who want to have their say about a project.
+			</p>
+
+			<p class="govuk-body">
+				National infrastructure projects are also called Nationally Significant Infrastructure Projects (NSIP).
+				These are large scale developments like:
+			</p>
+
+			<ul class="govuk-list govuk-list--bullet">
+				<li>offshore wind farms</li>
+				<li>power stations and electric lines</li>
+				<li>motorways and other major roads</li>
+				<li>railways</li>
+				<li>gas pipelines</li>
+			</ul>
+
+			<p class="govuk-body">
+				The process for national infrastructure projects is to decide if a Development Consent Order (DCO) can be granted.
+				A DCO is a legal document that allows an applicant to build their proposed project.
+				The applicant submits an application for a proposed development to the Planning Inspectorate.
+				A panel of independent inspectors called the examining authority examine the project, they conduct the examination of the application, and make a recommendation to the Secretary of State about it the project should go ahead.
+			</p>
+
+			<p class="govuk-body">
+				As part of this process, anyone can have their say about the project and tell us why they think it should or should not go ahead.
+			</p>
+
+			{% include "have-your-say-guide/_includes/have-your-say-guide-steps.njk" %}
+		</div>
+	</div>
+{% endblock %}

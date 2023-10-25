@@ -1,16 +1,6 @@
-{% set recommendationHtml %}
-	The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.
-	<br>
-	<br>
-	<a href='/decision-making-process-guide/recommendation-and-decision' class="govuk-link">
-		Making a recommendation and who makes the final decision.
-	</a>
-{% endset %}
-
-
 {{ govukDetails({
-	summaryText: "Recommendation",
-	html: recommendationHtml,
+	summaryText: processGuideStages.recommendation.title,
+	html: processGuideStages.recommendation.html,
 	open: applicationData.status.text === projectStages[5],
 	classes: 'govuk-!-margin-bottom-1'
 }) }}

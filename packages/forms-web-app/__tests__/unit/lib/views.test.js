@@ -5,16 +5,6 @@ describe('lib/views', () => {
 		expect(VIEW).toEqual({
 			APPLICATION_NUMBER: 'application-number',
 			COOKIES: 'cookies',
-			DCO_PROCESS_GUIDE: {
-				PRE_APPLICATION: 'decision-making-process-guide/pre-application',
-				EXAMINATION_OF_THE_APPLICATION:
-					'decision-making-process-guide/examination-of-the-application',
-				REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
-				PRE_EXAMINATION: 'decision-making-process-guide/pre-examination',
-				RECOMMENDATION_AND_DECISION: 'decision-making-process-guide/recommendation-and-decision',
-				WHAT_HAPPENS_AFTER_THE_DECISION_IS_MADE:
-					'decision-making-process-guide/what-happens-after-the-decision-is-made'
-			},
 			PROJECTS: {
 				PROJECT: 'projects/index',
 				PROJECT_TIMELINE: 'projects/project-timeline',
@@ -95,14 +85,6 @@ describe('lib/views', () => {
 					REGISTRATION_SAVED: 'register/agent/registration-saved',
 					REGISTRATION_COMPLETE: 'register/agent/registration-complete'
 				}
-			},
-			INTERESTED_PARTY_GUIDE: {
-				INTERESTED_PARTY: 'having-your-say-guide/interested-party',
-				HAVE_SAY_PRE_APPLICATION: 'having-your-say-guide/taking-part-pre-application',
-				REGISTER_TO_HAVE_YOUR_SAY: 'having-your-say-guide/registering-have-your-say',
-				GET_INVOLVED_PRELIMINARY_MEETING: 'having-your-say-guide/get-involved-preliminary-meeting',
-				HAVE_SAY_DURING_PROJECT_EXAMINATION: 'having-your-say-guide/have-your-say-examination',
-				AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision'
 			},
 			FOOTER_PAGES: {
 				ACCESSIBILITY: 'footer-pages/accessibility-statement',

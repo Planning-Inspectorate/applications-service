@@ -1,0 +1,45 @@
+{% extends "layouts/default.njk" %}
+
+{% from "components/ui/next-step.njk" import uiNextStep %}
+
+{% block pageTitle %}
+	Process guide - {{ processGuide.activeStep.title }}
+{% endblock %}
+
+{% block content %}
+	<h1 class="govuk-heading-xl">
+		{{ processGuide.activeStep.title }}
+	</h1>
+
+	<h2 class="style-contents-list-title govuk-heading-s">
+		Contents
+	</h2>
+
+	<ol class="govuk-list style-contents-list">
+		<li>
+			<a class="govuk-link" href="#decision-section">About the decision stage</a>
+		</li>
+	</ol>
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
+				<h2 class="govuk-heading-m" id="decision-section">
+					About the decision stage
+				</h2>
+
+				<p class="govuk-body">
+					The Secretary of State then has another 3 months to make the decision.
+					The Secretary of State considers the examining authority’s report to decide if the development should go ahead.
+					When a decision is made, we will publish the decision and report on the relevant project overview page.
+				</p>
+
+				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle) }}
+			</div>
+		</div>
+
+		<div class="govuk-grid-column-one-third">
+			{% include "process-guide/_includes/process-guide-steps.njk" %}
+		</div>
+	</div>
+{% endblock %}

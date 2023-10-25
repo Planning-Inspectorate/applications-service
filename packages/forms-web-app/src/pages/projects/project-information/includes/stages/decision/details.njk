@@ -1,16 +1,6 @@
-{% set decisionHtml %}
-	The decision stage is when the relevant Secretary of State then reviews the examining authority's recommendation report and makes the final decision. They have 3 months to make a decision. 
-	<br>
-	<br>
-	<a href='/decision-making-process-guide/recommendation-and-decision' class="govuk-link">
-		Making a recommendation and who makes the final decision.
-	</a>
-{% endset %}
-
-
 {{ govukDetails({
-	summaryText: "Decision",
-	html: decisionHtml,
+	summaryText: processGuideStages.decision.title,
+	html: processGuideStages.decision.html,
 	open: applicationData.status.text === projectStages[6],
 	classes: 'govuk-!-margin-bottom-1'
 }) }}
