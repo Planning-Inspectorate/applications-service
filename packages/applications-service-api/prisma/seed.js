@@ -94,6 +94,7 @@ const main = async () => {
 		where: { projectUpdateId: 3 },
 		update: {},
 		create: {
+			// exam
 			projectUpdateId: 3,
 			caseReference: 'BC0110001',
 			updateDate: '2023-08-04',
@@ -121,6 +122,7 @@ const main = async () => {
 	// Exam Preliminary Meeting
 	await createExaminationTimetableWithEventItems({
 		eventId: 1,
+		examinationTimetableId: 1,
 		type: 'Preliminary Meeting',
 		eventTitle: 'Example Preliminary Meeting',
 		description: 'A preliminary meeting will be held to discuss the examination process.',
@@ -130,6 +132,7 @@ const main = async () => {
 
 	// Exam Deadline
 	await createExaminationTimetableWithEventItems({
+		examinationTimetableId: 1,
 		eventId: 2,
 		type: 'Deadline',
 		eventTitle: 'Deadline Event',
@@ -142,6 +145,7 @@ const main = async () => {
 async function createExaminationTimetableWithEventItems(data) {
 	await prismaClient.examinationTimetable.create({
 		data: {
+			examinationTimetableId: data.examinationTimetableId,
 			caseReference: 'BC0110001',
 			eventId: data.eventId,
 			type: data.type,
