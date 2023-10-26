@@ -57,6 +57,7 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
 	nunjucksEnv.addGlobal('pinsContactDetails', config.pinsContactDetails);
 	nunjucksEnv.addGlobal('pinsPrivacyNoticeUrl', config.pinsPrivacyNoticeUrl);
+	nunjucksEnv.addGlobal('pinsURL', config.pinsURL);
 	nunjucksEnv.addGlobal('yearNow', getYearNow());
 
 	return nunjucksEnv;

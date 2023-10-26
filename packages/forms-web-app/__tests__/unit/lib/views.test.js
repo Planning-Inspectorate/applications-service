@@ -5,16 +5,6 @@ describe('lib/views', () => {
 		expect(VIEW).toEqual({
 			APPLICATION_NUMBER: 'application-number',
 			COOKIES: 'cookies',
-			DCO_PROCESS_GUIDE: {
-				PRE_APPLICATION: 'decision-making-process-guide/pre-application',
-				EXAMINATION_OF_THE_APPLICATION:
-					'decision-making-process-guide/examination-of-the-application',
-				REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
-				PRE_EXAMINATION: 'decision-making-process-guide/pre-examination',
-				RECOMMENDATION_AND_DECISION: 'decision-making-process-guide/recommendation-and-decision',
-				WHAT_HAPPENS_AFTER_THE_DECISION_IS_MADE:
-					'decision-making-process-guide/what-happens-after-the-decision-is-made'
-			},
 			PROJECTS: {
 				PROJECT: 'projects/index',
 				PROJECT_TIMELINE: 'projects/project-timeline',
