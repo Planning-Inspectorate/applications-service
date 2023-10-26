@@ -75,6 +75,9 @@ module.exports = {
 		adviceNotes:
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},
+	govUK: {
+		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court'
+	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
 	sessionStorage: {
