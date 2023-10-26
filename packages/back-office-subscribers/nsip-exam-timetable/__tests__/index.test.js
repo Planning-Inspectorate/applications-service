@@ -86,7 +86,7 @@ const assertEventsCreated = (message) => {
 				date: new Date(event.date),
 				eventId: event.eventId,
 				eventLineItems: {
-					create: event.eventLineItems.map((eventLineItem) => ({
+					create: event.eventLineItems?.map((eventLineItem) => ({
 						eventLineItemId: eventLineItem.eventLineItemId,
 						eventLineItemDescription: eventLineItem.eventLineItemDescription
 					}))
