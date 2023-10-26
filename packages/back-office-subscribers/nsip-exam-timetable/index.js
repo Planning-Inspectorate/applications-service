@@ -1,7 +1,7 @@
 const { prismaClient } = require('../lib/prisma');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-exam-timetable function with message: ${JSON.stringify(message)}`);
+	context.log(`invoking nsip-exam-timetable function`);
 	const events = message.events || [];
 	const currentTime = new Date();
 
@@ -35,7 +35,7 @@ module.exports = async (context, message) => {
 				await tx.examinationTimetable.create({
 					data: {
 						examinationTimetableId: message.examinationTimetableId,
-						caseReference: message.caseReference,
+						caseReference: message.caseReference || 'WAITING-FOR-BACKOFFICE', // todo - remove this default when back office is sending caseReference
 						type: event.type,
 						eventTitle: event.eventTitle,
 						description: event.description,

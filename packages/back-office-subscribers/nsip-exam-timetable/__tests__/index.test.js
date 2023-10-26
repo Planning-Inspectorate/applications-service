@@ -113,9 +113,7 @@ describe('nsip-exam-timetable', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toBeCalledWith(
-			`invoking nsip-exam-timetable function with message: ${JSON.stringify(mockMessage)}`
-		);
+		expect(mockContext.log).toBeCalledWith(`invoking nsip-exam-timetable function`);
 	});
 
 	it('start transaction', async () => {
