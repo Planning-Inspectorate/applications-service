@@ -12,11 +12,15 @@
 	}), initiateScriptsConfig) %}
 {% endblock %}
 
+{% block pageTitle %}
+  Process guide - {{ processGuide.steps.processGuide.title }}
+{% endblock %}
+
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<h1 class="govuk-heading-xl">
-        {{ pageHeading }}
+        {{ processGuide.steps.processGuide.title }}
       </h1>
 
       <p class="govuk-body">

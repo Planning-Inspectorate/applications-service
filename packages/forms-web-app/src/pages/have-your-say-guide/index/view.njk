@@ -13,25 +13,23 @@
 {% endblock %}
 
 {% block pageTitle %}
-	Having your say about a national infrastructure project - step by step - National Infrastructure Planning
+	Have your say guide - {{ haveYourSayGuide.steps.haveYourSayGuide.title }}
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-
 			<h1 class="govuk-heading-xl">
-				Having your say about a national infrastructure project
+				{{ haveYourSayGuide.steps.haveYourSayGuide.title }}
 			</h1>
 
-			<p class="govuk-body">This guide is for individuals and organisations who want to have their say about a
-				project.
+			<p class="govuk-body">
+				This guide is for individuals and organisations who want to have their say about a project.
 			</p>
 
 			<p class="govuk-body">
-				National infrastructure projects are also called Nationally Significant Infrastructure
-				Projects (NSIP). They are large developments which cross the threshold from a normal planning application
-				because of the impact they may have. This can be developments like:
+				National infrastructure projects are also called Nationally Significant Infrastructure Projects (NSIP).
+				These are large scale developments like:
 			</p>
 
 			<ul class="govuk-list govuk-list--bullet">
@@ -43,19 +41,17 @@
 			</ul>
 
 			<p class="govuk-body">
-				The process for national infrastructure projects is to decide if a Development Consent Order
-				(DCO) can be granted. A DCO is a legal document that allows a developer to build their proposed project. The
-				developer submits an application for a proposed development to the Planning Inspectorate. A panel of independent
-				inspectors examine the project and make a recommendation to the Secretary of State about if the project should
-				go ahead.
+				The process for national infrastructure projects is to decide if a Development Consent Order (DCO) can be granted.
+				A DCO is a legal document that allows an applicant to build their proposed project.
+				The applicant submits an application for a proposed development to the Planning Inspectorate.
+				A panel of independent inspectors called the examining authority examine the project, they conduct the examination of the application, and make a recommendation to the Secretary of State about it the project should go ahead.
 			</p>
 
 			<p class="govuk-body">
-				As part of this process, anyone can have their say about the project and tell us why they
-				think it should or should not go ahead.
+				As part of this process, anyone can have their say about the project and tell us why they think it should or should not go ahead.
 			</p>
 
-			{% include "includes/step-by-step-navigation.njk" %}
+			{% include "have-your-say-guide/_includes/have-your-say-guide-steps.njk" %}
 		</div>
 	</div>
 {% endblock %}
