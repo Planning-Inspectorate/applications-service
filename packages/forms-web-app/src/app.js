@@ -71,22 +71,6 @@ app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets'
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
 
-function isProjectClosed(req, res, next) {
-	const { isPeriodOpen } = req.session;
-
-	if (
-		typeof isPeriodOpen !== 'undefined' &&
-		isPeriodOpen === false &&
-		req.url.includes('register/')
-	) {
-		res.redirect('/register-have-your-say/registration-period-closed');
-	} else {
-		next();
-	}
-}
-
-app.use(isProjectClosed);
-
 // View Engine
 app.set('view engine', 'njk');
 
