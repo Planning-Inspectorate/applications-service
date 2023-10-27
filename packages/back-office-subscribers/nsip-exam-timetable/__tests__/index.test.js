@@ -29,7 +29,6 @@ const mockContext = {
 };
 
 const mockMessage = {
-	examinationTimetableId: 1,
 	caseReference: 'CASE-REF2',
 	events: [
 		{
@@ -41,11 +40,9 @@ const mockMessage = {
 			date: '2023-06-10',
 			eventLineItems: [
 				{
-					eventLineItemId: 1,
 					eventLineItemDescription: 'Item 1 Preliminary Description'
 				},
 				{
-					eventLineItemId: 2,
 					eventLineItemDescription: 'Item 2 Preliminary Description'
 				}
 			]
@@ -60,11 +57,9 @@ const mockMessage = {
 			date: '2023-05-10',
 			eventLineItems: [
 				{
-					eventLineItemId: 3,
 					eventLineItemDescription: 'Item 1 Deadline Description'
 				},
 				{
-					eventLineItemId: 4,
 					eventLineItemDescription: 'Item 2 Deadline Description'
 				}
 			]
@@ -77,7 +72,6 @@ const assertEventsCreated = (message) => {
 	message.events.forEach((event) => {
 		expect(mockCreate).toBeCalledWith({
 			data: {
-				examinationTimetableId: message.examinationTimetableId,
 				caseReference: message.caseReference,
 				type: event.type,
 				eventTitle: event.eventTitle,
@@ -87,7 +81,6 @@ const assertEventsCreated = (message) => {
 				eventId: event.eventId,
 				eventLineItems: {
 					create: event.eventLineItems?.map((eventLineItem) => ({
-						eventLineItemId: eventLineItem.eventLineItemId,
 						eventLineItemDescription: eventLineItem.eventLineItemDescription
 					}))
 				},
@@ -125,7 +118,7 @@ describe('nsip-exam-timetable', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockFindMany).toBeCalledWith({
 			where: {
-				examinationTimetableId: mockMessage.examinationTimetableId
+				caseReference: mockMessage.caseReference
 			},
 			rejectOnNotFound: false,
 			take: 1
@@ -136,14 +129,14 @@ describe('nsip-exam-timetable', () => {
 		beforeAll(() => {
 			mockFindMany.mockResolvedValue([]);
 		});
-		it('creates new events for examinationTimetableId', async () => {
+		it('creates new events for caseReference', async () => {
 			await sendMessage(mockContext, mockMessage);
 			assertEventsCreated(mockMessage);
 		});
 		it('logs message that it is updating events', async () => {
 			await sendMessage(mockContext, mockMessage);
 			expect(mockContext.log).toBeCalledWith(
-				`created / updated events with examinationTimetableId: ${mockMessage.examinationTimetableId}`
+				`created / updated events with caseReference: ${mockMessage.caseReference}`
 			);
 		});
 	});
@@ -152,27 +145,27 @@ describe('nsip-exam-timetable', () => {
 		beforeAll(() => {
 			mockFindMany.mockResolvedValue([
 				{
-					examinationTimetableId: mockMessage.examinationTimetableId,
+					caseReference: mockMessage.caseReference,
 					modifiedAt: new Date('2021-01-01T00:00:00.000Z')
 				}
 			]);
 		});
-		it('deletes existing events for examinationTimetableId', async () => {
+		it('deletes existing events for caseReference', async () => {
 			await sendMessage(mockContext, mockMessage);
 			expect(mockDeleteMany).toBeCalledWith({
 				where: {
-					examinationTimetableId: mockMessage.examinationTimetableId
+					caseReference: mockMessage.caseReference
 				}
 			});
 		});
-		it('creates new events for examinationTimetableId', async () => {
+		it('creates new events for caseReference', async () => {
 			await sendMessage(mockContext, mockMessage);
 			assertEventsCreated(mockMessage);
 		});
 		it('logs message that it is updating events', async () => {
 			await sendMessage(mockContext, mockMessage);
 			expect(mockContext.log).toBeCalledWith(
-				`created / updated events with examinationTimetableId: ${mockMessage.examinationTimetableId}`
+				`created / updated events with caseReference: ${mockMessage.caseReference}`
 			);
 		});
 	});
@@ -181,7 +174,7 @@ describe('nsip-exam-timetable', () => {
 		beforeAll(() => {
 			mockFindMany.mockResolvedValue([
 				{
-					examinationTimetableId: mockMessage.examinationTimetableId,
+					caseReference: mockMessage.caseReference,
 					modifiedAt: new Date('2023-02-01T00:00:00.000Z')
 				}
 			]);
@@ -201,7 +194,7 @@ describe('nsip-exam-timetable', () => {
 		it('logs message that it is skipping update', async () => {
 			await sendMessage(mockContextWithOlderTime, mockMessage);
 			expect(mockContext.log).toBeCalledWith(
-				`skipping update for examinationTimetableId: ${mockMessage.examinationTimetableId} as message is older than existing events`
+				`skipping update of events with caseReference: ${mockMessage.caseReference} as message is older than existing events`
 			);
 		});
 	});

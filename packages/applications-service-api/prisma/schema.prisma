@@ -179,7 +179,6 @@ model ProjectUpdate {
 
 model ExaminationTimetable {
   eventId                Int                             @unique
-  examinationTimetableId Int
   caseReference          String
   type                   String
   eventTitle             String
@@ -194,7 +193,7 @@ model ExaminationTimetable {
 }
 
 model ExaminationTimetableEventItem {
-  eventLineItemId          Int                   @unique
+  id                       Int                   @unique @default(autoincrement())
   eventLineItemDescription String
   eventId                  Int
   ExaminationTimetable     ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)

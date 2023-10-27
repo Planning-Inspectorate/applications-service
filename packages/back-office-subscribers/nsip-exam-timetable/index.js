@@ -4,38 +4,40 @@ module.exports = async (context, message) => {
 	context.log(`invoking nsip-exam-timetable function`);
 	const events = message.events || [];
 	const currentTime = new Date();
+	const caseReference = message.caseReference;
 
 	return await prismaClient.$transaction(async (tx) => {
 		// note: because of the nesting, it's much faster easier to remove and then add any events because back office will send all events
 
 		const event = await tx.examinationTimetable.findMany({
 			where: {
-				examinationTimetableId: message.examinationTimetableId
+				caseReference
 			},
 			rejectOnNotFound: false,
 			take: 1
 		});
 
 		const existingEvent = event?.[0];
-
+		const messageHasEvents = message.events?.length > 0;
 		const shouldUpdate =
-			!existingEvent ||
+			(messageHasEvents && !existingEvent) ||
 			new Date(context.bindingData.enqueuedTimeUtc).toUTCString() >
 				existingEvent.modifiedAt.toUTCString();
 
 		if (shouldUpdate) {
+			context.log(`created / updated events with caseReference: ${caseReference}`);
+
 			// will also remove any eventLineItems due to schema constraints
 			await tx.examinationTimetable.deleteMany({
 				where: {
-					examinationTimetableId: message.examinationTimetableId
+					caseReference
 				}
 			});
 
 			for (const event of events) {
 				await tx.examinationTimetable.create({
 					data: {
-						examinationTimetableId: message.examinationTimetableId,
-						caseReference: message.caseReference || 'WAITING-FOR-BACKOFFICE', // todo - remove this default when back office is sending caseReference
+						caseReference,
 						type: event.type,
 						eventTitle: event.eventTitle,
 						description: event.description,
@@ -44,7 +46,6 @@ module.exports = async (context, message) => {
 						eventId: event.eventId,
 						eventLineItems: {
 							create: event.eventLineItems?.map((eventLineItem) => ({
-								eventLineItemId: eventLineItem.eventLineItemId,
 								eventLineItemDescription: eventLineItem.eventLineItemDescription
 							}))
 						},
@@ -52,14 +53,10 @@ module.exports = async (context, message) => {
 						modifiedAt: currentTime
 					}
 				});
-
-				context.log(
-					`created / updated events with examinationTimetableId: ${message.examinationTimetableId}`
-				);
 			}
 		} else {
 			context.log(
-				`skipping update for examinationTimetableId: ${message.examinationTimetableId} as message is older than existing events`
+				`skipping update of events with caseReference: ${caseReference} as message is older than existing events`
 			);
 		}
 	});

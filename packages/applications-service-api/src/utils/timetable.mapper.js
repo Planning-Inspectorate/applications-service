@@ -1,6 +1,6 @@
 const mapBackOfficeTimetableToApi = (timetables) =>
 	timetables.map((t) => ({
-		id: t.examinationTimetableId,
+		id: t.eventId,
 		uniqueId: t.eventId.toString(),
 		caseReference: t.caseReference,
 		title: t.eventTitle,

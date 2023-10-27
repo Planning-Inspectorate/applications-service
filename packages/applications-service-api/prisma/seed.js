@@ -145,7 +145,6 @@ const main = async () => {
 async function createExaminationTimetableWithEventItems(data) {
 	await prismaClient.examinationTimetable.create({
 		data: {
-			examinationTimetableId: data.examinationTimetableId,
 			caseReference: 'BC0110001',
 			eventId: data.eventId,
 			type: data.type,
@@ -155,7 +154,6 @@ async function createExaminationTimetableWithEventItems(data) {
 			date: new Date(data.startDate),
 			eventLineItems: {
 				create: data.eventItemDescriptions.map((description) => ({
-					eventLineItemId: Math.floor(Math.random() * 1000000),
 					eventLineItemDescription: description
 				}))
 			}
