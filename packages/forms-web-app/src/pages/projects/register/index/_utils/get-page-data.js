@@ -8,7 +8,6 @@ const getPageData = ({ DateOfRelevantRepresentationClose }, periodOpen) => ({
 	),
 	activeId: 'register-index',
 	closeDate: DateOfRelevantRepresentationClose ? formatDate(DateOfRelevantRepresentationClose) : '',
-	headerTitle: 'Register to have your say about a national infrastructure project',
 	periodOpen
 });
 

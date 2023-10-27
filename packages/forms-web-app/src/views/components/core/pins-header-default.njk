@@ -1,24 +1,24 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
 
-{% macro pinsHeaderDefault(title, backLink) %}
-	<header role="banner">
+{% macro pinsHeaderDefault(headerTitle, backLink) %} 
+	 <header role="banner">
 		{{ govukSkipLink({
 			href: '#main-content',
 			text: 'Skip to main content'
 		}) }}
 
 		<div class="pins-header">
-			<div class="govuk-width-container">
-				{% include "components/core/pins-logo.njk" %}
-
-				{% if title %}
-					<span class="pins-header__title">
-            <strong>
-              {{ title }}
-            </strong>
-          </span>
-				{% endif %}
+			<div class="govuk-header__container pins-header__container govuk-width-container">
+				<div class="govuk-header__logo">
+					<span class="govuk-header__logotype">
+						{% include "components/core/pins-logo.njk" %}
+					</span>
+				</div>
+				<div class="govuk-header__content">
+					<span class="govuk-header__service-name">{{ headerTitle }}</span>
+				</div>
 			</div>
 		</div>
 
