@@ -1,4 +1,4 @@
-const { processGuideTitle, processGuideURL, processGuideLinkText } = require('../index/config');
+const { processGuideTitle, processGuideURL } = require('../index/config');
 const {
 	preApplicationTitle,
 	preApplicationContent,
@@ -50,12 +50,7 @@ const processGuideStagesViewModel = (title, content, url, linkText) => ({
 });
 
 const getProcessGuideStages = {
-	processGuide: processGuideStagesViewModel(
-		processGuideTitle,
-		null,
-		processGuideURL,
-		processGuideLinkText
-	),
+	processGuide: processGuideStagesViewModel(processGuideTitle, null, processGuideURL, null),
 	preApplication: processGuideStagesViewModel(
 		preApplicationTitle,
 		preApplicationContent,

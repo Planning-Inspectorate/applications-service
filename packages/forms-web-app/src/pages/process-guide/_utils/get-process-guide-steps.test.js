@@ -56,7 +56,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 					},
 					processGuide: {
 						content: null,
-						linkText: undefined,
+						linkText: null,
 						title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)',
 						url: '/decision-making-process-guide'
 					},

@@ -63,5 +63,6 @@ describe('pages/process-guide/router', () => {
 			addSteps,
 			getPostDecisionController
 		);
+		expect(get).toBeCalledTimes(8);
 	});
 });

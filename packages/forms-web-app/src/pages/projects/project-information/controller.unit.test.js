@@ -109,7 +109,7 @@ describe('projects/project-information/controller', () => {
 							title: 'Pre-examination'
 						},
 						processGuide: {
-							html: '<p class="govuk-body">null</p><a class="govuk-link" href="/decision-making-process-guide">undefined</a>',
+							html: '<p class="govuk-body">null</p><a class="govuk-link" href="/decision-making-process-guide">null</a>',
 							title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)'
 						},
 						recommendation: {
@@ -188,7 +188,7 @@ describe('projects/project-information/controller', () => {
 							title: 'Pre-examination'
 						},
 						processGuide: {
-							html: '<p class="govuk-body">null</p><a class="govuk-link" href="/decision-making-process-guide">undefined</a>',
+							html: '<p class="govuk-body">null</p><a class="govuk-link" href="/decision-making-process-guide">null</a>',
 							title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)'
 						},
 						recommendation: {
