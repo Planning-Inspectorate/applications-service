@@ -1,6 +1,6 @@
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 
-{% macro pinsHeaderLayout(title) %}
+{% macro pinsHeaderLayout(headerTitle) %}
   {% block skipLink %}{% endblock %}
 
   <header role="banner">
@@ -9,18 +9,17 @@
       text: 'Skip to main content'
     }) }}
 
-    <div class="pins-header">
-      <div class="govuk-width-container">
-        {% include "components/core/pins-logo.njk" %}
-
-        {% if title %}
-          <span class="pins-header__title">
-            <strong>
-              {{ title }}
-            </strong>
-          </span>
-        {% endif %}
-      </div>
-    </div>
+		<div class="pins-header">
+			<div class="govuk-header__container pins-header__container govuk-width-container">
+				<div class="govuk-header__logo">
+					<span class="govuk-header__logotype">
+						{% include "components/core/pins-logo.njk" %}
+					</span>
+				</div>
+				<div class="govuk-header__content">
+					<span class="govuk-header__service-name">{{ headerTitle }}</span>
+				</div>
+			</div>
+		</div>
   </header>
 {% endmacro %}

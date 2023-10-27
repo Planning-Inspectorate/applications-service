@@ -208,14 +208,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -289,8 +291,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -1172,14 +1177,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -1253,8 +1260,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -2136,14 +2146,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -2217,8 +2229,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -3100,14 +3115,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -3181,8 +3198,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -4068,14 +4088,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -4149,8 +4171,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -5036,14 +5061,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -5117,8 +5144,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -6000,14 +6030,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -6081,8 +6113,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 
@@ -6962,14 +6997,16 @@ exports[`projects/project-information/controller.component #getProjectInformatio
     
 
     
-	
-	<header role=\\"banner\\">
+	 
+	 <header role=\\"banner\\">
 		<a href=\\"#main-content\\" class=\\"govuk-skip-link\\" data-module=\\"govuk-skip-link\\">Skip to main content</a>
 
 
 		<div class=\\"pins-header\\">
-			<div class=\\"govuk-width-container\\">
-				<svg
+			<div class=\\"govuk-header__container pins-header__container govuk-width-container\\">
+				<div class=\\"govuk-header__logo\\">
+					<span class=\\"govuk-header__logotype\\">
+						<svg
 	aria-hidden=\\"true\\"
 	class=\\"pins-header__logo\\"
 	viewBox=\\"0 0 205.54 55.17\\"
@@ -7043,8 +7080,11 @@ exports[`projects/project-information/controller.component #getProjectInformatio
   <path d=\\"M78.97 0h3v55h-3z\\" />
 </svg>
 
-
-				
+					</span>
+				</div>
+				<div class=\\"govuk-header__content\\">
+					<span class=\\"govuk-header__service-name\\"></span>
+				</div>
 			</div>
 		</div>
 

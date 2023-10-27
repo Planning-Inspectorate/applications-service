@@ -43,7 +43,6 @@ describe('projects/register/index/controller', () => {
 			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
 				activeId: 'register-index',
 				closeDate: '2 January 2023',
-				headerTitle: 'Register to have your say about a national infrastructure project',
 				pageHeading: 'Register to have your say about a national infrastructure project',
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
@@ -77,7 +76,6 @@ describe('projects/register/index/controller', () => {
 			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
 				activeId: 'register-index',
 				closeDate: '2 January 2023',
-				headerTitle: 'Register to have your say about a national infrastructure project',
 				pageHeading: 'Register to have your say about a national infrastructure project',
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
