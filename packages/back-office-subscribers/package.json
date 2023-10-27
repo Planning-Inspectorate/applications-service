@@ -10,7 +10,8 @@
 	},
 	"dependencies": {
 		"lodash.pick": "^4.4.0",
-		"axios": "^1.4.0"
+		"axios": "^1.4.0",
+		"@prisma/client": "^4.12.0"
 	},
 	"devDependencies": {
 		"azure-functions-core-tools": "^4.0.5390",
