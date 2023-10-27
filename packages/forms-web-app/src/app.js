@@ -24,6 +24,7 @@ const routes = require('./routes');
 const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/helpers');
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
+const { setHeaderTitle } = require('./middleware/get-header-title');
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use(flashMessageToNunjucks(nunjucksEnv));
 app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
+app.use(setHeaderTitle);
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
