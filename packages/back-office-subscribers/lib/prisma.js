@@ -5,7 +5,7 @@ let prismaClientInstance;
 const createPrismaClient = () => {
 	if (!prismaClientInstance) {
 		prismaClientInstance = new PrismaClient({
-			log: [{ emit: 'event', level: 'query' }, 'info', 'warn', 'error']
+			log: ['query', 'info', 'warn', 'error']
 		});
 	}
 
