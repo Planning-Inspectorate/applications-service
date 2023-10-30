@@ -58,8 +58,8 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					registrationOpen = isRegistrationOpen(openDate, closeDate);
 				});
 
-				it('should return false', () => {
-					expect(registrationOpen).toEqual(false);
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
 				});
 			});
 		});

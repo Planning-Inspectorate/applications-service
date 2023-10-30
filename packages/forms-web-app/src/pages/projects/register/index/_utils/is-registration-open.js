@@ -1,7 +1,9 @@
 const dayjs = require('dayjs');
 const isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
+const isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
 
 dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 const isRegistrationOpen = (openDate, closedDate) => {
 	const dayToday = dayjs();
@@ -10,7 +12,7 @@ const isRegistrationOpen = (openDate, closedDate) => {
 
 	return (
 		dayToday.isSameOrAfter(registrationOpenDate) &&
-		(dayToday.isBefore(registrationClosedDate) || !closedDate)
+		(dayToday.isSameOrBefore(registrationClosedDate, 'day') || !closedDate)
 	);
 };
 
