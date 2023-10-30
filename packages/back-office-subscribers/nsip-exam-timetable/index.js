@@ -6,6 +6,11 @@ module.exports = async (context, message) => {
 	const currentTime = new Date();
 	const caseReference = message.caseReference;
 
+	if (!caseReference) {
+		context.log(`skipping update of events as caseReference is missing`);
+		return;
+	}
+
 	return await prismaClient.$transaction(async (tx) => {
 		// note: because of the nesting, it's much faster easier to remove and then add any events because back office will send all events
 

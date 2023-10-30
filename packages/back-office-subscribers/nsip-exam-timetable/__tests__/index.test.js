@@ -109,6 +109,12 @@ describe('nsip-exam-timetable', () => {
 		expect(mockContext.log).toBeCalledWith(`invoking nsip-exam-timetable function`);
 	});
 
+	it('skips update if caseReference is missing', async () => {
+		await sendMessage(mockContext, {});
+		expect(mockContext.log).toBeCalledWith(`skipping update of events as caseReference is missing`);
+		expect(mockFindMany).not.toBeCalled();
+	});
+
 	it('start transaction', async () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(prismaClient.$transaction).toBeCalled();
