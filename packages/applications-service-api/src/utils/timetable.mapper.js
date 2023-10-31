@@ -16,7 +16,7 @@ const createBackOfficeDescription = (timetableDescription, eventType, eventLineI
 	if (eventType === 'Deadline') {
 		description += ' \n';
 		eventLineItems.forEach((item) => {
-			description += '* ' + item.eventLineItemDescription + ' \n';
+			description += '* ' + item.eventLineItemDescription + '\r\n';
 		});
 	}
 	return description;

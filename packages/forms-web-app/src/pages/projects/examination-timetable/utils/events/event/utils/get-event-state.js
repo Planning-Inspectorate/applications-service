@@ -13,11 +13,14 @@ const eventStateTagMapper = (text, classes) => ({
 const getEventState = (event) => {
 	let eventStateTag = null;
 
-	const isSubmissionOpen = isTimetableTypeOfEventDeadlineOpen(
-		event.typeOfEvent,
-		event.dateOfEvent,
-		event.dateTimeDeadlineStart
-	);
+	const doesDescriptionDeadlineItems = event.description.includes('* ');
+
+	const isSubmissionOpen =
+		isTimetableTypeOfEventDeadlineOpen(
+			event.typeOfEvent,
+			event.dateOfEvent,
+			event.dateTimeDeadlineStart
+		) && doesDescriptionDeadlineItems;
 
 	if (isSubmissionOpen) eventStateTag = eventStateTagMapper('Open', 'govuk-tag govuk-tag--blue');
 	else if (isTimetableDateOfEventPast(event.dateOfEvent))
