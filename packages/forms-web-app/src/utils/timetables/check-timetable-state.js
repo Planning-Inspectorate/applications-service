@@ -13,6 +13,8 @@ const hasTimetableDeadlineStarted = (dateTimeDeadlineStart) =>
 	setTimeToStartOfDay(dateTimeDeadlineStart) <= getDateNow() ||
 	isNullSQLDate(new Date(dateTimeDeadlineStart));
 
+const hasDeadlineItemsList = (description) => description?.includes('* ');
+
 const isTimetableTypeOfEventDeadlineOpen = (typeOfEvent, dateOfEvent, dateTimeDeadlineStart) =>
 	isTimetableTypeOfEventDeadline(typeOfEvent) &&
 	!isTimetableDateOfEventPast(dateOfEvent) &&
@@ -21,5 +23,6 @@ const isTimetableTypeOfEventDeadlineOpen = (typeOfEvent, dateOfEvent, dateTimeDe
 module.exports = {
 	isTimetableTypeOfEventDeadline,
 	isTimetableDateOfEventPast,
-	isTimetableTypeOfEventDeadlineOpen
+	isTimetableTypeOfEventDeadlineOpen,
+	hasDeadlineItemsList
 };
