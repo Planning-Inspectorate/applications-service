@@ -17,10 +17,13 @@ jest.mock('../../lib/prisma', () => ({
 	}
 }));
 
+const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
+const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
+const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: new Date('2023-01-01T00:00:00.000Z').toUTCString(),
+		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
 		deliveryCount: 1,
 		messageId: 123
 	}
@@ -49,7 +52,7 @@ const mockProject = {
 	publishStatus: 'published',
 	regions: '["a","b"]',
 	sourceSystem: 'ODT',
-	modifiedAt: new Date('2023-01-01T00:00:00.000Z')
+	modifiedAt: mockCurrentTime
 };
 
 const assertUpsert = (mockUpsert, mockProject) => {
@@ -72,7 +75,7 @@ describe('nsip-project', () => {
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(new Date('2023-01-01T00:00:00.000Z'));
+		jest.setSystemTime(mockCurrentTime);
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -116,7 +119,7 @@ describe('nsip-project', () => {
 					...mockContext,
 					bindingData: {
 						...mockContext.bindingData,
-						enqueuedTimeUtc: new Date('2022-01-01T00:00:00.000Z').toUTCString()
+						enqueuedTimeUtc: mockPastTime.toUTCString()
 					}
 				};
 				await sendMessage(mockContextWithOlderTime, mockMessage);
@@ -133,7 +136,7 @@ describe('nsip-project', () => {
 					...mockContext,
 					bindingData: {
 						...mockContext.bindingData,
-						enqueuedTimeUtc: new Date('2024-01-01T00:00:00.000Z').toUTCString()
+						enqueuedTimeUtc: mockFutureTime.toUTCString()
 					}
 				};
 				await sendMessage(mockContextWithNewerTime, mockMessage);
