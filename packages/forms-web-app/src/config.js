@@ -60,7 +60,9 @@ module.exports = {
 		projectMigrationCaseReferences: splitStringToArray(
 			process.env.PROJECT_MIGRATION_CASE_REFERENCES
 		),
-		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
+		generalisedFormSanitisation:
+			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
+		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true
