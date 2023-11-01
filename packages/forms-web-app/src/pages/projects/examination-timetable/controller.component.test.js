@@ -49,21 +49,21 @@ describe('controllers/projects/examination-timetable/controller', () => {
 							timetables: [
 								{
 									dateOfEvent: '2023-01-01',
-									description: '<p>mock description 1</p>',
+									description: 'mock description 1 \r\n * mock item 1',
 									title: 'mock title 1',
 									uniqueId: 'mock id 1',
 									typeOfEvent: 'mock event type 1'
 								},
 								{
 									dateOfEvent: '2023-01-01',
-									description: '<p>mock description 2</p>',
+									description: 'mock description 2 \r\n * mock item 2',
 									title: 'mock title 2',
 									uniqueId: 'mock id 2',
 									typeOfEvent: 'Deadline'
 								},
 								{
 									dateOfEvent: '2023-01-03',
-									description: '<p>mock description 3</p>',
+									description: 'mock description 3 \r\n * mock item 3',
 									title: 'mock title 3',
 									uniqueId: 'mock id 3',
 									typeOfEvent: 'mock event type 3'
@@ -71,7 +71,7 @@ describe('controllers/projects/examination-timetable/controller', () => {
 								{
 									dateOfEvent: '2023-01-03',
 									dateTimeDeadlineStart: '2023-01-02',
-									description: '<p>mock description 4</p>',
+									description: 'mock description 4 \r\n * mock item 4',
 									title: 'mock title 4',
 									uniqueId: 'mock id 4',
 									typeOfEvent: 'Deadline'
@@ -91,7 +91,7 @@ describe('controllers/projects/examination-timetable/controller', () => {
 								displayEvents: true,
 								events: [
 									{
-										description: '<p>mock description 1</p>',
+										description: '<p>mock description 1 </p>\n<ul>\n<li>mock item 1</li>\n</ul>\n',
 										eventTitle: 'mock title 1',
 										id: 'mock id 1',
 										inputId: 'project-examination-timetable',
@@ -106,7 +106,7 @@ describe('controllers/projects/examination-timetable/controller', () => {
 										typeOfEvent: 'mock event type 1'
 									},
 									{
-										description: '<p>mock description 2</p>',
+										description: '<p>mock description 2 </p>\n<ul>\n<li>mock item 2</li>\n</ul>\n',
 										eventTitle: 'mock title 2',
 										id: 'mock id 2',
 										inputId: 'project-examination-timetable',
@@ -128,7 +128,7 @@ describe('controllers/projects/examination-timetable/controller', () => {
 								displayEvents: true,
 								events: [
 									{
-										description: '<p>mock description 3</p>',
+										description: '<p>mock description 3 </p>\n<ul>\n<li>mock item 3</li>\n</ul>\n',
 										eventTitle: 'mock title 3',
 										id: 'mock id 3',
 										inputId: 'project-examination-timetable',
@@ -140,7 +140,7 @@ describe('controllers/projects/examination-timetable/controller', () => {
 										typeOfEvent: 'mock event type 3'
 									},
 									{
-										description: '<p>mock description 4</p>',
+										description: '<p>mock description 4 </p>\n<ul>\n<li>mock item 4</li>\n</ul>\n',
 										eventTitle: 'mock title 4',
 										id: 'mock id 4',
 										inputId: 'project-examination-timetable',

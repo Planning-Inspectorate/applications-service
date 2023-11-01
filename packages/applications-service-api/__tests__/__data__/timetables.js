@@ -61,7 +61,7 @@ const TIMETABLES_BACKOFFICE_RESPONSE = [
 		caseReference: 'BACKOFFICE-CASEID',
 		title: 'Deadline 1A',
 		description:
-			'The ExA is under a duty to complete the Examination of the application by the end of the period of six months \n* description 1 \n* description 2 \n',
+			'The ExA is under a duty to complete the Examination of the application by the end of the period of six months \n* description 1\r\n* description 2\r\n',
 		dateOfEvent: '2020-02-19 11:21:42',
 		typeOfEvent: 'Deadline',
 		dateTimeDeadlineStart: '2020-05-16 15:44:52',
