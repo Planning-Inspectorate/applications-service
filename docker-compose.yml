@@ -75,6 +75,7 @@ services:
     user: node
     container_name: applications-web-app
     environment:
+      ACTIVATE_PLANNED_OUTAGE: 'false'
       APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       FEATURE_REDIS_SESSION_STORE: 'true'
@@ -98,6 +99,7 @@ services:
       GOOGLE_ANALYTICS_ID: G-X21W2S2FN3
       HOST_URL: http://localhost:9004/
       PDF_SERVICE_API_URL: http://pdf-service-api:3000
+      PLANNED_OUTAGE_RESUME_TEXT: 'Sample service resume text'
       PRIVATE_BETA_V1_ROUTES_ONLY: 'false'
       REDIS_CONNECTION_STRING: redis:6379,password=some_redis_password,ssl=False,abortConnect=False
       SESSION_KEY: some_secure_key_goes_here

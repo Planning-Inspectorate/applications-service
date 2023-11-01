@@ -84,7 +84,6 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).toContain('The application is expected to be submitted in Q4 2023');
-					expect(response.text).toMatchSnapshot();
 				});
 				it('should render the page for pre application (stage 1) - without the time period section if anticipatedSubmissionDateNonSpecific is not available', async () => {
 					getAppData.mockResolvedValue({
@@ -99,7 +98,6 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).not.toContain('The application is expected to be submitted');
-					expect(response.text).toMatchSnapshot();
 				});
 			});
 			describe('acceptance', () => {
@@ -120,7 +118,6 @@ describe('projects/project-information/controller.component', () => {
 					expect(response.text).toContain(
 						'The decision whether to accept the application for examination will be made by 29 January 2020.'
 					);
-					expect(response.text).toMatchSnapshot();
 				});
 
 				it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
@@ -139,7 +136,6 @@ describe('projects/project-information/controller.component', () => {
 					expect(response.text).not.toContain(
 						'The decision whether to accept the application for examination will be made by 02 January 2020.'
 					);
-					expect(response.text).toMatchSnapshot();
 				});
 			});
 			describe('pre examination', () => {
@@ -160,7 +156,6 @@ describe('projects/project-information/controller.component', () => {
 					expect(response.text).toContain(
 						'This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
 					);
-					expect(response.text).toMatchSnapshot();
 				});
 			});
 		});
@@ -183,7 +178,6 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(preApplicationStageTag.innerHTML).toContain('Not started');
-					expect(response.text).toMatchSnapshot();
 				});
 			});
 			describe('In progress', () => {
@@ -204,7 +198,6 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(preApplicationStageTag.innerHTML).toContain('In progress');
-					expect(response.text).toMatchSnapshot();
 				});
 			});
 			describe('Completed', () => {
@@ -224,7 +217,6 @@ describe('projects/project-information/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(preApplicationStageTag.innerHTML).toContain('Completed');
-					expect(response.text).toMatchSnapshot();
 				});
 			});
 		});

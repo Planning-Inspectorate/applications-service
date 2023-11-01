@@ -80,6 +80,10 @@ module.exports = {
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
+	plannedServiceOutage: {
+		showOutagePage: process.env.ACTIVATE_PLANNED_OUTAGE === 'true',
+		outageResumeText: process.env.PLANNED_OUTAGE_RESUME_TEXT
+	},
 	sessionStorage: {
 		examination: {
 			name: 'examination',

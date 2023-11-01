@@ -22,8 +22,7 @@ const getRegister = async (req, res) => {
 		req.session.caseRef = req.params.case_ref;
 		req.session.appData = appData;
 		req.session.projectName = appData.ProjectName;
-		req.session.isPeriodOpen = periodOpen;
-		req.session.registerJourneyStarted = true;
+		req.session.registerJourneyStarted = periodOpen;
 
 		res.render(view, getPageData(appData, periodOpen));
 	} else if (response.resp_code === 404) {
