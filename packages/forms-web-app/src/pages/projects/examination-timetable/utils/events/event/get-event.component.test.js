@@ -1,5 +1,8 @@
 const { getEvent } = require('./get-event');
-
+jest.mock('../../../../../../utils/timetables/check-timetable-state', () => ({
+	...jest.requireActual('../../../../../../utils/timetables/check-timetable-state'),
+	hasDeadlineItemsList: jest.fn().mockReturnValue(true)
+}));
 describe('controllers/projects/examination-timetable/utils/events/event/get-event', () => {
 	describe('#getEvent', () => {
 		describe('When getting the data for an event', () => {

@@ -37,6 +37,7 @@ const main = async () => {
 			stage4ExtensionToExamCloseDate: null,
 			stage5ExtensionToRecommendationDeadline: null,
 			dateOfRecommendations: null,
+			dateOfNonAcceptance: new Date('2021-06-10'),
 			confirmedDateOfDecision: null,
 			stage5ExtensionToDecisionDeadline: null,
 			dateProjectWithdrawn: null,
@@ -126,7 +127,8 @@ const main = async () => {
 		type: 'Preliminary Meeting',
 		eventTitle: 'Example Preliminary Meeting',
 		description: 'A preliminary meeting will be held to discuss the examination process.',
-		startDate: '2023-06-10',
+		eventDeadlineStartDate: '2023-06-10',
+		date: '2023-07-10',
 		eventItemDescriptions: ['Item 1 Preliminary Description', 'Item 2 Preliminary Description']
 	});
 
@@ -137,7 +139,8 @@ const main = async () => {
 		type: 'Deadline',
 		eventTitle: 'Deadline Event',
 		description: 'A deadline meeting description',
-		startDate: '2023-05-10',
+		eventDeadlineStartDate: '2023-06-10',
+		date: '2025-05-10',
 		eventItemDescriptions: ['Item 1 Deadline Description', 'Item 2 Deadline Description']
 	});
 };
@@ -150,8 +153,8 @@ async function createExaminationTimetableWithEventItems(data) {
 			type: data.type,
 			eventTitle: data.eventTitle,
 			description: data.description,
-			eventDeadlineStartDate: new Date(data.startDate),
-			date: new Date(data.startDate),
+			eventDeadlineStartDate: new Date(data.eventDeadlineStartDate),
+			date: new Date(data.date),
 			eventLineItems: {
 				create: data.eventItemDescriptions.map((description) => ({
 					eventLineItemDescription: description
