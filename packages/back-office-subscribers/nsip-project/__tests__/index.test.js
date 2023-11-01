@@ -1,7 +1,7 @@
 const sendMessage = require('../index');
 const { prismaClient } = require('../../lib/prisma');
 
-const mockFindOne = jest.fn();
+const mockFindUnique = jest.fn();
 const mockUpsert = jest.fn();
 
 jest.mock('../../lib/prisma', () => ({
@@ -9,7 +9,7 @@ jest.mock('../../lib/prisma', () => ({
 		$transaction: jest.fn().mockImplementation((callback) =>
 			callback({
 				project: {
-					findOne: mockFindOne,
+					findUnique: mockFindUnique,
 					upsert: mockUpsert
 				}
 			})
@@ -67,7 +67,7 @@ const assertUpsert = (mockUpsert, mockProject) => {
 
 describe('nsip-project', () => {
 	beforeEach(() => {
-		mockFindOne.mockReset();
+		mockFindUnique.mockReset();
 		mockUpsert.mockReset();
 	});
 	beforeAll(() => {
@@ -87,7 +87,7 @@ describe('nsip-project', () => {
 		expect(mockContext.log).toHaveBeenCalledWith(
 			'skipping update of events as caseReference is missing'
 		);
-		expect(mockFindOne).not.toHaveBeenCalled();
+		expect(mockFindUnique).not.toHaveBeenCalled();
 	});
 	it('start transaction', async () => {
 		await sendMessage(mockContext, mockMessage);
@@ -95,7 +95,7 @@ describe('nsip-project', () => {
 	});
 	it('finds existing project to determine if it should update', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockFindOne).toHaveBeenCalledWith({
+		expect(mockFindUnique).toHaveBeenCalledWith({
 			where: {
 				caseReference: mockMessage.caseReference
 			}
@@ -103,7 +103,7 @@ describe('nsip-project', () => {
 	});
 	describe('when no project exists in database', () => {
 		it('creates new project for caseReference', async () => {
-			mockFindOne.mockResolvedValue(null);
+			mockFindUnique.mockResolvedValue(null);
 			await sendMessage(mockContext, mockMessage);
 			assertUpsert(mockUpsert, mockProject);
 		});
@@ -111,7 +111,7 @@ describe('nsip-project', () => {
 	describe('when project exists in database', () => {
 		describe('and the message is older than existing project', () => {
 			it('skips update', async () => {
-				mockFindOne.mockResolvedValue(mockProject);
+				mockFindUnique.mockResolvedValue(mockProject);
 				const mockContextWithOlderTime = {
 					...mockContext,
 					bindingData: {
@@ -128,7 +128,7 @@ describe('nsip-project', () => {
 		});
 		describe('and the message is newer than existing project', () => {
 			it('updates project', async () => {
-				mockFindOne.mockResolvedValue(mockProject);
+				mockFindUnique.mockResolvedValue(mockProject);
 				const mockContextWithNewerTime = {
 					...mockContext,
 					bindingData: {
