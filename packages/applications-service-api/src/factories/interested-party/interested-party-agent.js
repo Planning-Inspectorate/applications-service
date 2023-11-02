@@ -11,7 +11,7 @@ module.exports = class OrgIP extends InterestedParty {
 	}
 
 	get(data) {
-		const { behalf, case_ref: caseref } = data;
+		const { behalf, case_ref: caseref, comment: therep } = data;
 
 		const {
 			'full-name': youname,
@@ -43,9 +43,10 @@ module.exports = class OrgIP extends InterestedParty {
 			country: agcountry
 		} = data.representor.address;
 
-		const interestedParty = {
+		return {
 			caseref,
 			behalf,
+			therep,
 			agorgname,
 			youname,
 			youcounty: representeeOver18 ? consts.over18Values[representeeOver18.toLowerCase()] : '',
@@ -65,8 +66,6 @@ module.exports = class OrgIP extends InterestedParty {
 			agmail,
 			agphone
 		};
-
-		return interestedParty;
 	}
 
 	getEmailingDetails(data) {
@@ -74,74 +73,6 @@ module.exports = class OrgIP extends InterestedParty {
 			email: data.agmail,
 			ipName: data.agname,
 			ipRef: `${data.ID}`
-		};
-	}
-
-	map(data) {
-		const {
-			ID: ipRefNo,
-			// eslint-disable-next-line camelcase
-			caseref: case_ref,
-			behalf,
-			agorgname,
-			youname,
-			youcounty: over18,
-			youmail,
-			youphone,
-			youbuild,
-			youstreet,
-			youtown,
-			youcode,
-			youcountry,
-			agname,
-			agbuild,
-			agstreet,
-			agtown,
-			agcode,
-			agcountry,
-			agmail,
-			agphone,
-			therep
-		} = data;
-
-		const personalData = {
-			ipRefNo,
-			case_ref,
-			behalf,
-			representing: null,
-			representee: {
-				'full-name': youname,
-				'over-18': consts.over18[over18.toLowerCase()],
-				address: {
-					line1: youbuild,
-					line2: youstreet,
-					line3: youtown,
-					postcode: youcode,
-					country: youcountry
-				},
-				email: youmail,
-				telephone: youphone
-			},
-			representor: {
-				'full-name': agname,
-				'over-18': null,
-				address: {
-					line1: agbuild,
-					line2: agstreet,
-					line3: agtown,
-					postcode: agcode,
-					country: agcountry
-				},
-				email: agmail,
-				telephone: agphone,
-				'organisation-name': agorgname
-			}
-		};
-
-		const comments = therep;
-		return {
-			personal_data: { ...personalData },
-			comments
 		};
 	}
 };

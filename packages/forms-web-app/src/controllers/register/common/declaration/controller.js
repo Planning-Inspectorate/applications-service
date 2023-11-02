@@ -5,10 +5,7 @@ const {
 		}
 	}
 } = require('../../../../lib/views');
-const {
-	postRegistrationData,
-	postCommentsData
-} = require('../../../../services/registration.service');
+const { postRegistrationData } = require('../../../../services/registration.service');
 const logger = require('../../../../lib/logger');
 const { viewModel } = require('./viewModel');
 const { getKeyFromUrl } = require('../get-key-from-url');
@@ -34,21 +31,15 @@ const postDeclaration = async (req, res) => {
 		const key = getKeyFromUrl(req.originalUrl);
 
 		const sessionForKey = getSessionBase(session, key);
-		let ipRefNo = sessionForKey?.ipRefNo;
+		sessionForKey.case_ref = case_ref;
 
-		if (!ipRefNo) {
-			sessionForKey.case_ref = case_ref;
-			sessionForKey.mode = session.mode;
-			const registrationData = JSON.stringify(sessionForKey);
-			const response = await postRegistrationData(registrationData);
-			ipRefNo = response.data;
-			sessionForKey.ipRefNo = ipRefNo;
-		}
+		const registrationData = {
+			...sessionForKey,
+			comment: session.comment
+		};
 
-		const commentsData = JSON.stringify({ comments: session.comment, mode: session.mode });
-		if (commentsData && Object.keys(JSON.parse(commentsData)).length) {
-			await postCommentsData(ipRefNo, commentsData);
-		}
+		const response = await postRegistrationData(JSON.stringify(registrationData));
+		sessionForKey.ipRefNo = response.data?.referenceId;
 
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
