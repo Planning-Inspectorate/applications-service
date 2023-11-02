@@ -6,7 +6,7 @@ module.exports = async (context, message) => {
 	const caseReference = message.caseReference;
 
 	if (!caseReference) {
-		context.log(`skipping update of events as caseReference is missing`);
+		context.log(`skipping update as caseReference is missing`);
 		return;
 	}
 
