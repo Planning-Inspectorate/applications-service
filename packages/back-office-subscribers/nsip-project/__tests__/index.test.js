@@ -87,9 +87,7 @@ describe('nsip-project', () => {
 	});
 	it('skips update if caseReference is missing', async () => {
 		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith(
-			'skipping update of events as caseReference is missing'
-		);
+		expect(mockContext.log).toHaveBeenCalledWith('skipping update as caseReference is missing');
 		expect(mockFindUnique).not.toHaveBeenCalled();
 	});
 	it('start transaction', async () => {
