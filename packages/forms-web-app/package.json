@@ -18,7 +18,7 @@
 		"start:dev:client": "webpack --config webpack.config.js --watch",
 		"start:dev:debug": "npm run start:dev:server:debug && npm run start:dev:client && npm run build:sass && npm run watch:sass",
 		"start:dev:server": "nodemon src/server.js | pino-pretty -tlc",
-		"start:dev:server:debug": "nodemon --inspect-brk=0.0.0.0 src/server.js",
+		"start:dev:server:debug": "nodemon --inspect=0.0.0.0 src/server.js",
 		"test": "jest",
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watch --runInBand",

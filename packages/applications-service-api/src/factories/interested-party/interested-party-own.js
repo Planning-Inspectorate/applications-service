@@ -17,7 +17,8 @@ module.exports = class OwnIP extends InterestedParty {
 			telephone: mephone,
 			'over-18': over18,
 			behalf,
-			case_ref: caseref
+			case_ref: caseref,
+			comment: therep
 		} = data;
 
 		const {
@@ -28,9 +29,10 @@ module.exports = class OwnIP extends InterestedParty {
 			country: mecountry
 		} = data.address;
 
-		const interestedParty = {
+		return {
 			caseref,
 			behalf,
+			therep,
 			mename,
 			memail,
 			mephone,
@@ -42,48 +44,6 @@ module.exports = class OwnIP extends InterestedParty {
 			// Do not remove this comment:
 			// Store over18/under18 information in field wp_ipc_relreps.<behalf>county as field over18 does not exist
 			mecounty: consts.over18Values[over18.toLowerCase()]
-		};
-		return interestedParty;
-	}
-
-	map(data) {
-		const {
-			ID: ipRefNo,
-			// eslint-disable-next-line camelcase
-			caseref: case_ref,
-			behalf,
-			mename,
-			mecounty: over18,
-			memail: email,
-			mephone: telephone,
-			mebuild: line1,
-			mestreet: line2,
-			metown: line3,
-			mecode: postcode,
-			mecountry: country,
-			therep
-		} = data;
-
-		const personalData = {
-			ipRefNo,
-			case_ref,
-			behalf,
-			'full-name': mename,
-			'over-18': consts.over18[over18.toLowerCase()],
-			address: {
-				line1,
-				line2,
-				line3,
-				postcode,
-				country
-			},
-			email,
-			telephone
-		};
-		const comments = therep;
-		return {
-			personal_data: { ...personalData },
-			comments
 		};
 	}
 

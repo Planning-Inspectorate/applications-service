@@ -4,8 +4,6 @@ const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const {
 	createInterestedParty,
-	updateComments,
-	confirmEmailAddress
 } = require('../../../src/controllers/interested-party');
 
 const ipDataOwnBehalf = {
@@ -58,6 +56,7 @@ const ipDataOwnBehalf = {
 	web_ref: 1
 };
 
+// eslint-disable-next-line no-unused-vars
 const ipDataOwnBehalfResult = {
 	personal_data: {
 		ipRefNo: 30000120,
@@ -134,6 +133,7 @@ const ipDataOrgBehalf = {
 	web_ref: 1
 };
 
+// eslint-disable-next-line no-unused-vars
 const ipDataOrgBehalfResult = {
 	personal_data: {
 		ipRefNo: 30000135,
@@ -317,102 +317,3 @@ describe('insertInterestedParty', () => {
 	});
 });
 
-describe('updateComments', () => {
-	it('should update comments for party', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				ID: '30000120'
-			},
-			body: {
-				comments: "I don't like traffic"
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await updateComments(req, res);
-
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-	});
-});
-
-describe('confirmEmailAddress on behalf of individual', () => {
-	it('should retrieve an interested party by token from mock', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e1'
-			},
-			body: {
-				email: 'david.white@planninginspectorate.gov.uk'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		const data = res._getData();
-		delete data.id;
-		delete data.createdAt;
-		delete data.updatedAt;
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual({ ...ipDataOwnBehalfResult });
-	});
-
-	it('should return interested party not found when token has been tampered with', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e'
-			},
-			body: {
-				email: 'david.white@planninginspectorate.gov.uk'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-		expect(res._getData()).toEqual({
-			code: 404,
-			errors: ['Interested party 3000012 not found']
-		});
-	});
-
-	it('should return interested party not found when email does not match', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e1'
-			},
-			body: {
-				email: 'david.white@planninginspectorate.gov.u'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-		expect(res._getData()).toEqual({
-			code: 404,
-			errors: ['Interested party 30000120 not found']
-		});
-	});
-});
-
-describe('confirmEmailAddress on behalf of organisation', () => {
-	it('should retrieve an interested party by token from mock', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: '4ff6ae1e750fac271a3447114397ba37b04c807f07047536'
-			},
-			body: {
-				email: 'Mr.Bean@MinistryofCoffeeandSocialAffairs.gov.uk'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		const data = res._getData();
-		delete data.id;
-		delete data.createdAt;
-		delete data.updatedAt;
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual({ ...ipDataOrgBehalfResult });
-	});
-});
