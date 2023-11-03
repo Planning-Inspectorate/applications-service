@@ -69,7 +69,7 @@ const mockDocument = {
 	modifiedAt: mockCurrentTime
 };
 
-const assertDocumentUpsert = (mockUpsert, mockDocument) => {
+const assertDocumentUpsert = () => {
 	expect(mockUpsert).toHaveBeenCalledWith({
 		where: {
 			documentId: mockMessage.documentId
@@ -93,5 +93,68 @@ describe('nsip-document', () => {
 	});
 	afterAll(() => {
 		jest.useRealTimers();
+	});
+
+	it('logs message', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-document function');
+	});
+	it('skips update if documentId is missing', async () => {
+		await sendMessage(mockContext, {});
+		expect(mockContext.log).toHaveBeenCalledWith('skipping update as documentId is missing');
+		expect(mockFindUnique).not.toHaveBeenCalled();
+	});
+	it('start transaction', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(prismaClient.$transaction).toHaveBeenCalled();
+	});
+	it('finds existing document to determine if it should update', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(mockFindUnique).toHaveBeenCalledWith({
+			where: {
+				documentId: mockMessage.documentId
+			}
+		});
+	});
+	describe('when no document exists in database', () => {
+		it('creates new document for documentId', async () => {
+			mockFindUnique.mockResolvedValue(null);
+			await sendMessage(mockContext, mockMessage);
+			assertDocumentUpsert();
+		});
+	});
+
+	describe('when document exists in database', () => {
+		describe('and the message is older than existing document', () => {
+			it('skips update', async () => {
+				mockFindUnique.mockResolvedValue(mockDocument);
+				const mockContextWithOlderTime = {
+					...mockContext,
+					bindingData: {
+						...mockContext.bindingData,
+						enqueuedTimeUtc: mockPastTime.toUTCString()
+					}
+				};
+				await sendMessage(mockContextWithOlderTime, mockMessage);
+				expect(mockUpsert).not.toHaveBeenCalled();
+				expect(mockContext.log).toHaveBeenCalledWith(
+					`skipping update of document with documentId: ${mockMessage.documentId}`
+				);
+			});
+		});
+		describe('and the message is newer than existing document', () => {
+			it('updates document', async () => {
+				mockFindUnique.mockResolvedValue(mockDocument);
+				const mockContextWithNewerTime = {
+					...mockContext,
+					bindingData: {
+						...mockContext.bindingData,
+						enqueuedTimeUtc: mockFutureTime.toUTCString()
+					}
+				};
+				await sendMessage(mockContextWithNewerTime, mockMessage);
+				assertDocumentUpsert();
+			});
+		});
 	});
 });

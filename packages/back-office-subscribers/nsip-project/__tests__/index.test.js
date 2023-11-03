@@ -55,7 +55,7 @@ const mockProject = {
 	modifiedAt: mockCurrentTime
 };
 
-const assertUpsert = (mockUpsert, mockProject) => {
+const assertUpsert = () => {
 	expect(mockUpsert).toHaveBeenCalledWith({
 		where: {
 			caseReference: mockMessage.caseReference
@@ -106,7 +106,7 @@ describe('nsip-project', () => {
 		it('creates new project for caseReference', async () => {
 			mockFindUnique.mockResolvedValue(null);
 			await sendMessage(mockContext, mockMessage);
-			assertUpsert(mockUpsert, mockProject);
+			assertUpsert();
 		});
 	});
 	describe('when project exists in database', () => {
@@ -138,7 +138,7 @@ describe('nsip-project', () => {
 					}
 				};
 				await sendMessage(mockContextWithNewerTime, mockMessage);
-				assertUpsert(mockUpsert, mockProject);
+				assertUpsert();
 			});
 		});
 	});
