@@ -26,8 +26,8 @@ module.exports = async (context, message) => {
 		const messageHasEvents = message.events?.length > 0;
 		const shouldUpdate =
 			(messageHasEvents && !existingEvent) ||
-			new Date(context.bindingData.enqueuedTimeUtc).toUTCString() >
-				existingEvent.modifiedAt.toUTCString();
+			new Date(context.bindingData.enqueuedTimeUtc) >
+				new Date(existingEvent.modifiedAt.toUTCString());
 
 		if (shouldUpdate) {
 			context.log(`created / updated events with caseReference: ${caseReference}`);

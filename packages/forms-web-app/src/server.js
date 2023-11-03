@@ -4,10 +4,19 @@
  * Module dependencies.
  */
 
+const appInsights = require('applicationinsights');
 const http = require('http');
 const config = require('./config');
 const app = require('./app');
 const logger = require('./lib/logger');
+
+if (config.featureFlag.useApplicationInsights) {
+	try {
+		appInsights.setup().start();
+	} catch (err) {
+		logger.warn({ err }, 'Application insights failed to start: ');
+	}
+}
 
 /**
  * Get port from environment and store in Express.

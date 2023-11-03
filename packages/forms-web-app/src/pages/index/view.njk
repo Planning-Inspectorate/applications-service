@@ -1,0 +1,44 @@
+{% extends "layouts/default.njk" %}
+{% from "components/ui/chevron-card.njk" import chevronCard %}
+
+{% block content %}
+    <div class="masthead masthead--full-width masthead--bg-teal">
+        <div class="masthead__content">
+            <h1 class="govuk-heading-xl masthead__title">{{ pageHeading }}</h1>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <p class="masthead__text">
+                        Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities. 
+                    </p>
+                    <p class="masthead__text">
+                        This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales. 
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="homepage-section govuk-!-margin-bottom-6">
+        <h2 class="govuk-heading-m  govuk-!-margin-bottom-6">Information for members of the public</h2>
+        <div class="homepage-section__content">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half">
+                   {{ chevronCard(
+                        'See the process', 
+                        homePageUrls.processGuide,
+                        'Here you can view the stages that an application goes through from start to finish.'
+                    ) }}
+                </div>
+                <div class="govuk-grid-column-one-half">
+                    {{ chevronCard(
+                        'How to have your say on a project',
+                        homePageUrls.haveYourSayGuide,
+                        'Find out everything you need to know about sharing your views on a project.'
+                    ) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

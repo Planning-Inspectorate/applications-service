@@ -133,5 +133,8 @@ module.exports = {
 			algorithm: 'aes-256-ctr',
 			secretKey: process.env.ENCRYPTION_SECRET_KEY || 'x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K'
 		}
+	},
+	featureFlag: {
+		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true'
 	}
 };
