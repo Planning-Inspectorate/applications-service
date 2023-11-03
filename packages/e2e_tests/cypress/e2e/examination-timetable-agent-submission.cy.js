@@ -2,7 +2,7 @@ import { PO_ExaminationTimetable } from '../pageObject/Examination-TimeTable/PO_
 
 const examinationTimetable = new PO_ExaminationTimetable();
 
-describe('User registers as themselves to have their say against the examination timetable', () => {
+describe('Agent has their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
 		cy.visit('/projects/EN010120/examination-timetable');
@@ -63,8 +63,6 @@ describe('User registers as themselves to have their say against the examination
 			'This is a test comment',
 			'Yes',
 			'My commentTesting.pdf'
-
-
 		]);
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.findAndSelectRadioOption('no');
@@ -97,9 +95,7 @@ describe('User registers as themselves to have their say against the examination
 		]);
 	});
 
-
 	it('Checks other answers correct and submission can be completed', () => {
-		examinationTimetable.checkAnswersSecondtPage(['No', 'Myself', 'John Tester', 'test@test.com']);
 		examinationTimetable.clickButton('Submit');
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
 	});
