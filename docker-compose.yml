@@ -35,6 +35,7 @@ services:
       DOCUMENTS_PER_PAGE: 20
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       ENCRYPTION_SECRET_KEY: x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K
+      FEATURE_APPLICATION_INSIGHTS: 'false'
       FILE_UPLOADS_PATH: /opt/app/uploads
       LOGGER_LEVEL: debug
       MYSQL_USERNAME: pins
@@ -78,6 +79,7 @@ services:
       ACTIVATE_PLANNED_OUTAGE: 'false'
       APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
+      FEATURE_APPLICATION_INSIGHTS: 'false'
       FEATURE_REDIS_SESSION_STORE: 'true'
       FEATURE_SAVE_AND_EXIT_OPTION: 'false'
       FEATURE_SHOW_AFFECTED_AREA_SECTION: 'false'

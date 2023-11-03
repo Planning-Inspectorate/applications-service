@@ -31,6 +31,7 @@
 		"@pins/common": "file:../common",
 		"@planning-inspectorate/pins-notify": "^1.0.2",
 		"@prisma/client": "^4.16.2",
+		"applicationinsights": "^2.9.0",
 		"axios": "^1.0.0",
 		"axios-logger": "^2.6.1",
 		"body-parser": "^1.19.0",
