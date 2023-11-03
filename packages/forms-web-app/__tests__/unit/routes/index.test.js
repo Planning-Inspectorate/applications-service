@@ -1,4 +1,5 @@
 const { use } = require('./router-mock');
+const { indexRouter } = require('../../../src/pages/index/router');
 const cookieRouter = require('../../../src/routes/cookies');
 const projectsRouter = require('../../../src/pages/projects/projects.router');
 const footerPagesRouter = require('../../../src/routes/footer-pages');
@@ -21,6 +22,7 @@ describe('routes/index', () => {
 	});
 
 	it('should define the expected routes', () => {
+		expect(use).toHaveBeenCalledWith('/', indexRouter);
 		expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
 		expect(use).toHaveBeenCalledWith('/projects', projectsRouter);
 		expect(use).toHaveBeenCalledWith('/', projectSearchRouter);
@@ -29,6 +31,6 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);
 		expect(use).toHaveBeenCalledWith(processGuideRouter);
 		expect(use).toHaveBeenCalledWith('/api', apiRouter);
-		expect(use.mock.calls.length).toBe(36);
+		expect(use.mock.calls.length).toBe(37);
 	});
 });
