@@ -1,8 +1,14 @@
 .pins-header {
-	padding: govuk-spacing(3) 0;
+	padding-top: 13px;
+	padding-bottom: 13px;
 	color: govuk-colour('white');
 	background-color: #074745;
 	border-bottom: 10px solid #13a19b;
+
+	&__container {
+		border-bottom: 0;
+		padding: 0;
+	}
 
 	&__logo {
 		display: block;
@@ -11,12 +17,10 @@
 		fill: currentColor;
 	}
 
-	&__title {
-		@extend .govuk-body-l;
-
-		display: block;
-		margin: 0;
-		@include govuk-responsive-margin(4, 'top');
-		color: inherit;
+	.govuk-header__content {
+		margin-top: 15px;
+	}
+	.govuk-header__service-name {
+		margin-bottom: 0;
 	}
 }

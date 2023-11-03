@@ -1,15 +1,22 @@
 const config = require('../lib/config');
-const db = require('../models');
+const {
+	getTimetablesByCaseReference: getBackOfficeTimetable
+} = require('../repositories/timetable.backoffice.repository');
+const {
+	getTimetablesByCaseReference: getNITimetable
+} = require('../repositories/timetable.ni.repository');
 
-const getTimetables = async (caseRef) => {
-	return db.Timetable.findAndCountAll({
-		where: {
-			case_reference: caseRef
-		},
-		limit: config.timetableItemsPerPage,
-		order: [['date_of_event', 'ASC']]
-	});
-};
+const { mapBackOfficeTimetableToApi, mapNITimetableToApi } = require('../utils/timetable.mapper');
+
+const getTimetables = async (caseReference) =>
+	isBackOfficeApplication(caseReference)
+		? mapBackOfficeTimetableToApi(await getBackOfficeTimetable(caseReference))
+		: mapNITimetableToApi(await getNITimetable(caseReference));
+
+const isBackOfficeApplication = (caseReference) =>
+	(
+		config.backOfficeIntegration.examinationTimetable.getExaminationTimetable.caseReferences || []
+	).includes(caseReference);
 
 module.exports = {
 	getTimetables

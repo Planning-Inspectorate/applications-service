@@ -1,5 +1,4 @@
 const express = require('express');
-const registrationPeriodClosedRouter = require('./registration-period-closed');
 const typeOfPartyRouter = require('./type-of-party');
 const myselfRegistrationRouter = require('./myself');
 const organisationRegistrationRouter = require('./organisation');
@@ -10,7 +9,6 @@ const { registerMiddleware } = require('./middleware');
 
 const router = express.Router({ mergeParams: true });
 
-router.use('/registration-period-closed', registerMiddleware, registrationPeriodClosedRouter);
 router.use('/who-registering-for', registerMiddleware, typeOfPartyRouter);
 router.use('/myself', registerMiddleware, myselfRegistrationRouter);
 router.use('/organisation', registerMiddleware, organisationRegistrationRouter);

@@ -1,13 +1,14 @@
 const { use } = require('./router-mock');
 const cookieRouter = require('../../../src/routes/cookies');
 const projectsRouter = require('../../../src/pages/projects/projects.router');
-const interestedPartyRouter = require('../../../src/routes/having-your-say-guide');
 const footerPagesRouter = require('../../../src/routes/footer-pages');
 const {
 	registerOfApplicationsRouter
 } = require('../../../src/pages/register-of-applications/router');
 const { projectSearchRouter } = require('../../../src/pages/project-search/router');
 const { apiRouter } = require('../../../src/api/router');
+const { processGuideRouter } = require('../../../src/pages/process-guide/router');
+const { haveYourSayGuideRouter } = require('../../../src/pages/have-your-say-guide/router');
 
 describe('routes/index', () => {
 	beforeEach(() => {
@@ -24,9 +25,10 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith('/projects', projectsRouter);
 		expect(use).toHaveBeenCalledWith('/', projectSearchRouter);
 		expect(use).toHaveBeenCalledWith('/', registerOfApplicationsRouter);
-		expect(use).toHaveBeenCalledWith(interestedPartyRouter);
 		expect(use).toHaveBeenCalledWith('/', footerPagesRouter);
+		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);
+		expect(use).toHaveBeenCalledWith(processGuideRouter);
 		expect(use).toHaveBeenCalledWith('/api', apiRouter);
-		expect(use.mock.calls.length).toBe(38);
+		expect(use.mock.calls.length).toBe(36);
 	});
 });

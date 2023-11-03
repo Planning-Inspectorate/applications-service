@@ -21,7 +21,6 @@ const VIEW = {
 	},
 	REGISTER: {
 		START: 'register/start',
-		REGISTRATION_PERIOD_CLOSED: 'register/registration-period-closed',
 		TYPE_OF_PARTY: 'register/who-registering-for',
 		COMMON: {
 			FULL_NAME_VIEW: 'register/common/full-name',
@@ -82,23 +81,6 @@ const VIEW = {
 		CONFIRM_EMAIL: 'register/confirm-email',
 		TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
 		MISSED_DEADLINE: 'register/missed-the-deadline'
-	},
-	INTERESTED_PARTY_GUIDE: {
-		INTERESTED_PARTY: 'having-your-say-guide/interested-party',
-		HAVE_SAY_PRE_APPLICATION: 'having-your-say-guide/taking-part-pre-application',
-		REGISTER_TO_HAVE_YOUR_SAY: 'having-your-say-guide/registering-have-your-say',
-		GET_INVOLVED_PRELIMINARY_MEETING: 'having-your-say-guide/get-involved-preliminary-meeting',
-		HAVE_SAY_DURING_PROJECT_EXAMINATION: 'having-your-say-guide/have-your-say-examination',
-		AFTER_MAKING_THE_DECISION: 'having-your-say-guide/what-happens-after-decision'
-	},
-	DCO_PROCESS_GUIDE: {
-		PRE_APPLICATION: 'decision-making-process-guide/pre-application',
-		EXAMINATION_OF_THE_APPLICATION: 'decision-making-process-guide/examination-of-the-application',
-		REVIEW_OF_THE_APPLICATION: 'decision-making-process-guide/review-of-the-application',
-		PRE_EXAMINATION: 'decision-making-process-guide/pre-examination',
-		RECOMMENDATION_AND_DECISION: 'decision-making-process-guide/recommendation-and-decision',
-		WHAT_HAPPENS_AFTER_THE_DECISION_IS_MADE:
-			'decision-making-process-guide/what-happens-after-the-decision-is-made'
 	},
 	FOOTER_PAGES: {
 		ACCESSIBILITY: 'footer-pages/accessibility-statement',

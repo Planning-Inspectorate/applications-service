@@ -37,6 +37,7 @@ const main = async () => {
 			stage4ExtensionToExamCloseDate: null,
 			stage5ExtensionToRecommendationDeadline: null,
 			dateOfRecommendations: null,
+			dateOfNonAcceptance: new Date('2021-06-10'),
 			confirmedDateOfDecision: null,
 			stage5ExtensionToDecisionDeadline: null,
 			dateProjectWithdrawn: null,
@@ -94,6 +95,7 @@ const main = async () => {
 		where: { projectUpdateId: 3 },
 		update: {},
 		create: {
+			// exam
 			projectUpdateId: 3,
 			caseReference: 'BC0110001',
 			updateDate: '2023-08-04',
@@ -113,7 +115,54 @@ const main = async () => {
 			updateStatus: 'Published'
 		}
 	});
+
+	// Delete any existing timetable events
+	await prismaClient.examinationTimetableEventItem.deleteMany();
+	await prismaClient.examinationTimetable.deleteMany();
+
+	// Exam Preliminary Meeting
+	await createExaminationTimetableWithEventItems({
+		eventId: 1,
+		examinationTimetableId: 1,
+		type: 'Preliminary Meeting',
+		eventTitle: 'Example Preliminary Meeting',
+		description: 'A preliminary meeting will be held to discuss the examination process.',
+		eventDeadlineStartDate: '2023-06-10',
+		date: '2023-07-10',
+		eventItemDescriptions: ['Item 1 Preliminary Description', 'Item 2 Preliminary Description']
+	});
+
+	// Exam Deadline
+	await createExaminationTimetableWithEventItems({
+		examinationTimetableId: 1,
+		eventId: 2,
+		type: 'Deadline',
+		eventTitle: 'Deadline Event',
+		description: 'A deadline meeting description',
+		eventDeadlineStartDate: '2023-06-10',
+		date: '2025-05-10',
+		eventItemDescriptions: ['Item 1 Deadline Description', 'Item 2 Deadline Description']
+	});
 };
+
+async function createExaminationTimetableWithEventItems(data) {
+	await prismaClient.examinationTimetable.create({
+		data: {
+			caseReference: 'BC0110001',
+			eventId: data.eventId,
+			type: data.type,
+			eventTitle: data.eventTitle,
+			description: data.description,
+			eventDeadlineStartDate: new Date(data.eventDeadlineStartDate),
+			date: new Date(data.date),
+			eventLineItems: {
+				create: data.eventItemDescriptions.map((description) => ({
+					eventLineItemDescription: description
+				}))
+			}
+		}
+	});
+}
 
 main()
 	.then(async () => {

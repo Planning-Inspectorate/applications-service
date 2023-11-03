@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { createSubmission, completeSubmission } = require('../services/submission.service');
 const { getDate } = require('../utils/date-utils');
+const ApiError = require('../error/apiError');
 
 const createSubmissionController = async (req, res) => {
 	const submissionRequestData = buildSubmissionData(req);
@@ -10,11 +11,21 @@ const createSubmissionController = async (req, res) => {
 };
 
 const completeSubmissionController = async (req, res) => {
-	await completeSubmission({
+	const submissionDetails = {
 		submissionId: req.params.submissionId,
 		caseReference: req.body?.caseReference,
 		email: req.body?.email
-	});
+	};
+
+	if (
+		(submissionDetails.caseReference && !submissionDetails.email) ||
+		(submissionDetails.email && !submissionDetails.caseReference)
+	) {
+		throw ApiError.badRequest("must include both 'email' and 'caseReference'");
+	}
+
+	await completeSubmission(submissionDetails);
+
 	return res.sendStatus(StatusCodes.NO_CONTENT);
 };
 

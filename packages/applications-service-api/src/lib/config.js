@@ -35,6 +35,13 @@ module.exports = {
 				)
 			}
 		},
+		interestedParty: {
+			postInterestedParty: {
+				caseReferences: parseCSV(
+					process.env.BACK_OFFICE_INTEGRATION_POST_INTERESTED_PARTY_CASE_REFERENCES
+				)
+			}
+		},
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
@@ -126,5 +133,8 @@ module.exports = {
 			algorithm: 'aes-256-ctr',
 			secretKey: process.env.ENCRYPTION_SECRET_KEY || 'x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K'
 		}
+	},
+	featureFlag: {
+		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true'
 	}
 };

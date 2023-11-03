@@ -7,8 +7,6 @@ const { routesConfig } = require('./config');
 const cookieRouter = require('./cookies');
 const registerRouter = require('./register');
 const { registerRouter: registerPagesRouter } = require('../pages/projects/register/router');
-const interestedPartyRouter = require('./having-your-say-guide');
-const decisionMakingProcessGuideRouter = require('./decision-making-process-guide');
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('../pages/examination/exmaination.router');
@@ -23,6 +21,7 @@ const {
 const { registerSubdirectory } = require('../pages/projects/register/config');
 const { apiSubdirectory } = require('../api/config');
 const { processGuideRouter } = require('../pages/process-guide/router');
+const { haveYourSayGuideRouter } = require('../pages/have-your-say-guide/router');
 
 router.use(routesConfig.project.directory, projectsRouter);
 router.use('/', footerPagesRouter);
@@ -42,14 +41,10 @@ router.use(
 	examinationRouter
 );
 
-router.use(interestedPartyRouter);
-
 router.use('/interested-party/confirm-your-email', confirmEmailRouter);
 
+router.use(haveYourSayGuideRouter);
 router.use(processGuideRouter);
-
-router.use(decisionMakingProcessGuideRouter);
-
 router.use(`/${apiSubdirectory}`, apiRouter);
 
 module.exports = router;

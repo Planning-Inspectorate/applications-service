@@ -60,7 +60,9 @@ module.exports = {
 		projectMigrationCaseReferences: splitStringToArray(
 			process.env.PROJECT_MIGRATION_CASE_REFERENCES
 		),
-		generalisedFormSanitisation: process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true'
+		generalisedFormSanitisation:
+			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
+		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true
@@ -71,8 +73,19 @@ module.exports = {
 		enquiriesEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
 		supportTeamPhoneNumber: '0303 444 5000'
 	},
+	pinsURL: {
+		adviceNotes:
+			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
+	},
+	govUK: {
+		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court'
+	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
+	plannedServiceOutage: {
+		showOutagePage: process.env.ACTIVATE_PLANNED_OUTAGE === 'true',
+		outageResumeText: process.env.PLANNED_OUTAGE_RESUME_TEXT
+	},
 	sessionStorage: {
 		examination: {
 			name: 'examination',
@@ -106,5 +119,10 @@ module.exports = {
 	maps: {
 		osMapsApiKey: process.env.OS_MAPS_API_KEY,
 		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
+	},
+	headerTitles: {
+		getUpdatesAboutProject: 'Get updates about this project',
+		registerToHaveYourSay: 'Register to have your say',
+		examinationHaveYourSay: 'Have your say on an application'
 	}
 };

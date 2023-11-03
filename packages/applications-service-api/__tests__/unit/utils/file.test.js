@@ -3,7 +3,10 @@ jest.mock('uuid');
 const { upload } = require('../../../src/lib/blobStorage');
 const uuid = require('uuid');
 
-const { generateRepresentationPDF, uploadToBlobStorage } = require('../../../src/utils/file');
+const {
+	generateRepresentationPDF,
+	uploadSubmissionFileToBlobStorage
+} = require('../../../src/utils/file');
 
 describe('file utils', () => {
 	describe('generateRepresentationPDF', () => {
@@ -17,7 +20,7 @@ describe('file utils', () => {
 		});
 	});
 
-	describe('uploadToBlobStorage', () => {
+	describe('uploadSubmissionFileToBlobStorage', () => {
 		it('invokes blob storage client with file', async () => {
 			uuid.v4.mockReturnValue('some-uuid');
 			const fileData = {
@@ -26,7 +29,7 @@ describe('file utils', () => {
 				mimeType: 'application/pdf'
 			};
 
-			await uploadToBlobStorage(fileData);
+			await uploadSubmissionFileToBlobStorage(fileData);
 
 			expect(upload).toBeCalledWith(fileData.buffer, fileData.mimeType, 'some-uuid/Test.pdf');
 		});

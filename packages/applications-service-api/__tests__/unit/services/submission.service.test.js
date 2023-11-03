@@ -32,7 +32,10 @@ const {
 	createNISubmission,
 	completeNISubmission
 } = require('../../../src/services/submission.ni.service');
-const { generateRepresentationPDF, uploadToBlobStorage } = require('../../../src/utils/file');
+const {
+	generateRepresentationPDF,
+	uploadSubmissionFileToBlobStorage
+} = require('../../../src/utils/file');
 const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
 const { getApplication } = require('../../../src/services/application.service');
 const { sendSubmissionNotification } = require('../../../src/lib/notify');
@@ -49,7 +52,7 @@ describe('submission.service', () => {
 	describe('createSubmission', () => {
 		describe('Back Office case', () => {
 			const mockGuid = 'd3ae5a1c-6b97-4708-a61f-217670ebaba1';
-			beforeEach(() => uploadToBlobStorage.mockResolvedValueOnce(mockGuid));
+			beforeEach(() => uploadSubmissionFileToBlobStorage.mockResolvedValueOnce(mockGuid));
 
 			describe('submission with submissionId supplied', () => {
 				describe('submission with user uploaded file', () => {
@@ -65,7 +68,7 @@ describe('submission.service', () => {
 
 						const result = await createSubmission(submission);
 
-						expect(uploadToBlobStorage).toBeCalledWith(submission.file);
+						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
 						expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
 						expect(result).toEqual({ submissionId: submission.metadata.submissionId });
 					});
@@ -94,7 +97,9 @@ describe('submission.service', () => {
 
 						const result = await createSubmission(submission);
 
-						expect(uploadToBlobStorage).toBeCalledWith(generatedRepresentationFileData);
+						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(
+							generatedRepresentationFileData
+						);
 						expect(publishDeadlineSubmission).toBeCalledWith(
 							{
 								...submission,
@@ -125,7 +130,7 @@ describe('submission.service', () => {
 
 						const result = await createSubmission(submission);
 
-						expect(uploadToBlobStorage).toBeCalledWith(submission.file);
+						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
 						expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
 						expect(result).toEqual({ submissionId: 'BC0110001-301223110613245' });
 					});
@@ -155,7 +160,9 @@ describe('submission.service', () => {
 
 						const result = await createSubmission(submission);
 
-						expect(uploadToBlobStorage).toBeCalledWith(generatedRepresentationFileData);
+						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(
+							generatedRepresentationFileData
+						);
 						expect(publishDeadlineSubmission).toBeCalledWith(
 							{
 								...submission,
@@ -215,30 +222,6 @@ describe('submission.service', () => {
 					code: 404,
 					message: {
 						errors: ['Project with case reference BC0110001 not found']
-					}
-				});
-			});
-
-			it.each([
-				[
-					'submissionId',
-					{
-						caseReference: BACK_OFFICE_CASE_REFERENCE,
-						email: 'person@example.org'
-					}
-				],
-				[
-					'email',
-					{
-						submissionId: 1,
-						caseReference: BACK_OFFICE_CASE_REFERENCE
-					}
-				]
-			])('throws error if %s is missing', async (missingPropertyName, submissionDetails) => {
-				await expect(() => completeSubmission(submissionDetails)).rejects.toEqual({
-					code: 400,
-					message: {
-						errors: [`must have required property '${missingPropertyName}'`]
 					}
 				});
 			});

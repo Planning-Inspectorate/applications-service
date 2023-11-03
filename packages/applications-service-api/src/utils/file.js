@@ -17,7 +17,7 @@ const generateRepresentationPDF = (submissionId, submissionRepresentation, fileN
 	};
 };
 
-const uploadToBlobStorage = async (file) => {
+const uploadSubmissionFileToBlobStorage = async (file) => {
 	const blobGuid = uuid.v4();
 	const path = `${blobGuid}/${file.originalName}`;
 
@@ -27,4 +27,4 @@ const uploadToBlobStorage = async (file) => {
 	return blobGuid;
 };
 
-module.exports = { generateRepresentationPDF, uploadToBlobStorage };
+module.exports = { generateRepresentationPDF, uploadSubmissionFileToBlobStorage };

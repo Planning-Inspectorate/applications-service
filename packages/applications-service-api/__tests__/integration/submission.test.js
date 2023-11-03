@@ -108,7 +108,7 @@ describe('/api/v1/submissions', () => {
 			let response;
 
 			describe('submission with written representation', () => {
-				const generatedPDFFileName = `Written-Representation-${requestSubmissionId}.pdf`;
+				const generatedPDFFileName = `Written-Representation.pdf`;
 
 				describe('request with submissionId provided', () => {
 					beforeEach(async () => {
@@ -145,8 +145,6 @@ describe('/api/v1/submissions', () => {
 				});
 
 				describe('request with no submissionId', () => {
-					const generatedPDFFileName = `Written-Representation-${mockGeneratedSubmissionId}.pdf`;
-
 					beforeEach(async () => {
 						getDate.mockReturnValueOnce(new Date()).mockReturnValueOnce(mockTime);
 						response = await submissionRequest().field(
@@ -285,6 +283,22 @@ describe('/api/v1/submissions', () => {
 				});
 				expect(notifyBuilder.setReference).toHaveBeenCalledWith(`Submission ${submissionId}`);
 				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+			});
+
+			it('returns 400 error if email is provided but caseReference is missing', async () => {
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					email: 'person@example.org'
+				});
+
+				expect(response.status).toEqual(400);
+			});
+
+			it('returns 400 error if caseReference is provided but email is missing', async () => {
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				expect(response.status).toEqual(400);
 			});
 		});
 	});

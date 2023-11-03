@@ -11,6 +11,7 @@ const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanu
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const formSanitisationMiddleware = require('./middleware/form-sanitisation');
+const { plannedOutage } = require('./middleware/planned-outage');
 const {
 	setLocalslDisplayCookieBannerValue
 } = require('./middleware/set-locals-display-cookie-banner-value');
@@ -24,6 +25,7 @@ const routes = require('./routes');
 const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/helpers');
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
+const { setHeaderTitle } = require('./middleware/get-header-title');
 
 const app = express();
 
@@ -64,29 +66,17 @@ app.use(flashMessageToNunjucks(nunjucksEnv));
 app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
+app.use(setHeaderTitle);
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
 
-function isProjectClosed(req, res, next) {
-	const { isPeriodOpen } = req.session;
-
-	if (
-		typeof isPeriodOpen !== 'undefined' &&
-		isPeriodOpen === false &&
-		req.url.includes('register/')
-	) {
-		res.redirect('/register-have-your-say/registration-period-closed');
-	} else {
-		next();
-	}
-}
-
-app.use(isProjectClosed);
-
 // View Engine
 app.set('view engine', 'njk');
+
+if (config.plannedServiceOutage.showOutagePage) app.use(plannedOutage);
 
 // Routes
 app.use('/', routes);
