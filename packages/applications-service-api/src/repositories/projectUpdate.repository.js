@@ -10,14 +10,6 @@ const getProjectUpdates = async (caseReference) =>
 		}
 	});
 
-const deleteProjectUpdate = async (projectUpdateId) =>
-	prismaClient.projectUpdate.delete({
-		where: {
-			projectUpdateId: projectUpdateId
-		}
-	});
-
 module.exports = {
-	getProjectUpdates,
-	deleteProjectUpdate
+	getProjectUpdates
 };
