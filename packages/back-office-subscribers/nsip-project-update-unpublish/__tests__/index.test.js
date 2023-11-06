@@ -1,49 +1,50 @@
-jest.mock('axios');
+const sendMessage = require('../index');
 
-const axios = require('axios');
+const mockDeleteMany = jest.fn();
 
-const subject = require('../index');
+jest.mock('../../lib/prisma', () => ({
+	prismaClient: {
+		projectUpdate: {
+			deleteMany: (query) => mockDeleteMany(query)
+		}
+	}
+}));
+
+const mockContext = {
+	log: jest.fn(),
+	bindingData: {
+		enqueuedTimeUtc: '2023-01-01T09:00:00.000Z',
+		deliveryCount: 1,
+		messageId: 123
+	}
+};
+
+const mockMessage = {
+	id: 1
+};
 
 describe('nsip-project-update-unpublish', () => {
-	const message = {
-		id: 952,
-		caseReference: 'BC0110001',
-		updateContentEnglish: 'helloworldfoo3',
-		updateStatus: 'unpublished',
-		updateDate: '2023-08-03T10:35:08.432Z'
-	};
-
-	const env = process.env;
-
-	beforeEach(() => {
-		jest.resetModules();
-		process.env = { ...env };
+	it('logs message', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-project-update-unpublish function');
 	});
 
-	afterEach(() => {
-		process.env = env;
+	it('skips unpublish if projectUpdateId is missing', async () => {
+		await sendMessage(mockContext, {});
+		expect(mockContext.log).toHaveBeenCalledWith(
+			'skipping unpublish as projectUpdateId is missing'
+		);
 	});
 
-	describe('index', () => {
-		it('invokes api delete with project update id from message', async () => {
-			process.env.APPLICATIONS_SERVICE_API_URL = 'https://example.org';
-			axios.delete.mockImplementationOnce(() => Promise.resolve());
-
-			const mockContext = {
-				log: jest.fn(),
-				bindingData: {
-					enqueuedTimeUtc: 1,
-					deliveryCount: 1,
-					messageId: 123
-				},
-				bindings: {
-					projectUpdate: jest.fn()
-				}
-			};
-
-			await subject(mockContext, message);
-
-			expect(axios.delete).toBeCalledWith(`https://example.org/api/v1/project-updates/952`);
+	it('unpublishes project update', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(mockDeleteMany).toHaveBeenCalledWith({
+			where: {
+				projectUpdateId: mockMessage.id
+			}
 		});
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`unpublished project update with id: ${mockMessage.id}`
+		);
 	});
 });

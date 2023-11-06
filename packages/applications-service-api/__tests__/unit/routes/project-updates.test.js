@@ -1,9 +1,6 @@
-const { get, delete: deleteFn } = require('./router-mock');
+const { get } = require('./router-mock');
 const { validateRequestWithOpenAPI } = require('../../../src/middleware/validator/openapi');
-const {
-	getProjectUpdates,
-	deleteProjectUpdate
-} = require('../../../src/controllers/project-updates');
+const { getProjectUpdates } = require('../../../src/controllers/project-updates');
 
 jest.mock('../../../src/middleware/parseFormDataProperties');
 jest.mock('@pins/common/src/utils/async-route');
@@ -34,15 +31,5 @@ describe('routes/project-updates', () => {
 			asyncRouteMock(getProjectUpdates)
 		);
 		expect(asyncRouteMockValue).toHaveBeenCalledWith(getProjectUpdates);
-
-		expect(parseIntegerParamMock).toBeCalledWith('projectUpdateId');
-
-		expect(deleteFn).toHaveBeenCalledWith(
-			'/:projectUpdateId',
-			parseIntegerParamMockValue,
-			validateRequestWithOpenAPI,
-			asyncRouteMock(deleteProjectUpdate)
-		);
-		expect(asyncRouteMockValue).toHaveBeenCalledWith(deleteProjectUpdate);
 	});
 });
