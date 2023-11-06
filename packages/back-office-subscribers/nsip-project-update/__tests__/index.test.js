@@ -50,7 +50,7 @@ const mockProjectUpdate = {
 	modifiedAt: mockCurrentTime
 };
 
-const assertProjectUpdateUpsert = (mockUpsert) => {
+const assertProjectUpdateUpsert = () => {
 	expect(mockUpsert).toHaveBeenCalledWith({
 		where: {
 			projectUpdateId: 1
@@ -98,7 +98,7 @@ describe('nsip-project-update', () => {
 		it('creates new projectUpdate for projectUpdateId', async () => {
 			mockFindUnique.mockResolvedValue(null);
 			await sendMessage(mockContext, mockMessage);
-			assertProjectUpdateUpsert(mockUpsert);
+			assertProjectUpdateUpsert();
 		});
 	});
 
@@ -131,7 +131,7 @@ describe('nsip-project-update', () => {
 					}
 				};
 				await sendMessage(mockContextWithFutureTime, mockMessage);
-				assertProjectUpdateUpsert(mockUpsert);
+				assertProjectUpdateUpsert();
 			});
 		});
 	});
