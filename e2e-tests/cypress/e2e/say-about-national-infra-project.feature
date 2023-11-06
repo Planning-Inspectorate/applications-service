@@ -27,6 +27,6 @@ Feature: Having your say about a national infrastructure project page
         And I click on "Have your say during the examination of the project" link
         Then I am on the "Have your say during the examination of the project" page
 
-    Scenario: Navigate to What you can do after the decision has been made
-        And I click on "What you can do after the decision has been made" link
-        Then I am on the "What you can do after the decision has been made" page
+    Scenario: Navigate to What happens after a decision has been made
+        And I click on "What happens after a decision has been made" link
+        Then I am on the "what you can do after the decision has been made" page

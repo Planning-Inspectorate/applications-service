@@ -15,18 +15,34 @@ Feature: Pre-application page
         And I verify below links present on Pre-application page
             | Links                                                                    |
             | The pre-application stage                                                |
-            | About the pre-application service for developers                         |
+            | About the pre-application service for applicants                         |
             | Advice for local authorities at the pre-application stage                |
             | More detailed advice                                                     |
 
-    Scenario: click on What happens during the preparation for the Examination link
-        And I click on "What happens during the preparation for the examination" link
-        Then I am on the "pre-examination" page
+    Scenario: click on Find out what you can do at this stage and check our detailed guides link
+        And I click on "Find out what you can do at this stage and check our detailed guides" link
+        Then I am on the "Pre-application" page
 
-    Scenario: click on What happens at the Examination of the application link
-        And I click on "What happens at the examination of the application" link
-        Then I am on the "examination of the application" page
+    Scenario: click on How the acceptance stage works and what happens next link
+        And I click on "How the acceptance stage works and what happens next" link
+        Then I am on the "Acceptance" page
 
-    Scenario: click on Making a recommendation and who makes the final decision link
-        And I click on "Making a recommendation and who makes the final decision" link
-        Then I am on the "recommendation and decision" page
+    Scenario: click on What happens during the pre-examination stage link
+        And I click on "What happens during the pre-examination stage" link
+        Then I am on the "Pre-examination" page
+
+    Scenario: click on What happens at the examination stage link
+        And I click on "What happens at the examination stage" link
+        Then I am on the "Examination" page
+
+    Scenario: click on Making a recommendation link
+        And I click on "Making a recommendation" link
+        Then I am on the "Recommendation" page
+
+    Scenario: click on Who makes the final decision link
+        And I click on "Who makes the final decision" link
+        Then I am on the "Decision" page
+
+    Scenario: click on What you can do after the decision has been made link
+        And I click on "What you can do after the decision has been made" link
+        Then I am on the "What happens after the decision is made" page
