@@ -85,7 +85,7 @@ module.exports = (pageName) => {
 		case 'having your say about a national infrastructure project':
 			cy.title().should(
 				'eq',
-				'Having your say about a national infrastructure project - step by step - National Infrastructure Planning'
+				'Have your say guide - Having your say about a national infrastructure project'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -122,21 +122,18 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/interested-party-guide/have-say-pre-application');
 			break;
 		case 'taking part at the pre-application stage':
-			cy.title().should(
-				'eq',
-				'Taking part at the Pre-application stage - National Infrastructure Planning'
-			);
+			cy.title().should('eq', 'Have your say guide - Taking part at the pre-application stage');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Taking part at the Pre-application stage');
+					expect(text).to.contain('Taking part at the pre-application stage');
 				});
 			cy.url().should('include', '/having-your-say-guide/taking-part-pre-application');
 			break;
 		case 'registering to have your say about a national infrastructure project':
 			cy.title().should(
 				'eq',
-				'Registering to have your say about a national infrastructure project - National Infrastructure Planning'
+				'Have your say guide - Registering to have your say about a national infrastructure project'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -148,33 +145,30 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/having-your-say-guide/registering-have-your-say');
 			break;
 		case 'get involved in the preliminary meeting':
-			cy.title().should(
-				'eq',
-				'Get involved in the Preliminary Meeting - National Infrastructure Planning'
-			);
+			cy.title().should('eq', 'Have your say guide - Get involved in the preliminary meeting');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Get involved in the Preliminary Meeting');
+					expect(text).to.contain('Get involved in the preliminary meeting');
 				});
 			cy.url().should('include', '/having-your-say-guide/get-involved-preliminary-meeting');
 			break;
 		case 'have your say during the examination of the project':
 			cy.title().should(
 				'eq',
-				'Have your say during the Examination of the application - National Infrastructure Planning'
+				'Have your say guide - Have your say during the examination of the application'
 			);
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Have your say during the Examination of the application');
+					expect(text).to.contain('Have your say during the examination of the application');
 				});
 			cy.url().should('include', '/having-your-say-guide/have-your-say-examination');
 			break;
 		case 'what you can do after the decision has been made':
 			cy.title().should(
 				'eq',
-				'What you can do after the decision has been made - National Infrastructure Planning'
+				'Have your say guide - What you can do after the decision has been made'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -683,19 +677,19 @@ module.exports = (pageName) => {
 		case 'the decision-making process for national infrastructure projects':
 			cy.title().should(
 				'eq',
-				'The process for nationally significant infrastructure projects (NSIPs)'
+				'Process guide - The process for Nationally Significant Infrastructure Projects (NSIPs)'
 			);
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
 					expect(text).to.contain(
-						'The process for nationally significant infrastructure projects (NSIPs)'
+						'The process for Nationally Significant Infrastructure Projects (NSIPs)'
 					);
 				});
 			cy.url().should('include', '/decision-making-process-guide');
 			break;
 		case 'pre-application':
-			cy.title().should('eq', 'Pre-application');
+			cy.title().should('eq', 'Process guide - Pre-application');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
@@ -703,17 +697,17 @@ module.exports = (pageName) => {
 				});
 			cy.url().should('include', '/pre-application');
 			break;
-		case 'review of the application':
-			cy.title().should('eq', 'Acceptance for examination');
+		case 'acceptance':
+			cy.title().should('eq', 'Process guide - Acceptance');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Acceptance for examination');
+					expect(text).to.contain('Acceptance');
 				});
 			cy.url().should('include', '/review-of-the-application');
 			break;
 		case 'pre-examination':
-			cy.title().should('eq', 'Pre-examination');
+			cy.title().should('eq', 'Process guide - Pre-examination');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
@@ -721,26 +715,35 @@ module.exports = (pageName) => {
 				});
 			cy.url().should('include', '/pre-examination');
 			break;
-		case 'examination of the application':
-			cy.title().should('eq', 'Examination of the application');
+		case 'examination':
+			cy.title().should('eq', 'Process guide - Examination');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Examination of the application');
+					expect(text).to.contain('Examination');
 				});
 			cy.url().should('include', '/examination-of-the-application');
 			break;
-		case 'recommendation and decision':
-			cy.title().should('eq', 'Recommendation and decision');
+		case 'recommendation':
+			cy.title().should('eq', 'Process guide - Recommendation');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Recommendation and decision');
+					expect(text).to.contain('Recommendation');
 				});
-			cy.url().should('include', '/recommendation-and-decision');
+			cy.url().should('include', '/recommendation');
+			break;
+		case 'decision':
+			cy.title().should('eq', 'Process guide - Decision');
+			cy.get('h1')
+				.invoke('text')
+				.then((text) => {
+					expect(text).to.contain('Decision');
+				});
+			cy.url().should('include', '/decision');
 			break;
 		case 'what happens after the decision is made':
-			cy.title().should('eq', 'What happens after the decision is made');
+			cy.title().should('eq', 'Process guide - What happens after the decision is made');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
