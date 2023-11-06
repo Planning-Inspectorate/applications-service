@@ -15,7 +15,6 @@ Pre-requisites:
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "SqlConnectionString": "Server=tcp:localhost,1433;Initial Catalog=pins_applications_development;User ID=<local-db-user>;Password=<local-db-pass>;Encrypt=False;TrustServerCertificate=False;Connection Timeout=30",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_EXTENSION_VERSION": "~4",
     "WEBSITE_NODE_DEFAULT_VERSION": "16",
@@ -27,7 +26,7 @@ Pre-requisites:
 }
 ```
 
-Note the `local.settings.json` example above contains placeholder values. You should replace them with real ones. The database credentials in `SqlConnectionString` are those for your local Azure SQL database. You can find those in [./packages/applications-service-api/.env](./packages/applications-service-api/.env). The `ServiceBusConnection` key will need to retrieved from into Azure Portal (`Service Bus` > `pins-sb-back-office-dev-ukw-001` > `Shared Access Policies`).
+Note the `local.settings.json` example above contains placeholder values. You should replace them with real ones. The `ServiceBusConnection` key will need to retrieved from into Azure Portal (`Service Bus` > `pins-sb-back-office-dev-ukw-001` > `Shared Access Policies`).
 
 then, from within the [./packages/back-office-subscribers](./packages/back-office-subscribers) directory:
 
