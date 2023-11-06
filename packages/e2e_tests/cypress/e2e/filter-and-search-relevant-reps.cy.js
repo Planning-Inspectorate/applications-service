@@ -44,5 +44,13 @@ describe('User can view, filter and search the relevant reps page for a project'
 		relevantReps.returnListOfRepresentations().should('be.visible');
 	});
 
-	it('can click to view the first relevant rep', () => {});
+	it('can click through to view the first relevant rep', () => {
+		relevantReps.clickFirstTitle();
+		relevantReps.returnRepHeading().should('be.visible');
+	});
+
+	it('can navigate back to list of results', () => {
+		relevantReps.clickBackToResults();
+		relevantReps.returnListOfRepresentations().should('be.visible');
+	});
 });

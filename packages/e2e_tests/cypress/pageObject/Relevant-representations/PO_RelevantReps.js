@@ -7,7 +7,10 @@ export class PO_RelevantReps {
 		searchInput: () => cy.get('#searchTerm'),
 		searchButton: () => cy.get('[data-cy="search-button"]'),
 		FilterOption: () => cy.get('[type="checkbox"]'),
-		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]')
+		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]'),
+		relevantRepTitle: () => cy.get('.ui-results-list__item').first().children().first(),
+		relevanteRepHeading: () => cy.get('.govuk-heading-l'),
+		backToResultsLink: () => cy.get('[data-cy="back')
 	};
 
 	clickRelevantRepsLink() {
@@ -44,5 +47,17 @@ export class PO_RelevantReps {
 
 	clickApplyFilters() {
 		this.elements.applyFilterButton().click();
+	}
+
+	clickFirstTitle() {
+		this.elements.relevantRepTitle().click();
+	}
+
+	returnRepHeading() {
+		return this.elements.relevanteRepHeading();
+	}
+
+	clickBackToResults() {
+		this.elements.backToResultsLink().click();
 	}
 }
