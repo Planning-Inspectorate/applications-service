@@ -1,7 +1,7 @@
-const subject = require('../index');
+const sendMessage = require('../index');
 
 describe('nsip-representation', () => {
-	const message = {
+	const mockMessage = {
 		attachments: [
 			{
 				documentId: '8e706443-3404-4b89-9fda-280ab7fd6b68'
@@ -44,7 +44,7 @@ describe('nsip-representation', () => {
 		status: 'VALID'
 	};
 
-	const representation = {
+	const mockRepresentation = {
 		representationId: 6409,
 		caseId: 151,
 		caseReference: 'BC0110001',
@@ -68,47 +68,4 @@ describe('nsip-representation', () => {
 		representedUnder18: false,
 		hasAttachments: true
 	};
-
-	beforeAll(() => jest.useFakeTimers());
-	afterAll(() => jest.useRealTimers());
-
-	describe('index', () => {
-		it('assigns representation data to binding in correct format', async () => {
-			const dateNow = new Date();
-			jest.setSystemTime(dateNow);
-
-			const mockContext = {
-				log: jest.fn(),
-				bindingData: {
-					enqueuedTimeUtc: 1,
-					deliveryCount: 1,
-					messageId: 123
-				},
-				bindings: {
-					representation: jest.fn(),
-					document: jest.fn()
-				}
-			};
-
-			await subject(mockContext, message);
-
-			const expectedRepresentation = {
-				...representation,
-				modifiedAt: dateNow
-			};
-
-			const expectedDocuments = [
-				{
-					documentId: '8e706443-3404-4b89-9fda-280ab7fd6b68',
-					representationId: 6409
-				}
-			];
-
-			expect(mockContext.log).toBeCalledWith(
-				`invoking nsip-representation function with message: ${JSON.stringify(message)}`
-			);
-			expect(mockContext.bindings.representation).toEqual(expectedRepresentation);
-			expect(mockContext.bindings.document).toEqual(expectedDocuments);
-		});
-	});
 });

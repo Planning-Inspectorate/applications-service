@@ -8,20 +8,6 @@
 			"subscriptionName": "applications-nsip-representation",
 			"connection": "ServiceBusConnection",
 			"accessRights": "listen"
-		},
-		{
-			"name": "representation",
-			"type": "sql",
-			"direction": "out",
-			"commandText": "dbo.Representation",
-			"connectionStringSetting": "SqlConnectionString"
-		},
-		{
-			"name": "document",
-			"type": "sql",
-			"direction": "out",
-			"commandText": "dbo.Document",
-			"connectionStringSetting": "SqlConnectionString"
 		}
 	],
 	"disabled": false
