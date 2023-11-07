@@ -18,6 +18,6 @@ And('I click on {string} link', (pageName) => {
 	cy.clickLinkTonavigateToPage(pageName);
 });
 
-Then('I verify below links present on Review of the application page', function (table) {
+Then('I verify below links present on Acceptance page', function (table) {
 	cy.assertLinksPresentOnPage(table);
 });
