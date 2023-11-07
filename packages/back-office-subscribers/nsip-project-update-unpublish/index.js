@@ -1,11 +1,20 @@
-const axios = require('axios');
+const { prismaClient } = require('../lib/prisma');
 
 module.exports = async (context, message) => {
-	context.log(
-		`invoking nsip-project-update-unpublish function with message: ${JSON.stringify(message)}`
-	);
+	context.log(`invoking nsip-project-update-unpublish function`);
+	const projectUpdateId = message.id;
 
-	await axios.delete(
-		`${process.env['APPLICATIONS_SERVICE_API_URL']}/api/v1/project-updates/${message.id}`
-	);
+	if (!projectUpdateId) {
+		context.log(`skipping unpublish as projectUpdateId is missing`);
+		return;
+	}
+
+	// we use deleteMany to avoid the need to check if the project update exists
+	await prismaClient.projectUpdate.deleteMany({
+		where: {
+			projectUpdateId
+		}
+	});
+
+	context.log(`unpublished project update with id: ${projectUpdateId}`);
 };
