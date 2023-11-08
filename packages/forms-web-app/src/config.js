@@ -43,6 +43,7 @@ module.exports = {
 		nsipBaseUrl: process.env.NSIP_BASE_URL || 'https://infrastructure.planninginspectorate.gov.uk' // Used for project links and email subscription
 	},
 	featureFlag: {
+		allowHomepage: process.env.FEATURE_HOME_PAGE === 'true',
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
 		usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
