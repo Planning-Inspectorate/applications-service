@@ -10,6 +10,9 @@ const { projectSearchRouter } = require('../../../src/pages/project-search/route
 const { apiRouter } = require('../../../src/api/router');
 const { processGuideRouter } = require('../../../src/pages/process-guide/router');
 const { haveYourSayGuideRouter } = require('../../../src/pages/have-your-say-guide/router');
+const {
+	accessibilityStatementRouter
+} = require('../../../src/pages/accessibility-statement/router');
 
 describe('routes/index', () => {
 	beforeEach(() => {
@@ -23,6 +26,7 @@ describe('routes/index', () => {
 
 	it('should define the expected routes', () => {
 		expect(use).toHaveBeenCalledWith('/', indexRouter);
+		expect(use).toHaveBeenCalledWith(accessibilityStatementRouter);
 		expect(use).toHaveBeenCalledWith('/cookies', cookieRouter);
 		expect(use).toHaveBeenCalledWith('/projects', projectsRouter);
 		expect(use).toHaveBeenCalledWith('/', projectSearchRouter);
@@ -31,6 +35,6 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);
 		expect(use).toHaveBeenCalledWith(processGuideRouter);
 		expect(use).toHaveBeenCalledWith('/api', apiRouter);
-		expect(use.mock.calls.length).toBe(37);
+		expect(use.mock.calls.length).toBe(38);
 	});
 });

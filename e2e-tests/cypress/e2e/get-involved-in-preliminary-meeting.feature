@@ -11,8 +11,8 @@ Feature: Get involved in the preliminary meeting page
         Then I am on the "Get involved in the preliminary meeting" page
         And I verify below links present on Get involved in the preliminary meeting
             | Links                             |
-            | About the Preliminary Meeting     |
-            | Attending the Preliminary Meeting |
+            | About the preliminary meeting     |
+            | Attending the preliminary meeting |
             | What happens next                 |
         When I click on "The Nationally Significant Infrastructure planning process step by step" link
         Then I am on the "Having your say about a national infrastructure project" page
@@ -29,14 +29,14 @@ Feature: Get involved in the preliminary meeting page
         When I click on "get involved in the preliminary meeting" link
         Then I am on the "Get involved in the preliminary meeting" page
 
+    Scenario: click Having your say during the examination of the project link
+        When I click on Having your say during the examination of the project link
+        Then I am on the "Have your say during the examination of the project" page
+
     Scenario: click What you can do after the decision has been made link
-        When I click on "what you can do after the decision has been made" link
+        When I click on "what happens after a decision has been made" link
         Then I am on the "What you can do after the decision has been made" page
 
     Scenario: click Next link
         When I click on Next link
-        Then I am on the "Have your say during the examination of the project" page
-
-    Scenario: click Having your say during the examination of the project link
-        When I click on Having your say during the examination of the project link
         Then I am on the "Have your say during the examination of the project" page

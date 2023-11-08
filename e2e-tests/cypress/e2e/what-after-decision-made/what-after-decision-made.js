@@ -2,12 +2,12 @@ import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_WhatAfterDecisionMade from './PageObjects/PO_WhatAfterDecisionMade';
 const afterDecisionMade = new PO_WhatAfterDecisionMade();
 
-Given('I navigate to What you can do after the decision has been made page', () => {
+Given('I navigate to what you can do after the decision has been made page', () => {
 	cy.visit('/having-your-say-guide');
 	cy.get(
 		'*[class^="app-step-nav__button-text app-step-nav__button-text--all js-step-controls-button-text"]'
 	).click();
-	cy.clickLinkTonavigateToPage('What you can do after the decision has been made');
+	cy.clickLinkTonavigateToPage('what happens after a decision has been made');
 });
 
 Then(

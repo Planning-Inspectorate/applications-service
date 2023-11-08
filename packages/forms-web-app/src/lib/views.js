@@ -83,7 +83,6 @@ const VIEW = {
 		MISSED_DEADLINE: 'register/missed-the-deadline'
 	},
 	FOOTER_PAGES: {
-		ACCESSIBILITY: 'footer-pages/accessibility-statement',
 		COOKIES: 'footer-pages/cookies-info'
 	},
 	EXAMINATION: {

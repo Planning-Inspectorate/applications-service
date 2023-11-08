@@ -11,7 +11,7 @@ Feature: Have your say during the examination of the project page
         Then I am on the "Have your say during the examination of the project" page
         And I verify below links present on Have your say during the examination of the project
             | Links                                       |
-            | What Examination means                      |
+            | What examination means                      |
             | How to comment during examination           |
             | If you have missed the deadline to register |
             | More detailed advice                        |
