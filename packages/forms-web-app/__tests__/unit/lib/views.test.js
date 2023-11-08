@@ -86,7 +86,6 @@ describe('lib/views', () => {
 				}
 			},
 			FOOTER_PAGES: {
-				ACCESSIBILITY: 'footer-pages/accessibility-statement',
 				COOKIES: 'footer-pages/cookies-info'
 			},
 			EXAMINATION: {
