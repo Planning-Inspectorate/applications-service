@@ -6,10 +6,12 @@ const { getDate } = require('../../../src/utils/date-utils');
 const {
 	publishCreateNSIPSubscription,
 	publishDeleteNSIPSubscription,
-	publishDeadlineSubmission
+	publishDeadlineSubmission,
+	publishRegisterRepresentation
 } = require('../../../src/services/backoffice.publish.service');
 const { SUBMISSION_DATA } = require('../../__data__/submission');
 const { REQUEST_FILE_DATA } = require('../../__data__/file');
+const { INTERESTED_PARTY_SELF_BACK_OFFICE } = require('../../__data__/interestedParty');
 
 describe('back office publish service', () => {
 	afterEach(() => jest.resetAllMocks());
@@ -95,6 +97,23 @@ describe('back office publish service', () => {
 					applicationProperties: {
 						version: '0.1',
 						type: 'Delete'
+					}
+				}
+			]);
+		});
+	});
+
+	describe('publishRegisterRepresentation', () => {
+		it('invokes event client with correct message', async () => {
+			await publishRegisterRepresentation(INTERESTED_PARTY_SELF_BACK_OFFICE);
+
+			expect(sendMessages).toBeCalledWith('register-representation', [
+				{
+					body: INTERESTED_PARTY_SELF_BACK_OFFICE,
+					contentType: 'application/json',
+					applicationProperties: {
+						version: '0.1',
+						type: 'Publish'
 					}
 				}
 			]);

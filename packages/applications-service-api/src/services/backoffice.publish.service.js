@@ -3,7 +3,7 @@ const config = require('../lib/config');
 const { sendMessages } = require('../lib/eventClient');
 const { getDate } = require('../utils/date-utils');
 
-const { DEADLINE_SUBMISSION, REGISTER_NSIP_SUBSCRIPTION } =
+const { DEADLINE_SUBMISSION, REGISTER_NSIP_SUBSCRIPTION, REGISTER_REPRESENTATION } =
 	config.backOfficeIntegration.serviceBus.topics;
 
 const publishDeadlineSubmission = async (submission, fileBlobGuid) => {
@@ -68,8 +68,21 @@ const publishDeleteNSIPSubscription = async (caseReference, email) => {
 	await sendMessages(REGISTER_NSIP_SUBSCRIPTION, [message]);
 };
 
+const publishRegisterRepresentation = async (interestedParty) => {
+	const message = {
+		body: interestedParty,
+		contentType: 'application/json',
+		applicationProperties: {
+			version: '0.1',
+			type: 'Publish'
+		}
+	};
+	await sendMessages(REGISTER_REPRESENTATION, [message]);
+};
+
 module.exports = {
 	publishCreateNSIPSubscription,
 	publishDeleteNSIPSubscription,
-	publishDeadlineSubmission
+	publishDeadlineSubmission,
+	publishRegisterRepresentation
 };
