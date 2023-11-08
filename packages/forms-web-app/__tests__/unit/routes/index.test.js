@@ -14,6 +14,17 @@ const {
 	accessibilityStatementRouter
 } = require('../../../src/pages/accessibility-statement/router');
 
+jest.mock('../../../src/config', () => {
+	const originalConfig = jest.requireActual('../../../src/config');
+	return {
+		...originalConfig,
+		featureFlag: {
+			allowHomepage: true,
+			usePrivateBetaV1RoutesOnly: false
+		}
+	};
+});
+
 describe('routes/index', () => {
 	beforeEach(() => {
 		// eslint-disable-next-line global-require
