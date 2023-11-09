@@ -23,9 +23,11 @@ const { apiSubdirectory } = require('../api/config');
 const { processGuideRouter } = require('../pages/process-guide/router');
 const { haveYourSayGuideRouter } = require('../pages/have-your-say-guide/router');
 const { indexRouter } = require('../pages/index/router');
+const { accessibilityStatementRouter } = require('../pages/accessibility-statement/router');
 
-router.use(indexRouter);
+if (config.featureFlag.allowHomepage) router.use(indexRouter);
 router.use(routesConfig.project.directory, projectsRouter);
+router.use(accessibilityStatementRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
 

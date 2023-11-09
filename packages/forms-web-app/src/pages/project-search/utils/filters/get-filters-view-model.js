@@ -81,7 +81,36 @@ const getFiltersViewModel = (filters) => {
 		);
 	});
 
+	const locationIndex = filterGroups.findIndex((filterGroup) => filterGroup.name === 'region');
+	filterGroups[locationIndex].items = orderLocationItems(filterGroups[locationIndex].items);
+
 	return orderFilterGroups(filterGroups);
+};
+
+const orderLocationItems = (items) => {
+	// north to south order
+	const locationOrder = [
+		'north_west',
+		'north_east',
+		'yorkshire_and_the_humber',
+		'west_midlands',
+		'east_midlands',
+		'eastern',
+		'south_west',
+		'south_east',
+		'london',
+		'wales'
+	];
+	const orderedItems = [];
+	locationOrder.forEach((region) => {
+		const regionIndex = items.findIndex((item) => item.value === region);
+
+		if (regionIndex >= 0) {
+			const regionElement = items[regionIndex];
+			orderedItems.push(regionElement);
+		}
+	});
+	return orderedItems;
 };
 
 module.exports = { getFiltersViewModel };

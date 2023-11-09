@@ -85,19 +85,11 @@ describe('project-search/controller', () => {
 							idPrefix: 'region-option',
 							isOpen: false,
 							items: [
-								{ checked: false, label: 'Wales', text: 'Wales (1)', value: 'wales' },
-								{ checked: false, label: 'Eastern', text: 'Eastern (1)', value: 'eastern' },
 								{
 									checked: false,
-									label: 'South East',
-									text: 'South East (3)',
-									value: 'south_east'
-								},
-								{
-									checked: false,
-									label: 'South West',
-									text: 'South West (11)',
-									value: 'south_west'
+									label: 'North East',
+									text: 'North East (1)',
+									value: 'north_east'
 								},
 								{
 									checked: false,
@@ -119,11 +111,34 @@ describe('project-search/controller', () => {
 								},
 								{
 									checked: false,
-									label: 'North East',
-									text: 'North East (1)',
-									value: 'north_east'
+									label: 'Eastern',
+									text: 'Eastern (1)',
+									value: 'eastern'
 								},
-								{ checked: false, label: 'London', text: 'London (1)', value: 'london' }
+								{
+									checked: false,
+									label: 'South West',
+									text: 'South West (11)',
+									value: 'south_west'
+								},
+								{
+									checked: false,
+									label: 'South East',
+									text: 'South East (3)',
+									value: 'south_east'
+								},
+								{
+									checked: false,
+									label: 'London',
+									text: 'London (1)',
+									value: 'london'
+								},
+								{
+									checked: false,
+									label: 'Wales',
+									text: 'Wales (1)',
+									value: 'wales'
+								}
 							],
 							label: 'Location',
 							name: 'region',
