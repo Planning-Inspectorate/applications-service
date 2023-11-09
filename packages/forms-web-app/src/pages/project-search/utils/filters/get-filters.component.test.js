@@ -9,14 +9,14 @@ describe('project-search/utils/filters/get-filters', () => {
 				mockFilters = [
 					{
 						name: 'region',
-						value: 'mock_value_1',
-						label: 'mock label 1',
+						value: 'north_east',
+						label: 'North East',
 						count: 1
 					},
 					{
 						name: 'region',
-						value: 'mock_value_2',
-						label: 'mock label 2',
+						value: 'north_west',
+						label: 'North West',
 						count: 2
 					},
 					{
@@ -63,15 +63,15 @@ describe('project-search/utils/filters/get-filters', () => {
 								items: [
 									{
 										checked: false,
-										label: 'mock label 1',
-										text: 'mock label 1 (1)',
-										value: 'mock_value_1'
+										label: 'North West',
+										text: 'North West (2)',
+										value: 'north_west'
 									},
 									{
 										checked: false,
-										label: 'mock label 2',
-										text: 'mock label 2 (2)',
-										value: 'mock_value_2'
+										label: 'North East',
+										text: 'North East (1)',
+										value: 'north_east'
 									}
 								],
 								label: 'Location',
@@ -134,7 +134,7 @@ describe('project-search/utils/filters/get-filters', () => {
 				beforeEach(() => {
 					filters = getFilters(
 						{
-							region: 'mock_value_2',
+							region: 'north_west',
 							sector: ['mock_value_3', 'mock_value_4'],
 							stage: 'mock_value_6'
 						},
@@ -151,7 +151,7 @@ describe('project-search/utils/filters/get-filters', () => {
 										icon: 'close',
 										link: '?sector=mock_value_3&sector=mock_value_4&stage=mock_value_6',
 										textHtml:
-											'<span class="govuk-visually-hidden">Remove</span> mock label 2 <span class="govuk-visually-hidden">filter</span>'
+											'<span class="govuk-visually-hidden">Remove</span> North West <span class="govuk-visually-hidden">filter</span>'
 									}
 								]
 							},
@@ -160,13 +160,13 @@ describe('project-search/utils/filters/get-filters', () => {
 								tags: [
 									{
 										icon: 'close',
-										link: '?region=mock_value_2&sector=mock_value_4&stage=mock_value_6',
+										link: '?region=north_west&sector=mock_value_4&stage=mock_value_6',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> mock label 3 <span class="govuk-visually-hidden">filter</span>'
 									},
 									{
 										icon: 'close',
-										link: '?region=mock_value_2&sector=mock_value_3&stage=mock_value_6',
+										link: '?region=north_west&sector=mock_value_3&stage=mock_value_6',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> mock label 4 <span class="govuk-visually-hidden">filter</span>'
 									}
@@ -177,7 +177,7 @@ describe('project-search/utils/filters/get-filters', () => {
 								tags: [
 									{
 										icon: 'close',
-										link: '?region=mock_value_2&sector=mock_value_3&sector=mock_value_4',
+										link: '?region=north_west&sector=mock_value_3&sector=mock_value_4',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> mock label 6 <span class="govuk-visually-hidden">filter</span>'
 									}
@@ -190,16 +190,16 @@ describe('project-search/utils/filters/get-filters', () => {
 								isOpen: false,
 								items: [
 									{
-										checked: false,
-										label: 'mock label 1',
-										text: 'mock label 1 (1)',
-										value: 'mock_value_1'
+										checked: true,
+										label: 'North West',
+										text: 'North West (2)',
+										value: 'north_west'
 									},
 									{
-										checked: true,
-										label: 'mock label 2',
-										text: 'mock label 2 (2)',
-										value: 'mock_value_2'
+										checked: false,
+										label: 'North East',
+										text: 'North East (1)',
+										value: 'north_east'
 									}
 								],
 								label: 'Location',
