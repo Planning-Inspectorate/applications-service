@@ -88,7 +88,7 @@ describe('projects _middleware', () => {
 					{
 						hidden: false,
 						id: 'representations',
-						name: 'Relevant representations (Registration comments)',
+						name: 'Relevant representations (registration comments)',
 						url: '/projects/mock-case-ref/representations'
 					},
 					{

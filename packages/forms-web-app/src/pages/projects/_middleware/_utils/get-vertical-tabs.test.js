@@ -60,7 +60,7 @@ describe('#getVerticalTabs', () => {
 					{
 						hidden: false,
 						id: 'representations',
-						name: 'Relevant representations (Registration comments)',
+						name: 'Relevant representations (registration comments)',
 						url: '/projects/mock case ref/representations'
 					},
 					{
@@ -140,7 +140,7 @@ describe('#getVerticalTabs', () => {
 						{
 							hidden: false,
 							id: 'representations',
-							name: 'Relevant representations (Registration comments)',
+							name: 'Relevant representations (registration comments)',
 							url: '/projects/mock case ref/representations'
 						},
 						{
@@ -208,7 +208,7 @@ describe('#getVerticalTabs', () => {
 						{
 							hidden: false,
 							id: 'representations',
-							name: 'Relevant representations (Registration comments)',
+							name: 'Relevant representations (registration comments)',
 							url: '/projects/migrated-case-ref/representations'
 						},
 						{

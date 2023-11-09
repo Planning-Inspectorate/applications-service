@@ -1,9 +1,6 @@
 const controller = require('./representations');
 const { getProjectData, searchRepresentations } = require('../../../lib/application-api-wrapper');
 const { getRepresentation } = require('../../../services/representation.service');
-const { featureHideLink } = require('../../../config');
-
-const { hideAllExaminationDocumentsLink } = featureHideLink;
 
 jest.mock('../../../lib/application-api-wrapper');
 jest.mock('../../../services/representation.service');
@@ -20,7 +17,6 @@ describe('pages/projects/relevant-representations/representations', () => {
 			params: {
 				case_ref: caseRef
 			},
-			get: jest.fn(),
 			query: {
 				page: '1'
 			}
@@ -111,33 +107,13 @@ describe('pages/projects/relevant-representations/representations', () => {
 				querySearchOrTypePresent: false,
 				representations: [
 					{
-						AgentOrgOnBhalfContactName: null,
-						Attachments: 'WS010006-000002',
-						CaseReference: 'EN010009',
-						CompulsoryAcquisitionHearing: null,
-						DataID: null,
-						DateRRepAppearOnWebsite: '2020-01-01',
-						DateRrepReceived: '19 February 2020',
-						DoNotPublish: null,
-						ID: 2,
-						IndvdlOnBhalfName: null,
-						InterestInLand: null,
-						IssuesSpecificHearings: null,
-						OpenFloorHearings: null,
-						OrgOnBhalfName: null,
-						PersonalName: 'Test (Test)',
-						PreliminaryMeeting: null,
-						ProjectName: 'SPT Feb 2020',
-						RelevantOrNot: null,
-						RepFrom: 'Members of the public/businesses',
-						RepresentationOriginal: null,
-						RepresentationRedacted: 'Some comments',
-						Representative: null,
-						SpecifyOther: null,
-						SubmitFurtherWrittenReps: null,
-						UniqueReference: 'WS010006-34601',
-						WebReference: null,
-						attachments: []
+						URL: '/projects/EN010009/representations/2',
+						attachments: [],
+						comment: 'Some comments',
+						dateSubmitted: '19 February 2020',
+						name: 'Test (Test)',
+						representative: null,
+						submittedBy: 'Members of the public/businesses'
 					}
 				],
 				resultsPerPage: {
@@ -164,19 +140,25 @@ describe('pages/projects/relevant-representations/representations', () => {
 			})
 		);
 		await controller.getRepresentation(req, res);
-		expect(req.get).toHaveBeenCalledWith('Referrer');
+
 		expect(res.render).toHaveBeenCalledWith(
 			'projects/relevant-representations/representation.njk',
 			{
-				projectName: 'ABC',
-				caseRef,
 				allowProjectInformation: true,
-				hideAllExaminationDocumentsLink,
-				RepFrom: 'Members of the public/businesses',
-				PersonalName: 'Test (Test)',
-				RepresentationRedacted: 'Some comments',
-				DateRrepReceived: '19 February 2020',
-				attachments: []
+				backToListUrl: '/projects/EN010009/representations',
+				hideAllExaminationDocumentsLink: true,
+				pageHeading: 'Representation by Test (Test)',
+				pageTitle: 'Relevant Representations | Representation by Test (Test)',
+				projectName: 'ABC',
+				representation: {
+					URL: '/projects/:case_ref/representations/2',
+					attachments: [],
+					comment: 'Some comments',
+					dateSubmitted: '19 February 2020',
+					name: 'Test (Test)',
+					representative: null,
+					submittedBy: 'Members of the public/businesses'
+				}
 			}
 		);
 	});

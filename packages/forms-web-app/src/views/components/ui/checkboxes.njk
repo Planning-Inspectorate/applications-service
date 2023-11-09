@@ -1,0 +1,25 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+{% macro uiCheckboxes(title, buttonText, name, items, buttonAttrs) %}
+  {{ govukCheckboxes({
+    idPrefix: name,
+    classes: "govuk-checkboxes--small",
+    name: name,
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--m"
+      }
+    },
+    items: items
+  }) }}
+
+  {{ govukButton({
+    attributes: buttonAttrs,
+    classes: "govuk-!-margin-0",
+    text: buttonText,
+    type: "Submit"
+  }) }}
+{% endmacro %}

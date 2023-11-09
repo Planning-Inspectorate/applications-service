@@ -1,5 +1,5 @@
+const logger = require('../../../lib/logger');
 const { getAppData } = require('../../../services/applications.service');
-const { formatDate } = require('../../../utils/date-utils');
 const { titleCase } = require('../../../utils/string-case');
 const { searchRepresentations } = require('../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
@@ -13,6 +13,12 @@ const { getRelevantRepresentationsQuery } = require('./_utils/get-relevant-repre
 const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
 const { buildPaginationQueryString } = require('../../_utils/build-pagination-query-string');
 const { isQuerySearchOrTypePresent } = require('./_utils/is-query-search-or-type-present');
+const {
+	getRepresentationsViewModel,
+	getRepresentationViewModel
+} = require('./_utils/get-representations-view-model');
+const { getRelevantRepresentationsURL } = require('./_utils/get-relevant-representations-url');
+const { mapTitles } = require('../../_utils/map-titles');
 
 const representationsView = 'projects/relevant-representations/representations.njk';
 const representationView = 'projects/relevant-representations/representation.njk';
@@ -49,17 +55,12 @@ exports.getRepresentations = async (req, res) => {
 		});
 	});
 
-	representations.forEach((repesentation) => {
-		repesentation.DateRrepReceived = formatDate(repesentation.DateRrepReceived.split('T')[0]);
-		repesentation.RepFrom = titleCase(repesentation.RepFrom);
-	});
-
 	res.render(representationsView, {
 		projectName: applicationData.projectName,
 		caseRef: case_ref,
 		allowProjectInformation,
 		hideAllExaminationDocumentsLink,
-		representations,
+		representations: getRepresentationsViewModel(representations, case_ref),
 		paginationData,
 		pageOptions,
 		searchTerm,
@@ -72,23 +73,27 @@ exports.getRepresentations = async (req, res) => {
 };
 
 exports.getRepresentation = async (req, res) => {
-	const applicationResponse = await getAppData(req.params.case_ref);
-	const representationResponse = await getRepresentation(req.params.id);
+	try {
+		const { params } = req;
+		const { case_ref, id } = params;
 
-	if (applicationResponse.resp_code === 404 || representationResponse.resp_code === 404) {
+		const { data: applicationData } = await getAppData(case_ref);
+		const { ProjectName } = applicationData;
+
+		const { data: representation } = await getRepresentation(id);
+
+		const pageHeading = `Representation by ${representation.PersonalName}`;
+
+		return res.render(representationView, {
+			...mapTitles(pageHeading, `Relevant Representations | ${pageHeading}`),
+			representation: getRepresentationViewModel(representation),
+			backToListUrl: getRelevantRepresentationsURL(case_ref),
+			projectName: ProjectName,
+			allowProjectInformation,
+			hideAllExaminationDocumentsLink
+		});
+	} catch (error) {
+		logger.error(error);
 		return res.status(404).render('error/not-found');
 	}
-
-	res.render(representationView, {
-		backLinkUrl: req.get('Referrer'),
-		projectName: applicationResponse.data.ProjectName,
-		caseRef: applicationResponse.data.CaseReference,
-		allowProjectInformation,
-		hideAllExaminationDocumentsLink,
-		RepFrom: titleCase(representationResponse.data.RepFrom),
-		PersonalName: representationResponse.data.PersonalName,
-		RepresentationRedacted: representationResponse.data.RepresentationRedacted,
-		DateRrepReceived: representationResponse.data.DateRrepReceived,
-		attachments: representationResponse.data.attachments
-	});
 };
