@@ -1,5 +1,5 @@
-const moment = require('moment');
+const dayjs = require('dayjs');
 
-const formatDateSubmitted = (date) => moment(date).format('D MMMM YYYY');
+const formatDateSubmitted = (date) => dayjs(date).format('D MMMM YYYY');
 
 module.exports = { formatDateSubmitted };
