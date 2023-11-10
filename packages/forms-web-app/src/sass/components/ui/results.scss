@@ -11,15 +11,17 @@
 	}
 
 	&__result-title {
-		@extend .govuk-body-s;
+		@extend .govuk-body;
 
-		&--link {
-			@extend .govuk-link;
-		}
+		margin-bottom: govuk-spacing(2);
+	}
+
+	&__result-title-link {
+		@extend .govuk-link;
 	}
 
 	&__result-description {
-		@extend .govuk-\!-font-size-14;
+		@extend .govuk-body-s;
 
 		margin: 0;
 	}

@@ -1,17 +1,19 @@
 <ul class="ui-results">
   {% for representation in representations %}
     <li class="ui-results__result">
-      <a href="{{ representation.URL }}" class="ui-results__result-title ui-results__result-title--link">
-        <strong>
-          {% if representation.representative %}
-            {{ representation.representative }} {% if representation.name %} on behalf of {{ representation.name }} {% endif %}
-          {% elseif representation.name %}
-            {{ representation.name }}
-          {% else %}
-            Unknown
-          {% endif %}
-        </strong>
-      </a>
+      <h2 class="ui-results__result-title">
+        <a href="{{ representation.URL }}" class="ui-results__result-title-link">
+          <strong>
+            {% if representation.representative %}
+              {{ representation.representative }} {% if representation.name %} on behalf of {{ representation.name }} {% endif %}
+            {% elseif representation.name %}
+              {{ representation.name }}
+            {% else %}
+              Unknown
+            {% endif %}
+          </strong>
+        </a>
+      </h2>
 
       <p class="ui-results__result-description">
         {{ representation.comment | truncate(200) }}
