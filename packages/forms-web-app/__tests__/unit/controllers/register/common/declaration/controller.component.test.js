@@ -2,13 +2,9 @@ const {
 	getDeclaration,
 	postDeclaration
 } = require('../../../../../../src/controllers/register/common/declaration/controller');
-const {
-	postCommentsData,
-	postRegistrationData
-} = require('../../../../../../src/services/registration.service');
+const { postRegistrationData } = require('../../../../../../src/services/registration.service');
 
 jest.mock('../../../../../../src/services/registration.service', () => ({
-	postCommentsData: jest.fn(),
 	postRegistrationData: jest.fn()
 }));
 describe('controllers/register/common/declaration/controller', () => {
@@ -98,69 +94,29 @@ describe('controllers/register/common/declaration/controller', () => {
 				});
 			});
 			describe('and the user has submitted a declaration for myself', () => {
-				describe('and the session has an ipRefNo', () => {
-					const req = {
-						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
-						params: { case_ref: 'mock case ref' },
-						session: {
-							comment: 'mock comment',
-							mode: 'mock session mode',
-							caseRef: 'mock case ref',
-							mySelfRegdata: { ipRefNo: 'mock ipRefNo', text: 'mock session key data' }
-						}
-					};
-					beforeEach(async () => {
-						postCommentsData.mockResolvedValue();
-						postRegistrationData.mockResolvedValue({ data: 'mock ip ref no' });
-						await postDeclaration(req, res);
-					});
-					it('should NOT get he ip ref no from the interested party endpoint ', () => {
-						expect(postRegistrationData).not.toHaveBeenCalled();
-					});
-					it('should call the post comment endpoint', () => {
-						expect(postCommentsData).toHaveBeenCalledWith(
-							'mock ipRefNo',
-							'{"comments":"mock comment","mode":"mock session mode"}'
-						);
-					});
-					it('should redirect to the next page for myself', () => {
-						expect(res.redirect).toHaveBeenCalledWith(
-							'/mock-base-url/mock-case-ref/register/myself/registration-complete'
-						);
-					});
+				const req = {
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+					params: { case_ref: 'mock case ref' },
+					session: {
+						comment: 'mock comment',
+						mode: 'mock session mode',
+						caseRef: 'mock case ref',
+						mySelfRegdata: { text: 'mock session key data' }
+					}
+				};
+				beforeEach(async () => {
+					postRegistrationData.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
+					await postDeclaration(req, res);
 				});
-				describe('and the session does NOT have an ipRefNo', () => {
-					const req = {
-						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
-						params: { case_ref: 'mock case ref' },
-						session: {
-							comment: 'mock comment',
-							mode: 'mock session mode',
-							caseRef: 'mock case ref',
-							mySelfRegdata: { text: 'mock session key data' }
-						}
-					};
-					beforeEach(async () => {
-						postCommentsData.mockResolvedValue();
-						postRegistrationData.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
-						await postDeclaration(req, res);
-					});
-					it('should get he ip ref no from the interested party endpoint ', () => {
-						expect(postRegistrationData).toHaveBeenCalledWith(
-							'{"text":"mock session key data","case_ref":"mock case ref","mode":"mock session mode"}'
-						);
-					});
-					it('should call the post comment endpoint', () => {
-						expect(postCommentsData).toHaveBeenCalledWith(
-							'mock ip ref no from endpoint',
-							'{"comments":"mock comment","mode":"mock session mode"}'
-						);
-					});
-					it('should redirect to the next page for myself', () => {
-						expect(res.redirect).toHaveBeenCalledWith(
-							'/mock-base-url/mock-case-ref/register/myself/registration-complete'
-						);
-					});
+				it('should get he ip ref no from the interested party endpoint ', () => {
+					expect(postRegistrationData).toHaveBeenCalledWith(
+						'{"text":"mock session key data","case_ref":"mock case ref","comment":"mock comment"}'
+					);
+				});
+				it('should redirect to the next page for myself', () => {
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/mock-base-url/mock-case-ref/register/myself/registration-complete'
+					);
 				});
 			});
 		});

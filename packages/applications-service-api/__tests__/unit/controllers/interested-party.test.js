@@ -2,11 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
-const {
-	createInterestedParty,
-	updateComments,
-	confirmEmailAddress
-} = require('../../../src/controllers/interested-party');
+const { createInterestedParty } = require('../../../src/controllers/interested-party');
 
 const ipDataOwnBehalf = {
 	ID: 30000120,
@@ -58,32 +54,6 @@ const ipDataOwnBehalf = {
 	web_ref: 1
 };
 
-const ipDataOwnBehalfResult = {
-	personal_data: {
-		ipRefNo: 30000120,
-		case_ref: 'EN010009',
-		behalf: 'me',
-		'full-name': 'David White',
-		'over-18': undefined,
-		address: {
-			line1: 'Temple Quay',
-			line2: '',
-			line3: 'BRISTOL',
-			postcode: 'BS1 6PN',
-			country: 'United Kingdom'
-		},
-		email: 'david.white@planninginspectorate.gov.uk',
-		telephone: '0303 111 111'
-	},
-	comments: 'I dont like noise either',
-	submissionPeriodClosed: false,
-	projectData: {
-		ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
-		ProjectName: 'St James Barton Giant Wind Turbine',
-		Region: 'Wales'
-	}
-};
-
 const ipDataOrgBehalf = {
 	ID: 30000135,
 	caseref: 'EN010009',
@@ -132,34 +102,6 @@ const ipDataOrgBehalf = {
 	emailed: '2021-06-22T14:45:46.000Z',
 	exported: null,
 	web_ref: 1
-};
-
-const ipDataOrgBehalfResult = {
-	personal_data: {
-		ipRefNo: 30000135,
-		case_ref: 'EN010009',
-		behalf: 'them',
-		'full-name': undefined,
-		'over-18': 'yes',
-		'organisation-name': 'Ministry of Coffee and Social Affairs',
-		role: undefined,
-		address: {
-			line1: 'Coffee Building',
-			line2: 'Coffee Wall Street',
-			line3: 'London',
-			postcode: 'CO127FE',
-			country: 'UK'
-		},
-		email: 'Mr.Bean@MinistryofCoffeeandSocialAffairs.gov.uk',
-		telephone: '0132232432'
-	},
-	comments: 'I dont like noise either',
-	submissionPeriodClosed: false,
-	projectData: {
-		ProjectEmailAddress: 'david.white@pins.gsi.gov.uk',
-		ProjectName: 'St James Barton Giant Wind Turbine',
-		Region: 'Wales'
-	}
 };
 
 const createIpOnOwnBehalf = {
@@ -314,105 +256,5 @@ describe('insertInterestedParty', () => {
 		await createInterestedParty(req, res);
 
 		expect(res._getStatusCode()).toEqual(StatusCodes.CREATED);
-	});
-});
-
-describe('updateComments', () => {
-	it('should update comments for party', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				ID: '30000120'
-			},
-			body: {
-				comments: "I don't like traffic"
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await updateComments(req, res);
-
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-	});
-});
-
-describe('confirmEmailAddress on behalf of individual', () => {
-	it('should retrieve an interested party by token from mock', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e1'
-			},
-			body: {
-				email: 'david.white@planninginspectorate.gov.uk'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		const data = res._getData();
-		delete data.id;
-		delete data.createdAt;
-		delete data.updatedAt;
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual({ ...ipDataOwnBehalfResult });
-	});
-
-	it('should return interested party not found when token has been tampered with', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e'
-			},
-			body: {
-				email: 'david.white@planninginspectorate.gov.uk'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-		expect(res._getData()).toEqual({
-			code: 404,
-			errors: ['Interested party 3000012 not found']
-		});
-	});
-
-	it('should return interested party not found when email does not match', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: 'b03bee6bd65cf4d770ee4d8712d4eaef9b78d50a970b51e1'
-			},
-			body: {
-				email: 'david.white@planninginspectorate.gov.u'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-		expect(res._getData()).toEqual({
-			code: 404,
-			errors: ['Interested party 30000120 not found']
-		});
-	});
-});
-
-describe('confirmEmailAddress on behalf of organisation', () => {
-	it('should retrieve an interested party by token from mock', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				token: '4ff6ae1e750fac271a3447114397ba37b04c807f07047536'
-			},
-			body: {
-				email: 'Mr.Bean@MinistryofCoffeeandSocialAffairs.gov.uk'
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await confirmEmailAddress(req, res);
-		const data = res._getData();
-		delete data.id;
-		delete data.createdAt;
-		delete data.updatedAt;
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual({ ...ipDataOrgBehalfResult });
 	});
 });

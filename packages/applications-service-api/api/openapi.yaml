@@ -247,6 +247,7 @@ paths:
                     country: 'UK'
                   email: 'person@example.org'
                   telephone: '0132232432'
+                  comment: 'this is my representation'
               organisation:
                 summary: An example of a request body when submitting on behalf of an organisation
                 value:
@@ -264,6 +265,7 @@ paths:
                     country: 'UK'
                   email: 'person@example.org'
                   telephone: '0132232432'
+                  comment: 'this is my representation'
               agent:
                 summary: An example of a request body when submitting on behalf of an agent
                 value:
@@ -293,6 +295,7 @@ paths:
                     email: 'elvin.ali@planninginspectorate.gov.uk'
                     telephone: '0137732432'
                     organisation-name: 'Hogwarts School of Witchcraft and Wizardry'
+                  comment: 'this is my representation'
         required: true
       responses:
         '201':
@@ -300,11 +303,15 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-                example: '30000001'
+                type: object
+                properties:
+                  referenceId:
+                    type: string
+                    example: '30000001'
 
   '/api/v1/interested-party/{token}':
     post:
+      deprecated: true
       summary: Retrieves an interested party by token
       description: Retrieves an interested party by token and returns the interested party details if email provided in body matches retrieved party's email
       tags:
@@ -336,6 +343,7 @@ paths:
 
   '/api/v1/interested-party/{ID}/comments':
     put:
+      deprecated: true
       summary: Persist interested party's comments
       description: Persist interested party's comments
       tags:
@@ -357,11 +365,13 @@ paths:
               properties:
                 mode:
                   type: string
+                  enum:
+                    - draft
+                    - final
                   example: 'draft'
                 comments:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Comment'
+                  type: string
+                  example: 'I dont like traffic'
       responses:
         '200':
           description: Comments updated successfully
@@ -1298,6 +1308,8 @@ components:
           type: string
         telephone:
           type: string
+        comment:
+          type: string
 
     DocumentSearchCriteria:
       type: object
@@ -1620,16 +1632,6 @@ components:
         country:
           type: string
           example: 'UK'
-
-    Comment:
-      type: object
-      properties:
-        type:
-          type: string
-          example: 'Traffic'
-        comment:
-          type: string
-          example: 'I dont like traffic'
 
     Email:
       type: object
