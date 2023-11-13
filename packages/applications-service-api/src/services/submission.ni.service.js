@@ -5,7 +5,8 @@ const { submitUserUploadedFile, submitRepresentationFile } = require('./ni.file.
 const {
 	getSubmission: getSubmissionRepository,
 	createSubmission: createSubmissionRepository,
-	updateSubmission: updateSubmissionRepository
+	updateSubmission: updateSubmissionRepository,
+	updateSubmissionsBySubmissionId: updateSubmissionsBySubmissionIdRepository
 } = require('../repositories/submission.ni.repository');
 
 const PLACEHOLDER_SUBMISSION_ID = 0;
@@ -78,7 +79,7 @@ const completeNISubmission = async (submissionId) => {
 		throw ApiError.notFound(`Project with case reference ${submission.caseReference} not found`);
 
 	await Promise.all([
-		updateSubmissionRepository(submissionId, { validated: new Date() }),
+		updateSubmissionsBySubmissionIdRepository(submissionId, { validated: new Date() }),
 		sendSubmissionNotification({
 			submissionId: submission.id,
 			email: submission.email,
