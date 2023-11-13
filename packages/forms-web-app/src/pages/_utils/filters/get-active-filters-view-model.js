@@ -1,7 +1,7 @@
-const { makeIntoArray } = require('../../../examination/select-file/utils/helpers');
+const { makeIntoArray } = require('../make-into-array');
 const {
 	getActiveFilterQueryParamsWithRemovedFilter
-} = require('../../../projects/documents/utils/filters/get-active-filter-query-params-with-removed-filter');
+} = require('./get-active-filter-query-params-with-removed-filter');
 
 const getActiveFiltersViewModel = (query, filters) => {
 	const localQuery = JSON.parse(JSON.stringify(query));

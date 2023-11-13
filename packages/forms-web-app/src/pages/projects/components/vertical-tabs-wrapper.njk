@@ -4,7 +4,6 @@
 {% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
 {% from "components/ui/checkboxes.njk" import uiCheckboxes %}
 
-
 {% set slots = [  uiVerticalTabs(
 	null,
 	activeId,
@@ -25,7 +24,7 @@
 
 {% if displayRepresentationsFilters %}
 	{% set slots = (slots.push(
-		uiCheckboxes("Filter", "Apply filters", "type", commentsTypeFilterItems, { "data-cy": "button-submit-and-continue" })
+		uiCheckboxes("Filter", "Apply filters", filterNameID, filters, { "data-cy": "button-submit-and-continue" })
 	), slots) %}
 {% endif %}
 
