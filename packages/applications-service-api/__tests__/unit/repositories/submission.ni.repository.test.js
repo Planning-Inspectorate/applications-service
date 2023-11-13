@@ -1,6 +1,8 @@
 const {
 	getSubmission,
-	createSubmission, updateSubmission
+	createSubmission,
+	updateSubmission,
+	updateSubmissionsBySubmissionId
 } = require('../../../src/repositories/submission.ni.repository');
 
 const mockCreate = jest.fn();
@@ -49,6 +51,14 @@ describe('submission ni repository', () => {
 			await updateSubmission(123, { name: 'foo' });
 
 			expect(mockUpdate).toHaveBeenCalledWith({ name: 'foo' }, { where: { id: 123 } });
+		});
+	});
+
+	describe('updateSubmissionsBySubmissionId', () => {
+		it('invokes db method correctly', async () => {
+			await updateSubmissionsBySubmissionId(123, { name: 'foo' });
+
+			expect(mockUpdate).toHaveBeenCalledWith({ name: 'foo' }, { where: { submissionId: 123 } });
 		});
 	});
 });
