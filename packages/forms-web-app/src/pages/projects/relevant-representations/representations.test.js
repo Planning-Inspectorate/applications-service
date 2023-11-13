@@ -89,9 +89,11 @@ describe('pages/projects/relevant-representations/representations', () => {
 		expect(res.render).toHaveBeenCalledWith(
 			'projects/relevant-representations/representations.njk',
 			{
+				activeFilters: [],
 				allowProjectInformation: true,
 				caseRef: 'EN010009',
-				commentsTypeFilterItems: [],
+				filterNameID: 'type',
+				filters: [],
 				hideAllExaminationDocumentsLink: true,
 				pageOptions: [1],
 				paginationData: {
@@ -105,6 +107,7 @@ describe('pages/projects/relevant-representations/representations', () => {
 				paginationQueryString: '?page=:page',
 				projectName: 'mock project name',
 				querySearchOrTypePresent: false,
+				relevantRepresentationsURL: '/projects/EN010009/representations',
 				representations: [
 					{
 						URL: '/projects/EN010009/representations/2',
