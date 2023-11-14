@@ -14,8 +14,16 @@ const updateSubmission = async (id, submissionData) =>
 		}
 	});
 
+const updateSubmissionsBySubmissionId = async (submissionId, submissionData) =>
+	db.Submission.update(submissionData, {
+		where: {
+			submissionId: submissionId
+		}
+	});
+
 module.exports = {
 	getSubmission,
 	createSubmission,
-	updateSubmission
+	updateSubmission,
+	updateSubmissionsBySubmissionId
 };
