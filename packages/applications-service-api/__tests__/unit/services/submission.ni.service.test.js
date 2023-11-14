@@ -12,7 +12,8 @@ jest.mock('../../../src/repositories/submission.ni.repository');
 const {
 	getSubmission: getSubmissionRepository,
 	createSubmission: createSubmissionRepository,
-	updateSubmission: updateSubmissionRepository
+	updateSubmission: updateSubmissionRepository,
+	updateSubmissionsBySubmissionId: updateSubmissionsBySubmissionIdRepository
 } = require('../../../src/repositories/submission.ni.repository');
 
 jest.mock('../../../src/services/ni.file.service');
@@ -132,7 +133,7 @@ describe('submission service', () => {
 				id: submissionId,
 				...SUBMISSION_DB_CREATE_OUTPUT
 			});
-			updateSubmissionRepository.mockResolvedValueOnce({
+			updateSubmissionsBySubmissionIdRepository.mockResolvedValueOnce({
 				id: submissionId,
 				...SUBMISSION_DB_CREATE_OUTPUT,
 				validated: mockTime
@@ -141,7 +142,9 @@ describe('submission service', () => {
 
 			await completeNISubmission(submissionId);
 
-			expect(updateSubmissionRepository).toBeCalledWith(submissionId, { validated: mockTime });
+			expect(updateSubmissionsBySubmissionIdRepository).toBeCalledWith(submissionId, {
+				validated: mockTime
+			});
 			expect(sendSubmissionNotificationMock).toBeCalledWith({
 				submissionId: submissionId,
 				email: 'joe@example.org',

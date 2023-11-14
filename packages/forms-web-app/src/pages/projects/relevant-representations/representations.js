@@ -1,6 +1,5 @@
 const logger = require('../../../lib/logger');
 const { getAppData } = require('../../../services/applications.service');
-const { titleCase } = require('../../../utils/string-case');
 const { searchRepresentations } = require('../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../lib/pagination');
 const { getRepresentation } = require('../../../services/representation.service');
@@ -19,57 +18,50 @@ const {
 } = require('./_utils/get-representations-view-model');
 const { getRelevantRepresentationsURL } = require('./_utils/get-relevant-representations-url');
 const { mapTitles } = require('../../_utils/map-titles');
+const { getFilters } = require('./_utils/get-filters');
 
 const representationsView = 'projects/relevant-representations/representations.njk';
 const representationView = 'projects/relevant-representations/representation.njk';
 
 exports.getRepresentations = async (req, res) => {
-	const { params, query } = req;
-	const { case_ref } = params;
-	const { searchTerm, type } = query;
-	const { locals } = res;
-	const { applicationData } = locals;
+	try {
+		const { params, query } = req;
+		const { case_ref } = params;
+		const { searchTerm } = query;
+		const { locals } = res;
+		const { applicationData } = locals;
 
-	const representationsResponse = await searchRepresentations(
-		getRelevantRepresentationsQuery(params, query)
-	);
+		const representationsResponse = await searchRepresentations(
+			getRelevantRepresentationsQuery(params, query)
+		);
 
-	if (representationsResponse.resp_code === 404) {
-		return res.status(404).render('error/not-found');
-	}
+		const respData = representationsResponse.data;
+		const { representations, filters } = respData;
+		const { typeFilters } = filters;
 
-	const respData = representationsResponse.data;
-	const { representations, filters } = respData;
-	const paginationData = getPaginationData(respData);
-	const pageOptions = calculatePageOptions(paginationData);
-	const { typeFilters } = filters;
+		const paginationData = getPaginationData(respData);
+		const pageOptions = calculatePageOptions(paginationData);
 
-	const commentsTypeFilterItems = [];
-
-	typeFilters.forEach((typeFilter) => {
-		const typeFilterName = titleCase(typeFilter.name);
-		commentsTypeFilterItems.push({
-			text: `${typeFilterName} (${typeFilter.count})`,
-			value: typeFilterName,
-			checked: type && type.includes(typeFilterName)
+		res.render(representationsView, {
+			...getFilters(query, typeFilters),
+			projectName: applicationData.projectName,
+			caseRef: case_ref,
+			allowProjectInformation,
+			hideAllExaminationDocumentsLink,
+			representations: getRepresentationsViewModel(representations, case_ref),
+			paginationData,
+			pageOptions,
+			searchTerm,
+			showReps: isDateAfterTodaysDate(applicationData.DateRRepAppearOnWebsite),
+			resultsPerPage: documentsPerPage(query),
+			paginationQueryString: buildPaginationQueryString(query),
+			querySearchOrTypePresent: isQuerySearchOrTypePresent(query),
+			relevantRepresentationsURL: getRelevantRepresentationsURL(case_ref)
 		});
-	});
-
-	res.render(representationsView, {
-		projectName: applicationData.projectName,
-		caseRef: case_ref,
-		allowProjectInformation,
-		hideAllExaminationDocumentsLink,
-		representations: getRepresentationsViewModel(representations, case_ref),
-		paginationData,
-		pageOptions,
-		searchTerm,
-		commentsTypeFilterItems,
-		showReps: isDateAfterTodaysDate(applicationData.DateRRepAppearOnWebsite),
-		resultsPerPage: documentsPerPage(query),
-		paginationQueryString: buildPaginationQueryString(query),
-		querySearchOrTypePresent: isQuerySearchOrTypePresent(query)
-	});
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).render('error/unhandled-exception');
+	}
 };
 
 exports.getRepresentation = async (req, res) => {
@@ -94,6 +86,6 @@ exports.getRepresentation = async (req, res) => {
 		});
 	} catch (error) {
 		logger.error(error);
-		return res.status(404).render('error/not-found');
+		return res.status(404).render('error/unhandled-exception');
 	}
 };
