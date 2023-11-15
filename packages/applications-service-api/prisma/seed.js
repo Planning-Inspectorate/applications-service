@@ -143,6 +143,29 @@ const main = async () => {
 		date: '2025-05-10',
 		eventItemDescriptions: ['Item 1 Deadline Description', 'Item 2 Deadline Description']
 	});
+
+	await prismaClient.advice.upsert({
+		where: { adviceId: 1 },
+		update: {},
+		create: {
+			adviceId: 1,
+			adviceReference: 'TR0200007-0005',
+			caseReference: 'BC0110001',
+			caseId: 130,
+			title: 'Advice title',
+			from: 'Advice from',
+			agent: 'Advice agent',
+			method: 'Advice method',
+			enquiryDate: new Date('2021-06-01'),
+			enquiryDetails: 'Advice enquiry details',
+			adviceGivenBy: 'Advice given by',
+			adviceDate: new Date('2021-08-01'),
+			adviceDetails: 'Advice details',
+			status: 'Advice status',
+			redactionStatus: 'Advice redaction status',
+			attachmentIds: '1,2,3'
+		}
+	});
 };
 
 async function createExaminationTimetableWithEventItems(data) {
