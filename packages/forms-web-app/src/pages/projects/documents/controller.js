@@ -3,11 +3,11 @@ const { pageData } = require('./utils/page-data');
 const { featureToggles } = require('./utils/feature-toggles');
 const { getDocuments } = require('./utils/documents/getDocuments');
 const { getFilters } = require('./utils/filters/getFilters');
-const { getPagination, getPaginationUrl } = require('../utils/pagination/pagination');
+const { getPagination, getPaginationUrl } = require('../_utils/pagination/pagination');
 const { searchDocuments } = require('./utils/documents/searchDocuments');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { isClearAllFiltersDisplayed } = require('./utils/is-clear-all-filters-displayed');
-const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
+const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
 const { isFiltersDisplayed } = require('./utils/is-filters-displayed');
 
 const view = 'projects/documents/index.njk';

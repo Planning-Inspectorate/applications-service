@@ -1,6 +1,6 @@
 const { pinsContactDetails } = require('../../../../config');
 const { getProcessGuideStages } = require('../../../process-guide/_utils/get-process-guide-stages');
-const { formatProjectUpdate } = require('../../utils/format-project-update');
+const { formatProjectUpdate } = require('../../_utils/format-project-update');
 const { formatProcessGuideStages } = require('./format-process-guide-stages');
 const { stripPrefixFromProposalType } = require('./strip-prefix-from-proposal-type');
 
