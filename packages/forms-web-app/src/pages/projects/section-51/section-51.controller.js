@@ -1,6 +1,6 @@
-const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
+const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
 const { listAdvice } = require('../../../services/advice.service');
-const { getPagination, getPaginationUrl } = require('../utils/pagination/pagination');
+const { getPagination, getPaginationUrl } = require('../_utils/pagination/pagination');
 const logger = require('../../../lib/logger');
 const { adviceViewModel } = require('./section-51.view-model');
 

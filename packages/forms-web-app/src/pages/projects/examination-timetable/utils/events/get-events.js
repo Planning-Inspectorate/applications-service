@@ -1,9 +1,9 @@
 const { getTimetables } = require('../../../../../lib/application-api-wrapper');
 const { getDate, getDateNow } = require('../../../../../utils/date-utils');
-const { getProjectCaseRef } = require('../../../utils/get-project-case-ref');
+const { getProjectCaseRef } = require('../../../_utils/get-project-case-ref');
 const {
 	getProjectDateOfNonAcceptance
-} = require('../../../utils/get-project-date-of-non-acceptance');
+} = require('../../../_utils/get-project-date-of-non-acceptance');
 const { eventsViewModel } = require('./events-view-model');
 const { getUpcomingTimetables } = require('../../../../../utils/timetables/get-timetables-state');
 const { getPastTimetables } = require('../../../../../utils/timetables/get-timetables-state');
