@@ -1,12 +1,25 @@
 const express = require('express');
+const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const config = require('../../config');
-const { asyncRoute } = require('@pins/common/src/utils/async-route');
+const { featureFlag } = require('../../config');
+
 const {
 	routesConfig: {
 		project: { pages, subDirectory }
 	}
 } = require('../../routes/config');
+
+const representationsController = require('./relevant-representations/representations');
+const examinationTimetable = require('./examination-timetable/controller');
+const aboutTheApplicationController = require('./documents/controller');
+const section51Router = require('./section-51/section-51.router');
+const { getUpdatesRouter } = require('./get-updates/router');
+const { getProjectUpdatesController } = require('./project-updates/controller');
+
+const { projectsMiddleware } = require('./_middleware/middleware');
+
+const projectsRouter = express.Router();
 
 const {
 	featureFlag: {
@@ -18,60 +31,48 @@ const {
 	}
 } = config;
 
-const router = express.Router();
-const representationsController = require('./relevant-representations/representations');
-const examinationTimetable = require('./examination-timetable/controller');
-const { getProjectInformation } = require('./project-information/controller');
-const aboutTheApplicationController = require('./documents/controller');
-const section51Router = require('./section-51/section-51.router');
-const { middleware, projectMigrationMiddleware } = require('./_middleware/middleware');
-const { featureFlag } = require('../../config');
-const { getUpdatesRouter } = require('./get-updates/router');
-const { getProjectUpdatesController } = require('./project-updates/controller');
-
 if (allowProjectInformation) {
-	router.get('/:case_ref', [middleware, projectMigrationMiddleware], getProjectInformation);
-	router.get('/:case_ref/project-updates', middleware, getProjectUpdatesController);
+	projectsRouter.get('/:case_ref/project-updates', projectsMiddleware, getProjectUpdatesController);
 }
 
 if (allowDocumentLibrary) {
-	router.get(
+	projectsRouter.get(
 		`${subDirectory}${pages.documents.route}`,
-		middleware,
+		projectsMiddleware,
 		aboutTheApplicationController.getApplicationDocuments
 	);
 }
 
 if (allowExaminationTimetable) {
-	router.get(
+	projectsRouter.get(
 		`${subDirectory}${pages.examinationTimetable.route}`,
-		middleware,
+		projectsMiddleware,
 		examinationTimetable.getExaminationTimetable
 	);
-	router.post(
+	projectsRouter.post(
 		`${subDirectory}${pages.examinationTimetable.route}`,
 		examinationTimetable.postExaminationTimetable
 	);
 }
 
 if (allowRepresentation) {
-	router.get(
+	projectsRouter.get(
 		'/:case_ref/representations',
-		middleware,
+		projectsMiddleware,
 		asyncRoute(representationsController.getRepresentations)
 	);
-	router.get(
+	projectsRouter.get(
 		'/:case_ref/representations/:id',
-		middleware,
+		projectsMiddleware,
 		asyncRoute(representationsController.getRepresentation)
 	);
 }
 
-if (allowGetUpdates) router.use(getUpdatesRouter);
+if (allowGetUpdates) projectsRouter.use(getUpdatesRouter);
 
 // Section 51
 if (featureFlag.allowSection51) {
-	router.use(section51Router);
+	projectsRouter.use(section51Router);
 }
 
-module.exports = router;
+module.exports = projectsRouter;

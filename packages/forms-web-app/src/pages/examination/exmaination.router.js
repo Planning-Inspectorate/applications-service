@@ -12,7 +12,7 @@ const {
 } = require('../../middleware/unset-edit-mode-submission-item-id');
 
 const { decodeUri } = require('../../middleware/decode-uri');
-const { middleware: projectsMiddleware } = require('../projects/_middleware/middleware');
+const { projectsMiddleware } = require('../projects/_middleware/middleware');
 
 const {
 	routesConfig: {

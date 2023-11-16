@@ -51,8 +51,8 @@ const commonMockData = {
 	ProjectLocation: 'mock project location'
 };
 
-describe('projects/project-information/controller.component', () => {
-	describe('#getProjectInformation', () => {
+describe('projects/index/controller.component', () => {
+	describe('#getProjectsIndexController', () => {
 		beforeEach(() => {
 			getTimetables.mockResolvedValue({
 				data: {

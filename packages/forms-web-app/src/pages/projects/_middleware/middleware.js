@@ -6,7 +6,7 @@ const { areEventsEligibleForDisplay } = require('../examination-timetable/utils/
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const config = require('../../../config');
 
-async function middleware(req, res, next) {
+async function projectsMiddleware(req, res, next) {
 	try {
 		const { params, baseUrl, path } = req;
 		const { case_ref } = params;
@@ -45,6 +45,6 @@ const projectMigrationMiddleware = (req, res, next) => {
 };
 
 module.exports = {
-	middleware,
+	projectsMiddleware,
 	projectMigrationMiddleware
 };
