@@ -1,16 +1,16 @@
 const { getSection51 } = require('./section-51.controller');
 const { listAdvice } = require('../../../services/advice.service');
-const { getPaginationUrl, getPagination } = require('../utils/pagination/pagination');
-const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
+const { getPaginationUrl, getPagination } = require('../_utils/pagination/pagination');
+const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
 const { adviceList } = require('./__mocks__/fixtures');
 
 jest.mock('../../../services/advice.service', () => ({
 	listAdvice: jest.fn()
 }));
-jest.mock('../utils/pagination/documentsPerPage', () => ({
+jest.mock('../_utils/pagination/documentsPerPage', () => ({
 	documentsPerPage: jest.fn()
 }));
-jest.mock('../utils/pagination/pagination', () => ({
+jest.mock('../_utils/pagination/pagination', () => ({
 	getPaginationUrl: jest.fn(),
 	getPagination: jest.fn()
 }));

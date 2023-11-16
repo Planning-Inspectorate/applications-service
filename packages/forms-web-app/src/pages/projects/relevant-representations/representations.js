@@ -9,7 +9,7 @@ const {
 } = require('../../../config');
 const { isDateAfterTodaysDate } = require('./_utils/is-date-after-todays-date');
 const { getRelevantRepresentationsQuery } = require('./_utils/get-relevant-representations-query');
-const { documentsPerPage } = require('../utils/pagination/documentsPerPage');
+const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
 const { buildPaginationQueryString } = require('../../_utils/build-pagination-query-string');
 const { isQuerySearchOrTypePresent } = require('./_utils/is-query-search-or-type-present');
 const {
