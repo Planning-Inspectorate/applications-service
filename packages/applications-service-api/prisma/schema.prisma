@@ -198,3 +198,24 @@ model ExaminationTimetableEventItem {
   eventId                  Int
   ExaminationTimetable     ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
 }
+
+model Advice {
+  adviceId        Int       @unique
+  adviceReference String?
+  caseReference   String?
+  caseId          Int
+  title           String?
+  from            String?
+  agent           String?
+  method          String?
+  enquiryDate     DateTime
+  enquiryDetails  String?
+  adviceGivenBy   String?
+  adviceDate      DateTime
+  adviceDetails   String?
+  status          String?
+  redactionStatus String?
+  attachmentIds   String?
+  createdAt       DateTime? @default(now())
+  modifiedAt      DateTime? @default(now())
+}
