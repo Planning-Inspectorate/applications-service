@@ -1,5 +1,5 @@
 const { getSection51 } = require('./section-51.controller');
-const { middleware } = require('../_middleware/middleware');
+const { projectsMiddleware } = require('../_middleware/middleware');
 const {
 	getSection51AdviceDetail
 } = require('./section-51-advice-detail/section-51-advice-detail.controller');
@@ -17,10 +17,14 @@ describe('#section51Router', () => {
 		});
 		describe('and the route is /', () => {
 			it('should mount the routes/_middleware/controllers for section 51', () => {
-				expect(router.get).toHaveBeenCalledWith('/:case_ref/s51advice', middleware, getSection51);
+				expect(router.get).toHaveBeenCalledWith(
+					'/:case_ref/s51advice',
+					projectsMiddleware,
+					getSection51
+				);
 				expect(router.get).toHaveBeenCalledWith(
 					'/:case_ref/s51advice/:id',
-					middleware,
+					projectsMiddleware,
 					getSection51AdviceDetail
 				);
 			});
