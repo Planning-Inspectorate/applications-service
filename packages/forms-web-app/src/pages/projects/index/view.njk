@@ -1,7 +1,9 @@
 {% extends "layouts/default.njk" %}
+
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from "./components/latest-update.njk" import getLatestUpdate %}
-{% from "./components/stage-progress-tag.njk" import stageProgressTag %}
+
+{% from "./_components/latest-update.njk" import getLatestUpdate %}
+{% from "./_components/stage-progress-tag.njk" import stageProgressTag %}
 
 {% set activeId = "project-information" %}
 
@@ -42,23 +44,23 @@
 
 			{{ getLatestUpdate(latestUpdate, caseRef) }}
 
-			{% include "projects/project-information/includes/about.njk" %}
+			{% include "./_includes/about.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
-			{% include "projects/project-information/includes/project-stage.njk" %}
+			{% include "./_includes/project-stage.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
 			{% if applicationData.projectLocation or mapAccessToken %}
 
-				{% include "./includes/location.njk" %}
+				{% include "./_includes/location.njk" %}
 				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
 			{% endif %}
 
-			{% include "projects/project-information/includes/get-updates.njk" %}
+			{% include "./_includes/get-updates.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
 
-			{% include "projects/project-information/includes/contact.njk" %}
+			{% include "./_includes/contact.njk" %}
 		</div>
 	</div>
 {% endblock %}

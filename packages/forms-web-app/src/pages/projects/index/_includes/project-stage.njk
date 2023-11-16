@@ -1,40 +1,40 @@
 <section>
 	<h2 class="govuk-heading-m">Project stage</h2>
 
-	<p>This project is at the <strong>{{ applicationData.status.text | lower }}</strong> stage</p>
+	<p class="govuk-body">This project is at the <strong>{{ applicationData.status.text | lower }}</strong> stage</p>
 
 	{% if applicationData.status.text === projectStages[1] %}
-		{% include "projects/project-information/includes/stages/pre-application/description.njk" %}
+		{% include "./stages/pre-application/description.njk" %}
 	{% endif %}
 
 	{% if applicationData.status.text === projectStages[2] %}
-		{% include "projects/project-information/includes/stages/acceptance/description.njk" %}
+		{% include "./stages/acceptance/description.njk" %}
 	{% endif %}
 
 	{% if applicationData.status.text === projectStages[3] %}
-		{% include "projects/project-information/includes/stages/pre-examination/description.njk" %}
+		{% include "./stages/pre-examination/description.njk" %}
 	{% endif %}
 
 	{% if applicationData.status.text === projectStages[4] %}
-		{% include "projects/project-information/includes/stages/examination/description.njk" %}
+		{% include "./stages/examination/description.njk" %}
 	{% endif %}
 
 	{% if applicationData.status.text === projectStages[5] %}
-		{% include "projects/project-information/includes/stages/recommendation/description.njk" %}
+		{% include "./stages/recommendation/description.njk" %}
 	{% endif %}
 
 	{% if applicationData.status.text === projectStages[6] %}
-		{% include "projects/project-information/includes/stages/decision/description.njk" %}
+		{% include "./stages/decision/description.njk" %}
 	{% endif %}
 
 	{% if applicationData.status.text === projectStages[7] %}
-		{% include "projects/project-information/includes/stages/post-decision/description.njk" %}
+		{% include "./stages/post-decision/description.njk" %}
 	{% endif %}
 
 	<dl class="govuk-summary-list pins-modded-last-item-border-none">
 		<div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/pre-application/details.njk" %}
+				{% include "./stages/pre-application/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 1) }}
@@ -42,7 +42,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[2] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/acceptance/details.njk" %}
+				{% include "./stages/acceptance/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 2) }}
@@ -50,7 +50,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[3] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/pre-examination/details.njk" %}
+				{% include "./stages/pre-examination/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 3) }}
@@ -58,7 +58,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[4] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/examination/details.njk" %}
+				{% include "./stages/examination/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 4) }}
@@ -66,7 +66,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[5] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/recommendation/details.njk" %}
+				{% include "./stages/recommendation/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 5) }}
@@ -74,7 +74,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[6] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/decision/details.njk" %}
+				{% include "./stages/decision/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 6) }}
@@ -82,7 +82,7 @@
 		</div>
 		<div id="project-stage-{{ projectStages[7] | lower }}" class="govuk-summary-list__row">
 			<dt class="govuk-summary-list__value">
-				{% include "projects/project-information/includes/stages/post-decision/details.njk" %}
+				{% include "./stages/post-decision/details.njk" %}
 			</dt>
 			<dd class="govuk-summary-list__actions">
 				{{ stageProgressTag( applicationData.status.number, 7) }}

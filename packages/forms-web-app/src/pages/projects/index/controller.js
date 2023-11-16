@@ -1,5 +1,5 @@
 const logger = require('../../../lib/logger');
-const { getPageData } = require('./utils/get-page-data');
+const { getPageData } = require('./_utils/get-page-data');
 const {
 	getProjectDecisionDocument,
 	getRule6DocumentType,
@@ -7,16 +7,16 @@ const {
 	getProjectUpdatesData
 } = require('../../services');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
-const { getApplicationDecision } = require('./utils/get-application-decision');
+const { getApplicationDecision } = require('./_utils/get-application-decision');
 const { documentTypes, documentTypeDictionary } = require('@pins/common/src/constants');
-const { getPreExaminationSubStage } = require('./utils/pre-examination-sub-stages');
-const { formatProjectStagesToLowerCase } = require('./utils/formatters');
+const { getPreExaminationSubStage } = require('./_utils/pre-examination-sub-stages');
+const { formatProjectStagesToLowerCase } = require('./_utils/formatters');
 const {
 	getExaminationOrDecisionCompletedDate
-} = require('./utils/examination-or-decision-completed-date');
+} = require('./_utils/examination-or-decision-completed-date');
 const { getMapAccessToken } = require('../../_services');
 
-const view = 'projects/project-information/view.njk';
+const view = 'projects/index/view.njk';
 
 const getMiscDataByStageName = async (stageName, caseRef) => {
 	stageName = stageName.toLocaleLowerCase();
@@ -32,7 +32,7 @@ const getMiscDataByStageName = async (stageName, caseRef) => {
 	return result;
 };
 
-const getProjectInformation = async (req, res, next) => {
+const getProjectsIndexController = async (req, res, next) => {
 	try {
 		const {
 			locals: { applicationData }
@@ -78,5 +78,5 @@ const getProjectInformation = async (req, res, next) => {
 };
 
 module.exports = {
-	getProjectInformation
+	getProjectsIndexController
 };

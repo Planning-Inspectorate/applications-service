@@ -1,4 +1,4 @@
-const { getProjectInformation } = require('./controller');
+const { getProjectsIndexController } = require('./controller');
 
 const { getProjectUpdates, getDocumentByType } = require('../../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../../_services');
@@ -20,8 +20,8 @@ jest.mock('../../_services', () => ({
 	getMapAccessToken: jest.fn()
 }));
 
-describe('projects/project-information/controller', () => {
-	describe('#getProjectInformation', () => {
+describe('pages/projects/index/controller', () => {
+	describe('#getProjectsIndexController', () => {
 		const today = '2020-01-01';
 
 		beforeAll(() => {
@@ -40,7 +40,7 @@ describe('projects/project-information/controller', () => {
 
 			beforeEach(async () => {
 				getProjectUpdates.mockReturnValue(getProjectUpdatesUnsuccessfulFixture);
-				await getProjectInformation(req, res, next);
+				await getProjectsIndexController(req, res, next);
 			});
 
 			it('should throw an error', () => {
@@ -66,11 +66,11 @@ describe('projects/project-information/controller', () => {
 					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
 				getMapAccessToken.mockReturnValue('mock map access token');
 
-				await getProjectInformation(req, res, next);
+				await getProjectsIndexController(req, res, next);
 			});
 
 			it('should render the page with the latest update', () => {
-				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
+				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
 					decisionCompletedDate: null,
@@ -145,11 +145,11 @@ describe('projects/project-information/controller', () => {
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
 
-				await getProjectInformation(req, res, next);
+				await getProjectsIndexController(req, res, next);
 			});
 
 			it('should render the page with NO latest update', () => {
-				expect(res.render).toHaveBeenCalledWith('projects/project-information/view.njk', {
+				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'mock@email.com',
 					decisionCompletedDate: null,
