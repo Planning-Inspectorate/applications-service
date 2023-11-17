@@ -1,6 +1,8 @@
 const { postGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 const logger = require('../../../../lib/logger');
-const { getUpdatesRoutes } = require('../_utils/get-updates-url');
+const {
+	getUpdatesConfirmYourEmailURL
+} = require('../confirm-your-email/utils/get-updates-confirm-your-email-url');
 const { getPageData } = require('./utils/get-page-data');
 const { formatHowOftenValue } = require('./utils/format-how-often-value');
 const {
@@ -48,7 +50,7 @@ const postGetUpdatesHowOften = async (req, res) => {
 
 		setGetUpdatesSubscriptionLinkSentSession(session, true);
 
-		return res.redirect(getUpdatesRoutes.confirm);
+		return res.redirect(getUpdatesConfirmYourEmailURL(caseRef));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render(view, getPageData(errorView, caseRef));
