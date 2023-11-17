@@ -5,14 +5,17 @@ describe('projects/get-updates/index/controller', () => {
 		it('should render the page and add the get updates key to the session', async () => {
 			const res = {
 				render: jest.fn(),
-				locals: { projectName: 'mock project name' }
+				locals: {
+					projectName: 'mock project name'
+				}
 			};
 			const req = {
-				session: {}
+				session: {},
+				params: { case_ref: 'mock case ref' }
 			};
 			await getGetUpdatesIndex(req, res);
 			expect(res.render).toHaveBeenCalledWith('projects/get-updates/index/view.njk', {
-				nextPageRoute: 'email',
+				nextPageRoute: '/projects/mock case ref/get-updates/email',
 				pageHeading: 'Get updates about this project',
 				pageTitle: 'Get updates | mock project name'
 			});
