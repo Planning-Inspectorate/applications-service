@@ -3,8 +3,8 @@ const express = require('express');
 const getUpdatesRouter = express.Router();
 
 const { projectsMiddleware, projectMigrationMiddleware } = require('../_middleware/middleware');
-const { getUpdatesRoutes } = require('./_utils/get-updates-routes');
-const { getGetUpdatesStart } = require('./start/controller');
+const { getUpdatesRoutes } = require('./_utils/get-updates-url');
+const { getGetUpdatesIndex } = require('./index/controller');
 const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./email/controller');
 const { emailValidationRules } = require('../../../validators/shared/email-address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
@@ -14,13 +14,16 @@ const { getGetUpdatesConfirmYourEmail } = require('./confirm-your-email/controll
 const { getGetUpdatesSubscribed } = require('./subscribed/controller');
 const { getGetUpdatesUnsubscribe, postGetUpdatesUnsubscribe } = require('./unsubscribe/controller');
 const { getGetUpdatesUnsubscribed } = require('./unsubscribed/controller');
+const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
 
 const baseUrl = '/:case_ref/get-updates/';
 
+const getUpdatesIndexRoute = getUpdatesIndexURL();
+
 getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.start}`,
+	getUpdatesIndexRoute,
 	[projectsMiddleware, projectMigrationMiddleware],
-	getGetUpdatesStart
+	getGetUpdatesIndex
 );
 
 getUpdatesRouter.get(`${baseUrl}${getUpdatesRoutes.email}`, getGetUpdatesEmail);

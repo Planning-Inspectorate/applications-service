@@ -1,6 +1,6 @@
 const logger = require('../../../../lib/logger');
 const { setGetUpdatesEmailSession } = require('../_session');
-const { getUpdatesRoutes } = require('../_utils/get-updates-routes');
+const { getUpdatesRoutes } = require('../_utils/get-updates-url');
 const { getPageData } = require('./utils/get-page-data');
 
 const view = 'projects/get-updates/email/view.njk';

@@ -1,5 +1,5 @@
 const { getGetUpdatesEmailSession } = require('../../_session');
-const { getUpdatesRoutes } = require('../../_utils/get-updates-routes');
+const { getUpdatesRoutes } = require('../../_utils/get-updates-url');
 
 const getPageData = (session) => ({
 	email: getGetUpdatesEmailSession(session),

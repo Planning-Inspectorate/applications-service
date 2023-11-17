@@ -1,9 +1,9 @@
 const { setGetUpdatesSession } = require('../_session/get-updates');
-const { getUpdatesRoutes } = require('../_utils/get-updates-routes');
+const { getUpdatesRoutes } = require('../_utils/get-updates-url');
 
-const view = 'projects/get-updates/start/view.njk';
+const view = 'projects/get-updates/index/view.njk';
 
-const getGetUpdatesStart = (req, res) => {
+const getGetUpdatesIndex = (req, res) => {
 	const { session } = req;
 
 	setGetUpdatesSession(session);
@@ -16,5 +16,5 @@ const getGetUpdatesStart = (req, res) => {
 };
 
 module.exports = {
-	getGetUpdatesStart
+	getGetUpdatesIndex
 };
