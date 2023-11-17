@@ -14,11 +14,14 @@ const { getGetUpdatesConfirmYourEmail } = require('./confirm-your-email/controll
 const { getGetUpdatesSubscribed } = require('./subscribed/controller');
 const { getGetUpdatesUnsubscribe, postGetUpdatesUnsubscribe } = require('./unsubscribe/controller');
 const { getGetUpdatesUnsubscribed } = require('./unsubscribed/controller');
-const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
 
-const baseUrl = '/:case_ref/get-updates/';
+const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
+const { getUpdatesEmailURL } = require('./email/utils/get-updates-email-url');
 
 const getUpdatesIndexRoute = getUpdatesIndexURL();
+const getUpdatesEmailRoute = getUpdatesEmailURL();
+
+const baseUrl = '/:case_ref/get-updates/';
 
 getUpdatesRouter.get(
 	getUpdatesIndexRoute,
@@ -26,9 +29,9 @@ getUpdatesRouter.get(
 	getGetUpdatesIndex
 );
 
-getUpdatesRouter.get(`${baseUrl}${getUpdatesRoutes.email}`, getGetUpdatesEmail);
+getUpdatesRouter.get(getUpdatesEmailRoute, getGetUpdatesEmail);
 getUpdatesRouter.post(
-	`${baseUrl}${getUpdatesRoutes.email}`,
+	getUpdatesEmailRoute,
 	emailValidationRules(),
 	validationErrorHandler,
 	postGetUpdatesEmail

@@ -1,10 +1,10 @@
 const { getGetUpdatesEmailSession } = require('../../_session');
-const { getUpdatesRoutes } = require('../../_utils/get-updates-url');
+const { getUpdatesIndexURL } = require('../../index/utils/get-updates-index-url');
 
-const getPageData = (session) => ({
+const getPageData = (session, caseRef) => ({
 	email: getGetUpdatesEmailSession(session),
 	pageTitle: `What is your email address?`,
-	backLinkUrl: getUpdatesRoutes.start
+	backLinkUrl: getUpdatesIndexURL(caseRef)
 });
 
 module.exports = { getPageData };
