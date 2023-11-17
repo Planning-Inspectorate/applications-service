@@ -9,6 +9,9 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 						email: 'mock@email.com',
 						subscriptionLinkSent: true
 					}
+				},
+				params: {
+					case_ref: 'mock-case-ref'
 				}
 			};
 			const res = {
@@ -37,6 +40,9 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 					getUpdates: {
 						subscriptionLinkSent: true
 					}
+				},
+				params: {
+					case_ref: 'mock-case-ref'
 				}
 			};
 			const res = {
@@ -59,6 +65,9 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 					getUpdates: {
 						subscriptionLinkSent: false
 					}
+				},
+				params: {
+					case_ref: 'mock-case-ref'
 				}
 			};
 			const res = {
