@@ -1,10 +1,10 @@
-const { getUpdatesRoutes } = require('../../_utils/get-updates-url');
+const { getUpdatesEmailURL } = require('../../email/utils/get-updates-email-url');
 const { inputNameId } = require('../config');
 const { getTitles } = require('./get-titles');
 
-const getPageData = (view = 'index') => ({
+const getPageData = (view = 'index', caseRef) => ({
 	...getTitles(view),
-	backLinkUrl: view === 'index' ? getUpdatesRoutes.email : null,
+	backLinkUrl: view === 'index' ? getUpdatesEmailURL(caseRef) : null,
 	displayContent: view,
 	inputNameId
 });

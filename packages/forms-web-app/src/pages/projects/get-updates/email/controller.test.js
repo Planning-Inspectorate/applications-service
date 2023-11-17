@@ -120,7 +120,9 @@ describe('projects/get-updates/email/controller', () => {
 				});
 
 				it('should redirect to next page', async () => {
-					expect(res.redirect).toHaveBeenCalledWith('how-often');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/get-updates/how-often'
+					);
 				});
 			});
 
