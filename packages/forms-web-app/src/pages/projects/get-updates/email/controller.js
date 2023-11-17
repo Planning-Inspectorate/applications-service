@@ -1,6 +1,6 @@
 const logger = require('../../../../lib/logger');
 const { setGetUpdatesEmailSession } = require('../_session');
-const { getUpdatesRoutes } = require('../_utils/get-updates-url');
+const { getUpdatesHowOftenURL } = require('../how-often/utils/get-updates-how-often-url');
 const { getPageData } = require('./utils/get-page-data');
 
 const view = 'projects/get-updates/email/view.njk';
@@ -39,7 +39,7 @@ const postGetUpdatesEmail = async (req, res, next) => {
 
 		setGetUpdatesEmailSession(session, email);
 
-		return res.redirect(getUpdatesRoutes.howOften);
+		return res.redirect(getUpdatesHowOftenURL(caseRef));
 	} catch (error) {
 		logger.error(error);
 		next(error);
