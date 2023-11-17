@@ -10,7 +10,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 	describe('#getGetUpdatesSubscribed', () => {
 		const req = {
 			params: {
-				case_ref: 'mock case ref'
+				case_ref: 'mock-case-ref'
 			},
 			query: {
 				subscriptionDetails: 'mock subscription details'
@@ -34,7 +34,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 				expect(res.render).toBeCalledWith('projects/get-updates/subscribed/view.njk', {
 					pageHeading: 'Get updates success',
 					pageTitle: 'Get updates success',
-					getUpdatesStartRoute: 'start',
+					getUpdatesStartRoute: '/projects/mock-case-ref/get-updates/start',
 					subscriptionStatus: 'successful'
 				});
 			});
@@ -52,7 +52,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 				expect(res.render).toBeCalledWith('projects/get-updates/subscribed/view.njk', {
 					pageHeading: 'Your email verification link has expired',
 					pageTitle: 'Verification link expired',
-					getUpdatesStartRoute: 'start',
+					getUpdatesStartRoute: '/projects/mock-case-ref/get-updates/start',
 					subscriptionStatus: 'expired'
 				});
 			});
@@ -70,7 +70,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 				expect(res.render).toBeCalledWith('projects/get-updates/subscribed/view.njk', {
 					pageHeading: 'There has been a problem with our system',
 					pageTitle: 'Email system problem',
-					getUpdatesStartRoute: 'start',
+					getUpdatesStartRoute: '/projects/mock-case-ref/get-updates/start',
 					subscriptionStatus: 'unsuccessful'
 				});
 			});

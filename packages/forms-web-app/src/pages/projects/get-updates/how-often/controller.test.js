@@ -229,7 +229,9 @@ describe('projects/get-updates/how-often/controller', () => {
 				});
 
 				it('should redirect to next page', async () => {
-					expect(res.redirect).toHaveBeenCalledWith('confirm-your-email');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/get-updates/confirm-your-email'
+					);
 				});
 			});
 		});

@@ -18,10 +18,14 @@ const { getGetUpdatesUnsubscribed } = require('./unsubscribed/controller');
 const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
 const { getUpdatesEmailURL } = require('./email/utils/get-updates-email-url');
 const { getUpdatesHowOftenURL } = require('./how-often/utils/get-updates-how-often-url');
+const {
+	getUpdatesConfirmYourEmailURL
+} = require('./confirm-your-email/utils/get-updates-confirm-your-email-url');
 
 const getUpdatesIndexRoute = getUpdatesIndexURL();
 const getUpdatesEmailRoute = getUpdatesEmailURL();
 const getUpdatesHowOftenRoute = getUpdatesHowOftenURL();
+const getUpdatesConfirmYourEmailRoute = getUpdatesConfirmYourEmailURL();
 
 const baseUrl = '/:case_ref/get-updates/';
 
@@ -48,7 +52,7 @@ getUpdatesRouter.post(
 );
 
 getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.confirm}`,
+	getUpdatesConfirmYourEmailRoute,
 	projectsMiddleware,
 	getGetUpdatesConfirmYourEmail
 );
