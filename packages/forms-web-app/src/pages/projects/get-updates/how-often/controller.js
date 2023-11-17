@@ -1,6 +1,6 @@
 const { postGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 const logger = require('../../../../lib/logger');
-const { getUpdatesRoutes } = require('../_utils/get-updates-routes');
+const { getUpdatesRoutes } = require('../_utils/get-updates-url');
 const { getPageData } = require('./utils/get-page-data');
 const { formatHowOftenValue } = require('./utils/format-how-often-value');
 const { inputNameId } = require('./config');
