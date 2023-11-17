@@ -1,4 +1,4 @@
-const { getUpdatesRoutes } = require('../../_utils/get-updates-routes');
+const { getUpdatesRoutes } = require('../../_utils/get-updates-url');
 const { inputNameId } = require('../config');
 const { getTitles } = require('./get-titles');
 

@@ -21,6 +21,7 @@ const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
 
 const { featureFlag } = require('../../config');
+const { getUpdatesRouter } = require('./get-updates/router');
 
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
@@ -57,6 +58,10 @@ if (featureFlag.allowSection51) {
 
 if (featureFlag.allowRepresentation) {
 	projectsRouter.use(representationsRouter);
+}
+
+if (featureFlag.allowGetUpdates) {
+	projectsRouter.use(getUpdatesRouter);
 }
 
 module.exports = { projectsRouter };

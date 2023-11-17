@@ -2,7 +2,7 @@ const logger = require('../../../../lib/logger');
 const { deleteGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 const { getPageData } = require('./utils/get-page-data');
 const { setGetUpdatesSession } = require('../_session/get-updates');
-const { getUpdatesRoutes } = require('../_utils/get-updates-routes');
+const { getUpdatesRoutes } = require('../_utils/get-updates-url');
 const { setGetUpdatesUnsubscribedSession } = require('../_session');
 
 const view = 'projects/get-updates/unsubscribe/view.njk';
