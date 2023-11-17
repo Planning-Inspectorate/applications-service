@@ -1,15 +1,18 @@
 const { setGetUpdatesSession } = require('../_session/get-updates');
-const { getUpdatesRoutes } = require('../_utils/get-updates-url');
+const { getUpdatesEmailURL } = require('../email/utils/get-updates-email-url');
 
 const view = 'projects/get-updates/index/view.njk';
 
 const getGetUpdatesIndex = (req, res) => {
-	const { session } = req;
+	const {
+		session,
+		params: { case_ref: caseRef }
+	} = req;
 
 	setGetUpdatesSession(session);
 
 	return res.render(view, {
-		nextPageRoute: getUpdatesRoutes.email,
+		nextPageRoute: getUpdatesEmailURL(caseRef),
 		pageHeading: 'Get updates about this project',
 		pageTitle: `Get updates | ${res.locals.projectName}`
 	});

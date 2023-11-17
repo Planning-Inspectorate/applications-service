@@ -7,9 +7,12 @@ const view = 'projects/get-updates/email/view.njk';
 
 const getGetUpdatesEmail = (req, res, next) => {
 	try {
-		const { session } = req;
+		const {
+			session,
+			params: { case_ref: caseRef }
+		} = req;
 
-		return res.render(view, getPageData(session));
+		return res.render(view, getPageData(session, caseRef));
 	} catch (error) {
 		logger.error(error);
 		next(error);
@@ -18,13 +21,16 @@ const getGetUpdatesEmail = (req, res, next) => {
 
 const postGetUpdatesEmail = async (req, res, next) => {
 	try {
-		const { body, session } = req;
-		const { errors, errorSummary } = body;
-		const { email } = body;
+		const {
+			body,
+			session,
+			params: { case_ref: caseRef }
+		} = req;
+		const { errors, errorSummary, email } = body;
 
 		if (errors) {
 			return res.render(view, {
-				...getPageData(session),
+				...getPageData(session, caseRef),
 				email: errors.email.value,
 				errors,
 				errorSummary
