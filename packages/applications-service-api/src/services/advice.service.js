@@ -23,7 +23,7 @@ const createQueryFilters = (query) => {
 	return { pageNo, size, offset, searchTerm, caseReference };
 };
 
-const gg = ({ count, advice }) => {
+const mapBackOfficeAdviceToApiWrapper = ({ count, advice }) => {
 	return {
 		count,
 		advice: mapBackOfficeAdviceToApi(advice)
@@ -33,7 +33,9 @@ const getAllAdvice = async (query) => {
 	const { caseReference, pageNo, size, offset, searchTerm } = createQueryFilters(query);
 
 	const { advice, count } = isBackOfficeCaseReference(caseReference)
-		? gg(await getAllBackOfficeAdvice(caseReference, offset, size, searchTerm))
+		? mapBackOfficeAdviceToApiWrapper(
+				await getAllBackOfficeAdvice(caseReference, offset, size, searchTerm)
+		  )
 		: await getAllNIAdvice(caseReference, offset, size, searchTerm);
 
 	return {

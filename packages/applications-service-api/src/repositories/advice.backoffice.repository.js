@@ -27,7 +27,6 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 
 	const advice = await prismaClient.advice.findMany(dbQuery);
 	const count = await prismaClient.advice.count({ where });
-	console.log({ count, advice });
 	return { count, advice };
 };
 

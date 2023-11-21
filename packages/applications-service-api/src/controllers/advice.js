@@ -14,12 +14,17 @@ const getAdvice = async (req, res) => {
 
 	try {
 		if (!caseRef) {
-			throw ApiError.badRequest('Case reference is required');
+			throw ApiError.badRequest('missing required parameter: caseRef');
 		}
 
 		const { advice, totalItems, itemsPerPage, totalPages, currentPage } = await getAllAdviceService(
 			req.query
 		);
+
+		if (totalItems === 0) {
+			throw ApiError.adviceNotFound(caseRef);
+		}
+
 		res.status(StatusCodes.OK).send({
 			advice: advice,
 			totalItems: totalItems,
