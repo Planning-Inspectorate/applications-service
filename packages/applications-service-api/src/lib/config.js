@@ -52,7 +52,8 @@ module.exports = {
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
 			topics: {
 				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription',
-				DEADLINE_SUBMISSION: 'deadline-submission-topic'
+				DEADLINE_SUBMISSION: 'deadline-submission-topic',
+				REGISTER_REPRESENTATION: 'register-representation'
 			}
 		},
 		blobStorage: {
