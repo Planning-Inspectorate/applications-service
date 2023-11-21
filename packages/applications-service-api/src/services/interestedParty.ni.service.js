@@ -5,6 +5,7 @@ const {
 	createInterestedParty: createInterestedPartyRepository,
 	updateInterestedParty
 } = require('../repositories/interestedParty.ni.repository');
+const { getDate } = require('../utils/date-utils');
 
 const createInterestedParty = async (createInterestedPartyRequest) => {
 	const interestedParty = IPFactory.createIP(createInterestedPartyRequest.behalf).get(
@@ -27,7 +28,7 @@ const createInterestedParty = async (createInterestedPartyRequest) => {
 		ipRef,
 		projectEmail
 	});
-	await updateInterestedParty(interestedPartyNI.id, { emailed: new Date() });
+	await updateInterestedParty(interestedPartyNI.ID, { emailed: getDate() });
 
 	return interestedPartyNI;
 };

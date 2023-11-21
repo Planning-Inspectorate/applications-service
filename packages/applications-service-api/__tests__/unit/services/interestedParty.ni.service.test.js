@@ -8,14 +8,21 @@ const { APPLICATION_FO } = require('../../__data__/application');
 jest.mock('../../../src/repositories/interestedParty.ni.repository');
 jest.mock('../../../src/repositories/project.ni.repository');
 jest.mock('../../../src/lib/notify');
+jest.mock('../../../src/utils/date-utils');
 const {
-	createInterestedParty: createInterestedPartyRepository
+	createInterestedParty: createInterestedPartyRepository,
+	updateInterestedParty
 } = require('../../../src/repositories/interestedParty.ni.repository');
 const { getApplication } = require('../../../src/repositories/project.ni.repository');
 const { sendIPRegistrationConfirmationEmailToIP } = require('../../../src/lib/notify');
+const { getDate } = require('../../../src/utils/date-utils');
 
 describe('interestedParty.ni.service', () => {
 	describe('createInterestedParty', () => {
+		const mockDate = new Date('2022-12-09 13:30:00');
+
+		beforeEach(() => getDate.mockReturnValueOnce(mockDate));
+
 		it('invokes create repository', async () => {
 			getApplication.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 			createInterestedPartyRepository.mockResolvedValueOnce({
@@ -42,6 +49,7 @@ describe('interestedParty.ni.service', () => {
 				ipRef: '123456',
 				projectEmail: 'webteam@planninginspectorate.gov.uk'
 			});
+			expect(updateInterestedParty).toHaveBeenCalledWith(123456, { emailed: mockDate });
 		});
 	});
 });
