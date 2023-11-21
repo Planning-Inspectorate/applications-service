@@ -208,6 +208,33 @@ describe('/api/v1/interested-party', () => {
 					});
 				});
 			});
+
+			describe('Database insert failure', () => {
+				it('returns 400 error', async () => {
+					const errorMessage =
+						"Incorrect string value: '\xF0\x9D\x99\xB1\xF0\x9D...' for column 'mename' at row 1";
+					mockInterestedPartyCreate.mockImplementationOnce(() => {
+						throw {
+							name: 'SequelizeDatabaseError',
+							parent: {
+								code: 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD'
+							},
+							message: errorMessage
+						};
+					});
+
+					const response = await request.post('/api/v1/interested-party').send({
+						...INTERESTED_PARTY_SELF_API,
+						'full-name': 'M. 𝙱𝔍'
+					});
+
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						code: 400,
+						errors: [errorMessage]
+					});
+				});
+			});
 		});
 
 		describe('Back Office project', () => {
