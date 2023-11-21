@@ -56,7 +56,6 @@ describe('/api/v1/advice', () => {
 				it('should return the correct data', async () => {
 					const response = await request.get('/api/v1/advice?caseRef=NI-CASEID');
 
-					console.log({ responsebody: response.body });
 					expect(response.status).toEqual(200);
 					expect(response.body).toEqual({
 						advice: ADVICE_NI_RESPONSE,
