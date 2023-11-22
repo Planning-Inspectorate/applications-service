@@ -111,6 +111,7 @@ describe('pages/projects/representations/index/controller', () => {
 			relevantRepresentationsURL: '/projects/EN010009/representations',
 			representations: [
 				{
+					Attachments: 'WS010006-000002',
 					URL: '/projects/EN010009/representations/2',
 					attachments: [],
 					comment: 'Some comments',
