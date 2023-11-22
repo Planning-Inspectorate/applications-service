@@ -48,63 +48,36 @@ describe('/api/v1/advice', () => {
 				const response = await request.get('/api/v1/advice?caseRef=NI-CASEID');
 
 				expect(response.status).toEqual(500);
-				expect(response.text).toEqual('{"message":"Problem getting advice \\n Error: MOCK ERROR"}');
+				expect(response.text).toEqual(
+					'{"code":500,"message":{"errors":["Unexpected internal server error while handling API call"]}}'
+				);
 			});
 		});
 		describe('when the case reference is ni', () => {
-			describe('and it exists in the ni database', () => {
-				it('should return the correct data', async () => {
-					const response = await request.get('/api/v1/advice?caseRef=NI-CASEID');
+			it('should return the correct data', async () => {
+				const response = await request.get('/api/v1/advice?caseRef=NI-CASEID');
 
-					expect(response.status).toEqual(200);
-					expect(response.body).toEqual({
-						advice: ADVICE_NI_RESPONSE,
-						totalItems: 1,
-						itemsPerPage: 25,
-						totalPages: 1,
-						currentPage: 1
-					});
-				});
-			});
-			describe('and it does not exist in the ni database', () => {
-				it('should return 404', async () => {
-					db.Advice.findAndCountAll.mockResolvedValue({ rows: [], count: 0 });
-					const response = await request.get('/api/v1/advice?caseRef=NI-CASEID-NOTFOUND');
-
-					expect(response.status).toEqual(404);
-					expect(response.body).toEqual({
-						code: 404,
-						errors: [`Advice with ID NI-CASEID-NOTFOUND not found`]
-					});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					advice: ADVICE_NI_RESPONSE,
+					totalItems: 1,
+					itemsPerPage: 25,
+					totalPages: 1,
+					currentPage: 1
 				});
 			});
 		});
 		describe('when the case reference is backoffice', () => {
-			describe('and it exists in the backoffice database', () => {
-				it('should return the correct data', async () => {
-					const response = await request.get('/api/v1/advice?caseRef=BACKOFFICE-CASEID');
+			it('should return the correct data', async () => {
+				const response = await request.get('/api/v1/advice?caseRef=BACKOFFICE-CASEID');
 
-					expect(response.status).toEqual(200);
-					expect(response.body).toEqual({
-						advice: ADVICE_BACKOFFICE_RESPONSE,
-						totalItems: 1,
-						itemsPerPage: 25,
-						totalPages: 1,
-						currentPage: 1
-					});
-				});
-			});
-			describe('and it does not exist in the backoffice database', () => {
-				it('should return 404', async () => {
-					mockFindManyPrisma.mockResolvedValue([]);
-					mockCountPrisma.mockResolvedValue(0);
-					const response = await request.get('/api/v1/advice?caseRef=BACKOFFICE-CASEID-NOTFOUND');
-
-					expect(response.status).toEqual(404);
-					expect(response.body).toEqual({
-						code: 404,
-						errors: [`Advice with ID BACKOFFICE-CASEID-NOTFOUND not found`]
-					});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					advice: ADVICE_BACKOFFICE_RESPONSE,
+					totalItems: 1,
+					itemsPerPage: 25,
+					totalPages: 1,
+					currentPage: 1
 				});
 			});
 		});

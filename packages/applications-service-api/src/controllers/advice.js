@@ -12,37 +12,21 @@ const getAdvice = async (req, res) => {
 	logger.debug(`Retrieving advice ...`);
 	const { caseRef } = req.query;
 
-	try {
-		if (!caseRef) {
-			throw ApiError.badRequest('missing required parameter: caseRef');
-		}
-
-		const { advice, totalItems, itemsPerPage, totalPages, currentPage } = await getAllAdviceService(
-			req.query
-		);
-
-		if (totalItems === 0) {
-			throw ApiError.adviceNotFound(caseRef);
-		}
-
-		res.status(StatusCodes.OK).send({
-			advice: advice,
-			totalItems: totalItems,
-			itemsPerPage: itemsPerPage,
-			totalPages: totalPages,
-			currentPage: currentPage
-		});
-	} catch (e) {
-		if (e instanceof ApiError) {
-			logger.debug(e.message);
-			res.status(e.code).send({ code: e.code, errors: e.message.errors });
-			return;
-		}
-		logger.error(e.message);
-		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-			message: `Problem getting advice \n ${e}`
-		});
+	if (!caseRef) {
+		throw ApiError.badRequest('missing required parameter: caseRef');
 	}
+
+	const { advice, totalItems, itemsPerPage, totalPages, currentPage } = await getAllAdviceService(
+		req.query
+	);
+
+	res.status(StatusCodes.OK).send({
+		advice: advice,
+		totalItems: totalItems,
+		itemsPerPage: itemsPerPage,
+		totalPages: totalPages,
+		currentPage: currentPage
+	});
 };
 
 const getAdviceById = async (req, res) => {

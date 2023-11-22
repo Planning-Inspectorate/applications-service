@@ -8,6 +8,7 @@ const {
 	getAllAdvice: getAllAdviceMock
 } = require('../../../src/services/advice.service');
 const { ADVICE_BACKOFFICE_RESPONSE } = require('../../__data__/advice');
+const ApiError = require('../../../src/error/apiError');
 jest.mock('../../../src/services/advice.service', () => ({
 	getAllAdvice: jest.fn(),
 	getAdviceById: jest.fn()
@@ -18,19 +19,25 @@ describe('getAdvice', () => {
 		jest.resetAllMocks();
 	});
 
+	beforeEach(() => {
+		getAllAdviceMock.mockResolvedValue({
+			advice: ADVICE_BACKOFFICE_RESPONSE,
+			totalItems: 1,
+			itemsPerPage: 25,
+			totalPages: 1,
+			currentPage: 1
+		});
+	});
 	it('should return 400 if caseRef is missing', async () => {
 		const req = httpMocks.createRequest({
 			query: {}
 		});
 		const res = httpMocks.createResponse();
-		await getAdvice(req, res);
-
-		expect(res._getStatusCode()).toEqual(StatusCodes.BAD_REQUEST);
-		expect(res._getData()).toEqual({
-			code: StatusCodes.BAD_REQUEST,
-			errors: ['missing required parameter: caseRef']
-		});
+		await expect(() => getAdvice(req, res)).rejects.toEqual(
+			ApiError.badRequest('missing required parameter: caseRef')
+		);
 	});
+
 	it('should call getAllAdviceService', async () => {
 		const req = httpMocks.createRequest({
 			query: {
@@ -44,13 +51,6 @@ describe('getAdvice', () => {
 		});
 	});
 	it('should return advice from service', async () => {
-		getAllAdviceMock.mockResolvedValue({
-			advice: ADVICE_BACKOFFICE_RESPONSE,
-			totalItems: 1,
-			itemsPerPage: 25,
-			totalPages: 1,
-			currentPage: 1
-		});
 		const req = httpMocks.createRequest({
 			query: {
 				caseRef: 'EN010009'
@@ -68,15 +68,14 @@ describe('getAdvice', () => {
 		});
 	});
 	it('should return a 500 error if an unhandled error occurs', async () => {
+		getAllAdviceMock.mockRejectedValue(new Error('some error'));
 		const res = httpMocks.createResponse();
 		const req = httpMocks.createRequest({
 			query: {
 				caseRef: 'EN010009'
 			}
 		});
-		getAllAdviceMock.mockRejectedValueOnce(new Error('some error'));
-		await getAdvice(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
+		await expect(() => getAdvice(req, res)).rejects.toEqual(new Error('some error'));
 	});
 });
 
