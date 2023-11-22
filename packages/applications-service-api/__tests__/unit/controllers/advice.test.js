@@ -92,7 +92,7 @@ describe('getAdviceById', () => {
 		enquiryDetail: 'Do we need more energy',
 		adviceGiven: 'Yes we do',
 		respondedBy: 'Joe Bloggs',
-		section1Enquiry: true,
+		section51Enquiry: true,
 		initiatedDate: '2016-04-28',
 		dateEnquiryReceived: '2016-04-28 08:42:58',
 		dateAdviceGiven: '2016-04-28',
