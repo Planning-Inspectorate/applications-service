@@ -1,10 +1,10 @@
-const { getProjectUpdatesURL } = require('../../_utils/get-updates-url');
+const { getUpdatesURL } = require('../../_utils/get-updates-url');
 const { getUpdatesIndexRoute } = require('../config');
 
 const getUpdatesIndexURL = (caseRef) => {
-	const projectUpdatesURL = getProjectUpdatesURL(caseRef);
+	const updatesURL = getUpdatesURL(caseRef);
 
-	return `${projectUpdatesURL}/${getUpdatesIndexRoute}`;
+	return `${updatesURL}/${getUpdatesIndexRoute}`;
 };
 
 module.exports = { getUpdatesIndexURL };

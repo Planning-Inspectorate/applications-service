@@ -1,10 +1,10 @@
-const { getProjectUpdatesURL } = require('../../_utils/get-updates-url');
+const { getUpdatesURL } = require('../../_utils/get-updates-url');
 const { getUpdatesConfirmYourEmailRoute } = require('../config');
 
 const getUpdatesConfirmYourEmailURL = (caseRef) => {
-	const projectUpdatesURL = getProjectUpdatesURL(caseRef);
+	const updatesURL = getUpdatesURL(caseRef);
 
-	return `${projectUpdatesURL}/${getUpdatesConfirmYourEmailRoute}`;
+	return `${updatesURL}/${getUpdatesConfirmYourEmailRoute}`;
 };
 
 module.exports = { getUpdatesConfirmYourEmailURL };
