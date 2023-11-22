@@ -110,7 +110,7 @@ class PO_ProjectAppDocs {
 	verifyNoSearchTermDocsFoundText() {
 		cy.get('[data-cy="no-docs-text"]').should(
 			'contain.text',
-			'No documents were found matching your search term and filters.'
+			'No results were found matching your search term or filters.'
 		);
 	}
 
