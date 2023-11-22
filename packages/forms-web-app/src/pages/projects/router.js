@@ -19,9 +19,9 @@ const { projectsMiddleware, projectMigrationMiddleware } = require('./_middlewar
 
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
+const { getUpdatesRouter } = require('./get-updates/router');
 
 const { featureFlag } = require('../../config');
-const { getUpdatesRouter } = require('./get-updates/router');
 
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
