@@ -8,6 +8,7 @@ const {
 
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
+const { getUpdatesRouter } = require('./get-updates/router');
 
 const { projectsMiddleware, projectMigrationMiddleware } = require('./_middleware/middleware');
 
@@ -21,7 +22,8 @@ jest.mock('../../config', () => {
 			allowDocumentLibrary: true,
 			allowExaminationTimetable: true,
 			allowSection51: true,
-			allowRepresentation: true
+			allowRepresentation: true,
+			allowGetUpdates: true
 		}
 	};
 });
@@ -78,9 +80,11 @@ describe('pages/projects/router', () => {
 
 			expect(use).toHaveBeenCalledWith(representationsRouter);
 
+			expect(use).toHaveBeenCalledWith(getUpdatesRouter);
+
 			expect(get).toBeCalledTimes(4);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(2);
+			expect(use).toBeCalledTimes(3);
 		});
 	});
 });
