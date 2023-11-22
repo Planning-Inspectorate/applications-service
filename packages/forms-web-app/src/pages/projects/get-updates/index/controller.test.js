@@ -1,7 +1,7 @@
-const { getGetUpdatesIndex } = require('./controller');
+const { getGetUpdatesIndexController } = require('./controller');
 
 describe('projects/get-updates/index/controller', () => {
-	describe('#getGetUpdatesIndex', () => {
+	describe('#getGetUpdatesIndexController', () => {
 		it('should render the page and add the get updates key to the session', async () => {
 			const res = {
 				render: jest.fn(),
@@ -13,7 +13,7 @@ describe('projects/get-updates/index/controller', () => {
 				session: {},
 				params: { case_ref: 'mock case ref' }
 			};
-			await getGetUpdatesIndex(req, res);
+			await getGetUpdatesIndexController(req, res);
 			expect(res.render).toHaveBeenCalledWith('projects/get-updates/index/view.njk', {
 				nextPageRoute: '/projects/mock case ref/get-updates/email',
 				pageHeading: 'Get updates about this project',

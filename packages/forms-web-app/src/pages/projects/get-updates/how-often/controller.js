@@ -16,7 +16,7 @@ const {
 
 const view = 'projects/get-updates/how-often/view.njk';
 
-const getGetUpdatesHowOften = (req, res, next) => {
+const getGetUpdatesHowOftenController = (req, res, next) => {
 	const {
 		params: { case_ref: caseRef }
 	} = req;
@@ -29,7 +29,7 @@ const getGetUpdatesHowOften = (req, res, next) => {
 	}
 };
 
-const postGetUpdatesHowOften = async (req, res) => {
+const postGetUpdatesHowOftenController = async (req, res) => {
 	const { body, params, session } = req;
 	const { errors, errorSummary } = body;
 	const { case_ref: caseRef } = params;
@@ -58,6 +58,6 @@ const postGetUpdatesHowOften = async (req, res) => {
 };
 
 module.exports = {
-	getGetUpdatesHowOften,
-	postGetUpdatesHowOften
+	getGetUpdatesHowOftenController,
+	postGetUpdatesHowOftenController
 };

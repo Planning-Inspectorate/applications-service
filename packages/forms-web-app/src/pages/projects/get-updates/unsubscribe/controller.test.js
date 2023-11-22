@@ -1,4 +1,7 @@
-const { getGetUpdatesUnsubscribe, postGetUpdatesUnsubscribe } = require('./controller');
+const {
+	getGetUpdatesUnsubscribeController,
+	postGetUpdatesUnsubscribeController
+} = require('./controller');
 
 const { deleteGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 
@@ -7,7 +10,7 @@ jest.mock('../../../../lib/application-api-wrapper', () => ({
 }));
 
 describe('projects/get-updates/unsubscribe/controller', () => {
-	describe('#getGetUpdatesUnsubscribe', () => {
+	describe('#getGetUpdatesUnsubscribeController', () => {
 		describe('When an email value is present in the query', () => {
 			const req = {
 				query: {
@@ -21,7 +24,7 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(async () => {
-				await getGetUpdatesUnsubscribe(req, res, next);
+				await getGetUpdatesUnsubscribeController(req, res, next);
 			});
 
 			it('it should call the correct with the page data', async () => {
@@ -43,7 +46,7 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesUnsubscribe(req, res, next);
+				getGetUpdatesUnsubscribeController(req, res, next);
 			});
 			it('should render the error page', () => {
 				expect(next).toHaveBeenCalledWith(Error('Email not found'));
@@ -51,7 +54,7 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 		});
 	});
 
-	describe('#postGetUpdatesUnsubscribe', () => {
+	describe('#postGetUpdatesUnsubscribeController', () => {
 		describe('When the subscription is successfully unsubscribed', () => {
 			const req = {
 				body: {
@@ -73,7 +76,7 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 						resp_code: 200
 					};
 				});
-				await postGetUpdatesUnsubscribe(req, res, next);
+				await postGetUpdatesUnsubscribeController(req, res, next);
 			});
 
 			it('should call the delete get updates function with the correct arguments', () => {
@@ -88,7 +91,9 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 			});
 
 			it('should redirect to the next page', () => {
-				expect(res.redirect).toHaveBeenCalledWith('unsubscribed');
+				expect(res.redirect).toHaveBeenCalledWith(
+					'/projects/mock case ref/get-updates/unsubscribed'
+				);
 			});
 		});
 
@@ -111,7 +116,7 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 				deleteGetUpdatesSubscription.mockImplementation(() => {
 					throw new Error('subscription is not unsubscribed');
 				});
-				await postGetUpdatesUnsubscribe(req, res, next);
+				await postGetUpdatesUnsubscribeController(req, res, next);
 			});
 
 			it('should throw and error', () => {

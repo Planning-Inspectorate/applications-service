@@ -4,7 +4,7 @@ const { getPageData } = require('./utils/get-page-data');
 
 const view = 'projects/get-updates/confirm-your-email/view.njk';
 
-const getGetUpdatesConfirmYourEmail = (req, res, next) => {
+const getGetUpdatesConfirmYourEmailController = (req, res, next) => {
 	try {
 		const {
 			session,
@@ -22,5 +22,5 @@ const getGetUpdatesConfirmYourEmail = (req, res, next) => {
 };
 
 module.exports = {
-	getGetUpdatesConfirmYourEmail
+	getGetUpdatesConfirmYourEmailController
 };
