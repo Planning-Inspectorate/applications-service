@@ -16,7 +16,10 @@ describe('#getSection51AdviceDetail', () => {
 			mockReq = {
 				get: jest.fn(() => 's51advice/mock-referer-value'),
 				params: {
-					id: 'mock advice detail id'
+					id: 'mock-advice-detail-id'
+				},
+				query: {
+					caseReference: 'mock-case-ref'
 				}
 			};
 			mockRes = {

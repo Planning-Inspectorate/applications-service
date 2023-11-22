@@ -5,9 +5,9 @@ const logger = require('../../../../lib/logger');
 const getSection51AdviceDetail = async (req, res) => {
 	try {
 		const { params } = req;
-		const { query } = req;
 		const { locals } = res;
-		const adviceDetailData = await getAdviceDetailData(params.id, query.caseReference);
+		const caseReference = req?.query?.caseReference || locals?.caseRef;
+		const adviceDetailData = await getAdviceDetailData(params.id, caseReference);
 		const referer = req.get('Referer');
 		return res.render(
 			'projects/section-51/section-51-advice-detail/index.njk',
