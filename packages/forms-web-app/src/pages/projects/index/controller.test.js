@@ -117,6 +117,7 @@ describe('pages/projects/index/controller', () => {
 							title: 'Recommendation'
 						}
 					},
+					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
 					proposal: 'Generating Stations',
 					recommendationCompletedDate: null,
 					rule6Document: undefined,
@@ -196,6 +197,7 @@ describe('pages/projects/index/controller', () => {
 							title: 'Recommendation'
 						}
 					},
+					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
 					proposal: 'Generating Stations',
 					recommendationCompletedDate: null,
 					rule6Document: undefined,
