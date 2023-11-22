@@ -15,8 +15,8 @@ const getRepresentationViewModel = (
 	},
 	caseRef
 ) => ({
-	Attachments,
 	attachments,
+	hasAttachments: (attachments && attachments.length) || !!Attachments,
 	dateSubmitted: formatDateSubmitted(DateRrepReceived),
 	comment: RepresentationRedacted,
 	name: PersonalName,

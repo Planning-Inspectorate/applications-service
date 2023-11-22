@@ -92,11 +92,11 @@ describe('pages/projects/representations/representation/controller', () => {
 							pageTitle: 'Relevant Representations | Representation by Test (Test)',
 							projectName: 'ABC',
 							representation: {
-								Attachments: 'WS010006-000002',
 								URL: '/projects/:case_ref/representations/2',
 								attachments: [],
 								comment: 'Some comments',
 								dateSubmitted: '19 February 2020',
+								hasAttachments: true,
 								name: 'Test (Test)',
 								representative: null,
 								submittedBy: 'Members of the public/businesses'
