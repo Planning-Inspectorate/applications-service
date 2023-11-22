@@ -2,7 +2,7 @@
 	<ul class="section-results">
 		{% for result in results %}
 			<li class="section-results__result">
-				<a class="section-results__result-link " href="s51advice/{{ result.adviceID }}">
+				<a class="section-results__result-link " href="s51advice/{{ result.adviceID }}?caseReference={{ result.caseReference }}">
 					<strong>
 						{{ result.link }}
 					</strong>

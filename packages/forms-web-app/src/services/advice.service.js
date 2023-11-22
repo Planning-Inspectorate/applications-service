@@ -28,14 +28,14 @@ const listAdvice = async (caseRef, searchTerm = '', { itemsPerPage = 25, page = 
 	return mapResponse(data);
 };
 
-const getRawAdviceDetail = async (adviceId) => {
-	const url = `/api/v1/advice/${adviceId}`;
+const getRawAdviceDetail = async (adviceId, caseReference) => {
+	const url = `/api/v1/advice/${adviceId}?caseReference=${caseReference}`;
 	const method = 'GET';
 	return handler('getAdviceDetail', url, method);
 };
 
-const getAdviceDetailData = async (adviceId) => {
-	const rawAdviceDetail = await getRawAdviceDetail(adviceId);
+const getAdviceDetailData = async (adviceId, caseReference) => {
+	const rawAdviceDetail = await getRawAdviceDetail(adviceId, caseReference);
 	if (rawAdviceDetail.resp_code === 404) throw new Error('NOT_FOUND');
 	return rawAdviceDetail.data;
 };
