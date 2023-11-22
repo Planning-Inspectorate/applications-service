@@ -111,11 +111,11 @@ describe('pages/projects/representations/index/controller', () => {
 			relevantRepresentationsURL: '/projects/EN010009/representations',
 			representations: [
 				{
-					Attachments: 'WS010006-000002',
 					URL: '/projects/EN010009/representations/2',
 					attachments: [],
 					comment: 'Some comments',
 					dateSubmitted: '19 February 2020',
+					hasAttachments: true,
 					name: 'Test (Test)',
 					representative: null,
 					submittedBy: 'Members of the public/businesses'
