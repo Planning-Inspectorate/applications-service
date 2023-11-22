@@ -4,7 +4,7 @@ const { getPageData } = require('./utils/get-page-data');
 
 const view = 'projects/get-updates/subscribed/view.njk';
 
-const getGetUpdatesSubscribedController = async (req, res) => {
+const getUpdatesSubscribedController = async (req, res) => {
 	const { params, query } = req;
 	const { case_ref: caseRef } = params;
 	const { subscriptionDetails } = query;
@@ -24,5 +24,5 @@ const getGetUpdatesSubscribedController = async (req, res) => {
 };
 
 module.exports = {
-	getGetUpdatesSubscribedController
+	getUpdatesSubscribedController
 };

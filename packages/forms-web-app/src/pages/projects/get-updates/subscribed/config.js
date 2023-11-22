@@ -1,5 +1,5 @@
-const getSubscribedRoute = 'subscribed';
+const getUpdatesSubscribedRoute = 'subscribed';
 
 module.exports = {
-	getSubscribedRoute
+	getUpdatesSubscribedRoute
 };

@@ -1,7 +1,7 @@
-const { getGetUpdatesUnsubscribedController } = require('./controller');
+const { getUpdatesUnsubscribedController } = require('./controller');
 
 describe('projects/get-updates/unsubscribed/controller', () => {
-	describe('#getGetUpdatesUnsubscribedController', () => {
+	describe('#getUpdatesUnsubscribedController', () => {
 		describe('When the get updates unsubscribed session value is true', () => {
 			const req = {
 				session: {
@@ -16,7 +16,7 @@ describe('projects/get-updates/unsubscribed/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesUnsubscribedController(req, res, next);
+				getUpdatesUnsubscribedController(req, res, next);
 			});
 
 			it('should render the unsubscribed page', () => {
@@ -40,7 +40,7 @@ describe('projects/get-updates/unsubscribed/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesUnsubscribedController(req, res, next);
+				getUpdatesUnsubscribedController(req, res, next);
 			});
 
 			it('should throw an error', () => {
