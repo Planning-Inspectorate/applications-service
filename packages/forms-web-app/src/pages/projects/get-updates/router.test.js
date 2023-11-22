@@ -11,13 +11,13 @@ const {
 	postGetUpdatesHowOftenController
 } = require('./how-often/controller');
 const { howOftenValidationRules } = require('./how-often/validator');
-const { getGetUpdatesConfirmYourEmailController } = require('./confirm-your-email/controller');
-const { getGetUpdatesSubscribedController } = require('./subscribed/controller');
+const { getUpdatesConfirmYourEmailController } = require('./confirm-your-email/controller');
+const { getUpdatesSubscribedController } = require('./subscribed/controller');
 const {
 	getGetUpdatesUnsubscribeController,
 	postGetUpdatesUnsubscribeController
 } = require('./unsubscribe/controller');
-const { getGetUpdatesUnsubscribedController } = require('./unsubscribed/controller');
+const { getUpdatesUnsubscribedController } = require('./unsubscribed/controller');
 
 jest.mock('../../../validators/shared/email-address', () => {
 	return {
@@ -83,13 +83,13 @@ describe('pages/projects/get-updates/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/confirm-your-email',
 				projectsMiddleware,
-				getGetUpdatesConfirmYourEmailController
+				getUpdatesConfirmYourEmailController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/subscribed',
 				projectsMiddleware,
-				getGetUpdatesSubscribedController
+				getUpdatesSubscribedController
 			);
 
 			expect(get).toHaveBeenCalledWith(
@@ -106,7 +106,7 @@ describe('pages/projects/get-updates/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/unsubscribed',
 				projectsMiddleware,
-				getGetUpdatesUnsubscribedController
+				getUpdatesUnsubscribedController
 			);
 		});
 	});

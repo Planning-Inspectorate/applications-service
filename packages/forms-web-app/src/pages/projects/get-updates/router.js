@@ -15,13 +15,13 @@ const {
 	postGetUpdatesHowOftenController
 } = require('./how-often/controller');
 const { howOftenValidationRules } = require('./how-often/validator');
-const { getGetUpdatesConfirmYourEmailController } = require('./confirm-your-email/controller');
-const { getGetUpdatesSubscribedController } = require('./subscribed/controller');
+const { getUpdatesConfirmYourEmailController } = require('./confirm-your-email/controller');
+const { getUpdatesSubscribedController } = require('./subscribed/controller');
 const {
 	getGetUpdatesUnsubscribeController,
 	postGetUpdatesUnsubscribeController
 } = require('./unsubscribe/controller');
-const { getGetUpdatesUnsubscribedController } = require('./unsubscribed/controller');
+const { getUpdatesUnsubscribedController } = require('./unsubscribed/controller');
 
 const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
 const { getUpdatesEmailURL } = require('./email/utils/get-updates-email-url');
@@ -66,18 +66,14 @@ getUpdatesRouter.post(
 getUpdatesRouter.get(
 	updatesConfirmYourEmailURL,
 	projectsMiddleware,
-	getGetUpdatesConfirmYourEmailController
+	getUpdatesConfirmYourEmailController
 );
 
-getUpdatesRouter.get(updatesSubscribedURL, projectsMiddleware, getGetUpdatesSubscribedController);
+getUpdatesRouter.get(updatesSubscribedURL, projectsMiddleware, getUpdatesSubscribedController);
 
 getUpdatesRouter.get(updatesUnsubscribeURL, projectsMiddleware, getGetUpdatesUnsubscribeController);
 getUpdatesRouter.post(updatesUnsubscribeURL, postGetUpdatesUnsubscribeController);
 
-getUpdatesRouter.get(
-	updatesUnsubscribedURL,
-	projectsMiddleware,
-	getGetUpdatesUnsubscribedController
-);
+getUpdatesRouter.get(updatesUnsubscribedURL, projectsMiddleware, getUpdatesUnsubscribedController);
 
 module.exports = { getUpdatesRouter };
