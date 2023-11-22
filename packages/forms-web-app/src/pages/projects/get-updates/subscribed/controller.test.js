@@ -1,4 +1,4 @@
-const { getGetUpdatesSubscribed } = require('./controller');
+const { getGetUpdatesSubscribedController } = require('./controller');
 
 const { putGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 
@@ -7,7 +7,7 @@ jest.mock('../../../../lib/application-api-wrapper', () => ({
 }));
 
 describe('projects/get-updates/subscribed/controller', () => {
-	describe('#getGetUpdatesSubscribed', () => {
+	describe('#getGetUpdatesSubscribedController', () => {
 		const req = {
 			params: {
 				case_ref: 'mock-case-ref'
@@ -27,7 +27,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 						resp_code: 204
 					};
 				});
-				await getGetUpdatesSubscribed(req, res);
+				await getGetUpdatesSubscribedController(req, res);
 			});
 
 			it('should call the success template with the successful page data', () => {
@@ -45,7 +45,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 				putGetUpdatesSubscription.mockImplementation(() => {
 					throw new Error('Subscription details have expired');
 				});
-				await getGetUpdatesSubscribed(req, res);
+				await getGetUpdatesSubscribedController(req, res);
 			});
 
 			it('should call the success template with the expired page data', () => {
@@ -63,7 +63,7 @@ describe('projects/get-updates/subscribed/controller', () => {
 				putGetUpdatesSubscription.mockImplementation(() => {
 					throw new Error('There is an issue');
 				});
-				await getGetUpdatesSubscribed(req, res);
+				await getGetUpdatesSubscribedController(req, res);
 			});
 
 			it('should call the success template with the unsuccessful page data', () => {

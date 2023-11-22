@@ -3,7 +3,7 @@ const { getUpdatesEmailURL } = require('../email/utils/get-updates-email-url');
 
 const view = 'projects/get-updates/index/view.njk';
 
-const getGetUpdatesIndex = (req, res) => {
+const getGetUpdatesIndexController = (req, res) => {
 	const {
 		session,
 		params: { case_ref: caseRef }
@@ -19,5 +19,5 @@ const getGetUpdatesIndex = (req, res) => {
 };
 
 module.exports = {
-	getGetUpdatesIndex
+	getGetUpdatesIndexController
 };

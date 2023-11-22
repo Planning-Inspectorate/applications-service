@@ -1,7 +1,7 @@
-const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./controller');
+const { getGetUpdatesEmailController, postGetUpdatesEmailController } = require('./controller');
 
 describe('projects/get-updates/email/controller', () => {
-	describe('#getGetUpdatesEmail', () => {
+	describe('#getGetUpdatesEmailController', () => {
 		describe('and there are no issues', () => {
 			const res = {
 				render: jest.fn()
@@ -15,7 +15,7 @@ describe('projects/get-updates/email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesEmail(req, res, next);
+				getGetUpdatesEmailController(req, res, next);
 			});
 
 			it('should render the page', () => {
@@ -37,7 +37,7 @@ describe('projects/get-updates/email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesEmail(req, res, next);
+				getGetUpdatesEmailController(req, res, next);
 			});
 
 			it('should throw and error', () => {
@@ -48,7 +48,7 @@ describe('projects/get-updates/email/controller', () => {
 		});
 	});
 
-	describe('#postGetUpdatesEmail', () => {
+	describe('#postGetUpdatesEmailController', () => {
 		describe('When posting the email', () => {
 			const res = {
 				render: jest.fn(),
@@ -76,7 +76,7 @@ describe('projects/get-updates/email/controller', () => {
 
 			describe('and there is an error on the page', () => {
 				beforeEach(async () => {
-					await postGetUpdatesEmail(req, res, next);
+					await postGetUpdatesEmailController(req, res, next);
 				});
 
 				it('should show error if no email entered', async () => {
@@ -112,7 +112,7 @@ describe('projects/get-updates/email/controller', () => {
 				const next = jest.fn();
 
 				beforeEach(async () => {
-					await postGetUpdatesEmail(req, res, next);
+					await postGetUpdatesEmailController(req, res, next);
 				});
 
 				it('should save the email to the get updates session', async () => {
@@ -139,7 +139,7 @@ describe('projects/get-updates/email/controller', () => {
 				const next = jest.fn();
 
 				beforeEach(() => {
-					postGetUpdatesEmail(req, res, next);
+					postGetUpdatesEmailController(req, res, next);
 				});
 
 				it('should throw and error', () => {

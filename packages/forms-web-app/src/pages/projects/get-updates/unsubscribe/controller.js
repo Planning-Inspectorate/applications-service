@@ -2,12 +2,12 @@ const logger = require('../../../../lib/logger');
 const { deleteGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 const { getPageData } = require('./utils/get-page-data');
 const { setGetUpdatesSession } = require('../_session/get-updates');
-const { getUpdatesRoutes } = require('../_utils/get-updates-url');
 const { setGetUpdatesUnsubscribedSession } = require('../_session');
+const { getUpdatesUnsubscribedURL } = require('../unsubscribed/utils/get-updates-unsubscribed-url');
 
 const view = 'projects/get-updates/unsubscribe/view.njk';
 
-const getGetUpdatesUnsubscribe = (req, res, next) => {
+const getGetUpdatesUnsubscribeController = (req, res, next) => {
 	try {
 		const { query } = req;
 
@@ -18,18 +18,18 @@ const getGetUpdatesUnsubscribe = (req, res, next) => {
 	}
 };
 
-const postGetUpdatesUnsubscribe = async (req, res, next) => {
+const postGetUpdatesUnsubscribeController = async (req, res, next) => {
 	try {
 		const { body, params, session } = req;
 		const { email } = body;
-		const { case_ref } = params;
+		const { case_ref: caseRef } = params;
 
-		await deleteGetUpdatesSubscription(case_ref, email);
+		await deleteGetUpdatesSubscription(caseRef, email);
 
 		setGetUpdatesSession(session);
 		setGetUpdatesUnsubscribedSession(session, true);
 
-		return res.redirect(getUpdatesRoutes.unsubscribed);
+		return res.redirect(getUpdatesUnsubscribedURL(caseRef));
 	} catch (error) {
 		logger.error(error);
 		next(error);
@@ -37,6 +37,6 @@ const postGetUpdatesUnsubscribe = async (req, res, next) => {
 };
 
 module.exports = {
-	getGetUpdatesUnsubscribe,
-	postGetUpdatesUnsubscribe
+	getGetUpdatesUnsubscribeController,
+	postGetUpdatesUnsubscribeController
 };

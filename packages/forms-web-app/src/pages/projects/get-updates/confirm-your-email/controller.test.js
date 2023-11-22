@@ -1,7 +1,7 @@
-const { getGetUpdatesConfirmYourEmail } = require('./controller');
+const { getGetUpdatesConfirmYourEmailController } = require('./controller');
 
 describe('projects/get-updates/confirm-your-email/controller', () => {
-	describe('#getGetUpdatesConfirmYourEmail', () => {
+	describe('#getGetUpdatesConfirmYourEmailController', () => {
 		describe('and there is an email address in the get updates session', () => {
 			const req = {
 				session: {
@@ -20,7 +20,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesConfirmYourEmail(req, res, next);
+				getGetUpdatesConfirmYourEmailController(req, res, next);
 			});
 
 			it('should call the confirm-your-email template with the correct page data', () => {
@@ -52,7 +52,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesConfirmYourEmail(req, res, next);
+				getGetUpdatesConfirmYourEmailController(req, res, next);
 			});
 
 			it('should render the error page', () => {
@@ -77,7 +77,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesConfirmYourEmail(req, res, next);
+				getGetUpdatesConfirmYourEmailController(req, res, next);
 			});
 
 			it('should render the error page', () => {
