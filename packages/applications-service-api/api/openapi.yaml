@@ -936,7 +936,7 @@ paths:
         - in: query
           name: caseRef
           example: 'TR040009'
-          required: false
+          required: true
           schema:
             type: string
           description: Case reference

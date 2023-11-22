@@ -28,6 +28,11 @@ module.exports = {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES)
 			}
 		},
+		advice: {
+			getAdvice: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_ADVICE_CASE_REFERENCES)
+			}
+		},
 		submissions: {
 			postSubmission: {
 				caseReferences: parseCSV(

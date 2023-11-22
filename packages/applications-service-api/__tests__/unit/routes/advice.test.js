@@ -1,5 +1,8 @@
 const { get } = require('./router-mock');
 const adviceController = require('../../../src/controllers/advice');
+const { asyncRoute } = require('@pins/common/src/utils/async-route');
+
+jest.mock('@pins/common/src/utils/async-route');
 
 describe('routes/advice', () => {
 	beforeEach(() => {
@@ -12,7 +15,7 @@ describe('routes/advice', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(get).toHaveBeenCalledWith('/', adviceController.getAdvice);
 		expect(get).toHaveBeenCalledWith('/:adviceID', adviceController.getAdviceById);
+		expect(get).toHaveBeenCalledWith('/', asyncRoute(adviceController.getAdvice));
 	});
 });
