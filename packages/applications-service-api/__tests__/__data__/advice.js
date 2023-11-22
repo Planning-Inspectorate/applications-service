@@ -22,7 +22,7 @@ const ADVICE_BACKOFFICE_DATA = [
 ];
 
 const ADVICE_BACKOFFICE_RESPONSE = ADVICE_BACKOFFICE_DATA.map((advice) => ({
-	s51Enquiry: true,
+	section1Enquiry: true,
 	adviceID: advice?.adviceId?.toString(),
 	enquiryDate: advice?.enquiryDate,
 	enquiryMethod: advice?.method,

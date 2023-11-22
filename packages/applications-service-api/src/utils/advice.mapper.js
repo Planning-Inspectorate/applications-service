@@ -2,7 +2,7 @@ const mapBackOfficeAdviceToApi = (backOfficeAdvice) => {
 	return backOfficeAdvice.map((advice) => {
 		const [firstName, ...lastName] = advice && advice.from ? advice.from.split(' ') : undefined;
 		return {
-			s51Enquiry: true,
+			section1Enquiry: true,
 			adviceID: advice?.adviceId?.toString(),
 			enquiryDate: advice?.enquiryDate,
 			enquiryMethod: advice?.method,
