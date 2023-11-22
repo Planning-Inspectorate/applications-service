@@ -28,6 +28,11 @@ module.exports = {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES)
 			}
 		},
+		advice: {
+			getAdvice: {
+				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_ADVICE_CASE_REFERENCES)
+			}
+		},
 		submissions: {
 			postSubmission: {
 				caseReferences: parseCSV(
@@ -47,7 +52,8 @@ module.exports = {
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,
 			topics: {
 				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription',
-				DEADLINE_SUBMISSION: 'deadline-submission-topic'
+				DEADLINE_SUBMISSION: 'deadline-submission-topic',
+				REGISTER_REPRESENTATION: 'register-representation'
 			}
 		},
 		blobStorage: {
