@@ -5,7 +5,7 @@ const { getPageData } = require('./utils/get-page-data');
 
 const view = 'projects/get-updates/email/view.njk';
 
-const getGetUpdatesEmail = (req, res, next) => {
+const getGetUpdatesEmailController = (req, res, next) => {
 	try {
 		const {
 			session,
@@ -19,7 +19,7 @@ const getGetUpdatesEmail = (req, res, next) => {
 	}
 };
 
-const postGetUpdatesEmail = async (req, res, next) => {
+const postGetUpdatesEmailController = async (req, res, next) => {
 	try {
 		const {
 			body,
@@ -47,6 +47,6 @@ const postGetUpdatesEmail = async (req, res, next) => {
 };
 
 module.exports = {
-	getGetUpdatesEmail,
-	postGetUpdatesEmail
+	getGetUpdatesEmailController,
+	postGetUpdatesEmailController
 };
