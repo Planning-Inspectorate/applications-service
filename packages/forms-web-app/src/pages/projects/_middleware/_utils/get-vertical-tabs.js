@@ -1,4 +1,13 @@
 const { featureHideLink, featureFlag } = require('../../../../config');
+const { getProjectsDocumentsURL } = require('../../documents/_utils/get-projects-documents-url');
+const { getProjectsIndexURL } = require('../../index/_utils/get-projects-index-url');
+const {
+	getRepresentationsIndexURL
+} = require('../../representations/index/_utils/get-representations-index-url');
+const { getSection51IndexURL } = require('../../section-51/index/_utils/get-section-51-index-url');
+const {
+	getProjectsExaminationTimetableURL
+} = require('../../examination-timetable/_utils/get-projects-examination-timetable-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
 const { registerRoute } = require('../../register/index/config');
 
@@ -15,7 +24,7 @@ function getVerticalTabs(
 				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
 			id: 'project-information',
 			name: 'Project information',
-			url: '/projects/' + caseRef
+			url: getProjectsIndexURL(caseRef)
 		},
 		{
 			hidden: featureFlag.hideProjectTimelineLink != true,
@@ -27,7 +36,7 @@ function getVerticalTabs(
 			hidden: featureFlag.allowDocumentLibrary != true,
 			id: 'project-documents',
 			name: 'Documents',
-			url: '/projects/' + caseRef + '/documents'
+			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
 			hidden: !isRegistrationOpen(
@@ -42,13 +51,13 @@ function getVerticalTabs(
 			hidden: false,
 			id: 'representations',
 			name: 'Relevant representations (registration comments)',
-			url: '/projects/' + caseRef + '/representations'
+			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
 			hidden: featureFlag.allowExaminationTimetable != true || !eventsEligibleForDisplay,
 			id: 'project-examination-timetable',
 			name: 'Examination timetable',
-			url: '/projects/' + caseRef + '/examination-timetable'
+			url: getProjectsExaminationTimetableURL(caseRef)
 		},
 		{
 			hidden: featureFlag.allowHaveYourSay != true || !hasOpenTimetables,
@@ -74,7 +83,7 @@ function getVerticalTabs(
 			hidden: featureFlag.allowSection51 != true,
 			id: 'section-51',
 			name: 'Section 51 advice',
-			url: '/projects/' + caseRef + '/s51advice'
+			url: getSection51IndexURL(caseRef)
 		}
 	];
 }

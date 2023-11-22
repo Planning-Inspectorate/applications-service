@@ -2,7 +2,9 @@ const { getApplicationData } = require('../_utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
 const { getHasOpenTimetables } = require('../../../utils/timetables/get-timetables-state');
-const { areEventsEligibleForDisplay } = require('../examination-timetable/utils/events/get-events');
+const {
+	areEventsEligibleForDisplay
+} = require('../examination-timetable/_utils/events/get-events');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const config = require('../../../config');
 
