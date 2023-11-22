@@ -4,6 +4,7 @@ const { formatDateSubmitted } = require('./format-date-submitted');
 
 const getRepresentationViewModel = (
 	{
+		Attachments,
 		attachments,
 		DateRrepReceived,
 		ID,
@@ -13,17 +14,16 @@ const getRepresentationViewModel = (
 		Representative
 	},
 	caseRef
-) => {
-	return {
-		attachments,
-		dateSubmitted: formatDateSubmitted(DateRrepReceived),
-		comment: RepresentationRedacted,
-		name: PersonalName,
-		representative: Representative,
-		submittedBy: titleCase(RepFrom),
-		URL: getRepresentationURL(caseRef, ID)
-	};
-};
+) => ({
+	Attachments,
+	attachments,
+	dateSubmitted: formatDateSubmitted(DateRrepReceived),
+	comment: RepresentationRedacted,
+	name: PersonalName,
+	representative: Representative,
+	submittedBy: titleCase(RepFrom),
+	URL: getRepresentationURL(caseRef, ID)
+});
 
 const getRepresentationsViewModel = (representations, caseRef) =>
 	representations.map((representation) => getRepresentationViewModel(representation, caseRef));
