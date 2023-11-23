@@ -1,7 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 
 const logger = require('../lib/logger');
-const { documentsHost } = require('../lib/config');
 const {
 	getAllAdvice: getAllAdviceService,
 	getAdviceById: getAdviceByIdService
@@ -30,36 +29,32 @@ const getAdvice = async (req, res) => {
 };
 
 const getAdviceById = async (req, res) => {
+	logger.debug(`Retrieving advice by ID...`);
+
 	const { adviceID } = req.params;
-	try {
-		logger.debug(`Retrieving advice by ID...`);
+	const caseReference = req?.query?.caseReference;
 
-		const advice = await getAdviceByIdService(adviceID);
-
-		if (!advice) {
-			throw ApiError.adviceNotFound(adviceID);
-		}
-
-		res.status(StatusCodes.OK).send({
-			...advice,
-			attachments: advice.attachments.map((adviceAttachment) => ({
-				...adviceAttachment,
-				documentURI: adviceAttachment.documentURI
-					? `${documentsHost}${adviceAttachment.documentURI}`
-					: null
-			}))
-		});
-	} catch (e) {
-		if (e instanceof ApiError) {
-			logger.debug(e.message);
-			res.status(e.code).send({ code: e.code, errors: e.message.errors });
-			return;
-		}
-		logger.error(e.message);
-		res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-			message: `Problem getting advice ${adviceID} \n ${e}`
-		});
+	if (!caseReference) {
+		throw ApiError.badRequest('missing required parameter: caseReference');
 	}
+
+	const advice = await getAdviceByIdService(adviceID, caseReference);
+
+	if (!advice) {
+		throw ApiError.adviceNotFound(adviceID);
+	}
+
+	res.status(StatusCodes.OK).send(advice);
+
+	// res.status(StatusCodes.OK).send({
+	// 	...advice,
+	// 	attachments: advice.attachments.map((adviceAttachment) => ({
+	// 		...adviceAttachment,
+	// 		documentURI: adviceAttachment.documentURI
+	// 			? `${documentsHost}${adviceAttachment.documentURI}`
+	// 			: null
+	// 	}))
+	// });
 };
 
 module.exports = {
