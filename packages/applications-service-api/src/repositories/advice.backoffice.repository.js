@@ -31,11 +31,10 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 };
 
 const getAdviceById = async (adviceID) => {
-	return await prismaClient.advice.findUnique({
+	return prismaClient.advice.findUnique({
 		where: {
 			adviceId: parseInt(adviceID)
 		}
-		// include: {}
 	});
 };
 

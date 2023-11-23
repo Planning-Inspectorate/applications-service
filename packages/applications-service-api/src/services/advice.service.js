@@ -7,12 +7,12 @@ const {
 	getAllAdviceByCaseReference: getAllNIAdvice,
 	getAdviceById: getNIAdviceById
 } = require('../repositories/advice.ni.repository');
+const { findDocumentsByCaseReference } = require('../repositories/document.ni.repository');
 const {
 	mapBackOfficeAdviceListToApi,
 	mapBackOfficeAdviceToApi,
 	mapNIAdviceToApi
 } = require('../utils/advice.mapper');
-const db = require('../models');
 const { getDocumentsByIds } = require('../repositories/document.backoffice.repository');
 const isBackOfficeCaseReference = (caseReference) =>
 	(config.backOfficeIntegration.advice.getAdvice.caseReferences || []).includes(caseReference);
@@ -65,10 +65,10 @@ const getAdviceById = async (adviceID, caseReference) => {
 	} else {
 		const advice = await getNIAdviceById(adviceID, caseReference);
 		if (!advice) return undefined;
-		const attachments = await db.Attachment.findAllAttachmentsWithCase(caseReference);
+		const attachments = await findDocumentsByCaseReference(caseReference);
 		return mapNIAdviceToApi({
 			...advice,
-			attachments: attachments.map(({ dataValues }) => dataValues)
+			attachments
 		});
 	}
 };

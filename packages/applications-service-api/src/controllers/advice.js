@@ -45,16 +45,6 @@ const getAdviceById = async (req, res) => {
 	}
 
 	res.status(StatusCodes.OK).send(advice);
-
-	// res.status(StatusCodes.OK).send({
-	// 	...advice,
-	// 	attachments: advice.attachments.map((adviceAttachment) => ({
-	// 		...adviceAttachment,
-	// 		documentURI: adviceAttachment.documentURI
-	// 			? `${documentsHost}${adviceAttachment.documentURI}`
-	// 			: null
-	// 	}))
-	// });
 };
 
 module.exports = {

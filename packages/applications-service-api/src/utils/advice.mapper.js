@@ -7,7 +7,7 @@ const mapBackOfficeAdviceListToApi = (backOfficeAdvice) => {
 const mapBackOfficeAdviceToApi = (advice) => {
 	return {
 		...mapCommonAdviceFieldsToApi(advice),
-		attachments: advice.attachments.map((attachment) => ({
+		attachments: advice?.attachments?.map((attachment) => ({
 			documentDataID: attachment.documentId,
 			mime: attachment.mime,
 			size: attachment.size,
@@ -40,7 +40,7 @@ const mapCommonAdviceFieldsToApi = (advice) => {
 const mapNIAdviceToApi = (advice) => {
 	return {
 		...advice,
-		attachments: advice.attachments.map((attachment) => ({
+		attachments: advice?.attachments?.map((attachment) => ({
 			documentDataID: attachment.documentDataID,
 			mime: attachment.mime,
 			size: attachment.size,

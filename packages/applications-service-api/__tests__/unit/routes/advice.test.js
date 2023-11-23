@@ -15,7 +15,7 @@ describe('routes/advice', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(get).toHaveBeenCalledWith('/:adviceID', adviceController.getAdviceById);
+		expect(get).toHaveBeenCalledWith('/:adviceID', asyncRoute(adviceController.getAdviceById));
 		expect(get).toHaveBeenCalledWith('/', asyncRoute(adviceController.getAdvice));
 	});
 });
