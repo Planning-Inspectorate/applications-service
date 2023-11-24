@@ -2,13 +2,10 @@ const express = require('express');
 const myselfRegistrationRouter = require('./myself');
 const organisationRegistrationRouter = require('./organisation');
 const behalfRegistrationRouter = require('./agent');
-const couldNotVerifyEmailRouter = require('./could-not-verify-email');
 const commonRouter = require('./common');
 const { registerMiddleware } = require('./middleware');
 
 const router = express.Router({ mergeParams: true });
-
-router.use('/could-not-verify-email', registerMiddleware, couldNotVerifyEmailRouter);
 
 router.use('/myself', registerMiddleware, myselfRegistrationRouter);
 router.use('/organisation', registerMiddleware, organisationRegistrationRouter);
