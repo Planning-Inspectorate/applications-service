@@ -1,4 +1,5 @@
 const { loadOpenAPISpec, createRequestValidator } = require('../../../src/utils/openapi');
+const OpenAPIRequestValidator = require('openapi-request-validator').default;
 
 describe('openapi utils', () => {
 	describe('loadOpenAPISpec', () => {
@@ -6,6 +7,29 @@ describe('openapi utils', () => {
 			const result = loadOpenAPISpec();
 
 			expect(result['openapi']).toMatch(/\d\.\d\.\d/);
+		});
+	});
+
+	describe('createRequestValidator', () => {
+		describe('when route exists in openapi spec', () => {
+			it.each([
+				['POST', '/api/v1/interested-party'],
+				['POST', '/api/v1/interested-party/'],
+				['GET', '/api/v1/applications/:caseReference'],
+				['GET', '/api/v1/applications/{caseReference}'],
+				['GET', '/api/v1/applications/:caseReference/'],
+				['GET', '/api/v1/applications/{caseReference}/']
+			])('should return validator object for route path - %s %s', (verb, path) => {
+				expect(createRequestValidator(verb, path)).toBeInstanceOf(OpenAPIRequestValidator);
+			});
+		});
+
+		describe('when route does not exist in openapi spec', () => {
+			it('should return an error', () => {
+				expect(() =>
+					createRequestValidator('POST', '/api/v1/interested-party/NOT-A-VALID-ROUTE')
+				).toThrowError();
+			});
 		});
 	});
 
