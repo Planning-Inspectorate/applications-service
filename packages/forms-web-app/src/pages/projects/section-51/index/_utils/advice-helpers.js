@@ -26,8 +26,7 @@ const getAdviceLinkTitle = (advice) =>
 		? `View meeting with ${getAdviceName(advice)}`
 		: `View advice to ${getAdviceName(advice)}`;
 
-const getAdviceLink = (caseRef, { adviceID }) =>
-	`${getSection51AdviceDetailURL(caseRef, adviceID)}?caseReference=${caseRef}`;
+const getAdviceLink = (caseRef, { adviceID }) => getSection51AdviceDetailURL(caseRef, adviceID);
 
 module.exports = {
 	getAdviceLinkTitle,

@@ -9,25 +9,21 @@
 				</a>
 
 				<div class="section-results__result-meta-data">
-					<div
-						class="section-results__result-item-two-thirds">
-
+					<div class="section-results__result-item-two-thirds">
 						<p class="section-results__result-copy">
 							<strong>
 								{{ result.date.text }}
 							</strong>
 							{{ result.date.date | date('D MMMM YYYY') }}
 						</p>
-
 					</div>
-					<div
-						class="section-results__result-item-one-third">
+
+					<div class="section-results__result-item-one-third">
 						<p class="section-results__result-copy">
 							<strong>
 								Enquiry type:
 							</strong>{{ result.method }}
 						</p>
-
 					</div>
 				</div>
 			</li>

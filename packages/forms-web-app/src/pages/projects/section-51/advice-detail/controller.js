@@ -9,7 +9,7 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 		const { params } = req;
 		const { locals } = res;
 
-		const caseReference = req?.query?.caseReference || locals?.caseRef;
+		const caseReference = locals?.caseRef;
 		const adviceDetailData = await getAdviceDetailData(params.id, caseReference);
 
 		return res.render(view, await getPageViewModel(locals, adviceDetailData));
