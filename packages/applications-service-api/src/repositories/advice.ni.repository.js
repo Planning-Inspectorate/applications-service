@@ -1,6 +1,5 @@
 const db = require('../models');
 const { Op } = require('sequelize');
-const { documentsHost } = require('../lib/config');
 
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
 	const where = {
