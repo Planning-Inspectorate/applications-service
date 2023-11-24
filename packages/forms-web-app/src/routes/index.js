@@ -8,7 +8,6 @@ const cookieRouter = require('./cookies');
 const registerRouter = require('./register');
 const { registerRouter: registerPagesRouter } = require('../pages/projects/register/router');
 const footerPagesRouter = require('./footer-pages');
-const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('../pages/examination/exmaination.router');
 const projectsRouterLegacy = require('../pages/projects/projects.router');
 const { projectsRouter } = require('../pages/projects/router');
@@ -47,8 +46,6 @@ router.use(
 	isProcessingSubmission,
 	examinationRouter
 );
-
-router.use('/interested-party/confirm-your-email', confirmEmailRouter);
 
 router.use(haveYourSayGuideRouter);
 router.use(processGuideRouter);
