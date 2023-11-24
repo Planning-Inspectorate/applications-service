@@ -5,7 +5,7 @@ const { getPageData } = require('./utils/get-page-data');
 
 const view = 'projects/get-updates/unsubscribed/view.njk';
 
-const getGetUpdatesUnsubscribed = (req, res, next) => {
+const getUpdatesUnsubscribedController = (req, res, next) => {
 	try {
 		const { session } = req;
 
@@ -17,4 +17,4 @@ const getGetUpdatesUnsubscribed = (req, res, next) => {
 	}
 };
 
-module.exports = { getGetUpdatesUnsubscribed };
+module.exports = { getUpdatesUnsubscribedController };

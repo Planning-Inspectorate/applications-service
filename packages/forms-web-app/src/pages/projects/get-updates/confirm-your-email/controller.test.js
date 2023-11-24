@@ -1,7 +1,7 @@
-const { getGetUpdatesConfirmYourEmail } = require('./controller');
+const { getUpdatesConfirmYourEmailController } = require('./controller');
 
 describe('projects/get-updates/confirm-your-email/controller', () => {
-	describe('#getGetUpdatesConfirmYourEmail', () => {
+	describe('#getUpdatesConfirmYourEmailController', () => {
 		describe('and there is an email address in the get updates session', () => {
 			const req = {
 				session: {
@@ -9,6 +9,9 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 						email: 'mock@email.com',
 						subscriptionLinkSent: true
 					}
+				},
+				params: {
+					case_ref: 'mock-case-ref'
 				}
 			};
 			const res = {
@@ -17,7 +20,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesConfirmYourEmail(req, res, next);
+				getUpdatesConfirmYourEmailController(req, res, next);
 			});
 
 			it('should call the confirm-your-email template with the correct page data', () => {
@@ -37,6 +40,9 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 					getUpdates: {
 						subscriptionLinkSent: true
 					}
+				},
+				params: {
+					case_ref: 'mock-case-ref'
 				}
 			};
 			const res = {
@@ -46,7 +52,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesConfirmYourEmail(req, res, next);
+				getUpdatesConfirmYourEmailController(req, res, next);
 			});
 
 			it('should render the error page', () => {
@@ -59,6 +65,9 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 					getUpdates: {
 						subscriptionLinkSent: false
 					}
+				},
+				params: {
+					case_ref: 'mock-case-ref'
 				}
 			};
 			const res = {
@@ -68,7 +77,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesConfirmYourEmail(req, res, next);
+				getUpdatesConfirmYourEmailController(req, res, next);
 			});
 
 			it('should render the error page', () => {

@@ -1,43 +1,43 @@
-const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./controller');
+const { getGetUpdatesEmailController, postGetUpdatesEmailController } = require('./controller');
 
 describe('projects/get-updates/email/controller', () => {
-	describe('#getGetUpdatesEmail', () => {
+	describe('#getGetUpdatesEmailController', () => {
 		describe('and there are no issues', () => {
 			const res = {
-				render: jest.fn(),
-				locals: { caseRef: 'mock-case-ref' }
+				render: jest.fn()
 			};
 			const req = {
 				session: {
 					getUpdates: {}
-				}
+				},
+				params: { case_ref: 'mock-case-ref' }
 			};
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesEmail(req, res, next);
+				getGetUpdatesEmailController(req, res, next);
 			});
 
 			it('should render the page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/email/view.njk', {
 					pageTitle: 'What is your email address?',
-					backLinkUrl: 'start'
+					backLinkUrl: '/projects/mock-case-ref/get-updates/start'
 				});
 			});
 		});
 
 		describe('and there is an issue', () => {
 			const res = {
-				render: jest.fn(),
-				locals: { caseRef: 'mock-case-ref' }
+				render: jest.fn()
 			};
 			const req = {
-				session: {}
+				session: {},
+				params: { case_ref: 'mock-case-ref' }
 			};
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesEmail(req, res, next);
+				getGetUpdatesEmailController(req, res, next);
 			});
 
 			it('should throw and error', () => {
@@ -48,12 +48,11 @@ describe('projects/get-updates/email/controller', () => {
 		});
 	});
 
-	describe('#postGetUpdatesEmail', () => {
+	describe('#postGetUpdatesEmailController', () => {
 		describe('When posting the email', () => {
 			const res = {
 				render: jest.fn(),
-				redirect: jest.fn(),
-				locals: { caseRef: 'mock-case-ref' }
+				redirect: jest.fn()
 			};
 			const req = {
 				body: {
@@ -70,19 +69,20 @@ describe('projects/get-updates/email/controller', () => {
 				},
 				session: {
 					getUpdates: {}
-				}
+				},
+				params: { case_ref: 'mock-case-ref' }
 			};
 			const next = jest.fn();
 
 			describe('and there is an error on the page', () => {
 				beforeEach(async () => {
-					await postGetUpdatesEmail(req, res, next);
+					await postGetUpdatesEmailController(req, res, next);
 				});
 
 				it('should show error if no email entered', async () => {
 					expect(res.render).toHaveBeenCalledWith('projects/get-updates/email/view.njk', {
 						pageTitle: 'What is your email address?',
-						backLinkUrl: 'start',
+						backLinkUrl: '/projects/mock-case-ref/get-updates/start',
 						email: '',
 						errors: {
 							email: {
@@ -100,19 +100,19 @@ describe('projects/get-updates/email/controller', () => {
 			describe('and there is no error on the page', () => {
 				const res = {
 					render: jest.fn(),
-					redirect: jest.fn(),
-					locals: { caseRef: 'mock-case-ref' }
+					redirect: jest.fn()
 				};
 				const req = {
 					body: { email: 'test@email.com' },
 					session: {
 						getUpdates: {}
-					}
+					},
+					params: { case_ref: 'mock-case-ref' }
 				};
 				const next = jest.fn();
 
 				beforeEach(async () => {
-					await postGetUpdatesEmail(req, res, next);
+					await postGetUpdatesEmailController(req, res, next);
 				});
 
 				it('should save the email to the get updates session', async () => {
@@ -120,24 +120,26 @@ describe('projects/get-updates/email/controller', () => {
 				});
 
 				it('should redirect to next page', async () => {
-					expect(res.redirect).toHaveBeenCalledWith('how-often');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/get-updates/how-often'
+					);
 				});
 			});
 
 			describe('and there is an issue', () => {
 				const res = {
 					render: jest.fn(),
-					redirect: jest.fn(),
-					locals: { caseRef: 'mock-case-ref' }
+					redirect: jest.fn()
 				};
 				const req = {
 					body: { email: 'test@email.com' },
-					session: {}
+					session: {},
+					params: { case_ref: 'mock case ref' }
 				};
 				const next = jest.fn();
 
 				beforeEach(() => {
-					postGetUpdatesEmail(req, res, next);
+					postGetUpdatesEmailController(req, res, next);
 				});
 
 				it('should throw and error', () => {

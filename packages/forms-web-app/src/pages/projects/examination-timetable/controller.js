@@ -1,6 +1,6 @@
 const logger = require('../../../lib/logger');
 const { getAppData } = require('../../../services/applications.service');
-const { getPageData } = require('./utils/get-page-data');
+const { getPageData } = require('./_utils/get-page-data');
 const {
 	routesConfig: {
 		project: {
@@ -14,10 +14,11 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const { getEvents } = require('./utils/events/get-events');
+const { getEvents } = require('./_utils/events/get-events');
 
-const view = 'projects/examination-timetable/index.njk';
-const getExaminationTimetable = async (req, res) => {
+const view = 'projects/examination-timetable/view.njk';
+
+const getProjectsExaminationTimetableController = async (req, res) => {
 	try {
 		const { params } = req;
 		const { case_ref } = params;
@@ -37,7 +38,7 @@ const getExaminationTimetable = async (req, res) => {
 	}
 };
 
-const postExaminationTimetable = (req, res, next) => {
+const postProjectsExaminationTimetableController = (req, res, next) => {
 	try {
 		const { body, session } = req;
 
@@ -53,4 +54,7 @@ const postExaminationTimetable = (req, res, next) => {
 	}
 };
 
-module.exports = { getExaminationTimetable, postExaminationTimetable };
+module.exports = {
+	getProjectsExaminationTimetableController,
+	postProjectsExaminationTimetableController
+};

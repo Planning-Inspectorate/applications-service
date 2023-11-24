@@ -1,4 +1,7 @@
-const { getGetUpdatesHowOften, postGetUpdatesHowOften } = require('./controller');
+const {
+	getGetUpdatesHowOftenController,
+	postGetUpdatesHowOftenController
+} = require('./controller');
 
 const { postGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
 
@@ -7,21 +10,23 @@ jest.mock('../../../../lib/application-api-wrapper', () => ({
 }));
 
 describe('projects/get-updates/how-often/controller', () => {
-	describe('#getGetUpdatesHowOften', () => {
+	describe('#getGetUpdatesHowOftenController', () => {
 		describe('and there are no issues', () => {
-			const req = {};
+			const req = {
+				params: { case_ref: 'mock-case-ref' }
+			};
 			const res = {
 				render: jest.fn()
 			};
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesHowOften(req, res, next);
+				getGetUpdatesHowOftenController(req, res, next);
 			});
 
 			it('should render the page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/how-often/view.njk', {
-					backLinkUrl: 'email',
+					backLinkUrl: '/projects/mock-case-ref/get-updates/email',
 					displayContent: 'index',
 					inputNameId: 'howOften',
 					pageHeading: 'How often do you want to get emails about the project?',
@@ -31,12 +36,14 @@ describe('projects/get-updates/how-often/controller', () => {
 		});
 
 		describe('and there is an issue', () => {
-			const req = null;
+			const req = {
+				params: { case_ref: 'mock-case-ref' }
+			};
 			const res = null;
 			const next = jest.fn();
 
 			beforeEach(() => {
-				getGetUpdatesHowOften(req, res, next);
+				getGetUpdatesHowOftenController(req, res, next);
 			});
 
 			it('should throw and error', () => {
@@ -47,7 +54,7 @@ describe('projects/get-updates/how-often/controller', () => {
 		});
 	});
 
-	describe('#postGetUpdatesHowOften', () => {
+	describe('#postGetUpdatesHowOftenController', () => {
 		describe('When posting the selection', () => {
 			describe('and no selection has been made', () => {
 				const req = {
@@ -69,7 +76,7 @@ describe('projects/get-updates/how-often/controller', () => {
 						]
 					},
 					params: {
-						caseRef: 'mock case ref'
+						case_ref: 'mock-case-ref'
 					},
 					session: {}
 				};
@@ -78,12 +85,12 @@ describe('projects/get-updates/how-often/controller', () => {
 				};
 
 				beforeEach(async () => {
-					await postGetUpdatesHowOften(req, res);
+					await postGetUpdatesHowOftenController(req, res);
 				});
 
 				it('should render the page with errors', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/get-updates/how-often/view.njk', {
-						backLinkUrl: 'email',
+						backLinkUrl: '/projects/mock-case-ref/get-updates/email',
 						displayContent: 'index',
 						inputNameId: 'howOften',
 						pageHeading: 'How often do you want to get emails about the project?',
@@ -126,7 +133,7 @@ describe('projects/get-updates/how-often/controller', () => {
 						]
 					},
 					params: {
-						caseRef: 'mock case ref'
+						case_ref: 'mock-case-ref'
 					},
 					session: {}
 				};
@@ -135,12 +142,12 @@ describe('projects/get-updates/how-often/controller', () => {
 				};
 
 				beforeEach(async () => {
-					await postGetUpdatesHowOften(req, res);
+					await postGetUpdatesHowOftenController(req, res);
 				});
 
 				it('should render the page with errors', async () => {
 					expect(res.render).toHaveBeenCalledWith('projects/get-updates/how-often/view.njk', {
-						backLinkUrl: 'email',
+						backLinkUrl: '/projects/mock-case-ref/get-updates/email',
 						displayContent: 'index',
 						inputNameId: 'howOften',
 						pageHeading: 'How often do you want to get emails about the project?',
@@ -167,7 +174,7 @@ describe('projects/get-updates/how-often/controller', () => {
 				const req = {
 					body: { howOften: ['allUpdates'] },
 					params: {
-						caseRef: 'mock case ref'
+						case_ref: 'mock-case-ref'
 					},
 					session: {
 						getUpdates: {
@@ -184,7 +191,7 @@ describe('projects/get-updates/how-often/controller', () => {
 					postGetUpdatesSubscription.mockImplementation(() => {
 						throw new Error('something went wrong');
 					});
-					await postGetUpdatesHowOften(req, res);
+					await postGetUpdatesHowOftenController(req, res);
 				});
 
 				it('should render the error page', async () => {
@@ -203,7 +210,7 @@ describe('projects/get-updates/how-often/controller', () => {
 				const req = {
 					body: { howOften: 'allUpdates' },
 					params: {
-						caseRef: 'mock case ref'
+						case_ref: 'mock-case-ref'
 					},
 					session: {
 						getUpdates: {
@@ -221,11 +228,13 @@ describe('projects/get-updates/how-often/controller', () => {
 							resp_code: 200
 						};
 					});
-					await postGetUpdatesHowOften(req, res);
+					await postGetUpdatesHowOftenController(req, res);
 				});
 
 				it('should redirect to next page', async () => {
-					expect(res.redirect).toHaveBeenCalledWith('confirm-your-email');
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/get-updates/confirm-your-email'
+					);
 				});
 			});
 		});

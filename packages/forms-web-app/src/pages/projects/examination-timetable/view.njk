@@ -1,0 +1,79 @@
+{% extends "projects/_components/project-pages-template.njk" %}
+
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+{% from "components/section/events.njk" import sectionEvents %}
+
+{% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{
+			callback: "window.GOVUKFrontend.initAll();",
+			src: "/assets/govuk/all.js"
+		}
+	), initiateScriptsConfig) %}
+{% endblock %}
+
+{% if events.upcoming.displayEvents %}
+	{% set upcomingEventsHtml = sectionEvents(events.upcoming.events) %}
+{% else %}
+	{% set upcomingEventsHtml = events.upcoming.noEventsHtml %}
+{% endif %}
+
+{% if events.past.displayEvents %}
+	{% set pastEventsHtml = sectionEvents(events.past.events) %}
+{% else %}
+	{% set pastEventsHtml = events.past.noEventsHtml %}
+{% endif %}
+
+{% set preTitle = title %}
+{% set title = subtitle %}
+{% set activeId = 'project-examination-timetable' %}
+
+{% block pageContent %}
+	<p class="govuk-body">
+		The examination timetable gives the dates of events and deadlines for submissions to be made by.
+	</p>
+
+	<p class="govuk-body">
+		You can have your say during the examination stage of the project.
+	</p>
+
+	{% if examination.startDate or examination.closeDate %}
+		<h2 class="govuk-heading-m">The examination stage</h2>
+	{% endif %}
+
+	{% if examination.startDate %}
+		<p>{{ examination.startDate }}</p>
+	{% endif %}
+
+	{% if examination.closeDate %}
+		<p>{{ examination.closeDate }}</p>
+	{% endif %}
+
+	{% if hasOpenTimetables and featureFlag.allowHaveYourSay == true %}
+		<a class="govuk-button" href='{{ baseUrl }}/{{ caseRef }}/examination/have-your-say-during-examination'>Have your say</a>
+	{% endif %}
+
+	{{ govukAccordion({
+		headingLevel: 3,
+		id: "examination-timetable-events-accordion",
+		items: [
+			{
+				heading: {
+				text: events.upcoming.title
+			},
+				expanded: true,
+				content: {
+				html: upcomingEventsHtml
+			}
+			},
+			{
+				heading: {
+				text: events.past.title
+			},
+				content: {
+				html: pastEventsHtml
+			}
+			}
+		]
+	}) }}
+{% endblock %}

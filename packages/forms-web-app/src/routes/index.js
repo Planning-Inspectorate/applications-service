@@ -10,7 +10,8 @@ const { registerRouter: registerPagesRouter } = require('../pages/projects/regis
 const footerPagesRouter = require('./footer-pages');
 const confirmEmailRouter = require('./register/confirm-email');
 const examinationRouter = require('../pages/examination/exmaination.router');
-const projectsRouter = require('../pages/projects/projects.router');
+const projectsRouterLegacy = require('../pages/projects/projects.router');
+const { projectsRouter } = require('../pages/projects/router');
 const { projectSearchRouter } = require('../pages/project-search/router');
 const { registerOfApplicationsRouter } = require('../pages/register-of-applications/router');
 const { apiRouter } = require('../api/router');
@@ -26,7 +27,10 @@ const { indexRouter } = require('../pages/index/router');
 const { accessibilityStatementRouter } = require('../pages/accessibility-statement/router');
 
 if (config.featureFlag.allowHomepage) router.use(indexRouter);
-router.use(routesConfig.project.directory, projectsRouter);
+
+router.use(projectsRouter);
+router.use(routesConfig.project.directory, projectsRouterLegacy);
+
 router.use(accessibilityStatementRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);

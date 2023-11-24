@@ -2,11 +2,13 @@ const { getApplicationData } = require('../_utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
 const { getHasOpenTimetables } = require('../../../utils/timetables/get-timetables-state');
-const { areEventsEligibleForDisplay } = require('../examination-timetable/utils/events/get-events');
+const {
+	areEventsEligibleForDisplay
+} = require('../examination-timetable/_utils/events/get-events');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const config = require('../../../config');
 
-async function middleware(req, res, next) {
+async function projectsMiddleware(req, res, next) {
 	try {
 		const { params, baseUrl, path } = req;
 		const { case_ref } = params;
@@ -45,6 +47,6 @@ const projectMigrationMiddleware = (req, res, next) => {
 };
 
 module.exports = {
-	middleware,
+	projectsMiddleware,
 	projectMigrationMiddleware
 };

@@ -1,4 +1,4 @@
-const { middleware, projectMigrationMiddleware } = require('./middleware');
+const { projectsMiddleware, projectMigrationMiddleware } = require('./middleware');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
@@ -21,7 +21,7 @@ jest.mock('../../../config', () => {
 });
 
 describe('projects _middleware', () => {
-	describe('#_middleware', () => {
+	describe('#projectsMiddleware', () => {
 		const next = jest.fn();
 		const req = {
 			params: { case_ref: 'mock-case-ref' },
@@ -37,7 +37,7 @@ describe('projects _middleware', () => {
 				DateOfRelevantRepresentationClose: '2023-01-04'
 			});
 			getTimetables.mockReturnValue(fixturesTimetableResponse);
-			middleware(req, res, next);
+			projectsMiddleware(req, res, next);
 		});
 		it('should set the locals', () => {
 			expect(res.locals).toEqual({
