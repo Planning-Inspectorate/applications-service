@@ -41,7 +41,7 @@ describe('application.ni.service', () => {
 
 			expect(result).toEqual({
 				...APPLICATION_FO,
-				MapZoomLevel: 6,
+				MapZoomLevel: 1,
 				LatLong: undefined,
 				LongLat: ['-0.7028315466694124', '53.620079146110655']
 			});

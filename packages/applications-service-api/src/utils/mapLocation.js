@@ -1,19 +1,19 @@
 const OSPoint = require('ospoint');
 
 const mapZoomLevel = (zoomLevelName) => {
-	const DEFAULT_ZOOM_LEVEL = 5;
+	const DEFAULT_ZOOM_LEVEL = 0;
 
 	if (!zoomLevelName) return DEFAULT_ZOOM_LEVEL;
 
 	const ZOOM_LEVELS = {
-		COUNTRY: 5,
-		REGION: 6,
-		COUNTY: 7,
-		BOROUGH: 8,
-		DISTRICT: 9,
-		CITY: 10,
-		TOWN: 11,
-		JUNCTION: 12
+		COUNTRY: 0,
+		REGION: 1,
+		COUNTY: 2,
+		BOROUGH: 3,
+		DISTRICT: 4,
+		CITY: 5,
+		TOWN: 6,
+		JUNCTION: 7
 	};
 
 	return ZOOM_LEVELS[zoomLevelName.toUpperCase()] || DEFAULT_ZOOM_LEVEL;
