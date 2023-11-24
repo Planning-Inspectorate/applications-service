@@ -32,11 +32,7 @@ const getAdviceById = async (req, res) => {
 	logger.debug(`Retrieving advice by ID...`);
 
 	const { adviceID } = req.params;
-	const caseReference = req?.query?.caseReference;
-
-	if (!caseReference) {
-		throw ApiError.badRequest('missing required parameter: caseReference');
-	}
+	const { caseReference } = req.query;
 
 	const advice = await getAdviceByIdService(adviceID, caseReference);
 

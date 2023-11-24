@@ -83,18 +83,6 @@ describe('getAdvice', () => {
 		beforeEach(() => {
 			getAdviceByIdMock.mockResolvedValue(ADVICE_BACKOFFICE_RESPONSE);
 		});
-		it('should return 400 if caseReference is missing', async () => {
-			const req = httpMocks.createRequest({
-				params: {
-					adviceID: '123'
-				},
-				query: {}
-			});
-			const res = httpMocks.createResponse();
-			await expect(() => getAdviceById(req, res)).rejects.toEqual(
-				ApiError.badRequest('missing required parameter: caseReference')
-			);
-		});
 		it('should call getAdviceByIdService', async () => {
 			const req = httpMocks.createRequest({
 				params: {

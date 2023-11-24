@@ -56,7 +56,7 @@ const getAllAdvice = async (query) => {
 const getAdviceById = async (adviceID, caseReference) => {
 	if (isBackOfficeCaseReference(caseReference)) {
 		const advice = await getBackOfficeAdviceById(adviceID);
-		if (!advice) return undefined;
+		if (!advice) return;
 		const attachments = await getDocumentsByIds(advice.attachmentIds);
 		return mapBackOfficeAdviceToApi({
 			...advice,
@@ -64,7 +64,7 @@ const getAdviceById = async (adviceID, caseReference) => {
 		});
 	} else {
 		const advice = await getNIAdviceById(adviceID, caseReference);
-		if (!advice) return undefined;
+		if (!advice) return;
 		const attachments = await findDocumentsByCaseReference(caseReference);
 		return mapNIAdviceToApi({
 			...advice,

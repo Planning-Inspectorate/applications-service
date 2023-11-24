@@ -44,7 +44,7 @@ describe('/api/v1/advice', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					code: 400,
-					errors: ['missing required parameter: caseRef']
+					errors: ["must have required property 'caseRef'"]
 				});
 			});
 		});
@@ -88,7 +88,7 @@ describe('/api/v1/advice', () => {
 			});
 		});
 	});
-	describe(' GET /api/v1/advice/{adviceID}?caseReference={caseReference}', () => {
+	describe(' GET /api/v1/advice/{adviceID', () => {
 		beforeEach(() => {
 			mockFindUniqueAdvicePrisma.mockResolvedValue(ADVICE_BACKOFFICE_DATA[0]);
 			mockFindManyDocumentPrisma.mockResolvedValue([
@@ -117,7 +117,7 @@ describe('/api/v1/advice', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					code: 400,
-					errors: ['missing required parameter: caseReference']
+					errors: ["must have required property 'caseReference'"]
 				});
 			});
 		});
