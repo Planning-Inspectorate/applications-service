@@ -1,3 +1,3 @@
-const registerSubdirectory = 'register';
+const registerRoute = 'register';
 
-module.exports = { registerSubdirectory };
+module.exports = { registerRoute };
