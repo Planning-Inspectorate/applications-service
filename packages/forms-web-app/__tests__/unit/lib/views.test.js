@@ -34,7 +34,6 @@ describe('lib/views', () => {
 					REGISTRATION_SAVED: 'register/common/registration-saved'
 				},
 				START: 'register/start',
-				TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
 				TYPE_OF_PARTY: 'register/who-registering-for',
 				MISSED_DEADLINE: 'register/missed-the-deadline',
 				MYSELF: {
