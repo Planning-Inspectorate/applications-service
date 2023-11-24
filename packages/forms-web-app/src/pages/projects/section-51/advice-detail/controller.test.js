@@ -19,9 +19,6 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 					get: jest.fn(() => 's51advice/mock-referer-value'),
 					params: {
 						id: 'mock advice detail id'
-					},
-					query: {
-						caseReference: 'mock-case-ref'
 					}
 				};
 				mockRes = {
