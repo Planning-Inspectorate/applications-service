@@ -1299,6 +1299,10 @@ components:
 
     InterestedPartyReqBody:
       type: object
+      required:
+        - case_ref
+        - behalf
+        - comment
       properties:
         case_ref:
           type: string
