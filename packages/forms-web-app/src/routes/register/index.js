@@ -8,10 +8,11 @@ const { registerMiddleware } = require('./middleware');
 
 const router = express.Router({ mergeParams: true });
 
+router.use('/could-not-verify-email', registerMiddleware, couldNotVerifyEmailRouter);
+
 router.use('/myself', registerMiddleware, myselfRegistrationRouter);
 router.use('/organisation', registerMiddleware, organisationRegistrationRouter);
 router.use('/agent', registerMiddleware, behalfRegistrationRouter);
-router.use('/could-not-verify-email', registerMiddleware, couldNotVerifyEmailRouter);
 
 router.use('/myself', registerMiddleware, commonRouter);
 router.use('/organisation', registerMiddleware, commonRouter);
