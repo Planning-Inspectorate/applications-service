@@ -1,4 +1,7 @@
-const { getAllAdviceByCaseReference } = require('../../../src/repositories/advice.ni.repository');
+const {
+	getAllAdviceByCaseReference,
+	getAdviceById
+} = require('../../../src/repositories/advice.ni.repository');
 const { ADVICE_NI_DATA } = require('../../__data__/advice');
 const db = require('../../../src/models');
 const { Op } = require('sequelize');
@@ -43,6 +46,24 @@ describe('advice.ni.repository', () => {
 				count: 1,
 				advice: ADVICE_NI_DATA
 			});
+		});
+	});
+	describe('getAdviceById', () => {
+		beforeAll(() => {
+			db.Advice.findOne.mockResolvedValue(ADVICE_NI_DATA[0]);
+		});
+		it('should call the database with the correct parameters', async () => {
+			await getAdviceById('ni');
+			expect(db.Advice.findOne).toHaveBeenCalledWith({
+				where: {
+					adviceID: 'ni'
+				},
+				raw: true
+			});
+		});
+		it('should return the correct data', async () => {
+			const result = await getAdviceById('ni');
+			expect(result).toEqual(ADVICE_NI_DATA[0]);
 		});
 	});
 });

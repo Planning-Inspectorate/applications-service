@@ -29,6 +29,15 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 	};
 };
 
+const getAdviceById = async (adviceID) => {
+	return db.Advice.findOne({
+		where: {
+			adviceID
+		},
+		raw: true
+	});
+};
+
 const mapSearchTermToQuery = (searchTerm) => {
 	if (searchTerm) {
 		const searchStatements = [
@@ -45,5 +54,6 @@ const mapSearchTermToQuery = (searchTerm) => {
 };
 
 module.exports = {
-	getAllAdviceByCaseReference
+	getAllAdviceByCaseReference,
+	getAdviceById
 };

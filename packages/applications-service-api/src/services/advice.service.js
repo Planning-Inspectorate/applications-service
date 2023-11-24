@@ -1,13 +1,19 @@
 const config = require('../lib/config');
-const db = require('../models');
 const {
-	getAllAdviceByCaseReference: getAllBackOfficeAdvice
+	getAllAdviceByCaseReference: getAllBackOfficeAdvice,
+	getAdviceById: getBackOfficeAdviceById
 } = require('../repositories/advice.backoffice.repository');
 const {
-	getAllAdviceByCaseReference: getAllNIAdvice
+	getAllAdviceByCaseReference: getAllNIAdvice,
+	getAdviceById: getNIAdviceById
 } = require('../repositories/advice.ni.repository');
-const { mapBackOfficeAdviceToApi } = require('../utils/advice.mapper');
-
+const { findDocumentsByCaseReference } = require('../repositories/document.ni.repository');
+const {
+	mapBackOfficeAdviceListToApi,
+	mapBackOfficeAdviceToApi,
+	mapNIAdviceToApi
+} = require('../utils/advice.mapper');
+const { getDocumentsByIds } = require('../repositories/document.backoffice.repository');
 const isBackOfficeCaseReference = (caseReference) =>
 	(config.backOfficeIntegration.advice.getAdvice.caseReferences || []).includes(caseReference);
 
@@ -26,7 +32,7 @@ const createQueryFilters = (query) => {
 const mapBackOfficeAdviceToApiWrapper = ({ count, advice }) => {
 	return {
 		count,
-		advice: mapBackOfficeAdviceToApi(advice)
+		advice: mapBackOfficeAdviceListToApi(advice)
 	};
 };
 const getAllAdvice = async (query) => {
@@ -47,34 +53,24 @@ const getAllAdvice = async (query) => {
 	};
 };
 
-const getAdviceById = async (adviceID) => {
-	const advice = await db.Advice.findOne({
-		where: {
-			adviceID
-		}
-	});
-
-	if (!advice) return undefined;
-
-	const attachments = await db.Attachment.findAllAttachmentsWithCase(advice.caseReference, {
-		where: {
-			adviceID
-		}
-	});
-
-	const adviceDTO = advice.get({
-		plain: true
-	});
-
-	adviceDTO.attachments = attachments.map((attachment) => {
-		// eslint-disable-next-line no-unused-vars
-		const { adviceID, ...dto } = attachment.get({
-			plain: true
+const getAdviceById = async (adviceID, caseReference) => {
+	if (isBackOfficeCaseReference(caseReference)) {
+		const advice = await getBackOfficeAdviceById(adviceID);
+		if (!advice) return;
+		const attachments = await getDocumentsByIds(advice.attachmentIds);
+		return mapBackOfficeAdviceToApi({
+			...advice,
+			attachments
 		});
-		return dto;
-	});
-
-	return adviceDTO;
+	} else {
+		const advice = await getNIAdviceById(adviceID, caseReference);
+		if (!advice) return;
+		const attachments = await findDocumentsByCaseReference(caseReference);
+		return mapNIAdviceToApi({
+			...advice,
+			attachments
+		});
+	}
 };
 
 module.exports = {
