@@ -144,14 +144,14 @@ describe('application.mapper', () => {
 		it.each([
 			[
 				{ LatLong: '53.620, -0.702', MapZoomLevel: 'Region' },
-				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 6 }
+				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 1 }
 			],
 			[
 				{ LatLong: '   53.620   , -0.702   ', MapZoomLevel: 'Region' },
-				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 6 }
+				{ LongLat: ['-0.702', '53.620'], MapZoomLevel: 1 }
 			],
-			[{ LatLong: '53.620, -0.702' }, { LongLat: ['-0.702', '53.620'], MapZoomLevel: 5 }],
-			[{ MapZoomLevel: 'Region' }, { LongLat: [], MapZoomLevel: 6 }]
+			[{ LatLong: '53.620, -0.702' }, { LongLat: ['-0.702', '53.620'], MapZoomLevel: 0 }],
+			[{ MapZoomLevel: 'Region' }, { LongLat: [], MapZoomLevel: 1 }]
 		])('adds LongLat and MapZoomLevel to NI application', (input, output) => {
 			const inputApplication = {
 				...APPLICATION_FO,
