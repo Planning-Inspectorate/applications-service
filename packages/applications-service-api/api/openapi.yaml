@@ -988,7 +988,13 @@ paths:
       parameters:
         - in: path
           name: adviceID
-          example: 'WA023013-Advice-00005'
+          example: 'TR040009-Advice-00009'
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: caseReference
+          example: TR040009
           required: true
           schema:
             type: string

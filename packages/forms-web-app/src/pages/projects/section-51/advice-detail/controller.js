@@ -8,8 +8,9 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 	try {
 		const { params } = req;
 		const { locals } = res;
+		const { caseRef } = locals;
 
-		const adviceDetailData = await getAdviceDetailData(params.id);
+		const adviceDetailData = await getAdviceDetailData(params.id, caseRef);
 
 		return res.render(view, await getPageViewModel(locals, adviceDetailData));
 	} catch (error) {

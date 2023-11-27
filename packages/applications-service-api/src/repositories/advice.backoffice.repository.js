@@ -30,6 +30,14 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 	return { count, advice };
 };
 
+const getAdviceById = async (adviceID) => {
+	return prismaClient.advice.findUnique({
+		where: {
+			adviceId: parseInt(adviceID)
+		}
+	});
+};
+
 const mapSearchTermToQuery = (searchTerm) => {
 	if (searchTerm) {
 		const searchStatements = ['from', 'agent', 'enquiryDetails', 'adviceDetails'].map((field) => ({
@@ -40,5 +48,6 @@ const mapSearchTermToQuery = (searchTerm) => {
 };
 
 module.exports = {
-	getAllAdviceByCaseReference
+	getAllAdviceByCaseReference,
+	getAdviceById
 };
