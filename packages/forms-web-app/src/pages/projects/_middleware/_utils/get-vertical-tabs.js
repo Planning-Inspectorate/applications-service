@@ -8,8 +8,9 @@ const { getSection51IndexURL } = require('../../section-51/index/_utils/get-sect
 const {
 	getProjectsExaminationTimetableURL
 } = require('../../examination-timetable/_utils/get-projects-examination-timetable-url');
+const { getRegisterIndexURL } = require('../../register/index/_utils/get-register-index-url');
+const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
-const { registerRoute } = require('../../register/index/config');
 
 function getVerticalTabs(
 	caseRef,
@@ -45,7 +46,7 @@ function getVerticalTabs(
 			),
 			id: 'register-index',
 			name: 'Register to have your say',
-			url: `/projects/${caseRef}/register/${registerRoute}`
+			url: getRegisterIndexURL(caseRef)
 		},
 		{
 			hidden: false,
@@ -71,7 +72,7 @@ function getVerticalTabs(
 				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
 			id: 'get-updates',
 			name: 'Get updates',
-			url: '/projects/' + caseRef + '/get-updates/start'
+			url: getUpdatesIndexURL(caseRef)
 		},
 		{
 			hidden: featureHideLink.hideAllExaminationDocumentsLink,

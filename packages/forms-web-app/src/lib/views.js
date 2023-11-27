@@ -78,8 +78,6 @@ const VIEW = {
 			REGISTRATION_SAVED: 'register/agent/registration-saved',
 			REGISTRATION_COMPLETE: 'register/agent/registration-complete'
 		},
-		CONFIRM_EMAIL: 'register/confirm-email',
-		TOKEN_EMAIL_NOT_VERIFIED: 'register/could-not-verify-email',
 		MISSED_DEADLINE: 'register/missed-the-deadline'
 	},
 	FOOTER_PAGES: {

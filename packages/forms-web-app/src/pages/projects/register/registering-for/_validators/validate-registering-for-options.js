@@ -1,22 +1,18 @@
 const { body } = require('express-validator');
-const { REGISTER } = require('../../constants');
+const { REGISTER } = require('../../../../../constants');
 
-const validTypeOfPartyOptions = [
+const registeringForOptions = [
 	REGISTER.TYPE_OF_PARTY.MY_SAY,
 	REGISTER.TYPE_OF_PARTY.ORGANISATION,
 	REGISTER.TYPE_OF_PARTY.AGENT
 ];
 
-const ruleTypeOfParty = () =>
+const validateRegisteringForOptions = () => [
 	body('type-of-party')
 		.notEmpty()
 		.withMessage('Select who you are registering for')
 		.bail()
-		.isIn(validTypeOfPartyOptions);
+		.isIn(registeringForOptions)
+];
 
-const rules = () => [ruleTypeOfParty()];
-
-module.exports = {
-	rules,
-	validTypeOfPartyOptions
-};
+module.exports = { validateRegisteringForOptions, registeringForOptions };

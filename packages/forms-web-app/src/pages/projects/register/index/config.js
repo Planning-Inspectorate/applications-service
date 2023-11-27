@@ -1,3 +1,3 @@
-const registerRoute = 'register-have-your-say';
+const registerIndexRoute = 'register-have-your-say';
 
-module.exports = { registerRoute };
+module.exports = { registerIndexRoute };

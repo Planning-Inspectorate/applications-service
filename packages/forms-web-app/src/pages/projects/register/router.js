@@ -1,12 +1,37 @@
 const express = require('express');
-const { asyncRoute } = require('@pins/common/src/utils/async-route');
-const { getRegister } = require('./index/controller');
-const { registerRoute } = require('./index/config');
+
+const { getRegisterIndexController } = require('./index/controller');
+const {
+	getRegisteringForController,
+	postRegisteringForController
+} = require('./registering-for/controller');
+
+const { getRegisterIndexURL } = require('./index/_utils/get-register-index-url');
+const { getRegisteringForURL } = require('./registering-for/_utils/get-registering-for-url');
+
 const { projectsMiddleware } = require('../_middleware/middleware');
+const { registerMiddleware } = require('../../../routes/register/middleware');
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
+
+const {
+	validateRegisteringForOptions
+} = require('./registering-for/_validators/validate-registering-for-options');
+
+const registerIndexURL = getRegisterIndexURL();
+const registeringForURL = getRegisteringForURL();
 
 const registerRouter = express.Router({ mergeParams: true });
 
-registerRouter.get(`/${registerRoute}`, projectsMiddleware, asyncRoute(getRegister));
-registerRouter.get(`/${registerRoute}/start`, projectsMiddleware, asyncRoute(getRegister));
+registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
+registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
+
+registerRouter.get(registeringForURL, registerMiddleware, getRegisteringForController);
+registerRouter.post(
+	registeringForURL,
+	registerMiddleware,
+	validateRegisteringForOptions(),
+	validationErrorHandler,
+	postRegisteringForController
+);
 
 module.exports = { registerRouter };

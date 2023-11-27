@@ -1,4 +1,4 @@
-const { getRegister } = require('./controller');
+const { getRegisterIndexController } = require('./controller');
 
 const { getAppData } = require('../../../../services/applications.service');
 const { mockReq, mockRes } = require('../../../../../__tests__/unit/mocks');
@@ -19,7 +19,7 @@ describe('projects/register/index/controller', () => {
 		jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
 	});
 
-	describe('#getRegister', () => {
+	describe('#getRegisterIndexController', () => {
 		it('should load project data and return register start view', async () => {
 			getAppData.mockImplementation(() =>
 				Promise.resolve({
@@ -38,7 +38,7 @@ describe('projects/register/index/controller', () => {
 				}
 			};
 
-			await getRegister(req, res);
+			await getRegisterIndexController(req, res);
 
 			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
 				activeId: 'register-index',
@@ -46,6 +46,7 @@ describe('projects/register/index/controller', () => {
 				pageHeading: 'Register to have your say about a national infrastructure project',
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
+				registeringForURL: '/projects/ABC123/register/who-registering-for',
 				periodOpen: true
 			});
 		});
@@ -72,13 +73,14 @@ describe('projects/register/index/controller', () => {
 					}
 				}
 			};
-			await getRegister(req, res);
+			await getRegisterIndexController(req, res);
 			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
 				activeId: 'register-index',
 				closeDate: '2 January 2023',
 				pageHeading: 'Register to have your say about a national infrastructure project',
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
+				registeringForURL: '/projects/ABC123/register/who-registering-for',
 				periodOpen: true
 			});
 		});
@@ -94,7 +96,7 @@ describe('projects/register/index/controller', () => {
 					case_ref: 'ABC100'
 				}
 			};
-			await getRegister(req, res);
+			await getRegisterIndexController(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);
 			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});
@@ -108,7 +110,7 @@ describe('projects/register/index/controller', () => {
 				...mockReq(),
 				session: {}
 			};
-			await getRegister(req, res);
+			await getRegisterIndexController(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);
 			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});
