@@ -16,12 +16,12 @@ describe('map and location utils', () => {
 
 	describe('mapZoomLevel', () => {
 		it.each([
-			['BOROUGH', 8],
-			['borough', 8],
-			['COUNTRY', 5],
-			['JUNCTION', 12],
-			['unknown', 5],
-			[undefined, 5]
+			['BOROUGH', 3],
+			['borough', 3],
+			['COUNTRY', 0],
+			['JUNCTION', 7],
+			['unknown', 0],
+			[undefined, 0]
 		])('maps lat/long string to long/lat array', (input, expectedOutput) => {
 			expect(mapZoomLevel(input)).toEqual(expectedOutput);
 		});
