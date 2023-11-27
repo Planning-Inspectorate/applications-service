@@ -18,9 +18,9 @@ const rawAdviceDocuments = async (params) => {
 	return handler('searchAdviceDocuments', url, method, {});
 };
 
-const listAdvice = async (caseRef, searchTerm = '', { itemsPerPage = 25, page = 1 }) => {
+const listAdvice = async (caseReference, searchTerm = '', { itemsPerPage = 25, page = 1 }) => {
 	const { data } = await rawAdviceDocuments({
-		caseRef,
+		caseReference,
 		searchTerm,
 		size: itemsPerPage,
 		page
