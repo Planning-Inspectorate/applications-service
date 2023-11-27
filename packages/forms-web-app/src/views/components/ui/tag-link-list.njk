@@ -1,20 +1,19 @@
 {% from "./tag-link.njk" import uiTagLink %}
 
-{% macro uiTagLinkList(caption, tagLinks) %}
+{% macro uiTagLinkList(caption, tagLinks, headingLevel = "h3") %}
   {% if tagLinks | length > 0 %}
-    <h3 class="govuk-heading-m">{{ caption }}</h3>
+    <{{ headingLevel }} class="govuk-heading-m">{{ caption }}</{{ headingLevel }}>
 
     <ul class="ui-tag-link-list {% if tagLinks | length > 1 %}ui-tag-link-list--multi{% endif %}">
       {% for tagLink in tagLinks %}
         <li class="ui-tag-link-list__row">
-          <div class="ui-tag-link-list__item">
-            <span class="ui-tag-link-list__close-icon"></span>
-            {% if tagLink.label %}
+          {% if tagLink.label %}
+            <div class="ui-tag-link-list__item">
               <h4 class="ui-tag-link-list__caption">
                 {{ tagLink.label }}:
               </h4>
-            {% endif %}
-          </div>
+            </div>
+          {% endif %}
 
           {% for tag in tagLink.tags %}
             <div class="ui-tag-link-list__item">

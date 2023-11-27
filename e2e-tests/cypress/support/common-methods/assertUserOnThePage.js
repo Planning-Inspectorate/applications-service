@@ -630,14 +630,11 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/terms-and-conditions');
 			break;
 		case 'accessibility':
-			cy.title().should(
-				'eq',
-				'GOV.UK - The best place to find government services and information'
-			);
+			cy.title().should('eq', 'Accessibility statement for National Infrastructure Projects');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Accessibility statement');
+					expect(text).to.contain('Accessibility statement for National Infrastructure Projects');
 				});
 			cy.url().should('include', '/accessibility-statement');
 			break;

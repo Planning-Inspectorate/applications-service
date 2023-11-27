@@ -5,16 +5,21 @@ const {
 	createInterestedParty: createInterestedPartyRepository,
 	updateInterestedParty
 } = require('../repositories/interestedParty.ni.repository');
+const { getDate } = require('../utils/date-utils');
 
-const createInterestedParty = async (interestedPartyData) => {
-	const interestedParty = await createInterestedPartyRepository(interestedPartyData);
+const createInterestedParty = async (createInterestedPartyRequest) => {
+	const interestedParty = IPFactory.createIP(createInterestedPartyRequest.behalf).get(
+		createInterestedPartyRequest
+	);
 
-	const caseReference = interestedParty.caseref;
+	const interestedPartyNI = await createInterestedPartyRepository(interestedParty);
+
+	const caseReference = interestedPartyNI.caseref;
 	const project = await getApplication(caseReference);
 
 	const { ProjectName: projectName, ProjectEmailAddress: projectEmail } = project.dataValues;
-	const { email, ipName, ipRef } = IPFactory.createIP(interestedParty.behalf).getEmailingDetails(
-		interestedParty
+	const { email, ipName, ipRef } = IPFactory.createIP(interestedPartyNI.behalf).getEmailingDetails(
+		interestedPartyNI
 	);
 	await notify.sendIPRegistrationConfirmationEmailToIP({
 		email,
@@ -23,9 +28,9 @@ const createInterestedParty = async (interestedPartyData) => {
 		ipRef,
 		projectEmail
 	});
-	await updateInterestedParty(interestedParty.id, { emailed: new Date() });
+	await updateInterestedParty(interestedPartyNI.ID, { emailed: getDate() });
 
-	return interestedParty;
+	return interestedPartyNI;
 };
 
 module.exports = {

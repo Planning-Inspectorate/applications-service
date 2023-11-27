@@ -1,195 +1,114 @@
-/* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const { getAdvice, getAdviceById } = require('../../../src/controllers/advice');
-
-jest.mock('../../../src/services/advice.service');
-const { getAdvice: getAdviceMock } = require('../../../src/services/advice.service');
-const { getAdviceById: getAdviceByIdMock } = require('../../../src/services/advice.service');
-
-const mockAdvice = {
-	adviceID: 'XX0123-Advice-00001',
-	enquiryDate: '2020-02-19',
-	enquiryMethod: 'Email',
-	industrySector: 'Energy',
-	caseReference: 'EN010009',
-	firstName: 'Joe',
-	lastName: 'Bloggs',
-	organisation: 'The organisation',
-	enquiryDetail: 'Do we need more energy',
-	adviceGiven: 'Yes we do',
-	respondedBy: 'Joe Bloggs',
-	section1Enquiry: true,
-	initiatedDate: '2016-04-28',
-	dateEnquiryReceived: '2016-04-28 08:42:58',
-	dateAdviceGiven: '2016-04-28',
-	dateLastModified: '2016-04-28 08:42:58',
-	dateCreated: '2016-04-28 08:42:58',
-	attachments: [
-		{
-			documentDataID: 'XX0123-EN024303-00001',
-			documentURI: '/pathname/to/document/or/blob/uri',
-			mime: 'application/pdf',
-			size: 50427
-		}
-	]
-};
+const { getAllAdvice } = require('../../../src/services/advice.service');
+const {
+	getAdviceById: getAdviceByIdMock,
+	getAllAdvice: getAllAdviceMock
+} = require('../../../src/services/advice.service');
+const { ADVICE_BACKOFFICE_RESPONSE } = require('../../__data__/advice');
+const ApiError = require('../../../src/error/apiError');
+jest.mock('../../../src/services/advice.service', () => ({
+	getAllAdvice: jest.fn(),
+	getAdviceById: jest.fn()
+}));
 
 describe('getAdvice', () => {
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
 
-	it('should get all advice from mock with default query params', async () => {
-		getAdviceMock.mockResolvedValue({
-			count: 1,
-			rows: [mockAdvice]
+	describe('getAdviceById', () => {
+		beforeEach(() => {
+			getAllAdviceMock.mockResolvedValue({
+				advice: ADVICE_BACKOFFICE_RESPONSE,
+				totalItems: 1,
+				itemsPerPage: 25,
+				totalPages: 1,
+				currentPage: 1
+			});
+		});
+		it('should return 400 if caseRef is missing', async () => {
+			const req = httpMocks.createRequest({
+				query: {}
+			});
+			const res = httpMocks.createResponse();
+			await expect(() => getAdvice(req, res)).rejects.toEqual(
+				ApiError.badRequest('missing required parameter: caseRef')
+			);
 		});
 
-		const req = httpMocks.createRequest();
-		const res = httpMocks.createResponse();
-		await getAdvice(req, res);
-
-		const data = res._getData();
-		const { advice, totalItems, itemsPerPage, totalPages, currentPage } = data;
-
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(totalItems).toBe(1);
-		expect(itemsPerPage).toBe(25);
-		expect(totalPages).toBe(1);
-		expect(currentPage).toBe(1);
-
-		expect(advice.length).toBe(1);
-
-		const item = advice[0];
-		expect(item).toEqual(mockAdvice);
-	});
-
-	it('passes request Query params down to service', async () => {
-		getAdviceMock.mockResolvedValue({
-			count: 1,
-			rows: [mockAdvice]
+		it('should call getAllAdviceService', async () => {
+			const req = httpMocks.createRequest({
+				query: {
+					caseRef: 'EN010009'
+				}
+			});
+			const res = httpMocks.createResponse();
+			await getAdvice(req, res);
+			expect(getAllAdvice).toBeCalledWith({
+				caseRef: 'EN010009'
+			});
 		});
-
-		const req = httpMocks.createRequest({
-			query: {
-				caseRef: 'EN010116',
-				searchTerm: 'test 123',
-				size: '50',
-				page: '2'
-			}
+		it('should return advice from service', async () => {
+			const req = httpMocks.createRequest({
+				query: {
+					caseRef: 'EN010009'
+				}
+			});
+			const res = httpMocks.createResponse();
+			await getAdvice(req, res);
+			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+			expect(res._getData()).toEqual({
+				advice: ADVICE_BACKOFFICE_RESPONSE,
+				totalItems: 1,
+				itemsPerPage: 25,
+				totalPages: 1,
+				currentPage: 1
+			});
 		});
-		const res = httpMocks.createResponse();
-		await getAdvice(req, res);
-
-		expect(getAdviceMock).toBeCalledWith({
-			caseReference: 'EN010116',
-			searchTerm: 'test 123',
-			itemsPerPage: 50,
-			page: 2
-		});
-	});
-
-	it('limits itemsPerPage to 100', async () => {
-		getAdviceMock.mockResolvedValueOnce({
-			count: 2,
-			rows: [mockAdvice, mockAdvice]
-		});
-
-		const req = httpMocks.createRequest({
-			query: {
-				caseRef: 'EN010116',
-				size: '101',
-				page: '2'
-			}
-		});
-		const res = httpMocks.createResponse();
-
-		await getAdvice(req, res);
-
-		const expectedFilters = {
-			caseReference: 'EN010116',
-			page: 2,
-			itemsPerPage: 100
-		};
-
-		expect(getAdviceMock).toBeCalledWith(expectedFilters);
-
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(res._getData()).toEqual({
-			advice: [mockAdvice, mockAdvice],
-			totalItems: 2,
-			itemsPerPage: 100,
-			totalPages: 1,
-			currentPage: 2
-		});
-	});
-
-	it('calculates the correct pagination', async () => {
-		getAdviceMock.mockResolvedValueOnce({
-			count: 2,
-			rows: [mockAdvice, mockAdvice]
-		});
-
-		const req = httpMocks.createRequest({
-			query: {
-				caseRef: 'EN010116',
-				size: '1',
-				page: '2'
-			}
-		});
-		const res = httpMocks.createResponse();
-
-		await getAdvice(req, res);
-
-		const expectedFilters = {
-			caseReference: 'EN010116',
-			page: 2,
-			itemsPerPage: 1
-		};
-
-		expect(getAdviceMock).toBeCalledWith(expectedFilters);
-
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(res._getData()).toEqual({
-			advice: [mockAdvice, mockAdvice],
-			totalItems: 2,
-			itemsPerPage: 1,
-			totalPages: 2,
-			currentPage: 2
+		it('should return a 500 error if an unhandled error occurs', async () => {
+			getAllAdviceMock.mockRejectedValue(new Error('some error'));
+			const res = httpMocks.createResponse();
+			const req = httpMocks.createRequest({
+				query: {
+					caseRef: 'EN010009'
+				}
+			});
+			await expect(() => getAdvice(req, res)).rejects.toEqual(new Error('some error'));
 		});
 	});
 
 	describe('getAdviceById', () => {
-		afterEach(() => {
-			jest.resetAllMocks();
+		beforeEach(() => {
+			getAdviceByIdMock.mockResolvedValue(ADVICE_BACKOFFICE_RESPONSE);
 		});
-
-		it('should get advice by Id from mock', async () => {
-			getAdviceByIdMock.mockResolvedValue(mockAdvice);
-
+		it('should call getAdviceByIdService', async () => {
 			const req = httpMocks.createRequest({
 				params: {
-					adviceID: 'adviceid123'
+					adviceID: '123'
+				},
+				query: {
+					caseReference: 'EN010009'
 				}
 			});
 			const res = httpMocks.createResponse();
 			await getAdviceById(req, res);
-
-			expect(getAdviceByIdMock).toBeCalledWith('adviceid123');
-			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-
-			const advice = res._getData();
-			expect(advice).toEqual({
-				...mockAdvice,
-				attachments: [
-					{
-						...mockAdvice.attachments[0],
-						documentURI:
-							'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects//pathname/to/document/or/blob/uri'
-					}
-				]
+			expect(getAdviceByIdMock).toBeCalledWith('123', 'EN010009');
+		});
+		it('should return advice from service', async () => {
+			const req = httpMocks.createRequest({
+				params: {
+					adviceID: '123'
+				},
+				query: {
+					caseReference: 'EN010009'
+				}
 			});
+			const res = httpMocks.createResponse();
+			await getAdviceById(req, res);
+			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+			expect(res._getData()).toEqual(ADVICE_BACKOFFICE_RESPONSE);
 		});
 	});
 });

@@ -79,8 +79,20 @@ const getDocumentsByType = async (queryData) =>
 		take: 1
 	});
 
+const getDocumentsByIds = async (documentIds) => {
+	if (!documentIds) return [];
+	return prismaClient.document.findMany({
+		where: {
+			id: {
+				in: documentIds?.split(',').map((id) => parseInt(id))
+			}
+		}
+	});
+};
+
 module.exports = {
 	getDocuments,
 	getFilters,
-	getDocumentsByType
+	getDocumentsByType,
+	getDocumentsByIds
 };

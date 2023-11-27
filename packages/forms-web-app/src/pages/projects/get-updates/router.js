@@ -2,66 +2,78 @@ const express = require('express');
 
 const getUpdatesRouter = express.Router();
 
-const { middleware, projectMigrationMiddleware } = require('../_middleware/middleware');
-const { getUpdatesRoutes } = require('./_utils/get-updates-routes');
-const { getGetUpdatesStart } = require('./start/controller');
-const { getGetUpdatesEmail, postGetUpdatesEmail } = require('./email/controller');
+const { projectsMiddleware, projectMigrationMiddleware } = require('../_middleware/middleware');
+const { getGetUpdatesIndexController } = require('./index/controller');
+const {
+	getGetUpdatesEmailController,
+	postGetUpdatesEmailController
+} = require('./email/controller');
 const { emailValidationRules } = require('../../../validators/shared/email-address');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const { getGetUpdatesHowOften, postGetUpdatesHowOften } = require('./how-often/controller');
+const {
+	getGetUpdatesHowOftenController,
+	postGetUpdatesHowOftenController
+} = require('./how-often/controller');
 const { howOftenValidationRules } = require('./how-often/validator');
-const { getGetUpdatesConfirmYourEmail } = require('./confirm-your-email/controller');
-const { getGetUpdatesSubscribed } = require('./subscribed/controller');
-const { getGetUpdatesUnsubscribe, postGetUpdatesUnsubscribe } = require('./unsubscribe/controller');
-const { getGetUpdatesUnsubscribed } = require('./unsubscribed/controller');
+const { getUpdatesConfirmYourEmailController } = require('./confirm-your-email/controller');
+const { getUpdatesSubscribedController } = require('./subscribed/controller');
+const {
+	getGetUpdatesUnsubscribeController,
+	postGetUpdatesUnsubscribeController
+} = require('./unsubscribe/controller');
+const { getUpdatesUnsubscribedController } = require('./unsubscribed/controller');
 
-const baseUrl = '/:case_ref/get-updates/';
+const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
+const { getUpdatesEmailURL } = require('./email/utils/get-updates-email-url');
+const { getUpdatesHowOftenURL } = require('./how-often/utils/get-updates-how-often-url');
+const {
+	getUpdatesConfirmYourEmailURL
+} = require('./confirm-your-email/utils/get-updates-confirm-your-email-url');
+const { getUpdatesSubscribedURL } = require('./subscribed/utils/get-updates-subscribed-url');
+const { getUpdatesUnsubscribeURL } = require('./unsubscribe/utils/get-updates-unsubscribe-url');
+const { getUpdatesUnsubscribedURL } = require('./unsubscribed/utils/get-updates-unsubscribed-url');
+
+const updatesIndexURL = getUpdatesIndexURL();
+const updatesEmailURL = getUpdatesEmailURL();
+const updatesHowOftenURL = getUpdatesHowOftenURL();
+const updatesConfirmYourEmailURL = getUpdatesConfirmYourEmailURL();
+const updatesSubscribedURL = getUpdatesSubscribedURL();
+const updatesUnsubscribeURL = getUpdatesUnsubscribeURL();
+const updatesUnsubscribedURL = getUpdatesUnsubscribedURL();
 
 getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.start}`,
-	[middleware, projectMigrationMiddleware],
-	getGetUpdatesStart
+	updatesIndexURL,
+	[projectsMiddleware, projectMigrationMiddleware],
+	getGetUpdatesIndexController
 );
 
-getUpdatesRouter.get(`${baseUrl}${getUpdatesRoutes.email}`, getGetUpdatesEmail);
+getUpdatesRouter.get(updatesEmailURL, getGetUpdatesEmailController);
 getUpdatesRouter.post(
-	`${baseUrl}${getUpdatesRoutes.email}`,
+	updatesEmailURL,
 	emailValidationRules(),
 	validationErrorHandler,
-	postGetUpdatesEmail
+	postGetUpdatesEmailController
 );
 
-getUpdatesRouter.get(`${baseUrl}${getUpdatesRoutes.howOften}`, getGetUpdatesHowOften);
+getUpdatesRouter.get(updatesHowOftenURL, getGetUpdatesHowOftenController);
 getUpdatesRouter.post(
-	`${baseUrl}${getUpdatesRoutes.howOften}`,
+	updatesHowOftenURL,
 	howOftenValidationRules(),
 	validationErrorHandler,
-	postGetUpdatesHowOften
+	postGetUpdatesHowOftenController
 );
 
 getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.confirm}`,
-	middleware,
-	getGetUpdatesConfirmYourEmail
+	updatesConfirmYourEmailURL,
+	projectsMiddleware,
+	getUpdatesConfirmYourEmailController
 );
 
-getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.subscribed}`,
-	middleware,
-	getGetUpdatesSubscribed
-);
+getUpdatesRouter.get(updatesSubscribedURL, projectsMiddleware, getUpdatesSubscribedController);
 
-getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.unsubscribe}`,
-	middleware,
-	getGetUpdatesUnsubscribe
-);
-getUpdatesRouter.post(`${baseUrl}${getUpdatesRoutes.unsubscribe}`, postGetUpdatesUnsubscribe);
+getUpdatesRouter.get(updatesUnsubscribeURL, projectsMiddleware, getGetUpdatesUnsubscribeController);
+getUpdatesRouter.post(updatesUnsubscribeURL, postGetUpdatesUnsubscribeController);
 
-getUpdatesRouter.get(
-	`${baseUrl}${getUpdatesRoutes.unsubscribed}`,
-	middleware,
-	getGetUpdatesUnsubscribed
-);
+getUpdatesRouter.get(updatesUnsubscribedURL, projectsMiddleware, getUpdatesUnsubscribedController);
 
 module.exports = { getUpdatesRouter };

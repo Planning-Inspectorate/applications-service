@@ -46,12 +46,12 @@ describe('./advice.service', () => {
 				let result;
 				beforeEach(async () => {
 					handler.mockReturnValue({ data: { mock: 'handler value' } });
-					result = await getAdviceDetailData('mock advice detail id');
+					result = await getAdviceDetailData('mock-advice-detail-id', 'mock-case-reference');
 				});
 				it('should call the wrapped getRawAdviceDetail', () => {
 					expect(handler).toHaveBeenCalledWith(
 						'getAdviceDetail',
-						'/api/v1/advice/mock advice detail id',
+						'/api/v1/advice/mock-advice-detail-id?caseReference=mock-case-reference',
 						'GET'
 					);
 				});
@@ -64,7 +64,7 @@ describe('./advice.service', () => {
 					handler.mockReturnValue({ resp_code: 404 });
 				});
 				it('should throw an error', () => {
-					expect(getAdviceDetailData('mock advice detail id')).rejects.toThrowError('NOT_FOUND');
+					expect(getAdviceDetailData('mock-advice-detail-id')).rejects.toThrowError('NOT_FOUND');
 				});
 			});
 		});
