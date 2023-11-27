@@ -32,7 +32,7 @@ config.backOfficeIntegration.advice.getAdvice.caseReferences = [
 	'BACKOFFICE-CASEID-NOTFOUND'
 ];
 describe('/api/v1/advice', () => {
-	describe(' GET /api/v1/advice?caseRef={caseReference}', () => {
+	describe(' GET /api/v1/advice?caseReference={caseReference}', () => {
 		beforeEach(() => {
 			mockFindManyAdvicePrisma.mockResolvedValue(ADVICE_BACKOFFICE_DATA);
 			mockCountAdvicePrisma.mockResolvedValue(1);
@@ -44,14 +44,14 @@ describe('/api/v1/advice', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					code: 400,
-					errors: ["must have required property 'caseRef'"]
+					errors: ["must have required property 'caseReference'"]
 				});
 			});
 		});
 		describe('when an error is thrown', () => {
 			it('should return 500', async () => {
 				db.Advice.findAndCountAll.mockRejectedValue(new Error('MOCK ERROR'));
-				const response = await request.get('/api/v1/advice?caseRef=NI-CASEID');
+				const response = await request.get('/api/v1/advice?caseReference=NI-CASEID');
 
 				expect(response.status).toEqual(500);
 				expect(response.text).toEqual(
@@ -61,7 +61,7 @@ describe('/api/v1/advice', () => {
 		});
 		describe('when the case reference is ni', () => {
 			it('should return the correct data', async () => {
-				const response = await request.get('/api/v1/advice?caseRef=NI-CASEID');
+				const response = await request.get('/api/v1/advice?caseReference=NI-CASEID');
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
@@ -75,7 +75,7 @@ describe('/api/v1/advice', () => {
 		});
 		describe('when the case reference is backoffice', () => {
 			it('should return the correct data', async () => {
-				const response = await request.get('/api/v1/advice?caseRef=BACKOFFICE-CASEID');
+				const response = await request.get('/api/v1/advice?caseReference=BACKOFFICE-CASEID');
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
