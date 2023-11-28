@@ -16,7 +16,7 @@ describe('User can review and search Section 51 advice', () => {
 		cy.url().should('include', 'itemsPerPage=50');
 	});
 
-	it('can perform a search', () => {
+	it('can perform a search for an s51', () => {
 		section51.enterSearchTerm('meeting');
 		cy.get('#search-button').click();
 		cy.url().should('include', 'meeting');
