@@ -22,7 +22,7 @@ describe('User can review and search Section 51 advice', () => {
 		cy.url().should('include', 'meeting');
 	});
 
-	it('can click to view one of the results', () => {
+	it('can click to view one of the s51 results', () => {
 		section51.clickFirstResult();
 		cy.get('.govuk-heading-m').contains('Enquiry').should('be.visible');
 	});
