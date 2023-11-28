@@ -54,7 +54,7 @@ describe('#registerMiddleware', () => {
 		};
 		registerMiddleware(req, res, next);
 		expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-			detailsLink: '/projects/undefined/register/register-have-your-say'
+			detailsLink: '/projects/:case_ref/register/register-have-your-say'
 		});
 	});
 

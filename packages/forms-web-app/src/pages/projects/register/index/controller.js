@@ -5,11 +5,14 @@ const { getPageData } = require('./_utils/get-page-data');
 
 const view = 'projects/register/index/view.njk';
 
-const getRegister = async (req, res) => {
+const getRegisterIndexController = async (req, res) => {
+	const { params } = req;
+	const { case_ref } = params;
+
 	delete req.session.comment;
 	delete req.session.typeOfParty;
 
-	const response = await getAppData(req.params.case_ref);
+	const response = await getAppData(case_ref);
 
 	if (response.resp_code === 200) {
 		const appData = response.data;
@@ -19,16 +22,16 @@ const getRegister = async (req, res) => {
 			appData.DateOfRelevantRepresentationClose
 		);
 
-		req.session.caseRef = req.params.case_ref;
+		req.session.caseRef = case_ref;
 		req.session.appData = appData;
 		req.session.projectName = appData.ProjectName;
 		req.session.registerJourneyStarted = periodOpen;
 
-		res.render(view, getPageData(appData, periodOpen));
+		res.render(view, getPageData(appData, periodOpen, case_ref));
 	} else if (response.resp_code === 404) {
-		logger.warn(`No project found with ID ${req.params.case_ref} for registration`);
+		logger.warn(`No project found with ID ${case_ref} for registration`);
 		res.status(404).render('error/not-found');
 	}
 };
 
-module.exports = { getRegister };
+module.exports = { getRegisterIndexController };

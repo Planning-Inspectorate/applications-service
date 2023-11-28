@@ -1,11 +1,11 @@
-const { VIEW } = require('../../lib/views');
-const registrationData = require('../../lib/registration-data.json');
-const { validTypeOfPartyOptions } = require('../../validators/register/type-of-party');
-const { REGISTER } = require('../../constants');
+const { VIEW } = require('../../../../lib/views');
+const registrationData = require('../../../../lib/registration-data.json');
+const { REGISTER } = require('../../../../constants');
+const { registeringForOptions } = require('./_validators/validate-registering-for-options');
+const { projectsRouteParam } = require('../../config');
+const { getPageData } = require('./_utils/get-page-data');
 
-exports.getTypeOfParty = (req, res) => {
-	res.render(VIEW.REGISTER.TYPE_OF_PARTY, { type: req.session.typeOfParty });
-};
+const view = 'projects/register/registering-for/view.njk';
 
 const forwardPage = (partyType) => {
 	const party = {
@@ -17,26 +17,37 @@ const forwardPage = (partyType) => {
 	return party[partyType] || party.default;
 };
 
-exports.forwardPage = forwardPage;
+const getRegisteringForController = (req, res) => {
+	const referrer = req.get('Referrer');
+	const { params, query, session } = req;
+	const { typeOfParty } = session;
 
-exports.postTypeOfParty = (req, res) => {
-	const { body } = req;
+	const caseRef = params[projectsRouteParam];
+
+	return res.render(view, getPageData(referrer, caseRef, query, typeOfParty));
+};
+
+const postRegisteringForController = (req, res) => {
+	const referrer = req.get('Referrer');
+	const { body, params, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
 
+	const caseRef = params[projectsRouteParam];
+
 	const typeOfParty = body['type-of-party'];
+
 	let selectedParty = null;
 
-	if (validTypeOfPartyOptions.includes(typeOfParty)) {
+	if (registeringForOptions.includes(typeOfParty)) {
 		selectedParty = typeOfParty;
 	}
 
 	if (Object.keys(errors).length > 0) {
-		res.render(forwardPage('default'), {
-			type: selectedParty,
+		return res.render(view, {
+			...getPageData(referrer, caseRef, query, selectedParty),
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	let redirectUrl = `/${forwardPage(selectedParty)}`;
@@ -61,3 +72,5 @@ exports.postTypeOfParty = (req, res) => {
 
 	return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
 };
+
+module.exports = { getRegisteringForController, postRegisteringForController, forwardPage };

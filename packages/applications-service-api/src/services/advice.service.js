@@ -18,7 +18,7 @@ const isBackOfficeCaseReference = (caseReference) =>
 	(config.backOfficeIntegration.advice.getAdvice.caseReferences || []).includes(caseReference);
 
 const createQueryFilters = (query) => {
-	const caseReference = query.caseRef;
+	const caseReference = query.caseReference;
 	const pageNo = parseInt(query?.page) || 1;
 	const defaultSize = 25;
 	const maxSize = 100;

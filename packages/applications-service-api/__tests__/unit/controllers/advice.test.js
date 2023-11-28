@@ -7,7 +7,6 @@ const {
 	getAllAdvice: getAllAdviceMock
 } = require('../../../src/services/advice.service');
 const { ADVICE_BACKOFFICE_RESPONSE } = require('../../__data__/advice');
-const ApiError = require('../../../src/error/apiError');
 jest.mock('../../../src/services/advice.service', () => ({
 	getAllAdvice: jest.fn(),
 	getAdviceById: jest.fn()
@@ -18,7 +17,7 @@ describe('getAdvice', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getAdviceById', () => {
+	describe('getAdvice', () => {
 		beforeEach(() => {
 			getAllAdviceMock.mockResolvedValue({
 				advice: ADVICE_BACKOFFICE_RESPONSE,
@@ -27,15 +26,6 @@ describe('getAdvice', () => {
 				totalPages: 1,
 				currentPage: 1
 			});
-		});
-		it('should return 400 if caseRef is missing', async () => {
-			const req = httpMocks.createRequest({
-				query: {}
-			});
-			const res = httpMocks.createResponse();
-			await expect(() => getAdvice(req, res)).rejects.toEqual(
-				ApiError.badRequest('missing required parameter: caseRef')
-			);
 		});
 
 		it('should call getAllAdviceService', async () => {

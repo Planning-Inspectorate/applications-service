@@ -934,7 +934,7 @@ paths:
         - Advice
       parameters:
         - in: query
-          name: caseRef
+          name: caseReference
           example: 'TR040009'
           required: true
           schema:

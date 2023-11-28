@@ -1,4 +1,8 @@
 const logger = require('../../lib/logger');
+const { getProjectsIndexURL } = require('../../pages/projects/index/_utils/get-projects-index-url');
+const {
+	getRegisterIndexURL
+} = require('../../pages/projects/register/index/_utils/get-register-index-url');
 
 const checkForErrors = (session, params) => {
 	if (!session.registerJourneyStarted)
@@ -13,14 +17,14 @@ const registerMiddleware = (req, res, next) => {
 	const { params, session } = req;
 	try {
 		checkForErrors(session, params);
-		res.locals.baseUrl = `/projects/${params.case_ref}`;
+		res.locals.baseUrl = getProjectsIndexURL(params.case_ref);
 		next();
 	} catch (error) {
 		logger.error(error);
 		if (req.get('Referrer'))
 			logger.info(`Referrer for error (${error.message}) - ${req.get('Referrer')}`);
 		return res.render('error/register-journey-error.njk', {
-			detailsLink: `/projects/${params.case_ref}/register/register-have-your-say`
+			detailsLink: getRegisterIndexURL(params.case_ref)
 		});
 	}
 };
