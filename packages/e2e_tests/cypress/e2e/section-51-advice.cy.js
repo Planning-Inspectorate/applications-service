@@ -11,7 +11,7 @@ describe('User can review and search Section 51 advice', () => {
 		section51.checkMainH1Visible();
 	});
 
-	it('can change the number of results displays to 50', () => {
+	it('can change the number of s51 results displays to 50', () => {
 		section51.changeNumberOfResults('50');
 		cy.url().should('include', 'itemsPerPage=50');
 	});
