@@ -4,8 +4,6 @@ const { decodeUri } = require('../../middleware/decode-uri');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
 const { rules: fullNameValidationRules } = require('../../validators/shared/full-name');
 const fullNameController = require('../../controllers/register/common/full-name/controller');
-const { rules: addressValidationRules } = require('../../validators/register/myself/address');
-const addressController = require('../../controllers/register/common/address/controller');
 const { emailValidationRules } = require('../../validators/shared/email-address');
 const emailController = require('../../controllers/register/common/email-address/controller');
 const { rules: over18Rules } = require('../../validators/register/myself/are-you-18-over');
@@ -26,15 +24,6 @@ router.post(
 	fullNameValidationRules(),
 	validationErrorHandler,
 	fullNameController.postFullName
-);
-
-router.get('/address', addressController.getAddress);
-
-router.post(
-	'/address',
-	addressValidationRules(),
-	validationErrorHandler,
-	addressController.postAddress
 );
 
 router.get('/email-address', emailController.getEmailAddress);
