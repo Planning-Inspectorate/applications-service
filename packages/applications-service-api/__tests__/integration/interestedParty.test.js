@@ -328,5 +328,21 @@ describe('/api/v1/interested-party', () => {
 				);
 			});
 		});
+
+		describe('request with missing required properties', () => {
+			it('should return 400 error with message', async () => {
+				const response = await request.post('/api/v1/interested-party').send({});
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					code: 400,
+					errors: [
+						"must have required property 'case_ref'",
+						"must have required property 'behalf'",
+						"must have required property 'comment'"
+					]
+				});
+			});
+		});
 	});
 });
