@@ -37,6 +37,7 @@ BEGIN TRAN;
 
 -- AlterTable
 ALTER TABLE [dbo].[Representation] DROP CONSTRAINT [Representation_redacted_df];
+ALTER TABLE [dbo].[Representation] DROP COLUMN [redacted];
 ALTER TABLE [dbo].[Representation] DROP COLUMN [hasAttachments],
 [originalRepresentation],
 [redactedBy],
