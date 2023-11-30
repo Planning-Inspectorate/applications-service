@@ -82,10 +82,10 @@ model ServiceUser {
   middleName       String?
   lastName         String?
   email            String?
-  website          String?
+  webAddress       String?
   phoneNumber      String?
   organisationName String?
-  jobTitle         String?
+  role             String?
   serviceUserType  String?
   createdAt        DateTime? @default(now())
   modifiedAt       DateTime? @default(now())
