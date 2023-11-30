@@ -61,40 +61,13 @@ model Representation {
   referenceId                    String?
   status                         String?
   dateReceived                   DateTime?
-  originalRepresentation         String    @db.NVarChar(4000)
-  redacted                       Boolean   @default(false)
-  redactedRepresentation         String?   @db.NVarChar(4000)
-  redactedBy                     String?
-  redactedNotes                  String?   @db.NVarChar(4000)
+  representationComment          String?   @db.NText
   representationFrom             String?
   representationType             String?
   registerFor                    String?
-  // represented person details
-  representedFirstName           String?
-  representedLastName            String?
-  representedUnder18             Boolean?
-  representedJobTitle            String?
-  representedOrganisationName    String?
-  representedContactMethod       String?
-  representedEmailAddress        String?
-  representedTelephone           String?
-  representedAddressLine1        String?
-  representedAddressLine2        String?
-  representedTown                String?
-  representedPostcode            String?
-  // representative details
-  representativeFirstName        String?
-  representativeLastName         String?
-  representativeUnder18          Boolean?
-  representativeOrganisationName String?
-  representativeContactMethod    String?
-  representativeEmailAddress     String?
-  representativeTelephone        String?
-  representativeAddressLine1     String?
-  representativeAddressLine2     String?
-  representativeTown             String?
-  representativePostcode         String?
-  hasAttachments                 Boolean?
+  representedId                  Int?
+  representativeId               Int?
+  attachmentIds                  String?
   createdAt                      DateTime? @default(now())
   modifiedAt                     DateTime? @default(now())
 
