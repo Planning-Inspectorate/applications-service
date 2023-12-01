@@ -74,6 +74,23 @@ model Representation {
   @@index([caseReference])
 }
 
+model ServiceUser {
+  id               Int      @unique @default(autoincrement())
+  serviceUserId    Int      @id
+  caseReference    String?
+  firstName        String?
+  middleName       String?
+  lastName         String?
+  email            String?
+  webAddress       String?
+  phoneNumber      String?
+  organisationName String?
+  role             String?
+  serviceUserType  String?
+  createdAt        DateTime? @default(now())
+  modifiedAt       DateTime? @default(now())
+}
+
 model Project {
   id                                                Int       @unique @default(autoincrement())
   caseId                                            Int       @unique
