@@ -2,6 +2,8 @@
 {% from "components/ui/chevron-card.njk" import chevronCard %}
 {% from "components/ui/search-bar.njk" import uiSearchBar %}
 
+{% set mainClasses = "pins-modded-no-padding" %}
+
 {% block content %}
     <div class="masthead masthead--full-width masthead--bg-teal">
         <div class="masthead__content">
@@ -19,9 +21,10 @@
             </div>
         </div>
     </div>
+    <div class="full-width-line full-width-line--bg-blue"></div>
 
-    <section class="homepage-section homepage-section--full-width homepage-section--bg-lightgrey govuk-!-margin-bottom-6">
-        <div class="homepage-section__content">
+    <section class="page-section full-width-section full-width-section--bg-lightgrey govuk-!-margin-bottom-6 govuk-!-padding-top-6">
+        <div class="page-section__content">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half">
                     <h2 class="govuk-heading-m">I am looking for a project</h2>
@@ -43,9 +46,9 @@
         </div>
     </section>
 
-    <section class="homepage-section govuk-!-margin-bottom-6">
-        <h2 class="govuk-heading-m  govuk-!-margin-bottom-6">Information for members of the public</h2>
-        <div class="homepage-section__content">
+    <section class="page-section govuk-!-margin-bottom-6">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-6">Information for members of the public</h2>
+        <div class="page-section__content">
             <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
                     {{ chevronCard(

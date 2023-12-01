@@ -22,12 +22,13 @@ const { apiSubdirectory } = require('../api/config');
 const { processGuideRouter } = require('../pages/process-guide/router');
 const { haveYourSayGuideRouter } = require('../pages/have-your-say-guide/router');
 const { indexRouter } = require('../pages/index/router');
+const { detailedInformationRouter } = require('../pages/detailed-information/router');
 const { accessibilityStatementRouter } = require('../pages/accessibility-statement/router');
 
 if (config.featureFlag.allowHomepage) router.use(indexRouter);
-
 router.use(projectsRouter);
 router.use(routesConfig.project.directory, projectsRouterLegacy);
+router.use(detailedInformationRouter);
 
 router.use(accessibilityStatementRouter);
 router.use('/', footerPagesRouter);

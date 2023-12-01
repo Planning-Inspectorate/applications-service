@@ -12,6 +12,7 @@
 @import './modded/homepage-search.scss';
 @import './modded/govuk-file-upload.scss';
 @import './modded/govuk-list-summary.scss';
+@import './modded/govuk-main-wrapper.scss';
 @import './modded/govuk-table.scss';
 
 /* page */
@@ -25,8 +26,10 @@
 @import './components/layout/slots.scss';
 @import './components/indicator/loading-spinner.scss';
 @import './components/section/events.scss';
-@import './components/section/homepage-section.scss';
+@import './components/section/full-width-section.scss';
+@import './components/section/page-section.scss';
 @import './components/section/masthead.scss';
+@import './components/section/full-width-line.scss';
 @import './components/section/results.scss';
 @import './components/style/contents-list.scss';
 @import './components/style/vertical-tabs.scss';
