@@ -3,7 +3,7 @@ const { getPageData } = require('./utils/get-page-data');
 
 const view = 'index/view.njk';
 
-const getIndex = async (req, res, next) => {
+const getIndexController = async (req, res, next) => {
 	try {
 		return res.render(view, getPageData());
 	} catch (error) {
@@ -13,5 +13,5 @@ const getIndex = async (req, res, next) => {
 };
 
 module.exports = {
-	getIndex
+	getIndexController
 };

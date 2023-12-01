@@ -11,10 +11,10 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                     <p class="masthead__text">
-                        Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities. 
+                        Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities.
                     </p>
                     <p class="masthead__text">
-                        This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales. 
+                        This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales.
                     </p>
 
                 </div>
@@ -52,7 +52,7 @@
             <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-half">
                     {{ chevronCard(
-                            'See the process', 
+                            'See the process',
                             homePageUrls.processGuide,
                             'Here you can view the stages that an application goes through from start to finish.'
                         ) }}
@@ -68,4 +68,21 @@
         </div>
     </section>
 
+		<section class="page-section govuk-!-margin-bottom-6">
+			<h2 class="govuk-heading-m govuk-!-margin-bottom-6">
+				Updates and contact information
+			</h2>
+
+			<div class="page-section__content">
+				<div class="govuk-grid-row">
+					<div class="govuk-grid-column-one-third">
+						{{ chevronCard(
+							'I need help',
+							homePageUrls.contactURL,
+							'How to get in contact with us.'
+						) }}
+					</div>
+				</div>
+			</div>
+  </section>
 {% endblock %}

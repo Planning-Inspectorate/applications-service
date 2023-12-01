@@ -1,0 +1,92 @@
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        {{ pageHeading }}
+      </h1>
+
+      <h2 class="govuk-heading-m">
+        General Enquiries
+      </h2>
+
+      <p class="govuk-body">
+        If you are contacting us about a project and have the case officer’s email address, please email them directly.
+      </p>
+
+      <p class="govuk-body">
+        If you have another enquiry, you can contact us by the following options:
+      </p>
+
+      <p class="govuk-body">
+        Contact form: <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}"> Click here to fill out our form</a>
+      </p>
+
+      <p class="govuk-body">
+        Email: <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
+      </p>
+
+      <p class="govuk-body">
+        If you are contacting us about a specific project, put the project name in the subject line. At busy times we may not be able to respond immediately.
+      </p>
+
+      <p class="govuk-body">
+        Telephone: <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
+        <br>
+        Monday to Friday, 9am to 12pm (except public holidays)
+      </p>
+
+      <p class="govuk-body">
+        Address:
+        <br>
+        The Planning Inspectorate
+        <br>
+        Room 3/OP
+        <br>
+        Temple Quay House
+        <br>
+        2 The Square
+        <br>
+        Temple Quay
+        <br>
+        Bristol
+        <br>
+        BS1 6PN
+        <br>
+      </p>
+
+      <p class="govuk-body">
+        Follow us on X: <a class="govuk-link" href="{{ pinsSocialMedia.twitterURL }}">{{ pinsSocialMedia.twitterHandle }}</a>
+      </p>
+
+      <p class="govuk-body">
+        Further information about contacting the Planning Inpectorate customer services can be viewed on <a class="govuk-link" href="{{ govUK.furtherInformationURL }}">GOV.UK</a>.
+      </p>
+
+      <h2 class="govuk-heading-m">
+        Feedback and complaints
+      </h2>
+
+      <p class="govuk-body">
+        The Planning Inspectorate tries to provide the best possible service for its customers.
+        We try to ensure everyone is satisfied with the service they receive.
+        Complaints about the examination process or examining authority’s final report will be considered and responded to.
+      </p>
+
+      <h2 class="govuk-heading-m">
+        Press and media
+      </h2>
+
+      <p class="govuk-body">
+        Telephone: <a class="govuk-link" href="tel:{{ pinsContactDetails.pressAndMediaPhoneNumber }}">{{ pinsContactDetails.pressAndMediaPhoneNumber }}</a>
+        <br>
+        Email: <a class="govuk-link" href="mailto:{{ pinsContactDetails.pressAndMediaEmailAddress }}">{{ pinsContactDetails.pressAndMediaEmailAddress }}</a>
+      </p>
+
+      <p class="govuk-body">
+        The GOV.UK Press office is open from 09:00 to 17:00 on Monday to Friday (except public holidays).
+      </p>
+    </div>
+  </div>
+{% endblock %}

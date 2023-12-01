@@ -1,4 +1,4 @@
-const { getIndex } = require('./controller');
+const { getIndexController } = require('./controller');
 
 jest.mock('../../../src/config', () => {
 	const originalConfig = jest.requireActual('../../../src/config');
@@ -16,6 +16,7 @@ const defaultPageData = {
 	pageTitle: 'Welcome to National Infrastructure Planning',
 	showProjectSearchUrl: true,
 	homePageUrls: {
+		contactURL: '/contact',
 		haveYourSayGuide: 'having-your-say-guide',
 		processGuide: 'decision-making-process-guide',
 		projectSearch: 'project-search'
@@ -23,7 +24,7 @@ const defaultPageData = {
 };
 
 describe('index/controller', () => {
-	describe('#getIndex', () => {
+	describe('#getIndexController', () => {
 		const req = {};
 		const res = { render: jest.fn() };
 
@@ -31,7 +32,7 @@ describe('index/controller', () => {
 			jest.resetAllMocks();
 		});
 		beforeEach(() => {
-			getIndex(req, res);
+			getIndexController(req, res);
 		});
 
 		it('should render the page using correct template and data', () => {

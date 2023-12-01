@@ -72,14 +72,22 @@ module.exports = {
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
 	pinsContactDetails: {
 		enquiriesEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
-		supportTeamPhoneNumber: '0303 444 5000'
+		supportTeamPhoneNumber: '0303 444 5000',
+		pressAndMediaPhoneNumber: '0303 444 5004',
+		pressAndMediaEmailAddress: 'press.office@planninginspectorate.gov.uk',
+		contactUsFormURL: 'https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new'
+	},
+	pinsSocialMedia: {
+		twitterHandle: '@PINSgov',
+		twitterURL: 'https://www.twitter.com/PINSgov'
 	},
 	pinsURL: {
 		adviceNotes:
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},
 	govUK: {
-		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court'
+		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
+		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate'
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
