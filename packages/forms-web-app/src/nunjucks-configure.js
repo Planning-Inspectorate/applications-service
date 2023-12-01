@@ -10,6 +10,7 @@ const { projectStages: projectStageNames } = require('./utils/project-stages');
 const { routesConfig } = require('./routes/config');
 const path = require('path');
 const { getYearNow } = require('./utils/date-utils');
+const { getFooterLinks } = require('./pages/_utils/get-footer-links');
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
@@ -56,10 +57,12 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addGlobal('routes', routesConfig);
 	nunjucksEnv.addGlobal('serviceFeedbackUrl', config.serviceFeedbackUrl);
 	nunjucksEnv.addGlobal('pinsContactDetails', config.pinsContactDetails);
+	nunjucksEnv.addGlobal('pinsSocialMedia', config.pinsSocialMedia);
 	nunjucksEnv.addGlobal('pinsPrivacyNoticeUrl', config.pinsPrivacyNoticeUrl);
 	nunjucksEnv.addGlobal('pinsURL', config.pinsURL);
 	nunjucksEnv.addGlobal('govUK', config.govUK);
 	nunjucksEnv.addGlobal('yearNow', getYearNow());
+	nunjucksEnv.addGlobal('footerLinks', getFooterLinks);
 
 	return nunjucksEnv;
 }
