@@ -8,7 +8,7 @@ const {
 	mockRepresentativeServiceUser,
 	mockRepresentedServiceUser,
 	mockApplicantServiceUser
-} = require('./fixtures');
+} = require('../../__data__/service-user');
 
 const mockFindUnique = jest.fn();
 const mockUpsert = jest.fn();
