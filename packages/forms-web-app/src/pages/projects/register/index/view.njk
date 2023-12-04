@@ -4,12 +4,9 @@
 
 {% set periodClosed = periodOpen === false %}
 
+{% set preTitle = projectName %}
 {% set title = pageHeading %}
 {% set h1Style = "govuk-heading-l" %}
-
-{% if periodClosed %}
-	{% set preTitle = projectName %}
-{% endif %}
 
 {% block pageContent %}
 

@@ -46,7 +46,7 @@ Then('I verify no pagination is present on the page', () => {
 Given('I have navigated to registration comments for the {string} project', (projectName) => {
 	cy.visit('/project-search', { failOnStatusCode: false });
 	cy.clickProjectLink(projectName);
-	cy.clickContentsLink('Registration comments');
+	cy.clickContentsLink('Relevant representations (registration comments)');
 });
 
 When('I search for comments containing {string}', (searchInput) => {
@@ -57,7 +57,7 @@ When('I search for comments containing {string}', (searchInput) => {
 Then(
 	'a list of registration comments with metadata containing {string} is provided',
 	(searchInput) => {
-		cy.get('.ui-results-list__item').each((element) => {
+		cy.get('[data-cy="representation"]').each((element) => {
 			expect(element.text().toLowerCase()).to.contain(searchInput.toLowerCase());
 		});
 	}
@@ -76,7 +76,7 @@ Then('the list is sorted by received date, newest first', () => {
 Then('I am informed that no results were found', () => {
 	cy.get('p[data-cy="no-comments-found"]').should(
 		'contain.text',
-		'No comments were found matching your search term and filters.'
+		'No results were found matching your search term or filters.'
 	);
 });
 

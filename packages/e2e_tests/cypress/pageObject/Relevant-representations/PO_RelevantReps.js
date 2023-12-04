@@ -8,7 +8,7 @@ export class PO_RelevantReps {
 		searchButton: () => cy.get('[data-cy="search-button"]'),
 		FilterOption: () => cy.get('[type="checkbox"]'),
 		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]'),
-		relevantRepTitle: () => cy.get('.ui-results-list__item').first().children().first(),
+		relevantRepTitle: () => cy.get('[data-cy="representation"]').first().children().first(),
 		relevanteRepHeading: () => cy.get('.govuk-heading-l'),
 		backToResultsLink: () => cy.get('[data-cy="back')
 	};
