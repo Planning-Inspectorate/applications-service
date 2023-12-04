@@ -104,7 +104,7 @@ describe('nsip-service-user', () => {
 		});
 	});
 	describe('when service user exists in database', () => {
-		describe('and the message is older than existing advice', () => {
+		describe('and the message is older than existing service user', () => {
 			it('skips update', async () => {
 				const mockExistingServiceUser = {
 					...mockRepresentativeServiceUser,
