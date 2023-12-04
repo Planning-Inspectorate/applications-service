@@ -6,7 +6,7 @@ Feature: Relevant Representations (Registration comments) page
 
     Scenario: Registration comments available for project
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         Then I can verify that the registration comments displayed in descending order
             | Date             | Stage                                  |
             | 1 February 2021 | Members of the public/businesses - 19  |
@@ -37,17 +37,17 @@ Feature: Relevant Representations (Registration comments) page
 
     Scenario: No Registration comments available for project
         Given I navigate to "Cleve Hill Solar Park" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         Then I verify no registration comments text present on the page
 
     Scenario: Do not show pagination links for 20 registration comments or less
         Given I navigate to "Ho Ho Hooo" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         Then I verify no pagination is present on the page
 
     Scenario: Show pagination links for more than 20 registration comments, previous link not displayed on first page, next link not displayed on last page and ellipsis
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         Then I verify below pagination is present on the page
             | Data              |
             | 1                 |
@@ -72,7 +72,7 @@ Feature: Relevant Representations (Registration comments) page
 #
     Scenario: When current page within first three, show only those page links and When current page within last three, show only those page links
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         When I navigate to page "3" of the results
         Then I verify below pagination is present on the page
             | Data                  |
@@ -103,7 +103,7 @@ Feature: Relevant Representations (Registration comments) page
 
     Scenario: When current page between first and last, show one page link either side, Always show first and last page links
         Given I navigate to "Hinkley Point C New Nuclear Power Station Material Change 1" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         When I navigate to page "3" of the results
         When I navigate to page "4" of the results
         When I navigate to page "5" of the results
@@ -143,40 +143,40 @@ Feature: Relevant Representations (Registration comments) page
 
     Scenario: Filter by Registration type
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         And I select "Parish councils (3)" checkbox
         And I click on Apply button to apply filters
         Then I can verify that below comments were returned
-            | Comments                                                                                                                 |
-						| Frosty Fliers (Frosty Fliers ) Some comments 14 March 2021 Parish councils                                               |
-						| Frosty Flights (Frosty Flights) Some comments 1 August 2021 Parish councils                                             |
-						| Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application 20 April 2022 Parish councils |
+            | Comments                                                                                                                                                                          |
+                | Frosty Fliers (Frosty Fliers ) Some comments Submitted by: Parish councils Date submitted: 14 March 2021 Contains attachment(s)                                               |
+                | Frosty Flights (Frosty Flights) Some comments Submitted by: Parish councils Date submitted: 1 August 2021 Contains attachment(s)                                              |
+                | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application Submitted by: Parish councils Date submitted: 20 April 2022 Contains attachment(s) |
 
     Scenario: Search by text and then filter by registration type
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         When I search for comments containing "joe"
         And I select "Local authorities (1)" checkbox
         And I click on Apply button to apply filters
         Then I can verify that below comments were returned
-            | Comments                                                                                                                                                                                                                                                          |
-            | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more 15 May 2022Local authorities |
+            | Comments                                                                                                                                                                                                                                                                                                                    |
+                | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more Submitted by: Local authorities Date submitted: 15 May 2022 Contains attachment(s) |
 
     Scenario: Filter by representative and then search by text
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         And I select "Members of the public/businesses (43)" checkbox
         And I click on Apply button to apply filters
         When I search for comments containing "Chris"
         Then I can verify that below comments were returned
-            | Comments                                                                   |
-						| Chris Cundill Some comments 16 March 2021 Members of the public/businesses |
-						| Chris Some comments 17 March 2021 Members of the public/businesses         |
-            | Chris Cundill Some comments 4 July 2022 Members of the public/businesses  |
+            | Comments                                                                                                     |
+				| Chris Cundill Some comments Submitted by: Members of the public/businesses Date submitted: 16 March 2021 |
+				| Chris Some comments Submitted by: Members of the public/businesses Date submitted: 17 March 2021         |
+                | Chris Cundill Some comments Submitted by: Members of the public/businesses Date submitted: 4 July 2022   |
 
     Scenario: No matching registration comments using filter by representative then search by text
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         And I select "Members of the public/businesses (43)" checkbox
         And I click on Apply button to apply filters
         When I search for comments containing "communication"
@@ -185,22 +185,22 @@ Feature: Relevant Representations (Registration comments) page
 
     Scenario: Option to ‘Read more’ on individual comments, Click ‘Read more’ link, View individual registration comments no attachments, navigate back to registration comments page
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         And I click on 0 read more link
         Then I verify below comment is displayed
-            | Data                                                                                                                                                                                                                                                                                                                                    |
-						| Representation by Test (Test) Some comment which exceeds the character limit. Clearly there is much to be said which must not be left unsaid. Even if it turns out I'm the only one to have said, no-one will be able to exclaim "You should have said!" 19 February 2020Members of the public/businesses                               |
+            | Data                                                                                                                                                                                                                                                                                                                                       |
+			    | Representation by Test (Test) Date submitted 19 February 2020 Submitted by Members of the public/businesses Some comment which exceeds the character limit. Clearly there is much to be said which must not be left unsaid. Even if it turns out I'm the only one to have said, no-one will be able to exclaim "You should have said!" |
         And I click on back link
         Then I verify text "Showing 1 to 25 of 48 results" is present on the page
 
     Scenario: navigate back to registration comments page after applying filters
         Given I navigate to "St James Barton Giant Wind Turbine" project Overview page
-        When I click on "Registration comments" link
+        When I click on "Relevant representations (registration comments)" link
         And I select "Members of the public/businesses (43)" checkbox
         And I click on Apply button to apply filters
         And I click on 0 read more link
         Then I verify below comment is displayed
-            | Data                                                                                                                                                                                                                                                                                                                                    |
-						| Representation by Test (Test) Some comment which exceeds the character limit. Clearly there is much to be said which must not be left unsaid. Even if it turns out I'm the only one to have said, no-one will be able to exclaim "You should have said!" 19 February 2020Members of the public/businesses                               |
+            | Data                                                                                                                                                                                                                                                                                                                                       |
+                | Representation by Test (Test) Date submitted 19 February 2020 Submitted by Members of the public/businesses Some comment which exceeds the character limit. Clearly there is much to be said which must not be left unsaid. Even if it turns out I'm the only one to have said, no-one will be able to exclaim "You should have said!" |
         And I click on back link
 

@@ -1,6 +1,6 @@
 <ul class="ui-results">
   {% for representation in representations %}
-    <li class="ui-results__result">
+    <li class="ui-results__result" data-cy="representation">
       <h2 class="ui-results__result-title">
         <a href="{{ representation.URL }}" class="ui-results__result-title-link">
           <strong>
@@ -24,11 +24,11 @@
       </p>
 
       <div class="ui-results__result-meta-data">
-        <div class="ui-results__result-meta-data-item ui-results__result-meta-data-item--fill-width">
+        <div class="ui-results__result-meta-data-item ui-results__result-meta-data-item--fill-width" data-cy="published-stage">
           <strong>Submitted by:</strong> {{ representation.submittedBy }}
         </div>
 
-        <div class="ui-results__result-meta-data-item" data-cy="published-stage">
+        <div class="ui-results__result-meta-data-item" data-cy="published-date">
           <span class="-white-space--nowrap"><strong>Date submitted:</strong> {{ representation.dateSubmitted }}</span>
         </div>
       </div>
