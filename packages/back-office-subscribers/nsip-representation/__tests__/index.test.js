@@ -31,7 +31,7 @@ const mockContext = {
 const mockMessage = {
 	representationId: 123,
 	caseRef: 'CASE-REF',
-	caseId: '123',
+	caseId: 123,
 	referenceId: 'reference-id',
 	status: 'published',
 	dateReceived: new Date('2023-01-01T09:00:00.000Z'),
@@ -59,7 +59,7 @@ const mockRepresentation = {
 	registerFor: mockMessage.registerFor,
 	representedId: mockMessage.representedId,
 	representativeId: mockMessage.representativeId,
-	attachments: mockMessage.attachmentIds.join(','),
+	attachmentIds: mockMessage.attachmentIds.join(','),
 	modifiedAt: mockCurrentTime
 };
 

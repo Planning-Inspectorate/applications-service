@@ -39,7 +39,7 @@ module.exports = async (context, message) => {
 			registerFor: message.registerFor,
 			representedId: message.representedId,
 			representativeId: message.representativeId,
-			attachments: message.attachmentIds?.join(','),
+			attachmentIds: message.attachmentIds?.join(','),
 			modifiedAt: new Date()
 		};
 
