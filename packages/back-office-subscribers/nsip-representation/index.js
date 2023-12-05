@@ -24,62 +24,24 @@ module.exports = async (context, message) => {
 			context.log(`skipping update of representation with representationId: ${representationId}`);
 			return;
 		}
-		const hasAttachments = message.attachments && message.attachments.length > 0;
-		if (hasAttachments) {
-			for (const attachment of message.attachments) {
-				await tx.document.upsert({
-					where: {
-						documentId: attachment.documentId
-					},
-					update: {
-						documentId: attachment.documentId,
-						representationId
-					},
-					create: {
-						documentId: attachment.documentId,
-						representationId
-					}
-				});
-			}
-		}
 		let representation = {
 			representationId: message.representationId,
-			referenceId: message.referenceId,
 			caseReference: message.caseRef,
 			caseId: message.caseId,
+			referenceId: message.referenceId,
 			status: message.status,
 			dateReceived: message.dateReceived,
-			originalRepresentation: message.originalRepresentation,
-			redacted: message.redacted,
-			redactedRepresentation: message.redactedRepresentation,
-			redactedBy: message.redactedBy,
-			redactedNotes: message.redactedNotes,
+			representationComment: message.redacted
+				? message.redactedRepresentation
+				: message.originalRepresentation,
 			representationFrom: message.representationFrom,
 			representationType: message.representationType,
 			registerFor: message.registerFor,
-			hasAttachments: hasAttachments,
+			representedId: message.representedId,
+			representativeId: message.representativeId,
+			attachments: message.attachmentIds?.join(','),
 			modifiedAt: new Date()
 		};
-
-		if (message.representative) {
-			representation = {
-				...representation,
-				representativeFirstName: message.representative.firstName,
-				representativeLastName: message.representative.lastName,
-				representativeUnder18: message.representative.under18,
-				representativeOrganisationName: message.representative.organisationName
-			};
-		}
-
-		if (message.represented) {
-			representation = {
-				...representation,
-				representedFirstName: message.represented.firstName,
-				representedLastName: message.represented.lastName,
-				representedUnder18: message.represented.under18,
-				representedOrganisationName: message.represented.organisationName
-			};
-		}
 
 		await tx.representation.upsert({
 			where: {
