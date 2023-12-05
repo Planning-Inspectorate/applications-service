@@ -11,11 +11,15 @@ const { getRegisteringForURL } = require('./registering-for/_utils/get-registeri
 
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { registerMiddleware } = require('../../../routes/register/middleware');
-const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
+const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
 	validateRegisteringForOptions
 } = require('./registering-for/_validators/validate-registering-for-options');
+
+const { registerAgentRouter } = require('./agent/router');
+const { registerMyselfRouter } = require('./myself/router');
+const { registerOrganisationRouter } = require('./organisation/router');
 
 const registerIndexURL = getRegisterIndexURL();
 const registeringForURL = getRegisteringForURL();
@@ -33,5 +37,11 @@ registerRouter.post(
 	validationErrorHandler,
 	postRegisteringForController
 );
+
+registerRouter.use(registerAgentRouter);
+
+registerRouter.use(registerMyselfRouter);
+
+registerRouter.use(registerOrganisationRouter);
 
 module.exports = { registerRouter };

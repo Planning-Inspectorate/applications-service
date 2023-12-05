@@ -1,27 +1,21 @@
-const {
-	VIEW: {
-		REGISTER: {
-			COMMON: { ADDRESS_VIEW }
-		}
-	}
-} = require('../../../../lib/views');
-const { getKeyFromUrl } = require('../get-key-from-url');
-const { getSession, setSession } = require('../session');
-const { viewModel } = require('./viewModel');
-const { getRedirectUrl } = require('./get-redirect-url');
-const { addressToObj } = require('./addressHandler');
-const logger = require('../../../../lib/logger');
+const logger = require('../../../../../lib/logger');
+const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
+const { getSession, setSession } = require('../../../../../controllers/register/common/session');
+const { addressToObj } = require('./_utils/addressHandler');
+const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const { viewModel } = require('./_utils/viewModel');
 
+const view = 'projects/register/_common/address/view.njk';
 const addressKey = 'address';
 
-const getAddress = (req, res) => {
+const getRegisterAddressController = (req, res) => {
 	try {
 		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
 
 		const address = getSession(session, key)[addressKey];
 
-		return res.render(ADDRESS_VIEW, {
+		return res.render(view, {
 			...viewModel[key],
 			address
 		});
@@ -31,14 +25,14 @@ const getAddress = (req, res) => {
 	}
 };
 
-const postAddress = (req, res) => {
+const postRegisterAddressController = (req, res) => {
 	try {
 		const { body, query, originalUrl, session } = req;
 		const key = getKeyFromUrl(originalUrl);
 
 		const { errors = {}, errorSummary = [] } = body;
 		if (Object.keys(errors).length > 0) {
-			return res.render(ADDRESS_VIEW, {
+			return res.render(view, {
 				errors,
 				errorSummary,
 				...viewModel[key],
@@ -56,6 +50,6 @@ const postAddress = (req, res) => {
 };
 
 module.exports = {
-	getAddress,
-	postAddress
+	getRegisterAddressController,
+	postRegisterAddressController
 };

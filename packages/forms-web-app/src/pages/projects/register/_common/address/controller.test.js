@@ -1,10 +1,7 @@
-const {
-	getAddress,
-	postAddress
-} = require('../../../../../../src/controllers/register/common/address/controller');
+const { getRegisterAddressController, postRegisterAddressController } = require('./controller');
 
-describe('controllers/register/common/address/controller', () => {
-	describe('#getAddress', () => {
+describe('pages/projects/register/_common/address/controller', () => {
+	describe('#getRegisterAddressController', () => {
 		describe('When getting the registration address page', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -18,10 +15,10 @@ describe('controllers/register/common/address/controller', () => {
 					session: { mySelfRegdata: { ['address']: { text: 'mock address body' } } }
 				};
 				beforeEach(() => {
-					getAddress(req, res);
+					getRegisterAddressController(req, res);
 				});
 				it('should render the registration address page with the myself data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
 						pageTitle:
 							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						title: 'What is your address?',
@@ -37,10 +34,10 @@ describe('controllers/register/common/address/controller', () => {
 					session: { orgRegdata: { ['address']: { text: 'mock address body' } } }
 				};
 				beforeEach(() => {
-					getAddress(req, res);
+					getRegisterAddressController(req, res);
 				});
 				it('should render the registration address page with the organisation data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
 						pageTitle:
 							'What is your address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						title: 'What is your address?',
@@ -58,10 +55,10 @@ describe('controllers/register/common/address/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					getAddress(req, res);
+					getRegisterAddressController(req, res);
 				});
 				it('should render the registration address page with the agent data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
 						pageTitle:
 							'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						title: 'What is your address?',
@@ -80,13 +77,13 @@ describe('controllers/register/common/address/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getAddress(req, res)).toThrowError(
+				expect(() => getRegisterAddressController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
 		});
 	});
-	describe('#postAddress', () => {
+	describe('#postRegisterAddressController', () => {
 		describe('When posting the registration address', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -106,7 +103,7 @@ describe('controllers/register/common/address/controller', () => {
 			describe('and there is an unrecoverable error', () => {
 				const req = {};
 				beforeEach(() => {
-					postAddress(req, res);
+					postRegisterAddressController(req, res);
 				});
 
 				it('should render the error page', () => {
@@ -124,11 +121,11 @@ describe('controllers/register/common/address/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					postAddress(req, res);
+					postRegisterAddressController(req, res);
 				});
 
 				it('should render address page with the error', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
 						address: mockAddress,
 						errorSummary: [
 							{
@@ -155,7 +152,7 @@ describe('controllers/register/common/address/controller', () => {
 					query: { mode: 'edit' }
 				};
 				beforeEach(() => {
-					postAddress(req, res);
+					postRegisterAddressController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -173,7 +170,7 @@ describe('controllers/register/common/address/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postAddress(req, res);
+					postRegisterAddressController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -191,7 +188,7 @@ describe('controllers/register/common/address/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postAddress(req, res);
+					postRegisterAddressController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -211,7 +208,7 @@ describe('controllers/register/common/address/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postAddress(req, res);
+					postRegisterAddressController(req, res);
 				});
 				it('should redirect to the next page for agent', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
