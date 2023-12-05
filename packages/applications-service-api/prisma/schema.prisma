@@ -76,10 +76,9 @@ model Representation {
 
 model ServiceUser {
   id               Int       @unique @default(autoincrement())
-  serviceUserId    Int       @id
+  serviceUserId    String    @id
   caseReference    String?
   firstName        String?
-  middleName       String?
   lastName         String?
   email            String?
   webAddress       String?
