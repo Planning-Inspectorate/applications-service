@@ -49,23 +49,23 @@ const mapMessageToServiceUser = (message) => {
 	if (serviceUserType === 'Representative' || serviceUserType === 'Represented') {
 		return {
 			serviceUserId: message.id,
-			firstName: message?.firstName,
-			lastName: message?.lastName,
-			organisationName: message?.organisation,
-			caseReference: message?.caseReference,
-			serviceUserType: message?.serviceUserType
+			firstName: message.firstName,
+			lastName: message.lastName,
+			organisationName: message.organisation,
+			caseReference: message.caseReference,
+			serviceUserType: message.serviceUserType
 		};
 	} else {
 		return {
 			serviceUserId: message.id,
-			firstName: message?.firstName,
-			lastName: message?.lastName,
-			organisationName: message?.organisation,
-			caseReference: message?.caseReference,
-			serviceUserType: message?.serviceUserType,
-			email: message?.emailAddress,
-			webAddress: message?.webAddress,
-			phoneNumber: message?.telephoneNumber
+			firstName: message.firstName,
+			lastName: message.lastName,
+			organisationName: message.organisation,
+			caseReference: message.caseReference,
+			serviceUserType: message.serviceUserType,
+			email: message.emailAddress,
+			webAddress: message.webAddress,
+			phoneNumber: message.telephoneNumber
 		};
 	}
 };
