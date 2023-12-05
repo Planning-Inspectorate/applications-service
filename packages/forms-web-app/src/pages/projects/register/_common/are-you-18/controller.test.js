@@ -1,10 +1,7 @@
-const {
-	getAreYouOver18,
-	postAreYouOver18
-} = require('../../../../../../src/controllers/register/common/are-you-18/controller');
+const { getRegisterAreYou18Controller, postRegisterAreYou18Controller } = require('./controller');
 
-describe('controllers/register/common/are-you-18-over/controller', () => {
-	describe('#getAreYouOver18', () => {
+describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/controller', () => {
+	describe('#getRegisterAreYou18Controller', () => {
 		describe('When getting the registration are you over 18 page', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -18,10 +15,10 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } }
 				};
 				beforeEach(() => {
-					getAreYouOver18(req, res);
+					getRegisterAreYou18Controller(req, res);
 				});
 				it('should render the registration are you over 18 page with the myself data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/are-you-18-over', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
 						pageTitle:
 							'Are you 18 or over? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						over18: 'mock are you over 18'
@@ -34,10 +31,10 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					session: { orgRegdata: { ['over-18']: 'mock are you over 18' } }
 				};
 				beforeEach(() => {
-					getAreYouOver18(req, res);
+					getRegisterAreYou18Controller(req, res);
 				});
 				it('should render the registration are you over 18 page with the organisation data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/are-you-18-over', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
 						pageTitle:
 							'Are you 18 or over? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						over18: 'mock are you over 18'
@@ -53,14 +50,14 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getAreYouOver18(req, res)).toThrowError(
+				expect(() => getRegisterAreYou18Controller(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
 		});
 	});
 
-	describe('#postAreYouOver18', () => {
+	describe('#postRegisterAreYou18Controller', () => {
 		describe('When posting the registration are you over 18', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -72,7 +69,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 			describe('and there is an unrecoverable error', () => {
 				const req = {};
 				beforeEach(() => {
-					postAreYouOver18(req, res);
+					postRegisterAreYou18Controller(req, res);
 				});
 
 				it('should render the error page', () => {
@@ -89,10 +86,10 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					postAreYouOver18(req, res);
+					postRegisterAreYou18Controller(req, res);
 				});
 				it('should render are you over 18 page with the error', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/are-you-18-over', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
 						errorSummary: [
 							{
 								href: '#',
@@ -117,7 +114,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					query: { mode: 'edit' }
 				};
 				beforeEach(() => {
-					postAreYouOver18(req, res);
+					postRegisterAreYou18Controller(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -135,7 +132,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postAreYouOver18(req, res);
+					postRegisterAreYou18Controller(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -153,7 +150,7 @@ describe('controllers/register/common/are-you-18-over/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postAreYouOver18(req, res);
+					postRegisterAreYou18Controller(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(

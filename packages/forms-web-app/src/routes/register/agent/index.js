@@ -4,7 +4,6 @@ const router = express.Router({ mergeParams: true });
 
 const representingForRouter = require('./who-representing');
 const representeeNameRouter = require('./name-person-representing');
-const representeeOver18Router = require('./are-they-18-over');
 const representeeAddressRouter = require('./their-postal-address');
 const representeeEmailRouter = require('./their-email-address');
 const representeeTelephoneRouter = require('./their-telephone-number');
@@ -16,7 +15,6 @@ const checkYourAnswersRouter = require('./check-answers');
 
 router.use('/', representingForRouter);
 router.use('/', representeeNameRouter);
-router.use('/', representeeOver18Router);
 router.use('/', representeeAddressRouter);
 router.use('/', representeeEmailRouter);
 router.use('/', representeeTelephoneRouter);
