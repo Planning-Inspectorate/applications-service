@@ -3,7 +3,6 @@ const { prismaClient } = require('../../lib/prisma');
 
 const mockRepresentationFindUnique = jest.fn();
 const mockRepresentationUpsert = jest.fn();
-const mockDocumentUpsert = jest.fn();
 
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
@@ -12,9 +11,6 @@ jest.mock('../../lib/prisma', () => ({
 				representation: {
 					findUnique: mockRepresentationFindUnique,
 					upsert: mockRepresentationUpsert
-				},
-				document: {
-					upsert: mockDocumentUpsert
 				}
 			})
 		)
@@ -33,81 +29,47 @@ const mockContext = {
 	}
 };
 const mockMessage = {
-	attachments: [
-		{
-			documentId: '8e706443-3404-4b89-9fda-280ab7fd6b68'
-		}
-	],
-	caseRef: 'BC0110001',
-	caseId: 151,
-	dateReceived: '2023-08-11T10:52:56.516Z',
-	examinationLibraryRef: '',
-	originalRepresentation: 'some rep text secret stuff',
-	redacted: true,
-	redactedBy: 'Bloggs, Joe',
-	redactedNotes: 'some notes here',
-	redactedRepresentation: 'some rep text',
-	referenceId: 'BC0110001-55',
+	representationId: 123,
+	caseRef: 'CASE-REF',
+	caseId: 123,
+	referenceId: 'reference-id',
+	status: 'published',
+	dateReceived: new Date('2023-01-01T09:00:00.000Z'),
+	redacted: false,
+	redactedRepresentation: 'redacted-representation',
+	originalRepresentation: 'original-representation',
+	representationFrom: 'PERSON',
+	representationType: 'Local Authorities',
 	registerFor: 'ORGANISATION',
-	representationFrom: 'AGENT',
-	representationId: 6409,
-	representationType: null,
-	representative: {
-		id: 6409,
-		contactMethod: 'email',
-		emailAddress: 'joe@example.com',
-		firstName: 'joe',
-		lastName: 'bloggs',
-		organisationName: 'agent company',
-		telephone: '01234 567891',
-		under18: false,
-		jobTitle: 'Engineer'
-	},
-	represented: {
-		id: 6410,
-		contactMethod: 'email',
-		emailAddress: 'jane@example.com',
-		firstName: 'jane',
-		lastName: 'bloggs',
-		telephone: '01234 567890',
-		under18: false
-	},
-	status: 'VALID'
+	representedId: 'represented-id',
+	representativeId: 'representative-id',
+	attachmentIds: ['123', '456']
 };
 
 const mockRepresentation = {
 	representationId: mockMessage.representationId,
-	caseId: mockMessage.caseId,
 	caseReference: mockMessage.caseRef,
+	caseId: mockMessage.caseId,
 	referenceId: mockMessage.referenceId,
 	status: mockMessage.status,
 	dateReceived: mockMessage.dateReceived,
-	originalRepresentation: mockMessage.originalRepresentation,
-	redacted: mockMessage.redacted,
-	redactedBy: mockMessage.redactedBy,
-	redactedNotes: mockMessage.redactedNotes,
-	redactedRepresentation: mockMessage.redactedRepresentation,
-	registerFor: mockMessage.registerFor,
+	representationComment: mockMessage.originalRepresentation,
 	representationFrom: mockMessage.representationFrom,
 	representationType: mockMessage.representationType,
-	representativeFirstName: mockMessage.representative.firstName,
-	representativeLastName: mockMessage.representative.lastName,
-	representativeOrganisationName: mockMessage.representative.organisationName,
-	representativeUnder18: mockMessage.representative.under18,
-	representedFirstName: mockMessage.represented.firstName,
-	representedLastName: mockMessage.represented.lastName,
-	representedUnder18: mockMessage.represented.under18,
-	hasAttachments: mockMessage.attachments.length > 0,
+	registerFor: mockMessage.registerFor,
+	representedId: mockMessage.representedId,
+	representativeId: mockMessage.representativeId,
+	attachmentIds: mockMessage.attachmentIds.join(','),
 	modifiedAt: mockCurrentTime
 };
 
-const assertRepresentationUpsert = () => {
+const assertRepresentationUpsert = (representation) => {
 	expect(mockRepresentationUpsert).toHaveBeenCalledWith({
 		where: {
 			representationId: mockMessage.representationId
 		},
-		update: mockRepresentation,
-		create: mockRepresentation
+		update: representation,
+		create: representation
 	});
 	expect(mockContext.log).toHaveBeenCalledWith(
 		`upserted representation with representationId: ${mockMessage.representationId}`
@@ -117,7 +79,6 @@ describe('nsip-representation', () => {
 	beforeEach(() => {
 		mockRepresentationFindUnique.mockReset();
 		mockRepresentationUpsert.mockReset();
-		mockDocumentUpsert.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
@@ -152,7 +113,7 @@ describe('nsip-representation', () => {
 		it('creates new representation for representationId', async () => {
 			mockRepresentationFindUnique.mockResolvedValue(null);
 			await sendMessage(mockContext, mockMessage);
-			assertRepresentationUpsert();
+			assertRepresentationUpsert(mockRepresentation);
 		});
 	});
 	describe('when representation exists in database', () => {
@@ -167,7 +128,6 @@ describe('nsip-representation', () => {
 					}
 				};
 				await sendMessage(mockContextWithOlderTime, mockMessage);
-				expect(mockDocumentUpsert).not.toHaveBeenCalled();
 				expect(mockRepresentationUpsert).not.toHaveBeenCalled();
 				expect(mockContext.log).toHaveBeenCalledWith(
 					`skipping update of representation with representationId: ${mockMessage.representationId}`
@@ -182,42 +142,43 @@ describe('nsip-representation', () => {
 					enqueuedTimeUtc: mockFutureTime.toUTCString()
 				}
 			};
-			describe('and the message has attachments', () => {
-				it('upserts documents', async () => {
-					mockRepresentationFindUnique.mockResolvedValue(mockRepresentation);
-					await sendMessage(mockContextWithNewerTime, mockMessage);
-					mockMessage.attachments.forEach((attachment) => {
-						expect(mockDocumentUpsert).toHaveBeenCalledWith({
-							where: {
-								documentId: attachment.documentId
-							},
-							update: {
-								documentId: attachment.documentId,
-								representationId: mockMessage.representationId
-							},
-							create: {
-								documentId: attachment.documentId,
-								representationId: mockMessage.representationId
-							}
-						});
-					});
-				});
-			});
-			describe('and the message has no attachments', () => {
-				it('does not upsert documents', async () => {
-					const mockMessageWithNoAttachments = {
-						...mockMessage,
-						attachments: []
-					};
-					mockRepresentationFindUnique.mockResolvedValue(mockRepresentation);
-					await sendMessage(mockContextWithNewerTime, mockMessageWithNoAttachments);
-					expect(mockDocumentUpsert).not.toHaveBeenCalled();
-				});
-			});
 			it('updates representation', async () => {
 				mockRepresentationFindUnique.mockResolvedValue(mockRepresentation);
 				await sendMessage(mockContextWithNewerTime, mockMessage);
-				assertRepresentationUpsert();
+				assertRepresentationUpsert(mockRepresentation);
+			});
+		});
+	});
+	describe('representationComment is set correctly', () => {
+		beforeEach(() => {
+			mockRepresentationFindUnique.mockResolvedValue(null);
+		});
+		describe('when redacted is true', () => {
+			it('sets representationComment to redactedRepresentation', async () => {
+				const mockMessageWithRedacted = {
+					...mockMessage,
+					redacted: true
+				};
+				const mockRepresentationWithRedacted = {
+					...mockRepresentation,
+					representationComment: mockMessageWithRedacted.redactedRepresentation
+				};
+				await sendMessage(mockContext, mockMessageWithRedacted);
+				assertRepresentationUpsert(mockRepresentationWithRedacted);
+			});
+		});
+		describe('when redacted is false', () => {
+			it('sets representationComment to originalRepresentation', async () => {
+				const mockMessageWithRedactedFalse = {
+					...mockMessage,
+					redacted: false
+				};
+				const mockRepresentationWithRedactedFalse = {
+					...mockRepresentation,
+					representationComment: mockMessageWithRedactedFalse.originalRepresentation
+				};
+				await sendMessage(mockContext, mockMessageWithRedactedFalse);
+				assertRepresentationUpsert(mockRepresentationWithRedactedFalse);
 			});
 		});
 	});
