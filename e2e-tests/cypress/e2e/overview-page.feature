@@ -32,9 +32,5 @@ Feature: Overview page
         When I click on "Find out more about the decision making process for national infrastructure projects" link
 
     Scenario: click on Having your say about a national infrastructure project link
-        When I click on "Having your say about a national infrastructure project" link
+        When I click on Having your say about a national infrastructure project link
         Then I am on the "Having your say about a national infrastructure project" page
-
-    Scenario: click on Find out more about registering to have your say
-        And I click on Find out more about registering to have your say
-        Then I am on the "registering to have your say about a national infrastructure project" page

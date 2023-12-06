@@ -24,7 +24,8 @@ if (featureFlag.allowHomepage) pagesRouter.get(indexURL, getIndexController);
 
 pagesRouter.get(contactURL, getContactController);
 
-pagesRouter.get(detailedInformationURL, getDetailedInformationController);
+if (featureFlag.allowHomepage)
+	pagesRouter.get(detailedInformationURL, getDetailedInformationController);
 
 pagesRouter.use(projectsRouter);
 
