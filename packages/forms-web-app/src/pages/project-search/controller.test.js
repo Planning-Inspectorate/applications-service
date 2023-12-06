@@ -1,4 +1,4 @@
-const { getProjectSearch } = require('./controller');
+const { getProjectSearchController } = require('./controller');
 
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 
@@ -8,7 +8,7 @@ jest.mock('../../lib/application-api-wrapper', () => ({
 	getAllProjectList: jest.fn()
 }));
 
-describe('project-search/controller', () => {
+describe('pages/project-search/controller', () => {
 	let req;
 	let res;
 	let next;
@@ -23,12 +23,12 @@ describe('project-search/controller', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('#getProjectSearch', () => {
+	describe('#getProjectSearchController', () => {
 		describe('When calling the get project search controller', () => {
 			describe('and there is an issue', () => {
 				beforeEach(async () => {
 					await getAllProjectList.mockResolvedValue({ resp_code: 500 });
-					await getProjectSearch(req, res, next);
+					await getProjectSearchController(req, res, next);
 				});
 				it('should render the error page', () => {
 					expect(next).toHaveBeenCalledWith(new Error('Applications response status not 200'));
@@ -39,7 +39,7 @@ describe('project-search/controller', () => {
 		describe('and there are no issues', () => {
 			beforeEach(async () => {
 				await getAllProjectList.mockResolvedValue(getApplicationsFixture);
-				await getProjectSearch(req, res, next);
+				await getProjectSearchController(req, res, next);
 			});
 
 			it('should call the correct template', async () => {

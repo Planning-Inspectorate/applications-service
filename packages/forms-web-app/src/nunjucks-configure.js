@@ -10,7 +10,7 @@ const { projectStages: projectStageNames } = require('./utils/project-stages');
 const { routesConfig } = require('./routes/config');
 const path = require('path');
 const { getYearNow } = require('./utils/date-utils');
-const { getFooterLinks } = require('./pages/_utils/get-footer-links');
+const { getFooterLinks } = require('./pages/_utils/get-links');
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
