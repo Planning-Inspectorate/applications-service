@@ -1,4 +1,4 @@
-const { getContactURL } = require('../contact/_utils/get-contact-url');
+const { getContactURL } = require('../../contact/_utils/get-contact-url');
 
 const getFooterLinks = {
 	contactURL: getContactURL()

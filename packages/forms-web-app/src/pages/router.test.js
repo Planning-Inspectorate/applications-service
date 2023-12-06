@@ -1,6 +1,7 @@
 const { getIndexController } = require('./index/controller');
 const { getContactController } = require('./contact/controller');
 const { getDetailedInformationController } = require('./detailed-information/controller');
+const { getProjectSearchController } = require('./project-search/controller');
 
 const { projectsRouter } = require('./projects/router');
 
@@ -10,7 +11,8 @@ jest.mock('../config', () => {
 	return {
 		...originalConfig,
 		featureFlag: {
-			allowHomepage: true
+			allowHomepage: true,
+			usePrivateBetaV1RoutesOnly: false
 		}
 	};
 });
@@ -40,9 +42,11 @@ describe('pages/router', () => {
 
 			expect(get).toHaveBeenCalledWith('/detailed-information', getDetailedInformationController);
 
+			expect(get).toHaveBeenCalledWith('/project-search', getProjectSearchController);
+
 			expect(use).toHaveBeenCalledWith(projectsRouter);
 
-			expect(get).toBeCalledTimes(3);
+			expect(get).toBeCalledTimes(4);
 			expect(post).toBeCalledTimes(0);
 			expect(use).toBeCalledTimes(1);
 		});

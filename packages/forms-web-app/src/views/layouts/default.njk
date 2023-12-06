@@ -1,10 +1,5 @@
 {% extends "govuk/template.njk" %}
 
-{% from "components/core/pins-header-default.njk" import pinsHeaderDefault %}
-
-{% set pageTitle = pageTitle %}
-{% set headerTitle = headerTitle %}
-{% set backLinkUrl = backLinkUrl %}
 {%- set initiateScriptsConfig = [{ src: "/public/scripts/index.script.js" }] -%}
 
 {% block pageTitle %}
@@ -30,7 +25,7 @@
 {% block skipLink %}{% endblock %}
 
 {% block header %}
-	{{ pinsHeaderDefault(headerTitle, backLinkUrl) }}
+	{% include "includes/header.njk" %}
 {% endblock %}
 
 {% block main %}

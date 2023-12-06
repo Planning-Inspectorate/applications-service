@@ -1,0 +1,9 @@
+<nav class="moj-primary-navigation pins-modded-full-width" aria-label="Primary navigation">
+  <ul class="moj-primary-navigation__list">
+    {% for link in globals.primaryNavigationLinks %}
+      <li class="moj-primary-navigation__item">
+        <a class="moj-primary-navigation__link" {% if link.active %} aria-current="page" {% endif %} href="{{ link.href }}">{{ link.text }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
