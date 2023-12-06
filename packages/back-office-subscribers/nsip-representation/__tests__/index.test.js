@@ -43,7 +43,7 @@ const mockMessage = {
 	registerFor: 'ORGANISATION',
 	representedId: 'represented-id',
 	representativeId: 'representative-id',
-	attachmentIds: ['123']
+	attachmentIds: ['123', '456']
 };
 
 const mockRepresentation = {
