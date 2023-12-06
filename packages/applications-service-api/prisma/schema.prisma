@@ -65,8 +65,8 @@ model Representation {
   representationFrom    String?
   representationType    String?
   registerFor           String?
-  representedId         Int?
-  representativeId      Int?
+  representedId         String?
+  representativeId      String?
   attachmentIds         String?
   createdAt             DateTime? @default(now())
   modifiedAt            DateTime? @default(now())
