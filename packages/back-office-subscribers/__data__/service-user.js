@@ -15,32 +15,16 @@ const mockBaseMessage = {
 	telephoneNumber: '0123456789'
 };
 
-const mockRepresentativeMessage = {
-	...mockBaseMessage,
-	serviceUserType: 'Representative'
-};
-const mockRepresentedMessage = {
-	...mockBaseMessage,
-	serviceUserType: 'Represented'
-};
 const mockApplicantMessage = {
 	...mockBaseMessage,
 	serviceUserType: 'Applicant'
 };
 
-const mockRepresentativeServiceUser = {
-	serviceUserId: mockRepresentativeMessage.id,
-	firstName: mockRepresentativeMessage.firstName,
-	lastName: mockRepresentativeMessage.lastName,
-	organisationName: mockRepresentativeMessage.organisation,
-	caseReference: mockRepresentativeMessage.caseReference,
-	serviceUserType: mockRepresentativeMessage.serviceUserType
+const mockRepresentationContactMessage = {
+	...mockBaseMessage,
+	serviceUserType: 'RepresentationContact'
 };
-const mockRepresentedServiceUser = {
-	...mockRepresentativeServiceUser,
-	serviceUserType: 'Represented'
-	// same as representative
-};
+
 const mockApplicantServiceUser = {
 	serviceUserId: mockApplicantMessage.id,
 	firstName: mockApplicantMessage.firstName,
@@ -53,12 +37,19 @@ const mockApplicantServiceUser = {
 	phoneNumber: mockApplicantMessage.telephoneNumber
 };
 
+const mockRepresentationContactServiceUser = {
+	serviceUserId: mockRepresentationContactMessage.id,
+	firstName: mockRepresentationContactMessage.firstName,
+	lastName: mockRepresentationContactMessage.lastName,
+	organisationName: mockRepresentationContactMessage.organisation,
+	caseReference: mockRepresentationContactMessage.caseReference,
+	serviceUserType: mockRepresentationContactMessage.serviceUserType
+};
+
 module.exports = {
 	mockMessageWithInvalidServiceUserType,
-	mockRepresentativeMessage,
-	mockRepresentedMessage,
 	mockApplicantMessage,
-	mockRepresentativeServiceUser,
-	mockRepresentedServiceUser,
-	mockApplicantServiceUser
+	mockApplicantServiceUser,
+	mockRepresentationContactMessage,
+	mockRepresentationContactServiceUser
 };

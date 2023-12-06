@@ -2,12 +2,10 @@ const sendMessage = require('../index');
 const { prismaClient } = require('../../lib/prisma');
 const {
 	mockMessageWithInvalidServiceUserType,
-	mockRepresentativeMessage,
-	mockRepresentedMessage,
 	mockApplicantMessage,
-	mockRepresentativeServiceUser,
-	mockRepresentedServiceUser,
-	mockApplicantServiceUser
+	mockApplicantServiceUser,
+	mockRepresentationContactMessage,
+	mockRepresentationContactServiceUser
 } = require('../../__data__/service-user');
 
 const mockFindUnique = jest.fn();
@@ -65,7 +63,7 @@ describe('nsip-service-user', () => {
 	});
 
 	it('logs message', async () => {
-		await sendMessage(mockContext, mockRepresentativeMessage);
+		await sendMessage(mockContext, mockApplicantMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-service-user function');
 	});
 	it('skips update if serviceUserId is missing', async () => {
@@ -74,14 +72,14 @@ describe('nsip-service-user', () => {
 		expect(mockFindUnique).not.toHaveBeenCalled();
 	});
 	it('start transaction', async () => {
-		await sendMessage(mockContext, mockRepresentativeMessage);
+		await sendMessage(mockContext, mockApplicantMessage);
 		expect(prismaClient.$transaction).toHaveBeenCalled();
 	});
 	it('finds existing service user to determine if it should update', async () => {
-		await sendMessage(mockContext, mockRepresentativeMessage);
+		await sendMessage(mockContext, mockApplicantMessage);
 		expect(mockFindUnique).toHaveBeenCalledWith({
 			where: {
-				serviceUserId: mockRepresentativeMessage.id
+				serviceUserId: mockApplicantMessage.id
 			}
 		});
 	});
@@ -94,8 +92,11 @@ describe('nsip-service-user', () => {
 
 	describe('when no service user exists in database', () => {
 		it.each([
-			['Representative', mockRepresentativeMessage, mockRepresentativeServiceUser],
-			['Represented', mockRepresentedMessage, mockRepresentedServiceUser],
+			[
+				'RepresentationContact',
+				mockRepresentationContactMessage,
+				mockRepresentationContactServiceUser
+			],
 			['Applicant', mockApplicantMessage, mockApplicantServiceUser]
 		])('upserts service user of type %s', async (serviceUserType, message, serviceUser) => {
 			mockFindUnique.mockResolvedValue(null);
@@ -107,7 +108,7 @@ describe('nsip-service-user', () => {
 		describe('and the message is older than existing service user', () => {
 			it('skips update', async () => {
 				const mockExistingServiceUser = {
-					...mockRepresentativeServiceUser,
+					...mockApplicantServiceUser,
 					modifiedAt: mockFutureTime
 				};
 				mockFindUnique.mockResolvedValue(mockExistingServiceUser);
@@ -118,17 +119,20 @@ describe('nsip-service-user', () => {
 						enqueuedTimeUtc: mockPastTime.toUTCString()
 					}
 				};
-				await sendMessage(mockContextWithOlderTime, mockRepresentativeMessage);
+				await sendMessage(mockContextWithOlderTime, mockApplicantMessage);
 				expect(mockUpsert).not.toHaveBeenCalled();
 				expect(mockContext.log).toHaveBeenCalledWith(
-					`skipping update of service user with serviceUserId: ${mockRepresentativeMessage.id}`
+					`skipping update of service user with serviceUserId: ${mockApplicantMessage.id}`
 				);
 			});
 		});
 		describe('and the message is newer than existing service user', () => {
 			it.each([
-				['Representative', mockRepresentativeMessage, mockRepresentativeServiceUser],
-				['Represented', mockRepresentedMessage, mockRepresentedServiceUser],
+				[
+					'RepresentationContact',
+					mockRepresentationContactMessage,
+					mockRepresentationContactServiceUser
+				],
 				['Applicant', mockApplicantMessage, mockApplicantServiceUser]
 			])('updates service user of type %s', async (serviceUserType, message, serviceUser) => {
 				const mockExistingServiceUser = {
