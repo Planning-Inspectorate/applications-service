@@ -68,21 +68,23 @@
         </div>
     </section>
 
-		<section class="page-section govuk-!-margin-bottom-6">
-			<h2 class="govuk-heading-m govuk-!-margin-bottom-6">
-				Updates and contact information
-			</h2>
+    {% include "./_includes/professional-users.njk" %}
 
-			<div class="page-section__content">
-				<div class="govuk-grid-row">
-					<div class="govuk-grid-column-one-third">
-						{{ chevronCard(
-							'I need help',
-							homePageUrls.contactURL,
-							'How to get in contact with us.'
-						) }}
-					</div>
-				</div>
-			</div>
-  </section>
+    <section class="page-section govuk-!-margin-bottom-6">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-6">
+            Updates and contact information
+        </h2>
+
+        <div class="page-section__content">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+                    {{ chevronCard(
+                        'I need help',
+                        homePageUrls.contactURL,
+                        'How to get in contact with us.'
+                    ) }}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

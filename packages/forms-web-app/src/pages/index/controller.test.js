@@ -17,13 +17,14 @@ const defaultPageData = {
 	showProjectSearchUrl: true,
 	homePageUrls: {
 		contactURL: '/contact',
+		detailedInformationURL: '/detailed-information',
 		haveYourSayGuide: 'having-your-say-guide',
 		processGuide: 'decision-making-process-guide',
 		projectSearch: 'project-search'
 	}
 };
 
-describe('index/controller', () => {
+describe('pages/index/controller', () => {
 	describe('#getIndexController', () => {
 		const req = {};
 		const res = { render: jest.fn() };
