@@ -1,23 +1,18 @@
-const {
-	VIEW: {
-		REGISTER: {
-			COMMON: { ARE_YOU_OVER_18 }
-		}
-	}
-} = require('../../../../lib/views');
-const { getKeyFromUrl } = require('../get-key-from-url');
-const { getSession, setSession } = require('../session');
-const { viewModel } = require('./viewModel');
-const logger = require('../../../../lib/logger');
-const { getRedirectUrl } = require('./get-redirect-url');
+const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
+const { getSession, setSession } = require('../../../../../controllers/register/common/session');
+const { viewModel } = require('./_utils/viewModel');
+const logger = require('../../../../../lib/logger');
+const { getRedirectUrl } = require('./_utils/get-redirect-url');
 
+const view = 'projects/register/_common/are-you-18/view.njk';
 const areYouOver18Key = 'over-18';
-const getAreYouOver18 = (req, res) => {
+
+const getRegisterAreYou18Controller = (req, res) => {
 	try {
 		const { session, originalUrl } = req;
 		const key = getKeyFromUrl(originalUrl);
 		const over18 = getSession(session, key)[areYouOver18Key];
-		return res.render(ARE_YOU_OVER_18, {
+		return res.render(view, {
 			...viewModel[key],
 			over18
 		});
@@ -27,13 +22,13 @@ const getAreYouOver18 = (req, res) => {
 	}
 };
 
-const postAreYouOver18 = (req, res) => {
+const postRegisterAreYou18Controller = (req, res) => {
 	try {
 		const { body, originalUrl, query, session } = req;
 		const key = getKeyFromUrl(originalUrl);
 		const { errors = {}, errorSummary = [] } = body;
 		if (errors[areYouOver18Key] || Object.keys(errors).length > 0) {
-			return res.render(ARE_YOU_OVER_18, {
+			return res.render(view, {
 				errors,
 				errorSummary,
 				...viewModel[key]
@@ -48,6 +43,6 @@ const postAreYouOver18 = (req, res) => {
 };
 
 module.exports = {
-	getAreYouOver18,
-	postAreYouOver18
+	getRegisterAreYou18Controller,
+	postRegisterAreYou18Controller
 };

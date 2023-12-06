@@ -1,10 +1,8 @@
-const over18Controller = require('../../../../../src/controllers/register/agent/are-they-18-over');
-const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
+const { getRegisterAreThey18Controller, postRegisterAreThey18Controller } = require('./controller');
+const { VIEW } = require('../../../../../lib/views');
+const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-jest.mock('../../../../../src/lib/logger');
-
-describe('controllers/register/agent/are-they-18-over', () => {
+describe('packages/forms-web-app/src/pages/projects/register/agent/are-they-18/controller', () => {
 	let req;
 	let res;
 
@@ -23,10 +21,10 @@ describe('controllers/register/agent/are-they-18-over', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getOver18', () => {
+	describe('#getRegisterAreThey18Controller', () => {
 		it('should call the correct template', () => {
-			over18Controller.getOver18(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/agent/are-they-18-over', {
+			getRegisterAreThey18Controller(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/are-they-18/view.njk', {
 				over18: 'yes'
 			});
 		});
@@ -43,7 +41,7 @@ describe('controllers/register/agent/are-they-18-over', () => {
 					mode: ''
 				}
 			};
-			await over18Controller.postOver18(mockRequest, res);
+			await postRegisterAreThey18Controller(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
 				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS}`
@@ -57,10 +55,10 @@ describe('controllers/register/agent/are-they-18-over', () => {
 					errors: { a: 'b' }
 				}
 			};
-			await over18Controller.postOver18(mockRequest, res);
+			await postRegisterAreThey18Controller(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18, {
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/are-they-18/view.njk', {
 				errorSummary: [{ text: 'There were errors here', href: '#' }],
 				errors: { a: 'b' }
 			});

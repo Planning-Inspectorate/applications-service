@@ -3,11 +3,24 @@ const {
 	postRegisterAddressController
 } = require('../_common/address/controller');
 
+const {
+	getRegisterAreThey18Controller,
+	postRegisterAreThey18Controller
+} = require('./are-they-18/controller');
+
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const {
+	rules: areThey18ValidationRules
+} = require('../../../../validators/register/agent/are-they-18-over');
 
 jest.mock('../../../../validators/register/myself/address', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/agent/are-they-18-over', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -45,8 +58,22 @@ describe('pages/projects/register/agent/router', () => {
 				postRegisterAddressController
 			);
 
-			expect(get).toBeCalledTimes(1);
-			expect(post).toBeCalledTimes(1);
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/are-they-18-over',
+				registerMiddleware,
+				getRegisterAreThey18Controller
+			);
+
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/are-they-18-over',
+				registerMiddleware,
+				areThey18ValidationRules(),
+				validationErrorHandler,
+				postRegisterAreThey18Controller
+			);
+
+			expect(get).toBeCalledTimes(2);
+			expect(post).toBeCalledTimes(2);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
