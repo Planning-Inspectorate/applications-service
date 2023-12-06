@@ -43,29 +43,29 @@ module.exports = async (context, message) => {
 
 const mapMessageToServiceUser = (message) => {
 	const serviceUserType = message.serviceUserType;
-	if (!['RepresentationContact', 'Applicant'].includes(serviceUserType)) {
-		throw new Error(`Invalid serviceUserType: ${serviceUserType}`);
-	}
-	if (serviceUserType === 'RepresentationContact') {
-		return {
-			serviceUserId: message.id,
-			firstName: message.firstName,
-			lastName: message.lastName,
-			organisationName: message.organisation,
-			caseReference: message.caseReference,
-			serviceUserType: message.serviceUserType
-		};
-	} else {
-		return {
-			serviceUserId: message.id,
-			firstName: message.firstName,
-			lastName: message.lastName,
-			organisationName: message.organisation,
-			caseReference: message.caseReference,
-			serviceUserType: message.serviceUserType,
-			email: message.emailAddress,
-			webAddress: message.webAddress,
-			phoneNumber: message.telephoneNumber
-		};
+	switch (serviceUserType) {
+		case 'Applicant':
+			return {
+				serviceUserId: message.id,
+				firstName: message.firstName,
+				lastName: message.lastName,
+				organisationName: message.organisation,
+				caseReference: message.caseReference,
+				serviceUserType: message.serviceUserType,
+				email: message.emailAddress,
+				webAddress: message.webAddress,
+				phoneNumber: message.telephoneNumber
+			};
+		case 'RepresentationContact':
+			return {
+				serviceUserId: message.id,
+				firstName: message.firstName,
+				lastName: message.lastName,
+				organisationName: message.organisation,
+				caseReference: message.caseReference,
+				serviceUserType: message.serviceUserType
+			};
+		default:
+			throw new Error(`Invalid serviceUserType: ${serviceUserType}`);
 	}
 };
