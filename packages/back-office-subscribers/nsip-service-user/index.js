@@ -43,10 +43,10 @@ module.exports = async (context, message) => {
 
 const mapMessageToServiceUser = (message) => {
 	const serviceUserType = message.serviceUserType;
-	if (!['Representative', 'Represented', 'Applicant'].includes(serviceUserType)) {
+	if (!['RepresentationContact', 'Applicant'].includes(serviceUserType)) {
 		throw new Error(`Invalid serviceUserType: ${serviceUserType}`);
 	}
-	if (serviceUserType === 'Representative' || serviceUserType === 'Represented') {
+	if (serviceUserType === 'RepresentationContact') {
 		return {
 			serviceUserId: message.id,
 			firstName: message.firstName,
