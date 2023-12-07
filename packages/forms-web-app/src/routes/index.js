@@ -1,5 +1,4 @@
 const express = require('express');
-const config = require('../config');
 
 const router = express.Router();
 const { routesConfig } = require('./config');
@@ -10,7 +9,6 @@ const registerRouter = require('./register');
 const { registerRouter: registerPagesRouter } = require('../pages/projects/register/router');
 const footerPagesRouter = require('./footer-pages');
 const examinationRouter = require('../pages/examination/exmaination.router');
-const { registerOfApplicationsRouter } = require('../pages/register-of-applications/router');
 const { apiRouter } = require('../api/router');
 const {
 	isProcessingSubmission
@@ -30,10 +28,6 @@ router.use(pagesRouter);
 router.use(accessibilityStatementRouter);
 router.use('/', footerPagesRouter);
 router.use('/cookies', cookieRouter);
-
-if (!config.featureFlag.usePrivateBetaV1RoutesOnly) {
-	router.use('/', registerOfApplicationsRouter);
-}
 
 router.use(registerPagesRouter);
 router.use('/projects/:case_ref/register', registerRouter);
