@@ -7,7 +7,7 @@ const {
 
 const view = 'register-of-applications/view.njk';
 
-const getRegisterOfApplications = async (req, res, next) => {
+const getRegisterOfApplicationsController = async (req, res, next) => {
 	try {
 		const { query } = req;
 
@@ -23,5 +23,5 @@ const getRegisterOfApplications = async (req, res, next) => {
 };
 
 module.exports = {
-	getRegisterOfApplications
+	getRegisterOfApplicationsController
 };
