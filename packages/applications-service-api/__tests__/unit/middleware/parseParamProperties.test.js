@@ -1,7 +1,7 @@
 const {
 	normaliseArrayQueryParams,
 	parseIntegerQueryParams
-} = require('../../../src/middleware/parseQueryParamProperties');
+} = require('../../../src/middleware/parseParamProperties');
 
 describe('parseQueryParamProperties middleware', () => {
 	describe('normaliseArrayQueryParams', () => {

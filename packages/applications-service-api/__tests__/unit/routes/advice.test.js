@@ -2,7 +2,7 @@ const { get } = require('./router-mock');
 const adviceController = require('../../../src/controllers/advice');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const { validateRequestWithOpenAPI } = require('../../../src/middleware/validator/openapi');
-const { parseIntegerQueryParams } = require('../../../src/middleware/parseQueryParamProperties');
+const { parseIntegerQueryParams } = require('../../../src/middleware/parseParamProperties');
 
 jest.mock('@pins/common/src/utils/async-route');
 jest.mock('../../../src/middleware/validator/openapi');

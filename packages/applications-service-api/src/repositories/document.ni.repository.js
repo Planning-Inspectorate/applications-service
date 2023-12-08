@@ -117,7 +117,8 @@ const getDocumentsByDataId = (dataIds) =>
 	db.Document.findAll({
 		where: {
 			dataID: { [Op.in]: dataIds }
-		}
+		},
+		raw: true
 	});
 
 const fetchDocumentsByDocumentType = async (requestQuery) => {

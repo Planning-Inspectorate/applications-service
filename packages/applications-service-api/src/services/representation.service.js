@@ -3,8 +3,28 @@ const db = require('../models');
 const {
 	getRepresentationsWithCount: getRepresentationsWithCountRepository,
 	getRepresentations: getRepresentationsRepository,
-	getRepresentationById: getRepresentationByIdRepository
+	getRepresentationById: getRepresentationByIdNIRepository
 } = require('../repositories/representation.ni.repository');
+const {
+	getRepresentationById: getRepresentationByBORepository
+} = require('../repositories/representation.backoffice.repository');
+const {
+	getDocumentsByDataId: getDocumentsByDataIdNIRepository
+} = require('../repositories/document.ni.repository');
+const {
+	getServiceUserById: getServiceUserByIdBORepository
+} = require('../repositories/serviceUser.backoffice.repository');
+const {
+	getDocumentsByIds: getDocumentsByIdsBORepository
+} = require('../repositories/document.backoffice.repository');
+const { mapBackOfficeRepresentationToApi } = require('../utils/representation.mapper');
+const config = require('../lib/config');
+const apiError = require('../error/apiError');
+
+const isBackOfficeCaseReference = (caseReference) =>
+	(config.backOfficeIntegration.representations.getRepresentations.caseReferences || []).includes(
+		caseReference
+	);
 
 const createQueryFilters = (query) => {
 	// Pagination
@@ -53,8 +73,37 @@ const getRepresentationsForApplication = async (query) => {
 	};
 };
 
-const getRepresentationById = async (ID) => {
-	return getRepresentationByIdRepository(ID);
+const getRepresentationById = async (id, caseReference) => {
+	if (isBackOfficeCaseReference(caseReference)) {
+		const representation = await getRepresentationByBORepository(id);
+		if (!representation) return;
+		const represented = await getServiceUserByIdBORepository(representation.representedId);
+		if (!represented) {
+			throw apiError.notFound(
+				`Service user not found for representation ${representation.representedId}`
+			);
+		}
+		const representative = await getServiceUserByIdBORepository(representation.representativeId);
+		const documents = await getDocumentsByIdsBORepository(representation.attachmentIds);
+		return mapBackOfficeRepresentationToApi(
+			representation,
+			represented,
+			representative,
+			documents || []
+		);
+	} else {
+		const representation = await getRepresentationByIdNIRepository(id);
+		const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
+		let attachments = await getDocumentsByDataIdNIRepository(dataIDs);
+		if (attachments && attachments.length > 0) {
+			attachments = attachments.map((att) => ({
+				...att,
+				path: att.path ? `${config.documentsHost}${att.path}` : null
+			}));
+		}
+		representation.attachments = attachments;
+		return representation;
+	}
 };
 
 const getFilters = async (filter, applicationId) => {

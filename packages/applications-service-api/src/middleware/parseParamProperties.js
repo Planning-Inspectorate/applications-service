@@ -24,4 +24,12 @@ const parseIntegerQueryParams = (paramNames) => (req, res, next) => {
 	next();
 };
 
-module.exports = { normaliseArrayQueryParams, parseIntegerQueryParams };
+const parseIntegerPathParams = (paramNames) => (req, res, next) => {
+	paramNames.forEach((paramName) => {
+		const paramValue = req.params?.[paramName];
+		if (paramValue) req.params[paramName] = parseInteger(paramValue);
+	});
+	next();
+};
+
+module.exports = { normaliseArrayQueryParams, parseIntegerQueryParams, parseIntegerPathParams };
