@@ -18,6 +18,9 @@ const {
 	mapBackOfficeAdviceToApi,
 	mapNIAdviceToApi
 } = require('../../../src/utils/advice.mapper');
+const {
+	findDocumentsByCaseReferenceAndAdviceID
+} = require('../../../src/repositories/document.ni.repository');
 const config = require('../../../src/lib/config');
 
 jest.mock('../../../src/repositories/advice.backoffice.repository');
@@ -113,6 +116,10 @@ describe('Advice Service', () => {
 			it('should get advice from ni repository', async () => {
 				await getAdviceById('123', 'NI-CASEID');
 				expect(getNIAdviceByIdRepository).toHaveBeenCalledWith('123', 'NI-CASEID');
+			});
+			it('should get attachments from ni repository', async () => {
+				await getAdviceById('123', 'NI-CASEID');
+				expect(findDocumentsByCaseReferenceAndAdviceID).toHaveBeenCalledWith('NI-CASEID', '123');
 			});
 			it('should map advice to api', async () => {
 				await getAdviceById('123', 'NI-CASEID');
