@@ -1,6 +1,7 @@
 const {
 	normaliseArrayQueryParams,
-	parseIntegerQueryParams
+	parseIntegerQueryParams,
+	parseIntegerPathParams
 } = require('../../../src/middleware/parseParamProperties');
 
 describe('parseQueryParamProperties middleware', () => {
@@ -73,6 +74,25 @@ describe('parseQueryParamProperties middleware', () => {
 
 			expect(req).toEqual({
 				query: {
+					foo: 1,
+					bar: 123
+				}
+			});
+		});
+	});
+
+	describe('parseIntegerPathParams', () => {
+		it('parses given path params values to integer', () => {
+			const req = {
+				params: {
+					foo: '1',
+					bar: '123'
+				}
+			};
+			parseIntegerPathParams(['foo', 'bar'])(req, {}, jest.fn());
+
+			expect(req).toEqual({
+				params: {
 					foo: 1,
 					bar: 123
 				}

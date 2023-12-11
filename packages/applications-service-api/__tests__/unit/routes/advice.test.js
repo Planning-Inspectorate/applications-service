@@ -6,7 +6,7 @@ const { parseIntegerQueryParams } = require('../../../src/middleware/parseParamP
 
 jest.mock('@pins/common/src/utils/async-route');
 jest.mock('../../../src/middleware/validator/openapi');
-jest.mock('../../../src/middleware/parseQueryParamProperties');
+jest.mock('../../../src/middleware/parseParamProperties');
 
 describe('routes/advice', () => {
 	beforeEach(() => {

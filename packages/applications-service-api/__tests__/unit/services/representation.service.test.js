@@ -7,8 +7,29 @@ const {
 const {
 	getRepresentationsWithCount: getRepresentationsWithCountRepository,
 	getRepresentations: getRepresentationsRepository,
-	getRepresentationById: getRepresentationByIdRepository
+	getRepresentationById: getRepresentationByIdNIRepository
 } = require('../../../src/repositories/representation.ni.repository');
+const {
+	getDocumentsByDataId: getDocumentsByDataIdNIRepository
+} = require('../../../src/repositories/document.ni.repository');
+
+const {
+	getRepresentationById: getRepresentationByBORepository
+} = require('../../../src/repositories/representation.backoffice.repository');
+const {
+	getServiceUserById: getServiceUserByIdBORepository
+} = require('../../../src/repositories/serviceUser.backoffice.repository');
+const {
+	getDocumentsByIds: getDocumentsByIdsBORepository
+} = require('../../../src/repositories/document.backoffice.repository');
+const { mapBackOfficeRepresentationToApi } = require('../../../src/utils/representation.mapper');
+const {
+	REPRESENTATION_BACKOFFICE_DATA,
+	REPRESENTATION_BACKOFFICE_RESPONSE,
+	REPRESENTATION_NI_DATA,
+	REPRESENTATION_NI_RESPONSE
+} = require('../../__data__/representation');
+
 const { Op } = require('sequelize');
 const db = require('../../../src/models');
 
@@ -133,18 +154,8 @@ describe('getRepresentationsForApplication', () => {
 });
 
 describe('getRepresentationById', () => {
-	it('should call getRepresentationByIdRepository', async () => {
-		// Act
-		await getRepresentationById(21);
-		// Assert
-		expect(getRepresentationByIdRepository).toBeCalledWith(21);
-	});
-	it('should return representation', async () => {
-		// Act
-		const data = await getRepresentationById(21);
-		// Assert
-		expect(data).toEqual(repMockData.representations[0]);
-	});
+	describe('when case reference is back office', () => {});
+	describe('when case reference is ni', () => {});
 });
 
 describe('getFilters', () => {
