@@ -1,5 +1,5 @@
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('./serviceUser');
-const {} = require('./documents');
+const { BACK_OFFICE_DB_DOCUMENTS } = require('./documents');
 const REPRESENTATION_NI_DATA = [
 	{
 		ID: 2,
@@ -30,6 +30,9 @@ const REPRESENTATION_NI_DATA = [
 	}
 ];
 
+const REPRESENTED_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[0];
+const REPRESENTATIVE_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[1];
+
 const REPRESENTATION_BACKOFFICE_DATA = {
 	id: 1,
 	representationId: 1,
@@ -42,13 +45,10 @@ const REPRESENTATION_BACKOFFICE_DATA = {
 	representationFrom: 'Members of the Public/Businesses',
 	representationType: 'Parish Councils',
 	registerFor: 'Compulsory Acquisition Hearing',
-	representedId: '10',
-	representativeId: '20',
+	representedId: REPRESENTED_BACKOFFICE_DATA.serviceUserId,
+	representativeId: REPRESENTATIVE_BACKOFFICE_DATA.serviceUserId,
 	attachmentIds: '1,2,3'
 };
-
-const REPRESENTED_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[0];
-const REPRESENTATIVE_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[1];
 
 const REPRESENTATION_BACKOFFICE_RESPONSE = {
 	ID: REPRESENTATION_BACKOFFICE_DATA.representationId,
@@ -62,7 +62,27 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 	RepresentationRedacted: REPRESENTATION_BACKOFFICE_DATA.representationComment,
 	DateRrepReceived: REPRESENTATION_BACKOFFICE_DATA.dateReceived,
 	Attachments: REPRESENTATION_BACKOFFICE_DATA.attachmentIds,
-	attachments: []
+	attachments: [
+		{
+			id: 1,
+			dataID: null,
+			case_reference: 'EN010009',
+			stage: 'pre-application',
+			type: 'Dave',
+			filter1: 'CR-1234-A',
+			filter2: '',
+			description: '',
+			size: 412846,
+			mime: 'application/pdf',
+			path: 'https://example.org/file.pdf',
+			datePublished: '2023-03-26T00:00:00.000',
+			representative: '',
+			docReference: null,
+			author: null,
+			lastModified: '2023-06-19 10:50:31.8860000',
+			dateCreated: '2023-06-19 10:50:31.8860000'
+		}
+	]
 };
 
 const FILTERS_NI_DB = [];

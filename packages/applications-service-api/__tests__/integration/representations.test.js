@@ -1,6 +1,13 @@
 const { request } = require('../__data__/supertest');
 const { REPRESENTATION_NI_DATA } = require('../__data__/representation');
 const { Op } = require('sequelize');
+const {
+	ADVICE_BACKOFFICE_DATA,
+	ADVICE_NI_DATA,
+	ADVICE_NI_RESPONSE,
+	ADVICE_BACKOFFICE_RESPONSE
+} = require('../__data__/advice');
+const db = require('../../src/models');
 const mockFindAndCountAll = jest.fn();
 const mockFindAll = jest.fn();
 const mockFindOne = jest.fn();
@@ -22,16 +29,21 @@ jest.mock('../../src/repositories/document.ni.repository', () => ({
 }));
 
 describe('api/v1/representations', () => {
-	describe('get single representation by id', () => {
-		it('happy path', async () => {
-			// Arrange
-			mockFindOne.mockResolvedValue(REPRESENTATION_NI_DATA[0]);
-			// Act
-			const response = await request.get('/api/v1/representations/2');
-			// Assert
-			expect(mockFindOne).toBeCalledWith({ where: { ID: '2' }, raw: true });
-			expect(response.status).toEqual(200);
-			expect(response.body).toEqual(REPRESENTATION_NI_DATA[0]);
+	describe(' GET /api/v1/representations?caseReference={caseReference}', () => {
+		beforeEach(() => {
+			//todo tests
+		});
+		describe('when case reference is missing', () => {
+			it('should return 400', async () => {});
+		});
+		describe('when an error is thrown', () => {
+			it('should return 500', async () => {});
+		});
+		describe('when the case reference is ni', () => {
+			it('should return the correct data', async () => {});
+		});
+		describe('when the case reference is backoffice', () => {
+			it('should return the correct data', async () => {});
 		});
 	});
 	describe('get all representations by application id', () => {

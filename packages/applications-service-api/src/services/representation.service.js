@@ -93,6 +93,7 @@ const getRepresentationById = async (id, caseReference) => {
 		);
 	} else {
 		const representation = await getRepresentationByIdNIRepository(id);
+		if (!representation) return;
 		const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
 		let attachments = await getDocumentsByDataIdNIRepository(dataIDs);
 		if (attachments && attachments.length > 0) {
