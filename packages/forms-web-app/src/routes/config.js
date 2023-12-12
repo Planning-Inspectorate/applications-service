@@ -86,7 +86,7 @@ const routesConfig = {
 				options: {
 					1: {
 						value: 'comment',
-						text: 'Write a comment'
+						text: 'Make a comment'
 					},
 					2: {
 						value: 'upload',
@@ -204,34 +204,34 @@ const routesConfig = {
 				name: '',
 				onError: {
 					message: {
-						isEmpty: 'Select yes if your comment contains personal information'
+						isEmpty: 'Select yes if your submission contains personal information'
 					}
 				},
-				pageTitle: 'Comment has personal information or not',
+				pageTitle: 'Submission has personal information or not',
 				route: 'comment-has-personal-information-or-not',
-				title: 'Does your comment contain personal information?'
+				title: 'Does your submission contain personal information?'
 			},
 			personalInformationCommentFiles: {
 				id: 'examination-personal-information-comment-files',
 				onError: {
 					message: {
-						isEmpty: 'Select yes if your comment and files contain personal information'
+						isEmpty: 'Select yes if your submission contains personal information'
 					}
 				},
-				pageTitle: 'Comment or files has personal information or not',
+				pageTitle: 'Submission has personal information or not',
 				route: 'comment-file-has-personal-information-or-not',
-				title: 'Do your comment and files contain personal information?'
+				title: 'Does your submission contain personal information?'
 			},
 			personalInformationFiles: {
 				id: 'examination-personal-information-files',
 				onError: {
 					message: {
-						isEmpty: 'Select yes if your files contain personal information'
+						isEmpty: 'Select yes if your submission contains personal information'
 					}
 				},
-				pageTitle: 'Files have personal information or not',
+				pageTitle: 'Submission has personal information or not',
 				route: 'files-have-personal-information-or-not',
-				title: 'Do your files contain personal information?'
+				title: 'Does your submission contain personal information?'
 			},
 			personalInformationWhich: {
 				view: 'pages/examination/personal-information-which'

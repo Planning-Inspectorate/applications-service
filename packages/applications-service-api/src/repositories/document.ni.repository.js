@@ -135,8 +135,12 @@ const fetchDocumentsByDocumentType = async (requestQuery) => {
 	return await db.Document.findOne(dbQuery);
 };
 
-const findDocumentsByCaseReference = async (caseReference) => {
-	const documents = await db.Attachment.findAllAttachmentsWithCase(caseReference);
+const findDocumentsByCaseReferenceAndAdviceID = async (caseReference, adviceID) => {
+	const documents = await db.Attachment.findAllAttachmentsWithCase(caseReference, {
+		where: {
+			adviceID
+		}
+	});
 	return documents?.map(({ dataValues }) => dataValues);
 };
 
@@ -145,5 +149,5 @@ module.exports = {
 	getAvailableFilters,
 	getDocumentsByDataId,
 	fetchDocumentsByDocumentType,
-	findDocumentsByCaseReference
+	findDocumentsByCaseReferenceAndAdviceID
 };

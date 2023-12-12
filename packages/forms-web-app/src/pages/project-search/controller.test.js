@@ -45,10 +45,6 @@ describe('pages/project-search/controller', () => {
 			it('should call the correct template', async () => {
 				expect(res.render).toHaveBeenCalledWith('project-search/view.njk', {
 					activeFilters: [],
-					allProjectsSubNavigationRoutes: {
-						projectSearch: '/project-search',
-						registerOfApplications: '/register-of-applications'
-					},
 					applicationsDownloadURL: '/api/applications-download',
 					totalApplicationsWithoutFilters: 21,
 					applications: [
@@ -213,6 +209,9 @@ describe('pages/project-search/controller', () => {
 					},
 					paginationQueryString: '?page=:page',
 					query: {},
+					relatedContentLinks: [
+						{ name: 'Register of applications', url: '/register-of-applications' }
+					],
 					resultsPerPage: {
 						fifty: { active: false, link: '?itemsPerPage=50', size: 50 },
 						oneHundred: { active: false, link: '?itemsPerPage=100', size: 100 },

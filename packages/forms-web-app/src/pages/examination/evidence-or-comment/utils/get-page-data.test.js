@@ -26,7 +26,7 @@ const pageData = {
 	id: 'examination-evidence-or-comment',
 	options: [
 		{
-			text: 'Write a comment',
+			text: 'Make a comment',
 			value: 'comment'
 		},
 		{
