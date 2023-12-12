@@ -84,7 +84,7 @@ const getDocumentsByIds = async (documentIds) => {
 	return prismaClient.document.findMany({
 		where: {
 			id: {
-				in: documentIds?.split(',').map((id) => parseInt(id))
+				in: documentIds.split(',').map((id) => parseInt(id))
 			}
 		}
 	});

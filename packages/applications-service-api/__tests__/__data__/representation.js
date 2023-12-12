@@ -1,5 +1,4 @@
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('./serviceUser');
-const { BACK_OFFICE_DB_DOCUMENTS } = require('./documents');
 const REPRESENTATION_NI_DATA = [
 	{
 		ID: 2,
