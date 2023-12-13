@@ -44,6 +44,7 @@ module.exports = {
 	},
 	featureFlag: {
 		allowHomepage: process.env.FEATURE_HOME_PAGE === 'true',
+		allowPrimaryNavigation: process.env.FEATURE_PRIMARY_NAVIGATION === 'true',
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
 		usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
