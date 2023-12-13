@@ -133,6 +133,21 @@ describe('api/v1/representations', () => {
 					});
 				});
 			});
+			describe('and the representative user is not found', () => {
+				it('should return data correctly', async () => {
+					jest.resetAllMocks();
+					mockBORepresentationFindUnique.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
+					mockBOServiceUserFindUnique.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[0]); // represented
+					mockBOServiceUserFindUnique.mockResolvedValueOnce(null); // representative
+					mockBODocumentFindMany.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
+					const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
+						...REPRESENTATION_BACKOFFICE_RESPONSE,
+						Representative: ''
+					});
+				});
+			});
 		});
 	});
 	describe('get all representations by application id', () => {

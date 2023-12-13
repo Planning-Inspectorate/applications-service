@@ -19,5 +19,17 @@ describe('representation.mapper', () => {
 
 			expect(result).toEqual(REPRESENTATION_BACKOFFICE_RESPONSE);
 		});
+		it('representative is null', () => {
+			const result = mapBackOfficeRepresentationToApi(
+				REPRESENTATION_BACKOFFICE_DATA,
+				mockRepresented,
+				null,
+				BACK_OFFICE_DB_DOCUMENTS
+			);
+			expect(result).toEqual({
+				...REPRESENTATION_BACKOFFICE_RESPONSE,
+				Representative: ''
+			});
+		});
 	});
 });

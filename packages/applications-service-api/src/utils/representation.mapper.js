@@ -11,8 +11,8 @@ const mapBackOfficeRepresentationToApi = (
 	} else {
 		PersonalName = `${represented.firstName || ''} ${represented.lastName || ''}`.trim();
 	}
-	const Representative = `${representative.firstName || ''} ${
-		representative.lastName || ''
+	const Representative = `${representative?.firstName || ''} ${
+		representative?.lastName || ''
 	}`.trim();
 	return {
 		ID: representation.representationId,
