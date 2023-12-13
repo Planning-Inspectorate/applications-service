@@ -23,7 +23,9 @@
 	<div class="govuk-width-container">
 		{% include "components/core/banner.njk" %}
 
-		{% include "includes/primary-navigation.njk" %}
+		{% if featureFlag.allowPrimaryNavigation %}
+			{% include "includes/primary-navigation.njk" %}
+		{% endif %}
 
 		{% if backLinkUrl %}
 			{% if backLinkUrl == 'show' %}
