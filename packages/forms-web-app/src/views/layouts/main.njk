@@ -38,7 +38,9 @@
 
 			{% include "components/core/banner.njk" %}
 
-			{% include "includes/primary-navigation.njk" %}
+			{% if featureFlag.allowPrimaryNavigation %}
+				{% include "includes/primary-navigation.njk" %}
+			{% endif %}
 
 			{% block backButton %}
 				{% if not hideBackLink %}
