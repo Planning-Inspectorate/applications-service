@@ -166,6 +166,49 @@ const main = async () => {
 			attachmentIds: '1,2,3'
 		}
 	});
+
+	// Representation
+	await prismaClient.representation.upsert({
+		where: { representationId: 1 },
+		update: {},
+		create: {
+			representationId: 10,
+			caseReference: 'BC0110001',
+			caseId: 130,
+			referenceId: 'TR0200007-0005',
+			status: 'valid',
+			dateReceived: new Date('2021-06-01'),
+			representationComment: 'Representation comment',
+			representationType: 'Represented',
+			representedId: '1',
+			representativeId: '2',
+			attachmentIds: '1,2,3'
+		}
+	});
+
+	// Service User - Represented
+	await prismaClient.serviceUser.upsert({
+		where: { serviceUserId: '1' },
+		update: {},
+		create: {
+			serviceUserId: '1',
+			firstName: 'John',
+			lastName: 'Doe',
+			organisationName: 'Example Organisation'
+		}
+	});
+
+	// Service User - Representative
+	await prismaClient.serviceUser.upsert({
+		where: { serviceUserId: '2' },
+		update: {},
+		create: {
+			serviceUserId: '2',
+			firstName: 'Jane',
+			lastName: 'Doe',
+			organisationName: 'Example Organisation'
+		}
+	});
 };
 
 async function createExaminationTimetableWithEventItems(data) {

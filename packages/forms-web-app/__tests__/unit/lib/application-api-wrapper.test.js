@@ -86,8 +86,10 @@ describe('lib/application-api-wrapper', () => {
 		describe('getRepresentationById', () => {
 			it(`should call the expected URL`, async () => {
 				fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
-				await getRepresentationById(9);
-				expect(fetch.mock.calls[0][0]).toEqual('http://fake.url/api/v1/representations/9');
+				await getRepresentationById(9, 'mock-case-reference');
+				expect(fetch.mock.calls[0][0]).toEqual(
+					'http://fake.url/api/v1/representations/9?caseReference=mock-case-reference'
+				);
 			});
 		});
 	});

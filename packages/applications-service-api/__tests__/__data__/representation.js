@@ -1,4 +1,5 @@
-const REPRESENTATION_NI_DB = [
+const { SERVICE_USERS_BACKOFFICE_DATA } = require('./serviceUser');
+const REPRESENTATION_NI_DATA = [
 	{
 		ID: 2,
 		ProjectName: 'SPT Feb 2020',
@@ -28,8 +29,65 @@ const REPRESENTATION_NI_DB = [
 	}
 ];
 
+const REPRESENTED_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[0];
+const REPRESENTATIVE_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[1];
+
+const REPRESENTATION_BACKOFFICE_DATA = {
+	id: 1,
+	representationId: 1,
+	caseReference: 'BC010001',
+	caseId: 1,
+	referenceId: 'TR010109-34671',
+	status: 'Open',
+	dateReceived: '2021-08-01T00:00:00.000Z',
+	representationComment: 'Some comments',
+	representationFrom: 'Members of the Public/Businesses',
+	representationType: 'Parish Councils',
+	registerFor: 'Compulsory Acquisition Hearing',
+	representedId: REPRESENTED_BACKOFFICE_DATA.serviceUserId,
+	representativeId: REPRESENTATIVE_BACKOFFICE_DATA.serviceUserId,
+	attachmentIds: '1,2,3'
+};
+
+const REPRESENTATION_BACKOFFICE_RESPONSE = {
+	ID: REPRESENTATION_BACKOFFICE_DATA.representationId,
+	CaseReference: REPRESENTATION_BACKOFFICE_DATA.caseReference,
+	UniqueReference: REPRESENTATION_BACKOFFICE_DATA.referenceId,
+	PersonalName: REPRESENTED_BACKOFFICE_DATA.firstName + ' ' + REPRESENTED_BACKOFFICE_DATA.lastName,
+	Representative:
+		REPRESENTATIVE_BACKOFFICE_DATA.firstName + ' ' + REPRESENTATIVE_BACKOFFICE_DATA.lastName,
+	OrgOnBhalfName: REPRESENTED_BACKOFFICE_DATA.organisationName,
+	RepFrom: REPRESENTATION_BACKOFFICE_DATA.representationType,
+	RepresentationRedacted: REPRESENTATION_BACKOFFICE_DATA.representationComment,
+	DateRrepReceived: REPRESENTATION_BACKOFFICE_DATA.dateReceived,
+	Attachments: REPRESENTATION_BACKOFFICE_DATA.attachmentIds,
+	attachments: [
+		{
+			id: 1,
+			dataID: null,
+			case_reference: 'EN010009',
+			stage: 'pre-application',
+			type: 'Dave',
+			filter1: 'CR-1234-A',
+			filter2: '',
+			description: '',
+			size: 412846,
+			mime: 'application/pdf',
+			path: 'https://example.org/file.pdf',
+			datePublished: '2023-03-26T00:00:00.000',
+			representative: '',
+			docReference: null,
+			author: null,
+			lastModified: '2023-06-19 10:50:31.8860000',
+			dateCreated: '2023-06-19 10:50:31.8860000'
+		}
+	]
+};
+
 const FILTERS_NI_DB = [];
 module.exports = {
-	REPRESENTATION_NI_DB,
-	FILTERS_NI_DB
+	REPRESENTATION_NI_DATA,
+	FILTERS_NI_DB,
+	REPRESENTATION_BACKOFFICE_DATA,
+	REPRESENTATION_BACKOFFICE_RESPONSE
 };

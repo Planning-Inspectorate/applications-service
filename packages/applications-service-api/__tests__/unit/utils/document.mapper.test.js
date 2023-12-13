@@ -123,8 +123,8 @@ describe('document mapper functions', () => {
 			const expectedResponseDocuments = [
 				{
 					id: 1000,
-					dataId: 'someref',
-					caseReference: 'EN0100085',
+					dataID: 'someref',
+					case_reference: 'EN0100085',
 					stage: 'examination',
 					type: 'Other Documents',
 					filter1: 'Deadline 6',

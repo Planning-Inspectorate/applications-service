@@ -59,8 +59,8 @@ const mapDocuments = (documents) => {
 const mapBackOfficeDocuments = (documents) =>
 	documents.map((document) => ({
 		id: document.id,
-		dataId: document.documentReference,
-		caseReference: document.caseRef,
+		dataID: document.documentReference,
+		case_reference: document.caseRef,
 		stage: document.stage,
 		type: document.documentType,
 		filter1: document.filter1,

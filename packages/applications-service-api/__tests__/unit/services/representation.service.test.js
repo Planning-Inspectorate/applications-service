@@ -4,11 +4,32 @@ const {
 	getRepresentationsForApplication,
 	getRepresentationById
 } = require('../../../src/services/representation.service');
+const config = require('../../../src/lib/config');
 const {
 	getRepresentationsWithCount: getRepresentationsWithCountRepository,
 	getRepresentations: getRepresentationsRepository,
-	getRepresentationById: getRepresentationByIdRepository
+	getRepresentationById: getRepresentationByIdNIRepository
 } = require('../../../src/repositories/representation.ni.repository');
+const {
+	getDocumentsByDataId: getDocumentsByDataIdNIRepository
+} = require('../../../src/repositories/document.ni.repository');
+
+const {
+	getRepresentationById: getRepresentationByBORepository
+} = require('../../../src/repositories/representation.backoffice.repository');
+const {
+	getServiceUserById: getServiceUserByIdBORepository
+} = require('../../../src/repositories/serviceUser.backoffice.repository');
+const {
+	getDocumentsByIds: getDocumentsByIdsBORepository
+} = require('../../../src/repositories/document.backoffice.repository');
+const { mapBackOfficeRepresentationToApi } = require('../../../src/utils/representation.mapper');
+const {
+	REPRESENTATION_BACKOFFICE_DATA,
+	REPRESENTATION_BACKOFFICE_RESPONSE,
+	REPRESENTATION_NI_DATA
+} = require('../../__data__/representation');
+const { SERVICE_USERS_BACKOFFICE_DATA } = require('../../__data__/serviceUser');
 const { Op } = require('sequelize');
 const db = require('../../../src/models');
 
@@ -81,9 +102,14 @@ jest.mock('../../../src/repositories/representation.ni.repository', () => {
 	return {
 		getRepresentationsWithCount: jest.fn().mockResolvedValue(repMockData),
 		getRepresentations: jest.fn(),
-		getRepresentationById: jest.fn().mockResolvedValue(repMockData.representations[0])
+		getRepresentationById: jest.fn()
 	};
 });
+jest.mock('../../../src/repositories/document.ni.repository');
+jest.mock('../../../src/repositories/representation.backoffice.repository');
+jest.mock('../../../src/repositories/serviceUser.backoffice.repository');
+jest.mock('../../../src/repositories/document.backoffice.repository');
+jest.mock('../../../src/utils/representation.mapper');
 
 describe('getRepresentationsForApplication', () => {
 	beforeAll(() => {
@@ -132,18 +158,95 @@ describe('getRepresentationsForApplication', () => {
 	});
 });
 
+config.backOfficeIntegration.representations.getRepresentations.caseReferences = ['BC010001'];
 describe('getRepresentationById', () => {
-	it('should call getRepresentationByIdRepository', async () => {
-		// Act
-		await getRepresentationById(21);
-		// Assert
-		expect(getRepresentationByIdRepository).toBeCalledWith(21);
+	describe('when case reference is back office', () => {
+		beforeEach(() => {
+			getRepresentationByBORepository.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
+			getServiceUserByIdBORepository
+				.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[0])
+				.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[1]);
+			mapBackOfficeRepresentationToApi.mockReturnValue(REPRESENTATION_BACKOFFICE_RESPONSE);
+		});
+		it('should call getRepresentationByIdBORepository with correct params', async () => {
+			await getRepresentationById('1', 'BC010001');
+			expect(getRepresentationByBORepository).toBeCalledWith('1');
+		});
+		it('should return undefined if no representation found', async () => {
+			getRepresentationByBORepository.mockResolvedValue(null);
+			const data = await getRepresentationById('1', 'BC010001');
+			expect(data).toBeUndefined();
+		});
+		it('should call getServiceUserByIdBORepository to get represented', async () => {
+			await getRepresentationById('1', 'BC010001');
+			expect(getServiceUserByIdBORepository).toBeCalledWith(
+				REPRESENTATION_BACKOFFICE_DATA.representedId
+			);
+		});
+		it('should throw not found error if represented not found', async () => {
+			jest.resetAllMocks();
+			getRepresentationByBORepository.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
+			getServiceUserByIdBORepository.mockResolvedValue(null);
+			let error;
+			try {
+				await getRepresentationById('1', 'BC010001');
+			} catch (e) {
+				error = e;
+			}
+			expect(error).toBeDefined();
+			expect(error.code).toEqual(404);
+			expect(error.message).toEqual({ errors: ['Service user not found for representation 10'] });
+		});
+		it('should call getServiceUserByIdBORepository to get representative', async () => {
+			await getRepresentationById('1', 'BC010001');
+			expect(getServiceUserByIdBORepository).toBeCalledWith(
+				REPRESENTATION_BACKOFFICE_DATA.representativeId
+			);
+		});
+		it('should call getDocumentsByIdsBORepository with correct params', async () => {
+			await getRepresentationById('1', 'BC010001');
+			expect(getDocumentsByIdsBORepository).toBeCalledWith(
+				REPRESENTATION_BACKOFFICE_DATA.attachmentIds
+			);
+		});
+		it('should call mapBackOfficeRepresentationToApi with correct params', async () => {
+			await getRepresentationById('1', 'BC010001');
+			expect(mapBackOfficeRepresentationToApi).toBeCalledWith(
+				REPRESENTATION_BACKOFFICE_DATA,
+				SERVICE_USERS_BACKOFFICE_DATA[0],
+				SERVICE_USERS_BACKOFFICE_DATA[1],
+				[]
+			);
+		});
+		it('should return representation', async () => {
+			const data = await getRepresentationById('1', 'BC010001');
+			expect(data).toEqual(REPRESENTATION_BACKOFFICE_RESPONSE);
+		});
 	});
-	it('should return representation', async () => {
-		// Act
-		const data = await getRepresentationById(21);
-		// Assert
-		expect(data).toEqual(repMockData.representations[0]);
+	describe('when case reference is ni', () => {
+		beforeEach(() => {
+			getRepresentationByIdNIRepository.mockResolvedValue(REPRESENTATION_NI_DATA[0]);
+			getDocumentsByDataIdNIRepository.mockResolvedValue([]);
+		});
+		it('should call getRepresentationByIdNIRepository with correct params', async () => {
+			await getRepresentationById('1', 'EN010009');
+			expect(getRepresentationByIdNIRepository).toBeCalledWith('1');
+		});
+		it('return undefined if no representation found', async () => {
+			getRepresentationByIdNIRepository.mockResolvedValue(null);
+			const data = await getRepresentationById('1', 'EN010009');
+			expect(data).toBeUndefined();
+		});
+		it('should call getDocumentsByDataIdNIRepository with correct params', async () => {
+			await getRepresentationById('1', 'EN010009');
+			expect(getDocumentsByDataIdNIRepository).toBeCalledWith(
+				REPRESENTATION_NI_DATA[0].Attachments.split(',')
+			);
+		});
+		it('should return representation', async () => {
+			const data = await getRepresentationById('1', 'EN010009');
+			expect(data).toEqual(REPRESENTATION_NI_DATA[0]);
+		});
 	});
 });
 
