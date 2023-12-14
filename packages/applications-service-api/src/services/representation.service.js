@@ -6,7 +6,8 @@ const {
 	getRepresentationById: getRepresentationByIdNIRepository
 } = require('../repositories/representation.ni.repository');
 const {
-	getRepresentationById: getRepresentationByBORepository
+	getRepresentationById: getRepresentationByBORepository,
+	getRepresentationsByCaseReference: getRepresentationsByCaseReferenceBORepository
 } = require('../repositories/representation.backoffice.repository');
 const {
 	getDocumentsByDataId: getDocumentsByDataIdNIRepository
@@ -17,7 +18,10 @@ const {
 const {
 	getDocumentsByIds: getDocumentsByIdsBORepository
 } = require('../repositories/document.backoffice.repository');
-const { mapBackOfficeRepresentationToApi } = require('../utils/representation.mapper');
+const {
+	mapBackOfficeRepresentationToApi,
+	mapBackOfficeRepresentationsToApi
+} = require('../utils/representation.mapper');
 const config = require('../lib/config');
 const apiError = require('../error/apiError');
 
@@ -42,35 +46,68 @@ const createQueryFilters = (query) => {
 };
 
 const getRepresentationsForApplication = async (query) => {
-	const { pageNo, size, offset, order } = createQueryFilters(query);
+	if (isBackOfficeCaseReference(query.caseReference)) {
+		const options = {
+			caseReference: query.caseReference
+		};
+		const representations = await getRepresentationsByCaseReferenceBORepository(options);
+		const representationsData = await Promise.all(
+			representations.map(async (rep) => {
+				if (!rep.representedId) return;
+				const represented = await getServiceUserByIdBORepository(rep.representedId);
+				if (!represented) return;
+				const representative = await getServiceUserByIdBORepository(rep.representativeId);
+				return { rep, represented, representative };
+			})
+		);
+		const representationsDataWithRepresented = representationsData.filter(
+			({ represented }) => represented
+		);
+		const mappedRepresentations = mapBackOfficeRepresentationsToApi(
+			representationsDataWithRepresented
+		);
 
-	const repositoryOptions = {
-		applicationId: query?.applicationId,
-		offset,
-		limit: size,
-		order,
-		type: query?.type,
-		searchTerm: query?.searchTerm
-	};
+		return {
+			representations: mappedRepresentations,
+			// TODO: Pagination & Filters will done in ASB-2097
+			totalItems: 0,
+			itemsPerPage: 0,
+			totalPages: 0,
+			currentPage: 0,
+			filters: {}
+		};
+	} else {
+		const { pageNo, size, offset, order } = createQueryFilters(query);
 
-	const { count, representations } = await getRepresentationsWithCountRepository(repositoryOptions);
-	const typeFilters = await getFilters('RepFrom', query?.applicationId);
+		const repositoryOptions = {
+			caseReference: query.caseReference,
+			offset,
+			limit: size,
+			order,
+			type: query?.type,
+			searchTerm: query?.searchTerm
+		};
 
-	return {
-		representations,
-		totalItems: count,
-		itemsPerPage: size,
-		totalPages: Math.ceil(Math.max(1, count) / size),
-		currentPage: pageNo,
-		filters: {
-			typeFilters: typeFilters
-				? typeFilters.map((filter) => ({
-						name: filter.RepFrom,
-						count: filter.count
-				  }))
-				: []
-		}
-	};
+		const { count, representations } = await getRepresentationsWithCountRepository(
+			repositoryOptions
+		);
+		const typeFilters = await getFilters('RepFrom', query?.caseReference);
+		return {
+			representations,
+			totalItems: count,
+			itemsPerPage: size,
+			totalPages: Math.ceil(Math.max(1, count) / size),
+			currentPage: pageNo,
+			filters: {
+				typeFilters: typeFilters
+					? typeFilters.map((filter) => ({
+							name: filter.RepFrom,
+							count: filter.count
+					  }))
+					: []
+			}
+		};
+	}
 };
 
 const getRepresentationById = async (id, caseReference) => {
@@ -85,12 +122,7 @@ const getRepresentationById = async (id, caseReference) => {
 		}
 		const representative = await getServiceUserByIdBORepository(representation.representativeId);
 		const documents = await getDocumentsByIdsBORepository(representation.attachmentIds);
-		return mapBackOfficeRepresentationToApi(
-			representation,
-			represented,
-			representative,
-			documents || []
-		);
+		return mapBackOfficeRepresentationToApi(representation, represented, representative, documents);
 	} else {
 		const representation = await getRepresentationByIdNIRepository(id);
 		if (!representation) return;

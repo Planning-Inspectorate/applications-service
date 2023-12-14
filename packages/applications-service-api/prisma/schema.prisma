@@ -54,29 +54,31 @@ model Document {
 }
 
 model Representation {
-  id                    Int       @unique @default(autoincrement())
-  representationId      Int       @id
+  id                    Int          @unique @default(autoincrement())
+  representationId      Int          @id
   caseReference         String
   caseId                Int
   referenceId           String?
   status                String?
   dateReceived          DateTime?
-  representationComment String?   @db.NText
+  representationComment String?      @db.NText
   representationFrom    String?
   representationType    String?
   registerFor           String?
   representedId         String?
   representativeId      String?
+  representative        ServiceUser? @relation("representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+  represented           ServiceUser? @relation("represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
   attachmentIds         String?
-  createdAt             DateTime? @default(now())
-  modifiedAt            DateTime? @default(now())
+  createdAt             DateTime?    @default(now())
+  modifiedAt            DateTime?    @default(now())
 
   @@index([caseReference])
 }
 
 model ServiceUser {
-  id               Int       @unique @default(autoincrement())
-  serviceUserId    String    @id
+  id               Int              @unique @default(autoincrement())
+  serviceUserId    String           @id
   caseReference    String?
   firstName        String?
   lastName         String?
@@ -86,8 +88,10 @@ model ServiceUser {
   organisationName String?
   role             String?
   serviceUserType  String?
-  createdAt        DateTime? @default(now())
-  modifiedAt       DateTime? @default(now())
+  representative   Representation[] @relation("representative")
+  represented      Representation[] @relation("represented")
+  createdAt        DateTime?        @default(now())
+  modifiedAt       DateTime?        @default(now())
 }
 
 model Project {

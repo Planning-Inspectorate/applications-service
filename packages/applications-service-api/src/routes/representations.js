@@ -13,6 +13,11 @@ router.get(
 	validateRequestWithOpenAPI,
 	asyncRoute(representationsController.getRepresentationById)
 );
-router.get('/', representationsController.getRepresentationsForApplication);
+router.get(
+	'/',
+	parseIntegerPathParams(['page', 'size']),
+	validateRequestWithOpenAPI,
+	asyncRoute(representationsController.getRepresentationsForApplication)
+);
 
 module.exports = router;
