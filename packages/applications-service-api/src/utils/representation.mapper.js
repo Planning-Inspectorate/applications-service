@@ -12,8 +12,8 @@ const mapBackOfficeRepresentationToApi = (
 };
 
 const mapBackOfficeRepresentationsToApi = (repsData) => {
-	return repsData.map(({ rep, represented, representative }) => {
-		return mapCommonRepresentationBOFieldsToApi(rep, represented, representative);
+	return repsData.map(({ representation, represented, representative }) => {
+		return mapCommonRepresentationBOFieldsToApi(representation, represented, representative);
 	});
 };
 

@@ -1,6 +1,10 @@
 const { get } = require('./router-mock');
 const representationsController = require('../../../src/controllers/representations');
-const { parseIntegerPathParams } = require('../../../src/middleware/parseParamProperties');
+const {
+	parseIntegerPathParams,
+	parseIntegerQueryParams,
+	normaliseArrayQueryParams
+} = require('../../../src/middleware/parseParamProperties');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const { validateRequestWithOpenAPI } = require('../../../src/middleware/validator/openapi');
 
@@ -28,7 +32,10 @@ describe('routes/representations', () => {
 
 		expect(get).toHaveBeenCalledWith(
 			'/',
-			representationsController.getRepresentationsForApplication
+			parseIntegerQueryParams(['page', 'size']),
+			normaliseArrayQueryParams(['type']),
+			validateRequestWithOpenAPI,
+			asyncRoute(representationsController.getRepresentationsForApplication)
 		);
 	});
 });

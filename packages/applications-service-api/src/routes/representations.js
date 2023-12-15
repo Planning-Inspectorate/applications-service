@@ -3,7 +3,11 @@ const express = require('express');
 const representationsController = require('../controllers/representations');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
-const { parseIntegerPathParams } = require('../middleware/parseParamProperties');
+const {
+	parseIntegerPathParams,
+	parseIntegerQueryParams,
+	normaliseArrayQueryParams
+} = require('../middleware/parseParamProperties');
 
 const router = express.Router();
 
@@ -15,7 +19,8 @@ router.get(
 );
 router.get(
 	'/',
-	parseIntegerPathParams(['page', 'size']),
+	parseIntegerQueryParams(['page', 'size']),
+	normaliseArrayQueryParams(['type']),
 	validateRequestWithOpenAPI,
 	asyncRoute(representationsController.getRepresentationsForApplication)
 );

@@ -1,8 +1,8 @@
 const { Op } = require('sequelize');
 const db = require('../models');
 const {
-	getRepresentationsWithCount: getRepresentationsWithCountRepository,
-	getRepresentations: getRepresentationsRepository,
+	getRepresentationsWithCount: getRepresentationsWithCountNIRepository,
+	getRepresentations: getRepresentationsNIRepository,
 	getRepresentationById: getRepresentationByIdNIRepository
 } = require('../repositories/representation.ni.repository');
 const {
@@ -46,68 +46,72 @@ const createQueryFilters = (query) => {
 };
 
 const getRepresentationsForApplication = async (query) => {
-	if (isBackOfficeCaseReference(query.caseReference)) {
-		const options = {
-			caseReference: query.caseReference
-		};
-		const representations = await getRepresentationsByCaseReferenceBORepository(options);
-		const representationsData = await Promise.all(
-			representations.map(async (rep) => {
-				if (!rep.representedId) return;
-				const represented = await getServiceUserByIdBORepository(rep.representedId);
-				if (!represented) return;
-				const representative = await getServiceUserByIdBORepository(rep.representativeId);
-				return { rep, represented, representative };
-			})
-		);
-		const representationsDataWithRepresented = representationsData.filter(
-			({ represented }) => represented
-		);
-		const mappedRepresentations = mapBackOfficeRepresentationsToApi(
-			representationsDataWithRepresented
-		);
+	return isBackOfficeCaseReference(query.caseReference)
+		? getRepresentationsForBO(query)
+		: getRepresentationsForNI(query);
+};
 
-		return {
-			representations: mappedRepresentations,
-			// TODO: Pagination & Filters will done in ASB-2097
-			totalItems: 0,
-			itemsPerPage: 0,
-			totalPages: 0,
-			currentPage: 0,
-			filters: {}
-		};
-	} else {
-		const { pageNo, size, offset, order } = createQueryFilters(query);
+const getRepresentationsForBO = async (query) => {
+	const options = {
+		caseReference: query.caseReference
+	};
+	const representations = await getRepresentationsByCaseReferenceBORepository(options);
+	const representationsData = await Promise.all(
+		representations.map(async (representation) => {
+			if (!representation.representedId) return;
+			const represented = await getServiceUserByIdBORepository(representation.representedId);
+			if (!represented) return;
+			const representative = await getServiceUserByIdBORepository(representation.representativeId);
+			return { representation, represented, representative };
+		})
+	);
+	const representationsDataWithRepresented = representationsData.filter((r) => r?.represented);
 
-		const repositoryOptions = {
-			caseReference: query.caseReference,
-			offset,
-			limit: size,
-			order,
-			type: query?.type,
-			searchTerm: query?.searchTerm
-		};
+	const mappedRepresentations = mapBackOfficeRepresentationsToApi(
+		representationsDataWithRepresented
+	);
 
-		const { count, representations } = await getRepresentationsWithCountRepository(
-			repositoryOptions
-		);
-		const typeFilters = await getFilters('RepFrom', query?.caseReference);
-		return {
-			representations,
-			totalItems: count,
-			itemsPerPage: size,
-			totalPages: Math.ceil(Math.max(1, count) / size),
-			currentPage: pageNo,
-			filters: {
-				typeFilters: typeFilters
-					? typeFilters.map((filter) => ({
-							name: filter.RepFrom,
-							count: filter.count
-					  }))
-					: []
-			}
-		};
-	}
+	return {
+		representations: mappedRepresentations,
+		// TODO: Pagination & Filters will done in ASB-2097
+		totalItems: 0,
+		itemsPerPage: 0,
+		totalPages: 0,
+		currentPage: 0,
+		filters: { typeFilters: [] }
+	};
+};
+const getRepresentationsForNI = async (query) => {
+	const { pageNo, size, offset, order } = createQueryFilters(query);
+
+	const repositoryOptions = {
+		caseReference: query.caseReference,
+		offset,
+		limit: size,
+		order,
+		type: query?.type,
+		searchTerm: query?.searchTerm
+	};
+
+	const { count, representations } = await getRepresentationsWithCountNIRepository(
+		repositoryOptions
+	);
+	const typeFilters = await getFilters('RepFrom', query?.caseReference);
+	return {
+		representations,
+		totalItems: count,
+		itemsPerPage: size,
+		totalPages: Math.ceil(Math.max(1, count) / size),
+		currentPage: pageNo,
+		filters: {
+			typeFilters: typeFilters
+				? typeFilters.map((filter) => ({
+						name: filter.RepFrom,
+						count: filter.count
+				  }))
+				: []
+		}
+	};
 };
 
 const getRepresentationById = async (id, caseReference) => {
@@ -146,7 +150,7 @@ const getFilters = async (filter, applicationId) => {
 		where = { CaseReference: applicationId, RepFrom: { [Op.ne]: null } };
 	}
 
-	return getRepresentationsRepository({
+	return getRepresentationsNIRepository({
 		where,
 		attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
 		group: [filter]
