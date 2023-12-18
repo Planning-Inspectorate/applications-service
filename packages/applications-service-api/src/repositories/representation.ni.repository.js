@@ -6,7 +6,8 @@ const getRepresentationById = async (ID) => {
 	return db.Representation.findOne({ where: { ID }, raw: true });
 };
 const getRepresentationsWithCount = async (options = {}) => {
-	let findOptions = pick(options, ['offset', 'limit', 'order']);
+	let findOptions = pick(options, ['offset', 'limit']);
+	findOptions.order = [['DateRrepReceived', 'ASC'], ['PersonalName']];
 	findOptions.raw = true;
 	findOptions.where = { [Op.and]: [{ CaseReference: options.caseReference }] };
 

@@ -31,7 +31,6 @@ const isBackOfficeCaseReference = (caseReference) =>
 	);
 
 const createQueryFilters = (query) => {
-	// Pagination
 	const pageNo = parseInt(query?.page) || 1;
 	const defaultSize = 25;
 	const maxSize = 100;
@@ -41,24 +40,31 @@ const createQueryFilters = (query) => {
 		pageNo,
 		size,
 		offset: size * (pageNo - 1),
-		order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
+		caseReference: query.caseReference,
+		searchTerm: query.searchTerm,
+		type: query.type
 	};
 };
 
 const getRepresentationsForApplication = async (query) => {
+	const queryFilters = createQueryFilters(query);
 	return isBackOfficeCaseReference(query.caseReference)
-		? getRepresentationsForBO(query)
-		: getRepresentationsForNI(query);
+		? getRepresentationsForBO(queryFilters)
+		: getRepresentationsForNI(queryFilters);
 };
 
-const getRepresentationsForBO = async (query) => {
-	const options = {
-		caseReference: query.caseReference
-	};
-	const representations = await getRepresentationsByCaseReferenceBORepository(options);
+const getRepresentationsForBO = async (queryFilters) => {
+	const { pageNo, size, caseReference, searchTerm, type, offset } = queryFilters;
+
+	const { representations, count } = await getRepresentationsByCaseReferenceBORepository({
+		caseReference,
+		offset,
+		limit: size,
+		type,
+		searchTerm
+	});
 	const representationsData = await Promise.all(
 		representations.map(async (representation) => {
-			if (!representation.representedId) return;
 			const represented = await getServiceUserByIdBORepository(representation.representedId);
 			if (!represented) return;
 			const representative = await getServiceUserByIdBORepository(representation.representativeId);
@@ -71,32 +77,27 @@ const getRepresentationsForBO = async (query) => {
 		representationsDataWithRepresented
 	);
 
+	// TODO PAGINATION AND FILTERS WIP
 	return {
 		representations: mappedRepresentations,
-		// TODO: Pagination & Filters will done in ASB-2097
-		totalItems: 0,
-		itemsPerPage: 0,
-		totalPages: 0,
-		currentPage: 0,
+		totalItems: count,
+		itemsPerPage: size,
+		totalPages: Math.ceil(Math.max(1, 0) / size),
+		currentPage: pageNo,
 		filters: { typeFilters: [] }
 	};
 };
-const getRepresentationsForNI = async (query) => {
-	const { pageNo, size, offset, order } = createQueryFilters(query);
+const getRepresentationsForNI = async (queryFilters) => {
+	const { pageNo, size, caseReference, searchTerm, type, offset } = queryFilters;
 
-	const repositoryOptions = {
-		caseReference: query.caseReference,
+	const { count, representations } = await getRepresentationsWithCountNIRepository({
+		caseReference,
 		offset,
 		limit: size,
-		order,
-		type: query?.type,
-		searchTerm: query?.searchTerm
-	};
-
-	const { count, representations } = await getRepresentationsWithCountNIRepository(
-		repositoryOptions
-	);
-	const typeFilters = await getFilters('RepFrom', query?.caseReference);
+		type,
+		searchTerm
+	});
+	const typeFilters = await getFilters('RepFrom', caseReference);
 	return {
 		representations,
 		totalItems: count,

@@ -12,14 +12,26 @@ const getRepresentationById = async (representationId) => {
 };
 
 const getRepresentationsByCaseReference = async (options) => {
-	return prismaClient.representation.findMany({
-		where: {
-			caseReference: options.caseReference,
-			status: {
-				in: ['PUBLISHED', 'published']
-			}
+	// todo add relations, add searchTerm, add type
+	const where = {
+		caseReference: options.caseReference,
+		status: {
+			in: ['PUBLISHED', 'published']
+		},
+		representedId: {
+			not: null
+		}
+	};
+	const representations = await prismaClient.representation.findMany({
+		where,
+		orderBy: {
+			dateReceived: 'asc'
 		}
 	});
+	const count = await prismaClient.representation.count({
+		where
+	});
+	return { count, representations };
 };
 
 module.exports = {
