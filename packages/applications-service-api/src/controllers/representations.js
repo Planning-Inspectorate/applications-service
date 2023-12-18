@@ -12,29 +12,19 @@ const ApiError = require('../error/apiError');
 
 module.exports = {
 	async getRepresentationsForApplication(req, res) {
-		try {
-			logger.debug(`Retrieving all representations ...`);
+		logger.debug(`Retrieving all representations ...`);
 
-			const { representations, totalItems, currentPage, itemsPerPage, totalPages, filters } =
-				await getRepresentationsForApplication(req.query);
+		const { representations, totalItems, currentPage, itemsPerPage, totalPages, filters } =
+			await getRepresentationsForApplication(req.query);
 
-			res.status(StatusCodes.OK).send({
-				representations,
-				totalItems,
-				currentPage,
-				itemsPerPage,
-				totalPages,
-				filters
-			});
-		} catch (e) {
-			if (e instanceof ApiError) {
-				logger.debug(e.message);
-				res.status(e.code).send({ code: e.code, errors: e.message.errors });
-				return;
-			}
-			logger.error(e.message);
-			res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Problem getting representations \n ${e}`);
-		}
+		res.status(StatusCodes.OK).send({
+			representations,
+			totalItems,
+			currentPage,
+			itemsPerPage,
+			totalPages,
+			filters
+		});
 	},
 
 	async getRepresentationById(req, res) {

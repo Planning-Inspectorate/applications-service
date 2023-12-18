@@ -27,7 +27,7 @@ describe('representation ni repository', () => {
 	const mockOptions = {
 		offset: 0,
 		limit: 10,
-		applicationId: 1
+		caseReference: 1
 	};
 	describe('getRepresentationById', () => {
 		const mockId = 10;
@@ -67,9 +67,9 @@ describe('representation ni repository', () => {
 			// Assert
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
-				applicationId: undefined,
+				caseReference: undefined,
 				raw: true,
-				where: { [Op.and]: [{ CaseReference: mockOptions.applicationId }] }
+				where: { [Op.and]: [{ CaseReference: mockOptions.caseReference }] }
 			});
 		});
 		it('calls findAllAndCount with type', async () => {
@@ -83,11 +83,11 @@ describe('representation ni repository', () => {
 			// Assert
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
-				applicationId: undefined,
+				caseReference: undefined,
 				raw: true,
 				where: {
 					[Op.and]: [
-						{ CaseReference: mockOptionsWithType.applicationId },
+						{ CaseReference: mockOptionsWithType.caseReference },
 						{ RepFrom: { [Op.in]: [mockOptionsWithType.type] } }
 					]
 				}
@@ -105,11 +105,11 @@ describe('representation ni repository', () => {
 			// Assert
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
-				applicationId: undefined,
+				caseReference: undefined,
 				raw: true,
 				where: {
 					[Op.and]: [
-						{ CaseReference: mockOptionsWithSearchTerm.applicationId },
+						{ CaseReference: mockOptionsWithSearchTerm.caseReference },
 						{
 							[Op.or]: [
 								{ PersonalName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },

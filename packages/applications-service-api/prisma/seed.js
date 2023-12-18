@@ -176,7 +176,7 @@ const main = async () => {
 			caseReference: 'BC0110001',
 			caseId: 130,
 			referenceId: 'TR0200007-0005',
-			status: 'valid',
+			status: 'published',
 			dateReceived: new Date('2021-06-01'),
 			representationComment: 'Representation comment',
 			representationType: 'Represented',

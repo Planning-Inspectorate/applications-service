@@ -1,4 +1,4 @@
-const { parseFormDataProperties, parseIntegerParam} = require('../../../src/middleware/parseFormDataProperties');
+const { parseFormDataProperties } = require('../../../src/middleware/parseFormDataProperties');
 
 describe('request middleware', () => {
 	const res = jest.fn();
@@ -18,20 +18,6 @@ describe('request middleware', () => {
 
 			expect(req.body.isActive).toEqual(true);
 			expect(req.body.numberOfThings).toEqual(1);
-		});
-	});
-
-	describe('parseIntegerParam', () => {
-		it('should parse integer property within request params', () => {
-			const req = {
-				params: {
-					foo: '1'
-				}
-			};
-
-			parseIntegerParam('foo')(req, res, next);
-
-			expect(req.params.foo).toEqual(1);
 		});
 	});
 });

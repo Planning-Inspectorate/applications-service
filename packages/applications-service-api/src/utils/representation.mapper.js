@@ -3,8 +3,21 @@ const mapBackOfficeRepresentationToApi = (
 	representation,
 	represented,
 	representative,
-	documents
+	documents = []
 ) => {
+	return {
+		...mapCommonRepresentationBOFieldsToApi(representation, represented, representative),
+		attachments: mapBackOfficeDocuments(documents)
+	};
+};
+
+const mapBackOfficeRepresentationsToApi = (repsData) => {
+	return repsData.map(({ representation, represented, representative }) => {
+		return mapCommonRepresentationBOFieldsToApi(representation, represented, representative);
+	});
+};
+
+const mapCommonRepresentationBOFieldsToApi = (representation, represented, representative) => {
 	let PersonalName = '';
 	if (!represented.firstName && !represented.lastName) {
 		PersonalName = represented.organisationName;
@@ -24,11 +37,11 @@ const mapBackOfficeRepresentationToApi = (
 		RepFrom: representation.representationType,
 		RepresentationRedacted: representation.representationComment,
 		DateRrepReceived: representation.dateReceived,
-		Attachments: representation.attachmentIds,
-		attachments: mapBackOfficeDocuments(documents)
+		Attachments: representation.attachmentIds
 	};
 };
 
 module.exports = {
-	mapBackOfficeRepresentationToApi
+	mapBackOfficeRepresentationToApi,
+	mapBackOfficeRepresentationsToApi
 };
