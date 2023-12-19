@@ -7,14 +7,12 @@ const {
 } = require('../repositories/representation.ni.repository');
 const {
 	getRepresentationById: getRepresentationByBORepository,
-	getRepresentationsByCaseReference: getRepresentationsByCaseReferenceBORepository
+	getRepresentations: getRepresentationsBORepository,
+	getFilters: getBOFilters
 } = require('../repositories/representation.backoffice.repository');
 const {
 	getDocumentsByDataId: getDocumentsByDataIdNIRepository
 } = require('../repositories/document.ni.repository');
-const {
-	getServiceUserById: getServiceUserByIdBORepository
-} = require('../repositories/serviceUser.backoffice.repository');
 const {
 	getDocumentsByIds: getDocumentsByIdsBORepository
 } = require('../repositories/document.backoffice.repository');
@@ -23,7 +21,6 @@ const {
 	mapBackOfficeRepresentationsToApi
 } = require('../utils/representation.mapper');
 const config = require('../lib/config');
-const apiError = require('../error/apiError');
 
 const isBackOfficeCaseReference = (caseReference) =>
 	(config.backOfficeIntegration.representations.getRepresentations.caseReferences || []).includes(
@@ -56,35 +53,24 @@ const getRepresentationsForApplication = async (query) => {
 const getRepresentationsForBO = async (queryFilters) => {
 	const { pageNo, size, caseReference, searchTerm, type, offset } = queryFilters;
 
-	const { representations, count } = await getRepresentationsByCaseReferenceBORepository({
+	const { representations, count } = await getRepresentationsBORepository({
 		caseReference,
 		offset,
 		limit: size,
 		type,
 		searchTerm
 	});
-	const representationsData = await Promise.all(
-		representations.map(async (representation) => {
-			const represented = await getServiceUserByIdBORepository(representation.representedId);
-			if (!represented) return;
-			const representative = await getServiceUserByIdBORepository(representation.representativeId);
-			return { representation, represented, representative };
-		})
-	);
-	const representationsDataWithRepresented = representationsData.filter((r) => r?.represented);
 
-	const mappedRepresentations = mapBackOfficeRepresentationsToApi(
-		representationsDataWithRepresented
-	);
+	const mappedRepresentations = mapBackOfficeRepresentationsToApi(representations);
+	const typeFilters = await getBOFilters(caseReference);
 
-	// TODO PAGINATION AND FILTERS WIP
 	return {
 		representations: mappedRepresentations,
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, 0) / size),
 		currentPage: pageNo,
-		filters: { typeFilters: [] }
+		filters: { typeFilters }
 	};
 };
 const getRepresentationsForNI = async (queryFilters) => {
@@ -97,21 +83,14 @@ const getRepresentationsForNI = async (queryFilters) => {
 		type,
 		searchTerm
 	});
-	const typeFilters = await getFilters('RepFrom', caseReference);
+	const typeFilters = await getNIFilters('RepFrom', caseReference);
 	return {
 		representations,
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),
 		currentPage: pageNo,
-		filters: {
-			typeFilters: typeFilters
-				? typeFilters.map((filter) => ({
-						name: filter.RepFrom,
-						count: filter.count
-				  }))
-				: []
-		}
+		filters: { typeFilters }
 	};
 };
 
@@ -119,15 +98,8 @@ const getRepresentationById = async (id, caseReference) => {
 	if (isBackOfficeCaseReference(caseReference)) {
 		const representation = await getRepresentationByBORepository(id);
 		if (!representation) return;
-		const represented = await getServiceUserByIdBORepository(representation.representedId);
-		if (!represented) {
-			throw apiError.notFound(
-				`Service user not found for representation ${representation.representedId}`
-			);
-		}
-		const representative = await getServiceUserByIdBORepository(representation.representativeId);
 		const documents = await getDocumentsByIdsBORepository(representation.attachmentIds);
-		return mapBackOfficeRepresentationToApi(representation, represented, representative, documents);
+		return mapBackOfficeRepresentationToApi(representation, documents);
 	} else {
 		const representation = await getRepresentationByIdNIRepository(id);
 		if (!representation) return;
@@ -144,22 +116,20 @@ const getRepresentationById = async (id, caseReference) => {
 	}
 };
 
-const getFilters = async (filter, applicationId) => {
-	let where = { CaseReference: applicationId };
-
-	if (filter === 'RepFrom') {
-		where = { CaseReference: applicationId, RepFrom: { [Op.ne]: null } };
-	}
-
-	return getRepresentationsNIRepository({
-		where,
+const getNIFilters = async (filter, caseReference) => {
+	const filters = await getRepresentationsNIRepository({
+		where: { CaseReference: caseReference, RepFrom: { [Op.ne]: null } },
 		attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
 		group: [filter]
 	});
+	return filters.map((filter) => ({
+		name: filter.RepFrom,
+		count: filter.count
+	}));
 };
 
 module.exports = {
 	getRepresentationsForApplication,
 	getRepresentationById,
-	getFilters
+	getNIFilters
 };

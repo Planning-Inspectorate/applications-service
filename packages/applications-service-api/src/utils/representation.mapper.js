@@ -1,23 +1,20 @@
 const { mapBackOfficeDocuments } = require('./document.mapper');
-const mapBackOfficeRepresentationToApi = (
-	representation,
-	represented,
-	representative,
-	documents = []
-) => {
+const mapBackOfficeRepresentationToApi = (representation, documents = []) => {
 	return {
-		...mapCommonRepresentationBOFieldsToApi(representation, represented, representative),
+		...mapCommonRepresentationBOFieldsToApi(representation),
 		attachments: mapBackOfficeDocuments(documents)
 	};
 };
 
-const mapBackOfficeRepresentationsToApi = (repsData) => {
-	return repsData.map(({ representation, represented, representative }) => {
-		return mapCommonRepresentationBOFieldsToApi(representation, represented, representative);
-	});
+const mapBackOfficeRepresentationsToApi = (representation) => {
+	return representation.map((representation) =>
+		mapCommonRepresentationBOFieldsToApi(representation)
+	);
 };
 
-const mapCommonRepresentationBOFieldsToApi = (representation, represented, representative) => {
+const mapCommonRepresentationBOFieldsToApi = (representation) => {
+	const represented = representation?.represented;
+	const representative = representation?.representative;
 	let PersonalName = '';
 	if (!represented.firstName && !represented.lastName) {
 		PersonalName = represented.organisationName;
