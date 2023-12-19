@@ -39,9 +39,12 @@ const getRepresentations = async (options) => {
 	if (options.searchTerm) {
 		where['AND'].push({
 			OR: [
-				// Cant search in represented or representative as that would need to be in the `include` which would mean
-				// we would not be able to include it in the `OR` query to search in the representationComment
-
+				{ represented: { firstName: { contains: options.searchTerm } } },
+				{ represented: { lastName: { contains: options.searchTerm } } },
+				{ represented: { organisationName: { contains: options.searchTerm } } },
+				{ representative: { firstName: { contains: options.searchTerm } } },
+				{ representative: { lastName: { contains: options.searchTerm } } },
+				{ representative: { organisationName: { contains: options.searchTerm } } },
 				{ representationComment: { contains: options.searchTerm } }
 			]
 		});
@@ -54,7 +57,7 @@ const getRepresentations = async (options) => {
 		});
 	}
 
-	const filters = {
+	const representations = await prismaClient.representation.findMany({
 		where,
 		orderBy: {
 			dateReceived: 'asc'
@@ -65,11 +68,10 @@ const getRepresentations = async (options) => {
 			represented: true,
 			representative: true
 		}
-	};
+	});
 
-	const representations = await prismaClient.representation.findMany(filters);
-	console.log({ representations });
-	return { representations };
+	const count = await prismaClient.representation.count({ where });
+	return { representations, count };
 };
 
 const getFilters = async (caseReference) => {
