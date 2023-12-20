@@ -1,9 +1,7 @@
-const { Op } = require('sequelize');
-const db = require('../models');
 const {
 	getRepresentationsWithCount: getRepresentationsWithCountNIRepository,
-	getRepresentations: getRepresentationsNIRepository,
-	getRepresentationById: getRepresentationByIdNIRepository
+	getRepresentationById: getRepresentationByIdNIRepository,
+	getFilters: getNIFilters
 } = require('../repositories/representation.ni.repository');
 const {
 	getRepresentationById: getRepresentationByBORepository,
@@ -43,47 +41,30 @@ const createQueryFilters = (query) => {
 	};
 };
 
-const getRepresentationsForApplication = async (query) => {
-	const queryFilters = createQueryFilters(query);
-	return isBackOfficeCaseReference(query.caseReference)
-		? getRepresentationsForBO(queryFilters)
-		: getRepresentationsForNI(queryFilters);
-};
-
-const getRepresentationsForBO = async (queryFilters) => {
-	const { pageNo, size, caseReference, searchTerm, type, offset } = queryFilters;
-
-	const { representations, count } = await getRepresentationsBORepository({
-		caseReference,
-		offset,
-		limit: size,
-		type,
-		searchTerm
-	});
-
-	const mappedRepresentations = mapBackOfficeRepresentationsToApi(representations);
-	const typeFilters = await getBOFilters(caseReference);
-
+const backOfficeMapWrapper = ({ representations, count }) => {
 	return {
-		representations: mappedRepresentations,
-		totalItems: count,
-		itemsPerPage: size,
-		totalPages: Math.ceil(Math.max(1, 0) / size),
-		currentPage: pageNo,
-		filters: { typeFilters }
+		representations: mapBackOfficeRepresentationsToApi(representations),
+		count
 	};
 };
-const getRepresentationsForNI = async (queryFilters) => {
-	const { pageNo, size, caseReference, searchTerm, type, offset } = queryFilters;
-
-	const { count, representations } = await getRepresentationsWithCountNIRepository({
+const getRepresentationsForApplication = async (query) => {
+	const { pageNo, size, caseReference, searchTerm, type, offset } = createQueryFilters(query);
+	const options = {
 		caseReference,
 		offset,
 		limit: size,
 		type,
 		searchTerm
-	});
-	const typeFilters = await getNIFilters('RepFrom', caseReference);
+	};
+	const isBOApplication = isBackOfficeCaseReference(caseReference);
+	const { representations, count } = isBOApplication
+		? backOfficeMapWrapper(await getRepresentationsBORepository(options))
+		: await getRepresentationsWithCountNIRepository(options);
+
+	const typeFilters = isBOApplication
+		? await getBOFilters(caseReference)
+		: await getNIFilters('RepFrom', caseReference);
+
 	return {
 		representations,
 		totalItems: count,
@@ -116,20 +97,7 @@ const getRepresentationById = async (id, caseReference) => {
 	}
 };
 
-const getNIFilters = async (filter, caseReference) => {
-	const filters = await getRepresentationsNIRepository({
-		where: { CaseReference: caseReference, RepFrom: { [Op.ne]: null } },
-		attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
-		group: [filter]
-	});
-	return filters.map((filter) => ({
-		name: filter.RepFrom,
-		count: filter.count
-	}));
-};
-
 module.exports = {
 	getRepresentationsForApplication,
-	getRepresentationById,
-	getNIFilters
+	getRepresentationById
 };

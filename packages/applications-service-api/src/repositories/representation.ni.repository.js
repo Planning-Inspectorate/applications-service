@@ -11,7 +11,6 @@ const getRepresentationsWithCount = async (options = {}) => {
 	findOptions.raw = true;
 	findOptions.where = { [Op.and]: [{ CaseReference: options.caseReference }] };
 
-	// types
 	let types = [];
 	if (options.type) {
 		types = options.type instanceof Array ? [...options.type] : options.type.split(',');
@@ -23,7 +22,6 @@ const getRepresentationsWithCount = async (options = {}) => {
 		}
 	}
 
-	// search term
 	if (options.searchTerm) {
 		const orOptions = [
 			{ PersonalName: { [Op.like]: `%${options.searchTerm}%` } },
@@ -45,8 +43,20 @@ const getRepresentations = async (options = {}) => {
 	return db.Representation.findAll({ ...options, raw: true });
 };
 
+const getFilters = async (filter, caseReference) => {
+	const filters = await getRepresentations({
+		where: { CaseReference: caseReference, RepFrom: { [Op.ne]: null } },
+		attributes: [filter, [db.sequelize.fn('COUNT', db.sequelize.col(filter)), 'count']],
+		group: [filter]
+	});
+	return filters.map((filter) => ({
+		name: filter.RepFrom,
+		count: filter.count
+	}));
+};
 module.exports = {
 	getRepresentationsWithCount,
 	getRepresentations,
-	getRepresentationById
+	getRepresentationById,
+	getFilters
 };

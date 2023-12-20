@@ -2,7 +2,7 @@ const { prismaClient } = require('../lib/prisma');
 const { Prisma } = require('@prisma/client');
 
 const getRepresentationById = async (representationId) => {
-	return await prismaClient.representation.findFirst({
+	return prismaClient.representation.findFirst({
 		where: {
 			representationId,
 			status: {
