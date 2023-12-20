@@ -28,36 +28,48 @@ const shortComment = 'I am against the proposal since it will reduce resident pa
 
 And('I have been asked to check my answers', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	cy.selectRadioYesOrNo('Yes');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	repAddressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Representee Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	repTelNumber.enterTextIntoRepTelephoneNumberField('12121212121');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	tellAboutProject.enterTextIntoCommentsField(shortComment);
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 });
 
@@ -69,6 +81,7 @@ And(
 	'I verify below data is present on Check your answers before registering page',
 	function (table) {
 		cyaBeforeReg.assertDataOnPage(table);
+		cy.captureScreenForSiteMap();
 	}
 );
 
@@ -76,18 +89,22 @@ And('User clicks on accept and continue button for {string}', (linkType) => {
 	switch (linkType) {
 		case 'myself':
 			cy.clickOnHref('/register/myself/declaration');
+			cy.captureScreenForSiteMap();
 			break;
 		case 'organisation':
 			cy.clickOnHref('/register/organisation/declaration');
+			cy.captureScreenForSiteMap();
 			break;
 		case 'on behalf':
 			cy.clickOnHref('/register/agent/declaration');
+			cy.captureScreenForSiteMap();
 			break;
 	}
 });
 
 And('User clicks on accept and register button', () => {
 	cy.get('[data-cy="button-accept-and-regoster"]').click();
+	cy.captureScreenForSiteMap();
 });
 
 And('I click on {string} change link', (linkType) => {

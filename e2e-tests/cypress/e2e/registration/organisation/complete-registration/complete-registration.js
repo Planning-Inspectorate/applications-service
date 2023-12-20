@@ -16,33 +16,43 @@ const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I have been asked to check my answers', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	cy.selectRadioYesOrNo('Yes');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	cy.assertUserOnThePage('What is your job title or volunteer role?');
 	jobTitlePage.enterTextIntoJobTitleField('Test job title');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	emailAddressPage.enterTextIntoEmailField('test@test.com');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0QQ',
 		Country: 'United Kingdom'
 	});
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	telephoneNumberPage.enterTextIntoTelephoneNumberField('07859894511');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	commentsPage.enterTextIntoCommentsField('This is a test comment');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	cy.assertUserOnThePage('check your answers before registering organisation');
 });
 
 When('I confirm my answers are correct', () => {
+	cy.captureScreenForSiteMap();
 	cy.clickOnHref('/register/organisation/declaration');
 });
 
 When('I accept the declaration', () => {
 	cy.get('[data-cy="button-accept-and-regoster"]').click();
+	cy.captureScreenForSiteMap();
 });

@@ -659,6 +659,15 @@ module.exports = (pageName) => {
 				});
 			cy.url().should('include', '/cookies-info');
 			break;
+		case 'contact':
+			cy.title().should('eq', 'Contact');
+			cy.get('h1')
+				.invoke('text')
+				.then((text) => {
+					expect(text).to.contain('Contact us');
+				});
+			cy.url().should('include', '/contact');
+			break;
 		case 'what is the name of the organisation you work for?':
 			cy.title().should(
 				'eq',

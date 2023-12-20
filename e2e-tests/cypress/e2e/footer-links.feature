@@ -22,3 +22,7 @@ Feature: verify footer links
     Scenario: click on Cookies
         And I click on "Cookies" footer link
         Then I am on the "Cookies settings" page
+
+		Scenario: click on Contact
+				And I click on "Contact" footer link
+				Then I am on the "Contact" page
