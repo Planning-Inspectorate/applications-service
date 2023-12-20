@@ -1,4 +1,4 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/default.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
@@ -21,7 +21,7 @@
 
       {% include 'components/flash-message.njk' %}
 
-      <h1 class="govuk-heading-l cookie-settings__with-js govuk-!-display-none" data-cy="cookies-with-js-heading">Cookies</h1>
+      <h1 class="govuk-heading-l cookie-settings__with-js govuk-!-display-none" data-cy="cookies-with-js-heading">Cookies on application service</h1>
       <h1 class="govuk-heading-l cookie-settings__no-js" data-cy="cookies-without-js-heading">Cookies on application service</h1>
 
       <p data-cy="common-cookie-information">Cookies are files saved on your phone, tablet or computer when you visit a website. We use cookies to store
@@ -30,11 +30,11 @@
 
       <h2 class="govuk-heading-m">Cookie settings</h2>
 
-      {% include 'includes/cookies-without-js.njk' %}
+      {% include './_includes/cookies-without-js.njk' %}
 
       <div class="cookie-settings__with-js govuk-!-display-none" data-cy="cookies-with-js-content">
         <p>We use different types of cookies. </p>
-        <p>You can choose which cookies you’re happy for us to use and how the data is shared.</p>
+        <p>You can choose which cookies you're happy for us to use and how the data is shared.</p>
         <h2 class="govuk-heading-m">Strictly necessary cookies</h2>
         <p>We use essential cookies to help you use the application service. These do things
           such as:</p>

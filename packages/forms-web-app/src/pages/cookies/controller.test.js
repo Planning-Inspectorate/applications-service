@@ -1,19 +1,23 @@
-const cookiesController = require('../../../src/controllers/cookies');
-const cookieConfig = require('../../../src/scripts/cookie/cookie-config');
-const appConfig = require('../../../src/config');
-const getPreviousPagePath = require('../../../src/lib/get-previous-page-path');
-const { VIEW } = require('../../../src/lib/views');
-const { mockReq, mockRes } = require('../mocks');
-const { addFlashMessage } = require('../../../src/lib/flash-message');
-const { removeUnwantedCookies } = require('../../../src/lib/remove-unwanted-cookies');
-const { toBase64 } = require('../../../src/lib/base64');
+const { getCookiesController, postCookiesController } = require('./controller');
+const cookieConfig = require('../../scripts/cookie/cookie-config');
+const appConfig = require('../../config');
+const getPreviousPagePath = require('../../lib/get-previous-page-path');
+const { mockReq, mockRes } = require('../../../__tests__/unit/mocks');
+const { addFlashMessage } = require('../../lib/flash-message');
+const { removeUnwantedCookies } = require('../../lib/remove-unwanted-cookies');
+const { toBase64 } = require('../../lib/base64');
+const { getCookiesURL } = require('./_utils/get-cookies-url');
+
+const view = 'cookies/view.njk';
+const cookiesUpdatedMessagePath = 'cookies/_includes/cookies-updated-successfully-message.njk';
+const cookiesURL = getCookiesURL();
 
 jest.mock('../../../src/config');
 jest.mock('../../../src/lib/remove-unwanted-cookies');
 jest.mock('../../../src/lib/flash-message');
 jest.mock('../../../src/lib/get-previous-page-path');
 
-describe('controllers/cookies', () => {
+describe('pages/cookies/controller.js', () => {
 	const FIXED_SYSTEM_TIME = '2020-11-18T00:00:00Z';
 	const fakePreviousPage = '/some/previous/page';
 
@@ -39,7 +43,7 @@ describe('controllers/cookies', () => {
 		jest.useRealTimers();
 	});
 
-	describe('getCookies', () => {
+	describe('#getCookiesController', () => {
 		beforeEach(() => {
 			getPreviousPagePath.mockImplementation(() => fakePreviousPage);
 		});
@@ -47,14 +51,14 @@ describe('controllers/cookies', () => {
 		it('should not throw if cannot parse req.cookies value', () => {
 			req.cookies[cookieConfig.COOKIE_POLICY_KEY] = 'blurgh';
 
-			cookiesController.getCookies(req, res);
+			getCookiesController(req, res);
 
 			expect(req.log.warn).toHaveBeenCalledWith(
 				new SyntaxError('Unexpected token b in JSON at position 0'),
 				'Get cookies.'
 			);
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.COOKIES, {
+			expect(res.render).toHaveBeenCalledWith(view, {
 				cookiePolicy: {},
 				previousPagePath: toBase64(fakePreviousPage),
 				displayCookieBanner: false
@@ -62,9 +66,9 @@ describe('controllers/cookies', () => {
 		});
 
 		it('should call the correct template', () => {
-			cookiesController.getCookies(req, res);
+			getCookiesController(req, res);
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.COOKIES, {
+			expect(res.render).toHaveBeenCalledWith(view, {
 				cookiePolicy: undefined,
 				previousPagePath: toBase64(fakePreviousPage),
 				displayCookieBanner: false
@@ -72,11 +76,11 @@ describe('controllers/cookies', () => {
 		});
 	});
 
-	describe('postCookies', () => {
+	describe('#postCookiesController', () => {
 		it('should redirect on the happy path - no data submitted', () => {
-			cookiesController.postCookies(req, res);
+			postCookiesController(req, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.COOKIES}`);
+			expect(res.redirect).toHaveBeenCalledWith(`/cookies`);
 
 			expect(res.cookie).not.toHaveBeenCalled();
 		});
@@ -89,9 +93,9 @@ describe('controllers/cookies', () => {
 				}
 			};
 
-			cookiesController.postCookies(req, res);
+			postCookiesController(req, res);
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.COOKIES, {
+			expect(res.render).toHaveBeenCalledWith(view, {
 				cookiePolicy: undefined,
 				displayCookieBanner: false
 			});
@@ -188,19 +192,19 @@ describe('controllers/cookies', () => {
 						before();
 						req = setupReq();
 
-						cookiesController.postCookies(req, res);
+						postCookiesController(req, res);
 
 						expect(addFlashMessage).toHaveBeenCalledWith(req, {
 							type: 'success',
 							template: {
-								path: `${VIEW.MESSAGES.COOKIES_UPDATED_SUCCESSFULLY}.njk`,
+								path: cookiesUpdatedMessagePath,
 								vars: {
 									previousPagePath: expectedPreviousPagePath
 								}
 							}
 						});
 
-						expect(res.redirect).toHaveBeenCalledWith(`/${VIEW.COOKIES}`);
+						expect(res.redirect).toHaveBeenCalledWith(cookiesURL);
 
 						runExtraAssertions(req, res);
 					});

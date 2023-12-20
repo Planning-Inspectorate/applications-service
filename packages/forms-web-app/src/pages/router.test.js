@@ -1,10 +1,19 @@
 const { getIndexController } = require('./index/controller');
 const { getContactController } = require('./contact/controller');
+const { getCookiesController, postCookiesController } = require('./cookies/controller');
 const { getDetailedInformationController } = require('./detailed-information/controller');
 const { getProjectSearchController } = require('./project-search/controller');
 const { getRegisterOfApplicationsController } = require('./register-of-applications/controller');
-
 const { projectsRouter } = require('./projects/router');
+
+const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
+const { validationErrorHandler } = require('../validators/validation-error-handler');
+
+jest.mock('./cookies/_validators/validate-cookies', () => {
+	return {
+		cookiesValidationRules: jest.fn()
+	};
+});
 
 jest.mock('../config', () => {
 	const originalConfig = jest.requireActual('../config');
@@ -41,6 +50,14 @@ describe('pages/router', () => {
 
 			expect(get).toHaveBeenCalledWith('/contact', getContactController);
 
+			expect(get).toHaveBeenCalledWith('/cookies', getCookiesController);
+			expect(post).toHaveBeenCalledWith(
+				'/cookies',
+				cookiesValidationRules(),
+				validationErrorHandler,
+				postCookiesController
+			);
+
 			expect(get).toHaveBeenCalledWith('/detailed-information', getDetailedInformationController);
 
 			expect(get).toHaveBeenCalledWith('/project-search', getProjectSearchController);
@@ -52,8 +69,8 @@ describe('pages/router', () => {
 
 			expect(use).toHaveBeenCalledWith(projectsRouter);
 
-			expect(get).toBeCalledTimes(5);
-			expect(post).toBeCalledTimes(0);
+			expect(get).toBeCalledTimes(6);
+			expect(post).toBeCalledTimes(1);
 			expect(use).toBeCalledTimes(1);
 		});
 	});

@@ -1,7 +1,5 @@
 const VIEW = {
 	APPLICATION_NUMBER: 'application-number',
-
-	COOKIES: 'cookies',
 	PROJECTS: {
 		PROJECT: 'projects/index',
 		PROJECT_TIMELINE: 'projects/project-timeline',
@@ -15,9 +13,6 @@ const VIEW = {
 	PROJECT_SEARCH: 'project-search',
 	GUIDANCE_PAGES: {
 		BEFORE_APPLY: 'guidance-pages/before-apply'
-	},
-	MESSAGES: {
-		COOKIES_UPDATED_SUCCESSFULLY: 'messages/cookies-updated-successfully'
 	},
 	REGISTER: {
 		START: 'register/start',
