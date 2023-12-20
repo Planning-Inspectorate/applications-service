@@ -1,10 +1,7 @@
-const {
-	getFullName,
-	postFullName
-} = require('../../../../../../src/controllers/register/common/full-name/controller');
+const { getRegisterNameController, postRegisterNameController } = require('./controller');
 
-describe('controllers/register/common/full-name/controller', () => {
-	describe('#getFullname', () => {
+describe('pages/projects/register/_common/name/controller', () => {
+	describe('#getRegisterNameController', () => {
 		describe('When getting the registration full name page', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -18,14 +15,13 @@ describe('controllers/register/common/full-name/controller', () => {
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } }
 				};
 				beforeEach(() => {
-					getFullName(req, res);
+					getRegisterNameController(req, res);
 				});
 				it('should render the registration full name page with the myself data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/name/view.njk', {
 						pageTitle:
 							'What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						hint: `<p>We will publish this on the website along with your comments about the project.</p>
-                <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`,
+						hint: `<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`,
 						fullName: 'mock full name'
 					});
 				});
@@ -36,10 +32,10 @@ describe('controllers/register/common/full-name/controller', () => {
 					session: { orgRegdata: { ['full-name']: 'mock full name' } }
 				};
 				beforeEach(() => {
-					getFullName(req, res);
+					getRegisterNameController(req, res);
 				});
 				it('should render the registration full name page with the organisation data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/name/view.njk', {
 						pageTitle:
 							'What is your full name? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						fullName: 'mock full name'
@@ -52,10 +48,10 @@ describe('controllers/register/common/full-name/controller', () => {
 					session: { behalfRegdata: { representor: { ['full-name']: 'mock full name' } } }
 				};
 				beforeEach(() => {
-					getFullName(req, res);
+					getRegisterNameController(req, res);
 				});
 				it('should render the registration full name page with the agent data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/name/view.njk', {
 						pageTitle:
 							'What is your full name? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						fullName: 'mock full name'
@@ -71,14 +67,14 @@ describe('controllers/register/common/full-name/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getFullName(req, res)).toThrowError(
+				expect(() => getRegisterNameController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
 		});
 	});
 
-	describe('#postFullName', () => {
+	describe('#postRegisterNameController', () => {
 		describe('When posting the registration full name', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -90,7 +86,7 @@ describe('controllers/register/common/full-name/controller', () => {
 			describe('and there is an unrecoverable error', () => {
 				const req = {};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 
 				it('should render the error page', () => {
@@ -107,10 +103,10 @@ describe('controllers/register/common/full-name/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 				it('should render full name page with the error', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/name/view.njk', {
 						errorSummary: [
 							{
 								href: '#',
@@ -122,8 +118,7 @@ describe('controllers/register/common/full-name/controller', () => {
 						},
 						pageTitle:
 							'What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						hint: `<p>We will publish this on the website along with your comments about the project.</p>
-                <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
+						hint: `<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
 					});
 				});
 			});
@@ -137,16 +132,15 @@ describe('controllers/register/common/full-name/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 				it('should render full name page with the error', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/full-name', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/name/view.njk', {
 						errors: { ['full-name']: 'an error' },
 						errorSummary: [{ text: 'Error summary', href: '#' }],
 						pageTitle:
 							'What is your full name? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						hint: `<p>We will publish this on the website along with your comments about the project.</p>
-                <p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
+						hint: `<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
 					});
 				});
 			});
@@ -160,7 +154,7 @@ describe('controllers/register/common/full-name/controller', () => {
 					query: { mode: 'edit' }
 				};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -178,7 +172,7 @@ describe('controllers/register/common/full-name/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -196,7 +190,7 @@ describe('controllers/register/common/full-name/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -214,7 +208,7 @@ describe('controllers/register/common/full-name/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postFullName(req, res);
+					postRegisterNameController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(

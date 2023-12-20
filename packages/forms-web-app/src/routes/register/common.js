@@ -1,9 +1,6 @@
 const express = require('express');
 
-const { decodeUri } = require('../../middleware/decode-uri');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
-const { rules: fullNameValidationRules } = require('../../validators/shared/full-name');
-const fullNameController = require('../../controllers/register/common/full-name/controller');
 const { emailValidationRules } = require('../../validators/shared/email-address');
 const emailController = require('../../controllers/register/common/email-address/controller');
 const { rules: telephoneValidationRules } = require('../../validators/register/myself/telephone');
@@ -14,15 +11,6 @@ const declarationController = require('../../controllers/register/common/declara
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router({ mergeParams: true });
-
-router.get('/full-name', fullNameController.getFullName);
-router.post(
-	'/full-name',
-	decodeUri('body', ['full-name']),
-	fullNameValidationRules(),
-	validationErrorHandler,
-	fullNameController.postFullName
-);
 
 router.get('/email-address', emailController.getEmailAddress);
 

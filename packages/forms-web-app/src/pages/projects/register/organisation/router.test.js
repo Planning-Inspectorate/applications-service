@@ -2,18 +2,24 @@ const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
-
 const {
 	getRegisterAreYou18Controller,
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
+const {
+	getRegisterNameController,
+	postRegisterNameController
+} = require('../_common/name/controller');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
+const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
-const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
+const { decodeUri } = require('../../../../middleware/decode-uri');
 
 jest.mock('../../../../validators/register/myself/address', () => {
 	return {
@@ -23,6 +29,16 @@ jest.mock('../../../../validators/register/myself/address', () => {
 jest.mock('../../../../validators/register/organisation/are-you-18-over', () => {
 	return {
 		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/shared/full-name', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../middleware/decode-uri', () => {
+	return {
+		decodeUri: jest.fn()
 	};
 });
 
@@ -46,6 +62,21 @@ describe('pages/projects/register/organisation/router', () => {
 
 		it('should call the register organisation routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/full-name',
+				registerMiddleware,
+				getRegisterNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/full-name',
+				registerMiddleware,
+				decodeUri(),
+				fullNameValidationRules(),
+				validationErrorHandler,
+				postRegisterNameController
+			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['full-name']);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
 				registerMiddleware,
 				getRegisterAddressController
@@ -63,7 +94,6 @@ describe('pages/projects/register/organisation/router', () => {
 				registerMiddleware,
 				getRegisterAreYou18Controller
 			);
-
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/are-you-18-over',
 				registerMiddleware,
@@ -72,8 +102,8 @@ describe('pages/projects/register/organisation/router', () => {
 				postRegisterAreYou18Controller
 			);
 
-			expect(get).toBeCalledTimes(2);
-			expect(post).toBeCalledTimes(2);
+			expect(get).toBeCalledTimes(3);
+			expect(post).toBeCalledTimes(3);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

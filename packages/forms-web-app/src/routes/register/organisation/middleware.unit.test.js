@@ -3,6 +3,7 @@ describe('#registerMiddleware', () => {
 	it('registerMiddleware - no errors', () => {
 		const next = jest.fn();
 		const req = {
+			get: jest.fn().mockReturnValue('referrer-response'),
 			session: {
 				registerJourneyStarted: true,
 				caseRef: 'a-case-ref'
