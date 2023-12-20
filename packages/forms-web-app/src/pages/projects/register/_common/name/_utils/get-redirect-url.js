@@ -1,4 +1,4 @@
-const { VIEW } = require('../../../../lib/views');
+const { VIEW } = require('../../../../../../lib/views');
 const getRedirectUrl = (query, key) => {
 	let redirectURl = '';
 	if (query.mode === 'edit') {

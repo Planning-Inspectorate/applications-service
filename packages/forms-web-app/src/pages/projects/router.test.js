@@ -11,6 +11,7 @@ const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
 
 const { projectsMiddleware, projectMigrationMiddleware } = require('./_middleware/middleware');
+const { registerRouter } = require('./register/router');
 
 jest.mock('../../config', () => {
 	const originalConfig = jest.requireActual('../../config');
@@ -82,9 +83,11 @@ describe('pages/projects/router', () => {
 
 			expect(use).toHaveBeenCalledWith(getUpdatesRouter);
 
+			expect(use).toHaveBeenCalledWith(registerRouter);
+
 			expect(get).toBeCalledTimes(4);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(3);
+			expect(use).toBeCalledTimes(4);
 		});
 	});
 });

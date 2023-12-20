@@ -1,24 +1,19 @@
-const {
-	VIEW: {
-		REGISTER: {
-			COMMON: { FULL_NAME_VIEW }
-		}
-	}
-} = require('../../../../lib/views');
-const { getKeyFromUrl } = require('../get-key-from-url');
-const { getRedirectUrl } = require('./get-redirect-url');
-const { viewModel } = require('./viewModel');
-const logger = require('../../../../lib/logger');
-const { getSession, setSession } = require('../session');
+const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
+const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const { viewModel } = require('./_utils/viewModel');
+const logger = require('../../../../../lib/logger');
+const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 
+const view = 'projects/register/_common/name/view.njk';
 const fullNameKey = 'full-name';
-const getFullName = (req, res) => {
+
+const getRegisterNameController = (req, res) => {
 	try {
 		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
-
 		const fullName = getSession(session, key)[fullNameKey];
-		return res.render(FULL_NAME_VIEW, {
+
+		return res.render(view, {
 			...viewModel[key],
 			fullName
 		});
@@ -27,7 +22,8 @@ const getFullName = (req, res) => {
 		throw e;
 	}
 };
-const postFullName = (req, res) => {
+
+const postRegisterNameController = (req, res) => {
 	try {
 		const { body, query, originalUrl, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
@@ -35,7 +31,7 @@ const postFullName = (req, res) => {
 		const key = getKeyFromUrl(originalUrl);
 
 		if (errors[fullNameKey] || Object.keys(errors).length > 0) {
-			return res.render(FULL_NAME_VIEW, {
+			return res.render(view, {
 				errors,
 				errorSummary,
 				...viewModel[key]
@@ -52,6 +48,6 @@ const postFullName = (req, res) => {
 };
 
 module.exports = {
-	getFullName,
-	postFullName
+	getRegisterNameController,
+	postRegisterNameController
 };
