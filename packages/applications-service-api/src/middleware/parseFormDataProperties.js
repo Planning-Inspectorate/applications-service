@@ -15,17 +15,6 @@ const parseFormDataProperties = (booleanProperties = [], integerProperties = [])
 	};
 };
 
-const parseIntegerParam = (property) => {
-	return (req, res, next) => {
-		if (req.params && req.params[property]) {
-			req.params[property] = parseInteger(req.params[property]);
-		}
-
-		next();
-	};
-}
-
 module.exports = {
-	parseFormDataProperties,
-	parseIntegerParam
+	parseFormDataProperties
 };

@@ -33,6 +33,13 @@ module.exports = {
 				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_ADVICE_CASE_REFERENCES)
 			}
 		},
+		representations: {
+			getRepresentations: {
+				caseReferences: parseCSV(
+					process.env.BACK_OFFICE_INTEGRATION_GET_REPRESENTATION_CASE_REFERENCES
+				)
+			}
+		},
 		submissions: {
 			postSubmission: {
 				caseReferences: parseCSV(

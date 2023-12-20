@@ -1,0 +1,8 @@
+.moj-primary-navigation {
+	background-color: govuk-colour('light-grey');
+
+	&.pins-modded-full-width {
+		box-shadow: 0 0 0 100vmax govuk-colour('light-grey');
+		clip-path: inset(0 -100vmax);
+	}
+}

@@ -1,4 +1,4 @@
-{% extends "../_layouts/all-projects.njk" %}
+{% extends "layouts/default.njk" %}
 
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
@@ -15,7 +15,7 @@
 		<div class="govuk-grid-row">
 			<div class="govuk-grid-column-one-third">
 
-				{% include "./includes/filters.njk" %}
+				{% include "./includes/sidebar.njk" %}
 
 			</div>
 

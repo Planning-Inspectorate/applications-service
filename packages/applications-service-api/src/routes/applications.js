@@ -8,7 +8,7 @@ const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi'
 const {
 	normaliseArrayQueryParams,
 	parseIntegerQueryParams
-} = require('../middleware/parseQueryParamProperties');
+} = require('../middleware/parseParamProperties');
 
 const router = express.Router();
 

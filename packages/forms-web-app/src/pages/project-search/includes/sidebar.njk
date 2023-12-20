@@ -1,0 +1,21 @@
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
+{% from "components/layout/slots.njk" import layoutSlots %}
+{% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
+
+{{ layoutSlots([
+  uiCheckboxAccordion(
+    true,
+    filters,
+    "Filter",
+    pagination.paginationData.totalItems + " projects",
+    "project-search-page-filters",
+    'modal-on-tablet'
+  ),
+  uiVerticalTabs(
+    "Related content",
+    null,
+    relatedContentLinks,
+    "Related content navigation",
+    "h3"
+  )
+]) }}

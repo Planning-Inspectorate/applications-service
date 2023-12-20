@@ -21,7 +21,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 								]
 							},
 							key: { text: "How you've submitted your representation" },
-							value: { html: 'Write a comment' }
+							value: { html: 'Make a comment' }
 						});
 					});
 				});

@@ -19,7 +19,7 @@ const getRepresentationController = async (req, res, next) => {
 		const { data: applicationData } = await getAppData(case_ref);
 		const { ProjectName } = applicationData;
 
-		const { data: representation } = await getRepresentation(id);
+		const { data: representation } = await getRepresentation(id, case_ref);
 
 		const pageHeading = `Representation by ${representation.PersonalName}`;
 

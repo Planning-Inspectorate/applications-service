@@ -38,6 +38,10 @@
 
 			{% include "components/core/banner.njk" %}
 
+			{% if featureFlag.allowPrimaryNavigation %}
+				{% include "includes/primary-navigation.njk" %}
+			{% endif %}
+
 			{% block backButton %}
 				{% if not hideBackLink %}
 					{{ govukBackLink({

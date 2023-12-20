@@ -5,7 +5,7 @@ const getRelevantRepresentationsQuery = (
 	{ itemsPerPage, page, searchTerm, type }
 ) => {
 	return buildQueryString({
-		applicationId: case_ref,
+		caseReference: case_ref,
 		size: itemsPerPage || 25,
 		page: page || 1,
 		searchTerm: searchTerm || [],

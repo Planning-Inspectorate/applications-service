@@ -97,11 +97,11 @@ jest.mock('../../../src/repositories/document.ni.repository');
 
 getFilters.mockImplementation(() => Promise.resolve([]));
 
-getRepresentationsForApplication.mockImplementation(({ applicationId }) => {
-	if (applicationId === 'EN010009') {
+getRepresentationsForApplication.mockImplementation(({ caseReference }) => {
+	if (caseReference === 'EN010009') {
 		return Promise.resolve(mockData);
 	}
-	if (applicationId === 'EN000000') {
+	if (caseReference === 'EN000000') {
 		return Promise.resolve({
 			count: 0,
 			representations: [],
@@ -115,93 +115,64 @@ getRepresentationsForApplication.mockImplementation(({ applicationId }) => {
 	return Promise.resolve(null);
 });
 
-getRepresentationById.mockImplementation((id) => {
-	if (id === 2) {
-		return Promise.resolve(mockData.representations[0]);
-	}
-	return Promise.resolve(null);
-});
-
 getDocumentsByDataId.mockImplementation(() => {
 	return Promise.resolve({ 0: {} });
 });
 
-describe('getRepresentationsForApplication', () => {
-	it('should get representations for application from mock', async () => {
-		const req = httpMocks.createRequest({
-			query: {
-				applicationId: 'EN010009',
-				page: 1,
-				type: 'abc'
-			}
+describe('representation controller', () => {
+	describe('getRepresentationsForApplication', () => {
+		it('should get representations for application from mock', async () => {
+			const req = httpMocks.createRequest({
+				query: {
+					caseReference: 'EN010009',
+					page: 1,
+					type: 'abc'
+				}
+			});
+			const res = httpMocks.createResponse();
+			await getRepresentations(req, res);
+			const data = res._getData();
+			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+			expect(data).toEqual(returnData);
 		});
-		const res = httpMocks.createResponse();
-		await getRepresentations(req, res);
-		const data = res._getData();
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual(returnData);
+		it('should return an empty list if no representations found', async () => {
+			const req = httpMocks.createRequest({
+				query: {
+					caseReference: 'EN000000'
+				}
+			});
+			const res = httpMocks.createResponse();
+			await getRepresentations(req, res);
+			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+			expect(res._getData()).toEqual({
+				representations: [],
+				totalItems: 0,
+				itemsPerPage: 3,
+				totalPages: 1,
+				currentPage: 1,
+				filters: {
+					typeFilters: []
+				}
+			});
+		});
 	});
-	it('should return an empty list if no representations found', async () => {
-		const req = httpMocks.createRequest({
-			query: {
-				applicationId: 'EN000000'
-			}
-		});
-		const res = httpMocks.createResponse();
-		await getRepresentations(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(res._getData()).toEqual({
-			representations: [],
-			totalItems: 0,
-			itemsPerPage: 3,
-			totalPages: 1,
-			currentPage: 1,
-			filters: {
-				typeFilters: []
-			}
-		});
-	});
-	it('should return internal server error', async () => {
-		const req = httpMocks.createRequest({
-			query: {
-				applicationId: 'ENF0000F'
-			}
-		});
-		const res = httpMocks.createResponse();
-		await getRepresentations(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-		expect(res._getData()).toContain(`Problem getting representations`);
-	});
-});
+	describe('getRepresentationById', () => {
+		it('should get representation from mock', async () => {
+			getRepresentationById.mockResolvedValue(mockData.representations[0]);
+			const req = httpMocks.createRequest({
+				params: {
+					id: 2
+				},
+				query: {
+					caseReference: 'EN010009'
+				}
+			});
 
-describe('getRepresentationById', () => {
-	it('should get representation from mock', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				id: 2
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await getRepresentation(req, res);
-		const data = res._getData();
-		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual({ ...returnData.representations[0], attachments: [{}] });
-	});
-
-	it('should return representation not found', async () => {
-		const req = httpMocks.createRequest({
-			params: {
-				id: 20000
-			}
-		});
-
-		const res = httpMocks.createResponse();
-		await getRepresentation(req, res);
-		expect(res._getStatusCode()).toEqual(StatusCodes.NOT_FOUND);
-		expect(res._getData()).toEqual({
-			code: 404,
-			errors: ['Representation with ID 20000 not found']
+			const res = httpMocks.createResponse();
+			await getRepresentation(req, res);
+			const data = res._getData();
+			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
+			expect(data).toEqual({ ...returnData.representations[0] });
 		});
 	});
 });

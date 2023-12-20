@@ -23,8 +23,8 @@ And('I click on Apply filters', () => {
 	overviewPage.clickOnApplyFilters();
 });
 
-And('I click on Find out more about registering to have your say', () => {
-	cy.get('a[href*="/having-your-say-guide"]').last().click();
+And('I click on Having your say about a national infrastructure project link', () => {
+	cy.clickOnHref('/having-your-say-guide');
 });
 
 And('I click on required {string} link', (requiredLink) => {

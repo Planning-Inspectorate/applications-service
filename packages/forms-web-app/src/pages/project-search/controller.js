@@ -5,7 +5,7 @@ const { getProjectSearchQueryString } = require('./utils/get-project-search-quer
 
 const view = 'project-search/view.njk';
 
-const getProjectSearch = async (req, res, next) => {
+const getProjectSearchController = async (req, res, next) => {
 	try {
 		const { query } = req;
 
@@ -21,5 +21,5 @@ const getProjectSearch = async (req, res, next) => {
 };
 
 module.exports = {
-	getProjectSearch
+	getProjectSearchController
 };

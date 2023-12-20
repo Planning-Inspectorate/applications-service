@@ -3,7 +3,7 @@ const express = require('express');
 const adviceController = require('../controllers/advice');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
-const { parseIntegerQueryParams } = require('../middleware/parseQueryParamProperties');
+const { parseIntegerQueryParams } = require('../middleware/parseParamProperties');
 
 const router = express.Router();
 

@@ -593,7 +593,7 @@ paths:
         - Representations
       parameters:
         - in: query
-          name: applicationId
+          name: caseReference
           example: 'EN010009'
           required: true
           schema:
@@ -656,6 +656,13 @@ paths:
           schema:
             type: integer
           description: Representation id
+        - in: query
+          name: caseReference
+          example: 'EN010009'
+          required: true
+          schema:
+              type: string
+          description: Case reference
       responses:
         '200':
           description: Returns a representation

@@ -8,7 +8,7 @@ const getRepresentationById = async (ID) => {
 const getRepresentationsWithCount = async (options = {}) => {
 	let findOptions = pick(options, ['offset', 'limit', 'order']);
 	findOptions.raw = true;
-	findOptions.where = { [Op.and]: [{ CaseReference: options.applicationId }] };
+	findOptions.where = { [Op.and]: [{ CaseReference: options.caseReference }] };
 
 	// types
 	let types = [];

@@ -1,4 +1,4 @@
-const { getRegisterOfApplications } = require('./controller');
+const { getRegisterOfApplicationsController } = require('./controller');
 
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 
@@ -8,7 +8,7 @@ jest.mock('../../lib/application-api-wrapper', () => ({
 	getAllProjectList: jest.fn()
 }));
 
-describe('register-of-applications/controller', () => {
+describe('pages/register-of-applications/controller', () => {
 	let req;
 	let res;
 	let next;
@@ -23,12 +23,12 @@ describe('register-of-applications/controller', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('#getRegisterOfApplications', () => {
+	describe('#getRegisterOfApplicationsController', () => {
 		describe('When calling the get register of applications controller', () => {
 			describe('and there is an issue', () => {
 				beforeEach(async () => {
 					await getAllProjectList.mockResolvedValue({ resp_code: 500 });
-					await getRegisterOfApplications(req, res, next);
+					await getRegisterOfApplicationsController(req, res, next);
 				});
 				it('should render the error page', () => {
 					expect(next).toHaveBeenCalledWith(new Error('Applications response status not 200'));
@@ -39,15 +39,11 @@ describe('register-of-applications/controller', () => {
 		describe('and there are no issues', () => {
 			beforeEach(async () => {
 				await getAllProjectList.mockResolvedValue(getApplicationsFixture);
-				await getRegisterOfApplications(req, res, next);
+				await getRegisterOfApplicationsController(req, res, next);
 			});
 
 			it('should call the correct template', async () => {
 				expect(res.render).toHaveBeenCalledWith('register-of-applications/view.njk', {
-					allProjectsSubNavigationRoutes: {
-						projectSearch: '/project-search',
-						registerOfApplications: '/register-of-applications'
-					},
 					applicationsDownloadURL: '/api/applications-download',
 					totalApplicationsWithoutFilters: 21,
 					applications: [

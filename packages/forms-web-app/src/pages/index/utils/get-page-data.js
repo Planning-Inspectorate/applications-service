@@ -3,6 +3,9 @@ const {
 } = require('../../../config');
 const { mapTitles } = require('../../_utils/map-titles');
 const { getContactURL } = require('../../contact/_utils/get-contact-url');
+const {
+	getDetailedInformationURL
+} = require('../../detailed-information/_utils/get-detailed-information-url');
 const { haveYourSayGuideSubdirectory } = require('../../have-your-say-guide/config');
 const { processGuideSubdirectory } = require('../../process-guide/config');
 const { projectSearchRoute } = require('../../project-search/config');
@@ -13,7 +16,8 @@ const getPageData = () => {
 			haveYourSayGuide: haveYourSayGuideSubdirectory,
 			processGuide: processGuideSubdirectory,
 			projectSearch: projectSearchRoute,
-			contactURL: getContactURL()
+			contactURL: getContactURL(),
+			detailedInformationURL: getDetailedInformationURL()
 		},
 		...mapTitles('Welcome to National Infrastructure Planning'),
 		headerTitle: 'National Infrastructure Projects',
