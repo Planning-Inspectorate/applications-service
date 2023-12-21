@@ -1,8 +1,6 @@
 const express = require('express');
 
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
-const { emailValidationRules } = require('../../validators/shared/email-address');
-const emailController = require('../../controllers/register/common/email-address/controller');
 const { rules: telephoneValidationRules } = require('../../validators/register/myself/telephone');
 const telephoneNumberController = require('../../controllers/register/common/telephone-number/controller');
 const registrationCompleteController = require('../../controllers/register/common/registration-complete/controller');
@@ -11,15 +9,6 @@ const declarationController = require('../../controllers/register/common/declara
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router({ mergeParams: true });
-
-router.get('/email-address', emailController.getEmailAddress);
-
-router.post(
-	'/email-address',
-	emailValidationRules(),
-	validationErrorHandler,
-	emailController.postEmailAddress
-);
 
 router.get('/telephone-number', telephoneNumberController.getTelephoneNumber);
 

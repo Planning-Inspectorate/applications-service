@@ -1,19 +1,20 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/default.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% set title = pageTitle %}
+
 {% block pageTitle %}
 	{% if errors %}
 		{% set title = "Error: " + title %}
 	{% endif %}
+
 	{{ title }}
 {% endblock %}
 
 {% block content %}
-
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			{% if errorSummary %}
@@ -22,9 +23,9 @@
 					errorList: errorSummary
 				}) }}
 			{% endif %}
-			<form action="" method="POST" novalidate>
-				<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
 
+			<form method="POST" novalidate>
+				<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
 					{{ govukInput({
 						label: {
 							text: "What is your email address?",
@@ -52,9 +53,7 @@
 					type: "Submit",
 					attributes: { "data-cy":"button-save-and-continue"}
 				}) }}
-
 			</form>
 		</div>
 	</div>
-
 {% endblock %}

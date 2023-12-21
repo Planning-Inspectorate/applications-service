@@ -1,6 +1,14 @@
 const express = require('express');
 
 const {
+	getRegisterNameController,
+	postRegisterNameController
+} = require('../_common/name/controller');
+const {
+	getRegisterEmailController,
+	postRegisterEmailController
+} = require('../_common/email/controller');
+const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
@@ -8,30 +16,30 @@ const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
-const {
-	getRegisterNameController,
-	postRegisterNameController
-} = require('../_common/name/controller');
 
+const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
+const { getRegisterAgentEmailURL } = require('./email/_utils/get-register-agent-email-url');
 const { getRegisterAgentAddressURL } = require('./address/_utils/get-register-agent-address-url');
 const {
 	getRegisterAgentAreThey18URL
 } = require('./are-they-18/utils/get-register-agent-are-they-18-url');
-const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
-const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+const { decodeUri } = require('../../../../middleware/decode-uri');
 
+const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
+const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
-const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
-const { decodeUri } = require('../../../../middleware/decode-uri');
 
+const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+
+const registerAgentNameURL = getRegisterAgentNameURL();
+const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
-const registerAgentNameURL = getRegisterAgentNameURL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
@@ -43,6 +51,15 @@ registerAgentRouter.post(
 	fullNameValidationRules(),
 	validationErrorHandler,
 	postRegisterNameController
+);
+
+registerAgentRouter.get(registerAgentEmailURL, registerMiddleware, getRegisterEmailController);
+registerAgentRouter.post(
+	registerAgentEmailURL,
+	registerMiddleware,
+	emailValidationRules(),
+	validationErrorHandler,
+	postRegisterEmailController
 );
 
 registerAgentRouter.get(registerAgentAddressURL, registerMiddleware, getRegisterAddressController);
