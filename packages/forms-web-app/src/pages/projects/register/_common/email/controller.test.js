@@ -1,10 +1,7 @@
-const {
-	getEmailAddress,
-	postEmailAddress
-} = require('../../../../../../src/controllers/register/common/email-address/controller');
+const { getRegisterEmailController, postRegisterEmailController } = require('./controller');
 
-describe('controllers/register/common/email-address/controller', () => {
-	describe('#getEmailAddress', () => {
+describe('pages/projects/register/_common/email/controller', () => {
+	describe('#getRegisterEmailController', () => {
 		describe('When getting the registration email page', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -18,10 +15,10 @@ describe('controllers/register/common/email-address/controller', () => {
 					session: { mySelfRegdata: { ['email']: 'mock email' } }
 				};
 				beforeEach(() => {
-					getEmailAddress(req, res);
+					getRegisterEmailController(req, res);
 				});
 				it('should render the registration email page with the myself data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
 						pageTitle:
 							'What is your email address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						email: 'mock email'
@@ -34,10 +31,10 @@ describe('controllers/register/common/email-address/controller', () => {
 					session: { orgRegdata: { ['email']: 'mock email' } }
 				};
 				beforeEach(() => {
-					getEmailAddress(req, res);
+					getRegisterEmailController(req, res);
 				});
 				it('should render the registration email page with the organisation data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
 						pageTitle:
 							'What is your email address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						email: 'mock email'
@@ -50,10 +47,10 @@ describe('controllers/register/common/email-address/controller', () => {
 					session: { behalfRegdata: { representor: { ['email']: 'mock email' } } }
 				};
 				beforeEach(() => {
-					getEmailAddress(req, res);
+					getRegisterEmailController(req, res);
 				});
 				it('should render the registration email page with the agent data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
 						pageTitle:
 							'What is your email address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						email: 'mock email'
@@ -69,14 +66,14 @@ describe('controllers/register/common/email-address/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getEmailAddress(req, res)).toThrowError(
+				expect(() => getRegisterEmailController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
 		});
 	});
 
-	describe('#postEmailAddress', () => {
+	describe('#postRegisterEmailController', () => {
 		describe('When posting the registration email address', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -88,7 +85,7 @@ describe('controllers/register/common/email-address/controller', () => {
 			describe('and there is an unrecoverable error', () => {
 				const req = {};
 				beforeEach(() => {
-					postEmailAddress(req, res);
+					postRegisterEmailController(req, res);
 				});
 
 				it('should render the error page', () => {
@@ -105,10 +102,10 @@ describe('controllers/register/common/email-address/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					postEmailAddress(req, res);
+					postRegisterEmailController(req, res);
 				});
 				it('should render email address page with the error', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/email-address', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
 						errorSummary: [
 							{
 								href: '#',
@@ -133,7 +130,7 @@ describe('controllers/register/common/email-address/controller', () => {
 					query: { mode: 'edit' }
 				};
 				beforeEach(() => {
-					postEmailAddress(req, res);
+					postRegisterEmailController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -151,7 +148,7 @@ describe('controllers/register/common/email-address/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postEmailAddress(req, res);
+					postRegisterEmailController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -169,7 +166,7 @@ describe('controllers/register/common/email-address/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postEmailAddress(req, res);
+					postRegisterEmailController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -187,7 +184,7 @@ describe('controllers/register/common/email-address/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postEmailAddress(req, res);
+					postRegisterEmailController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(

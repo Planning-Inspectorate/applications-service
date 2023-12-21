@@ -1,37 +1,45 @@
 const express = require('express');
 
 const {
-	getRegisterAddressController,
-	postRegisterAddressController
-} = require('../_common/address/controller');
+	getRegisterNameController,
+	postRegisterNameController
+} = require('../_common/name/controller');
 const {
 	getRegisterAreYou18Controller,
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
 const {
-	getRegisterNameController,
-	postRegisterNameController
-} = require('../_common/name/controller');
+	getRegisterEmailController,
+	postRegisterEmailController
+} = require('../_common/email/controller');
+const {
+	getRegisterAddressController,
+	postRegisterAddressController
+} = require('../_common/address/controller');
 
-const { getRegisterMyselfAddressURL } = require('./address/_utils/get-register-myself-address-url');
+const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
 	getRegisterMyselfAreYou18URL
 } = require('./are-you-18/_utils/get-register-myself-are-you-18-url');
-const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
+const { getRegisterMyselfEmailURL } = require('./email/_utils/get-register-myself-email-url');
+const { getRegisterMyselfAddressURL } = require('./address/_utils/get-register-myself-address-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
-const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+const { decodeUri } = require('../../../../middleware/decode-uri');
 
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/myself/are-you-18-over');
-const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
-const { decodeUri } = require('../../../../middleware/decode-uri');
+const { emailValidationRules } = require('../../../../validators/shared/email-address');
+const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 
-const registerMyselfAddressURL = getRegisterMyselfAddressURL();
-const registerMyselfAreYou18URL = getRegisterMyselfAreYou18URL();
+const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+
 const registerMyselfNameURL = getRegisterMyselfNameURL();
+const registerMyselfAreYou18URL = getRegisterMyselfAreYou18URL();
+const registerMyselfEmailURL = getRegisterMyselfEmailURL();
+const registerMyselfAddressURL = getRegisterMyselfAddressURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -46,19 +54,6 @@ registerMyselfRouter.post(
 );
 
 registerMyselfRouter.get(
-	registerMyselfAddressURL,
-	registerMiddleware,
-	getRegisterAddressController
-);
-registerMyselfRouter.post(
-	registerMyselfAddressURL,
-	registerMiddleware,
-	addressValidationRules(),
-	validationErrorHandler,
-	postRegisterAddressController
-);
-
-registerMyselfRouter.get(
 	registerMyselfAreYou18URL,
 	registerMiddleware,
 	getRegisterAreYou18Controller
@@ -69,6 +64,28 @@ registerMyselfRouter.post(
 	areYou18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreYou18Controller
+);
+
+registerMyselfRouter.get(registerMyselfEmailURL, registerMiddleware, getRegisterEmailController);
+registerMyselfRouter.post(
+	registerMyselfEmailURL,
+	registerMiddleware,
+	emailValidationRules(),
+	validationErrorHandler,
+	postRegisterEmailController
+);
+
+registerMyselfRouter.get(
+	registerMyselfAddressURL,
+	registerMiddleware,
+	getRegisterAddressController
+);
+registerMyselfRouter.post(
+	registerMyselfAddressURL,
+	registerMiddleware,
+	addressValidationRules(),
+	validationErrorHandler,
+	postRegisterAddressController
 );
 
 module.exports = { registerMyselfRouter };
