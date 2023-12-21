@@ -1,16 +1,18 @@
 const { validationResult } = require('express-validator');
-const { rules, validUsageCookieOptions } = require('../../../src/validators/cookies');
-const { testExpressValidatorMiddleware } = require('./validation-middleware-helper');
+const { cookiesValidationRules, validUsageCookiesOptions } = require('./validate-cookies');
+const {
+	testExpressValidatorMiddleware
+} = require('../../../../__tests__/unit/validators/validation-middleware-helper');
 
 describe('validators/cookies', () => {
 	describe('rules', () => {
 		it('is configured with the expected rules', () => {
-			expect(rules().length).toEqual(1);
+			expect(cookiesValidationRules().length).toEqual(1);
 		});
 
-		describe('ruleUsageCookie', () => {
+		describe('ruleUsageCookies', () => {
 			it('is configured with the expected rules', () => {
-				const rule = rules()[0].builder.build();
+				const rule = cookiesValidationRules()[0].builder.build();
 
 				expect(rule.fields).toEqual(['usage-cookies']);
 				expect(rule.locations).toEqual(['body']);
@@ -70,16 +72,16 @@ describe('validators/cookies', () => {
 				const mockReq = given();
 				const mockRes = jest.fn();
 
-				await testExpressValidatorMiddleware(mockReq, mockRes, rules());
+				await testExpressValidatorMiddleware(mockReq, mockRes, cookiesValidationRules());
 				const result = validationResult(mockReq);
 				expected(result);
 			});
 		});
 	});
 
-	describe('validUsageCookieOptions', () => {
+	describe('validUsageCookiesOptions', () => {
 		it('should define the expected valid usage cookie options', () => {
-			expect(validUsageCookieOptions).toEqual(['on', 'off']);
+			expect(validUsageCookiesOptions).toEqual(['on', 'off']);
 		});
 	});
 });

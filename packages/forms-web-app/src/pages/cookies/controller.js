@@ -1,40 +1,30 @@
-const { VIEW } = require('../lib/views');
-const appConfig = require('../config');
-const cookieConfig = require('../scripts/cookie/cookie-config');
-const getPreviousPagePath = require('../lib/get-previous-page-path');
-const { addFlashMessage } = require('../lib/flash-message');
-const { removeUnwantedCookies } = require('../lib/remove-unwanted-cookies');
-const { toBase64, fromBase64 } = require('../lib/base64');
+const appConfig = require('../../config');
+const cookieConfig = require('../../scripts/cookie/cookie-config');
+const getPreviousPagePath = require('../../lib/get-previous-page-path');
+const { addFlashMessage } = require('../../lib/flash-message');
+const { removeUnwantedCookies } = require('../../lib/remove-unwanted-cookies');
+const { toBase64, fromBase64 } = require('../../lib/base64');
+const { getExistingCookiePolicy } = require('./_utils/get-existing-cookie-policy');
+const { getCookiesURL } = require('./_utils/get-cookies-url');
 
-const getExistingCookiePolicy = (req) => {
-	let cookiePolicy = {};
+const view = 'cookies/view.njk';
+const cookiesUpdatedMessagePath = 'cookies/_includes/cookies-updated-successfully-message.njk';
+const cookiesURL = getCookiesURL();
 
-	try {
-		cookiePolicy =
-			req.cookies &&
-			req.cookies[cookieConfig.COOKIE_POLICY_KEY] &&
-			JSON.parse(req.cookies[cookieConfig.COOKIE_POLICY_KEY]);
-	} catch (e) {
-		req.log.warn(e, 'Get cookies.');
-	}
-
-	return cookiePolicy;
-};
-
-exports.getCookies = (req, res) => {
-	res.render(VIEW.COOKIES, {
+const getCookiesController = (req, res) => {
+	res.render(view, {
 		cookiePolicy: getExistingCookiePolicy(req),
 		displayCookieBanner: false,
 		previousPagePath: toBase64(getPreviousPagePath(req))
 	});
 };
 
-exports.postCookies = (req, res) => {
+const postCookiesController = (req, res) => {
 	const { body } = req;
 	const { errors = {} } = body;
 
 	if (Object.keys(errors).length > 0) {
-		res.render(VIEW.COOKIES, {
+		res.render(view, {
 			cookiePolicy: getExistingCookiePolicy(req),
 			displayCookieBanner: false
 		});
@@ -42,7 +32,7 @@ exports.postCookies = (req, res) => {
 	}
 
 	if (typeof body['usage-cookies'] === 'undefined') {
-		res.redirect(`/${VIEW.COOKIES}`);
+		res.redirect(cookiesURL);
 		return;
 	}
 
@@ -62,7 +52,7 @@ exports.postCookies = (req, res) => {
 	addFlashMessage(req, {
 		type: 'success',
 		template: {
-			path: `${VIEW.MESSAGES.COOKIES_UPDATED_SUCCESSFULLY}.njk`,
+			path: cookiesUpdatedMessagePath,
 			vars: {
 				previousPagePath: fromBase64(body.previous_page_path) || '/'
 			}
@@ -73,5 +63,7 @@ exports.postCookies = (req, res) => {
 		removeUnwantedCookies(req, res);
 	}
 
-	res.redirect(`/${VIEW.COOKIES}`);
+	res.redirect(cookiesURL);
 };
+
+module.exports = { getCookiesController, postCookiesController };
