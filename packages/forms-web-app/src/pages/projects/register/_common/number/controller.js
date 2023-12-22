@@ -1,24 +1,19 @@
-const {
-	VIEW: {
-		REGISTER: {
-			COMMON: { TELEPHONE_NUMBER_VIEW }
-		}
-	}
-} = require('../../../../lib/views');
-const { getRedirectUrl } = require('./get-redirect-url');
-const { getKeyFromUrl } = require('../get-key-from-url');
-const { getSession, setSession } = require('../session');
-const { viewModel } = require('./viewModel');
-const logger = require('../../../../lib/logger');
+const logger = require('../../../../../lib/logger');
+const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
+const { getSession, setSession } = require('../../../../../controllers/register/common/session');
+const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const { viewModel } = require('./_utils/viewModel');
 
+const view = 'projects/register/_common/number/view.njk';
 const telephoneNumberKey = 'telephone';
-const getTelephoneNumber = (req, res) => {
+
+const getRegisterNumberController = (req, res) => {
 	try {
 		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
-
 		const telephone = getSession(session, key)[telephoneNumberKey];
-		return res.render(TELEPHONE_NUMBER_VIEW, {
+
+		return res.render(view, {
 			...viewModel[key],
 			telephone
 		});
@@ -28,14 +23,14 @@ const getTelephoneNumber = (req, res) => {
 	}
 };
 
-const postTelephoneNumber = (req, res) => {
+const postRegisterNumberController = (req, res) => {
 	try {
 		const { body, query, originalUrl, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 		const key = getKeyFromUrl(originalUrl);
 
 		if (errors[telephoneNumberKey] || Object.keys(errors).length > 0) {
-			return res.render(TELEPHONE_NUMBER_VIEW, {
+			return res.render(view, {
 				errors,
 				errorSummary,
 				...viewModel[key]
@@ -52,6 +47,6 @@ const postTelephoneNumber = (req, res) => {
 };
 
 module.exports = {
-	getTelephoneNumber,
-	postTelephoneNumber
+	getRegisterNumberController,
+	postRegisterNumberController
 };

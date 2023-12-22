@@ -18,7 +18,6 @@ const VIEW = {
 		START: 'register/start',
 		TYPE_OF_PARTY: 'register/who-registering-for',
 		COMMON: {
-			TELEPHONE_NUMBER_VIEW: 'register/common/telephone',
 			DECLARATION: 'register/common/declaration',
 			REGISTRATION_COMPLETE: 'register/common/registration-complete',
 			REGISTRATION_SAVED: 'register/common/registration-saved'

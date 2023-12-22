@@ -1,10 +1,7 @@
-const {
-	getTelephoneNumber,
-	postTelephoneNumber
-} = require('../../../../../../src/controllers/register/common/telephone-number/controller');
+const { getRegisterNumberController, postRegisterNumberController } = require('./controller');
 
-describe('controllers/register/common/telephone-number/controller', () => {
-	describe('#getTelephoneNumber', () => {
+describe('pages/projects/register/_common/number/controller', () => {
+	describe('#getRegisterNumberController', () => {
 		describe('When getting the registration telephone number page', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -18,10 +15,10 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					session: { mySelfRegdata: { ['telephone']: 'mock telephone number' } }
 				};
 				beforeEach(() => {
-					getTelephoneNumber(req, res);
+					getRegisterNumberController(req, res);
 				});
 				it('should render the registration telephone number page with the myself data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
 						pageTitle:
 							'What is your telephone number? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						telephone: 'mock telephone number'
@@ -34,10 +31,10 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					session: { orgRegdata: { ['telephone']: 'mock telephone number' } }
 				};
 				beforeEach(() => {
-					getTelephoneNumber(req, res);
+					getRegisterNumberController(req, res);
 				});
 				it('should render the registration telephone number page with the organisation data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
 						pageTitle:
 							'What is your telephone number? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						telephone: 'mock telephone number'
@@ -52,10 +49,10 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					getTelephoneNumber(req, res);
+					getRegisterNumberController(req, res);
 				});
 				it('should render the registration telephone number page with the agent data', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
 						pageTitle:
 							'What is your telephone number? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						telephone: 'mock telephone number'
@@ -71,14 +68,14 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getTelephoneNumber(req, res)).toThrowError(
+				expect(() => getRegisterNumberController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
 		});
 	});
 
-	describe('#postTelephoneNumber', () => {
+	describe('#postRegisterNumberController', () => {
 		describe('When posting the registration telephone number', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -90,7 +87,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 			describe('and there is an unrecoverable error', () => {
 				const req = {};
 				beforeEach(() => {
-					postTelephoneNumber(req, res);
+					postRegisterNumberController(req, res);
 				});
 
 				it('should render the error page', () => {
@@ -107,10 +104,10 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					postTelephoneNumber(req, res);
+					postRegisterNumberController(req, res);
 				});
 				it('should render telephone number page with the error', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/telephone', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
 						errorSummary: [
 							{
 								href: '#',
@@ -135,7 +132,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					query: { mode: 'edit' }
 				};
 				beforeEach(() => {
-					postTelephoneNumber(req, res);
+					postRegisterNumberController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -153,7 +150,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postTelephoneNumber(req, res);
+					postRegisterNumberController(req, res);
 				});
 				it('should redirect to the next page for myself', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -171,7 +168,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postTelephoneNumber(req, res);
+					postRegisterNumberController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(
@@ -191,7 +188,7 @@ describe('controllers/register/common/telephone-number/controller', () => {
 					query: {}
 				};
 				beforeEach(() => {
-					postTelephoneNumber(req, res);
+					postRegisterNumberController(req, res);
 				});
 				it('should redirect to the next page for organisation', () => {
 					expect(res.redirect).toHaveBeenCalledWith(

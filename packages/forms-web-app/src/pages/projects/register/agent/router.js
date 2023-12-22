@@ -13,6 +13,10 @@ const {
 	postRegisterAddressController
 } = require('../_common/address/controller');
 const {
+	getRegisterNumberController,
+	postRegisterNumberController
+} = require('../_common/number/controller');
+const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
@@ -20,6 +24,7 @@ const {
 const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
 const { getRegisterAgentEmailURL } = require('./email/_utils/get-register-agent-email-url');
 const { getRegisterAgentAddressURL } = require('./address/_utils/get-register-agent-address-url');
+const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
 const {
 	getRegisterAgentAreThey18URL
 } = require('./are-they-18/utils/get-register-agent-are-they-18-url');
@@ -31,6 +36,9 @@ const { rules: fullNameValidationRules } = require('../../../../validators/share
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
+	rules: telephoneValidationRules
+} = require('../../../../validators/register/myself/telephone');
+const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
 
@@ -39,6 +47,7 @@ const { validationErrorHandler } = require('../../../../validators/validation-er
 const registerAgentNameURL = getRegisterAgentNameURL();
 const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
+const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
@@ -69,6 +78,15 @@ registerAgentRouter.post(
 	addressValidationRules(),
 	validationErrorHandler,
 	postRegisterAddressController
+);
+
+registerAgentRouter.get(registerAgentNumberURL, registerMiddleware, getRegisterNumberController);
+registerAgentRouter.post(
+	registerAgentNumberURL,
+	registerMiddleware,
+	telephoneValidationRules(),
+	validationErrorHandler,
+	postRegisterNumberController
 );
 
 registerAgentRouter.get(

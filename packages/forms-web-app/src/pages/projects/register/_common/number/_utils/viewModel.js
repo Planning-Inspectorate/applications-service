@@ -1,5 +1,5 @@
-const { keys } = require('../keys');
-const { pageTitle } = require('../common-veiw-model');
+const { keys } = require('../../../../../../controllers/register/common/keys');
+const { pageTitle } = require('../../../../../../controllers/register/common/common-veiw-model');
 
 const pageTitlePrefix = 'What is your telephone number?';
 

@@ -11,6 +11,10 @@ const {
 	postRegisterAddressController
 } = require('../_common/address/controller');
 const {
+	getRegisterNumberController,
+	postRegisterNumberController
+} = require('../_common/number/controller');
+const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
@@ -21,6 +25,9 @@ const { decodeUri } = require('../../../../middleware/decode-uri');
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const {
+	rules: telephoneValidationRules
+} = require('../../../../validators/register/myself/telephone');
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
@@ -44,6 +51,11 @@ jest.mock('../../../../validators/shared/email-address', () => {
 	};
 });
 jest.mock('../../../../validators/register/myself/address', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/myself/telephone', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -115,6 +127,19 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/telephone-number',
+				registerMiddleware,
+				getRegisterNumberController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/telephone-number',
+				registerMiddleware,
+				telephoneValidationRules(),
+				validationErrorHandler,
+				postRegisterNumberController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/are-they-18-over',
 				registerMiddleware,
 				getRegisterAreThey18Controller
@@ -127,8 +152,8 @@ describe('pages/projects/register/agent/router', () => {
 				postRegisterAreThey18Controller
 			);
 
-			expect(get).toBeCalledTimes(4);
-			expect(post).toBeCalledTimes(4);
+			expect(get).toBeCalledTimes(5);
+			expect(post).toBeCalledTimes(5);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
