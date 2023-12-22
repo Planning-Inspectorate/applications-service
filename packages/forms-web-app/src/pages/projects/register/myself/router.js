@@ -16,6 +16,10 @@ const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
+const {
+	getRegisterNumberController,
+	postRegisterNumberController
+} = require('../_common/number/controller');
 
 const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
@@ -23,6 +27,7 @@ const {
 } = require('./are-you-18/_utils/get-register-myself-are-you-18-url');
 const { getRegisterMyselfEmailURL } = require('./email/_utils/get-register-myself-email-url');
 const { getRegisterMyselfAddressURL } = require('./address/_utils/get-register-myself-address-url');
+const { getRegisterMyselfNumberURL } = require('./number/_utils/get-register-myself-number-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -33,6 +38,9 @@ const {
 } = require('../../../../validators/register/myself/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const {
+	rules: telephoneValidationRules
+} = require('../../../../validators/register/myself/telephone');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -40,6 +48,7 @@ const registerMyselfNameURL = getRegisterMyselfNameURL();
 const registerMyselfAreYou18URL = getRegisterMyselfAreYou18URL();
 const registerMyselfEmailURL = getRegisterMyselfEmailURL();
 const registerMyselfAddressURL = getRegisterMyselfAddressURL();
+const registerMyselfNumberURL = getRegisterMyselfNumberURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -86,6 +95,15 @@ registerMyselfRouter.post(
 	addressValidationRules(),
 	validationErrorHandler,
 	postRegisterAddressController
+);
+
+registerMyselfRouter.get(registerMyselfNumberURL, registerMiddleware, getRegisterNumberController);
+registerMyselfRouter.post(
+	registerMyselfNumberURL,
+	registerMiddleware,
+	telephoneValidationRules(),
+	validationErrorHandler,
+	postRegisterNumberController
 );
 
 module.exports = { registerMyselfRouter };

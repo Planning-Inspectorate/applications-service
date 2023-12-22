@@ -16,6 +16,10 @@ const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
+const {
+	getRegisterNumberController,
+	postRegisterNumberController
+} = require('../_common/number/controller');
 
 const {
 	getRegisterOrganisationAreYouOver18URL
@@ -29,6 +33,9 @@ const {
 const {
 	getRegisterOrganisationAddressURL
 } = require('./address/_utils/get-register-organisation-address-url');
+const {
+	getRegisterOrganisationNumberURL
+} = require('./number/_utils/get-register-organisation-number-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -39,6 +46,9 @@ const {
 } = require('../../../../validators/register/organisation/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const {
+	rules: telephoneValidationRules
+} = require('../../../../validators/register/myself/telephone');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -46,6 +56,7 @@ const registerOrganisationNameURL = getRegisterOrganisationNameURL();
 const registerOrganisationAreYouOver18URL = getRegisterOrganisationAreYouOver18URL();
 const registerOrganisationEmailURL = getRegisterOrganisationEmailURL();
 const registerOrganisationAddressURL = getRegisterOrganisationAddressURL();
+const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
 
 const registerOrganisationRouter = express.Router({ mergeParams: true });
 
@@ -100,6 +111,19 @@ registerOrganisationRouter.post(
 	addressValidationRules(),
 	validationErrorHandler,
 	postRegisterAddressController
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationNumberURL,
+	registerMiddleware,
+	getRegisterNumberController
+);
+registerOrganisationRouter.post(
+	registerOrganisationNumberURL,
+	registerMiddleware,
+	telephoneValidationRules(),
+	validationErrorHandler,
+	postRegisterNumberController
 );
 
 module.exports = { registerOrganisationRouter };

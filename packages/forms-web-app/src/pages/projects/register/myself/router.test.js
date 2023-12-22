@@ -14,6 +14,10 @@ const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
+const {
+	getRegisterNumberController,
+	postRegisterNumberController
+} = require('../_common/number/controller');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -24,6 +28,9 @@ const {
 } = require('../../../../validators/register/myself/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const {
+	rules: telephoneValidationRules
+} = require('../../../../validators/register/myself/telephone');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -49,6 +56,11 @@ jest.mock('../../../../validators/shared/email-address', () => {
 	};
 });
 jest.mock('../../../../validators/register/myself/address', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/myself/telephone', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -127,8 +139,21 @@ describe('pages/projects/register/myself/router', () => {
 				postRegisterAddressController
 			);
 
-			expect(get).toBeCalledTimes(4);
-			expect(post).toBeCalledTimes(4);
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/telephone-number',
+				registerMiddleware,
+				getRegisterNumberController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/telephone-number',
+				registerMiddleware,
+				telephoneValidationRules(),
+				validationErrorHandler,
+				postRegisterNumberController
+			);
+
+			expect(get).toBeCalledTimes(5);
+			expect(post).toBeCalledTimes(5);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

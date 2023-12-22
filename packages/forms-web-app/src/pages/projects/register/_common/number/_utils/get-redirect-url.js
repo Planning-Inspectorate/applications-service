@@ -1,5 +1,5 @@
-const { VIEW } = require('../../../../lib/views');
-const { keys } = require('../keys');
+const { VIEW } = require('../../../../../../lib/views');
+const { keys } = require('../../../../../../controllers/register/common/keys');
 const getRedirectUrl = (query, key) => {
 	let redirectURl = '';
 	if (query.mode === 'edit') {
