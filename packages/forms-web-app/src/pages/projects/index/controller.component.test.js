@@ -83,7 +83,7 @@ describe('projects/index/controller.component', () => {
 					const response = await request.get('/projects/EN010085');
 
 					expect(response.status).toEqual(200);
-					expect(response.text).toContain('The application is expected to be submitted in Q4 2023');
+					expect(response.text).toContain('The application is expected to be submitted Q4 2023');
 				});
 				it('should render the page for pre application (stage 1) - without the time period section if anticipatedSubmissionDateNonSpecific is not available', async () => {
 					getAppData.mockResolvedValue({
