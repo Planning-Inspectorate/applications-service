@@ -18,6 +18,10 @@ const {
 	getRegisterNumberController,
 	postRegisterNumberController
 } = require('../_common/number/controller');
+const {
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
+} = require('../_common/declaration/controller');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -152,8 +156,19 @@ describe('pages/projects/register/myself/router', () => {
 				postRegisterNumberController
 			);
 
-			expect(get).toBeCalledTimes(5);
-			expect(post).toBeCalledTimes(5);
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/declaration',
+				registerMiddleware,
+				getRegisterDeclarationController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/declaration',
+				registerMiddleware,
+				postRegisterDeclarationController
+			);
+
+			expect(get).toBeCalledTimes(6);
+			expect(post).toBeCalledTimes(6);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

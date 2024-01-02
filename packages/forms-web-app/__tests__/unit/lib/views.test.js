@@ -20,7 +20,6 @@ describe('lib/views', () => {
 			},
 			REGISTER: {
 				COMMON: {
-					DECLARATION: 'register/common/declaration',
 					REGISTRATION_COMPLETE: 'register/common/registration-complete',
 					REGISTRATION_SAVED: 'register/common/registration-saved'
 				},

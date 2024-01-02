@@ -20,6 +20,10 @@ const {
 	getRegisterNumberController,
 	postRegisterNumberController
 } = require('../_common/number/controller');
+const {
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
+} = require('../_common/declaration/controller');
 
 const {
 	getRegisterOrganisationAreYouOver18URL
@@ -36,6 +40,9 @@ const {
 const {
 	getRegisterOrganisationNumberURL
 } = require('./number/_utils/get-register-organisation-number-url');
+const {
+	getRegisterOrganisationDeclarationURL
+} = require('./declaration/_utils/get-register-organisation-declaration-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -57,6 +64,7 @@ const registerOrganisationAreYouOver18URL = getRegisterOrganisationAreYouOver18U
 const registerOrganisationEmailURL = getRegisterOrganisationEmailURL();
 const registerOrganisationAddressURL = getRegisterOrganisationAddressURL();
 const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
+const registerOrganisationDeclarationURL = getRegisterOrganisationDeclarationURL();
 
 const registerOrganisationRouter = express.Router({ mergeParams: true });
 
@@ -124,6 +132,17 @@ registerOrganisationRouter.post(
 	telephoneValidationRules(),
 	validationErrorHandler,
 	postRegisterNumberController
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationDeclarationURL,
+	registerMiddleware,
+	getRegisterDeclarationController
+);
+registerOrganisationRouter.post(
+	registerOrganisationDeclarationURL,
+	registerMiddleware,
+	postRegisterDeclarationController
 );
 
 module.exports = { registerOrganisationRouter };

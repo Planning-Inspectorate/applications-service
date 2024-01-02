@@ -1,21 +1,16 @@
-const {
-	VIEW: {
-		REGISTER: {
-			COMMON: { DECLARATION }
-		}
-	}
-} = require('../../../../lib/views');
-const { postRegistrationData } = require('../../../../services/registration.service');
-const logger = require('../../../../lib/logger');
-const { viewModel } = require('./viewModel');
-const { getKeyFromUrl } = require('../get-key-from-url');
-const { getSessionBase } = require('../session');
-const { getRedirectUrl } = require('./get-redirect-url');
+const { postRegistrationData } = require('../../../../../services/registration.service');
+const logger = require('../../../../../lib/logger');
+const { viewModel } = require('./_utils/viewModel');
+const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
+const { getSessionBase } = require('../../../../../controllers/register/common/session');
+const { getRedirectUrl } = require('./_utils/get-redirect-url');
 
-const getDeclaration = (req, res) => {
+const view = 'projects/register/_common/declaration/view.njk';
+
+const getRegisterDeclarationController = (req, res) => {
 	try {
 		const key = getKeyFromUrl(req.originalUrl);
-		return res.render(DECLARATION, {
+		return res.render(view, {
 			...viewModel[key]
 		});
 	} catch (e) {
@@ -24,7 +19,7 @@ const getDeclaration = (req, res) => {
 	}
 };
 
-const postDeclaration = async (req, res) => {
+const postRegisterDeclarationController = async (req, res) => {
 	try {
 		const { session, params } = req;
 		const { case_ref } = params;
@@ -49,6 +44,6 @@ const postDeclaration = async (req, res) => {
 };
 
 module.exports = {
-	getDeclaration,
-	postDeclaration
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
 };

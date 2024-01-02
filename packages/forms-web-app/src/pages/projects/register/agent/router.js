@@ -17,6 +17,10 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
+} = require('../_common/declaration/controller');
+const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
@@ -25,6 +29,10 @@ const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-na
 const { getRegisterAgentEmailURL } = require('./email/_utils/get-register-agent-email-url');
 const { getRegisterAgentAddressURL } = require('./address/_utils/get-register-agent-address-url');
 const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
+const {
+	getRegisterAgentDeclarationURL
+} = require('./declaration/_utils/get-register-agent-declaration-url');
+
 const {
 	getRegisterAgentAreThey18URL
 } = require('./are-they-18/utils/get-register-agent-are-they-18-url');
@@ -48,6 +56,7 @@ const registerAgentNameURL = getRegisterAgentNameURL();
 const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
+const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
@@ -87,6 +96,17 @@ registerAgentRouter.post(
 	telephoneValidationRules(),
 	validationErrorHandler,
 	postRegisterNumberController
+);
+
+registerAgentRouter.get(
+	registerAgentDeclarationURL,
+	registerMiddleware,
+	getRegisterDeclarationController
+);
+registerAgentRouter.post(
+	registerAgentDeclarationURL,
+	registerMiddleware,
+	postRegisterDeclarationController
 );
 
 registerAgentRouter.get(
