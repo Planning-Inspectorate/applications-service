@@ -1,8 +1,19 @@
 const { mapBackOfficeDocuments } = require('./document.mapper');
+const config = require('../lib/config');
 const mapBackOfficeRepresentationToApi = (representation, documents = []) => {
 	return {
 		...mapCommonRepresentationBOFieldsToApi(representation),
 		attachments: mapBackOfficeDocuments(documents)
+	};
+};
+
+const mapNIRepresentationToApi = (representation, documents = []) => {
+	return {
+		...representation,
+		attachments: documents.map((doc) => ({
+			...doc,
+			path: doc.path ? `${config.documentsHost}${doc.path}` : null
+		}))
 	};
 };
 
@@ -40,5 +51,6 @@ const mapCommonRepresentationBOFieldsToApi = (representation) => {
 
 module.exports = {
 	mapBackOfficeRepresentationToApi,
-	mapBackOfficeRepresentationsToApi
+	mapBackOfficeRepresentationsToApi,
+	mapNIRepresentationToApi
 };

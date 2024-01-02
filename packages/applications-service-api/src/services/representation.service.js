@@ -16,7 +16,8 @@ const {
 } = require('../repositories/document.backoffice.repository');
 const {
 	mapBackOfficeRepresentationToApi,
-	mapBackOfficeRepresentationsToApi
+	mapBackOfficeRepresentationsToApi,
+	mapNIRepresentationToApi
 } = require('../utils/representation.mapper');
 const config = require('../lib/config');
 
@@ -76,25 +77,17 @@ const getRepresentationsForApplication = async (query) => {
 };
 
 const getRepresentationById = async (id, caseReference) => {
-	if (isBackOfficeCaseReference(caseReference)) {
-		const representation = await getRepresentationByBORepository(id);
-		if (!representation) return;
-		const documents = await getDocumentsByIdsBORepository(representation.attachmentIds);
-		return mapBackOfficeRepresentationToApi(representation, documents);
-	} else {
-		const representation = await getRepresentationByIdNIRepository(id);
-		if (!representation) return;
-		const dataIDs = representation.Attachments ? representation.Attachments.split(',') : [];
-		let attachments = await getDocumentsByDataIdNIRepository(dataIDs);
-		if (attachments && attachments.length > 0) {
-			attachments = attachments.map((att) => ({
-				...att,
-				path: att.path ? `${config.documentsHost}${att.path}` : null
-			}));
-		}
-		representation.attachments = attachments;
-		return representation;
-	}
+	const isBOApplication = isBackOfficeCaseReference(caseReference);
+	const representation = isBOApplication
+		? await getRepresentationByBORepository(id)
+		: await getRepresentationByIdNIRepository(id);
+	if (!representation) return;
+	const documents = isBOApplication
+		? await getDocumentsByIdsBORepository(representation.attachmentIds)
+		: await getDocumentsByDataIdNIRepository(representation.Attachments?.split(','));
+	return isBOApplication
+		? mapBackOfficeRepresentationToApi(representation, documents)
+		: mapNIRepresentationToApi(representation, documents);
 };
 
 module.exports = {
