@@ -1,14 +1,14 @@
 const {
-	getDeclaration,
-	postDeclaration
-} = require('../../../../../../src/controllers/register/common/declaration/controller');
-const { postRegistrationData } = require('../../../../../../src/services/registration.service');
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
+} = require('./controller');
+const { postRegistrationData } = require('../../../../../services/registration.service');
 
 jest.mock('../../../../../../src/services/registration.service', () => ({
 	postRegistrationData: jest.fn()
 }));
-describe('controllers/register/common/declaration/controller', () => {
-	describe('#getDeclaration', () => {
+describe('pages/projects/register/_common/declaration/controller', () => {
+	describe('#getRegisterDeclarationController', () => {
 		describe('When getting the declaration', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -21,13 +21,16 @@ describe('controllers/register/common/declaration/controller', () => {
 					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration'
 				};
 				beforeEach(() => {
-					getDeclaration(req, res);
+					getRegisterDeclarationController(req, res);
 				});
 				it('should render declaration page', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/declaration', {
-						pageTitle:
-							'Declaration - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
-					});
+					expect(res.render).toHaveBeenCalledWith(
+						'projects/register/_common/declaration/view.njk',
+						{
+							pageTitle:
+								'Declaration - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						}
+					);
 				});
 			});
 			describe('and the user has selected organisation', () => {
@@ -35,13 +38,16 @@ describe('controllers/register/common/declaration/controller', () => {
 					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration'
 				};
 				beforeEach(() => {
-					getDeclaration(req, res);
+					getRegisterDeclarationController(req, res);
 				});
 				it('should render declaration page', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/declaration', {
-						pageTitle:
-							'Declaration - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
-					});
+					expect(res.render).toHaveBeenCalledWith(
+						'projects/register/_common/declaration/view.njk',
+						{
+							pageTitle:
+								'Declaration - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						}
+					);
 				});
 			});
 			describe('and the user has selected agent', () => {
@@ -49,13 +55,16 @@ describe('controllers/register/common/declaration/controller', () => {
 					originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration'
 				};
 				beforeEach(() => {
-					getDeclaration(req, res);
+					getRegisterDeclarationController(req, res);
 				});
 				it('should render declaration page', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/declaration', {
-						pageTitle:
-							'Declaration - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
-					});
+					expect(res.render).toHaveBeenCalledWith(
+						'projects/register/_common/declaration/view.njk',
+						{
+							pageTitle:
+								'Declaration - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						}
+					);
 				});
 			});
 		});
@@ -67,14 +76,14 @@ describe('controllers/register/common/declaration/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getDeclaration(req, res)).toThrowError(
+				expect(() => getRegisterDeclarationController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
 		});
 	});
 
-	describe('#postDeclaration', () => {
+	describe('#postRegisterDeclarationController', () => {
 		describe('When posting declaration', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -86,7 +95,7 @@ describe('controllers/register/common/declaration/controller', () => {
 			describe('and there is an unrecoverable error', () => {
 				const req = { params: { case_ref: 'mock case ref' } };
 				beforeEach(() => {
-					postDeclaration(req, res);
+					postRegisterDeclarationController(req, res);
 				});
 
 				it('should render the error page', () => {
@@ -106,7 +115,7 @@ describe('controllers/register/common/declaration/controller', () => {
 				};
 				beforeEach(async () => {
 					postRegistrationData.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
-					await postDeclaration(req, res);
+					await postRegisterDeclarationController(req, res);
 				});
 				it('should get he ip ref no from the interested party endpoint ', () => {
 					expect(postRegistrationData).toHaveBeenCalledWith(

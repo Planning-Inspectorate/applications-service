@@ -20,6 +20,10 @@ const {
 	getRegisterNumberController,
 	postRegisterNumberController
 } = require('../_common/number/controller');
+const {
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
+} = require('../_common/declaration/controller');
 
 const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
@@ -28,6 +32,9 @@ const {
 const { getRegisterMyselfEmailURL } = require('./email/_utils/get-register-myself-email-url');
 const { getRegisterMyselfAddressURL } = require('./address/_utils/get-register-myself-address-url');
 const { getRegisterMyselfNumberURL } = require('./number/_utils/get-register-myself-number-url');
+const {
+	getRegisterMyselfDeclarationURL
+} = require('./declaration/_utils/get-register-myself-declaration-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -49,6 +56,7 @@ const registerMyselfAreYou18URL = getRegisterMyselfAreYou18URL();
 const registerMyselfEmailURL = getRegisterMyselfEmailURL();
 const registerMyselfAddressURL = getRegisterMyselfAddressURL();
 const registerMyselfNumberURL = getRegisterMyselfNumberURL();
+const registerMyselfDeclarationURL = getRegisterMyselfDeclarationURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -104,6 +112,17 @@ registerMyselfRouter.post(
 	telephoneValidationRules(),
 	validationErrorHandler,
 	postRegisterNumberController
+);
+
+registerMyselfRouter.get(
+	registerMyselfDeclarationURL,
+	registerMiddleware,
+	getRegisterDeclarationController
+);
+registerMyselfRouter.post(
+	registerMyselfDeclarationURL,
+	registerMiddleware,
+	postRegisterDeclarationController
 );
 
 module.exports = { registerMyselfRouter };
