@@ -23,6 +23,10 @@ const {
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getRegisterMyselfAboutProjectController,
+	postRegisterMyselfAboutProjectController
+} = require('./about-project/controller');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -36,6 +40,9 @@ const { rules: addressValidationRules } = require('../../../../validators/regist
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -68,6 +75,11 @@ jest.mock('../../../../validators/register/myself/address', () => {
 jest.mock('../../../../validators/register/myself/telephone', () => {
 	return {
 		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/tell-us-about-project', () => {
+	return {
+		validate: jest.fn()
 	};
 });
 
@@ -174,8 +186,23 @@ describe('pages/projects/register/myself/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(7);
-			expect(post).toBeCalledTimes(6);
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/tell-us-about-project',
+				registerMiddleware,
+				getRegisterMyselfAboutProjectController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/tell-us-about-project',
+				registerMiddleware,
+				decodeUri(),
+				aboutProjectValidationRules(),
+				validationErrorHandler,
+				postRegisterMyselfAboutProjectController
+			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['comment']);
+
+			expect(get).toBeCalledTimes(8);
+			expect(post).toBeCalledTimes(7);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

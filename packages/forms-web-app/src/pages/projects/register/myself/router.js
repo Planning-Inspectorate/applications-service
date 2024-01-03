@@ -25,6 +25,10 @@ const {
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getRegisterMyselfAboutProjectController,
+	postRegisterMyselfAboutProjectController
+} = require('./about-project/controller');
 
 const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
@@ -39,6 +43,9 @@ const {
 const {
 	getRegisterMyselfCompleteURL
 } = require('./complete/_utils/get-register-myself-complete-url');
+const {
+	getRegisterMyselfAboutProjectURL
+} = require('./about-project/_utils/get-register-myself-about-project-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -52,6 +59,9 @@ const { rules: addressValidationRules } = require('../../../../validators/regist
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -62,6 +72,7 @@ const registerMyselfAddressURL = getRegisterMyselfAddressURL();
 const registerMyselfNumberURL = getRegisterMyselfNumberURL();
 const registerMyselfDeclarationURL = getRegisterMyselfDeclarationURL();
 const registerMyselfCompleteURL = getRegisterMyselfCompleteURL();
+const registerMyselfAboutProjectURL = getRegisterMyselfAboutProjectURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -134,6 +145,20 @@ registerMyselfRouter.get(
 	registerMyselfCompleteURL,
 	registerMiddleware,
 	getRegisterCompleteController
+);
+
+registerMyselfRouter.get(
+	registerMyselfAboutProjectURL,
+	registerMiddleware,
+	getRegisterMyselfAboutProjectController
+);
+registerMyselfRouter.post(
+	registerMyselfAboutProjectURL,
+	registerMiddleware,
+	decodeUri('body', ['comment']),
+	aboutProjectValidationRules(),
+	validationErrorHandler,
+	postRegisterMyselfAboutProjectController
 );
 
 module.exports = { registerMyselfRouter };

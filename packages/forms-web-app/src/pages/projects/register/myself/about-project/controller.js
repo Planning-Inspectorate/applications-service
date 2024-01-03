@@ -1,35 +1,36 @@
-const { VIEW } = require('../../../lib/views');
+const {
+	VIEW: { REGISTER: registerRoute }
+} = require('../../../../../lib/views');
 const {
 	postRegistrationData,
 	postCommentsData
-} = require('../../../services/registration.service');
-const config = require('../../../config');
+} = require('../../../../../services/registration.service');
+const config = require('../../../../../config');
 
-exports.getComments = (req, res) => {
+const view = 'projects/register/myself/about-project/view.njk';
+
+const getRegisterMyselfAboutProjectController = (req, res) => {
 	const { comment } = req.session;
-	res.render(VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT, { comment });
+	return res.render(view, { comment });
 };
 
-exports.postComments = async (req, res) => {
+const postRegisterMyselfAboutProjectController = async (req, res) => {
 	const { body } = req;
 	const { comment, errors = {}, errorSummary = [] } = body;
 
 	const hasErrors = !!errors.comment || Object.keys(errors).length > 0;
 
 	const routes = {
-		checkYourAnswers: `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`,
-		registrationComplete: `/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}`,
-		tellUsAboutProject: VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT
+		checkYourAnswers: `/${registerRoute.MYSELF.CHECK_YOUR_ANSWERS}`,
+		registrationComplete: `/${registerRoute.MYSELF.REGISTRATION_COMPLETE}`
 	};
 
 	if (hasErrors) {
-		res.render(routes.tellUsAboutProject, {
+		return res.render(view, {
 			errors,
 			errorSummary,
 			comment
 		});
-
-		return;
 	}
 
 	const mode = req.body.mode ? req.body.mode : req.query.mode;
@@ -68,4 +69,9 @@ exports.postComments = async (req, res) => {
 			return res.redirect(`${res.locals.baseUrl}${routes.checkYourAnswers}`);
 		}
 	}
+};
+
+module.exports = {
+	getRegisterMyselfAboutProjectController,
+	postRegisterMyselfAboutProjectController
 };

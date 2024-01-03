@@ -1,14 +1,17 @@
-const commentsController = require('../../../../../src/controllers/register/myself/tell-us-about-project');
-const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
-const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
-const config = require('../../../../../src/config');
+const {
+	getRegisterMyselfAboutProjectController,
+	postRegisterMyselfAboutProjectController
+} = require('./controller');
 
-jest.mock('../../../../../src/lib/application-api-wrapper');
-jest.mock('../../../../../src/lib/logger');
-jest.mock('../../../../../src/config');
+const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
+const config = require('../../../../../config');
 
-describe('controllers/register/myself/tell-us-about-project', () => {
+const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
+
+jest.mock('../../../../../lib/application-api-wrapper');
+jest.mock('../../../../../config');
+
+describe('pages/projects/register/myself/about-project/controller', () => {
 	let req;
 	let res;
 
@@ -29,10 +32,10 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 		config.featureFlag.allowSaveAndExitOption = true;
 	});
 
-	describe('getComments', () => {
+	describe('#getRegisterMyselfAboutProjectController', () => {
 		it('should call the correct template', () => {
-			commentsController.getComments(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/myself/tell-us-about-project', {
+			getRegisterMyselfAboutProjectController(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/myself/about-project/view.njk', {
 				comment: undefined
 			});
 		});
@@ -50,8 +53,8 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 					}
 				}
 			};
-			commentsController.getComments(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/myself/tell-us-about-project', {
+			getRegisterMyselfAboutProjectController(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/myself/about-project/view.njk', {
 				comment: {
 					comment: 'test'
 				}
@@ -59,8 +62,8 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 		});
 	});
 
-	describe('postComments', () => {
-		it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if comments is provided`, async () => {
+	describe('#postRegisterMyselfAboutProjectController', () => {
+		it('should post data and redirect to the check your answers page if comments is provided', async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -70,13 +73,14 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 					mode: ''
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/myself/check-answers'
 			);
 		});
-		it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}' if comments is provided and mode is edit`, async () => {
+
+		it('should post data and redirect to the check your answers page if comments is provided and mode is edit', async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -89,14 +93,14 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 					comment: 'comment'
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/myself/check-answers'
 			);
 		});
 
-		it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}' if comments is provided and mode is draft`, async () => {
+		it(`'should post data and redirect to the registration complete page if comments is provided and mode is draft`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -110,12 +114,13 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 					mySelfRegdata: {}
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.REGISTRATION_COMPLETE}`
+				'/mock-base-url/mock-case-ref/register/myself/registration-complete'
 			);
 		});
+
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {
 				...req,
@@ -125,10 +130,11 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 					comment: ''
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT, {
+			expect(res.render).toHaveBeenCalledWith('projects/register/myself/about-project/view.njk', {
 				errors: { a: 'b' },
 				errorSummary: [{ href: '#', text: 'There were errors here' }],
 				comment: ''
@@ -145,10 +151,10 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 				}
 			};
 
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toBeCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/myself/check-answers'
 			);
 		});
 
@@ -163,10 +169,10 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 				}
 			};
 
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toBeCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/myself/check-answers'
 			);
 		});
 
@@ -179,10 +185,10 @@ describe('controllers/register/myself/tell-us-about-project', () => {
 				}
 			};
 
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.render).toBeCalledWith(
-				VIEW.REGISTER.MYSELF.TELL_US_ABOUT_PROJECT,
+				'projects/register/myself/about-project/view.njk',
 				expect.objectContaining(mockRequest.body)
 			);
 		});
