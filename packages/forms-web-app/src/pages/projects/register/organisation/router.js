@@ -24,6 +24,7 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
+const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const {
 	getRegisterOrganisationAreYouOver18URL
@@ -43,6 +44,9 @@ const {
 const {
 	getRegisterOrganisationDeclarationURL
 } = require('./declaration/_utils/get-register-organisation-declaration-url');
+const {
+	getRegisterOrganisationCompleteURL
+} = require('./complete/_utils/get-register-organisation-complete-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -65,6 +69,7 @@ const registerOrganisationEmailURL = getRegisterOrganisationEmailURL();
 const registerOrganisationAddressURL = getRegisterOrganisationAddressURL();
 const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
 const registerOrganisationDeclarationURL = getRegisterOrganisationDeclarationURL();
+const registerOrganisationCompleteURL = getRegisterOrganisationCompleteURL();
 
 const registerOrganisationRouter = express.Router({ mergeParams: true });
 
@@ -143,6 +148,12 @@ registerOrganisationRouter.post(
 	registerOrganisationDeclarationURL,
 	registerMiddleware,
 	postRegisterDeclarationController
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationCompleteURL,
+	registerMiddleware,
+	getRegisterCompleteController
 );
 
 module.exports = { registerOrganisationRouter };

@@ -1,12 +1,7 @@
-const {
-	getConfirmation
-} = require('../../../../../../src/controllers/register/common/registration-complete/controller');
-jest.mock('../../../../../../src/services/registration.service', () => ({
-	postCommentsData: jest.fn(),
-	postRegistrationData: jest.fn()
-}));
+const { getRegisterCompleteController } = require('./controller');
+
 describe('controllers/register/common/registration-complete/controller', () => {
-	describe('#getConfirmation', () => {
+	describe('#getRegisterCompleteController', () => {
 		describe('When getting the registration complete page', () => {
 			const res = {
 				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
@@ -23,10 +18,10 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					getConfirmation(req, res);
+					getRegisterCompleteController(req, res);
 				});
 				it('should render registration complete page', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/registration-complete', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
 						email: 'mock email',
 						ipRefNo: 'mock ip ref no',
 						nsipProjectLink:
@@ -45,10 +40,10 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					getConfirmation(req, res);
+					getRegisterCompleteController(req, res);
 				});
 				it('should render registration complete page', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/registration-complete', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
 						email: 'mock email',
 						ipRefNo: 'mock ip ref no',
 						nsipProjectLink:
@@ -67,10 +62,10 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					}
 				};
 				beforeEach(() => {
-					getConfirmation(req, res);
+					getRegisterCompleteController(req, res);
 				});
 				it('should render registration complete page', () => {
-					expect(res.render).toHaveBeenCalledWith('register/common/registration-complete', {
+					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
 						email: 'mock email',
 						ipRefNo: 'mock ip ref no',
 						nsipProjectLink:
@@ -89,7 +84,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			};
 			const req = { session: 'mock session' };
 			it('should throw an error', () => {
-				expect(() => getConfirmation(req, res)).toThrowError(
+				expect(() => getRegisterCompleteController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
 				);
 			});
