@@ -18,8 +18,7 @@ const VIEW = {
 		START: 'register/start',
 		TYPE_OF_PARTY: 'register/who-registering-for',
 		COMMON: {
-			REGISTRATION_COMPLETE: 'register/common/registration-complete',
-			REGISTRATION_SAVED: 'register/common/registration-saved'
+			REGISTRATION_COMPLETE: 'register/common/registration-complete'
 		},
 		MYSELF: {
 			FULL_NAME: 'register/myself/full-name',
@@ -30,7 +29,6 @@ const VIEW = {
 			TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
 			CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
 			DECLARATION: 'register/myself/declaration',
-			REGISTRATION_SAVED: 'register/myself/registration-saved',
 			REGISTRATION_COMPLETE: 'register/myself/registration-complete'
 		},
 		ORGANISATION: {
@@ -44,7 +42,6 @@ const VIEW = {
 			TELL_US_ABOUT_PROJECT: 'register/organisation/tell-us-about-project',
 			CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
 			DECLARATION: 'register/organisation/declaration',
-			REGISTRATION_SAVED: 'register/organisation/registration-saved',
 			REGISTRATION_COMPLETE: 'register/organisation/registration-complete'
 		},
 		AGENT: {
@@ -64,7 +61,6 @@ const VIEW = {
 			TELL_US_ABOUT_PROJECT: 'register/agent/tell-us-about-project',
 			CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
 			DECLARATION: 'register/agent/declaration',
-			REGISTRATION_SAVED: 'register/agent/registration-saved',
 			REGISTRATION_COMPLETE: 'register/agent/registration-complete'
 		},
 		MISSED_DEADLINE: 'register/missed-the-deadline'

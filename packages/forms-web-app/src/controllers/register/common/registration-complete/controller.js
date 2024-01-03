@@ -14,19 +14,12 @@ const getConfirmation = (req, res) => {
 		const { ipRefNo } = getSessionBase(session, key);
 		const { email } = getSession(session, key);
 
-		if (session.mode === 'draft') {
-			session.ipRefNo = ipRefNo;
-			return res.redirect(
-				`${res.locals.baseUrl}/${REGISTER[key.toUpperCase()].REGISTRATION_SAVED}`
-			);
-		} else {
-			return res.render(REGISTER.COMMON.REGISTRATION_COMPLETE, {
-				...viewModel[key],
-				ipRefNo,
-				email,
-				nsipProjectLink: nsipProjectLink(req.session.appData)
-			});
-		}
+		return res.render(REGISTER.COMMON.REGISTRATION_COMPLETE, {
+			...viewModel[key],
+			ipRefNo,
+			email,
+			nsipProjectLink: nsipProjectLink(req.session.appData)
+		});
 	} catch (e) {
 		logger.error(e);
 		throw e;
