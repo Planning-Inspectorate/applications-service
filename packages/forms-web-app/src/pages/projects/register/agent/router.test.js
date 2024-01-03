@@ -18,6 +18,7 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
+const { getRegisterCompleteController } = require('../_common/complete/controller');
 const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
@@ -155,6 +156,12 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/registration-complete',
+				registerMiddleware,
+				getRegisterCompleteController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/are-they-18-over',
 				registerMiddleware,
 				getRegisterAreThey18Controller
@@ -167,7 +174,7 @@ describe('pages/projects/register/agent/router', () => {
 				postRegisterAreThey18Controller
 			);
 
-			expect(get).toBeCalledTimes(6);
+			expect(get).toBeCalledTimes(7);
 			expect(post).toBeCalledTimes(6);
 			expect(use).toBeCalledTimes(0);
 		});

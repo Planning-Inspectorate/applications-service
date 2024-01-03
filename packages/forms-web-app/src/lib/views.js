@@ -17,9 +17,6 @@ const VIEW = {
 	REGISTER: {
 		START: 'register/start',
 		TYPE_OF_PARTY: 'register/who-registering-for',
-		COMMON: {
-			REGISTRATION_COMPLETE: 'register/common/registration-complete'
-		},
 		MYSELF: {
 			FULL_NAME: 'register/myself/full-name',
 			OVER_18: 'register/myself/are-you-18-over',

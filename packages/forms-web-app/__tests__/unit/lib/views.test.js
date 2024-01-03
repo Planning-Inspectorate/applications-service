@@ -19,9 +19,6 @@ describe('lib/views', () => {
 				BEFORE_APPLY: 'guidance-pages/before-apply'
 			},
 			REGISTER: {
-				COMMON: {
-					REGISTRATION_COMPLETE: 'register/common/registration-complete'
-				},
 				START: 'register/start',
 				TYPE_OF_PARTY: 'register/who-registering-for',
 				MISSED_DEADLINE: 'register/missed-the-deadline',

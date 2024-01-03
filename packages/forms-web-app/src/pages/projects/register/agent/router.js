@@ -20,6 +20,7 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
+const { getRegisterCompleteController } = require('../_common/complete/controller');
 const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
@@ -32,7 +33,9 @@ const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agen
 const {
 	getRegisterAgentDeclarationURL
 } = require('./declaration/_utils/get-register-agent-declaration-url');
-
+const {
+	getRegisterAgentCompleteURL
+} = require('./complete/_utils/get-register-agent-complete-url');
 const {
 	getRegisterAgentAreThey18URL
 } = require('./are-they-18/utils/get-register-agent-are-they-18-url');
@@ -57,6 +60,7 @@ const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
+const registerAgentCompleteURL = getRegisterAgentCompleteURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
@@ -107,6 +111,12 @@ registerAgentRouter.post(
 	registerAgentDeclarationURL,
 	registerMiddleware,
 	postRegisterDeclarationController
+);
+
+registerAgentRouter.get(
+	registerAgentCompleteURL,
+	registerMiddleware,
+	getRegisterCompleteController
 );
 
 registerAgentRouter.get(

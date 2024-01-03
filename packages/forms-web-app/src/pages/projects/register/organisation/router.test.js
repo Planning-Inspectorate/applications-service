@@ -22,6 +22,7 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
+const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -167,7 +168,13 @@ describe('pages/projects/register/organisation/router', () => {
 				postRegisterDeclarationController
 			);
 
-			expect(get).toBeCalledTimes(6);
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/registration-complete',
+				registerMiddleware,
+				getRegisterCompleteController
+			);
+
+			expect(get).toBeCalledTimes(7);
 			expect(post).toBeCalledTimes(6);
 			expect(use).toBeCalledTimes(0);
 		});

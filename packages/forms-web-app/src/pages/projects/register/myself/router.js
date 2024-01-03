@@ -24,6 +24,7 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
+const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
@@ -35,6 +36,9 @@ const { getRegisterMyselfNumberURL } = require('./number/_utils/get-register-mys
 const {
 	getRegisterMyselfDeclarationURL
 } = require('./declaration/_utils/get-register-myself-declaration-url');
+const {
+	getRegisterMyselfCompleteURL
+} = require('./complete/_utils/get-register-myself-complete-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -57,6 +61,7 @@ const registerMyselfEmailURL = getRegisterMyselfEmailURL();
 const registerMyselfAddressURL = getRegisterMyselfAddressURL();
 const registerMyselfNumberURL = getRegisterMyselfNumberURL();
 const registerMyselfDeclarationURL = getRegisterMyselfDeclarationURL();
+const registerMyselfCompleteURL = getRegisterMyselfCompleteURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -123,6 +128,12 @@ registerMyselfRouter.post(
 	registerMyselfDeclarationURL,
 	registerMiddleware,
 	postRegisterDeclarationController
+);
+
+registerMyselfRouter.get(
+	registerMyselfCompleteURL,
+	registerMiddleware,
+	getRegisterCompleteController
 );
 
 module.exports = { registerMyselfRouter };
