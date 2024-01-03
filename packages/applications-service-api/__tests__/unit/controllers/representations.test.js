@@ -6,7 +6,6 @@ const {
 	getRepresentationById: getRepresentation
 } = require('../../../src/controllers/representations');
 const {
-	getFilters,
 	getRepresentationsForApplication,
 	getRepresentationById
 } = require('../../../src/services/representation.service');
@@ -94,8 +93,6 @@ jest.mock('../../../src/lib/config.js', () => ({
 
 jest.mock('../../../src/services/representation.service');
 jest.mock('../../../src/repositories/document.ni.repository');
-
-getFilters.mockImplementation(() => Promise.resolve([]));
 
 getRepresentationsForApplication.mockImplementation(({ caseReference }) => {
 	if (caseReference === 'EN010009') {

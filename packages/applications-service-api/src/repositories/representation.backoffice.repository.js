@@ -83,8 +83,8 @@ const getFilters = async (caseReference) => {
 			AND representationType is not null
 		GROUP BY representationType, status`;
 
-	const filters = await prismaClient.$queryRaw(sql);
-	return filters.map((filter) => ({
+	const options = await prismaClient.$queryRaw(sql);
+	return options.map((filter) => ({
 		name: filter.representationType,
 		count: filter.total
 	}));
