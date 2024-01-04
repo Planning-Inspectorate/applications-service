@@ -4,18 +4,18 @@ describe('pages/projects/register/organisation/organisation-name/_utils/get-regi
 	describe('#getRegisterOrganisationOrgNameURL', () => {
 		describe('When getting the register organisation org name URL', () => {
 			describe('and a case reference is not provided', () => {
-				const registerMyselfAboutProjectURL = getRegisterOrganisationOrgNameURL();
+				const registerOrganisationOrgNameURL = getRegisterOrganisationOrgNameURL();
 				it('should return the register organisation org name URL with the route parameters', () => {
-					expect(registerMyselfAboutProjectURL).toEqual(
+					expect(registerOrganisationOrgNameURL).toEqual(
 						'/projects/:case_ref/register/organisation/name-of-organisation-or-charity'
 					);
 				});
 			});
 			describe('and a case reference is provided', () => {
-				const registerMyselfAboutProjectURL =
+				const registerOrganisationOrgNameURL =
 					getRegisterOrganisationOrgNameURL('mock-case-reference');
 				it('should return the register organisation org name URL with the case reference', () => {
-					expect(registerMyselfAboutProjectURL).toEqual(
+					expect(registerOrganisationOrgNameURL).toEqual(
 						'/projects/mock-case-reference/register/organisation/name-of-organisation-or-charity'
 					);
 				});
