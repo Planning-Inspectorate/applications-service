@@ -15,8 +15,7 @@
 	},
 	"dependencies": {
 		"@godaddy/terminus": "^4.7.1",
-		"pino": "^6.11.3",
-		"prom-client": "^13.0.0"
+		"pino": "^6.11.3"
 	},
 	"devDependencies": {
 		"eslint": "^8.17.0",
