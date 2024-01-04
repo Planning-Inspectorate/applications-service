@@ -15,14 +15,15 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
+	getRegisterAreThey18Controller,
+	postRegisterAreThey18Controller
+} = require('./are-they-18/controller');
+const { getRegisterAgentCheckAnswersController } = require('./check-answers/controller');
+const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
-const {
-	getRegisterAreThey18Controller,
-	postRegisterAreThey18Controller
-} = require('./are-they-18/controller');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -145,6 +146,25 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/are-they-18-over',
+				registerMiddleware,
+				getRegisterAreThey18Controller
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/are-they-18-over',
+				registerMiddleware,
+				areThey18ValidationRules(),
+				validationErrorHandler,
+				postRegisterAreThey18Controller
+			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/check-answers',
+				registerMiddleware,
+				getRegisterAgentCheckAnswersController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/declaration',
 				registerMiddleware,
 				getRegisterDeclarationController
@@ -161,20 +181,7 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/agent/are-they-18-over',
-				registerMiddleware,
-				getRegisterAreThey18Controller
-			);
-			expect(post).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/agent/are-they-18-over',
-				registerMiddleware,
-				areThey18ValidationRules(),
-				validationErrorHandler,
-				postRegisterAreThey18Controller
-			);
-
-			expect(get).toBeCalledTimes(7);
+			expect(get).toBeCalledTimes(8);
 			expect(post).toBeCalledTimes(6);
 			expect(use).toBeCalledTimes(0);
 		});

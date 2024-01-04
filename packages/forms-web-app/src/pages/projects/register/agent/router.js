@@ -17,28 +17,32 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
+	getRegisterAreThey18Controller,
+	postRegisterAreThey18Controller
+} = require('./are-they-18/controller');
+const { getRegisterAgentCheckAnswersController } = require('./check-answers/controller');
+const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
-const {
-	getRegisterAreThey18Controller,
-	postRegisterAreThey18Controller
-} = require('./are-they-18/controller');
 
 const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
 const { getRegisterAgentEmailURL } = require('./email/_utils/get-register-agent-email-url');
 const { getRegisterAgentAddressURL } = require('./address/_utils/get-register-agent-address-url');
 const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
 const {
+	getRegisterAgentAreThey18URL
+} = require('./are-they-18/utils/get-register-agent-are-they-18-url');
+const {
+	getRegisterAgentCheckAnswersURL
+} = require('./check-answers/_utils/get-register-agent-check-answers-url');
+const {
 	getRegisterAgentDeclarationURL
 } = require('./declaration/_utils/get-register-agent-declaration-url');
 const {
 	getRegisterAgentCompleteURL
 } = require('./complete/_utils/get-register-agent-complete-url');
-const {
-	getRegisterAgentAreThey18URL
-} = require('./are-they-18/utils/get-register-agent-are-they-18-url');
 
 const { registerMiddleware } = require('../../../../routes/register/middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
@@ -59,9 +63,10 @@ const registerAgentNameURL = getRegisterAgentNameURL();
 const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
+const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
+const registerAgentCheckAnswersURL = getRegisterAgentCheckAnswersURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
 const registerAgentCompleteURL = getRegisterAgentCompleteURL();
-const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
@@ -103,6 +108,25 @@ registerAgentRouter.post(
 );
 
 registerAgentRouter.get(
+	registerAgentAreTheyOver18URL,
+	registerMiddleware,
+	getRegisterAreThey18Controller
+);
+registerAgentRouter.post(
+	registerAgentAreTheyOver18URL,
+	registerMiddleware,
+	areThey18ValidationRules(),
+	validationErrorHandler,
+	postRegisterAreThey18Controller
+);
+
+registerAgentRouter.get(
+	registerAgentCheckAnswersURL,
+	registerMiddleware,
+	getRegisterAgentCheckAnswersController
+);
+
+registerAgentRouter.get(
 	registerAgentDeclarationURL,
 	registerMiddleware,
 	getRegisterDeclarationController
@@ -117,19 +141,6 @@ registerAgentRouter.get(
 	registerAgentCompleteURL,
 	registerMiddleware,
 	getRegisterCompleteController
-);
-
-registerAgentRouter.get(
-	registerAgentAreTheyOver18URL,
-	registerMiddleware,
-	getRegisterAreThey18Controller
-);
-registerAgentRouter.post(
-	registerAgentAreTheyOver18URL,
-	registerMiddleware,
-	areThey18ValidationRules(),
-	validationErrorHandler,
-	postRegisterAreThey18Controller
 );
 
 module.exports = { registerAgentRouter };
