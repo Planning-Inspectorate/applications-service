@@ -9,6 +9,10 @@ const {
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
 const {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterEmailController,
 	postRegisterEmailController
 } = require('../_common/email/controller');
@@ -29,6 +33,9 @@ const { getRegisterCompleteController } = require('../_common/complete/controlle
 const {
 	getRegisterOrganisationAreYouOver18URL
 } = require('./are-you-18/_utils/get-register-organisation-are-you-18-url');
+const {
+	getRegisterOrganisationOrgNameURL
+} = require('./organisation-name/_utils/get-register-organisation-org-name-url');
 const {
 	getRegisterOrganisationNameURL
 } = require('./name/_utils/get-register-organisation-name-url');
@@ -55,6 +62,9 @@ const { rules: fullNameValidationRules } = require('../../../../validators/share
 const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
+const {
+	rules: organisationNameValidationRules
+} = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
@@ -65,6 +75,7 @@ const { validationErrorHandler } = require('../../../../validators/validation-er
 
 const registerOrganisationNameURL = getRegisterOrganisationNameURL();
 const registerOrganisationAreYouOver18URL = getRegisterOrganisationAreYouOver18URL();
+const registerOrganisationOrgNameURL = getRegisterOrganisationOrgNameURL();
 const registerOrganisationEmailURL = getRegisterOrganisationEmailURL();
 const registerOrganisationAddressURL = getRegisterOrganisationAddressURL();
 const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
@@ -98,6 +109,20 @@ registerOrganisationRouter.post(
 	areYou18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreYou18Controller
+);
+
+//TEST route and add validation
+registerOrganisationRouter.get(
+	registerOrganisationOrgNameURL,
+	registerMiddleware,
+	getRegisterOrganisationOrgNameController
+);
+registerOrganisationRouter.post(
+	registerOrganisationOrgNameURL,
+	registerMiddleware,
+	organisationNameValidationRules(),
+	validationErrorHandler,
+	postRegisterOrganisationOrgNameController
 );
 
 registerOrganisationRouter.get(

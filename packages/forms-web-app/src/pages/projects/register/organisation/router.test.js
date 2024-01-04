@@ -3,6 +3,10 @@ const {
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
 const {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterNameController,
 	postRegisterNameController
 } = require('../_common/name/controller');
@@ -31,6 +35,9 @@ const { rules: fullNameValidationRules } = require('../../../../validators/share
 const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
+const {
+	rules: organisationNameValidationRules
+} = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
@@ -51,6 +58,11 @@ jest.mock('../../../../validators/shared/full-name', () => {
 	};
 });
 jest.mock('../../../../validators/register/organisation/are-you-18-over', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/organisation/name-of-organisation-or-charity', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -119,6 +131,19 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				getRegisterOrganisationOrgNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				organisationNameValidationRules(),
+				validationErrorHandler,
+				postRegisterOrganisationOrgNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
 				registerMiddleware,
 				getRegisterEmailController
@@ -174,8 +199,8 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(7);
-			expect(post).toBeCalledTimes(6);
+			expect(get).toBeCalledTimes(8);
+			expect(post).toBeCalledTimes(7);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
