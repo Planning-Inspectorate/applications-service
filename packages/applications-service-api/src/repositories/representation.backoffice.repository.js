@@ -1,16 +1,37 @@
 const { prismaClient } = require('../lib/prisma');
 const { Prisma } = require('@prisma/client');
 
+const commonWhereFilters = {
+	status: {
+		in: ['PUBLISHED', 'published']
+	},
+	OR: [
+		{
+			AND: [
+				{ represented: { firstName: { not: null } } },
+				{ represented: { firstName: { not: '' } } }
+			]
+		},
+		{
+			AND: [
+				{ represented: { lastName: { not: null } } },
+				{ represented: { lastName: { not: '' } } }
+			]
+		},
+		{
+			AND: [
+				{ represented: { organisationName: { not: null } } },
+				{ represented: { organisationName: { not: '' } } }
+			]
+		}
+	]
+};
+
 const getRepresentationById = async (representationId) => {
 	return prismaClient.representation.findFirst({
 		where: {
 			representationId,
-			status: {
-				in: ['PUBLISHED', 'published']
-			},
-			represented: {
-				isNot: null
-			}
+			...commonWhereFilters
 		},
 		include: {
 			represented: true,
@@ -21,19 +42,7 @@ const getRepresentationById = async (representationId) => {
 
 const getRepresentations = async (options) => {
 	const where = {
-		AND: [
-			{ caseReference: options.caseReference },
-			{
-				status: {
-					in: ['PUBLISHED', 'published']
-				}
-			},
-			{
-				represented: {
-					isNot: null
-				}
-			}
-		]
+		AND: [{ caseReference: options.caseReference }, commonWhereFilters]
 	};
 
 	if (options.searchTerm) {

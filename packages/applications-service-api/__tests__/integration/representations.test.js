@@ -135,26 +135,6 @@ describe('api/v1/representations', () => {
 				});
 			});
 		});
-		describe('when representation.Represented fields are null', () => {
-			it('should throw error', async () => {
-				mockBORepresentationFindFirst.mockResolvedValue({
-					...REPRESENTATION_BACKOFFICE_DATA,
-					represented: {
-						...SERVICE_USERS_BACKOFFICE_DATA[0],
-						firstName: null,
-						lastName: null,
-						organisationName: null
-					},
-					representative: SERVICE_USERS_BACKOFFICE_DATA[1]
-				});
-				const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
-				expect(response.status).toEqual(404);
-				expect(response.body).toEqual({
-					code: 404,
-					errors: ['Represented user is missing']
-				});
-			});
-		});
 	});
 	describe(' GET /api/v1/representations?caseReference={caseReference}', () => {
 		describe('when case reference is missing', () => {
@@ -376,12 +356,27 @@ describe('api/v1/representations', () => {
 						{
 							status: {
 								in: ['PUBLISHED', 'published']
-							}
-						},
-						{
-							represented: {
-								isNot: null
-							}
+							},
+							OR: [
+								{
+									AND: [
+										{ represented: { firstName: { not: null } } },
+										{ represented: { firstName: { not: '' } } }
+									]
+								},
+								{
+									AND: [
+										{ represented: { lastName: { not: null } } },
+										{ represented: { lastName: { not: '' } } }
+									]
+								},
+								{
+									AND: [
+										{ represented: { organisationName: { not: null } } },
+										{ represented: { organisationName: { not: '' } } }
+									]
+								}
+							]
 						}
 					]
 				},

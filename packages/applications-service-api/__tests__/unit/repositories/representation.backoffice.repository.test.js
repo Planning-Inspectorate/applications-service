@@ -22,6 +22,31 @@ jest.mock('../../../src/lib/prisma', () => ({
 }));
 
 describe('service.backoffice.repository', () => {
+	const commonWhereFilters = {
+		status: {
+			in: ['PUBLISHED', 'published']
+		},
+		OR: [
+			{
+				AND: [
+					{ represented: { firstName: { not: null } } },
+					{ represented: { firstName: { not: '' } } }
+				]
+			},
+			{
+				AND: [
+					{ represented: { lastName: { not: null } } },
+					{ represented: { lastName: { not: '' } } }
+				]
+			},
+			{
+				AND: [
+					{ represented: { organisationName: { not: null } } },
+					{ represented: { organisationName: { not: '' } } }
+				]
+			}
+		]
+	};
 	describe('getRepresentationById', () => {
 		beforeAll(() => {
 			mockFindFirst.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
@@ -31,12 +56,7 @@ describe('service.backoffice.repository', () => {
 			expect(mockFindFirst).toHaveBeenCalledWith({
 				where: {
 					representationId: 'mock-representation-id',
-					status: {
-						in: ['PUBLISHED', 'published']
-					},
-					represented: {
-						isNot: null
-					}
+					...commonWhereFilters
 				},
 				include: {
 					represented: true,
@@ -58,19 +78,7 @@ describe('service.backoffice.repository', () => {
 		const mockCaseReference = 'mock-case-reference';
 		const expectedCommonQuery = {
 			where: {
-				AND: [
-					{ caseReference: mockCaseReference },
-					{
-						status: {
-							in: ['PUBLISHED', 'published']
-						}
-					},
-					{
-						represented: {
-							isNot: null
-						}
-					}
-				]
+				AND: [{ caseReference: mockCaseReference }, commonWhereFilters]
 			},
 			orderBy: {
 				dateReceived: 'asc'

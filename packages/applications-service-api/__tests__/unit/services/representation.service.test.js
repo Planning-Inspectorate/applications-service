@@ -33,7 +33,6 @@ const {
 	BACK_OFFICE_DB_DOCUMENTS,
 	DB_DOCUMENTS: NI_DB_DOCUMENTS
 } = require('../../__data__/documents');
-const APIError = require('../../../src/error/apiError');
 
 jest.mock('../../../src/repositories/document.ni.repository');
 jest.mock('../../../src/repositories/representation.ni.repository');
@@ -182,24 +181,6 @@ describe('representation.service', () => {
 						path: doc.path ? `${config.documentsHost}${doc.path}` : null
 					}))
 				});
-			});
-		});
-		describe('when representation.Represented fields are null', () => {
-			it('should throw error', async () => {
-				getDocumentsByIdsBORepository.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
-				getRepresentationByBORepository.mockResolvedValue({
-					...REPRESENTATION_BACKOFFICE_DATA,
-					represented: {
-						...SERVICE_USERS_BACKOFFICE_DATA[0],
-						firstName: null,
-						lastName: null,
-						organisationName: null
-					},
-					representative: SERVICE_USERS_BACKOFFICE_DATA[1]
-				});
-				await expect(async () => {
-					await getRepresentationById('1', 'BC010001');
-				}).rejects.toEqual(APIError.notFound('Represented user is missing'));
 			});
 		});
 	});

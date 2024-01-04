@@ -20,7 +20,6 @@ const {
 	mapNIRepresentationToApi
 } = require('../utils/representation.mapper');
 const config = require('../lib/config');
-const ApiError = require('../error/apiError');
 
 const isBackOfficeCaseReference = (caseReference) =>
 	(config.backOfficeIntegration.representations.getRepresentations.caseReferences || []).includes(
@@ -86,13 +85,9 @@ const getRepresentationById = async (id, caseReference) => {
 	const documents = isBOApplication
 		? await getDocumentsByIdsBORepository(representation.attachmentIds)
 		: await getDocumentsByDataIdNIRepository(representation.Attachments?.split(','));
-	const mappedRepresentation = isBOApplication
+	return isBOApplication
 		? mapBackOfficeRepresentationToApi(representation, documents)
 		: mapNIRepresentationToApi(representation, documents);
-	if (!mappedRepresentation.PersonalName || mappedRepresentation.PersonalName.trim() === '') {
-		throw ApiError.notFound('Represented user is missing');
-	}
-	return mappedRepresentation;
 };
 
 module.exports = {
