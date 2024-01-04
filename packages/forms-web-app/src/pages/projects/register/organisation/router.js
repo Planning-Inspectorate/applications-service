@@ -111,7 +111,6 @@ registerOrganisationRouter.post(
 	postRegisterAreYou18Controller
 );
 
-//TEST route and add validation
 registerOrganisationRouter.get(
 	registerOrganisationOrgNameURL,
 	registerMiddleware,
