@@ -1,9 +1,7 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/default.njk" %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "../../macros/bool-to-sentence-case.njk" import boolToSentenceCaseField %}
-{% from "../../macros/summary-field.njk" import summaryField %}
+{% from "macros/summary-field.njk" import summaryField %}
 
 {% block pageTitle %}
 	Check your answers before registering - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning
@@ -25,9 +23,13 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds-from-desktop">
 
-			<h1 class="govuk-heading-xl">Check your answers before registering</h1>
+			<h1 class="govuk-heading-xl">
+				Check your answers before registering
+			</h1>
 
-			<h2 class="govuk-heading-m">Personal details</h2>
+			<h2 class="govuk-heading-m">
+				Personal details
+			</h2>
 
 			{{ govukSummaryList({
 				classes: "govuk-!-margin-bottom-9",
@@ -166,8 +168,7 @@
 				rows: commentsRow
 			}) }}
 
-			<a href="{{ baseUrl }}/register/myself/declaration" role="button" class="govuk-button govuk-button"
-				 data-module="govuk-button">
+			<a href="{{ registerMyselfDeclarationURL }}" role="button" class="govuk-button govuk-button" data-module="govuk-button">
 				Accept and continue
 			</a>
 		</div>

@@ -39,6 +39,6 @@ describe('routes/index', () => {
 		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);
 		expect(use).toHaveBeenCalledWith(processGuideRouter);
 		expect(use).toHaveBeenCalledWith('/api', apiRouter);
-		expect(use.mock.calls.length).toBe(25);
+		expect(use.mock.calls.length).toBe(21);
 	});
 });

@@ -11,7 +11,6 @@ const representeeTelephoneRouter = require('./their-telephone-number');
 const organisationNameRouter = require('./name-of-organisation');
 
 const commentsRouter = require('./tell-us-about-project');
-const checkYourAnswersRouter = require('./check-answers');
 
 router.use('/', representingForRouter);
 router.use('/', representeeNameRouter);
@@ -22,6 +21,5 @@ router.use('/', representeeTelephoneRouter);
 router.use('/', organisationNameRouter);
 
 router.use('/', commentsRouter);
-router.use('/', checkYourAnswersRouter);
 
 module.exports = router;

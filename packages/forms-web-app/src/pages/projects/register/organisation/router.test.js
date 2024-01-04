@@ -1,15 +1,11 @@
 const {
-	getRegisterAreYou18Controller,
-	postRegisterAreYou18Controller
-} = require('../_common/are-you-18/controller');
-const {
-	getRegisterOrganisationOrgNameController,
-	postRegisterOrganisationOrgNameController
-} = require('./organisation-name/controller');
-const {
 	getRegisterNameController,
 	postRegisterNameController
 } = require('../_common/name/controller');
+const {
+	getRegisterAreYou18Controller,
+	postRegisterAreYou18Controller
+} = require('../_common/are-you-18/controller');
 const {
 	getRegisterEmailController,
 	postRegisterEmailController
@@ -23,6 +19,11 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
+} = require('./organisation-name/controller');
+const { getRegisterOrganisationCheckAnswersController } = require('./check-answers/controller');
+const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
@@ -35,14 +36,14 @@ const { rules: fullNameValidationRules } = require('../../../../validators/share
 const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
-const {
-	rules: organisationNameValidationRules
-} = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
+const {
+	rules: organisationNameValidationRules
+} = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -131,19 +132,6 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
-				registerMiddleware,
-				getRegisterOrganisationOrgNameController
-			);
-			expect(post).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
-				registerMiddleware,
-				organisationNameValidationRules(),
-				validationErrorHandler,
-				postRegisterOrganisationOrgNameController
-			);
-
-			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
 				registerMiddleware,
 				getRegisterEmailController
@@ -183,6 +171,25 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				getRegisterOrganisationOrgNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				organisationNameValidationRules(),
+				validationErrorHandler,
+				postRegisterOrganisationOrgNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/check-answers',
+				registerMiddleware,
+				getRegisterOrganisationCheckAnswersController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/declaration',
 				registerMiddleware,
 				getRegisterDeclarationController
@@ -199,7 +206,7 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(8);
+			expect(get).toBeCalledTimes(9);
 			expect(post).toBeCalledTimes(7);
 			expect(use).toBeCalledTimes(0);
 		});
