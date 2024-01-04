@@ -1,17 +1,19 @@
-const { VIEW } = require('../../../lib/views');
+const { VIEW } = require('../../../../../lib/views');
 
-exports.getOrganisationName = (req, res) => {
-	res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {
+const view = 'projects/register/organisation/organisation-name/view.njk';
+
+const getRegisterOrganisationOrgNameController = (req, res) => {
+	res.render(view, {
 		organisationName: req.session.orgRegdata['organisation-name']
 	});
 };
 
-exports.postOrganisationName = (req, res) => {
+const postRegisterOrganisationOrgNameController = (req, res) => {
 	const { body } = req;
 
 	const { errors = {}, errorSummary = [] } = body;
 	if (errors['organisation-name'] || Object.keys(errors).length > 0) {
-		return res.render(VIEW.REGISTER.ORGANISATION.ORGANISATION_NAME, {
+		return res.render(view, {
 			errors,
 			errorSummary
 		});
@@ -25,4 +27,9 @@ exports.postOrganisationName = (req, res) => {
 			: VIEW.REGISTER.ORGANISATION.ROLE;
 
 	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
+};
+
+module.exports = {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
 };
