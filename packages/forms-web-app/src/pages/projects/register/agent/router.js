@@ -20,6 +20,10 @@ const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
+const {
+	getRegisterAgentAboutProjectController,
+	postRegisterAgentAboutProjectController
+} = require('./about-project/controller');
 const { getRegisterAgentCheckAnswersController } = require('./check-answers/controller');
 const {
 	getRegisterDeclarationController,
@@ -34,6 +38,9 @@ const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agen
 const {
 	getRegisterAgentAreThey18URL
 } = require('./are-they-18/utils/get-register-agent-are-they-18-url');
+const {
+	getRegisterAgentAboutProjectURL
+} = require('./about-project/_utils/get-register-agent-about-project-url');
 const {
 	getRegisterAgentCheckAnswersURL
 } = require('./check-answers/_utils/get-register-agent-check-answers-url');
@@ -56,6 +63,9 @@ const {
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -64,6 +74,7 @@ const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
+const registerAgentAboutProjectURL = getRegisterAgentAboutProjectURL();
 const registerAgentCheckAnswersURL = getRegisterAgentCheckAnswersURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
 const registerAgentCompleteURL = getRegisterAgentCompleteURL();
@@ -118,6 +129,20 @@ registerAgentRouter.post(
 	areThey18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreThey18Controller
+);
+
+registerAgentRouter.get(
+	registerAgentAboutProjectURL,
+	registerMiddleware,
+	getRegisterAgentAboutProjectController
+);
+registerAgentRouter.post(
+	registerAgentAboutProjectURL,
+	registerMiddleware,
+	decodeUri('body', ['comment']),
+	aboutProjectValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentAboutProjectController
 );
 
 registerAgentRouter.get(

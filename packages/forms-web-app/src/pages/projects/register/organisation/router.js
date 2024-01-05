@@ -9,6 +9,10 @@ const {
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
 const {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterEmailController,
 	postRegisterEmailController
 } = require('../_common/email/controller');
@@ -21,9 +25,9 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
-	getRegisterOrganisationOrgNameController,
-	postRegisterOrganisationOrgNameController
-} = require('./organisation-name/controller');
+	getRegisterOrganisationAboutProjectController,
+	postRegisterOrganisationAboutProjectController
+} = require('./about-project/controller');
 const { getRegisterOrganisationCheckAnswersController } = require('./check-answers/controller');
 const {
 	getRegisterDeclarationController,
@@ -32,11 +36,14 @@ const {
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const {
+	getRegisterOrganisationNameURL
+} = require('./name/_utils/get-register-organisation-name-url');
+const {
 	getRegisterOrganisationAreYouOver18URL
 } = require('./are-you-18/_utils/get-register-organisation-are-you-18-url');
 const {
-	getRegisterOrganisationNameURL
-} = require('./name/_utils/get-register-organisation-name-url');
+	getRegisterOrganisationOrgNameURL
+} = require('./organisation-name/_utils/get-register-organisation-org-name-url');
 const {
 	getRegisterOrganisationEmailURL
 } = require('./email/_utils/get-register-organisation-email-url');
@@ -47,8 +54,8 @@ const {
 	getRegisterOrganisationNumberURL
 } = require('./number/_utils/get-register-organisation-number-url');
 const {
-	getRegisterOrganisationOrgNameURL
-} = require('./organisation-name/_utils/get-register-organisation-org-name-url');
+	getRegisterOrganisationAboutProjectURL
+} = require('./about-project/_utils/get-register-organisation-about-project-url');
 const {
 	getRegisterOrganisationCheckAnswersURL
 } = require('./check-answers/_utils/get-register-organisation-check-answers-url');
@@ -74,15 +81,19 @@ const {
 const {
 	rules: organisationNameValidationRules
 } = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
 const registerOrganisationNameURL = getRegisterOrganisationNameURL();
 const registerOrganisationAreYouOver18URL = getRegisterOrganisationAreYouOver18URL();
+const registerOrganisationOrgNameURL = getRegisterOrganisationOrgNameURL();
 const registerOrganisationEmailURL = getRegisterOrganisationEmailURL();
 const registerOrganisationAddressURL = getRegisterOrganisationAddressURL();
 const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
-const registerOrganisationOrgNameURL = getRegisterOrganisationOrgNameURL();
+const registerOrganisationAboutProjectURL = getRegisterOrganisationAboutProjectURL();
 const registerOrganisationCheckAnswersURL = getRegisterOrganisationCheckAnswersURL();
 const registerOrganisationDeclarationURL = getRegisterOrganisationDeclarationURL();
 const registerOrganisationCompleteURL = getRegisterOrganisationCompleteURL();
@@ -114,6 +125,19 @@ registerOrganisationRouter.post(
 	areYou18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreYou18Controller
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationOrgNameURL,
+	registerMiddleware,
+	getRegisterOrganisationOrgNameController
+);
+registerOrganisationRouter.post(
+	registerOrganisationOrgNameURL,
+	registerMiddleware,
+	organisationNameValidationRules(),
+	validationErrorHandler,
+	postRegisterOrganisationOrgNameController
 );
 
 registerOrganisationRouter.get(
@@ -156,16 +180,17 @@ registerOrganisationRouter.post(
 );
 
 registerOrganisationRouter.get(
-	registerOrganisationOrgNameURL,
+	registerOrganisationAboutProjectURL,
 	registerMiddleware,
-	getRegisterOrganisationOrgNameController
+	getRegisterOrganisationAboutProjectController
 );
 registerOrganisationRouter.post(
-	registerOrganisationOrgNameURL,
+	registerOrganisationAboutProjectURL,
 	registerMiddleware,
-	organisationNameValidationRules(),
+	decodeUri('body', ['comment']),
+	aboutProjectValidationRules(),
 	validationErrorHandler,
-	postRegisterOrganisationOrgNameController
+	postRegisterOrganisationAboutProjectController
 );
 
 registerOrganisationRouter.get(
