@@ -1,72 +1,23 @@
 const { prismaClient } = require('../src/lib/prisma');
+const {
+	createExaminationTimetableWithEventItems,
+	createProjectWithServiceUsers,
+	createRepresentationWithServiceUsers
+} = require('./utils');
 
+const caseReference = 'BC0110001';
+const deleteFilter = {
+	where: {
+		caseReference
+	}
+};
 const main = async () => {
-	await prismaClient.project.upsert({
-		where: { caseReference: 'BC0110001' },
-		update: {},
-		create: {
-			caseId: 130,
-			caseReference: 'BC0110001',
-			projectName: 'Office Use Test Application 1',
-			projectDescription:
-				'A description of test case 1 which is a case of subsector type Office Use',
-			publishStatus: 'published',
-			sector: 'BC - Business and Commercial',
-			projectType: 'BC01 - Office Use',
-			sourceSystem: 'ODT',
-			stage: 'pre_application',
-			projectLocation: null,
-			projectEmailAddress: 'BC0110001@example.org',
-			regions: 'south_west',
-			transboundary: null,
-			easting: null,
-			northing: null,
-			welshLanguage: null,
-			mapZoomLevel: 'none',
-			secretaryOfState: null,
-			dateProjectAppearsOnWebsite: null,
-			dateOfDCOAcceptance: null,
-			anticipatedDateOfSubmission: null,
-			anticipatedSubmissionDateNonSpecific: null,
-			dateOfDCOSubmission: null,
-			dateOfRepresentationPeriodOpen: null,
-			dateOfRelevantRepresentationClose: null,
-			dateRRepAppearOnWebsite: null,
-			confirmedStartOfExamination: null,
-			dateTimeExaminationEnds: null,
-			stage4ExtensionToExamCloseDate: null,
-			stage5ExtensionToRecommendationDeadline: null,
-			dateOfRecommendations: null,
-			dateOfNonAcceptance: new Date('2021-06-10'),
-			confirmedDateOfDecision: null,
-			stage5ExtensionToDecisionDeadline: null,
-			dateProjectWithdrawn: null,
-			section46Notification: null,
-			datePINSFirstNotifiedOfProject: null,
-			screeningOpinionSought: null,
-			screeningOpinionIssued: null,
-			scopingOpinionSought: null,
-			scopingOpinionIssued: null,
-			deadlineForAcceptanceDecision: null,
-			dateSection58NoticeReceived: null,
-			preliminaryMeetingStartDate: null,
-			deadlineForCloseOfExamination: null,
-			deadlineForSubmissionOfRecommendation: null,
-			deadlineForDecision: null,
-			jRPeriodEndDate: null,
-			extensionToDateRelevantRepresentationsClose: null,
-			examinationTimetableId: null,
-			createdAt: new Date(),
-			modifiedAt: new Date()
-		}
-	});
-
 	await prismaClient.projectUpdate.upsert({
 		where: { projectUpdateId: 1 },
 		update: {},
 		create: {
 			projectUpdateId: 1,
-			caseReference: 'BC0110001',
+			caseReference,
 			updateDate: '2023-06-10',
 			updateName: 'Case update',
 			updateContentEnglish: 'The application has been accepted for examination.',
@@ -80,7 +31,7 @@ const main = async () => {
 		update: {},
 		create: {
 			projectUpdateId: 2,
-			caseReference: 'BC0110001',
+			caseReference,
 			updateDate: '2023-07-21',
 			updateName: 'Case update',
 			updateContentEnglish:
@@ -97,7 +48,7 @@ const main = async () => {
 		create: {
 			// exam
 			projectUpdateId: 3,
-			caseReference: 'BC0110001',
+			caseReference,
 			updateDate: '2023-08-04',
 			updateName: 'Case update',
 			updateContentEnglish: `this is a test of the html project update that should be able to handle:
@@ -116,41 +67,13 @@ const main = async () => {
 		}
 	});
 
-	// Delete any existing timetable events
-	await prismaClient.examinationTimetableEventItem.deleteMany();
-	await prismaClient.examinationTimetable.deleteMany();
-
-	// Exam Preliminary Meeting
-	await createExaminationTimetableWithEventItems({
-		eventId: 1,
-		examinationTimetableId: 1,
-		type: 'Preliminary Meeting',
-		eventTitle: 'Example Preliminary Meeting',
-		description: 'A preliminary meeting will be held to discuss the examination process.',
-		eventDeadlineStartDate: '2023-06-10',
-		date: '2023-07-10',
-		eventItemDescriptions: ['Item 1 Preliminary Description', 'Item 2 Preliminary Description']
-	});
-
-	// Exam Deadline
-	await createExaminationTimetableWithEventItems({
-		examinationTimetableId: 1,
-		eventId: 2,
-		type: 'Deadline',
-		eventTitle: 'Deadline Event',
-		description: 'A deadline meeting description',
-		eventDeadlineStartDate: '2023-06-10',
-		date: '2025-05-10',
-		eventItemDescriptions: ['Item 1 Deadline Description', 'Item 2 Deadline Description']
-	});
-
 	await prismaClient.advice.upsert({
 		where: { adviceId: 1 },
 		update: {},
 		create: {
 			adviceId: 1,
 			adviceReference: 'TR0200007-0005',
-			caseReference: 'BC0110001',
+			caseReference,
 			caseId: 130,
 			title: 'Advice title',
 			from: 'Advice from',
@@ -167,14 +90,99 @@ const main = async () => {
 		}
 	});
 
-	// delete any representations and linked service users
-	await prismaClient.representation.deleteMany();
-	await prismaClient.serviceUser.deleteMany();
+	await prismaClient.project.deleteMany(deleteFilter);
+	await prismaClient.examinationTimetableEventItem.deleteMany();
+	await prismaClient.examinationTimetable.deleteMany(deleteFilter);
+	await prismaClient.representation.deleteMany(deleteFilter);
+	await prismaClient.serviceUser.deleteMany(deleteFilter);
 
-	// Representation with Service Users
+	await createProjectWithServiceUsers({
+		caseReference,
+		caseId: 130,
+		projectName: 'Office Use Test Application 1',
+		projectDescription: 'A description of test case 1 which is a case of subsector type Office Use',
+		publishStatus: 'published',
+		sector: 'BC - Business and Commercial',
+		projectType: 'BC01 - Office Use',
+		sourceSystem: 'ODT',
+		stage: 'pre_application',
+		projectLocation: null,
+		projectEmailAddress: 'BC0110001@example.org',
+		regions: 'south_west',
+		transboundary: null,
+		easting: null,
+		northing: null,
+		welshLanguage: null,
+		mapZoomLevel: 'none',
+		secretaryOfState: null,
+		dateProjectAppearsOnWebsite: null,
+		dateOfDCOAcceptance: null,
+		anticipatedDateOfSubmission: null,
+		anticipatedSubmissionDateNonSpecific: null,
+		dateOfDCOSubmission: null,
+		dateOfRepresentationPeriodOpen: null,
+		dateOfRelevantRepresentationClose: null,
+		dateRRepAppearOnWebsite: null,
+		confirmedStartOfExamination: null,
+		dateTimeExaminationEnds: null,
+		stage4ExtensionToExamCloseDate: null,
+		stage5ExtensionToRecommendationDeadline: null,
+		dateOfRecommendations: null,
+		dateOfNonAcceptance: new Date('2021-06-10'),
+		confirmedDateOfDecision: null,
+		stage5ExtensionToDecisionDeadline: null,
+		dateProjectWithdrawn: null,
+		section46Notification: null,
+		datePINSFirstNotifiedOfProject: null,
+		screeningOpinionSought: null,
+		screeningOpinionIssued: null,
+		scopingOpinionSought: null,
+		scopingOpinionIssued: null,
+		deadlineForAcceptanceDecision: null,
+		dateSection58NoticeReceived: null,
+		preliminaryMeetingStartDate: null,
+		deadlineForCloseOfExamination: null,
+		deadlineForSubmissionOfRecommendation: null,
+		deadlineForDecision: null,
+		jRPeriodEndDate: null,
+		extensionToDateRelevantRepresentationsClose: null,
+		examinationTimetableId: null,
+		applicant: {
+			applicantId: '99',
+			firstName: 'Billy',
+			lastName: 'Bob'
+		}
+	});
+
+	// Exam Preliminary Meeting
+	await createExaminationTimetableWithEventItems({
+		caseReference,
+		eventId: 1,
+		examinationTimetableId: 1,
+		type: 'Preliminary Meeting',
+		eventTitle: 'Example Preliminary Meeting',
+		description: 'A preliminary meeting will be held to discuss the examination process.',
+		eventDeadlineStartDate: '2023-06-10',
+		date: '2023-07-10',
+		eventItemDescriptions: ['Item 1 Preliminary Description', 'Item 2 Preliminary Description']
+	});
+
+	// Exam Deadline
+	await createExaminationTimetableWithEventItems({
+		caseReference,
+		examinationTimetableId: 1,
+		eventId: 2,
+		type: 'Deadline',
+		eventTitle: 'Deadline Event',
+		description: 'A deadline meeting description',
+		eventDeadlineStartDate: '2023-06-10',
+		date: '2025-05-10',
+		eventItemDescriptions: ['Item 1 Deadline Description', 'Item 2 Deadline Description']
+	});
+
 	await createRepresentationWithServiceUsers({
 		representationId: 10,
-		caseReference: 'BC0110001',
+		caseReference,
 		caseId: 130,
 		referenceId: 'TR0200007-0005',
 		status: 'published',
@@ -182,72 +190,20 @@ const main = async () => {
 		representationComment: 'Representation comment',
 		representationType: 'Local Authorities',
 		attachmentIds: '1,2,3',
-		representedId: '10',
 		represented: {
+			representedId: '10',
 			firstName: 'John',
 			lastName: 'Doe',
 			organisationName: 'Example Organisation One'
 		},
-		representativeId: '20',
 		representative: {
+			representativeId: '20',
 			firstName: 'Jane',
 			lastName: 'Doe',
 			organisationName: 'Example Organisation Two'
 		}
 	});
 };
-
-async function createExaminationTimetableWithEventItems(data) {
-	await prismaClient.examinationTimetable.create({
-		data: {
-			caseReference: 'BC0110001',
-			eventId: data.eventId,
-			type: data.type,
-			eventTitle: data.eventTitle,
-			description: data.description,
-			eventDeadlineStartDate: new Date(data.eventDeadlineStartDate),
-			date: new Date(data.date),
-			eventLineItems: {
-				create: data.eventItemDescriptions.map((description) => ({
-					eventLineItemDescription: description
-				}))
-			}
-		}
-	});
-}
-
-async function createRepresentationWithServiceUsers(data) {
-	await prismaClient.representation.create({
-		data: {
-			representationId: data.representationId,
-			caseReference: data.caseReference,
-			caseId: data.caseId,
-			referenceId: data.referenceId,
-			status: data.status,
-			dateReceived: new Date(data.dateReceived),
-			representationComment: data.representationComment,
-			representationType: data.representationType,
-			attachmentIds: data.attachmentIds,
-			represented: {
-				create: {
-					serviceUserId: data.representedId,
-					firstName: data.represented.firstName,
-					lastName: data.represented.lastName,
-					organisationName: data.represented.organisationName
-				}
-			},
-			representative: {
-				create: {
-					serviceUserId: data.representativeId,
-					firstName: data.representative.firstName,
-					lastName: data.representative.lastName,
-					organisationName: data.representative.organisationName
-				}
-			}
-		}
-	});
-}
-
 main()
 	.then(async () => {
 		await prismaClient.$disconnect();
