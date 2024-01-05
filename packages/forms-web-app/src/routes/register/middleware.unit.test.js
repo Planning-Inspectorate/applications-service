@@ -1,4 +1,4 @@
-const { registerMiddleware } = require('../middleware');
+const { registerMiddleware } = require('./middleware');
 describe('#registerMiddleware', () => {
 	it('registerMiddleware - no errors', () => {
 		const next = jest.fn();
