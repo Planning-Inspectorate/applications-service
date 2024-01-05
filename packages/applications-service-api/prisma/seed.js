@@ -167,46 +167,32 @@ const main = async () => {
 		}
 	});
 
-	// Representation
-	await prismaClient.representation.upsert({
-		where: { representationId: 1 },
-		update: {},
-		create: {
-			representationId: 10,
-			caseReference: 'BC0110001',
-			caseId: 130,
-			referenceId: 'TR0200007-0005',
-			status: 'published',
-			dateReceived: new Date('2021-06-01'),
-			representationComment: 'Representation comment',
-			representationType: 'Represented',
-			representedId: '1',
-			representativeId: '2',
-			attachmentIds: '1,2,3'
-		}
-	});
+	// delete any representations and linked service users
+	await prismaClient.representation.deleteMany();
+	await prismaClient.serviceUser.deleteMany();
 
-	// Service User - Represented
-	await prismaClient.serviceUser.upsert({
-		where: { serviceUserId: '1' },
-		update: {},
-		create: {
-			serviceUserId: '1',
+	// Representation with Service Users
+	await createRepresentationWithServiceUsers({
+		representationId: 10,
+		caseReference: 'BC0110001',
+		caseId: 130,
+		referenceId: 'TR0200007-0005',
+		status: 'published',
+		dateReceived: new Date('2021-06-01'),
+		representationComment: 'Representation comment',
+		representationType: 'Local Authorities',
+		attachmentIds: '1,2,3',
+		representedId: '10',
+		represented: {
 			firstName: 'John',
 			lastName: 'Doe',
-			organisationName: 'Example Organisation'
-		}
-	});
-
-	// Service User - Representative
-	await prismaClient.serviceUser.upsert({
-		where: { serviceUserId: '2' },
-		update: {},
-		create: {
-			serviceUserId: '2',
+			organisationName: 'Example Organisation One'
+		},
+		representativeId: '20',
+		representative: {
 			firstName: 'Jane',
 			lastName: 'Doe',
-			organisationName: 'Example Organisation'
+			organisationName: 'Example Organisation Two'
 		}
 	});
 };
@@ -225,6 +211,38 @@ async function createExaminationTimetableWithEventItems(data) {
 				create: data.eventItemDescriptions.map((description) => ({
 					eventLineItemDescription: description
 				}))
+			}
+		}
+	});
+}
+
+async function createRepresentationWithServiceUsers(data) {
+	await prismaClient.representation.create({
+		data: {
+			representationId: data.representationId,
+			caseReference: data.caseReference,
+			caseId: data.caseId,
+			referenceId: data.referenceId,
+			status: data.status,
+			dateReceived: new Date(data.dateReceived),
+			representationComment: data.representationComment,
+			representationType: data.representationType,
+			attachmentIds: data.attachmentIds,
+			represented: {
+				create: {
+					serviceUserId: data.representedId,
+					firstName: data.represented.firstName,
+					lastName: data.represented.lastName,
+					organisationName: data.represented.organisationName
+				}
+			},
+			representative: {
+				create: {
+					serviceUserId: data.representativeId,
+					firstName: data.representative.firstName,
+					lastName: data.representative.lastName,
+					organisationName: data.representative.organisationName
+				}
 			}
 		}
 	});

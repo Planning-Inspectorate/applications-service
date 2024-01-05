@@ -57,8 +57,26 @@ const mockRepresentation = {
 	representationFrom: mockMessage.representationFrom,
 	representationType: mockMessage.representationType,
 	registerFor: mockMessage.registerFor,
-	representedId: mockMessage.representedId,
-	representativeId: mockMessage.representativeId,
+	represented: {
+		connectOrCreate: {
+			where: {
+				serviceUserId: mockMessage.representedId
+			},
+			create: {
+				serviceUserId: mockMessage.representedId
+			}
+		}
+	},
+	representative: {
+		connectOrCreate: {
+			where: {
+				serviceUserId: mockMessage.representativeId
+			},
+			create: {
+				serviceUserId: mockMessage.representativeId
+			}
+		}
+	},
 	attachmentIds: mockMessage.attachmentIds.join(','),
 	modifiedAt: mockCurrentTime
 };
