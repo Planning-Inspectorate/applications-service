@@ -15,6 +15,10 @@ const {
 	postRegisterEmailController
 } = require('../_common/email/controller');
 const {
+	getRegisterOrganisationJobTitleController,
+	postRegisterOrganisationJobTitleController
+} = require('./job-title/controller');
+const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
@@ -41,6 +45,9 @@ const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
+const {
+	rules: jobTitleValidationRules
+} = require('../../../../validators/register/organisation/what-job-title-or-role');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
 	rules: telephoneValidationRules
@@ -78,6 +85,11 @@ jest.mock('../../../../validators/register/organisation/name-of-organisation-or-
 jest.mock('../../../../validators/shared/email-address', () => {
 	return {
 		emailValidationRules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/organisation/what-job-title-or-role', () => {
+	return {
+		rules: jest.fn()
 	};
 });
 jest.mock('../../../../validators/register/myself/address', () => {
@@ -170,6 +182,21 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				registerMiddleware,
+				getRegisterOrganisationJobTitleController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				registerMiddleware,
+				decodeUri(),
+				jobTitleValidationRules(),
+				validationErrorHandler,
+				postRegisterOrganisationJobTitleController
+			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['role']);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
 				registerMiddleware,
 				getRegisterAddressController
@@ -233,8 +260,8 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(10);
-			expect(post).toBeCalledTimes(8);
+			expect(get).toBeCalledTimes(11);
+			expect(post).toBeCalledTimes(9);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

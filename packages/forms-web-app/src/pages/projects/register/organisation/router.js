@@ -17,6 +17,10 @@ const {
 	postRegisterEmailController
 } = require('../_common/email/controller');
 const {
+	getRegisterOrganisationJobTitleController,
+	postRegisterOrganisationJobTitleController
+} = require('./job-title/controller');
+const {
 	getRegisterAddressController,
 	postRegisterAddressController
 } = require('../_common/address/controller');
@@ -48,6 +52,9 @@ const {
 	getRegisterOrganisationEmailURL
 } = require('./email/_utils/get-register-organisation-email-url');
 const {
+	getRegisterOrganisationJobTitleURL
+} = require('./job-title/_utils/get-register-organisation-job-title-url');
+const {
 	getRegisterOrganisationAddressURL
 } = require('./address/_utils/get-register-organisation-address-url');
 const {
@@ -74,6 +81,9 @@ const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
+const {
+	rules: jobTitleValidationRules
+} = require('../../../../validators/register/organisation/what-job-title-or-role');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
 	rules: telephoneValidationRules
@@ -91,6 +101,7 @@ const registerOrganisationNameURL = getRegisterOrganisationNameURL();
 const registerOrganisationAreYouOver18URL = getRegisterOrganisationAreYouOver18URL();
 const registerOrganisationOrgNameURL = getRegisterOrganisationOrgNameURL();
 const registerOrganisationEmailURL = getRegisterOrganisationEmailURL();
+const registerOrganisationJobTitleURL = getRegisterOrganisationJobTitleURL();
 const registerOrganisationAddressURL = getRegisterOrganisationAddressURL();
 const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
 const registerOrganisationAboutProjectURL = getRegisterOrganisationAboutProjectURL();
@@ -151,6 +162,20 @@ registerOrganisationRouter.post(
 	emailValidationRules(),
 	validationErrorHandler,
 	postRegisterEmailController
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationJobTitleURL,
+	registerMiddleware,
+	getRegisterOrganisationJobTitleController
+);
+registerOrganisationRouter.post(
+	registerOrganisationJobTitleURL,
+	registerMiddleware,
+	decodeUri('body', ['role']),
+	jobTitleValidationRules(),
+	validationErrorHandler,
+	postRegisterOrganisationJobTitleController
 );
 
 registerOrganisationRouter.get(
