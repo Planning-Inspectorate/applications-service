@@ -69,7 +69,8 @@ describe('representation ni repository', () => {
 				...mockOptions,
 				caseReference: undefined,
 				raw: true,
-				where: { [Op.and]: [{ CaseReference: mockOptions.caseReference }] }
+				where: { [Op.and]: [{ CaseReference: mockOptions.caseReference }] },
+				order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
 			});
 		});
 		it('calls findAllAndCount with type', async () => {
@@ -90,7 +91,8 @@ describe('representation ni repository', () => {
 						{ CaseReference: mockOptionsWithType.caseReference },
 						{ RepFrom: { [Op.in]: [mockOptionsWithType.type] } }
 					]
-				}
+				},
+				order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
 			});
 		});
 		it('calls findAllAndCount with search term', async () => {
@@ -120,7 +122,8 @@ describe('representation ni repository', () => {
 							]
 						}
 					]
-				}
+				},
+				order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
 			});
 		});
 		it('returns the result of findAllAndCount', async () => {
