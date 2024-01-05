@@ -10,16 +10,11 @@ const representeeTelephoneRouter = require('./their-telephone-number');
 
 const organisationNameRouter = require('./name-of-organisation');
 
-const commentsRouter = require('./tell-us-about-project');
-
 router.use('/', representingForRouter);
 router.use('/', representeeNameRouter);
 router.use('/', representeeAddressRouter);
 router.use('/', representeeEmailRouter);
 router.use('/', representeeTelephoneRouter);
-
 router.use('/', organisationNameRouter);
-
-router.use('/', commentsRouter);
 
 module.exports = router;

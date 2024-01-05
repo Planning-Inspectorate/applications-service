@@ -7,6 +7,10 @@ const {
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
 const {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterEmailController,
 	postRegisterEmailController
 } = require('../_common/email/controller');
@@ -19,9 +23,9 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
-	getRegisterOrganisationOrgNameController,
-	postRegisterOrganisationOrgNameController
-} = require('./organisation-name/controller');
+	getRegisterOrganisationAboutProjectController,
+	postRegisterOrganisationAboutProjectController
+} = require('./about-project/controller');
 const { getRegisterOrganisationCheckAnswersController } = require('./check-answers/controller');
 const {
 	getRegisterDeclarationController,
@@ -44,6 +48,9 @@ const {
 const {
 	rules: organisationNameValidationRules
 } = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -81,6 +88,11 @@ jest.mock('../../../../validators/register/myself/address', () => {
 jest.mock('../../../../validators/register/myself/telephone', () => {
 	return {
 		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/tell-us-about-project', () => {
+	return {
+		validate: jest.fn()
 	};
 });
 
@@ -132,6 +144,19 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				getRegisterOrganisationOrgNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				organisationNameValidationRules(),
+				validationErrorHandler,
+				postRegisterOrganisationOrgNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
 				registerMiddleware,
 				getRegisterEmailController
@@ -171,17 +196,19 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				'/projects/:case_ref/register/organisation/tell-us-about-project',
 				registerMiddleware,
-				getRegisterOrganisationOrgNameController
+				getRegisterOrganisationAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				'/projects/:case_ref/register/organisation/tell-us-about-project',
 				registerMiddleware,
-				organisationNameValidationRules(),
+				decodeUri(),
+				aboutProjectValidationRules(),
 				validationErrorHandler,
-				postRegisterOrganisationOrgNameController
+				postRegisterOrganisationAboutProjectController
 			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['comment']);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/check-answers',
@@ -206,8 +233,8 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(9);
-			expect(post).toBeCalledTimes(7);
+			expect(get).toBeCalledTimes(10);
+			expect(post).toBeCalledTimes(8);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
