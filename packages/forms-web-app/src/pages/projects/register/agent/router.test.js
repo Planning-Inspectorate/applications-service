@@ -3,6 +3,10 @@ const {
 	postRegisterNameController
 } = require('../_common/name/controller');
 const {
+	getRegisterAgentOrgNameController,
+	postRegisterAgentOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterEmailController,
 	postRegisterEmailController
 } = require('../_common/email/controller');
@@ -33,6 +37,9 @@ const { registerMiddleware } = require('../../../../routes/register/middleware')
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
+const {
+	rules: organisationNameValidationRules
+} = require('../../../../validators/register/agent/name-of-organisation');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
@@ -54,6 +61,11 @@ jest.mock('../../../../middleware/decode-uri', () => {
 });
 
 jest.mock('../../../../validators/shared/full-name', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/agent/name-of-organisation', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -103,6 +115,8 @@ describe('pages/projects/register/agent/router', () => {
 		});
 
 		it('should call the register agent routes and controllers', () => {
+			expect(decodeUri).toHaveBeenCalledWith('body', ['full-name']);
+
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
 				registerMiddleware,
@@ -116,7 +130,19 @@ describe('pages/projects/register/agent/router', () => {
 				validationErrorHandler,
 				postRegisterNameController
 			);
-			expect(decodeUri).toHaveBeenCalledWith('body', ['full-name']);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-of-organisation',
+				registerMiddleware,
+				getRegisterAgentOrgNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-of-organisation',
+				registerMiddleware,
+				organisationNameValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentOrgNameController
+			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/email-address',
@@ -208,8 +234,8 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(9);
-			expect(post).toBeCalledTimes(7);
+			expect(get).toBeCalledTimes(10);
+			expect(post).toBeCalledTimes(8);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

@@ -26,9 +26,12 @@ describe('pages/projects/register/agent/organisation-name/controller', () => {
 	describe('#getRegisterAgentOrgNameController', () => {
 		it('should call the correct template', () => {
 			getRegisterAgentOrgNameController(req, res);
-			expect(res.render).toHaveBeenCalledWith('pages/projects/register/agent/view.njk', {
-				organisationName: 'test'
-			});
+			expect(res.render).toHaveBeenCalledWith(
+				'projects/register/agent/organisation-name/view.njk',
+				{
+					organisationName: 'test'
+				}
+			);
 		});
 	});
 
@@ -61,10 +64,13 @@ describe('pages/projects/register/agent/organisation-name/controller', () => {
 			await postRegisterAgentOrgNameController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith('pages/projects/register/agent/view.njk', {
-				errorSummary: [{ text: 'There were errors here', href: '#' }],
-				errors: { a: 'b' }
-			});
+			expect(res.render).toHaveBeenCalledWith(
+				'projects/register/agent/organisation-name/view.njk',
+				{
+					errorSummary: [{ text: 'There were errors here', href: '#' }],
+					errors: { a: 'b' }
+				}
+			);
 		});
 	});
 });

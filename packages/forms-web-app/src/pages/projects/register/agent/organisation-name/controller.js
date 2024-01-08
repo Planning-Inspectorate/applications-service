@@ -1,6 +1,6 @@
 const { VIEW } = require('../../../../../lib/views');
 
-const view = 'pages/projects/register/agent/view.njk';
+const view = 'projects/register/agent/organisation-name/view.njk';
 
 const getRegisterAgentOrgNameController = (req, res) => {
 	res.render(view, {
