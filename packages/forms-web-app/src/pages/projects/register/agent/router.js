@@ -5,6 +5,10 @@ const {
 	postRegisterNameController
 } = require('../_common/name/controller');
 const {
+	getRegisterAgentOrgNameController,
+	postRegisterAgentOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterEmailController,
 	postRegisterEmailController
 } = require('../_common/email/controller');
@@ -32,6 +36,9 @@ const {
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
+const {
+	getRegisterAgentOrgNameURL
+} = require('./organisation-name/_utils/get-register-agent-organisation-name-url');
 const { getRegisterAgentEmailURL } = require('./email/_utils/get-register-agent-email-url');
 const { getRegisterAgentAddressURL } = require('./address/_utils/get-register-agent-address-url');
 const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
@@ -55,6 +62,9 @@ const { registerMiddleware } = require('../../../../routes/register/middleware')
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
+const {
+	rules: organisationNameValidationRules
+} = require('../../../../validators/register/agent/name-of-organisation');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
@@ -70,6 +80,7 @@ const {
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
 const registerAgentNameURL = getRegisterAgentNameURL();
+const registerAgentOrgNameURL = getRegisterAgentOrgNameURL();
 const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
@@ -89,6 +100,19 @@ registerAgentRouter.post(
 	fullNameValidationRules(),
 	validationErrorHandler,
 	postRegisterNameController
+);
+
+registerAgentRouter.get(
+	registerAgentOrgNameURL,
+	registerMiddleware,
+	getRegisterAgentOrgNameController
+);
+registerAgentRouter.post(
+	registerAgentOrgNameURL,
+	registerMiddleware,
+	organisationNameValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentOrgNameController
 );
 
 registerAgentRouter.get(registerAgentEmailURL, registerMiddleware, getRegisterEmailController);
