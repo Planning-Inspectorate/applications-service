@@ -1,17 +1,19 @@
-const { VIEW } = require('../../../lib/views');
+const { VIEW } = require('../../../../../lib/views');
 
-exports.getOrganisationName = (req, res) => {
-	res.render(VIEW.REGISTER.AGENT.ORGANISATION_NAME, {
+const view = 'pages/projects/register/agent/view.njk';
+
+const getRegisterAgentOrgNameController = (req, res) => {
+	res.render(view, {
 		organisationName: req.session.behalfRegdata.representor['organisation-name']
 	});
 };
 
-exports.postOrganisationName = (req, res) => {
+const postRegisterAgentOrgNameController = (req, res) => {
 	const { body } = req;
 
 	const { errors = {}, errorSummary = [] } = body;
 	if (errors['organisation-name'] || Object.keys(errors).length > 0) {
-		res.render(VIEW.REGISTER.AGENT.ORGANISATION_NAME, {
+		res.render(view, {
 			errors,
 			errorSummary
 		});
@@ -23,4 +25,9 @@ exports.postOrganisationName = (req, res) => {
 	const redirectUrl =
 		req.query.mode === 'edit' ? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS : VIEW.REGISTER.AGENT.EMAIL;
 	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
+};
+
+module.exports = {
+	getRegisterAgentOrgNameController,
+	postRegisterAgentOrgNameController
 };
