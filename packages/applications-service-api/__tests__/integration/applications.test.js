@@ -60,12 +60,6 @@ describe('/api/v1/applications', () => {
 			expect(response.body).toEqual({
 				...APPLICATION_API_V1,
 				DateOfDCOAcceptance_NonAcceptance: null,
-				ApplicantEmailAddress: 'TBC',
-				ApplicantPhoneNumber: 'TBC',
-				PromoterFirstName: 'TBC',
-				PromoterLastName: 'TBC',
-				PromoterName: 'TBC',
-				WebAddress: 'TBC',
 				sourceSystem: 'ODT'
 			});
 		});

@@ -217,12 +217,12 @@ const mapBackOfficeApplicationToApi = (application) => {
 
 	return {
 		...data,
-		applicantName: application.applicant?.organisationName,
-		applicantFirstName: application.applicant?.firstName,
-		applicantLastName: application.applicant?.lastName,
-		applicantPhoneNumber: application.applicant?.phoneNumber,
-		applicantEmailAddress: application.applicant?.email,
-		applicantWebsite: application.applicant?.webAddress,
+		applicantName: application.applicant?.organisationName || '',
+		applicantFirstName: application.applicant?.firstName || '',
+		applicantLastName: application.applicant?.lastName || '',
+		applicantPhoneNumber: application.applicant?.phoneNumber || '',
+		applicantEmailAddress: application.applicant?.email || '',
+		applicantWebsite: application.applicant?.webAddress || '',
 		sector: mapColumnValueToApi('sector', application.sector?.substring(0, 2)),
 		longLat: mapNorthingEastingToLongLat(application.northing, application.easting),
 		mapZoomLevel: mapZoomLevel(application.mapZoomLevel),
