@@ -53,7 +53,7 @@ const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
 const {
-	rules: organisationNameValidationRules
+	rules: organisationOrgNameValidationRules
 } = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
 const {
 	validate: aboutProjectValidationRules
@@ -163,7 +163,7 @@ describe('pages/projects/register/organisation/router', () => {
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
 				registerMiddleware,
-				organisationNameValidationRules(),
+				organisationOrgNameValidationRules(),
 				validationErrorHandler,
 				postRegisterOrganisationOrgNameController
 			);
