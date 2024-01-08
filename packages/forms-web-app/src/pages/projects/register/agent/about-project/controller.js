@@ -1,33 +1,36 @@
-const { VIEW } = require('../../../lib/views');
+const { VIEW } = require('../../../../../lib/views');
 const {
 	postRegistrationData,
 	postCommentsData
-} = require('../../../services/registration.service');
-const config = require('../../../config');
+} = require('../../../../../services/registration.service');
+const config = require('../../../../../config');
 
-exports.getComments = (req, res) => {
+const view = 'projects/register/agent/about-project/view.njk';
+
+const getRegisterAgentAboutProjectController = (req, res) => {
 	const { comment } = req.session;
-	res.render(VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT, { comment });
+	return res.render(view, { comment });
 };
 
-exports.postComments = async (req, res) => {
+const postRegisterAgentAboutProjectController = async (req, res) => {
 	const { body } = req;
 	const { comment, errors = {}, errorSummary = [] } = body;
 
 	const hasErrors = !!errors.comment || Object.keys(errors).length > 0;
 
 	const routes = {
-		checkYourAnswers: `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`,
-		registrationConfirmation: `/${VIEW.REGISTER.ORGANISATION.CONFIRMATION}`,
-		tellUsAboutProject: VIEW.REGISTER.ORGANISATION.TELL_US_ABOUT_PROJECT
+		checkYourAnswers: `/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`,
+		registrationComplete: `/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}`
 	};
 
 	if (hasErrors) {
-		return res.render(routes.tellUsAboutProject, {
+		res.render(view, {
 			errors,
 			errorSummary,
 			comment
 		});
+
+		return;
 	}
 
 	const mode = req.body.mode ? req.body.mode : req.query.mode;
@@ -44,16 +47,16 @@ exports.postComments = async (req, res) => {
 		if (mode === 'draft' && config.featureFlag.allowSaveAndExitOption) {
 			req.session.mode = 'draft';
 
-			let { ipRefNo } = req.session.orgRegdata;
+			let { ipRefNo } = req.session.behalfRegdata;
 
-			if (!req.session.orgRegdata.ipRefNo) {
-				req.session.orgRegdata.case_ref = req.session.caseRef;
+			if (!req.session.behalfRegdata.ipRefNo) {
+				req.session.behalfRegdata.case_ref = req.session.caseRef;
 
-				const registrationData = JSON.stringify(req.session.orgRegdata);
+				const registrationData = JSON.stringify(req.session.behalfRegdata);
 				const response = await postRegistrationData(registrationData);
 
 				ipRefNo = response.data;
-				req.session.orgRegdata.ipRefNo = ipRefNo;
+				req.session.behalfRegdata.ipRefNo = ipRefNo;
 			}
 
 			const commentsData = JSON.stringify({
@@ -63,11 +66,15 @@ exports.postComments = async (req, res) => {
 
 			if (commentsData) await postCommentsData(ipRefNo, commentsData);
 
-			return res.redirect(`${res.locals.baseUrl}${routes.registrationConfirmation}`);
+			return res.redirect(`${res.locals.baseUrl}${routes.registrationComplete}`);
 		} else {
 			req.session.mode = 'final';
-
 			return res.redirect(`${res.locals.baseUrl}${routes.checkYourAnswers}`);
 		}
 	}
+};
+
+module.exports = {
+	getRegisterAgentAboutProjectController,
+	postRegisterAgentAboutProjectController
 };

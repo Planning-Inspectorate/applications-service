@@ -1,20 +1,20 @@
-{% extends "layouts/main.njk" %}
+{% extends "layouts/default.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %},
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = "What is your full name? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+{% set title = "What is your job title or volunteer role? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
 
 {% block pageTitle %}
   {% if errors %}
     {% set title = "Error: " + title %}
   {% endif %}
+
   {{ title }}
 {% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
@@ -23,22 +23,22 @@
           errorList: errorSummary
         }) }}
       {% endif %}
-      <form action="" method="POST" novalidate>
-        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
 
+      <form method="POST" novalidate>
+        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
           {{ govukInput({
             label: {
-                text: "What is your full name?",
-                classes: "govuk-label--l",
-                isPageHeading: true
+              text: "What is your job title or volunteer role?",
+              classes: "govuk-label--l",
+              isPageHeading: true
             },
-            id: "full-name",
-            name: "full-name",
-						autocomplete: 'name',
-            value: fullName or errors['full-name'].value,
-            attributes: {"data-cy": "full-name"},
-            errorMessage: errors['full-name'] and {
-              text: errors['full-name'].msg
+            id: "role",
+            name: "role",
+						autocomplete: 'organization-title',
+            value: role or errors['role'].value,
+            attributes: {"data-cy": "role"},
+            errorMessage: errors['role'] and {
+              text: errors['role'].msg
             }
           }) }}
         </div>
@@ -48,9 +48,7 @@
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
-
       </form>
     </div>
   </div>
-
 {% endblock %}

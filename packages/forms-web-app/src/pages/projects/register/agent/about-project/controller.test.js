@@ -1,14 +1,18 @@
-const commentsController = require('../../../../../src/controllers/register/agent/tell-us-about-project');
-const { postRegistration, putComments } = require('../../../../../src/lib/application-api-wrapper');
-const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
-const config = require('../../../../../src/config');
+const {
+	getRegisterAgentAboutProjectController,
+	postRegisterAgentAboutProjectController
+} = require('./controller');
 
-jest.mock('../../../../../src/lib/application-api-wrapper');
-jest.mock('../../../../../src/lib/logger');
-jest.mock('../../../../../src/config');
+const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-describe('controllers/register/agent/tell-us-about-project', () => {
+const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
+const config = require('../../../../../config');
+
+jest.mock('../../../../../lib/application-api-wrapper');
+jest.mock('../../../../../lib/logger');
+jest.mock('../../../../../config');
+
+describe('pages/projects/register/agent/about-project/controller', () => {
 	let req;
 	let res;
 
@@ -29,10 +33,10 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 		config.featureFlag.allowSaveAndExitOption = true;
 	});
 
-	describe('getComments', () => {
+	describe('#getRegisterAgentAboutProjectController', () => {
 		it('should call the correct template', () => {
-			commentsController.getComments(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/agent/tell-us-about-project', {
+			getRegisterAgentAboutProjectController(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/about-project/view.njk', {
 				comment: undefined
 			});
 		});
@@ -48,15 +52,15 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 					comment: 'test'
 				}
 			};
-			commentsController.getComments(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/agent/tell-us-about-project', {
+			getRegisterAgentAboutProjectController(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/about-project/view.njk', {
 				comment: 'test'
 			});
 		});
 	});
 
-	describe('postComments', () => {
-		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}' if comments is provided`, async () => {
+	describe('#postRegisterAgentAboutProjectController', () => {
+		it(`'should post data and redirect to the register agent check answers page if comments is provided`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -66,13 +70,14 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 					mode: ''
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/agent/check-answers'
 			);
 		});
-		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}' if comments is provided and mode is edit`, async () => {
+
+		it(`'should post data and redirect to the register agent check answers page if comments is provided and mode is edit`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -85,14 +90,14 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 					comments: []
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/agent/check-answers'
 			);
 		});
 
-		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}' if comments is provided and mode is draft`, async () => {
+		it(`'should post data and redirect to the register agent complete page if comments is provided and mode is draft`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -106,10 +111,10 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 					behalfRegdata: {}
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REGISTRATION_COMPLETE}`
+				'/mock-base-url/mock-case-ref/register/agent/registration-complete'
 			);
 		});
 
@@ -121,10 +126,10 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 					errors: { a: 'b' }
 				}
 			};
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT, {
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/about-project/view.njk', {
 				errors: { a: 'b' },
 				errorSummary: [{ href: '#', text: 'There were errors here' }],
 				comment: undefined
@@ -141,10 +146,10 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 				}
 			};
 
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toBeCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/agent/check-answers'
 			);
 		});
 
@@ -159,10 +164,10 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 				}
 			};
 
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toBeCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`
+				'/mock-base-url/mock-case-ref/register/agent/check-answers'
 			);
 		});
 
@@ -175,10 +180,10 @@ describe('controllers/register/agent/tell-us-about-project', () => {
 				}
 			};
 
-			await commentsController.postComments(mockRequest, res);
+			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.render).toBeCalledWith(
-				VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT,
+				'projects/register/agent/about-project/view.njk',
 				expect.objectContaining(mockRequest.body)
 			);
 		});

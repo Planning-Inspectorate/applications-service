@@ -7,9 +7,17 @@ const {
 	postRegisterAreYou18Controller
 } = require('../_common/are-you-18/controller');
 const {
+	getRegisterOrganisationOrgNameController,
+	postRegisterOrganisationOrgNameController
+} = require('./organisation-name/controller');
+const {
 	getRegisterEmailController,
 	postRegisterEmailController
 } = require('../_common/email/controller');
+const {
+	getRegisterOrganisationJobTitleController,
+	postRegisterOrganisationJobTitleController
+} = require('./job-title/controller');
 const {
 	getRegisterAddressController,
 	postRegisterAddressController
@@ -19,9 +27,9 @@ const {
 	postRegisterNumberController
 } = require('../_common/number/controller');
 const {
-	getRegisterOrganisationOrgNameController,
-	postRegisterOrganisationOrgNameController
-} = require('./organisation-name/controller');
+	getRegisterOrganisationAboutProjectController,
+	postRegisterOrganisationAboutProjectController
+} = require('./about-project/controller');
 const { getRegisterOrganisationCheckAnswersController } = require('./check-answers/controller');
 const {
 	getRegisterDeclarationController,
@@ -37,13 +45,19 @@ const {
 	rules: areYou18ValidationRules
 } = require('../../../../validators/register/organisation/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
+const {
+	rules: jobTitleValidationRules
+} = require('../../../../validators/register/organisation/what-job-title-or-role');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
 const {
-	rules: organisationNameValidationRules
+	rules: organisationOrgNameValidationRules
 } = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -73,6 +87,11 @@ jest.mock('../../../../validators/shared/email-address', () => {
 		emailValidationRules: jest.fn()
 	};
 });
+jest.mock('../../../../validators/register/organisation/what-job-title-or-role', () => {
+	return {
+		rules: jest.fn()
+	};
+});
 jest.mock('../../../../validators/register/myself/address', () => {
 	return {
 		rules: jest.fn()
@@ -81,6 +100,11 @@ jest.mock('../../../../validators/register/myself/address', () => {
 jest.mock('../../../../validators/register/myself/telephone', () => {
 	return {
 		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/tell-us-about-project', () => {
+	return {
+		validate: jest.fn()
 	};
 });
 
@@ -132,6 +156,19 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				getRegisterOrganisationOrgNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerMiddleware,
+				organisationOrgNameValidationRules(),
+				validationErrorHandler,
+				postRegisterOrganisationOrgNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
 				registerMiddleware,
 				getRegisterEmailController
@@ -143,6 +180,21 @@ describe('pages/projects/register/organisation/router', () => {
 				validationErrorHandler,
 				postRegisterEmailController
 			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				registerMiddleware,
+				getRegisterOrganisationJobTitleController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				registerMiddleware,
+				decodeUri(),
+				jobTitleValidationRules(),
+				validationErrorHandler,
+				postRegisterOrganisationJobTitleController
+			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['role']);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
@@ -171,17 +223,19 @@ describe('pages/projects/register/organisation/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				'/projects/:case_ref/register/organisation/tell-us-about-project',
 				registerMiddleware,
-				getRegisterOrganisationOrgNameController
+				getRegisterOrganisationAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				'/projects/:case_ref/register/organisation/tell-us-about-project',
 				registerMiddleware,
-				organisationNameValidationRules(),
+				decodeUri(),
+				aboutProjectValidationRules(),
 				validationErrorHandler,
-				postRegisterOrganisationOrgNameController
+				postRegisterOrganisationAboutProjectController
 			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['comment']);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/check-answers',
@@ -206,8 +260,8 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(9);
-			expect(post).toBeCalledTimes(7);
+			expect(get).toBeCalledTimes(11);
+			expect(post).toBeCalledTimes(9);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

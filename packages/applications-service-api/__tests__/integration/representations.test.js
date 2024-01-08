@@ -9,15 +9,20 @@ const {
 	REPRESENTATIONS_BACKOFFICE_RESPONSE
 } = require('../__data__/representation');
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('../__data__/serviceUser');
-const { BACK_OFFICE_DB_DOCUMENTS } = require('../__data__/documents');
+const {
+	BACK_OFFICE_DB_DOCUMENTS,
+	DB_DOCUMENTS: NI_DB_DOCUMENTS
+} = require('../__data__/documents');
 
 const mockNIRepresentationFindAndCountAll = jest.fn();
 const mockNIRepresentationFindAll = jest.fn();
 const mockNIRepresentationFindOne = jest.fn();
-const mockBORepresentationFindUnique = jest.fn();
+const mockNIDocumentFindMany = jest.fn();
+const mockBORepresentationFindFirst = jest.fn();
 const mockBORepresentationFindMany = jest.fn();
-const mockBOServiceUserFindUnique = jest.fn();
+const mockBORepresentationCount = jest.fn();
 const mockBODocumentFindMany = jest.fn();
+const mockBOQueryRaw = jest.fn();
 
 jest.mock('../../src/models', () => ({
 	Representation: {
@@ -34,12 +39,11 @@ jest.mock('../../src/models', () => ({
 
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
+		$queryRaw: (query) => mockBOQueryRaw(query),
 		representation: {
-			findUnique: (query) => mockBORepresentationFindUnique(query),
-			findMany: (query) => mockBORepresentationFindMany(query)
-		},
-		serviceUser: {
-			findUnique: (query) => mockBOServiceUserFindUnique(query)
+			findFirst: (query) => mockBORepresentationFindFirst(query),
+			findMany: (query) => mockBORepresentationFindMany(query),
+			count: (query) => mockBORepresentationCount(query)
 		},
 		document: {
 			findMany: (query) => mockBODocumentFindMany(query)
@@ -48,7 +52,7 @@ jest.mock('../../src/lib/prisma', () => ({
 }));
 
 jest.mock('../../src/repositories/document.ni.repository', () => ({
-	getDocumentsByDataId: jest.fn().mockResolvedValue([])
+	getDocumentsByDataId: (query) => mockNIDocumentFindMany(query)
 }));
 
 describe('api/v1/representations', () => {
@@ -56,10 +60,12 @@ describe('api/v1/representations', () => {
 	describe(' GET /api/v1/representations/{representationId}?caseReference={caseReference}', () => {
 		beforeEach(() => {
 			mockNIRepresentationFindOne.mockResolvedValue(REPRESENTATION_NI_DATA[0]);
-			mockBORepresentationFindUnique.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
-			mockBOServiceUserFindUnique
-				.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[0]) // represented
-				.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[1]); // representative
+			mockNIDocumentFindMany.mockResolvedValue(NI_DB_DOCUMENTS);
+			mockBORepresentationFindFirst.mockResolvedValue({
+				...REPRESENTATION_BACKOFFICE_DATA,
+				represented: SERVICE_USERS_BACKOFFICE_DATA[0],
+				representative: SERVICE_USERS_BACKOFFICE_DATA[1]
+			});
 			mockBODocumentFindMany.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
 		});
 		describe('when case reference is missing', () => {
@@ -75,7 +81,7 @@ describe('api/v1/representations', () => {
 		});
 		describe('when an error is thrown', () => {
 			it('should return 500', async () => {
-				mockBORepresentationFindUnique.mockRejectedValue(new Error('MOCK ERROR'));
+				mockBORepresentationFindFirst.mockRejectedValue(new Error('MOCK ERROR'));
 				const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
 				expect(response.status).toEqual(500);
 				expect(response.text).toEqual(
@@ -88,7 +94,13 @@ describe('api/v1/representations', () => {
 				it('should return the correct data', async () => {
 					const response = await request.get('/api/v1/representations/40?caseReference=EN010009');
 					expect(response.status).toEqual(200);
-					expect(response.body).toEqual(REPRESENTATION_NI_DATA[0]);
+					expect(response.body).toEqual({
+						...REPRESENTATION_NI_DATA[0],
+						attachments: NI_DB_DOCUMENTS.map((doc) => ({
+							...doc,
+							path: doc.path ? `${config.documentsHost}${doc.path}` : null
+						}))
+					});
 				});
 			});
 			describe('and the representation is not found', () => {
@@ -113,42 +125,12 @@ describe('api/v1/representations', () => {
 			});
 			describe('and the representation is not found', () => {
 				it('should return 404', async () => {
-					mockBORepresentationFindUnique.mockResolvedValue(null);
+					mockBORepresentationFindFirst.mockResolvedValue(null);
 					const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
 					expect(response.status).toEqual(404);
 					expect(response.body).toEqual({
 						code: 404,
 						errors: ['Representation with ID 40 not found']
-					});
-				});
-			});
-			describe('and the represented user is not found', () => {
-				it('should return 404', async () => {
-					jest.resetAllMocks();
-					mockBORepresentationFindUnique.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
-					mockBOServiceUserFindUnique
-						.mockResolvedValueOnce(null) // represented
-						.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[1]); // representative
-					const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
-					expect(response.status).toEqual(404);
-					expect(response.body).toEqual({
-						code: 404,
-						errors: ['Service user not found for representation 10']
-					});
-				});
-			});
-			describe('and the representative user is not found', () => {
-				it('should return data correctly', async () => {
-					jest.resetAllMocks();
-					mockBORepresentationFindUnique.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
-					mockBOServiceUserFindUnique.mockResolvedValueOnce(SERVICE_USERS_BACKOFFICE_DATA[0]); // represented
-					mockBOServiceUserFindUnique.mockResolvedValueOnce(null); // representative
-					mockBODocumentFindMany.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
-					const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
-					expect(response.status).toEqual(200);
-					expect(response.body).toEqual({
-						...REPRESENTATION_BACKOFFICE_RESPONSE,
-						Representative: ''
 					});
 				});
 			});
@@ -182,13 +164,12 @@ describe('api/v1/representations', () => {
 				order: [['DateRrepReceived', 'ASC'], ['PersonalName']],
 				raw: true
 			};
+
 			beforeEach(() => {
-				mockNIRepresentationFindAndCountAll.mockClear();
-				mockNIRepresentationFindAll.mockClear();
+				mockNIRepresentationFindAll.mockResolvedValue([]);
 			});
 			it('happy path', async () => {
 				// Arrange
-				mockNIRepresentationFindAll.mockResolvedValue([]);
 				mockNIRepresentationFindAndCountAll.mockResolvedValue({
 					rows: REPRESENTATION_NI_DATA,
 					count: 1
@@ -204,7 +185,7 @@ describe('api/v1/representations', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					representations: [...REPRESENTATION_NI_DATA],
+					representations: REPRESENTATION_NI_DATA,
 					totalItems: 1,
 					itemsPerPage: 25,
 					totalPages: 1,
@@ -217,7 +198,6 @@ describe('api/v1/representations', () => {
 			it('with pagination', async () => {
 				// Arrange
 				const queryParameters = ['caseReference=EN010009', 'page=2', 'size=10'].join('&');
-				mockNIRepresentationFindAll.mockResolvedValue([]);
 				mockNIRepresentationFindAndCountAll.mockResolvedValue({
 					rows: REPRESENTATION_NI_DATA,
 					count: 11
@@ -248,7 +228,6 @@ describe('api/v1/representations', () => {
 			it('with type filters', async () => {
 				// Arrange
 				const queryParameters = ['caseReference=EN010009', 'type=foo'].join('&');
-				mockNIRepresentationFindAll.mockResolvedValue([]);
 				mockNIRepresentationFindAndCountAll.mockResolvedValue({
 					rows: REPRESENTATION_NI_DATA,
 					count: 1
@@ -276,14 +255,13 @@ describe('api/v1/representations', () => {
 			});
 			it('with search term', async () => {
 				// Arrange
-				const queryParamters = ['caseReference=EN010009', 'searchTerm=foo'].join('&');
-				mockNIRepresentationFindAll.mockResolvedValue([]);
+				const queryParameters = ['caseReference=EN010009', 'searchTerm=foo'].join('&');
 				mockNIRepresentationFindAndCountAll.mockResolvedValue({
 					rows: REPRESENTATION_NI_DATA,
 					count: 1
 				});
 				// Act
-				const response = await request.get(`/api/v1/representations?${queryParamters}`);
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
 				// Assert
 				expect(mockNIRepresentationFindAndCountAll).toBeCalledWith({
 					...defaultFilters,
@@ -314,14 +292,13 @@ describe('api/v1/representations', () => {
 			});
 			it('with type filters and search term', async () => {
 				// Arrange
-				const queryParamters = ['caseReference=EN010009', 'type=foo', 'searchTerm=bar'].join('&');
-				mockNIRepresentationFindAll.mockResolvedValue([]);
+				const queryParameters = ['caseReference=EN010009', 'type=foo', 'searchTerm=bar'].join('&');
 				mockNIRepresentationFindAndCountAll.mockResolvedValue({
 					rows: REPRESENTATION_NI_DATA,
 					count: 1
 				});
 				// Act
-				const response = await request.get(`/api/v1/representations?${queryParamters}`);
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
 				// Assert
 				expect(mockNIRepresentationFindAndCountAll).toBeCalledWith({
 					...defaultFilters,
@@ -341,8 +318,27 @@ describe('api/v1/representations', () => {
 				});
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					representations: [...REPRESENTATION_NI_DATA],
+					representations: REPRESENTATION_NI_DATA,
 					totalItems: 1,
+					itemsPerPage: 25,
+					totalPages: 1,
+					currentPage: 1,
+					filters: {
+						typeFilters: []
+					}
+				});
+			});
+			it('no representations found', async () => {
+				mockNIRepresentationFindAndCountAll.mockResolvedValue({
+					rows: [],
+					count: 0
+				});
+
+				const response = await request.get('/api/v1/representations?caseReference=EN010009');
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					representations: [],
+					totalItems: 0,
 					itemsPerPage: 25,
 					totalPages: 1,
 					currentPage: 1,
@@ -353,95 +349,182 @@ describe('api/v1/representations', () => {
 			});
 		});
 		describe('when the case reference is backoffice', () => {
-			beforeEach(() => {
-				mockBORepresentationFindMany.mockResolvedValue(REPRESENTATIONS_BACKOFFICE_DATA);
-				mockBOServiceUserFindUnique.mockImplementation((query) => {
-					const serviceUserId = query.where.serviceUserId;
-					return Promise.resolve(
-						SERVICE_USERS_BACKOFFICE_DATA.find((user) => user.serviceUserId === serviceUserId)
-					);
-				});
-			});
-			describe('and representations are found', () => {
-				it('should return the correct data', async () => {
-					const response = await request.get('/api/v1/representations?caseReference=BC0110001');
-					// expect(response.status).toEqual(200);
-					expect(response.body).toEqual({
-						representations: REPRESENTATIONS_BACKOFFICE_RESPONSE,
-						totalItems: 0,
-						itemsPerPage: 0,
-						totalPages: 0,
-						currentPage: 0,
-						filters: {
-							typeFilters: []
-						}
-					});
-				});
-				describe('and the represented user is not found', () => {
-					it('should not return that representation', async () => {
-						mockBORepresentationFindMany.mockResolvedValue([
-							{
-								...REPRESENTATION_BACKOFFICE_DATA,
-								representedId: '999'
-							}
-						]);
-						const response = await request.get('/api/v1/representations?caseReference=BC0110001');
-						expect(response.status).toEqual(200);
-						expect(response.body).toEqual({
-							representations: [],
-							totalItems: 0,
-							itemsPerPage: 0,
-							totalPages: 0,
-							currentPage: 0,
-							filters: {
-								typeFilters: []
-							}
-						});
-					});
-				});
-				describe('and the representative user is not found', () => {
-					it('should return data correctly', async () => {
-						mockBORepresentationFindMany.mockResolvedValue([
-							{
-								...REPRESENTATIONS_BACKOFFICE_DATA[0],
-								representativeId: '999'
-							}
-						]);
-						const response = await request.get('/api/v1/representations?caseReference=BC0110001');
-						expect(response.status).toEqual(200);
-						expect(response.body).toEqual({
-							representations: [
+			const defaultFilters = {
+				where: {
+					AND: [
+						{ caseReference: 'BC0110001' },
+						{
+							status: {
+								in: ['PUBLISHED', 'published']
+							},
+							OR: [
 								{
-									...REPRESENTATIONS_BACKOFFICE_RESPONSE[0],
-									Representative: ''
+									AND: [
+										{ represented: { firstName: { not: null } } },
+										{ represented: { firstName: { not: '' } } }
+									]
+								},
+								{
+									AND: [
+										{ represented: { lastName: { not: null } } },
+										{ represented: { lastName: { not: '' } } }
+									]
+								},
+								{
+									AND: [
+										{ represented: { organisationName: { not: null } } },
+										{ represented: { organisationName: { not: '' } } }
+									]
 								}
-							],
-							totalItems: 0,
-							itemsPerPage: 0,
-							totalPages: 0,
-							currentPage: 0,
-							filters: {
-								typeFilters: []
-							}
-						});
-					});
+							]
+						}
+					]
+				},
+				orderBy: {
+					dateReceived: 'asc'
+				},
+				skip: 0,
+				take: 25,
+				include: {
+					represented: true,
+					representative: true
+				}
+			};
+			beforeEach(() => {
+				mockBORepresentationFindMany.mockResolvedValue(
+					REPRESENTATIONS_BACKOFFICE_DATA.map((representation) => ({
+						...representation,
+						represented: SERVICE_USERS_BACKOFFICE_DATA[0],
+						representative: SERVICE_USERS_BACKOFFICE_DATA[1]
+					}))
+				);
+				mockBORepresentationCount.mockResolvedValue(1);
+				mockBODocumentFindMany.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
+				mockBOQueryRaw.mockResolvedValue([]);
+			});
+
+			it('happy path', async () => {
+				const queryParameters = ['caseReference=BC0110001'].join('&');
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
+				expect(mockBORepresentationFindMany).toBeCalledWith(defaultFilters);
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					representations: REPRESENTATIONS_BACKOFFICE_RESPONSE,
+					totalItems: 1,
+					itemsPerPage: 25,
+					totalPages: 1,
+					currentPage: 1,
+					filters: {
+						typeFilters: []
+					}
 				});
 			});
-			describe('and representations are not found', () => {
-				it('should return empty array', async () => {
-					mockBORepresentationFindMany.mockResolvedValue([]);
-					const response = await request.get('/api/v1/representations?caseReference=BC0110001');
-					expect(response.status).toEqual(200);
-					expect(response.body).toEqual({
-						representations: [],
-						totalItems: 0,
-						itemsPerPage: 0,
-						totalPages: 0,
-						currentPage: 0,
-						filters: {
-							typeFilters: []
-						}
-					});
+			it('with pagination', async () => {
+				const queryParameters = ['caseReference=BC0110001', 'page=2', 'size=50'].join('&');
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
+				expect(mockBORepresentationFindMany).toBeCalledWith({
+					...defaultFilters,
+					skip: 50,
+					take: 50
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					representations: REPRESENTATIONS_BACKOFFICE_RESPONSE,
+					totalItems: 1,
+					itemsPerPage: 50,
+					totalPages: 1,
+					currentPage: 2,
+					filters: {
+						typeFilters: []
+					}
+				});
+			});
+			it('with type filters', async () => {
+				const queryParameters = ['caseReference=BC0110001', 'type=foo'].join('&');
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
+				expect(mockBORepresentationFindMany).toBeCalledWith({
+					...defaultFilters,
+					where: {
+						AND: [
+							...defaultFilters.where.AND,
+							{
+								representationType: {
+									in: ['foo']
+								}
+							}
+						]
+					}
+				});
+				expect(response.status).toEqual(200);
+			});
+
+			it('with search term', async () => {
+				const queryParameters = ['caseReference=BC0110001', 'searchTerm=foo'].join('&');
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
+				expect(mockBORepresentationFindMany).toBeCalledWith({
+					...defaultFilters,
+					where: {
+						AND: [
+							...defaultFilters.where.AND,
+							{
+								OR: [
+									{ represented: { firstName: { contains: 'foo' } } },
+									{ represented: { lastName: { contains: 'foo' } } },
+									{ represented: { organisationName: { contains: 'foo' } } },
+									{ representative: { firstName: { contains: 'foo' } } },
+									{ representative: { lastName: { contains: 'foo' } } },
+									{ representative: { organisationName: { contains: 'foo' } } },
+									{ representationComment: { contains: 'foo' } }
+								]
+							}
+						]
+					}
+				});
+				expect(response.status).toEqual(200);
+			});
+			it('with type filters and search term', async () => {
+				const queryParameters = ['caseReference=BC0110001', 'type=foo', 'searchTerm=bar'].join('&');
+				const response = await request.get(`/api/v1/representations?${queryParameters}`);
+				expect(mockBORepresentationFindMany).toBeCalledWith({
+					...defaultFilters,
+					where: {
+						AND: [
+							...defaultFilters.where.AND,
+							{
+								OR: [
+									{ represented: { firstName: { contains: 'bar' } } },
+									{ represented: { lastName: { contains: 'bar' } } },
+									{ represented: { organisationName: { contains: 'bar' } } },
+									{ representative: { firstName: { contains: 'bar' } } },
+									{ representative: { lastName: { contains: 'bar' } } },
+									{ representative: { organisationName: { contains: 'bar' } } },
+									{ representationComment: { contains: 'bar' } }
+								]
+							},
+							{
+								representationType: {
+									in: ['foo']
+								}
+							}
+						]
+					}
+				});
+				expect(response.status).toEqual(200);
+			});
+			it('no representations found', async () => {
+				mockBORepresentationFindMany.mockResolvedValue([]);
+				mockBORepresentationCount.mockResolvedValue(0);
+				const response = await request.get('/api/v1/representations?caseReference=BC0110001');
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					representations: [],
+					totalItems: 0,
+					itemsPerPage: 25,
+					totalPages: 1,
+					currentPage: 1,
+					filters: {
+						typeFilters: []
+					}
 				});
 			});
 		});

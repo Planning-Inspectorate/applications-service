@@ -18,6 +18,10 @@ const {
 	getRegisterAreThey18Controller,
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
+const {
+	getRegisterAgentAboutProjectController,
+	postRegisterAgentAboutProjectController
+} = require('./about-project/controller');
 const { getRegisterAgentCheckAnswersController } = require('./check-answers/controller');
 const {
 	getRegisterDeclarationController,
@@ -37,6 +41,9 @@ const {
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
+const {
+	validate: aboutProjectValidationRules
+} = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -69,6 +76,11 @@ jest.mock('../../../../validators/register/myself/telephone', () => {
 jest.mock('../../../../validators/register/agent/are-they-18-over', () => {
 	return {
 		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/tell-us-about-project', () => {
+	return {
+		validate: jest.fn()
 	};
 });
 
@@ -159,6 +171,21 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/tell-us-about-project',
+				registerMiddleware,
+				getRegisterAgentAboutProjectController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/tell-us-about-project',
+				registerMiddleware,
+				decodeUri(),
+				aboutProjectValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentAboutProjectController
+			);
+			expect(decodeUri).toHaveBeenCalledWith('body', ['comment']);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/check-answers',
 				registerMiddleware,
 				getRegisterAgentCheckAnswersController
@@ -181,8 +208,8 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(8);
-			expect(post).toBeCalledTimes(6);
+			expect(get).toBeCalledTimes(9);
+			expect(post).toBeCalledTimes(7);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
