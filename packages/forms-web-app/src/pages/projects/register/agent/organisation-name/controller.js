@@ -3,7 +3,7 @@ const { VIEW } = require('../../../../../lib/views');
 const view = 'projects/register/agent/organisation-name/view.njk';
 
 const getRegisterAgentOrgNameController = (req, res) => {
-	res.render(view, {
+	return res.render(view, {
 		organisationName: req.session.behalfRegdata.representor['organisation-name']
 	});
 };
@@ -13,11 +13,10 @@ const postRegisterAgentOrgNameController = (req, res) => {
 
 	const { errors = {}, errorSummary = [] } = body;
 	if (errors['organisation-name'] || Object.keys(errors).length > 0) {
-		res.render(view, {
+		return res.render(view, {
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	req.session.behalfRegdata.representor['organisation-name'] = body['organisation-name'];
