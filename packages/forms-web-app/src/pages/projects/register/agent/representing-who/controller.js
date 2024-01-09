@@ -1,22 +1,22 @@
-const { VIEW } = require('../../../lib/views');
-const registrationData = require('../../../lib/registration-data.json');
+const { VIEW } = require('../../../../../lib/views');
+const registrationData = require('../../../../../lib/registration-data.json');
 
-exports.getRepresentingFor = (req, res) => {
-	res.render(VIEW.REGISTER.AGENT.REPRESENTING_FOR, {
+const view = 'projects/register/agent/representing-who/view.njk';
+
+const getRegisterAgentRepresentingWhoController = (req, res) =>
+	res.render(view, {
 		representing: req.session.behalfRegdata.representing
 	});
-};
 
-exports.postRepresentingFor = (req, res) => {
+const postRegisterAgentRepresentingWhoController = (req, res) => {
 	const { body } = req;
 	const { representing } = body;
 	const { errors = {}, errorSummary = [] } = body;
 	if (errors.representing || Object.keys(errors).length > 0) {
-		res.render(VIEW.REGISTER.AGENT.REPRESENTING_FOR, {
+		return res.render(view, {
 			errors,
 			errorSummary
 		});
-		return;
 	}
 	// const oldRepresenting = req.session.behalfRegdata.representing;
 	const representingChanged = req.session.behalfRegdata.representing !== representing;
@@ -37,4 +37,9 @@ exports.postRepresentingFor = (req, res) => {
 	}
 
 	return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
+};
+
+module.exports = {
+	getRegisterAgentRepresentingWhoController,
+	postRegisterAgentRepresentingWhoController
 };
