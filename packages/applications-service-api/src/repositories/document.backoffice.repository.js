@@ -80,7 +80,7 @@ const getDocumentsByType = async (queryData) =>
 	});
 
 const getDocumentsByIds = async (documentIds) => {
-	if (!documentIds) return [];
+	if (!documentIds || documentIds.length === 0) return [];
 	return prismaClient.document.findMany({
 		where: {
 			documentId: {

@@ -37,31 +37,34 @@ module.exports = async (context, message) => {
 			representationFrom: message.representationFrom,
 			representationType: message.representationType,
 			registerFor: message.registerFor,
-			// connect (create if it does not exist) to serviceUser with representedId
-			represented: {
-				connectOrCreate: {
-					where: {
-						serviceUserId: message.representedId
-					},
-					create: {
-						serviceUserId: message.representedId
-					}
-				}
-			},
-			// connect (create if it does not exist) to serviceUser with representativeId
-			representative: {
-				connectOrCreate: {
-					where: {
-						serviceUserId: message.representativeId
-					},
-					create: {
-						serviceUserId: message.representativeId
-					}
-				}
-			},
 			attachmentIds: message.attachmentIds?.join(','),
 			modifiedAt: new Date()
 		};
+
+		if (message.representedId) {
+			representation.represented = {
+				connectOrCreate: {
+					where: {
+						serviceUserId: message.representedId
+					},
+					create: {
+						serviceUserId: message.representedId
+					}
+				}
+			};
+		}
+		if (message.representativeId) {
+			representation.representative = {
+				connectOrCreate: {
+					where: {
+						serviceUserId: message.representativeId
+					},
+					create: {
+						serviceUserId: message.representativeId
+					}
+				}
+			};
+		}
 
 		await tx.representation.upsert({
 			where: {
