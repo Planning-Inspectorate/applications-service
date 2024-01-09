@@ -19,6 +19,10 @@ const {
 	postRegisterAgentRepresentingWhoController
 } = require('./representing-who/controller');
 const {
+	getRegisterAgentRepresentingNameController,
+	postRegisterAgentRepresentingNameController
+} = require('./_common/representing-name/controller');
+const {
 	getRegisterNumberController,
 	postRegisterNumberController
 } = require('../_common/number/controller');
@@ -53,6 +57,9 @@ const { rules: addressValidationRules } = require('../../../../validators/regist
 const {
 	rules: representingWhoValidationRules
 } = require('../../../../validators/register/agent/who-representing');
+const {
+	rules: representingNameValidationRules
+} = require('../../../../validators/register/agent/name-person-representing');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
@@ -95,6 +102,11 @@ jest.mock('../../../../validators/register/myself/address', () => {
 	};
 });
 jest.mock('../../../../validators/register/agent/who-representing', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/agent/name-person-representing', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -208,6 +220,45 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-person-representing',
+				registerMiddleware,
+				getRegisterAgentRepresentingNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-person-representing',
+				registerMiddleware,
+				representingNameValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentRepresentingNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-organisation-representing',
+				registerMiddleware,
+				getRegisterAgentRepresentingNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-organisation-representing',
+				registerMiddleware,
+				representingNameValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentRepresentingNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-family-group-representing',
+				registerMiddleware,
+				getRegisterAgentRepresentingNameController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/name-family-group-representing',
+				registerMiddleware,
+				representingNameValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentRepresentingNameController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
 				registerMiddleware,
 				getRegisterNumberController
@@ -285,8 +336,8 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(12);
-			expect(post).toBeCalledTimes(10);
+			expect(get).toBeCalledTimes(15);
+			expect(post).toBeCalledTimes(13);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

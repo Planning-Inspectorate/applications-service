@@ -21,6 +21,10 @@ const {
 	postRegisterAgentRepresentingWhoController
 } = require('./representing-who/controller');
 const {
+	getRegisterAgentRepresentingNameController,
+	postRegisterAgentRepresentingNameController
+} = require('./_common/representing-name/controller');
+const {
 	getRegisterNumberController,
 	postRegisterNumberController
 } = require('../_common/number/controller');
@@ -52,6 +56,15 @@ const { getRegisterAgentAddressURL } = require('./address/_utils/get-register-ag
 const {
 	getRegisterAgentRepresentingWhoURL
 } = require('./representing-who/_utils/get-register-agent-representing-who-url');
+const {
+	getRegisterAgentRepresentingPersonNameURL
+} = require('./representing-person-name/_utils/get-register-agent-representing-person-name-url');
+const {
+	getRegisterAgentRepresentingOrgNameURL
+} = require('./representing-organisation-name/_utils/get-register-agent-representing-organisation-name-url');
+const {
+	getRegisterAgentRepresentingFamilyNameURL
+} = require('./representing-family-name/_utils/get-register-agent-representing-family-name-url');
 const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
 const {
 	getRegisterAgentAreThey18URL
@@ -85,6 +98,9 @@ const {
 	rules: representingWhoValidationRules
 } = require('../../../../validators/register/agent/who-representing');
 const {
+	rules: representingNameValidationRules
+} = require('../../../../validators/register/agent/name-person-representing');
+const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
 const {
@@ -104,6 +120,9 @@ const registerAgentOrgNameURL = getRegisterAgentOrgNameURL();
 const registerAgentEmailURL = getRegisterAgentEmailURL();
 const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentRepresentingWhoURL = getRegisterAgentRepresentingWhoURL();
+const registerAgentRepresentingPersonNameURL = getRegisterAgentRepresentingPersonNameURL();
+const registerAgentRepresentingOrgNameURL = getRegisterAgentRepresentingOrgNameURL();
+const registerAgentRepresentingFamilyNameURL = getRegisterAgentRepresentingFamilyNameURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 const registerAgentTheirAddressURL = getRegisterAgentTheirAddressURL();
@@ -166,6 +185,45 @@ registerAgentRouter.post(
 	representingWhoValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentRepresentingWhoController
+);
+
+registerAgentRouter.get(
+	registerAgentRepresentingPersonNameURL,
+	registerMiddleware,
+	getRegisterAgentRepresentingNameController
+);
+registerAgentRouter.post(
+	registerAgentRepresentingPersonNameURL,
+	registerMiddleware,
+	representingNameValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentRepresentingNameController
+);
+
+registerAgentRouter.get(
+	registerAgentRepresentingOrgNameURL,
+	registerMiddleware,
+	getRegisterAgentRepresentingNameController
+);
+registerAgentRouter.post(
+	registerAgentRepresentingOrgNameURL,
+	registerMiddleware,
+	representingNameValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentRepresentingNameController
+);
+
+registerAgentRouter.get(
+	registerAgentRepresentingFamilyNameURL,
+	registerMiddleware,
+	getRegisterAgentRepresentingNameController
+);
+registerAgentRouter.post(
+	registerAgentRepresentingFamilyNameURL,
+	registerMiddleware,
+	representingNameValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentRepresentingNameController
 );
 
 registerAgentRouter.get(registerAgentNumberURL, registerMiddleware, getRegisterNumberController);
