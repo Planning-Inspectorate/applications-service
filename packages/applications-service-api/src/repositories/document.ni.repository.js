@@ -113,13 +113,15 @@ const buildDateQuery = ({ from, to } = {}) => {
 		return { ['date_published']: { [Op.gte]: from } };
 	}
 };
-const getDocumentsByDataId = (dataIds) =>
-	db.Document.findAll({
+const getDocumentsByDataId = (dataIds) => {
+	if (!dataIds || dataIds.length === 0) return [];
+	return db.Document.findAll({
 		where: {
 			dataID: { [Op.in]: dataIds }
 		},
 		raw: true
 	});
+};
 
 const fetchDocumentsByDocumentType = async (requestQuery) => {
 	const where = {
