@@ -1,10 +1,10 @@
-const addressController = require('../../../../../src/controllers/register/agent/their-postal-address');
-const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
+const {
+	getRegisterAgentTheirAddressController,
+	postRegisterAgentTheirAddressController
+} = require('./controller');
+const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-jest.mock('../../../../../src/lib/logger');
-
-describe('controllers/register/agent/their-postal-address', () => {
+describe('pages/projects/register/agent/their-address/controller.js', () => {
 	let req;
 	let res;
 
@@ -29,17 +29,17 @@ describe('controllers/register/agent/their-postal-address', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getAddress', () => {
+	describe('#getRegisterAgentTheirAddressController', () => {
 		it('should call the correct template', () => {
-			addressController.getAddress(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/agent/their-postal-address', {
+			getRegisterAgentTheirAddressController(req, res);
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/their-address/view.njk', {
 				address: { country: 'UK', line1: 'abc', line2: 'xyz', line3: 'xyz', postcode: 'ABC 123' }
 			});
 		});
 	});
 
-	describe('postAddress', () => {
-		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL}' if address is provided`, async () => {
+	describe('#getRegisterAgentTheirAddressController', () => {
+		it(`'should post data and redirect to  agent their-email-address if address is provided`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -55,10 +55,10 @@ describe('controllers/register/agent/their-postal-address', () => {
 					mode: ''
 				}
 			};
-			await addressController.postAddress(mockRequest, res);
+			await postRegisterAgentTheirAddressController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL}`
+				`/mock-base-url/mock-case-ref/register/agent/their-email-address`
 			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {
@@ -69,10 +69,10 @@ describe('controllers/register/agent/their-postal-address', () => {
 					errors: { a: 'b' }
 				}
 			};
-			await addressController.postAddress(mockRequest, res);
+			await postRegisterAgentTheirAddressController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS, {
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/their-address/view.njk', {
 				address: {
 					errorSummary: [
 						{

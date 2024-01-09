@@ -27,6 +27,10 @@ const {
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
 const {
+	getRegisterAgentTheirAddressController,
+	postRegisterAgentTheirAddressController
+} = require('./their-address/controller');
+const {
 	getRegisterAgentAboutProjectController,
 	postRegisterAgentAboutProjectController
 } = require('./about-project/controller');
@@ -55,6 +59,9 @@ const {
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
+const {
+	rules: theirAddressValidationRules
+} = require('../../../../validators/register/agent/their-postal-address');
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
@@ -98,6 +105,11 @@ jest.mock('../../../../validators/register/myself/telephone', () => {
 	};
 });
 jest.mock('../../../../validators/register/agent/are-they-18-over', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/agent/their-postal-address', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -222,6 +234,20 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/their-postal-address',
+				registerMiddleware,
+				getRegisterAgentTheirAddressController
+			);
+
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/their-postal-address',
+				registerMiddleware,
+				theirAddressValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentTheirAddressController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/tell-us-about-project',
 				registerMiddleware,
 				getRegisterAgentAboutProjectController
@@ -259,8 +285,8 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(11);
-			expect(post).toBeCalledTimes(9);
+			expect(get).toBeCalledTimes(12);
+			expect(post).toBeCalledTimes(10);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

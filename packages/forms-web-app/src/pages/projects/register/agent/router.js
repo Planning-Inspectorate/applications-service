@@ -29,6 +29,10 @@ const {
 	postRegisterAreThey18Controller
 } = require('./are-they-18/controller');
 const {
+	getRegisterAgentTheirAddressController,
+	postRegisterAgentTheirAddressController
+} = require('./their-address/controller');
+const {
 	getRegisterAgentAboutProjectController,
 	postRegisterAgentAboutProjectController
 } = require('./about-project/controller');
@@ -52,6 +56,9 @@ const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agen
 const {
 	getRegisterAgentAreThey18URL
 } = require('./are-they-18/utils/get-register-agent-are-they-18-url');
+const {
+	getRegisterAgentTheirAddressURL
+} = require('./their-address/_utils/get-register-agent-their-address-url');
 const {
 	getRegisterAgentAboutProjectURL
 } = require('./about-project/_utils/get-register-agent-about-project-url');
@@ -84,6 +91,9 @@ const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
 const {
+	rules: theirAddressValidationRules
+} = require('../../../../validators/register/agent/their-postal-address');
+const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
 
@@ -96,6 +106,7 @@ const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentRepresentingWhoURL = getRegisterAgentRepresentingWhoURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
+const registerAgentTheirAddressURL = getRegisterAgentTheirAddressURL();
 const registerAgentAboutProjectURL = getRegisterAgentAboutProjectURL();
 const registerAgentCheckAnswersURL = getRegisterAgentCheckAnswersURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
@@ -177,6 +188,19 @@ registerAgentRouter.post(
 	areThey18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreThey18Controller
+);
+
+registerAgentRouter.get(
+	registerAgentTheirAddressURL,
+	registerMiddleware,
+	getRegisterAgentTheirAddressController
+);
+registerAgentRouter.post(
+	registerAgentTheirAddressURL,
+	registerMiddleware,
+	theirAddressValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentTheirAddressController
 );
 
 registerAgentRouter.get(
