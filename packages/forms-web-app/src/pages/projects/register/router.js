@@ -10,7 +10,7 @@ const { getRegisterIndexURL } = require('./index/_utils/get-register-index-url')
 const { getRegisteringForURL } = require('./registering-for/_utils/get-registering-for-url');
 
 const { projectsMiddleware } = require('../_middleware/middleware');
-const { registerMiddleware } = require('../../../routes/register/middleware');
+const { registerMiddleware } = require('./_middleware/register-middleware');
 
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {

@@ -73,7 +73,7 @@ const {
 	getRegisterOrganisationCompleteURL
 } = require('./complete/_utils/get-register-organisation-complete-url');
 
-const { registerMiddleware } = require('../../../../routes/register/middleware');
+const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');

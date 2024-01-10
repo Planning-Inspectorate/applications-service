@@ -53,7 +53,7 @@ const {
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
-const { registerMiddleware } = require('../../../../routes/register/middleware');
+const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
