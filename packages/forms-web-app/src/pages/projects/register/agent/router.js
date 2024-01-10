@@ -40,6 +40,10 @@ const {
 	getRegisterAgentAboutProjectController,
 	postRegisterAgentAboutProjectController
 } = require('./about-project/controller');
+const {
+	getRegisterAgentTheirTelephoneController,
+	postRegisterAgentTheirTelephoneController
+} = require('./their-telephone/controller');
 const { getRegisterAgentCheckAnswersController } = require('./check-answers/controller');
 const {
 	getRegisterDeclarationController,
@@ -75,6 +79,9 @@ const {
 const {
 	getRegisterAgentAboutProjectURL
 } = require('./about-project/_utils/get-register-agent-about-project-url');
+const {
+	getRegisterAgentTheirTelephoneURL
+} = require('./their-telephone/_utils/get-register-agent-their-telephone-url');
 const {
 	getRegisterAgentCheckAnswersURL
 } = require('./check-answers/_utils/get-register-agent-check-answers-url');
@@ -112,6 +119,9 @@ const {
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
+const {
+	rules: theirTelephoneValidationRules
+} = require('../../../../validators/register/agent/their-telephone-number');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -127,6 +137,7 @@ const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 const registerAgentTheirAddressURL = getRegisterAgentTheirAddressURL();
 const registerAgentAboutProjectURL = getRegisterAgentAboutProjectURL();
+const registerAgentTheirTelephoneURL = getRegisterAgentTheirTelephoneURL();
 const registerAgentCheckAnswersURL = getRegisterAgentCheckAnswersURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
 const registerAgentCompleteURL = getRegisterAgentCompleteURL();
@@ -273,6 +284,19 @@ registerAgentRouter.post(
 	aboutProjectValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentAboutProjectController
+);
+
+registerAgentRouter.get(
+	registerAgentTheirTelephoneURL,
+	registerMiddleware,
+	getRegisterAgentTheirTelephoneController
+);
+registerAgentRouter.post(
+	registerAgentTheirTelephoneURL,
+	registerMiddleware,
+	theirTelephoneValidationRules(),
+	validationErrorHandler,
+	postRegisterAgentTheirTelephoneController
 );
 
 registerAgentRouter.get(

@@ -1,20 +1,22 @@
-const { VIEW } = require('../../../lib/views');
+const { VIEW } = require('../../../../../lib/views');
 
-exports.getTelephone = (req, res) => {
-	res.render(VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE, {
+const view = 'projects/register/agent/their-telephone/view.njk';
+
+const getRegisterAgentTheirTelephoneController = (req, res) => {
+	return res.render(view, {
 		telephone: req.session.behalfRegdata.representee.telephone
 	});
 };
 
-exports.postTelephone = (req, res) => {
+const postRegisterAgentTheirTelephoneController = (req, res) => {
 	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
+
 	if (errors.telephone || Object.keys(errors).length > 0) {
-		res.render(VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE, {
+		return res.render(view, {
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	req.session.behalfRegdata.representee.telephone = body.telephone;
@@ -25,4 +27,9 @@ exports.postTelephone = (req, res) => {
 			: VIEW.REGISTER.AGENT.TELL_US_ABOUT_PROJECT;
 
 	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
+};
+
+module.exports = {
+	getRegisterAgentTheirTelephoneController,
+	postRegisterAgentTheirTelephoneController
 };
