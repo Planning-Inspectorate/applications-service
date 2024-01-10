@@ -200,4 +200,32 @@ describe('nsip-representation', () => {
 			});
 		});
 	});
+	describe('when representedId is missing', () => {
+		it('does not createOrConnect represented', async () => {
+			const mockMessageWithoutRepresented = {
+				...mockMessage,
+				representedId: null
+			};
+			const mockRepresentationWithoutRepresented = {
+				...mockRepresentation,
+				represented: undefined
+			};
+			await sendMessage(mockContext, mockMessageWithoutRepresented);
+			assertRepresentationUpsert(mockRepresentationWithoutRepresented);
+		});
+	});
+	describe('when representativeId is missing', () => {
+		it('does not createOrConnect representative', async () => {
+			const mockMessageWithoutRepresentative = {
+				...mockMessage,
+				representativeId: null
+			};
+			const mockRepresentationWithoutRepresentative = {
+				...mockRepresentation,
+				representative: undefined
+			};
+			await sendMessage(mockContext, mockMessageWithoutRepresentative);
+			assertRepresentationUpsert(mockRepresentationWithoutRepresentative);
+		});
+	});
 });
