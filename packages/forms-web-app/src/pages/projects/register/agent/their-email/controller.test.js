@@ -1,10 +1,11 @@
-const emailController = require('../../../../../src/controllers/register/agent/their-email-address');
-const { VIEW } = require('../../../../../src/lib/views');
-const { mockReq, mockRes } = require('../../../mocks');
+const {
+	getRegisterAgentTheirEmailController,
+	postRegisterAgentTheirEmailController
+} = require('./controller');
 
-jest.mock('../../../../../src/lib/logger');
+const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-describe('controllers/register/agent/their-email-address', () => {
+describe('pages/projects/register/agent/their-email/controller', () => {
 	let req;
 	let res;
 
@@ -26,17 +27,18 @@ describe('controllers/register/agent/their-email-address', () => {
 		jest.resetAllMocks();
 	});
 
-	describe('getEmail', () => {
+	describe('#getRegisterAgentTheirEmailController', () => {
 		it('should call the correct template', () => {
-			emailController.getEmail(req, res);
-			expect(res.render).toHaveBeenCalledWith('register/agent/their-email-address', {
+			getRegisterAgentTheirEmailController(req, res);
+
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/their-email/view.njk', {
 				email: 'anc@test.com'
 			});
 		});
 	});
 
-	describe('postEmail', () => {
-		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE}' if email is provided`, async () => {
+	describe('#postRegisterAgentTheirEmailController', () => {
+		it(`'should post data and redirect to the their number page if email is provided`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -46,12 +48,13 @@ describe('controllers/register/agent/their-email-address', () => {
 					mode: ''
 				}
 			};
-			await emailController.postEmail(mockRequest, res);
+			await postRegisterAgentTheirEmailController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE}`
+				'/mock-base-url/mock-case-ref/register/agent/their-telephone-number'
 			);
 		});
+
 		it('should re-render the template with errors if there is any validation error', async () => {
 			const mockRequest = {
 				...req,
@@ -60,10 +63,12 @@ describe('controllers/register/agent/their-email-address', () => {
 					errors: { a: 'b' }
 				}
 			};
-			await emailController.postEmail(mockRequest, res);
+
+			await postRegisterAgentTheirEmailController(mockRequest, res);
+
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL, {
+			expect(res.render).toHaveBeenCalledWith('projects/register/agent/their-email/view.njk', {
 				errorSummary: [{ text: 'There were errors here', href: '#' }],
 				errors: { a: 'b' }
 			});
