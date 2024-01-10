@@ -5,7 +5,7 @@ const {
 } = require('./registering-for/controller');
 
 const { projectsMiddleware } = require('../_middleware/middleware');
-const { registerMiddleware } = require('../../../routes/register/middleware');
+const { registerMiddleware } = require('./_middleware/register-middleware');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {

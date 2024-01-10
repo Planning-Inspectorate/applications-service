@@ -59,8 +59,7 @@ const VIEW = {
 			CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
 			DECLARATION: 'register/agent/declaration',
 			REGISTRATION_COMPLETE: 'register/agent/registration-complete'
-		},
-		MISSED_DEADLINE: 'register/missed-the-deadline'
+		}
 	},
 	FOOTER_PAGES: {
 		COOKIES: 'footer-pages/cookies-info'

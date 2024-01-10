@@ -1,9 +1,7 @@
-const logger = require('../../lib/logger');
-const { getSiteBackLinkURL } = require('../../pages/_utils/get-site-back-link-url');
-const { getProjectsIndexURL } = require('../../pages/projects/index/_utils/get-projects-index-url');
-const {
-	getRegisterIndexURL
-} = require('../../pages/projects/register/index/_utils/get-register-index-url');
+const logger = require('../../../../lib/logger');
+const { getSiteBackLinkURL } = require('../../../_utils/get-site-back-link-url');
+const { getProjectsIndexURL } = require('../../index/_utils/get-projects-index-url');
+const { getRegisterIndexURL } = require('../index/_utils/get-register-index-url');
 
 const checkForErrors = (session, params) => {
 	if (!session.registerJourneyStarted)
