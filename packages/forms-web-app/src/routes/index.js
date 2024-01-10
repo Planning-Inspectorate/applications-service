@@ -4,7 +4,6 @@ const router = express.Router();
 const { routesConfig } = require('./config');
 
 const { pagesRouter } = require('../pages/router');
-const registerRouter = require('./register');
 const footerPagesRouter = require('./footer-pages');
 const examinationRouter = require('../pages/examination/exmaination.router');
 const { apiRouter } = require('../api/router');
@@ -25,8 +24,6 @@ router.use(pagesRouter);
 
 router.use(accessibilityStatementRouter);
 router.use('/', footerPagesRouter);
-
-router.use('/projects/:case_ref/register', registerRouter);
 
 router.use(
 	`/projects/:case_ref/${routesConfig.examination.baseDirectory}`,

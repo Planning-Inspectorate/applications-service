@@ -1,20 +1,22 @@
-const { VIEW } = require('../../../lib/views');
+const { VIEW } = require('../../../../../lib/views');
 
-exports.getEmail = (req, res) => {
-	res.render(VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL, {
+const view = 'projects/register/agent/their-email/view.njk';
+
+const getRegisterAgentTheirEmailController = (req, res) => {
+	return res.render(view, {
 		email: req.session.behalfRegdata.representee.email
 	});
 };
 
-exports.postEmail = (req, res) => {
+const postRegisterAgentTheirEmailController = (req, res) => {
 	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
+
 	if (errors.email || Object.keys(errors).length > 0) {
-		res.render(VIEW.REGISTER.AGENT.REPRESENTEE_EMAIL, {
+		return res.render(view, {
 			errors,
 			errorSummary
 		});
-		return;
 	}
 
 	req.session.behalfRegdata.representee.email = body.email;
@@ -25,4 +27,9 @@ exports.postEmail = (req, res) => {
 			: VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE;
 
 	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
+};
+
+module.exports = {
+	getRegisterAgentTheirEmailController,
+	postRegisterAgentTheirEmailController
 };

@@ -35,6 +35,10 @@ const {
 	postRegisterAgentTheirAddressController
 } = require('./their-address/controller');
 const {
+	getRegisterAgentTheirEmailController,
+	postRegisterAgentTheirEmailController
+} = require('./their-email/controller');
+const {
 	getRegisterAgentAboutProjectController,
 	postRegisterAgentAboutProjectController
 } = require('./about-project/controller');
@@ -73,6 +77,9 @@ const {
 const {
 	rules: theirAddressValidationRules
 } = require('../../../../validators/register/agent/their-postal-address');
+const {
+	rules: theirEmailValidationRules
+} = require('../../../../validators/register/agent/their-email-address');
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
@@ -129,6 +136,11 @@ jest.mock('../../../../validators/register/agent/are-they-18-over', () => {
 	};
 });
 jest.mock('../../../../validators/register/agent/their-postal-address', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/agent/their-email-address', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -301,13 +313,25 @@ describe('pages/projects/register/agent/router', () => {
 				registerMiddleware,
 				getRegisterAgentTheirAddressController
 			);
-
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-postal-address',
 				registerMiddleware,
 				theirAddressValidationRules(),
 				validationErrorHandler,
 				postRegisterAgentTheirAddressController
+			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/their-email-address',
+				registerMiddleware,
+				getRegisterAgentTheirEmailController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/their-email-address',
+				registerMiddleware,
+				theirEmailValidationRules(),
+				validationErrorHandler,
+				postRegisterAgentTheirEmailController
 			);
 
 			expect(get).toHaveBeenCalledWith(
@@ -361,8 +385,8 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(16);
-			expect(post).toBeCalledTimes(14);
+			expect(get).toBeCalledTimes(17);
+			expect(post).toBeCalledTimes(15);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
