@@ -21,15 +21,14 @@ async function createExaminationTimetableWithEventItems(data) {
 
 async function createProjectWithServiceUsers(data) {
 	const { applicant, ...projectData } = data;
+	const { applicantId, ...applicantData } = applicant;
 	await prismaClient.project.create({
 		data: {
 			...projectData,
 			applicant: {
 				create: {
-					serviceUserId: applicant.applicantId,
-					firstName: applicant.firstName,
-					lastName: applicant.lastName,
-					caseReference: projectData.caseReference
+					...applicantData,
+					serviceUserId: applicantId
 				}
 			}
 		}

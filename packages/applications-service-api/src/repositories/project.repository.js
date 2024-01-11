@@ -4,6 +4,9 @@ const getByCaseReference = async (caseReference) => {
 	return prismaClient.project.findUnique({
 		where: {
 			caseReference: caseReference
+		},
+		include: {
+			applicant: true
 		}
 	});
 };
