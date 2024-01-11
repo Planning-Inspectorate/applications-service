@@ -150,7 +150,11 @@ const main = async () => {
 		applicant: {
 			applicantId: '99',
 			firstName: 'Billy',
-			lastName: 'Bob'
+			lastName: 'Bob',
+			email: 'example@example.com',
+			webAddress: 'https://example.com',
+			phoneNumber: '01234567890',
+			organisationName: 'Example Organisation'
 		}
 	});
 

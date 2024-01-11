@@ -55,7 +55,15 @@ const APPLICATION_DB = {
 	stage5ExtensionToDecisionDeadline: '2023-11-14',
 	stage5ExtensionToRecommendationDeadline: '2023-10-14',
 	createdAt: '2023-04-14 15:52:45.9033333',
-	modifiedAt: '2023-04-18 09:43:07.3020000'
+	modifiedAt: '2023-04-18 09:43:07.3020000',
+	applicant: {
+		firstName: 'Joe',
+		lastName: 'Bloggs',
+		organisationName: 'North Lincolnshire Green Energy Park Limited',
+		email: 'joe.bloggs@planninginspectorate.gov.uk',
+		phoneNumber: '01314960000',
+		webAddress: 'https://northlincolnshiregreenenergypark.co.uk/'
+	}
 };
 
 // application data as stored in NI database
