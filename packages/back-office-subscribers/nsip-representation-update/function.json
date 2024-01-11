@@ -1,0 +1,14 @@
+{
+	"bindings": [
+		{
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"name": "message",
+			"topicName": "nsip-representation",
+			"subscriptionName": "applications-nsip-representation-update",
+			"connection": "ServiceBusConnection",
+			"accessRights": "listen"
+		}
+	],
+	"disabled": false
+}
