@@ -1,5 +1,4 @@
 const logger = require('../../../../lib/logger');
-const { getSiteBackLinkURL } = require('../../../_utils/get-site-back-link-url');
 const { getProjectsIndexURL } = require('../../index/_utils/get-projects-index-url');
 const { getRegisterIndexURL } = require('../index/_utils/get-register-index-url');
 
@@ -16,9 +15,8 @@ const registerMiddleware = (req, res, next) => {
 	const { params, session } = req;
 	try {
 		checkForErrors(session, params);
-		const referrer = req.get('Referrer');
 		res.locals.baseUrl = getProjectsIndexURL(params.case_ref);
-		res.locals.backLinkUrl = getSiteBackLinkURL(referrer);
+		res.locals.backLinkUrl = '#';
 		next();
 	} catch (error) {
 		logger.error(error);

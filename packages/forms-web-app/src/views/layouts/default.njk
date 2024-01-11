@@ -40,4 +40,25 @@
 	{% block script %}{% endblock %}
 
 	{% include "includes/initiate-scripts.njk" %}
+
+	{% if backLinkUrl == '#' %}
+		<script {% if cspNonce %} nonce={{ cspNonce }} {% endif %}>
+			const link = document.getElementById('back-link')
+
+			function handleLink(event) {
+				event.preventDefault();
+				history.back()
+			}
+
+			if (link) {
+				link.addEventListener('click', handleLink)
+			}
+
+			window.removeEventListener('unload', () => {
+				link.removeEventListener('click', handleLink);
+				handleRemoveUnload()
+				return
+			});
+		</script>
+	{% endif %}
 {% endblock %}
