@@ -5,13 +5,15 @@ const { formatName, formatNameWithCount } = require('./formatters');
 const { mapFilterTypeToCheckBox } = require('./mappers');
 
 const convertFilterToPageView = (filter, type) => {
+	const filterLabel = filter.label || filter.value;
+
 	return {
 		idPrefix: formatValueToValidElementId(`${filter.name} ${filter.value}`),
 		isOpen: false,
 		items: mapFilterTypeToCheckBox(filter.type),
-		label: filter.label,
+		label: filterLabel,
 		name: formatName(filter),
-		title: formatNameWithCount(filter.label, filter.count),
+		title: formatNameWithCount(filterLabel, filter.count),
 		type
 	};
 };
