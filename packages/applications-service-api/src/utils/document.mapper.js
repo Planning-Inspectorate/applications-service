@@ -35,7 +35,11 @@ const mapDocumentFilterLabel = (filterName, filterValue) => {
 			return LABEL_MAPPING[filterName][normalisedKey] || filterValue;
 		}
 
-		return LABEL_MAPPING[filterName][filterValue];
+		if (Number.isInteger(filterValue)) {
+			return LABEL_MAPPING[filterName][filterValue];
+		} else {
+			return LABEL_MAPPING[filterName][filterValue.toLowerCase()];
+		}
 	} catch (e) {
 		return filterValue;
 	}
