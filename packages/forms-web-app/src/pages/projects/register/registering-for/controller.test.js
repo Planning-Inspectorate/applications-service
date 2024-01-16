@@ -20,8 +20,7 @@ describe('pages/projects/register/registering-for/controller', () => {
 			},
 			query: {
 				mode: ''
-			},
-			get: jest.fn().mockReturnValue('referrer-url')
+			}
 		};
 		res = mockRes();
 
@@ -32,7 +31,6 @@ describe('pages/projects/register/registering-for/controller', () => {
 		it('should call the correct template', () => {
 			getRegisteringForController(req, res);
 			expect(res.render).toHaveBeenCalledWith('projects/register/registering-for/view.njk', {
-				backLinkUrl: '/projects/:case_ref/register/register-have-your-say',
 				type: 'myself'
 			});
 		});
@@ -124,7 +122,6 @@ describe('pages/projects/register/registering-for/controller', () => {
 			expect(res.redirect).not.toHaveBeenCalled();
 
 			expect(res.render).toHaveBeenCalledWith('projects/register/registering-for/view.njk', {
-				backLinkUrl: '/projects/:case_ref/register/register-have-your-say',
 				type: null,
 				errorSummary: [{ text: 'There were errors here', href: '#' }],
 				errors: { a: 'b' }

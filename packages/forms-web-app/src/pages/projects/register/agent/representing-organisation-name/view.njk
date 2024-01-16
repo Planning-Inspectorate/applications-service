@@ -1,0 +1,55 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set title = "What is the full name of the organisation or charity that you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+
+{% block pageTitle %}
+  {% if errors %}
+    {% set title = "Error: " + title %}
+  {% endif %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+
+      <form method="POST" novalidate>
+        <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+          {{ govukInput({
+            label: {
+              text: "What is the full name of the organisation or charity that you are representing?",
+              classes: "govuk-label--l",
+              isPageHeading: true
+            },
+            id: "full-name",
+            name: "full-name",
+						autocomplete: 'name',
+            value: fullName or errors['full-name'].value,
+            attributes: {"data-cy": "full-name"},
+            errorMessage: errors['full-name'] and {
+              text: errors['full-name'].msg
+            }
+          }) }}
+        </div>
+
+        <input type="hidden" name="representing" value={{ representing }}>
+
+        {{ govukButton({
+          text: "Continue",
+          type: "Submit",
+          attributes: { "data-cy":"button-save-and-continue"}
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
