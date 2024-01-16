@@ -88,7 +88,11 @@ const mapBackOfficeDocuments = (documents) =>
 
 const mapFilters = (input) => {
 	const appendFilter = (filterGroup, filter, filterName) => {
-		const filterValue = filter[filterName];
+		const filterValue =
+			Number.isInteger(filter[filterName]) || filterName === 'category'
+				? filter[filterName]
+				: filter[filterName].toLowerCase();
+
 		if (!filterGroup[filterValue]) {
 			filterGroup[filterValue] = {
 				name: filterName,
