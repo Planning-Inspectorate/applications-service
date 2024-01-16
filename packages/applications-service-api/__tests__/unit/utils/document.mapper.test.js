@@ -181,7 +181,7 @@ describe('document mapper functions', () => {
 					}
 				];
 				const mappedFilters = mapFilters(filter);
-				const lowerCaseValue =
+				const expectedFilterValue =
 					Number.isInteger(filterValue) || filterName === 'category'
 						? filterValue
 						: filterValue.toLowerCase();
@@ -189,7 +189,7 @@ describe('document mapper functions', () => {
 				expect(mappedFilters[0]).toEqual(
 					expect.objectContaining({
 						name: filterName,
-						value: lowerCaseValue,
+						value: expectedFilterValue,
 						label: expectedLabel,
 						type: [
 							{
