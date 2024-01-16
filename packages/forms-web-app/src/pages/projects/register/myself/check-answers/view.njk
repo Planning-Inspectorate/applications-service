@@ -1,0 +1,176 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "macros/summary-field.njk" import summaryField %}
+
+{% block pageTitle %}
+	Check your answers before registering - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning
+{% endblock %}
+
+{% set address %}
+	{{ data.address.line1 }}<br>
+	{% if data.address.line2 %}
+		{{ data.address.line2 }}<br>
+	{% endif %}
+	{% if data.address.line3 %}
+		{{ data.address.line3 }}<br>
+	{% endif %}
+	{{ data.address.postcode }}<br>
+	{{ data.address.country }}
+{% endset %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds-from-desktop">
+
+			<h1 class="govuk-heading-xl">
+				Check your answers before registering
+			</h1>
+
+			<h2 class="govuk-heading-m">
+				Personal details
+			</h2>
+
+			{{ govukSummaryList({
+				classes: "govuk-!-margin-bottom-9",
+				rows: [
+					{
+						key: {
+						text: "Who are you registering for?"
+					},
+						value: {
+						text: summaryField( "Myself", { 'data-cy': "type-of-party" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/who-registering-for?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "who are you registering for",
+								attributes: { "data-cy": "who-are-you" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Full name"
+					},
+						value: {
+						text: summaryField( data['full-name'], { 'data-cy': "full-name" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/full-name?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "your full name",
+								attributes: { "data-cy": "full-name" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Are you 18 or over?"
+					},
+						value: {
+						text: summaryField( data['over-18'] | title, { 'data-cy': "are-you-18-over" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/are-you-18-over?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "if you are over 18",
+								attributes: { "data-cy": "over-18" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Email address"
+					},
+						value: {
+						text: summaryField( data['email'], { 'data-cy': "email" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/email-address?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "your email address",
+								attributes: { "data-cy": "email" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Telephone number"
+					},
+						value: {
+						text: summaryField( data['telephone'], { 'data-cy': "telephone" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/telephone-number?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "your telephone number",
+								attributes: { "data-cy": "telephone" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Address"
+					},
+						value: {
+						html: address
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/address?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "your address",
+								attributes: { "data-cy": "address" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Registration comments"
+					},
+						value: {
+						text: summaryField( data['comment'], { "class": "-white-space--pre-line", 'data-cy': "comment" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/tell-us-about-project?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "registration comments",
+								attributes: { "data-cy": "comment" }
+							}
+						]
+					}
+					}
+				]
+			}) }}
+
+			{{ govukSummaryList({
+				classes: "govuk-summary-list govuk-!-margin-bottom-9",
+				rows: commentsRow
+			}) }}
+
+			<a href="{{ registerMyselfDeclarationURL }}" role="button" class="govuk-button govuk-button" data-module="govuk-button">
+				Accept and continue
+			</a>
+		</div>
+	</div>
+{% endblock %}

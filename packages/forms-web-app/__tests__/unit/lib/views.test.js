@@ -19,19 +19,8 @@ describe('lib/views', () => {
 				BEFORE_APPLY: 'guidance-pages/before-apply'
 			},
 			REGISTER: {
-				COMMON: {
-					FULL_NAME_VIEW: 'register/common/full-name',
-					ADDRESS_VIEW: 'register/common/address',
-					EMAIL_ADDRESS_VIEW: 'register/common/email-address',
-					ARE_YOU_OVER_18: 'register/common/are-you-18-over',
-					TELEPHONE_NUMBER_VIEW: 'register/common/telephone',
-					DECLARATION: 'register/common/declaration',
-					REGISTRATION_COMPLETE: 'register/common/registration-complete',
-					REGISTRATION_SAVED: 'register/common/registration-saved'
-				},
 				START: 'register/start',
 				TYPE_OF_PARTY: 'register/who-registering-for',
-				MISSED_DEADLINE: 'register/missed-the-deadline',
 				MYSELF: {
 					FULL_NAME: 'register/myself/full-name',
 					OVER_18: 'register/myself/are-you-18-over',
@@ -41,7 +30,6 @@ describe('lib/views', () => {
 					TELL_US_ABOUT_PROJECT: 'register/myself/tell-us-about-project',
 					CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
 					DECLARATION: 'register/myself/declaration',
-					REGISTRATION_SAVED: 'register/myself/registration-saved',
 					REGISTRATION_COMPLETE: 'register/myself/registration-complete'
 				},
 				ORGANISATION: {
@@ -55,7 +43,6 @@ describe('lib/views', () => {
 					TELL_US_ABOUT_PROJECT: 'register/organisation/tell-us-about-project',
 					CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
 					DECLARATION: 'register/organisation/declaration',
-					REGISTRATION_SAVED: 'register/organisation/registration-saved',
 					REGISTRATION_COMPLETE: 'register/organisation/registration-complete'
 				},
 				AGENT: {
@@ -75,7 +62,6 @@ describe('lib/views', () => {
 					TELL_US_ABOUT_PROJECT: 'register/agent/tell-us-about-project',
 					CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
 					DECLARATION: 'register/agent/declaration',
-					REGISTRATION_SAVED: 'register/agent/registration-saved',
 					REGISTRATION_COMPLETE: 'register/agent/registration-complete'
 				}
 			},

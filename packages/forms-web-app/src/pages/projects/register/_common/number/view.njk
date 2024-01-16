@@ -1,0 +1,59 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set title = pageTitle %}
+
+{% block pageTitle %}
+	{% if errors %}
+		{% set title = "Error: " + title %}
+	{% endif %}
+
+	{{ title }}
+{% endblock %}
+
+{% block content %}
+
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{% if errorSummary %}
+				{{ govukErrorSummary({
+					titleText: "There is a problem",
+					errorList: errorSummary
+				}) }}
+			{% endif %}
+
+			<form method="POST" novalidate>
+				<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+					{{ govukInput({
+						label: {
+							text: "What is your telephone number?",
+							classes: "govuk-label--l",
+							isPageHeading: true
+						},
+						hint: {
+							text: "We will use your phone number to get in touch with you about the project if we cannot reach you by email. We will not publish your telephone number."
+						},
+						classes: "govuk-input--width-20",
+						id: "telephone",
+						name: "telephone",
+						autocomplete: 'tel-national',
+						value: telephone or errors['telephone'].value,
+						attributes: {"data-cy": "telephone"},
+						errorMessage: errors['telephone'] and {
+							text: errors['telephone'].msg
+						}
+					}) }}
+				</div>
+
+				{{ govukButton({
+					text: "Continue",
+					type: "Submit",
+					attributes: { "data-cy":"button-save-and-continue"}
+				}) }}
+			</form>
+		</div>
+	</div>
+{% endblock %}
