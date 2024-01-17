@@ -16,7 +16,10 @@ describe('project repository', () => {
 		it('calls findUnique with caseReference', async () => {
 			await getByCaseReference(caseReference);
 
-			expect(mockFindUnique).toBeCalledWith({ where: { caseReference: caseReference } });
+			expect(mockFindUnique).toBeCalledWith({
+				where: { caseReference: caseReference },
+				include: { applicant: true }
+			});
 		});
 	});
 });

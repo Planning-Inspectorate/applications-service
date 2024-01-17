@@ -2,7 +2,6 @@ const { VIEW } = require('../../../../lib/views');
 const registrationData = require('../../../../lib/registration-data.json');
 const { REGISTER } = require('../../../../constants');
 const { registeringForOptions } = require('./_validators/validate-registering-for-options');
-const { projectsRouteParam } = require('../../config');
 const { getPageData } = require('./_utils/get-page-data');
 
 const view = 'projects/register/registering-for/view.njk';
@@ -18,21 +17,15 @@ const forwardPage = (partyType) => {
 };
 
 const getRegisteringForController = (req, res) => {
-	const referrer = req.get('Referrer');
-	const { params, query, session } = req;
+	const { session } = req;
 	const { typeOfParty } = session;
 
-	const caseRef = params[projectsRouteParam];
-
-	return res.render(view, getPageData(referrer, caseRef, query, typeOfParty));
+	return res.render(view, getPageData(typeOfParty));
 };
 
 const postRegisteringForController = (req, res) => {
-	const referrer = req.get('Referrer');
-	const { body, params, query } = req;
+	const { body } = req;
 	const { errors = {}, errorSummary = [] } = body;
-
-	const caseRef = params[projectsRouteParam];
 
 	const typeOfParty = body['type-of-party'];
 
@@ -44,7 +37,7 @@ const postRegisteringForController = (req, res) => {
 
 	if (Object.keys(errors).length > 0) {
 		return res.render(view, {
-			...getPageData(referrer, caseRef, query, selectedParty),
+			...getPageData(selectedParty),
 			errors,
 			errorSummary
 		});

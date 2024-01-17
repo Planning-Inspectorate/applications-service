@@ -37,19 +37,43 @@ module.exports = async (context, message) => {
 			representationFrom: message.representationFrom,
 			representationType: message.representationType,
 			registerFor: message.registerFor,
-			representedId: message.representedId,
-			representativeId: message.representativeId,
 			attachmentIds: message.attachmentIds?.join(','),
 			modifiedAt: new Date()
 		};
+
+		if (message.representedId) {
+			representation.represented = {
+				connectOrCreate: {
+					where: {
+						serviceUserId: message.representedId
+					},
+					create: {
+						serviceUserId: message.representedId
+					}
+				}
+			};
+		}
+		if (message.representativeId) {
+			representation.representative = {
+				connectOrCreate: {
+					where: {
+						serviceUserId: message.representativeId
+					},
+					create: {
+						serviceUserId: message.representativeId
+					}
+				}
+			};
+		}
 
 		await tx.representation.upsert({
 			where: {
 				representationId
 			},
-			update: representation,
-			create: representation
+			create: representation,
+			update: representation
 		});
+
 		context.log(`upserted representation with representationId: ${representationId}`);
 	});
 };

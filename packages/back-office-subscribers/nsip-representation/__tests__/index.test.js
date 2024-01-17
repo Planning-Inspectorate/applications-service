@@ -57,8 +57,26 @@ const mockRepresentation = {
 	representationFrom: mockMessage.representationFrom,
 	representationType: mockMessage.representationType,
 	registerFor: mockMessage.registerFor,
-	representedId: mockMessage.representedId,
-	representativeId: mockMessage.representativeId,
+	represented: {
+		connectOrCreate: {
+			where: {
+				serviceUserId: mockMessage.representedId
+			},
+			create: {
+				serviceUserId: mockMessage.representedId
+			}
+		}
+	},
+	representative: {
+		connectOrCreate: {
+			where: {
+				serviceUserId: mockMessage.representativeId
+			},
+			create: {
+				serviceUserId: mockMessage.representativeId
+			}
+		}
+	},
 	attachmentIds: mockMessage.attachmentIds.join(','),
 	modifiedAt: mockCurrentTime
 };
@@ -180,6 +198,34 @@ describe('nsip-representation', () => {
 				await sendMessage(mockContext, mockMessageWithRedactedFalse);
 				assertRepresentationUpsert(mockRepresentationWithRedactedFalse);
 			});
+		});
+	});
+	describe('when representedId is missing', () => {
+		it('does not createOrConnect represented', async () => {
+			const mockMessageWithoutRepresented = {
+				...mockMessage,
+				representedId: null
+			};
+			const mockRepresentationWithoutRepresented = {
+				...mockRepresentation,
+				represented: undefined
+			};
+			await sendMessage(mockContext, mockMessageWithoutRepresented);
+			assertRepresentationUpsert(mockRepresentationWithoutRepresented);
+		});
+	});
+	describe('when representativeId is missing', () => {
+		it('does not createOrConnect representative', async () => {
+			const mockMessageWithoutRepresentative = {
+				...mockMessage,
+				representativeId: null
+			};
+			const mockRepresentationWithoutRepresentative = {
+				...mockRepresentation,
+				representative: undefined
+			};
+			await sendMessage(mockContext, mockMessageWithoutRepresentative);
+			assertRepresentationUpsert(mockRepresentationWithoutRepresentative);
 		});
 	});
 });

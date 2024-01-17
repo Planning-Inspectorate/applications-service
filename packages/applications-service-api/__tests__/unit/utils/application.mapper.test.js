@@ -120,19 +120,52 @@ describe('application.mapper', () => {
 	});
 
 	describe('mapBackOfficeApplicationToApi', () => {
-		it('maps back office application data to api format', () => {
-			expect(mapBackOfficeApplicationToApi(APPLICATION_DB)).toEqual(
-				expect.objectContaining({
-					...APPLICATION_API,
-					applicantName: 'TBC',
-					applicantFirstName: 'TBC',
-					applicantLastName: 'TBC',
-					applicantEmailAddress: 'TBC',
-					applicantPhoneNumber: 'TBC',
-					applicantWebsite: 'TBC',
-					sourceSystem: 'ODT'
-				})
-			);
+		describe('when applicant does not exist', () => {
+			it('maps back office application data to api format', () => {
+				const applicationWithoutApplicant = {
+					...APPLICATION_DB,
+					applicant: null
+				};
+				expect(mapBackOfficeApplicationToApi(applicationWithoutApplicant)).toEqual(
+					expect.objectContaining({
+						...APPLICATION_API,
+						applicantEmailAddress: '',
+						applicantFirstName: '',
+						applicantLastName: '',
+						applicantName: '',
+						applicantPhoneNumber: '',
+						applicantWebsite: '',
+						sourceSystem: 'ODT'
+					})
+				);
+			});
+		});
+		describe('when applicant exists', () => {
+			it('maps back office application data to api format', () => {
+				const applicationWithApplicant = {
+					...APPLICATION_DB,
+					applicant: {
+						organisationName: 'Test Organisation',
+						firstName: 'Test',
+						lastName: 'User',
+						phoneNumber: '0123456789',
+						email: 'test@test.com',
+						webAddress: 'www.test.com'
+					}
+				};
+				expect(mapBackOfficeApplicationToApi(applicationWithApplicant)).toEqual(
+					expect.objectContaining({
+						...APPLICATION_API,
+						applicantEmailAddress: applicationWithApplicant.applicant.email,
+						applicantFirstName: applicationWithApplicant.applicant.firstName,
+						applicantLastName: applicationWithApplicant.applicant.lastName,
+						applicantName: applicationWithApplicant.applicant.organisationName,
+						applicantPhoneNumber: applicationWithApplicant.applicant.phoneNumber,
+						applicantWebsite: applicationWithApplicant.applicant.webAddress,
+						sourceSystem: 'ODT'
+					})
+				);
+			});
 		});
 
 		it('returns undefined if no application provided', () => {

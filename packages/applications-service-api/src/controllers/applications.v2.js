@@ -22,12 +22,12 @@ const mapResponseBackToNILegacyFormat = (application) => ({
 	Proposal: application.projectType,
 	Summary: application.projectDescription,
 	Stage: stageMap[application.stage],
-	PromoterName: 'TBC', // TODO: populate from Service User data
-	PromoterFirstName: 'TBC', // TODO: populate from Service User data
-	PromoterLastName: 'TBC', // TODO: populate from Service User data
-	ApplicantEmailAddress: 'TBC', // TODO: populate from Service User data
-	ApplicantPhoneNumber: 'TBC', // TODO: populate from Service User data
-	WebAddress: 'TBC', // TODO: populate from Service User data
+	PromoterName: application.applicantName,
+	PromoterFirstName: application.applicantFirstName,
+	PromoterLastName: application.applicantLastName,
+	ApplicantEmailAddress: application.applicantEmailAddress,
+	ApplicantPhoneNumber: application.applicantPhoneNumber,
+	WebAddress: application.applicantWebsite,
 	ProjectEmailAddress: application.projectEmailAddress,
 	Region: application.regions?.map((region) => regionMap[region]).join(','),
 	ProjectLocation: application.projectLocation,

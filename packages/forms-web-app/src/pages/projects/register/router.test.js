@@ -5,12 +5,16 @@ const {
 } = require('./registering-for/controller');
 
 const { projectsMiddleware } = require('../_middleware/middleware');
-const { registerMiddleware } = require('../../../routes/register/middleware');
+const { registerMiddleware } = require('./_middleware/register-middleware');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {
 	validateRegisteringForOptions
 } = require('./registering-for/_validators/validate-registering-for-options');
+
+const { registerAgentRouter } = require('./agent/router');
+const { registerMyselfRouter } = require('./myself/router');
+const { registerOrganisationRouter } = require('./organisation/router');
 
 jest.mock('./registering-for/_validators/validate-registering-for-options', () => ({
 	validateRegisteringForOptions: jest.fn()
@@ -40,6 +44,7 @@ describe('pages/projects/register/router', () => {
 				projectsMiddleware,
 				getRegisterIndexController
 			);
+
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/register-have-your-say/start',
 				projectsMiddleware,
@@ -59,9 +64,15 @@ describe('pages/projects/register/router', () => {
 				postRegisteringForController
 			);
 
+			expect(use).toHaveBeenCalledWith(registerAgentRouter);
+
+			expect(use).toHaveBeenCalledWith(registerMyselfRouter);
+
+			expect(use).toHaveBeenCalledWith(registerOrganisationRouter);
+
 			expect(get).toBeCalledTimes(3);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(0);
+			expect(use).toBeCalledTimes(3);
 		});
 	});
 });

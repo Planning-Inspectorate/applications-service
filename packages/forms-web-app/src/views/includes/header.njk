@@ -28,19 +28,14 @@
 		{% endif %}
 
 		{% if backLinkUrl %}
-			{% if backLinkUrl == 'show' %}
-				<a class="govuk-back-link" href="javascript:history.back()">Back</a>
-			{% else %}
-				{{ govukBackLink({
-					attributes: {
-						'data-cy': 'back',
-						'id': 'back-link'
-					},
-					href: backLinkUrl,
-					text: "Back"
-				}) }}
-			{% endif %}
-
+			{{ govukBackLink({
+				attributes: {
+					'data-cy': 'back',
+					'id': 'back-link'
+				},
+				href: backLinkUrl,
+				text: "Back"
+			}) }}
 		{% endif %}
 	</div>
 </header>
