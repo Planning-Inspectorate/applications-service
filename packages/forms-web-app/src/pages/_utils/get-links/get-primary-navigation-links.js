@@ -1,4 +1,6 @@
 const { featureFlag } = require('../../../config');
+const { getLocaleTranslation } = require('../../_locales/_utils/get-locale-content');
+const { getPrimaryNavigationLinksText } = require('../../_locales/primary-navigation-links');
 const {
 	getDetailedInformationURL
 } = require('../../detailed-information/_utils/get-detailed-information-url');
@@ -14,20 +16,33 @@ const primaryNavigationLinkModel = (text, linkURL, pageURL) => ({
 	active: isPrimaryNavigationLinkActive(linkURL, pageURL)
 });
 
-const getPrimaryNavigationLinks = (pageURL) => {
+const getPrimaryNavigationLinks = (locale, pageURL) => {
 	let primaryNavigationLinks = [];
 
+	const primaryNavigationLinksText = getPrimaryNavigationLinksText();
+	const primaryNavigationLinksLocale = getLocaleTranslation(locale, primaryNavigationLinksText);
+
 	if (featureFlag.allowHomepage)
-		primaryNavigationLinks.push(primaryNavigationLinkModel('Home', getIndexURL(), pageURL));
+		primaryNavigationLinks.push(
+			primaryNavigationLinkModel(primaryNavigationLinksLocale.indexPageText, getIndexURL(), pageURL)
+		);
 
 	if (!featureFlag.usePrivateBetaV1RoutesOnly)
 		primaryNavigationLinks.push(
-			primaryNavigationLinkModel('All projects', getProjectSearchURL(), pageURL)
+			primaryNavigationLinkModel(
+				primaryNavigationLinksLocale.projectSearchText,
+				getProjectSearchURL(),
+				pageURL
+			)
 		);
 
 	if (featureFlag.allowHomepage)
 		primaryNavigationLinks.push(
-			primaryNavigationLinkModel('Detailed information', getDetailedInformationURL(), pageURL)
+			primaryNavigationLinkModel(
+				primaryNavigationLinksLocale.detailedInformationText,
+				getDetailedInformationURL(),
+				pageURL
+			)
 		);
 
 	return primaryNavigationLinks;
