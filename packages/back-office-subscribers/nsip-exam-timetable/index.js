@@ -51,7 +51,7 @@ module.exports = async (context, message) => {
 						eventId: event.eventId,
 						eventLineItems: {
 							create: event.eventLineItems?.map((eventLineItem) => ({
-								eventLineItemDescription: eventLineItem.eventLineItemDescription
+								eventLineItemDescription: eventLineItem.description
 							}))
 						},
 						createdAt: currentTime,

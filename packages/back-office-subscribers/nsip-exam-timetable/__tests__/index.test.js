@@ -40,10 +40,10 @@ const mockMessage = {
 			date: '2023-06-10',
 			eventLineItems: [
 				{
-					eventLineItemDescription: 'Item 1 Preliminary Description'
+					description: 'Item 1 Preliminary Description'
 				},
 				{
-					eventLineItemDescription: 'Item 2 Preliminary Description'
+					description: 'Item 2 Preliminary Description'
 				}
 			]
 		},
@@ -57,10 +57,10 @@ const mockMessage = {
 			date: '2023-05-10',
 			eventLineItems: [
 				{
-					eventLineItemDescription: 'Item 1 Deadline Description'
+					description: 'Item 1 Deadline Description'
 				},
 				{
-					eventLineItemDescription: 'Item 2 Deadline Description'
+					description: 'Item 2 Deadline Description'
 				}
 			]
 		}
@@ -81,7 +81,7 @@ const assertEventsCreated = (message) => {
 				eventId: event.eventId,
 				eventLineItems: {
 					create: event.eventLineItems?.map((eventLineItem) => ({
-						eventLineItemDescription: eventLineItem.eventLineItemDescription
+						eventLineItemDescription: eventLineItem.description
 					}))
 				},
 				createdAt: new Date('2023-01-01T00:00:00.000Z'),
