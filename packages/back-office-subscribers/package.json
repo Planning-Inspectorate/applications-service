@@ -2,11 +2,17 @@
 	"name": "@pins/back-office-subscribers",
 	"version": "1.0.0",
 	"description": "",
+	"config": {
+		"numOfMessages": 100
+	},
 	"scripts": {
 		"start": "func start",
 		"start:dev": "npx func start --functions",
 		"lint": "eslint ./",
-		"test": "jest"
+		"test": "jest",
+		"rep-service-user:clear": "node ./test-scripts/clear-db.js",
+		"rep-service-user:parallel": "node ./test-scripts/service-user.js $npm_package_config_numOfMessages & node ./test-scripts/representation.js $npm_package_config_numOfMessages",
+		"rep-service-user:clear-and-parallel": "npm run rep-service-user:clear && npm run rep-service-user:parallel"
 	},
 	"dependencies": {
 		"lodash.pick": "^4.4.0",

@@ -20,6 +20,7 @@ const { projectsMiddleware, projectMigrationMiddleware } = require('./_middlewar
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
+const { registerRouter } = require('./register/router');
 
 const { featureFlag } = require('../../config');
 
@@ -63,5 +64,7 @@ if (featureFlag.allowRepresentation) {
 if (featureFlag.allowGetUpdates) {
 	projectsRouter.use(getUpdatesRouter);
 }
+
+projectsRouter.use(registerRouter);
 
 module.exports = { projectsRouter };

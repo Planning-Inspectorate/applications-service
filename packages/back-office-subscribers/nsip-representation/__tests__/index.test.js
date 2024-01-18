@@ -1,33 +1,22 @@
 const sendMessage = require('../index');
-const { prismaClient } = require('../../lib/prisma');
 
-const mockRepresentationFindUnique = jest.fn();
-const mockRepresentationUpsert = jest.fn();
-
+const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$transaction: jest.fn().mockImplementation((callback) =>
-			callback({
-				representation: {
-					findUnique: mockRepresentationFindUnique,
-					upsert: mockRepresentationUpsert
-				}
-			})
-		)
+		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
 
-const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
-const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
-const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
+const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
+		enqueuedTimeUtc: mockEnqueueDateTime,
 		deliveryCount: 1,
 		messageId: 123
 	}
 };
+
 const mockMessage = {
 	representationId: 123,
 	caseRef: 'CASE-REF',
@@ -57,50 +46,19 @@ const mockRepresentation = {
 	representationFrom: mockMessage.representationFrom,
 	representationType: mockMessage.representationType,
 	registerFor: mockMessage.registerFor,
-	represented: {
-		connectOrCreate: {
-			where: {
-				serviceUserId: mockMessage.representedId
-			},
-			create: {
-				serviceUserId: mockMessage.representedId
-			}
-		}
-	},
-	representative: {
-		connectOrCreate: {
-			where: {
-				serviceUserId: mockMessage.representativeId
-			},
-			create: {
-				serviceUserId: mockMessage.representativeId
-			}
-		}
-	},
 	attachmentIds: mockMessage.attachmentIds.join(','),
-	modifiedAt: mockCurrentTime
+	representedId: mockMessage.representedId,
+	representativeId: mockMessage.representativeId,
+	modifiedAt: new Date()
 };
 
-const assertRepresentationUpsert = (representation) => {
-	expect(mockRepresentationUpsert).toHaveBeenCalledWith({
-		where: {
-			representationId: mockMessage.representationId
-		},
-		update: representation,
-		create: representation
-	});
-	expect(mockContext.log).toHaveBeenCalledWith(
-		`upserted representation with representationId: ${mockMessage.representationId}`
-	);
-};
 describe('nsip-representation', () => {
 	beforeEach(() => {
-		mockRepresentationFindUnique.mockReset();
-		mockRepresentationUpsert.mockReset();
+		mockExecuteRawUnsafe.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(mockCurrentTime);
+		jest.setSystemTime(new Date(mockRepresentation.modifiedAt));
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -113,119 +71,80 @@ describe('nsip-representation', () => {
 	it('skips update if representationId is missing', async () => {
 		await sendMessage(mockContext, {});
 		expect(mockContext.log).toHaveBeenCalledWith('skipping update as representationId is missing');
-		expect(mockRepresentationFindUnique).not.toHaveBeenCalled();
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
-	it('start transaction', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(prismaClient.$transaction).toHaveBeenCalled();
-	});
-	it('finds existing representation to determine if it should update', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(mockRepresentationFindUnique).toHaveBeenCalledWith({
-			where: {
-				representationId: mockMessage.representationId
-			}
-		});
-	});
-	describe('when no representation exists in database', () => {
-		it('creates new representation for representationId', async () => {
-			mockRepresentationFindUnique.mockResolvedValue(null);
-			await sendMessage(mockContext, mockMessage);
-			assertRepresentationUpsert(mockRepresentation);
-		});
-	});
-	describe('when representation exists in database', () => {
-		describe('and the message is older than existing representation', () => {
-			it('skips update', async () => {
-				mockRepresentationFindUnique.mockResolvedValue(mockRepresentation);
-				const mockContextWithOlderTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockPastTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithOlderTime, mockMessage);
-				expect(mockRepresentationUpsert).not.toHaveBeenCalled();
+
+	describe('represented service user', () => {
+		describe('when represented exists', () => {
+			it('creates represented', async () => {
+				await sendMessage(mockContext, mockMessage);
+				expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(
+					`
+		MERGE INTO [dbo].[serviceUser] AS Target 
+		USING (SELECT @P1 AS serviceUserId) AS Source
+		ON Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
+					mockMessage.representedId
+				);
 				expect(mockContext.log).toHaveBeenCalledWith(
-					`skipping update of representation with representationId: ${mockMessage.representationId}`
+					`created represented with serviceUserId ${mockMessage.representedId}`
 				);
 			});
 		});
-		describe('and the message is newer than existing project', () => {
-			const mockContextWithNewerTime = {
-				...mockContext,
-				bindingData: {
-					...mockContext.bindingData,
-					enqueuedTimeUtc: mockFutureTime.toUTCString()
-				}
-			};
-			it('updates representation', async () => {
-				mockRepresentationFindUnique.mockResolvedValue(mockRepresentation);
-				await sendMessage(mockContextWithNewerTime, mockMessage);
-				assertRepresentationUpsert(mockRepresentation);
+		describe('when represented is missing', () => {
+			it('does not create represented', async () => {
+				await sendMessage(mockContext, { ...mockMessage, representedId: undefined });
+				expect(mockExecuteRawUnsafe).not.toHaveBeenCalledWith(expect.anything(), 'represented-id');
 			});
 		});
 	});
-	describe('representationComment is set correctly', () => {
-		beforeEach(() => {
-			mockRepresentationFindUnique.mockResolvedValue(null);
-		});
-		describe('when redacted is true', () => {
-			it('sets representationComment to redactedRepresentation', async () => {
-				const mockMessageWithRedacted = {
-					...mockMessage,
-					redacted: true
-				};
-				const mockRepresentationWithRedacted = {
-					...mockRepresentation,
-					representationComment: mockMessageWithRedacted.redactedRepresentation
-				};
-				await sendMessage(mockContext, mockMessageWithRedacted);
-				assertRepresentationUpsert(mockRepresentationWithRedacted);
+
+	describe('representative service user', () => {
+		describe('when representative exists', () => {
+			it('creates representative', async () => {
+				await sendMessage(mockContext, mockMessage);
+				expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(
+					`
+		MERGE INTO [dbo].[serviceUser] AS Target 
+		USING (SELECT @P1 AS serviceUserId) AS Source
+		ON Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
+					mockMessage.representativeId
+				);
+				expect(mockContext.log).toHaveBeenCalledWith(
+					`created representative with serviceUserId ${mockMessage.representativeId}`
+				);
 			});
 		});
-		describe('when redacted is false', () => {
-			it('sets representationComment to originalRepresentation', async () => {
-				const mockMessageWithRedactedFalse = {
-					...mockMessage,
-					redacted: false
-				};
-				const mockRepresentationWithRedactedFalse = {
-					...mockRepresentation,
-					representationComment: mockMessageWithRedactedFalse.originalRepresentation
-				};
-				await sendMessage(mockContext, mockMessageWithRedactedFalse);
-				assertRepresentationUpsert(mockRepresentationWithRedactedFalse);
+		describe('when representative is missing', () => {
+			it('does not create representative', async () => {
+				await sendMessage(mockContext, { ...mockMessage, representativeId: undefined });
+				expect(mockExecuteRawUnsafe).not.toHaveBeenCalledWith(
+					expect.anything(),
+					'representative-id'
+				);
 			});
 		});
 	});
-	describe('when representedId is missing', () => {
-		it('does not createOrConnect represented', async () => {
-			const mockMessageWithoutRepresented = {
-				...mockMessage,
-				representedId: null
-			};
-			const mockRepresentationWithoutRepresented = {
-				...mockRepresentation,
-				represented: undefined
-			};
-			await sendMessage(mockContext, mockMessageWithoutRepresented);
-			assertRepresentationUpsert(mockRepresentationWithoutRepresented);
-		});
-	});
-	describe('when representativeId is missing', () => {
-		it('does not createOrConnect representative', async () => {
-			const mockMessageWithoutRepresentative = {
-				...mockMessage,
-				representativeId: null
-			};
-			const mockRepresentationWithoutRepresentative = {
-				...mockRepresentation,
-				representative: undefined
-			};
-			await sendMessage(mockContext, mockMessageWithoutRepresentative);
-			assertRepresentationUpsert(mockRepresentationWithoutRepresentative);
-		});
+	it('runs query to match upsert representation', async () => {
+		await sendMessage(mockContext, mockMessage);
+		const expectedStatement = `MERGE INTO [representation] AS Target
+			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14) AS Source ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt])
+			ON Target.[representationId] = Source.[representationId]
+			WHEN MATCHED 
+			AND '2023-01-01 09:00:00' >= Target.[modifiedAt]
+			THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt]
+			WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14);`;
+		const expectedParameters = Object.values(mockRepresentation);
+		expect(mockExecuteRawUnsafe).toHaveBeenNthCalledWith(
+			3,
+			expectedStatement,
+			...expectedParameters
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`upserted representation with representationId ${mockMessage.representationId}`
+		);
 	});
 });

@@ -157,6 +157,7 @@ describe('document mapper functions', () => {
 			['stage', 7, 'Post-decision'],
 			['stage', 'pre-application', 'Pre-application'],
 			['stage', 'acceptance', 'Acceptance'],
+			['stage', 'Acceptance', 'Acceptance'],
 			['stage', 'pre-examination', 'Pre-examination'],
 			['stage', 'examination', 'Examination'],
 			['stage', 'recommendation', 'Recommendation'],
@@ -180,11 +181,15 @@ describe('document mapper functions', () => {
 					}
 				];
 				const mappedFilters = mapFilters(filter);
+				const expectedFilterValue =
+					Number.isInteger(filterValue) || filterName === 'category'
+						? filterValue
+						: filterValue.toLowerCase();
 
 				expect(mappedFilters[0]).toEqual(
 					expect.objectContaining({
 						name: filterName,
-						value: filterValue,
+						value: expectedFilterValue,
 						label: expectedLabel,
 						type: [
 							{
@@ -230,6 +235,20 @@ describe('document mapper functions', () => {
 			expect(mappedFilters[0].value).toEqual('pre-application');
 			expect(mappedFilters[1].value).toEqual('examination');
 			expect(mappedFilters[2].value).toEqual('decision');
+		});
+
+		it('merges stages with uppercase and lowercase value combinations into a single filter)', () => {
+			const mappedFilters = mapFilters([
+				{ stage: 'decision', filter1: 'something', total: 1 },
+				{ stage: 'examination', filter1: 'something', total: 6 },
+				{ stage: 'Examination', filter1: 'something', total: 3 },
+				{ stage: 'pre-application', filter1: 'something', total: 1 },
+				{ stage: 'Pre-application', filter1: 'something', total: 3 }
+			]);
+
+			expect(mappedFilters.length).toEqual(3);
+			expect(mappedFilters[1].value).toEqual('examination');
+			expect(mappedFilters[1].count).toEqual(9);
 		});
 	});
 });
