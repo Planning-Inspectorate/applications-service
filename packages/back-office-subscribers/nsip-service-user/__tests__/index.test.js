@@ -61,7 +61,7 @@ describe('nsip-service-user', () => {
 			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7) AS Source ([serviceUserId], [firstName], [lastName], [organisationName], [caseReference], [serviceUserType], [modifiedAt])
 			ON Target.[serviceUserId] = Source.[serviceUserId]
 			WHEN MATCHED 
-			AND '${sqlDateTime}' BETWEEN DATEADD(MINUTE, -1, Target.[modifiedAt]) AND DATEADD(MINUTE, 1, Target.[modifiedAt])
+			AND '${sqlDateTime}' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
 			THEN UPDATE SET Target.[firstName] = Source.[firstName], Target.[lastName] = Source.[lastName], Target.[organisationName] = Source.[organisationName], Target.[caseReference] = Source.[caseReference], Target.[serviceUserType] = Source.[serviceUserType], Target.[modifiedAt] = Source.[modifiedAt]
 			WHEN NOT MATCHED THEN INSERT ([serviceUserId], [firstName], [lastName], [organisationName], [caseReference], [serviceUserType], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7);`;
 			const expectedParameters = Object.values(mockRepresentationContactServiceUser);
