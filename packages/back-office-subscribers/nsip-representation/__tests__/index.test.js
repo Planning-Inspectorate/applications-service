@@ -134,7 +134,7 @@ describe('nsip-representation', () => {
 			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14) AS Source ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt])
 			ON Target.[representationId] = Source.[representationId]
 			WHEN MATCHED 
-			AND '2023-01-01 09:00:00' BETWEEN DATEADD(MINUTE, -1, Target.[modifiedAt]) AND DATEADD(MINUTE, 1, Target.[modifiedAt])
+			AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
 			THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt]
 			WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14);`;
 		const expectedParameters = Object.values(mockRepresentation);

@@ -30,12 +30,11 @@ const buildMergeQuery = (tableName, keyColumn, entity, dateToCompare) => {
 		.map((col) => `Target.[${col}] = Source.[${col}]`)
 		.join(', ');
 
-	// modified Date is a range so out of sync messages can be processed, but not too far out of sync
 	const statement = `MERGE INTO [${tableName}] AS Target
 			USING (SELECT ${parameterNames}) AS Source (${columns})
 			ON Target.[${keyColumn}] = Source.[${keyColumn}]
 			WHEN MATCHED 
-			AND '${dateToCompare}' BETWEEN DATEADD(MINUTE, -1, Target.[modifiedAt]) AND DATEADD(MINUTE, 1, Target.[modifiedAt])
+			AND '${dateToCompare}' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
 			THEN UPDATE SET ${updateColumns}
 			WHEN NOT MATCHED THEN INSERT (${columns}) VALUES (${parameterNames});`;
 
