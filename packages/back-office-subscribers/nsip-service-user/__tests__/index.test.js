@@ -1,5 +1,4 @@
 const sendMessage = require('../index');
-const { prismaClient } = require('../../lib/prisma');
 const {
 	mockMessageWithInvalidServiceUserType,
 	mockApplicantMessage,
@@ -8,55 +7,30 @@ const {
 	mockRepresentationContactServiceUser
 } = require('../../__data__/service-user');
 
-const mockFindUnique = jest.fn();
-const mockUpsert = jest.fn();
-
+const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$transaction: jest.fn().mockImplementation((callback) =>
-			callback({
-				serviceUser: {
-					findUnique: mockFindUnique,
-					upsert: mockUpsert
-				}
-			})
-		)
+		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
 
-const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
-const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
-const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
+const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
+		enqueuedTimeUtc: mockEnqueueDateTime,
 		deliveryCount: 1,
 		messageId: 123
 	}
 };
 
-const assertUpsert = (serviceUserType, message, serviceUser) => {
-	expect(mockUpsert).toHaveBeenCalledWith({
-		where: {
-			serviceUserId: message.id
-		},
-		create: serviceUser,
-		update: serviceUser
-	});
-	expect(mockContext.log).toHaveBeenCalledWith(
-		`upserted service user of type ${serviceUserType} with serviceUserId: ${message.id}`
-	);
-};
-
 describe('nsip-service-user', () => {
 	beforeEach(() => {
-		mockFindUnique.mockReset();
-		mockUpsert.mockReset();
+		mockExecuteRawUnsafe.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(mockCurrentTime);
+		jest.setSystemTime(new Date(mockApplicantServiceUser.modifiedAt));
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -69,87 +43,45 @@ describe('nsip-service-user', () => {
 	it('skips update if serviceUserId is missing', async () => {
 		await sendMessage(mockContext, {});
 		expect(mockContext.log).toHaveBeenCalledWith('skipping update as serviceUserId is missing');
-		expect(mockFindUnique).not.toHaveBeenCalled();
-	});
-	it('start transaction', async () => {
-		await sendMessage(mockContext, mockApplicantMessage);
-		expect(prismaClient.$transaction).toHaveBeenCalled();
-	});
-	it('finds existing service user to determine if it should update', async () => {
-		await sendMessage(mockContext, mockApplicantMessage);
-		expect(mockFindUnique).toHaveBeenCalledWith({
-			where: {
-				serviceUserId: mockApplicantMessage.id
-			}
-		});
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
 	it('throws error if serviceUserType is invalid', async () => {
 		await expect(sendMessage(mockContext, mockMessageWithInvalidServiceUserType)).rejects.toThrow(
 			`Invalid serviceUserType: ${mockMessageWithInvalidServiceUserType.serviceUserType}`
 		);
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
-	describe('when no service user exists in database', () => {
-		it.each([
-			[
-				'RepresentationContact',
-				mockRepresentationContactMessage,
-				mockRepresentationContactServiceUser
-			],
-			['Applicant', mockApplicantMessage, mockApplicantServiceUser]
-		])('upserts service user of type %s', async (serviceUserType, message, serviceUser) => {
-			mockFindUnique.mockResolvedValue(null);
-			await sendMessage(mockContext, message);
-			assertUpsert(serviceUserType, message, serviceUser);
+	describe('when service user is valid', () => {
+		const sqlDateTime = new Date(mockEnqueueDateTime).toISOString().slice(0, 19).replace('T', ' ');
+		it('runs query to match upsert RepresentationContact', async () => {
+			await sendMessage(mockContext, mockRepresentationContactMessage);
+			const expectedStatement = `MERGE INTO [serviceUser] AS Target
+			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7) AS Source ([serviceUserId], [firstName], [lastName], [organisationName], [caseReference], [serviceUserType], [modifiedAt])
+			ON Target.[serviceUserId] = Source.[serviceUserId]
+			WHEN MATCHED 
+			AND '${sqlDateTime}' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
+			THEN UPDATE SET Target.[firstName] = Source.[firstName], Target.[lastName] = Source.[lastName], Target.[organisationName] = Source.[organisationName], Target.[caseReference] = Source.[caseReference], Target.[serviceUserType] = Source.[serviceUserType], Target.[modifiedAt] = Source.[modifiedAt]
+			WHEN NOT MATCHED THEN INSERT ([serviceUserId], [firstName], [lastName], [organisationName], [caseReference], [serviceUserType], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7);`;
+			const expectedParameters = Object.values(mockRepresentationContactServiceUser);
+			expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(expectedStatement, ...expectedParameters);
 		});
-	});
-	describe('when service user exists in database', () => {
-		describe('and the message is older than existing service user', () => {
-			it('skips update', async () => {
-				const mockExistingServiceUser = {
-					...mockApplicantServiceUser,
-					modifiedAt: mockFutureTime
-				};
-				mockFindUnique.mockResolvedValue(mockExistingServiceUser);
-				const mockContextWithOlderTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockPastTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithOlderTime, mockApplicantMessage);
-				expect(mockUpsert).not.toHaveBeenCalled();
-				expect(mockContext.log).toHaveBeenCalledWith(
-					`skipping update of service user with serviceUserId: ${mockApplicantMessage.id}`
-				);
-			});
-		});
-		describe('and the message is newer than existing service user', () => {
-			it.each([
-				[
-					'RepresentationContact',
-					mockRepresentationContactMessage,
-					mockRepresentationContactServiceUser
-				],
-				['Applicant', mockApplicantMessage, mockApplicantServiceUser]
-			])('updates service user of type %s', async (serviceUserType, message, serviceUser) => {
-				const mockExistingServiceUser = {
-					...serviceUser,
-					modifiedAt: mockPastTime
-				};
-				mockFindUnique.mockResolvedValue(mockExistingServiceUser);
-				const mockContextWithNewerTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockFutureTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithNewerTime, message);
-				assertUpsert(serviceUserType, message, serviceUser);
-			});
+
+		it('runs query to match upsert Applicant', async () => {
+			await sendMessage(mockContext, mockApplicantMessage);
+			const expectedStatement = `MERGE INTO [serviceUser] AS Target
+			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10) AS Source ([serviceUserId], [firstName], [lastName], [organisationName], [caseReference], [serviceUserType], [email], [webAddress], [phoneNumber], [modifiedAt])
+			ON Target.[serviceUserId] = Source.[serviceUserId]
+			WHEN MATCHED 
+			AND '${sqlDateTime}' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
+			THEN UPDATE SET Target.[firstName] = Source.[firstName], Target.[lastName] = Source.[lastName], Target.[organisationName] = Source.[organisationName], Target.[caseReference] = Source.[caseReference], Target.[serviceUserType] = Source.[serviceUserType], Target.[email] = Source.[email], Target.[webAddress] = Source.[webAddress], Target.[phoneNumber] = Source.[phoneNumber], Target.[modifiedAt] = Source.[modifiedAt]
+			WHEN NOT MATCHED THEN INSERT ([serviceUserId], [firstName], [lastName], [organisationName], [caseReference], [serviceUserType], [email], [webAddress], [phoneNumber], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10);`;
+			const expectedParameters = Object.values(mockApplicantServiceUser);
+			expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(expectedStatement, ...expectedParameters);
+			expect(mockContext.log).toHaveBeenCalledWith(
+				`updated serviceUser with serviceUserId ${mockApplicantServiceUser.serviceUserId}`
+			);
 		});
 	});
 });
