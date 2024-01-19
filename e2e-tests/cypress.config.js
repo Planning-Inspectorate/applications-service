@@ -9,7 +9,8 @@ module.exports = defineConfig({
 	env: {
 		demoDelay: 0,
 		APP_APPLICATION_BASE_URL: 'http://forms-web-app:9004',
-		TAGS: 'not (@wip or @ignore)'
+		TAGS: 'not (@wip or @ignore)',
+		captureSiteMap: false
 	},
 	projectId: 'ud8v53',
 	e2e: {

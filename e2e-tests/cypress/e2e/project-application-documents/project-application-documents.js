@@ -25,6 +25,7 @@ Then('below rows should be returned', (table) => {
 
 When('I enter text {string} into search field', (searchInput) => {
 	projectAppDocs.enterTextIntoSearchField(searchInput);
+	cy.captureScreenForSiteMap();
 });
 
 And('I verify below pagination is present on the page', (table) => {
@@ -33,6 +34,7 @@ And('I verify below pagination is present on the page', (table) => {
 
 And('I navigate to page {string} of the results', (paginationLink) => {
 	projectAppDocs.clickOnPaginationLink(paginationLink);
+	cy.captureScreenForSiteMap();
 });
 
 And('I verify text {string} is present on the page', (resultsText) => {
@@ -79,11 +81,13 @@ Then(
 	'I verify that the {string} section expanded with {int} filters',
 	(sectionName, sectionLength) => {
 		projectAppDocs.assertSectionLength(sectionName, sectionLength);
+		cy.captureScreenForSiteMap();
 	}
 );
 
 And('I click on Apply button to apply filters', () => {
 	projectAppDocs.clickApplyFilterButton();
+	cy.captureScreenForSiteMap();
 });
 
 And('I select {string} checkbox', (checkBoxName) => {

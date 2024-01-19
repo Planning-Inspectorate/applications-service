@@ -10,18 +10,27 @@ And('I click on {string} footer link', (linkType) => {
 	switch (linkType) {
 		case 'Sitemap':
 			cy.get('[data-cy="Privacy"]').click();
+			cy.captureScreenForSiteMap();
 			break;
 		case 'Terms and conditions':
 			cy.get('[data-cy="Terms and conditions"]').click();
+			cy.captureScreenForSiteMap();
 			break;
 		case 'Accessibility':
 			cy.get('[data-cy="Accessibility statement"]').click();
+			cy.captureScreenForSiteMap();
 			break;
 		case 'Privacy Notice':
 			cy.get('[data-cy="Privacy"]').click();
+			cy.captureScreenForSiteMap();
 			break;
 		case 'Cookies':
 			cy.get('[data-cy="Cookies"]').click();
+			cy.captureScreenForSiteMap();
+			break;
+		case 'Contact':
+			cy.get('[data-cy="Contact"]').click();
+			cy.captureScreenForSiteMap();
 			break;
 	}
 });

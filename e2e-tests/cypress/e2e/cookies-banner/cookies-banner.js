@@ -13,10 +13,12 @@ Then('I am on the {string} page', (pageName) => {
 });
 
 And('I click on {string} cookies button', (cookieChoice) => {
+	cy.captureScreenForSiteMap();
 	cookiePage.clickOnCookieChoice(cookieChoice);
 });
 
 Then('I verify below text is present on the page', function (table) {
+	cy.captureScreenForSiteMap();
 	const data = table.hashes();
 	cy.confirmTextOnPage(data[0].Text);
 });
@@ -26,6 +28,7 @@ And('I select {string} radio choice', (radioChoice) => {
 });
 
 And('I click on save changes on cookie settings page', () => {
+	cy.captureScreenForSiteMap();
 	cookiePage.clickSaveChangesButton();
 });
 

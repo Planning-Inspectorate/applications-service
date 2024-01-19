@@ -12,8 +12,10 @@ And('I click on show all link', () => {
 	cy.get(
 		'*[class^="app-step-nav__button-text app-step-nav__button-text--all js-step-controls-button-text"]'
 	).click();
+	cy.captureScreenForSiteMap();
 });
 
 And('I click on {string} link', (pageName) => {
 	cy.clickLinkTonavigateToPage(pageName);
+	cy.captureScreenForSiteMap();
 });

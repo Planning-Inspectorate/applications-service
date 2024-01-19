@@ -25,6 +25,11 @@ Cypress.Commands.add('clickContentsLink', require('../common-methods/clickConten
 Cypress.Commands.add('selectRadioYesOrNo', require('../common-methods/selectRadioYesOrNo'));
 
 Cypress.Commands.add(
+	'captureScreenForSiteMap',
+	require('../common-methods/captureScreenForSiteMap')
+);
+
+Cypress.Commands.add(
 	'assertLinksPresentOnPage',
 	require('../common-methods/assertLinksPresentOnPage')
 );

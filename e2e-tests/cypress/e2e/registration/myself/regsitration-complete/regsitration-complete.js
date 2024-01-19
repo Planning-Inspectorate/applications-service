@@ -17,13 +17,17 @@ Given('I navigate to UK address details page', () => {
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');
 	cy.selectRadioOption('Myself');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	cy.selectRadioYesOrNo('Yes');
+	cy.captureScreenForSiteMap();
 	cy.clickSaveAndContinue();
 	emailAddressPage.enterTextIntoEmailField('test@gmail.com');
 	cy.clickSaveAndContinue();
+	cy.captureScreenForSiteMap();
 });
 
 And('User clicks on continue button', () => {
@@ -32,6 +36,7 @@ And('User clicks on continue button', () => {
 
 And('I enter below data into address details page', function (table) {
 	addressDetails.enterTextIntoAddressFields(table);
+	cy.captureScreenForSiteMap();
 });
 
 Then('I am on the {string} page', (pageName) => {
@@ -40,22 +45,27 @@ Then('I am on the {string} page', (pageName) => {
 
 And('I enter {string} into email address field', (dataInput) => {
 	emailAddressPage.enterTextIntoEmailField(dataInput);
+	cy.captureScreenForSiteMap();
 });
 
 And('I enter {string} into telephone number field', (dataInput) => {
 	teleNumberPage.enterTextIntoTelephoneNumberField(dataInput);
+	cy.captureScreenForSiteMap();
 });
 
 And('I enter {string} into comments field', (dataInput) => {
 	tellAboutProject.enterTextIntoCommentsField(dataInput);
+	cy.captureScreenForSiteMap();
 });
 
 And('User clicks on accept and continue button for {string}', (linkType) => {
 	switch (linkType) {
 		case 'myself':
+			cy.captureScreenForSiteMap();
 			cy.clickOnHref('/register/myself/declaration');
 			break;
 		case 'organisation':
+			cy.captureScreenForSiteMap();
 			cy.clickOnHref('/register/organisation/declaration');
 			break;
 	}
@@ -63,23 +73,27 @@ And('User clicks on accept and continue button for {string}', (linkType) => {
 
 And('User clicks on accept and register button', () => {
 	cy.get('[data-cy="button-accept-and-regoster"]').click();
+	cy.captureScreenForSiteMap();
 });
 
 And(
 	'I click on find out more about having your say during the Examination of the application link',
 	() => {
 		cy.clickOnHref('/having-your-say-guide/have-your-say-examination');
+		cy.captureScreenForSiteMap();
 	}
 );
 
 And('I enter {string} into topic field', (dataInput) => {
 	tellAboutProject.enterTextIntoTopicField(dataInput);
+	cy.captureScreenForSiteMap();
 });
 
 When(
 	'user selects {string} radio option on Do you want to add another comment page',
 	(radioChoice) => {
 		cy.selectRadioYesOrNo(radioChoice);
+		cy.captureScreenForSiteMap();
 	}
 );
 
@@ -90,6 +104,7 @@ Then('I click on feedback link', () => {
 			cy.get('.govuk-link').eq(index).click();
 		}
 	});
+	cy.captureScreenForSiteMap();
 });
 
 Then('I click on go back to project page link', () => {
