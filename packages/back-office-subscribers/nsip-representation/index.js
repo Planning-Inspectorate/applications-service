@@ -15,6 +15,9 @@ module.exports = async (context, message) => {
 	if (message.representedId) {
 		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representedId);
 		context.log(`created represented with serviceUserId ${message.representedId}`);
+	} else {
+		context.log(`skipping update as representedId is missing`);
+		return;
 	}
 	if (message.representativeId) {
 		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representativeId);

@@ -97,6 +97,11 @@ describe('nsip-representation', () => {
 				await sendMessage(mockContext, { ...mockMessage, representedId: undefined });
 				expect(mockExecuteRawUnsafe).not.toHaveBeenCalledWith(expect.anything(), 'represented-id');
 			});
+			it('and exits', async () => {
+				await sendMessage(mockContext, { ...mockMessage, representedId: undefined });
+				expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+				expect(mockContext.log).toHaveBeenCalledWith('skipping update as representedId is missing');
+			});
 		});
 	});
 
