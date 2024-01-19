@@ -25,6 +25,7 @@ const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
 const { setHeaderTitle } = require('./middleware/get-header-title');
+const { configureI18n } = require('./configure-i18n');
 
 const app = express();
 
@@ -69,6 +70,8 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
 app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
+
+configureI18n(app);
 
 // View Engine
 app.set('view engine', 'njk');

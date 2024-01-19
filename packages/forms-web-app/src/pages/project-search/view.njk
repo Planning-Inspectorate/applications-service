@@ -20,16 +20,20 @@
 			</div>
 
 			<div class="govuk-grid-column-two-thirds">
-				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ pageHeading }}</h1>
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+					{{ t("pages.projectSearch.heading") }}
+				</h1>
 
 				<p class="govuk-body">
-					This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
+					{{ t("pages.projectSearch.summary") }}
 				</p>
 
 				{% if applications | length %}
 
 					<p class="govuk-body">
-						<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>Download a table containing a complete list of all {{ totalApplicationsWithoutFilters }} projects (CSV)</a>
+						<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
+							{{ t("pages.projectSearch.downloadDescription", { count: totalApplicationsWithoutFilters }) }}
+						</a>
 					</p>
 
 				{% endif %}

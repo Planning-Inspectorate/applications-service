@@ -36,14 +36,10 @@
 						<button type="button" class="ui-checkbox-accordion__switch" id="show-hide-all-filters">Show all sections</button>
 
 						{% for section in sections %}
-						{% set sectionAriaControlsId = 'ui-checkbox-accordion__checkboxes-section--' + loop.index + '' %}
-						{% set sectionInputId = 'ui-checkbox-accordion__section-switch--' + loop.index + '' %}
-						<details
-							class="ui-checkbox-accordion__section"
-							{% if section.isOpen %}
-							open
-							{% endif %}
-						>
+							{% set sectionAriaControlsId = 'ui-checkbox-accordion__checkboxes-section--' + loop.index + '' %}
+							{% set sectionInputId = 'ui-checkbox-accordion__section-switch--' + loop.index + '' %}
+
+						<details class="ui-checkbox-accordion__section" {% if section.isOpen %} open {% endif %}>
 							<summary class="ui-checkbox-accordion__section-switch">
 								<svg
 									class="ui-checkbox-accordion__section-switch-indicator"

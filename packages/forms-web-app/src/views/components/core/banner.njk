@@ -1,8 +1,10 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
+{% set link = '<a class="govuk-link" data-cy="Feedback" href="' + serviceFeedbackUrl + '">' + t("common.feedback") + '</a>' %}
+
 {{ govukPhaseBanner({
   tag: {
-    text: "beta"
+    text: t("global.banner.tagText")
   },
-  html: 'This is a beta service – your <a class="govuk-link" data-cy="Feedback" href="' + serviceFeedbackUrl + '">feedback</a> will help us to improve it.'
+  html: t("global.banner.html", { link: link })
 }) }}

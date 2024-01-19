@@ -1,9 +1,9 @@
 {% from "components/ui/results-per-page-content.njk" import uiResultsPerPageContent %}
 
-{% macro uiResultsPerPage(resultsPerPage) %}
+{% macro uiResultsPerPage(resultsPerPage, heading = 'Results per page') %}
 	<p>
 		<span class="govuk-!-margin-right-2">
-			<strong>Results per page</strong>
+			<strong>{{ heading }}</strong>
 		</span>
 
 		{% for key, value in resultsPerPage %}
