@@ -10,15 +10,16 @@ module.exports = async (context, message) => {
 		return;
 	}
 
-	// Only create the service users if it doesn't already exist
-	// We create this first so that the foreign key constraint doesn't fail
-	if (message.representedId) {
-		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representedId);
-		context.log(`created represented with serviceUserId ${message.representedId}`);
-	} else {
+	if (!message.representedId) {
 		context.log(`skipping update as representedId is missing`);
 		return;
 	}
+
+	// Only create the service users if it doesn't already exist
+	// We create this first so that the foreign key constraint doesn't fail
+	await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representedId);
+	context.log(`created represented with serviceUserId ${message.representedId}`);
+
 	if (message.representativeId) {
 		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representativeId);
 		context.log(`created representative with serviceUserId ${message.representativeId}`);
