@@ -11,6 +11,8 @@
 		"lint": "eslint ./",
 		"test": "jest",
 		"rep-service-user:clear": "node ./test-scripts/clear-db.js",
+		"rep-service-user:reps": "node ./test-scripts/representation.js $npm_package_config_numOfMessages",
+		"rep-service-user:users": "node ./test-scripts/service-user.js $npm_package_config_numOfMessages",
 		"rep-service-user:parallel": "node ./test-scripts/service-user.js $npm_package_config_numOfMessages & node ./test-scripts/representation.js $npm_package_config_numOfMessages",
 		"rep-service-user:clear-and-parallel": "npm run rep-service-user:clear && npm run rep-service-user:parallel"
 	},

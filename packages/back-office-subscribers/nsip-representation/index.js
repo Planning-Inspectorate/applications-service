@@ -13,27 +13,11 @@ module.exports = async (context, message) => {
 	// Only create the service users if it doesn't already exist
 	// We create this first so that the foreign key constraint doesn't fail
 	if (message.representedId) {
-		await prismaClient.$executeRawUnsafe(
-			`
-		MERGE INTO [dbo].[serviceUser] AS Target 
-		USING (SELECT @P1 AS serviceUserId) AS Source
-		ON Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
-			message.representedId
-		);
+		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representedId);
 		context.log(`created represented with serviceUserId ${message.representedId}`);
 	}
 	if (message.representativeId) {
-		await prismaClient.$executeRawUnsafe(
-			`
-		MERGE INTO [dbo].[serviceUser] AS Target 
-		USING (SELECT @P1 AS serviceUserId) AS Source
-		ON Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
-			message.representativeId
-		);
+		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representativeId);
 		context.log(`created representative with serviceUserId ${message.representativeId}`);
 	}
 
@@ -65,3 +49,10 @@ module.exports = async (context, message) => {
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
 	context.log(`upserted representation with representationId ${representationId}`);
 };
+
+const serviceUserQuery = `
+		MERGE INTO [dbo].[serviceUser] AS Target 
+		USING (SELECT @P1 AS serviceUserId) AS Source
+		ON Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`;
