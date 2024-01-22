@@ -1,5 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
+const { serviceUserQuery } = require('../lib/queries');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-representation function`);
@@ -53,10 +54,3 @@ module.exports = async (context, message) => {
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
 	context.log(`upserted representation with representationId ${representationId}`);
 };
-
-const serviceUserQuery = `
-		MERGE INTO [dbo].[serviceUser] AS Target 
-		USING (SELECT @P1 AS serviceUserId) AS Source
-		ON Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`;

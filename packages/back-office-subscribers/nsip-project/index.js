@@ -1,5 +1,7 @@
 const pick = require('lodash.pick');
 const { prismaClient } = require('../lib/prisma');
+const buildMergeQuery = require('../lib/build-merge-query');
+const { serviceUserQuery } = require('../lib/queries');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-project function`);
@@ -10,37 +12,30 @@ module.exports = async (context, message) => {
 		return;
 	}
 
-	return await prismaClient.$transaction(async (tx) => {
-		const existingProject = await tx.project.findUnique({
-			where: {
-				caseReference
-			}
-		});
+	if (!message.applicantId) {
+		context.log(`skipping update as applicantId is missing`);
+		return;
+	}
 
-		const shouldUpdate =
-			!existingProject ||
-			new Date(context.bindingData.enqueuedTimeUtc) >
-				new Date(existingProject.modifiedAt.toUTCString());
+	await prismaClient.$executeRawUnsafe(serviceUserQuery, message.applicantId);
+	context.log(`created applicant with serviceUserId ${message.applicantId}`);
 
-		if (shouldUpdate) {
-			let project = pick(message, projectPropertiesFromMessage);
-			project = {
-				...project,
-				regions: Array.isArray(project.regions) ? JSON.stringify(project.regions) : null,
-				modifiedAt: new Date()
-			};
-			await tx.project.upsert({
-				where: {
-					caseReference
-				},
-				update: project,
-				create: project
-			});
-			context.log(`upserted project with caseReference: ${caseReference}`);
-		} else {
-			context.log(`skipping update of project with caseReference: ${caseReference}`);
-		}
-	});
+	const project = {
+		...pick(message, projectPropertiesFromMessage),
+		regions: Array.isArray(message.regions) ? JSON.stringify(message.regions) : null,
+		applicantId: message.applicantId,
+		modifiedAt: new Date()
+	};
+
+	const { statement, parameters } = buildMergeQuery(
+		'project',
+		'caseReference',
+		project,
+		context.bindingData.enqueuedTimeUtc
+	);
+
+	await prismaClient.$executeRawUnsafe(statement, ...parameters);
+	context.log(`upserted project with caseReference ${caseReference}`);
 };
 
 const projectPropertiesFromMessage = [

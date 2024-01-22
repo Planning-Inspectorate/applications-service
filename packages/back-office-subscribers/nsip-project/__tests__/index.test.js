@@ -1,29 +1,17 @@
 const sendMessage = require('../index');
-const { prismaClient } = require('../../lib/prisma');
 
-const mockFindUnique = jest.fn();
-const mockUpsert = jest.fn();
-
+const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$transaction: jest.fn().mockImplementation((callback) =>
-			callback({
-				project: {
-					findUnique: mockFindUnique,
-					upsert: mockUpsert
-				}
-			})
-		)
+		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
 
-const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
-const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
-const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
+const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
+		enqueuedTimeUtc: mockEnqueueDateTime,
 		deliveryCount: 1,
 		messageId: 123
 	}
@@ -36,7 +24,7 @@ const mockMessage = {
 	projectDescription: 'some desc',
 	publishStatus: 'published',
 	sourceSystem: 'ODT',
-	applicantIds: ['1'],
+	applicantId: 'mock-applicant-id',
 	nsipOfficerIds: [],
 	nsipAdministrationOfficerIds: [],
 	inspectorIds: [],
@@ -46,36 +34,23 @@ const mockMessage = {
 
 const mockProject = {
 	caseId: 1,
-	caseReference: 'ABC',
-	projectDescription: 'some desc',
-	projectName: 'some case',
-	publishStatus: 'published',
-	regions: '["a","b"]',
-	sourceSystem: 'ODT',
-	modifiedAt: mockCurrentTime
-};
-
-const assertUpsert = () => {
-	expect(mockUpsert).toHaveBeenCalledWith({
-		where: {
-			caseReference: mockMessage.caseReference
-		},
-		create: mockProject,
-		update: mockProject
-	});
-	expect(mockContext.log).toHaveBeenCalledWith(
-		`upserted project with caseReference: ${mockMessage.caseReference}`
-	);
+	caseReference: mockMessage.caseReference,
+	projectName: mockMessage.projectName,
+	projectDescription: mockMessage.projectDescription,
+	publishStatus: mockMessage.publishStatus,
+	sourceSystem: mockMessage.sourceSystem,
+	regions: JSON.stringify(mockMessage.regions),
+	applicantId: mockMessage.applicantId,
+	modifiedAt: new Date()
 };
 
 describe('nsip-project', () => {
 	beforeEach(() => {
-		mockFindUnique.mockReset();
-		mockUpsert.mockReset();
+		mockExecuteRawUnsafe.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(mockCurrentTime);
+		jest.setSystemTime(new Date(mockProject.modifiedAt));
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -88,58 +63,48 @@ describe('nsip-project', () => {
 	it('skips update if caseReference is missing', async () => {
 		await sendMessage(mockContext, {});
 		expect(mockContext.log).toHaveBeenCalledWith('skipping update as caseReference is missing');
-		expect(mockFindUnique).not.toHaveBeenCalled();
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
-	it('start transaction', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(prismaClient.$transaction).toHaveBeenCalled();
-	});
-	it('finds existing project to determine if it should update', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(mockFindUnique).toHaveBeenCalledWith({
-			where: {
-				caseReference: mockMessage.caseReference
-			}
+
+	describe('when applicantId is missing', () => {
+		it('skips update', async () => {
+			await sendMessage(mockContext, { caseReference: 'ABC' });
+			expect(mockContext.log).toHaveBeenCalledWith('skipping update as applicantId is missing');
+			expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 		});
 	});
-	describe('when no project exists in database', () => {
-		it('creates new project for caseReference', async () => {
-			mockFindUnique.mockResolvedValue(null);
+	describe('when applicantId is present', () => {
+		it('creates applicant', async () => {
 			await sendMessage(mockContext, mockMessage);
-			assertUpsert();
+			expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(
+				`
+		MERGE INTO [dbo].[serviceUser] AS Target 
+		USING (SELECT @P1 AS serviceUserId) AS Source
+		ON Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
+		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
+				mockMessage.applicantId
+			);
+			expect(mockContext.log).toHaveBeenCalledWith(
+				`created applicant with serviceUserId ${mockMessage.applicantId}`
+			);
 		});
 	});
-	describe('when project exists in database', () => {
-		describe('and the message is older than existing project', () => {
-			it('skips update', async () => {
-				mockFindUnique.mockResolvedValue(mockProject);
-				const mockContextWithOlderTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockPastTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithOlderTime, mockMessage);
-				expect(mockUpsert).not.toHaveBeenCalled();
-				expect(mockContext.log).toHaveBeenCalledWith(
-					`skipping update of project with caseReference: ${mockMessage.caseReference}`
-				);
-			});
-		});
-		describe('and the message is newer than existing project', () => {
-			it('updates project', async () => {
-				mockFindUnique.mockResolvedValue(mockProject);
-				const mockContextWithNewerTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockFutureTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithNewerTime, mockMessage);
-				assertUpsert();
-			});
-		});
+	it('upserts project', async () => {
+		await sendMessage(mockContext, mockMessage);
+		const expectedStatement = `MERGE INTO [project] AS Target
+			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9) AS Source ([caseId], [caseReference], [projectName], [projectDescription], [publishStatus], [sourceSystem], [regions], [applicantId], [modifiedAt])
+			ON Target.[caseReference] = Source.[caseReference]
+			WHEN MATCHED 
+			AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
+			THEN UPDATE SET Target.[caseId] = Source.[caseId], Target.[projectName] = Source.[projectName], Target.[projectDescription] = Source.[projectDescription], Target.[publishStatus] = Source.[publishStatus], Target.[sourceSystem] = Source.[sourceSystem], Target.[regions] = Source.[regions], Target.[applicantId] = Source.[applicantId], Target.[modifiedAt] = Source.[modifiedAt]
+			WHEN NOT MATCHED THEN INSERT ([caseId], [caseReference], [projectName], [projectDescription], [publishStatus], [sourceSystem], [regions], [applicantId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9);`;
+		const expectedParameters = Object.values(mockProject);
+		const [first, ...rest] = mockExecuteRawUnsafe.mock.calls[1];
+		expect(first).toEqual(expectedStatement);
+		expect(rest).toEqual(expectedParameters);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`upserted project with caseReference ${mockMessage.caseReference}`
+		);
 	});
 });

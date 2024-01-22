@@ -143,11 +143,9 @@ describe('nsip-representation', () => {
 			THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt]
 			WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14);`;
 		const expectedParameters = Object.values(mockRepresentation);
-		expect(mockExecuteRawUnsafe).toHaveBeenNthCalledWith(
-			3,
-			expectedStatement,
-			...expectedParameters
-		);
+		const [first, ...rest] = mockExecuteRawUnsafe.mock.calls[2];
+		expect(first).toEqual(expectedStatement);
+		expect(rest).toEqual(expectedParameters);
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`upserted representation with representationId ${mockMessage.representationId}`
 		);
