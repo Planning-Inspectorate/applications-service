@@ -1,4 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
+const buildMergeQuery = require('../lib/build-merge-query');
+
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-service-user function`);
 	const serviceUserId = message.id;
@@ -8,37 +10,15 @@ module.exports = async (context, message) => {
 		return;
 	}
 
-	return await prismaClient.$transaction(async (tx) => {
-		const existingServiceUser = await tx.serviceUser.findUnique({
-			where: {
-				serviceUserId
-			}
-		});
-
-		const shouldUpdate =
-			!existingServiceUser ||
-			new Date(context.bindingData.enqueuedTimeUtc) >
-				new Date(existingServiceUser.modifiedAt.toUTCString());
-
-		if (shouldUpdate) {
-			const serviceUserType = message.serviceUserType;
-
-			const serviceUser = mapMessageToServiceUser(message);
-			await tx.serviceUser.upsert({
-				where: {
-					serviceUserId
-				},
-				update: serviceUser,
-				create: serviceUser
-			});
-
-			context.log(
-				`upserted service user of type ${serviceUserType} with serviceUserId: ${serviceUserId}`
-			);
-		} else {
-			context.log(`skipping update of service user with serviceUserId: ${serviceUserId}`);
-		}
-	});
+	const serviceUser = mapMessageToServiceUser(message);
+	const { statement, parameters } = buildMergeQuery(
+		'serviceUser',
+		'serviceUserId',
+		serviceUser,
+		context.bindingData.enqueuedTimeUtc
+	);
+	await prismaClient.$executeRawUnsafe(statement, ...parameters);
+	context.log(`updated serviceUser with serviceUserId ${serviceUserId}`);
 };
 
 const mapMessageToServiceUser = (message) => {
@@ -54,7 +34,8 @@ const mapMessageToServiceUser = (message) => {
 				serviceUserType: message.serviceUserType,
 				email: message.emailAddress,
 				webAddress: message.webAddress,
-				phoneNumber: message.telephoneNumber
+				phoneNumber: message.telephoneNumber,
+				modifiedAt: new Date()
 			};
 		case 'RepresentationContact':
 			return {
@@ -63,7 +44,8 @@ const mapMessageToServiceUser = (message) => {
 				lastName: message.lastName,
 				organisationName: message.organisation,
 				caseReference: message.caseReference,
-				serviceUserType: message.serviceUserType
+				serviceUserType: message.serviceUserType,
+				modifiedAt: new Date()
 			};
 		default:
 			throw new Error(`Invalid serviceUserType: ${serviceUserType}`);

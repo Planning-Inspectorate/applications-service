@@ -34,7 +34,8 @@ const mockApplicantServiceUser = {
 	serviceUserType: mockApplicantMessage.serviceUserType,
 	email: mockApplicantMessage.emailAddress,
 	webAddress: mockApplicantMessage.webAddress,
-	phoneNumber: mockApplicantMessage.telephoneNumber
+	phoneNumber: mockApplicantMessage.telephoneNumber,
+	modifiedAt: new Date('2023-01-01T10:00:00.000Z')
 };
 
 const mockRepresentationContactServiceUser = {
@@ -43,7 +44,8 @@ const mockRepresentationContactServiceUser = {
 	lastName: mockRepresentationContactMessage.lastName,
 	organisationName: mockRepresentationContactMessage.organisation,
 	caseReference: mockRepresentationContactMessage.caseReference,
-	serviceUserType: mockRepresentationContactMessage.serviceUserType
+	serviceUserType: mockRepresentationContactMessage.serviceUserType,
+	modifiedAt: new Date('2023-01-01T10:00:00.000Z')
 };
 
 module.exports = {
