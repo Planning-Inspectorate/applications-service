@@ -1,6 +1,6 @@
 {% macro getFileName(description, personalName, path) %}
-  {% if description or personal_name %}
-    {{ description or personal_name  }}
+  {% if description or personalName %}
+    {{ description or personalName  }}
   {% else %}
     {{ path | fileNameFromDocumentURL }}
   {% endif %}
