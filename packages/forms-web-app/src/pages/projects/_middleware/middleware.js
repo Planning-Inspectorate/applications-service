@@ -17,6 +17,7 @@ async function projectsMiddleware(req, res, next) {
 		const eventsEligibleForDisplay = areEventsEligibleForDisplay(
 			applicationData.dateOfNonAcceptance
 		);
+		const i18n = res.locals.i18n;
 
 		res.locals.projectName = applicationData.projectName;
 		res.locals.caseRef = case_ref;
@@ -26,6 +27,7 @@ async function projectsMiddleware(req, res, next) {
 		res.locals.projectStages = projectInfoProjectStages;
 		res.locals.hasOpenTimetables = hasOpenTimetables;
 		res.locals.verticalTabs = getVerticalTabs(
+			i18n,
 			case_ref,
 			hasOpenTimetables,
 			eventsEligibleForDisplay,

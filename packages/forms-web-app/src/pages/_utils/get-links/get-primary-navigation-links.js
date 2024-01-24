@@ -5,8 +5,7 @@ const {
 const { getIndexURL } = require('../../index/utils/get-index-url');
 const { getProjectSearchURL } = require('../../project-search/utils/get-project-search-url');
 
-const isPrimaryNavigationLinkActive = (linkURL, pageURL) =>
-	linkURL === pageURL || `${linkURL}/` === pageURL;
+const isPrimaryNavigationLinkActive = (linkURL, pageURL) => pageURL.includes(linkURL);
 
 const primaryNavigationLinkModel = (text, linkURL, pageURL) => ({
 	text,
@@ -14,20 +13,20 @@ const primaryNavigationLinkModel = (text, linkURL, pageURL) => ({
 	active: isPrimaryNavigationLinkActive(linkURL, pageURL)
 });
 
-const getPrimaryNavigationLinks = (pageURL) => {
+const getPrimaryNavigationLinks = (i18n, pageURL) => {
 	let primaryNavigationLinks = [];
 
 	if (featureFlag.allowHomepage)
-		primaryNavigationLinks.push(primaryNavigationLinkModel('Home', getIndexURL(), pageURL));
+		primaryNavigationLinks.push(primaryNavigationLinkModel(i18n.t('common:primaryNav.home'), getIndexURL(), pageURL));
 
 	if (!featureFlag.usePrivateBetaV1RoutesOnly)
 		primaryNavigationLinks.push(
-			primaryNavigationLinkModel('All projects', getProjectSearchURL(), pageURL)
+			primaryNavigationLinkModel( i18n.t('common:primaryNav.projectSearch'), getProjectSearchURL(), pageURL)
 		);
 
 	if (featureFlag.allowHomepage)
 		primaryNavigationLinks.push(
-			primaryNavigationLinkModel('Detailed information', getDetailedInformationURL(), pageURL)
+			primaryNavigationLinkModel(i18n.t('common:primaryNav.detailedInformation'), getDetailedInformationURL(), pageURL)
 		);
 
 	return primaryNavigationLinks;

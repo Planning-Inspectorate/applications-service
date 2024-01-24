@@ -1,0 +1,50 @@
+{
+    "buttons": {
+        "startNow": "Start now",
+        "continue": "Continue"
+    },
+    "primaryNav": {
+        "home": "Home",
+        "projectSearch": "Project search",
+        "detailedInformation": "Detailed information"
+    },
+    "prepositions": {
+        "at": "yn",
+        "in": "yn",
+        "of": "o",
+        "for": "ar gyfer",
+        "to": "i",
+        "with": "gyda"
+    },
+    "verticalTabs": {
+        "projectInformation": "Project information",
+        "documents": "Documents",
+        "register" : "Register to have your say",
+        "relevantRepresentations": "Relevant representations (registration comments)",
+        "examinationTimetable": "Examination timetable",
+        "haveYourSay": "Register to have your say",
+        "getUpdates": "Get updates",
+        "section51": "Section 51 advice"
+    },
+    "relatedGuides": {
+        "relatedGuidesTitle": "Related guides",
+        "processGuide": "The process for Nationally Significant Infrastructure Projects (NSIPs)",
+        "haveYourSayGuide": "Having your say about a national infrastructure project "
+    },
+    "betaBanner": {
+        "content": "This is a beta service - your {{-link}} will help us to improve it",
+        "feedback": "feedback"
+    },
+    "footer": {
+        "links": {
+            "terms": "Terms and conditions",
+            "accessibility": "Accessibility statement",
+            "privacy": "Privacy",
+            "cookies": "Cookies",
+            "contact": "Contact"
+        },
+        "crownCopyrightText": "Crown copyright",
+        "footnote": "All content is available under the {{-link}}, except where otherwise stated",
+        "footnoteLinkText": "Open Government Licence v3.0"
+    }
+}

@@ -25,6 +25,22 @@ const registerIndexURL = getRegisterIndexURL();
 const registeringForURL = getRegisteringForURL();
 
 const registerRouter = express.Router({ mergeParams: true });
+const { registerRoute } = require('./config');
+
+registerRouter.use((req, res, next) => {
+	const namespace = registerRoute 
+	const currentLang = req.i18n.language
+
+	req.i18n.loadNamespaces(namespace, (err) => {
+	  if (err) {
+		console.error(`Failed to load namespace: ${namespace}`, err);
+		res.status(500).send(`Failed to load namespace for lang: ${currentLang}`);
+	  } else {
+		console.log(`Loaded namespace: ${namespace} for lang: ${currentLang}`)
+		next();
+	  }
+	});
+  });
 
 registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
 registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
@@ -43,5 +59,7 @@ registerRouter.use(registerAgentRouter);
 registerRouter.use(registerMyselfRouter);
 
 registerRouter.use(registerOrganisationRouter);
+
+
 
 module.exports = { registerRouter };

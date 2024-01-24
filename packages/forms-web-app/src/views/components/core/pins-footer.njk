@@ -2,31 +2,33 @@
   set links = [
     {
       href: "https://infrastructure.planninginspectorate.gov.uk/help/terms-and-conditions/",
-      text: "Terms and conditions",
+      text: t("common:footer.links.terms"),
       attributes: { "data-cy": "Terms and conditions" }
     },
     {
       href: "" + host + "accessibility-statement",
-      text: "Accessibility statement",
+      text: t("common:footer.links.accessibility"),
       attributes: { "data-cy":"Accessibility" }
     },
     {
       href: "https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice",
-      text: "Privacy",
+      text: t("common:footer.links.privacy"),
       attributes: { "data-cy": "Privacy Notice (on GOV.UK)" }
     },
     {
       href: "" + host + "cookies",
-      text: "Cookies",
+      text: t("common:footer.links.cookies"),
       attributes: { "data-cy": "Cookies" }
     },
     {
       href: footerLinks.contactURL,
-      text: "Contact",
+      text: t("common:footer.links.contact"),
       attributes: { "data-cy": "Contact" }
     }
   ]
 %}
+
+{% set footnoteLink = '<a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">' + t("common:footer.footnoteLinkText") + '</a>' %}
 
 <footer class="govuk-footer govuk-!-padding-bottom-8" role="contentinfo">
   <div class="govuk-width-container">
@@ -64,13 +66,13 @@
         </svg>
 
         <span class="govuk-!-display-inline-block">
-          All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+          {{ t("common:footer.footnote", { link: footnoteLink }) | safe  }}
         </span>
       </div>
 
       <div class="govuk-footer__meta-item">
         <a class="govuk-link" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">
-          &copy; Crown copyright
+          &copy; {{ t("common:footer.crownCopyrightText")}}
         </a>
       </div>
     </div>

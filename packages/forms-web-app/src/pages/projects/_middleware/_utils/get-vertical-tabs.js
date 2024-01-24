@@ -13,6 +13,7 @@ const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-update
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
 
 function getVerticalTabs(
+	i18n,
 	caseRef,
 	hasOpenTimetables,
 	eventsEligibleForDisplay,
@@ -24,7 +25,7 @@ function getVerticalTabs(
 				featureFlag.allowProjectInformation != true ||
 				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
 			id: 'project-information',
-			name: 'Project information',
+			name: i18n.t('common:verticalTabs.projectInformation'),
 			url: getProjectsIndexURL(caseRef)
 		},
 		{
@@ -36,7 +37,7 @@ function getVerticalTabs(
 		{
 			hidden: featureFlag.allowDocumentLibrary != true,
 			id: 'project-documents',
-			name: 'Documents',
+			name: i18n.t('common:verticalTabs.documents'),
 			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
@@ -45,25 +46,25 @@ function getVerticalTabs(
 				DateOfRelevantRepresentationClose
 			),
 			id: 'register-index',
-			name: 'Register to have your say',
+			name: i18n.t('common:verticalTabs.register'),
 			url: getRegisterIndexURL(caseRef)
 		},
 		{
 			hidden: false,
 			id: 'representations',
-			name: 'Relevant representations (registration comments)',
+			name: i18n.t('common:verticalTabs.relevantRepresentations'),
 			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
 			hidden: featureFlag.allowExaminationTimetable != true || !eventsEligibleForDisplay,
 			id: 'project-examination-timetable',
-			name: 'Examination timetable',
+			name: i18n.t('common:verticalTabs.examinationTimetable'),
 			url: getProjectsExaminationTimetableURL(caseRef)
 		},
 		{
 			hidden: featureFlag.allowHaveYourSay != true || !hasOpenTimetables,
 			id: 'project-have-your-say',
-			name: 'Have your say',
+			name: i18n.t('common:verticalTabs.haveYourSay'),
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
@@ -71,7 +72,7 @@ function getVerticalTabs(
 				featureFlag.allowGetUpdates != true ||
 				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
 			id: 'get-updates',
-			name: 'Get updates',
+			name: i18n.t('common:verticalTabs.getUpdates'),
 			url: getUpdatesIndexURL(caseRef)
 		},
 		{
@@ -83,7 +84,7 @@ function getVerticalTabs(
 		{
 			hidden: featureFlag.allowSection51 != true,
 			id: 'section-51',
-			name: 'Section 51 advice',
+			name: i18n.t('common:verticalTabs.section51'),
 			url: getSection51IndexURL(caseRef)
 		}
 	];

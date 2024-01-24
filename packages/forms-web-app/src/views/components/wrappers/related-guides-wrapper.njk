@@ -1,17 +1,17 @@
 {% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 
-{% macro relatedGuidesWrapper (featureHideLink, styles) %}
+{% macro relatedGuidesWrapper (t, featureHideLink, styles) %}
 	<div class="{{ styles }}">
 		{{ uiVerticalTabs(
-			"Related guides",
+			t('common:relatedGuides.relatedGuidesTitle'),
 			null,
 			[
 				{
-					name: "The process for Nationally Significant Infrastructure Projects (NSIPs)",
+					name: t('common:relatedGuides.processGuide'),
 					url:"/decision-making-process-guide"
 				},
 				{
-					name: "Having your say about a national infrastructure project",
+					name: t('common:relatedGuides.haveYourSayGuide'),
 					url:"/having-your-say-guide"
 				}
 			],

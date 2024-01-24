@@ -1,0 +1,50 @@
+{
+    "buttons": {
+        "startNow": "Dechreuwch nawr",
+        "continue": "Parhau"
+    },
+    "primaryNav": {
+        "home": "Cartref",
+        "projectSearch": "Chwilio prosiect",
+        "detailedInformation": "Gwybodaeth fanwl"
+    },
+    "prepositions": {
+        "at": "yn",
+        "in": "yn",
+        "of": "o",
+        "for": "ar gyfer",
+        "to": "i",
+        "with": "gyda"
+    },
+    "verticalTabs": {
+        "projectInformation": "Gwybodaeth prosiect",
+        "documents": "Dogfennau",
+        "register" : "Cofrestrwch i ddweud eich dweud",
+        "relevantRepresentations": "Sylwadau perthnasol (sylwadau cofrestru)",
+        "examinationTimetable": "Amserlen arholiadau",
+        "haveYourSay": "Dweud eich dweud",
+        "getUpdates": "Cael diweddariadau",
+        "section51": "Cyngor adran 51"
+    },
+    "relatedGuides": {
+        "relatedGuidesTitle": "Canllawiau cysylltiedig",
+        "processGuide": "Y broses ar gyfer Prosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPs)",
+        "haveYourSayGuide": "Dweud eich dweud am brosiect seilwaith cenedlaethol"
+    },
+    "betaBanner": {
+        "content": "Gwasanaeth beta yw hwn - bydd eich {{-link}} yn ein helpu i'w wella.",
+        "feedback": "adborth"
+    },
+    "footer": {
+        "links": {
+            "terms": "Telerau ac Amodau",
+            "accessibility": "Datganiad hygyrchedd",
+            "privacy": "Preifatrwydd",
+            "cookies": "Briwsion",
+            "contact": "Cyswllt"
+        },
+        "crownCopyrightText": "Hawlfraint y Goron",
+        "footnote": "Mae'r holl gynnwys ar gael o dan y {{-link}}, ac eithrio lle nodir yn wahanol",
+        "footnoteLinkText": "Trwydded Llywodraeth Agored v3.0"
+    }
+}

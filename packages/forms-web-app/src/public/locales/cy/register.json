@@ -1,0 +1,40 @@
+{   
+    "test": "Welsh test",
+    "index": {
+        "registerPeriodClosed": "Mae’r cyfnod amser i gofrestru i ddweud eich dweud wedi cau.",
+        "heading1": "Cofrestrwch i ddweud eich dweud am brosiect seilwaith cenedlaethol",
+        "heading2": "Rydych chi'n cofrestru i ddweud eich dweud am y",
+        "paragraph1": "Defnyddiwch y gwasanaeth hwn i ddweud eich dweud am brosiect seilwaith cenedlaethol. Rydym angen eich manylion personol a'ch sylwadau am y",
+        "heading3": "Ysgrifennu eich sylwadau",
+        "paragraph2": "Rhaid i chi gynnwys sylwadau gyda'ch cofrestriad. Rhaid i'ch sylwadau ymwneud â'r hyn rydych chi'n ei ystyried yw'r prif faterion ac effeithiau. Gallwch hefyd gynnwys unrhyw beth a allai effeithio ar eich bywyd o ddydd i ddydd.",
+        "paragraph3": "Bydd y wybodaeth hon yn:",
+        "listItem1": "gweld gan yr awdurdod archwilio",
+        "listItem2": "cyhoeddi ar ein gwefan",
+        "paragraph4": "Byddwch yn gallu cyflwyno sylwadau pellach yn ystod archwiliad y cais unwaith y byddwch wedi cofrestru.",
+        "paragraph5": "Rhaid i chi gyflwyno'ch cofrestriad o'r blaen",
+        "heading4": "Cyn i chi ddechrau",
+        "heading5": "Os ydych yn cofrestru eich hun fel unigolyn",
+        "paragraph6": "Bydd angen eich:",
+        "listItem3": "enw llawn",
+        "listItem4": "cyfeiriad",
+        "listItem5": "cyfeiriad e-bost a rhif ffôn",
+        "listItem6": "sylwadau cofrestru am y prosiect",
+        "heading6": "Os ydych chi'n cofrestru ar gyfer sefydliad rydych chi'n gweithio neu'n gwirfoddoli iddo",
+        "paragraph7": "Bydd angen:",
+        "listItem7": "eich enw llawn",
+        "listItem8": "enw'r elusen neu'r sefydliad rydych yn gweithio iddo",
+        "listItem9": "eich cyfeiriad gwaith",
+        "listItem10": "cyfeiriad e-bost a rhif ffôn",
+        "listItem11": "sylwadau cofrestru am y prosiect",
+        "heading7": "Os ydych yn cofrestru ar ran person neu sefydliad arall",
+        "paragraph8": "Bydd angen:",
+        "listItem12": "eich enw llawn",
+        "listItem13": "eich cyfeiriad",
+        "listItem14": "cyfeiriad e-bost a rhif ffôn",
+        "listItem15": "manylion yr unigolyn, grŵp teulu neu sefydliad yr ydych yn ei gynrychioli",
+        "listItem16": "eu sylwadau cofrestru am y prosiect"
+    },
+    "registeringFor": {
+        "heading1": "Ar gyfer pwy ydych chi'n cofrestru?"
+    }
+}
