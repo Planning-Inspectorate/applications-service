@@ -46,7 +46,9 @@ module.exports = async (context, message) => {
 						type: event.type,
 						eventTitle: event.eventTitle,
 						description: event.description,
-						eventDeadlineStartDate: new Date(event.eventDeadlineStartDate),
+						...(event.eventDeadlineStartDate && {
+							eventDeadlineStartDate: new Date(event.eventDeadlineStartDate)
+						}),
 						date: new Date(event.date),
 						eventId: event.eventId,
 						eventLineItems: {
