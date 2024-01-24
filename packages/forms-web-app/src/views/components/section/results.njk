@@ -1,3 +1,12 @@
+{% macro getFileName(description, personalName, path) %}
+  {% if description or personal_name %}
+    {{ description or personal_name  }}
+  {% else %}
+    {{ path | fileNameFromDocumentURL }}
+  {% endif %}
+
+{% endmacro %}
+
 {% macro sectionResults(results) %}
   <ul class="section-results">
     {% for result in results %}
@@ -9,7 +18,7 @@
           target="_blank"
         >
           <strong>
-            {{ result.description or result.personal_name  }} ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
+            {{ getFileName(result.description, result.personal_name, result.path) }} ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
           </strong>
         </a>
 
