@@ -647,18 +647,6 @@ module.exports = (pageName) => {
 				});
 			cy.url().should('include', '/customer-privacy-notice');
 			break;
-		case 'cookies':
-			cy.title().should(
-				'eq',
-				'GOV.UK - The best place to find government services and information'
-			);
-			cy.get('h1')
-				.invoke('text')
-				.then((text) => {
-					expect(text).to.contain('Cookies');
-				});
-			cy.url().should('include', '/cookies-info');
-			break;
 		case 'what is the name of the organisation you work for?':
 			cy.title().should(
 				'eq',
