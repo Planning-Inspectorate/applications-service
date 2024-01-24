@@ -61,9 +61,6 @@ const VIEW = {
 			REGISTRATION_COMPLETE: 'register/agent/registration-complete'
 		}
 	},
-	FOOTER_PAGES: {
-		COOKIES: 'footer-pages/cookies-info'
-	},
 	EXAMINATION: {
 		ROUTE_PREFIX: 'pages/examination/',
 		YOUR_NAME: 'name',
