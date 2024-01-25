@@ -48,17 +48,19 @@ const getRepresentations = async (options) => {
 	if (options.searchTerm) {
 		const terms = options.searchTerm.split(' ');
 		where['AND'].push({
-			OR: terms.map((term) => ({
-				OR: [
-					{ represented: { firstName: { contains: term } } },
-					{ represented: { lastName: { contains: term } } },
-					{ represented: { organisationName: { contains: term } } },
-					{ representative: { firstName: { contains: term } } },
-					{ representative: { lastName: { contains: term } } },
-					{ representative: { organisationName: { contains: term } } },
-					{ representationComment: { contains: term } }
-				]
-			}))
+			OR: [
+				{ representationComment: { contains: options.searchTerm } },
+				{ representative: { organisationName: { contains: options.searchTerm } } },
+				{ represented: { organisationName: { contains: options.searchTerm } } },
+				...terms.map((term) => ({
+					OR: [
+						{ represented: { firstName: { contains: term } } },
+						{ represented: { lastName: { contains: term } } },
+						{ representative: { firstName: { contains: term } } },
+						{ representative: { lastName: { contains: term } } }
+					]
+				}))
+			]
 		});
 	}
 	if (options.type) {
