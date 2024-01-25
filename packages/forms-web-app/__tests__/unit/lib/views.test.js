@@ -65,9 +65,6 @@ describe('lib/views', () => {
 					REGISTRATION_COMPLETE: 'register/agent/registration-complete'
 				}
 			},
-			FOOTER_PAGES: {
-				COOKIES: 'footer-pages/cookies-info'
-			},
 			EXAMINATION: {
 				HAVE_YOUR_SAY_DURING_EXAMINATION: 'have-your-say',
 				ROUTE_PREFIX: 'pages/examination/',

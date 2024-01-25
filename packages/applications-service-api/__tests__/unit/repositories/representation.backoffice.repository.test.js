@@ -107,13 +107,17 @@ describe('service.backoffice.repository', () => {
 							...expectedCommonQuery.where.AND,
 							{
 								OR: [
-									{ represented: { firstName: { contains: 'mock-search-term' } } },
-									{ represented: { lastName: { contains: 'mock-search-term' } } },
-									{ represented: { organisationName: { contains: 'mock-search-term' } } },
-									{ representative: { firstName: { contains: 'mock-search-term' } } },
-									{ representative: { lastName: { contains: 'mock-search-term' } } },
-									{ representative: { organisationName: { contains: 'mock-search-term' } } },
-									{ representationComment: { contains: 'mock-search-term' } }
+									{
+										OR: [
+											{ represented: { firstName: { contains: 'mock-search-term' } } },
+											{ represented: { lastName: { contains: 'mock-search-term' } } },
+											{ represented: { organisationName: { contains: 'mock-search-term' } } },
+											{ representative: { firstName: { contains: 'mock-search-term' } } },
+											{ representative: { lastName: { contains: 'mock-search-term' } } },
+											{ representative: { organisationName: { contains: 'mock-search-term' } } },
+											{ representationComment: { contains: 'mock-search-term' } }
+										]
+									}
 								]
 							}
 						]
@@ -165,13 +169,17 @@ describe('service.backoffice.repository', () => {
 							...expectedCommonQuery.where.AND,
 							{
 								OR: [
-									{ represented: { firstName: { contains: 'mock-search-term' } } },
-									{ represented: { lastName: { contains: 'mock-search-term' } } },
-									{ represented: { organisationName: { contains: 'mock-search-term' } } },
-									{ representative: { firstName: { contains: 'mock-search-term' } } },
-									{ representative: { lastName: { contains: 'mock-search-term' } } },
-									{ representative: { organisationName: { contains: 'mock-search-term' } } },
-									{ representationComment: { contains: 'mock-search-term' } }
+									{
+										OR: [
+											{ represented: { firstName: { contains: 'mock-search-term' } } },
+											{ represented: { lastName: { contains: 'mock-search-term' } } },
+											{ represented: { organisationName: { contains: 'mock-search-term' } } },
+											{ representative: { firstName: { contains: 'mock-search-term' } } },
+											{ representative: { lastName: { contains: 'mock-search-term' } } },
+											{ representative: { organisationName: { contains: 'mock-search-term' } } },
+											{ representationComment: { contains: 'mock-search-term' } }
+										]
+									}
 								]
 							},
 							{

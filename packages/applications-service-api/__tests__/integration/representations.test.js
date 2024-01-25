@@ -468,13 +468,17 @@ describe('api/v1/representations', () => {
 							...defaultFilters.where.AND,
 							{
 								OR: [
-									{ represented: { firstName: { contains: 'foo' } } },
-									{ represented: { lastName: { contains: 'foo' } } },
-									{ represented: { organisationName: { contains: 'foo' } } },
-									{ representative: { firstName: { contains: 'foo' } } },
-									{ representative: { lastName: { contains: 'foo' } } },
-									{ representative: { organisationName: { contains: 'foo' } } },
-									{ representationComment: { contains: 'foo' } }
+									{
+										OR: [
+											{ represented: { firstName: { contains: 'foo' } } },
+											{ represented: { lastName: { contains: 'foo' } } },
+											{ represented: { organisationName: { contains: 'foo' } } },
+											{ representative: { firstName: { contains: 'foo' } } },
+											{ representative: { lastName: { contains: 'foo' } } },
+											{ representative: { organisationName: { contains: 'foo' } } },
+											{ representationComment: { contains: 'foo' } }
+										]
+									}
 								]
 							}
 						]
@@ -492,13 +496,17 @@ describe('api/v1/representations', () => {
 							...defaultFilters.where.AND,
 							{
 								OR: [
-									{ represented: { firstName: { contains: 'bar' } } },
-									{ represented: { lastName: { contains: 'bar' } } },
-									{ represented: { organisationName: { contains: 'bar' } } },
-									{ representative: { firstName: { contains: 'bar' } } },
-									{ representative: { lastName: { contains: 'bar' } } },
-									{ representative: { organisationName: { contains: 'bar' } } },
-									{ representationComment: { contains: 'bar' } }
+									{
+										OR: [
+											{ represented: { firstName: { contains: 'bar' } } },
+											{ represented: { lastName: { contains: 'bar' } } },
+											{ represented: { organisationName: { contains: 'bar' } } },
+											{ representative: { firstName: { contains: 'bar' } } },
+											{ representative: { lastName: { contains: 'bar' } } },
+											{ representative: { organisationName: { contains: 'bar' } } },
+											{ representationComment: { contains: 'bar' } }
+										]
+									}
 								]
 							},
 							{

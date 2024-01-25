@@ -46,16 +46,19 @@ const getRepresentations = async (options) => {
 	};
 
 	if (options.searchTerm) {
+		const terms = options.searchTerm.split(' ');
 		where['AND'].push({
-			OR: [
-				{ represented: { firstName: { contains: options.searchTerm } } },
-				{ represented: { lastName: { contains: options.searchTerm } } },
-				{ represented: { organisationName: { contains: options.searchTerm } } },
-				{ representative: { firstName: { contains: options.searchTerm } } },
-				{ representative: { lastName: { contains: options.searchTerm } } },
-				{ representative: { organisationName: { contains: options.searchTerm } } },
-				{ representationComment: { contains: options.searchTerm } }
-			]
+			OR: terms.map((term) => ({
+				OR: [
+					{ represented: { firstName: { contains: term } } },
+					{ represented: { lastName: { contains: term } } },
+					{ represented: { organisationName: { contains: term } } },
+					{ representative: { firstName: { contains: term } } },
+					{ representative: { lastName: { contains: term } } },
+					{ representative: { organisationName: { contains: term } } },
+					{ representationComment: { contains: term } }
+				]
+			}))
 		});
 	}
 	if (options.type) {
@@ -85,12 +88,12 @@ const getRepresentations = async (options) => {
 
 const getFilters = async (caseReference) => {
 	const sql = Prisma.sql`
-		SELECT DISTINCT(representationType), status, count(id) as total
-		FROM Representation
-		WHERE caseReference = ${caseReference}
-		  AND (status = 'PUBLISHED' or status = 'published')
-			AND representationType is not null
-		GROUP BY representationType, status`;
+      SELECT DISTINCT(representationType), status, count(id) as total
+      FROM Representation
+      WHERE caseReference = ${caseReference}
+        AND (status = 'PUBLISHED' or status = 'published')
+        AND representationType is not null
+      GROUP BY representationType, status`;
 
 	const options = await prismaClient.$queryRaw(sql);
 	return options.map((filter) => ({
