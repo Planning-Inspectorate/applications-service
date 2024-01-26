@@ -390,6 +390,29 @@ describe('api/v1/representations', () => {
 					representative: true
 				}
 			};
+			const searchTermQuerySection = {
+				OR: [
+					{ representationComment: { contains: 'foo bar' } },
+					{ representative: { organisationName: { contains: 'foo bar' } } },
+					{ represented: { organisationName: { contains: 'foo bar' } } },
+					{
+						OR: [
+							{ represented: { firstName: { contains: 'foo' } } },
+							{ represented: { lastName: { contains: 'foo' } } },
+							{ representative: { firstName: { contains: 'foo' } } },
+							{ representative: { lastName: { contains: 'foo' } } }
+						]
+					},
+					{
+						OR: [
+							{ represented: { firstName: { contains: 'bar' } } },
+							{ represented: { lastName: { contains: 'bar' } } },
+							{ representative: { firstName: { contains: 'bar' } } },
+							{ representative: { lastName: { contains: 'bar' } } }
+						]
+					}
+				]
+			};
 			beforeEach(() => {
 				mockBORepresentationFindMany.mockResolvedValue(
 					REPRESENTATIONS_BACKOFFICE_DATA.map((representation) => ({
@@ -459,48 +482,27 @@ describe('api/v1/representations', () => {
 			});
 
 			it('with search term', async () => {
-				const queryParameters = ['caseReference=BC0110001', 'searchTerm=foo'].join('&');
+				const queryParameters = ['caseReference=BC0110001', 'searchTerm=foo bar'].join('&');
 				const response = await request.get(`/api/v1/representations?${queryParameters}`);
 				expect(mockBORepresentationFindMany).toBeCalledWith({
 					...defaultFilters,
 					where: {
-						AND: [
-							...defaultFilters.where.AND,
-							{
-								OR: [
-									{ represented: { firstName: { contains: 'foo' } } },
-									{ represented: { lastName: { contains: 'foo' } } },
-									{ represented: { organisationName: { contains: 'foo' } } },
-									{ representative: { firstName: { contains: 'foo' } } },
-									{ representative: { lastName: { contains: 'foo' } } },
-									{ representative: { organisationName: { contains: 'foo' } } },
-									{ representationComment: { contains: 'foo' } }
-								]
-							}
-						]
+						AND: [...defaultFilters.where.AND, searchTermQuerySection]
 					}
 				});
 				expect(response.status).toEqual(200);
 			});
 			it('with type filters and search term', async () => {
-				const queryParameters = ['caseReference=BC0110001', 'type=foo', 'searchTerm=bar'].join('&');
+				const queryParameters = ['caseReference=BC0110001', 'type=foo', 'searchTerm=foo bar'].join(
+					'&'
+				);
 				const response = await request.get(`/api/v1/representations?${queryParameters}`);
 				expect(mockBORepresentationFindMany).toBeCalledWith({
 					...defaultFilters,
 					where: {
 						AND: [
 							...defaultFilters.where.AND,
-							{
-								OR: [
-									{ represented: { firstName: { contains: 'bar' } } },
-									{ represented: { lastName: { contains: 'bar' } } },
-									{ represented: { organisationName: { contains: 'bar' } } },
-									{ representative: { firstName: { contains: 'bar' } } },
-									{ representative: { lastName: { contains: 'bar' } } },
-									{ representative: { organisationName: { contains: 'bar' } } },
-									{ representationComment: { contains: 'bar' } }
-								]
-							},
+							searchTermQuerySection,
 							{
 								representationType: {
 									in: ['foo']
