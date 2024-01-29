@@ -2,9 +2,11 @@ const { StatusCodes } = require('http-status-codes');
 const logger = require('../lib/logger');
 const {
 	getNIApplication,
-	getAllNIApplications,
 	getAllNIApplicationsDownload
 } = require('../services/application.ni.service');
+const {
+	getAllApplications: getAllApplicationsService
+} = require('../services/application.service');
 const ApiError = require('../error/apiError');
 
 const getApplication = async (req, res) => {
@@ -30,7 +32,7 @@ const getAllApplications = async (req, res) => {
 		totalPages,
 		filters,
 		totalItemsWithoutFilters
-	} = await getAllNIApplications(req.query);
+	} = await getAllApplicationsService(req.query);
 
 	const response = {
 		applications,

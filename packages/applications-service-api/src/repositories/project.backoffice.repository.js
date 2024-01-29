@@ -11,6 +11,15 @@ const getByCaseReference = async (caseReference) => {
 	});
 };
 
+const getAllApplications = async () => {
+	return prismaClient.project.findMany({
+		include: {
+			applicant: true
+		}
+	});
+};
+
 module.exports = {
-	getByCaseReference
+	getByCaseReference,
+	getAllApplications
 };
