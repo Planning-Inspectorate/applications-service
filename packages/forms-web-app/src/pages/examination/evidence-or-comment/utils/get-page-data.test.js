@@ -38,8 +38,8 @@ const pageData = {
 			value: 'both'
 		}
 	],
-	pageTitle: 'How would you like to submit comments ("written representation")?',
-	title: 'How would you like to submit comments ("written representation")?'
+	pageTitle: 'How would you like to submit comments?',
+	title: 'How would you like to submit comments?'
 };
 
 describe('examination/evidence-or-comment/utils/get-page-data', () => {
