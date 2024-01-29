@@ -11,6 +11,7 @@ const { routesConfig } = require('./routes/config');
 const path = require('path');
 const { getYearNow } = require('./utils/date-utils');
 const { getFooterLinks } = require('./pages/_utils/get-links');
+const { getFileNameFromDocumentUrl } = require('./lib/get-file-name-from-url');
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
@@ -45,6 +46,7 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addFilter('formatMimeType', fileTypeDisplayHelper);
 	nunjucksEnv.addFilter('filterByKey', filterByKey);
 	nunjucksEnv.addFilter('render', renderTemplateFilter(nunjucks));
+	nunjucksEnv.addFilter('fileNameFromDocumentURL', getFileNameFromDocumentUrl);
 
 	nunjucksEnv.addGlobal('defaultPageTitle', config.defaultPageTitle);
 	nunjucksEnv.addGlobal('featureFlag', config.featureFlag);

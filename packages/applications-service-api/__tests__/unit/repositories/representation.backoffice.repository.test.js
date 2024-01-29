@@ -90,6 +90,37 @@ describe('service.backoffice.repository', () => {
 			skip: 0,
 			take: 25
 		};
+		const expectedSearchTermSection = {
+			OR: [
+				{ representationComment: { contains: 'mock search term' } },
+				{ representative: { organisationName: { contains: 'mock search term' } } },
+				{ represented: { organisationName: { contains: 'mock search term' } } },
+				{
+					OR: [
+						{ represented: { firstName: { contains: 'mock' } } },
+						{ represented: { lastName: { contains: 'mock' } } },
+						{ representative: { firstName: { contains: 'mock' } } },
+						{ representative: { lastName: { contains: 'mock' } } }
+					]
+				},
+				{
+					OR: [
+						{ represented: { firstName: { contains: 'search' } } },
+						{ represented: { lastName: { contains: 'search' } } },
+						{ representative: { firstName: { contains: 'search' } } },
+						{ representative: { lastName: { contains: 'search' } } }
+					]
+				},
+				{
+					OR: [
+						{ represented: { firstName: { contains: 'term' } } },
+						{ represented: { lastName: { contains: 'term' } } },
+						{ representative: { firstName: { contains: 'term' } } },
+						{ representative: { lastName: { contains: 'term' } } }
+					]
+				}
+			]
+		};
 
 		describe('when only mandatory options (case reference and pagination) are provided', () => {
 			it('should call the database with options', async () => {
@@ -103,20 +134,7 @@ describe('service.backoffice.repository', () => {
 					...expectedCommonQuery,
 					where: {
 						...expectedCommonQuery.where,
-						AND: [
-							...expectedCommonQuery.where.AND,
-							{
-								OR: [
-									{ represented: { firstName: { contains: 'mock-search-term' } } },
-									{ represented: { lastName: { contains: 'mock-search-term' } } },
-									{ represented: { organisationName: { contains: 'mock-search-term' } } },
-									{ representative: { firstName: { contains: 'mock-search-term' } } },
-									{ representative: { lastName: { contains: 'mock-search-term' } } },
-									{ representative: { organisationName: { contains: 'mock-search-term' } } },
-									{ representationComment: { contains: 'mock-search-term' } }
-								]
-							}
-						]
+						AND: [...expectedCommonQuery.where.AND, expectedSearchTermSection]
 					}
 				};
 
@@ -124,7 +142,7 @@ describe('service.backoffice.repository', () => {
 					caseReference: mockCaseReference,
 					offset: 0,
 					limit: 25,
-					searchTerm: 'mock-search-term'
+					searchTerm: 'mock search term'
 				});
 				expect(mockFindMany).toHaveBeenCalledWith(expectedSearchTermQuery);
 			});
@@ -163,17 +181,7 @@ describe('service.backoffice.repository', () => {
 						...expectedCommonQuery.where,
 						AND: [
 							...expectedCommonQuery.where.AND,
-							{
-								OR: [
-									{ represented: { firstName: { contains: 'mock-search-term' } } },
-									{ represented: { lastName: { contains: 'mock-search-term' } } },
-									{ represented: { organisationName: { contains: 'mock-search-term' } } },
-									{ representative: { firstName: { contains: 'mock-search-term' } } },
-									{ representative: { lastName: { contains: 'mock-search-term' } } },
-									{ representative: { organisationName: { contains: 'mock-search-term' } } },
-									{ representationComment: { contains: 'mock-search-term' } }
-								]
-							},
+							expectedSearchTermSection,
 							{
 								representationType: {
 									in: ['mock-type']
@@ -187,7 +195,7 @@ describe('service.backoffice.repository', () => {
 					caseReference: mockCaseReference,
 					offset: 0,
 					limit: 25,
-					searchTerm: 'mock-search-term',
+					searchTerm: 'mock search term',
 					type: ['mock-type']
 				});
 				expect(mockFindMany).toHaveBeenCalledWith(expectedQuery);

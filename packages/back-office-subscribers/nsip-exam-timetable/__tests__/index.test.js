@@ -36,7 +36,6 @@ const mockMessage = {
 			type: 'Preliminary Meeting',
 			eventTitle: 'Example Preliminary Meeting',
 			description: 'A preliminary meeting will be held to discuss the examination process.',
-			eventDeadlineStartDate: '2023-06-10',
 			date: '2023-06-10',
 			eventLineItems: [
 				{
@@ -76,7 +75,9 @@ const assertEventsCreated = (message) => {
 				type: event.type,
 				eventTitle: event.eventTitle,
 				description: event.description,
-				eventDeadlineStartDate: new Date(event.eventDeadlineStartDate),
+				...(event.eventDeadlineStartDate && {
+					eventDeadlineStartDate: new Date(event.eventDeadlineStartDate)
+				}),
 				date: new Date(event.date),
 				eventId: event.eventId,
 				eventLineItems: {
