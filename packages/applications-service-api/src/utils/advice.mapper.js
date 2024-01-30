@@ -33,7 +33,8 @@ const mapCommonAdviceFieldsToApi = (advice) => {
 		dateEnquiryReceived: advice?.enquiryDate,
 		dateAdviceGiven: advice?.adviceDate,
 		dateLastModified: advice?.modifiedAt,
-		dateCreated: advice?.createdAt
+		dateCreated: advice?.createdAt,
+		title: advice?.title
 	};
 };
 

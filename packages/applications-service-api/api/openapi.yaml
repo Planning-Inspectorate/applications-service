@@ -1935,6 +1935,9 @@ components:
         adviceID:
           type: string
           example: 'XX0123-Advice-00001'
+        title:
+          type: string
+          example: 'Advice title'
         enquiryDate:
           type: string
           format: date
