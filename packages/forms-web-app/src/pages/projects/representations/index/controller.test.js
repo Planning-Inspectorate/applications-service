@@ -127,7 +127,9 @@ describe('pages/projects/representations/index/controller', () => {
 				twentyFive: { active: true, link: '?itemsPerPage=25', size: 25 }
 			},
 			searchTerm: undefined,
-			showReps: false
+			showRepresentations: false,
+			resultsNotFound: false,
+			hasNoResultsPreDecision: false
 		});
 	});
 });
