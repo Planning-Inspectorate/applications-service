@@ -1,7 +1,7 @@
 const { removeTimetableItemFormatting, formatTimetableItems } = require('./format-timetable-items');
 
 const { unformattedDeadlines } = require('./__mocks__/fixtures');
-describe('have your say deadlines', () => {
+describe('utils/timetables/format-timetable-items', () => {
 	describe('#removeTimetableItemFormatting', () => {
 		describe('When removing the deadline formatting', () => {
 			const response = removeTimetableItemFormatting(unformattedDeadlines);

@@ -21,7 +21,7 @@ const INTERESTED_PARTY_ORGANISATION_API = {
 	behalf: 'them',
 	'organisation-name': 'Example Company',
 	role: 'CEO'
-}
+};
 
 const INTERESTED_PARTY_AGENT_PERSON_API = {
 	case_ref: 'BC0110002',
@@ -38,7 +38,7 @@ const INTERESTED_PARTY_AGENT_PERSON_API = {
 			country: 'England'
 		},
 		email: 'joe@example.org',
-		telephone: '07700900000',
+		telephone: '07700900000'
 	},
 	representor: {
 		'full-name': 'A.N. Other',
@@ -205,12 +205,13 @@ const INTERESTED_PARTY_SELF_BACK_OFFICE = {
 	referenceId: 'BC0110002-091222133021123',
 	caseReference: 'BC0110002',
 	originalRepresentation: 'this is the representation',
+	representationFrom: 'PERSON',
 	represented: {
 		firstName: 'Joe',
 		lastName: 'Bloggs',
 		type: 'PERSON',
 		under18: false,
-		contactMethod: undefined,
+		contactMethod: 'email',
 		email: 'joe@example.org',
 		phoneNumber: '07700900000',
 		address: {
@@ -227,16 +228,19 @@ const INTERESTED_PARTY_SELF_BACK_OFFICE = {
 
 const INTERESTED_PARTY_ORGANISATION_BACK_OFFICE = {
 	...INTERESTED_PARTY_SELF_BACK_OFFICE,
+	representationFrom: 'ORGANISATION',
+
 	represented: {
 		...INTERESTED_PARTY_SELF_BACK_OFFICE.represented,
 		type: 'ORGANISATION',
 		organisationName: 'Example Company',
-		jobTitle: 'CEO',
+		jobTitle: 'CEO'
 	}
 };
 
 const INTERESTED_PARTY_AGENT_PERSON_BACK_OFFICE = {
 	...INTERESTED_PARTY_SELF_BACK_OFFICE,
+	representationFrom: 'AGENT',
 	representative: {
 		firstName: 'A.N.',
 		lastName: 'Other',
@@ -244,7 +248,7 @@ const INTERESTED_PARTY_AGENT_PERSON_BACK_OFFICE = {
 		under18: false,
 		organisationName: 'Example Company',
 		jobTitle: undefined,
-		contactMethod: undefined,
+		contactMethod: 'email',
 		email: 'another@example.org',
 		phoneNumber: '07700900001',
 		address: {
@@ -260,7 +264,7 @@ const INTERESTED_PARTY_AGENT_PERSON_BACK_OFFICE = {
 const INTERESTED_PARTY_AGENT_ORGANISATION_BACK_OFFICE = {
 	...INTERESTED_PARTY_AGENT_PERSON_BACK_OFFICE,
 	represented: {
-		type: "ORGANISATION",
+		type: 'ORGANISATION',
 		firstName: 'Another',
 		lastName: 'Org',
 		under18: false,
@@ -273,14 +277,14 @@ const INTERESTED_PARTY_AGENT_ORGANISATION_BACK_OFFICE = {
 		},
 		email: 'another@example.org',
 		phoneNumber: '07700900000',
-		contactMethod: undefined
+		contactMethod: 'email'
 	}
-}
+};
 
 const INTERESTED_PARTY_AGENT_FAMILY_BACK_OFFICE = {
 	...INTERESTED_PARTY_AGENT_PERSON_BACK_OFFICE,
 	represented: {
-		type: "FAMILY_GROUP",
+		type: 'FAMILY_GROUP',
 		firstName: 'Robinson',
 		lastName: 'Family',
 		under18: false,
@@ -293,9 +297,9 @@ const INTERESTED_PARTY_AGENT_FAMILY_BACK_OFFICE = {
 		},
 		email: 'robinsons@example.org',
 		phoneNumber: '07700900002',
-		contactMethod: undefined
+		contactMethod: 'email'
 	}
-}
+};
 
 module.exports = {
 	INTERESTED_PARTY_SELF_API,

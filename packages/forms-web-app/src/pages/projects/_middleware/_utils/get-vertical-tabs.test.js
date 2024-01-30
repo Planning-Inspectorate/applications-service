@@ -16,6 +16,7 @@ describe('#getVerticalTabs', () => {
 		beforeEach(() => {
 			jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
 		});
+
 		describe('and no feature flags are set', () => {
 			let result;
 
@@ -28,7 +29,7 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
 
-				result = getVerticalTabs('mock case ref', true, true, mockApplicationData);
+				result = getVerticalTabs('mock case ref', mockApplicationData, true);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -96,6 +97,7 @@ describe('#getVerticalTabs', () => {
 				]);
 			});
 		});
+
 		describe('and feature flags are set', () => {
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = true;
@@ -111,7 +113,7 @@ describe('#getVerticalTabs', () => {
 
 			describe('and case id is in the projectMigrationCaseReferences', () => {
 				it('should return the vertical tabs', () => {
-					const result = getVerticalTabs('mock case ref', false, false, mockApplicationData);
+					const result = getVerticalTabs('mock case ref', mockApplicationData, false);
 					expect(result).toEqual([
 						{
 							hidden: false,
@@ -179,7 +181,7 @@ describe('#getVerticalTabs', () => {
 
 			describe('and case id is not in the projectMigrationCaseReferences', () => {
 				it('should return the vertical tabs excluding "get-updates" and "project-information', () => {
-					const result = getVerticalTabs('migrated-case-ref', false, false, mockApplicationData);
+					const result = getVerticalTabs('migrated-case-ref', mockApplicationData, false);
 					expect(result).toEqual([
 						{
 							hidden: true,

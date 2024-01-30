@@ -1,8 +1,8 @@
 const {
-	getHasOpenTimetables,
 	getPastTimetables,
 	getUpcomingTimetables,
-	getOpenEventDeadlineTimetables
+	getOpenEventDeadlineTimetables,
+	getHasTimetables
 } = require('./get-timetables-state');
 
 const { getTimetables } = require('../../lib/application-api-wrapper');
@@ -16,47 +16,94 @@ describe('utils/timetables/get-timetables-state', () => {
 	const datePresent = '2022-01-02';
 	const datePast = '2022-01-01';
 	const dateUpcoming = '2022-01-03';
+
 	beforeEach(() => {
 		jest.useFakeTimers().setSystemTime(new Date(datePresent));
 	});
 
-	describe('#getHasOpenTimetables', () => {
-		describe('When there are open deadline for a timetable', () => {
-			let response;
-			beforeEach(async () => {
-				jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
-				getTimetables.mockReturnValue(fixturesTimetableResponse);
-				response = await getHasOpenTimetables('mock case ref');
-			});
-			it('should return true', () => {
-				expect(response).toBe(true);
+	describe('#getHasTimetables', () => {
+		describe('and there are no project timetables set in the session', () => {
+			describe('and there is NO data returned from the api', () => {
+				let hasTimetables;
+
+				const mockSession = {};
+				const mockCaseRef = 'mockCaseRef';
+
+				beforeEach(async () => {
+					getTimetables.mockResolvedValue({ data: null });
+					hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+				});
+
+				it('should return false', () => {
+					expect(hasTimetables).toEqual(false);
+				});
+
+				it('should set the projects timetables value to the session', () => {
+					expect(mockSession).toEqual({ timetables: { mockCaseRef: false } });
+				});
 			});
 
-			describe('When there are NO open deadline for a timetable', () => {
-				let response;
-				beforeEach(async () => {
-					jest.useFakeTimers().setSystemTime(new Date('2023-01-28'));
-					getTimetables.mockReturnValue(fixturesTimetableResponse);
-					response = await getHasOpenTimetables('mock case ref');
+			describe('and there is data returned from the api', () => {
+				describe('and the project has timetables', () => {
+					let hasTimetables;
+
+					const mockSession = { timetables: { anotherCaseRef: false } };
+					const mockCaseRef = 'mockCaseRef';
+
+					beforeEach(async () => {
+						getTimetables.mockResolvedValue(fixturesTimetableResponse);
+						hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+					});
+
+					it('should return true', () => {
+						expect(hasTimetables).toEqual(true);
+					});
+
+					it('should set the projects timetables value to the session', () => {
+						expect(mockSession).toEqual({
+							timetables: { mockCaseRef: true, anotherCaseRef: false }
+						});
+					});
 				});
-				it('should return false', () => {
-					expect(response).toBe(false);
+
+				describe('and the project does not have timetables', () => {
+					let hasTimetables;
+
+					const mockSession = {};
+					const mockCaseRef = 'mockCaseRef';
+
+					beforeEach(async () => {
+						getTimetables.mockResolvedValue({ data: { timetables: [] } });
+						hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+					});
+
+					it('should return false', () => {
+						expect(hasTimetables).toEqual(false);
+					});
+
+					it('should set the projects timetables value to the session', () => {
+						expect(mockSession).toEqual({ timetables: { mockCaseRef: false } });
+					});
 				});
 			});
 		});
 
-		describe('When there are NO timetables', () => {
-			let response;
+		describe('and there are timetables set in the session', () => {
+			let hasTimetables;
+
+			const mockCaseRef = 'mockCaseRef';
+			const mockSession = { timetables: { mockCaseRef: true } };
+
 			beforeEach(async () => {
-				jest.useFakeTimers().setSystemTime(new Date('2023-01-28'));
-				getTimetables.mockReturnValue({ resp_code: 404 });
-				response = await getHasOpenTimetables('mock case ref');
+				hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
 			});
-			it('should return false', () => {
-				expect(response).toBe(false);
+
+			it('should return true', () => {
+				expect(hasTimetables).toEqual(true);
 			});
 		});
 	});
+
 	describe('#getPastTimetables', () => {
 		describe('When getting the past timetables', () => {
 			let result;
@@ -107,6 +154,7 @@ describe('utils/timetables/get-timetables-state', () => {
 		describe('When getting open deadline timetables', () => {
 			describe('and there are open deadline timetables', () => {
 				let result;
+
 				const mockTimetables = [
 					{
 						typeOfEvent: 'Not deadline',
@@ -129,9 +177,11 @@ describe('utils/timetables/get-timetables-state', () => {
 						dateTimeDeadlineStart: '2022-01-04'
 					}
 				];
+
 				beforeEach(() => {
 					result = getOpenEventDeadlineTimetables(mockTimetables);
 				});
+
 				it('should return the open deadline timetables', () => {
 					expect(result).toEqual([
 						{
@@ -140,6 +190,31 @@ describe('utils/timetables/get-timetables-state', () => {
 							typeOfEvent: 'Deadline'
 						}
 					]);
+				});
+			});
+
+			describe('and there are NO open deadline timetables', () => {
+				let result;
+
+				const mockTimetables = [
+					{
+						typeOfEvent: 'Deadline',
+						dateOfEvent: datePast,
+						dateTimeDeadlineStart: datePast
+					},
+					{
+						typeOfEvent: 'Not deadline',
+						dateOfEvent: dateUpcoming,
+						dateTimeDeadlineStart: datePresent
+					}
+				];
+
+				beforeEach(() => {
+					result = getOpenEventDeadlineTimetables(mockTimetables);
+				});
+
+				it('should return no deadlines', () => {
+					expect(result).toEqual([]);
 				});
 			});
 		});

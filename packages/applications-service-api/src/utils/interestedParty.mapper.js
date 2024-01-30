@@ -32,12 +32,14 @@ const mapInterestedParty = (data) => {
 	switch (data.behalf) {
 		case BEHALF_SELF:
 		case BEHALF_ORG:
+			interestedParty.representationFrom = CONTACT_TYPES_API[data.behalf];
 			interestedParty.represented = mapInterestedPartyContactDetails(
 				data,
 				CONTACT_TYPES_API[data.behalf]
 			);
 			break;
 		case BEHALF_AGENT:
+			interestedParty.representationFrom = CONTACT_TYPES_BACK_OFFICE.agent;
 			interestedParty.represented = mapInterestedPartyContactDetails(
 				data.representee,
 				CONTACT_TYPES_BACK_OFFICE[data.representing]
@@ -60,7 +62,7 @@ const mapInterestedPartyContactDetails = (contactDetails, type) => {
 		lastName,
 		type,
 		under18: contactDetails['over-18'] === 'no',
-		contactMethod: undefined,
+		contactMethod: 'email',
 		email: contactDetails.email,
 		phoneNumber: contactDetails.telephone,
 		address: {

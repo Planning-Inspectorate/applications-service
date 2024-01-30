@@ -13,10 +13,12 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 			const datePresent = '2023-01-02';
 			const dateUpcoming = '2023-01-03';
 			const datePast = '2023-01-01';
+			const mockSession = {};
 			const mockAppData = {
 				CaseReference: 'mock case reference',
 				dateOfNonAcceptance: '2023-01-01'
 			};
+
 			beforeEach(async () => {
 				jest.useFakeTimers().setSystemTime(new Date(datePresent));
 				getTimetables.mockResolvedValue({
@@ -39,10 +41,12 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 						]
 					}
 				});
-				result = await getEvents(mockAppData);
+				result = await getEvents(mockSession, mockAppData);
 			});
+
 			it('should return the events formatted to the view model', () => {
 				expect(result).toEqual({
+					hasOpenTimetables: false,
 					past: {
 						displayEvents: true,
 						events: [
