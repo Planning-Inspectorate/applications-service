@@ -36,7 +36,8 @@ const ADVICE_BACKOFFICE_RESPONSE = ADVICE_BACKOFFICE_DATA.map((advice) => ({
 	dateEnquiryReceived: advice?.enquiryDate,
 	dateAdviceGiven: advice?.adviceDate,
 	dateLastModified: advice?.modifiedAt,
-	dateCreated: advice?.createdAt
+	dateCreated: advice?.createdAt,
+	title: advice?.title
 }));
 
 const ADVICE_NI_DATA = [

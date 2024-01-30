@@ -30,7 +30,9 @@ describe('pages examination have-your-say', () => {
 				await getHaveYourSay(req, res, next);
 			});
 			it('should redirect to the  no open deadline page', () => {
-				expect(res.render).toHaveBeenCalledWith('examination/have-your-say/no-deadlines-view.njk');
+				expect(res.render).toHaveBeenCalledWith('examination/have-your-say/no-deadlines-view.njk', {
+					activeId: 'project-have-your-say'
+				});
 			});
 		});
 		describe('and there is an error', () => {
