@@ -99,7 +99,7 @@ const routesConfig = {
 				},
 				route: 'select-upload-evidence-or-comment',
 				sessionId: 'submissionType',
-				title: 'How would you like to submit comments ("written representation")?',
+				title: 'How would you like to submit comments?',
 				view: 'pages/examination/evidence-or-comment'
 			},
 			haveYourSay: {
