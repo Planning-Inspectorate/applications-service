@@ -4,6 +4,9 @@ const logger = require('../../../lib/logger');
 const { getHasTimetables } = require('../../../utils/timetables/get-timetables-state');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const config = require('../../../config');
+const {
+	hasRepresentationsAvailable
+} = require('../representations/index/_utils/has-representations-available');
 
 async function projectsMiddleware(req, res, next) {
 	try {
@@ -11,7 +14,10 @@ async function projectsMiddleware(req, res, next) {
 		const { case_ref } = params;
 
 		const applicationData = await getApplicationData(case_ref);
-		const hasTimetables = await getHasTimetables(session, case_ref);
+		const showExaminationLink = await getHasTimetables(session, case_ref);
+		const showRepresentationsLink = hasRepresentationsAvailable(
+			applicationData.DateRRepAppearOnWebsite
+		);
 
 		res.locals.projectName = applicationData.projectName;
 		res.locals.caseRef = case_ref;
@@ -19,7 +25,12 @@ async function projectsMiddleware(req, res, next) {
 		res.locals.baseUrl = baseUrl;
 		res.locals.path = path;
 		res.locals.projectStages = projectInfoProjectStages;
-		res.locals.verticalTabs = getVerticalTabs(case_ref, applicationData, hasTimetables);
+		res.locals.verticalTabs = getVerticalTabs(
+			case_ref,
+			applicationData,
+			showExaminationLink,
+			showRepresentationsLink
+		);
 		next();
 	} catch (e) {
 		logger.error(e);

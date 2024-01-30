@@ -86,7 +86,7 @@ describe('projects _middleware', () => {
 						url: '/projects/mock-case-ref/register/register-have-your-say'
 					},
 					{
-						hidden: false,
+						hidden: true,
 						id: 'representations',
 						name: 'Relevant representations (registration comments)',
 						url: '/projects/mock-case-ref/representations'
