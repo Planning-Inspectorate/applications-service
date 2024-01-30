@@ -76,7 +76,6 @@ describe('/api/v1/applications', () => {
 			});
 		});
 	});
-
 	describe('get all applications', () => {
 		describe('when backOfficeIntegration.applications.getAllApplications is false', () => {
 			config.backOfficeIntegration.applications.getAllApplications = false;
@@ -235,8 +234,29 @@ describe('/api/v1/applications', () => {
 		describe('when backOfficeIntegration.applications.getAllApplications is true', () => {
 			beforeEach(() => {
 				config.backOfficeIntegration.applications.getAllApplications = true;
+				mockProjectFindMany.mockResolvedValueOnce([APPLICATION_DB]);
 			});
-			// TODO
+			it('happy path', async () => {
+				const response = await request.get('/api/v1/applications');
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					applications: [
+						{
+							...APPLICATION_API_V1,
+							DateOfDCOAcceptance_NonAcceptance: null,
+							sourceSystem: 'ODT'
+						}
+					],
+					currentPage: 1,
+					itemsPerPage: 25,
+					totalItems: 1,
+					totalPages: 1,
+					totalItemsWithoutFilters: 0,
+					filters: []
+				});
+			});
+			// TODO: ASB-2190 - pagination, filter, and sorting tests
 		});
 	});
 });
