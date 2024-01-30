@@ -55,15 +55,19 @@ describe('have your say decide exam journey route', () => {
 				});
 			});
 		});
+
 		describe('When the use user has NOT come from the examination timetable', () => {
 			const session = {};
 			const caseRef = 'mock case ref';
+
 			beforeEach(async () => {
 				jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
 				getAppData.mockResolvedValue(fixtureApplicationResponse);
 				getTimetables.mockResolvedValue(fixturesTimetableResponse);
+
 				await setupExaminationJourney(session, caseRef);
 			});
+
 			it('should setup the journey for the selected deadline', () => {
 				expect(session).toEqual({
 					caseRef: 'mock case ref',

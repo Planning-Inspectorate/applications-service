@@ -91,6 +91,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 						activeProjectLink: 'project-examination-timetable',
 						caseRef: 'mock case ref',
 						events: {
+							hasOpenTimetables: true,
 							past: {
 								displayEvents: true,
 								events: [
