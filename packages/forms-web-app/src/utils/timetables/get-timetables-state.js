@@ -1,4 +1,8 @@
 const { getTimetables } = require('../../lib/application-api-wrapper');
+const {
+	getTimetablesSession,
+	setTimetablesSession
+} = require('../../pages/projects/examination-timetable/_session/timetables');
 const { isTimetableDateOfEventPast } = require('./check-timetable-state');
 const { isTimetableTypeOfEventDeadlineOpen } = require('./check-timetable-state');
 
@@ -13,19 +17,23 @@ const getOpenEventDeadlineTimetables = (timetables) =>
 		isTimetableTypeOfEventDeadlineOpen(typeOfEvent, dateOfEvent, dateTimeDeadlineStart)
 	);
 
-const getHasOpenTimetables = async (case_ref) => {
-	const { data } = await getTimetables(case_ref);
-	let response = false;
-	if (data && data.timetables) {
-		const openEventDeadlineTimetables = getOpenEventDeadlineTimetables(data.timetables);
-		response = openEventDeadlineTimetables.length > 0;
+const getHasTimetables = async (session, case_ref) => {
+	let hasTimetables = getTimetablesSession(session, case_ref);
+
+	if (hasTimetables === undefined) {
+		const { data } = await getTimetables(case_ref);
+
+		hasTimetables = Array.isArray(data?.timetables) && data?.timetables.length > 0;
+
+		setTimetablesSession(session, case_ref, hasTimetables);
 	}
-	return response;
+
+	return hasTimetables;
 };
 
 module.exports = {
 	getPastTimetables,
 	getUpcomingTimetables,
 	getOpenEventDeadlineTimetables,
-	getHasOpenTimetables
+	getHasTimetables
 };
