@@ -1,14 +1,19 @@
-const { getApplication } = require('../../../src/services/application.service');
-
-jest.mock('../../../src/repositories/project.repository');
-const { getByCaseReference } = require('../../../src/repositories/project.repository');
-
-jest.mock('../../../src/services/application.ni.service');
+const { getApplication, getAllApplications } = require('../../../src/services/application.service');
+const config = require('../../../src/lib/config');
+jest.mock('../../../src/repositories/project.backoffice.repository');
+const {
+	getByCaseReference,
+	getAllApplications: getAllApplicationsRepository
+} = require('../../../src/repositories/project.backoffice.repository');
+const { getAllNIApplications } = require('../../../src/services/application.ni.service');
 const { getNIApplication } = require('../../../src/services/application.ni.service');
 
 jest.mock('../../../src/utils/application.mapper');
+jest.mock('../../../src/services/application.ni.service');
+
 const {
 	mapBackOfficeApplicationToApi,
+	mapBackOfficeApplicationsToApi,
 	mapNIApplicationToApi
 } = require('../../../src/utils/application.mapper');
 const { APPLICATION_DB, APPLICATION_FO } = require('../../__data__/application');
@@ -44,6 +49,24 @@ describe('application.service', () => {
 
 			expect(getNIApplication).toHaveBeenCalledWith('EN010009');
 			expect(mapNIApplicationToApi).toHaveBeenCalledWith(APPLICATION_FO);
+		});
+	});
+	describe('getAllApplications', () => {
+		it('invokes getAllBOApplicationsRepository if BO caseReference', async () => {
+			config.backOfficeIntegration.applications.getAllApplications = true;
+			getAllApplicationsRepository.mockResolvedValueOnce([APPLICATION_DB]);
+
+			await getAllApplications();
+
+			expect(getAllApplicationsRepository).toHaveBeenCalled();
+			expect(mapBackOfficeApplicationsToApi).toHaveBeenCalledWith([APPLICATION_DB]);
+		});
+		it('invokes getAllNIApplications if NI caseReference', async () => {
+			config.backOfficeIntegration.applications.getAllApplications = false;
+
+			await getAllApplications();
+
+			expect(getAllNIApplications).toHaveBeenCalled();
 		});
 	});
 });
