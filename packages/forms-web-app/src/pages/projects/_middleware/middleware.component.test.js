@@ -26,7 +26,8 @@ describe('projects _middleware', () => {
 		const req = {
 			params: { case_ref: 'mock-case-ref' },
 			baseUrl: 'mock base url',
-			path: 'mock path'
+			path: 'mock path',
+			session: {}
 		};
 		const res = { locals: {} };
 		beforeEach(() => {
@@ -59,7 +60,6 @@ describe('projects _middleware', () => {
 					6: 'Decision',
 					7: 'Post-decision'
 				},
-				hasOpenTimetables: true,
 				verticalTabs: [
 					{
 						hidden: true,
