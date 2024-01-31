@@ -3,13 +3,15 @@ const {
 	mapApplicationFiltersToNI,
 	mapNIApplicationToApi,
 	mapBackOfficeApplicationToApi,
-	addMapZoomLevelAndLongLat
+	addMapZoomLevelAndLongLat,
+	mapBackOfficeApplicationsToApi
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
 	APPLICATIONS_FO_FILTERS,
 	APPLICATION_FO,
 	APPLICATION_API,
+	APPLICATION_API_V1,
 	APPLICATION_DB
 } = require('../../__data__/application');
 
@@ -200,6 +202,17 @@ describe('application.mapper', () => {
 			delete outputApplication.LatLong;
 
 			expect(addMapZoomLevelAndLongLat(inputApplication)).toEqual(outputApplication);
+		});
+	});
+	describe('mapBackOfficeApplicationsToApi', () => {
+		it('maps back office applications data to api format', () => {
+			expect(mapBackOfficeApplicationsToApi([APPLICATION_DB])).toEqual([
+				{
+					...APPLICATION_API_V1,
+					DateOfDCOAcceptance_NonAcceptance: null,
+					sourceSystem: 'ODT'
+				}
+			]);
 		});
 	});
 });
