@@ -12,7 +12,7 @@ const getApplicationData = async (case_ref) => {
 
 	const status = {
 		number: data.Stage,
-		text: projectInfoProjectStages[data.Stage]
+		text: projectInfoProjectStages[data.Stage] || ''
 	};
 
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);
