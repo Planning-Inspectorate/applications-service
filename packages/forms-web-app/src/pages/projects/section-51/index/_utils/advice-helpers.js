@@ -18,13 +18,19 @@ const getAdviceTitle = (advice) =>
 		? `Meeting with ${getAdviceName(advice)}`
 		: `Advice to ${getAdviceName(advice)}`;
 
+const getAdviceTypeLabel = (advice) =>
+	isAdviceMeeting(advice.enquiryMethod) ? `Meeting with` : `Enquiry from`;
+
 const getAdviceEnquiryText = (enquiryMethod) =>
 	isAdviceMeeting(enquiryMethod) ? 'Meeting with' : 'From';
 
-const getAdviceLinkTitle = (advice) =>
-	isAdviceMeeting(advice.enquiryMethod)
+const getAdviceLinkTitle = (advice) => {
+	if (advice.title) return advice.title;
+
+	return isAdviceMeeting(advice.enquiryMethod)
 		? `View meeting with ${getAdviceName(advice)}`
 		: `View advice to ${getAdviceName(advice)}`;
+};
 
 const getAdviceLink = (caseRef, { adviceID }) => getSection51AdviceDetailURL(caseRef, adviceID);
 
@@ -33,6 +39,7 @@ module.exports = {
 	getAdviceLink,
 	isAdviceMeeting,
 	getAdviceTitle,
+	getAdviceTypeLabel,
 	getAdviceDateText,
 	getAdviceName,
 	getAdviceEnquiryText
