@@ -79,40 +79,48 @@ describe('pages/projects/section-51/index/controller', () => {
 						searchTerm: 'mock search term',
 						advice: [
 							{
+								enquiryDetail: 'mock enquiry detail',
+								adviceGivenBy: 'mock organisation',
+								adviceTypeLabel: 'Enquiry from',
 								date: {
 									date: '2023-01-01',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 1',
-								linkTitle: 'View advice to mock organisation',
-								method: 'mock enquiry method'
+								linkTitle: 'View advice to mock organisation'
 							},
 							{
+								enquiryDetail: 'mock enquiry detail 2',
+								adviceGivenBy: 'mock organisation',
+								adviceTypeLabel: 'Meeting with',
 								date: {
 									date: 'mock date given 2',
 									text: 'Date of meeting:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 2',
-								linkTitle: 'View meeting with mock organisation',
-								method: 'Meeting'
+								linkTitle: 'View meeting with mock organisation'
 							},
 							{
+								enquiryDetail: 'mock enquiry detail 3',
+								adviceGivenBy: 'mock first name mock last name',
+								adviceTypeLabel: 'Enquiry from',
 								date: {
 									date: 'mock date given 3',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 3',
-								linkTitle: 'View advice to mock first name mock last name',
-								method: 'Email'
+								linkTitle: 'View advice to mock first name mock last name'
 							},
 							{
+								enquiryDetail: 'mock enquiry detail 4',
+								adviceGivenBy: 'Anonymous',
+								adviceTypeLabel: 'Enquiry from',
 								date: {
 									date: 'mock date given 4',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 4',
-								linkTitle: 'View advice to Anonymous',
-								method: 'Email'
+								linkTitle: 'View advice to Anonymous'
 							}
 						]
 					});
