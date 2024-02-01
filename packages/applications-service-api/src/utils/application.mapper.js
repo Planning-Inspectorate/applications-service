@@ -107,6 +107,17 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	return filters;
 };
 
+const buildApplicationsFiltersFromBOApplications = (applications) => {
+	const mappedToNIApplications = applications.map((application) => {
+		return {
+			Stage: stageMap[application.stage],
+			Region: regionMap[application.regions], // TODO: BO cases can have multiple regions
+			Proposal: application.sector
+		};
+	});
+	return buildApiFiltersFromNIApplications(mappedToNIApplications);
+};
+
 /**
  * Map API filters back to values for querying against NI database
  * @param {{ stage?: string[], region?: string[], sector?: string[] }} query
@@ -326,5 +337,6 @@ module.exports = {
 	mapBackOfficeApplicationToApi,
 	mapBackOfficeApplicationsToApi,
 	addMapZoomLevelAndLongLat,
-	mapResponseBackToNILegacyFormat
+	mapResponseBackToNILegacyFormat,
+	buildApplicationsFiltersFromBOApplications
 };
