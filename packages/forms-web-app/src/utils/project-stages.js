@@ -43,7 +43,8 @@ const projectInfoProjectStages = {
 	4: 'Examination',
 	5: 'Recommendation',
 	6: 'Decision',
-	7: 'Post-decision'
+	7: 'Post-decision',
+	8: 'Withdrawn'
 };
 
 const registerOfApplicationsStages = [
