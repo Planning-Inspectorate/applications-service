@@ -19,7 +19,7 @@ const { getMapAccessToken } = require('../../_services');
 const view = 'projects/index/view.njk';
 
 const getMiscDataByStageName = async (stageName, caseRef) => {
-	stageName = stageName.toLocaleLowerCase();
+	stageName = stageName.toLowerCase();
 	const formattedProjectStages = formatProjectStagesToLowerCase(projectInfoProjectStages);
 	let result = null;
 
