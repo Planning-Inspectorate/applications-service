@@ -51,7 +51,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							enquirySummaryList: [
 								{ key: { text: 'From' }, value: { text: 'mock organisation' } },
 								{ key: { text: 'Date advice given' }, value: { text: '1 January 2023' } },
-								{ key: { text: 'Enquiry type' }, value: { text: 'mock enquiry method' } }
+								{ key: { text: 'Enquiry type' }, value: { text: 'Email' } }
 							],
 							enquiryText: 'mock enquiry detail',
 							pageTitle: 'mock enquiry detail',

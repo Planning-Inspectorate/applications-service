@@ -1,29 +1,30 @@
 {% macro sectionResults(results) %}
-	<ul class="section-results">
+	<ul class="ui-results">
 		{% for result in results %}
-			<li class="section-results__result">
-				<a class="section-results__result-link " href="{{ result.link }}">
-					<strong>
-						{{ result.linkTitle }}
-					</strong>
-				</a>
+			<li  class="ui-results__result">
+				<h2 class="ui-results__result-title">
+					<a class="section-results__result-link" href="{{ result.link }}">
+						<strong>
+							{{ result.linkTitle }}
+						</strong>
+					</a>
+				</h2>
 
-				<div class="section-results__result-meta-data">
-					<div class="section-results__result-item-two-thirds">
-						<p class="section-results__result-copy">
-							<strong>
-								{{ result.date.text }}
-							</strong>
-							{{ result.date.date | date('D MMMM YYYY') }}
-						</p>
+				<p class="ui-results__result-description govuk-body-s">
+					{{ result.enquiryDetail | truncate(200) }}
+
+					{% if result.enquiryDetail | length > 200 %}
+						<a href="{{ result.link }}" class="govuk-link" >Read more</a>
+					{% endif %}
+				</p>
+
+				<div class="ui-results__result-meta-data">
+					<div class="ui-results__result-meta-data-item ui-results__result-meta-data-item--fill-width" data-cy="published-stage">
+						<span class="govuk-body-s"><strong>{{ result.adviceTypeLabel }}: </strong>{{ result.adviceGivenBy}}</span>	
 					</div>
 
-					<div class="section-results__result-item-one-third">
-						<p class="section-results__result-copy">
-							<strong>
-								Enquiry type:
-							</strong>{{ result.method }}
-						</p>
+					<div class="ui-results__result-meta-data-item" data-cy="published-date">
+						<span class="-white-space--nowrap govuk-body-s"><strong>{{ result.date.text }}</strong> {{ result.date.date | date('D MMMM YYYY') }}</span>
 					</div>
 				</div>
 			</li>
