@@ -77,11 +77,17 @@ const buildApiFiltersFromNIApplications = (applications) => {
 
 			if (isValidNIColumnValue('stage', stageValue))
 				memo.stage[stageValue] = memo.stage[stageValue] + 1 || 1;
-			if (isValidNIColumnValue('region', regionValue))
-				memo.region[regionValue] = memo.region[regionValue] + 1 || 1;
 			if (isValidNIColumnValue('sector', sectorValue))
 				memo.sector[sectorValue] = memo.sector[sectorValue] + 1 || 1;
-
+			if (Array.isArray(regionValue)) {
+				regionValue.forEach((region) => {
+					if (isValidNIColumnValue('region', region))
+						memo.region[region] = memo.region[region] + 1 || 1;
+				});
+			} else {
+				if (isValidNIColumnValue('region', regionValue))
+					memo.region[regionValue] = memo.region[regionValue] + 1 || 1;
+			}
 			return memo;
 		},
 		{
@@ -107,11 +113,16 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	return filters;
 };
 
+/**
+ * Builds Applications API filters from list of Applications from Back Office
+ * @param applications
+ * @returns {{name: string, value: string, label: string, count: number}[]}
+ */
 const buildApplicationsFiltersFromBOApplications = (applications) => {
 	const mappedToNIApplications = applications.map((application) => {
 		return {
 			Stage: stageMap[application.stage],
-			Region: regionMap[application.regions], // TODO: BO cases can have multiple regions
+			Region: application.regions?.split(',').map((region) => regionMap[region.trim()]),
 			Proposal: application.sector
 		};
 	});

@@ -1,5 +1,6 @@
 const {
 	buildApiFiltersFromNIApplications,
+	buildApplicationsFiltersFromBOApplications,
 	mapApplicationFiltersToNI,
 	mapNIApplicationToApi,
 	mapBackOfficeApplicationToApi,
@@ -8,6 +9,7 @@ const {
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
+	APPLICATIONS_BO_FILTER_COLUMNS,
 	APPLICATIONS_FO_FILTERS,
 	APPLICATION_FO,
 	APPLICATION_API,
@@ -56,6 +58,86 @@ describe('application.mapper', () => {
 			expect(result).toEqual([
 				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
 				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					value: 'business_and_commercial',
+					count: 2
+				}
+			]);
+		});
+	});
+
+	describe('buildApplicationsFiltersFromBOApplications', () => {
+		it('maps applications from back office database to filters in api format', () => {
+			const result = buildApplicationsFiltersFromBOApplications(APPLICATIONS_BO_FILTER_COLUMNS);
+			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
+		});
+		it('excludes undefined values from filter counts', () => {
+			const result = buildApplicationsFiltersFromBOApplications([
+				{ stage: 'acceptance', regions: 'south_east', sector: 'EN01 - Generating Stations' },
+				{ stage: null, regions: 'north_east', sector: 'EN01 - Generating Stations' },
+				{ stage: 'pre_application', regions: null, sector: 'BC08 - Leisure' },
+				{ stage: 'pre_application', regions: 'south_east', sector: null }
+			]);
+			expect(result).toEqual([
+				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
+				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
+				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
+				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					value: 'business_and_commercial',
+					count: 1
+				}
+			]);
+		});
+		it('excludes invalid values from filter counts', () => {
+			const result = buildApplicationsFiltersFromBOApplications([
+				{ stage: 'acceptance', regions: 'NOT A REGION', sector: 'EN01 - Generating Stations' },
+				{ stage: 'NOT A STAGE', regions: 'north_east', sector: 'NOT A SECTOR' },
+				{ stage: 'pre_application', regions: 'south_east', sector: 'BC08 - Leisure' }
+			]);
+			expect(result).toEqual([
+				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
+				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
+				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{ name: 'region', label: 'South East', value: 'south_east', count: 1 },
+				{ name: 'sector', label: 'Energy', value: 'energy', count: 1 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					value: 'business_and_commercial',
+					count: 1
+				}
+			]);
+		});
+		it('handles multiple regions in one application correctly', () => {
+			const result = buildApplicationsFiltersFromBOApplications([
+				{
+					stage: 'acceptance',
+					regions: 'south_east,north_west',
+					sector: 'EN01 - Generating Stations'
+				},
+				{ stage: 'pre_application', regions: 'south_east', sector: 'BC08 - Leisure' },
+				{
+					stage: 'pre_application',
+					regions: 'north_east,north_east,wales',
+					sector: 'BC08 - Leisure'
+				},
+				{ stage: 'acceptance', regions: 'south_west', sector: 'EN01 - Generating Stations' }
+			]);
+			expect(result).toEqual([
+				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
+				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
+				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
+				{ name: 'region', label: 'North West', value: 'north_west', count: 1 },
+				{ name: 'region', label: 'North East', value: 'north_east', count: 2 },
+				{ name: 'region', label: 'Wales', value: 'wales', count: 1 },
+				{ name: 'region', label: 'South West', value: 'south_west', count: 1 },
+				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
 				{
 					name: 'sector',
 					label: 'Business and Commercial',

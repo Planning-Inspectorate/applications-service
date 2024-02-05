@@ -11,12 +11,14 @@ const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
 
 const mockFindUnique = jest.fn();
+const mockCount = jest.fn();
 const mockProjectFindMany = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
 			findUnique: (query) => mockFindUnique(query),
-			findMany: (query) => mockProjectFindMany(query)
+			findMany: (query) => mockProjectFindMany(query),
+			count: (query) => mockCount(query)
 		}
 	}
 }));

@@ -64,8 +64,7 @@ const createQueryFilters = (query) => {
 	};
 };
 const getAllApplications = async (query) => {
-	// const isGetFromBackOfficeEnabled = config.backOfficeIntegration.applications.getAllApplications;
-	const isGetFromBackOfficeEnabled = true; // TODO for testing
+	const isGetFromBackOfficeEnabled = config.backOfficeIntegration.applications.getAllApplications;
 	if (!isGetFromBackOfficeEnabled) return getAllNIApplications(query);
 
 	const queryOptions = createQueryFilters(query);

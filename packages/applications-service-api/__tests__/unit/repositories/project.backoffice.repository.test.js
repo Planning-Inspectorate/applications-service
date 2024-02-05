@@ -5,11 +5,14 @@ const {
 
 const mockFindUnique = jest.fn();
 const mockFindMany = jest.fn();
+const mockCount = jest.fn();
+
 jest.mock('../../../src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
 			findUnique: (query) => mockFindUnique(query),
-			findMany: (query) => mockFindMany(query)
+			findMany: (query) => mockFindMany(query),
+			count: (query) => mockCount(query)
 		}
 	}
 }));
@@ -34,6 +37,10 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true }
 			});
+		});
+		it('calls count', async () => {
+			await getAllApplications();
+			expect(mockCount).toBeCalledWith({});
 		});
 		it('returns all applications', async () => {
 			mockFindMany.mockResolvedValueOnce([]);
