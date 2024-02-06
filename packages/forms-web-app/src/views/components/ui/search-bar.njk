@@ -1,6 +1,6 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% macro uiSearchBar(id, inputId, value, label) %}
+{% macro uiSearchBar(id, inputId, value, label, buttonText = 'Search') %}
   <div class="ui-search-bar" id="{{ id }}">
     <div class="ui-search-bar__section ui-search-bar__section--input">
       <label class="ui-search-bar__label" for="{{ inputId }}">
@@ -20,7 +20,7 @@
       {{ govukButton({
         attributes: { "data-cy": "search-button", "enterkeyhint": "search", "id": "search-button" },
         classes: "ui-search-bar__submit",
-        text: "Search",
+        text: buttonText,
         type: "submit"
       }) }}
     </div>

@@ -28,6 +28,8 @@
   ]
 %}
 
+{% set footnoteLink = '<a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">' + t("global.footer.footnoteLinkText") + '</a>' %}
+
 <footer class="govuk-footer govuk-!-padding-bottom-8" role="contentinfo">
   <div class="govuk-width-container">
     <div class="govuk-footer__meta">
@@ -64,13 +66,13 @@
         </svg>
 
         <span class="govuk-!-display-inline-block">
-          All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+          {{ t("global.footer.footnote", { link: footnoteLink }) | safe  }}
         </span>
       </div>
 
       <div class="govuk-footer__meta-item">
         <a class="govuk-link" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">
-          &copy; Crown copyright
+          &copy; {{ t("global.footer.crownCopyrightText") }}
         </a>
       </div>
     </div>
