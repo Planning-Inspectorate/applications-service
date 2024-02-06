@@ -4,15 +4,12 @@
 
 {% set pageTitle = "Relevant Representations | " + projectName +"" %}
 
-{% set showResults = representations.length > 0 and showReps %}
-{% set resultsNotFound = representations.length == 0 and querySearchOrTypePresent %}
-
 {% block content %}
 	<form>
 		<div class="govuk-grid-row">
 			<div class="govuk-grid-column-one-third">
 				{% set activeId = "representations" %}
-				{% set displayRepresentationsFilters = showResults %}
+				{% set displayRepresentationsFilters = showRepresentations %}
 
 				{% include "projects/_components/vertical-tabs-wrapper.njk" %}
 			</div>
@@ -26,25 +23,33 @@
 					Relevant representations (registration comments)
 				</h1>
 
-				{% include './_includes/search.njk' %}
+				{% if showRepresentations or resultsNotFound %}
 
-				{% include "./_includes/active-filters.njk" %}
+					{% include './_includes/search.njk' %}
 
-				{% if showResults %}
+					{% include "./_includes/active-filters.njk" %}
 
-					{% include './_includes/results-per-page.njk' %}
+					{% if showRepresentations %}
 
-					{% include './_includes/results.njk' %}
+						{% include './_includes/results-per-page.njk' %}
 
-					{% include './_includes/pagination.njk' %}
+						{% include './_includes/results.njk' %}
 
-				{% elseif resultsNotFound %}
+						{% include './_includes/pagination.njk' %}
 
-					{% include './_includes/results-not-found.njk' %}
+					{% else %}
+
+						{% include './_includes/results-not-found.njk' %}
+
+					{% endif %}
+
+				{% elseif hasNoResultsPreDecision %}
+
+					{% include './_includes/no-results-pre-decision.njk' %}
 
 				{% else %}
 
-					{% include './_includes/no-results.njk' %}
+					{% include './_includes/no-results-post-decision.njk' %}
 
 				{% endif %}
 

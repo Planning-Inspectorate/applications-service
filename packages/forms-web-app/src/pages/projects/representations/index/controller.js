@@ -5,7 +5,6 @@ const {
 	featureHideLink: { hideAllExaminationDocumentsLink },
 	featureFlag: { allowProjectInformation }
 } = require('../../../../config');
-const { isDateAfterTodaysDate } = require('./_utils/is-date-after-todays-date');
 const { getRelevantRepresentationsQuery } = require('./_utils/get-relevant-representations-query');
 const { documentsPerPage } = require('../../_utils/pagination/documentsPerPage');
 const { buildPaginationQueryString } = require('../../../_utils/build-pagination-query-string');
@@ -13,6 +12,7 @@ const { isQuerySearchOrTypePresent } = require('./_utils/is-query-search-or-type
 const { getRepresentationsViewModel } = require('./_utils/get-representations-view-model');
 const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getFilters } = require('./_utils/get-filters');
+const { hasRepresentationsAvailable } = require('./_utils/has-representations-available');
 
 const view = 'projects/representations/index/view.njk';
 
@@ -35,6 +35,13 @@ const getRepresentationsIndexController = async (req, res, next) => {
 		const paginationData = getPaginationData(respData);
 		const pageOptions = calculatePageOptions(paginationData);
 
+		const representationsAvailable = hasRepresentationsAvailable(
+			applicationData.DateRRepAppearOnWebsite
+		);
+		const showRepresentations = representations.length > 0 && representationsAvailable;
+		const resultsNotFound = representations.length === 0 && isQuerySearchOrTypePresent(query);
+		const hasNoResultsPreDecision = representations.length === 0 && representationsAvailable;
+
 		return res.render(view, {
 			...getFilters(query, typeFilters),
 			projectName: applicationData.projectName,
@@ -45,7 +52,9 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			paginationData,
 			pageOptions,
 			searchTerm,
-			showReps: isDateAfterTodaysDate(applicationData.DateRRepAppearOnWebsite),
+			showRepresentations,
+			resultsNotFound,
+			hasNoResultsPreDecision,
 			resultsPerPage: documentsPerPage(query),
 			paginationQueryString: buildPaginationQueryString(query),
 			querySearchOrTypePresent: isQuerySearchOrTypePresent(query),

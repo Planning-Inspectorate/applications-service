@@ -15,7 +15,8 @@ const { isRegistrationOpen } = require('../../register/index/_utils/is-registrat
 function getVerticalTabs(
 	caseRef,
 	{ DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose },
-	hasTimetables
+	showExaminationLink,
+	showRepresentationsLink
 ) {
 	return [
 		{
@@ -48,19 +49,19 @@ function getVerticalTabs(
 			url: getRegisterIndexURL(caseRef)
 		},
 		{
-			hidden: false,
+			hidden: !showRepresentationsLink,
 			id: 'representations',
 			name: 'Relevant representations (registration comments)',
 			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowExaminationTimetable != true || !hasTimetables,
+			hidden: featureFlag.allowExaminationTimetable != true || !showExaminationLink,
 			id: 'project-examination-timetable',
 			name: 'Examination timetable',
 			url: getProjectsExaminationTimetableURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowHaveYourSay != true || !hasTimetables,
+			hidden: featureFlag.allowHaveYourSay != true || !showExaminationLink,
 			id: 'project-have-your-say',
 			name: 'Have your say',
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'

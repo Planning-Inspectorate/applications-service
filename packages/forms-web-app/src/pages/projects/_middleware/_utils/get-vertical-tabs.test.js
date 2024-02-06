@@ -29,7 +29,7 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
 
-				result = getVerticalTabs('mock case ref', mockApplicationData, true);
+				result = getVerticalTabs('mock case ref', mockApplicationData, true, true);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -113,7 +113,7 @@ describe('#getVerticalTabs', () => {
 
 			describe('and case id is in the projectMigrationCaseReferences', () => {
 				it('should return the vertical tabs', () => {
-					const result = getVerticalTabs('mock case ref', mockApplicationData, false);
+					const result = getVerticalTabs('mock case ref', mockApplicationData, false, false);
 					expect(result).toEqual([
 						{
 							hidden: false,
@@ -140,7 +140,7 @@ describe('#getVerticalTabs', () => {
 							url: '/projects/mock case ref/register/register-have-your-say'
 						},
 						{
-							hidden: false,
+							hidden: true,
 							id: 'representations',
 							name: 'Relevant representations (registration comments)',
 							url: '/projects/mock case ref/representations'
@@ -208,7 +208,7 @@ describe('#getVerticalTabs', () => {
 							url: '/projects/migrated-case-ref/register/register-have-your-say'
 						},
 						{
-							hidden: false,
+							hidden: true,
 							id: 'representations',
 							name: 'Relevant representations (registration comments)',
 							url: '/projects/migrated-case-ref/representations'
