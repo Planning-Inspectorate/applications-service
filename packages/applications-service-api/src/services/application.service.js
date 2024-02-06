@@ -5,6 +5,7 @@ const {
 const { getAllNIApplications } = require('./application.ni.service');
 const { getNIApplication } = require('./application.ni.service');
 const config = require('../lib/config');
+const { isEmpty } = require('lodash');
 const {
 	mapNIApplicationToApi,
 	mapBackOfficeApplicationToApi,
@@ -49,25 +50,27 @@ const createQueryFilters = (query) => {
 		sortFieldName === 'PromoterName'
 			? { applicant: { organisationName: sortDirection } }
 			: { [niFieldsToBoFields[sortFieldName]]: sortDirection };
+	const filters = {
+		...(query?.region ? { region: query?.region } : {}),
+		...(query?.stage ? { stage: query?.stage } : {}),
+		...(query?.sector ? { sector: query?.sector } : {})
+	};
 
 	return {
 		pageNo,
 		size,
 		offset: size * (pageNo - 1),
 		orderBy,
-		searchTerm: query?.searchTerm,
-		filters: {
-			region: query?.region,
-			stage: query?.stage,
-			sector: query?.sector
-		}
+		...(query.searchTerm ? { searchTerm: query.searchTerm } : {}),
+		...(isEmpty(filters) ? {} : { filters })
 	};
 };
 const getAllApplications = async (query) => {
 	const isGetFromBackOfficeEnabled = config.backOfficeIntegration.applications.getAllApplications;
 	if (!isGetFromBackOfficeEnabled) return getAllNIApplications(query);
 
-	const queryOptions = createQueryFilters(query);
+	const { pageNo, ...queryOptions } = createQueryFilters(query);
+
 	const { applications, count } = await getAllBOApplicationsRepository(queryOptions);
 	const { applications: allApplications, count: totalItemsWithoutFilters } =
 		await getAllBOApplicationsRepository();
@@ -80,7 +83,7 @@ const getAllApplications = async (query) => {
 		totalItemsWithoutFilters,
 		itemsPerPage: queryOptions.size,
 		totalPages: Math.ceil(Math.max(1, count) / queryOptions.size),
-		currentPage: queryOptions.pageNo,
+		currentPage: pageNo,
 		filters
 	};
 };

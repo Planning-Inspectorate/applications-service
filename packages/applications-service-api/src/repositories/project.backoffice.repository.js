@@ -12,7 +12,7 @@ const getByCaseReference = async (caseReference) => {
 };
 
 const getAllApplications = async (options = {}) => {
-	const { filters, searchTerm, orderBy, offset, limit } = options;
+	const { filters, searchTerm, orderBy, offset, size } = options;
 	const where = {};
 
 	if (filters?.region || filters?.stage || filters?.sector || searchTerm) {
@@ -56,15 +56,17 @@ const getAllApplications = async (options = {}) => {
 		});
 	}
 
-	const applications = await prismaClient.project.findMany({
+	const findOptions = {
 		where,
-		orderBy,
-		skip: offset,
-		take: limit,
+		...(orderBy && { orderBy }),
+		...(offset !== undefined && { skip: offset }),
+		...(size !== undefined && { take: size }),
 		include: {
 			applicant: true
 		}
-	});
+	};
+
+	const applications = await prismaClient.project.findMany(findOptions);
 	const count = await prismaClient.project.count({ where });
 	return { applications, count };
 };
