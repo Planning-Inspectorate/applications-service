@@ -4,39 +4,52 @@
 {% set mainClasses = "pins-modded-no-padding" %}
 
 {% block content %}
-    <div class="masthead masthead--full-width masthead--bg-teal">
-        <div class="masthead__content">
-            <h1 class="govuk-heading-xl masthead__title">{{ pageHeading }}</h1>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                    <p class="masthead__text">
-                        Find further legislation and guidance resources. Information on this page may be useful for those applying to use the service and the general public. 
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="full-width-line full-width-line--bg-blue"></div>
+	<div class="masthead masthead--full-width masthead--bg-teal">
+		<div class="masthead__content">
+			<h1 class="govuk-heading-xl masthead__title">
+				{{ pageHeading }}
+			</h1>
 
-    <section class="page-section full-width-section full-width-section--bg-lightgrey">
-        <div class="page-section__content">
-            <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-third">
-                    {{ chevronCard(
-                            'See the process', 
-                            detailedInformationUrls.processGuide,
-                            'View the stages an application goes through, from start to finish.'
-                        ) }}
-                    </div>
-                <div class="govuk-grid-column-one-third">
-                    {{ chevronCard(
-                        'How to have your say on a project',
-                        detailedInformationUrls.haveYourSayGuide,
-                        'Find out everything you need to know about sharing your views on a project.'
-                    ) }}
-                </div>
-            </div>
-        </div>
-    </section>
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-two-thirds">
+					<p class="masthead__text">
+						Find further legislation and guidance resources.
+						Information on this page may be useful for those applying to use the service and the general public.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="full-width-line full-width-line--bg-blue"></div>
+
+	<section class="page-section full-width-section full-width-section--bg-lightgrey">
+		<div class="page-section__content">
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-one-third">
+					{{ chevronCard(
+						'See the process',
+						detailedInformationUrls.processGuide,
+						'View the stages an application goes through, from start to finish.'
+					) }}
+				</div>
+
+				<div class="govuk-grid-column-one-third">
+					{{ chevronCard(
+						'How to have your say on a project',
+						detailedInformationUrls.haveYourSayGuide,
+						'Find out everything you need to know about sharing your views on a project.'
+					) }}
+				</div>
+
+				<div class="govuk-grid-column-one-third">
+					{{ chevronCard(
+						'See advice notes',
+						govUK.adviceNotes,
+						'The Planning Inspectorate has a series of advice notes covering a range of process details.'
+					) }}
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}
