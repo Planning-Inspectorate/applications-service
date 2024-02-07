@@ -82,7 +82,10 @@ const getFiltersViewModel = (filters) => {
 	});
 
 	const locationIndex = filterGroups.findIndex((filterGroup) => filterGroup.name === 'region');
-	filterGroups[locationIndex].items = orderLocationItems(filterGroups[locationIndex].items);
+
+	if (locationIndex >= 0) {
+		filterGroups[locationIndex].items = orderLocationItems(filterGroups[locationIndex]?.items);
+	}
 
 	return orderFilterGroups(filterGroups);
 };
