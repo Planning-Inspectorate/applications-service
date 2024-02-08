@@ -14,9 +14,15 @@ jest.mock('../../../src/services/application.ni.service');
 const {
 	mapBackOfficeApplicationToApi,
 	mapBackOfficeApplicationsToApi,
-	mapNIApplicationToApi
+	mapNIApplicationToApi,
+	buildApplicationsFiltersFromBOApplications
 } = require('../../../src/utils/application.mapper');
-const { APPLICATION_DB, APPLICATION_FO } = require('../../__data__/application');
+const {
+	APPLICATION_DB,
+	APPLICATION_FO,
+	APPLICATION_API,
+	APPLICATIONS_FO_FILTERS
+} = require('../../__data__/application');
 
 jest.mock('../../../src/lib/config', () => ({
 	backOfficeIntegration: {
@@ -52,21 +58,244 @@ describe('application.service', () => {
 		});
 	});
 	describe('getAllApplications', () => {
-		it('invokes getAllBOApplicationsRepository if BO caseReference', async () => {
-			config.backOfficeIntegration.applications.getAllApplications = true;
-			getAllApplicationsRepository.mockResolvedValueOnce([APPLICATION_DB]);
-
-			await getAllApplications();
-
-			expect(getAllApplicationsRepository).toHaveBeenCalled();
-			expect(mapBackOfficeApplicationsToApi).toHaveBeenCalledWith([APPLICATION_DB]);
-		});
 		it('invokes getAllNIApplications if NI caseReference', async () => {
 			config.backOfficeIntegration.applications.getAllApplications = false;
-
 			await getAllApplications();
-
 			expect(getAllNIApplications).toHaveBeenCalled();
+		});
+		describe('if BO caseReference', () => {
+			beforeEach(() => {
+				config.backOfficeIntegration.applications.getAllApplications = true;
+				getAllApplicationsRepository
+					// getting applications
+					.mockResolvedValueOnce({
+						applications: [APPLICATION_DB],
+						count: 1
+					})
+					// getting all applications to create filters
+					.mockResolvedValueOnce({
+						applications: [APPLICATION_DB],
+						count: 1
+					});
+				buildApplicationsFiltersFromBOApplications.mockReturnValue(APPLICATIONS_FO_FILTERS);
+				mapBackOfficeApplicationsToApi.mockReturnValue([APPLICATION_API]);
+			});
+			describe('pagination', () => {
+				describe('when page num', () => {
+					describe('is provided', () => {
+						it('calls findAll with offset', async () => {
+							const mockPageNum = 2;
+							const mockPageSize = 25;
+
+							await getAllApplications({ page: mockPageNum, size: mockPageSize });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								size: mockPageSize,
+								offset: mockPageSize * (mockPageNum - 1),
+								orderBy: {
+									projectName: 'asc'
+								}
+							});
+						});
+					});
+
+					describe('is not provided', () => {
+						it('calls findAll with offset 0', async () => {
+							const mockPageSize = 25;
+
+							await getAllApplications({ size: mockPageSize });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: mockPageSize,
+								orderBy: {
+									projectName: 'asc'
+								}
+							});
+						});
+					});
+				});
+
+				describe('when page size', () => {
+					describe('is provided under 100', () => {
+						it('calls findAll with limit', async () => {
+							const mockPageSize = 25;
+
+							await getAllApplications({ size: mockPageSize });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: mockPageSize,
+								orderBy: {
+									projectName: 'asc'
+								}
+							});
+						});
+					});
+
+					describe('is provided over 100', () => {
+						it('calls findAll with limit 100', async () => {
+							await getAllApplications({ size: 101 });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: 100,
+								orderBy: {
+									projectName: 'asc'
+								}
+							});
+						});
+					});
+
+					describe('is not provided', () => {
+						it('calls findAll with default limit 25', async () => {
+							await getAllApplications({});
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: 25,
+								orderBy: {
+									projectName: 'asc'
+								}
+							});
+						});
+					});
+				});
+			});
+
+			describe('sorting', () => {
+				describe('when sort is provided', () => {
+					describe('when sort has key but no direction', () => {
+						it.each([
+							['ProjectName', { projectName: 'asc' }],
+							['PromoterName', { applicant: { organisationName: 'asc' } }],
+							['DateOfDCOSubmission', { dateOfDCOSubmission: 'asc' }],
+							['ConfirmedDateOfDecision', { confirmedDateOfDecision: 'asc' }]
+						])('calls findAll with orderBy: [[key, asc]]', async (sort, orderBy) => {
+							await getAllApplications({ sort });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: 25,
+								orderBy
+							});
+						});
+					});
+
+					describe('when sort has key and direction', () => {
+						it.each([
+							['+ProjectName', { projectName: 'asc' }],
+							['-ProjectName', { projectName: 'desc' }],
+							['+PromoterName', { applicant: { organisationName: 'asc' } }],
+							['-PromoterName', { applicant: { organisationName: 'desc' } }],
+							['+DateOfDCOSubmission', { dateOfDCOSubmission: 'asc' }],
+							['-DateOfDCOSubmission', { dateOfDCOSubmission: 'desc' }],
+							['+ConfirmedDateOfDecision', { confirmedDateOfDecision: 'asc' }],
+							['-ConfirmedDateOfDecision', { confirmedDateOfDecision: 'desc' }],
+							['+Stage', { stage: 'asc' }],
+							['-Stage', { stage: 'desc' }]
+						])('calls findAll with orderBy', async (sort, orderBy) => {
+							await getAllApplications({ sort });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: 25,
+								orderBy
+							});
+						});
+					});
+
+					describe('when sort key is invalid', () => {
+						it('calls findAll with default orderBy', async () => {
+							await getAllApplications({ sort: 'foo' });
+
+							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+								offset: 0,
+								size: 25,
+								orderBy: {
+									projectName: 'asc'
+								}
+							});
+						});
+					});
+				});
+
+				describe('when sort is not provided', () => {
+					it('calls findAll with default orderBy', async () => {
+						await getAllApplications({});
+
+						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+							offset: 0,
+							size: 25,
+							orderBy: {
+								projectName: 'asc'
+							}
+						});
+					});
+				});
+			});
+
+			describe('filtering', () => {
+				it('passes applied filters to repository in format for NI database', async () => {
+					await getAllApplications({
+						stage: ['pre_application', 'acceptance'],
+						region: ['eastern'],
+						sector: ['transport', 'energy']
+					});
+
+					expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+						offset: 0,
+						size: 25,
+						orderBy: {
+							projectName: 'asc'
+						},
+						filters: {
+							stage: ['pre_application', 'acceptance'],
+							region: ['eastern'],
+							sector: ['transport', 'energy']
+						}
+					});
+				});
+			});
+
+			describe('searching', () => {
+				it('passes search term to repository', async () => {
+					await getAllApplications({ searchTerm: 'foo bar' });
+
+					expect(getAllApplicationsRepository).toHaveBeenCalledWith({
+						offset: 0,
+						size: 25,
+						orderBy: {
+							projectName: 'asc'
+						},
+						searchTerm: 'foo bar'
+					});
+				});
+			});
+			it('maps result to API format', async () => {
+				await getAllApplications({});
+				expect(mapBackOfficeApplicationsToApi).toHaveBeenCalledWith([APPLICATION_DB]);
+			});
+
+			it('calls buildApplicationsFiltersFromBOApplications', async () => {
+				await getAllApplications({});
+				expect(buildApplicationsFiltersFromBOApplications).toHaveBeenCalledWith([APPLICATION_DB]);
+			});
+
+			it('maps and returns result', async () => {
+				const result = await getAllApplications({});
+
+				expect(mapBackOfficeApplicationsToApi).toHaveBeenCalledWith([APPLICATION_DB]);
+				expect(result).toEqual({
+					applications: [APPLICATION_API],
+					totalItems: 1,
+					itemsPerPage: 25,
+					totalPages: 1,
+					currentPage: 1,
+					totalItemsWithoutFilters: 1,
+					filters: APPLICATIONS_FO_FILTERS
+				});
+			});
 		});
 	});
 });
