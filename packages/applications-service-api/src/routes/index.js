@@ -15,6 +15,8 @@ const submissionRouter = require('./submissions');
 const subscriptionRoute = require('./subscriptions');
 const adviceRoute = require('./advice');
 
+router.get('/', (req, res) => res.sendStatus(204));
+
 router.use('/api/v1/applications', applicationsRouter);
 router.use('/api/v1/interested-party', interestedPartyRouter);
 router.use('/api-docs', apiDocsRouter);
