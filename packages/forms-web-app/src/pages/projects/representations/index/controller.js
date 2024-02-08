@@ -39,9 +39,10 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			applicationData.DateRRepAppearOnWebsite
 		);
 		const showRepresentations = representations.length > 0 && representationsAvailable;
-		const resultsNotFound = representations.length === 0 && isQuerySearchOrTypePresent(query);
-		const hasNoResultsPreDecision =
-			representations.length === 0 && applicationData.status.number < 7;
+		const resultsNotFound =
+			representations.length === 0 && representationsAvailable && isQuerySearchOrTypePresent(query);
+		const hasNoResultsPostDecision =
+			representations.length === 0 && applicationData.status.number >= 7;
 
 		return res.render(view, {
 			...getFilters(query, typeFilters),
@@ -55,7 +56,7 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			searchTerm,
 			showRepresentations,
 			resultsNotFound,
-			hasNoResultsPreDecision,
+			hasNoResultsPostDecision,
 			resultsPerPage: documentsPerPage(query),
 			paginationQueryString: buildPaginationQueryString(query),
 			querySearchOrTypePresent: isQuerySearchOrTypePresent(query),

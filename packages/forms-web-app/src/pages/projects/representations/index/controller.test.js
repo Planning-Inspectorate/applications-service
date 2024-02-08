@@ -129,7 +129,7 @@ describe('pages/projects/representations/index/controller', () => {
 			searchTerm: undefined,
 			showRepresentations: false,
 			resultsNotFound: false,
-			hasNoResultsPreDecision: false
+			hasNoResultsPostDecision: false
 		});
 	});
 });
