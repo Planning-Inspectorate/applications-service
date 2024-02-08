@@ -2,7 +2,7 @@ const {
 	getPastTimetables,
 	getUpcomingTimetables,
 	getOpenEventDeadlineTimetables,
-	getHasTimetables
+	getHasProjectTimetables
 } = require('./get-timetables-state');
 
 const { getTimetables } = require('../../lib/application-api-wrapper');
@@ -21,25 +21,30 @@ describe('utils/timetables/get-timetables-state', () => {
 		jest.useFakeTimers().setSystemTime(new Date(datePresent));
 	});
 
-	describe('#getHasTimetables', () => {
+	describe('#getHasProjectTimetables', () => {
 		describe('and there are no project timetables set in the session', () => {
 			describe('and there is NO data returned from the api', () => {
 				let hasTimetables;
 
 				const mockSession = {};
 				const mockCaseRef = 'mockCaseRef';
+				const mockForceTimetableLookup = false;
 
 				beforeEach(async () => {
 					getTimetables.mockResolvedValue({ data: null });
-					hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+					hasTimetables = await getHasProjectTimetables(
+						mockSession,
+						mockCaseRef,
+						mockForceTimetableLookup
+					);
 				});
 
 				it('should return false', () => {
 					expect(hasTimetables).toEqual(false);
 				});
 
-				it('should set the projects timetables value to the session', () => {
-					expect(mockSession).toEqual({ timetables: { mockCaseRef: false } });
+				it('should set the has project timetables value to the session', () => {
+					expect(mockSession).toEqual({ hasTimetables: { mockCaseRef: false } });
 				});
 			});
 
@@ -47,21 +52,26 @@ describe('utils/timetables/get-timetables-state', () => {
 				describe('and the project has timetables', () => {
 					let hasTimetables;
 
-					const mockSession = { timetables: { anotherCaseRef: false } };
+					const mockSession = { hasTimetables: { anotherCaseRef: false } };
 					const mockCaseRef = 'mockCaseRef';
+					const mockForceTimetableLookup = false;
 
 					beforeEach(async () => {
 						getTimetables.mockResolvedValue(fixturesTimetableResponse);
-						hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+						hasTimetables = await getHasProjectTimetables(
+							mockSession,
+							mockCaseRef,
+							mockForceTimetableLookup
+						);
 					});
 
 					it('should return true', () => {
 						expect(hasTimetables).toEqual(true);
 					});
 
-					it('should set the projects timetables value to the session', () => {
+					it('should set the has project timetables value to the session', () => {
 						expect(mockSession).toEqual({
-							timetables: { mockCaseRef: true, anotherCaseRef: false }
+							hasTimetables: { mockCaseRef: true, anotherCaseRef: false }
 						});
 					});
 				});
@@ -71,35 +81,68 @@ describe('utils/timetables/get-timetables-state', () => {
 
 					const mockSession = {};
 					const mockCaseRef = 'mockCaseRef';
+					const mockForceTimetableLookup = false;
 
 					beforeEach(async () => {
 						getTimetables.mockResolvedValue({ data: { timetables: [] } });
-						hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+						hasTimetables = await getHasProjectTimetables(
+							mockSession,
+							mockCaseRef,
+							mockForceTimetableLookup
+						);
 					});
 
 					it('should return false', () => {
 						expect(hasTimetables).toEqual(false);
 					});
 
-					it('should set the projects timetables value to the session', () => {
-						expect(mockSession).toEqual({ timetables: { mockCaseRef: false } });
+					it('should set the has project timetables value to the session', () => {
+						expect(mockSession).toEqual({ hasTimetables: { mockCaseRef: false } });
 					});
 				});
 			});
 		});
 
 		describe('and there are timetables set in the session', () => {
-			let hasTimetables;
+			describe('and a timetable lookup is not forced', () => {
+				let hasTimetables;
 
-			const mockCaseRef = 'mockCaseRef';
-			const mockSession = { timetables: { mockCaseRef: true } };
+				const mockCaseRef = 'mockCaseRef';
+				const mockSession = { hasTimetables: { mockCaseRef: true } };
+				const mockForceTimetableLookup = false;
 
-			beforeEach(async () => {
-				hasTimetables = await getHasTimetables(mockSession, mockCaseRef);
+				beforeEach(async () => {
+					hasTimetables = await getHasProjectTimetables(
+						mockSession,
+						mockCaseRef,
+						mockForceTimetableLookup
+					);
+				});
+
+				it('should return true', () => {
+					expect(hasTimetables).toEqual(true);
+				});
 			});
 
-			it('should return true', () => {
-				expect(hasTimetables).toEqual(true);
+			describe('and a timetable lookup is forced', () => {
+				let hasTimetables;
+
+				const mockCaseRef = 'mockCaseRef';
+				const mockSession = { hasTimetables: { mockCaseRef: false } };
+				const mockForceTimetableLookup = true;
+
+				beforeEach(async () => {
+					getTimetables.mockResolvedValue(fixturesTimetableResponse);
+					hasTimetables = await getHasProjectTimetables(
+						mockSession,
+						mockCaseRef,
+						mockForceTimetableLookup
+					);
+				});
+
+				it('should return true', () => {
+					expect(hasTimetables).toEqual(true);
+				});
 			});
 		});
 	});

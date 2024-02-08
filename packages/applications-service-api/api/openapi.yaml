@@ -11,6 +11,13 @@ servers:
   - url: '/'
 
 paths:
+  '/':
+    get:
+      summary: Returns a 204 status code
+      description: The front-end load balancer sends a GET request to the application root every five minutes. The continuous ping prevents the app from being unloaded. Returning 204 status code stops App Insights from logging the ping as 404 error.
+      responses:
+        '204':
+          description: No content status code
   '/api/v1/applications/{caseReference}':
     get:
       summary: Returns an existing application
