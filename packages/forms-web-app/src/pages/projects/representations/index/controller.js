@@ -40,7 +40,8 @@ const getRepresentationsIndexController = async (req, res, next) => {
 		);
 		const showRepresentations = representations.length > 0 && representationsAvailable;
 		const resultsNotFound = representations.length === 0 && isQuerySearchOrTypePresent(query);
-		const hasNoResultsPreDecision = representations.length === 0 && representationsAvailable;
+		const hasNoResultsPreDecision =
+			representations.length === 0 && applicationData.status.number < 7;
 
 		return res.render(view, {
 			...getFilters(query, typeFilters),
