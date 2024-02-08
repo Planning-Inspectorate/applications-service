@@ -6,8 +6,7 @@ module.exports = async (context, message) => {
 	const adviceId = message.adviceId;
 
 	if (!adviceId) {
-		context.log(`skipping update as adviceId is missing`);
-		return;
+		throw new Error('adviceId is required');
 	}
 
 	return await prismaClient.$transaction(async (tx) => {

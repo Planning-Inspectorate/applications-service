@@ -68,8 +68,9 @@ const assertUpsert = () => {
 
 describe('nsip-advice', () => {
 	beforeEach(() => {
-		mockFindUnique.mockReset();
-		mockUpsert.mockReset();
+		mockFindUnique.mockClear();
+		mockUpsert.mockClear();
+		prismaClient.$transaction.mockClear();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
@@ -83,10 +84,12 @@ describe('nsip-advice', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-advice function');
 	});
-	it('skips update if adviceId is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping update as adviceId is missing');
+	it('throws error if adviceId is missing', async () => {
+		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
+			'adviceId is required'
+		);
 		expect(mockFindUnique).not.toHaveBeenCalled();
+		expect(prismaClient.$transaction).not.toHaveBeenCalled();
 	});
 	it('start transaction', async () => {
 		await sendMessage(mockContext, mockMessage);
