@@ -1,4 +1,5 @@
 const { projectsMiddleware, projectMigrationMiddleware } = require('../_middleware/middleware');
+const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const { getGetUpdatesIndexController } = require('./index/controller');
 const {
 	getGetUpdatesEmailController,
@@ -58,6 +59,7 @@ describe('pages/projects/get-updates/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/email',
+				getUpdatesMiddleware,
 				getGetUpdatesEmailController
 			);
 
@@ -70,6 +72,7 @@ describe('pages/projects/get-updates/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/how-often',
+				getUpdatesMiddleware,
 				getGetUpdatesHowOftenController
 			);
 
@@ -83,6 +86,7 @@ describe('pages/projects/get-updates/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/confirm-your-email',
 				projectsMiddleware,
+				getUpdatesMiddleware,
 				getUpdatesConfirmYourEmailController
 			);
 
