@@ -7,9 +7,9 @@ const duringExaminationURL = getHaveYourSayGuidePageURL(duringExaminationRoute);
 const duringExaminationTitle = 'Have your say during the examination of the application';
 
 const duringExaminationContent =
-	'The examination stage is where the examining authority asks questions, and the applicant and anyone who has registered to have their say may get involved and comment on the proposed development at the deadlines in the examination timetable. You can also attend any hearings that may take place during this stage. The examination takes up to six months.';
+	'At this stage the Examining Authority asks questions about the proposed development. The applicant and anyone who has registered to have their say can make comments by the deadlines in the examination timetable. Anyone can attend hearings that may take place during this stage. The examination can take up to 6 months.';
 
-const duringExaminationLinkText = 'Submitting comments during the examination stage';
+const duringExaminationLinkText = 'Submitting comments during the examination stage.';
 
 module.exports = {
 	duringExaminationURL,
