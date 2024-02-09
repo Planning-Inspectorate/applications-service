@@ -3,6 +3,7 @@ const express = require('express');
 const getUpdatesRouter = express.Router();
 
 const { projectsMiddleware, projectMigrationMiddleware } = require('../_middleware/middleware');
+const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const { getGetUpdatesIndexController } = require('./index/controller');
 const {
 	getGetUpdatesEmailController,
@@ -47,7 +48,7 @@ getUpdatesRouter.get(
 	getGetUpdatesIndexController
 );
 
-getUpdatesRouter.get(updatesEmailURL, getGetUpdatesEmailController);
+getUpdatesRouter.get(updatesEmailURL, getUpdatesMiddleware, getGetUpdatesEmailController);
 getUpdatesRouter.post(
 	updatesEmailURL,
 	emailValidationRules(),
@@ -55,7 +56,7 @@ getUpdatesRouter.post(
 	postGetUpdatesEmailController
 );
 
-getUpdatesRouter.get(updatesHowOftenURL, getGetUpdatesHowOftenController);
+getUpdatesRouter.get(updatesHowOftenURL, getUpdatesMiddleware, getGetUpdatesHowOftenController);
 getUpdatesRouter.post(
 	updatesHowOftenURL,
 	howOftenValidationRules(),
@@ -66,6 +67,7 @@ getUpdatesRouter.post(
 getUpdatesRouter.get(
 	updatesConfirmYourEmailURL,
 	projectsMiddleware,
+	getUpdatesMiddleware,
 	getUpdatesConfirmYourEmailController
 );
 
