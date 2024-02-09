@@ -5,6 +5,6 @@ const haveYourSayGuideURL = getHaveYourSayGuidePageURL();
 /* /index being used for e2e tests */
 const haveYourSayGuideIndexURL = getHaveYourSayGuidePageURL('index');
 
-const haveYourSayGuideTitle = 'Having your say about a national infrastructure project';
+const haveYourSayGuideTitle = 'Have your say about a national infrastructure project';
 
 module.exports = { haveYourSayGuideURL, haveYourSayGuideIndexURL, haveYourSayGuideTitle };
