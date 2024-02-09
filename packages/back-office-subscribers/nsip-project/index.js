@@ -22,7 +22,7 @@ module.exports = async (context, message) => {
 
 	const project = {
 		...pick(message, projectPropertiesFromMessage),
-		regions: Array.isArray(message.regions) ? JSON.stringify(message.regions) : null,
+		regions: Array.isArray(message.regions) ? message.regions.join(',') : null,
 		applicantId: message.applicantId,
 		modifiedAt: new Date()
 	};

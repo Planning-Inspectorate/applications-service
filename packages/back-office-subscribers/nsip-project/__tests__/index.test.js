@@ -29,7 +29,7 @@ const mockMessage = {
 	nsipAdministrationOfficerIds: [],
 	inspectorIds: [],
 	interestedPartyIds: [],
-	regions: ['a', 'b']
+	regions: ['a', 'b', 'c']
 };
 
 const mockProject = {
@@ -39,7 +39,7 @@ const mockProject = {
 	projectDescription: mockMessage.projectDescription,
 	publishStatus: mockMessage.publishStatus,
 	sourceSystem: mockMessage.sourceSystem,
-	regions: JSON.stringify(mockMessage.regions),
+	regions: 'a,b,c',
 	applicantId: mockMessage.applicantId,
 	modifiedAt: new Date()
 };

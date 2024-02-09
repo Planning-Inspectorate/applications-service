@@ -562,6 +562,34 @@ const APPLICATIONS_NI_FILTER_COLUMNS = [
 	{ Stage: 5, Region: 'South East', Proposal: 'EN01 - Generating Stations' }
 ];
 
+const APPLICATIONS_BO_FILTER_COLUMNS = [
+	{
+		stage: 'pre_application',
+		regions: 'south_east',
+		sector: 'BC - Business and Commercial'
+	},
+	{
+		stage: 'recommendation',
+		regions: 'north_west',
+		sector: 'EN - Energy'
+	},
+	{
+		stage: 'post_decision',
+		regions: 'south_west',
+		sector: 'EN - Energy'
+	},
+	{
+		stage: 'pre_application',
+		regions: 'eastern',
+		sector: 'EN - Energy'
+	},
+	{
+		stage: 'post_decision',
+		regions: 'south_east',
+		sector: 'EN - Energy'
+	}
+];
+
 const APPLICATIONS_FO_FILTERS = [
 	{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
 	{ name: 'stage', label: 'Recommendation', value: 'recommendation', count: 1 },
@@ -579,6 +607,7 @@ module.exports = {
 	APPLICATION_FO,
 	APPLICATIONS_NI_DB,
 	APPLICATIONS_NI_FILTER_COLUMNS,
+	APPLICATIONS_BO_FILTER_COLUMNS,
 	APPLICATIONS_FO,
 	APPLICATIONS_FO_FILTERS,
 	APPLICATION_API_V1,

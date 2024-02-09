@@ -2,7 +2,7 @@
 
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
-{% set pageTitle = "Relevant Representations | " + projectName +"" %}
+{% set pageTitle = "Relevant Representations | " + projectName + "" %}
 
 {% block content %}
 	<form>
@@ -16,8 +16,8 @@
 
 			<div class="govuk-grid-column-two-thirds">
 				<span class="govuk-caption-l">
-          {{ projectName }}
-        </span>
+					{{ projectName }}
+				</span>
 
 				<h1 class="govuk-heading-xl">
 					Relevant representations (registration comments)
@@ -43,13 +43,13 @@
 
 					{% endif %}
 
-				{% elseif hasNoResultsPreDecision %}
+				{% elseif hasNoResultsPostDecision %}
 
-					{% include './_includes/no-results-pre-decision.njk' %}
+					{% include './_includes/no-results-post-decision.njk' %}
 
 				{% else %}
 
-					{% include './_includes/no-results-post-decision.njk' %}
+					{% include './_includes/no-results-pre-decision.njk' %}
 
 				{% endif %}
 
