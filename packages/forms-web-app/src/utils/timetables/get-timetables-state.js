@@ -1,8 +1,8 @@
 const { getTimetables } = require('../../lib/application-api-wrapper');
 const {
-	getTimetablesSession,
-	setTimetablesSession
-} = require('../../pages/projects/examination-timetable/_session/timetables');
+	getHasProjectTimetablesSession,
+	setHasProjectTimetablesSession
+} = require('../../pages/projects/examination-timetable/_session/has-project-timetables-session');
 const { isTimetableDateOfEventPast } = require('./check-timetable-state');
 const { isTimetableTypeOfEventDeadlineOpen } = require('./check-timetable-state');
 
@@ -17,23 +17,23 @@ const getOpenEventDeadlineTimetables = (timetables) =>
 		isTimetableTypeOfEventDeadlineOpen(typeOfEvent, dateOfEvent, dateTimeDeadlineStart)
 	);
 
-const getHasTimetables = async (session, case_ref) => {
-	let hasTimetables = getTimetablesSession(session, case_ref);
+const getHasProjectTimetables = async (session, case_ref, forceTimetableLookup) => {
+	let hasProjectTimetables = getHasProjectTimetablesSession(session, case_ref);
 
-	if (hasTimetables === undefined) {
+	if (forceTimetableLookup || hasProjectTimetables === undefined) {
 		const { data } = await getTimetables(case_ref);
 
-		hasTimetables = Array.isArray(data?.timetables) && data?.timetables.length > 0;
+		hasProjectTimetables = Array.isArray(data?.timetables) && data?.timetables.length > 0;
 
-		setTimetablesSession(session, case_ref, hasTimetables);
+		setHasProjectTimetablesSession(session, case_ref, hasProjectTimetables);
 	}
 
-	return hasTimetables;
+	return hasProjectTimetables;
 };
 
 module.exports = {
 	getPastTimetables,
 	getUpcomingTimetables,
 	getOpenEventDeadlineTimetables,
-	getHasTimetables
+	getHasProjectTimetables
 };

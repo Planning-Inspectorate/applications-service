@@ -1,12 +1,12 @@
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
-const { getHasTimetables } = require('../../../utils/timetables/get-timetables-state');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const config = require('../../../config');
 const {
 	hasRepresentationsAvailable
 } = require('../representations/index/_utils/has-representations-available');
+const { getShowExaminationLink } = require('./_utils/get-show-examination-link');
 
 async function projectsMiddleware(req, res, next) {
 	try {
@@ -14,7 +14,8 @@ async function projectsMiddleware(req, res, next) {
 		const { case_ref } = params;
 
 		const applicationData = await getApplicationData(case_ref);
-		const showExaminationLink = await getHasTimetables(session, case_ref);
+
+		const showExaminationLink = await getShowExaminationLink(path, session, case_ref);
 		const showRepresentationsLink = hasRepresentationsAvailable(
 			applicationData.DateRRepAppearOnWebsite
 		);

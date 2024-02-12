@@ -9,50 +9,46 @@
 const path = require('path');
 const { parseCSV } = require('../utils/parse');
 
+const backOfficeIntegrationCaseReferences = parseCSV(
+	process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES
+);
+
 module.exports = {
 	backOfficeIntegration: {
 		applications: {
 			getApplication: {
-				caseReferences: parseCSV(
-					process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES
-				)
+				caseReferences: backOfficeIntegrationCaseReferences
 			},
 			getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS === 'true'
 		},
 		documents: {
 			getDocuments: {
-				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES)
+				caseReferences: backOfficeIntegrationCaseReferences
 			}
 		},
 		examinationTimetable: {
 			getExaminationTimetable: {
-				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES)
+				caseReferences: backOfficeIntegrationCaseReferences
 			}
 		},
 		advice: {
 			getAdvice: {
-				caseReferences: parseCSV(process.env.BACK_OFFICE_INTEGRATION_GET_ADVICE_CASE_REFERENCES)
+				caseReferences: backOfficeIntegrationCaseReferences
 			}
 		},
 		representations: {
 			getRepresentations: {
-				caseReferences: parseCSV(
-					process.env.BACK_OFFICE_INTEGRATION_GET_REPRESENTATION_CASE_REFERENCES
-				)
+				caseReferences: backOfficeIntegrationCaseReferences
 			}
 		},
 		submissions: {
 			postSubmission: {
-				caseReferences: parseCSV(
-					process.env.BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES
-				)
+				caseReferences: backOfficeIntegrationCaseReferences
 			}
 		},
 		interestedParty: {
 			postInterestedParty: {
-				caseReferences: parseCSV(
-					process.env.BACK_OFFICE_INTEGRATION_POST_INTERESTED_PARTY_CASE_REFERENCES
-				)
+				caseReferences: backOfficeIntegrationCaseReferences
 			}
 		},
 		serviceBus: {
