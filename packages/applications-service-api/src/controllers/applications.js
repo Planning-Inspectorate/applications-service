@@ -53,7 +53,7 @@ const getAllApplicationsDownload = async (req, res) => {
 	res.setHeader('Content-Type', 'text/csv');
 	res.setHeader('Content-Disposition', 'attachment; filename=applications.csv');
 
-	const response = await getAllNIApplicationsDownload();
+	const response = await getAllNIApplicationsDownload(req.query);
 
 	res.status(StatusCodes.OK).send(response);
 };

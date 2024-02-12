@@ -66,9 +66,19 @@ const createQueryFilters = (query) => {
 	};
 };
 const getAllApplications = async (query) => {
-	const isGetFromBackOfficeEnabled = config.backOfficeIntegration.applications.getAllApplications;
-	if (!isGetFromBackOfficeEnabled) return getAllNIApplications(query);
+	const getFromBackOffice = config.backOfficeIntegration.applications.getAllApplications;
 
+	switch (getFromBackOffice) {
+		case 'BO':
+			return await getAllBOApplications(query);
+		case 'BOTH':
+			return await getAllMergedApplications(query);
+		default:
+			// default is NI so no breaking change
+			return await getAllNIApplications(query);
+	}
+};
+const getAllBOApplications = async (query) => {
 	const { pageNo, ...queryOptions } = createQueryFilters(query);
 
 	const { applications, count } = await getAllBOApplicationsRepository(queryOptions);
@@ -88,6 +98,26 @@ const getAllApplications = async (query) => {
 	};
 };
 
+const getAllMergedApplications = async (query) => {
+	const niApplications = await getAllNIApplications(query);
+	const boApplications = await getAllBOApplications(query);
+
+	const totalItems = niApplications.totalItems + boApplications.totalItems;
+	const totalItemsWithoutFilters =
+		niApplications.totalItemsWithoutFilters + boApplications.totalItemsWithoutFilters;
+	const itemsPerPage = niApplications.itemsPerPage + boApplications.itemsPerPage;
+	const mergedApplications = [];
+	const mergedFilters = {};
+	return {
+		applications: mergedApplications,
+		totalItems,
+		totalItemsWithoutFilters,
+		itemsPerPage,
+		totalPages: 1,
+		currentPage: 1,
+		filters: mergedFilters
+	};
+};
 const isBackOfficeApplication = (caseReference) =>
 	config.backOfficeIntegration.applications.getApplication.caseReferences.includes(caseReference);
 
