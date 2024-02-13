@@ -20,11 +20,14 @@
 
 				<div class="ui-results__result-meta-data">
 					<div class="ui-results__result-meta-data-item ui-results__result-meta-data-item--fill-width" data-cy="published-stage">
-						<span class="govuk-body-s"><strong>{{ result.adviceTypeLabel }}: </strong>{{ result.adviceGivenBy}}</span>	
+						<span class="govuk-body-s">
+							<strong>{{ result.adviceTypeLabel }}: </strong>{{ result.adviceGivenBy}}</span>
 					</div>
 
 					<div class="ui-results__result-meta-data-item" data-cy="published-date">
-						<span class="-white-space--nowrap govuk-body-s"><strong>{{ result.date.text }}</strong> {{ result.date.date | date('D MMMM YYYY') }}</span>
+						<span class="-white-space--nowrap govuk-body-s">
+							<strong>{{ result.date.text }}</strong>
+							{{ result.date.date | date }}</span>
 					</div>
 				</div>
 			</li>
