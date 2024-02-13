@@ -7,7 +7,7 @@ const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
 	application: {
-		defaultDisplayDateFormat: 'DD MMMM YYYY'
+		defaultDisplayDateFormat: 'D MMMM YYYY'
 	},
 	applications: {
 		timeout: Number(process.env.APPLICATIONS_SERVICE_API_TIMEOUT || 10000),
