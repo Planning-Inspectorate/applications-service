@@ -1,5 +1,22 @@
 .pins-rte {
+	p {
+		@extend .govuk-body;
+	}
+
 	a {
 		@extend .govuk-link;
+	}
+
+	ul,
+	ol {
+		@extend .govuk-list;
+	}
+
+	ul {
+		@extend .govuk-list--bullet;
+	}
+
+	ol {
+		@extend .govuk-list--number;
 	}
 }
