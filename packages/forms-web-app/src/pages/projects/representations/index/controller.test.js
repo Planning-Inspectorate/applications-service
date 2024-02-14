@@ -114,6 +114,7 @@ describe('pages/projects/representations/index/controller', () => {
 					URL: '/projects/EN010009/representations/2',
 					attachments: [],
 					comment: 'Some comments',
+					formattedComment: '<p>Some comments</p>',
 					dateSubmitted: '19 February 2020',
 					hasAttachments: true,
 					name: 'Test (Test)',
