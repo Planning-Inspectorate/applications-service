@@ -95,6 +95,7 @@ describe('pages/projects/representations/representation/controller', () => {
 								URL: '/projects/:case_ref/representations/2',
 								attachments: [],
 								comment: 'Some comments',
+								formattedComment: '<p>Some comments</p>',
 								dateSubmitted: '19 February 2020',
 								hasAttachments: true,
 								name: 'Test (Test)',

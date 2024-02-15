@@ -1,6 +1,9 @@
+const { marked } = require('marked');
 const { titleCase } = require('../../../../../utils/string-case');
 const { getRepresentationURL } = require('../../representation/_utils/get-representation-url');
 const { formatDateSubmitted } = require('./format-date-submitted');
+
+const getFormattedComment = (comment) => (comment ? marked.parse(comment).trim() : '');
 
 const getRepresentationViewModel = (
 	{
@@ -19,6 +22,7 @@ const getRepresentationViewModel = (
 	hasAttachments: (attachments && attachments.length) || !!Attachments,
 	dateSubmitted: formatDateSubmitted(DateRrepReceived),
 	comment: RepresentationRedacted,
+	formattedComment: getFormattedComment(RepresentationRedacted),
 	name: PersonalName,
 	representative: Representative,
 	submittedBy: titleCase(RepFrom),
