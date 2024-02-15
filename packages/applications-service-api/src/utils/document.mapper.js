@@ -19,8 +19,8 @@ const LABEL_MAPPING = {
 		examination: 'Examination',
 		recommendation: 'Recommendation',
 		decision: 'Decision',
-		post_decision: 'Post-decision',
-		developers_application: "Developer's Application"
+		'post-decision': 'Post-decision',
+		'developers-application': "Developer's Application"
 	},
 	category: {
 		developersapplication: "Developer's Application"
