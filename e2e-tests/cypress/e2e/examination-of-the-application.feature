@@ -13,11 +13,13 @@ Feature: Examination page
     Scenario: verify page title, heading and contents
         Then I am on the "examination" page
         And I verify below links present on Examination page
-            | Links                                                   |
-            | About the examination stage                             |
-            | What happens at the examination stage                   |
-            | What you can do if you have registered to have your say |
-            | If you have missed the deadline to register             |
-            | More detailed advice                                    |
+            | Links                                                                     |
+            | About the examination stage                                               |
+            | What happens at the examination stage                                     |
+            | When you have registered to have your say you can                         |
+            | If you have missed the deadline to register                               |
+            | If you have recently gained an interest in land affected by a development |
+            | More information                                                          |
+
         And I click on "Find out what you can do at this stage and check our detailed guides" link
         Then I am on the "Pre-application" page
