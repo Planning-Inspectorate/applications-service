@@ -227,7 +227,7 @@ const BACK_OFFICE_DB_DOCUMENTS = [
 		originalFilename: 'TR0100012-Advice-note-6-Annex-PINS.pdf',
 		size: 412846,
 		mime: 'application/pdf',
-		documentURI: 'https://example.org/file.pdf',
+		publishedDocumentURI: 'https://example.org/file.pdf',
 		path: 'EN010009/TR0100012-Advice-note-6-Annex-PINS.pdf',
 		virusCheckStatus: 'scanned',
 		fileMD5: '49f68a5c8493ec2c0bf489821c21fc3b',
