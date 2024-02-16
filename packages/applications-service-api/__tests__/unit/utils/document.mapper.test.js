@@ -110,7 +110,7 @@ describe('document mapper functions', () => {
 					description: 'Deadline 6 Submission - Cover Letter',
 					size: 209077,
 					mime: 'application/pdf',
-					documentURI: 'https://example.org/file.pdf',
+					publishedDocumentURI: 'https://example.org/file.pdf',
 					datePublished: '2023-03-26T00:00:00.000',
 					representative: 'somerep',
 					documentReference: 'someref',
