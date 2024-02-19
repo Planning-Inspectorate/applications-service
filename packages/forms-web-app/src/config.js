@@ -76,7 +76,8 @@ module.exports = {
 		supportTeamPhoneNumber: '0303 444 5000',
 		pressAndMediaPhoneNumber: '0303 444 5004',
 		pressAndMediaEmailAddress: 'press.office@planninginspectorate.gov.uk',
-		contactUsFormURL: 'https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new'
+		contactUsFormURL: 'https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new',
+		openingHours: '9:00 to 17:00'
 	},
 	pinsSocialMedia: {
 		twitterHandle: '@PINSgov',
