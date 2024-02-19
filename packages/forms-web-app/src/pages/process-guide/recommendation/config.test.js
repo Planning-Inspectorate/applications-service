@@ -12,8 +12,8 @@ describe('pages/process-guide/recommendation/config', () => {
 		expect(recommendationURL).toEqual('/decision-making-process-guide/recommendation');
 		expect(recommendationTitle).toEqual('Recommendation');
 		expect(recommendationContent).toEqual(
-			'The examining authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination.'
+			'The Examining Authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination stage.'
 		);
-		expect(recommendationLinkText).toEqual('Making a recommendation');
+		expect(recommendationLinkText).toEqual('Making a recommendation.');
 	});
 });

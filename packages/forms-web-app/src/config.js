@@ -7,7 +7,7 @@ const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
 	application: {
-		defaultDisplayDateFormat: 'DD MMMM YYYY'
+		defaultDisplayDateFormat: 'D MMMM YYYY'
 	},
 	applications: {
 		timeout: Number(process.env.APPLICATIONS_SERVICE_API_TIMEOUT || 10000),
@@ -87,6 +87,8 @@ module.exports = {
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},
 	govUK: {
+		adviceNotes:
+			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate'
 	},

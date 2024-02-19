@@ -46,9 +46,9 @@
 				]
 			}) }}
 
-			<p class="govuk-body">
-				{{ representation.comment }}
-			</p>
+			<div class="pins-rte">
+				{{ representation.formattedComment | safe }}
+			</div>
 
 			{% if representation.attachments | length > 0 %}
 				<h2 class="govuk-heading-m">Attachment(s)</h2>

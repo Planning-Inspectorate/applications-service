@@ -14,6 +14,6 @@ describe('pages/process-guide/acceptance/config', () => {
 		expect(acceptanceContent).toEqual(
 			'This is when the applicant sends us their application documents. We check if we can accept the application for examination. We have 28 days to make this decision.'
 		);
-		expect(acceptanceLinkText).toEqual('How the acceptance stage works and what happens next');
+		expect(acceptanceLinkText).toEqual('How the acceptance stage works and what happens next.');
 	});
 });

@@ -85,12 +85,12 @@ module.exports = (pageName) => {
 		case 'having your say about a national infrastructure project':
 			cy.title().should(
 				'eq',
-				'Have your say guide - Having your say about a national infrastructure project'
+				'Have your say guide - Have your say about a national infrastructure project'
 			);
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('Having your say about a national infrastructure project');
+					expect(text).to.contain('Have your say about a national infrastructure project');
 				});
 			cy.url().should('include', '/having-your-say-guide');
 			break;

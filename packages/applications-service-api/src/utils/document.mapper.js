@@ -19,8 +19,8 @@ const LABEL_MAPPING = {
 		examination: 'Examination',
 		recommendation: 'Recommendation',
 		decision: 'Decision',
-		post_decision: 'Post-decision',
-		developers_application: "Developer's Application"
+		'post-decision': 'Post-decision',
+		'developers-application': "Developer's Application"
 	},
 	category: {
 		developersapplication: "Developer's Application"
@@ -72,7 +72,7 @@ const mapBackOfficeDocuments = (documents) =>
 		description: document.description,
 		size: document.size,
 		mime: document.mime,
-		path: document.documentURI,
+		path: document.publishedDocumentURI,
 		// status: 'Published', // should always be Published, so not needed in API response?
 		datePublished: document.datePublished,
 		// deadlineDate: "", // no equivalent in BO schema
