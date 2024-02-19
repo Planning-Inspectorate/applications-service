@@ -72,7 +72,7 @@ const mapBackOfficeDocuments = (documents) =>
 		description: document.description,
 		size: document.size,
 		mime: document.mime,
-		path: document.documentURI,
+		path: document.publishedDocumentURI,
 		// status: 'Published', // should always be Published, so not needed in API response?
 		datePublished: document.datePublished,
 		// deadlineDate: "", // no equivalent in BO schema

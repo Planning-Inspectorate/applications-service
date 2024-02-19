@@ -96,7 +96,7 @@ describe('/api/v1/advice', () => {
 					documentId: '123',
 					mime: 'application/pdf',
 					size: 123,
-					documentURI: 'mock-uri'
+					publishedDocumentURI: 'mock-uri'
 				}
 			]);
 			db.Advice.findOne.mockResolvedValue(ADVICE_NI_DATA[0]);
