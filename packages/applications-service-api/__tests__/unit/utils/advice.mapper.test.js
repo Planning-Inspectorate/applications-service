@@ -24,7 +24,7 @@ describe('advice.mapper', () => {
 				documentId: '123',
 				mime: 'application/pdf',
 				size: 123,
-				documentURI: 'mock-uri'
+				publishedDocumentURI: 'mock-uri'
 			};
 			const mockBOAdvice = {
 				...ADVICE_BACKOFFICE_DATA[0],
