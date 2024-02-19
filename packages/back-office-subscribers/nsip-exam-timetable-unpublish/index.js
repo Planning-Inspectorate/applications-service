@@ -8,7 +8,7 @@ module.exports = async (context, message) => {
 		throw new Error('caseReference is required');
 	}
 
-	// we use deleteMany to avoid the need to check if the project exists
+	// we use deleteMany to avoid the need to check if the timetable exists
 	await prismaClient.examinationTimetable.deleteMany({
 		where: {
 			caseReference
