@@ -11,7 +11,7 @@ const mapBackOfficeAdviceToApi = (advice) => {
 			documentDataID: attachment.documentId,
 			mime: attachment.mime,
 			size: attachment.size,
-			documentURI: attachment.documentURI
+			documentURI: attachment.publishedDocumentURI
 		}))
 	};
 };
