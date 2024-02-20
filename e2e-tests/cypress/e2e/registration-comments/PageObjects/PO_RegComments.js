@@ -40,7 +40,7 @@ class PO_RegComments {
 	assertNoRegCommentsOnThePage() {
 		cy.get('[data-cy="no-comments-available"]').should(
 			'contain.text',
-			'There are no registration comments to display.'
+			'The relevant representations for this project have been archived and are no longer available on this site.'
 		);
 	}
 

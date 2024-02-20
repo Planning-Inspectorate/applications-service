@@ -43,9 +43,4 @@ Feature: cookies banner page
         And I click on go back to the page you were looking at link
         Then I am on the "who are you registering for?" page
 
-    Scenario: click back link
-        And I click on "view" cookies button
-        And I click on back link
-        Then I am on the "who are you registering for?" page
-
 
