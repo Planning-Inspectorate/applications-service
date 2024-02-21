@@ -12,7 +12,7 @@
       </h2>
 
       <p class="govuk-body">
-        If you are contacting us about a project and have the case officer’s email address, please email them directly.
+        If you are contacting us about a particular project, please email the project team. The project team email address can be found on the project page.
       </p>
 
       <p class="govuk-body">
@@ -20,7 +20,7 @@
       </p>
 
       <p class="govuk-body">
-        Contact form: <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}"> Click here to fill out our form</a>
+        Contact form: <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}"> Fill out our form</a>
       </p>
 
       <p class="govuk-body">
@@ -32,9 +32,9 @@
       </p>
 
       <p class="govuk-body">
-        Telephone: <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
+        Telephone customer services: <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
         <br>
-        Monday to Friday, 9am to 12pm (except public holidays)
+        {{ pinsContactDetails.csOpeningHours }}
       </p>
 
       <p class="govuk-body">
@@ -85,7 +85,7 @@
       </p>
 
       <p class="govuk-body">
-        The GOV.UK Press office is open from 09:00 to 17:00 on Monday to Friday (except public holidays).
+        The GOV.UK Press office is open from {{ govUK.pressOfficeOpeningHours }}.
       </p>
     </div>
   </div>
