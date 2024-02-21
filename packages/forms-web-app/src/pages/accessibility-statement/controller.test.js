@@ -31,8 +31,8 @@ describe('pages/accessibility-statement/controller', () => {
 			it('should call the correct template with the page data', () => {
 				expect(mockRes.render).toBeCalledWith('accessibility-statement/view.njk', {
 					backLinkUrl: null,
-					pageHeading: 'Accessibility statement for National Infrastructure Projects',
-					pageTitle: 'Accessibility statement for National Infrastructure Projects'
+					pageHeading: 'Accessibility statement for national infrastructure projects',
+					pageTitle: 'Accessibility statement for national infrastructure projects'
 				});
 			});
 		});
