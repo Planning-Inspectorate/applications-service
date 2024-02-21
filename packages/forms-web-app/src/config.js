@@ -77,7 +77,7 @@ module.exports = {
 		pressAndMediaPhoneNumber: '0303 444 5004',
 		pressAndMediaEmailAddress: 'press.office@planninginspectorate.gov.uk',
 		contactUsFormURL: 'https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new',
-		openingHours: '9:00 to 17:00'
+		csOpeningHours: 'Monday to Friday, 9am to 12pm (except public holidays)'
 	},
 	pinsSocialMedia: {
 		twitterHandle: '@PINSgov',
@@ -91,7 +91,8 @@ module.exports = {
 		adviceNotes:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
-		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate'
+		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate',
+		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',

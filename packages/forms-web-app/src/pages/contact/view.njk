@@ -34,7 +34,7 @@
       <p class="govuk-body">
         Telephone customer services: <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
         <br>
-        Monday to Friday, 9am to 12pm (except public holidays)
+        {{ pinsContactDetails.csOpeningHours }}
       </p>
 
       <p class="govuk-body">
@@ -85,7 +85,7 @@
       </p>
 
       <p class="govuk-body">
-        The GOV.UK Press office is open from {{ pinsContactDetails.openingHours }} on Monday to Friday (except public holidays).
+        The GOV.UK Press office is open from {{ govUK.pressOfficeOpeningHours }}.
       </p>
     </div>
   </div>
