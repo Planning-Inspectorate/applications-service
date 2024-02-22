@@ -24,7 +24,7 @@ jest.mock('../../../src/utils/date-utils');
 jest.mock('../../../src/utils/file');
 jest.mock('../../../src/services/submission.ni.service');
 jest.mock('../../../src/services/backoffice.publish.service');
-jest.mock('../../../src/services/application.service');
+jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/lib/notify');
 
 const { getDate } = require('../../../src/utils/date-utils');
@@ -37,7 +37,7 @@ const {
 	uploadSubmissionFileToBlobStorage
 } = require('../../../src/utils/file');
 const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
-const { getApplication } = require('../../../src/services/application.service');
+const { getApplication } = require('../../../src/services/application.backoffice.service');
 const { sendSubmissionNotification } = require('../../../src/lib/notify');
 
 const {

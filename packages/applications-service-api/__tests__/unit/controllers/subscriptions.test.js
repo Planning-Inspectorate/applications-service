@@ -1,9 +1,9 @@
-jest.mock('../../../src/services/application.service');
+jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/lib/crypto');
 jest.mock('../../../src/services/backoffice.publish.service');
 
-const { getApplication } = require('../../../src/services/application.service');
+const { getApplication } = require('../../../src/services/application.backoffice.service');
 const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify');
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
 const {

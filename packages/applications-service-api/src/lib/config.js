@@ -19,7 +19,7 @@ module.exports = {
 			getApplication: {
 				caseReferences: backOfficeIntegrationCaseReferences
 			},
-			getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS === 'true'
+			getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS
 		},
 		documents: {
 			getDocuments: {

@@ -3,6 +3,7 @@ const {
 	getAllApplications: getAllBOApplicationsRepository
 } = require('../repositories/project.backoffice.repository');
 const { getAllNIApplications } = require('./application.ni.service');
+const { getAllMergedApplications } = require('./application.merge.service');
 const { getNIApplication } = require('./application.ni.service');
 const config = require('../lib/config');
 const { isEmpty } = require('lodash');
@@ -66,17 +67,24 @@ const createQueryFilters = (query) => {
 	};
 };
 const getAllApplications = async (query) => {
-	const isGetFromBackOfficeEnabled = config.backOfficeIntegration.applications.getAllApplications;
-	if (!isGetFromBackOfficeEnabled) return getAllNIApplications(query);
+	const getApplications = config.backOfficeIntegration.applications.getAllApplications;
+	switch (getApplications) {
+		case 'BO':
+			return getAllBOApplications(query);
+		case 'MERGE':
+			return getAllMergedApplications(query);
+		// NI is the default
+		default:
+			return getAllNIApplications(query);
+	}
+};
 
+const getAllBOApplications = async (query) => {
 	const { pageNo, ...queryOptions } = createQueryFilters(query);
-
 	const { applications, count } = await getAllBOApplicationsRepository(queryOptions);
 	const { applications: allApplications, count: totalItemsWithoutFilters } =
 		await getAllBOApplicationsRepository();
-
 	const filters = buildApplicationsFiltersFromBOApplications(allApplications);
-
 	return {
 		applications: mapBackOfficeApplicationsToApi(applications),
 		totalItems: count,
@@ -92,6 +100,7 @@ const isBackOfficeApplication = (caseReference) =>
 	config.backOfficeIntegration.applications.getApplication.caseReferences.includes(caseReference);
 
 module.exports = {
+	createQueryFilters,
 	getApplication,
 	getAllApplications
 };

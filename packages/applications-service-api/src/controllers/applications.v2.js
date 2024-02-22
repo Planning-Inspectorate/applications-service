@@ -1,4 +1,6 @@
-const { getApplication: getApplicationFromService } = require('../services/application.service');
+const {
+	getApplication: getApplicationFromService
+} = require('../services/application.backoffice.service');
 const { StatusCodes } = require('http-status-codes');
 const ApiError = require('../error/apiError');
 const { mapResponseBackToNILegacyFormat } = require('../utils/application.mapper');
