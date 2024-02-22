@@ -95,7 +95,7 @@ function map() {
 			const marker = new Feature(new Point(centerEpsg27700));
 			markers.getSource().addFeature(marker);
 		} catch (error) {
-			console.log('yoyo:>>', error);
+			console.log(error);
 		}
 	};
 }
