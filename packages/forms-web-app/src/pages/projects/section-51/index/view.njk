@@ -46,7 +46,15 @@
 				</p>
 
 				{% if advice.length > 0 or queryUrl != '' %}
-					{{ uiSearchBar('section-51-page-search-bar', 'searchTerm', searchTerm, 'Search Section 51 Advice') }}
+					<h2 class="govuk-heading-m">
+						Search advice
+					</h2>
+
+					<p class="govuk-body">
+  					Search by key words or the name of person the advice was given to.
+					</p>
+
+					{{ uiSearchBar('section-51-page-search-bar', 'searchTerm', searchTerm, 'Search by key words or the name of person the advice was given to.') }}
 				{% endif %}
 
 				{% if advice.length == 0 and queryUrl != '' %}
