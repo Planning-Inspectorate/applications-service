@@ -20,10 +20,10 @@ const LABEL_MAPPING = {
 		recommendation: 'Recommendation',
 		decision: 'Decision',
 		'post-decision': 'Post-decision',
-		'developers-application': "Developer's Application"
+		'developers-application': "Developer's application"
 	},
 	category: {
-		developersapplication: "Developer's Application"
+		developersapplication: "Developer's application"
 	}
 };
 

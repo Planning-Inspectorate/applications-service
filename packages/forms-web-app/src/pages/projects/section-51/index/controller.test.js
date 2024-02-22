@@ -71,7 +71,7 @@ describe('pages/projects/section-51/index/controller', () => {
 				});
 				it('should render the section 51 page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/section-51/index/view.njk', {
-						title: 'Section 51 Advice',
+						title: 'Section 51 advice',
 						pagination: 'mock pagination',
 						paginationUrl: 'mock pagination url',
 						resultsPerPage: 'mock results per page',
