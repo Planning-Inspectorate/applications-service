@@ -6,7 +6,7 @@ const {
 } = require('../services/application.ni.service');
 const {
 	getAllApplications: getAllApplicationsService
-} = require('../services/application.service');
+} = require('../services/application.backoffice.service');
 const ApiError = require('../error/apiError');
 
 const getApplication = async (req, res) => {

@@ -5,7 +5,7 @@ const {
 } = require('../services/interestedParty.ni.service');
 const { publishRegisterRepresentation } = require('./backoffice.publish.service');
 const { sendIPRegistrationConfirmationEmailToIP } = require('../lib/notify');
-const { getApplication } = require('./application.service');
+const { getApplication } = require('./application.backoffice.service');
 const { mapInterestedParty } = require('../utils/interestedParty.mapper');
 
 const createInterestedParty = async (createInterestedPartyRequest) => {

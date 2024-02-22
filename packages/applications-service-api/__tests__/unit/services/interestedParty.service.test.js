@@ -21,8 +21,8 @@ const { mapInterestedParty } = require('../../../src/utils/interestedParty.mappe
 jest.mock('../../../src/lib/notify');
 const { sendIPRegistrationConfirmationEmailToIP } = require('../../../src/lib/notify');
 
-jest.mock('../../../src/services/application.service');
-const { getApplication } = require('../../../src/services/application.service');
+jest.mock('../../../src/services/application.backoffice.service');
+const { getApplication } = require('../../../src/services/application.backoffice.service');
 
 jest.mock('../../../src/utils/date-utils');
 const { getDate } = require('../../../src/utils/date-utils');

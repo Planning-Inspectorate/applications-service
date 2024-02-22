@@ -5,7 +5,7 @@ const { createNISubmission, completeNISubmission } = require('./submission.ni.se
 const { publishDeadlineSubmission } = require('./backoffice.publish.service');
 const { generateRepresentationPDF, uploadSubmissionFileToBlobStorage } = require('../utils/file');
 const { getDate } = require('../utils/date-utils');
-const { getApplication } = require('./application.service');
+const { getApplication } = require('./application.backoffice.service');
 const { sendSubmissionNotification } = require('../lib/notify');
 
 const createSubmission = async (submission) =>
