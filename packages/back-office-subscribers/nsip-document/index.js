@@ -25,6 +25,7 @@ module.exports = async (context, message) => {
 		if (shouldUpdate) {
 			const document = {
 				...pick(message, documentPropertiesFromMessage),
+				stage: message.documentCaseStage,
 				modifiedAt: new Date()
 			};
 			await tx.document.upsert({
@@ -71,7 +72,6 @@ const documentPropertiesFromMessage = [
 	'author',
 	'representative',
 	'description',
-	'stage',
 	'filter1',
 	'filter2'
 ];
