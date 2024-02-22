@@ -17,16 +17,17 @@ const mapBackOfficeAdviceToApi = (advice) => {
 };
 
 const mapCommonAdviceFieldsToApi = (advice) => {
-	const [firstName, ...lastName] = advice && advice.from ? advice.from.split(' ') : undefined;
+	const [firstName, ...lastName] = advice && advice.agent ? advice.agent.split(' ') : '';
+
 	return {
 		section51Enquiry: true,
 		adviceID: advice?.adviceId?.toString(),
 		enquiryDate: advice?.enquiryDate,
 		enquiryMethod: advice?.method,
 		caseReference: advice?.caseReference,
-		firstName: firstName,
-		lastName: lastName?.join(' '),
-		organisation: advice?.agent,
+		firstName: firstName || '',
+		lastName: lastName?.join(' ') || '',
+		organisation: advice?.from,
 		enquiryDetail: advice?.enquiryDetails,
 		adviceGiven: advice?.adviceDetails,
 		respondedBy: advice?.adviceGivenBy,
