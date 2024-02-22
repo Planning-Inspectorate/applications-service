@@ -1,4 +1,7 @@
-const { getApplication, getAllApplications } = require('../../../src/services/application.service');
+const {
+	getApplication,
+	getAllApplications
+} = require('../../../src/services/application.backoffice.service');
 const config = require('../../../src/lib/config');
 jest.mock('../../../src/repositories/project.backoffice.repository');
 const {
@@ -7,9 +10,11 @@ const {
 } = require('../../../src/repositories/project.backoffice.repository');
 const { getAllNIApplications } = require('../../../src/services/application.ni.service');
 const { getNIApplication } = require('../../../src/services/application.ni.service');
+const { getAllMergedApplications } = require('../../../src/services/application.merge.service');
 
 jest.mock('../../../src/utils/application.mapper');
 jest.mock('../../../src/services/application.ni.service');
+jest.mock('../../../src/services/application.merge.service');
 
 const {
 	mapBackOfficeApplicationToApi,
@@ -37,7 +42,7 @@ jest.mock('../../../src/lib/config', () => ({
 	}
 }));
 
-describe('application.service', () => {
+describe('application.backoffice.service', () => {
 	describe('getApplication', () => {
 		it('invokes getBackOfficeApplication if BO caseReference', async () => {
 			getByCaseReference.mockResolvedValueOnce(APPLICATION_DB);
@@ -58,14 +63,24 @@ describe('application.service', () => {
 		});
 	});
 	describe('getAllApplications', () => {
-		it('invokes getAllNIApplications if NI caseReference', async () => {
-			config.backOfficeIntegration.applications.getAllApplications = false;
+		it('invokes getAllNIApplications if NI', async () => {
+			config.backOfficeIntegration.applications.getAllApplications = 'NI';
 			await getAllApplications();
 			expect(getAllNIApplications).toHaveBeenCalled();
 		});
-		describe('if BO caseReference', () => {
+		it('invokes getAllNIApplications if getAllApplications is not set', async () => {
+			config.backOfficeIntegration.applications.getAllApplications = undefined;
+			await getAllApplications();
+			expect(getAllNIApplications).toHaveBeenCalled();
+		});
+		it('invokes getAllMergedApplications if MERGE', async () => {
+			config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
+			await getAllApplications();
+			expect(getAllMergedApplications).toHaveBeenCalled();
+		});
+		describe('when BO', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = true;
+				config.backOfficeIntegration.applications.getAllApplications = 'BO';
 				getAllApplicationsRepository
 					// getting applications
 					.mockResolvedValueOnce({
