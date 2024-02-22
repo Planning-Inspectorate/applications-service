@@ -34,6 +34,7 @@ jest.mock('../../src/models', () => ({
 }));
 
 const config = require('../../src/lib/config');
+const { addMapZoomLevelAndLongLat } = require('../../src/utils/application.mapper');
 
 describe('/api/v1/applications', () => {
 	describe('get single application', () => {
@@ -80,8 +81,8 @@ describe('/api/v1/applications', () => {
 		});
 	});
 	describe('get all applications', () => {
-		describe('when backOfficeIntegration.applications.getAllApplications is false', () => {
-			config.backOfficeIntegration.applications.getAllApplications = false;
+		describe('when getAllApplications is NI', () => {
+			config.backOfficeIntegration.applications.getAllApplications = 'NI';
 			beforeEach(() => {
 				mockFindAndCountAll.mockResolvedValueOnce({
 					rows: APPLICATIONS_NI_FILTER_COLUMNS,
@@ -234,9 +235,9 @@ describe('/api/v1/applications', () => {
 				});
 			});
 		});
-		describe('when backOfficeIntegration.applications.getAllApplications is true', () => {
+		describe('when getAllApplications is BO', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = true;
+				config.backOfficeIntegration.applications.getAllApplications = 'BO';
 				mockProjectFindMany
 					// applications
 					.mockResolvedValueOnce([APPLICATION_DB])
@@ -380,6 +381,144 @@ describe('/api/v1/applications', () => {
 					}
 				});
 
+				expect(response.status).toEqual(200);
+			});
+		});
+		describe('when getAllApplications is MERGE', () => {
+			beforeEach(() => {
+				config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
+				// NI
+				mockFindAndCountAll.mockResolvedValue({
+					rows: APPLICATIONS_NI_DB,
+					count: APPLICATIONS_NI_DB.length
+				});
+				// BO
+				mockProjectFindMany.mockResolvedValue([APPLICATION_DB]);
+				mockCount.mockResolvedValue(1);
+			});
+			afterEach(() => {
+				mockProjectFindMany.mockClear();
+				mockFindAndCountAll.mockClear();
+			});
+			it('happy path', async () => {
+				const response = await request.get('/api/v1/applications');
+
+				const BOApplication = {
+					...APPLICATION_API_V1,
+					DateOfDCOAcceptance_NonAcceptance: null,
+					sourceSystem: 'ODT'
+				};
+				const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+				const combinedApplications = [BOApplication, ...NIApplications];
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					applications: combinedApplications,
+					totalItems: combinedApplications.length,
+					totalItemsWithoutFilters: combinedApplications.length,
+					itemsPerPage: combinedApplications.length,
+					totalPages: 1,
+					currentPage: 1,
+					filters: expect.anything() // not testing filters as the original mapper is used here
+				});
+			});
+
+			it('has no duplicates', async () => {
+				const NIApplicationWithSameCaseReference = {
+					...APPLICATIONS_NI_DB[0],
+					CaseReference: APPLICATION_DB.caseReference
+				};
+				mockFindAndCountAll.mockResolvedValue({
+					rows: [NIApplicationWithSameCaseReference, ...APPLICATIONS_NI_DB],
+					count: APPLICATIONS_NI_DB.length + 1
+				});
+				const response = await request.get('/api/v1/applications');
+				const BOApplication = {
+					...APPLICATION_API_V1,
+					DateOfDCOAcceptance_NonAcceptance: null,
+					sourceSystem: 'ODT'
+				};
+				const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+				const combinedApplications = [BOApplication, ...NIApplications];
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					applications: combinedApplications,
+					totalItems: combinedApplications.length,
+					totalItemsWithoutFilters: combinedApplications.length,
+					itemsPerPage: combinedApplications.length,
+					totalPages: 1,
+					currentPage: 1,
+					filters: expect.anything() // not testing filters as the original mapper is used here
+				});
+			});
+
+			it('with search term and filters applied', async () => {
+				const queryString = [
+					'stage=acceptance',
+					'stage=recommendation',
+					'region=eastern',
+					'region=north_west',
+					'sector=energy',
+					'sector=transport',
+					'searchTerm=Nuclear'
+				].join('&');
+				const response = await request.get(`/api/v1/applications?${queryString}`);
+				expect(response.status).toEqual(200);
+				// BO Searches
+				expect(mockProjectFindMany).toHaveBeenNthCalledWith(1, {
+					include: { applicant: true },
+					orderBy: { projectName: 'asc' },
+					where: {
+						AND: [
+							{
+								OR: [
+									{ projectName: { contains: 'Nuclear' } },
+									{
+										OR: [
+											{ applicant: { organisationName: { contains: 'Nuclear' } } },
+											{ applicant: { firstName: { contains: 'Nuclear' } } },
+											{ applicant: { lastName: { contains: 'Nuclear' } } }
+										]
+									}
+								]
+							},
+							{
+								OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
+							},
+							{
+								OR: [{ stage: 'acceptance' }, { stage: 'recommendation' }]
+							},
+							{
+								OR: [{ sector: { contains: 'energy' } }, { sector: { contains: 'transport' } }]
+							}
+						]
+					}
+				});
+				expect(mockProjectFindMany).toHaveBeenNthCalledWith(2, {
+					include: { applicant: true },
+					where: {}
+				});
+				// NI Searches
+				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(1, {
+					order: [['ProjectName', 'ASC']],
+					raw: true,
+					where: expect.objectContaining({
+						[Op.and]: [
+							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
+							{ Stage: { [Op.in]: [2, 5] } },
+							{
+								[Op.or]: [{ Proposal: { [Op.like]: 'EN%' } }, { Proposal: { [Op.like]: 'TR%' } }]
+							}
+						],
+						[Op.or]: [
+							{ ProjectName: { [Op.like]: '%Nuclear%' } },
+							{ PromoterName: { [Op.like]: '%Nuclear%' } }
+						]
+					})
+				});
+				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(2, {
+					raw: true,
+					where: {}
+				});
 				expect(response.status).toEqual(200);
 			});
 		});
