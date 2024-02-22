@@ -59,13 +59,15 @@ const mockMessage = {
 	author: 'someone',
 	representative: 'some agency',
 	description: 'this is a description',
-	stage: 'decision',
+	documentCaseStage: 'decision',
 	filter1: 'Deadline 2',
 	filter2: 'Scoping Option Report'
 };
 
+const { documentCaseStage, ...documentProperties } = mockMessage;
 const mockDocument = {
-	...mockMessage,
+	...documentProperties,
+	stage: documentCaseStage,
 	modifiedAt: mockCurrentTime
 };
 
