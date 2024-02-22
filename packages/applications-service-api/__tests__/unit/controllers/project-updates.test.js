@@ -1,4 +1,4 @@
-jest.mock('../../../src/services/application.service');
+jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/repositories/projectUpdate.repository');
 
 const { getProjectUpdates } = require('../../../src/controllers/project-updates');

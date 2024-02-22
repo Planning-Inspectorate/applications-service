@@ -84,6 +84,7 @@ const createQueryFilters = (query) => {
 };
 
 module.exports = {
+	createQueryFilters,
 	getNIApplication,
 	getAllNIApplications,
 	getAllNIApplicationsDownload
