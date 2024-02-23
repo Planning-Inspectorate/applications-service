@@ -78,7 +78,7 @@ describe('documentsV3 controller', () => {
 						filters: [
 							{
 								name: 'category',
-								value: "Developer's Application",
+								value: "Developer's application",
 								type: [{ value: 'Plans' }, { value: 'Reports' }]
 							}
 						],
@@ -97,7 +97,7 @@ describe('documentsV3 controller', () => {
 				filters: [
 					{
 						name: 'category',
-						value: "Developer's Application",
+						value: "Developer's application",
 						type: [{ value: 'Plans' }, { value: 'Reports' }]
 					}
 				],

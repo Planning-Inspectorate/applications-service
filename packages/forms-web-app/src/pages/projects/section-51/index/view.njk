@@ -23,14 +23,14 @@
 
 			<div class="govuk-grid-column-two-thirds">
 				<span class="govuk-caption-l">
-          {{ projectName }}
-        </span>
+					{{ projectName }}
+				</span>
 
 				<h1 class="govuk-heading-xl">
 					{{ title }}
 				</h1>
 
-				{% if advice.length > 0 or (advice.length == 0 and queryUrl != '' ) %}
+				{% if advice.length > 0 or(advice.length == 0 and queryUrl != '') %}
 					<p class="govuk-body">The list below includes a record of advice we have provided for this project.</p>
 
 				{% else %}
@@ -39,19 +39,30 @@
 					</h2>
 				{% endif %}
 
-				<p class="govuk-body">There is a statutory duty, under <a class="govuk-link" href="https://www.legislation.gov.uk/ukpga/2008/29/section/51">section 51 of the Planning Act 2008</a>, to
-					record the advice that is given in relation to an application or a potential application, including the name
-					of the person who requested the advice, and to make this publicly available.
+				<p class="govuk-body">
+					There is a statutory duty, under <a class="govuk-link" href="https://www.legislation.gov.uk/ukpga/2008/29/section/51">section 51 of the Planning Act 2008</a>, around an application or potential application.
+					This includes recording the name of the person who requested advice and the advice given.
+					This information has to be made publicly available.
 				</p>
 
 				{% if advice.length > 0 or queryUrl != '' %}
-					{{ uiSearchBar('section-51-page-search-bar', 'searchTerm', searchTerm, 'Search Section 51 Advice') }}
+					<h2 class="govuk-heading-m">
+						Search advice
+					</h2>
+
+					<p class="govuk-body">
+  					Search by key words or the name of person the advice was given to.
+					</p>
+
+					{{ uiSearchBar('section-51-page-search-bar', 'searchTerm', searchTerm, 'Search by key words or the name of person the advice was given to.') }}
 				{% endif %}
 
 				{% if advice.length == 0 and queryUrl != '' %}
 					<p class="govuk-body">No advice was found matching your search term.</p>
 					<p class="govuk-body">Would you like to clear your search to view all available advice instead?</p>
-					<p class="govuk-body"><a class="govuk-link" href="{{ baseUrl }}{{ path }}">Clear search</a></p>
+					<p class="govuk-body">
+						<a class="govuk-link" href="{{ baseUrl }}{{ path }}">Clear search</a>
+					</p>
 				{% endif %}
 
 				{% if advice.length > 0 %}

@@ -4,12 +4,7 @@
 {% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
 {% from "components/ui/checkboxes.njk" import uiCheckboxes %}
 
-{% set slots = [  uiVerticalTabs(
-	null,
-	activeId,
-	verticalTabs,
-	"Project navigation"
-)] %}
+{% set slots = [uiVerticalTabs(null, activeId, verticalTabs, "Project navigation")] %}
 
 {% if displayFilters %}
 	{% set slots = (slots.push(uiCheckboxAccordion(

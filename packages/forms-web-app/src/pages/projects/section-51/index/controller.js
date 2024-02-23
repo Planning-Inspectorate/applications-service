@@ -21,7 +21,7 @@ async function getSection51IndexController(req, res, next) {
 		const resultsPerPage = documentsPerPage(query);
 
 		return res.render('projects/section-51/index/view.njk', {
-			title: 'Section 51 Advice',
+			title: 'Section 51 advice',
 			advice: getAdviceViewModel(advice, caseRef),
 			pagination,
 			resultsPerPage,
