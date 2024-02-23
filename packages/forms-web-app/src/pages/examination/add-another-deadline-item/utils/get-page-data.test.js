@@ -38,7 +38,7 @@ describe('#getPageData', () => {
 							value: 'yes'
 						},
 						{
-							text: 'no',
+							text: 'No',
 							value: 'no'
 						}
 					],
@@ -72,7 +72,7 @@ describe('#getPageData', () => {
 							value: 'yes'
 						},
 						{
-							text: 'no',
+							text: 'No',
 							value: 'no'
 						}
 					],

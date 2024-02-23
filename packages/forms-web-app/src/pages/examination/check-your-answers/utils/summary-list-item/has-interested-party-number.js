@@ -16,7 +16,10 @@ const getSummaryListItemHasInterestedPartyNumber = (session) => {
 	);
 	if (!hasInterestedPartyNumberText)
 		throw new Error('Has interested party number text is undefined');
-	return getSummaryListItem('Interested party number available', hasInterestedPartyNumberText);
+	return getSummaryListItem(
+		'Interested party reference number available',
+		hasInterestedPartyNumberText
+	);
 };
 
 module.exports = { getSummaryListItemHasInterestedPartyNumber };
