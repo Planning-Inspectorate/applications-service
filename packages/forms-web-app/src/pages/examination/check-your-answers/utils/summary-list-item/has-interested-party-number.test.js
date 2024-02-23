@@ -51,7 +51,7 @@ describe('examination/check-your-answers/utils/summary-list-item/has-interested-
 				});
 				it('should get the summary list item with the has interested party number title and selected option text', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
-						'Interested party number available',
+						'Interested party reference number available',
 						mockHasInterestedPartyNumberText
 					);
 				});
