@@ -104,10 +104,10 @@ const mergeApplicationsAndCounts = (
 };
 
 const getAllMergedApplicationsDownload = async () => {
-	const allBOApplications = await getAllBOApplicationsRepository();
 	const allNIApplications = await getAllNIApplicationsRepository();
-	const boApplications = mapBackOfficeApplicationsToApi(allBOApplications.applications);
 	const niApplications = allNIApplications.applications.map(addMapZoomLevelAndLongLat);
+	const allBOApplications = await getAllBOApplicationsRepository();
+	const boApplications = mapBackOfficeApplicationsToApi(allBOApplications.applications);
 	const mergedApplications = uniqBy([...boApplications, ...niApplications], 'CaseReference');
 	return mapApplicationsToCSV(mergedApplications);
 };

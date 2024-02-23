@@ -47,9 +47,6 @@ const getAllNIApplications = async (query) => {
 const getAllNIApplicationsDownload = async () => {
 	const { applications } = await getAllApplicationsRepository();
 	const applicationsWithMapZoomLvlAndLongLat = applications.map(addMapZoomLevelAndLongLat);
-	console.log({
-		applicationsWithMapZoomLvlAndLongLat
-	});
 	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
 };
 

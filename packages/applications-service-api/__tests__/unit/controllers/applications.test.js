@@ -12,13 +12,11 @@ jest.mock('../../../src/services/application.ni.service');
 const mockGetNIApplication =
 	require('../../../src/services/application.ni.service').getNIApplication;
 
-jest.mock('../../../src/services/application.ni.service');
-const mockGetAllNIApplications =
-	require('../../../src/services/application.ni.service').getAllNIApplications;
-
-const mockGetAllNIApplicationsDownload =
-	require('../../../src/services/application.ni.service').getAllNIApplicationsDownload;
-
+jest.mock('../../../src/services/application.backoffice.service');
+const getAllApplicationsDownloadService =
+	require('../../../src/services/application.backoffice.service').getAllApplicationsDownload;
+const getAllApplicationsService =
+	require('../../../src/services/application.backoffice.service').getAllApplications;
 describe('getApplication', () => {
 	afterEach(() => mockGetNIApplication.mockClear());
 
@@ -62,10 +60,8 @@ describe('getApplication', () => {
 });
 
 describe('getAllApplications', () => {
-	afterEach(() => mockGetNIApplication.mockClear());
-
 	it('should get all applications from mock', async () => {
-		mockGetAllNIApplications.mockResolvedValue({
+		getAllApplicationsService.mockResolvedValue({
 			applications: [APPLICATION_FO],
 			totalItems: 1,
 			currentPage: 1,
@@ -91,10 +87,8 @@ describe('getAllApplications', () => {
 });
 
 describe('getAllApplicationsDownload', () => {
-	afterEach(() => mockGetNIApplication.mockClear());
-
 	it('should get all applications from mock', async () => {
-		mockGetAllNIApplicationsDownload.mockResolvedValue('csv-foo');
+		getAllApplicationsDownloadService.mockResolvedValue('csv-foo');
 
 		const req = httpMocks.createRequest();
 		const res = httpMocks.createResponse();
