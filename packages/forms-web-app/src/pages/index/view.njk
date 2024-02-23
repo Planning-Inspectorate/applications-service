@@ -5,86 +5,102 @@
 {% set mainClasses = "pins-modded-no-padding" %}
 
 {% block content %}
-    <div class="masthead masthead--full-width masthead--bg-teal">
-        <div class="masthead__content">
-            <h1 class="govuk-heading-xl masthead__title">{{ pageHeading }}</h1>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                    <p class="masthead__text">
-                        Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities.
-                    </p>
-                    <p class="masthead__text">
-                        This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales.
-                    </p>
+	<div class="masthead masthead--full-width masthead--bg-teal">
+		<div class="masthead__content">
+			<h1 class="govuk-heading-xl masthead__title">
+				{{ pageHeading }}
+			</h1>
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="full-width-line full-width-line--bg-blue"></div>
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-two-thirds">
+					<p class="masthead__text">
+						Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities.
+   				</p>
 
-    <section class="page-section full-width-section full-width-section--bg-lightgrey govuk-!-margin-bottom-6 govuk-!-padding-top-6">
-        <div class="page-section__content">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-half">
-                    <h2 class="govuk-heading-m">I am looking for a project</h2>
-                    <p class="govuk-body">
-                        Search by project name or applicant
-                    </p>
+					<p class="masthead__text">
+						This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                    <form action="{{ homePageUrls.projectSearch }}" method="get">
-                        {{ uiSearchBar('homepage-search-bar', 'searchTerm', '', 'Search by project name or applicant') }}
-                    </form>
-                </div>
-                {% if showProjectSearchUrl %}
-                    <div class="govuk-grid-column-one-half">
-                        <h2 class="govuk-heading-m ">I want to view all projects</h2>
-                        <p class="govuk-body">See a <a href="{{ homePageUrls.projectSearch }}" class="govuk-link">complete list of all projects</a></p>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
+	<div class="full-width-line full-width-line--bg-blue"></div>
 
-    <section class="page-section govuk-!-margin-bottom-6">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-6">Information for members of the public</h2>
-        <div class="page-section__content">
-            <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-half">
-                    {{ chevronCard(
-                            'See the process',
-                            homePageUrls.processGuide,
-                            'Here you can view the stages that an application goes through from start to finish.'
-                        ) }}
-                    </div>
-                <div class="govuk-grid-column-one-half">
-                    {{ chevronCard(
-                        'How to have your say on a project',
-                        homePageUrls.haveYourSayGuide,
-                        'Find out everything you need to know about sharing your views on a project.'
-                    ) }}
-                </div>
-            </div>
-        </div>
-    </section>
+	<section class="page-section full-width-section full-width-section--bg-lightgrey govuk-!-margin-bottom-6 govuk-!-padding-top-6">
+		<div class="page-section__content">
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-one-half">
+					<h2 class="govuk-heading-m">
+						I am looking for a project
+					</h2>
 
-    {% include "./_includes/professional-users.njk" %}
+					<p class="govuk-body">
+						Search by project name or applicant
+					</p>
 
-    <section class="page-section govuk-!-margin-bottom-6">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-6">
-            Updates and contact information
-        </h2>
+					<form action="{{ homePageUrls.projectSearch }}" method="get">
+						{{ uiSearchBar('homepage-search-bar', 'searchTerm', '', 'Search by project name or applicant') }}
+					</form>
+				</div>
+				{% if showProjectSearchUrl %}
+					<div class="govuk-grid-column-one-half">
+						<h2 class="govuk-heading-m ">
+							I want to view all projects
+						</h2>
 
-        <div class="page-section__content">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third">
-                    {{ chevronCard(
-                        'I need help',
-                        homePageUrls.contactURL,
-                        'How to get in contact with us.'
-                    ) }}
-                </div>
-            </div>
-        </div>
-    </section>
+						<p class="govuk-body">
+							See a <a href="{{ homePageUrls.projectSearch }}" class="govuk-link">complete list of all projects</a>
+						</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</section>
+
+	<section class="page-section govuk-!-margin-bottom-6">
+		<h2 class="govuk-heading-m govuk-!-margin-bottom-6">
+			Information for members of the public
+		</h2>
+
+		<div class="page-section__content">
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-one-half">
+					{{ chevronCard(
+						'See the process',
+						homePageUrls.processGuide,
+						'Here you can view the stages that an application goes through from start to finish.'
+					) }}
+				</div>
+
+				<div class="govuk-grid-column-one-half">
+					{{ chevronCard(
+						'How to have your say on a project',
+						homePageUrls.haveYourSayGuide,
+						'Find out everything you need to know about sharing your views on a project.'
+					) }}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% include "./_includes/professional-users.njk" %}
+
+	<section class="page-section govuk-!-margin-bottom-6">
+		<h2 class="govuk-heading-m govuk-!-margin-bottom-6">
+      Updates and contact information
+    </h2>
+
+		<div class="page-section__content">
+			<div class="govuk-grid-row">
+				<div class="govuk-grid-column-one-third">
+					{{ chevronCard(
+						'I need help',
+						homePageUrls.contactURL,
+						'How to get in contact with us.'
+					) }}
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}
