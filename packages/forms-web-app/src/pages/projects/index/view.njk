@@ -8,14 +8,14 @@
 
 {% set activeId = "project-information" %}
 
-{% set pageTitle = projectName + " - Project Information" %}
-{% set pageHeading = "Project Information" %}
+{% set pageHeading = "Project information" %}
+{% set pageTitle = projectName + " - " + pageHeading %}
 
 {% if mapAccessToken %}
 
 	{% block stylesheet %}
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css"/>
 	{% endblock %}
 
 	{% block script %}
@@ -46,20 +46,20 @@
 			{{ getLatestUpdate(latestUpdate, projectsAllUpdatesURL) }}
 
 			{% include "./_includes/about.njk" %}
-			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
 			{% include "./_includes/project-stage.njk" %}
-			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
 			{% if applicationData.projectLocation or mapAccessToken %}
 
 				{% include "./_includes/location.njk" %}
-				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
 			{% endif %}
 
 			{% include "./_includes/get-updates.njk" %}
-			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible" />
+			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
 			{% include "./_includes/contact.njk" %}
 
