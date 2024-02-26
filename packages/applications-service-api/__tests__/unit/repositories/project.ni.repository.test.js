@@ -63,7 +63,9 @@ describe('project ni repository', () => {
 			// Assert
 			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
-				where: {}
+				where: {
+					Region: { [Op.ne]: 'Wales' }
+				}
 			});
 		});
 
@@ -79,6 +81,7 @@ describe('project ni repository', () => {
 			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				where: {
+					Region: { [Op.ne]: 'Wales' },
 					[Op.or]: [
 						{ ProjectName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },
 						{ PromoterName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } }
