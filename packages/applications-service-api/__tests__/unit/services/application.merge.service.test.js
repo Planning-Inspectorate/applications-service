@@ -1,4 +1,7 @@
-const { getAllMergedApplications } = require('../../../src/services/application.merge.service');
+const {
+	getAllMergedApplications,
+	getAllMergedApplicationsDownload
+} = require('../../../src/services/application.merge.service');
 const {
 	getAllApplications: getAllNIApplications
 } = require('../../../src/repositories/project.ni.repository');
@@ -6,6 +9,7 @@ const {
 	getAllApplications: getAllBOApplications
 } = require('../../../src/repositories/project.backoffice.repository');
 const { addMapZoomLevelAndLongLat } = require('../../../src/utils/application.mapper');
+const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const {
 	APPLICATION_DB,
 	APPLICATIONS_NI_DB,
@@ -14,6 +18,8 @@ const {
 
 jest.mock('../../../src/repositories/project.ni.repository');
 jest.mock('../../../src/repositories/project.backoffice.repository');
+jest.mock('../../../src/utils/map-applications-to-csv');
+
 describe('application.merge.service', () => {
 	describe('getAllMergedApplications', () => {
 		beforeEach(() => {
@@ -87,6 +93,45 @@ describe('application.merge.service', () => {
 					filters: expect.anything() // not testing filters as the original mapper is used here
 				});
 			});
+		});
+	});
+	describe('getAllMergedApplicationsDownload', () => {
+		beforeEach(() => {
+			getAllBOApplications.mockResolvedValue({
+				applications: [APPLICATION_DB],
+				count: 1
+			});
+			getAllNIApplications.mockResolvedValue({
+				applications: APPLICATIONS_NI_DB,
+				count: APPLICATIONS_NI_DB.length
+			});
+		});
+		it('calls getAllNIApplicationsRepository', async () => {
+			await getAllMergedApplicationsDownload();
+			expect(getAllNIApplications).toHaveBeenCalled();
+		});
+		it('calls getAllBOApplicationsRepository', async () => {
+			await getAllMergedApplicationsDownload();
+			expect(getAllBOApplications).toHaveBeenCalled();
+		});
+		it('removes duplicates from the combined applications and maps to CSV', async () => {
+			const NIApplicationWithSameCaseReference = {
+				...APPLICATIONS_NI_DB[0],
+				CaseReference: APPLICATION_DB.caseReference
+			};
+			getAllNIApplications.mockResolvedValue({
+				applications: [NIApplicationWithSameCaseReference, ...APPLICATIONS_NI_DB],
+				count: APPLICATIONS_NI_DB.length + 1
+			});
+			const BOApplication = {
+				...APPLICATION_API_V1,
+				DateOfDCOAcceptance_NonAcceptance: null,
+				sourceSystem: 'ODT'
+			};
+			const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+			const combinedApplications = [BOApplication, ...NIApplications];
+			await getAllMergedApplicationsDownload();
+			expect(mapApplicationsToCSV).toHaveBeenCalledWith(combinedApplications);
 		});
 	});
 });

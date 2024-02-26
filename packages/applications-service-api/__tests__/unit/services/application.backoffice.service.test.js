@@ -1,6 +1,7 @@
 const {
 	getApplication,
-	getAllApplications
+	getAllApplications,
+	getAllApplicationsDownload
 } = require('../../../src/services/application.backoffice.service');
 const config = require('../../../src/lib/config');
 jest.mock('../../../src/repositories/project.backoffice.repository');
@@ -8,14 +9,15 @@ const {
 	getByCaseReference,
 	getAllApplications: getAllApplicationsRepository
 } = require('../../../src/repositories/project.backoffice.repository');
-const { getAllNIApplications } = require('../../../src/services/application.ni.service');
-const { getNIApplication } = require('../../../src/services/application.ni.service');
-const { getAllMergedApplications } = require('../../../src/services/application.merge.service');
-
-jest.mock('../../../src/utils/application.mapper');
-jest.mock('../../../src/services/application.ni.service');
-jest.mock('../../../src/services/application.merge.service');
-
+const {
+	getAllNIApplications,
+	getNIApplication,
+	getAllNIApplicationsDownload
+} = require('../../../src/services/application.ni.service');
+const {
+	getAllMergedApplications,
+	getAllMergedApplicationsDownload
+} = require('../../../src/services/application.merge.service');
 const {
 	mapBackOfficeApplicationToApi,
 	mapBackOfficeApplicationsToApi,
@@ -28,6 +30,12 @@ const {
 	APPLICATION_API,
 	APPLICATIONS_FO_FILTERS
 } = require('../../__data__/application');
+const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
+
+jest.mock('../../../src/utils/application.mapper');
+jest.mock('../../../src/services/application.ni.service');
+jest.mock('../../../src/services/application.merge.service');
+jest.mock('../../../src/utils/map-applications-to-csv');
 
 jest.mock('../../../src/lib/config', () => ({
 	backOfficeIntegration: {
@@ -310,6 +318,45 @@ describe('application.backoffice.service', () => {
 					totalItemsWithoutFilters: 1,
 					filters: APPLICATIONS_FO_FILTERS
 				});
+			});
+		});
+	});
+	describe('getAllApplicationsDownload', () => {
+		describe('when NI', () => {
+			beforeEach(() => {
+				config.backOfficeIntegration.applications.getAllApplications = 'NI';
+			});
+			it('invokes getAllNIApplicationsDownload', async () => {
+				await getAllApplicationsDownload();
+				expect(getAllNIApplicationsDownload).toHaveBeenCalled();
+			});
+		});
+		describe('when MERGE', () => {
+			beforeEach(() => {
+				config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
+			});
+			it('invokes getAllMergedApplicationsDownload', async () => {
+				await getAllApplicationsDownload();
+				expect(getAllMergedApplicationsDownload).toHaveBeenCalled();
+			});
+		});
+		describe('when BO', () => {
+			beforeEach(() => {
+				config.backOfficeIntegration.applications.getAllApplications = 'BO';
+				getAllApplicationsRepository.mockResolvedValue({
+					applications: [APPLICATION_DB],
+					count: 1
+				});
+				mapBackOfficeApplicationsToApi.mockReturnValue([APPLICATION_API]);
+			});
+			it('invokes getAllBOApplicationsDownload', async () => {
+				await getAllApplicationsDownload();
+				expect(getAllApplicationsRepository).toHaveBeenCalled();
+			});
+			it('maps applications to CSV', async () => {
+				await getAllApplicationsDownload();
+				expect(mapBackOfficeApplicationsToApi).toHaveBeenCalledWith([APPLICATION_DB]);
+				expect(mapApplicationsToCSV).toHaveBeenCalledWith([APPLICATION_API]);
 			});
 		});
 	});
