@@ -8,7 +8,9 @@ const getApplication = async (caseReference) =>
 const getAllApplications = async (options = {}) => {
 	const { filters, searchTerm } = options;
 	let findAllOptions = pick(options, ['attributes', 'offset', 'limit', 'order']);
-	findAllOptions.where = {};
+	findAllOptions.where = {
+		Region: { [Op.ne]: 'Wales' }
+	};
 
 	// filters
 	const filterStatements = [];
