@@ -7,6 +7,7 @@ const {
 	mapApplicationFiltersToNI,
 	buildApiFiltersFromNIApplications
 } = require('../utils/application.mapper');
+const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const {
 	getAllApplications: getAllNIApplicationsRepository
 } = require('../repositories/project.ni.repository');
@@ -101,6 +102,17 @@ const mergeApplicationsAndCounts = (
 		allApplications
 	};
 };
+
+const getAllMergedApplicationsDownload = async () => {
+	const allNIApplications = await getAllNIApplicationsRepository();
+	const niApplications = allNIApplications.applications.map(addMapZoomLevelAndLongLat);
+	const allBOApplications = await getAllBOApplicationsRepository();
+	const boApplications = mapBackOfficeApplicationsToApi(allBOApplications.applications);
+	const mergedApplications = uniqBy([...boApplications, ...niApplications], 'CaseReference');
+	return mapApplicationsToCSV(mergedApplications);
+};
+
 module.exports = {
-	getAllMergedApplications
+	getAllMergedApplications,
+	getAllMergedApplicationsDownload
 };
