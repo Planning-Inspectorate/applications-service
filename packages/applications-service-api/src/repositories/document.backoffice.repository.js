@@ -6,7 +6,7 @@ const getFilters = (caseReference) => {
 		SELECT DISTINCT(stage), filter1, count(id) as total
 		FROM Document
 		WHERE caseRef = ${caseReference}
-			AND (stage is not null and stage <> 'draft')
+			AND (stage is not null and stage <> 'draft' and stage <> '0')
 			AND filter1 is not null
 		GROUP BY stage, filter1`;
 
@@ -18,7 +18,11 @@ const getDocuments = async (query) => {
 		AND: [
 			{ caseRef: query.caseReference },
 			{
-				AND: [{ stage: { not: { equals: null } } }, { stage: { not: { equals: 'draft' } } }]
+				AND: [
+					{ stage: { not: { equals: null } } },
+					{ stage: { not: { equals: 'draft' } } },
+					{ stage: { not: { equals: '0' } } }
+				]
 			}
 		]
 	};
