@@ -1,5 +1,5 @@
 const { request } = require('../__data__/supertest');
-
+const uuid = require('uuid');
 const config = require('../../src/lib/config');
 const { APPLICATION_FO, APPLICATION_DB } = require('../__data__/application');
 const {
@@ -34,6 +34,7 @@ jest.mock('../../src/models', () => ({
 }));
 
 const mockProjectFindUnique = jest.fn();
+jest.mock('uuid');
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		project: {
@@ -239,7 +240,7 @@ describe('/api/v1/interested-party', () => {
 
 		describe('Back Office project', () => {
 			const BACK_OFFICE_CASE_REFERENCE = 'BC0110002';
-			const mockReferenceId = 'BC0110002-091222133021123';
+			const mockReferenceId = 'F3AAB2CF4';
 			const mockDate = new Date('2022-12-09 13:30:21:123');
 
 			beforeEach(() => {
@@ -251,6 +252,7 @@ describe('/api/v1/interested-party', () => {
 				];
 
 				getDate.mockReturnValue(mockDate);
+				uuid.v4.mockReturnValue('3aab2cf4c4d34e3e8');
 
 				mockProjectFindUnique.mockResolvedValueOnce({
 					...APPLICATION_DB,
@@ -290,7 +292,10 @@ describe('/api/v1/interested-party', () => {
 								type: 'Publish',
 								version: '0.1'
 							},
-							body: message,
+							body: {
+								...message,
+								referenceId: 'F3AAB2CF4'
+							},
 							contentType: 'application/json'
 						}
 					]);
