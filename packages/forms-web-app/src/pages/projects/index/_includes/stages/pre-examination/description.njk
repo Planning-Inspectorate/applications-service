@@ -14,7 +14,7 @@
 {% set repsOpenDescText %}
 <p class="govuk-body">
 		If you want to comment on this proposed project, you can now <a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">register to have your say</a>.
-		{% if applicationData.DateOfRelevantRepresentationClose %}Registration closes on {{ applicationData.DateOfRelevantRepresentationClose | date }} at 23:59  {% endif %}
+		{% if applicationData.DateOfRelevantRepresentationClose %}Registration closes on {{ applicationData.DateOfRelevantRepresentationClose | date }} at 23:59.{% endif %}
 </p>
 
 <a href='/projects/{{ caseRef }}/register/register-have-your-say' class="govuk-button">
