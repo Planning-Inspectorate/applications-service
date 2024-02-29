@@ -1,18 +1,18 @@
 const logger = require('../../../../lib/logger');
 const { getAdviceDetailData } = require('../../../../services/advice.service');
 const { getPageViewModel } = require('./_utils/get-page-view-model');
-
-const view = 'projects/section-51/advice-detail/view.njk';
+const { getView } = require('./_utils/get-view');
 
 const getSection51AdviceDetailController = async (req, res, next) => {
 	try {
-		const { params } = req;
-		const { locals } = res;
-		const { caseRef } = locals;
+		const { params, path } = req;
+		const { case_ref, id } = params;
 
-		const adviceDetailData = await getAdviceDetailData(params.id, caseRef);
+		const adviceDetailData = await getAdviceDetailData(id, case_ref);
 
-		return res.render(view, await getPageViewModel(locals, adviceDetailData));
+		const view = getView(path, id);
+
+		return res.render(view, await getPageViewModel(path, case_ref, id, adviceDetailData));
 	} catch (error) {
 		logger.error(error);
 		if (error.message === 'NOT_FOUND') return res.status(404).render('error/not-found');

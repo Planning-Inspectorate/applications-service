@@ -19,6 +19,7 @@ const {
 } = require('./register-of-applications/utils/get-register-of-applications-url');
 
 const { projectsRouter } = require('./projects/router');
+const { registerOfAdviceRouter } = require('./register-of-advice/router');
 
 const indexURL = getIndexURL();
 const contactURL = getContactURL();
@@ -37,13 +38,13 @@ const pagesRouter = express.Router();
 if (featureFlag.allowHomepage) {
 	pagesRouter.get(indexURL, getIndexController);
 	pagesRouter.get(detailedInformationURL, getDetailedInformationController);
+	pagesRouter.use(registerOfAdviceRouter);
 }
 
 if (!featureFlag.usePrivateBetaV1RoutesOnly) {
 	pagesRouter.get(projectSearchURL, getProjectSearchController);
 	pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
 }
-
 pagesRouter.get(contactURL, getContactController);
 
 pagesRouter.get(cookiesURL, getCookiesController);
