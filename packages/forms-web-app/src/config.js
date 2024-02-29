@@ -64,7 +64,8 @@ module.exports = {
 		),
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
-		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true'
+		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
+		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true
