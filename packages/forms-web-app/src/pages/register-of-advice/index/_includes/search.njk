@@ -1,0 +1,15 @@
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+
+<h2 class="govuk-heading-m">
+  Search advice
+</h2>
+
+<p class="govuk-body">
+  Search by key words or the name of person the advice was given to.
+</p>
+
+<form>
+  {{ uiSearchBar('register-of-advice-search-bar', 'searchTerm', searchTerm, 'Search by key words or the name of person the advice was given to.') }}
+
+  <input type="hidden" name="itemsPerPage" value="{{ itemsPerPage }}">
+</form>
