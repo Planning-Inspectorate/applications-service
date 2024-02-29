@@ -40,10 +40,12 @@ function getVerticalTabs(
 			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
-			hidden: !isRegistrationOpen(
-				DateOfRepresentationPeriodOpen,
-				DateOfRelevantRepresentationClose
-			),
+			hidden:
+				!isRegistrationOpen(
+					DateOfRepresentationPeriodOpen,
+					DateOfRelevantRepresentationClose,
+					caseRef
+				) || featureFlag.openRegistrationCaseReferences.includes(caseRef),
 			id: 'register-index',
 			name: 'Register to have your say',
 			url: getRegisterIndexURL(caseRef)

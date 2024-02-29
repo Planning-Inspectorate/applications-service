@@ -114,5 +114,23 @@ describe('projects/register/index/controller', () => {
 			expect(res.status).toHaveBeenCalledWith(404);
 			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
 		});
+		it('should redirect to not found route if registration period has closed and openRegistrationCaseReferences is empty', async () => {
+			getAppData.mockImplementation(() =>
+				Promise.resolve({
+					resp_code: 404,
+					data: {
+						DateOfRepresentationPeriodOpen: '2022-04-01',
+						DateOfRelevantRepresentationClose: '2022-07-01',
+						openRegistrationCaseReferences: ''
+					}
+				})
+			);
+			const req = {
+				...mockReq()
+			};
+			await getRegisterIndexController(req, res);
+			expect(res.status).toHaveBeenCalledWith(404);
+			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
+		});
 	});
 });
