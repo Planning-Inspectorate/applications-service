@@ -8,6 +8,11 @@ const sortApplications = (applications, sort = '+ProjectName') => {
 	const direction = sort.startsWith('-') ? 'desc' : 'asc';
 	const key = sort.replace(/^[+-]/, '');
 
+	// add initial sort by projectName so missing date fields are sorted by project name
+	if (key !== 'ProjectName') {
+		applications = applications.sort(sortByStringKeyInObject('ProjectName', 'asc'));
+	}
+
 	switch (key) {
 		case 'ProjectName':
 		case 'PromoterName':
@@ -31,8 +36,8 @@ const sortByDateKeyInObject = (key, direction) => (a, b) => {
 };
 
 const sortByStringKeyInObject = (key, direction) => (a, b) => {
-	const aValue = a[key].toLowerCase();
-	const bValue = b[key].toLowerCase();
+	const aValue = a[key]?.toLowerCase();
+	const bValue = b[key]?.toLowerCase();
 	return direction === 'asc' ? (aValue > bValue ? 1 : -1) : aValue < bValue ? 1 : -1;
 };
 
