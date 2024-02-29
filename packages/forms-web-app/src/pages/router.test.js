@@ -4,7 +4,9 @@ const { getCookiesController, postCookiesController } = require('./cookies/contr
 const { getDetailedInformationController } = require('./detailed-information/controller');
 const { getProjectSearchController } = require('./project-search/controller');
 const { getRegisterOfApplicationsController } = require('./register-of-applications/controller');
+
 const { projectsRouter } = require('./projects/router');
+const { registerOfAdviceRouter } = require('./register-of-advice/router');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -69,9 +71,11 @@ describe('pages/router', () => {
 
 			expect(use).toHaveBeenCalledWith(projectsRouter);
 
+			expect(use).toHaveBeenCalledWith(registerOfAdviceRouter);
+
 			expect(get).toBeCalledTimes(6);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(1);
+			expect(use).toBeCalledTimes(2);
 		});
 	});
 });

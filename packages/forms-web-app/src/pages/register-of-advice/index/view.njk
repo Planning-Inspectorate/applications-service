@@ -1,0 +1,43 @@
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        {{ pageHeading }}
+      </h1>
+
+      <p class="govuk-body">
+      This list is a record of general advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.
+    </p>
+
+      <p class="govuk-body">
+      Project specific advice can be viewed on the relevant project page.
+    </p>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ projectSearchURL }}">View all projects</a>
+      </p>
+
+      {% if advice | length or searchTerm %}
+
+        {% include "./_includes/search.njk" %}
+
+        {% if advice %}
+
+          {% include "./_includes/results-per-page.njk" %}
+
+          {% include "./_includes/results.njk" %}
+
+          {% include "./_includes/pagination.njk" %}
+
+        {% elseif searchTerm %}
+
+          {% include "./_includes/no-results-found.njk" %}
+
+        {% endif %}
+
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

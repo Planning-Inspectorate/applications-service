@@ -2,7 +2,7 @@ const { getAttachments } = require('./get-attachments');
 const { getEnquirySummaryList } = require('./get-enquiry-summary-list');
 const { getBreadcrumbsItems } = require('./get-breadcrumbs-items');
 const { getAdviceTitle } = require('../../index/_utils/advice-helpers');
-const { getSection51IndexURL } = require('../../index/_utils/get-section-51-index-url');
+const { getBackToListURL } = require('./get-back-to-list-url');
 
 const handleAdviceDetails = (adviceDetails) => ({
 	adviceGiven: adviceDetails.adviceGiven,
@@ -13,10 +13,10 @@ const handleAdviceDetails = (adviceDetails) => ({
 	title: getAdviceTitle(adviceDetails)
 });
 
-const getPageViewModel = async ({ caseRef }, adviceDetails) => ({
+const getPageViewModel = async (path, caseRef, id, adviceDetails) => ({
 	activeId: 'section-51',
-	backToListUrl: getSection51IndexURL(caseRef),
-	breadcrumbsItems: getBreadcrumbsItems(caseRef),
+	backToListUrl: getBackToListURL(path, caseRef, id),
+	breadcrumbsItems: getBreadcrumbsItems(path, caseRef, id),
 	...handleAdviceDetails(adviceDetails)
 });
 
