@@ -84,7 +84,7 @@ const DB_DOCUMENTS = [
 		type: 'Application Form',
 		filter_1: null,
 		filter_2: null,
-		category: "Developer's Application",
+		category: "Developer's application",
 		description: null,
 		size: 105711,
 		mime: 'application/pdf',
@@ -189,7 +189,7 @@ const RESPONSE_DOCUMENTS = [
 		type: 'Application Form',
 		filter1: null,
 		filter2: null,
-		category: "Developer's Application",
+		category: "Developer's application",
 		description: null,
 		size: 105711,
 		mime: 'application/pdf',
@@ -209,7 +209,7 @@ const RESPONSE_DOCUMENTS = [
 ];
 
 const DB_FILTERS = [
-	{ stage: 1, filter_1: 'Application Form', category: "Developer's Application", count: 1 },
+	{ stage: 1, filter_1: 'Application Form', category: "Developer's application", count: 1 },
 	{ stage: 4, filter_1: 'Recording of hearing', category: null, count: 1 },
 	{ stage: 7, filter_1: 'Plans', category: null, count: 1 },
 	{ stage: 7, filter_1: 'Decided', category: null, count: 1 }
@@ -281,8 +281,8 @@ const RESPONSE_FILTERS = [
 	},
 	{
 		name: 'category',
-		value: "Developer's Application",
-		label: "Developer's Application",
+		value: "Developer's application",
+		label: "Developer's application",
 		count: 1,
 		type: [{ value: 'Application Form', count: 1 }]
 	}

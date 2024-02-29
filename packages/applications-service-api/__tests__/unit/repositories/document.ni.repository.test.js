@@ -65,7 +65,7 @@ describe('documentV3 service', () => {
 				filters: [
 					{
 						name: 'category',
-						value: "Developer's Application",
+						value: "Developer's application",
 						type: [{ value: 'Plans' }, { value: 'Reports' }]
 					},
 					{
@@ -84,7 +84,7 @@ describe('documentV3 service', () => {
 						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
-								{ category: "Developer's Application", filter_1: ['Plans', 'Reports'] },
+								{ category: "Developer's application", filter_1: ['Plans', 'Reports'] },
 								{ stage: 1, filter_1: ['Deadline 2', 'Deadline 3'] }
 							]
 						}

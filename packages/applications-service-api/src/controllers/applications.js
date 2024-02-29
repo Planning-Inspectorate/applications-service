@@ -1,9 +1,9 @@
 const { StatusCodes } = require('http-status-codes');
 const logger = require('../lib/logger');
+const { getNIApplication } = require('../services/application.ni.service');
 const {
-	getNIApplication,
-	getAllNIApplicationsDownload
-} = require('../services/application.ni.service');
+	getAllApplicationsDownload: getAllApplicationsDownloadService
+} = require('../services/application.backoffice.service');
 const {
 	getAllApplications: getAllApplicationsService
 } = require('../services/application.backoffice.service');
@@ -53,7 +53,7 @@ const getAllApplicationsDownload = async (req, res) => {
 	res.setHeader('Content-Type', 'text/csv');
 	res.setHeader('Content-Disposition', 'attachment; filename=applications.csv');
 
-	const response = await getAllNIApplicationsDownload();
+	const response = await getAllApplicationsDownloadService();
 
 	res.status(StatusCodes.OK).send(response);
 };

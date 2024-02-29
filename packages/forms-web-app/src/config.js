@@ -67,7 +67,8 @@ module.exports = {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
 		openRegistrationCaseReferences: splitStringToArray(
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
-		)
+		),
+		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE'
 	},
 	featureHideLink: {
 		hideAllExaminationDocumentsLink: true
@@ -87,6 +88,7 @@ module.exports = {
 		twitterURL: 'https://www.twitter.com/PINSgov'
 	},
 	pinsURL: {
+		index: 'https://infrastructure.planninginspectorate.gov.uk',
 		adviceNotes:
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},
@@ -95,6 +97,14 @@ module.exports = {
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate',
+		developmentConsent:
+			'https://www.gov.uk/government/collections/nationally-significant-infrastructure-projects-development-consent',
+		developmentConsentAndAdvice:
+			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-development-consent-legislation-and-advice',
+		nationalPolicyStatements:
+			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements',
+		planningGuidance:
+			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
 		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
 	},
 	pinsPrivacyNoticeUrl:

@@ -13,11 +13,17 @@ const getByCaseReference = async (caseReference) => {
 
 const getAllApplications = async (options = {}) => {
 	const { filters, searchTerm, orderBy, offset, size } = options;
-	const where = {};
-
-	if (filters?.region || filters?.stage || filters?.sector || searchTerm) {
-		where['AND'] = [];
-	}
+	const where = {
+		AND: [
+			{
+				regions: {
+					not: {
+						contains: 'wales'
+					}
+				}
+			}
+		]
+	};
 
 	if (searchTerm) {
 		const terms = options.searchTerm.split(' ');

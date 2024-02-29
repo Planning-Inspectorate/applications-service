@@ -4,12 +4,7 @@
 {% from "components/section/events.njk" import sectionEvents %}
 
 {% block script %}
-	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
-		{
-			callback: "window.GOVUKFrontend.initAll();",
-			src: "/assets/govuk/all.js"
-		}
-	), initiateScriptsConfig) %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({callback: "window.GOVUKFrontend.initAll();", src: "/assets/govuk/all.js"}), initiateScriptsConfig) %}
 {% endblock %}
 
 {% if events.upcoming.displayEvents %}
@@ -30,11 +25,11 @@
 
 {% block pageContent %}
 	<p class="govuk-body">
-		The examination timetable gives the dates of events and deadlines for submissions to be made by.
+		The examination timetable shows the dates of events and deadlines for submissions.
 	</p>
 
 	<p class="govuk-body">
-		You can have your say during the examination stage of the project.
+		If you have registered to have your say, you can do this in the examination stage.
 	</p>
 
 	{% if examination.startDate or examination.closeDate %}

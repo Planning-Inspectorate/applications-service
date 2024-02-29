@@ -21,9 +21,17 @@
 		{% include "./includes/search.njk" %}
 
 		{% if applications | length %}
-			{% include "./includes/results-per-page.njk" %}
+
+            {% if featureFlag.allowApplicationsPagination == true %}
+                {% include "./includes/results-per-page.njk" %}
+            {% endif %}
+
 			{% include "./includes/applications-table.njk" %}
-			{% include "./includes/pagination.njk" %}
+
+            {% if featureFlag.allowApplicationsPagination == true %}
+                {% include "./includes/pagination.njk" %}
+            {% endif %}
+
 		{% else %}
 			{% include "./includes/no-matching-results.njk" %}
 		{% endif %}

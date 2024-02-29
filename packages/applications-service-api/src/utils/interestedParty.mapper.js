@@ -1,4 +1,4 @@
-const moment = require('moment/moment');
+const uuid = require('uuid');
 const { getDate } = require('./date-utils');
 
 const BEHALF_SELF = 'me';
@@ -85,7 +85,8 @@ const mapInterestedPartyContactDetails = (contactDetails, type) => {
 	return details;
 };
 
-const generateReferenceId = (caseReference) =>
-	`${caseReference}-${moment(getDate()).format('DDMMYYHHmmssSSS')}`;
+const generateReferenceId = () => {
+	return `F${uuid.v4().replace(/-/g, '').substring(0, 8).toUpperCase()}`;
+};
 
 module.exports = { mapInterestedParty };
