@@ -1,4 +1,8 @@
 const {
+	getRegisterOfAdviceDetailURL
+} = require('../../../../register-of-advice/detail/_utils/get-register-of-advice-detail-url');
+const { registerOfAdviceCaseRef } = require('../../../../register-of-advice/index/config');
+const {
 	getSection51AdviceDetailURL
 } = require('../../advice-detail/_utils/get-section-51-advice-detail-url');
 
@@ -32,7 +36,10 @@ const getAdviceLinkTitle = (advice) => {
 		: `View advice to ${getAdviceName(advice)}`;
 };
 
-const getAdviceLink = (caseRef, { adviceID }) => getSection51AdviceDetailURL(caseRef, adviceID);
+const getAdviceLink = (caseRef, { adviceID }) =>
+	caseRef === registerOfAdviceCaseRef
+		? getRegisterOfAdviceDetailURL(adviceID)
+		: getSection51AdviceDetailURL(caseRef, adviceID);
 
 module.exports = {
 	getAdviceLinkTitle,
