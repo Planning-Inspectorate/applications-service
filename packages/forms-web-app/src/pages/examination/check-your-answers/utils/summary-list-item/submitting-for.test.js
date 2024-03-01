@@ -46,7 +46,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/sub
 							1: { text: 'Myself', value: 'myself' },
 							2: { text: 'An organisation I work for', value: 'organisation' },
 							3: {
-								text: 'On behalf of another person, a family group or another organisation I do not work for',
+								text: 'On behalf of another person, a household or another organisation I do not work for',
 								value: 'agent'
 							}
 						},
