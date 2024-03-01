@@ -1,6 +1,7 @@
+const config = require('../../config');
+
 const getProjectEmailAddress = (session) => {
-	if (!session.ProjectEmailAddress) throw new Error('No project email address in app data session');
-	return session.ProjectEmailAddress;
+	return session.ProjectEmailAddress || config.pinsContactDetails.enquiriesEmailAddress;
 };
 
 module.exports = {
