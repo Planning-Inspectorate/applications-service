@@ -12,7 +12,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 
 			beforeEach(() => {
 				jest.useFakeTimers().setSystemTime(new Date(dateToday));
-				featureFlag.openRegistrationCaseReferences = 're-opened case ref';
+				featureFlag.openRegistrationCaseReferences = ['re-opened-case-ref'];
 			});
 
 			describe('and the open date is the same as the date today and no close date is set', () => {
@@ -20,7 +20,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = dateToday;
 					const closeDate = null;
-					const caseRef = 're-opened case ref';
+					const caseRef = 're-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -35,7 +35,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = dateToday;
 					const closeDate = null;
-					const caseRef = 'mock case ref';
+					const caseRef = 'not-re-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -52,7 +52,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2023-01-01';
 					const closeDate = '2023-01-03';
-					const caseRef = 're-opened case ref';
+					const caseRef = 're-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -67,7 +67,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2023-01-01';
 					const closeDate = '2023-01-03';
-					const caseRef = 'mock case ref';
+					const caseRef = 'not-re-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -84,13 +84,13 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2023-01-03';
 					const closeDate = '2023-01-04';
-					const caseRef = 're-opened case ref';
+					const caseRef = 're-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
 					});
 
-					it('should return false', () => {
+					it('should return true', () => {
 						expect(registrationOpen).toEqual(true);
 					});
 				});
@@ -99,7 +99,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2023-01-03';
 					const closeDate = '2023-01-04';
-					const caseRef = 'mock case ref';
+					const caseRef = 'not-re-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -116,7 +116,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2023-01-01';
 					const closeDate = dateToday;
-					const caseRef = 're-opened case ref';
+					const caseRef = 're-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -127,11 +127,11 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					});
 				});
 
-				describe('and the case ref is in openRegistrationCaseReferences', () => {
+				describe('and the case ref is NOT in openRegistrationCaseReferences', () => {
 					let registrationOpen;
 					const openDate = '2023-01-01';
 					const closeDate = dateToday;
-					const caseRef = 'mock case ref';
+					const caseRef = 'not-re-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -148,7 +148,7 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2022-01-01';
 					const closeDate = '2022-01-02';
-					const caseRef = 're-opened case ref';
+					const caseRef = 're-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
@@ -163,13 +163,13 @@ describe('projects/register/index/_utils/is-registration-open', () => {
 					let registrationOpen;
 					const openDate = '2022-01-01';
 					const closeDate = '2022-01-02';
-					const caseRef = 'mock case ref';
+					const caseRef = 'not-re-opened-case-ref';
 
 					beforeEach(() => {
 						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
 					});
 
-					it('should return true', () => {
+					it('should return false', () => {
 						expect(registrationOpen).toEqual(false);
 					});
 				});

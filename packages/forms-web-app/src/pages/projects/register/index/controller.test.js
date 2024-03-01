@@ -117,11 +117,11 @@ describe('projects/register/index/controller', () => {
 		it('should redirect to not found route if registration period has closed and openRegistrationCaseReferences is empty', async () => {
 			getAppData.mockImplementation(() =>
 				Promise.resolve({
-					resp_code: 404,
+					resp_code: 200,
 					data: {
 						DateOfRepresentationPeriodOpen: '2022-04-01',
 						DateOfRelevantRepresentationClose: '2022-07-01',
-						openRegistrationCaseReferences: ''
+						openRegistrationCaseReferences: []
 					}
 				})
 			);
