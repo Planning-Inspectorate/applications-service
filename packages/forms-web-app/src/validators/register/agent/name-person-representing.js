@@ -25,12 +25,12 @@ const rules = () => {
 		body('full-name')
 			.if(body('representing').matches('family'))
 			.notEmpty()
-			.withMessage('Enter the name of the family group you are representing'),
+			.withMessage('Enter the name of the household you are representing'),
 		body('full-name')
 			.if(body('representing').matches('family'))
 			.isLength({ min: 3, max: 64 })
 			.withMessage(
-				'Full name of the family group you are representing must be between 3 and 64 characters'
+				'Full name of the household you are representing must be between 3 and 64 characters'
 			)
 	];
 };
