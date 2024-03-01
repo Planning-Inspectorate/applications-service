@@ -2,6 +2,7 @@ const {
 	getAllMergedApplications,
 	getAllMergedApplicationsDownload
 } = require('../../../src/services/application.merge.service');
+const sortApplications = require('../../../src/utils/sort-applications.merge');
 const {
 	getAllApplications: getAllNIApplications
 } = require('../../../src/repositories/project.ni.repository');
@@ -19,9 +20,17 @@ const {
 jest.mock('../../../src/repositories/project.ni.repository');
 jest.mock('../../../src/repositories/project.backoffice.repository');
 jest.mock('../../../src/utils/map-applications-to-csv');
+jest.mock('../../../src/utils/sort-applications.merge');
 
 describe('application.merge.service', () => {
 	describe('getAllMergedApplications', () => {
+		const BOApplication = {
+			...APPLICATION_API_V1,
+			DateOfDCOAcceptance_NonAcceptance: null,
+			sourceSystem: 'ODT'
+		};
+		const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+		const combinedApplications = [BOApplication, ...NIApplications];
 		beforeEach(() => {
 			getAllBOApplications.mockResolvedValue({
 				applications: [APPLICATION_DB],
@@ -31,29 +40,32 @@ describe('application.merge.service', () => {
 				applications: APPLICATIONS_NI_DB,
 				count: APPLICATIONS_NI_DB.length
 			});
+			sortApplications.mockImplementation((applications) => applications);
 		});
+
 		it('calls getAllNIApplicationsRepository', async () => {
 			await getAllMergedApplications({});
 			expect(getAllNIApplications).toHaveBeenCalled();
 		});
+
 		it('calls getAllBOApplicationsRepository', async () => {
 			await getAllMergedApplications({});
 			expect(getAllBOApplications).toHaveBeenCalled();
+		});
+
+		it('calls sortApplications with query.sort', async () => {
+			await getAllMergedApplications({
+				sort: '+ProjectName'
+			});
+			expect(sortApplications).toHaveBeenCalledWith(combinedApplications, '+ProjectName');
 		});
 
 		describe('when there are no duplicates caseReferences', () => {
 			it('correctly merges applications and counts', async () => {
 				const result = await getAllMergedApplications({});
 
-				const BOApplication = {
-					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					sourceSystem: 'ODT'
-				};
-				const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
-				const combinedApplications = [BOApplication, ...NIApplications];
 				expect(result).toEqual({
-					applications: combinedApplications,
+					applications: expect.arrayContaining([...combinedApplications]),
 					totalItems: combinedApplications.length,
 					totalItemsWithoutFilters: combinedApplications.length,
 					itemsPerPage: combinedApplications.length,
@@ -76,15 +88,8 @@ describe('application.merge.service', () => {
 				});
 
 				const result = await getAllMergedApplications({});
-				const BOApplication = {
-					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					sourceSystem: 'ODT'
-				};
-				const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
-				const combinedApplications = [BOApplication, ...NIApplications];
 				expect(result).toEqual({
-					applications: combinedApplications,
+					applications: expect.arrayContaining([...combinedApplications]),
 					totalItems: combinedApplications.length,
 					totalItemsWithoutFilters: combinedApplications.length,
 					itemsPerPage: combinedApplications.length,
@@ -95,6 +100,7 @@ describe('application.merge.service', () => {
 			});
 		});
 	});
+
 	describe('getAllMergedApplicationsDownload', () => {
 		beforeEach(() => {
 			getAllBOApplications.mockResolvedValue({
