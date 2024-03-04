@@ -7,6 +7,7 @@ describe('#getPreExaminationSubStage', () => {
 	const closedDatePast = '2018-01-01';
 	const websiteDateFuture = '2021-01-01';
 	const websiteDatePast = '2018-01-01';
+	const caseRef = 'mock-case-ref';
 
 	beforeAll(() => {
 		jest.useFakeTimers().setSystemTime(new Date(today));
@@ -35,24 +36,32 @@ describe('#getPreExaminationSubStage', () => {
 		});
 	});
 	describe('Reps Open', () => {
-		it('when today is after open date and closed date is before today - should return sub stages PRE_REPS: true', () => {
-			const response = getPreExaminationSubStage(openDatePast, closedDateFuture);
-			expect(response).toEqual({
-				PRE_REPS: false,
-				OPEN_REPS: true,
-				CLOSED_REPS: false,
-				PUBLISHED_REPS: false,
-				RULE_6_PUBLISHED_REPS: false
+		describe('when today is after open date and before close date', () => {
+			describe('and the case ref is NOT included in openRegistrationCaseReferences', () => {
+				it('should return sub stages OPEN_REPS: true', () => {
+					const response = getPreExaminationSubStage(openDatePast, closedDateFuture, caseRef);
+					expect(response).toEqual({
+						PRE_REPS: false,
+						OPEN_REPS: true,
+						CLOSED_REPS: false,
+						PUBLISHED_REPS: false,
+						RULE_6_PUBLISHED_REPS: false
+					});
+				});
 			});
 		});
-		it('when today is after open date and closed date is null - should return sub stages PRE_REPS: true', () => {
-			const response = getPreExaminationSubStage(openDatePast, null);
-			expect(response).toEqual({
-				PRE_REPS: false,
-				OPEN_REPS: true,
-				CLOSED_REPS: false,
-				PUBLISHED_REPS: false,
-				RULE_6_PUBLISHED_REPS: false
+		describe('when today is after open date and closed date is null', () => {
+			describe('and the case ref is NOT included in openRegistrationCaseReferences', () => {
+				it('should return sub stages OPEN_REPS: true', () => {
+					const response = getPreExaminationSubStage(openDatePast, null, caseRef);
+					expect(response).toEqual({
+						PRE_REPS: false,
+						OPEN_REPS: true,
+						CLOSED_REPS: false,
+						PUBLISHED_REPS: false,
+						RULE_6_PUBLISHED_REPS: false
+					});
+				});
 			});
 		});
 	});

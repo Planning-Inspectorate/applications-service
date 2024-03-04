@@ -108,6 +108,7 @@ services:
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
       GOOGLE_ANALYTICS_ID: G-X21W2S2FN3
       HOST_URL: http://localhost:9004/
+      OPEN_REGISTRATION_CASE_REFERENCES: 'EN010102, EN013014'
       PDF_SERVICE_API_URL: http://pdf-service-api:3000
       PLANNED_OUTAGE_RESUME_TEXT: 'Sample service resume text'
       PRIVATE_BETA_V1_ROUTES_ONLY: 'false'
