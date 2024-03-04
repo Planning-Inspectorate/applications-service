@@ -102,7 +102,7 @@ VALUES ('EN010009', 'St James Barton Giant Wind Turbine', 'EN01 - Generating Sta
         'david.white@pins.gsi.gov.uk', NULL, NULL, NULL, 'Long— –dash', NULL, NULL, NULL, '2017-02-14', '2024-08-01',
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, '', NULL, 347128, 176491, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ShowSubmissionsTab',
-        '51.48441200795, -2.7615229238543', 'Wales', '2015-12-10', NULL, '', '2021-09-29 10:00:06', '2017-08-01', NULL,
+        '51.48441200795, -2.7615229238543', 'South West', '2015-12-10', NULL, '', '2021-09-29 10:00:06', '2017-08-01', NULL,
         NULL, NULL, NULL, NULL, NULL, 'HORIZON', '2022-11-30 00:00:00', 'mc');
 INSERT INTO ipclive.wp_ipc_projects (CaseReference, ProjectName, Proposal, ProjectLocation, Stage, PromoterName,
                                      PromoterFirstName, PromoterLastName, ApplicantEmailAddress, ApplicantPhoneNumber,

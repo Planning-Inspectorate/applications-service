@@ -47,7 +47,8 @@ const getProjectsIndexController = async (req, res, next) => {
 			applicationData.DateOfRepresentationPeriodOpen,
 			applicationData.DateOfRelevantRepresentationClose,
 			applicationData.DateRRepAppearOnWebsite,
-			rule6Document
+			rule6Document,
+			caseRef
 		);
 		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
 			applicationData.dateTimeExaminationEnds,
