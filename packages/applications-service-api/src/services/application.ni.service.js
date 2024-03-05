@@ -6,7 +6,8 @@ const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const {
 	buildApiFiltersFromNIApplications,
 	mapApplicationFiltersToNI,
-	addMapZoomLevelAndLongLat
+	addMapZoomLevelAndLongLat,
+	mapNIApplicationsToApi
 } = require('../utils/application.mapper');
 const { isEmpty } = require('lodash');
 
@@ -34,7 +35,7 @@ const getAllNIApplications = async (query) => {
 	const { applications, count } = await getAllApplicationsRepository(repositoryOptions);
 
 	return {
-		applications: applications.map(addMapZoomLevelAndLongLat),
+		applications: mapNIApplicationsToApi(applications),
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),
@@ -46,8 +47,8 @@ const getAllNIApplications = async (query) => {
 
 const getAllNIApplicationsDownload = async () => {
 	const { applications } = await getAllApplicationsRepository();
-	const applicationsWithMapZoomLvlAndLongLat = applications.map(addMapZoomLevelAndLongLat);
-	return mapApplicationsToCSV(applicationsWithMapZoomLvlAndLongLat);
+	const mappedApplications = mapNIApplicationsToApi(applications);
+	return mapApplicationsToCSV(mappedApplications);
 };
 
 const createQueryFilters = (query) => {
