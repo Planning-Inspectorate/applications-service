@@ -205,10 +205,10 @@ model Advice {
   agent           String?
   method          String?
   enquiryDate     DateTime
-  enquiryDetails  String?
+  enquiryDetails  String?   @db.NText
   adviceGivenBy   String?
   adviceDate      DateTime
-  adviceDetails   String?
+  adviceDetails   String?   @db.NText
   status          String?
   redactionStatus String?
   attachmentIds   String?
