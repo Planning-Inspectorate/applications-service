@@ -10,7 +10,7 @@ const {
 } = require('../__data__/application');
 const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
-const { addMapZoomLevelAndLongLat } = require('../../src/utils/application.mapper');
+const { mapNIApplicationsToApi } = require('../../src/utils/application.mapper');
 const config = require('../../src/lib/config');
 const sortApplications = require('../../src/utils/sort-applications.merge');
 
@@ -396,7 +396,7 @@ describe('/api/v1/applications', () => {
 				DateOfDCOAcceptance_NonAcceptance: null,
 				sourceSystem: 'ODT'
 			};
-			const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];
 			beforeEach(() => {
 				config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
