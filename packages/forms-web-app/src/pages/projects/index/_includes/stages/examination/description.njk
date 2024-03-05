@@ -3,9 +3,11 @@
 	You may also attend hearings, if hearings are held.
 </p>
 
-<p class="govuk-body">
-	You can also <a class="govuk-link" href="{{ rule8Document.path|default("/not-found", true) }}" target="_blank">view the rule 8 letter</a> to find out more about what you can do during the examination stage.
-</p>
+{% if rule8Document.path %}
+	<p class="govuk-body">
+		You can also <a class="govuk-link" href="{{ rule8Document.path }}" target="_blank" rel="noopener noreferrer">view the rule 8 letter</a> to find out more about what you can do during the examination stage.
+	</p>
+{% endif %}
 
 <p class="govuk-body">
 	<a class="govuk-link" href="/having-your-say-guide/have-your-say-examination">Find out more about the examination of the application</a> stage.
