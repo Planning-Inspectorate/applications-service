@@ -1,4 +1,5 @@
 const { getProjectEmailAddress } = require('../../../../src/controllers/session/app-data-session');
+const config = require('../../../../src/config');
 
 describe('session/app-data-session', () => {
 	describe('#getProjectEmailAddress', () => {
@@ -10,12 +11,12 @@ describe('session/app-data-session', () => {
 					expect(result).toEqual('mock project email');
 				});
 			});
-			describe('and the project email address  is NOT available', () => {
+			describe('and the project email address is NOT available', () => {
 				const mockSession = { appData: {} };
-				it('should throw an error', () => {
-					expect(() => getProjectEmailAddress(mockSession)).toThrow(
-						'No project email address in app data session'
-					);
+				config.pinsContactDetails.enquiriesEmailAddress = 'mock email';
+				it('should use default enquiriesEmailAddress', () => {
+					const result = getProjectEmailAddress(mockSession);
+					expect(result).toEqual('mock email');
 				});
 			});
 		});
