@@ -9,7 +9,7 @@ const {
 const {
 	getAllApplications: getAllBOApplications
 } = require('../../../src/repositories/project.backoffice.repository');
-const { addMapZoomLevelAndLongLat } = require('../../../src/utils/application.mapper');
+const { mapNIApplicationsToApi } = require('../../../src/utils/application.mapper');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const {
 	APPLICATION_DB,
@@ -29,7 +29,7 @@ describe('application.merge.service', () => {
 			DateOfDCOAcceptance_NonAcceptance: null,
 			sourceSystem: 'ODT'
 		};
-		const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+		const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 		const combinedApplications = [BOApplication, ...NIApplications];
 		beforeEach(() => {
 			getAllBOApplications.mockResolvedValue({
@@ -134,7 +134,7 @@ describe('application.merge.service', () => {
 				DateOfDCOAcceptance_NonAcceptance: null,
 				sourceSystem: 'ODT'
 			};
-			const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
+			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];
 			await getAllMergedApplicationsDownload();
 			expect(mapApplicationsToCSV).toHaveBeenCalledWith(combinedApplications);
