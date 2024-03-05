@@ -297,7 +297,7 @@ const mapResponseBackToNILegacyFormat = (application) => ({
 	MapZoomLevel: application.mapZoomLevel,
 	AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
 	AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
-	DateOfDCOSubmission: application.dateOfDCOSubmission,
+	DateOfDCOSubmission: getValidDateInStringOrNull(application.dateOfDCOSubmission),
 	DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
 	DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
 	ConfirmedStartOfExamination: application.confirmedStartOfExamination,
@@ -309,13 +309,28 @@ const mapResponseBackToNILegacyFormat = (application) => ({
 	stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
 	Stage5ExtensiontoDecisionDeadline: application.stage5ExtensionToDecisionDeadline,
 	DateOfRecommendations: application.dateOfRecommendations,
-	ConfirmedDateOfDecision: application.confirmedDateOfDecision,
+	ConfirmedDateOfDecision: getValidDateInStringOrNull(application.confirmedDateOfDecision),
 	DateProjectWithdrawn: application.dateProjectWithdrawn,
 	sourceSystem: application.sourceSystem,
 	dateOfNonAcceptance: application.dateOfNonAcceptance,
 	LongLat: application.longLat
 });
 
+const mapNIApplicationsToApi = (applications) => {
+	return applications.map(addMapZoomLevelAndLongLat).map((application) => {
+		return {
+			...application,
+			ConfirmedDateOfDecision: getValidDateInStringOrNull(application.ConfirmedDateOfDecision),
+			DateOfDCOSubmission: getValidDateInStringOrNull(application.DateOfDCOSubmission)
+		};
+	});
+};
+const getValidDateInStringOrNull = (date) => {
+	if (new Date(date).toString() === 'Invalid Date') return null;
+	// NI saves dates as '0000-00-00' when they are not set
+	if (date === '0000-00-00') return null;
+	return date;
+};
 const stageMap = {
 	draft: 0,
 	pre_application: 1,
@@ -349,5 +364,6 @@ module.exports = {
 	mapBackOfficeApplicationsToApi,
 	addMapZoomLevelAndLongLat,
 	mapResponseBackToNILegacyFormat,
-	buildApplicationsFiltersFromBOApplications
+	buildApplicationsFiltersFromBOApplications,
+	mapNIApplicationsToApi
 };

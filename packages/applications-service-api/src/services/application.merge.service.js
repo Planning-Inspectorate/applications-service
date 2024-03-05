@@ -3,9 +3,9 @@ const {
 } = require('../repositories/project.backoffice.repository');
 const {
 	mapBackOfficeApplicationsToApi,
-	addMapZoomLevelAndLongLat,
 	mapApplicationFiltersToNI,
-	buildApiFiltersFromNIApplications
+	buildApiFiltersFromNIApplications,
+	mapNIApplicationsToApi
 } = require('../utils/application.mapper');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const {
@@ -84,8 +84,8 @@ const getNIApplicationsWithoutPagination = async (query) => {
 	const { applications } = await getAllNIApplicationsRepository(queryOptions);
 	const { applications: allApplications } = await getAllNIApplicationsRepository();
 	return {
-		applications: applications.map(addMapZoomLevelAndLongLat),
-		allApplications: allApplications.map(addMapZoomLevelAndLongLat)
+		applications: mapNIApplicationsToApi(applications),
+		allApplications: mapNIApplicationsToApi(allApplications)
 	};
 };
 
@@ -111,7 +111,7 @@ const mergeApplicationsAndCounts = (
 
 const getAllMergedApplicationsDownload = async () => {
 	const allNIApplications = await getAllNIApplicationsRepository();
-	const niApplications = allNIApplications.applications.map(addMapZoomLevelAndLongLat);
+	const niApplications = mapNIApplicationsToApi(allNIApplications.applications);
 	const allBOApplications = await getAllBOApplicationsRepository();
 	const boApplications = mapBackOfficeApplicationsToApi(allBOApplications.applications);
 	const mergedApplications = uniqBy([...boApplications, ...niApplications], 'CaseReference');
