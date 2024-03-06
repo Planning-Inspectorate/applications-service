@@ -8,12 +8,12 @@
       </h1>
 
       <p class="govuk-body">
-      This list is a record of general advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.
-    </p>
+        This list is a record of general advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.
+      </p>
 
       <p class="govuk-body">
-      Project specific advice can be viewed on the relevant project page.
-    </p>
+        Project specific advice can be viewed on the relevant project page.
+      </p>
 
       <p class="govuk-body">
         <a class="govuk-link" href="{{ projectSearchURL }}">View all projects</a>
@@ -23,7 +23,7 @@
 
         {% include "./_includes/search.njk" %}
 
-        {% if advice %}
+        {% if advice | length %}
 
           {% include "./_includes/results-per-page.njk" %}
 
