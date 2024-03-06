@@ -1,10 +1,4 @@
-const {
-	getRegisteringForController,
-	postRegisteringForController,
-	forwardPage
-} = require('./controller');
-
-const { VIEW } = require('../../../../lib/views');
+const { getRegisteringForController, postRegisteringForController } = require('./controller');
 
 const { mockReq, mockRes } = require('../../../../../__tests__/unit/mocks');
 
@@ -15,12 +9,11 @@ describe('pages/projects/register/registering-for/controller', () => {
 	beforeEach(() => {
 		req = {
 			...mockReq(),
-			session: {
-				typeOfParty: 'myself'
+			params: {
+				case_ref: 'mock-case-ref'
 			},
-			query: {
-				mode: ''
-			}
+			query: {},
+			session: {}
 		};
 		res = mockRes();
 
@@ -28,103 +21,215 @@ describe('pages/projects/register/registering-for/controller', () => {
 	});
 
 	describe('#getRegisteringForController', () => {
-		it('should call the correct template', () => {
+		beforeEach(() => {
+			req.session.typeOfParty = 'myself';
 			getRegisteringForController(req, res);
+		});
+		it('should call the correct template', () => {
 			expect(res.render).toHaveBeenCalledWith('projects/register/registering-for/view.njk', {
 				type: 'myself'
 			});
 		});
 	});
 
-	describe('#forwardPage', () => {
-		it(`should return '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option selected`, async () => {
-			const pageRedirect = forwardPage('myself');
-
-			expect(pageRedirect).toEqual(VIEW.REGISTER.MYSELF.FULL_NAME);
-		});
-
-		it(`should return '/${VIEW.REGISTER.ORGANISATION.FULL_NAME}' if 2nd option selected`, async () => {
-			const pageRedirect = forwardPage('organisation');
-
-			expect(pageRedirect).toEqual(VIEW.REGISTER.ORGANISATION.FULL_NAME);
-		});
-
-		it(`should return '/${VIEW.REGISTER.AGENT.FULL_NAME}' if 3rd option selected`, async () => {
-			const pageRedirect = forwardPage('behalf');
-
-			expect(pageRedirect).toEqual(VIEW.REGISTER.AGENT.FULL_NAME);
-		});
-
-		it(`should return '/${VIEW.REGISTER.TYPE_OF_PARTY}' if it is 'default'`, async () => {
-			const pageRedirect = forwardPage('default');
-
-			expect(pageRedirect).toEqual(VIEW.REGISTER.TYPE_OF_PARTY);
-		});
-	});
-
 	describe('#postRegisteringForController', () => {
-		it(`'should post data and redirect to '/${VIEW.REGISTER.MYSELF.FULL_NAME}' if 1st option is selected`, async () => {
-			const typeOfParty = 'myself';
-			const mockRequest = {
-				...req,
-				body: {
-					'type-of-party': typeOfParty
-				}
-			};
-			await postRegisteringForController(mockRequest, res);
+		describe('And there is an issue', () => {
+			it('should re-render the template with errors if there is any validation error', async () => {
+				const mockRequest = {
+					...req,
+					body: {
+						'type-of-party': null,
+						errors: { a: 'b' },
+						errorSummary: [{ text: 'There were errors here', href: '#' }]
+					}
+				};
+				await postRegisteringForController(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.MYSELF.FULL_NAME}`
-			);
+				expect(res.redirect).not.toHaveBeenCalled();
+
+				expect(res.render).toHaveBeenCalledWith('projects/register/registering-for/view.njk', {
+					type: null,
+					errorSummary: [{ text: 'There were errors here', href: '#' }],
+					errors: { a: 'b' }
+				});
+			});
 		});
 
-		it(`'should post data and redirect to '/${VIEW.REGISTER.ORGANISATION.FULL_NAME}' if 2nd option is selected`, async () => {
-			const typeOfParty = 'organisation';
-			const mockRequest = {
-				...req,
-				body: {
-					'type-of-party': typeOfParty
-				}
-			};
-			await postRegisteringForController(mockRequest, res);
+		describe('And there are no issues', () => {
+			describe(`When the user has selected 'Myself' - myself`, () => {
+				beforeEach(() => {
+					req = {
+						...req,
+						body: {
+							'type-of-party': 'myself'
+						}
+					};
 
-			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.ORGANISATION.FULL_NAME}`
-			);
-		});
+					postRegisteringForController(req, res);
+				});
 
-		it(`'should post data and redirect to '/${VIEW.REGISTER.AGENT.FULL_NAME}' if 3rd option is selected`, async () => {
-			const typeOfParty = 'behalf';
-			const mockRequest = {
-				...req,
-				body: {
-					'type-of-party': typeOfParty
-				}
-			};
-			await postRegisteringForController(mockRequest, res);
+				it('should set the correct session data and redirect to the correct page', () => {
+					expect(req.session).toEqual({
+						mySelfRegdata: {
+							address: { country: null, line1: null, line2: null, line3: null, postcode: null },
+							behalf: 'me',
+							case_ref: null,
+							email: null,
+							'full-name': null,
+							'over-18': null,
+							telephone: null
+						},
+						typeOfParty: 'myself'
+					});
 
-			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/${VIEW.REGISTER.AGENT.FULL_NAME}`
-			);
-		});
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/register/myself/full-name'
+					);
+				});
+			});
 
-		it('should re-render the template with errors if there is any validation error', async () => {
-			const mockRequest = {
-				...req,
-				body: {
-					'type-of-party': null,
-					errors: { a: 'b' },
-					errorSummary: [{ text: 'There were errors here', href: '#' }]
-				}
-			};
-			await postRegisteringForController(mockRequest, res);
+			describe(`When the user has selected 'An organisation I work or volunteer for' - organisation`, () => {
+				beforeEach(() => {
+					req = {
+						...req,
+						body: {
+							'type-of-party': 'organisation'
+						}
+					};
 
-			expect(res.redirect).not.toHaveBeenCalled();
+					postRegisteringForController(req, res);
+				});
 
-			expect(res.render).toHaveBeenCalledWith('projects/register/registering-for/view.njk', {
-				type: null,
-				errorSummary: [{ text: 'There were errors here', href: '#' }],
-				errors: { a: 'b' }
+				it('should set the correct session data and redirect to the correct page', () => {
+					expect(req.session).toEqual({
+						orgRegdata: {
+							address: { country: null, line1: null, line2: null, line3: null, postcode: null },
+							behalf: 'them',
+							case_ref: null,
+							email: null,
+							'full-name': null,
+							'organisation-name': null,
+							'over-18': null,
+							role: null,
+							telephone: null
+						},
+						typeOfParty: 'organisation'
+					});
+
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/register/organisation/full-name'
+					);
+				});
+			});
+
+			describe(`When the user has selected 'On behalf of another person, a family group or an organisation I do not work for' - behalf`, () => {
+				beforeEach(() => {
+					req = {
+						...req,
+						body: {
+							'type-of-party': 'behalf'
+						}
+					};
+
+					postRegisteringForController(req, res);
+				});
+
+				it('should set the correct session data and redirect to the correct page', () => {
+					expect(req.session).toEqual({
+						behalfRegdata: {
+							behalf: 'you',
+							case_ref: null,
+							representee: {
+								address: { country: null, line1: null, line2: null, line3: null, postcode: null },
+								email: null,
+								'full-name': null,
+								'over-18': null,
+								telephone: null
+							},
+							representing: null,
+							representor: {
+								address: { country: null, line1: null, line2: null, line3: null, postcode: null },
+								email: null,
+								'full-name': null,
+								'organisation-name': null,
+								'over-18': null,
+								telephone: null
+							}
+						},
+						typeOfParty: 'behalf'
+					});
+
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/register/agent/full-name'
+					);
+				});
+			});
+
+			describe('And the user is editing their previously selected option', () => {
+				beforeEach(() => {
+					req = {
+						...req,
+						query: {
+							mode: 'edit'
+						},
+						session: {
+							typeOfParty: 'myself'
+						}
+					};
+				});
+
+				describe('and the user does not select a new option', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+							body: {
+								'type-of-party': 'myself'
+							}
+						};
+
+						postRegisteringForController(req, res);
+					});
+
+					it('should not set any new session data and should redirect to the correct page', () => {
+						expect(req.session).toEqual({ typeOfParty: 'myself' });
+
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/myself/check-answers'
+						);
+					});
+				});
+				describe('and the user selects a new option', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+							body: {
+								'type-of-party': 'organisation'
+							}
+						};
+
+						postRegisteringForController(req, res);
+					});
+					it('should set the correct session data and redirect to the correct page', () => {
+						expect(req.session).toEqual({
+							orgRegdata: {
+								address: { country: null, line1: null, line2: null, line3: null, postcode: null },
+								behalf: 'them',
+								case_ref: null,
+								email: null,
+								'full-name': null,
+								'organisation-name': null,
+								'over-18': null,
+								role: null,
+								telephone: null
+							},
+							typeOfParty: 'organisation'
+						});
+
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/organisation/full-name'
+						);
+					});
+				});
 			});
 		});
 	});
