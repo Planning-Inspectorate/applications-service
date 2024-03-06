@@ -12,7 +12,7 @@ Feature: Complete registration as Agent representing a person journey
 		Then I am on the "check your answers before registering on behalf of someone else" page
 		And I verify below data is present on Check your answers before registering page
 			| Column1                                     | Column2                                                                          | Column3                                            |
-			| Who are you registering for?                | On behalf of another person, a family group or an organisation I do not work for | Change who are you registering for                 |
+			| Who are you registering for?                | On behalf of another person, a household or an organisation I do not work for | Change who are you registering for                 |
 			| Full name                                   | TestFirstName TestMiddleName TestLastName                                        | Change your full name                              |
 			| Organisation name                           | Test Organisation Name                                                           | Change your organisation name                      |
 			| Address                                     | Address Line 1 NE27 0BB United Kingdom                                           | Change your address                                |
@@ -38,9 +38,9 @@ Feature: Complete registration as Agent representing a person journey
 		And I click on the continue button
 		Then I am on the "What is the full name of the organisation or charity that you are representing?" page
 
-	Scenario: click change link, select A family group and continue
+	Scenario: click change link, select A household and continue
 		And I click on "Who are you representing" change link
 		Then I am on the "Who are you representing?" page
-		And user selects "A family group" on who are you representing page
+		And user selects "A household" on who are you representing page
 		And I click on the continue button
-		Then I am on the "What is the name of the family group you are representing?" page
+		Then I am on the "what is the name of the household you are representing?" page
