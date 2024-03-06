@@ -1,20 +1,10 @@
-const { VIEW } = require('../../../../lib/views');
-const registrationData = require('../../../../lib/registration-data.json');
-const { REGISTER } = require('../../../../constants');
-const { registeringForOptions } = require('./_validators/validate-registering-for-options');
 const { getPageData } = require('./_utils/get-page-data');
+const { getRegisteringForRedirectURL } = require('./_utils/get-registering-for-redirect-url');
+const { setRegisteringForSession } = require('./_utils/set-registering-for-session');
+const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode-edit');
+const { isSelectedRegisteringForOptionNew } = require('./_utils/helpers');
 
 const view = 'projects/register/registering-for/view.njk';
-
-const forwardPage = (partyType) => {
-	const party = {
-		[REGISTER.TYPE_OF_PARTY.MY_SAY]: VIEW.REGISTER.MYSELF.FULL_NAME,
-		[REGISTER.TYPE_OF_PARTY.ORGANISATION]: VIEW.REGISTER.ORGANISATION.FULL_NAME,
-		[REGISTER.TYPE_OF_PARTY.AGENT]: VIEW.REGISTER.AGENT.FULL_NAME,
-		default: VIEW.REGISTER.TYPE_OF_PARTY
-	};
-	return party[partyType] || party.default;
-};
 
 const getRegisteringForController = (req, res) => {
 	const { session } = req;
@@ -24,16 +14,11 @@ const getRegisteringForController = (req, res) => {
 };
 
 const postRegisteringForController = (req, res) => {
-	const { body } = req;
+	const { body, session, params, query } = req;
 	const { errors = {}, errorSummary = [] } = body;
+	const { case_ref } = params;
 
-	const typeOfParty = body['type-of-party'];
-
-	let selectedParty = null;
-
-	if (registeringForOptions.includes(typeOfParty)) {
-		selectedParty = typeOfParty;
-	}
+	const selectedParty = body['type-of-party'];
 
 	if (Object.keys(errors).length > 0) {
 		return res.render(view, {
@@ -43,27 +28,15 @@ const postRegisteringForController = (req, res) => {
 		});
 	}
 
-	let redirectUrl = `/${forwardPage(selectedParty)}`;
-	if (typeOfParty !== req.session.typeOfParty) {
-		req.session.typeOfParty = typeOfParty;
-		if (typeOfParty === 'myself') {
-			req.session.mySelfRegdata = registrationData.myself;
-		} else if (typeOfParty === 'organisation') {
-			req.session.orgRegdata = registrationData.org;
-		} else if (typeOfParty === 'behalf') {
-			req.session.behalfRegdata = registrationData.behalf;
-		}
-	} else if (req.query.mode === 'edit') {
-		if (typeOfParty === 'myself') {
-			redirectUrl = `/${VIEW.REGISTER.MYSELF.CHECK_YOUR_ANSWERS}`;
-		} else if (typeOfParty === 'organisation') {
-			redirectUrl = `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`;
-		} else if (typeOfParty === 'behalf') {
-			redirectUrl = `/${VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS}`;
-		}
-	}
+	const { nextURL, editURL } = getRegisteringForRedirectURL(case_ref, selectedParty);
 
-	return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
+	let redirectURL = nextURL;
+
+	if (isSelectedRegisteringForOptionNew(selectedParty, session.typeOfParty))
+		setRegisteringForSession(session, selectedParty);
+	else if (isQueryModeEdit(query)) redirectURL = editURL;
+
+	return res.redirect(redirectURL);
 };
 
-module.exports = { getRegisteringForController, postRegisteringForController, forwardPage };
+module.exports = { getRegisteringForController, postRegisteringForController };
