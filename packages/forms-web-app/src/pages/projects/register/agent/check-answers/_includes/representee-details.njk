@@ -1,13 +1,13 @@
 {% set address %}
-	{{ data.representee.address.line1 }}<br>
-	{% if data.representee.address.line2 %}
-		{{ data.representee.address.line2 }}<br>
-	{% endif %}
-	{% if data.representee.address.line3 %}
-		{{ data.representee.address.line3 }}<br>
-	{% endif %}
-	{{ data.representee.address.postcode }}<br>
-	{{ data.representee.address.country }}
+{{ data.representee.address.line1 }}<br>
+{% if data.representee.address.line2 %}
+	{{ data.representee.address.line2 }}<br>
+{% endif %}
+{% if data.representee.address.line3 %}
+	{{ data.representee.address.line3 }}<br>
+{% endif %}
+{{ data.representee.address.postcode }}<br>
+{{ data.representee.address.country }}
 {% endset %}
 
 {% if data.representing === 'person' %}
@@ -19,9 +19,9 @@
 	{% set representingTxt = "The name of the organisation or charity that you are representing" %}
 	{% set representingHiddenText = "the name of the organisation or charity that you are representing" %}
 {% elseif data.representing === 'family' %}
-	{% set representing = "A family group" %}
-	{% set representingTxt = "The name of the family group you are representing" %}
-	{% set representingHiddenText = "the name of the family group you are representing " %}
+	{% set representing = "A household" %}
+	{% set representingTxt = "The name of the household you are representing" %}
+	{% set representingHiddenText = "the name of the household you are representing " %}
 {% endif %}
 
 {% set rows = [{

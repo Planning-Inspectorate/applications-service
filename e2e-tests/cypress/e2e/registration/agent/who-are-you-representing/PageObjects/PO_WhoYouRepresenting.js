@@ -7,7 +7,7 @@ class PO_WhoYouRepresenting {
 			case 'An organisation or charity':
 				cy.get('[data-cy="answer-organisation"]').click();
 				break;
-			case 'A family group':
+			case 'A household':
 				cy.get('[data-cy="answer-family"]').click();
 				break;
 		}
