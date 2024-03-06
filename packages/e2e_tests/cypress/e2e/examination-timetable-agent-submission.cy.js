@@ -97,6 +97,7 @@ describe('Agent has their say against the examination timetable', () => {
 
 	it('Checks other answers correct and submission can be completed', () => {
 		examinationTimetable.clickButton('Submit');
+		cy.wait(Cypress.env('commandDelay'));
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
 	});
 });
