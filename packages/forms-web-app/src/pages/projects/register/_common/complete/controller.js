@@ -1,4 +1,4 @@
-const { nsipProjectLink } = require('../../../../../lib/nsip-project-link');
+const { getProjectsURL } = require('../../../../projects/_utils/get-projects-url');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const logger = require('../../../../../lib/logger');
 const { viewModel } = require('./_utils/viewModel');
@@ -10,6 +10,7 @@ const {
 const getRegisterCompleteController = (req, res) => {
 	try {
 		const { session } = req;
+		const { caseRef } = session;
 		const key = getKeyFromUrl(req.originalUrl);
 		const { ipRefNo } = getSessionBase(session, key);
 		const { email } = getSession(session, key);
@@ -18,7 +19,7 @@ const getRegisterCompleteController = (req, res) => {
 			...viewModel[key],
 			ipRefNo,
 			email,
-			nsipProjectLink: nsipProjectLink(req.session.appData)
+			projectURL: getProjectsURL(caseRef)
 		});
 	} catch (e) {
 		logger.error(e);
