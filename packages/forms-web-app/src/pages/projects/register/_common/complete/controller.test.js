@@ -12,9 +12,11 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			describe('and the user has selected myself', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/myself/registration-complete',
+					params: {
+						case_ref: 'mock-case-ref'
+					},
 					session: {
-						appData: { Region: 'mock region', ProjectName: 'mock project name' },
-						mySelfRegdata: { email: 'mock email', ipRefNo: 'mock ip ref no' }
+						mySelfRegdata: { email: 'mock-email', ipRefNo: 'mock-ip-ref-no' }
 					}
 				};
 				beforeEach(() => {
@@ -22,10 +24,9 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				});
 				it('should render registration complete page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
-						email: 'mock email',
-						ipRefNo: 'mock ip ref no',
-						nsipProjectLink:
-							'https://infrastructure.planninginspectorate.gov.uk/projects/mock-region/mock-project-name',
+						email: 'mock-email',
+						ipRefNo: 'mock-ip-ref-no',
+						projectsIndexURL: '/projects/mock-case-ref',
 						pageTitle:
 							'Registration complete - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
@@ -34,9 +35,11 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			describe('and the user has selected organisation', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/registration-complete',
+					params: {
+						case_ref: 'mock-case-ref'
+					},
 					session: {
-						appData: { Region: 'mock region', ProjectName: 'mock project name' },
-						orgRegdata: { email: 'mock email', ipRefNo: 'mock ip ref no' }
+						orgRegdata: { email: 'mock-email', ipRefNo: 'mock-ip-ref-no' }
 					}
 				};
 				beforeEach(() => {
@@ -44,10 +47,9 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				});
 				it('should render registration complete page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
-						email: 'mock email',
-						ipRefNo: 'mock ip ref no',
-						nsipProjectLink:
-							'https://infrastructure.planninginspectorate.gov.uk/projects/mock-region/mock-project-name',
+						email: 'mock-email',
+						ipRefNo: 'mock-ip-ref-no',
+						projectsIndexURL: '/projects/mock-case-ref',
 						pageTitle:
 							'Registration complete - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
@@ -56,9 +58,11 @@ describe('controllers/register/common/registration-complete/controller', () => {
 			describe('and the user has selected agent', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/agent/registration-complete',
+					params: {
+						case_ref: 'mock-case-ref'
+					},
 					session: {
-						appData: { Region: 'mock region', ProjectName: 'mock project name' },
-						behalfRegdata: { representor: { email: 'mock email' }, ipRefNo: 'mock ip ref no' }
+						behalfRegdata: { representor: { email: 'mock-email' }, ipRefNo: 'mock-ip-ref-no' }
 					}
 				};
 				beforeEach(() => {
@@ -66,10 +70,9 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				});
 				it('should render registration complete page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
-						email: 'mock email',
-						ipRefNo: 'mock ip ref no',
-						nsipProjectLink:
-							'https://infrastructure.planninginspectorate.gov.uk/projects/mock-region/mock-project-name',
+						email: 'mock-email',
+						ipRefNo: 'mock-ip-ref-no',
+						projectsIndexURL: '/projects/mock-case-ref',
 						pageTitle:
 							'Registration complete - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 					});
@@ -82,7 +85,12 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				render: jest.fn(),
 				status: jest.fn(() => res)
 			};
-			const req = { session: 'mock session' };
+			const req = {
+				session: 'mock-session',
+				params: {
+					case_ref: 'mock-case-ref'
+				}
+			};
 			it('should throw an error', () => {
 				expect(() => getRegisterCompleteController(req, res)).toThrowError(
 					"Cannot read properties of undefined (reading 'split')"
