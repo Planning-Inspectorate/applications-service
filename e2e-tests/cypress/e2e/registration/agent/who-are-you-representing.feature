@@ -23,10 +23,10 @@ Feature: Who are you representing? page
         And I click on the continue button
         Then I am on the "What is the full name of the organisation or charity that you are representing?" page
 
-    Scenario: select A family group and continue
-        And user selects "A family group" on who are you representing page
+    Scenario: select A household and continue
+        And user selects "A household" on who are you representing page
         And I click on the continue button
-        Then I am on the "What is the name of the family group you are representing?" page
+        Then I am on the "what is the name of the household you are representing?" page
 
     Scenario: User click on back link
         When I click on back link

@@ -560,15 +560,15 @@ module.exports = (pageName) => {
 				});
 			cy.url().should('include', '/name-organisation-representing');
 			break;
-		case 'what is the name of the family group you are representing?':
+		case 'what is the name of the household you are representing?':
 			cy.title().should(
 				'eq',
-				'What is the name of the family group you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'What is the name of the household you are representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('What is the name of the family group you are representing?');
+					expect(text).to.contain('What is the name of the household you are representing?');
 				});
 			cy.url().should('include', '/name-family-group-representing');
 			break;

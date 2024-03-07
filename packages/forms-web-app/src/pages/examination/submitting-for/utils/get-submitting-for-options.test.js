@@ -25,7 +25,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 							value: 'organisation'
 						},
 						{
-							text: 'On behalf of another person, a family group or another organisation I do not work for',
+							text: 'On behalf of another person, a household or another organisation I do not work for',
 							value: 'agent'
 						}
 					]);
@@ -49,7 +49,7 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 							value: 'organisation'
 						},
 						{
-							text: 'On behalf of another person, a family group or another organisation I do not work for',
+							text: 'On behalf of another person, a household or another organisation I do not work for',
 							value: 'agent'
 						}
 					]);
