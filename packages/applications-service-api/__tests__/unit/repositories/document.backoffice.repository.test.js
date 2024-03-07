@@ -96,7 +96,7 @@ describe('document repository', () => {
 			});
 
 			expect(mockFindFirst).toHaveBeenCalledWith({
-				orderBy: { createdAt: 'desc' },
+				orderBy: { datePublished: 'desc' },
 				take: 1,
 				where: { caseRef: 'mock case ref', documentType: 'mock type' }
 			});

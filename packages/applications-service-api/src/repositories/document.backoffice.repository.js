@@ -78,7 +78,7 @@ const getDocumentsByType = async (queryData) =>
 			documentType: queryData.type
 		},
 		orderBy: {
-			createdAt: 'desc'
+			datePublished: 'desc'
 		},
 		take: 1
 	});
