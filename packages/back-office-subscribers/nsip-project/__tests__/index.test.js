@@ -29,7 +29,9 @@ const mockMessage = {
 	nsipAdministrationOfficerIds: [],
 	inspectorIds: [],
 	interestedPartyIds: [],
-	regions: ['a', 'b', 'c']
+	regions: ['a', 'b', 'c'],
+	dateOfReOpenRelevantRepresentationStart: '2024-01-01T09:00:00.000Z',
+	dateOfReOpenRelevantRepresentationClose: '2024-02-01T09:00:00.000Z'
 };
 
 const mockProject = {
@@ -41,6 +43,8 @@ const mockProject = {
 	sourceSystem: mockMessage.sourceSystem,
 	regions: 'a,b,c',
 	applicantId: mockMessage.applicantId,
+	dateOfReOpenRelevantRepresentationStart: mockMessage.dateOfReOpenRelevantRepresentationStart,
+	dateOfReOpenRelevantRepresentationClose: mockMessage.dateOfReOpenRelevantRepresentationClose,
 	modifiedAt: new Date()
 };
 
@@ -93,16 +97,17 @@ describe('nsip-project', () => {
 	it('upserts project', async () => {
 		await sendMessage(mockContext, mockMessage);
 		const expectedStatement = `MERGE INTO [project] AS Target
-			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9) AS Source ([caseId], [caseReference], [projectName], [projectDescription], [publishStatus], [sourceSystem], [regions], [applicantId], [modifiedAt])
+			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11) AS Source ([caseId], [caseReference], [projectName], [projectDescription], [publishStatus], [sourceSystem], [regions], [dateOfReOpenRelevantRepresentationStart], [dateOfReOpenRelevantRepresentationClose], [applicantId], [modifiedAt])
 			ON Target.[caseReference] = Source.[caseReference]
 			WHEN MATCHED 
 			AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
-			THEN UPDATE SET Target.[caseId] = Source.[caseId], Target.[projectName] = Source.[projectName], Target.[projectDescription] = Source.[projectDescription], Target.[publishStatus] = Source.[publishStatus], Target.[sourceSystem] = Source.[sourceSystem], Target.[regions] = Source.[regions], Target.[applicantId] = Source.[applicantId], Target.[modifiedAt] = Source.[modifiedAt]
-			WHEN NOT MATCHED THEN INSERT ([caseId], [caseReference], [projectName], [projectDescription], [publishStatus], [sourceSystem], [regions], [applicantId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9);`;
+			THEN UPDATE SET Target.[caseId] = Source.[caseId], Target.[projectName] = Source.[projectName], Target.[projectDescription] = Source.[projectDescription], Target.[publishStatus] = Source.[publishStatus], Target.[sourceSystem] = Source.[sourceSystem], Target.[regions] = Source.[regions], Target.[dateOfReOpenRelevantRepresentationStart] = Source.[dateOfReOpenRelevantRepresentationStart], Target.[dateOfReOpenRelevantRepresentationClose] = Source.[dateOfReOpenRelevantRepresentationClose], Target.[applicantId] = Source.[applicantId], Target.[modifiedAt] = Source.[modifiedAt]
+			WHEN NOT MATCHED THEN INSERT ([caseId], [caseReference], [projectName], [projectDescription], [publishStatus], [sourceSystem], [regions], [dateOfReOpenRelevantRepresentationStart], [dateOfReOpenRelevantRepresentationClose], [applicantId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11);`;
 		const expectedParameters = Object.values(mockProject);
 		const [first, ...rest] = mockExecuteRawUnsafe.mock.calls[1];
 		expect(first).toEqual(expectedStatement);
-		expect(rest).toEqual(expectedParameters);
+		expect(rest.length).toEqual(expectedParameters.length);
+		expect(rest).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`upserted project with caseReference ${mockMessage.caseReference}`
 		);

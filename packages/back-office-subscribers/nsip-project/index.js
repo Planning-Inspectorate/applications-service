@@ -93,5 +93,7 @@ const projectPropertiesFromMessage = [
 	'deadlineForDecision',
 	'jRPeriodEndDate',
 	'extensionToDateRelevantRepresentationsClose',
-	'examinationTimetableId'
+	'examinationTimetableId',
+	'dateOfReOpenRelevantRepresentationStart',
+	'dateOfReOpenRelevantRepresentationClose'
 ];
