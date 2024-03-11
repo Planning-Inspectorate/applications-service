@@ -1,5 +1,6 @@
 const logger = require('../../../../lib/logger');
 const { getAdviceDetailData } = require('../../../../services/advice.service');
+const { registerOfAdviceCaseRef } = require('../../../register-of-advice/index/config');
 const { getPageViewModel } = require('./_utils/get-page-view-model');
 const { getView } = require('./_utils/get-view');
 
@@ -8,7 +9,9 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 		const { params, path } = req;
 		const { case_ref, id } = params;
 
-		const adviceDetailData = await getAdviceDetailData(id, case_ref);
+		const caseRef = case_ref || registerOfAdviceCaseRef;
+
+		const adviceDetailData = await getAdviceDetailData(id, caseRef);
 
 		const view = getView(path, id);
 

@@ -100,9 +100,9 @@ module.exports = {
 		developmentConsent:
 			'https://www.gov.uk/government/collections/nationally-significant-infrastructure-projects-development-consent',
 		developmentConsentAndAdvice:
-			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-development-consent-legislation-and-advice',
+			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-development-consent-legislation/nationally-significant-infrastructure-projects-development-consent-legislation',
 		nationalPolicyStatements:
-			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements',
+			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements/nationally-significant-infrastructure-projects-national-policy-statements',
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
 		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
