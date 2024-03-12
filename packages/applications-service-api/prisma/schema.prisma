@@ -129,6 +129,8 @@ model Project {
   dateOfRepresentationPeriodOpen                    DateTime?    @db.Date
   dateOfRelevantRepresentationClose                 DateTime?    @db.Date
   dateRRepAppearOnWebsite                           DateTime?    @db.Date
+  dateOfReOpenRelevantRepresentationStart           DateTime?    @db.Date
+  dateOfReOpenRelevantRepresentationClose           DateTime?    @db.Date
   confirmedStartOfExamination                       DateTime?    @db.Date
   dateTimeExaminationEnds                           DateTime?    @db.Date
   stage4ExtensionToExamCloseDate                    DateTime?    @db.Date
@@ -156,8 +158,6 @@ model Project {
   applicant                                         ServiceUser? @relation("Applicant", fields: [applicantId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
   createdAt                                         DateTime?    @default(now())
   modifiedAt                                        DateTime?    @default(now())
-  dateOfReOpenRelevantRepresentationStart           DateTime?    @db.Date
-  dateOfReOpenRelevantRepresentationClose           DateTime?    @db.Date
 }
 
 model ProjectUpdate {
