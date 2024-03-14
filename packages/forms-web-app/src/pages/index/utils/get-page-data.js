@@ -19,8 +19,7 @@ const getPageData = () => {
 			contactURL: getContactURL(),
 			detailedInformationURL: getDetailedInformationURL()
 		},
-		...mapTitles('Welcome to National Infrastructure Planning'),
-		headerTitle: 'National Infrastructure Projects',
+		...mapTitles('Welcome to Find a National Infrastructure Project'),
 		showProjectSearchUrl: !usePrivateBetaV1RoutesOnly
 	};
 };
