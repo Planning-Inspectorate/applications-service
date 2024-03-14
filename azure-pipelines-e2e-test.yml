@@ -1,0 +1,57 @@
+parameters:
+  - name: environment
+    displayName: Environment
+    type: string
+    default: 'test'
+    values:
+      - 'dev'
+      - 'test'
+
+variables:
+  - name: APP
+    value: 'applications'
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - packages/e2e_tests/cypress/e2e
+trigger: none
+
+jobs:
+  - job: Run_Cypress_Tests_For_Applications_FO
+    pool:
+      vmImage: "ubuntu-latest"
+
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "18.x"
+        displayName: 'Install Node.js'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
+
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
+        displayName: 'Install Dependencies'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
+          args: '${{ parameters.environment }}'
+        displayName: 'Run Cypress Tests'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
+          artifactName: 'FailedTests'
+        displayName: 'Publish Failed Tests Artifacts'
+        condition: failed()
