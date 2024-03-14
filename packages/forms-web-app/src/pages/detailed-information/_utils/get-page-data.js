@@ -7,7 +7,6 @@ const {
 
 const getPageData = () => ({
 	...mapTitles('Detailed information'),
-	headerTitle: 'National Infrastructure Projects',
 	detailedInformationUrls: {
 		haveYourSayGuide: haveYourSayGuideSubdirectory,
 		processGuide: processGuideSubdirectory,
