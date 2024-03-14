@@ -32,7 +32,7 @@ describe('pages/projects/register/agent/representing-who/controller', () => {
 	});
 
 	describe('postRegisterAgentRepresentingWhoController', () => {
-		it('should post data and redirect to the representing family name page if representing-for is provided', async () => {
+		it('should post data and redirect to the representing household page if representing-for is provided', async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -45,7 +45,7 @@ describe('pages/projects/register/agent/representing-who/controller', () => {
 			await postRegisterAgentRepresentingWhoController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/agent/name-family-group-representing'
+				'/mock-base-url/mock-case-ref/register/agent/name-household-representing'
 			);
 		});
 
@@ -71,7 +71,7 @@ describe('pages/projects/register/agent/representing-who/controller', () => {
 			);
 		});
 
-		it('should post data and redirect to the representing family name page if representing-for is changed to family', async () => {
+		it('should post data and redirect to the representing household page if representing-for is changed to household', async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -89,7 +89,7 @@ describe('pages/projects/register/agent/representing-who/controller', () => {
 			await postRegisterAgentRepresentingWhoController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/agent/name-family-group-representing'
+				'/mock-base-url/mock-case-ref/register/agent/name-household-representing'
 			);
 		});
 

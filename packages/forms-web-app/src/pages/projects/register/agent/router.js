@@ -71,8 +71,8 @@ const {
 	getRegisterAgentRepresentingOrgNameURL
 } = require('./representing-organisation-name/_utils/get-register-agent-representing-organisation-name-url');
 const {
-	getRegisterAgentRepresentingFamilyNameURL
-} = require('./representing-family-name/_utils/get-register-agent-representing-family-name-url');
+	getRegisterAgentRepresentingHouseholdURL
+} = require('./representing-family-name/_utils/get-register-agent-representing-household-url');
 const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
 const {
 	getRegisterAgentAreThey18URL
@@ -142,7 +142,7 @@ const registerAgentAddressURL = getRegisterAgentAddressURL();
 const registerAgentRepresentingWhoURL = getRegisterAgentRepresentingWhoURL();
 const registerAgentRepresentingPersonNameURL = getRegisterAgentRepresentingPersonNameURL();
 const registerAgentRepresentingOrgNameURL = getRegisterAgentRepresentingOrgNameURL();
-const registerAgentRepresentingFamilyNameURL = getRegisterAgentRepresentingFamilyNameURL();
+const registerAgentRepresentingHouseholdURL = getRegisterAgentRepresentingHouseholdURL();
 const registerAgentNumberURL = getRegisterAgentNumberURL();
 const registerAgentAreTheyOver18URL = getRegisterAgentAreThey18URL();
 const registerAgentTheirAddressURL = getRegisterAgentTheirAddressURL();
@@ -236,12 +236,12 @@ registerAgentRouter.post(
 );
 
 registerAgentRouter.get(
-	registerAgentRepresentingFamilyNameURL,
+	registerAgentRepresentingHouseholdURL,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
-	registerAgentRepresentingFamilyNameURL,
+	registerAgentRepresentingHouseholdURL,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,

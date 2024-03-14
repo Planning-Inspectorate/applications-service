@@ -1,3 +1,3 @@
-const registerAgentRepresentingFamilyNameRoute = 'name-family-group-representing';
+const registerAgentRepresentingHouseholdRoute = 'name-household-representing';
 
-module.exports = { registerAgentRepresentingFamilyNameRoute };
+module.exports = { registerAgentRepresentingHouseholdRoute };

@@ -270,12 +270,12 @@ describe('pages/projects/register/agent/router', () => {
 			);
 
 			expect(get).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/agent/name-family-group-representing',
+				'/projects/:case_ref/register/agent/name-household-representing',
 				registerMiddleware,
 				getRegisterAgentRepresentingNameController
 			);
 			expect(post).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/agent/name-family-group-representing',
+				'/projects/:case_ref/register/agent/name-household-representing',
 				registerMiddleware,
 				representingNameValidationRules(),
 				validationErrorHandler,
