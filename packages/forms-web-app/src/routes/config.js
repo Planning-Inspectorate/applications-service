@@ -110,10 +110,10 @@ const routesConfig = {
 			},
 			hasInterestedPartyNumber: {
 				id: 'examination-has-interested-party-number',
-				name: 'Do you have an interested party number?',
+				name: 'Do you have an interested party reference number?',
 				onError: {
 					message: {
-						isEmpty: 'Select yes if you have an interested party number'
+						isEmpty: 'Select yes if you have an interested party reference number'
 					}
 				},
 				options: {
@@ -132,13 +132,13 @@ const routesConfig = {
 			nameAgent: {
 				id: 'examination-name',
 				name: 'Name of person or group',
-				title: "What's the full name of the person, family group or organisation?",
-				pageTitle: "What's the full name of the person, family group or organisation?",
+				title: "What's the full name of the person, household or organisation?",
+				pageTitle: "What's the full name of the person, household or organisation?",
 				onError: {
 					message: {
 						checkLength:
-							"The full name of the person, family group or organisation organisation's name must be between 1 and 255 characters",
-						notEmpty: 'Enter the full name of the person, family group or organisation'
+							"The full name of the person, household or organisation organisation's name must be between 1 and 255 characters",
+						notEmpty: 'Enter the full name of the person, household or organisation'
 					},
 					minMaxOptions: {
 						min: 1,
@@ -312,7 +312,7 @@ const routesConfig = {
 					},
 					3: {
 						value: 'agent',
-						text: 'On behalf of another person, a family group or another organisation I do not work for'
+						text: 'On behalf of another person, a household or another organisation I do not work for'
 					}
 				},
 				route: 'who-are-you-submitting-for',
@@ -320,11 +320,12 @@ const routesConfig = {
 			},
 			yourInterestedPartyNumber: {
 				id: 'examination-your-interested-party-number',
-				name: "What's your interested party number?",
+				name: "What's your interested party reference number?",
 				onError: {
 					message: {
-						checkLength: 'Your interested party number must be between 3 and 20 characters',
-						notEmpty: 'Enter your interested party number'
+						checkLength:
+							'Your interested party reference number must be between 3 and 20 characters',
+						notEmpty: 'Enter your interested party reference number'
 					},
 					minMaxOptions: {
 						min: 3,

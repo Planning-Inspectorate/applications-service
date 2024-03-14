@@ -124,3 +124,9 @@ uploads/*
 
 init/mssql
 !init/mssql/mssql.conf
+
+# Azurite artifacts
+__blobstorage__
+__queuestorage__
+__azurite
+__azurite_db*__.json

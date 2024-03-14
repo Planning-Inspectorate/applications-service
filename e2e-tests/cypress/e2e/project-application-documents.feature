@@ -106,7 +106,7 @@ Feature: Project Application documents page
 		Examples:
 			| name                   | filterAmount | expectedLabel           | sum |
 			| pre-application        | 2            | Pre-application         | 7   |
-			| developers-application | 7            | Developer's Application | 258 |
+			| developers-application | 7            | Developer's application | 258 |
 			| acceptance             | 11           | Acceptance              | 266 |
 			| pre-examination        | 6            | Pre-examination         | 24  |
 			| examination            | 20           | Examination             | 671 |

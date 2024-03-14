@@ -48,7 +48,7 @@ Feature:Documents page-Filtered results
 		And the user clicks the selects all filters link within the "Examination" stage
 		And the user click the apply filter button
 		Then the filtered results section is displayed with the project stage "Pre-application"
-		And the filtered results section is displayed with the project stage "Developer's Application"
+		And the filtered results section is displayed with the project stage "Developer's application"
 		And the filtered results section is displayed with the project stage "Acceptance"
 		And the filtered results section is displayed with the project stage "Pre-examination"
 		And the filtered results section is displayed with the project stage "Examination"

@@ -18,8 +18,8 @@ const pageData = {
 		'This is a unique reference number that identifies you as an interested party.<br />You will have been given this number when you registered.',
 	id: 'examination-has-interested-party-number',
 	options: [hasInterestedPartyNumberOptions[1], hasInterestedPartyNumberOptions[2]],
-	pageTitle: 'Do you have an interested party number?',
-	title: 'Do you have an interested party number?'
+	pageTitle: 'Do you have an interested party reference number?',
+	title: 'Do you have an interested party reference number?'
 };
 
 describe('controllers/examination/has-interested-party-number', () => {

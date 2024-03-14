@@ -1,6 +1,6 @@
 const orderFilters = (filters) => {
 	const developersApplicationIndex = filters.findIndex(
-		(filter) => filter.label === `Developer's Application`
+		(filter) => filter.label === `Developer's application`
 	);
 
 	if (developersApplicationIndex >= 0 && developersApplicationIndex !== 1) {

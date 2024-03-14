@@ -1,10 +1,10 @@
 {% set decisionText %}
-    {% if applicationDecision and applicationData.confirmedDateOfDecision %}
-        This application was {{ applicationDecision }} on {{ applicationData.confirmedDateOfDecision | date }}
-    {% endif %}
-    {% if not applicationDecision and applicationData.confirmedDateOfDecision %}
-        This application was decided on {{ applicationData.confirmedDateOfDecision | date }}
-    {% endif %}
+{% if applicationDecision and applicationData.confirmedDateOfDecision %}
+	This application was {{ applicationDecision }} on {{ applicationData.confirmedDateOfDecision | date }}.
+{% endif %}
+{% if not applicationDecision and applicationData.confirmedDateOfDecision %}
+	This application was decided on {{ applicationData.confirmedDateOfDecision | date }}.
+{% endif %}
 {% endset %}
 
 <p class="govuk-body">

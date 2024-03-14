@@ -3,14 +3,21 @@ const {
 } = require('../repositories/project.backoffice.repository');
 const {
 	mapBackOfficeApplicationsToApi,
-	addMapZoomLevelAndLongLat,
 	mapApplicationFiltersToNI,
-	buildApiFiltersFromNIApplications
+	buildApiFiltersFromNIApplications,
+	mapNIApplicationsToApi
 } = require('../utils/application.mapper');
+const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const {
 	getAllApplications: getAllNIApplicationsRepository
 } = require('../repositories/project.ni.repository');
 const { isEmpty, uniqBy } = require('lodash');
+const sortApplications = require('../utils/sort-applications.merge');
+
+/**
+ * This is a temporary file which will be removed once the applications-service-api is updated to only use BO applications.
+ * In the meantime while we are merging the applications from BO and NI we need to combine and sort them on the API level
+ */
 
 const getAllMergedApplications = async (query) => {
 	const { applications: niApplications, allApplications: allNIApplications } =
@@ -26,9 +33,9 @@ const getAllMergedApplications = async (query) => {
 		);
 
 	const filters = buildApiFiltersFromNIApplications(allApplications);
-
+	const sortedApplications = sortApplications(applications, query?.sort);
 	return {
-		applications,
+		applications: sortedApplications,
 		totalItems,
 		totalItemsWithoutFilters,
 		itemsPerPage: totalItems,
@@ -77,8 +84,8 @@ const getNIApplicationsWithoutPagination = async (query) => {
 	const { applications } = await getAllNIApplicationsRepository(queryOptions);
 	const { applications: allApplications } = await getAllNIApplicationsRepository();
 	return {
-		applications: applications.map(addMapZoomLevelAndLongLat),
-		allApplications: allApplications.map(addMapZoomLevelAndLongLat)
+		applications: mapNIApplicationsToApi(applications),
+		allApplications: mapNIApplicationsToApi(allApplications)
 	};
 };
 
@@ -101,6 +108,17 @@ const mergeApplicationsAndCounts = (
 		allApplications
 	};
 };
+
+const getAllMergedApplicationsDownload = async () => {
+	const allNIApplications = await getAllNIApplicationsRepository();
+	const niApplications = mapNIApplicationsToApi(allNIApplications.applications);
+	const allBOApplications = await getAllBOApplicationsRepository();
+	const boApplications = mapBackOfficeApplicationsToApi(allBOApplications.applications);
+	const mergedApplications = uniqBy([...boApplications, ...niApplications], 'CaseReference');
+	return mapApplicationsToCSV(mergedApplications);
+};
+
 module.exports = {
-	getAllMergedApplications
+	getAllMergedApplications,
+	getAllMergedApplicationsDownload
 };

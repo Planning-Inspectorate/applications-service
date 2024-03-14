@@ -5,7 +5,8 @@ const {
 	mapNIApplicationToApi,
 	mapBackOfficeApplicationToApi,
 	addMapZoomLevelAndLongLat,
-	mapBackOfficeApplicationsToApi
+	mapBackOfficeApplicationsToApi,
+	mapNIApplicationsToApi
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
@@ -295,6 +296,49 @@ describe('application.mapper', () => {
 					sourceSystem: 'ODT'
 				}
 			]);
+		});
+	});
+	describe('mapNIApplicationsToApi', () => {
+		it('maps NI applications data to API format', () => {
+			expect(mapNIApplicationsToApi([APPLICATION_FO])).toEqual([
+				{
+					...APPLICATION_FO,
+					LongLat: ['-0.7028315466694124', '53.620079146110655'],
+					LatLong: undefined,
+					MapZoomLevel: 1
+				}
+			]);
+		});
+		describe('when date is not a valid value', () => {
+			const niApplicationsWithInvalidDate = [
+				{
+					...APPLICATION_FO,
+					ConfirmedDateOfDecision: 'Invalid Date',
+					DateOfDCOSubmission: 'Invalid Date'
+				}
+			];
+			const niApplicationsWithUnsetDate = [
+				{
+					...APPLICATION_FO,
+					ConfirmedDateOfDecision: '0000-00-00',
+					DateOfDCOSubmission: '0000-00-00'
+				}
+			];
+			it.each([[niApplicationsWithInvalidDate], [niApplicationsWithUnsetDate]])(
+				'maps NI application to API format',
+				(input) => {
+					expect(mapNIApplicationsToApi(input)).toEqual([
+						{
+							...APPLICATION_FO,
+							ConfirmedDateOfDecision: null,
+							DateOfDCOSubmission: null,
+							LongLat: ['-0.7028315466694124', '53.620079146110655'],
+							LatLong: undefined,
+							MapZoomLevel: 1
+						}
+					]);
+				}
+			);
 		});
 	});
 });

@@ -1,4 +1,4 @@
 module.exports = {
-	developersApplication: "Developer's Application",
+	developersApplication: "Developer's application",
 	documentExaminationLibraryId: 'examination library'
 };

@@ -129,6 +129,8 @@ model Project {
   dateOfRepresentationPeriodOpen                    DateTime?    @db.Date
   dateOfRelevantRepresentationClose                 DateTime?    @db.Date
   dateRRepAppearOnWebsite                           DateTime?    @db.Date
+  dateOfReOpenRelevantRepresentationStart           DateTime?    @db.Date
+  dateOfReOpenRelevantRepresentationClose           DateTime?    @db.Date
   confirmedStartOfExamination                       DateTime?    @db.Date
   dateTimeExaminationEnds                           DateTime?    @db.Date
   stage4ExtensionToExamCloseDate                    DateTime?    @db.Date
@@ -205,10 +207,10 @@ model Advice {
   agent           String?
   method          String?
   enquiryDate     DateTime
-  enquiryDetails  String?
+  enquiryDetails  String?   @db.NText
   adviceGivenBy   String?
   adviceDate      DateTime
-  adviceDetails   String?
+  adviceDetails   String?   @db.NText
   status          String?
   redactionStatus String?
   attachmentIds   String?

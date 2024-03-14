@@ -10,6 +10,9 @@ const {
 } = require('../__data__/application');
 const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
+const { mapNIApplicationsToApi } = require('../../src/utils/application.mapper');
+const config = require('../../src/lib/config');
+const sortApplications = require('../../src/utils/sort-applications.merge');
 
 const mockFindUnique = jest.fn();
 const mockCount = jest.fn();
@@ -32,9 +35,6 @@ jest.mock('../../src/models', () => ({
 		findOne: (attributes) => mockProjectFindOne(attributes)
 	}
 }));
-
-const config = require('../../src/lib/config');
-const { addMapZoomLevelAndLongLat } = require('../../src/utils/application.mapper');
 
 describe('/api/v1/applications', () => {
 	describe('get single application', () => {
@@ -131,6 +131,7 @@ describe('/api/v1/applications', () => {
 				expect(mockFindAndCountAll).toBeCalledWith(
 					expect.objectContaining({
 						where: {
+							Region: { [Op.ne]: 'Wales' },
 							[Op.and]: [
 								{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 								{ Stage: { [Op.in]: [2, 5] } },
@@ -166,6 +167,7 @@ describe('/api/v1/applications', () => {
 				expect(mockFindAndCountAll).toBeCalledWith(
 					expect.objectContaining({
 						where: {
+							Region: { [Op.ne]: 'Wales' },
 							[Op.or]: [
 								{ ProjectName: { [Op.like]: '%London Resort%' } },
 								{ PromoterName: { [Op.like]: '%London Resort%' } }
@@ -208,6 +210,7 @@ describe('/api/v1/applications', () => {
 				expect(mockFindAndCountAll).toBeCalledWith(
 					expect.objectContaining({
 						where: {
+							Region: { [Op.ne]: 'Wales' },
 							[Op.and]: [
 								{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 								{ Stage: { [Op.in]: [2, 5] } },
@@ -285,6 +288,7 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
+							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
 							},
@@ -310,6 +314,7 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
+							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'London Resort' } },
@@ -356,6 +361,7 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
+							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
@@ -385,6 +391,13 @@ describe('/api/v1/applications', () => {
 			});
 		});
 		describe('when getAllApplications is MERGE', () => {
+			const BOApplication = {
+				...APPLICATION_API_V1,
+				DateOfDCOAcceptance_NonAcceptance: null,
+				sourceSystem: 'ODT'
+			};
+			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
+			const combinedApplications = [BOApplication, ...NIApplications];
 			beforeEach(() => {
 				config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
 				// NI
@@ -402,17 +415,9 @@ describe('/api/v1/applications', () => {
 			});
 			it('happy path', async () => {
 				const response = await request.get('/api/v1/applications');
-
-				const BOApplication = {
-					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					sourceSystem: 'ODT'
-				};
-				const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
-				const combinedApplications = [BOApplication, ...NIApplications];
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					applications: combinedApplications,
+					applications: expect.arrayContaining(combinedApplications),
 					totalItems: combinedApplications.length,
 					totalItemsWithoutFilters: combinedApplications.length,
 					itemsPerPage: combinedApplications.length,
@@ -432,22 +437,60 @@ describe('/api/v1/applications', () => {
 					count: APPLICATIONS_NI_DB.length + 1
 				});
 				const response = await request.get('/api/v1/applications');
-				const BOApplication = {
-					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					sourceSystem: 'ODT'
-				};
-				const NIApplications = APPLICATIONS_NI_DB.map(addMapZoomLevelAndLongLat);
-				const combinedApplications = [BOApplication, ...NIApplications];
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
-					applications: combinedApplications,
+					applications: expect.arrayContaining(combinedApplications),
 					totalItems: combinedApplications.length,
 					totalItemsWithoutFilters: combinedApplications.length,
 					itemsPerPage: combinedApplications.length,
 					totalPages: 1,
 					currentPage: 1,
 					filters: expect.anything() // not testing filters as the original mapper is used here
+				});
+			});
+
+			describe('with correct sort', () => {
+				it.each([
+					['+ProjectName', sortApplications([...combinedApplications], '+ProjectName')],
+					['-ProjectName', sortApplications([...combinedApplications], '-ProjectName')],
+					['ProjectName', sortApplications([...combinedApplications], '+ProjectName')],
+					['+PromoterName', sortApplications([...combinedApplications], '+PromoterName')],
+					['-PromoterName', sortApplications([...combinedApplications], '-PromoterName')],
+					['PromoterName', sortApplications([...combinedApplications], '+PromoterName')],
+					[
+						'+DateOfDCOSubmission',
+						sortApplications([...combinedApplications], '+DateOfDCOSubmission')
+					],
+					[
+						'-DateOfDCOSubmission',
+						sortApplications([...combinedApplications], '-DateOfDCOSubmission')
+					],
+					[
+						'DateOfDCOSubmission',
+						sortApplications([...combinedApplications], '+DateOfDCOSubmission')
+					],
+					[
+						'+ConfirmedDateOfDecision',
+						sortApplications([...combinedApplications], '+ConfirmedDateOfDecision')
+					],
+					[
+						'-ConfirmedDateOfDecision',
+						sortApplications([...combinedApplications], '-ConfirmedDateOfDecision')
+					],
+					[
+						'ConfirmedDateOfDecision',
+						sortApplications([...combinedApplications], '+ConfirmedDateOfDecision')
+					],
+					['+Stage', sortApplications([...combinedApplications], '+Stage')],
+					['-Stage', sortApplications([...combinedApplications], '-Stage')],
+					['Stage', sortApplications([...combinedApplications], '+Stage')]
+				])('should sort by %s', async (sort, expected) => {
+					const response = await request.get(
+						`/api/v1/applications?sort=${encodeURIComponent(sort)}`
+					);
+					expect(response.status).toEqual(200);
+					expect(response.body.applications.length).toEqual(expected.length);
+					expect(response.body.applications).toEqual(expected);
 				});
 			});
 
@@ -469,6 +512,7 @@ describe('/api/v1/applications', () => {
 					orderBy: { projectName: 'asc' },
 					where: {
 						AND: [
+							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
@@ -495,13 +539,16 @@ describe('/api/v1/applications', () => {
 				});
 				expect(mockProjectFindMany).toHaveBeenNthCalledWith(2, {
 					include: { applicant: true },
-					where: {}
+					where: {
+						AND: [{ regions: { not: { contains: 'wales' } } }]
+					}
 				});
 				// NI Searches
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(1, {
 					order: [['ProjectName', 'ASC']],
 					raw: true,
 					where: expect.objectContaining({
+						Region: { [Op.ne]: 'Wales' },
 						[Op.and]: [
 							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 							{ Stage: { [Op.in]: [2, 5] } },
@@ -517,7 +564,9 @@ describe('/api/v1/applications', () => {
 				});
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(2, {
 					raw: true,
-					where: {}
+					where: {
+						Region: { [Op.ne]: 'Wales' }
+					}
 				});
 				expect(response.status).toEqual(200);
 			});

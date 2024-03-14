@@ -1,0 +1,7 @@
+{% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
+
+<p class="govuk-body">
+  Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of <strong>{{ paginationData.totalItems }}</strong> entries, newest first.
+</p>
+
+{{ uiResultsPerPage(resultsPerPage) }}

@@ -25,7 +25,7 @@ const getPageData = (session, query) => {
 			},
 			{
 				value: 'no',
-				text: 'no'
+				text: 'No'
 			}
 		],
 		name: addAnotherDeadlineItem.name,

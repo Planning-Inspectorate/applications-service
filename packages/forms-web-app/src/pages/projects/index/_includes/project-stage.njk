@@ -7,7 +7,7 @@
 
 	{% else %}
 
-		<p class="govuk-body">This project is at the <strong>{{ applicationData.status.text | lower }}</strong> stage</p>
+		<p class="govuk-body">This project is at the <strong>{{ applicationData.status.text | lower }}</strong> stage.</p>
 
 		{% if applicationData.status.text === projectStages[1] %}
 			{% include "./stages/pre-application/description.njk" %}

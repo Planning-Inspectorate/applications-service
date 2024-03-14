@@ -14,11 +14,11 @@ module.exports = defineConfig({
 		baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk',
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
-		pageLoadTimeout: 10000,
-		defaultCommandTimeout: 10000,
+		pageLoadTimeout: 20000,
+		defaultCommandTimeout: 20000,
 		testIsolation: false,
 		env: {
-			commandDelay: 300
+			commandDelay: 2000
 		},
 		viewportWidth: 1920,
 		viewportHeight: 2000

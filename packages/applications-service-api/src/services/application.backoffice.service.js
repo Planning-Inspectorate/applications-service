@@ -3,8 +3,12 @@ const {
 	getAllApplications: getAllBOApplicationsRepository
 } = require('../repositories/project.backoffice.repository');
 const { getAllNIApplications } = require('./application.ni.service');
-const { getAllMergedApplications } = require('./application.merge.service');
-const { getNIApplication } = require('./application.ni.service');
+const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
+const {
+	getAllMergedApplications,
+	getAllMergedApplicationsDownload
+} = require('./application.merge.service');
+const { getNIApplication, getAllNIApplicationsDownload } = require('./application.ni.service');
 const config = require('../lib/config');
 const { isEmpty } = require('lodash');
 const {
@@ -96,11 +100,30 @@ const getAllBOApplications = async (query) => {
 	};
 };
 
+const getAllApplicationsDownload = async () => {
+	const getApplications = config.backOfficeIntegration.applications.getAllApplications;
+	switch (getApplications) {
+		case 'BO':
+			return getAllBOApplicationsDownload();
+		case 'MERGE':
+			return getAllMergedApplicationsDownload();
+		// NI is the default
+		default:
+			return getAllNIApplicationsDownload();
+	}
+};
+
+const getAllBOApplicationsDownload = async () => {
+	const { applications } = await getAllBOApplicationsRepository();
+	const mappedToAPIApplications = mapBackOfficeApplicationsToApi(applications);
+	return mapApplicationsToCSV(mappedToAPIApplications);
+};
 const isBackOfficeApplication = (caseReference) =>
 	config.backOfficeIntegration.applications.getApplication.caseReferences.includes(caseReference);
 
 module.exports = {
 	createQueryFilters,
 	getApplication,
-	getAllApplications
+	getAllApplications,
+	getAllApplicationsDownload
 };

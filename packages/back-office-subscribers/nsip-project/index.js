@@ -71,6 +71,8 @@ const projectPropertiesFromMessage = [
 	'dateOfRepresentationPeriodOpen',
 	'dateOfRelevantRepresentationClose',
 	'dateRRepAppearOnWebsite',
+	'dateOfReOpenRelevantRepresentationStart',
+	'dateOfReOpenRelevantRepresentationClose',
 	'confirmedStartOfExamination',
 	'dateTimeExaminationEnds',
 	'stage4ExtensionToExamCloseDate',

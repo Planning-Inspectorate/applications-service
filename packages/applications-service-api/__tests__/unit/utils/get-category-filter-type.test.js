@@ -4,12 +4,12 @@ const { getCategoryFilterType } = require('../../../src/utils/get-category-filte
 const categoryFilterParameterValue = [
 	{ category: 'NULL', count: 18 },
 	{ category: null, count: 0 },
-	{ category: "Developer's Application", count: 258 }
+	{ category: "Developer's application", count: 258 }
 ];
 
 const categoryFilterResultValue = [{ count: 258, name: 'Application Document' }];
 
-const developerApplication = "Developer's Application";
+const developerApplication = "Developer's application";
 
 describe('All test cases', () => {
 	let i = 0;
