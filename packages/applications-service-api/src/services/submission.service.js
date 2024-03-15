@@ -1,12 +1,11 @@
-const moment = require('moment');
 const config = require('../lib/config');
 const ApiError = require('../error/apiError');
 const { createNISubmission, completeNISubmission } = require('./submission.ni.service');
 const { publishDeadlineSubmission } = require('./backoffice.publish.service');
 const { generateRepresentationPDF, uploadSubmissionFileToBlobStorage } = require('../utils/file');
-const { getDate } = require('../utils/date-utils');
 const { getApplication } = require('./application.backoffice.service');
 const { sendSubmissionNotification } = require('../lib/notify');
+const { generateId } = require('../utils/generate-id');
 
 const createSubmission = async (submission) =>
 	isBackOfficeSubmission(submission.metadata.caseReference)
@@ -21,7 +20,7 @@ const completeSubmission = async (submissionDetails) =>
 const createBackOfficeSubmission = async (submission) => {
 	const { metadata } = submission;
 
-	if (!metadata.submissionId) metadata.submissionId = generateSubmissionId(metadata.caseReference);
+	if (!metadata.submissionId) metadata.submissionId = generateId('S');
 
 	if (metadata.representation) {
 		submission.file = generateRepresentationPDF(
@@ -38,9 +37,6 @@ const createBackOfficeSubmission = async (submission) => {
 		submissionId: metadata.submissionId
 	};
 };
-
-const generateSubmissionId = (caseReference) =>
-	`${caseReference}-${moment(getDate()).format('DDMMYYHHmmssSSS')}`;
 
 const completeBackOfficeSubmission = async (submissionDetails) => {
 	const { submissionId, caseReference, email } = submissionDetails;

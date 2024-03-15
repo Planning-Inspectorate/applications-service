@@ -1134,6 +1134,12 @@ components:
         DateOfRelevantRepresentationClose:
           type: string
           example: '2018-08-01'
+        DateOfReOpenRelevantRepresentationStart:
+          type: string
+          example: '2017-08-01'
+        DateOfReOpenRelevantRepresentationClose:
+          type: string
+          example: '2018-08-01'
         DateRRepAppearOnWebsite:
           type: string
           example: '2017-08-01'
