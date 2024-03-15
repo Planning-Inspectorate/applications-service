@@ -1,5 +1,5 @@
-const uuid = require('uuid');
 const { getDate } = require('./date-utils');
+const { generateId } = require('./generate-id');
 
 const BEHALF_SELF = 'me';
 const BEHALF_ORG = 'them';
@@ -22,7 +22,7 @@ const REPRESENTATION_TYPE = 'Members of the Public/Businesses';
 
 const mapInterestedParty = (data) => {
 	let interestedParty = {
-		referenceId: generateReferenceId(data.case_ref),
+		referenceId: generateId('F'),
 		caseReference: data.case_ref,
 		originalRepresentation: data.comment,
 		representationType: REPRESENTATION_TYPE,
@@ -83,10 +83,6 @@ const mapInterestedPartyContactDetails = (contactDetails, type) => {
 	}
 
 	return details;
-};
-
-const generateReferenceId = () => {
-	return `F${uuid.v4().replace(/-/g, '').substring(0, 8).toUpperCase()}`;
 };
 
 module.exports = { mapInterestedParty };
