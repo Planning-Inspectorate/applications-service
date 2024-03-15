@@ -11,9 +11,8 @@ jest.mock('../../../src/config', () => {
 });
 
 const defaultPageData = {
-	headerTitle: 'National Infrastructure Projects',
-	pageHeading: 'Welcome to National Infrastructure Planning',
-	pageTitle: 'Welcome to National Infrastructure Planning',
+	pageHeading: 'Welcome to Find a National Infrastructure Project',
+	pageTitle: 'Welcome to Find a National Infrastructure Project',
 	showProjectSearchUrl: true,
 	homePageUrls: {
 		contactURL: '/contact',
