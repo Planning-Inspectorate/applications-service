@@ -146,10 +146,5 @@ module.exports = {
 	maps: {
 		osMapsApiKey: process.env.OS_MAPS_API_KEY,
 		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
-	},
-	headerTitles: {
-		getUpdatesAboutProject: 'Get updates about this project',
-		registerToHaveYourSay: 'Register to have your say',
-		examinationHaveYourSay: 'Have your say on an application'
 	}
 };
