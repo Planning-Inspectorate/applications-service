@@ -49,9 +49,11 @@
 			You will be able to submit further comments during the examination of the application once you have registered.
 		</p>
 
-		<p class="govuk-body">
-			You must submit your registration before 23:59 on {{ closeDate }}.
-		</p>
+		{% if registrationReOpened === false %}
+			<p class="govuk-body">
+				You must submit your registration before 23:59 on {{ closeDate }}.
+			</p>
+		{% endif %}
 
 		<a href="{{ registeringForURL }}" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
 			Start now
