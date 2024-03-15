@@ -1,4 +1,25 @@
+const { generateId } = require('../../../src/utils/generate-id');
+const {
+	createNISubmission,
+	completeNISubmission
+} = require('../../../src/services/submission.ni.service');
+const {
+	generateRepresentationPDF,
+	uploadSubmissionFileToBlobStorage
+} = require('../../../src/utils/file');
+const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
+const { getApplication } = require('../../../src/services/application.backoffice.service');
+const { sendSubmissionNotification } = require('../../../src/lib/notify');
+
+const {
+	createSubmission,
+	completeSubmission
+} = require('../../../src/services/submission.service');
+const { REQUEST_FILE_DATA } = require('../../__data__/file');
+const { SUBMISSION_DATA } = require('../../__data__/submission');
+const { APPLICATION_API } = require('../../__data__/application');
 const BACK_OFFICE_CASE_REFERENCE = 'BC0110001';
+
 jest.mock('../../../src/lib/config', () => ({
 	backOfficeIntegration: {
 		submissions: {
@@ -20,33 +41,12 @@ jest.mock('../../../src/lib/config', () => ({
 	ni: {}
 }));
 
-jest.mock('../../../src/utils/date-utils');
 jest.mock('../../../src/utils/file');
 jest.mock('../../../src/services/submission.ni.service');
 jest.mock('../../../src/services/backoffice.publish.service');
 jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/lib/notify');
-
-const { getDate } = require('../../../src/utils/date-utils');
-const {
-	createNISubmission,
-	completeNISubmission
-} = require('../../../src/services/submission.ni.service');
-const {
-	generateRepresentationPDF,
-	uploadSubmissionFileToBlobStorage
-} = require('../../../src/utils/file');
-const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
-const { getApplication } = require('../../../src/services/application.backoffice.service');
-const { sendSubmissionNotification } = require('../../../src/lib/notify');
-
-const {
-	createSubmission,
-	completeSubmission
-} = require('../../../src/services/submission.service');
-const { REQUEST_FILE_DATA } = require('../../__data__/file');
-const { SUBMISSION_DATA } = require('../../__data__/submission');
-const { APPLICATION_API } = require('../../__data__/application');
+jest.mock('../../../src/utils/generate-id');
 
 describe('submission.service', () => {
 	describe('createSubmission', () => {
@@ -113,8 +113,9 @@ describe('submission.service', () => {
 			});
 
 			describe('submission without submissionId', () => {
-				const mockTime = new Date('2023-12-30T11:06:13.245Z');
-				beforeEach(() => getDate.mockReturnValueOnce(mockTime));
+				beforeAll(() => {
+					generateId.mockReturnValue('S3AAB2CF4');
+				});
 
 				describe('submission with user uploaded file', () => {
 					it('publishes message with submission metadata and uploads user file', async () => {
@@ -132,7 +133,7 @@ describe('submission.service', () => {
 
 						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
 						expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
-						expect(result).toEqual({ submissionId: 'BC0110001-301223110613245' });
+						expect(result).toEqual({ submissionId: 'S3AAB2CF4' });
 					});
 				});
 
@@ -170,7 +171,7 @@ describe('submission.service', () => {
 							},
 							mockGuid
 						);
-						expect(result).toEqual({ submissionId: 'BC0110001-301223110613245' });
+						expect(result).toEqual({ submissionId: 'S3AAB2CF4' });
 					});
 				});
 			});
