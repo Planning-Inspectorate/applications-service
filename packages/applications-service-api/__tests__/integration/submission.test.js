@@ -1,3 +1,4 @@
+const { generateId } = require('../../src/utils/generate-id');
 const mockUploadData = jest.fn();
 const mockGetBlockBlobClient = jest.fn().mockReturnValue({
 	uploadData: mockUploadData
@@ -7,6 +8,9 @@ const mockBlobServiceClient = jest.fn().mockReturnValue({
 		getBlockBlobClient: mockGetBlockBlobClient
 	})
 });
+
+jest.mock('../../src/utils/generate-id');
+
 jest.mock('@azure/storage-blob', () => ({
 	BlobServiceClient: mockBlobServiceClient
 }));
@@ -40,7 +44,6 @@ jest.mock('../../src/utils/date-utils');
 jest.mock('../../src/lib/eventClient');
 jest.mock('../../src/utils/pdf');
 jest.mock('uuid');
-const { getDate } = require('../../src/utils/date-utils');
 const { sendMessages } = require('../../src/lib/eventClient');
 const { textToPdf } = require('../../src/utils/pdf');
 const uuid = require('uuid');
@@ -64,7 +67,6 @@ const submissionRequest = () =>
 		.field('lateSubmission', 'false');
 
 describe('/api/v1/submissions', () => {
-	const mockTime = new Date('2023-12-30T11:06:13.245Z');
 	const mockUuid = 'eb43f2de-cd51-4f95-a7a3-e04082bdcd8b';
 
 	beforeEach(() => {
@@ -80,8 +82,7 @@ describe('/api/v1/submissions', () => {
 	describe('POST /:caseReference', () => {
 		describe('Back Office case reference', () => {
 			const mockFileBuffer = Buffer.from([1, 2, 3]);
-			const mockGeneratedSubmissionId = 'BC0110001-301223110613245'; // timestamp from mockTime
-			const requestSubmissionId = 'BC0110001-101023134030108';
+			const mockSubmissionId = 'S3AAB2CF4';
 			const expectedMessage = {
 				blobGuid: mockUuid,
 				caseReference: BACK_OFFICE_CASE_REFERENCE,
@@ -97,6 +98,7 @@ describe('/api/v1/submissions', () => {
 
 			beforeEach(() => {
 				textToPdf.mockReturnValue(mockFileBuffer);
+				generateId.mockReturnValue(mockSubmissionId);
 			});
 
 			afterEach(() => {
@@ -114,7 +116,7 @@ describe('/api/v1/submissions', () => {
 					beforeEach(async () => {
 						response = await submissionRequest()
 							.field('representation', 'this is the representation text')
-							.field('submissionId', requestSubmissionId);
+							.field('submissionId', mockSubmissionId);
 					});
 
 					it('uploads file to blob storage', async () => {
@@ -131,7 +133,7 @@ describe('/api/v1/submissions', () => {
 								body: {
 									...expectedMessage,
 									documentName: generatedPDFFileName,
-									submissionId: requestSubmissionId
+									submissionId: mockSubmissionId
 								},
 								contentType: 'application/json'
 							}
@@ -140,13 +142,12 @@ describe('/api/v1/submissions', () => {
 
 					it('returns successful api response with submissionId', async () => {
 						expect(response.status).toEqual(201);
-						expect(response.body.submissionId).toEqual(requestSubmissionId);
+						expect(response.body.submissionId).toEqual(mockSubmissionId);
 					});
 				});
 
 				describe('request with no submissionId', () => {
 					beforeEach(async () => {
-						getDate.mockReturnValueOnce(new Date()).mockReturnValueOnce(mockTime);
 						response = await submissionRequest().field(
 							'representation',
 							'this is the representation text'
@@ -167,7 +168,7 @@ describe('/api/v1/submissions', () => {
 								body: {
 									...expectedMessage,
 									documentName: generatedPDFFileName,
-									submissionId: mockGeneratedSubmissionId
+									submissionId: mockSubmissionId
 								},
 								contentType: 'application/json'
 							}
@@ -176,7 +177,7 @@ describe('/api/v1/submissions', () => {
 
 					it('returns successful api response with submissionId', async () => {
 						expect(response.status).toEqual(201);
-						expect(response.body.submissionId).toEqual(mockGeneratedSubmissionId);
+						expect(response.body.submissionId).toEqual(mockSubmissionId);
 					});
 				});
 			});
@@ -185,7 +186,7 @@ describe('/api/v1/submissions', () => {
 				describe('request with submissionId provided', () => {
 					beforeEach(async () => {
 						response = await submissionRequest()
-							.field('submissionId', requestSubmissionId)
+							.field('submissionId', mockSubmissionId)
 							.attach('file', mockFileBuffer, { filename: 'foo.pdf' });
 					});
 
@@ -203,7 +204,7 @@ describe('/api/v1/submissions', () => {
 								body: {
 									...expectedMessage,
 									documentName: 'foo.pdf',
-									submissionId: requestSubmissionId
+									submissionId: mockSubmissionId
 								},
 								contentType: 'application/json'
 							}
@@ -212,13 +213,12 @@ describe('/api/v1/submissions', () => {
 
 					it('returns successful api response with submissionId', async () => {
 						expect(response.status).toEqual(201);
-						expect(response.body.submissionId).toEqual(requestSubmissionId);
+						expect(response.body.submissionId).toEqual(mockSubmissionId);
 					});
 				});
 
 				describe('request with no submissionId', () => {
 					beforeEach(async () => {
-						getDate.mockReturnValueOnce(new Date()).mockReturnValueOnce(mockTime);
 						response = await submissionRequest().attach('file', mockFileBuffer, {
 							filename: 'foo.pdf'
 						});
@@ -238,7 +238,7 @@ describe('/api/v1/submissions', () => {
 								body: {
 									...expectedMessage,
 									documentName: 'foo.pdf',
-									submissionId: mockGeneratedSubmissionId
+									submissionId: mockSubmissionId
 								},
 								contentType: 'application/json'
 							}
@@ -247,7 +247,7 @@ describe('/api/v1/submissions', () => {
 
 					it('returns successful api response with submissionId', async () => {
 						expect(response.status).toEqual(201);
-						expect(response.body.submissionId).toEqual(mockGeneratedSubmissionId);
+						expect(response.body.submissionId).toEqual(mockSubmissionId);
 					});
 				});
 			});

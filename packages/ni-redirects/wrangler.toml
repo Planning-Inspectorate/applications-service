@@ -1,0 +1,9 @@
+name = "ni-redirects"
+main = "src/index.js"
+compatibility_date = "2024-02-08"
+
+[env.test.vars]
+CONFIG = "test"
+
+[env.prod.vars]
+CONFIG = "prod"

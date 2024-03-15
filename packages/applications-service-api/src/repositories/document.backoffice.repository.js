@@ -62,7 +62,10 @@ const getDocuments = async (query) => {
 	}
 
 	const rows = await prismaClient.document.findMany({
-		where: whereClause
+		where: whereClause,
+		orderBy: {
+			datePublished: 'desc'
+		}
 	});
 	const count = await prismaClient.document.count({
 		where: whereClause
@@ -78,7 +81,7 @@ const getDocumentsByType = async (queryData) =>
 			documentType: queryData.type
 		},
 		orderBy: {
-			createdAt: 'desc'
+			datePublished: 'desc'
 		},
 		take: 1
 	});

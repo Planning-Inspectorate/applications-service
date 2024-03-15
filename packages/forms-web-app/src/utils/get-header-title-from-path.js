@@ -1,4 +1,6 @@
-const { headerTitles } = require('../config');
+const { examinationHeaderTitle } = require('../pages/examination/config');
+const { getUpdatesHeaderTitle } = require('../pages/projects/get-updates/config');
+const { registerHeaderTitle } = require('../pages/projects/register/config');
 
 const getHeaderTitleFromPath = (path) => {
 	//regex to test the paths and ensure it has two letters followed by some numbers [caseId] followed by a '/get-updates' and not followed by '/start'
@@ -14,16 +16,15 @@ const getHeaderTitleFromPath = (path) => {
 		/[a-zA-Z]{2}\d+\/examination\/(?!have-your-say-during-examination)/
 	);
 
-	if (getUpdatesRegex.test(path)) {
-		return headerTitles.getUpdatesAboutProject;
-	}
-
-	if (registerToHaveYourSayRegex.test(path)) {
-		return headerTitles.registerToHaveYourSay;
-	}
-
-	if (examinationHaveYourSayRegex.test(path)) {
-		return headerTitles.examinationHaveYourSay;
+	switch (true) {
+		case getUpdatesRegex.test(path):
+			return getUpdatesHeaderTitle;
+		case registerToHaveYourSayRegex.test(path):
+			return registerHeaderTitle;
+		case examinationHaveYourSayRegex.test(path):
+			return examinationHeaderTitle;
+		default:
+			return 'Find a National Infrastructure Project';
 	}
 };
 

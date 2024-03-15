@@ -12,17 +12,17 @@ const {
 	INTERESTED_PARTY_AGENT_ORGANISATION_BACK_OFFICE,
 	INTERESTED_PARTY_AGENT_FAMILY_BACK_OFFICE
 } = require('../../__data__/interestedParty');
-const uuid = require('uuid');
+const { generateId } = require('../../../src/utils/generate-id');
 
 jest.mock('../../../src/utils/date-utils');
-jest.mock('uuid');
+jest.mock('../../../src/utils/generate-id');
 
 describe('interestedParty mapper', () => {
 	describe('mapInterestedParty', () => {
 		const mockDate = new Date('2022-12-09 13:30:21:123');
 		beforeAll(() => {
 			getDate.mockReturnValue(mockDate);
-			uuid.v4.mockReturnValue('3aab2cf4c4d34e3e8');
+			generateId.mockReturnValue('F3AAB2CF4');
 		});
 
 		it.each([
