@@ -1,6 +1,7 @@
 const { getIndexController } = require('./index/controller');
 const { getContactController } = require('./contact/controller');
 const { getCookiesController, postCookiesController } = require('./cookies/controller');
+const { getTermsAndConditionsController } = require('./terms-and-conditions/controller');
 const { getDetailedInformationController } = require('./detailed-information/controller');
 const { getProjectSearchController } = require('./project-search/controller');
 const { getRegisterOfApplicationsController } = require('./register-of-applications/controller');
@@ -60,6 +61,8 @@ describe('pages/router', () => {
 				postCookiesController
 			);
 
+			expect(get).toHaveBeenCalledWith('/terms-and-conditions', getTermsAndConditionsController);
+
 			expect(get).toHaveBeenCalledWith('/detailed-information', getDetailedInformationController);
 
 			expect(get).toHaveBeenCalledWith('/project-search', getProjectSearchController);
@@ -73,7 +76,7 @@ describe('pages/router', () => {
 
 			expect(use).toHaveBeenCalledWith(registerOfAdviceRouter);
 
-			expect(get).toBeCalledTimes(6);
+			expect(get).toBeCalledTimes(7);
 			expect(post).toBeCalledTimes(1);
 			expect(use).toBeCalledTimes(2);
 		});
