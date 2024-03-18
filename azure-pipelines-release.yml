@@ -30,7 +30,6 @@ extends:
                 parameters:
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
-                  tag: v$(apiVersion)
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-applications-service-applications-api-$(ENVIRONMENT)-$(REGION_SHORT)-001
@@ -44,7 +43,6 @@ extends:
                 parameters:
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
-                  tag: v$(webVersion)
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
                   appName: pins-app-applications-service-applications-wfe-$(ENVIRONMENT)-$(REGION_SHORT)-001
