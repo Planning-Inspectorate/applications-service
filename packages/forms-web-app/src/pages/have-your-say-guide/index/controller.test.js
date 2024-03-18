@@ -16,7 +16,8 @@ describe('pages/have-your-say-guide/index/controller', () => {
 
 			it('should render the process guide page', () => {
 				expect(res.render).toHaveBeenCalledWith('have-your-say-guide/index/view.njk', {
-					backLinkUrl: 'mock back link url'
+					backLinkUrl: 'mock back link url',
+					projectSearchURL: '/project-search'
 				});
 			});
 
