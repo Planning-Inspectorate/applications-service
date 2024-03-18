@@ -22,7 +22,7 @@ extends:
   template: stages/wrapper_cd.yml@templates
   parameters:
     deploymentStages:
-      - name: Staging
+      - name: Stage
         deploymentJobs:
           - name: Stage API
             steps:
@@ -60,9 +60,9 @@ extends:
             variables:
               - name: webVersion
                 value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.webVersion'] ]
-      - name: Production
+      - name: Deploy
         dependsOn:
-          - Staging
+          - Stage
         deploymentJobs:
           - name: Deploy API
             steps:
@@ -82,7 +82,7 @@ extends:
                   appTargetSlotName: production
       - name: Semantic Release
         dependsOn:
-          - Production
+          - Deploy
         jobs:
           - name: Run Semantic Release
             steps:
