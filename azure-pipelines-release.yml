@@ -21,12 +21,10 @@ resources:
 extends:
   template: stages/wrapper_cd.yml@templates
   parameters:
-    preDeploymentStages:
-      - name: Stage
-        condition: eq(dependencies.semantic_release.outputs['run_semantic_release.versions.release'], 'true')
+    deploymentStages:
+      - name: Staging
         deploymentJobs:
           - name: Stage API
-            condition: eq(stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiRelease'], 'true')
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
                 parameters:
@@ -45,7 +43,6 @@ extends:
               - name: apiVersion
                 value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiVersion'] ]
           - name: Stage Web
-            condition: eq(stageDependencies.semantic_release.run_semantic_release.outputs['versions.webRelease'], 'true')
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
                 parameters:
@@ -63,9 +60,9 @@ extends:
             variables:
               - name: webVersion
                 value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.webVersion'] ]
-      - name: Deploy
+      - name: Production
         dependsOn:
-          - Stage
+          - Staging
         deploymentJobs:
           - name: Deploy API
             steps:
@@ -83,8 +80,9 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   appStagingSlotName: staging
                   appTargetSlotName: production
-    deploymentStages:
       - name: Semantic Release
+        dependsOn:
+          - Production
         jobs:
           - name: Run Semantic Release
             steps:
