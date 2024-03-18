@@ -38,10 +38,6 @@ extends:
                   appSlotName: staging
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
-                  tag: v$(apiVersion)
-            variables:
-              - name: apiVersion
-                value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiVersion'] ]
           - name: Stage Web
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
@@ -56,10 +52,6 @@ extends:
                   appSlotName: staging
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
-                  tag: v$(webVersion)
-            variables:
-              - name: webVersion
-                value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.webVersion'] ]
       - name: Deploy
         dependsOn:
           - Stage
