@@ -72,7 +72,7 @@ const {
 } = require('./representing-organisation-name/_utils/get-register-agent-representing-organisation-name-url');
 const {
 	getRegisterAgentRepresentingHouseholdURL
-} = require('./representing-family-name/_utils/get-register-agent-representing-household-url');
+} = require('./representing-household-name/_utils/get-register-agent-representing-household-url');
 const { getRegisterAgentNumberURL } = require('./number/_utils/get-register-agent-number-url');
 const {
 	getRegisterAgentAreThey18URL

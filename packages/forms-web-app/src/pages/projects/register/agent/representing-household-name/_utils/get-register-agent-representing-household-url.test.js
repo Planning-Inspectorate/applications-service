@@ -2,7 +2,7 @@ const {
 	getRegisterAgentRepresentingHouseholdURL
 } = require('./get-register-agent-representing-household-url');
 
-describe('pages/projects/register/agent/representing-family-name/_utils/get-register-agent-representing-household-url', () => {
+describe('pages/projects/register/agent/representing-household-name/_utils/get-register-agent-representing-household-url', () => {
 	describe('#getRegisterAgentRepresentingHouseholdURL', () => {
 		describe('When getting the register agent representing household URL', () => {
 			describe('and a case reference is not provided', () => {
