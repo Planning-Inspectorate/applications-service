@@ -22,56 +22,6 @@ extends:
   template: stages/wrapper_cd.yml@templates
   parameters:
     preDeploymentStages:
-      - name: Semantic Release
-        jobs:
-          - name: Run Semantic Release
-            steps:
-              - checkout: self
-                clean: true
-                persistCredentials: true
-              - template: ../steps/node_script.yml
-                parameters:
-                  script: npm ci
-              - template: ../steps/node_script.yml
-                parameters:
-                  script: cd packages/applications-service-api && npx prisma generate
-              - template: ../steps/node_script.yml
-                parameters:
-                  script: npm run release
-                  environmentVariables:
-                    GH_TOKEN: $(GH_TOKEN)
-              - script: |
-                  API_VERSION=$(cat packages/applications-service-api/.release-version)
-                  WEB_VERSION=$(cat packages/forms-web-app/.release-version)
-
-                  RELEASE=false
-
-                  if [[ ! -z "$API_VERSION" ]]; then
-                    echo "API version: $API_VERSION"
-                    echo "##vso[task.setvariable variable=apiVersion;isOutput=true]$API_VERSION"
-                    echo "##vso[task.setvariable variable=apiRelease;isOutput=true]true"
-                    RELEASE=true
-                  else
-                    API_VERSION=$(git describe --match "applications-service-api@*" --abbrev=0 --tags $(git rev-list --tags --max-count=1))
-                    echo "API version: $API_VERSION (No change)"
-                  fi
-
-                  if [[ ! -z "$WEB_VERSION" ]]; then
-                    echo "Web version: $WEB_VERSION"
-                    echo "##vso[task.setvariable variable=webVersion;isOutput=true]$WEB_VERSION"
-                    echo "##vso[task.setvariable variable=webRelease;isOutput=true]true"
-                    RELEASE=true
-                  else
-                    WEB_VERSION=$(git describe --match "forms-web-app@*" --abbrev=0 --tags $(git rev-list --tags --max-count=1))
-                    echo "API version: $WEB_VERSION (No change)"
-                  fi
-
-                  if [[ $RELEASE == true ]]; then
-                    echo "##vso[task.setvariable variable=release;isOutput=true]true"
-                  fi
-                displayName: Display next versions
-                name: versions
-    deploymentStages:
       - name: Stage
         condition: eq(dependencies.semantic_release.outputs['run_semantic_release.versions.release'], 'true')
         deploymentJobs:
@@ -133,6 +83,56 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   appStagingSlotName: staging
                   appTargetSlotName: production
+    deploymentStages:
+      - name: Semantic Release
+        jobs:
+          - name: Run Semantic Release
+            steps:
+              - checkout: self
+                clean: true
+                persistCredentials: true
+              - template: ../steps/node_script.yml
+                parameters:
+                  script: npm ci
+              - template: ../steps/node_script.yml
+                parameters:
+                  script: cd packages/applications-service-api && npx prisma generate
+              - template: ../steps/node_script.yml
+                parameters:
+                  script: npm run release
+                  environmentVariables:
+                    GH_TOKEN: $(GH_TOKEN)
+              - script: |
+                  API_VERSION=$(cat packages/applications-service-api/.release-version)
+                  WEB_VERSION=$(cat packages/forms-web-app/.release-version)
+
+                  RELEASE=false
+
+                  if [[ ! -z "$API_VERSION" ]]; then
+                    echo "API version: $API_VERSION"
+                    echo "##vso[task.setvariable variable=apiVersion;isOutput=true]$API_VERSION"
+                    echo "##vso[task.setvariable variable=apiRelease;isOutput=true]true"
+                    RELEASE=true
+                  else
+                    API_VERSION=$(git describe --match "applications-service-api@*" --abbrev=0 --tags $(git rev-list --tags --max-count=1))
+                    echo "API version: $API_VERSION (No change)"
+                  fi
+
+                  if [[ ! -z "$WEB_VERSION" ]]; then
+                    echo "Web version: $WEB_VERSION"
+                    echo "##vso[task.setvariable variable=webVersion;isOutput=true]$WEB_VERSION"
+                    echo "##vso[task.setvariable variable=webRelease;isOutput=true]true"
+                    RELEASE=true
+                  else
+                    WEB_VERSION=$(git describe --match "forms-web-app@*" --abbrev=0 --tags $(git rev-list --tags --max-count=1))
+                    echo "API version: $WEB_VERSION (No change)"
+                  fi
+
+                  if [[ $RELEASE == true ]]; then
+                    echo "##vso[task.setvariable variable=release;isOutput=true]true"
+                  fi
+                displayName: Display next versions
+                name: versions
     environments:
       - name: Prod
     globalVariables:
