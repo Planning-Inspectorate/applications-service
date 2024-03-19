@@ -25,9 +25,9 @@ Feature: Registration complete page
         When I click on feedback link
         Then I am on the "feedback" page
 
-     Scenario: click on go back to project page link
+    Scenario: click on go back to project page link
         When I click on go back to project page link
-        Then I am on the "north lincolnshire green energy park" page
+        Then I am on the "north lincolnshire green energy park project information" page
 
     Scenario: click on find out more about having your say
         When I click on find out more about having your say during the Examination of the application link
