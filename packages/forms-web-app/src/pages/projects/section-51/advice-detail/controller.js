@@ -11,11 +11,13 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 
 		const caseRef = case_ref || registerOfAdviceCaseRef;
 
+		const refURL = req.get('Referrer');
+
 		const adviceDetailData = await getAdviceDetailData(id, caseRef);
 
 		const view = getView(path, id);
 
-		return res.render(view, await getPageViewModel(path, case_ref, id, adviceDetailData));
+		return res.render(view, await getPageViewModel(refURL, path, case_ref, id, adviceDetailData));
 	} catch (error) {
 		logger.error(error);
 		if (error.message === 'NOT_FOUND') return res.status(404).render('error/not-found');

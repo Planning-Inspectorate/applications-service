@@ -13,9 +13,9 @@ const handleAdviceDetails = (adviceDetails) => ({
 	title: getAdviceTitle(adviceDetails)
 });
 
-const getPageViewModel = async (path, caseRef, id, adviceDetails) => ({
+const getPageViewModel = async (refURL, path, caseRef, id, adviceDetails) => ({
 	activeId: 'section-51',
-	backToListUrl: getBackToListURL(path, caseRef, id),
+	backToListUrl: getBackToListURL(refURL, path, caseRef, id),
 	breadcrumbsItems: getBreadcrumbsItems(path, caseRef, id),
 	...handleAdviceDetails(adviceDetails)
 });
