@@ -1,3 +1,9 @@
 const registeringForRoute = 'who-registering-for';
 
-module.exports = { registeringForRoute };
+const registeringForOptions = {
+	agent: 'behalf',
+	myself: 'myself',
+	organisation: 'organisation'
+};
+
+module.exports = { registeringForRoute, registeringForOptions };

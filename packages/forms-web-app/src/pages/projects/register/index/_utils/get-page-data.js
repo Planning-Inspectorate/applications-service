@@ -1,6 +1,9 @@
 const { formatDate } = require('../../../../../utils/date-utils');
 const { mapTitles } = require('../../../../_utils/map-titles');
 const { getRegisteringForURL } = require('../../registering-for/_utils/get-registering-for-url');
+const {
+	featureFlag: { openRegistrationCaseReferences }
+} = require('../../../../../config');
 
 const getPageData = ({ DateOfRelevantRepresentationClose }, periodOpen, caseRef) => ({
 	...mapTitles(
@@ -10,7 +13,8 @@ const getPageData = ({ DateOfRelevantRepresentationClose }, periodOpen, caseRef)
 	activeId: 'register-index',
 	closeDate: DateOfRelevantRepresentationClose ? formatDate(DateOfRelevantRepresentationClose) : '',
 	periodOpen,
-	registeringForURL: getRegisteringForURL(caseRef)
+	registeringForURL: getRegisteringForURL(caseRef),
+	registrationReOpened: openRegistrationCaseReferences.includes(caseRef)
 });
 
 module.exports = { getPageData };

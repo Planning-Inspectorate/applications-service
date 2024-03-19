@@ -47,7 +47,8 @@ describe('projects/register/index/controller', () => {
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
 				registeringForURL: '/projects/ABC123/register/who-registering-for',
-				periodOpen: true
+				periodOpen: true,
+				registrationReOpened: false
 			});
 		});
 		it('should load project data and return register start view even when existing project in session  ', async () => {
@@ -81,7 +82,8 @@ describe('projects/register/index/controller', () => {
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
 				registeringForURL: '/projects/ABC123/register/who-registering-for',
-				periodOpen: true
+				periodOpen: true,
+				registrationReOpened: false
 			});
 		});
 		it('should redirect to not found route if project not found for caseRef provided', async () => {
