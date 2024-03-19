@@ -9,10 +9,10 @@
 		{% for key, value in resultsPerPage %}
 
 			{% if loop.index !== 1 %}
-				<span class="govuk-!-margin-left-1">|</span>
+				<span class="govuk-!-margin-left-1" data-cy="number-of-results-per-page">|</span>
 			{% endif %}
 
-			<span class="govuk-!-margin-left-1">
+			<span class="govuk-!-margin-left-1" data-cy="number-of-results-per-page">
 				{{ uiResultsPerPageContent(value.size, value.link, value.active) }}
 			</span>
 

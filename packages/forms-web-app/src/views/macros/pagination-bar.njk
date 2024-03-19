@@ -8,7 +8,7 @@
     {% if paginationData.totalPages !== 1 %}
         <nav class="moj-pagination" id="pagination-label">
           <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
-          <ul class="moj-pagination__list">
+          <ul class="moj-pagination__list" data-cy="pagination-links">
             {% for page in pageOptions %}
               {% if page === 'prev' %}
                 <li class="moj-pagination__item  moj-pagination__item--prev">
