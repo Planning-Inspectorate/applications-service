@@ -1,4 +1,3 @@
-const config = require('../lib/config');
 const ApiError = require('../error/apiError');
 const { createNISubmission, completeNISubmission } = require('./submission.ni.service');
 const { publishDeadlineSubmission } = require('./backoffice.publish.service');
@@ -6,14 +5,14 @@ const { generateRepresentationPDF, uploadSubmissionFileToBlobStorage } = require
 const { getApplication } = require('./application.backoffice.service');
 const { sendSubmissionNotification } = require('../lib/notify');
 const { generateId } = require('../utils/generate-id');
-
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const createSubmission = async (submission) =>
-	isBackOfficeSubmission(submission.metadata.caseReference)
+	isBackOfficeCaseReference(submission.metadata.caseReference)
 		? createBackOfficeSubmission(submission)
 		: createNISubmission(submission);
 
 const completeSubmission = async (submissionDetails) =>
-	isBackOfficeSubmission(submissionDetails.caseReference)
+	isBackOfficeCaseReference(submissionDetails.caseReference)
 		? completeBackOfficeSubmission(submissionDetails)
 		: completeNISubmission(submissionDetails.submissionId);
 
@@ -54,9 +53,6 @@ const completeBackOfficeSubmission = async (submissionDetails) => {
 		}
 	});
 };
-
-const isBackOfficeSubmission = (caseReference) =>
-	config.backOfficeIntegration.submissions.postSubmission.caseReferences.includes(caseReference);
 
 module.exports = {
 	createSubmission,

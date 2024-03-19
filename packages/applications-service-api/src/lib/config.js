@@ -9,48 +9,10 @@
 const path = require('path');
 const { parseCSV } = require('../utils/parse');
 
-const backOfficeIntegrationCaseReferences = parseCSV(
-	process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES
-);
-
 module.exports = {
 	backOfficeIntegration: {
-		applications: {
-			getApplication: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			},
-			getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS
-		},
-		documents: {
-			getDocuments: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			}
-		},
-		examinationTimetable: {
-			getExaminationTimetable: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			}
-		},
-		advice: {
-			getAdvice: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			}
-		},
-		representations: {
-			getRepresentations: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			}
-		},
-		submissions: {
-			postSubmission: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			}
-		},
-		interestedParty: {
-			postInterestedParty: {
-				caseReferences: backOfficeIntegrationCaseReferences
-			}
-		},
+		caseReferences: parseCSV(process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES),
+		getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS,
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,

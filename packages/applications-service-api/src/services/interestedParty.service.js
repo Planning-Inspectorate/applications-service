@@ -1,5 +1,4 @@
-const config = require('../lib/config');
-
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const {
 	createInterestedParty: createNIInterestedParty
 } = require('../services/interestedParty.ni.service');
@@ -9,7 +8,7 @@ const { getApplication } = require('./application.backoffice.service');
 const { mapInterestedParty } = require('../utils/interestedParty.mapper');
 
 const createInterestedParty = async (createInterestedPartyRequest) => {
-	if (isBackOfficeInterestedPartyRegistration(createInterestedPartyRequest.case_ref)) {
+	if (isBackOfficeCaseReference(createInterestedPartyRequest.case_ref)) {
 		const { referenceId } = await createBackOfficeInterestedParty(createInterestedPartyRequest);
 		return { referenceId };
 	} else {
@@ -40,10 +39,5 @@ const sendEmailConfirmation = async (interestedParty, application) => {
 		projectEmail: application.projectEmailAddress
 	});
 };
-
-const isBackOfficeInterestedPartyRegistration = (caseReference) =>
-	config.backOfficeIntegration.interestedParty.postInterestedParty.caseReferences.includes(
-		caseReference
-	);
 
 module.exports = { createInterestedParty };
