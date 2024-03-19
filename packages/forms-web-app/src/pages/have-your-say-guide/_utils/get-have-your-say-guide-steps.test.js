@@ -23,7 +23,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 					},
 					getInvolved: {
 						content:
-							'In the months after the registration period closes, the Examining Authority will hold a preliminary meeting. This meeting is to discuss the main issues the examining authority will be examining, and the timetable for the examination stage.',
+							'In the months after the registration period closes, the Examining Authority will hold a preliminary meeting. This meeting is to discuss the main issues the Examining Authority will be examining, and the timetable for the examination stage.',
 						linkText: 'What you can do at the preliminary meeting.',
 						title: 'Get involved in the preliminary meeting',
 						url: '/having-your-say-guide/get-involved-preliminary-meeting'
@@ -36,7 +36,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 					},
 					registering: {
 						content:
-							'To get involved after the application is submitted to the Planning Inspectorate, you must register to have your say at the pre-examination stage. Pre-examination is where we prepare for an examination. We will identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the examination stage. Registration is open for at least 30 days. The pre-examination stage takes about three months.',
+							'To get involved after the application is submitted to the Planning Inspectorate, you must register to have your say at the pre-examination stage. Pre-examination is where we prepare for an examination. We will identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the examination stage. Registration is open for at least 30 days. The pre-examination stage takes about 3 months.',
 						linkText: 'How to register to have your say about a national infrastructure project.',
 						title: 'Registering to have your say about a national infrastructure project',
 						url: '/having-your-say-guide/registering-have-your-say'
