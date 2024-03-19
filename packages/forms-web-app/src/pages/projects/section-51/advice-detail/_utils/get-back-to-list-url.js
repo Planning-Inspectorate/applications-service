@@ -6,9 +6,15 @@ const {
 	isRegisterOfAdviceDetailURL
 } = require('../../../../register-of-advice/detail/_utils/is-register-of-advice-detail-url');
 
-const getBackToListURL = (path, caseRef, id) =>
+const getRegisterOfAdviceBackLinkURL = (refURL) => {
+	const registerOfAdviceIndexURL = getRegisterOfAdviceIndexURL();
+
+	return refURL && refURL.includes(registerOfAdviceIndexURL) ? refURL : registerOfAdviceIndexURL;
+};
+
+const getBackToListURL = (refURL, path, caseRef, id) =>
 	isRegisterOfAdviceDetailURL(path, id)
-		? getRegisterOfAdviceIndexURL()
+		? getRegisterOfAdviceBackLinkURL(refURL)
 		: getSection51IndexURL(caseRef);
 
 module.exports = { getBackToListURL };
