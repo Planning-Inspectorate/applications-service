@@ -570,7 +570,7 @@ module.exports = (pageName) => {
 				.then((text) => {
 					expect(text).to.contain('What is the name of the household you are representing?');
 				});
-			cy.url().should('include', '/name-family-group-representing');
+			cy.url().should('include', '/name-household-representing');
 			break;
 		case 'your comments are saved':
 			cy.title().should(
