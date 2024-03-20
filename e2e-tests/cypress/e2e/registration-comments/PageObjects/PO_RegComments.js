@@ -63,7 +63,7 @@ class PO_RegComments {
 	}
 
 	clickApplyFilterButton() {
-		cy.get('[data-cy="button-submit-and-continue"]').click();
+		cy.get('[data-cy="apply-filter-button"]').click();
 	}
 
 	selectCheckBox(checkBoxName) {

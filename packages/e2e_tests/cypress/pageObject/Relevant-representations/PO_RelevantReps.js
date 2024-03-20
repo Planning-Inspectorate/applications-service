@@ -1,7 +1,7 @@
 export class PO_RelevantReps {
 	elements = {
 		relevantRepsLink: () => cy.get('a[href*="representations"]'),
-		listOfRelevantReps: () => cy.get('.ui-results-list').children(),
+		listOfRelevantReps: () => cy.get('[data-cy="representation"]'),
 		paginationLink: () => cy.get('.moj-pagination__link'),
 		resultsPerPage: () => cy.get('.govuk-link'),
 		searchInput: () => cy.get('#searchTerm'),

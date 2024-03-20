@@ -5,9 +5,5 @@ Then('I am on the {string} page', (pageName) => {
 });
 
 Then('the page includes a link to the project', () => {
-	cy.get('#project-link').should(
-		'have.attr',
-		'href',
-		'https://infrastructure.planninginspectorate.gov.uk/projects/yorkshire-and-the-humber/north-lincolnshire-green-energy-park'
-	);
+	cy.get('#project-link').should('have.attr', 'href', '/projects/EN010116');
 });

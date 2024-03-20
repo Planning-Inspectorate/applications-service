@@ -33,7 +33,7 @@ const postRegisterAgentRepresentingWhoController = (req, res) => {
 	} else if (representing === 'organisation') {
 		redirectUrl = `/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_ORGANISATION}`;
 	} else if (representing === 'family') {
-		redirectUrl = `/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_FAMILY}`;
+		redirectUrl = `/${VIEW.REGISTER.AGENT.REPRESENTEE_NAME_HOUSEHOLD}`;
 	}
 
 	return res.redirect(`${res.locals.baseUrl}${redirectUrl}`);
