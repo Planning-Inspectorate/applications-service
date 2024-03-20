@@ -31,26 +31,18 @@ const {
 	APPLICATIONS_FO_FILTERS
 } = require('../../__data__/application');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
-
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 jest.mock('../../../src/utils/application.mapper');
 jest.mock('../../../src/services/application.ni.service');
 jest.mock('../../../src/services/application.merge.service');
 jest.mock('../../../src/utils/map-applications-to-csv');
-
-jest.mock('../../../src/lib/config', () => ({
-	backOfficeIntegration: {
-		applications: {
-			getApplication: {
-				caseReferences: ['BC0110001']
-			}
-		}
-	},
-	logger: {
-		level: 'info'
-	}
-}));
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('application.backoffice.service', () => {
+	beforeAll(() => {
+		config.logger.level = 'info';
+		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC0110001');
+	});
 	describe('getApplication', () => {
 		it('invokes getBackOfficeApplication if BO caseReference', async () => {
 			getByCaseReference.mockResolvedValueOnce(APPLICATION_DB);
@@ -72,23 +64,23 @@ describe('application.backoffice.service', () => {
 	});
 	describe('getAllApplications', () => {
 		it('invokes getAllNIApplications if NI', async () => {
-			config.backOfficeIntegration.applications.getAllApplications = 'NI';
+			config.backOfficeIntegration.getAllApplications = 'NI';
 			await getAllApplications();
 			expect(getAllNIApplications).toHaveBeenCalled();
 		});
 		it('invokes getAllNIApplications if getAllApplications is not set', async () => {
-			config.backOfficeIntegration.applications.getAllApplications = undefined;
+			config.backOfficeIntegration.getAllApplications = undefined;
 			await getAllApplications();
 			expect(getAllNIApplications).toHaveBeenCalled();
 		});
 		it('invokes getAllMergedApplications if MERGE', async () => {
-			config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
+			config.backOfficeIntegration.getAllApplications = 'MERGE';
 			await getAllApplications();
 			expect(getAllMergedApplications).toHaveBeenCalled();
 		});
 		describe('when BO', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = 'BO';
+				config.backOfficeIntegration.getAllApplications = 'BO';
 				getAllApplicationsRepository
 					// getting applications
 					.mockResolvedValueOnce({
@@ -324,7 +316,7 @@ describe('application.backoffice.service', () => {
 	describe('getAllApplicationsDownload', () => {
 		describe('when NI', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = 'NI';
+				config.backOfficeIntegration.getAllApplications = 'NI';
 			});
 			it('invokes getAllNIApplicationsDownload', async () => {
 				await getAllApplicationsDownload();
@@ -333,7 +325,7 @@ describe('application.backoffice.service', () => {
 		});
 		describe('when MERGE', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
+				config.backOfficeIntegration.getAllApplications = 'MERGE';
 			});
 			it('invokes getAllMergedApplicationsDownload', async () => {
 				await getAllApplicationsDownload();
@@ -342,7 +334,7 @@ describe('application.backoffice.service', () => {
 		});
 		describe('when BO', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = 'BO';
+				config.backOfficeIntegration.getAllApplications = 'BO';
 				getAllApplicationsRepository.mockResolvedValue({
 					applications: [APPLICATION_DB],
 					count: 1

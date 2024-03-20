@@ -2,6 +2,7 @@ const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
 const { decrypt, encrypt } = require('../../src/lib/crypto');
 const { request } = require('../__data__/supertest');
 const { APPLICATION_DB, APPLICATION_FO } = require('../__data__/application');
+const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 
 const mockFindUnique = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
@@ -23,7 +24,7 @@ jest.mock('../../src/models', () => {
 
 const dateSpy = jest.spyOn(Date, 'now');
 
-const config = require('../../src/lib/config');
+jest.mock('../../src/utils/is-backoffice-case-reference');
 
 jest.mock('@planning-inspectorate/pins-notify', () => ({
 	createNotifyClient: {
@@ -44,7 +45,7 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 	const mockTime = new Date('2023-07-06T11:06:00.000Z');
 
 	beforeEach(() => {
-		config.backOfficeIntegration.applications.getApplication.caseReferences = ['EN010116'];
+		isBackOfficeCaseReference.mockReturnValue(true);
 	});
 	afterEach(() => {
 		mockFindUnique.mockReset();
@@ -79,7 +80,7 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 		});
 
 		it('given NI case with caseReference exists, returns 200', async () => {
-			config.backOfficeIntegration.applications.getApplication.caseReferences = [];
+			isBackOfficeCaseReference.mockReturnValue(false);
 			dateSpy.mockImplementation(() => mockTime.getTime());
 			mockProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 
