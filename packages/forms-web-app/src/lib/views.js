@@ -16,9 +16,7 @@ const VIEW = {
 	},
 	REGISTER: {
 		START: 'register/start',
-		TYPE_OF_PARTY: 'register/who-registering-for',
 		MYSELF: {
-			FULL_NAME: 'register/myself/full-name',
 			OVER_18: 'register/myself/are-you-18-over',
 			ADDRESS: 'register/myself/address',
 			EMAIL_ADDRESS: 'register/myself/email-address',
@@ -29,7 +27,6 @@ const VIEW = {
 			REGISTRATION_COMPLETE: 'register/myself/registration-complete'
 		},
 		ORGANISATION: {
-			FULL_NAME: 'register/organisation/full-name',
 			OVER_18: 'register/organisation/are-you-18-over',
 			ORGANISATION_NAME: 'register/organisation/name-of-organisation-or-charity',
 			ROLE: 'register/organisation/what-job-title-or-role',
@@ -50,7 +47,6 @@ const VIEW = {
 			REPRESENTEE_ADDRESS: 'register/agent/their-postal-address',
 			REPRESENTEE_EMAIL: 'register/agent/their-email-address',
 			REPRESENTEE_TELEPHONE: 'register/agent/their-telephone-number',
-			FULL_NAME: 'register/agent/full-name',
 			ADDRESS: 'register/agent/address',
 			EMAIL: 'register/agent/email-address',
 			TELEPHONE: 'register/agent/telephone-number',

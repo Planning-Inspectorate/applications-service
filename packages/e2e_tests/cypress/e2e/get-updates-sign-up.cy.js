@@ -30,6 +30,6 @@ describe('when user subscribes to get updates about a project', () => {
 	it('then user clicks link and returns to Project Page', () => {
 		cy.get('a[href*="BC0110003"]').click();
 		cy.url().should('include', '/projects/BC0110003');
-		cy.get('.govuk-heading-xl').contains('Project Information');
+		cy.get('.govuk-heading-xl').contains('Project information');
 	});
 });

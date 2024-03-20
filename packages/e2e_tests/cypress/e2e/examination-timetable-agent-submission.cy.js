@@ -89,7 +89,7 @@ describe('Agent has their say against the examination timetable', () => {
 	it('Final check that answers have updates successfully', () => {
 		examinationTimetable.checkAnswersSecondtPage([
 			'No',
-			'On behalf of another person, a family group or another organisation I do not work for',
+			'On behalf of another person, a household or another organisation I do not work for',
 			'Test Organisation',
 			'tester@tester.com'
 		]);

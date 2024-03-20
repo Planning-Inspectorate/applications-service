@@ -1,10 +1,10 @@
 export class PO_Section51 {
 	elements = {
 		section51Link: () => cy.get('.ui-vertical-tabs__list-item').contains('Section 51 advice'),
-		section51H1: () => cy.get('.govuk-heading-xl').contains('Section 51 Advice'),
+		section51H1: () => cy.get('.govuk-heading-xl').contains('Section 51 advice'),
 		changeResultsPerPage: () => cy.get('.govuk-link'),
 		searchInput: () => cy.get('#searchTerm'),
-		firstResult: () => cy.get('.section-results__result-link ').first()
+		firstResult: () => cy.get('.section-results__result-link').first()
 	};
 
 	clickSection51Link() {

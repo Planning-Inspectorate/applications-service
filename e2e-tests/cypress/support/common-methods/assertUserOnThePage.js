@@ -621,11 +621,11 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/sitemap');
 			break;
 		case 'terms and conditions':
-			cy.title().should('eq', 'Terms and conditions | National Infrastructure Planning');
+			cy.title().should('eq', 'Terms and conditions');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
-					expect(text).to.contain('National Infrastructure Planning');
+					expect(text).to.contain('Terms and conditions');
 				});
 			cy.url().should('include', '/terms-and-conditions');
 			break;

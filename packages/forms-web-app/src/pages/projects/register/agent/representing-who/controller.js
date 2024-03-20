@@ -1,5 +1,5 @@
 const { VIEW } = require('../../../../../lib/views');
-const registrationData = require('../../../../../lib/registration-data.json');
+const registrationData = require('../../registering-for/_session/registration-data.json');
 
 const view = 'projects/register/agent/representing-who/view.njk';
 

@@ -27,13 +27,13 @@ describe('User can view, filter and search the relevant reps page for a project'
 	});
 
 	it('can apply a filter and see results', () => {
-		relevantReps.checkFilter('Local authorities');
+		relevantReps.checkFilter('Local Authorities');
 		relevantReps.clickApplyFilters();
 		relevantReps.returnListOfRepresentations().should('be.visible');
 	});
 
 	it('can uncheck the applied filter', () => {
-		relevantReps.uncheckFilter('Local authorities');
+		relevantReps.uncheckFilter('Local Authorities');
 		relevantReps.clickApplyFilters();
 		relevantReps.returnListOfRepresentations().should('be.visible');
 	});
