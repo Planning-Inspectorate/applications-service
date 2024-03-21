@@ -1,177 +1,219 @@
-const { isRegistrationOpen } = require('./is-registration-open');
+const { isRegistrationOpen, isRegistrationReOpened } = require('./is-registration-open');
 const { featureFlag } = require('../../../../../config');
 
 jest.mock('../../../../../config', () => ({
-	featureFlag: {}
+	featureFlag: {
+		openRegistrationCaseReferences: []
+	}
 }));
 
-describe('projects/register/index/_utils/is-registration-open', () => {
+describe('pages/projects/register/index/_utils/is-registration-open', () => {
+	const dateBeforeYesterday = '2023-01-01';
+	const dateYesterday = '2023-01-02';
+	const dateToday = '2023-01-03';
+	const dateTomorrow = '2023-01-04';
+	const dateAfterTomorrow = '2023-01-05';
+
+	let appData;
+	const caseRef = 'mock case ref';
+
+	beforeEach(() => {
+		jest.useFakeTimers().setSystemTime(new Date(dateToday));
+		featureFlag.openRegistrationCaseReferences = [];
+		appData = {
+			DateOfRepresentationPeriodOpen: null,
+			DateOfRelevantRepresentationClose: dateYesterday,
+			DateOfReOpenRelevantRepresentationStart: null,
+			DateOfReOpenRelevantRepresentationClose: null
+		};
+	});
 	describe('#isRegistrationOpen', () => {
-		describe('When determining if the registration is open', () => {
-			const dateToday = '2023-01-02';
+		describe('When the close date is not set', () => {
+			let registrationOpen;
 
 			beforeEach(() => {
-				jest.useFakeTimers().setSystemTime(new Date(dateToday));
-				featureFlag.openRegistrationCaseReferences = ['re-opened-case-ref'];
+				appData.DateOfRelevantRepresentationClose = null;
+				registrationOpen = isRegistrationOpen(appData);
 			});
+			it('should return true', () => {
+				expect(registrationOpen).toEqual(true);
+			});
+		});
 
-			describe('and the open date is the same as the date today and no close date is set', () => {
-				describe('and the case ref is in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = dateToday;
-					const closeDate = null;
-					const caseRef = 're-opened-case-ref';
+		describe('Open date', () => {
+			beforeEach(() => {
+				appData.DateOfRelevantRepresentationClose = dateAfterTomorrow;
+			});
+			describe('When the open date is set to yesterday', () => {
+				let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				beforeEach(() => {
+					appData.DateOfRepresentationPeriodOpen = dateYesterday;
+					registrationOpen = isRegistrationOpen(appData);
 				});
-
-				describe('and the case ref is NOT in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = dateToday;
-					const closeDate = null;
-					const caseRef = 'not-re-opened-case-ref';
-
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
 				});
 			});
 
-			describe('and the open date is before the date today and the close date is after the date today', () => {
-				describe('and the case ref is in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2023-01-01';
-					const closeDate = '2023-01-03';
-					const caseRef = 're-opened-case-ref';
+			describe('When the open date is set to today', () => {
+				let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				beforeEach(() => {
+					appData.DateOfRepresentationPeriodOpen = dateToday;
+					registrationOpen = isRegistrationOpen(appData);
 				});
-
-				describe('and the case ref is NOT in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2023-01-01';
-					const closeDate = '2023-01-03';
-					const caseRef = 'not-re-opened-case-ref';
-
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
 				});
 			});
 
-			describe('and the open date is after the date today', () => {
-				describe('and the case ref is in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2023-01-03';
-					const closeDate = '2023-01-04';
-					const caseRef = 're-opened-case-ref';
+			describe('When the open date is set to tomorrow', () => {
+				let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				beforeEach(() => {
+					appData.DateOfRepresentationPeriodOpen = dateTomorrow;
+					registrationOpen = isRegistrationOpen(appData);
 				});
+				it('should return false', () => {
+					expect(registrationOpen).toEqual(false);
+				});
+			});
+		});
 
-				describe('and the case ref is NOT in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2023-01-03';
-					const closeDate = '2023-01-04';
-					const caseRef = 'not-re-opened-case-ref';
+		describe('Close date', () => {
+			beforeEach(() => {
+				appData.DateOfRepresentationPeriodOpen = dateBeforeYesterday;
+			});
+			describe('When the close date is set to yesterday', () => {
+				let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return false', () => {
-						expect(registrationOpen).toEqual(false);
-					});
+				beforeEach(() => {
+					appData.DateOfRelevantRepresentationClose = dateYesterday;
+					registrationOpen = isRegistrationOpen(appData);
+				});
+				it('should return false', () => {
+					expect(registrationOpen).toEqual(false);
 				});
 			});
 
-			describe('and the close date is the date today', () => {
-				describe('and the case ref is in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2023-01-01';
-					const closeDate = dateToday;
-					const caseRef = 're-opened-case-ref';
+			describe('When the close date is set to today', () => {
+				let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				beforeEach(() => {
+					appData.DateOfRelevantRepresentationClose = dateToday;
+					registrationOpen = isRegistrationOpen(appData);
 				});
-
-				describe('and the case ref is NOT in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2023-01-01';
-					const closeDate = dateToday;
-					const caseRef = 'not-re-opened-case-ref';
-
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
 				});
 			});
 
-			describe('and the date today is after the close date', () => {
-				describe('and the case ref is in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2022-01-01';
-					const closeDate = '2022-01-02';
-					const caseRef = 're-opened-case-ref';
+			describe('When the close date is set to tomorrow', () => {
+				let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
-
-					it('should return true', () => {
-						expect(registrationOpen).toEqual(true);
-					});
+				beforeEach(() => {
+					appData.DateOfRelevantRepresentationClose = dateTomorrow;
+					registrationOpen = isRegistrationOpen(appData);
 				});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
+				});
+			});
+		});
+	});
 
-				describe('and the case ref is NOT in openRegistrationCaseReferences', () => {
-					let registrationOpen;
-					const openDate = '2022-01-01';
-					const closeDate = '2022-01-02';
-					const caseRef = 'not-re-opened-case-ref';
+	describe('#isRegistrationReOpened', () => {
+		describe('When the project case reference is re-opened', () => {
+			let registrationOpen;
 
-					beforeEach(() => {
-						registrationOpen = isRegistrationOpen(openDate, closeDate, caseRef);
-					});
+			beforeEach(() => {
+				featureFlag.openRegistrationCaseReferences = ['mock case ref'];
+				registrationOpen = isRegistrationOpen(caseRef, appData);
+			});
+			it('should return true', () => {
+				expect(registrationOpen).toEqual(true);
+			});
+		});
 
-					it('should return false', () => {
-						expect(registrationOpen).toEqual(false);
-					});
+		describe('Re-open date', () => {
+			beforeEach(() => {
+				appData.DateOfReOpenRelevantRepresentationClose = dateAfterTomorrow;
+			});
+			describe('When the re-open date is set to yesterday', () => {
+				let registrationOpen;
+
+				beforeEach(() => {
+					appData.DateOfReOpenRelevantRepresentationStart = dateYesterday;
+					registrationOpen = isRegistrationReOpened(caseRef, appData);
+				});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
+				});
+			});
+
+			describe('When the re-open date is set to today', () => {
+				let registrationOpen;
+
+				beforeEach(() => {
+					appData.DateOfReOpenRelevantRepresentationStart = dateToday;
+					registrationOpen = isRegistrationReOpened(caseRef, appData);
+				});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
+				});
+			});
+
+			describe('When the re-open date is set to tomorrow', () => {
+				let registrationOpen;
+
+				beforeEach(() => {
+					appData.DateOfReOpenRelevantRepresentationStart = dateTomorrow;
+					registrationOpen = isRegistrationReOpened(caseRef, appData);
+				});
+				it('should return false', () => {
+					expect(registrationOpen).toEqual(false);
+				});
+			});
+		});
+
+		describe('Re-open close date', () => {
+			beforeEach(() => {
+				appData.DateOfReOpenRelevantRepresentationStart = dateBeforeYesterday;
+			});
+			describe('When the re-open close date is set to yesterday', () => {
+				let registrationOpen;
+
+				beforeEach(() => {
+					appData.DateOfReOpenRelevantRepresentationClose = dateYesterday;
+					registrationOpen = isRegistrationReOpened(caseRef, appData);
+				});
+				it('should return false', () => {
+					expect(registrationOpen).toEqual(false);
+				});
+			});
+
+			describe('When the re-open close date is set to today', () => {
+				let registrationOpen;
+
+				beforeEach(() => {
+					appData.DateOfReOpenRelevantRepresentationClose = dateToday;
+					registrationOpen = isRegistrationReOpened(caseRef, appData);
+				});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
+				});
+			});
+
+			describe('When the re-open close date is set to tomorrow', () => {
+				let registrationOpen;
+
+				beforeEach(() => {
+					appData.DateOfReOpenRelevantRepresentationClose = dateTomorrow;
+					registrationOpen = isRegistrationReOpened(caseRef, appData);
+				});
+				it('should return true', () => {
+					expect(registrationOpen).toEqual(true);
 				});
 			});
 		});
