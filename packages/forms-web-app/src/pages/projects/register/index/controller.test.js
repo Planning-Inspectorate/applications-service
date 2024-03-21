@@ -42,12 +42,12 @@ describe('projects/register/index/controller', () => {
 
 			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
 				activeId: 'register-index',
-				closeDate: '2 January 2023',
+				closeDate: false,
 				pageHeading: 'Register to have your say about a national infrastructure project',
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
 				registeringForURL: '/projects/ABC123/register/who-registering-for',
-				periodOpen: true,
+				registrationOpen: false,
 				registrationReOpened: false
 			});
 		});
@@ -77,12 +77,12 @@ describe('projects/register/index/controller', () => {
 			await getRegisterIndexController(req, res);
 			expect(res.render).toHaveBeenCalledWith('projects/register/index/view.njk', {
 				activeId: 'register-index',
-				closeDate: '2 January 2023',
+				closeDate: false,
 				pageHeading: 'Register to have your say about a national infrastructure project',
 				pageTitle:
 					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
 				registeringForURL: '/projects/ABC123/register/who-registering-for',
-				periodOpen: true,
+				registrationOpen: false,
 				registrationReOpened: false
 			});
 		});
@@ -111,24 +111,6 @@ describe('projects/register/index/controller', () => {
 			const req = {
 				...mockReq(),
 				session: {}
-			};
-			await getRegisterIndexController(req, res);
-			expect(res.status).toHaveBeenCalledWith(404);
-			expect(responseWithStatus.render).toHaveBeenCalledWith('error/not-found');
-		});
-		it('should redirect to not found route if registration period has closed and openRegistrationCaseReferences is empty', async () => {
-			getAppData.mockImplementation(() =>
-				Promise.resolve({
-					resp_code: 200,
-					data: {
-						DateOfRepresentationPeriodOpen: '2022-04-01',
-						DateOfRelevantRepresentationClose: '2022-07-01',
-						openRegistrationCaseReferences: []
-					}
-				})
-			);
-			const req = {
-				...mockReq()
 			};
 			await getRegisterIndexController(req, res);
 			expect(res.status).toHaveBeenCalledWith(404);

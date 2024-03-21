@@ -13,12 +13,7 @@ const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-update
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
 const { isStringPartOfArray } = require('../../../_utils/is-string-part-of-array');
 
-function getVerticalTabs(
-	caseRef,
-	{ DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose },
-	showExaminationLink,
-	showRepresentationsLink
-) {
+function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepresentationsLink) {
 	return [
 		{
 			hidden:
@@ -41,12 +36,7 @@ function getVerticalTabs(
 			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
-			hidden:
-				!isRegistrationOpen(
-					DateOfRepresentationPeriodOpen,
-					DateOfRelevantRepresentationClose,
-					caseRef
-				) || featureFlag.openRegistrationCaseReferences.includes(caseRef),
+			hidden: !isRegistrationOpen(applicationData),
 			id: 'register-index',
 			name: 'Register to have your say',
 			url: getRegisterIndexURL(caseRef)

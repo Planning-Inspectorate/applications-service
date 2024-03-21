@@ -43,13 +43,7 @@ const getProjectsIndexController = async (req, res, next) => {
 		const rule6Document = await getRule6DocumentType(caseRef);
 		const rule8Document = await getRule8DocumentType(caseRef);
 
-		const preExamSubStages = getPreExaminationSubStage(
-			applicationData.DateOfRepresentationPeriodOpen,
-			applicationData.DateOfRelevantRepresentationClose,
-			applicationData.DateRRepAppearOnWebsite,
-			rule6Document,
-			caseRef
-		);
+		const preExamSubStages = getPreExaminationSubStage(applicationData, rule6Document);
 		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
 			applicationData.dateTimeExaminationEnds,
 			applicationData.stage5ExtensionToRecommendationDeadline
