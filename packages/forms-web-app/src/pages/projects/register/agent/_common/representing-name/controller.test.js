@@ -94,7 +94,7 @@ describe('pages/projects/register/agent/_common/representing-name/controller', (
 			expect(res.redirect).not.toHaveBeenCalled();
 
 			expect(res.render).toHaveBeenCalledWith(
-				'projects/register/agent/representing-family-name/view.njk',
+				'projects/register/agent/representing-household-name/view.njk',
 				{
 					errorSummary: [{ text: 'There were errors here', href: '#' }],
 					errors: { a: 'b' },

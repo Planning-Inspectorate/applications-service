@@ -41,7 +41,7 @@ const VIEW = {
 		AGENT: {
 			REPRESENTING_FOR: 'register/agent/who-representing',
 			REPRESENTEE_NAME: 'register/agent/name-person-representing',
-			REPRESENTEE_NAME_FAMILY: 'register/agent/name-family-group-representing',
+			REPRESENTEE_NAME_HOUSEHOLD: 'register/agent/name-household-representing',
 			REPRESENTEE_NAME_ORGANISATION: 'register/agent/name-organisation-representing',
 			REPRESENTEE_OVER_18: 'register/agent/are-they-18-over',
 			REPRESENTEE_ADDRESS: 'register/agent/their-postal-address',

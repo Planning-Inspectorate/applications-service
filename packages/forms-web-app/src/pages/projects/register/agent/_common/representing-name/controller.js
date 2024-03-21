@@ -3,7 +3,8 @@ const { VIEW } = require('../../../../../../lib/views');
 const representingPersonNameView = 'projects/register/agent/representing-person-name/view.njk';
 const representingOrganisationNameView =
 	'projects/register/agent/representing-organisation-name/view.njk';
-const representingFamilyNameView = 'projects/register/agent/representing-family-name/view.njk';
+const representingHouseholdNameView =
+	'projects/register/agent/representing-household-name/view.njk';
 
 const getRegisterAgentRepresentingNameController = (req, res) => {
 	const { representing } = req.session.behalfRegdata;
@@ -11,7 +12,7 @@ const getRegisterAgentRepresentingNameController = (req, res) => {
 	let view = representingPersonNameView;
 
 	if (representing === 'organisation') view = representingOrganisationNameView;
-	else if (representing === 'family') view = representingFamilyNameView;
+	else if (representing === 'family') view = representingHouseholdNameView;
 
 	return res.render(view, {
 		representing,
@@ -29,7 +30,7 @@ const postRegisterAgentRepresentingNameController = (req, res) => {
 		let view = representingPersonNameView;
 
 		if (representing === 'organisation') view = representingOrganisationNameView;
-		else if (representing === 'family') view = representingFamilyNameView;
+		else if (representing === 'family') view = representingHouseholdNameView;
 
 		return res.render(view, {
 			representing,
