@@ -9,7 +9,7 @@ const {
 	fetchBackOfficeDocumentFilters,
 	fetchBackOfficeDocumentsByType
 } = require('../services/document.backoffice.service');
-const config = require('../lib/config');
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 
 const getBackOfficeDocuments = (req, res) =>
 	getDocuments(req, res, fetchBackOfficeDocuments, fetchBackOfficeDocumentFilters);
@@ -48,14 +48,11 @@ const buildFilters = (req) => ({
 });
 
 const getDocumentByCaseReference = async (req, res) => {
-	const backOfficeCaseReferences =
-		config.backOfficeIntegration.documents.getDocuments.caseReferences || [];
-
 	let response;
 	const { caseReference } = req.params;
 	let { type } = req.query;
 
-	if (backOfficeCaseReferences.includes(caseReference)) {
+	if (isBackOfficeCaseReference(caseReference)) {
 		const { data } = await fetchBackOfficeDocumentsByType({
 			caseReference,
 			type

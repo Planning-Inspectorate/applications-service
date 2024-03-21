@@ -10,6 +10,7 @@ const {
 } = require('./application.merge.service');
 const { getNIApplication, getAllNIApplicationsDownload } = require('./application.ni.service');
 const config = require('../lib/config');
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const { isEmpty } = require('lodash');
 const {
 	mapNIApplicationToApi,
@@ -19,7 +20,7 @@ const {
 } = require('../utils/application.mapper');
 
 const getApplication = async (caseReference) =>
-	isBackOfficeApplication(caseReference)
+	isBackOfficeCaseReference(caseReference)
 		? mapBackOfficeApplicationToApi(await getBackOfficeApplication(caseReference))
 		: mapNIApplicationToApi(await getNIApplication(caseReference));
 
@@ -71,7 +72,7 @@ const createQueryFilters = (query) => {
 	};
 };
 const getAllApplications = async (query) => {
-	const getApplications = config.backOfficeIntegration.applications.getAllApplications;
+	const getApplications = config.backOfficeIntegration.getAllApplications;
 	switch (getApplications) {
 		case 'BO':
 			return getAllBOApplications(query);
@@ -101,7 +102,7 @@ const getAllBOApplications = async (query) => {
 };
 
 const getAllApplicationsDownload = async () => {
-	const getApplications = config.backOfficeIntegration.applications.getAllApplications;
+	const getApplications = config.backOfficeIntegration.getAllApplications;
 	switch (getApplications) {
 		case 'BO':
 			return getAllBOApplicationsDownload();
@@ -118,9 +119,6 @@ const getAllBOApplicationsDownload = async () => {
 	const mappedToAPIApplications = mapBackOfficeApplicationsToApi(applications);
 	return mapApplicationsToCSV(mappedToAPIApplications);
 };
-const isBackOfficeApplication = (caseReference) =>
-	config.backOfficeIntegration.applications.getApplication.caseReferences.includes(caseReference);
-
 module.exports = {
 	createQueryFilters,
 	getApplication,

@@ -1,4 +1,4 @@
-const config = require('../lib/config');
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const {
 	getTimetablesByCaseReference: getBackOfficeTimetable
 } = require('../repositories/timetable.backoffice.repository');
@@ -9,14 +9,9 @@ const {
 const { mapBackOfficeTimetableToApi, mapNITimetableToApi } = require('../utils/timetable.mapper');
 
 const getTimetables = async (caseReference) =>
-	isBackOfficeApplication(caseReference)
+	isBackOfficeCaseReference(caseReference)
 		? mapBackOfficeTimetableToApi(await getBackOfficeTimetable(caseReference))
 		: mapNITimetableToApi(await getNITimetable(caseReference));
-
-const isBackOfficeApplication = (caseReference) =>
-	(
-		config.backOfficeIntegration.examinationTimetable.getExaminationTimetable.caseReferences || []
-	).includes(caseReference);
 
 module.exports = {
 	getTimetables

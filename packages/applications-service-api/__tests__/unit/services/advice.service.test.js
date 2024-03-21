@@ -1,4 +1,5 @@
 const { getAllAdvice, getAdviceById } = require('../../../src/services/advice.service');
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	ADVICE_BACKOFFICE_RESPONSE,
 	ADVICE_BACKOFFICE_DATA,
@@ -21,16 +22,20 @@ const {
 const {
 	findDocumentsByCaseReferenceAndAdviceID
 } = require('../../../src/repositories/document.ni.repository');
-const config = require('../../../src/lib/config');
 
 jest.mock('../../../src/repositories/advice.backoffice.repository');
 jest.mock('../../../src/repositories/advice.ni.repository');
 jest.mock('../../../src/repositories/document.backoffice.repository');
 jest.mock('../../../src/repositories/document.ni.repository');
 jest.mock('../../../src/utils/advice.mapper');
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 
-config.backOfficeIntegration.advice.getAdvice.caseReferences = ['BACKOFFICE-CASEID'];
 describe('Advice Service', () => {
+	beforeAll(() => {
+		isBackOfficeCaseReference.mockImplementation(
+			(caseReference) => caseReference === 'BACKOFFICE-CASEID'
+		);
+	});
 	describe('getAllAdvice', () => {
 		beforeAll(() => {
 			getAllBackOfficeAdviceBORepository.mockResolvedValue({
