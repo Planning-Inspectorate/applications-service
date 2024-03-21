@@ -25,7 +25,7 @@ module.exports = async (context, message) => {
 			let advice = pick(message, advicePropertiesFromMessage);
 			advice = {
 				...advice,
-				attachmentIds: advice?.attachmentIds.join(','),
+				attachmentIds: advice?.attachmentIds?.join(','),
 				modifiedAt: new Date()
 			};
 			await tx.advice.upsert({
