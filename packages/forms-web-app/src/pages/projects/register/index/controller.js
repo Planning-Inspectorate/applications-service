@@ -23,7 +23,7 @@ const getRegisterIndexController = async (req, res) => {
 		req.session.caseRef = case_ref;
 		req.session.appData = appData;
 		req.session.projectName = appData.ProjectName;
-		req.session.registerJourneyStarted = registrationOpen;
+		req.session.registerJourneyStarted = registrationOpen || registrationReOpened;
 
 		return res.render(view, getPageData(case_ref, appData, registrationOpen, registrationReOpened));
 	} else {
