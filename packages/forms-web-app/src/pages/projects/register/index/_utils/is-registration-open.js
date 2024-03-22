@@ -6,6 +6,32 @@ const { featureFlag } = require('../../../../../config');
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
+const isRegistrationClosed = ({
+	DateOfRepresentationPeriodOpen,
+	DateOfRelevantRepresentationClose,
+	DateOfReOpenRelevantRepresentationStart,
+	DateOfReOpenRelevantRepresentationClose
+}) => {
+	let registrationClosed = false;
+
+	if (!DateOfRelevantRepresentationClose) registrationClosed = false;
+	else if (
+		DateOfRepresentationPeriodOpen &&
+		dayjs().isAfter(dayjs(DateOfRepresentationPeriodOpen), 'day') &&
+		dayjs().isAfter(dayjs(DateOfRelevantRepresentationClose), 'day')
+	)
+		registrationClosed = true;
+	else if (
+		DateOfReOpenRelevantRepresentationStart &&
+		DateOfReOpenRelevantRepresentationClose &&
+		dayjs().isAfter(dayjs(DateOfReOpenRelevantRepresentationStart), 'day') &&
+		dayjs().isAfter(dayjs(DateOfReOpenRelevantRepresentationClose), 'day')
+	)
+		registrationClosed = true;
+
+	return registrationClosed;
+};
+
 const isOpen = (openDate, closeDate) =>
 	!!openDate &&
 	!!closeDate &&
@@ -26,4 +52,4 @@ const isRegistrationOpen = ({
 	!DateOfRelevantRepresentationClose ||
 	isOpen(DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose);
 
-module.exports = { isRegistrationOpen, isRegistrationReOpened };
+module.exports = { isRegistrationOpen, isRegistrationReOpened, isRegistrationClosed };
