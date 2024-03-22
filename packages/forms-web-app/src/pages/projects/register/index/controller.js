@@ -1,6 +1,10 @@
 const { getAppData } = require('../../../../services/applications.service');
 const logger = require('../../../../lib/logger');
-const { isRegistrationOpen, isRegistrationReOpened } = require('./_utils/is-registration-open');
+const {
+	isRegistrationOpen,
+	isRegistrationReOpened,
+	isRegistrationClosed
+} = require('./_utils/is-registration-open');
 const { getPageData } = require('./_utils/get-page-data');
 
 const view = 'projects/register/index/view.njk';
@@ -19,6 +23,10 @@ const getRegisterIndexController = async (req, res) => {
 
 		const registrationOpen = isRegistrationOpen(appData);
 		const registrationReOpened = isRegistrationReOpened(case_ref, appData);
+		const registrationClosed = isRegistrationClosed(appData);
+
+		if (!registrationOpen && !registrationReOpened && !registrationClosed)
+			return res.status(404).render('error/not-found');
 
 		req.session.caseRef = case_ref;
 		req.session.appData = appData;

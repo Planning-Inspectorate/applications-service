@@ -1,4 +1,8 @@
-const { isRegistrationOpen, isRegistrationReOpened } = require('./is-registration-open');
+const {
+	isRegistrationOpen,
+	isRegistrationReOpened,
+	isRegistrationClosed
+} = require('./is-registration-open');
 const { featureFlag } = require('../../../../../config');
 
 jest.mock('../../../../../config', () => ({
@@ -22,7 +26,7 @@ describe('pages/projects/register/index/_utils/is-registration-open', () => {
 		featureFlag.openRegistrationCaseReferences = [];
 		appData = {
 			DateOfRepresentationPeriodOpen: null,
-			DateOfRelevantRepresentationClose: dateYesterday,
+			DateOfRelevantRepresentationClose: dateBeforeYesterday,
 			DateOfReOpenRelevantRepresentationStart: null,
 			DateOfReOpenRelevantRepresentationClose: null
 		};
@@ -215,6 +219,46 @@ describe('pages/projects/register/index/_utils/is-registration-open', () => {
 				it('should return true', () => {
 					expect(registrationOpen).toEqual(true);
 				});
+			});
+		});
+	});
+
+	describe('#isRegistrationClosed', () => {
+		describe('When the registration close date is set to null', () => {
+			let registrationClosed;
+
+			beforeEach(() => {
+				appData.DateOfRelevantRepresentationClose = null;
+				registrationClosed = isRegistrationClosed(appData);
+			});
+			it('should return false', () => {
+				expect(registrationClosed).toEqual(false);
+			});
+		});
+
+		describe('When the registration start date and close date have both ended', () => {
+			let registrationClosed;
+
+			beforeEach(() => {
+				appData.DateOfRepresentationPeriodOpen = dateBeforeYesterday;
+				appData.DateOfRelevantRepresentationClose = dateYesterday;
+				registrationClosed = isRegistrationClosed(appData);
+			});
+			it('should return true', () => {
+				expect(registrationClosed).toEqual(true);
+			});
+		});
+
+		describe('When the registration re-open start date and re-open close date have both ended', () => {
+			let registrationClosed;
+
+			beforeEach(() => {
+				appData.DateOfReOpenRelevantRepresentationStart = dateBeforeYesterday;
+				appData.DateOfReOpenRelevantRepresentationClose = dateYesterday;
+				registrationClosed = isRegistrationClosed(appData);
+			});
+			it('should return true', () => {
+				expect(registrationClosed).toEqual(true);
 			});
 		});
 	});
