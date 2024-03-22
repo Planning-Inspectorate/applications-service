@@ -9,9 +9,9 @@ const {
 	fetchBackOfficeDocumentsByType
 } = require('../../../src/services/document.backoffice.service');
 const { fetchNIDocumentsByType } = require('../../../src/services/document.ni.service');
-const config = require('../../../src/lib/config');
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 
-jest.mock('../../../src/lib/config');
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 jest.mock('../../../src/services/document.ni.service');
 jest.mock('../../../src/services/document.backoffice.service');
 const fetchNIDocumentsMock = require('../../../src/services/document.ni.service').fetchNIDocuments;
@@ -20,7 +20,9 @@ const fetchNIDocumentFiltersMock =
 
 describe('documentsV3 controller', () => {
 	const res = httpMocks.createResponse();
-
+	beforeEach(() => {
+		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC0110001');
+	});
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -236,7 +238,6 @@ describe('documentsV3 controller', () => {
 			it('returns a BO document for the case ref and type', async () => {
 				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
 
-				config.backOfficeIntegration.documents.getDocuments.caseReferences = ['BC0110001'];
 				await getDocumentByCaseReference(
 					{
 						params: { caseReference: 'BC0110001' },
