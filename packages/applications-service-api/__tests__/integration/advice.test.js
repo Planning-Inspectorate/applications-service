@@ -6,6 +6,7 @@ const {
 } = require('../__data__/advice');
 const { request } = require('../__data__/supertest');
 const config = require('../../src/lib/config');
+const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 const db = require('../../src/models');
 
 const mockFindManyAdvicePrisma = jest.fn();
@@ -24,13 +25,12 @@ jest.mock('../../src/lib/prisma', () => ({
 		}
 	}
 }));
-
+jest.mock('../../src/utils/is-backoffice-case-reference');
 jest.mock('../../src/models');
 
-config.backOfficeIntegration.advice.getAdvice.caseReferences = [
-	'BACKOFFICE-CASEID',
-	'BACKOFFICE-CASEID-NOTFOUND'
-];
+isBackOfficeCaseReference.mockImplementation((caseReference) =>
+	caseReference.startsWith('BACKOFFICE-')
+);
 describe('/api/v1/advice', () => {
 	describe(' GET /api/v1/advice?caseReference={caseReference}', () => {
 		beforeEach(() => {

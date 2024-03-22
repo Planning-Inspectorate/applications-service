@@ -12,6 +12,7 @@ const { request } = require('../__data__/supertest');
 const { Op } = require('sequelize');
 const { mapNIApplicationsToApi } = require('../../src/utils/application.mapper');
 const config = require('../../src/lib/config');
+const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 const sortApplications = require('../../src/utils/sort-applications.merge');
 
 const mockFindUnique = jest.fn();
@@ -26,7 +27,7 @@ jest.mock('../../src/lib/prisma', () => ({
 		}
 	}
 }));
-
+jest.mock('../../src/utils/is-backoffice-case-reference');
 const mockFindAndCountAll = jest.fn();
 const mockProjectFindOne = jest.fn();
 jest.mock('../../src/models', () => ({
@@ -44,7 +45,7 @@ describe('/api/v1/applications', () => {
 		});
 
 		it('given NI case with caseReference exists, returns 200', async () => {
-			config.backOfficeIntegration.applications.getApplication.caseReferences = [];
+			isBackOfficeCaseReference.mockReturnValue(false);
 			mockProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 
 			const response = await request.get('/api/v1/applications/EN010116');
@@ -57,7 +58,7 @@ describe('/api/v1/applications', () => {
 		});
 
 		it('given Back Office case with caseReference exists, returns 200', async () => {
-			config.backOfficeIntegration.applications.getApplication.caseReferences = ['EN010116'];
+			isBackOfficeCaseReference.mockReturnValue(true);
 			mockFindUnique.mockResolvedValueOnce(APPLICATION_DB);
 
 			const response = await request.get('/api/v1/applications/EN010116');
@@ -82,7 +83,7 @@ describe('/api/v1/applications', () => {
 	});
 	describe('get all applications', () => {
 		describe('when getAllApplications is NI', () => {
-			config.backOfficeIntegration.applications.getAllApplications = 'NI';
+			config.backOfficeIntegration.getAllApplications = 'NI';
 			beforeEach(() => {
 				mockFindAndCountAll.mockResolvedValueOnce({
 					rows: APPLICATIONS_NI_FILTER_COLUMNS,
@@ -240,7 +241,7 @@ describe('/api/v1/applications', () => {
 		});
 		describe('when getAllApplications is BO', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = 'BO';
+				config.backOfficeIntegration.getAllApplications = 'BO';
 				mockProjectFindMany
 					// applications
 					.mockResolvedValueOnce([APPLICATION_DB])
@@ -399,7 +400,7 @@ describe('/api/v1/applications', () => {
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getAllApplications = 'MERGE';
+				config.backOfficeIntegration.getAllApplications = 'MERGE';
 				// NI
 				mockFindAndCountAll.mockResolvedValue({
 					rows: APPLICATIONS_NI_DB,

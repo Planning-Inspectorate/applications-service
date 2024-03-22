@@ -1,4 +1,4 @@
-const config = require('../../../src/lib/config');
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	INTERESTED_PARTY_SELF_API,
 	INTERESTED_PARTY_SELF_BACK_OFFICE
@@ -28,14 +28,13 @@ jest.mock('../../../src/utils/date-utils');
 const { getDate } = require('../../../src/utils/date-utils');
 
 const { APPLICATION_API } = require('../../__data__/application');
-
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 describe('interestedParty service', () => {
 	describe('createInterestedParty', () => {
-		const BACK_OFFICE_CASE_REFERENCE = 'BC0110002';
 		beforeEach(() => {
-			config.backOfficeIntegration.interestedParty.postInterestedParty.caseReferences = [
-				BACK_OFFICE_CASE_REFERENCE
-			];
+			isBackOfficeCaseReference.mockImplementation(
+				(caseReference) => caseReference === 'BC0110002'
+			);
 		});
 
 		describe('NI case', () => {

@@ -1,4 +1,4 @@
-const config = require('../lib/config');
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const {
 	getAllAdviceByCaseReference: getAllBackOfficeAdvice,
 	getAdviceById: getBackOfficeAdviceById
@@ -16,8 +16,6 @@ const {
 	mapNIAdviceToApi
 } = require('../utils/advice.mapper');
 const { getDocumentsByIds } = require('../repositories/document.backoffice.repository');
-const isBackOfficeCaseReference = (caseReference) =>
-	(config.backOfficeIntegration.advice.getAdvice.caseReferences || []).includes(caseReference);
 
 const createQueryFilters = (query) => {
 	const caseReference = query.caseReference;
