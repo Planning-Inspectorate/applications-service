@@ -1,3 +1,5 @@
 const registerAgentOrgNameRoute = 'name-of-organisation';
 
-module.exports = { registerAgentOrgNameRoute };
+const registerAgentOrgNameInputID = 'organisation-name';
+
+module.exports = { registerAgentOrgNameRoute, registerAgentOrgNameInputID };
