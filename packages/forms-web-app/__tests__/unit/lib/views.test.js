@@ -52,7 +52,6 @@ describe('lib/views', () => {
 					REPRESENTEE_EMAIL: 'register/agent/their-email-address',
 					REPRESENTEE_TELEPHONE: 'register/agent/their-telephone-number',
 					ADDRESS: 'register/agent/address',
-					EMAIL: 'register/agent/email-address',
 					TELEPHONE: 'register/agent/telephone-number',
 					ORGANISATION_NAME: 'register/agent/name-of-organisation',
 					TELL_US_ABOUT_PROJECT: 'register/agent/tell-us-about-project',
