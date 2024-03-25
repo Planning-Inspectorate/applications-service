@@ -30,4 +30,4 @@ Feature: Who are you representing? page
 
     Scenario: User click on back link
         When I click on back link
-        Then I am on the "what is your address? agent" page
+        Then I am on the "what is your telephone number? agent" page
