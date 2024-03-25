@@ -2,12 +2,10 @@ import { Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_FullName from '../full-name/PageObjects/PO_FullName';
 import PO_OrgYouWorkFor from '../what-is-the-name-of-org-you-work-for/PageObjects/PO_OrgYouWorkFor';
 import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailAddress';
-import PO_TelNumber from '../what-is-your-telephone-number/PageObjects/PO_TelNumber';
 import PO_AddressDetails from './PageObjects/PO_AddressDetails';
 const fullNamePage = new PO_FullName();
 const orgYouWorkFor = new PO_OrgYouWorkFor();
 const emailAddress = new PO_EmailAddress();
-const telNumber = new PO_TelNumber();
 const addressDetails = new PO_AddressDetails();
 
 And('I have been asked to provide my postal address', () => {
@@ -16,8 +14,6 @@ And('I have been asked to provide my postal address', () => {
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
 	cy.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
-	telNumber.enterTextIntoTelephoneNumberField('123456789');
 	cy.clickSaveAndContinue();
 });
 

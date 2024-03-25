@@ -51,10 +51,10 @@ Feature: UK Address details page
         When I continue with the following values in the address fields
             | AddressLine1   | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Address Line 1 |              |              | NE27 0QQ | United Kingdom |
-        Then I am on the "Who are you representing?" page
+        Then I am on the "what is your telephone number? agent" page
 
     Scenario: User continues with valid data just within the max length constraints
         When I continue with the following values in the address fields
             | AddressLine1                                                                                                                                                                                                                                                    | AddressLine2 | AddressLine3 | PostCode | Country        |
             | Some ultra long house number from outta space, the galaxy and probably the known universe - and - some ultra long street name from outta space, the galaxy and probably the known universe - really - should the system really allow for this many characters?? |              |              | NE27 0QQ | United Kingdom |
-        Then I am on the "Who are you representing?" page
+        Then I am on the "what is your telephone number? agent" page

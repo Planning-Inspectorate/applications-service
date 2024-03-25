@@ -31,13 +31,13 @@ And('I have been asked to provide comments on a proposed project', () => {
 	cy.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
 	cy.clickSaveAndContinue();
-	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
+	cy.clickSaveAndContinue();
+	telNumber.enterTextIntoTelephoneNumberField('123456789');
 	cy.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
 	cy.clickSaveAndContinue();
