@@ -6,14 +6,14 @@ const getCloseDate = (
 	registrationOpen,
 	registrationOpenCloseDate,
 	registrationReOpened,
-	registrationReOpenedOpenedCloseDate
+	registrationReOpenedCloseDate
 ) => {
 	let closeDate = false;
 
 	if (registrationOpen && registrationOpenCloseDate)
 		closeDate = formatDate(registrationOpenCloseDate);
-	else if (registrationReOpened && registrationReOpenedOpenedCloseDate)
-		closeDate = formatDate(registrationReOpenedOpenedCloseDate);
+	else if (registrationReOpened && registrationReOpenedCloseDate)
+		closeDate = formatDate(registrationReOpenedCloseDate);
 
 	return closeDate;
 };
