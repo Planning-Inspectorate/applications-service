@@ -4,13 +4,16 @@ const {
 } = require('./controller');
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-describe('pages/projects/register/agent/their-address/controller.js', () => {
+describe('pages/projects/register/agent/their-address/controller', () => {
 	let req;
 	let res;
 
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			params: {
+				case_ref: 'mock-case-ref'
+			},
 			session: {
 				behalfRegdata: {
 					representee: {
@@ -39,7 +42,7 @@ describe('pages/projects/register/agent/their-address/controller.js', () => {
 	});
 
 	describe('#getRegisterAgentTheirAddressController', () => {
-		it(`'should post data and redirect to  agent their-email-address if address is provided`, async () => {
+		it(`'should post data and redirect to  agent their number url if address is provided`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -58,7 +61,7 @@ describe('pages/projects/register/agent/their-address/controller.js', () => {
 			await postRegisterAgentTheirAddressController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/register/agent/their-email-address`
+				'/projects/mock-case-ref/register/agent/their-telephone-number'
 			);
 		});
 		it('should re-render the template with errors if there is any validation error', async () => {

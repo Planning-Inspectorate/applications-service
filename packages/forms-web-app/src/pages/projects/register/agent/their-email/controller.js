@@ -1,4 +1,3 @@
-// const { VIEW } = require('../../../../../lib/views');
 const { getRedirectURL } = require('./_utils/get-redirect-url');
 
 const view = 'projects/register/agent/their-email/view.njk';
@@ -22,11 +21,6 @@ const postRegisterAgentTheirEmailController = (req, res) => {
 	}
 
 	req.session.behalfRegdata.representee.email = body.email;
-
-	// const redirectUrl =
-	// 	req.query.mode === 'edit'
-	// 		? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS
-	// 		: VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE;
 
 	const redirectURL = getRedirectURL(case_ref, query);
 
