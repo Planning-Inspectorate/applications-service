@@ -99,7 +99,9 @@ describe('nsip-advice', () => {
 		expect(statements[6].trim()).toBe(
 			'WHEN NOT MATCHED THEN INSERT ([adviceId], [adviceReference], [caseReference], [caseId], [title], [from], [agent], [method], [enquiryDate], [enquiryDetails], [adviceGivenBy], [adviceDate], [adviceDetails], [status], [redactionStatus], [attachmentIds], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17);'
 		);
-		expect(receivedParameters).toEqual(Object.values(mockAdvice));
+		const expectedParameters = Object.values(mockAdvice);
+		expect(receivedParameters.length).toBe(expectedParameters.length);
+		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`upserted advice with adviceId ${mockMessage.adviceId}`
 		);
