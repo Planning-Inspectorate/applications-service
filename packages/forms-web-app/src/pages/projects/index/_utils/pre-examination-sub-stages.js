@@ -1,10 +1,11 @@
 const dayjs = require('dayjs');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
-const {
-	featureFlag: { openRegistrationCaseReferences }
-} = require('../../../../config');
 
-function getPreExaminationSubStage(openDate, closedDate, websiteDate, rule6 = false, caseRef) {
+function getPreExaminationSubStage(applicationData, rule6 = false) {
+	const openDate = applicationData.DateOfRepresentationPeriodOpen;
+	const closedDate = applicationData.DateOfRelevantRepresentationClose;
+	const websiteDate = applicationData.DateRRepAppearOnWebsite;
+
 	const dayToday = dayjs();
 	const dayOpenDate = dayjs(openDate);
 	const dayClosedDate = dayjs(closedDate);
@@ -19,11 +20,7 @@ function getPreExaminationSubStage(openDate, closedDate, websiteDate, rule6 = fa
 	};
 
 	if (dayToday.isBefore(dayOpenDate) || openDate === null) subStages.PRE_REPS = true;
-	else if (
-		isRegistrationOpen(openDate, closedDate, caseRef) &&
-		!openRegistrationCaseReferences.includes(caseRef)
-	)
-		subStages.OPEN_REPS = true;
+	else if (isRegistrationOpen(applicationData)) subStages.OPEN_REPS = true;
 	else if (
 		dayToday.isAfter(dayClosedDate) &&
 		(dayToday.isBefore(dayWebsiteDate) || websiteDate === null)
