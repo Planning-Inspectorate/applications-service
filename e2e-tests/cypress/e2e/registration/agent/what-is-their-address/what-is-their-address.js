@@ -6,6 +6,7 @@ import PO_TelNumber from '../what-is-your-telephone-number/PageObjects/PO_TelNum
 import PO_AddressDetails from '../uk-address-details/PageObjects/PO_AddressDetails';
 import PO_WhoYouRepresenting from '../who-are-you-representing/PageObjects/PO_WhoYouRepresenting';
 import PO_RepName from '../representee-name/PageObjects/PO_RepName';
+import PO_RepEmailAddress from '../what-is-their-email-address/PageObjects/PO_RepEmailAddress';
 import PO_RepAddressDetails from './PageObjects/PO_RepAddressDetails';
 const fullNamePage = new PO_FullName();
 const orgYouWorkFor = new PO_OrgYouWorkFor();
@@ -14,6 +15,7 @@ const telNumber = new PO_TelNumber();
 const addressDetails = new PO_AddressDetails();
 const whoYouRepresenting = new PO_WhoYouRepresenting();
 const repName = new PO_RepName();
+const repEmailAddress = new PO_RepEmailAddress();
 const repAddressDetails = new PO_RepAddressDetails();
 
 And('I have been asked to provide representee postal address', () => {
@@ -36,6 +38,8 @@ And('I have been asked to provide representee postal address', () => {
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
 	cy.clickSaveAndContinue();
 	cy.selectRadioYesOrNo('Yes');
+	cy.clickSaveAndContinue();
+	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
 	cy.clickSaveAndContinue();
 });
 
