@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
@@ -23,25 +22,25 @@
           errorList: errorSummary
         }) }}
       {% endif %}
+
       <form method="POST" novalidate>
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
-
           {{ govukInput({
             label: {
-                text: "What is the name of the organisation you work for?",
-                classes: "govuk-label--l",
-                isPageHeading: true
+              text: "What is the name of the organisation you work for?",
+              classes: "govuk-label--l",
+              isPageHeading: true
             },
             hint: {
-                text: "We will publish your organisation name, your client's name and their comments on the website."
+              text: "We will publish your organisation name, your client's name and their comments on the website."
             },
-            id: "organisation-name",
-            name: "organisation-name",
+            id: registerAgentOrgNameInputID,
+            name: registerAgentOrgNameInputID,
 						autocomplete: 'organization',
-            value: organisationName or errors['organisation-name'].value,
-            attributes: {"data-cy": "organisation-name"},
-            errorMessage: errors['organisation-name'] and {
-              text: errors['organisation-name'].msg
+            value: organisationName or errors[registerAgentOrgNameInputID].value,
+            attributes: { "data-cy": "organisation-name" },
+            errorMessage: errors[registerAgentOrgNameInputID] and {
+              text: errors[registerAgentOrgNameInputID].msg
             }
           }) }}
         </div>
@@ -51,10 +50,9 @@
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
-
       </form>
-      <a class="govuk-body govuk-link" href="{{ baseUrl }}/register/agent/email-address">I don't work for an organisation</a>
+
+      <a class="govuk-body govuk-link" href="{{ registerAgentEmailURL }}">I don't work for an organisation</a>
     </div>
   </div>
-
 {% endblock %}

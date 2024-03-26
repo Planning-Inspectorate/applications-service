@@ -1,3 +1,9 @@
 const registerAgentRepresentingWhoRoute = 'who-representing';
 
-module.exports = { registerAgentRepresentingWhoRoute };
+const registerAgentRepresentingWhoOptions = {
+	family: 'family',
+	person: 'person',
+	organisation: 'organisation'
+};
+
+module.exports = { registerAgentRepresentingWhoRoute, registerAgentRepresentingWhoOptions };

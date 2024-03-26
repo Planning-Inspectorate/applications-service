@@ -11,7 +11,7 @@ Feature: What is your telephone number? page
     Scenario: User click on back link
         Then I am on the "what is your telephone number? agent" page
         When I click on back link
-        Then I am on the "what is your email address? agent" page
+        Then I am on the "what is your address? agent" page
 
     Scenario Outline: User continues with invalid data
         When I continue with the value "<text>" in the telephone number field
@@ -25,7 +25,7 @@ Feature: What is your telephone number? page
 
     Scenario Outline: User continues with valid data
         When I continue with the value "<text>" in the telephone number field
-        Then I am on the "what is your address? agent" page
+        Then I am on the "who are you representing?" page
 
         Examples:
             | text                                                                                                                                                                                                                                                            |

@@ -11,10 +11,16 @@ describe('pages/projects/register/agent/organisation-name/controller', () => {
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			body: {
+				'organisation-name': 'mock body organisation name'
+			},
+			params: {
+				case_ref: 'mock-case-ref'
+			},
 			session: {
 				behalfRegdata: {
 					representor: {
-						'organisation-name': 'test'
+						'organisation-name': 'mock session organisation name'
 					}
 				}
 			}
@@ -29,29 +35,59 @@ describe('pages/projects/register/agent/organisation-name/controller', () => {
 			expect(res.render).toHaveBeenCalledWith(
 				'projects/register/agent/organisation-name/view.njk',
 				{
-					organisationName: 'test'
+					organisationName: 'mock session organisation name',
+					registerAgentEmailURL: '/projects/mock-case-ref/register/agent/email-address',
+					registerAgentOrgNameInputID: 'organisation-name'
 				}
 			);
 		});
 	});
 
 	describe('#postRegisterAgentOrgNameController', () => {
-		it(`'should post data and redirect to /agent/email-address if name is provided`, async () => {
-			const organisationName = 'test';
+		it('should post data and redirect to /agent/email-address if name is provided', async () => {
 			const mockRequest = {
 				...req,
-				body: {
-					'organisation-name': organisationName
-				},
 				query: {
 					mode: ''
+				},
+				session: {
+					behalfRegdata: {
+						representor: {}
+					}
 				}
 			};
 			await postRegisterAgentOrgNameController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				`/mock-base-url/mock-case-ref/register/agent/email-address`
+				`/projects/mock-case-ref/register/agent/email-address`
 			);
+
+			expect(mockRequest.session).toEqual({
+				behalfRegdata: { representor: { 'organisation-name': 'mock body organisation name' } }
+			});
+		});
+
+		it('should post data and redirect to /agent/check-answers if in edit mode', async () => {
+			const mockRequest = {
+				...req,
+				query: {
+					mode: 'edit'
+				},
+				session: {
+					behalfRegdata: {
+						representor: {}
+					}
+				}
+			};
+			await postRegisterAgentOrgNameController(mockRequest, res);
+
+			expect(res.redirect).toHaveBeenCalledWith(
+				`/projects/mock-case-ref/register/agent/check-answers`
+			);
+
+			expect(mockRequest.session).toEqual({
+				behalfRegdata: { representor: { 'organisation-name': 'mock body organisation name' } }
+			});
 		});
 		it('should re-render the template with errors if there is any validation errors', async () => {
 			const mockRequest = {
@@ -67,8 +103,11 @@ describe('pages/projects/register/agent/organisation-name/controller', () => {
 			expect(res.render).toHaveBeenCalledWith(
 				'projects/register/agent/organisation-name/view.njk',
 				{
-					errorSummary: [{ text: 'There were errors here', href: '#' }],
-					errors: { a: 'b' }
+					errorSummary: [{ href: '#', text: 'There were errors here' }],
+					errors: { a: 'b' },
+					organisationName: undefined,
+					registerAgentEmailURL: '/projects/mock-case-ref/register/agent/email-address',
+					registerAgentOrgNameInputID: 'organisation-name'
 				}
 			);
 		});

@@ -11,7 +11,7 @@ Feature: What is their email address? page
     Scenario: User click on back link
         Then I am on the "what is their email address?" page
         When I click on back link
-        Then I am on the "What is their address?" page
+        Then I am on the "are they 18 or over?" page
 
     Scenario Outline: User continues with invalid data
         When I continue with the value "<text>" in the representee email address field
@@ -27,7 +27,7 @@ Feature: What is their email address? page
 
     Scenario Outline: User continues with valid data
         When I continue with the value "<text>" in the representee email address field
-        Then I am on the "What is their telephone number?" page
+        Then I am on the "what is their address?" page
 
         Examples:
             | text                   |

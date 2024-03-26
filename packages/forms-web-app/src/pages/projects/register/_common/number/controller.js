@@ -1,7 +1,7 @@
 const logger = require('../../../../../lib/logger');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
-const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const { getRedirectURL } = require('./_utils/get-redirect-url');
 const { viewModel } = require('./_utils/viewModel');
 
 const view = 'projects/register/_common/number/view.njk';
@@ -25,8 +25,10 @@ const getRegisterNumberController = (req, res) => {
 
 const postRegisterNumberController = (req, res) => {
 	try {
-		const { body, query, originalUrl, session } = req;
+		const { body, originalUrl, params, query, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
+		const { case_ref } = params;
+
 		const key = getKeyFromUrl(originalUrl);
 
 		if (errors[telephoneNumberKey] || Object.keys(errors).length > 0) {
@@ -39,7 +41,9 @@ const postRegisterNumberController = (req, res) => {
 
 		setSession(session, key, telephoneNumberKey, body[telephoneNumberKey]);
 
-		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(query, key)}`);
+		const redirectURL = getRedirectURL(session, case_ref, query);
+
+		return res.redirect(redirectURL);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
