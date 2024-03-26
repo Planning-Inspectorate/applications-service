@@ -12,6 +12,9 @@ describe('pages/projects/register/agent/_common/representing-name/controller', (
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			params: {
+				case_ref: 'mock-case-ref'
+			},
 			session: {
 				behalfRegdata: {
 					representee: {
@@ -27,6 +30,7 @@ describe('pages/projects/register/agent/_common/representing-name/controller', (
 	describe('#getRegisterAgentRepresentingNameController', () => {
 		it('should call the correct template', () => {
 			getRegisterAgentRepresentingNameController(req, res);
+
 			expect(res.render).toHaveBeenCalledWith(
 				'projects/register/agent/representing-person-name/view.njk',
 				{
@@ -51,7 +55,7 @@ describe('pages/projects/register/agent/_common/representing-name/controller', (
 			await postRegisterAgentRepresentingNameController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/agent/are-they-18-over'
+				'/projects/mock-case-ref/register/agent/are-they-18-over'
 			);
 		});
 

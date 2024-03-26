@@ -1,4 +1,3 @@
-// const { VIEW } = require('../../../../../../lib/views');
 const { getRedirectURL } = require('./_utils/get-redirect-url');
 
 const representingPersonNameView = 'projects/register/agent/representing-person-name/view.njk';
@@ -44,10 +43,6 @@ const postRegisterAgentRepresentingNameController = (req, res) => {
 	req.session.behalfRegdata.representee['full-name'] = body['full-name'];
 
 	const redirectURL = getRedirectURL(session, case_ref, query);
-
-	// if (req.query.mode === 'edit') redirectUrl = VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS;
-	// else if (representing === 'organisation') redirectUrl = VIEW.REGISTER.AGENT.REPRESENTEE_ADDRESS;
-	// else redirectUrl = VIEW.REGISTER.AGENT.REPRESENTEE_OVER_18;
 
 	return res.redirect(redirectURL);
 };

@@ -12,6 +12,9 @@ describe('pages/projects/register/agent/their-email/controller', () => {
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			params: {
+				case_ref: 'mock-case-ref'
+			},
 			session: {
 				behalfRegdata: {
 					representee: {
@@ -38,7 +41,7 @@ describe('pages/projects/register/agent/their-email/controller', () => {
 	});
 
 	describe('#postRegisterAgentTheirEmailController', () => {
-		it(`'should post data and redirect to the their number page if email is provided`, async () => {
+		it(`'should post data and redirect to the their address page if email is provided`, async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -51,7 +54,7 @@ describe('pages/projects/register/agent/their-email/controller', () => {
 			await postRegisterAgentTheirEmailController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/agent/their-telephone-number'
+				'/projects/mock-case-ref/register/agent/their-postal-address'
 			);
 		});
 

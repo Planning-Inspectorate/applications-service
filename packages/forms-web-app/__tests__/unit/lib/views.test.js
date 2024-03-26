@@ -41,11 +41,7 @@ describe('lib/views', () => {
 					REPRESENTEE_NAME_HOUSEHOLD: 'register/agent/name-household-representing',
 					REPRESENTEE_NAME_ORGANISATION: 'register/agent/name-organisation-representing',
 					REPRESENTEE_OVER_18: 'register/agent/are-they-18-over',
-					REPRESENTEE_ADDRESS: 'register/agent/their-postal-address',
-					REPRESENTEE_EMAIL: 'register/agent/their-email-address',
-					REPRESENTEE_TELEPHONE: 'register/agent/their-telephone-number',
 					ORGANISATION_NAME: 'register/agent/name-of-organisation',
-					TELL_US_ABOUT_PROJECT: 'register/agent/tell-us-about-project',
 					CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
 					DECLARATION: 'register/agent/declaration',
 					REGISTRATION_COMPLETE: 'register/agent/registration-complete'
