@@ -6,6 +6,12 @@ const { featureFlag } = require('../../../../../config');
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
+/*
+	#isRegistrationClosed
+	if registration has been previously open or
+	if registration has been re-opened and is now closed
+	the registration is determined to be closed
+*/
 const isRegistrationClosed = ({
 	DateOfRepresentationPeriodOpen,
 	DateOfRelevantRepresentationClose,
