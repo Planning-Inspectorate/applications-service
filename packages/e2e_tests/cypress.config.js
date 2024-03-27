@@ -18,7 +18,7 @@ module.exports = defineConfig({
 		defaultCommandTimeout: 20000,
 		testIsolation: false,
 		env: {
-			commandDelay: 2000
+			commandDelay: 0
 		},
 		viewportWidth: 1920,
 		viewportHeight: 2000
