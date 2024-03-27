@@ -1,6 +1,8 @@
 {
-	"blobStoreUrl": "https://pinsstdocsboprodukw001.blob.core.windows.net/published-documents",
+	"blobStoreUrl": "https://nsip-documents.planninginspectorate.gov.uk/published-documents",
 	"frontOfficeUrl": "https://national-infrastructure-consenting.planninginspectorate.gov.uk",
-	"documentRedirectCaseReferences": [],
-	"projectRedirects": {}
+	"documentRedirectCaseReferences": ["TR010033"],
+	"projectRedirects": {
+		"north-west/a5036-port-of-liverpool-access-scheme/": "TR010033"
+	}
 }
