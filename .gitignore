@@ -130,3 +130,7 @@ __blobstorage__
 __queuestorage__
 __azurite
 __azurite_db*__.json
+
+# Structurizr
+workspace.json
+.structurizr/*
