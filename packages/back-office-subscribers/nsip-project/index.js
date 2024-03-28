@@ -8,13 +8,11 @@ module.exports = async (context, message) => {
 	const caseReference = message.caseReference;
 
 	if (!caseReference) {
-		context.log(`skipping update as caseReference is missing`);
-		return;
+		throw new Error('caseReference is required');
 	}
 
 	if (!message.applicantId) {
-		context.log(`skipping update as applicantId is missing`);
-		return;
+		throw new Error('applicantId is required');
 	}
 
 	await prismaClient.$executeRawUnsafe(serviceUserQuery, message.applicantId);
