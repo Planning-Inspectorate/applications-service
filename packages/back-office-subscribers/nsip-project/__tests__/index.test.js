@@ -66,14 +66,16 @@ describe('nsip-project', () => {
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-project function');
 	});
 	it('throws error if caseReference is missing', async () => {
-		expect(() => sendMessage(mockContext, {})).toThrow('caseReference is required');
+		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
+			'caseReference is required'
+		);
 		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
 	it('throws error if applicantId is missing', async () => {
-		expect(() => sendMessage(mockContext, { caseReference: 'ABC' })).toThrow(
-			'applicantId is required'
-		);
+		await expect(
+			async () => await sendMessage(mockContext, { caseReference: 'ABC' })
+		).rejects.toThrow('applicantId is required');
 		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
