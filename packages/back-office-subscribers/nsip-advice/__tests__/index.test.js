@@ -1,29 +1,21 @@
 const sendMessage = require('../index');
-const { prismaClient } = require('../../lib/prisma');
+const buildMergeQuery = require('../../lib/build-merge-query');
 
-const mockFindUnique = jest.fn();
-const mockUpsert = jest.fn();
-
+const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$transaction: jest.fn().mockImplementation((callback) =>
-			callback({
-				advice: {
-					findUnique: mockFindUnique,
-					upsert: mockUpsert
-				}
-			})
-		)
+		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
+jest.mock('../../lib/build-merge-query', () =>
+	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
+);
 
-const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
-const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
-const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
+const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
+		enqueuedTimeUtc: mockEnqueueDateTime,
 		deliveryCount: 1,
 		messageId: 123
 	}
@@ -51,30 +43,16 @@ const mockMessage = {
 const mockAdvice = {
 	...mockMessage,
 	attachmentIds: mockMessage.attachmentIds.join(','),
-	modifiedAt: mockCurrentTime
-};
-const assertUpsert = () => {
-	expect(mockUpsert).toHaveBeenCalledWith({
-		where: {
-			adviceId: mockMessage.adviceId
-		},
-		create: mockAdvice,
-		update: mockAdvice
-	});
-	expect(mockContext.log).toHaveBeenCalledWith(
-		`upserted advice with adviceId: ${mockMessage.adviceId}`
-	);
+	modifiedAt: new Date()
 };
 
 describe('nsip-advice', () => {
 	beforeEach(() => {
-		mockFindUnique.mockClear();
-		mockUpsert.mockClear();
-		prismaClient.$transaction.mockClear();
+		mockExecuteRawUnsafe.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(mockCurrentTime);
+		jest.setSystemTime(new Date(mockAdvice.modifiedAt));
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -84,63 +62,48 @@ describe('nsip-advice', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-advice function');
 	});
+
 	it('throws error if adviceId is missing', async () => {
 		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
 			'adviceId is required'
 		);
-		expect(mockFindUnique).not.toHaveBeenCalled();
-		expect(prismaClient.$transaction).not.toHaveBeenCalled();
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
-	it('start transaction', async () => {
+
+	it('calls buildMergeQuery with correct parameters', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(prismaClient.$transaction).toHaveBeenCalled();
+		expect(buildMergeQuery).toHaveBeenCalledWith(
+			'advice',
+			'adviceId',
+			mockAdvice,
+			mockEnqueueDateTime
+		);
 	});
-	it('finds existing advice to determine if it should update', async () => {
+
+	it('runs query to upsert advice', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockFindUnique).toHaveBeenCalledWith({
-			where: {
-				adviceId: mockMessage.adviceId
-			}
-		});
-	});
-	describe('when no advice exists in database', () => {
-		it('creates new advice for adviceId', async () => {
-			mockFindUnique.mockResolvedValue(null);
-			await sendMessage(mockContext, mockMessage);
-			assertUpsert();
-		});
-	});
-	describe('when advice exists in database', () => {
-		describe('and the message is older than existing advice', () => {
-			it('skips update', async () => {
-				mockFindUnique.mockResolvedValue(mockAdvice);
-				const mockContextWithOlderTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockPastTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithOlderTime, mockMessage);
-				expect(mockUpsert).not.toHaveBeenCalled();
-				expect(mockContext.log).toHaveBeenCalledWith(
-					`skipping update of advice with adviceId: ${mockMessage.adviceId}`
-				);
-			});
-		});
-		describe('and the message is newer than existing advice', () => {
-			it('updates advice', async () => {
-				mockFindUnique.mockResolvedValue(mockAdvice);
-				const mockContextWithNewerTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockFutureTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithNewerTime, mockMessage);
-				assertUpsert();
-			});
-		});
+		const [receivedStatement, ...receivedParameters] = mockExecuteRawUnsafe.mock.calls[0];
+		const statements = receivedStatement.split('\n');
+		expect(statements[0].trim()).toBe('MERGE INTO [advice] AS Target');
+		expect(statements[1].trim()).toBe(
+			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17) AS Source ([adviceId], [adviceReference], [caseReference], [caseId], [title], [from], [agent], [method], [enquiryDate], [enquiryDetails], [adviceGivenBy], [adviceDate], [adviceDetails], [status], [redactionStatus], [attachmentIds], [modifiedAt])'
+		);
+		expect(statements[2].trim()).toBe('ON Target.[adviceId] = Source.[adviceId]');
+		expect(statements[3].trim()).toBe('WHEN MATCHED');
+		expect(statements[4].trim()).toBe(
+			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
+		);
+		expect(statements[5].trim()).toBe(
+			'THEN UPDATE SET Target.[adviceReference] = Source.[adviceReference], Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[title] = Source.[title], Target.[from] = Source.[from], Target.[agent] = Source.[agent], Target.[method] = Source.[method], Target.[enquiryDate] = Source.[enquiryDate], Target.[enquiryDetails] = Source.[enquiryDetails], Target.[adviceGivenBy] = Source.[adviceGivenBy], Target.[adviceDate] = Source.[adviceDate], Target.[adviceDetails] = Source.[adviceDetails], Target.[status] = Source.[status], Target.[redactionStatus] = Source.[redactionStatus], Target.[attachmentIds] = Source.[attachmentIds], Target.[modifiedAt] = Source.[modifiedAt]'
+		);
+		expect(statements[6].trim()).toBe(
+			'WHEN NOT MATCHED THEN INSERT ([adviceId], [adviceReference], [caseReference], [caseId], [title], [from], [agent], [method], [enquiryDate], [enquiryDetails], [adviceGivenBy], [adviceDate], [adviceDetails], [status], [redactionStatus], [attachmentIds], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17);'
+		);
+		const expectedParameters = Object.values(mockAdvice);
+		expect(receivedParameters.length).toBe(expectedParameters.length);
+		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`upserted advice with adviceId ${mockMessage.adviceId}`
+		);
 	});
 });

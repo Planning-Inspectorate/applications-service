@@ -15,4 +15,13 @@ describe('agent registers to have your say and submits on behalf of householder'
 	it('it should click on register to have your say link', () => {
 		projectPage.findAndClickSidebarLinkLeft('Register to have your say');
 	});
+
+	it('it should click start now button', () => {
+		projectPage.findAndClickButton('Start now');
+	});
+
+	it('it should check on behalf of another person ', () => {
+		haveYourSay.checkRadioOption();
+		projectPage.findAndClickButton('Continue');
+	});
 });

@@ -1,4 +1,8 @@
 export class PO_HaveYourSay {
+	elements = {
+		radioButton: () => cy.get('[data-cy="answer-behalf"]')
+	};
+
 	acceptCookiesButton() {
 		return cy.get("a[data-cy='cookie-banner-view-cookies']").click();
 	}
@@ -74,5 +78,9 @@ export class PO_HaveYourSay {
 
 	registrationCompleteText(string) {
 		cy.get('.govuk-panel__title').contains(string);
+	}
+
+	checkRadioOption() {
+		this.elements.radioButton().click();
 	}
 }
