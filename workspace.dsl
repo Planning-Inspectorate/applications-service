@@ -7,7 +7,7 @@ workspace "Applications service" {
 
 		userPublicIndividual = person "Private individual" "Member of public interested in nationally significant infrastructure projects"
 		userMemberOfOrg = person "Member of organisation" "Member of an organisation interested in nationally significant infrastructure projects"
-		userAgent = person "Agent" "Represent a private individualm family or organisation"
+		userAgent = person "Agent" "Represent a private individual family or organisation"
 
 
 		group "Planning Inspectorate"{
@@ -27,7 +27,7 @@ workspace "Applications service" {
 					tags "Microsoft Azure - Cache Redis"
 				}
 
-				containerAzureSql = container "Database" "Local projection of cases" "Azure SQL" {
+				containerAzureSql = container "Database" "Local projection of data from back-office" "Azure SQL" {
 					tags "Database" "Microsoft Azure - Azure SQL"
 				}
 
@@ -51,6 +51,8 @@ workspace "Applications service" {
 			}
 
 			systemAppsBo = softwareSystem "Applications Back-Office" "Internally facing service allowing for management of cases relating to Nationally Significant Infrastructure Projects (NSIPs) within England and Wales"  {
+					tags "InternalCollaboratorSystem"
+
 				containerBoFileStorage = container "File storage" {
 					tags "Microsoft Azure - Storage Azure Files"
 				}
@@ -66,38 +68,14 @@ workspace "Applications service" {
 				containerBoAzureSql = container "Database" "Source of truth for cases" "Azure SQL" {
 					tags "Database" "Microsoft Azure - Azure SQL"
 				}
-
-				containerBoFunctionApp1 = container "Function App 1"{
-					tags "Microsoft Azure - Function Apps"
-				}
-
-				containerBoFunctionApp2 = container "Function App 2"{
-					tags "Microsoft Azure - Function Apps"
-				}
-
-				containerBoFunctionApp3 = container "Function App 3"{
-					tags "Microsoft Azure - Function Apps"
-				}
-
-				containerBoKeyVault = container "Key Vault" "Hold secrets and sensitive data" "Azure Key Vault"{
-					tags "Microsoft Azure - Key Vaults"
-				}
 			}
 
 			systemOdw = softwareSystem "Operational Data Warehouse (ODW)" "Holds all Planning Inspectorate data so that it can be used for internal purposes" {
-				tags "Microsoft Azure - Azure Synapse Analytics"
+				tags "Microsoft Azure - Azure Synapse Analytics" "InternalCollaboratorSystem"
 			}
 
 			group "Legacy"{
 				systemHorizon = softwareSystem "Horizon" "Legacy back office system for managing planning applications and appeals"{
-					tags "LegacySystem"
-				}
-
-				systemNspiApi = softwareSystem "NSIP API" "[ What does this do ?? ]"{
-					tags "LegacySystem"
-				}
-
-				systemNsipDocumentStore = softwareSystem "NSIP Document Store" "[ What does this do ?? ]"{
 					tags "LegacySystem"
 				}
 
@@ -112,7 +90,8 @@ workspace "Applications service" {
 			containerGovNotify = container "GOV Notify" "UK government messaging platform for sending emails, text and letters to users"
 		}
 
-		### Releationships
+		##################################################################################
+		# Releationships
 		userPublicIndividual -> containerFoWeb "Finds project information and registers interest" "HTTPS, HTML"
 		userMemberOfOrg -> containerFoWeb "Finds project information and registers interest" "HTTPS, HTML"
 		userAgent -> containerFoWeb "Finds project information and registers interest" "HTTPS, HTML"
@@ -120,8 +99,10 @@ workspace "Applications service" {
 
 		# Back-office
 		systemAppsBo -> systemOdw "Broadcasts message when entities change" "Azure Service Bus via topic XXX" "ServiceBus"
-		containerBoWeb -> containerBoApi "[ NEEDS DESCRIPTION ??" "HTTP, JSON"
+		containerBoWeb -> containerBoApi "[ NEEDS DESCRIPTION ?? ]" "HTTP, JSON"
 		containerBoApi -> containerBoAzureSql "Reads and writes case data to"
+
+		# TODO: List topic names in relationship descriptions https://github.com/Planning-Inspectorate/back-office/blob/8b5cb72caebee46ce6e83216978eefe4ef8a819c/docs/event-repository.md
 		containerBoApi -> containerFunctionAppProjects "Broadcasts message on Project changes" "Azure Service via topic XXX" "ServiceBus"
 		containerBoApi -> containerFunctionAppProjectUpdates "Broadcasts message on Project Update changes" "Azure Service via topic XXX" "ServiceBus"
 		containerBoApi -> containerFunctionAppDocumentMetadata "Broadcasts message on Document Metadata changes" "Azure Service via topic XXX" "ServiceBus"
@@ -138,25 +119,22 @@ workspace "Applications service" {
 		containerFoApi -> containerAzureSql "Read only access to"
 		containerFoApi -> containerGovNotify "Sends notification emails through" "HTTPS, JSON"
 		containerFoApi -> systemNiDatabase "Reads and writes legacy case data from", "TCP, SQL"
-		containerFoApi -> systemNspiApi "Uploads files (what type?) to"
 		containerFoApi -> containerFoKeyVault "Retrieves secrets from"
 		containerFoApi -> containerBoFileStorage "[ NEEDS DESCRIPTION ?? ]"
 
 		# Misc
 		systemNiDatabase -> systemHorizon "Extracts project data including documents and interested party comments (representations)"
-		systemNspiApi -> systemNsipDocumentStore "Stores files in"
-		systemHorizon -> systemNspiApi "Syncronises datas with"
+
+		##################################################################################
+		# Deployment environments
+		# https://docs.structurizr.com/dsl/cookbook/deployment-groups/
 	}
 
 	views {
 		theme default
 
-		# Icons and colours
-		# theme https://static.structurizr.com/themes/microsoft-azure-2023.01.24/theme.json
-
-		# Icons only
+		# Azure icons only
 		theme https://static.structurizr.com/themes/microsoft-azure-2023.01.24/icons.json
-
 
 		styles {
 
@@ -170,6 +148,10 @@ workspace "Applications service" {
 
 			element LegacySystem {
 				background #CCCCCC
+			}
+
+			element InternalCollaboratorSystem {
+				background #888888
 			}
 
 			relationship ServiceBus {
