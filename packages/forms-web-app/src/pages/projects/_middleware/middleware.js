@@ -7,6 +7,7 @@ const {
 	hasRepresentationsAvailable
 } = require('../representations/index/_utils/has-representations-available');
 const { getShowExaminationLink } = require('./_utils/get-show-examination-link');
+const { isStringPartOfArray } = require('../../_utils/is-string-part-of-array');
 
 async function projectsMiddleware(req, res, next) {
 	try {
@@ -40,7 +41,7 @@ async function projectsMiddleware(req, res, next) {
 }
 
 const projectMigrationMiddleware = (req, res, next) => {
-	if (config.featureFlag.projectMigrationCaseReferences.includes(req.params.case_ref)) {
+	if (isStringPartOfArray(config.featureFlag.projectMigrationCaseReferences, req.params.case_ref)) {
 		next();
 	} else {
 		res.status(404).render('error/not-found');
