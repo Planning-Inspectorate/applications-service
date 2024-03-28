@@ -14,15 +14,13 @@ Monorepo for all Applications Service services and infrastructure
 
 ## Architecture
 
-The Applications Service is featured within the ODT Architecture diagram on Confluence here:
-https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/907870332/Current+ODT+Architecture 
+The architecture of the applications service and it's relationships with other systems can be viewed through interactive [C4 Model diagrams](https://c4model.com) held as [Structizier](https://docs.structurizr.com) code in the `workspace.dsl` file
 
-The following diagrams provide a more detailed view of the immediate system context 
-and containers within the Applications Service.
+This can be viewed locally through an interactive web interface by running the follow command
 
-[PINS Applications Architecture C1 Context](doc/images/pins-applications-c1-context.drawio.png "PINS Applications Architecture C1 Context")
+`docker run -it --rm -p 8080:8080 -v $PWD:/usr/local/structurizr structurizr/lite`
 
-[PINS Applications Architecture C2 Containers](doc/images/pins-applications-c2-context.drawio.png "PINS Applications Architecture C1 Context")
+Finally open your web browser to view [http://localhost:8080](http://localhost:8080)
 
 ### Packages
 
