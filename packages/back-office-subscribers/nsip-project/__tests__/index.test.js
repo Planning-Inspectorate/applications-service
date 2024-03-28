@@ -1,7 +1,11 @@
 const sendMessage = require('../index');
 const { serviceUserQuery } = require('../../lib/queries');
+const buildMergeQuery = require('../../lib/build-merge-query');
 
 const mockExecuteRawUnsafe = jest.fn();
+jest.mock('../../lib/build-merge-query', () =>
+	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
+);
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
 		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
@@ -86,6 +90,17 @@ describe('nsip-project', () => {
 			`created applicant with serviceUserId ${mockMessage.applicantId}`
 		);
 	});
+
+	it('calls buildMergeQuery with correct parameters', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(buildMergeQuery).toHaveBeenCalledWith(
+			'project',
+			'caseReference',
+			mockProject,
+			mockEnqueueDateTime
+		);
+	});
+
 	it('upserts project', async () => {
 		await sendMessage(mockContext, mockMessage);
 		const expectedParameters = Object.values(mockProject);
