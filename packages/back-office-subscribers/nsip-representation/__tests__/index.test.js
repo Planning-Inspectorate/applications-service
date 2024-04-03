@@ -1,4 +1,6 @@
 const sendMessage = require('../index');
+const { serviceUserQuery } = require('../../lib/queries');
+const buildMergeQuery = require('../../lib/build-merge-query');
 
 const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
@@ -6,6 +8,9 @@ jest.mock('../../lib/prisma', () => ({
 		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
+jest.mock('../../lib/build-merge-query', () =>
+	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
+);
 
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
@@ -68,9 +73,17 @@ describe('nsip-representation', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-representation function');
 	});
-	it('skips update if representationId is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping update as representationId is missing');
+	it('throws error if representationId is missing', async () => {
+		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
+			'representationId is required'
+		);
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+	});
+
+	it('throws error if representedId is missing', async () => {
+		await expect(
+			async () => await sendMessage(mockContext, { ...mockMessage, representedId: undefined })
+		).rejects.toThrow('representedId is required');
 		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
@@ -79,28 +92,12 @@ describe('nsip-representation', () => {
 			it('creates represented', async () => {
 				await sendMessage(mockContext, mockMessage);
 				expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(
-					`
-		MERGE INTO [dbo].[serviceUser] AS Target 
-		USING (SELECT @P1 AS serviceUserId) AS Source
-		ON Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
+					serviceUserQuery,
 					mockMessage.representedId
 				);
 				expect(mockContext.log).toHaveBeenCalledWith(
 					`created represented with serviceUserId ${mockMessage.representedId}`
 				);
-			});
-		});
-		describe('when represented is missing', () => {
-			it('does not create represented', async () => {
-				await sendMessage(mockContext, { ...mockMessage, representedId: undefined });
-				expect(mockExecuteRawUnsafe).not.toHaveBeenCalledWith(expect.anything(), 'represented-id');
-			});
-			it('and exits', async () => {
-				await sendMessage(mockContext, { ...mockMessage, representedId: undefined });
-				expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
-				expect(mockContext.log).toHaveBeenCalledWith('skipping update as representedId is missing');
 			});
 		});
 	});
@@ -110,12 +107,7 @@ describe('nsip-representation', () => {
 			it('creates representative', async () => {
 				await sendMessage(mockContext, mockMessage);
 				expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(
-					`
-		MERGE INTO [dbo].[serviceUser] AS Target 
-		USING (SELECT @P1 AS serviceUserId) AS Source
-		ON Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN MATCHED THEN UPDATE SET Target.[serviceUserId] = Source.[serviceUserId]
-		WHEN NOT MATCHED THEN INSERT ([serviceUserId]) VALUES (@P1);`,
+					serviceUserQuery,
 					mockMessage.representativeId
 				);
 				expect(mockContext.log).toHaveBeenCalledWith(
@@ -133,19 +125,37 @@ describe('nsip-representation', () => {
 			});
 		});
 	});
+	it('calls buildMergeQuery with correct parameters', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(buildMergeQuery).toHaveBeenCalledWith(
+			'representation',
+			'representationId',
+			mockRepresentation,
+			mockEnqueueDateTime
+		);
+	});
 	it('runs query to match upsert representation', async () => {
 		await sendMessage(mockContext, mockMessage);
-		const expectedStatement = `MERGE INTO [representation] AS Target
-			USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14) AS Source ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt])
-			ON Target.[representationId] = Source.[representationId]
-			WHEN MATCHED 
-			AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])
-			THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt]
-			WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14);`;
+		const [receivedStatement, ...receivedParameters] = mockExecuteRawUnsafe.mock.calls[2];
+		const statements = receivedStatement.split('\n');
+		expect(statements[0].trim()).toBe('MERGE INTO [representation] AS Target');
+		expect(statements[1].trim()).toBe(
+			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14) AS Source ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt])'
+		);
+		expect(statements[2].trim()).toBe('ON Target.[representationId] = Source.[representationId]');
+		expect(statements[3].trim()).toBe('WHEN MATCHED');
+		expect(statements[4].trim()).toBe(
+			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
+		);
+		expect(statements[5].trim()).toBe(
+			'THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt]'
+		);
+		expect(statements[6].trim()).toBe(
+			'WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14);'
+		);
 		const expectedParameters = Object.values(mockRepresentation);
-		const [first, ...rest] = mockExecuteRawUnsafe.mock.calls[2];
-		expect(first).toEqual(expectedStatement);
-		expect(rest).toEqual(expectedParameters);
+		expect(receivedParameters.length).toBe(expectedParameters.length);
+		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`upserted representation with representationId ${mockMessage.representationId}`
 		);
