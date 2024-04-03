@@ -96,6 +96,7 @@ describe('nsip-exam-timetable', () => {
 		mockFindMany.mockClear();
 		mockDeleteMany.mockClear();
 		mockCreate.mockClear();
+		prismaClient.$transaction.mockClear();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers();
@@ -110,10 +111,11 @@ describe('nsip-exam-timetable', () => {
 		expect(mockContext.log).toBeCalledWith(`invoking nsip-exam-timetable function`);
 	});
 
-	it('skips update if caseReference is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toBeCalledWith(`skipping update of events as caseReference is missing`);
-		expect(mockFindMany).not.toBeCalled();
+	it('throws error if caseReference is missing', async () => {
+		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
+			'caseReference is required'
+		);
+		expect(prismaClient.$transaction).not.toBeCalled();
 	});
 
 	it('start transaction', async () => {
