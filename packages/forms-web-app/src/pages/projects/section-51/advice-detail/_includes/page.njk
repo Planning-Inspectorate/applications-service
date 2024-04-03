@@ -19,9 +19,9 @@
   {% endif %}
 
   {% if enquiryText %}
-    <p class="govuk-body">
-      {{ enquiryText }}
-    </p>
+    <div class="pins-rte">
+      {{ enquiryText | safe }}
+    </div>
   {% endif %}
 {% endif %}
 
@@ -30,9 +30,9 @@
     Advice given
   </h2>
 
-  <p class="govuk-body">
-    {{ adviceGiven }}
-  </p>
+  <div class="pins-rte">
+      {{ adviceGiven | safe }}
+  </div>
 {% endif %}
 
 {% if attachments.length %}

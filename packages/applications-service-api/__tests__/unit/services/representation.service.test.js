@@ -4,6 +4,7 @@ const {
 	getRepresentationById
 } = require('../../../src/services/representation.service');
 const config = require('../../../src/lib/config');
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	getRepresentationsWithCount: getRepresentationsNIRepository,
 	getRepresentationById: getRepresentationByIdNIRepository,
@@ -38,10 +39,12 @@ jest.mock('../../../src/repositories/document.ni.repository');
 jest.mock('../../../src/repositories/representation.ni.repository');
 jest.mock('../../../src/repositories/representation.backoffice.repository');
 jest.mock('../../../src/repositories/document.backoffice.repository');
-
-config.backOfficeIntegration.representations.getRepresentations.caseReferences = ['BC010001'];
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('representation.service', () => {
+	beforeAll(() => {
+		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC010001');
+	});
 	const filtersMockData = [
 		{ name: 'Members of the Public/Businesses', count: 23 },
 		{ name: 'Parish Councils', count: 2 }

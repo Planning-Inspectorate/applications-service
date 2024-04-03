@@ -10,6 +10,7 @@ const {
 const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
 const { getApplication } = require('../../../src/services/application.backoffice.service');
 const { sendSubmissionNotification } = require('../../../src/lib/notify');
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 
 const {
 	createSubmission,
@@ -22,11 +23,6 @@ const BACK_OFFICE_CASE_REFERENCE = 'BC0110001';
 
 jest.mock('../../../src/lib/config', () => ({
 	backOfficeIntegration: {
-		submissions: {
-			postSubmission: {
-				caseReferences: [BACK_OFFICE_CASE_REFERENCE]
-			}
-		},
 		serviceBus: {
 			enabled: false,
 			topics: {
@@ -47,8 +43,14 @@ jest.mock('../../../src/services/backoffice.publish.service');
 jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/utils/generate-id');
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('submission.service', () => {
+	beforeAll(() => {
+		isBackOfficeCaseReference.mockImplementation(
+			(caseReference) => caseReference === BACK_OFFICE_CASE_REFERENCE
+		);
+	});
 	describe('createSubmission', () => {
 		describe('Back Office case', () => {
 			const mockGuid = 'd3ae5a1c-6b97-4708-a61f-217670ebaba1';

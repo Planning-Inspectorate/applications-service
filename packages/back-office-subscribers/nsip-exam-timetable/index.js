@@ -7,8 +7,7 @@ module.exports = async (context, message) => {
 	const caseReference = message.caseReference;
 
 	if (!caseReference) {
-		context.log(`skipping update of events as caseReference is missing`);
-		return;
+		throw new Error('caseReference is required');
 	}
 
 	return await prismaClient.$transaction(async (tx) => {

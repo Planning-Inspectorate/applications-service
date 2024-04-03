@@ -5,7 +5,6 @@ const {
 	TIMETABLES_BACKOFFICE_RESPONSE,
 	TIMETABLES_BACKOFFICE_DATA
 } = require('../../__data__/timetables');
-const config = require('../../../src/lib/config');
 const {
 	getTimetablesByCaseReference: getBackOfficeTimetable
 } = require('../../../src/repositories/timetable.backoffice.repository');
@@ -16,14 +15,18 @@ const {
 	mapBackOfficeTimetableToApi,
 	mapNITimetableToApi
 } = require('../../../src/utils/timetable.mapper');
+const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 
 jest.mock('../../../src/repositories/timetable.backoffice.repository');
 jest.mock('../../../src/repositories/timetable.ni.repository');
 jest.mock('../../../src/utils/timetable.mapper');
-config.backOfficeIntegration.examinationTimetable.getExaminationTimetable.caseReferences = [
-	'BACKOFFICE-CASEID'
-];
+jest.mock('../../../src/utils/is-backoffice-case-reference');
 describe('timetable service', () => {
+	beforeAll(() => {
+		isBackOfficeCaseReference.mockImplementation(
+			(caseReference) => caseReference === 'BACKOFFICE-CASEID'
+		);
+	});
 	describe('back office', () => {
 		beforeAll(() => {
 			getBackOfficeTimetable.mockResolvedValue(TIMETABLES_BACKOFFICE_DATA);

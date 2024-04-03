@@ -19,7 +19,7 @@ const {
 	INTERESTED_PARTY_AGENT_ORGANISATION_BACK_OFFICE,
 	INTERESTED_PARTY_AGENT_FAMILY_BACK_OFFICE
 } = require('../__data__/interestedParty');
-
+const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 const mockInterestedPartyCreate = jest.fn();
 const mockInterestedPartyUpdate = jest.fn();
 const mockNIProjectFindOne = jest.fn();
@@ -48,7 +48,7 @@ const { sendMessages } = require('../../src/lib/eventClient');
 
 jest.mock('../../src/utils/date-utils');
 const { getDate } = require('../../src/utils/date-utils');
-
+jest.mock('../../src/utils/is-backoffice-case-reference');
 const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
 jest.mock('@planning-inspectorate/pins-notify', () => ({
 	createNotifyClient: {
@@ -76,8 +76,7 @@ describe('/api/v1/interested-party', () => {
 
 		describe('NI project', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.interestedParty.postInterestedParty.caseReferences = [];
-
+				isBackOfficeCaseReference.mockReturnValue(false);
 				mockNIProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
 			});
 
@@ -244,13 +243,7 @@ describe('/api/v1/interested-party', () => {
 			const mockDate = new Date('2022-12-09 13:30:21:123');
 
 			beforeEach(() => {
-				config.backOfficeIntegration.applications.getApplication.caseReferences = [
-					BACK_OFFICE_CASE_REFERENCE
-				];
-				config.backOfficeIntegration.interestedParty.postInterestedParty.caseReferences = [
-					BACK_OFFICE_CASE_REFERENCE
-				];
-
+				isBackOfficeCaseReference.mockReturnValue(true);
 				getDate.mockReturnValue(mockDate);
 				uuid.v4.mockReturnValue('3aab2cf4c4d34e3e8');
 

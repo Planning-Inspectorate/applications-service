@@ -19,13 +19,7 @@ const {
 	mapBackOfficeRepresentationsToApi,
 	mapNIRepresentationToApi
 } = require('../utils/representation.mapper');
-const config = require('../lib/config');
-
-const isBackOfficeCaseReference = (caseReference) =>
-	(config.backOfficeIntegration.representations.getRepresentations.caseReferences || []).includes(
-		caseReference
-	);
-
+const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const createQueryFilters = (query) => {
 	const pageNo = parseInt(query?.page) || 1;
 	const defaultSize = 25;
