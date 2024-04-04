@@ -7,13 +7,11 @@ module.exports = async (context, message) => {
 	const representationId = message.representationId;
 
 	if (!representationId) {
-		context.log(`skipping update as representationId is missing`);
-		return;
+		throw new Error('representationId is required');
 	}
 
 	if (!message.representedId) {
-		context.log(`skipping update as representedId is missing`);
-		return;
+		throw new Error('representedId is required');
 	}
 
 	// Only create the service users if it doesn't already exist

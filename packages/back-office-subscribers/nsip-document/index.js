@@ -1,45 +1,30 @@
 const pick = require('lodash.pick');
 const { prismaClient } = require('../lib/prisma');
+const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-document function`);
 	const documentId = message.documentId;
 
 	if (!documentId) {
-		context.log(`skipping update as documentId is missing`);
-		return;
+		throw new Error('documentId is required');
 	}
 
-	return await prismaClient.$transaction(async (tx) => {
-		const existingDocument = await tx.document.findUnique({
-			where: {
-				documentId
-			}
-		});
+	const documents = {
+		...pick(message, documentPropertiesFromMessage),
+		stage: message.documentCaseStage,
+		modifiedAt: new Date()
+	};
 
-		const shouldUpdate =
-			!existingDocument ||
-			new Date(context.bindingData.enqueuedTimeUtc) >
-				new Date(existingDocument.modifiedAt.toUTCString());
+	const { statement, parameters } = buildMergeQuery(
+		'document',
+		'documentId',
+		documents,
+		context.bindingData.enqueuedTimeUtc
+	);
 
-		if (shouldUpdate) {
-			const document = {
-				...pick(message, documentPropertiesFromMessage),
-				stage: message.documentCaseStage,
-				modifiedAt: new Date()
-			};
-			await tx.document.upsert({
-				where: {
-					documentId
-				},
-				update: document,
-				create: document
-			});
-			context.log(`upserted document with documentId: ${documentId}`);
-		} else {
-			context.log(`skipping update of document with documentId: ${documentId}`);
-		}
-	});
+	await prismaClient.$executeRawUnsafe(statement, ...parameters);
+	context.log(`upserted document with documentId ${documentId}`);
 };
 
 const documentPropertiesFromMessage = [

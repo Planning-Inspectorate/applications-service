@@ -1,10 +1,11 @@
 const { getAppData } = require('../../../../services/applications.service');
 const logger = require('../../../../lib/logger');
-const { isRegistrationOpen } = require('./_utils/is-registration-open');
-const { getPageData } = require('./_utils/get-page-data');
 const {
-	featureFlag: { openRegistrationCaseReferences }
-} = require('../../../../config');
+	isRegistrationOpen,
+	isRegistrationReOpened,
+	isRegistrationClosed
+} = require('./_utils/is-registration-open');
+const { getPageData } = require('./_utils/get-page-data');
 
 const view = 'projects/register/index/view.njk';
 
@@ -20,24 +21,20 @@ const getRegisterIndexController = async (req, res) => {
 	if (response.resp_code === 200) {
 		const appData = response.data;
 
-		const periodOpen = isRegistrationOpen(
-			appData.DateOfRepresentationPeriodOpen,
-			appData.DateOfRelevantRepresentationClose,
-			case_ref
-		);
+		const registrationOpen = isRegistrationOpen(appData);
+		const registrationReOpened = isRegistrationReOpened(case_ref, appData);
+		const registrationClosed = isRegistrationClosed(appData);
 
-		if (!periodOpen && !openRegistrationCaseReferences.join()) {
-			logger.warn(`Case ref list is empty`);
+		if (!registrationOpen && !registrationReOpened && !registrationClosed)
 			return res.status(404).render('error/not-found');
-		}
 
 		req.session.caseRef = case_ref;
 		req.session.appData = appData;
 		req.session.projectName = appData.ProjectName;
-		req.session.registerJourneyStarted = periodOpen;
+		req.session.registerJourneyStarted = registrationOpen || registrationReOpened;
 
-		return res.render(view, getPageData(appData, periodOpen, case_ref));
-	} else if (response.resp_code === 404) {
+		return res.render(view, getPageData(case_ref, appData, registrationOpen, registrationReOpened));
+	} else {
 		logger.warn(`No project found with ID ${case_ref} for registration`);
 		return res.status(404).render('error/not-found');
 	}

@@ -10,19 +10,19 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
 
   
 
-  <div class=\\"govuk-cookie-banner \\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on application service\\" data-cy=\\"cookie-banner\\" id=\\"cookie-banner-consent\\">
+  <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on application service" data-cy="cookie-banner" id="cookie-banner-consent">
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
+    <div class="govuk-cookie-banner__message govuk-width-container">
 
-    <div class=\\"govuk-grid-row\\">
-      <div class=\\"govuk-grid-column-two-thirds\\">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
-        <h2 class=\\"govuk-cookie-banner__heading govuk-heading-m\\">Cookies on application service</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on application service</h2>
         
 
-        <div class=\\"govuk-cookie-banner__content\\">
+        <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
     <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
   </div>
@@ -30,16 +30,16 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
     </div>
 
       
-      <div class=\\"govuk-button-group\\">
+      <div class="govuk-button-group">
         
           
-            <button value=\\"accept\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accept-analytics-cookies\\">
+            <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-accept-analytics-cookies">
               Accept analytics cookies
             </button>
           
         
           
-            <button value=\\"reject\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-reject-analytics-cookies\\">
+            <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-reject-analytics-cookies">
               Reject analytics cookies
             </button>
           
@@ -48,7 +48,7 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
             
               
               
-              <a class=\\"govuk-link\\" href=\\"/some/path/here\\" data-cy=\\"cookie-banner-view-cookies\\">View cookies</a>
+              <a class="govuk-link" href="/some/path/here" data-cy="cookie-banner-view-cookies">View cookies</a>
             
           
         
@@ -70,19 +70,19 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
 
   
 
-  <div class=\\"govuk-cookie-banner \\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on test service name here\\" data-cy=\\"cookie-banner\\" id=\\"cookie-banner-consent\\">
+  <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on test service name here" data-cy="cookie-banner" id="cookie-banner-consent">
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
+    <div class="govuk-cookie-banner__message govuk-width-container">
 
-    <div class=\\"govuk-grid-row\\">
-      <div class=\\"govuk-grid-column-two-thirds\\">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
-        <h2 class=\\"govuk-cookie-banner__heading govuk-heading-m\\">Cookies on test service name here</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on test service name here</h2>
         
 
-        <div class=\\"govuk-cookie-banner__content\\">
+        <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
     <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
   </div>
@@ -90,16 +90,16 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
     </div>
 
       
-      <div class=\\"govuk-button-group\\">
+      <div class="govuk-button-group">
         
           
-            <button value=\\"accept\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accept-analytics-cookies\\">
+            <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-accept-analytics-cookies">
               Accept analytics cookies
             </button>
           
         
           
-            <button value=\\"reject\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-reject-analytics-cookies\\">
+            <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-reject-analytics-cookies">
               Reject analytics cookies
             </button>
           
@@ -108,7 +108,7 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
             
               
               
-              <a class=\\"govuk-link\\" href=\\"/cookies\\" data-cy=\\"cookie-banner-view-cookies\\">View cookies</a>
+              <a class="govuk-link" href="/cookies" data-cy="cookie-banner-view-cookies">View cookies</a>
             
           
         
@@ -130,19 +130,19 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
 
   
 
-  <div class=\\"govuk-cookie-banner \\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on custom service name\\" data-cy=\\"cookie-banner\\" id=\\"cookie-banner-consent\\">
+  <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on custom service name" data-cy="cookie-banner" id="cookie-banner-consent">
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
+    <div class="govuk-cookie-banner__message govuk-width-container">
 
-    <div class=\\"govuk-grid-row\\">
-      <div class=\\"govuk-grid-column-two-thirds\\">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
-        <h2 class=\\"govuk-cookie-banner__heading govuk-heading-m\\">Cookies on custom service name</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on custom service name</h2>
         
 
-        <div class=\\"govuk-cookie-banner__content\\">
+        <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
     <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
   </div>
@@ -150,16 +150,16 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
     </div>
 
       
-      <div class=\\"govuk-button-group\\">
+      <div class="govuk-button-group">
         
           
-            <button value=\\"accept\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accept-analytics-cookies\\">
+            <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-accept-analytics-cookies">
               Accept analytics cookies
             </button>
           
         
           
-            <button value=\\"reject\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-reject-analytics-cookies\\">
+            <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-reject-analytics-cookies">
               Reject analytics cookies
             </button>
           
@@ -168,7 +168,7 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
             
               
               
-              <a class=\\"govuk-link\\" href=\\"/a/b/c\\" data-cy=\\"cookie-banner-view-cookies\\">View cookies</a>
+              <a class="govuk-link" href="/a/b/c" data-cy="cookie-banner-view-cookies">View cookies</a>
             
           
         
@@ -190,19 +190,19 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
 
   
 
-  <div class=\\"govuk-cookie-banner \\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on application service\\" data-cy=\\"cookie-banner\\" id=\\"cookie-banner-consent\\">
+  <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on application service" data-cy="cookie-banner" id="cookie-banner-consent">
     
     
 
-    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
+    <div class="govuk-cookie-banner__message govuk-width-container">
 
-    <div class=\\"govuk-grid-row\\">
-      <div class=\\"govuk-grid-column-two-thirds\\">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
-        <h2 class=\\"govuk-cookie-banner__heading govuk-heading-m\\">Cookies on application service</h2>
+        <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on application service</h2>
         
 
-        <div class=\\"govuk-cookie-banner__content\\">
+        <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
     <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
   </div>
@@ -210,16 +210,16 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
     </div>
 
       
-      <div class=\\"govuk-button-group\\">
+      <div class="govuk-button-group">
         
           
-            <button value=\\"accept\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accept-analytics-cookies\\">
+            <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-accept-analytics-cookies">
               Accept analytics cookies
             </button>
           
         
           
-            <button value=\\"reject\\" type=\\"submit\\" name=\\"cookie_banner\\" class=\\"govuk-button govuk-!-display-none\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-reject-analytics-cookies\\">
+            <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button" data-cy="cookie-banner-reject-analytics-cookies">
               Reject analytics cookies
             </button>
           
@@ -228,7 +228,7 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
             
               
               
-              <a class=\\"govuk-link\\" href=\\"/cookies\\" data-cy=\\"cookie-banner-view-cookies\\">View cookies</a>
+              <a class="govuk-link" href="/cookies" data-cy="cookie-banner-view-cookies">View cookies</a>
             
           
         
