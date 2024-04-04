@@ -1,4 +1,3 @@
-// const { VIEW } = require('../../../../../lib/views');
 const {
 	setRegisterAgentOrganisationNameSession
 } = require('./_session/register-agent-organisation-name-session');

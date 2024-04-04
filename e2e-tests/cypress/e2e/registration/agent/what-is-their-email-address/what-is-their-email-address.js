@@ -6,7 +6,6 @@ import PO_TelNumber from '../what-is-your-telephone-number/PageObjects/PO_TelNum
 import PO_AddressDetails from '../uk-address-details/PageObjects/PO_AddressDetails';
 import PO_WhoYouRepresenting from '../who-are-you-representing/PageObjects/PO_WhoYouRepresenting';
 import PO_RepName from '../representee-name/PageObjects/PO_RepName';
-// import PO_RepAddressDetails from '../what-is-their-address/PageObjects/PO_RepAddressDetails';
 import PO_RepEmailAddress from './PageObjects/PO_RepEmailAddress';
 const fullNamePage = new PO_FullName();
 const orgYouWorkFor = new PO_OrgYouWorkFor();
@@ -15,7 +14,6 @@ const telNumber = new PO_TelNumber();
 const addressDetails = new PO_AddressDetails();
 const whoYouRepresenting = new PO_WhoYouRepresenting();
 const repName = new PO_RepName();
-// const repAddressDetails = new PO_RepAddressDetails();
 const repEmailAddress = new PO_RepEmailAddress();
 
 And('I have been asked to provide representee email address', () => {
