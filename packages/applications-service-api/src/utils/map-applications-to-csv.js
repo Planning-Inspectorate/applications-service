@@ -2,7 +2,7 @@ const { stringify } = require('csv-stringify/sync');
 const moment = require('moment');
 const { mapColumnLabelToApi } = require('./application.mapper');
 
-const formatDate = (date) => (date ? moment(date).format('YYYY-MM-DD') : '');
+const formatDate = (date) => (moment(date).isValid() ? moment(date).format('YYYY-MM-DD') : '');
 
 const mapApplicationsToCSV = (applications) => {
 	const mappedApplications = applications.map((application) => ({
