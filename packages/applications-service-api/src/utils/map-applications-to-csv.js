@@ -1,4 +1,8 @@
 const { stringify } = require('csv-stringify/sync');
+const moment = require('moment');
+const { mapColumnLabelToApi } = require('./application.mapper');
+
+const formatDate = (date) => (date ? moment(date).format('YYYY-MM-DD') : '');
 
 const mapApplicationsToCSV = (applications) => {
 	const mappedApplications = applications.map((application) => ({
@@ -11,14 +15,14 @@ const mapApplicationsToCSV = (applications) => {
 		'Grid reference - Easting': application.AnticipatedGridRefEasting,
 		'Grid reference - Northing:': application.AnticipatedGridRefNorthing,
 		'GPS co-ordinates': application.LongLat?.join(', ') || '',
-		Stage: application.Stage,
+		Stage: mapColumnLabelToApi('stage', application.Stage),
 		Description: application.Summary,
 		'Anticipated submission date': application.AnticipatedDateOfSubmission,
 		'Anticipated submission period': application.AnticipatedSubmissionDateNonSpecific,
 		'Date of application': application.DateOfDCOSubmission,
 		'Date application accepted': application.DateOfDCOAcceptance_NonAcceptance,
 		'Date Examination started': application.ConfirmedStartOfExamination,
-		'Date Examination closed': application.DateTimeExaminationEnds,
+		'Date Examination closed': formatDate(application.DateTimeExaminationEnds),
 		'Date of recommendation': application.DateOfRecommendations,
 		'Date of decision': application.ConfirmedDateOfDecision,
 		'Date withdrawn': application.DateProjectWithdrawn
