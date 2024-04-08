@@ -2,6 +2,7 @@ const {
 	getRegisterAgentTheirTelephoneController,
 	postRegisterAgentTheirTelephoneController
 } = require('./controller');
+
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
 describe('pages/projects/register/agent/their-telephone/controller', () => {
@@ -11,6 +12,9 @@ describe('pages/projects/register/agent/their-telephone/controller', () => {
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			params: {
+				case_ref: 'mock-case-ref'
+			},
 			session: {
 				behalfRegdata: {
 					representee: {
@@ -33,7 +37,7 @@ describe('pages/projects/register/agent/their-telephone/controller', () => {
 	});
 
 	describe('#postRegisterAgentTheirTelephoneController', () => {
-		it(`'should post data and redirect to check your answers page if telephone is provided`, async () => {
+		it('should post data and redirect to about project page if a telephone number is provided', async () => {
 			const mockRequest = {
 				...req,
 				body: {
@@ -46,7 +50,7 @@ describe('pages/projects/register/agent/their-telephone/controller', () => {
 			await postRegisterAgentTheirTelephoneController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/agent/tell-us-about-project'
+				'/projects/mock-case-ref/register/agent/tell-us-about-project'
 			);
 		});
 		it('should re-render the template with errors if there is any validation errors', async () => {

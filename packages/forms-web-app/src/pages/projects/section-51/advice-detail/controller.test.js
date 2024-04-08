@@ -46,7 +46,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							'projects/section-51/advice-detail/view.njk',
 							{
 								activeId: 'section-51',
-								adviceGiven: 'mock advice given',
+								adviceGiven: '<p>mock advice given</p>',
 								attachments: [
 									{ text: 'View advice (PDF)', url: 'mock document URI 1' },
 									{ text: 'View advice (Word)', url: 'mock document URI 2' }
@@ -61,7 +61,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 									{ key: { text: 'Date advice given' }, value: { text: '1 January 2023' } },
 									{ key: { text: 'Enquiry type' }, value: { text: 'Email' } }
 								],
-								enquiryText: 'mock enquiry detail',
+								enquiryText: '<p>mock enquiry detail</p>',
 								pageTitle: 'mock enquiry detail',
 								title: 'Advice to mock organisation'
 							}
@@ -84,7 +84,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 					it('should call the register of advice detail template with the page data', () => {
 						expect(mockRes.render).toHaveBeenCalledWith('register-of-advice/detail/view.njk', {
 							activeId: 'section-51',
-							adviceGiven: 'mock advice given',
+							adviceGiven: '<p>mock advice given</p>',
 							attachments: [
 								{ text: 'View advice (PDF)', url: 'mock document URI 1' },
 								{ text: 'View advice (Word)', url: 'mock document URI 2' }
@@ -96,7 +96,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 								{ key: { text: 'Date advice given' }, value: { text: '1 January 2023' } },
 								{ key: { text: 'Enquiry type' }, value: { text: 'Email' } }
 							],
-							enquiryText: 'mock enquiry detail',
+							enquiryText: '<p>mock enquiry detail</p>',
 							pageTitle: 'mock enquiry detail',
 							title: 'Advice to mock organisation'
 						});

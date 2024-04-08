@@ -82,41 +82,42 @@
 	}), rows) %}
 {% endif %}
 
-{% set rows = (rows.push({
-	key: {
-		text: "Their address"
-	},
-	value: {
-		html: address
-	},
-	actions: {
-		items: [
-			{
-				href: baseUrl + "/register/agent/their-postal-address?mode=edit",
-				text: "Change",
-				visuallyHiddenText: "their address",
-				attributes: { "data-cy": "address" }
-			}
-		]
-	}
-},
+{% set rows = (rows.push(
 	{
 		key: {
-		text: "Their email address"
-	},
+			text: "Their email address"
+		},
 		value: {
-		text: summaryField( data.representee['email'], { 'data-cy': "email" })
-	},
+			text: summaryField( data.representee['email'], { 'data-cy': "email" })
+		},
 		actions: {
-		items: [
-			{
-				href: baseUrl + "/register/agent/their-email-address?mode=edit",
-				text: "Change",
-				visuallyHiddenText: "their email address",
-				attributes: { "data-cy": "email" }
-			}
-		]
-	}
+			items: [
+				{
+					href: baseUrl + "/register/agent/their-email-address?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "their email address",
+					attributes: { "data-cy": "email" }
+				}
+			]
+		}
+	},
+	{
+		key: {
+			text: "Their address"
+		},
+		value: {
+			html: address
+		},
+		actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/their-postal-address?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "their address",
+					attributes: { "data-cy": "address" }
+				}
+			]
+		}
 	},
 	{
 		key: {
@@ -126,15 +127,15 @@
 		text: summaryField( data.representee['telephone'], { 'data-cy': "telephone" })
 	},
 		actions: {
-		items: [
-			{
-				href: baseUrl + "/register/agent/their-telephone-number?mode=edit",
-				text: "Change",
-				visuallyHiddenText: "their telephone number",
-				attributes: { "data-cy": "telephone" }
-			}
-		]
-	}
+			items: [
+				{
+					href: baseUrl + "/register/agent/their-telephone-number?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "their telephone number",
+					attributes: { "data-cy": "telephone" }
+				}
+			]
+		}
 	},
 	{
 		key: {

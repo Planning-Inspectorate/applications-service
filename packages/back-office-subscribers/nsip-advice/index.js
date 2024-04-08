@@ -1,5 +1,6 @@
 const pick = require('lodash.pick');
 const { prismaClient } = require('../lib/prisma');
+const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-advice function`);
@@ -8,38 +9,21 @@ module.exports = async (context, message) => {
 	if (!adviceId) {
 		throw new Error('adviceId is required');
 	}
+	const advice = {
+		...pick(message, advicePropertiesFromMessage),
+		attachmentIds: message.attachmentIds?.join(','),
+		modifiedAt: new Date()
+	};
 
-	return await prismaClient.$transaction(async (tx) => {
-		const existingAdvice = await tx.advice.findUnique({
-			where: {
-				adviceId
-			}
-		});
+	const { statement, parameters } = buildMergeQuery(
+		'advice',
+		'adviceId',
+		advice,
+		context.bindingData.enqueuedTimeUtc
+	);
 
-		const shouldUpdate =
-			!existingAdvice ||
-			new Date(context.bindingData.enqueuedTimeUtc) >
-				new Date(existingAdvice.modifiedAt.toUTCString());
-
-		if (shouldUpdate) {
-			let advice = pick(message, advicePropertiesFromMessage);
-			advice = {
-				...advice,
-				attachmentIds: advice?.attachmentIds?.join(','),
-				modifiedAt: new Date()
-			};
-			await tx.advice.upsert({
-				where: {
-					adviceId
-				},
-				update: advice,
-				create: advice
-			});
-			context.log(`upserted advice with adviceId: ${adviceId}`);
-		} else {
-			context.log(`skipping update of advice with adviceId: ${adviceId}`);
-		}
-	});
+	await prismaClient.$executeRawUnsafe(statement, ...parameters);
+	context.log(`upserted advice with adviceId ${adviceId}`);
 };
 const advicePropertiesFromMessage = [
 	'adviceId',

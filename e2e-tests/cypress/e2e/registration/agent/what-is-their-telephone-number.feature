@@ -11,7 +11,7 @@ Feature: What is their telephone number? page
     Scenario: User click on back link
         Then I am on the "what is their telephone number?" page
         When I click on back link
-        Then I am on the "what is their email address?" page
+        Then I am on the "what is their address?" page
 
     Scenario Outline: User continues with invalid data
         When I continue with the value "<text>" in the representee telephone number field

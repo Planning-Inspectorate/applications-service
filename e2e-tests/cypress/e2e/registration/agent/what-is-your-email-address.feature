@@ -27,7 +27,7 @@ Feature: What is your email address? page
 
     Scenario Outline: User continues with valid data
         When I continue with the value "<text>" in the email address field
-        Then I am on the "what is your telephone number? agent" page
+        Then I am on the "what is your address? agent" page
 
         Examples:
             | text                |

@@ -1,4 +1,4 @@
-const { VIEW } = require('../../../../../lib/views');
+const { getRedirectURL } = require('./_utils/get-redirect-url');
 
 const view = 'projects/register/agent/their-email/view.njk';
 
@@ -9,7 +9,8 @@ const getRegisterAgentTheirEmailController = (req, res) => {
 };
 
 const postRegisterAgentTheirEmailController = (req, res) => {
-	const { body } = req;
+	const { body, params, query } = req;
+	const { case_ref } = params;
 	const { errors = {}, errorSummary = [] } = body;
 
 	if (errors.email || Object.keys(errors).length > 0) {
@@ -21,12 +22,9 @@ const postRegisterAgentTheirEmailController = (req, res) => {
 
 	req.session.behalfRegdata.representee.email = body.email;
 
-	const redirectUrl =
-		req.query.mode === 'edit'
-			? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS
-			: VIEW.REGISTER.AGENT.REPRESENTEE_TELEPHONE;
+	const redirectURL = getRedirectURL(case_ref, query);
 
-	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
+	return res.redirect(redirectURL);
 };
 
 module.exports = {

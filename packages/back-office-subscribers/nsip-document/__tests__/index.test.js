@@ -1,29 +1,21 @@
 const sendMessage = require('../index');
-const { prismaClient } = require('../../lib/prisma');
+const buildMergeQuery = require('../../lib/build-merge-query');
 
-const mockFindUnique = jest.fn();
-const mockUpsert = jest.fn();
-
+const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$transaction: jest.fn().mockImplementation((callback) =>
-			callback({
-				document: {
-					findUnique: mockFindUnique,
-					upsert: mockUpsert
-				}
-			})
-		)
+		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
+jest.mock('../../lib/build-merge-query', () =>
+	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
+);
 
-const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
-const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
-const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
+const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
+		enqueuedTimeUtc: mockEnqueueDateTime,
 		deliveryCount: 1,
 		messageId: 123
 	}
@@ -51,7 +43,7 @@ const mockMessage = {
 	redactedStatus: 'redacted',
 	publishedStatus: 'published',
 	datePublished: '2023-03-26T00:00:00.000',
-	documentType: null,
+	documentType: 'abc',
 	securityClassification: 'public',
 	sourceSystem: 'back_office',
 	origin: 'pins',
@@ -68,30 +60,16 @@ const { documentCaseStage, ...documentProperties } = mockMessage;
 const mockDocument = {
 	...documentProperties,
 	stage: documentCaseStage,
-	modifiedAt: mockCurrentTime
-};
-
-const assertDocumentUpsert = () => {
-	expect(mockUpsert).toHaveBeenCalledWith({
-		where: {
-			documentId: mockMessage.documentId
-		},
-		update: mockDocument,
-		create: mockDocument
-	});
-	expect(mockContext.log).toHaveBeenCalledWith(
-		`upserted document with documentId: ${mockMessage.documentId}`
-	);
+	modifiedAt: new Date()
 };
 
 describe('nsip-document', () => {
 	beforeEach(() => {
-		mockFindUnique.mockReset();
-		mockUpsert.mockReset();
+		mockExecuteRawUnsafe.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(mockCurrentTime);
+		jest.setSystemTime(new Date(mockDocument.modifiedAt));
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -101,62 +79,48 @@ describe('nsip-document', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-document function');
 	});
-	it('skips update if documentId is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping update as documentId is missing');
-		expect(mockFindUnique).not.toHaveBeenCalled();
-	});
-	it('start transaction', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(prismaClient.$transaction).toHaveBeenCalled();
-	});
-	it('finds existing document to determine if it should update', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(mockFindUnique).toHaveBeenCalledWith({
-			where: {
-				documentId: mockMessage.documentId
-			}
-		});
-	});
-	describe('when no document exists in database', () => {
-		it('creates new document for documentId', async () => {
-			mockFindUnique.mockResolvedValue(null);
-			await sendMessage(mockContext, mockMessage);
-			assertDocumentUpsert();
-		});
+
+	it('throws error if documentId is missing', async () => {
+		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
+			'documentId is required'
+		);
+		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
-	describe('when document exists in database', () => {
-		describe('and the message is older than existing document', () => {
-			it('skips update', async () => {
-				mockFindUnique.mockResolvedValue(mockDocument);
-				const mockContextWithOlderTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockPastTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithOlderTime, mockMessage);
-				expect(mockUpsert).not.toHaveBeenCalled();
-				expect(mockContext.log).toHaveBeenCalledWith(
-					`skipping update of document with documentId: ${mockMessage.documentId}`
-				);
-			});
-		});
-		describe('and the message is newer than existing document', () => {
-			it('updates document', async () => {
-				mockFindUnique.mockResolvedValue(mockDocument);
-				const mockContextWithNewerTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockFutureTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithNewerTime, mockMessage);
-				assertDocumentUpsert();
-			});
-		});
+	it('calls buildMergeQuery with correct parameters', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(buildMergeQuery).toHaveBeenCalledWith(
+			'document',
+			'documentId',
+			mockDocument,
+			mockEnqueueDateTime
+		);
+	});
+
+	it('runs query to upsert document', async () => {
+		await sendMessage(mockContext, mockMessage);
+		const [receivedStatement, ...receivedParameters] = mockExecuteRawUnsafe.mock.calls[0];
+		const expectedParameters = Object.values(mockDocument);
+		const statements = receivedStatement.split('\n');
+		expect(statements[0].trim()).toBe('MERGE INTO [document] AS Target');
+		expect(statements[1].trim()).toBe(
+			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17, @P18, @P19, @P20, @P21, @P22, @P23, @P24, @P25, @P26, @P27, @P28, @P29, @P30, @P31, @P32, @P33) AS Source ([documentId], [caseId], [caseRef], [documentReference], [version], [examinationRefNo], [filename], [originalFilename], [size], [mime], [documentURI], [publishedDocumentURI], [virusCheckStatus], [fileMD5], [dateCreated], [lastModified], [caseType], [documentStatus], [redactedStatus], [publishedStatus], [datePublished], [documentType], [securityClassification], [sourceSystem], [origin], [owner], [author], [representative], [description], [filter1], [filter2], [stage], [modifiedAt])'
+		);
+		expect(statements[2].trim()).toBe('ON Target.[documentId] = Source.[documentId]');
+		expect(statements[3].trim()).toBe('WHEN MATCHED');
+		expect(statements[4].trim()).toBe(
+			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
+		);
+		expect(statements[5].trim()).toBe(
+			'THEN UPDATE SET Target.[caseId] = Source.[caseId], Target.[caseRef] = Source.[caseRef], Target.[documentReference] = Source.[documentReference], Target.[version] = Source.[version], Target.[examinationRefNo] = Source.[examinationRefNo], Target.[filename] = Source.[filename], Target.[originalFilename] = Source.[originalFilename], Target.[size] = Source.[size], Target.[mime] = Source.[mime], Target.[documentURI] = Source.[documentURI], Target.[publishedDocumentURI] = Source.[publishedDocumentURI], Target.[virusCheckStatus] = Source.[virusCheckStatus], Target.[fileMD5] = Source.[fileMD5], Target.[dateCreated] = Source.[dateCreated], Target.[lastModified] = Source.[lastModified], Target.[caseType] = Source.[caseType], Target.[documentStatus] = Source.[documentStatus], Target.[redactedStatus] = Source.[redactedStatus], Target.[publishedStatus] = Source.[publishedStatus], Target.[datePublished] = Source.[datePublished], Target.[documentType] = Source.[documentType], Target.[securityClassification] = Source.[securityClassification], Target.[sourceSystem] = Source.[sourceSystem], Target.[origin] = Source.[origin], Target.[owner] = Source.[owner], Target.[author] = Source.[author], Target.[representative] = Source.[representative], Target.[description] = Source.[description], Target.[filter1] = Source.[filter1], Target.[filter2] = Source.[filter2], Target.[stage] = Source.[stage], Target.[modifiedAt] = Source.[modifiedAt]'
+		);
+		expect(statements[6].trim()).toBe(
+			'WHEN NOT MATCHED THEN INSERT ([documentId], [caseId], [caseRef], [documentReference], [version], [examinationRefNo], [filename], [originalFilename], [size], [mime], [documentURI], [publishedDocumentURI], [virusCheckStatus], [fileMD5], [dateCreated], [lastModified], [caseType], [documentStatus], [redactedStatus], [publishedStatus], [datePublished], [documentType], [securityClassification], [sourceSystem], [origin], [owner], [author], [representative], [description], [filter1], [filter2], [stage], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17, @P18, @P19, @P20, @P21, @P22, @P23, @P24, @P25, @P26, @P27, @P28, @P29, @P30, @P31, @P32, @P33);'
+		);
+		expect(receivedParameters.length).toBe(expectedParameters.length);
+		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`upserted document with documentId ${mockMessage.documentId}`
+		);
 	});
 });

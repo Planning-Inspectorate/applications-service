@@ -1,7 +1,7 @@
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 const { viewModel } = require('./_utils/viewModel');
-const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const { getRedirectURL } = require('./_utils/get-redirect-url');
 const logger = require('../../../../../lib/logger');
 
 const view = 'projects/register/_common/email/view.njk';
@@ -12,6 +12,7 @@ const getRegisterEmailController = (req, res) => {
 		const { session, originalUrl } = req;
 		const key = getKeyFromUrl(originalUrl);
 		const email = getSession(session, key)[emailAddressKey];
+
 		return res.render(view, {
 			...viewModel[key],
 			email
@@ -24,10 +25,12 @@ const getRegisterEmailController = (req, res) => {
 
 const postRegisterEmailController = (req, res) => {
 	try {
-		const { body, originalUrl, query, session } = req;
+		const { body, originalUrl, params, query, session } = req;
+		const { errors = {}, errorSummary = [] } = body;
+		const { case_ref } = params;
+
 		const key = getKeyFromUrl(originalUrl);
 
-		const { errors = {}, errorSummary = [] } = body;
 		if (errors[emailAddressKey] || Object.keys(errors).length > 0) {
 			return res.render(view, {
 				errors,
@@ -38,7 +41,9 @@ const postRegisterEmailController = (req, res) => {
 
 		setSession(session, key, emailAddressKey, body[emailAddressKey]);
 
-		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(query, key)}`);
+		const redirectURL = getRedirectURL(session, case_ref, query);
+
+		return res.redirect(redirectURL);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');

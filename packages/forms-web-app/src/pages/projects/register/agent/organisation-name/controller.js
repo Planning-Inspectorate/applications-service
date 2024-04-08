@@ -1,29 +1,40 @@
-const { VIEW } = require('../../../../../lib/views');
+const {
+	setRegisterAgentOrganisationNameSession
+} = require('./_session/register-agent-organisation-name-session');
+const { getPageData } = require('./_utils/get-page-data');
+const { getRedirectURL } = require('./_utils/get-redirect-url');
+const { registerAgentOrgNameInputID } = require('./config');
 
 const view = 'projects/register/agent/organisation-name/view.njk';
 
 const getRegisterAgentOrgNameController = (req, res) => {
-	return res.render(view, {
-		organisationName: req.session.behalfRegdata.representor['organisation-name']
-	});
+	const { params, session } = req;
+	const { case_ref } = params;
+
+	return res.render(view, getPageData(session, case_ref));
 };
 
 const postRegisterAgentOrgNameController = (req, res) => {
-	const { body } = req;
-
+	const { body, params, query, session } = req;
+	const { case_ref } = params;
 	const { errors = {}, errorSummary = [] } = body;
-	if (errors['organisation-name'] || Object.keys(errors).length > 0) {
+
+	const enteredOrganisationName = body[registerAgentOrgNameInputID];
+
+	if (Object.keys(errors).length > 0) {
 		return res.render(view, {
+			...getPageData(session, case_ref),
+			organisationName: enteredOrganisationName,
 			errors,
 			errorSummary
 		});
 	}
 
-	req.session.behalfRegdata.representor['organisation-name'] = body['organisation-name'];
+	setRegisterAgentOrganisationNameSession(session, enteredOrganisationName);
 
-	const redirectUrl =
-		req.query.mode === 'edit' ? VIEW.REGISTER.AGENT.CHECK_YOUR_ANSWERS : VIEW.REGISTER.AGENT.EMAIL;
-	return res.redirect(`${res.locals.baseUrl}/${redirectUrl}`);
+	const redirectURL = getRedirectURL(case_ref, query);
+
+	return res.redirect(redirectURL);
 };
 
 module.exports = {
