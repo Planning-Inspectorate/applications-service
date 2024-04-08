@@ -71,24 +71,6 @@
 		},
 		{
 			key: {
-			text: "Address"
-		},
-			value: {
-			html: address
-		},
-			actions: {
-			items: [
-				{
-					href: baseUrl + "/register/agent/address?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "your address",
-					attributes: { "data-cy": "address" }
-				}
-			]
-		}
-		},
-		{
-			key: {
 			text: "Email address"
 		},
 			value: {
@@ -101,6 +83,24 @@
 					text: "Change",
 					visuallyHiddenText: "your email address",
 					attributes: { "data-cy": "email" }
+				}
+			]
+		}
+		},
+		{
+			key: {
+			text: "Address"
+		},
+			value: {
+			html: address
+		},
+			actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/address?mode=edit",
+					text: "Change",
+					visuallyHiddenText: "your address",
+					attributes: { "data-cy": "address" }
 				}
 			]
 		}

@@ -11,18 +11,14 @@ const {
 const { getRegisterIndexURL } = require('../../register/index/_utils/get-register-index-url');
 const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
+const { isStringPartOfArray } = require('../../../_utils/is-string-part-of-array');
 
-function getVerticalTabs(
-	caseRef,
-	{ DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose },
-	showExaminationLink,
-	showRepresentationsLink
-) {
+function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepresentationsLink) {
 	return [
 		{
 			hidden:
 				featureFlag.allowProjectInformation != true ||
-				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
+				!isStringPartOfArray(featureFlag.projectMigrationCaseReferences, caseRef),
 			id: 'project-information',
 			name: 'Project information',
 			url: getProjectsIndexURL(caseRef)
@@ -40,12 +36,7 @@ function getVerticalTabs(
 			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
-			hidden:
-				!isRegistrationOpen(
-					DateOfRepresentationPeriodOpen,
-					DateOfRelevantRepresentationClose,
-					caseRef
-				) || featureFlag.openRegistrationCaseReferences.includes(caseRef),
+			hidden: !isRegistrationOpen(applicationData),
 			id: 'register-index',
 			name: 'Register to have your say',
 			url: getRegisterIndexURL(caseRef)
@@ -71,7 +62,7 @@ function getVerticalTabs(
 		{
 			hidden:
 				featureFlag.allowGetUpdates != true ||
-				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
+				!isStringPartOfArray(featureFlag.projectMigrationCaseReferences, caseRef),
 			id: 'get-updates',
 			name: 'Get updates',
 			url: getUpdatesIndexURL(caseRef)

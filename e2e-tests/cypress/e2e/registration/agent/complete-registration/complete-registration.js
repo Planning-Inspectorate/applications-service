@@ -33,13 +33,13 @@ And('I have been asked to check my answers', () => {
 	cy.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
 	cy.clickSaveAndContinue();
-	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
+	cy.clickSaveAndContinue();
+	telNumber.enterTextIntoTelephoneNumberField('123456789');
 	cy.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
 	cy.clickSaveAndContinue();
@@ -47,13 +47,13 @@ And('I have been asked to check my answers', () => {
 	cy.clickSaveAndContinue();
 	cy.selectRadioYesOrNo('Yes');
 	cy.clickSaveAndContinue();
+	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
+	cy.clickSaveAndContinue();
 	repAddressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Representee Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
-	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
 	cy.clickSaveAndContinue();
 	repTelNumber.enterTextIntoRepTelephoneNumberField('12121212121');
 	cy.clickSaveAndContinue();

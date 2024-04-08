@@ -83,26 +83,36 @@ describe('pages/projects/register/_common/address/controller', () => {
 			});
 		});
 	});
+
 	describe('#postRegisterAddressController', () => {
 		describe('When posting the registration address', () => {
+			let req;
+
 			const res = {
-				locals: { baseUrl: '/mock-base-url/mock-case-ref' },
 				render: jest.fn(),
 				redirect: jest.fn(),
 				status: jest.fn(() => res),
 				send: jest.fn()
 			};
 
-			const mockAddress = {
-				line1: 'mock line 1',
-				line2: 'mock line 2',
-				line3: 'mock line 3',
-				postcode: 'mock postcode',
-				country: 'mock country'
-			};
+			beforeEach(() => {
+				req = {
+					body: {
+						line1: 'mock body address line 1',
+						line2: 'mock body address line 2',
+						line3: 'mock body address line 3',
+						postcode: 'mock body address postcode',
+						country: 'mock body address country'
+					},
+					params: {
+						case_ref: 'mock-case-ref'
+					}
+				};
+			});
+
 			describe('and there is an unrecoverable error', () => {
-				const req = {};
 				beforeEach(() => {
+					req = {};
 					postRegisterAddressController(req, res);
 				});
 
@@ -110,110 +120,272 @@ describe('pages/projects/register/_common/address/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 				});
 			});
+
 			describe('and there is an error in the form', () => {
-				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/myself/address',
-					session: { mySelfRegdata: { ['address']: 'mock address' } },
-					body: {
-						errors: { ['address']: 'an error' },
-						errorSummary: [{ text: 'Error summary', href: '#' }],
-						...mockAddress
-					}
-				};
 				beforeEach(() => {
+					req = {
+						...req,
+						originalUrl: '/mock-base-url/mock-case-ref/register/myself/email',
+						session: { mySelfRegdata: { address: 'mock session address' }, typeOfParty: 'myself' },
+						body: {
+							...req.body,
+							errors: { address: 'an error' },
+							errorSummary: [{ text: 'Error summary', href: '#' }]
+						}
+					};
 					postRegisterAddressController(req, res);
 				});
 
 				it('should render address page with the error', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
-						address: mockAddress,
-						errorSummary: [
-							{
-								href: '#',
-								text: 'Error summary'
-							}
-						],
-						errors: {
-							address: 'an error'
+						address: {
+							country: 'mock body address country',
+							line1: 'mock body address line 1',
+							line2: 'mock body address line 2',
+							line3: 'mock body address line 3',
+							postcode: 'mock body address postcode'
 						},
-						title: 'What is your address?',
+						errorSummary: [{ href: '#', text: 'Error summary' }],
+						errors: { address: 'an error' },
 						pageTitle:
-							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						title: 'What is your address?'
 					});
 				});
 			});
-			describe('and the user has submitted a address for selected myself and is in edit mode', () => {
-				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/myself/address',
-					session: { mySelfRegdata: { ['address']: { text: 'mock address' } } },
-					body: {
-						address: { ...mockAddress }
-					},
-					query: { mode: 'edit' }
-				};
+
+			describe('When the user is in edit mode', () => {
 				beforeEach(() => {
-					postRegisterAddressController(req, res);
+					req = {
+						...req,
+						query: { mode: 'edit' }
+					};
 				});
-				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith(
-						'/mock-base-url/mock-case-ref/register/myself/check-answers'
-					);
+
+				describe('and the user has previously selected agent and submitted an address', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+							originalUrl: '/mock-base-url/mock-case-ref/register/agent/address',
+							session: {
+								behalfRegdata: {
+									representor: { address: { line1: 'mock session address line 1' } }
+								},
+								typeOfParty: 'behalf'
+							}
+						};
+
+						postRegisterAddressController(req, res);
+					});
+
+					it('should set the correct session data', () => {
+						expect(req.session).toEqual({
+							behalfRegdata: {
+								representor: {
+									address: {
+										country: 'mock body address country',
+										line1: 'mock body address line 1',
+										line2: 'mock body address line 2',
+										line3: 'mock body address line 3',
+										postcode: 'mock body address postcode'
+									}
+								}
+							},
+							typeOfParty: 'behalf'
+						});
+					});
+
+					it('should redirect to the register agent check answers page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/agent/check-answers'
+						);
+					});
+				});
+
+				describe('and the user has previously selected myself and submitted an address', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+
+							originalUrl: '/mock-base-url/mock-case-ref/register/myself/address',
+							session: {
+								mySelfRegdata: { address: { line1: 'mock session address line 1' } },
+								typeOfParty: 'myself'
+							}
+						};
+
+						postRegisterAddressController(req, res);
+					});
+
+					it('should set the correct session data', () => {
+						expect(req.session).toEqual({
+							mySelfRegdata: {
+								address: {
+									country: 'mock body address country',
+									line1: 'mock body address line 1',
+									line2: 'mock body address line 2',
+									line3: 'mock body address line 3',
+									postcode: 'mock body address postcode'
+								}
+							},
+							typeOfParty: 'myself'
+						});
+					});
+
+					it('should redirect to the register myself check answers page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/myself/check-answers'
+						);
+					});
+				});
+
+				describe('and the user has previously selected organisation and submitted an address', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+							originalUrl: '/mock-base-url/mock-case-ref/register/organisation/address',
+							session: {
+								orgRegdata: { address: { line1: 'mock session address line 1' } },
+								typeOfParty: 'organisation'
+							}
+						};
+
+						postRegisterAddressController(req, res);
+					});
+
+					it('should set the correct session data', () => {
+						expect(req.session).toEqual({
+							orgRegdata: {
+								address: {
+									country: 'mock body address country',
+									line1: 'mock body address line 1',
+									line2: 'mock body address line 2',
+									line3: 'mock body address line 3',
+									postcode: 'mock body address postcode'
+								}
+							},
+							typeOfParty: 'organisation'
+						});
+					});
+
+					it('should redirect to the register organisation check answers page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/organisation/check-answers'
+						);
+					});
 				});
 			});
-			describe('and the user has submitted a address for selected myself', () => {
-				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/myself/address',
-					session: { mySelfRegdata: { ['address']: { text: 'mock address' } } },
-					body: {
-						address: { ...mockAddress }
-					},
-					query: {}
-				};
-				beforeEach(() => {
-					postRegisterAddressController(req, res);
+
+			describe('When the user is NOT in edit mode', () => {
+				describe('and the user has previously selected agent and submitted an address', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+							originalUrl: '/mock-base-url/mock-case-ref/register/agent/address',
+							session: {
+								behalfRegdata: { representor: {} },
+								typeOfParty: 'behalf'
+							}
+						};
+
+						postRegisterAddressController(req, res);
+					});
+
+					it('should set the correct session data', () => {
+						expect(req.session).toEqual({
+							behalfRegdata: {
+								representor: {
+									address: {
+										country: 'mock body address country',
+										line1: 'mock body address line 1',
+										line2: 'mock body address line 2',
+										line3: 'mock body address line 3',
+										postcode: 'mock body address postcode'
+									}
+								}
+							},
+							typeOfParty: 'behalf'
+						});
+					});
+
+					it('should redirect to the register agent number page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/agent/telephone-number'
+						);
+					});
 				});
-				it('should redirect to the next page for myself', () => {
-					expect(res.redirect).toHaveBeenCalledWith(
-						'/mock-base-url/mock-case-ref/register/myself/telephone-number'
-					);
+
+				describe('and the user has previously selected myself and submitted an address', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+
+							originalUrl: '/mock-base-url/mock-case-ref/register/myself/address',
+							session: {
+								mySelfRegdata: {},
+								typeOfParty: 'myself'
+							}
+						};
+
+						postRegisterAddressController(req, res);
+					});
+
+					it('should set the correct session data', () => {
+						expect(req.session).toEqual({
+							mySelfRegdata: {
+								address: {
+									country: 'mock body address country',
+									line1: 'mock body address line 1',
+									line2: 'mock body address line 2',
+									line3: 'mock body address line 3',
+									postcode: 'mock body address postcode'
+								}
+							},
+							typeOfParty: 'myself'
+						});
+					});
+
+					it('should redirect to the register myself number page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/myself/telephone-number'
+						);
+					});
 				});
-			});
-			describe('and the user has submitted a address for selected organisation', () => {
-				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/address',
-					session: { orgRegdata: { ['address']: { text: 'mock address' } } },
-					body: {
-						address: { ...mockAddress }
-					},
-					query: {}
-				};
-				beforeEach(() => {
-					postRegisterAddressController(req, res);
-				});
-				it('should redirect to the next page for organisation', () => {
-					expect(res.redirect).toHaveBeenCalledWith(
-						'/mock-base-url/mock-case-ref/register/organisation/telephone-number'
-					);
-				});
-			});
-			describe('and the user has submitted a address for selected agent', () => {
-				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/agent/address',
-					session: {
-						behalfRegdata: { representor: { ['address']: { text: 'mock address body' } } }
-					},
-					body: {
-						address: { ...mockAddress }
-					},
-					query: {}
-				};
-				beforeEach(() => {
-					postRegisterAddressController(req, res);
-				});
-				it('should redirect to the next page for agent', () => {
-					expect(res.redirect).toHaveBeenCalledWith(
-						'/mock-base-url/mock-case-ref/register/agent/who-representing'
-					);
+
+				describe('and the user has previously selected organisation and submitted an address', () => {
+					beforeEach(() => {
+						req = {
+							...req,
+							originalUrl: '/mock-base-url/mock-case-ref/register/organisation/address',
+							session: {
+								orgRegdata: {},
+								typeOfParty: 'organisation'
+							}
+						};
+
+						postRegisterAddressController(req, res);
+					});
+
+					it('should set the correct session data', () => {
+						expect(req.session).toEqual({
+							orgRegdata: {
+								address: {
+									country: 'mock body address country',
+									line1: 'mock body address line 1',
+									line2: 'mock body address line 2',
+									line3: 'mock body address line 3',
+									postcode: 'mock body address postcode'
+								}
+							},
+							typeOfParty: 'organisation'
+						});
+					});
+
+					it('should redirect to the register organisation number page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/projects/mock-case-ref/register/organisation/telephone-number'
+						);
+					});
 				});
 			});
 		});

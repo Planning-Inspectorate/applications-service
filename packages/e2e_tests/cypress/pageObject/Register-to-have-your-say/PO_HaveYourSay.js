@@ -83,4 +83,8 @@ export class PO_HaveYourSay {
 	checkRadioOption() {
 		this.elements.radioButton().click();
 	}
+
+	findAndClickDecleration(string) {
+		cy.get('.govuk-button govuk-button').contains(string).click();
+	}
 }

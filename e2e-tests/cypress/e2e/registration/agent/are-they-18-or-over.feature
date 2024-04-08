@@ -16,12 +16,12 @@ Feature: Are they 18 or over page
             | Select yes if they are 18 or over |
         When user selects "Yes" radio option on are they 18 or over page
         And I click on the continue button
-        Then I am on the "What is their address?" page
+        Then I am on the "what is their email address?" page
 
     Scenario: select No and continue
         When user selects "No" radio option on are they 18 or over page
         And I click on the continue button
-        Then I am on the "What is their address?" page
+        Then I am on the "what is their email address?" page
 
     Scenario: User click on back link
         When I click on back link

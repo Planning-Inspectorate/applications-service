@@ -10,7 +10,7 @@ describe('#getVerticalTabs', () => {
 	describe('When getting the vertical tabs for the projects layout', () => {
 		const mockApplicationData = {
 			DateOfRepresentationPeriodOpen: '2023-01-03',
-			DateOfRelevantRepresentationClose: null
+			DateOfRelevantRepresentationClose: '2023-01-04'
 		};
 
 		beforeEach(() => {
@@ -28,7 +28,6 @@ describe('#getVerticalTabs', () => {
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
-				featureFlag.openRegistrationCaseReferences = ['mock-case-ref'];
 
 				result = getVerticalTabs('mock-case-ref', mockApplicationData, true, true);
 			});
@@ -110,10 +109,6 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowHaveYourSay = true;
 				featureFlag.allowGetUpdates = true;
 				featureFlag.projectMigrationCaseReferences = ['mock-case-ref'];
-				featureFlag.openRegistrationCaseReferences = [
-					're-opened-registration-case-ref',
-					'mock-case-ref'
-				];
 			});
 
 			describe('and case id is in the projectMigrationCaseReferences', () => {
