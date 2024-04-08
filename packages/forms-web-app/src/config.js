@@ -81,7 +81,7 @@ module.exports = {
 		pressAndMediaPhoneNumber: '0303 444 5004',
 		pressAndMediaEmailAddress: 'press.office@planninginspectorate.gov.uk',
 		contactUsFormURL: 'https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new',
-		csOpeningHours: 'Monday to Friday, 9am to 12pm (except public holidays)'
+		csOpeningHours: 'Monday to Friday, 9am to 4pm (except bank holidays)'
 	},
 	pinsSocialMedia: {
 		twitterHandle: '@PINSgov',
