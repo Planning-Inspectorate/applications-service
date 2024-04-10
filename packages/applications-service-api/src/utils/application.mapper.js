@@ -369,5 +369,6 @@ module.exports = {
 	addMapZoomLevelAndLongLat,
 	mapResponseBackToNILegacyFormat,
 	buildApplicationsFiltersFromBOApplications,
-	mapNIApplicationsToApi
+	mapNIApplicationsToApi,
+	mapColumnLabelToApi
 };

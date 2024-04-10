@@ -97,6 +97,14 @@ describe('agent registers to have your say and submits on behalf of householder'
 	});
 
 	it('Declaration', () => {
-		haveYourSay.findAndClickDeclaration('Continue to declaration');
+		cy.get('a[href*="/agent/declaration"]').click();
+	});
+
+	it('Accept and continue', () => {
+		cy.get('[data-cy="button-accept-and-regoster"]').click();
+	});
+
+	it('User sees the registration complete message', () => {
+		haveYourSay.registrationCompleteText('Registration complete');
 	});
 });
