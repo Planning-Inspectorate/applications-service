@@ -42,7 +42,7 @@ describe('nsip-service-user', () => {
 	});
 
 	it('throws error if serviceUserId is missing', async () => {
-		await expect(sendMessage(mockContext, {})).rejects.toThrow(`serviceUserId is required`);
+		await expect(sendMessage(mockContext, {})).rejects.toThrow(`id is required`);
 		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
 
