@@ -1,29 +1,21 @@
 const sendMessage = require('../index');
-const { prismaClient } = require('../../lib/prisma');
+const buildMergeQuery = require('../../lib/build-merge-query');
 
-const mockFindUnique = jest.fn();
-const mockUpsert = jest.fn();
-
+const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$transaction: jest.fn().mockImplementation((callback) =>
-			callback({
-				projectUpdate: {
-					findUnique: mockFindUnique,
-					upsert: mockUpsert
-				}
-			})
-		)
+		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
 	}
 }));
+jest.mock('../../lib/build-merge-query', () =>
+	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
+);
 
-const mockCurrentTime = new Date('2023-01-01T09:00:00.000Z');
-const mockPastTime = new Date('2023-01-01T08:00:00.000Z');
-const mockFutureTime = new Date('2023-01-01T10:00:00.000Z');
+const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
-		enqueuedTimeUtc: mockCurrentTime.toUTCString(),
+		enqueuedTimeUtc: mockEnqueueDateTime,
 		deliveryCount: 1,
 		messageId: 123
 	}
@@ -47,28 +39,16 @@ const mockProjectUpdate = {
 	updateContentEnglish: 'this is an update',
 	updateContentWelsh: 'diweddariad yw hwn',
 	updateStatus: 'published',
-	modifiedAt: mockCurrentTime
-};
-
-const assertProjectUpdateUpsert = () => {
-	expect(mockUpsert).toHaveBeenCalledWith({
-		where: {
-			projectUpdateId: 1
-		},
-		update: mockProjectUpdate,
-		create: mockProjectUpdate
-	});
-	expect(mockContext.log).toHaveBeenCalledWith(`upserted projectUpdate with projectUpdateId: 1`);
+	modifiedAt: new Date()
 };
 
 describe('nsip-project-update', () => {
 	beforeEach(() => {
-		mockFindUnique.mockReset();
-		mockUpsert.mockReset();
+		mockExecuteRawUnsafe.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
-		jest.setSystemTime(mockCurrentTime);
+		jest.setSystemTime(new Date(mockProjectUpdate.modifiedAt));
 	});
 	afterAll(() => {
 		jest.useRealTimers();
@@ -78,61 +58,47 @@ describe('nsip-project-update', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-project-update function');
 	});
-	it('skips update if projectUpdateId is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping update as projectUpdateId is missing');
-	});
-	it('start transaction', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(prismaClient.$transaction).toHaveBeenCalled();
-	});
-	it('finds existing projectUpdate to determine if it should update', async () => {
-		await sendMessage(mockContext, mockMessage);
-		expect(mockFindUnique).toHaveBeenCalledWith({
-			where: {
-				projectUpdateId: mockMessage.id
-			}
-		});
-	});
-	describe('when no projectUpdate exists in database', () => {
-		it('creates new projectUpdate for projectUpdateId', async () => {
-			mockFindUnique.mockResolvedValue(null);
-			await sendMessage(mockContext, mockMessage);
-			assertProjectUpdateUpsert();
-		});
+
+	it('throws error if id is missing', async () => {
+		const mockMessageWithoutId = { ...mockMessage };
+		delete mockMessageWithoutId.id;
+		await expect(sendMessage(mockContext, mockMessageWithoutId)).rejects.toThrow('id is required');
 	});
 
-	describe('when projectUpdate exists in database', () => {
-		describe('and the message is older than the existing projectUpdate', () => {
-			it('does not update the projectUpdate', async () => {
-				mockFindUnique.mockResolvedValue(mockProjectUpdate);
-				const mockContextWithPastTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockPastTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithPastTime, mockMessage);
-				expect(mockUpsert).not.toHaveBeenCalled();
-				expect(mockContext.log).toHaveBeenCalledWith(
-					'skipping update of projectUpdate with projectUpdateId: 1 as it is not newer than existing'
-				);
-			});
-		});
-		describe('and the message is newer than the existing projectUpdate', () => {
-			it('updates the projectUpdate', async () => {
-				mockFindUnique.mockResolvedValue(mockProjectUpdate);
-				const mockContextWithFutureTime = {
-					...mockContext,
-					bindingData: {
-						...mockContext.bindingData,
-						enqueuedTimeUtc: mockFutureTime.toUTCString()
-					}
-				};
-				await sendMessage(mockContextWithFutureTime, mockMessage);
-				assertProjectUpdateUpsert();
-			});
-		});
+	it('calls buildMergeQuery with correct parameters', async () => {
+		await sendMessage(mockContext, mockMessage);
+		expect(buildMergeQuery).toHaveBeenCalledWith(
+			'projectUpdate',
+			'projectUpdateId',
+			mockProjectUpdate,
+			mockEnqueueDateTime
+		);
+	});
+
+	it('runs query to upsert projectUpdate', async () => {
+		await sendMessage(mockContext, mockMessage);
+		const [receivedStatement, ...receivedParameters] = mockExecuteRawUnsafe.mock.calls[0];
+		const statements = receivedStatement.split('\n');
+		expect(statements[0].trim()).toBe('MERGE INTO [projectUpdate] AS Target');
+		expect(statements[1].trim()).toBe(
+			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8) AS Source ([projectUpdateId], [caseReference], [updateDate], [updateName], [updateContentEnglish], [updateContentWelsh], [updateStatus], [modifiedAt])'
+		);
+		expect(statements[2].trim()).toBe('ON Target.[projectUpdateId] = Source.[projectUpdateId]');
+		expect(statements[3].trim()).toBe('WHEN MATCHED');
+		expect(statements[4].trim()).toBe(
+			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
+		);
+		expect(statements[5].trim()).toBe(
+			'THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[updateDate] = Source.[updateDate], Target.[updateName] = Source.[updateName], Target.[updateContentEnglish] = Source.[updateContentEnglish], Target.[updateContentWelsh] = Source.[updateContentWelsh], Target.[updateStatus] = Source.[updateStatus], Target.[modifiedAt] = Source.[modifiedAt]'
+		);
+		expect(statements[6].trim()).toBe(
+			'WHEN NOT MATCHED THEN INSERT ([projectUpdateId], [caseReference], [updateDate], [updateName], [updateContentEnglish], [updateContentWelsh], [updateStatus], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8);'
+		);
+		const expectedParameters = Object.values(mockProjectUpdate);
+		expect(receivedParameters.length).toBe(expectedParameters.length);
+		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`upserted projectUpdate with projectUpdateId ${mockMessage.id}`
+		);
 	});
 });

@@ -6,7 +6,7 @@ module.exports = async (context, message) => {
 	const serviceUserId = message.id;
 
 	if (!serviceUserId) {
-		throw new Error(`serviceUserId is required`);
+		throw new Error(`id is required`);
 	}
 
 	const serviceUser = mapMessageToServiceUser(message);
