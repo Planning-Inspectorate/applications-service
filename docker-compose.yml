@@ -111,7 +111,6 @@ services:
       OPEN_REGISTRATION_CASE_REFERENCES: 'EN010102, EN013014'
       PDF_SERVICE_API_URL: http://pdf-service-api:3000
       PLANNED_OUTAGE_RESUME_TEXT: 'Sample service resume text'
-      PRIVATE_BETA_V1_ROUTES_ONLY: 'false'
       REDIS_CONNECTION_STRING: redis:6379,password=some_redis_password,ssl=False,abortConnect=False
       SESSION_KEY: some_secure_key_goes_here
       # please override this locally if using not using localhost or ip address to browse the site in dev.
