@@ -1,19 +1,8 @@
 const { getIndexController } = require('./controller');
 
-jest.mock('../../../src/config', () => {
-	const originalConfig = jest.requireActual('../../../src/config');
-	return {
-		...originalConfig,
-		featureFlag: {
-			usePrivateBetaV1RoutesOnly: false
-		}
-	};
-});
-
 const defaultPageData = {
 	pageHeading: 'Welcome to Find a National Infrastructure Project',
 	pageTitle: 'Welcome to Find a National Infrastructure Project',
-	showProjectSearchUrl: true,
 	homePageUrls: {
 		contactURL: '/contact',
 		detailedInformationURL: '/detailed-information',

@@ -24,8 +24,7 @@ jest.mock('../config', () => {
 	return {
 		...originalConfig,
 		featureFlag: {
-			allowHomepage: true,
-			usePrivateBetaV1RoutesOnly: false
+			allowHomepage: true
 		}
 	};
 });

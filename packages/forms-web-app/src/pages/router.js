@@ -46,10 +46,9 @@ if (featureFlag.allowHomepage) {
 	pagesRouter.use(registerOfAdviceRouter);
 }
 
-if (!featureFlag.usePrivateBetaV1RoutesOnly) {
-	pagesRouter.get(projectSearchURL, getProjectSearchController);
-	pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
-}
+pagesRouter.get(projectSearchURL, getProjectSearchController);
+
+pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
 
 pagesRouter.get(termsAndConditionsURL, getTermsAndConditionsController);
 
