@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-project-update function`);
@@ -6,45 +7,27 @@ module.exports = async (context, message) => {
 	const projectUpdateId = message.id;
 
 	if (!projectUpdateId) {
-		context.log(`skipping update as projectUpdateId is missing`);
-		return;
+		throw new Error('id is required');
 	}
-	return await prismaClient.$transaction(async (tx) => {
-		const existingProjectUpdate = await tx.projectUpdate.findUnique({
-			where: {
-				projectUpdateId
-			}
-		});
 
-		const shouldUpdate =
-			!existingProjectUpdate ||
-			new Date(context.bindingData.enqueuedTimeUtc) >
-				new Date(existingProjectUpdate.modifiedAt.toUTCString());
+	const projectUpdate = {
+		projectUpdateId,
+		caseReference: message.caseReference,
+		updateDate: message.updateDate,
+		updateName: message.updateName,
+		updateContentEnglish: message.updateContentEnglish,
+		updateContentWelsh: message.updateContentWelsh,
+		updateStatus: message.updateStatus,
+		modifiedAt: new Date()
+	};
 
-		if (shouldUpdate) {
-			const projectUpdate = {
-				projectUpdateId,
-				caseReference: message.caseReference,
-				updateDate: message.updateDate,
-				updateName: message.updateName,
-				updateContentEnglish: message.updateContentEnglish,
-				updateContentWelsh: message.updateContentWelsh,
-				updateStatus: message.updateStatus,
-				modifiedAt: new Date()
-			};
+	const { statement, parameters } = buildMergeQuery(
+		'projectUpdate',
+		'projectUpdateId',
+		projectUpdate,
+		context.bindingData.enqueuedTimeUtc
+	);
 
-			await tx.projectUpdate.upsert({
-				where: {
-					projectUpdateId
-				},
-				update: projectUpdate,
-				create: projectUpdate
-			});
-			context.log(`upserted projectUpdate with projectUpdateId: ${projectUpdateId}`);
-		} else {
-			context.log(
-				`skipping update of projectUpdate with projectUpdateId: ${projectUpdateId} as it is not newer than existing`
-			);
-		}
-	});
+	await prismaClient.$executeRawUnsafe(statement, ...parameters);
+	context.log(`upserted projectUpdate with projectUpdateId ${projectUpdateId}`);
 };
