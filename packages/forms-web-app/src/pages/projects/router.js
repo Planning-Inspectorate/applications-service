@@ -40,18 +40,14 @@ if (featureFlag.allowProjectInformation) {
 	projectsRouter.get(projectsAllUpdatesURL, projectsMiddleware, getProjectsAllUpdatesController);
 }
 
-if (featureFlag.allowDocumentLibrary) {
-	projectsRouter.get(projectsDocumentsURL, projectsMiddleware, getProjectsDocumentsController);
-}
+projectsRouter.get(projectsDocumentsURL, projectsMiddleware, getProjectsDocumentsController);
 
-if (featureFlag.allowExaminationTimetable) {
-	projectsRouter.get(
-		examinationTimetableURL,
-		projectsMiddleware,
-		getProjectsExaminationTimetableController
-	);
-	projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);
-}
+projectsRouter.get(
+	examinationTimetableURL,
+	projectsMiddleware,
+	getProjectsExaminationTimetableController
+);
+projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);
 
 if (featureFlag.allowSection51) {
 	projectsRouter.use(section51Router);
