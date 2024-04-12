@@ -1,4 +1,4 @@
-const { projectsMiddleware, projectMigrationMiddleware } = require('../_middleware/middleware');
+const { projectsMiddleware } = require('../_middleware/middleware');
 const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const { getGetUpdatesIndexController } = require('./index/controller');
 const {
@@ -53,7 +53,7 @@ describe('pages/projects/get-updates/router', () => {
 		it('it should call get updates routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/start',
-				[projectsMiddleware, projectMigrationMiddleware],
+				projectsMiddleware,
 				getGetUpdatesIndexController
 			);
 

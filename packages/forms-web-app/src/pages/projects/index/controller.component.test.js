@@ -12,17 +12,6 @@ const {
 } = require('../../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../../_services');
 
-jest.mock('../../../config', () => {
-	const originalConfig = jest.requireActual('../../../config');
-	return {
-		...originalConfig,
-		featureFlag: {
-			...originalConfig.featureFlag,
-			projectMigrationCaseReferences: ['EN010085']
-		}
-	};
-});
-
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn(),
 	getProjectUpdates: jest.fn(),
