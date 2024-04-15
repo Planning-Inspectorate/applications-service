@@ -8,27 +8,27 @@ exports[`views/macros/cookie-banner-accepted should allow setting a custom cooki
 
   
 
-  <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on application service" data-cy="cookie-banner-accepted" id="cookie-banner-accepted">
+  <div class=\\"govuk-cookie-banner govuk-!-display-none\\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on application service\\" data-cy=\\"cookie-banner-accepted\\" id=\\"cookie-banner-accepted\\">
     
     
 
-    <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+    <div class=\\"govuk-grid-row\\">
+      <div class=\\"govuk-grid-column-two-thirds\\">
         
 
-        <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/some/path/here">change your cookie settings</a> at any time.</p>
+        <div class=\\"govuk-cookie-banner__content\\">
+    <p>You’ve accepted analytics cookies. You can <a class=\\"govuk-link\\" href=\\"/some/path/here\\">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
 
       
-      <div class="govuk-button-group">
+      <div class=\\"govuk-button-group\\">
         
           
-            <button value="hide" type="submit" name="cookie_banner_accepted" class="govuk-button" data-module="govuk-button" data-cy="cookie-banner-accepted-hide-message">
+            <button value=\\"hide\\" type=\\"submit\\" name=\\"cookie_banner_accepted\\" class=\\"govuk-button\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accepted-hide-message\\">
               Hide this message
             </button>
           
@@ -49,27 +49,27 @@ exports[`views/macros/cookie-banner-accepted should allow setting a custom servi
 
   
 
-  <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on test service name here" data-cy="cookie-banner-accepted" id="cookie-banner-accepted">
+  <div class=\\"govuk-cookie-banner govuk-!-display-none\\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on test service name here\\" data-cy=\\"cookie-banner-accepted\\" id=\\"cookie-banner-accepted\\">
     
     
 
-    <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+    <div class=\\"govuk-grid-row\\">
+      <div class=\\"govuk-grid-column-two-thirds\\">
         
 
-        <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+        <div class=\\"govuk-cookie-banner__content\\">
+    <p>You’ve accepted analytics cookies. You can <a class=\\"govuk-link\\" href=\\"/cookies\\">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
 
       
-      <div class="govuk-button-group">
+      <div class=\\"govuk-button-group\\">
         
           
-            <button value="hide" type="submit" name="cookie_banner_accepted" class="govuk-button" data-module="govuk-button" data-cy="cookie-banner-accepted-hide-message">
+            <button value=\\"hide\\" type=\\"submit\\" name=\\"cookie_banner_accepted\\" class=\\"govuk-button\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accepted-hide-message\\">
               Hide this message
             </button>
           
@@ -90,27 +90,27 @@ exports[`views/macros/cookie-banner-accepted should allow setting all custom att
 
   
 
-  <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on custom service name" data-cy="cookie-banner-accepted" id="cookie-banner-accepted">
+  <div class=\\"govuk-cookie-banner govuk-!-display-none\\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on custom service name\\" data-cy=\\"cookie-banner-accepted\\" id=\\"cookie-banner-accepted\\">
     
     
 
-    <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+    <div class=\\"govuk-grid-row\\">
+      <div class=\\"govuk-grid-column-two-thirds\\">
         
 
-        <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/a/b/c">change your cookie settings</a> at any time.</p>
+        <div class=\\"govuk-cookie-banner__content\\">
+    <p>You’ve accepted analytics cookies. You can <a class=\\"govuk-link\\" href=\\"/a/b/c\\">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
 
       
-      <div class="govuk-button-group">
+      <div class=\\"govuk-button-group\\">
         
           
-            <button value="hide" type="submit" name="cookie_banner_accepted" class="govuk-button" data-module="govuk-button" data-cy="cookie-banner-accepted-hide-message">
+            <button value=\\"hide\\" type=\\"submit\\" name=\\"cookie_banner_accepted\\" class=\\"govuk-button\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accepted-hide-message\\">
               Hide this message
             </button>
           
@@ -131,27 +131,27 @@ exports[`views/macros/cookie-banner-accepted should have sensible default attrib
 
   
 
-  <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on application service" data-cy="cookie-banner-accepted" id="cookie-banner-accepted">
+  <div class=\\"govuk-cookie-banner govuk-!-display-none\\" data-nosnippet role=\\"region\\" aria-label=\\"Cookies on application service\\" data-cy=\\"cookie-banner-accepted\\" id=\\"cookie-banner-accepted\\">
     
     
 
-    <div class="govuk-cookie-banner__message govuk-width-container">
+    <div class=\\"govuk-cookie-banner__message govuk-width-container\\">
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds">
+    <div class=\\"govuk-grid-row\\">
+      <div class=\\"govuk-grid-column-two-thirds\\">
         
 
-        <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+        <div class=\\"govuk-cookie-banner__content\\">
+    <p>You’ve accepted analytics cookies. You can <a class=\\"govuk-link\\" href=\\"/cookies\\">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
 
       
-      <div class="govuk-button-group">
+      <div class=\\"govuk-button-group\\">
         
           
-            <button value="hide" type="submit" name="cookie_banner_accepted" class="govuk-button" data-module="govuk-button" data-cy="cookie-banner-accepted-hide-message">
+            <button value=\\"hide\\" type=\\"submit\\" name=\\"cookie_banner_accepted\\" class=\\"govuk-button\\" data-module=\\"govuk-button\\" data-cy=\\"cookie-banner-accepted-hide-message\\">
               Hide this message
             </button>
           
