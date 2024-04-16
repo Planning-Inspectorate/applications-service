@@ -218,7 +218,7 @@ describe('service.backoffice.repository', () => {
 			mockGroupBy.mockResolvedValue([
 				{
 					representationType: 'mock-type',
-					count: 1
+					_count: { id: 1 }
 				}
 			]);
 		});
@@ -237,6 +237,15 @@ describe('service.backoffice.repository', () => {
 					id: true
 				}
 			});
+		});
+		it('should return the correct data', async () => {
+			const result = await getFilters('mock-case-reference');
+			expect(result).toEqual([
+				{
+					name: 'mock-type',
+					count: 1
+				}
+			]);
 		});
 	});
 });

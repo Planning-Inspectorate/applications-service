@@ -103,7 +103,7 @@ const getFilters = async (caseReference) => {
 	});
 
 	return options.map((option) => ({
-		type: option.representationType,
+		name: option.representationType,
 		count: option._count.id
 	}));
 };
