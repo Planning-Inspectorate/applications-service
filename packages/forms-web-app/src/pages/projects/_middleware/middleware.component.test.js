@@ -117,7 +117,7 @@ describe('projects _middleware', () => {
 						url: '/projects/all-examination-documents'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'section-51',
 						name: 'Section 51 advice',
 						url: '/projects/mock-case-ref/s51advice'

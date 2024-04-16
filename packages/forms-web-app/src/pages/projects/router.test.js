@@ -22,8 +22,6 @@ jest.mock('../../config', () => {
 			allowProjectInformation: true,
 			allowDocumentLibrary: true,
 			allowExaminationTimetable: true,
-			allowSection51: true,
-			allowRepresentation: true,
 			allowGetUpdates: true
 		}
 	};
