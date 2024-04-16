@@ -89,7 +89,7 @@ const getRepresentations = async (options) => {
 
 const getFilters = async (caseReference) => {
 	const options = await prismaClient.representation.groupBy({
-		by: ['representationType'],
+		by: ['representationType', 'status'],
 		where: {
 			caseReference,
 			representationType: {
@@ -102,9 +102,9 @@ const getFilters = async (caseReference) => {
 		}
 	});
 
-	return options.map((filter) => ({
-		name: filter.representationType,
-		count: filter.total
+	return options.map((option) => ({
+		type: option.representationType,
+		count: option._count.id
 	}));
 };
 

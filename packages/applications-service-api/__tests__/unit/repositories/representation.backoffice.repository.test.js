@@ -225,7 +225,7 @@ describe('service.backoffice.repository', () => {
 		it('should execute query', async () => {
 			await getFilters('mock-case-reference');
 			expect(mockGroupBy).toHaveBeenCalledWith({
-				by: ['representationType'],
+				by: ['representationType', 'status'],
 				where: {
 					caseReference: 'mock-case-reference',
 					representationType: {
