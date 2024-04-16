@@ -53,9 +53,7 @@ if (featureFlag.allowExaminationTimetable) {
 	projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);
 }
 
-if (featureFlag.allowSection51) {
-	projectsRouter.use(section51Router);
-}
+projectsRouter.use(section51Router);
 
 projectsRouter.use(representationsRouter);
 

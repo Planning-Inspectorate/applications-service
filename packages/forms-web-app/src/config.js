@@ -55,7 +55,6 @@ module.exports = {
 		allowExaminationTimetable: process.env.FEATURE_ALLOW_EXAMINATION_TIMETABLE === 'true',
 		allowHaveYourSay: process.env.FEATURE_ALLOW_HAVE_YOUR_SAY === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
-		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true',
 		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
 		projectMigrationCaseReferences: splitStringToArray(
