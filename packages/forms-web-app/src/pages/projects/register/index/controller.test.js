@@ -31,7 +31,17 @@ describe('projects/register/index/controller', () => {
 				case_ref: 'mock-case-ref'
 			}
 		};
-		res = mockRes();
+		res = {
+			...mockRes(),
+			locals: {
+				applicationData: {
+					DateOfRepresentationPeriodOpen: dateToday,
+					DateOfRelevantRepresentationClose: null,
+					DateOfReOpenRelevantRepresentationStart: null,
+					DateOfReOpenRelevantRepresentationClose: null
+				}
+			}
+		};
 		responseWithStatus = mockRes();
 		res.status.mockImplementation(() => responseWithStatus);
 		jest.useFakeTimers().setSystemTime(new Date(dateToday));
@@ -60,14 +70,18 @@ describe('projects/register/index/controller', () => {
 						Promise.resolve({
 							resp_code: 200,
 							data: {
-								ProjectName: 'mock project name',
-								DateOfRepresentationPeriodOpen: dateTomorrow,
-								DateOfRelevantRepresentationClose: dateAfterTomorrow,
-								DateOfReOpenRelevantRepresentationStart: null,
-								DateOfReOpenRelevantRepresentationClose: null
+								ProjectName: 'mock project name'
+								// DateOfRepresentationPeriodOpen: dateTomorrow,
+								// DateOfRelevantRepresentationClose: dateAfterTomorrow,
+								// DateOfReOpenRelevantRepresentationStart: null,
+								// DateOfReOpenRelevantRepresentationClose: null
 							}
 						})
 					);
+					res.locals.applicationData.DateOfRepresentationPeriodOpen = dateTomorrow;
+					res.locals.applicationData.DateOfRelevantRepresentationClose = dateAfterTomorrow;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationStart = null;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationClose = null;
 					await getRegisterIndexController(req, res);
 				});
 				it('should display the page not found screen', () => {
@@ -90,6 +104,10 @@ describe('projects/register/index/controller', () => {
 							}
 						})
 					);
+					res.locals.applicationData.DateOfRepresentationPeriodOpen = dateToday;
+					res.locals.applicationData.DateOfRelevantRepresentationClose = dateTomorrow;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationStart = null;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationClose = null;
 					await getRegisterIndexController(req, res);
 				});
 				it('should render the registration page with the correct data and set the correct session data', () => {
@@ -131,6 +149,10 @@ describe('projects/register/index/controller', () => {
 							}
 						})
 					);
+					res.locals.applicationData.DateOfRepresentationPeriodOpen = dateBeforeYesterday;
+					res.locals.applicationData.DateOfRelevantRepresentationClose = dateYesterday;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationStart = null;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationClose = null;
 					await getRegisterIndexController(req, res);
 				});
 				it('should render the registration page with the correct data and set the correct session data', () => {
@@ -175,6 +197,10 @@ describe('projects/register/index/controller', () => {
 							}
 						})
 					);
+					res.locals.applicationData.DateOfRepresentationPeriodOpen = dateBeforeYesterday;
+					res.locals.applicationData.DateOfRelevantRepresentationClose = dateYesterday;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationStart = dateTomorrow;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationClose = dateAfterTomorrow;
 					await getRegisterIndexController(req, res);
 				});
 				it('should render the registration page with the correct data and set the correct session data', () => {
@@ -217,6 +243,10 @@ describe('projects/register/index/controller', () => {
 							}
 						})
 					);
+					res.locals.applicationData.DateOfRepresentationPeriodOpen = dateBeforeYesterday;
+					res.locals.applicationData.DateOfRelevantRepresentationClose = dateYesterday;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationStart = dateToday;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationClose = dateTomorrow;
 					await getRegisterIndexController(req, res);
 				});
 				it('should render the registration page with the correct data and set the correct session data', () => {
@@ -259,6 +289,10 @@ describe('projects/register/index/controller', () => {
 							}
 						})
 					);
+					res.locals.applicationData.DateOfRepresentationPeriodOpen = dateBeforeYesterday;
+					res.locals.applicationData.DateOfRelevantRepresentationClose = dateYesterday;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationStart = dateBeforeYesterday;
+					res.locals.applicationData.DateOfReOpenRelevantRepresentationClose = dateYesterday;
 					await getRegisterIndexController(req, res);
 				});
 				it('should render the registration page with the correct data and set the correct session data', () => {
