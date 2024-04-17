@@ -26,7 +26,6 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowDocumentLibrary = false;
 				featureFlag.allowExaminationTimetable = false;
 				featureHideLink.hideAllExaminationDocumentsLink = true;
-				featureFlag.allowSection51 = false;
 				featureFlag.allowHaveYourSay = false;
 
 				result = getVerticalTabs('mock-case-ref', mockApplicationData, true, true);
@@ -89,7 +88,7 @@ describe('#getVerticalTabs', () => {
 						url: '/projects/all-examination-documents'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'section-51',
 						name: 'Section 51 advice',
 						url: '/projects/mock-case-ref/s51advice'
@@ -105,7 +104,6 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowDocumentLibrary = true;
 				featureFlag.allowExaminationTimetable = true;
 				featureHideLink.hideAllExaminationDocumentsLink = false;
-				featureFlag.allowSection51 = true;
 				featureFlag.allowHaveYourSay = true;
 				featureFlag.allowGetUpdates = true;
 				featureFlag.projectMigrationCaseReferences = ['mock-case-ref'];
