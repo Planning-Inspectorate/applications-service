@@ -71,10 +71,6 @@ describe('projects/register/index/controller', () => {
 							resp_code: 200,
 							data: {
 								ProjectName: 'mock project name'
-								// DateOfRepresentationPeriodOpen: dateTomorrow,
-								// DateOfRelevantRepresentationClose: dateAfterTomorrow,
-								// DateOfReOpenRelevantRepresentationStart: null,
-								// DateOfReOpenRelevantRepresentationClose: null
 							}
 						})
 					);
