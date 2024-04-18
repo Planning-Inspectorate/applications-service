@@ -47,17 +47,16 @@
 						{{ uiSearchBar('homepage-search-bar', 'searchTerm', '', 'Search by project name or applicant') }}
 					</form>
 				</div>
-				{% if showProjectSearchUrl %}
-					<div class="govuk-grid-column-one-half">
-						<h2 class="govuk-heading-m ">
-							I want to view all projects
-						</h2>
+				<div class="govuk-grid-column-one-half">
+					<h2 class="govuk-heading-m ">
+						I want to view all projects
+					</h2>
 
-						<p class="govuk-body">
-							See a <a href="{{ homePageUrls.projectSearch }}" class="govuk-link">complete list of all projects</a>
-						</p>
-					</div>
-				{% endif %}
+					<p class="govuk-body">
+						See a <a href="{{ homePageUrls.projectSearch }}" class="govuk-link">complete list of all projects</a>
+					</p>
+				</div>
+
 			</div>
 		</div>
 	</section>

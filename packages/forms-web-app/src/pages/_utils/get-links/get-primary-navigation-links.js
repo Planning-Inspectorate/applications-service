@@ -20,10 +20,9 @@ const getPrimaryNavigationLinks = (pageURL) => {
 	if (featureFlag.allowHomepage)
 		primaryNavigationLinks.push(primaryNavigationLinkModel('Home', getIndexURL(), pageURL));
 
-	if (!featureFlag.usePrivateBetaV1RoutesOnly)
-		primaryNavigationLinks.push(
-			primaryNavigationLinkModel('All projects', getProjectSearchURL(), pageURL)
-		);
+	primaryNavigationLinks.push(
+		primaryNavigationLinkModel('All projects', getProjectSearchURL(), pageURL)
+	);
 
 	if (featureFlag.allowHomepage)
 		primaryNavigationLinks.push(

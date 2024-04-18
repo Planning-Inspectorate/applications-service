@@ -23,7 +23,7 @@ const mockBORepresentationFindFirst = jest.fn();
 const mockBORepresentationFindMany = jest.fn();
 const mockBORepresentationCount = jest.fn();
 const mockBODocumentFindMany = jest.fn();
-const mockBOQueryRaw = jest.fn();
+const mockBOGroupBy = jest.fn();
 
 jest.mock('../../src/models', () => ({
 	Representation: {
@@ -40,11 +40,11 @@ jest.mock('../../src/models', () => ({
 jest.mock('../../src/utils/is-backoffice-case-reference');
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
-		$queryRaw: (query) => mockBOQueryRaw(query),
 		representation: {
 			findFirst: (query) => mockBORepresentationFindFirst(query),
 			findMany: (query) => mockBORepresentationFindMany(query),
-			count: (query) => mockBORepresentationCount(query)
+			count: (query) => mockBORepresentationCount(query),
+			groupBy: (query) => mockBOGroupBy(query)
 		},
 		document: {
 			findMany: (query) => mockBODocumentFindMany(query)
@@ -426,7 +426,7 @@ describe('api/v1/representations', () => {
 				);
 				mockBORepresentationCount.mockResolvedValue(1);
 				mockBODocumentFindMany.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
-				mockBOQueryRaw.mockResolvedValue([]);
+				mockBOGroupBy.mockResolvedValue([]);
 			});
 
 			it('happy path', async () => {

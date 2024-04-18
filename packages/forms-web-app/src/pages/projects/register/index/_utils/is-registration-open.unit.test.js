@@ -32,15 +32,42 @@ describe('pages/projects/register/index/_utils/is-registration-open', () => {
 		};
 	});
 	describe('#isRegistrationOpen', () => {
-		describe('When the close date is not set', () => {
+		describe('When the close date is not set and the open date has been reached', () => {
 			let registrationOpen;
 
 			beforeEach(() => {
+				appData.DateOfRepresentationPeriodOpen = dateYesterday;
 				appData.DateOfRelevantRepresentationClose = null;
 				registrationOpen = isRegistrationOpen(appData);
 			});
 			it('should return true', () => {
 				expect(registrationOpen).toEqual(true);
+			});
+		});
+
+		describe('When the close date is not set and the open date has NOT been reached', () => {
+			let registrationOpen;
+
+			beforeEach(() => {
+				appData.DateOfRepresentationPeriodOpen = dateAfterTomorrow;
+				appData.DateOfRelevantRepresentationClose = null;
+				registrationOpen = isRegistrationOpen(appData);
+			});
+			it('should return false', () => {
+				expect(registrationOpen).toEqual(false);
+			});
+		});
+
+		describe('When both open and close date are not set', () => {
+			let registrationOpen;
+
+			beforeEach(() => {
+				appData.DateOfRepresentationPeriodOpen = null;
+				appData.DateOfRelevantRepresentationClose = null;
+				registrationOpen = isRegistrationOpen(appData);
+			});
+			it('should return false', () => {
+				expect(registrationOpen).toEqual(false);
 			});
 		});
 

@@ -11,14 +11,11 @@ const {
 const { getRegisterIndexURL } = require('../../register/index/_utils/get-register-index-url');
 const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
-const { isStringPartOfArray } = require('../../../_utils/is-string-part-of-array');
 
 function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepresentationsLink) {
 	return [
 		{
-			hidden:
-				featureFlag.allowProjectInformation != true ||
-				!isStringPartOfArray(featureFlag.projectMigrationCaseReferences, caseRef),
+			hidden: featureFlag.allowProjectInformation != true,
 			id: 'project-information',
 			name: 'Project information',
 			url: getProjectsIndexURL(caseRef)
@@ -30,7 +27,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: '/projects/project-timeline'
 		},
 		{
-			hidden: featureFlag.allowDocumentLibrary != true,
+			hidden: false,
 			id: 'project-documents',
 			name: 'Documents',
 			url: getProjectsDocumentsURL(caseRef)
@@ -48,7 +45,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowExaminationTimetable != true || !showExaminationLink,
+			hidden: !showExaminationLink,
 			id: 'project-examination-timetable',
 			name: 'Examination timetable',
 			url: getProjectsExaminationTimetableURL(caseRef)
@@ -60,9 +57,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
-			hidden:
-				featureFlag.allowGetUpdates != true ||
-				!isStringPartOfArray(featureFlag.projectMigrationCaseReferences, caseRef),
+			hidden: featureFlag.allowGetUpdates != true,
 			id: 'get-updates',
 			name: 'Get updates',
 			url: getUpdatesIndexURL(caseRef)
