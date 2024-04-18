@@ -56,9 +56,6 @@ module.exports = {
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
 		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
-		projectMigrationCaseReferences: splitStringToArray(
-			process.env.PROJECT_MIGRATION_CASE_REFERENCES
-		),
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
