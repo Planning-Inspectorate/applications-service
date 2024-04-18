@@ -32,6 +32,12 @@ const getApplicationData = async (case_ref) => {
 		DateOfDCOSubmission: add28DaysToDate(DateOfDCOSubmission),
 		DateOfRepresentationPeriodOpen: badDateToNull(data.DateOfRepresentationPeriodOpen),
 		DateOfRelevantRepresentationClose: badDateToNull(data.DateOfRelevantRepresentationClose),
+		DateOfReOpenRelevantRepresentationStart: badDateToNull(
+			data.DateOfReOpenRelevantRepresentationStart
+		),
+		DateOfReOpenRelevantRepresentationClose: badDateToNull(
+			data.DateOfReOpenRelevantRepresentationStart
+		),
 		DateRRepAppearOnWebsite: badDateToNull(data.DateRRepAppearOnWebsite),
 		DateOfPreliminaryMeeting: badDateToNull(data.DateOfPreliminaryMeeting),
 		dateTimeExaminationEnds: badDateToNull(data.DateTimeExaminationEnds),

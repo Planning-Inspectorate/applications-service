@@ -2,7 +2,7 @@ const express = require('express');
 
 const getUpdatesRouter = express.Router();
 
-const { projectsMiddleware, projectMigrationMiddleware } = require('../_middleware/middleware');
+const { projectsMiddleware } = require('../_middleware/middleware');
 const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const { getGetUpdatesIndexController } = require('./index/controller');
 const {
@@ -42,11 +42,7 @@ const updatesSubscribedURL = getUpdatesSubscribedURL();
 const updatesUnsubscribeURL = getUpdatesUnsubscribeURL();
 const updatesUnsubscribedURL = getUpdatesUnsubscribedURL();
 
-getUpdatesRouter.get(
-	updatesIndexURL,
-	[projectsMiddleware, projectMigrationMiddleware],
-	getGetUpdatesIndexController
-);
+getUpdatesRouter.get(updatesIndexURL, projectsMiddleware, getGetUpdatesIndexController);
 
 getUpdatesRouter.get(updatesEmailURL, getUpdatesMiddleware, getGetUpdatesEmailController);
 getUpdatesRouter.post(
