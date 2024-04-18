@@ -1,5 +1,4 @@
 const { prismaClient } = require('../lib/prisma');
-const { Prisma } = require('@prisma/client');
 
 const commonWhereFilters = {
 	status: {
@@ -89,18 +88,23 @@ const getRepresentations = async (options) => {
 };
 
 const getFilters = async (caseReference) => {
-	const sql = Prisma.sql`
-      SELECT DISTINCT(representationType), status, count(id) as total
-      FROM Representation
-      WHERE caseReference = ${caseReference}
-        AND (status = 'PUBLISHED' or status = 'published')
-        AND representationType is not null
-      GROUP BY representationType, status`;
+	const options = await prismaClient.representation.groupBy({
+		by: ['representationType', 'status'],
+		where: {
+			caseReference,
+			representationType: {
+				not: null
+			},
+			...commonWhereFilters
+		},
+		_count: {
+			id: true
+		}
+	});
 
-	const options = await prismaClient.$queryRaw(sql);
-	return options.map((filter) => ({
-		name: filter.representationType,
-		count: filter.total
+	return options.map((option) => ({
+		name: option.representationType,
+		count: option._count.id
 	}));
 };
 

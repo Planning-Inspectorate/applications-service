@@ -8,15 +8,15 @@ const { REPRESENTATION_BACKOFFICE_DATA } = require('../../__data__/representatio
 const mockFindFirst = jest.fn();
 const mockFindMany = jest.fn();
 const mockCount = jest.fn();
-const mockQueryRaw = jest.fn();
+const mockGroupBy = jest.fn();
 
 jest.mock('../../../src/lib/prisma', () => ({
 	prismaClient: {
-		$queryRaw: (query) => mockQueryRaw(query),
 		representation: {
 			findFirst: (query) => mockFindFirst(query),
 			findMany: (query) => mockFindMany(query),
-			count: (query) => mockCount(query)
+			count: (query) => mockCount(query),
+			groupBy: (query) => mockGroupBy(query)
 		}
 	}
 }));
@@ -215,13 +215,37 @@ describe('service.backoffice.repository', () => {
 	});
 	describe('getFilters', () => {
 		beforeAll(() => {
-			mockQueryRaw.mockResolvedValue([{ representation_type: 'mock-representation-type' }]);
+			mockGroupBy.mockResolvedValue([
+				{
+					representationType: 'mock-type',
+					_count: { id: 1 }
+				}
+			]);
 		});
 		it('should execute query', async () => {
 			await getFilters('mock-case-reference');
-			expect(mockQueryRaw).toHaveBeenCalledWith(
-				expect.objectContaining({ values: ['mock-case-reference'] })
-			);
+			expect(mockGroupBy).toHaveBeenCalledWith({
+				by: ['representationType', 'status'],
+				where: {
+					caseReference: 'mock-case-reference',
+					representationType: {
+						not: null
+					},
+					...commonWhereFilters
+				},
+				_count: {
+					id: true
+				}
+			});
+		});
+		it('should return the correct data', async () => {
+			const result = await getFilters('mock-case-reference');
+			expect(result).toEqual([
+				{
+					name: 'mock-type',
+					count: 1
+				}
+			]);
 		});
 	});
 });
