@@ -1,4 +1,4 @@
-const { projectsMiddleware, projectMigrationMiddleware } = require('./middleware');
+const { projectsMiddleware } = require('./middleware');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
@@ -15,7 +15,13 @@ jest.mock('../../../config', () => {
 		...originalConfig,
 		featureFlag: {
 			...originalConfig.featureFlag,
-			projectMigrationCaseReferences: ['mock-case-ref-in-config']
+			allowProjectInformation: false,
+			hideProjectTimelineLink: false,
+			allowDocumentLibrary: false,
+			allowExaminationTimetable: false,
+			hideAllExaminationDocumentsLink: false,
+			allowHaveYourSay: false,
+			allowGetUpdates: false
 		}
 	};
 });
@@ -127,33 +133,6 @@ describe('projects _middleware', () => {
 		});
 		it('should call next ', () => {
 			expect(next).toHaveBeenCalled();
-		});
-	});
-	describe('#projectMigrationMiddleware', () => {
-		const next = jest.fn();
-		const res = {
-			status: jest.fn().mockReturnThis(),
-			render: jest.fn()
-		};
-
-		describe('when the project case-ref is in config.featureFlag.projectMigrationCaseReferences', () => {
-			it('should call next()', () => {
-				const req = {
-					params: { case_ref: 'mock-case-ref-in-config' }
-				};
-				projectMigrationMiddleware(req, res, next);
-				expect(next).toHaveBeenCalledWith();
-			});
-		});
-		describe('when the project case-ref is not in config.featureFlag.projectMigrationCaseReferences', () => {
-			it('should call res.status(404).render("error/not-found")', () => {
-				const req = {
-					params: { case_ref: 'mock-case-ref-not-in-config' }
-				};
-				projectMigrationMiddleware(req, res, next);
-				expect(res.status).toHaveBeenCalledWith(404);
-				expect(res.render).toHaveBeenCalledWith('error/not-found');
-			});
 		});
 	});
 });
