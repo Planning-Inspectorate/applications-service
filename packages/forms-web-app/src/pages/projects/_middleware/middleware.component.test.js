@@ -20,7 +20,6 @@ jest.mock('../../../config', () => {
 			allowDocumentLibrary: false,
 			allowExaminationTimetable: false,
 			hideAllExaminationDocumentsLink: false,
-			allowHaveYourSay: false,
 			allowGetUpdates: false
 		}
 	};
@@ -105,7 +104,7 @@ describe('projects _middleware', () => {
 						url: '/projects/mock-case-ref/examination-timetable'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-have-your-say',
 						name: 'Have your say',
 						url: '/projects/mock-case-ref/examination/have-your-say-during-examination'

@@ -26,7 +26,6 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowDocumentLibrary = false;
 				featureFlag.allowExaminationTimetable = false;
 				featureHideLink.hideAllExaminationDocumentsLink = true;
-				featureFlag.allowHaveYourSay = false;
 
 				result = getVerticalTabs('mock-case-ref', mockApplicationData, true, true);
 			});
@@ -70,7 +69,7 @@ describe('#getVerticalTabs', () => {
 						url: '/projects/mock-case-ref/examination-timetable'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-have-your-say',
 						name: 'Have your say',
 						url: '/projects/mock-case-ref/examination/have-your-say-during-examination'
@@ -104,7 +103,6 @@ describe('#getVerticalTabs', () => {
 				featureFlag.allowDocumentLibrary = true;
 				featureFlag.allowExaminationTimetable = true;
 				featureHideLink.hideAllExaminationDocumentsLink = false;
-				featureFlag.allowHaveYourSay = true;
 				featureFlag.allowGetUpdates = true;
 			});
 

@@ -51,7 +51,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: getProjectsExaminationTimetableURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowHaveYourSay != true || !showExaminationLink,
+			hidden: !showExaminationLink,
 			id: 'project-have-your-say',
 			name: 'Have your say',
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
