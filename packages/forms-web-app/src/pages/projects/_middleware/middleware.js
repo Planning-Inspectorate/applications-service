@@ -2,12 +2,10 @@ const { getApplicationData } = require('../_utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
-const config = require('../../../config');
 const {
 	hasRepresentationsAvailable
 } = require('../representations/index/_utils/has-representations-available');
 const { getShowExaminationLink } = require('./_utils/get-show-examination-link');
-const { isStringPartOfArray } = require('../../_utils/is-string-part-of-array');
 
 async function projectsMiddleware(req, res, next) {
 	try {
@@ -40,15 +38,6 @@ async function projectsMiddleware(req, res, next) {
 	}
 }
 
-const projectMigrationMiddleware = (req, res, next) => {
-	if (isStringPartOfArray(config.featureFlag.projectMigrationCaseReferences, req.params.case_ref)) {
-		next();
-	} else {
-		res.status(404).render('error/not-found');
-	}
-};
-
 module.exports = {
-	projectsMiddleware,
-	projectMigrationMiddleware
+	projectsMiddleware
 };

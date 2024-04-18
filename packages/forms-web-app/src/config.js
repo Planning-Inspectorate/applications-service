@@ -46,20 +46,14 @@ module.exports = {
 		allowHomepage: process.env.FEATURE_HOME_PAGE === 'true',
 		allowPrimaryNavigation: process.env.FEATURE_PRIMARY_NAVIGATION === 'true',
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
-		usePrivateBetaV1RoutesOnly: process.env.PRIVATE_BETA_V1_ROUTES_ONLY === 'true',
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
 		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
 		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true',
-		allowRepresentation: process.env.FEATURE_ALLOW_REPRESENTATION === 'true',
 		allowHaveYourSay: process.env.FEATURE_ALLOW_HAVE_YOUR_SAY === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
-		allowSection51: process.env.FEATURE_ALLOW_SECTION_51 === 'true',
 		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
-		projectMigrationCaseReferences: splitStringToArray(
-			process.env.PROJECT_MIGRATION_CASE_REFERENCES
-		),
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',

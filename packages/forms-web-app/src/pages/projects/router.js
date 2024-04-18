@@ -15,7 +15,7 @@ const {
 	getProjectsExaminationTimetableURL
 } = require('./examination-timetable/_utils/get-projects-examination-timetable-url');
 
-const { projectsMiddleware, projectMigrationMiddleware } = require('./_middleware/middleware');
+const { projectsMiddleware } = require('./_middleware/middleware');
 
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
@@ -32,11 +32,7 @@ const examinationTimetableURL = getProjectsExaminationTimetableURL();
 const projectsRouter = express.Router();
 
 if (featureFlag.allowProjectInformation) {
-	projectsRouter.get(
-		projectsIndexURL,
-		[projectsMiddleware, projectMigrationMiddleware],
-		getProjectsIndexController
-	);
+	projectsRouter.get(projectsIndexURL, projectsMiddleware, getProjectsIndexController);
 	projectsRouter.get(projectsAllUpdatesURL, projectsMiddleware, getProjectsAllUpdatesController);
 }
 
@@ -49,13 +45,9 @@ projectsRouter.get(
 );
 projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);
 
-if (featureFlag.allowSection51) {
-	projectsRouter.use(section51Router);
-}
+projectsRouter.use(section51Router);
 
-if (featureFlag.allowRepresentation) {
-	projectsRouter.use(representationsRouter);
-}
+projectsRouter.use(representationsRouter);
 
 if (featureFlag.allowGetUpdates) {
 	projectsRouter.use(getUpdatesRouter);

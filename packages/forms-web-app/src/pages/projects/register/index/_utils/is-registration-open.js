@@ -20,7 +20,8 @@ const isRegistrationClosed = ({
 }) => {
 	let registrationClosed = false;
 
-	if (!DateOfRelevantRepresentationClose) registrationClosed = false;
+	if (isOpenWithoutEndDate(DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose))
+		registrationClosed = false;
 	else if (
 		DateOfRepresentationPeriodOpen &&
 		dayjs().isAfter(dayjs(DateOfRepresentationPeriodOpen), 'day') &&
@@ -44,6 +45,11 @@ const isOpen = (openDate, closeDate) =>
 	dayjs().isSameOrAfter(dayjs(openDate), 'day') &&
 	dayjs().isSameOrBefore(dayjs(closeDate), 'day');
 
+//registration should be considered open, when the open date has been reached and close date is not set
+const isOpenWithoutEndDate = (openDate, closeDate) => {
+	return !closeDate && dayjs().isSameOrAfter(dayjs(openDate), 'day');
+};
+
 const isRegistrationReOpened = (
 	caseRef,
 	{ DateOfReOpenRelevantRepresentationStart, DateOfReOpenRelevantRepresentationClose }
@@ -55,7 +61,7 @@ const isRegistrationOpen = ({
 	DateOfRepresentationPeriodOpen,
 	DateOfRelevantRepresentationClose
 }) =>
-	!DateOfRelevantRepresentationClose ||
+	isOpenWithoutEndDate(DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose) ||
 	isOpen(DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose);
 
 module.exports = { isRegistrationOpen, isRegistrationReOpened, isRegistrationClosed };
