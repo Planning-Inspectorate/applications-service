@@ -27,7 +27,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: '/projects/project-timeline'
 		},
 		{
-			hidden: featureFlag.allowDocumentLibrary != true,
+			hidden: false,
 			id: 'project-documents',
 			name: 'Documents',
 			url: getProjectsDocumentsURL(caseRef)
@@ -45,7 +45,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowExaminationTimetable != true || !showExaminationLink,
+			hidden: !showExaminationLink,
 			id: 'project-examination-timetable',
 			name: 'Examination timetable',
 			url: getProjectsExaminationTimetableURL(caseRef)
