@@ -10,7 +10,7 @@ const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
 
-const { projectsMiddleware, projectMigrationMiddleware } = require('./_middleware/middleware');
+const { projectsMiddleware } = require('./_middleware/middleware');
 const { registerRouter } = require('./register/router');
 
 jest.mock('../../config', () => {
@@ -48,7 +48,7 @@ describe('pages/projects/router', () => {
 		it('should call the projects routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref',
-				[projectsMiddleware, projectMigrationMiddleware],
+				projectsMiddleware,
 				getProjectsIndexController
 			);
 

@@ -12,6 +12,22 @@ const view = 'projects/register/index/view.njk';
 const getRegisterIndexController = async (req, res) => {
 	const { params } = req;
 	const { case_ref } = params;
+	const {
+		locals: { applicationData }
+	} = res;
+	const {
+		DateOfRepresentationPeriodOpen,
+		DateOfRelevantRepresentationClose,
+		DateOfReOpenRelevantRepresentationStart,
+		DateOfReOpenRelevantRepresentationClose
+	} = applicationData;
+
+	const registrationDates = {
+		DateOfRepresentationPeriodOpen,
+		DateOfRelevantRepresentationClose,
+		DateOfReOpenRelevantRepresentationStart,
+		DateOfReOpenRelevantRepresentationClose
+	};
 
 	delete req.session.comment;
 	delete req.session.typeOfParty;
@@ -21,9 +37,9 @@ const getRegisterIndexController = async (req, res) => {
 	if (response.resp_code === 200) {
 		const appData = response.data;
 
-		const registrationOpen = isRegistrationOpen(appData);
-		const registrationReOpened = isRegistrationReOpened(case_ref, appData);
-		const registrationClosed = isRegistrationClosed(appData);
+		const registrationOpen = isRegistrationOpen(registrationDates);
+		const registrationReOpened = isRegistrationReOpened(case_ref, registrationDates);
+		const registrationClosed = isRegistrationClosed(registrationDates);
 
 		if (!registrationOpen && !registrationReOpened && !registrationClosed)
 			return res.status(404).render('error/not-found');
