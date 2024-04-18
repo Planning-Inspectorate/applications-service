@@ -31,7 +31,8 @@
 		"test": "turbo run test --parallel --continue",
 		"test:cov": "turbo run test:cov --parallel --continue",
 		"test:watch": "turbo run test:watch --parallel --continue",
-		"win:common:fix": "xcopy /E /Y packages\\common node_modules\\@pins\\common\\"
+		"win:common:fix": "xcopy /E /Y packages\\common node_modules\\@pins\\common\\",
+		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8080:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
 	},
 	"repository": {
 		"type": "git",
