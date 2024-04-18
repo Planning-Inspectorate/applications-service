@@ -74,7 +74,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: '/projects/all-examination-documents'
 		},
 		{
-			hidden: featureFlag.allowSection51 != true,
+			hidden: false,
 			id: 'section-51',
 			name: 'Section 51 advice',
 			url: getSection51IndexURL(caseRef)
