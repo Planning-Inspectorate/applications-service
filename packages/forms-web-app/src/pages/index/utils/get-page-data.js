@@ -1,6 +1,3 @@
-const {
-	featureFlag: { usePrivateBetaV1RoutesOnly }
-} = require('../../../config');
 const { mapTitles } = require('../../_utils/map-titles');
 const { getContactURL } = require('../../contact/_utils/get-contact-url');
 const {
@@ -19,8 +16,7 @@ const getPageData = () => {
 			contactURL: getContactURL(),
 			detailedInformationURL: getDetailedInformationURL()
 		},
-		...mapTitles('Welcome to Find a National Infrastructure Project'),
-		showProjectSearchUrl: !usePrivateBetaV1RoutesOnly
+		...mapTitles('Welcome to Find a National Infrastructure Project')
 	};
 };
 
