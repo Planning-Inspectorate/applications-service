@@ -19,16 +19,93 @@ const {
 	getRepresentationsWithCount: getRepresentationsWithCountNIRepository
 } = require('../repositories/representation.ni.repository');
 const { mapBackOfficeRepresentationsToApi } = require('../utils/representation.mapper');
+const { mapBackOfficeTimetableToApi, mapNITimetableToApi } = require('../utils/timetable.mapper');
+const {
+	getTimetablesByCaseReference: getBackOfficeTimetable
+} = require('../repositories/timetable.backoffice.repository');
+const {
+	getTimetablesByCaseReference: getNITimetable
+} = require('../repositories/timetable.ni.repository');
+const {
+	getAllAdviceByCaseReference: getAllBackOfficeAdvice
+} = require('../repositories/advice.backoffice.repository');
+const {
+	getAllAdviceByCaseReference: getAllNIAdvice
+} = require('../repositories/advice.ni.repository');
+const { mapBackOfficeAdviceListToApi } = require('../utils/advice.mapper');
+const { getDocuments } = require('../repositories/document.backoffice.repository');
+const { mapBackOfficeDocuments, mapDocuments } = require('../utils/document.mapper');
+const { fetchDocuments } = require('../repositories/document.ni.repository');
 
 const validateMigration = async (req, res) => {
 	const caseReference = req.params.caseReference;
 	const applications = await getApplicationDiff(caseReference);
 	const representations = await getRepresentationDiff(caseReference);
+	const advice = await getAdviceDiff(caseReference);
+	const examTimetable = await getExamTimetableDiff(caseReference);
+	const documents = await getDocumentDiff(caseReference);
 	res.status(200).json({
 		applications,
-		representations
+		representations,
+		advice,
+		examTimetable,
+		documents
 	});
 };
+
+const getApplicationDiff = async (caseReference) => {
+	const boApplication = mapBackOfficeApplicationToApi(
+		await getBackOfficeApplication(caseReference)
+	);
+	const niApplication = mapNIApplicationToApi(await getNIApplication(caseReference));
+	if (!boApplication && !niApplication) {
+		return 'No applications found in back office or NI';
+	}
+	if (!boApplication || isEmpty(boApplication)) {
+		return 'No BO application found';
+	}
+	if (!niApplication || isEmpty(niApplication)) {
+		return 'No NI application found';
+	}
+	if (isEqual(boApplication, niApplication)) {
+		return 'Applications are the same';
+	}
+
+	const diff = jsonDiff.diff(niApplication, boApplication);
+	return generateBetterDiff(diff);
+};
+
+const getRepresentationDiff = async (caseReference) => {
+	const { representations } = await getRepresentationsBORepository({ caseReference });
+	const boRepresentations = mapBackOfficeRepresentationsToApi(representations);
+	const { representations: niRepresentations } = await getRepresentationsWithCountNIRepository({
+		caseReference
+	});
+	return getEntityDiff('ID', niRepresentations, boRepresentations);
+};
+
+const getAdviceDiff = async (caseReference) => {
+	const { advice } = await getAllBackOfficeAdvice(caseReference);
+	const boAdvice = mapBackOfficeAdviceListToApi(advice);
+	const { advice: niAdvice } = await getAllNIAdvice(caseReference);
+	return getEntityDiff('adviceID', niAdvice, boAdvice);
+};
+
+const getExamTimetableDiff = async (caseReference) => {
+	const boTimeTable = mapBackOfficeTimetableToApi(await getBackOfficeTimetable(caseReference));
+	const niTimeTable = mapNITimetableToApi(await getNITimetable(caseReference));
+	return getEntityDiff('id', niTimeTable, boTimeTable);
+};
+
+const getDocumentDiff = async (caseReference) => {
+	const { rows: boDocs } = await getDocuments({ caseReference });
+	const mappedBoDOcs = mapBackOfficeDocuments(boDocs);
+	const { rows: niDocs } = await fetchDocuments({ caseReference });
+	const mappedNiDOcs = mapDocuments(niDocs);
+	return getEntityDiff('id', mappedNiDOcs, mappedBoDOcs);
+};
+
+/* ------------------ Helper functions ------------------ */
 
 /**
  * This function generates a more readable diff object
@@ -61,52 +138,38 @@ const generateBetterDiff = (diff) => {
 	return diff;
 };
 
-const getApplicationDiff = async (caseReference) => {
-	const boApplication = mapBackOfficeApplicationToApi(
-		await getBackOfficeApplication(caseReference)
-	);
-	const niApplication = mapNIApplicationToApi(await getNIApplication(caseReference));
-	if (!boApplication && !niApplication) {
-		return 'No applications found in back office or NI';
+const getEntityDiff = (comparisonKey, niEntity, boEntity) => {
+	if (!niEntity && !boEntity) {
+		return 'None found in back office or NI';
 	}
-	if (!boApplication || isEmpty(boApplication)) {
-		return 'No back office application found';
+	if (!niEntity) {
+		return 'None found in NI';
 	}
-	if (!niApplication || isEmpty(niApplication)) {
-		return 'No NI application found';
-	}
-	if (isEqual(boApplication, niApplication)) {
-		return 'Applications are the same';
+	if (!boEntity) {
+		return 'None found in BO';
 	}
 
-	const diff = jsonDiff.diff(niApplication, boApplication);
-	return generateBetterDiff(diff);
-};
-
-const getRepresentationDiff = async (caseReference) => {
 	const diff = {};
-	const { representations } = await getRepresentationsBORepository({ caseReference });
-	const boRepresentations = mapBackOfficeRepresentationsToApi(representations);
-	const { representations: niRepresentations } = await getRepresentationsWithCountNIRepository({
-		caseReference
-	});
-
-	niRepresentations.forEach((niRepresentation) => {
-		const boRepresentation = boRepresentations.find(
-			(boRepresentation) => boRepresentation.ID === niRepresentation.ID
-		);
-		if (!boRepresentation) {
-			diff[`${niRepresentation.ID}__missing_in_BO`] = niRepresentation;
+	niEntity.forEach((ni) => {
+		const bo = boEntity.find((bo) => bo[comparisonKey] === ni[comparisonKey]);
+		if (!bo) {
+			diff[`${ni[comparisonKey]}__missing_in_BO`] = ni;
 		} else {
-			const representationDiff = jsonDiff.diff(niRepresentation, boRepresentation);
-			if (representationDiff) {
-				diff[`${niRepresentation.ID}__${boRepresentation.ID}`] = representationDiff;
-			}
+			const entityDiff = jsonDiff.diff(ni, bo);
+			diff[ni[comparisonKey]] = generateBetterDiff(entityDiff);
 		}
 	});
+
+	boEntity.forEach((bo) => {
+		const ni = niEntity.find((ni) => ni[comparisonKey] === bo[comparisonKey]);
+		if (!ni) {
+			diff[`${bo[comparisonKey]}__missing_in_NI`] = bo;
+		}
+	});
+
 	return {
-		boLength: boRepresentations.length,
-		niLength: niRepresentations.length,
+		boLength: boEntity.length,
+		niLength: niEntity.length,
 		diff
 	};
 };
