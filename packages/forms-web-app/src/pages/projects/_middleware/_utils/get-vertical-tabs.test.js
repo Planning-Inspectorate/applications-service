@@ -23,8 +23,6 @@ describe('#getVerticalTabs', () => {
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = false;
 				featureFlag.hideProjectTimelineLink = false;
-				featureFlag.allowDocumentLibrary = false;
-				featureFlag.allowExaminationTimetable = false;
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 
 				result = getVerticalTabs('mock-case-ref', mockApplicationData, true, true);
@@ -45,7 +43,7 @@ describe('#getVerticalTabs', () => {
 						url: '/projects/project-timeline'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-documents',
 						name: 'Documents',
 						url: '/projects/mock-case-ref/documents'
@@ -63,7 +61,7 @@ describe('#getVerticalTabs', () => {
 						url: '/projects/mock-case-ref/representations'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock-case-ref/examination-timetable'
@@ -100,8 +98,6 @@ describe('#getVerticalTabs', () => {
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = true;
 				featureFlag.hideProjectTimelineLink = true;
-				featureFlag.allowDocumentLibrary = true;
-				featureFlag.allowExaminationTimetable = true;
 				featureHideLink.hideAllExaminationDocumentsLink = false;
 				featureFlag.allowGetUpdates = true;
 			});

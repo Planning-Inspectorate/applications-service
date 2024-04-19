@@ -80,7 +80,7 @@ describe('projects _middleware', () => {
 						url: '/projects/project-timeline'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-documents',
 						name: 'Documents',
 						url: '/projects/mock-case-ref/documents'
@@ -98,7 +98,7 @@ describe('projects _middleware', () => {
 						url: '/projects/mock-case-ref/representations'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock-case-ref/examination-timetable'
