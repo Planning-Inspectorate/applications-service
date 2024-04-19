@@ -57,7 +57,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
-			hidden: featureFlag.allowGetUpdates != true,
+			hidden: false,
 			id: 'get-updates',
 			name: 'Get updates',
 			url: getUpdatesIndexURL(caseRef)
