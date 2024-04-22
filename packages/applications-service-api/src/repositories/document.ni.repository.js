@@ -14,7 +14,7 @@ const fetchDocuments = async (requestQuery) => {
 	const dbQuery = {
 		where,
 		order: [['date_published', 'DESC'], ['id']],
-		offset: (requestQuery.page - 1) * requestQuery.itemsPerPage,
+		offset: (requestQuery.page - 1) * requestQuery.itemsPerPage || 0,
 		limit: requestQuery.itemsPerPage
 	};
 
