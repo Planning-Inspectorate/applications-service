@@ -99,10 +99,10 @@ const getExamTimetableDiff = async (caseReference) => {
 
 const getDocumentDiff = async (caseReference) => {
 	const { rows: boDocs } = await getDocuments({ caseReference });
-	const mappedBoDOcs = mapBackOfficeDocuments(boDocs);
+	const mappedBoDocs = mapBackOfficeDocuments(boDocs);
 	const { rows: niDocs } = await fetchDocuments({ caseReference });
-	const mappedNiDOcs = mapDocuments(niDocs);
-	return getEntityDiff('id', mappedNiDOcs, mappedBoDOcs);
+	const mappedNiDocs = mapDocuments(niDocs);
+	return getEntityDiff('id', mappedNiDocs, mappedBoDocs);
 };
 
 /* ------------------ Helper functions ------------------ */

@@ -28,6 +28,6 @@ router.use('/api/v1/timetables', timetablesRouter);
 router.use('/api/v1/submissions', submissionRouter);
 router.use('/api/v1/subscriptions', subscriptionRoute);
 router.use('/api/v1/advice', adviceRoute);
-router.use('/validate/migration', validateMigrationRouter);
+router.use('/validate-migration', validateMigrationRouter);
 
 module.exports = router;
