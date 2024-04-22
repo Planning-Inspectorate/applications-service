@@ -19,8 +19,7 @@ jest.mock('../../config', () => {
 	return {
 		...originalConfig,
 		featureFlag: {
-			allowProjectInformation: true,
-			allowGetUpdates: true
+			allowProjectInformation: true
 		}
 	};
 });

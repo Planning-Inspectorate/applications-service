@@ -49,9 +49,7 @@ projectsRouter.use(section51Router);
 
 projectsRouter.use(representationsRouter);
 
-if (featureFlag.allowGetUpdates) {
-	projectsRouter.use(getUpdatesRouter);
-}
+projectsRouter.use(getUpdatesRouter);
 
 projectsRouter.use(registerRouter);
 

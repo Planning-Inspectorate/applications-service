@@ -50,9 +50,7 @@ module.exports = {
 		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
 		hideProjectTimelineLink: process.env.FEATURE_PROJECT_TIMELINE_LINK === 'true',
-		allowHaveYourSay: process.env.FEATURE_ALLOW_HAVE_YOUR_SAY === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
-		allowGetUpdates: process.env.FEATURE_GET_UPDATES === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
