@@ -17,11 +17,7 @@ jest.mock('../../../config', () => {
 			...originalConfig.featureFlag,
 			allowProjectInformation: false,
 			hideProjectTimelineLink: false,
-			allowDocumentLibrary: false,
-			allowExaminationTimetable: false,
-			hideAllExaminationDocumentsLink: false,
-			allowHaveYourSay: false,
-			allowGetUpdates: false
+			hideAllExaminationDocumentsLink: false
 		}
 	};
 });
@@ -105,13 +101,13 @@ describe('projects _middleware', () => {
 						url: '/projects/mock-case-ref/examination-timetable'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-have-your-say',
 						name: 'Have your say',
 						url: '/projects/mock-case-ref/examination/have-your-say-during-examination'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock-case-ref/get-updates/start'
