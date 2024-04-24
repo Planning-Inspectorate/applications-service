@@ -1,5 +1,9 @@
 const { getPrimaryNavigationLinks } = require('./get-primary-navigation-links');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
+const globalTranslation_EN = require('../../../locales/en/global.json');
+
 jest.mock('../../../config', () => {
 	const originalConfig = jest.requireActual('../../../config');
 
@@ -14,10 +18,13 @@ jest.mock('../../../config', () => {
 describe('pages/_utils/get-links/get-primary-navigation-links', () => {
 	describe('#getPrimaryNavigationLinks', () => {
 		let primaryNavigationLinks;
-		const mockPageURL = '/';
+		const mockPath = '/';
 
 		beforeEach(() => {
-			primaryNavigationLinks = getPrimaryNavigationLinks(mockPageURL);
+			primaryNavigationLinks = getPrimaryNavigationLinks(
+				mockPath,
+				mockI18n('global', globalTranslation_EN)
+			);
 		});
 		it('should return the primary navigation links', () => {
 			expect(primaryNavigationLinks).toEqual([

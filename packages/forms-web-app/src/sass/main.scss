@@ -49,6 +49,9 @@
 @import './components/ui/vertical-tabs.scss';
 @import './components/ui/file-upload.scss';
 
+/* includes */
+@import './includes/locale-selector.scss';
+
 /* helpers */
 @import './helpers/visible-on';
 @import './helpers/flex.scss';

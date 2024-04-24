@@ -15,9 +15,9 @@ const { processGuideRouter } = require('../pages/process-guide/router');
 const { haveYourSayGuideRouter } = require('../pages/have-your-say-guide/router');
 const { accessibilityStatementRouter } = require('../pages/accessibility-statement/router');
 
-const { addGlobalsMiddleware } = require('../pages/_middleware/add-globals-middleware');
+const { addGlobalMiddleware } = require('../pages/_middleware/add-global-middleware');
 
-router.use(addGlobalsMiddleware);
+router.use(addGlobalMiddleware);
 
 router.use(pagesRouter);
 

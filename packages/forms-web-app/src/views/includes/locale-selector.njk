@@ -1,0 +1,11 @@
+<ul class="locale-selector">
+  {% for locale in global.localeSelectorLinks %}
+    <li class="locale-selector__locale">
+      {% if locale.active %}
+        <span>{{ locale.name }}</span>
+      {% else %}
+        <a class="govuk-link" href="{{ locale.url }}">{{ locale.name }}</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
