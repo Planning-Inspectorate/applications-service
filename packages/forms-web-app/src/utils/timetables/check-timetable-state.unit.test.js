@@ -85,8 +85,16 @@ describe('utils/check-timetable-state', () => {
 					expect(result).toEqual(true);
 				});
 			});
-			describe('and the type of event is "procedural deadline"', () => {
+			describe('and the type of event is "procedural deadline" [source: NI]', () => {
 				mockTypeOfEvent = 'Procedural DEADLINE';
+				const result = isTimetableTypeOfEventActionable(mockTypeOfEvent);
+				it('should return true', () => {
+					expect(result).toEqual(true);
+				});
+			});
+
+			describe('and the type of event is "procedural deadline (pre-examination)" [source: BO]', () => {
+				mockTypeOfEvent = 'Procedural DEADLINE (pre-examination)';
 				const result = isTimetableTypeOfEventActionable(mockTypeOfEvent);
 				it('should return true', () => {
 					expect(result).toEqual(true);
