@@ -5,15 +5,23 @@ const {
 	isNullSQLDate
 } = require('../date-utils');
 
-//event list triggering open timetable
-const openTimetableEventList = ['deadline', 'procedural deadline'].map((event) =>
-	event.toLowerCase()
-);
+const eventTypeTriggers = {
+	deadline: 'deadline',
+	proceduralDeadline: 'procedural deadline'
+};
+
+const isEventOfTypeDeadline = (event) => event === eventTypeTriggers.deadline;
+
+const isEventOfTypeProceduralDeadline = (event) =>
+	event.includes(eventTypeTriggers.proceduralDeadline);
 
 const isTimetableTypeOfEventActionable = (typeOfEvent) => {
 	const typeOfEventLowerCase = typeOfEvent?.toLowerCase();
 
-	return openTimetableEventList.includes(typeOfEventLowerCase);
+	return (
+		isEventOfTypeDeadline(typeOfEventLowerCase) ||
+		isEventOfTypeProceduralDeadline(typeOfEventLowerCase)
+	);
 };
 
 const isTimetableDateOfEventPast = (dateOfEvent) => setTimeToEndOfDay(dateOfEvent) < getDateNow();
