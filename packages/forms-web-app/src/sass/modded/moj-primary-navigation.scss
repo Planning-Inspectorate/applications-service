@@ -5,4 +5,16 @@
 		box-shadow: 0 0 0 100vmax govuk-colour('light-grey');
 		clip-path: inset(0 -100vmax);
 	}
+
+	&.pins-modded-locale-selector {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: flex-end;
+
+		.moj-primary-navigation__list {
+			flex-grow: 1;
+			padding-right: 15px;
+		}
+	}
 }

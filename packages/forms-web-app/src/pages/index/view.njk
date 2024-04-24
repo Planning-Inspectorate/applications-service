@@ -10,20 +10,22 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-two-thirds">
 					<h1 class="govuk-heading-xl masthead__title">
-						{{ pageHeading }}
+						{{ t('index.heading1') }}
 					</h1>
 
 					<p class="masthead__text">
-						Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities.
-   					</p>
-
-					<p class="masthead__text">
-						This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales.
+						{{ t('index.paragraph1') }}
 					</p>
 
 					<p class="masthead__text">
-						This is a new service. If you are visiting for information on a Welsh project, visit our <a class="govuk-link govuk-link--inverse" href="{{ pinsURL.index }}">old website</a>.
+						{{ t('index.paragraph2') }}
 					</p>
+
+					{% if not featureFlag.allowWelshTranslation %}
+						<p class="masthead__text">
+							{{ t('index.paragraph3', { link: '<a class="govuk-link govuk-link--inverse" href="' + pinsURL.index + '">' + t('index.paragraph3LinkText') + '</a>' }) | safe }}
+						</p>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -36,74 +38,33 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-one-half">
 					<h2 class="govuk-heading-m">
-						I am looking for a project
+						{{ t('index.heading2') }}
 					</h2>
 
 					<p class="govuk-body">
-						Search by project name or applicant
+						{{ t('index.paragraph4') }}
 					</p>
 
 					<form action="{{ homePageUrls.projectSearch }}" method="get">
-						{{ uiSearchBar('homepage-search-bar', 'searchTerm', '', 'Search by project name or applicant') }}
+						{{ uiSearchBar('homepage-search-bar', 'searchTerm', '', t('index.paragraph4'), t('common.search')) }}
 					</form>
 				</div>
 				<div class="govuk-grid-column-one-half">
 					<h2 class="govuk-heading-m ">
-						I want to view all projects
+						{{ t('index.heading3') }}
 					</h2>
 
 					<p class="govuk-body">
-						See a <a href="{{ homePageUrls.projectSearch }}" class="govuk-link">complete list of all projects</a>
+						{{ t('index.paragraph5', { link: '<a class="govuk-link" href="' + homePageUrls.projectSearch + '">' + t('index.paragraph5LinkText') + '</a>' }) | safe }}
 					</p>
 				</div>
-
 			</div>
 		</div>
 	</section>
 
-	<section class="page-section govuk-!-margin-bottom-6">
-		<h2 class="govuk-heading-m govuk-!-margin-bottom-6">
-			Information for members of the public
-		</h2>
-
-		<div class="page-section__content">
-			<div class="govuk-grid-row">
-				<div class="govuk-grid-column-one-half">
-					{{ chevronCard(
-						'See the process',
-						homePageUrls.processGuide,
-						'Here you can view the stages that an application goes through from start to finish.'
-					) }}
-				</div>
-
-				<div class="govuk-grid-column-one-half">
-					{{ chevronCard(
-						'How to have your say on a project',
-						homePageUrls.haveYourSayGuide,
-						'Find out everything you need to know about sharing your views on a project.'
-					) }}
-				</div>
-			</div>
-		</div>
-	</section>
+	{% include "./_includes/members-of-public.njk" %}
 
 	{% include "./_includes/professional-users.njk" %}
 
-	<section class="page-section govuk-!-margin-bottom-6">
-		<h2 class="govuk-heading-m govuk-!-margin-bottom-6">
-      Updates and contact information
-    </h2>
-
-		<div class="page-section__content">
-			<div class="govuk-grid-row">
-				<div class="govuk-grid-column-one-third">
-					{{ chevronCard(
-						'I need help',
-						homePageUrls.contactURL,
-						'How to get in contact with us.'
-					) }}
-				</div>
-			</div>
-		</div>
-	</section>
+	{% include "./_includes/updates-and-contacts.njk" %}
 {% endblock %}

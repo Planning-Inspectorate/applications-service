@@ -7,7 +7,7 @@ const { haveYourSayGuideRouter } = require('../../../src/pages/have-your-say-gui
 const {
 	accessibilityStatementRouter
 } = require('../../../src/pages/accessibility-statement/router');
-const { addGlobalsMiddleware } = require('../../../src/pages/_middleware/add-globals-middleware');
+const { addGlobalMiddleware } = require('../../../src/pages/_middleware/add-global-middleware');
 
 jest.mock('../../../src/config', () => {
 	const originalConfig = jest.requireActual('../../../src/config');
@@ -30,7 +30,7 @@ describe('routes/index', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(use).toHaveBeenCalledWith(addGlobalsMiddleware);
+		expect(use).toHaveBeenCalledWith(addGlobalMiddleware);
 		expect(use).toHaveBeenCalledWith(pagesRouter);
 		expect(use).toHaveBeenCalledWith(accessibilityStatementRouter);
 		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);

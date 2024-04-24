@@ -10,7 +10,6 @@ const { projectStages: projectStageNames } = require('./utils/project-stages');
 const { routesConfig } = require('./routes/config');
 const path = require('path');
 const { getYearNow } = require('./utils/date-utils');
-const { getFooterLinks } = require('./pages/_utils/get-links');
 const { getFileNameFromDocumentUrl } = require('./lib/get-file-name-from-url');
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
@@ -64,7 +63,6 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addGlobal('pinsURL', config.pinsURL);
 	nunjucksEnv.addGlobal('govUK', config.govUK);
 	nunjucksEnv.addGlobal('yearNow', getYearNow());
-	nunjucksEnv.addGlobal('footerLinks', getFooterLinks);
 
 	return nunjucksEnv;
 }

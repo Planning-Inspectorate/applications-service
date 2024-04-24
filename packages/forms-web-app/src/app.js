@@ -24,7 +24,7 @@ const routes = require('./routes');
 const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/helpers');
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
-const { setHeaderTitle } = require('./middleware/get-header-title');
+const { configureI18n, i18nRedirect } = require('./i18n');
 
 const app = express();
 
@@ -63,7 +63,6 @@ app.use(flashMessageToNunjucks(nunjucksEnv));
 app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
-app.use(setHeaderTitle);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
@@ -74,6 +73,10 @@ app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.
 app.set('view engine', 'njk');
 
 if (config.plannedServiceOutage.showOutagePage) app.use(plannedOutage);
+
+app.use(i18nRedirect);
+
+configureI18n(app);
 
 // Routes
 app.use('/', routes);
