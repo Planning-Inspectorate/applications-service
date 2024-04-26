@@ -28,6 +28,9 @@ const {
 const {
 	addIndexTranslationsMiddleware
 } = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addDetailedInformationTranslationsMiddleware
+} = require('./detailed-information/_middleware/add-detailed-information-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -54,7 +57,11 @@ if (featureFlag.allowHomepage) {
 		addIndexTranslationsMiddleware,
 		getIndexController
 	);
-	pagesRouter.get(detailedInformationURL, getDetailedInformationController);
+	pagesRouter.get(
+		detailedInformationURL,
+		addDetailedInformationTranslationsMiddleware,
+		getDetailedInformationController
+	);
 	pagesRouter.use(registerOfAdviceRouter);
 }
 

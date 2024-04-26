@@ -1,4 +1,6 @@
-const { addIndexTranslationsMiddleware } = require('./add-index-translations-middleware');
+const {
+	addDetailedInformationTranslationsMiddleware
+} = require('./add-detailed-information-translations-middleware');
 
 jest.mock('../../_utils/get-translations', () => {
 	return {
@@ -9,8 +11,8 @@ jest.mock('../../_utils/get-translations', () => {
 	};
 });
 
-describe('pages/index/_middleware/add-index-translations-middleware', () => {
-	describe('#addIndexTranslationsMiddleware', () => {
+describe('pages/detailed-information/_middleware/add-detailed-information-translations-middleware', () => {
+	describe('#addDetailedInformationTranslationsMiddleware', () => {
 		const req = {
 			i18n: {
 				language: null,
@@ -23,13 +25,13 @@ describe('pages/index/_middleware/add-index-translations-middleware', () => {
 		describe('When the language is set to english', () => {
 			beforeEach(() => {
 				req.i18n.language = 'en';
-				addIndexTranslationsMiddleware(req, res, next);
+				addDetailedInformationTranslationsMiddleware(req, res, next);
 			});
 
 			it('should add the english translations', () => {
 				expect(req.i18n.addResources).toHaveBeenCalledWith(
 					'en',
-					'index',
+					'detailedInformation',
 					'mock get english translations'
 				);
 			});
@@ -38,13 +40,13 @@ describe('pages/index/_middleware/add-index-translations-middleware', () => {
 		describe('When the language is set to welsh', () => {
 			beforeEach(() => {
 				req.i18n.language = 'cy';
-				addIndexTranslationsMiddleware(req, res, next);
+				addDetailedInformationTranslationsMiddleware(req, res, next);
 			});
 
 			it('should add the welsh translations', () => {
 				expect(req.i18n.addResources).toHaveBeenCalledWith(
 					'cy',
-					'index',
+					'detailedInformation',
 					'mock get welsh translations'
 				);
 			});
