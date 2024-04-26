@@ -1,4 +1,7 @@
 workspace "Applications service" {
+
+	!docs architecture
+
 	model {
 		# Required for nested groups - https://docs.structurizr.com/dsl/cookbook/groups/
 		properties {
