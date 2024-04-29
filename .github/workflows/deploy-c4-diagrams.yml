@@ -17,6 +17,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Create output directory
+        run: mkdir -p build/site
+      - name: Check if workspace.dsl exists
+        run: ls
       - name: Pull Structurizr Site Generator Docker image
         run: docker pull ghcr.io/avisi-cloud/structurizr-site-generatr
       - name: Generate C4 Diagrams Site
