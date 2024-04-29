@@ -58,7 +58,8 @@ const ADVICE_NI_DATA = [
 		dateEnquiryReceived: '2016-04-28 08:42:58',
 		dateAdviceGiven: '2016-04-28',
 		dateLastModified: '2016-04-28 08:42:58',
-		dateCreated: '2016-04-28 08:42:58'
+		dateCreated: '2016-04-28 08:42:58',
+		attachments: 'attachment1,attachment2,attachment3'
 	}
 ];
 
