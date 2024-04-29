@@ -1,8 +1,0 @@
-{
-	"blobStoreUrl": "https://pinsstdocsbotestukw001.blob.core.windows.net/published-documents",
-	"frontOfficeUrl": "https://applications-service-test.planninginspectorate.gov.uk",
-	"documentRedirectCaseReferences": ["EN010120"],
-	"projectRedirects": {
-		"yorkshire-and-the-humber/drax-bioenergy-with-carbon-capture-and-storage-project": "EN010120"
-	}
-}

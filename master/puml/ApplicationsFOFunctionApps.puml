@@ -1,0 +1,67 @@
+@startuml
+set separator none
+title Applications Front-Office Function Apps
+
+top to bottom direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+System_Boundary("ApplicationsBackOffice_boundary", "Applications Back-Office", $tags="") {
+  Container(ApplicationsBackOffice.WebBOAPI, "Web BO API", $techn="Node.js, Azure Web App", $descr="", $tags="", $link="")
+}
+
+System_Boundary("ApplicationsFrontOffice_boundary", "Applications Front-Office", $tags="") {
+  AddBoundaryTag("Function Apps", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="Dashed", $borderThickness="1")
+  Boundary(group_1, "Function Apps", $tags="Function Apps") {
+    Container(ApplicationsFrontOffice.Advice, "Advice", $techn="Function App, JavaScript", $descr="Consumes Advice messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.AdviceUnpublish, "Advice Unpublish", $techn="Function App, JavaScript", $descr="Consumes Advice unpublish messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.DocumentMetadata, "Document Metadata", $techn="Function App, JavaScript", $descr="Consumes Document Metadata messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.DocumentMetadataUnpublish, "Document Metadata Unpublish", $techn="Function App, JavaScript", $descr="Consumes Document Metadata Unpublish messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.ExamTimeTable, "Exam Time Table", $techn="Function App, JavaScript", $descr="Consumes ExamTimeTable messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.ExamTimeTableUnpublish, "Exam Time Table Unpublish", $techn="Function App, JavaScript", $descr="Consumes ExamTimeTable Unpublish messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.Projects, "Projects", $techn="Function App, JavaScript", $descr="Consumes Project messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.ProjectsUnpublish, "Projects Unpublish", $techn="Function App, JavaScript", $descr="Consumes Project Unpublish messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.ProjectUpdates, "Project Updates", $techn="Function App, JavaScript", $descr="Consumes Project Update messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.Representations, "Representations", $techn="Function App, JavaScript", $descr="Consumes Representation messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.RepresentationUpdate, "Representation Update", $techn="Function App, JavaScript", $descr="Consumes Representation Update messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.RepresentationsUnpublish, "Representations Unpublish", $techn="Function App, JavaScript", $descr="Consumes Representation Unpublish messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.ServiceUsers, "Service Users", $techn="Function App, JavaScript", $descr="Consumes Service User (Represented or Representative) messages from Service Bus", $tags="", $link="")
+    Container(ApplicationsFrontOffice.ServiceUsersUnpublish, "Service Users Unpublish", $techn="Function App, JavaScript", $descr="Consumes Service User Unpublish messages from Service Bus", $tags="", $link="")
+  }
+
+  ContainerDb(ApplicationsFrontOffice.Database, "Database", $techn="Azure SQL", $descr="Local projection of data from Back-Office", $tags="", $link="")
+}
+
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.Advice, "Broadcasts message on Advice changes", $techn="Azure Service via topic s51-advice", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.AdviceUnpublish, "Broadcasts message on Advice Unpublish changes", $techn="Azure Service via topic s51-advice", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.DocumentMetadata, "Broadcasts message on Document Metadata changes", $techn="Azure Service via topic nsip-document", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.DocumentMetadataUnpublish, "Broadcasts message on Document Metadata Unpublish changes", $techn="Azure Service via topic nsip-document", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.ExamTimeTable, "Broadcasts message on Exam Time Table changes", $techn="Azure Service via topic nsip-exam-timetable", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.ExamTimeTableUnpublish, "Broadcasts message on Exam Time Table Unpublish changes", $techn="Azure Service via topic nsip-exam-timetable", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.Projects, "Broadcasts message on Project changes", $techn="Azure Service via topic nsip-project", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.ProjectsUnpublish, "Broadcasts message on Project Unpublish changes", $techn="Azure Service via topic nsip-project", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.ProjectUpdates, "Broadcasts message on Project Update changes", $techn="Azure Service via topic nsip-project-update", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.Representations, "Broadcasts message on Representation changes", $techn="Azure Service via topic nsip-representation", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.RepresentationUpdate, "Broadcasts message on Representation Update changes", $techn="Azure Service via topic nsip-representation", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.RepresentationsUnpublish, "Broadcasts message on Representation Unpublish changes", $techn="Azure Service via topic nsip-representation", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.ServiceUsers, "Broadcasts message on Service User changes", $techn="Azure Service via topic nsip-service-user", $tags="", $link="")
+Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice.ServiceUsersUnpublish, "Broadcasts message on Service User Unpublish changes", $techn="Azure Service via topic nsip-service-user", $tags="", $link="")
+Rel(ApplicationsFrontOffice.Advice, ApplicationsFrontOffice.Database, "Consumes message body to Advice table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.AdviceUnpublish, ApplicationsFrontOffice.Database, "Deletes from Advice table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.DocumentMetadata, ApplicationsFrontOffice.Database, "Consumes message body to Document Metadata table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.DocumentMetadataUnpublish, ApplicationsFrontOffice.Database, "Deletes from Document Metadata table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.ExamTimeTable, ApplicationsFrontOffice.Database, "Consumes message body to Exam Time Table table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.ExamTimeTableUnpublish, ApplicationsFrontOffice.Database, "Deletes from Exam Time Table table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.Projects, ApplicationsFrontOffice.Database, "Consumes message body to Project table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.ProjectsUnpublish, ApplicationsFrontOffice.Database, "Deletes from Project table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.ProjectUpdates, ApplicationsFrontOffice.Database, "Consumes message body to Project Update table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.Representations, ApplicationsFrontOffice.Database, "Consumes message body to Representation table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.RepresentationUpdate, ApplicationsFrontOffice.Database, "Consumes message body to Representation Update table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.RepresentationsUnpublish, ApplicationsFrontOffice.Database, "Deletes from Representation table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.ServiceUsers, ApplicationsFrontOffice.Database, "Consumes message body to Service User table", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.ServiceUsersUnpublish, ApplicationsFrontOffice.Database, "Deletes from Service User table", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

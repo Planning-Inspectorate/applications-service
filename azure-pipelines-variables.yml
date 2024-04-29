@@ -1,4 +1,0 @@
-variables:
-  azurecrName: pinscrsharedtoolinguks
-  resourceGroup: pins-rg-applications-service-$(ENVIRONMENT)-$(REGION_SHORT)-001
-  tagPrefix: applications-service

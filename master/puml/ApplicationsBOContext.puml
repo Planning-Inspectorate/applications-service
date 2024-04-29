@@ -1,0 +1,25 @@
+@startuml
+set separator none
+title Applications Back-Office Context
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+AddBoundaryTag("Planning Inspectorate", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="Dashed", $borderThickness="1")
+Boundary(group_1, "Planning Inspectorate", $tags="Planning Inspectorate") {
+  System(ApplicationsBackOffice, "Applications Back-Office", $descr="Internally facing service allowing for management of cases relating to Nationally Significant Infrastructure Projects (NSIPs) within England and Wales", $tags="", $link="")
+  System(OperationalDataWarehouseODW, "Operational Data Warehouse (ODW)", $descr="Holds all Planning Inspectorate data so that it can be used for internal purposes", $tags="", $link="")
+  Person(Caseworker, "Case worker", $descr="Member of PINS staff who administers project information", $tags="", $link="")
+  System(ApplicationsFrontOffice, "Applications Front-Office", $descr="External facing service providing ability to participate in the application process for Nationally Significant Infrastructure Projects (NSIPs) within England and Wales", $tags="", $link="")
+}
+
+
+Rel(ApplicationsFrontOffice, ApplicationsBackOffice, "Sends file for submission", $techn="HTTPS", $tags="", $link="")
+Rel(Caseworker, ApplicationsBackOffice, "Manages cases through", $techn="HTTPS, HTML, Active Directory Auth", $tags="", $link="")
+Rel(ApplicationsBackOffice, OperationalDataWarehouseODW, "Broadcasts message when entities change", $techn="Azure Service Bus via topic XXX", $tags="", $link="")
+Rel(ApplicationsBackOffice, ApplicationsFrontOffice, "Broadcasts message on Advice changes", $techn="Azure Service via topic s51-advice", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

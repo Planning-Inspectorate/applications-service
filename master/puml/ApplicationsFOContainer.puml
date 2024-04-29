@@ -1,0 +1,39 @@
+@startuml
+set separator none
+title Applications Front-Office Container
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(Privateindividual, "Private individual", $descr="Member of public interested in nationally significant infrastructure projects", $tags="", $link="")
+Person(Memberoforganisation, "Member of organisation", $descr="Member of an organisation interested in nationally significant infrastructure projects", $tags="", $link="")
+Person(Agent, "Agent", $descr="Represent a private individual family or organisation", $tags="", $link="")
+System(ApplicationsBackOffice, "Applications Back-Office", $descr="Internally facing service allowing for management of cases relating to Nationally Significant Infrastructure Projects (NSIPs) within England and Wales", $tags="", $link="")
+System(NIDatabase, "NI Database", $descr="Persistant storage for legacy NI website content", $tags="", $link="")
+System(GOVUK, "GOV.UK", $descr="", $tags="", $link="")
+
+System_Boundary("ApplicationsFrontOffice_boundary", "Applications Front-Office", $tags="") {
+  Container(ApplicationsFrontOffice.KeyVault, "Key Vault", $techn="Azure Key Vault", $descr="Hold secrets and sensitive data", $tags="", $link="")
+  Container(ApplicationsFrontOffice.FOWeb, "FO Web", $techn="Node.js, Azure Web App", $descr="Front-end website", $tags="", $link="")
+  Container(ApplicationsFrontOffice.WebFOAPI, "Web FO API", $techn="Node.js, Azure Web App", $descr="Front Office API handles all interactions with other services", $tags="", $link="")
+  Container(ApplicationsFrontOffice.Redis, "Redis", $techn="", $descr="Session storage", $tags="", $link="")
+  ContainerDb(ApplicationsFrontOffice.Database, "Database", $techn="Azure SQL", $descr="Local projection of data from Back-Office", $tags="", $link="")
+}
+
+Rel(ApplicationsFrontOffice.WebFOAPI, ApplicationsBackOffice, "Sends file for submission", $techn="HTTPS", $tags="", $link="")
+Rel(Privateindividual, ApplicationsFrontOffice.FOWeb, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(Memberoforganisation, ApplicationsFrontOffice.FOWeb, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(Agent, ApplicationsFrontOffice.FOWeb, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(ApplicationsFrontOffice.FOWeb, ApplicationsFrontOffice.Redis, "Maintains session state and caches data from", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.FOWeb, ApplicationsFrontOffice.KeyVault, "Retrieves secrets from", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.FOWeb, ApplicationsFrontOffice.WebFOAPI, "renders pages, gets and posts data using", $techn="HTTPS, JSON", $tags="", $link="")
+Rel(ApplicationsFrontOffice.WebFOAPI, ApplicationsFrontOffice.Database, "Read only access to", $techn="", $tags="", $link="")
+Rel(ApplicationsFrontOffice.WebFOAPI, GOVUK, "Sends notification emails through", $techn="HTTPS, JSON", $tags="", $link="")
+Rel(ApplicationsFrontOffice.WebFOAPI, NIDatabase, "Reads and writes legacy case data from", $techn=",", $tags="", $link="")
+Rel(ApplicationsFrontOffice.WebFOAPI, ApplicationsFrontOffice.KeyVault, "Retrieves secrets from", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

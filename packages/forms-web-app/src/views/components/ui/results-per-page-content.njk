@@ -1,8 +1,0 @@
-{% macro uiResultsPerPageContent(size, link, active) %}
-	{% if active %}
-		<input type="hidden" name="itemsPerPage" value="{{ size }}">
-		{{ size }}
-	{% else %}
-		<a class="govuk-link" href="{{ link }}"><span class="govuk-visually-hidden">View </span>{{ size }}<span class="govuk-visually-hidden"> results per page</span></a>
-	{% endif %}
-{% endmacro %}

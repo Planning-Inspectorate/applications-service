@@ -1,0 +1,41 @@
+@startuml
+set separator none
+title System Landscape
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+AddBoundaryTag("Planning Inspectorate", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="Dashed", $borderThickness="1")
+Boundary(group_1, "Planning Inspectorate", $tags="Planning Inspectorate") {
+  System(ApplicationsBackOffice, "Applications Back-Office", $descr="Internally facing service allowing for management of cases relating to Nationally Significant Infrastructure Projects (NSIPs) within England and Wales", $tags="", $link="")
+  System(OperationalDataWarehouseODW, "Operational Data Warehouse (ODW)", $descr="Holds all Planning Inspectorate data so that it can be used for internal purposes", $tags="", $link="")
+  Person(Caseworker, "Case worker", $descr="Member of PINS staff who administers project information", $tags="", $link="")
+  System(ApplicationsFrontOffice, "Applications Front-Office", $descr="External facing service providing ability to participate in the application process for Nationally Significant Infrastructure Projects (NSIPs) within England and Wales", $tags="", $link="")
+    AddBoundaryTag("Planning Inspectorate/Legacy", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="Dashed", $borderThickness="1")
+    Boundary(group_2, "Legacy", $tags="Planning Inspectorate/Legacy") {
+      System(Horizon, "Horizon", $descr="Legacy back office system for managing planning applications and appeals", $tags="", $link="")
+      System(NIDatabase, "NI Database", $descr="Persistant storage for legacy NI website content", $tags="", $link="")
+    }
+
+}
+
+Person(Privateindividual, "Private individual", $descr="Member of public interested in nationally significant infrastructure projects", $tags="", $link="")
+Person(Memberoforganisation, "Member of organisation", $descr="Member of an organisation interested in nationally significant infrastructure projects", $tags="", $link="")
+Person(Agent, "Agent", $descr="Represent a private individual family or organisation", $tags="", $link="")
+System(GOVUK, "GOV.UK", $descr="", $tags="", $link="")
+
+Rel(ApplicationsFrontOffice, ApplicationsBackOffice, "Sends file for submission", $techn="HTTPS", $tags="", $link="")
+Rel(NIDatabase, Horizon, "Extracts project data including documents and interested party comments (representations)", $techn="", $tags="", $link="")
+Rel(Privateindividual, ApplicationsFrontOffice, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(Memberoforganisation, ApplicationsFrontOffice, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(Agent, ApplicationsFrontOffice, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(Caseworker, ApplicationsBackOffice, "Manages cases through", $techn="HTTPS, HTML, Active Directory Auth", $tags="", $link="")
+Rel(ApplicationsBackOffice, OperationalDataWarehouseODW, "Broadcasts message when entities change", $techn="Azure Service Bus via topic XXX", $tags="", $link="")
+Rel(ApplicationsBackOffice, ApplicationsFrontOffice, "Broadcasts message on Advice changes", $techn="Azure Service via topic s51-advice", $tags="", $link="")
+Rel(ApplicationsFrontOffice, GOVUK, "Sends notification emails through", $techn="HTTPS, JSON", $tags="", $link="")
+Rel(ApplicationsFrontOffice, NIDatabase, "Reads and writes legacy case data from", $techn=",", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml
