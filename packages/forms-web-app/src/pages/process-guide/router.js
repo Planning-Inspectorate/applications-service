@@ -19,10 +19,18 @@ const { decisionURL } = require('./decision/config');
 const { postDecisionURL } = require('./post-decision/config');
 
 const { addSteps } = require('./_middleware/add-steps');
+const {
+	addProcessGuideTranslationsMiddleware
+} = require('./_middleware/add-process-guide-translations-middleware');
 
 const processGuideRouter = express.Router();
 
-processGuideRouter.get(processGuideURL, addSteps, getProcessGuideController);
+processGuideRouter.get(
+	processGuideURL,
+	addSteps,
+	addProcessGuideTranslationsMiddleware,
+	getProcessGuideController
+);
 processGuideRouter.get(preApplicationURL, addSteps, getPreApplicationController);
 processGuideRouter.get(acceptanceURL, addSteps, getAcceptanceController);
 processGuideRouter.get(preExaminationURL, addSteps, getPreExaminationController);

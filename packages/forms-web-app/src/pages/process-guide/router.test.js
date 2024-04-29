@@ -6,6 +6,9 @@ const { getExaminationController } = require('./examination/controller');
 const { getRecommendationController } = require('./recommendation/controller');
 const { getDecisionController } = require('./decision/controller');
 const { getPostDecisionController } = require('./post-decision/controller');
+const {
+	addProcessGuideTranslationsMiddleware
+} = require('./_middleware/add-process-guide-translations-middleware');
 
 const { addSteps } = require('./_middleware/add-steps');
 
@@ -26,6 +29,7 @@ describe('pages/process-guide/router', () => {
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide',
 			addSteps,
+			addProcessGuideTranslationsMiddleware,
 			getProcessGuideController
 		);
 		expect(get).toHaveBeenCalledWith(
