@@ -5,9 +5,10 @@ describe('pages/_middleware/i18n/add-common-translations-middleware', () => {
 		describe('When there is an error', () => {
 			const req = {
 				i18n: {
-					loadNamespaces: (namespace, callback) => {
-						const err = true;
-						callback(err);
+					loadNamespaces: () => {
+						return new Promise((resolve, reject) => {
+							reject();
+						});
 					}
 				}
 			};
@@ -29,9 +30,10 @@ describe('pages/_middleware/i18n/add-common-translations-middleware', () => {
 		describe('When there is no error', () => {
 			const req = {
 				i18n: {
-					loadNamespaces: (namespace, callback) => {
-						const err = false;
-						callback(err);
+					loadNamespaces: () => {
+						return new Promise((resolve) => {
+							resolve();
+						});
 					}
 				}
 			};
