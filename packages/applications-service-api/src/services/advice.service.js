@@ -7,9 +7,7 @@ const {
 	getAllAdviceByCaseReference: getAllNIAdvice,
 	getAdviceById: getNIAdviceById
 } = require('../repositories/advice.ni.repository');
-const {
-	findDocumentsByCaseReferenceAndAdviceID
-} = require('../repositories/document.ni.repository');
+const { getDocumentsByDataId } = require('../repositories/document.ni.repository');
 const {
 	mapBackOfficeAdviceListToApi,
 	mapBackOfficeAdviceToApi,
@@ -65,7 +63,8 @@ const getAdviceById = async (adviceID, caseReference) => {
 	} else {
 		const advice = await getNIAdviceById(adviceID, caseReference);
 		if (!advice) return;
-		const attachments = await findDocumentsByCaseReferenceAndAdviceID(caseReference, adviceID);
+
+		const attachments = await getDocumentsByDataId(advice.attachments?.split(','));
 		return mapNIAdviceToApi({
 			...advice,
 			attachments

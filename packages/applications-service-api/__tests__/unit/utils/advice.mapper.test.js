@@ -47,10 +47,10 @@ describe('advice.mapper', () => {
 	describe('mapNIAdviceToApi', () => {
 		it('maps the advice record to the API format', () => {
 			const mockNIDocument = {
-				documentDataID: '123',
+				dataID: '123',
 				mime: 'application/pdf',
 				size: 123,
-				documentURI: 'mock-uri'
+				path: 'mock-uri'
 			};
 			const mockNIAdvice = {
 				...ADVICE_NI_DATA[0],
