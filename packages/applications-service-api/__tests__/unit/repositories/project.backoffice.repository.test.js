@@ -49,6 +49,23 @@ describe('project repository', () => {
 				}
 			});
 		});
+		it('calls findMany with the excludeNullDateOfSubmission option', async () => {
+			const options = {
+				excludeNullDateOfSubmission: true
+			};
+
+			await getAllApplications(options);
+
+			expect(mockFindMany).toBeCalledWith({
+				include: { applicant: true },
+				where: {
+					AND: [
+						{ regions: { not: { contains: 'wales' } } },
+						{ OR: [{ dateOfDCOSubmission: { not: null } }] }
+					]
+				}
+			});
+		});
 		it('calls findMany with given pagination options', async () => {
 			const options = {
 				orderBy: { projectName: 'asc' },

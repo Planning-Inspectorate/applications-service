@@ -6,11 +6,19 @@ const getApplication = async (caseReference) =>
 	db.Project.findOne({ where: { CaseReference: caseReference } });
 
 const getAllApplications = async (options = {}) => {
-	const { filters, searchTerm } = options;
+	const { filters, searchTerm, excludeNullDateOfSubmission } = options;
+
 	let findAllOptions = pick(options, ['attributes', 'offset', 'limit', 'order']);
 	findAllOptions.where = {
 		Region: { [Op.ne]: 'Wales' }
 	};
+
+	if (excludeNullDateOfSubmission) {
+		findAllOptions.where = {
+			...findAllOptions.where,
+			DateOfDCOSubmission: { [Op.ne]: null }
+		};
+	}
 
 	// filters
 	const filterStatements = [];
