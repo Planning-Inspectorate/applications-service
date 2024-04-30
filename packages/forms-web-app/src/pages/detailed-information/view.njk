@@ -1,20 +1,20 @@
 {% extends "layouts/default.njk" %}
 {% from "components/ui/chevron-card.njk" import chevronCard %}
 
+{% set pageTitle = t('detailedInformation.heading1') %}
 {% set mainClasses = "pins-modded-no-padding" %}
 
 {% block content %}
 	<div class="masthead masthead--full-width masthead--bg-teal">
 		<div class="masthead__content">
 			<h1 class="govuk-heading-xl masthead__title">
-				{{ pageHeading }}
+				{{ t('detailedInformation.heading1') }}
 			</h1>
 
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-two-thirds">
 					<p class="masthead__text">
-						Find further legislation and guidance resources.
-						Information on this page may be useful for those applying to use the service and the general public.
+						{{ t('detailedInformation.paragraph1') }}
 					</p>
 				</div>
 			</div>
@@ -28,25 +28,25 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'See the process',
+						t('detailedInformation.linkTitle1'),
 						detailedInformationUrls.processGuide,
-						'View the stages an application goes through, from start to finish.'
+						t('detailedInformation.linkParagraph1')
 					) }}
 				</div>
 
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'How to have your say on a project',
+						t('detailedInformation.linkTitle2'),
 						detailedInformationUrls.haveYourSayGuide,
-						'Find out everything you need to know about sharing your views on a project.'
+						t('detailedInformation.linkParagraph2')
 					) }}
 				</div>
 
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'Guide for applicants',
+						t('detailedInformation.linkTitle3'),
 						govUK.developmentConsent,
-						'Outlining the application process with resources on submitting a planning proposal.'
+						t('detailedInformation.linkParagraph3')
 					) }}
 				</div>
 			</div>
@@ -54,25 +54,25 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'Legislation information',
+						t('detailedInformation.linkTitle4'),
 						govUK.developmentConsentAndAdvice,
-						'View the 2008 Planning Act to understand our legal duties.'
+						t('detailedInformation.linkParagraph4')
 					) }}
 				</div>
 
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'View guidance',
+						t('detailedInformation.linkTitle5'),
 						govUK.planningGuidance,
-						'View documents around submitting applications for a Nationally Significant Infrastructure project.'
+						t('detailedInformation.linkParagraph5')
 					) }}
 				</div>
 
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'See advice notes',
+						t('detailedInformation.linkTitle6'),
 						govUK.adviceNotes,
-						'The Planning Inspectorate has a series of advice notes covering a range of process details.'
+						t('detailedInformation.linkParagraph6')
 					) }}
 				</div>
 			</div>
@@ -80,17 +80,17 @@
 			<div class="govuk-grid-row">
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'National Policy Statements',
+						t('detailedInformation.linkTitle7'),
 						govUK.nationalPolicyStatements,
-						'Find out what National Policy Statements (NPSs) are, what they include and how they fit into the Planning Act 2008 process.'
+						t('detailedInformation.linkParagraph7')
 					) }}
 				</div>
 
 				<div class="govuk-grid-column-one-third">
 					{{ chevronCard(
-						'Register of advice',
+						t('detailedInformation.linkTitle8'),
 						detailedInformationUrls.registerOfAdviceIndexURL,
-						'Here you can view all advice provided by the Planning Inspectorate since 2008.'
+						t('detailedInformation.linkParagraph8')
 					) }}
 				</div>
 			</div>

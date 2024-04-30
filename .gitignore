@@ -134,3 +134,4 @@ __azurite_db*__.json
 # Structurizr
 workspace.json
 .structurizr/*
+build

@@ -5,7 +5,6 @@ const {
 	ADVICE_NI_DATA
 } = require('../__data__/advice');
 const { request } = require('../__data__/supertest');
-const config = require('../../src/lib/config');
 const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 const db = require('../../src/models');
 
@@ -13,6 +12,7 @@ const mockFindManyAdvicePrisma = jest.fn();
 const mockCountAdvicePrisma = jest.fn();
 const mockFindUniqueAdvicePrisma = jest.fn();
 const mockFindManyDocumentPrisma = jest.fn();
+const mockNIDocumentFindMany = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		advice: {
@@ -27,6 +27,10 @@ jest.mock('../../src/lib/prisma', () => ({
 }));
 jest.mock('../../src/utils/is-backoffice-case-reference');
 jest.mock('../../src/models');
+
+jest.mock('../../src/repositories/document.ni.repository', () => ({
+	getDocumentsByDataId: (query) => mockNIDocumentFindMany(query)
+}));
 
 isBackOfficeCaseReference.mockImplementation((caseReference) =>
 	caseReference.startsWith('BACKOFFICE-')
@@ -100,14 +104,12 @@ describe('/api/v1/advice', () => {
 				}
 			]);
 			db.Advice.findOne.mockResolvedValue(ADVICE_NI_DATA[0]);
-			db.Attachment.findAllAttachmentsWithCase.mockResolvedValue([
+			mockNIDocumentFindMany.mockResolvedValue([
 				{
-					dataValues: {
-						documentDataID: '123',
-						mime: 'application/pdf',
-						size: 123,
-						documentURI: 'mock-uri'
-					}
+					dataID: '123',
+					mime: 'application/pdf',
+					size: 123,
+					path: 'mock-uri'
 				}
 			]);
 		});
@@ -145,7 +147,8 @@ describe('/api/v1/advice', () => {
 								documentDataID: '123',
 								mime: 'application/pdf',
 								size: 123,
-								documentURI: `${config.documentsHost}mock-uri`
+								documentURI:
+									'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/projects/mock-uri'
 							}
 						]
 					});
