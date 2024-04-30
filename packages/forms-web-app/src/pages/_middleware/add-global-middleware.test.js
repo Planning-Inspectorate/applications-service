@@ -4,6 +4,10 @@ const { mockI18n } = require('../_mocks/i18n');
 
 const globalTranslation_EN = require('../../locales/en/global.json');
 
+const globalMiddlewareTranslations = {
+	global: globalTranslation_EN
+};
+
 jest.mock('../../config', () => {
 	const originalConfig = jest.requireActual('../config');
 
@@ -19,7 +23,7 @@ describe('pages/_middleware/add-global-middleware', () => {
 	describe('#addGlobalMiddleware', () => {
 		const req = {
 			cookies: {},
-			i18n: mockI18n('global', globalTranslation_EN),
+			i18n: mockI18n(globalMiddlewareTranslations),
 			path: '/',
 			query: {}
 		};
