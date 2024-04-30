@@ -18,6 +18,7 @@ System_Boundary("ApplicationsBackOffice_boundary", "Applications Back-Office", $
 }
 
 Rel(ApplicationsFrontOffice, ApplicationsBackOffice.Filestorage, "Sends file for submission", $techn="HTTPS", $tags="", $link="")
+Rel(ApplicationsBackOffice.Filestorage, ApplicationsFrontOffice, "Reads published documents files", $techn="", $tags="", $link="")
 Rel(ApplicationsBackOffice.BOWeb, ApplicationsBackOffice.WebBOAPI, "Renders page, gets and posts data using", $techn="HTTPS, JSON", $tags="", $link="")
 Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsBackOffice.Database, "Reads and writes case data to", $techn="", $tags="", $link="")
 Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice, "Broadcasts message on Advice changes", $techn="Azure Service via topic s51-advice", $tags="", $link="")

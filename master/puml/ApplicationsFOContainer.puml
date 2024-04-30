@@ -24,9 +24,10 @@ System_Boundary("ApplicationsFrontOffice_boundary", "Applications Front-Office",
 }
 
 Rel(ApplicationsFrontOffice.WebFOAPI, ApplicationsBackOffice, "Sends file for submission", $techn="HTTPS", $tags="", $link="")
-Rel(Privateindividual, ApplicationsFrontOffice.FOWeb, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
-Rel(Memberoforganisation, ApplicationsFrontOffice.FOWeb, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
-Rel(Agent, ApplicationsFrontOffice.FOWeb, "Finds project information and registers interest", $techn="HTTPS, HTML", $tags="", $link="")
+Rel(ApplicationsBackOffice, ApplicationsFrontOffice.WebFOAPI, "Reads published documents files", $techn="", $tags="", $link="")
+Rel(Privateindividual, ApplicationsFrontOffice.FOWeb, "Finds projects, registers for interest, and makes submissions", $techn=",", $tags="", $link="")
+Rel(Memberoforganisation, ApplicationsFrontOffice.FOWeb, "Finds projects, registers for interest, and makes submissions", $techn=",", $tags="", $link="")
+Rel(Agent, ApplicationsFrontOffice.FOWeb, "Finds projects, registers for interest, and makes submissions", $techn=",", $tags="", $link="")
 Rel(ApplicationsFrontOffice.FOWeb, ApplicationsFrontOffice.Redis, "Maintains session state and caches data from", $techn="", $tags="", $link="")
 Rel(ApplicationsFrontOffice.FOWeb, ApplicationsFrontOffice.KeyVault, "Retrieves secrets from", $techn="", $tags="", $link="")
 Rel(ApplicationsFrontOffice.FOWeb, ApplicationsFrontOffice.WebFOAPI, "renders pages, gets and posts data using", $techn="HTTPS, JSON", $tags="", $link="")

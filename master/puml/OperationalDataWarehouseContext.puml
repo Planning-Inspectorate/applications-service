@@ -14,7 +14,7 @@ Boundary(group_1, "Planning Inspectorate", $tags="Planning Inspectorate") {
 }
 
 
-Rel(ApplicationsBackOffice, OperationalDataWarehouseODW, "Broadcasts message when entities change", $techn="Azure Service Bus via topic XXX", $tags="", $link="")
+Rel(ApplicationsBackOffice, OperationalDataWarehouseODW, "Broadcasts message when entities change", $techn="Azure Service Bus via topic subscriptions", $tags="", $link="")
 
 SHOW_LEGEND(true)
 @enduml
