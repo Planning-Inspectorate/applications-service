@@ -25,7 +25,6 @@
 		"paragraph9": "There is a {{-link}} with information for people or organisations who want to have their say about a national infrastructure project.",
 		"paragraph9LinkText": "guide"
 	},
-	"button1": "Show all steps",
 	"preApplication": {
 		"subHeading1": "Pre-application",
 		"paragraph10": "This is where the applicant starts to create their application. The applicant is required to consult with people and organisations in the area. They must also create detailed documents about the impact the project could have on the environment.",
@@ -63,5 +62,8 @@
 		"subHeading7": "What happens after the decision is made",
 		"paragraph19": "Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.",
 		"linkText7": "What you can do after the decision has been made."
+	},
+	"buttons": {
+		"showAllButton": "Show all steps"
 	}
 }

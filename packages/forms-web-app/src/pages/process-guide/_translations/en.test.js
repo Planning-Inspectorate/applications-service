@@ -36,7 +36,6 @@ describe('pages/process-guide/_translations/en', () => {
 					'There is a {{-link}} with information for people or organisations who want to have their say about a national infrastructure project.',
 				paragraph9LinkText: 'guide'
 			},
-			button1: 'Show all steps',
 			preApplication: {
 				subHeading1: 'Pre-application',
 				paragraph10:
@@ -83,6 +82,9 @@ describe('pages/process-guide/_translations/en', () => {
 				paragraph19:
 					'Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.',
 				linkText7: 'What you can do after the decision has been made.'
+			},
+			buttons: {
+				showAllButton: 'Show all steps'
 			}
 		});
 	});

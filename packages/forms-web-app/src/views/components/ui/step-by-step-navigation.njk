@@ -1,4 +1,4 @@
-{% macro stepByStepNavigation(params, activeStep, template, state) %}
+{% macro stepByStepNavigation(params, activeStep, template, state, t) %}
   {% set navigationSize = "" %}
 
   {% if template === "main" %}
@@ -6,6 +6,7 @@
   {% endif %}
 
   {% set navigationState = "" %}
+  {% set showAllText = t('processGuide.buttons.showAllButton')%}
 
   {% if state === "dynamic" %}
     {% set navigationState = "js-hidden" %}
@@ -39,7 +40,7 @@
 
   {% endif %}
 
-  <div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all steps" data-hide-all-text="Hide all steps">
+  <div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="Show" data-hide-text="Hide" data-show-all-text="{{ showAllText }}" data-hide-all-text="Hide all steps">
     <ol class="app-step-nav__steps">
 
       {% for step in params.steps %}

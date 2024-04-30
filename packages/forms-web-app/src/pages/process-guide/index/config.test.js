@@ -1,4 +1,4 @@
-const { processGuideURL, processGuideTitle } = require('./config');
+const { processGuideURL, processGuideTitle, processGuideI18nNamespace } = require('./config');
 
 describe('pages/process-guide/config', () => {
 	describe('#processGuideURL', () => {
@@ -12,6 +12,12 @@ describe('pages/process-guide/config', () => {
 			expect(processGuideTitle).toEqual(
 				'The process for Nationally Significant Infrastructure Projects (NSIPs)'
 			);
+		});
+	});
+
+	describe('#processGuideI18nNamespace', () => {
+		it('should return the process guide i18n namespace route', () => {
+			expect(processGuideI18nNamespace).toEqual('processGuide');
 		});
 	});
 });

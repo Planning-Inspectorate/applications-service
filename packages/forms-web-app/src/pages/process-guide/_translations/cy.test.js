@@ -36,7 +36,6 @@ describe('pages/process-guide/_translations/cy', () => {
 					'Mae {{-link}} ar gael sy’n cynnwys gwybodaeth i bobl neu sefydliadau sydd eisiau lleisio’u barn am brosiect seilwaith cenedlaethol.',
 				paragraph9LinkText: 'canllaw'
 			},
-			button1: 'Dangos pob cam',
 			preApplication: {
 				subHeading1: 'Cyn-ymgeisio',
 				paragraph10:
@@ -84,6 +83,9 @@ describe('pages/process-guide/_translations/cy', () => {
 				paragraph19:
 					'Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, mae cyfnod o 6 wythnos pryd y gall pobl herio’r penderfyniad yn yr Uchel Lys. Yr enw ar hyn yw adolygiad barnwrol.',
 				linkText7: 'Yr hyn y gallwch ei wneud ar ôl i’r penderfyniad gael ei wneud.'
+			},
+			buttons: {
+				showAllButton: 'Dangos pob cam'
 			}
 		});
 	});

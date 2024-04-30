@@ -25,7 +25,6 @@
 		"paragraph9": "Mae {{-link}} ar gael sy’n cynnwys gwybodaeth i bobl neu sefydliadau sydd eisiau lleisio’u barn am brosiect seilwaith cenedlaethol.",
 		"paragraph9LinkText": "canllaw"
 	},
-	"button1": "Dangos pob cam",
 	"preApplication": {
 		"subHeading1": "Cyn-ymgeisio",
 		"paragraph10": "Dyma’r adeg pan fydd yr ymgeisydd yn dechrau creu ei gais. Mae’n ofynnol i’r ymgeisydd ymgynghori â phobl a sefydliadau yn yr ardal. Mae’n rhaid iddo hefyd greu dogfennau manwl ynglŷn â’r effaith y gallai’r prosiect ei chael ar yr amgylchedd.",
@@ -63,5 +62,8 @@
 		"subHeading7": "Beth sy’n digwydd ar ôl i’r penderfyniad gael ei wneud",
 		"paragraph19": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, mae cyfnod o 6 wythnos pryd y gall pobl herio’r penderfyniad yn yr Uchel Lys. Yr enw ar hyn yw adolygiad barnwrol.",
 		"linkText7": "Yr hyn y gallwch ei wneud ar ôl i’r penderfyniad gael ei wneud."
+	},
+	"buttons": {
+		"showAllButton": "Dangos pob cam"
 	}
 }
