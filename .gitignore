@@ -105,6 +105,9 @@ dist
 .idea
 *.iml
 
+# Vim swap files
+**/*.swp
+
 # Jest
 jest-reports
 junit.xml
