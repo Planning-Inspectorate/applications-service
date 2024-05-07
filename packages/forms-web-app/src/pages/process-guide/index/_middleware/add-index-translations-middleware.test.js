@@ -1,8 +1,6 @@
-const {
-	addProcessGuideTranslationsMiddleware
-} = require('./add-process-guide-translations-middleware');
+const { addIndexTranslationsMiddleware } = require('./add-index-translations-middleware');
 
-jest.mock('../../_utils/get-translations', () => {
+jest.mock('../../../_utils/get-translations', () => {
 	return {
 		getTranslations: () => ({
 			en: 'mock get English translations',
@@ -11,8 +9,8 @@ jest.mock('../../_utils/get-translations', () => {
 	};
 });
 
-describe('pages/process-guide/_middleware/add-process-guide-translations-middleware', () => {
-	describe('#addprocessGuideTranslationsMiddleware', () => {
+describe('pages/process-guide/index/_middleware/add-index-translations-middleware', () => {
+	describe('#addIndexTranslationsMiddleware', () => {
 		const req = {
 			i18n: {
 				language: null,
@@ -25,7 +23,7 @@ describe('pages/process-guide/_middleware/add-process-guide-translations-middlew
 		describe('When the language is set to English', () => {
 			beforeEach(() => {
 				req.i18n.language = 'en';
-				addProcessGuideTranslationsMiddleware(req, res, next);
+				addIndexTranslationsMiddleware(req, res, next);
 			});
 
 			it('should add the English translations', () => {
@@ -40,7 +38,7 @@ describe('pages/process-guide/_middleware/add-process-guide-translations-middlew
 		describe('When the language is set to Welsh', () => {
 			beforeEach(() => {
 				req.i18n.language = 'cy';
-				addProcessGuideTranslationsMiddleware(req, res, next);
+				addIndexTranslationsMiddleware(req, res, next);
 			});
 
 			it('should add the Welsh translations', () => {

@@ -20,6 +20,9 @@ const { postDecisionURL } = require('./post-decision/config');
 
 const { addSteps } = require('./_middleware/add-steps');
 const {
+	addIndexTranslationsMiddleware
+} = require('./index/_middleware/add-index-translations-middleware');
+const {
 	addProcessGuideTranslationsMiddleware
 } = require('./_middleware/add-process-guide-translations-middleware');
 const {
@@ -28,7 +31,11 @@ const {
 
 const processGuideRouter = express.Router();
 
-processGuideRouter.use(addCommonTranslationsMiddleware, addProcessGuideTranslationsMiddleware);
+processGuideRouter.use(
+	addCommonTranslationsMiddleware,
+	addIndexTranslationsMiddleware,
+	addProcessGuideTranslationsMiddleware
+);
 
 processGuideRouter.get(processGuideURL, addSteps, getProcessGuideController);
 processGuideRouter.get(preApplicationURL, addSteps, getPreApplicationController);

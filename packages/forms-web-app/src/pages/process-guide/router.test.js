@@ -6,14 +6,16 @@ const { getExaminationController } = require('./examination/controller');
 const { getRecommendationController } = require('./recommendation/controller');
 const { getDecisionController } = require('./decision/controller');
 const { getPostDecisionController } = require('./post-decision/controller');
+const { addSteps } = require('./_middleware/add-steps');
+const {
+	addIndexTranslationsMiddleware
+} = require('./index/_middleware/add-index-translations-middleware');
 const {
 	addProcessGuideTranslationsMiddleware
 } = require('./_middleware/add-process-guide-translations-middleware');
 const {
 	addCommonTranslationsMiddleware
 } = require('../../../src/pages/_middleware/i18n/add-common-translations-middleware');
-
-const { addSteps } = require('./_middleware/add-steps');
 
 describe('pages/process-guide/router', () => {
 	const get = jest.fn();
@@ -33,6 +35,7 @@ describe('pages/process-guide/router', () => {
 	it('should call the process guide routes and controllers', () => {
 		expect(use).toHaveBeenCalledWith(
 			addCommonTranslationsMiddleware,
+			addIndexTranslationsMiddleware,
 			addProcessGuideTranslationsMiddleware
 		);
 		expect(get).toHaveBeenCalledWith(

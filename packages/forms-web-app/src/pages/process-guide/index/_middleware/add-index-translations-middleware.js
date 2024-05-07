@@ -1,9 +1,9 @@
-const { getTranslations } = require('../../_utils/get-translations');
+const { getTranslations } = require('../../../_utils/get-translations');
 const enTranslation = require('../_translations/en.json');
 const cyTranslation = require('../_translations/cy.json');
-const { processGuideI18nNamespace } = require('../config');
+const { processGuideI18nNamespace } = require('../../config');
 
-const addProcessGuideTranslationsMiddleware = (req, res, next) => {
+const addIndexTranslationsMiddleware = (req, res, next) => {
 	const { i18n } = req;
 	const { language } = i18n;
 
@@ -14,4 +14,4 @@ const addProcessGuideTranslationsMiddleware = (req, res, next) => {
 	next();
 };
 
-module.exports = { addProcessGuideTranslationsMiddleware };
+module.exports = { addIndexTranslationsMiddleware };
