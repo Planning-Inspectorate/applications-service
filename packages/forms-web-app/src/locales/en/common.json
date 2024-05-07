@@ -1,3 +1,7 @@
 {
-	"search": "Search"
+	"search": "Search",
+	"hideButton": "Hide",
+	"showButton": "Show",
+	"hideAllButton": "Hide all sections",
+	"showAllButton": "Show all sections"
 }

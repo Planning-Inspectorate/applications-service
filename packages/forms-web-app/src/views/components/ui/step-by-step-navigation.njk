@@ -6,7 +6,10 @@
   {% endif %}
 
   {% set navigationState = "" %}
-  {% set showAllText = t('processGuide.buttons.showAllButton')%}
+  {% set showText = t('common.showButton')%}
+  {% set hideText = t('common.hideButton')%}
+  {% set showAllText = t('common.showAllButton')%}
+  {% set hideAllText = t('common.hideAllButton')%}
 
   {% if state === "dynamic" %}
     {% set navigationState = "js-hidden" %}
@@ -40,7 +43,7 @@
 
   {% endif %}
 
-  <div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="Show" data-hide-text="Hide" data-show-all-text="{{ showAllText }}" data-hide-all-text="Hide all steps">
+  <div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="{{ showText }}" data-hide-text="{{ hideText }}" data-show-all-text="{{ showAllText }}" data-hide-all-text="{{ hideAllText }}">
     <ol class="app-step-nav__steps">
 
       {% for step in params.steps %}

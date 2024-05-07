@@ -22,15 +22,15 @@ const { addSteps } = require('./_middleware/add-steps');
 const {
 	addProcessGuideTranslationsMiddleware
 } = require('./_middleware/add-process-guide-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../src/pages/_middleware/i18n/add-common-translations-middleware');
 
 const processGuideRouter = express.Router();
 
-processGuideRouter.get(
-	processGuideURL,
-	addSteps,
-	addProcessGuideTranslationsMiddleware,
-	getProcessGuideController
-);
+processGuideRouter.use(addCommonTranslationsMiddleware, addProcessGuideTranslationsMiddleware);
+
+processGuideRouter.get(processGuideURL, addSteps, getProcessGuideController);
 processGuideRouter.get(preApplicationURL, addSteps, getPreApplicationController);
 processGuideRouter.get(acceptanceURL, addSteps, getAcceptanceController);
 processGuideRouter.get(preExaminationURL, addSteps, getPreExaminationController);

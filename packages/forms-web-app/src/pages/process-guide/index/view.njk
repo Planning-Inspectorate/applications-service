@@ -13,70 +13,70 @@
 {% endblock %}
 
 {% block pageTitle %}
-  {{ t('processGuide.applicationSummary.heading1') }}
+  {{ t('processGuide.index.heading1') }}
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<h1 class="govuk-heading-xl">
-        {{ t('processGuide.applicationSummary.heading1') }}
+        {{ t('processGuide.index.heading1') }}
       </h1>
 
 	  <p class="govuk-body">
-        {{ t('processGuide.applicationSummary.paragraph1') }}
+        {{ t('processGuide.index.paragraph1') }}
       </p>
 
 			<p class="govuk-body">
-        		{{ t('processGuide.applicationSummary.paragraph2') }}
+        		{{ t('processGuide.index.paragraph2') }}
 			</p>
 
 			<ul class="govuk-list govuk-list--bullet">
-				<li>{{ t('processGuide.applicationSummary.listItem1') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem2') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem3') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem4') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem5') }}</li>
+				<li>{{ t('processGuide.index.listItem1') }}</li>
+				<li>{{ t('processGuide.index.listItem2') }}</li>
+				<li>{{ t('processGuide.index.listItem3') }}</li>
+				<li>{{ t('processGuide.index.listItem4') }}</li>
+				<li>{{ t('processGuide.index.listItem5') }}</li>
 			</ul>
 
 			<p class="govuk-body">
-        		{{ t('processGuide.applicationSummary.paragraph3') }}
+        		{{ t('processGuide.index.paragraph3') }}
 			</p>
 
 			<ul class="govuk-list govuk-list--bullet">
-				<li>{{ t('processGuide.applicationSummary.listItem6') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem7') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem8') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem9') }}</li>
-				<li>{{ t('processGuide.applicationSummary.listItem10') }}</li>
+				<li>{{ t('processGuide.index.listItem6') }}</li>
+				<li>{{ t('processGuide.index.listItem7') }}</li>
+				<li>{{ t('processGuide.index.listItem8') }}</li>
+				<li>{{ t('processGuide.index.listItem9') }}</li>
+				<li>{{ t('processGuide.index.listItem10') }}</li>
 			</ul>
 
 			<p class="govuk-body">
-        		{{ t('processGuide.applicationSummary.paragraph4') }}
+        		{{ t('processGuide.index.paragraph4') }}
 			</p>
 
 			<p class="govuk-body">
-				{{ t('processGuide.applicationSummary.paragraph5') }}
+				{{ t('processGuide.index.paragraph5') }}
 			</p>
 
 			<p class="govuk-body">
-        		{{ t('processGuide.applicationSummary.paragraph6') }}
+        		{{ t('processGuide.index.paragraph6') }}
 			</p>
 
 			<h2 class="govuk-heading-m">
-				{{ t('processGuide.haveYourSay.heading2') }}
+				{{ t('processGuide.index.heading2') }}
 			</h2>
 
 			<p class="govuk-body">
-        		{{ t('processGuide.haveYourSay.paragraph7') }}
+        		{{ t('processGuide.index.paragraph7') }}
 			</p>
 
 			<p class="govuk-body">
-        		{{ t('processGuide.haveYourSay.paragraph8') }}
+        		{{ t('processGuide.index.paragraph8') }}
 			</p>
 
 			<p class="govuk-body">
-				{{ t('processGuide.haveYourSay.paragraph9', { link: '<a class="govuk-link" href="' + haveYourSayGuideURL + '">' + t('processGuide.haveYourSay.paragraph9LinkText') + '</a>' }) | safe }}
+				{{ t('processGuide.index.paragraph9', { link: '<a class="govuk-link" href="' + haveYourSayGuideURL + '">' + t('processGuide.index.paragraph9LinkText') + '</a>' }) | safe }}
 			</p>
 
 			{% include "process-guide/_includes/process-guide-steps.njk" %}

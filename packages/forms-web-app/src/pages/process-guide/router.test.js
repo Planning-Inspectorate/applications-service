@@ -9,15 +9,20 @@ const { getPostDecisionController } = require('./post-decision/controller');
 const {
 	addProcessGuideTranslationsMiddleware
 } = require('./_middleware/add-process-guide-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../src/pages/_middleware/i18n/add-common-translations-middleware');
 
 const { addSteps } = require('./_middleware/add-steps');
 
 describe('pages/process-guide/router', () => {
 	const get = jest.fn();
+	const use = jest.fn();
 
 	jest.doMock('express', () => ({
 		Router: () => ({
-			get
+			get,
+			use
 		})
 	}));
 
@@ -26,10 +31,13 @@ describe('pages/process-guide/router', () => {
 	});
 
 	it('should call the process guide routes and controllers', () => {
+		expect(use).toHaveBeenCalledWith(
+			addCommonTranslationsMiddleware,
+			addProcessGuideTranslationsMiddleware
+		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide',
 			addSteps,
-			addProcessGuideTranslationsMiddleware,
 			getProcessGuideController
 		);
 		expect(get).toHaveBeenCalledWith(

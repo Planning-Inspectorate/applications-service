@@ -16,7 +16,7 @@ describe('pages/process-guide/_middleware/add-process-guide-translations-middlew
 		const req = {
 			i18n: {
 				language: null,
-				addResourceBundle: jest.fn()
+				addResources: jest.fn()
 			}
 		};
 		const res = {};
@@ -29,7 +29,7 @@ describe('pages/process-guide/_middleware/add-process-guide-translations-middlew
 			});
 
 			it('should add the English translations', () => {
-				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
+				expect(req.i18n.addResources).toHaveBeenCalledWith(
 					'en',
 					'processGuide',
 					'mock get English translations'
@@ -44,7 +44,7 @@ describe('pages/process-guide/_middleware/add-process-guide-translations-middlew
 			});
 
 			it('should add the Welsh translations', () => {
-				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
+				expect(req.i18n.addResources).toHaveBeenCalledWith(
 					'cy',
 					'processGuide',
 					'mock get Welsh translations'

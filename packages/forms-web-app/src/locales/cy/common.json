@@ -1,3 +1,7 @@
 {
-	"search": "Chwilio"
+	"search": "Chwilio",
+	"hideButton": "Cuddio",
+	"showButton": "Dangos",
+	"hideAllButton": "Cuddio pob adran",
+	"showAllButton": "Dangos pob adran"
 }
