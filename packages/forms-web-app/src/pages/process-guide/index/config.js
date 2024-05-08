@@ -4,4 +4,6 @@ const processGuideURL = getProcessGuidePageURL();
 
 const processGuideTitle = 'The process for Nationally Significant Infrastructure Projects (NSIPs)';
 
-module.exports = { processGuideURL, processGuideTitle };
+const processGuideIndexI18nNamespace = 'processGuideIndex';
+
+module.exports = { processGuideURL, processGuideTitle, processGuideIndexI18nNamespace };

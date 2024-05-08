@@ -4,10 +4,10 @@ describe('locales/en/common', () => {
 	it('should return the english common translations', () => {
 		expect(enCommonTranslations).toEqual({
 			search: 'Search',
-			hideButton: 'Hide',
-			showButton: 'Show',
-			hideAllButton: 'Hide all sections',
-			showAllButton: 'Show all sections'
+			hide: 'Hide',
+			show: 'Show',
+			hideAllSections: 'Hide all sections',
+			showAllSections: 'Show all sections'
 		});
 	});
 });

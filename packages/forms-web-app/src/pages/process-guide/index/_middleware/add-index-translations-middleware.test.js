@@ -29,7 +29,7 @@ describe('pages/process-guide/index/_middleware/add-index-translations-middlewar
 			it('should add the English translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'en',
-					'processGuide',
+					'processGuideIndex',
 					'mock get English translations'
 				);
 			});
@@ -44,7 +44,7 @@ describe('pages/process-guide/index/_middleware/add-index-translations-middlewar
 			it('should add the Welsh translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'cy',
-					'processGuide',
+					'processGuideIndex',
 					'mock get Welsh translations'
 				);
 			});
