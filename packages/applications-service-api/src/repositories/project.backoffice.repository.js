@@ -12,7 +12,7 @@ const getByCaseReference = async (caseReference) => {
 };
 
 const getAllApplications = async (options = {}) => {
-	const { filters, searchTerm, orderBy, offset, size } = options;
+	const { filters, searchTerm, orderBy, offset, size, excludeNullDateOfSubmission } = options;
 	const where = {
 		AND: [
 			{
@@ -24,6 +24,18 @@ const getAllApplications = async (options = {}) => {
 			}
 		]
 	};
+
+	if (excludeNullDateOfSubmission) {
+		where['AND'].push({
+			OR: [
+				{
+					dateOfDCOSubmission: {
+						not: null
+					}
+				}
+			]
+		});
+	}
 
 	if (searchTerm) {
 		const terms = options.searchTerm.split(' ');

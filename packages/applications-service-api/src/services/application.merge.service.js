@@ -54,6 +54,7 @@ const createQueryFiltersBO = (query) => {
 		orderBy: {
 			projectName: 'asc'
 		},
+		excludeNullDateOfSubmission: query.excludeNullDateOfSubmission,
 		...(query.searchTerm ? { searchTerm: query.searchTerm } : {}),
 		...(isEmpty(filters) ? {} : { filters })
 	};
@@ -65,7 +66,8 @@ const createQueryFiltersNI = (query) => {
 	return {
 		order,
 		searchTerm: query?.searchTerm,
-		filters: isEmpty(appliedFilters) ? undefined : appliedFilters
+		filters: isEmpty(appliedFilters) ? undefined : appliedFilters,
+		excludeNullDateOfSubmission: query.excludeNullDateOfSubmission
 	};
 };
 
