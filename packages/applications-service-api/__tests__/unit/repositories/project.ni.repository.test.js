@@ -84,7 +84,7 @@ describe('project ni repository', () => {
 				...mockOptions,
 				where: {
 					Region: { [Op.ne]: 'Wales' },
-					DateOfDCOSubmission: { [Op.gte]: 0 },
+					DateOfDCOSubmission: { [Op.gt]: 0, [Op.ne]: null },
 					[Op.or]: [
 						{ ProjectName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },
 						{ PromoterName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } }
