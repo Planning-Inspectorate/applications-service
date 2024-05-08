@@ -16,7 +16,7 @@ const getAllApplications = async (options = {}) => {
 	if (excludeNullDateOfSubmission) {
 		findAllOptions.where = {
 			...findAllOptions.where,
-			DateOfDCOSubmission: { [Op.ne]: null }
+			DateOfDCOSubmission: { [Op.gte]: 0 }
 		};
 	}
 
