@@ -1,4 +1,4 @@
-const { addSteps } = require('./add-steps');
+const { addProcessGuideStepsMiddleware } = require('./add-process-guide-steps-middleware');
 
 const { getProcessGuideSteps } = require('../_utils/get-process-guide-steps');
 
@@ -6,7 +6,7 @@ jest.mock('../_utils/get-process-guide-steps', () => ({
 	getProcessGuideSteps: jest.fn()
 }));
 
-describe('pages/process-guide/_middleware/add-steps', () => {
+describe('pages/process-guide/_middleware/add-process-guide-steps-middleware', () => {
 	const mockReq = {
 		path: 'mock path'
 	};
@@ -19,7 +19,7 @@ describe('pages/process-guide/_middleware/add-steps', () => {
 		getProcessGuideSteps.mockReturnValue({
 			processGuideSteps: 'mock value'
 		});
-		addSteps(mockReq, mockRes, mockNext);
+		addProcessGuideStepsMiddleware(mockReq, mockRes, mockNext);
 	});
 
 	it('should add the mock process guide steps to the locals', () => {

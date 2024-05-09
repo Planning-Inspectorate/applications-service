@@ -3,24 +3,24 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Process guide - {{ processGuide.activeStep.title }}
+	{{ t('processGuide.common.processGuide') }} - {{ t('processGuide.acceptance.heading1') }}
 {% endblock %}
 
 {% block content %}
 	<h1 class="govuk-heading-xl">
-		{{ processGuide.activeStep.title }}
+		{{ t('processGuide.acceptance.heading1') }}
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-		Contents
+		{{ t('common.contents') }}
 	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#the-acceptance-stage">The acceptance stage</a>
+			<a class="govuk-link" href="#the-acceptance-stage">{{ t('acceptance.heading2') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#what-we-consider-at-the-acceptance-stage">What we consider at the acceptance stage</a>
+			<a class="govuk-link" href="#what-we-consider-at-the-acceptance-stage">{{ t('acceptance.heading3') }}</a>
 		</li>
 	</ol>
 
@@ -28,42 +28,40 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="the-acceptance-stage">
-					The acceptance stage
+					{{ t('acceptance.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					The applicant sends us their application at this stage.
-					The application must include all the required documents as set out in legislation and details of the consultation the applicant has carried out during the pre-application stage.
-					We look at the documents to check if we can accept the application for examination. We have 28 days to make this decision.
+					{{ t('acceptance.paragraph1') }}
 				</p>
 
 				<p class="govuk-body">
-					This stage can have one of 3 outcomes:
+					{{ t('acceptance.paragraph2') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>we accept the application for examination</li>
-					<li>we do not accept the application</li>
-					<li>the applicant withdraws their application</li>
+					<li>{{ t('acceptance.listItem1') }}</li>
+					<li>{{ t('acceptance.listItem2') }}</li>
+					<li>{{ t('acceptance.listItem3') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-					If it is accepted, the application will progress to the pre-examination stage.
+					{{ t('acceptance.paragraph3') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="what-we-consider-at-the-acceptance-stage">
-					What we consider at the acceptance stage
+					{{ t('acceptance.heading3') }}
 				</h2>
 
 				<p class="govuk-body">
-					We will check the application to make sure the applicant has submitted all the documents required by law and that these are of a satisfactory standard to examine the application.
+					{{ t('acceptance.paragraph4') }}
 				</p>
 
 				<p class="govuk-body">
-					If anything is missing or we need more information, we may not be able to accept the application for examination.
+					{{ t('acceptance.paragraph5') }}
 				</p>
 
-				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle) }}
+				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 
