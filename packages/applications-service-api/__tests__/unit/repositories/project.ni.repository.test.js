@@ -11,6 +11,7 @@ jest.mock('../../../src/models', () => ({
 		findAndCountAll: jest.fn()
 	}
 }));
+
 describe('project ni repository', () => {
 	describe('getApplication', () => {
 		const mockProject = {
@@ -69,11 +70,12 @@ describe('project ni repository', () => {
 			});
 		});
 
-		it('calls findAndCountAll with searchTerm is where clause', async () => {
+		it('calls findAndCountAll with additional options in where clause', async () => {
 			// Arrange
 			const mockOptionsWithSearchTerm = {
 				...mockOptions,
-				searchTerm: 'foo'
+				searchTerm: 'foo',
+				excludeNullDateOfSubmission: true
 			};
 			// Act
 			await getAllApplications(mockOptionsWithSearchTerm);
@@ -82,6 +84,7 @@ describe('project ni repository', () => {
 				...mockOptions,
 				where: {
 					Region: { [Op.ne]: 'Wales' },
+					DateOfDCOSubmission: { [Op.gt]: 0, [Op.ne]: null },
 					[Op.or]: [
 						{ ProjectName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },
 						{ PromoterName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } }
