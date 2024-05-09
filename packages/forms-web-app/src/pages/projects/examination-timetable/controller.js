@@ -20,16 +20,15 @@ const view = 'projects/examination-timetable/view.njk';
 
 const getProjectsExaminationTimetableController = async (req, res) => {
 	try {
-		const { params } = req;
+		const { params, i18n } = req;
 		const { case_ref } = params;
 		const { data } = await getAppData(case_ref);
 		const examinationTimetableData = data;
-		const projectName = examinationTimetableData.ProjectName;
-		const pageData = getPageData(case_ref, projectName, examinationTimetableData);
-
+		const projectName = examinationTimetableData?.ProjectName;
+		const pageData = getPageData(case_ref, projectName, examinationTimetableData, i18n);
 		return res.render(view, {
 			...pageData,
-			events: await getEvents(examinationTimetableData)
+			events: await getEvents(examinationTimetableData, i18n)
 		});
 	} catch (error) {
 		logger.error(error);

@@ -1,3 +1,9 @@
 {
-	"search": "Chwilio"
+	"search": "Chwilio",
+	"show": "Dangos",
+	"hide": "Cuddio",
+	"showAllSections": "Dangos pob adran",
+	"hideAllSections": "Cuddio pob adran",
+	"open": "Agor",
+	"close": "Caeedig"
 }

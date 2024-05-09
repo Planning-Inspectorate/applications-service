@@ -11,6 +11,12 @@ const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
 
 const { projectsMiddleware } = require('./_middleware/middleware');
+const {
+	addExaminationTimetableTranslationsMiddleware
+} = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
 const { registerRouter } = require('./register/router');
 
 jest.mock('../../config', () => {
@@ -64,6 +70,8 @@ describe('pages/projects/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/examination-timetable',
 				projectsMiddleware,
+				addCommonTranslationsMiddleware,
+				addExaminationTimetableTranslationsMiddleware,
 				getProjectsExaminationTimetableController
 			);
 

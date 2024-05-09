@@ -1,5 +1,4 @@
 const { getFooterLinks } = require('./get-footer-links');
-
 const { mockI18n } = require('../../_mocks/i18n');
 
 const globalTranslation_EN = require('../../../locales/en/global.json');
