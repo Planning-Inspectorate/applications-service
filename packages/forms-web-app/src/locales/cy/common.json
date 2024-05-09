@@ -1,3 +1,9 @@
 {
-	"search": "Chwilio"
+	"contents": "Cynnwys",
+	"hide": "Cuddio",
+	"hideAllSections": "Cuddio pob adran",
+	"next": "Nesaf",
+	"search": "Chwilio",
+	"show": "Dangos",
+	"showAllSections": "Dangos pob adran"
 }

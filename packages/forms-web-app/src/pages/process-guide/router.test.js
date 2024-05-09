@@ -7,14 +7,84 @@ const { getRecommendationController } = require('./recommendation/controller');
 const { getDecisionController } = require('./decision/controller');
 const { getPostDecisionController } = require('./post-decision/controller');
 
-const { addSteps } = require('./_middleware/add-steps');
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	addProcessGuideTranslationsMiddleware
+} = require('./_middleware/add-process-guide-translations-middleware');
+const {
+	addProcessGuideStepsMiddleware
+} = require('./_middleware/add-process-guide-steps-middleware');
+const {
+	addIndexTranslationsMiddleware
+} = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addPreApplicationTranslationsMiddleware
+} = require('./pre-application/_middleware/add-pre-application-translations-middleware');
+const {
+	addAcceptanceTranslationsMiddleware
+} = require('./acceptance/_middleware/add-acceptance-translations-middleware');
+const {
+	addPreExaminationTranslationsMiddleware
+} = require('./pre-examination/_middleware/add-pre-examination-translations-middleware');
+const {
+	addExaminationTranslationsMiddleware
+} = require('./examination/_middleware/add-examination-translations-middleware');
+const {
+	addRecommendationTranslationsMiddleware
+} = require('./recommendation/_middleware/add-recommendation-translations-middleware');
+const {
+	addDecisionTranslationsMiddleware
+} = require('./decision/_middleware/add-decision-translations-middleware');
+const {
+	addPostDecisionTranslationsMiddleware
+} = require('./post-decision/_middleware/add-post-decision-translations-middleware');
+
+jest.mock('../_middleware/i18n/add-common-translations-middleware', () => ({
+	addCommonTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./_middleware/add-process-guide-translations-middleware', () => ({
+	addProcessGuideTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./_middleware/add-process-guide-steps-middleware', () => ({
+	addProcessGuideStepsMiddleware: jest.fn()
+}));
+jest.mock('./index/_middleware/add-index-translations-middleware', () => ({
+	addIndexTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./pre-application/_middleware/add-pre-application-translations-middleware', () => ({
+	addDetailedInformationTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./acceptance/_middleware/add-acceptance-translations-middleware', () => ({
+	addAcceptanceTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./pre-examination/_middleware/add-pre-examination-translations-middleware', () => ({
+	addPreExaminationTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./examination/_middleware/add-examination-translations-middleware', () => ({
+	addExaminationTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./recommendation/_middleware/add-recommendation-translations-middleware', () => ({
+	addRecommendationTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./decision/_middleware/add-decision-translations-middleware', () => ({
+	addDecisionTranslationsMiddleware: jest.fn()
+}));
+jest.mock('./post-decision/_middleware/add-post-decision-translations-middleware', () => ({
+	addPostDecisionTranslationsMiddleware: jest.fn()
+}));
 
 describe('pages/process-guide/router', () => {
 	const get = jest.fn();
+	const post = jest.fn();
+	const use = jest.fn();
 
 	jest.doMock('express', () => ({
 		Router: () => ({
-			get
+			get,
+			post,
+			use
 		})
 	}));
 
@@ -23,46 +93,62 @@ describe('pages/process-guide/router', () => {
 	});
 
 	it('should call the process guide routes and controllers', () => {
+		expect(use).toHaveBeenCalledWith(
+			addCommonTranslationsMiddleware,
+			addProcessGuideTranslationsMiddleware
+		);
+
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide',
-			addSteps,
+			addIndexTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getProcessGuideController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/pre-application',
-			addSteps,
+			addPreApplicationTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getPreApplicationController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/review-of-the-application',
-			addSteps,
+			addAcceptanceTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getAcceptanceController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/pre-examination',
-			addSteps,
+			addPreExaminationTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getPreExaminationController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/examination-of-the-application',
-			addSteps,
+			addExaminationTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getExaminationController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/recommendation',
-			addSteps,
+			addRecommendationTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getRecommendationController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/decision',
-			addSteps,
+			addDecisionTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getDecisionController
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/decision-making-process-guide/what-happens-after-the-decision-is-made',
-			addSteps,
+			addPostDecisionTranslationsMiddleware,
+			addProcessGuideStepsMiddleware,
 			getPostDecisionController
 		);
+
 		expect(get).toBeCalledTimes(8);
+		expect(post).toBeCalledTimes(0);
+		expect(use).toBeCalledTimes(1);
 	});
 });

@@ -1,99 +1,71 @@
-const { processGuideTitle, processGuideURL } = require('../index/config');
-const {
-	preApplicationTitle,
-	preApplicationContent,
-	preApplicationURL,
-	preApplicationLinkText
-} = require('../pre-application/config');
-const {
-	acceptanceTitle,
-	acceptanceContent,
-	acceptanceURL,
-	acceptanceLinkText
-} = require('../acceptance/config');
-const {
-	preExaminationTitle,
-	preExaminationContent,
-	preExaminationURL,
-	preExaminationLinkText
-} = require('../pre-examination/config');
-const {
-	examinationTitle,
-	examinationContent,
-	examinationURL,
-	examinationLinkText
-} = require('../examination/config');
-const {
-	recommendationTitle,
-	recommendationContent,
-	recommendationURL,
-	recommendationLinkText
-} = require('../recommendation/config');
-const {
-	decisionTitle,
-	decisionContent,
-	decisionURL,
-	decisionLinkText
-} = require('../decision/config');
-const {
-	postDecisionTitle,
-	postDecisionContent,
-	postDecisionURL,
-	postDecisionLinkText
-} = require('../post-decision/config');
+const { processGuideURL } = require('../index/config');
+const { preApplicationURL } = require('../pre-application/config');
+const { acceptanceURL } = require('../acceptance/config');
+const { preExaminationURL } = require('../pre-examination/config');
+const { examinationURL } = require('../examination/config');
+const { recommendationURL } = require('../recommendation/config');
+const { decisionURL } = require('../decision/config');
+const { postDecisionURL } = require('../post-decision/config');
 
-const processGuideStagesViewModel = (title, content, url, linkText) => ({
+const stepViewModel = (title, content, linkText, url) => ({
 	title,
 	content,
-	url,
-	linkText
+	linkText,
+	url
 });
 
-const getProcessGuideStages = {
-	processGuide: processGuideStagesViewModel(processGuideTitle, null, processGuideURL, null),
-	preApplication: processGuideStagesViewModel(
-		preApplicationTitle,
-		preApplicationContent,
-		preApplicationURL,
-		preApplicationLinkText
+const getProcessGuideStages = (i18n) => ({
+	index: stepViewModel(i18n.t('processGuide.index.heading1'), null, null, processGuideURL),
+	preApplication: stepViewModel(
+		i18n.t('processGuide.preApplication.heading1'),
+		[
+			i18n.t('processGuide.preApplication.paragraph1'),
+			i18n.t('processGuide.preApplication.paragraph2')
+		],
+		i18n.t('processGuide.preApplication.linkText'),
+		preApplicationURL
 	),
-	acceptance: processGuideStagesViewModel(
-		acceptanceTitle,
-		acceptanceContent,
-		acceptanceURL,
-		acceptanceLinkText
+	acceptance: stepViewModel(
+		i18n.t('processGuide.acceptance.heading1'),
+		i18n.t('processGuide.acceptance.paragraph1'),
+		i18n.t('processGuide.acceptance.linkText'),
+		acceptanceURL
 	),
-	preExamination: processGuideStagesViewModel(
-		preExaminationTitle,
-		preExaminationContent,
-		preExaminationURL,
-		preExaminationLinkText
+	preExamination: stepViewModel(
+		i18n.t('processGuide.preExamination.heading1'),
+		[
+			i18n.t('processGuide.preExamination.paragraph1'),
+			i18n.t('processGuide.preExamination.paragraph2'),
+			i18n.t('processGuide.preExamination.paragraph3')
+		],
+		i18n.t('processGuide.preExamination.linkText'),
+		preExaminationURL
 	),
-	examination: processGuideStagesViewModel(
-		examinationTitle,
-		examinationContent,
-		examinationURL,
-		examinationLinkText
+	examination: stepViewModel(
+		i18n.t('processGuide.examination.heading1'),
+		i18n.t('processGuide.examination.paragraph1'),
+		i18n.t('processGuide.examination.linkText'),
+		examinationURL
 	),
-	recommendation: processGuideStagesViewModel(
-		recommendationTitle,
-		recommendationContent,
-		recommendationURL,
-		recommendationLinkText
+	recommendation: stepViewModel(
+		i18n.t('processGuide.recommendation.heading1'),
+		i18n.t('processGuide.recommendation.paragraph1'),
+		i18n.t('processGuide.recommendation.linkText'),
+		recommendationURL
 	),
-	decision: processGuideStagesViewModel(
-		decisionTitle,
-		decisionContent,
-		decisionURL,
-		decisionLinkText
+	decision: stepViewModel(
+		i18n.t('processGuide.decision.heading1'),
+		i18n.t('processGuide.decision.paragraph1'),
+		i18n.t('processGuide.decision.linkText'),
+		decisionURL
 	),
-	postDecision: processGuideStagesViewModel(
-		postDecisionTitle,
-		postDecisionContent,
-		postDecisionURL,
-		postDecisionLinkText
+	postDecision: stepViewModel(
+		i18n.t('processGuide.postDecision.heading1'),
+		i18n.t('processGuide.postDecision.paragraph1'),
+		i18n.t('processGuide.postDecision.linkText'),
+		postDecisionURL
 	)
-};
+});
 
 module.exports = {
 	getProcessGuideStages

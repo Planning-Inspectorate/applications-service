@@ -34,6 +34,7 @@ const getMiscDataByStageName = async (stageName, caseRef) => {
 
 const getProjectsIndexController = async (req, res, next) => {
 	try {
+		const { i18n } = req;
 		const {
 			locals: { applicationData }
 		} = res;
@@ -57,7 +58,7 @@ const getProjectsIndexController = async (req, res, next) => {
 		const mapAccessToken = applicationData.longLat ? await getMapAccessToken() : null;
 
 		return res.render(view, {
-			...getPageData(applicationData, projectUpdates),
+			...getPageData(i18n, applicationData, projectUpdates),
 			preExamSubStages,
 			applicationDecision,
 			rule6Document,
