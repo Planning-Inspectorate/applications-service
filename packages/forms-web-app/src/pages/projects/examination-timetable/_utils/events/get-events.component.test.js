@@ -1,6 +1,12 @@
 const { getEvents } = require('./get-events');
-
 const { getTimetables } = require('../../../../../lib/application-api-wrapper');
+const { mockI18n } = require('../../../../_mocks/i18n');
+const examinationTimetableTranslation_EN = require('../../_translations/en.json');
+
+const examinationTimetableTranslations = {
+	examinationTimetable: examinationTimetableTranslation_EN
+};
+const i18n = mockI18n(examinationTimetableTranslations);
 
 jest.mock('../../../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
@@ -13,7 +19,6 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 			const datePresent = '2023-01-02';
 			const dateUpcoming = '2023-01-03';
 			const datePast = '2023-01-01';
-			const mockSession = {};
 			const mockAppData = {
 				CaseReference: 'mock case reference',
 				dateOfNonAcceptance: '2023-01-01'
@@ -41,7 +46,7 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 						]
 					}
 				});
-				result = await getEvents(mockSession, mockAppData);
+				result = await getEvents(mockAppData, i18n);
 			});
 
 			it('should return the events formatted to the view model', () => {

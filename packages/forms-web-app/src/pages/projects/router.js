@@ -26,6 +26,12 @@ const { getUpdatesRouter } = require('./get-updates/router');
 const { registerRouter } = require('./register/router');
 
 const { featureFlag } = require('../../config');
+const {
+	addExaminationTimetableTranslationsMiddleware
+} = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
 
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
@@ -49,6 +55,8 @@ projectsRouter.get(projectsDocumentsURL, projectsMiddleware, getProjectsDocument
 projectsRouter.get(
 	examinationTimetableURL,
 	projectsMiddleware,
+	addCommonTranslationsMiddleware,
+	addExaminationTimetableTranslationsMiddleware,
 	getProjectsExaminationTimetableController
 );
 projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);

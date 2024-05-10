@@ -3,13 +3,15 @@ const cyCommonTranslations = require('./common.json');
 describe('locales/cy/common', () => {
 	it('should return the welsh common translations', () => {
 		expect(cyCommonTranslations).toEqual({
-			contents: 'Cynnwys',
-			hide: 'Cuddio',
-			hideAllSections: 'Cuddio pob adran',
-			next: 'Nesaf',
 			search: 'Chwilio',
 			show: 'Dangos',
-			showAllSections: 'Dangos pob adran'
+			hide: 'Cuddio',
+			showAllSections: 'Dangos pob adran',
+			hideAllSections: 'Cuddio pob adran',
+			open: 'Agor',
+			close: 'Caeedig',
+			contents: 'Cynnwys',
+			next: 'Nesaf'
 		});
 	});
 });
