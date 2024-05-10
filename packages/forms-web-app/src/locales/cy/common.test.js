@@ -9,7 +9,9 @@ describe('locales/cy/common', () => {
 			showAllSections: 'Dangos pob adran',
 			hideAllSections: 'Cuddio pob adran',
 			open: 'Agor',
-			close: 'Caeedig'
+			close: 'Caeedig',
+			contents: 'Cynnwys',
+			next: 'Nesaf'
 		});
 	});
 });

@@ -3,34 +3,34 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Process guide - {{ processGuide.activeStep.title }}
+	{{ t('processGuide.common.processGuide') }} - {{ t('processGuide.examination.heading1') }}
 {% endblock %}
 
 {% block content %}
 	<h1 class="govuk-heading-xl">
-		{{ processGuide.activeStep.title }}
+		{{ t('processGuide.examination.heading1') }}
 	</h1>
 
-	<h2 class="style-contents-list-title govuk-heading-s">Contents</h2>
+	<h2 class="style-contents-list-title govuk-heading-s">{{ t('common.contents') }}</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#about-the-examination-stage">About the examination stage</a>
+			<a class="govuk-link" href="#about-the-examination-stage">{{ t('examination.heading2') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#what-happens-at-the-examination-stage">What happens at the examination stage</a>
+			<a class="govuk-link" href="#what-happens-at-the-examination-stage">{{ t('examination.heading3') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#when-you-have-registered">When you have registered to have your say you can</a>
+			<a class="govuk-link" href="#when-you-have-registered">{{ t('examination.heading4') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#missed-the-deadline">If you have missed the deadline to register</a>
+			<a class="govuk-link" href="#missed-the-deadline">{{ t('examination.heading5') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#gained-an-interest">If you have recently gained an interest in land affected by a development</a>
+			<a class="govuk-link" href="#gained-an-interest">{{ t('examination.heading6') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#more-information">More information</a>
+			<a class="govuk-link" href="#more-information">{{ t('examination.heading7') }}</a>
 		</li>
 	</ol>
 
@@ -38,100 +38,96 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="about-the-examination-stage">
-					About the examination stage
+					{{ t('examination.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					The examination stage is where the Examining Authority look at the proposed project and ask questions.
+					{{ t('examination.paragraph1') }}
 				</p>
 
 				<p class="govuk-body">
-					The applicant, anyone who is registered to have their say, official bodies and people whose land is directly affected can comment on the proposed development or answer any of the questions at each deadline.
+					{{ t('examination.paragraph2') }}
 				</p>
 
 				<p class="govuk-body">
-					This is usually done in writing.
-					The Examining Authority publish their questions at the times outlined in the examination timetable.
-					The examination may also involve hearings if there are issues that need discussing in detail.
+					{{ t('examination.paragraph3') }}
 				</p>
 
 				<p class="govuk-body">
-					This stage takes up to 6 months.
+					{{ t('examination.paragraph4') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="what-happens-at-the-examination-stage">
-					What happens at the examination stage
+					{{ t('examination.heading3') }}
 				</h2>
 
 				<p class="govuk-body">
-					The examination stage is where the Examining Authority will consider the proposed development and ask questions.
+					{{ t('examination.paragraph5') }}
 				</p>
 
 				<p class="govuk-body">
-					You can send your comments by filling in the online form in the project section of this website.
+					{{ t('examination.paragraph6') }}
 				</p>
 
 				<p class="govuk-body">
-					Anyone who has difficulty using online services can send us information by email or post.
-					The project information in the project section of this website provides contact details for the project case team.
+					{{ t('examination.paragraph7') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="when-you-have-registered">
-					When you have registered to have your say you can:
+					{{ t('examination.heading4') }}:
 				</h2>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>comment on the proposed development</li>
-					<li>speak at hearings</li>
-					<li>attend an accompanied site inspection</li>
+					<li>{{ t('examination.listItem1') }}</li>
+					<li>{{ t('examination.listItem2') }}</li>
+					<li>{{ t('examination.listItem3') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-					You need to register to have your say for your views to be taken into consideration.
+					{{ t('examination.paragraph8') }}
 				</p>
 
 				<p class="govuk-body">
-					You will be given a reference number once you register. You must use this when submitting comments.
+					{{ t('examination.paragraph9') }}
 				</p>
 
 				<p class="govuk-body">
-					To find out more, check our <a class="govuk-link" href="{{ haveYourSayGuideURL }}">guide for having your say about a national infrastructure project</a>.
+					{{ t('examination.paragraph10', { link: '<a class="govuk-link" href="' + haveYourSayGuideURL + '">' +  t('examination.paragraph10LinkText') + '</a>' }) | safe }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="missed-the-deadline">
-					If you have missed the deadline to register
+					{{ t('examination.heading5') }}
 				</h2>
 
 				<p class="govuk-body">
-					You can look at project information but you cannot submit a comment.
+					{{ t('examination.paragraph11') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="gained-an-interest">
-					If you have recently gained an interest in land affected by a development
+					{{ t('examination.heading6') }}
 				</h2>
 
 				<p class="govuk-body">
-					You can contact the project team if the developer did not tell you the application was accepted or you did not register to have your say.
-					The project team will ask the Examining Authority if you can be an Interested Party and have your say.
+					{{ t('examination.paragraph12') }}
 				</p>
 
 				<p class="govuk-body">
-					The project team email address can be found in the contact us section of the project page.
+					{{ t('examination.paragraph13') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="more-information">
-					More information
+					{{ t('examination.heading7') }}
 				</h2>
 
 				<p class="govuk-body">
-					All details about the project including documents, questions, comments and any advice given will be published on the project information page.
+					{{ t('examination.paragraph14') }}
 				</p>
 
 				<p class="govuk-body">
-					<a class="govuk-link" href="{{ pinsURL.adviceNotes }}">You can also read the full set of technical advice notes</a>.
+					{{ t('examination.paragraph15', { link: '<a class="govuk-link" href="' + pinsURL.adviceNotes + '">' +  t('examination.paragraph15LinkText') + '</a>' }) | safe }}
 				</p>
 
-				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle) }}
+				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 

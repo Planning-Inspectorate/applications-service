@@ -9,7 +9,9 @@ describe('locales/en/common', () => {
 			showAllSections: 'Show all sections',
 			hideAllSections: 'Hide all sections',
 			open: 'Open',
-			close: 'Close'
+			close: 'Close',
+			contents: 'Contents',
+			next: 'Next'
 		});
 	});
 });

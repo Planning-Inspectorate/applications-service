@@ -13,71 +13,70 @@
 {% endblock %}
 
 {% block pageTitle %}
-  Process guide - {{ processGuide.steps.processGuide.title }}
+	{{ t('processGuide.common.processGuide') }} - {{ t('processGuide.index.heading1') }}
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<h1 class="govuk-heading-xl">
-        {{ processGuide.steps.processGuide.title }}
-      </h1>
-
-      <p class="govuk-body">
-        Nationally Significant Infrastructure Projects are submitted to the Planning Inspectorate. We are the government agency who examine the proposal.
-      </p>
+				{{ t('processGuide.index.heading1') }}
+			</h1>
 
 			<p class="govuk-body">
-        		Anyone can get involved including:
+				{{ t('processGuideIndex.paragraph1') }}
+			</p>
+
+			<p class="govuk-body">
+				{{ t('processGuideIndex.paragraph2') }}
 			</p>
 
 			<ul class="govuk-list govuk-list--bullet">
-				<li>applicants</li>
-				<li>members of the public</li>
-				<li>statutory bodies</li>
-				<li>charities</li>
-				<li>local authorities</li>
+				<li>{{ t('processGuideIndex.listItem1') }}</li>
+				<li>{{ t('processGuideIndex.listItem2') }}</li>
+				<li>{{ t('processGuideIndex.listItem3') }}</li>
+				<li>{{ t('processGuideIndex.listItem4') }}</li>
+				<li>{{ t('processGuideIndex.listItem5') }}</li>
 			</ul>
 
 			<p class="govuk-body">
-        		An applicant submits an application for a development consent order to the Planning Inspectorate. These can be developments like:
+				{{ t('processGuideIndex.paragraph3') }}
 			</p>
 
 			<ul class="govuk-list govuk-list--bullet">
-				<li>offshore wind farms</li>
-				<li>power stations and electric lines</li>
-				<li>motorways and other major roads</li>
-				<li>railways</li>
-				<li>gas pipelines</li>
+				<li>{{ t('processGuideIndex.listItem6') }}</li>
+				<li>{{ t('processGuideIndex.listItem7') }}</li>
+				<li>{{ t('processGuideIndex.listItem8') }}</li>
+				<li>{{ t('processGuideIndex.listItem9') }}</li>
+				<li>{{ t('processGuideIndex.listItem10') }}</li>
 			</ul>
 
 			<p class="govuk-body">
-        		We appoint independent inspectors to examine application and make recommendations to the relevant Secretary of State about whether permission for development should be given.
+				{{ t('processGuideIndex.paragraph4') }}
 			</p>
 
 			<p class="govuk-body">
-				The relevant Secretary of State makes the final decision.
+				{{ t('processGuideIndex.paragraph5') }}
 			</p>
 
 			<p class="govuk-body">
-        		There are several stages in the process for considering whether a national infrastructure project should be given consent.
-				The whole process can take around 18 months.
+				{{ t('processGuideIndex.paragraph6') }}
 			</p>
 
 			<h2 class="govuk-heading-m">
-				Guide for people or organisations who want to have their say
+				{{ t('processGuideIndex.heading2') }}
 			</h2>
 
 			<p class="govuk-body">
-        		Members of the public can get involved in early consultations before an application has been submitted by contacting the applicant directly.
+				{{ t('processGuideIndex.paragraph7') }}
 			</p>
 
 			<p class="govuk-body">
-        		Alternatively you can register to have your say on this website during the pre-examination stage.
+				{{ t('processGuideIndex.paragraph8') }}
 			</p>
 
 			<p class="govuk-body">
-				There is a <a class="govuk-link" href="{{ haveYourSayGuideURL }}">guide</a> with information for people or organisations who want to have their say about a national infrastructure project.
+				{{ t('processGuideIndex.paragraph9', { link: '<a class="govuk-link" href="' + haveYourSayGuideURL + '">' + t('processGuideIndex.paragraph9LinkText') + '</a>' }) | safe }}
 			</p>
 
 			{% include "process-guide/_includes/process-guide-steps.njk" %}

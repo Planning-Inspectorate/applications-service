@@ -1,3 +1,5 @@
 const processGuideSubdirectory = 'decision-making-process-guide';
 
-module.exports = { processGuideSubdirectory };
+const processGuideI18nNamespace = 'processGuide';
+
+module.exports = { processGuideSubdirectory, processGuideI18nNamespace };

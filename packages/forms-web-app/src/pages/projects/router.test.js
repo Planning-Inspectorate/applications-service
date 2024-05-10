@@ -9,6 +9,7 @@ const {
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
+const { registerRouter } = require('./register/router');
 
 const { projectsMiddleware } = require('./_middleware/middleware');
 const {
@@ -17,8 +18,16 @@ const {
 const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
-const { registerRouter } = require('./register/router');
+const {
+	addProcessGuideTranslationsMiddleware
+} = require('../process-guide/_middleware/add-process-guide-translations-middleware');
 
+jest.mock('../_middleware/i18n/add-common-translations-middleware', () => ({
+	addCommonTranslationsMiddleware: jest.fn()
+}));
+jest.mock('../process-guide/_middleware/add-process-guide-translations-middleware', () => ({
+	addProcessGuideTranslationsMiddleware: jest.fn()
+}));
 jest.mock('../../config', () => {
 	const originalConfig = jest.requireActual('../../config');
 
@@ -51,6 +60,7 @@ describe('pages/projects/router', () => {
 		it('should call the projects routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref',
+				addProcessGuideTranslationsMiddleware,
 				projectsMiddleware,
 				getProjectsIndexController
 			);
