@@ -11,7 +11,11 @@ describe('locales/cy/common', () => {
 			open: 'Agor',
 			close: 'Caeedig',
 			contents: 'Cynnwys',
-			next: 'Nesaf'
+			next: 'Nesaf',
+			govUK: {
+				pressOfficeOpeningHours:
+					'9:00 tan 17:00 o ddydd Llun i ddydd Gwener (heblaw am wyliau cyhoeddus)'
+			}
 		});
 	});
 });

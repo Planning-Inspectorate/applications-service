@@ -11,7 +11,10 @@ describe('locales/en/common', () => {
 			open: 'Open',
 			close: 'Close',
 			contents: 'Contents',
-			next: 'Next'
+			next: 'Next',
+			govUK: {
+				pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
+			}
 		});
 	});
 });
