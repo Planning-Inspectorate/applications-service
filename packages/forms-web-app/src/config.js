@@ -101,7 +101,9 @@ module.exports = {
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
-		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
+		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)',
+		nsipNews:
+			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest'
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
