@@ -7,5 +7,7 @@
 	"open": "Agor",
 	"close": "Caeedig",
 	"contents": "Cynnwys",
-	"next": "Nesaf"
+	"next": "Nesaf",
+	"showAllSteps": "Dangos pob cam",
+	"hideAllSteps": "Cuddio pob cam"
 }

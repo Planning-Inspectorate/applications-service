@@ -7,5 +7,7 @@
 	"open": "Open",
 	"close": "Close",
 	"contents": "Contents",
-	"next": "Next"
+	"next": "Next",
+	"showAllSteps": "Show all steps",
+	"hideAllSteps": "Hide all steps"
 }

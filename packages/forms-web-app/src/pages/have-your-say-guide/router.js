@@ -14,17 +14,62 @@ const { getInvolvedURL } = require('./get-involved/config');
 const { duringExaminationURL } = require('./during-examination/config');
 const { decisionMadeURL } = require('./decision-made/config');
 
-const { addSteps } = require('./_middleware/add-steps');
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	addHaveYourSayGuideTranslationsMiddleware
+} = require('./_middleware/add-have-your-say-guide-translations-middleware');
+const {
+	addHaveYourSayGuideStepsMiddleware
+} = require('./_middleware/add-have-your-say-guide-steps-middleware');
+const {
+	addIndexTranslationsMiddleware
+} = require('./index/_middleware/add-index-translations-middleware');
 
 const haveYourSayGuideRouter = express.Router();
 
-haveYourSayGuideRouter.get(haveYourSayGuideURL, addSteps, getHaveYourSayGuideController);
+haveYourSayGuideRouter.use(
+	addCommonTranslationsMiddleware,
+	addHaveYourSayGuideTranslationsMiddleware
+);
+haveYourSayGuideRouter.get(
+	haveYourSayGuideURL,
+	addIndexTranslationsMiddleware,
+	addHaveYourSayGuideStepsMiddleware,
+	getHaveYourSayGuideController
+);
 /* /index being used for e2e tests */
-haveYourSayGuideRouter.get(haveYourSayGuideIndexURL, addSteps, getHaveYourSayGuideController);
-haveYourSayGuideRouter.get(takingPartURL, addSteps, getTakingPartController);
-haveYourSayGuideRouter.get(registeringURL, addSteps, getRegisteringController);
-haveYourSayGuideRouter.get(getInvolvedURL, addSteps, getInvolvedController);
-haveYourSayGuideRouter.get(duringExaminationURL, addSteps, getDuringExaminationController);
-haveYourSayGuideRouter.get(decisionMadeURL, addSteps, getDecisionMadeController);
+haveYourSayGuideRouter.get(
+	haveYourSayGuideIndexURL,
+	addIndexTranslationsMiddleware,
+	addHaveYourSayGuideStepsMiddleware,
+	getHaveYourSayGuideController
+);
+haveYourSayGuideRouter.get(
+	takingPartURL,
+	addHaveYourSayGuideStepsMiddleware,
+	getTakingPartController
+);
+haveYourSayGuideRouter.get(
+	registeringURL,
+	addHaveYourSayGuideStepsMiddleware,
+	getRegisteringController
+);
+haveYourSayGuideRouter.get(
+	getInvolvedURL,
+	addHaveYourSayGuideStepsMiddleware,
+	getInvolvedController
+);
+haveYourSayGuideRouter.get(
+	duringExaminationURL,
+	addHaveYourSayGuideStepsMiddleware,
+	getDuringExaminationController
+);
+haveYourSayGuideRouter.get(
+	decisionMadeURL,
+	addHaveYourSayGuideStepsMiddleware,
+	getDecisionMadeController
+);
 
 module.exports = { haveYourSayGuideRouter };
