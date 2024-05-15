@@ -1,4 +1,4 @@
-const { projectsMiddleware, projectMigrationMiddleware } = require('./middleware');
+const { projectsMiddleware } = require('./middleware');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
@@ -15,7 +15,9 @@ jest.mock('../../../config', () => {
 		...originalConfig,
 		featureFlag: {
 			...originalConfig.featureFlag,
-			projectMigrationCaseReferences: ['mock-case-ref-in-config']
+			allowProjectInformation: false,
+			hideProjectTimelineLink: false,
+			hideAllExaminationDocumentsLink: false
 		}
 	};
 });
@@ -75,7 +77,7 @@ describe('projects _middleware', () => {
 						url: '/projects/project-timeline'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-documents',
 						name: 'Documents',
 						url: '/projects/mock-case-ref/documents'
@@ -93,19 +95,19 @@ describe('projects _middleware', () => {
 						url: '/projects/mock-case-ref/representations'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-examination-timetable',
 						name: 'Examination timetable',
 						url: '/projects/mock-case-ref/examination-timetable'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-have-your-say',
 						name: 'Have your say',
 						url: '/projects/mock-case-ref/examination/have-your-say-during-examination'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock-case-ref/get-updates/start'
@@ -117,7 +119,7 @@ describe('projects _middleware', () => {
 						url: '/projects/all-examination-documents'
 					},
 					{
-						hidden: true,
+						hidden: false,
 						id: 'section-51',
 						name: 'Section 51 advice',
 						url: '/projects/mock-case-ref/s51advice'
@@ -127,33 +129,6 @@ describe('projects _middleware', () => {
 		});
 		it('should call next ', () => {
 			expect(next).toHaveBeenCalled();
-		});
-	});
-	describe('#projectMigrationMiddleware', () => {
-		const next = jest.fn();
-		const res = {
-			status: jest.fn().mockReturnThis(),
-			render: jest.fn()
-		};
-
-		describe('when the project case-ref is in config.featureFlag.projectMigrationCaseReferences', () => {
-			it('should call next()', () => {
-				const req = {
-					params: { case_ref: 'mock-case-ref-in-config' }
-				};
-				projectMigrationMiddleware(req, res, next);
-				expect(next).toHaveBeenCalledWith();
-			});
-		});
-		describe('when the project case-ref is not in config.featureFlag.projectMigrationCaseReferences', () => {
-			it('should call res.status(404).render("error/not-found")', () => {
-				const req = {
-					params: { case_ref: 'mock-case-ref-not-in-config' }
-				};
-				projectMigrationMiddleware(req, res, next);
-				expect(res.status).toHaveBeenCalledWith(404);
-				expect(res.render).toHaveBeenCalledWith('error/not-found');
-			});
 		});
 	});
 });

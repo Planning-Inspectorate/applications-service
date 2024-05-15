@@ -3,30 +3,30 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Process guide - {{ processGuide.activeStep.title }}
+	{{ t('processGuide.common.processGuide') }} - {{ t('processGuide.preApplication.heading1') }}
 {% endblock %}
 
 {% block content %}
 	<h1 class="govuk-heading-xl">
-		{{ processGuide.activeStep.title }}
+		{{ t('processGuide.preApplication.heading1') }}
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-    Contents
-  </h2>
+		{{ t('common.contents') }}
+	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#the-pre-application-stage">The pre-application stage</a>
+			<a class="govuk-link" href="#the-pre-application-stage">{{ t('preApplication.heading2') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#about-the-pre-application-service-for-applicants">About the pre-application service for applicants</a>
+			<a class="govuk-link" href="#about-the-pre-application-service-for-applicants">{{ t('preApplication.heading3') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#advive-for-local-authorities-at-the-pre-application-stage">Advice for local authorities at the pre-application stage</a>
+			<a class="govuk-link" href="#advive-for-local-authorities-at-the-pre-application-stage">{{ t('preApplication.heading4') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
+			<a class="govuk-link" href="#more-detailed-advice">{{ t('preApplication.heading5') }}</a>
 		</li>
 	</ol>
 
@@ -34,79 +34,76 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="the-pre-application-stage">
-          The pre-application stage
-        </h2>
+					{{ t('preApplication.heading2') }}
+				</h2>
 
 				<p class="govuk-body">
-          Before an applicant sends their application for a proposed development to the Planning Inspectorate, they must carry out public consultation.
-					This feedback will then be taken into account and used to help shape the proposed project.
-					This happens at the pre-application stage.
-        </p>
+					{{ t('preApplication.paragraph1') }}
+				</p>
 
 				<p class="govuk-body">
-          The applicant must consult:
-        </p>
+					{{ t('preApplication.paragraph2') }}
+				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>the general public</li>
-					<li>parish councils</li>
-					<li>statutory consultees</li>
-					<li>local authorities and councils</li>
-					<li>land owners and tenants</li>
+					<li>{{ t('preApplication.listItem1') }}</li>
+					<li>{{ t('preApplication.listItem2') }}</li>
+					<li>{{ t('preApplication.listItem3') }}</li>
+					<li>{{ t('preApplication.listItem4') }}</li>
+					<li>{{ t('preApplication.listItem5') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-          They must consider all comments and information from members of the public and organisations.
-        </p>
+					{{ t('preApplication.paragraph3') }}
+				</p>
 
 				<p class="govuk-body">
-          Getting involved in the applicant's consultation during the pre-application stage is very important.
-					This is your opportunity to put forward any questions and concerns, learn more about the development and how it might effect the area.
-        </p>
+					{{ t('preApplication.paragraph4') }}
+				</p>
 
 				<p class="govuk-body">
-					<a class="govuk-link" href="{{ haveYourSayGuideURL }}">Check the guide on how you can have your say</a>.
+					{{ t('preApplication.paragraph5', { link: '<a class="govuk-link" href="' + haveYourSayGuideURL + '">' +  t('preApplication.paragraph5LinkText') + '</a>' }) | safe }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="about-the-pre-application-service-for-applicants">
-          About the pre-application service for applicants
-        </h2>
+					{{ t('preApplication.heading3') }}
+				</h2>
 
 				<p class="govuk-body">
-          We offer a pre-application service for applicants who are preparing an application. This is a free service.
-        </p>
+					{{ t('preApplication.paragraph6') }}
+				</p>
 
 				<p class="govuk-body">
-          This includes:
-        </p>
+					{{ t('preApplication.paragraph7') }}
+				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>providing advice about how to prepare an application</li>
-					<li>pre-submission checks and reviews of draft documents</li>
-					<li>checking applicants have followed all the required steps</li>
+					<li>{{ t('preApplication.listItem6') }}</li>
+					<li>{{ t('preApplication.listItem7') }}</li>
+					<li>{{ t('preApplication.listItem8') }}</li>
 				</ul>
 
 				<h2 class="govuk-heading-m" id="advive-for-local-authorities-at-the-pre-application-stage">
-          Advice for local authorities at the pre-application stage
-        </h2>
+					{{ t('preApplication.heading4') }}
+				</h2>
 
 				<p class="govuk-body">
-					You can view our advice notes with information about <a class="govuk-link" href="{{ pinsURL.adviceNotes }}">what you need to do if you represent a local authority</a>.
-        </p>
-
-				<h2 class="govuk-heading-m" id="more-detailed-advice">
-          More detailed advice
-        </h2>
-
-				<p class="govuk-body">
-          If you need more detailed advice, you can check our advice notes for more information.
-        </p>
-
-				<p class="govuk-body">
-					<a class="govuk-link" href="{{ pinsURL.adviceNotes }}">Read the full set of detailed advice notes</a>
+					{{ t('preApplication.paragraph8', { link: '<a class="govuk-link" href="' + pinsURL.adviceNotes + '">' +  t('preApplication.paragraph8LinkText') + '</a>' }) | safe }}
 				</p>
 
-				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle) }}
+				<h2 class="govuk-heading-m" id="more-detailed-advice">
+					{{ t('preApplication.heading5') }}
+				</h2>
+
+				<p class="govuk-body">
+					{{ t('preApplication.paragraph9') }}
+				</p>
+
+				<p class="govuk-body">
+					<a class="govuk-link" href="{{ pinsURL.adviceNotes }}">{{ t('preApplication.paragraph10LinkText') }}</a>
+				</p>
+
+				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 

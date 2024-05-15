@@ -1,8 +1,15 @@
 const { getProcessGuideStages } = require('./get-process-guide-stages');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
+const processGuideTranslations_EN = require('../_translations/en.json');
+
 describe('pages/process-guide/_utils/get-process-guide-stages', () => {
+	const i18n = mockI18n({ processGuide: processGuideTranslations_EN });
+	const processGuideStages = getProcessGuideStages(i18n);
+
 	it('should return the process guide stages', () => {
-		expect(getProcessGuideStages).toEqual({
+		expect(processGuideStages).toEqual({
 			acceptance: {
 				content:
 					'This is when the applicant sends us their application documents. We check if we can accept the application for examination. We have 28 days to make this decision.',
@@ -24,6 +31,12 @@ describe('pages/process-guide/_utils/get-process-guide-stages', () => {
 				title: 'Examination',
 				url: '/decision-making-process-guide/examination-of-the-application'
 			},
+			index: {
+				content: null,
+				linkText: null,
+				title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)',
+				url: '/decision-making-process-guide'
+			},
 			postDecision: {
 				content:
 					'Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.',
@@ -42,19 +55,13 @@ describe('pages/process-guide/_utils/get-process-guide-stages', () => {
 			},
 			preExamination: {
 				content: [
-					'The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.',
+					'The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say must be able to register at this stage.',
 					'The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.',
 					'The pre-examination stage usually takes about 3 months.'
 				],
 				linkText: 'What happens during the pre-examination stage.',
 				title: 'Pre-examination',
 				url: '/decision-making-process-guide/pre-examination'
-			},
-			processGuide: {
-				content: null,
-				linkText: null,
-				title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)',
-				url: '/decision-making-process-guide'
 			},
 			recommendation: {
 				content:

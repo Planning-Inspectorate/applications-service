@@ -6,8 +6,7 @@ module.exports = async (context, message) => {
 	const serviceUserId = message.id;
 
 	if (!serviceUserId) {
-		context.log(`skipping update as serviceUserId is missing`);
-		return;
+		throw new Error(`id is required`);
 	}
 
 	const serviceUser = mapMessageToServiceUser(message);

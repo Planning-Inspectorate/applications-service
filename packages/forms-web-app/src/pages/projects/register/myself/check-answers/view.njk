@@ -8,15 +8,15 @@
 {% endblock %}
 
 {% set address %}
-	{{ data.address.line1 }}<br>
-	{% if data.address.line2 %}
-		{{ data.address.line2 }}<br>
-	{% endif %}
-	{% if data.address.line3 %}
-		{{ data.address.line3 }}<br>
-	{% endif %}
-	{{ data.address.postcode }}<br>
-	{{ data.address.country }}
+{{ data.address.line1 }}<br>
+{% if data.address.line2 %}
+	{{ data.address.line2 }}<br>
+{% endif %}
+{% if data.address.line3 %}
+	{{ data.address.line3 }}<br>
+{% endif %}
+{{ data.address.postcode }}<br>
+{{ data.address.country }}
 {% endset %}
 
 {% block content %}
@@ -108,24 +108,6 @@
 					},
 					{
 						key: {
-						text: "Telephone number"
-					},
-						value: {
-						text: summaryField( data['telephone'], { 'data-cy': "telephone" })
-					},
-						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/myself/telephone-number?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "your telephone number",
-								attributes: { "data-cy": "telephone" }
-							}
-						]
-					}
-					},
-					{
-						key: {
 						text: "Address"
 					},
 						value: {
@@ -138,6 +120,24 @@
 								text: "Change",
 								visuallyHiddenText: "your address",
 								attributes: { "data-cy": "address" }
+							}
+						]
+					}
+					},
+					{
+						key: {
+						text: "Telephone number"
+					},
+						value: {
+						text: summaryField( data['telephone'], { 'data-cy': "telephone" })
+					},
+						actions: {
+						items: [
+							{
+								href: baseUrl + "/register/myself/telephone-number?mode=edit",
+								text: "Change",
+								visuallyHiddenText: "your telephone number",
+								attributes: { "data-cy": "telephone" }
 							}
 						]
 					}

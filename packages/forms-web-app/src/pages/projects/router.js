@@ -15,7 +15,10 @@ const {
 	getProjectsExaminationTimetableURL
 } = require('./examination-timetable/_utils/get-projects-examination-timetable-url');
 
-const { projectsMiddleware, projectMigrationMiddleware } = require('./_middleware/middleware');
+const { projectsMiddleware } = require('./_middleware/middleware');
+const {
+	addProcessGuideTranslationsMiddleware
+} = require('../process-guide/_middleware/add-process-guide-translations-middleware');
 
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
@@ -23,6 +26,12 @@ const { getUpdatesRouter } = require('./get-updates/router');
 const { registerRouter } = require('./register/router');
 
 const { featureFlag } = require('../../config');
+const {
+	addExaminationTimetableTranslationsMiddleware
+} = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
 
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
@@ -34,36 +43,29 @@ const projectsRouter = express.Router();
 if (featureFlag.allowProjectInformation) {
 	projectsRouter.get(
 		projectsIndexURL,
-		[projectsMiddleware, projectMigrationMiddleware],
+		addProcessGuideTranslationsMiddleware,
+		projectsMiddleware,
 		getProjectsIndexController
 	);
 	projectsRouter.get(projectsAllUpdatesURL, projectsMiddleware, getProjectsAllUpdatesController);
 }
 
-if (featureFlag.allowDocumentLibrary) {
-	projectsRouter.get(projectsDocumentsURL, projectsMiddleware, getProjectsDocumentsController);
-}
+projectsRouter.get(projectsDocumentsURL, projectsMiddleware, getProjectsDocumentsController);
 
-if (featureFlag.allowExaminationTimetable) {
-	projectsRouter.get(
-		examinationTimetableURL,
-		projectsMiddleware,
-		getProjectsExaminationTimetableController
-	);
-	projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);
-}
+projectsRouter.get(
+	examinationTimetableURL,
+	projectsMiddleware,
+	addCommonTranslationsMiddleware,
+	addExaminationTimetableTranslationsMiddleware,
+	getProjectsExaminationTimetableController
+);
+projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableController);
 
-if (featureFlag.allowSection51) {
-	projectsRouter.use(section51Router);
-}
+projectsRouter.use(section51Router);
 
-if (featureFlag.allowRepresentation) {
-	projectsRouter.use(representationsRouter);
-}
+projectsRouter.use(representationsRouter);
 
-if (featureFlag.allowGetUpdates) {
-	projectsRouter.use(getUpdatesRouter);
-}
+projectsRouter.use(getUpdatesRouter);
 
 projectsRouter.use(registerRouter);
 

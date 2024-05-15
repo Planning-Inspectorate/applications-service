@@ -1,7 +1,7 @@
 const {
 	isTimetableDateOfEventPast,
 	isTimetableTypeOfEventDeadlineOpen,
-	isTimetableTypeOfEventDeadline
+	isTimetableTypeOfEventActionable
 } = require('./check-timetable-state');
 
 describe('utils/check-timetable-state', () => {
@@ -13,26 +13,25 @@ describe('utils/check-timetable-state', () => {
 			beforeEach(() => {
 				jest.useFakeTimers().setSystemTime(new Date(datePresent));
 			});
+
 			describe('and the event date is in the past', () => {
 				let result;
-				const mockEvent = {
-					dateOfEvent: datePast
-				};
+
 				beforeEach(() => {
-					result = isTimetableDateOfEventPast(mockEvent);
+					result = isTimetableDateOfEventPast(datePast);
 				});
+
 				it('should return true', () => {
-					expect(result).toEqual(false);
+					expect(result).toEqual(true);
 				});
 			});
 			describe('and the event date is upcoming', () => {
 				let result;
-				const mockEvent = {
-					dateOfEvent: dateUpcoming
-				};
+
 				beforeEach(() => {
-					result = isTimetableDateOfEventPast(mockEvent);
+					result = isTimetableDateOfEventPast(dateUpcoming);
 				});
+
 				it('should return false', () => {
 					expect(result).toEqual(false);
 				});
@@ -52,27 +51,19 @@ describe('utils/check-timetable-state', () => {
 				describe('and the event date is upcoming', () => {
 					describe('and the event deadline start date has started', () => {
 						let result;
-						const mockEvent = {
-							typeOfEvent: 'Deadline',
-							dateTimeDeadlineStart: datePast,
-							dateOfEvent: dateUpcoming
-						};
+
 						beforeEach(() => {
-							result = isTimetableTypeOfEventDeadlineOpen(mockEvent);
+							result = isTimetableTypeOfEventDeadlineOpen('Deadline', dateUpcoming, datePast);
 						});
 						it('should return true', () => {
-							expect(result).toEqual(false);
+							expect(result).toEqual(true);
 						});
 					});
 					describe('and the event deadline start date has not started', () => {
 						let result;
-						const mockEvent = {
-							typeOfEvent: 'Deadline',
-							dateTimeDeadlineStart: dateUpcoming,
-							dateOfEvent: dateUpcoming
-						};
+
 						beforeEach(() => {
-							result = isTimetableTypeOfEventDeadlineOpen(mockEvent);
+							result = isTimetableTypeOfEventDeadlineOpen('Deadline', dateUpcoming, dateUpcoming);
 						});
 						it('should return false', () => {
 							expect(result).toEqual(false);
@@ -83,24 +74,35 @@ describe('utils/check-timetable-state', () => {
 		});
 	});
 
-	describe('#isTimetableTypeOfEventDeadline', () => {
-		describe('When asserting if the type of event is deadline', () => {
-			describe('and the type of event is deadline', () => {
-				let result;
-				const mockTypeOfEvent = 'Deadline';
-				beforeEach(() => {
-					result = isTimetableTypeOfEventDeadline(mockTypeOfEvent);
-				});
+	describe('#isTimetableTypeOfEventActionable', () => {
+		describe('When asserting if the type of event should trigger opening of the timetable', () => {
+			let mockTypeOfEvent;
+
+			describe('and the type of event is "deadline"', () => {
+				mockTypeOfEvent = 'Deadline';
+				const result = isTimetableTypeOfEventActionable(mockTypeOfEvent);
 				it('should return true', () => {
 					expect(result).toEqual(true);
 				});
 			});
-			describe('and the type of event is not deadline', () => {
-				let result;
-				const mockTypeOfEvent = 'Not deadline';
-				beforeEach(() => {
-					result = isTimetableTypeOfEventDeadline(mockTypeOfEvent);
+			describe('and the type of event is "procedural deadline" [source: NI]', () => {
+				mockTypeOfEvent = 'Procedural DEADLINE';
+				const result = isTimetableTypeOfEventActionable(mockTypeOfEvent);
+				it('should return true', () => {
+					expect(result).toEqual(true);
 				});
+			});
+
+			describe('and the type of event is "procedural deadline (pre-examination)" [source: BO]', () => {
+				mockTypeOfEvent = 'Procedural DEADLINE (pre-examination)';
+				const result = isTimetableTypeOfEventActionable(mockTypeOfEvent);
+				it('should return true', () => {
+					expect(result).toEqual(true);
+				});
+			});
+			describe('and the type of event is not on the actionable events list', () => {
+				mockTypeOfEvent = 'Not actionable deadline';
+				const result = isTimetableTypeOfEventActionable(mockTypeOfEvent);
 				it('should return false', () => {
 					expect(result).toEqual(false);
 				});

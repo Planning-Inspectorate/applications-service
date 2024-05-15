@@ -105,6 +105,9 @@ dist
 .idea
 *.iml
 
+# Vim swap files
+**/*.swp
+
 # Jest
 jest-reports
 junit.xml
@@ -130,3 +133,8 @@ __blobstorage__
 __queuestorage__
 __azurite
 __azurite_db*__.json
+
+# Structurizr
+workspace.json
+.structurizr/*
+build

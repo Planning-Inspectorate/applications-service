@@ -14,6 +14,7 @@ const timetablesRouter = require('./timetables');
 const submissionRouter = require('./submissions');
 const subscriptionRoute = require('./subscriptions');
 const adviceRoute = require('./advice');
+const validateMigrationRouter = require('./validate-migration');
 
 router.get('/', (req, res) => res.sendStatus(204));
 
@@ -27,5 +28,6 @@ router.use('/api/v1/timetables', timetablesRouter);
 router.use('/api/v1/submissions', submissionRouter);
 router.use('/api/v1/subscriptions', subscriptionRoute);
 router.use('/api/v1/advice', adviceRoute);
+router.use('/validate-migration', validateMigrationRouter);
 
 module.exports = router;

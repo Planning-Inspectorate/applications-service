@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% if events.upcoming.displayEvents %}
-	{% set upcomingEventsHtml = sectionEvents(events.upcoming.events) %}
+	{% set upcomingEventsHtml = sectionEvents(events.upcoming.events, t) %}
 {% else %}
 	{% set upcomingEventsHtml = events.upcoming.noEventsHtml %}
 {% endif %}
@@ -20,20 +20,20 @@
 {% endif %}
 
 {% set preTitle = title %}
-{% set title = subtitle %}
+{% set title = t('examinationTimetable.heading1') %}
 {% set activeId = 'project-examination-timetable' %}
 
 {% block pageContent %}
 	<p class="govuk-body">
-		The examination timetable shows the dates of events and deadlines for submissions.
+		{{ t('examinationTimetable.paragraph1') }}
 	</p>
 
 	<p class="govuk-body">
-		If you have registered to have your say, you can do this in the examination stage.
+		{{ t('examinationTimetable.paragraph2') }}
 	</p>
 
 	{% if examination.startDate or examination.closeDate %}
-		<h2 class="govuk-heading-m">The examination stage</h2>
+		<h2 class="govuk-heading-m">{{ t('examinationTimetable.heading2') }}</h2>
 	{% endif %}
 
 	{% if examination.startDate %}
@@ -44,13 +44,17 @@
 		<p>{{ examination.closeDate }}</p>
 	{% endif %}
 
-	{% if events.hasOpenTimetables and featureFlag.allowHaveYourSay == true %}
-		<a class="govuk-button" href='{{ baseUrl }}/projects/{{ caseRef }}/examination/have-your-say-during-examination'>Have your say</a>
+	{% if events.hasOpenTimetables %}
+		<a class="govuk-button" href='{{ baseUrl }}/projects/{{ caseRef }}/examination/have-your-say-during-examination'>{{ t('examinationTimetable.submitHaveYourSay') }}</a>
 	{% endif %}
 
 	{{ govukAccordion({
 		headingLevel: 3,
 		id: "examination-timetable-events-accordion",
+		showAllSectionsText: t('common.showAllSections'),
+		hideAllSectionsText: t('common.hideAllSections'),
+		showSectionText: t('common.show'),
+		hideSectionText: t('common.hide'),
 		items: [
 			{
 				heading: {

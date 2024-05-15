@@ -22,6 +22,19 @@ const {
 	getRegisterOfApplicationsURL
 } = require('./register-of-applications/utils/get-register-of-applications-url');
 
+const {
+	addCommonTranslationsMiddleware
+} = require('./_middleware/i18n/add-common-translations-middleware');
+const {
+	addIndexTranslationsMiddleware
+} = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addDetailedInformationTranslationsMiddleware
+} = require('./detailed-information/_middleware/add-detailed-information-translations-middleware');
+
+const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
+const { validationErrorHandler } = require('../validators/validation-error-handler');
+
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
 
@@ -33,23 +46,28 @@ const projectSearchURL = getProjectSearchURL();
 const detailedInformationURL = getDetailedInformationURL();
 const registerOfApplicationsURL = getRegisterOfApplicationsURL();
 
-const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
-const { validationErrorHandler } = require('../validators/validation-error-handler');
-
 const { featureFlag } = require('../config');
 
 const pagesRouter = express.Router();
 
 if (featureFlag.allowHomepage) {
-	pagesRouter.get(indexURL, getIndexController);
-	pagesRouter.get(detailedInformationURL, getDetailedInformationController);
+	pagesRouter.get(
+		indexURL,
+		addCommonTranslationsMiddleware,
+		addIndexTranslationsMiddleware,
+		getIndexController
+	);
+	pagesRouter.get(
+		detailedInformationURL,
+		addDetailedInformationTranslationsMiddleware,
+		getDetailedInformationController
+	);
 	pagesRouter.use(registerOfAdviceRouter);
 }
 
-if (!featureFlag.usePrivateBetaV1RoutesOnly) {
-	pagesRouter.get(projectSearchURL, getProjectSearchController);
-	pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
-}
+pagesRouter.get(projectSearchURL, getProjectSearchController);
+
+pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
 
 pagesRouter.get(termsAndConditionsURL, getTermsAndConditionsController);
 

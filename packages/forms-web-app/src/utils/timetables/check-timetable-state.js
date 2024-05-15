@@ -5,7 +5,24 @@ const {
 	isNullSQLDate
 } = require('../date-utils');
 
-const isTimetableTypeOfEventDeadline = (typeOfEvent) => typeOfEvent === 'Deadline';
+const eventTypeTriggers = {
+	deadline: 'deadline',
+	proceduralDeadline: 'procedural deadline'
+};
+
+const isEventOfTypeDeadline = (event) => event === eventTypeTriggers.deadline;
+
+const isEventOfTypeProceduralDeadline = (event) =>
+	event.includes(eventTypeTriggers.proceduralDeadline);
+
+const isTimetableTypeOfEventActionable = (typeOfEvent) => {
+	const typeOfEventLowerCase = typeOfEvent?.toLowerCase();
+
+	return (
+		isEventOfTypeDeadline(typeOfEventLowerCase) ||
+		isEventOfTypeProceduralDeadline(typeOfEventLowerCase)
+	);
+};
 
 const isTimetableDateOfEventPast = (dateOfEvent) => setTimeToEndOfDay(dateOfEvent) < getDateNow();
 
@@ -16,12 +33,12 @@ const hasTimetableDeadlineStarted = (dateTimeDeadlineStart) =>
 const hasDeadlineItemsList = (description) => description?.includes('* ');
 
 const isTimetableTypeOfEventDeadlineOpen = (typeOfEvent, dateOfEvent, dateTimeDeadlineStart) =>
-	isTimetableTypeOfEventDeadline(typeOfEvent) &&
+	isTimetableTypeOfEventActionable(typeOfEvent) &&
 	!isTimetableDateOfEventPast(dateOfEvent) &&
 	hasTimetableDeadlineStarted(dateTimeDeadlineStart);
 
 module.exports = {
-	isTimetableTypeOfEventDeadline,
+	isTimetableTypeOfEventActionable,
 	isTimetableDateOfEventPast,
 	isTimetableTypeOfEventDeadlineOpen,
 	hasDeadlineItemsList

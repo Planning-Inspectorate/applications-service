@@ -14,7 +14,7 @@ const fetchDocuments = async (requestQuery) => {
 	const dbQuery = {
 		where,
 		order: [['date_published', 'DESC'], ['id']],
-		offset: (requestQuery.page - 1) * requestQuery.itemsPerPage,
+		offset: (requestQuery.page - 1) * requestQuery.itemsPerPage || 0,
 		limit: requestQuery.itemsPerPage
 	};
 
@@ -137,19 +137,9 @@ const fetchDocumentsByDocumentType = async (requestQuery) => {
 	return await db.Document.findOne(dbQuery);
 };
 
-const findDocumentsByCaseReferenceAndAdviceID = async (caseReference, adviceID) => {
-	const documents = await db.Attachment.findAllAttachmentsWithCase(caseReference, {
-		where: {
-			adviceID
-		}
-	});
-	return documents?.map(({ dataValues }) => dataValues);
-};
-
 module.exports = {
 	fetchDocuments,
 	getAvailableFilters,
 	getDocumentsByDataId,
-	fetchDocumentsByDocumentType,
-	findDocumentsByCaseReferenceAndAdviceID
+	fetchDocumentsByDocumentType
 };

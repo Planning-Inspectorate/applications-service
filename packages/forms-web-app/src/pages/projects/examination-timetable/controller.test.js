@@ -5,13 +5,22 @@ const {
 
 const { getAppData } = require('../../../services/applications.service');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
+const { mockI18n } = require('../../_mocks/i18n');
 
-jest.mock('../../..//services/applications.service', () => ({
+const examinationTimetableTranslation_EN = require('./_translations/en.json');
+const globalTranslation_EN = require('../../../locales/en/global.json');
+
+jest.mock('../../../services/applications.service', () => ({
 	getAppData: jest.fn()
 }));
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
 }));
+
+const examinationTimetableTranslations = {
+	global: globalTranslation_EN,
+	examinationTimetable: examinationTimetableTranslation_EN
+};
 
 describe('pages/projects/examination-timetable/controller', () => {
 	let req;
@@ -27,7 +36,8 @@ describe('pages/projects/examination-timetable/controller', () => {
 				params: {
 					case_ref: 'mock case ref'
 				},
-				session: {}
+				session: {},
+				i18n: mockI18n(examinationTimetableTranslations)
 			};
 			res = {
 				status: jest.fn(() => res),
@@ -169,8 +179,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 							startDate: 'The examination opened on 1 January 2023'
 						},
 						pageTitle:
-							'Examination timetable - mock project name - National Infrastructure Planning',
-						subtitle: 'Examination timetable',
+							'Examination timetable - mock project name - Find a National Infrastructure Project',
 						title: 'mock project name'
 					});
 				});

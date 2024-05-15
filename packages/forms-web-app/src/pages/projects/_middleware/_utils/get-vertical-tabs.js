@@ -12,17 +12,10 @@ const { getRegisterIndexURL } = require('../../register/index/_utils/get-registe
 const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
 
-function getVerticalTabs(
-	caseRef,
-	{ DateOfRepresentationPeriodOpen, DateOfRelevantRepresentationClose },
-	showExaminationLink,
-	showRepresentationsLink
-) {
+function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepresentationsLink) {
 	return [
 		{
-			hidden:
-				featureFlag.allowProjectInformation != true ||
-				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
+			hidden: featureFlag.allowProjectInformation != true,
 			id: 'project-information',
 			name: 'Project information',
 			url: getProjectsIndexURL(caseRef)
@@ -34,18 +27,13 @@ function getVerticalTabs(
 			url: '/projects/project-timeline'
 		},
 		{
-			hidden: featureFlag.allowDocumentLibrary != true,
+			hidden: false,
 			id: 'project-documents',
 			name: 'Documents',
 			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
-			hidden:
-				!isRegistrationOpen(
-					DateOfRepresentationPeriodOpen,
-					DateOfRelevantRepresentationClose,
-					caseRef
-				) || featureFlag.openRegistrationCaseReferences.includes(caseRef),
+			hidden: !isRegistrationOpen(applicationData),
 			id: 'register-index',
 			name: 'Register to have your say',
 			url: getRegisterIndexURL(caseRef)
@@ -57,21 +45,19 @@ function getVerticalTabs(
 			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowExaminationTimetable != true || !showExaminationLink,
+			hidden: !showExaminationLink,
 			id: 'project-examination-timetable',
 			name: 'Examination timetable',
 			url: getProjectsExaminationTimetableURL(caseRef)
 		},
 		{
-			hidden: featureFlag.allowHaveYourSay != true || !showExaminationLink,
+			hidden: !showExaminationLink,
 			id: 'project-have-your-say',
 			name: 'Have your say',
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
-			hidden:
-				featureFlag.allowGetUpdates != true ||
-				!featureFlag.projectMigrationCaseReferences.includes(caseRef),
+			hidden: false,
 			id: 'get-updates',
 			name: 'Get updates',
 			url: getUpdatesIndexURL(caseRef)
@@ -83,7 +69,7 @@ function getVerticalTabs(
 			url: '/projects/all-examination-documents'
 		},
 		{
-			hidden: featureFlag.allowSection51 != true,
+			hidden: false,
 			id: 'section-51',
 			name: 'Section 51 advice',
 			url: getSection51IndexURL(caseRef)

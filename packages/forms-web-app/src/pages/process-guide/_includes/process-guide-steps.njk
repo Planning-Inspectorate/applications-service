@@ -1,115 +1,107 @@
 {% from "components/ui/step-by-step-navigation.njk" import stepByStepNavigation %}
 
-{% set params =
-  {
-    steps: [
-      {
-          heading: {
-            text: processGuide.steps.preApplication.title
-          },
-          content: {
-            text: processGuide.steps.preApplication.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.preApplication.linkText,
-              href: processGuide.steps.preApplication.url
-            }
-          ]
+{% set params = {
+  steps: [
+    {
+      heading: {
+        text: processGuide.steps.preApplication.title
       },
-      {
-          heading: {
-            text: processGuide.steps.acceptance.title
-          },
-          content: {
-            text: processGuide.steps.acceptance.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.acceptance.linkText,
-              href: processGuide.steps.acceptance.url
-            }
-          ]
+      content: {
+        text: processGuide.steps.preApplication.content
       },
-      {
-          heading: {
-            text: processGuide.steps.preExamination.title
-          },
-          content: {
-            text: processGuide.steps.preExamination.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.preExamination.linkText,
-              href: processGuide.steps.preExamination.url
-            }
-          ]
+      subList: [
+        {
+          text: processGuide.steps.preApplication.linkText,
+          href: processGuide.steps.preApplication.url
+        }
+      ]
+    }, {
+      heading: {
+        text: processGuide.steps.acceptance.title
       },
-      {
-          heading: {
-            text: processGuide.steps.examination.title
-          },
-          content: {
-            text: processGuide.steps.examination.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.examination.linkText,
-              href: processGuide.steps.examination.url
-            }
-          ]
+      content: {
+        text: processGuide.steps.acceptance.content
       },
-      {
-          heading: {
-            text: processGuide.steps.recommendation.title
-          },
-          content: {
-            text: processGuide.steps.recommendation.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.recommendation.linkText,
-              href: processGuide.steps.recommendation.url
-            }
-          ]
+      subList: [
+        {
+          text: processGuide.steps.acceptance.linkText,
+          href: processGuide.steps.acceptance.url
+        }
+      ]
+    }, {
+      heading: {
+        text: processGuide.steps.preExamination.title
       },
-      {
-          heading: {
-            text: processGuide.steps.decision.title
-          },
-          content: {
-            text: processGuide.steps.decision.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.decision.linkText,
-              href: processGuide.steps.decision.url
-            }
-          ]
+      content: {
+        text: processGuide.steps.preExamination.content
       },
-      {
-          heading: {
-            text: processGuide.steps.postDecision.title
-          },
-          content: {
-            text: processGuide.steps.postDecision.content
-          },
-          subList: [
-            {
-              text: processGuide.steps.postDecision.linkText,
-              href: processGuide.steps.postDecision.url
-            }
-          ]
-      }
-    ]
-  }
-%}
+      subList: [
+        {
+          text: processGuide.steps.preExamination.linkText,
+          href: processGuide.steps.preExamination.url
+        }
+      ]
+    }, {
+      heading: {
+        text: processGuide.steps.examination.title
+      },
+      content: {
+        text: processGuide.steps.examination.content
+      },
+      subList: [
+        {
+          text: processGuide.steps.examination.linkText,
+          href: processGuide.steps.examination.url
+        }
+      ]
+    }, {
+      heading: {
+        text: processGuide.steps.recommendation.title
+      },
+      content: {
+        text: processGuide.steps.recommendation.content
+      },
+      subList: [
+        {
+          text: processGuide.steps.recommendation.linkText,
+          href: processGuide.steps.recommendation.url
+        }
+      ]
+    }, {
+      heading: {
+        text: processGuide.steps.decision.title
+      },
+      content: {
+        text: processGuide.steps.decision.content
+      },
+      subList: [
+        {
+          text: processGuide.steps.decision.linkText,
+          href: processGuide.steps.decision.url
+        }
+      ]
+    }, {
+      heading: {
+        text: processGuide.steps.postDecision.title
+      },
+      content: {
+        text: processGuide.steps.postDecision.content
+      },
+      subList: [
+        {
+          text: processGuide.steps.postDecision.linkText,
+          href: processGuide.steps.postDecision.url
+        }
+      ]
+    }
+  ]
+} %}
 
 {% if templateID !== 'main' %}
   {% set params = {
     pretitle: "Part of",
-    title: processGuide.steps.processGuide.title,
-    url: processGuide.steps.processGuide.url,
+    title: processGuide.steps.index.title,
+    url: processGuide.steps.index.url,
     steps: params.steps
   } %}
 {% endif %}
@@ -120,4 +112,4 @@
   {% set state = 'dynamic' %}
 {% endif %}
 
-{{ stepByStepNavigation(params, processGuide.activeStep.step, templateID, state) }}
+{{ stepByStepNavigation(params, processGuide.activeStep.step, templateID, state, t) }}

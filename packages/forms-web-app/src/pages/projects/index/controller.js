@@ -34,6 +34,7 @@ const getMiscDataByStageName = async (stageName, caseRef) => {
 
 const getProjectsIndexController = async (req, res, next) => {
 	try {
+		const { i18n } = req;
 		const {
 			locals: { applicationData }
 		} = res;
@@ -43,13 +44,7 @@ const getProjectsIndexController = async (req, res, next) => {
 		const rule6Document = await getRule6DocumentType(caseRef);
 		const rule8Document = await getRule8DocumentType(caseRef);
 
-		const preExamSubStages = getPreExaminationSubStage(
-			applicationData.DateOfRepresentationPeriodOpen,
-			applicationData.DateOfRelevantRepresentationClose,
-			applicationData.DateRRepAppearOnWebsite,
-			rule6Document,
-			caseRef
-		);
+		const preExamSubStages = getPreExaminationSubStage(applicationData, rule6Document);
 		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
 			applicationData.dateTimeExaminationEnds,
 			applicationData.stage5ExtensionToRecommendationDeadline
@@ -63,7 +58,7 @@ const getProjectsIndexController = async (req, res, next) => {
 		const mapAccessToken = applicationData.longLat ? await getMapAccessToken() : null;
 
 		return res.render(view, {
-			...getPageData(applicationData, projectUpdates),
+			...getPageData(i18n, applicationData, projectUpdates),
 			preExamSubStages,
 			applicationDecision,
 			rule6Document,
