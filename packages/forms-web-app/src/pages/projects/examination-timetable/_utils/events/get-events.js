@@ -7,7 +7,7 @@ const {
 } = require('../../../../../utils/timetables/get-timetables-state');
 const { getPastTimetables } = require('../../../../../utils/timetables/get-timetables-state');
 
-const getEvents = async (appData) => {
+const getEvents = async (appData, i18n) => {
 	const { data } = await getTimetables(getProjectCaseRef(appData));
 
 	const timetables = data?.timetables || [];
@@ -19,7 +19,7 @@ const getEvents = async (appData) => {
 
 	const hasOpenTimetables = getOpenEventDeadlineTimetables(timetables).length > 0;
 
-	return { ...eventsViewModel(sortedTimetables), hasOpenTimetables };
+	return { ...eventsViewModel(sortedTimetables, i18n), hasOpenTimetables };
 };
 
 module.exports = { getEvents };

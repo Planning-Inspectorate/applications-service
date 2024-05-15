@@ -1,7 +1,8 @@
 const {
 	normaliseArrayQueryParams,
 	parseIntegerQueryParams,
-	parseIntegerPathParams
+	parseIntegerPathParams,
+	parseBooleanQueryParams
 } = require('../../../src/middleware/parseParamProperties');
 
 describe('parseQueryParamProperties middleware', () => {
@@ -95,6 +96,25 @@ describe('parseQueryParamProperties middleware', () => {
 				params: {
 					foo: 1,
 					bar: 123
+				}
+			});
+		});
+	});
+
+	describe('parseBooleanQueryParams', () => {
+		it('parses given query params values to booleans', () => {
+			const req = {
+				query: {
+					foo: 'true',
+					bar: 'false'
+				}
+			};
+			parseBooleanQueryParams(['foo', 'bar'])(req, {}, jest.fn());
+
+			expect(req).toEqual({
+				query: {
+					foo: true,
+					bar: false
 				}
 			});
 		});

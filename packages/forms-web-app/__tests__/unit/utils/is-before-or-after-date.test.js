@@ -5,6 +5,14 @@ const {
 	getConfirmedStartOfExamination
 } = require('../../../src/utils/is-before-or-after-date');
 
+const { mockI18n } = require('../../../src/pages/_mocks/i18n');
+const examinationTimetableTranslation_EN = require('../../../src/pages/projects/examination-timetable/_translations/en.json');
+
+const examinationTimetableTranslations = {
+	examinationTimetable: examinationTimetableTranslation_EN
+};
+const i18n = mockI18n(examinationTimetableTranslations);
+
 describe('#utils/is-before-or-after-date', () => {
 	describe('#isBeforeNowUTC', () => {
 		describe('When checking if a date is before today', () => {
@@ -96,7 +104,7 @@ describe('#utils/is-before-or-after-date', () => {
 				const date = '2019-01-01';
 				beforeEach(() => {
 					jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-					result = getDateTimeExaminationEnds(date, undefined, undefined);
+					result = getDateTimeExaminationEnds(date, undefined, undefined, i18n);
 				});
 				it('should return the correct before date sentence. ', () => {
 					expect(result).toEqual('The examination closed on 1 January 2019');
@@ -107,7 +115,7 @@ describe('#utils/is-before-or-after-date', () => {
 				const date = '2022-01-01';
 				beforeEach(() => {
 					jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-					result = getDateTimeExaminationEnds(date, undefined, undefined);
+					result = getDateTimeExaminationEnds(date, undefined, undefined, i18n);
 				});
 				it('should return the correct before date sentence. ', () => {
 					expect(result).toEqual('The examination is expected to close on 1 January 2022');
@@ -120,10 +128,12 @@ describe('#utils/is-before-or-after-date', () => {
 				const date = '2022-08-19';
 				beforeEach(() => {
 					jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-					result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+					result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 				});
 				it('should return the correct before date sentence. ', () => {
-					expect(result).toEqual('The examination is expected to close on 19 August 2022');
+					expect(result).toEqual(
+						'The deadline for the close of the Examination has been extended to 22 April 2023'
+					);
 				});
 			});
 
@@ -134,7 +144,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const date = '0000-00-00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination is expected to close on 14 March 2023');
@@ -146,7 +156,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const date = '0000-00-00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2024-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination closed on 14 March 2023');
@@ -161,7 +171,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const extensionDate = '0000-00-00 00:00:00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2023-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination closed on 22 April 2022');
@@ -173,7 +183,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const extensionDate = '0000-00-00 00:00:00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
@@ -186,7 +196,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const extensionDate = '0000-00-00 00:00:00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
@@ -199,7 +209,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const extensionDate = '0000-00-00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
@@ -212,7 +222,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const extensionDate = null;
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual('The examination is expected to close on 22 April 2022');
@@ -227,7 +237,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const nullDate = '0000-00-00 00:00:00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual(
@@ -241,7 +251,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const nullDate = '0000-00-00';
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual(
@@ -255,7 +265,7 @@ describe('#utils/is-before-or-after-date', () => {
 					const nullDate = null;
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14');
+						result = getDateTimeExaminationEnds(nullDate, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
 						expect(result).toEqual(
@@ -267,7 +277,7 @@ describe('#utils/is-before-or-after-date', () => {
 					let result;
 					beforeEach(() => {
 						jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-						result = getDateTimeExaminationEnds(null, null, null);
+						result = getDateTimeExaminationEnds(null, null, null, i18n);
 					});
 					it('should return empty string.', () => {
 						expect(result).toEqual('');
@@ -285,7 +295,7 @@ describe('#getConfirmedStartOfExamination', () => {
 			const date = '2019-01-01';
 			beforeEach(() => {
 				jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-				result = getConfirmedStartOfExamination(date);
+				result = getConfirmedStartOfExamination(date, i18n);
 			});
 			it('should return the correct before date sentence. ', () => {
 				expect(result).toEqual('The examination opened on 1 January 2019');
@@ -296,7 +306,7 @@ describe('#getConfirmedStartOfExamination', () => {
 			const date = '2022-01-01';
 			beforeEach(() => {
 				jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
-				result = getConfirmedStartOfExamination(date);
+				result = getConfirmedStartOfExamination(date, i18n);
 			});
 			it('should return the correct before date sentence. ', () => {
 				expect(result).toEqual('The examination opens on 1 January 2022');

@@ -3,21 +3,21 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Process guide - {{ processGuide.activeStep.title }}
+	{{ t('processGuide.common.processGuide') }} - {{ t('processGuide.recommendation.heading1') }}
 {% endblock %}
 
 {% block content %}
 	<h1 class="govuk-heading-xl">
-		{{ processGuide.activeStep.title }}
+		{{ t('processGuide.recommendation.heading1') }}
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-		Contents
+		{{ t('common.contents') }}
 	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#about-the-recommendation-stage">About the recommendation stage</a>
+			<a class="govuk-link" href="#about-the-recommendation-stage">{{ t('recommendation.heading2') }}</a>
 		</li>
 	</ol>
 
@@ -25,15 +25,14 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="about-the-recommendation-stage">
-					About the recommendation stage
+					{{ t('recommendation.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					After the Examining Authority has completed all its enquiries and understood everyone's views during the examination, it will then write its recommendation report.
-					The report must be completed and sent to the relevant Secretary of State within 3 months of the end of the examination.
+					{{ t('recommendation.paragraph1') }}
 				</p>
 
-				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle) }}
+				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 

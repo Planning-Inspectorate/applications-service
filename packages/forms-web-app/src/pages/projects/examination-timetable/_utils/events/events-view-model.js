@@ -1,19 +1,19 @@
 const { getEvent } = require('./event/get-event');
 
-const mapEventsToViewModel = (events) => events.map((event) => getEvent(event));
+const mapEventsToViewModel = (events, i18n) => events.map((event) => getEvent(event, i18n));
 
-const eventsViewModel = (events) => ({
+const eventsViewModel = (events, i18n) => ({
 	past: {
 		displayEvents: events.past.length > 0,
-		events: mapEventsToViewModel(events.past),
-		noEventsHtml: '<p>There are no deadlines and events</p>',
-		title: 'Past deadlines and events'
+		events: mapEventsToViewModel(events.past, i18n),
+		noEventsHtml: `<p>${i18n.t('examinationTimetable.noEvents')}</p>`,
+		title: i18n.t('examinationTimetable.heading4')
 	},
 	upcoming: {
 		displayEvents: events.upcoming.length > 0,
-		events: mapEventsToViewModel(events.upcoming),
-		noEventsHtml: '<p>There are no deadlines and events</p>',
-		title: 'Upcoming deadlines and events'
+		events: mapEventsToViewModel(events.upcoming, i18n),
+		noEventsHtml: `<p>${i18n.t('examinationTimetable.noEvents')}</p>`,
+		title: i18n.t('examinationTimetable.heading3')
 	}
 });
 

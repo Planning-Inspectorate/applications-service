@@ -12,11 +12,11 @@ const getLatestUpdate = (projectUpdates) =>
 		? formatProjectUpdate(projectUpdates[0])
 		: null;
 
-const getPageData = ({ caseRef, contactEmailAddress, proposal }, projectUpdates) => ({
+const getPageData = (i18n, { caseRef, contactEmailAddress, proposal }, projectUpdates) => ({
 	contactEmailAddress: contactEmailAddress || pinsContactDetails.enquiriesEmailAddress,
 	proposal: stripPrefixFromProposalType(proposal),
 	latestUpdate: getLatestUpdate(projectUpdates),
-	processGuideStages: formatProcessGuideStages(getProcessGuideStages),
+	processGuideStages: formatProcessGuideStages(getProcessGuideStages(i18n)),
 	projectsAllUpdatesURL: getProjectsAllUpdatesURL(caseRef)
 });
 
