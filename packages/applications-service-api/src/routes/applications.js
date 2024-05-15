@@ -6,7 +6,8 @@ const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
 const {
 	normaliseArrayQueryParams,
-	parseIntegerQueryParams
+	parseIntegerQueryParams,
+	parseBooleanQueryParams
 } = require('../middleware/parseParamProperties');
 const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 
@@ -26,6 +27,7 @@ router.get('/:caseReference', validateRequestWithOpenAPI, getApplicationsRoute);
 router.get(
 	'',
 	parseIntegerQueryParams(['page', 'size']),
+	parseBooleanQueryParams(['excludeNullDateOfSubmission']),
 	normaliseArrayQueryParams(['stage', 'region', 'sector']),
 	validateRequestWithOpenAPI,
 	applicationsController.getAllApplications

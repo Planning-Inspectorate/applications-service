@@ -12,6 +12,9 @@ const {
 const {
 	addIndexTranslationsMiddleware
 } = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addDetailedInformationTranslationsMiddleware
+} = require('./detailed-information/_middleware/add-detailed-information-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -30,6 +33,15 @@ jest.mock('./index/_middleware/add-index-translations-middleware', () => {
 		addIndexTranslationsMiddleware: jest.fn()
 	};
 });
+
+jest.mock(
+	'./detailed-information/_middleware/add-detailed-information-translations-middleware',
+	() => {
+		return {
+			addDetailedInformationTranslationsMiddleware: jest.fn()
+		};
+	}
+);
 
 jest.mock('./cookies/_validators/validate-cookies', () => {
 	return {
@@ -86,7 +98,11 @@ describe('pages/router', () => {
 
 			expect(get).toHaveBeenCalledWith('/terms-and-conditions', getTermsAndConditionsController);
 
-			expect(get).toHaveBeenCalledWith('/detailed-information', getDetailedInformationController);
+			expect(get).toHaveBeenCalledWith(
+				'/detailed-information',
+				addDetailedInformationTranslationsMiddleware,
+				getDetailedInformationController
+			);
 
 			expect(get).toHaveBeenCalledWith('/project-search', getProjectSearchController);
 

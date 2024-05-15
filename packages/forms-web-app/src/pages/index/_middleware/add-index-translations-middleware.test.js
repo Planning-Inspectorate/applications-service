@@ -14,7 +14,7 @@ describe('pages/index/_middleware/add-index-translations-middleware', () => {
 		const req = {
 			i18n: {
 				language: null,
-				addResourceBundle: jest.fn()
+				addResources: jest.fn()
 			}
 		};
 		const res = {};
@@ -27,7 +27,7 @@ describe('pages/index/_middleware/add-index-translations-middleware', () => {
 			});
 
 			it('should add the english translations', () => {
-				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
+				expect(req.i18n.addResources).toHaveBeenCalledWith(
 					'en',
 					'index',
 					'mock get english translations'
@@ -42,7 +42,7 @@ describe('pages/index/_middleware/add-index-translations-middleware', () => {
 			});
 
 			it('should add the welsh translations', () => {
-				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
+				expect(req.i18n.addResources).toHaveBeenCalledWith(
 					'cy',
 					'index',
 					'mock get welsh translations'

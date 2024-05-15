@@ -9,7 +9,7 @@ const eventStateTagMapper = (text, classes) => ({
 	classes
 });
 
-const getEventState = (event) => {
+const getEventState = (event, i18n) => {
 	let eventStateTag = null;
 
 	const isSubmissionOpen =
@@ -19,9 +19,14 @@ const getEventState = (event) => {
 			event.dateTimeDeadlineStart
 		) && hasDeadlineItemsList(event.description);
 
-	if (isSubmissionOpen) eventStateTag = eventStateTagMapper('Open', 'govuk-tag govuk-tag--blue');
-	else if (isTimetableDateOfEventPast(event.dateOfEvent))
-		eventStateTag = eventStateTagMapper('Closed', 'govuk-tag');
+	if (isSubmissionOpen)
+		eventStateTag = eventStateTagMapper(
+			i18n.t('examinationTimetable.tagTextOpen'),
+			'govuk-tag govuk-tag--blue'
+		);
+	else if (isTimetableDateOfEventPast(event.dateOfEvent)) {
+		eventStateTag = eventStateTagMapper(i18n.t('examinationTimetable.tagTextClosed'), 'govuk-tag');
+	}
 
 	return {
 		isSubmissionOpen,

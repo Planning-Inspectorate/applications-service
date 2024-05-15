@@ -9,10 +9,25 @@ const {
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
-
-const { projectsMiddleware } = require('./_middleware/middleware');
 const { registerRouter } = require('./register/router');
 
+const { projectsMiddleware } = require('./_middleware/middleware');
+const {
+	addExaminationTimetableTranslationsMiddleware
+} = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	addProcessGuideTranslationsMiddleware
+} = require('../process-guide/_middleware/add-process-guide-translations-middleware');
+
+jest.mock('../_middleware/i18n/add-common-translations-middleware', () => ({
+	addCommonTranslationsMiddleware: jest.fn()
+}));
+jest.mock('../process-guide/_middleware/add-process-guide-translations-middleware', () => ({
+	addProcessGuideTranslationsMiddleware: jest.fn()
+}));
 jest.mock('../../config', () => {
 	const originalConfig = jest.requireActual('../../config');
 
@@ -45,6 +60,7 @@ describe('pages/projects/router', () => {
 		it('should call the projects routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref',
+				addProcessGuideTranslationsMiddleware,
 				projectsMiddleware,
 				getProjectsIndexController
 			);
@@ -64,6 +80,8 @@ describe('pages/projects/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/examination-timetable',
 				projectsMiddleware,
+				addCommonTranslationsMiddleware,
+				addExaminationTimetableTranslationsMiddleware,
 				getProjectsExaminationTimetableController
 			);
 

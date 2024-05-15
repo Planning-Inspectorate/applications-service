@@ -32,4 +32,18 @@ const parseIntegerPathParams = (paramNames) => (req, res, next) => {
 	next();
 };
 
-module.exports = { normaliseArrayQueryParams, parseIntegerQueryParams, parseIntegerPathParams };
+const parseBooleanQueryParams = (paramNames) => (req, res, next) => {
+	paramNames.forEach((paramName) => {
+		const paramValue = req.query?.[paramName];
+		if (paramValue === 'true') req.query[paramName] = true;
+		else req.query[paramName] = false;
+	});
+	next();
+};
+
+module.exports = {
+	normaliseArrayQueryParams,
+	parseIntegerQueryParams,
+	parseIntegerPathParams,
+	parseBooleanQueryParams
+};
