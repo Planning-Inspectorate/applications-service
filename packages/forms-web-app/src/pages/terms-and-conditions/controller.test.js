@@ -27,8 +27,6 @@ describe('pages/terms-and-conditions/controller', () => {
 
 			it('should call the correct template with the page data', () => {
 				expect(res.render).toHaveBeenCalledWith('terms-and-conditions/view.njk', {
-					pageHeading: 'Terms and conditions',
-					pageTitle: 'Terms and conditions',
 					termsPageUrls: {
 						contact: '/contact',
 						cookies: '/cookies'
