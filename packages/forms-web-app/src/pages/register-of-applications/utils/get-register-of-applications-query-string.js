@@ -3,6 +3,7 @@ const { buildQueryString } = require('../../_utils/build-query-string');
 
 const getRegisterOfApplicationsQueryString = ({ page, searchTerm, itemsPerPage, sortBy }) =>
 	buildQueryString({
+		excludeNullDateOfSubmission: true,
 		page: page || 1,
 		searchTerm: searchTerm || '',
 		size: itemsPerPage || 25,

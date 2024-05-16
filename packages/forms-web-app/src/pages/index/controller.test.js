@@ -1,8 +1,6 @@
 const { getIndexController } = require('./controller');
 
 const defaultPageData = {
-	pageHeading: 'Welcome to Find a National Infrastructure Project',
-	pageTitle: 'Welcome to Find a National Infrastructure Project',
 	homePageUrls: {
 		contactURL: '/contact',
 		detailedInformationURL: '/detailed-information',

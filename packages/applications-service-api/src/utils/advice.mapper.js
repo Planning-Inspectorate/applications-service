@@ -43,10 +43,10 @@ const mapNIAdviceToApi = (advice) => {
 	return {
 		...advice,
 		attachments: advice?.attachments?.map((attachment) => ({
-			documentDataID: attachment.documentDataID,
+			documentDataID: attachment.dataID,
 			mime: attachment.mime,
 			size: attachment.size,
-			documentURI: attachment.documentURI ? `${documentsHost}${attachment.documentURI}` : null
+			documentURI: attachment.path ? `${documentsHost}${attachment.path}` : null
 		}))
 	};
 };

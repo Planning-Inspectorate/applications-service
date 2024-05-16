@@ -9,12 +9,12 @@ const {
 	}
 } = require('../../../../../../routes/config');
 
-const eventViewModel = (event) => ({
+const eventViewModel = (event, i18n) => ({
 	description: marked.parse(event.description),
 	eventTitle: event.title,
 	id: event.uniqueId,
 	inputId: examinationTimetable.id,
-	state: getEventState(event),
+	state: getEventState(event, i18n),
 	title: `${formatDate(event.dateOfEvent)} - ${event.title}`,
 	typeOfEvent: event.typeOfEvent
 });

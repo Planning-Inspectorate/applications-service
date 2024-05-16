@@ -20,6 +20,8 @@ This can be viewed locally through an interactive web interface by running `npm 
 
 Finally open your web browser to view [http://localhost:8080](http://localhost:8080)
 
+There is also a deployed version of the C4 model available [here](https://planning-inspectorate.github.io/applications-service/master/)
+
 ### Packages
 
 The monorepo consists of several packages:

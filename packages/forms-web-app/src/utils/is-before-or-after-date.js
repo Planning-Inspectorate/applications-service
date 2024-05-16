@@ -25,36 +25,36 @@ const isBeforeTodayUTC = (date) => {
 	return currentDate < givenDate;
 };
 
-const getConfirmedStartOfExamination = (date) => {
+const getConfirmedStartOfExamination = (date, i18n) => {
 	const formattedDate = formatDate(date);
 
 	if (!formattedDate || formattedDate === 'NaNvalid date') return;
 
-	const toHappen = `The examination opens on ${formattedDate}`;
-	const happened = `The examination opened on ${formattedDate}`;
+	const toHappen = `${i18n.t('examinationTimetable.examinationOpensOn')} ${formattedDate}`; //The examination opens on
+	const happened = `${i18n.t('examinationTimetable.examinationOpenedOn')} ${formattedDate}`; //The examination opened on
 
 	return isBeforeNowUTC(date) ? toHappen : happened;
 };
 
-const handleGrantedExtension = (date) =>
-	`The deadline for the close of the Examination has been extended to ${formatDate(date)}`;
+const handleGrantedExtension = (date, i18n) =>
+	`${i18n.t('examinationTimetable.examinationExtendedTo')} ${formatDate(date)}`; //The deadline for the close of the Examination has been extended to
 
 const isInvalidDate = (date) =>
-	date === '0000-00-00 00:00:00' || date === '0000-00-00' || date === null;
+	date === '0000-00-00 00:00:00' || date === '0000-00-00' || date === null || !date;
 
-const isBeforeOrAfterSentence = (date) =>
+const isBeforeOrAfterSentence = (date, i18n) =>
 	isBeforeTodayUTC(date)
-		? `The examination is expected to close on ${formatDate(date)}`
-		: `The examination closed on ${formatDate(date)}`;
+		? `${i18n.t('examinationTimetable.examinationClosesOn')} ${formatDate(date)}` //The examination is expected to close on
+		: `${i18n.t('examinationTimetable.examinationClosedOn')} ${formatDate(date)}`; //The examination closed on
 
-const getDateTimeExaminationEnds = (closeDate, extensionCloseDate, startDate) => {
-	if (!isInvalidDate(closeDate)) return isBeforeOrAfterSentence(closeDate);
+const getDateTimeExaminationEnds = (closeDate, extensionCloseDate, startDate, i18n) => {
+	if (!isInvalidDate(extensionCloseDate)) return handleGrantedExtension(extensionCloseDate, i18n);
 
-	if (!isInvalidDate(extensionCloseDate)) return handleGrantedExtension(extensionCloseDate);
+	if (!isInvalidDate(closeDate)) return isBeforeOrAfterSentence(closeDate, i18n);
 
 	if (isInvalidDate(startDate)) return '';
 
-	return isBeforeOrAfterSentence(moment(startDate).add(6, 'M').toISOString());
+	return isBeforeOrAfterSentence(moment(startDate).add(6, 'M').toISOString(), i18n);
 };
 
 module.exports = {

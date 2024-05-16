@@ -1,12 +1,13 @@
 const { getFooterLinks } = require('./get-footer-links');
-
 const { mockI18n } = require('../../_mocks/i18n');
 
 const globalTranslation_EN = require('../../../locales/en/global.json');
 
+const footerLinksTranslations = { global: globalTranslation_EN };
+
 describe('pages/_utils/get-links/get-footer-links', () => {
 	describe('#getFooterLinks', () => {
-		const i18n = mockI18n('global', globalTranslation_EN);
+		const i18n = mockI18n(footerLinksTranslations);
 
 		const footerLinks = getFooterLinks(i18n);
 		it('should return the footer links', () => {
