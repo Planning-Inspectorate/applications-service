@@ -1,12 +1,11 @@
 const { getAppData } = require('../../../services/applications.service');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const dayjs = require('dayjs');
+const { preserveLinebreaks } = require('../../../lib/preserve-line-breaks');
 
 const badDateToNull = (date) => (date === '0000-00-00' ? null : date);
 
 const add28DaysToDate = (date) => (date ? dayjs(date).add(28, 'days').toISOString() : null);
-
-const preserveLinebreaks = (text) => (!text ? text : text.replace(/\r\n|\r|\n/g, '<br>'));
 
 const getApplicationData = async (case_ref) => {
 	const { data, resp_code } = await getAppData(case_ref);
