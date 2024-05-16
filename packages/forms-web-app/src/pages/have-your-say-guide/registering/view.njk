@@ -3,7 +3,7 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Have your say guide - {{ haveYourSayGuide.activeStep.title }}
+	{{ t('haveYourSayGuide.common.haveYourSayGuide') }} - {{ haveYourSayGuide.activeStep.title }}
 {% endblock %}
 
 {% block content %}
@@ -12,27 +12,27 @@
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-		Contents
+		{{ t('common.contents') }}
 	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#who-can-register">Who can register</a>
+			<a class="govuk-link" href="#who-can-register">{{ t('registering.heading2') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#when-to-register">When to register</a>
+			<a class="govuk-link" href="#when-to-register">{{ t('registering.heading3') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#what-you-need-to-register">What you need to register</a>
+			<a class="govuk-link" href="#what-you-need-to-register">{{ t('registering.heading4') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#after-you-have-registered">After you have registered</a>
+			<a class="govuk-link" href="#after-you-have-registered">{{ t('registering.heading5') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#register-to-have-your-say">Register to have your say</a>
+			<a class="govuk-link" href="#register-to-have-your-say">{{ t('registering.heading6') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#more-detailed-advice">More detailed advice</a>
+			<a class="govuk-link" href="#more-detailed-advice">{{ t('registering.heading7') }}</a>
 		</li>
 	</ol>
 
@@ -40,98 +40,87 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="who-can-register">
-					Who can register
+					{{ t('registering.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					Anyone can register to have their say, including:
+					{{ t('registering.paragraph1') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>members of the public from the local area or anywhere in the UK</li>
-					<li>members of the public from other countries</li>
-					<li>organisations such as local authorities, parish councils, local bodies and authorities such as Natural England and the Environment Agency</li>
-					<li>charities, local action groups and businesses</li>
+					<li>{{ t('registering.listItem1') }}</li>
+					<li>{{ t('registering.listItem2') }}</li>
+					<li>{{ t('registering.listItem3') }}</li>
+					<li>{{ t('registering.listItem4') }}</li>
 				</ul>
 
 				<h2 class="govuk-heading-m" id="when-to-register">
-					When to register
+					{{ t('registering.heading3') }}
 				</h2>
 
 				<p class="govuk-body">
-					Registration will be open for at least 30 days for each project, during the pre-examination stage.
-					This is the preparation stage for the examination of the application.
-					You must register during this time to get your interested party reference number and make sure your comments are taken into account.
+					{{ t('registering.paragraph2') }}
 				</p>
 
 				<p class="govuk-body">
-					The developer will advertise when the project has been accepted for examination.
-					They must also give details about when registration opens and closes for the project and how you can register.
+					{{ t('registering.paragraph3') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="what-you-need-to-register">
-					What you need to register
+					{{ t('registering.heading4') }}
 				</h2>
 
 				<p class="govuk-body">
-					To register, you will need to give us your:
+					{{ t('registering.paragraph4') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>full name</li>
-					<li>address, email and telephone number</li>
-					<li>your comments about the project</li>
+					<li>{{ t('registering.listItem5') }}</li>
+					<li>{{ t('registering.listItem6') }}</li>
+					<li>{{ t('registering.listItem7') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-					After you register, you will be given a reference number.
-					This reference number will become your interested party reference number.
-					Your name and comments will be published on our website.
-					Your address, email address and phone number will be kept private.
-					<a class="govuk-link" target="_blank" rel="noopener noreferrer" href="{{ pinsPrivacyNoticeUrl }}">You can view our privacy notice for more information (opens a new tab)</a>.
+					{{ t('registering.paragraph5', { link: '<a class="govuk-link" target="_blank" rel="noopener noreferrer" href="' + pinsPrivacyNoticeUrl + '">' + t('registering.paragraph5LinkText') + '</a>' }) | safe }}
 				</p>
 
 				<p class="govuk-body">
-					You must include comments with your registration.
-					Your comments must be about what you consider to be the main issues and impacts.
-					You should include as much detail as possible and cover anything that may affect your day-to-day life.
+					{{ t('registering.paragraph6') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="after-you-have-registered">
-					After you have registered
+					{{ t('registering.heading5') }}
 				</h2>
 
 				<p class="govuk-body">
-					Once you have registered to have your say, your name and comments will be published on the project information page for each project.
-					Once the registration period closes, you can see all of the other registration comments (also known as relevant representations) from other people.
+					{{ t('registering.paragraph7') }}
 				</p>
 
 				<p class="govuk-body">
-					Once the examination of the application starts, you will be able to submit more information at the deadlines in the timetable.
-					You can do this using the online submission form in the specific project section of this website.
+					{{ t('registering.paragraph8') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="register-to-have-your-say">
-					Register to have your say
+					{{ t('registering.heading6') }}
 				</h2>
 
 				<p class="govuk-body">
-					The deadline for registering will be in the developer's advert, or you can check the project page.
+					{{ t('registering.paragraph9') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="more-detailed-advice">
-					More detailed advice
+					{{ t('registering.heading7') }}
 				</h2>
 
 				<p class="govuk-body">
-					If you need more detailed advice, you can check our advice notes for more information.
+					{{ t('registering.paragraph10') }}
 				</p>
 
 				<p class="govuk-body">
-					<a class="govuk-link" target="_blank" rel="noopener noreferrer" href="{{ pinsURL.adviceNotes }}">Read the full set of advice notes (opens in a new tab)</a>
+					<a class="govuk-link" target="_blank" rel="noopener noreferrer" href="{{ pinsURL.adviceNotes }}">{{ t('registering.linkText1') }}</a>
 				</p>
 
-				{{ uiNextStep(haveYourSayGuide.activeStep.nextStepURL, haveYourSayGuide.activeStep.nextStepTitle) }}
+				{{ uiNextStep(haveYourSayGuide.activeStep.nextStepURL, haveYourSayGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 
