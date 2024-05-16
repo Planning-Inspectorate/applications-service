@@ -1,0 +1,12 @@
+{
+	"recommendations": [
+		"firsttris.vscode-jest-runner",
+		"eseom.nunjucks-template",
+		"esbenp.prettier-vscode",
+		"prisma.prisma",
+		"ms-mssql.mssql",
+		"dbaeumer.vscode-eslint",
+		"ms-azuretools.vscode-docker",
+		"streetsidesoftware.code-spell-checker"
+	]
+}
