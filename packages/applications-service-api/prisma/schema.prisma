@@ -100,7 +100,7 @@ model Project {
   caseId                                            Int          @unique
   caseReference                                     String       @id
   projectName                                       String?
-  projectDescription                                String?
+  projectDescription                                String?      @db.VarChar(2000)
   publishStatus                                     String?
   sector                                            String?
   projectType                                       String?
@@ -192,7 +192,7 @@ model ExaminationTimetable {
 
 model ExaminationTimetableEventItem {
   id                       Int                   @unique @default(autoincrement())
-  eventLineItemDescription String
+  eventLineItemDescription String                @db.NText
   eventId                  Int
   ExaminationTimetable     ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
 }

@@ -27,11 +27,8 @@ describe('pages/contact/controller', () => {
 				getContactController(req, res, next);
 			});
 
-			it('should call the correct template with the page data', () => {
-				expect(res.render).toHaveBeenCalledWith('contact/view.njk', {
-					pageHeading: 'Contact us',
-					pageTitle: 'Contact'
-				});
+			it('should call the correct template', () => {
+				expect(res.render).toHaveBeenCalledWith('contact/view.njk');
 			});
 		});
 	});

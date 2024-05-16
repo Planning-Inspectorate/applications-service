@@ -100,8 +100,7 @@ module.exports = {
 			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements/nationally-significant-infrastructure-projects-national-policy-statements',
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
-			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
-		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
+			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance'
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
