@@ -4,6 +4,9 @@ const takingPartRoute = 'taking-part-pre-application';
 
 const takingPartURL = getHaveYourSayGuidePageURL(takingPartRoute);
 
+const takingPartI18nNamespace = 'takingPart';
+
 module.exports = {
-	takingPartURL
+	takingPartURL,
+	takingPartI18nNamespace
 };

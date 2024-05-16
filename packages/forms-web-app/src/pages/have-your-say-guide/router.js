@@ -26,6 +26,9 @@ const {
 const {
 	addIndexTranslationsMiddleware
 } = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addTakingPartTranslationsMiddleware
+} = require('./taking-part/_middleware/add-taking-part-translations-middleware');
 
 const haveYourSayGuideRouter = express.Router();
 
@@ -48,6 +51,7 @@ haveYourSayGuideRouter.get(
 );
 haveYourSayGuideRouter.get(
 	takingPartURL,
+	addTakingPartTranslationsMiddleware,
 	addHaveYourSayGuideStepsMiddleware,
 	getTakingPartController
 );

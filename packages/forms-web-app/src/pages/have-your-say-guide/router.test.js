@@ -17,6 +17,9 @@ const {
 const {
 	addIndexTranslationsMiddleware
 } = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addTakingPartTranslationsMiddleware
+} = require('./taking-part/_middleware/add-taking-part-translations-middleware');
 
 describe('pages/have-your-say-guide/router', () => {
 	const get = jest.fn();
@@ -54,6 +57,7 @@ describe('pages/have-your-say-guide/router', () => {
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/having-your-say-guide/taking-part-pre-application',
+			addTakingPartTranslationsMiddleware,
 			addHaveYourSayGuideStepsMiddleware,
 			getTakingPartController
 		);

@@ -3,7 +3,7 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Have your say guide - {{ haveYourSayGuide.activeStep.title }}
+	{{ t('haveYourSayGuide.common.haveYourSayGuide') }} - {{ haveYourSayGuide.activeStep.title }}
 {% endblock %}
 
 {% block content %}
@@ -12,21 +12,21 @@
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-		Contents
+		{{ t('common.contents') }}
 	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#what-happens-at-the-pre-application-stage">What happens at the pre-application stage</a>
+			<a class="govuk-link" href="#what-happens-at-the-pre-application-stage">{{ t('takingPart.heading2') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#what-the-applicant-must-do">What the applicant must do</a>
+			<a class="govuk-link" href="#what-the-applicant-must-do">{{ t('takingPart.heading3') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#how-you-can-get-involved-at-this-point">How you can get involved at this point</a>
+			<a class="govuk-link" href="#how-you-can-get-involved-at-this-point">{{ t('takingPart.heading4') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#what-you-can-do-if-the-application-has-already-been-submitted">What you can do if the application has already been submitted</a>
+			<a class="govuk-link" href="#what-you-can-do-if-the-application-has-already-been-submitted">{{ t('takingPart.heading5') }}</a>
 		</li>
 	</ol>
 
@@ -34,84 +34,80 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="what-happens-at-the-pre-application-stage">
-					What happens at the pre-application stage
+					{{ t('takingPart.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					Before the applicant sends their application for a proposed national infrastructure development to the Planning Inspectorate, they must carry out public consultation.
-					This happens at the pre-application stage.
+					{{ t('takingPart.paragraph1') }}
 				</p>
 
 				<p class="govuk-body">
-					The applicant must consult:
+					{{ t('takingPart.paragraph2') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>the general public</li>
-					<li>parish councils</li>
-					<li>statutory consultees</li>
-					<li>local authorities and councils</li>
-					<li>land owners and tenants</li>
+					<li>{{ t('takingPart.listItem1') }}</li>
+					<li>{{ t('takingPart.listItem2') }}</li>
+					<li>{{ t('takingPart.listItem3') }}</li>
+					<li>{{ t('takingPart.listItem4') }}</li>
+					<li>{{ t('takingPart.listItem5') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-					They must gather all comments and information from members of the public and organisations.
-					This feedback is taken into account and used to help shape the proposed project.
+					{{ t('takingPart.paragraph3') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="what-the-applicant-must-do">
-					What the applicant must do
+					{{ t('takingPart.heading3') }}
 				</h2>
 
 				<p class="govuk-body">
-					The applicant must advertise their consultation period.
+					{{ t('takingPart.paragraph4') }}
 				</p>
 
 				<p class="govuk-body">
-					The advert must appear for at least two weeks and include:
+					{{ t('takingPart.paragraph5') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>a description of the project</li>
-					<li>where you can find out more about the project</li>
-					<li>the deadline for sending them your comments</li>
+					<li>{{ t('takingPart.listItem6') }}</li>
+					<li>{{ t('takingPart.listItem7') }}</li>
+					<li>{{ t('takingPart.listItem8') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-					The applicant must also contact consultees and anyone whose land is affected by the proposed development.
+					{{ t('takingPart.paragraph6') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="how-you-can-get-involved-at-this-point">
-					How you can get involved at this point
+					{{ t('takingPart.heading4') }}
 				</h2>
 
 				<p class="govuk-body">
-					You need to contact the applicant to get involved at this stage.
+					{{ t('takingPart.paragraph7') }}
 				</p>
 
 				<p class="govuk-body">
-					If there is a project page on this website, you can find the applicant's details here.
-					Alternatively, you can find information in local news or ask your local authority.
+					{{ t('takingPart.paragraph8') }}
 				</p>
 
 				<p class="govuk-body">
-					Getting involved in the applicant's consultation during the pre-application stage is very important.
-					This is your opportunity to put forward any questions and concerns, and find out more about the development and how it might impact the area.
+					{{ t('takingPart.paragraph9') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="what-you-can-do-if-the-application-has-already-been-submitted">
-					What you can do if the application has already been submitted
+					{{ t('takingPart.heading5') }}
 				</h2>
 
 				<p class="govuk-body">
-					If the application has been sent to the Planning Inspectorate, you can get involved by registering to have your say.
+					{{ t('takingPart.paragraph10') }}
 				</p>
 
 				<p class="govuk-body">
-					You must do this when the project is in the pre-examination stage.
+					{{ t('takingPart.paragraph11') }}
 				</p>
 
-				{{ uiNextStep(haveYourSayGuide.activeStep.nextStepURL, haveYourSayGuide.activeStep.nextStepTitle) }}
+				{{ uiNextStep(haveYourSayGuide.activeStep.nextStepURL, haveYourSayGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 
