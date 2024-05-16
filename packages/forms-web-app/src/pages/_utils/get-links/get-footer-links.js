@@ -1,7 +1,7 @@
 const { pinsPrivacyNoticeUrl } = require('../../../config');
 const {
 	getAccessibilityStatementURL
-} = require('../../accessibility-statement/utils/get-accessibility-statement-url');
+} = require('../../accessibility-statement/_utils/get-accessibility-statement-url');
 const { getContactURL } = require('../../contact/_utils/get-contact-url');
 const { getCookiesURL } = require('../../cookies/_utils/get-cookies-url');
 const {
