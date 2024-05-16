@@ -32,6 +32,9 @@ const {
 const {
 	addRegisteringTranslationsMiddleware
 } = require('./registering/_middleware/add-registering-translations-middleware');
+const {
+	addGetInvolvedTranslationsMiddleware
+} = require('./get-involved/_middleware/add-get-involved-translations-middleware');
 
 const haveYourSayGuideRouter = express.Router();
 
@@ -66,6 +69,7 @@ haveYourSayGuideRouter.get(
 );
 haveYourSayGuideRouter.get(
 	getInvolvedURL,
+	addGetInvolvedTranslationsMiddleware,
 	addHaveYourSayGuideStepsMiddleware,
 	getInvolvedController
 );

@@ -23,6 +23,9 @@ const {
 const {
 	addRegisteringTranslationsMiddleware
 } = require('./registering/_middleware/add-registering-translations-middleware');
+const {
+	addGetInvolvedTranslationsMiddleware
+} = require('./get-involved/_middleware/add-get-involved-translations-middleware');
 
 describe('pages/have-your-say-guide/router', () => {
 	const get = jest.fn();
@@ -72,6 +75,7 @@ describe('pages/have-your-say-guide/router', () => {
 		);
 		expect(get).toHaveBeenCalledWith(
 			'/having-your-say-guide/get-involved-preliminary-meeting',
+			addGetInvolvedTranslationsMiddleware,
 			addHaveYourSayGuideStepsMiddleware,
 			getInvolvedController
 		);

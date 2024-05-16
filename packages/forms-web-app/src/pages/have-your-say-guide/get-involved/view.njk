@@ -3,7 +3,7 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Have your say guide - {{ haveYourSayGuide.activeStep.title }}
+	{{ t('haveYourSayGuide.common.haveYourSayGuide') }} - {{ haveYourSayGuide.activeStep.title }}
 {% endblock %}
 
 {% block content %}
@@ -12,18 +12,18 @@
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-		Contents
+		{{ t('common.contents') }}
 	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#about-the-preliminary-meeting">About the preliminary meeting</a>
+			<a class="govuk-link" href="#about-the-preliminary-meeting">{{ t('getInvolved.heading2') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#attending-the-preliminary-meeting">Attending the preliminary meeting</a>
+			<a class="govuk-link" href="#attending-the-preliminary-meeting">{{ t('getInvolved.heading3') }}</a>
 		</li>
 		<li>
-			<a class="govuk-link" href="#what-happens-next">What happens next</a>
+			<a class="govuk-link" href="#what-happens-next">{{ t('getInvolved.heading4') }}</a>
 		</li>
 	</ol>
 
@@ -31,67 +31,62 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="about-the-preliminary-meeting">
-					About the preliminary meeting
+					{{ t('getInvolved.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					In the months after the registration period closes, the Examining Authority will hold a preliminary meeting.
+					{{ t('getInvolved.paragraph1') }}
 				</p>
 
 				<p class="govuk-body">
-					Several weeks before this meeting, a letter called the rule 6 letter is sent to everyone who registered to have their say.
-					This is to let everyone know when and where the meeting will be held.
-					It will also include a draft timetable for the examination of the application and how the Examining Authority will examine the application.
+					{{ t('getInvolved.paragraph2') }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="attending-the-preliminary-meeting">
-					Attending the preliminary meeting
+					{{ t('getInvolved.heading3') }}
 				</h2>
 
 				<p class="govuk-body">
-					To be involved in the preliminary meeting, you must either:
+					{{ t('getInvolved.paragraph3') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>be registered to have your say, and have an interested party reference number</li>
-					<li>have a statutory right to be involved</li>
+					<li>{{ t('getInvolved.listItem1') }}</li>
+					<li>{{ t('getInvolved.listItem2') }}</li>
 				</ul>
 
 				<p class="govuk-body">
-					After the registration period has closed, you will be invited to a preliminary meeting.
-					This is to talk about how the application will be examined.
-					You can choose not to attend this meeting and will still be invited to submit more information when the examination starts.
+					{{ t('getInvolved.paragraph4') }}
 				</p>
 
 				<p class="govuk-body">
-					You cannot give your views about the proposed development at this meeting.
+					{{ t('getInvolved.paragraph5') }}
 				</p>
 
 				<p class="govuk-body">
-					You can talk about:
+					{{ t('getInvolved.paragraph6') }}
 				</p>
 
 				<ul class="govuk-list govuk-list--bullet">
-					<li>anything that may affect your ability to attend hearings or meet deadlines, for example other local events happening at the same time or issues with travel or working patterns</li>
-					<li>if there are any suitable local places to hold the hearings</li>
-					<li>if there are any groups of people who need a different approach to be able to take part in the process</li>
-					<li>any other matters relating to the draft examination timetable</li>
+					<li>{{ t('getInvolved.listItem3') }}</li>
+					<li>{{ t('getInvolved.listItem4') }}</li>
+					<li>{{ t('getInvolved.listItem5') }}</li>
+					<li>{{ t('getInvolved.listItem6') }}</li>
 				</ul>
 
 				<h2 class="govuk-heading-m" id="what-happens-next">
-					What happens next
+					{{ t('getInvolved.heading4') }}
 				</h2>
 
 				<p class="govuk-body">
-					The Planning Inspectorate will publish the meeting notes and a live stream recording on the project section of this website a week after the preliminary meeting.
+					{{ t('getInvolved.paragraph7') }}
 				</p>
 
 				<p class="govuk-body">
-					A letter called the rule 8 letter is sent to everyone who registered, as well as anyone with a statutory right.
-					This will have details of the examination including the finalised timetable with all deadlines for submitting more information.
+					{{ t('getInvolved.paragraph8') }}
 				</p>
 
-				{{ uiNextStep(haveYourSayGuide.activeStep.nextStepURL, haveYourSayGuide.activeStep.nextStepTitle) }}
+				{{ uiNextStep(haveYourSayGuide.activeStep.nextStepURL, haveYourSayGuide.activeStep.nextStepTitle, t('common.next')) }}
 			</div>
 		</div>
 

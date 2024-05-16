@@ -1,17 +1,17 @@
 const { getTranslations } = require('../../../_utils/get-translations');
 const enTranslation = require('../_translations/en.json');
 const cyTranslation = require('../_translations/cy.json');
-const { haveYourSayGuideIndexI18nNamespace } = require('../config');
+const { getInvolvedI18nNamespace } = require('../config');
 
-const addIndexTranslationsMiddleware = (req, res, next) => {
+const addGetInvolvedTranslationsMiddleware = (req, res, next) => {
 	const { i18n } = req;
 	const { language } = i18n;
 
 	const translations = getTranslations(enTranslation, cyTranslation);
 
-	i18n.addResourceBundle(language, haveYourSayGuideIndexI18nNamespace, translations[language]);
+	i18n.addResourceBundle(language, getInvolvedI18nNamespace, translations[language]);
 
 	next();
 };
 
-module.exports = { addIndexTranslationsMiddleware };
+module.exports = { addGetInvolvedTranslationsMiddleware };
