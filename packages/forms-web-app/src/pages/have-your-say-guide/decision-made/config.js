@@ -4,6 +4,9 @@ const decisionMadeRoute = 'what-happens-after-decision';
 
 const decisionMadeURL = getHaveYourSayGuidePageURL(decisionMadeRoute);
 
+const decisionMadeI18nNamespace = 'decisionMade';
+
 module.exports = {
-	decisionMadeURL
+	decisionMadeURL,
+	decisionMadeI18nNamespace
 };

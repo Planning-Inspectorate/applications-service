@@ -3,7 +3,7 @@
 {% from "components/ui/next-step.njk" import uiNextStep %}
 
 {% block pageTitle %}
-	Have your say guide - {{ haveYourSayGuide.activeStep.title }}
+	{{ t('haveYourSayGuide.common.haveYourSayGuide') }} - {{ haveYourSayGuide.activeStep.title }}
 {% endblock %}
 
 {% block content %}
@@ -12,12 +12,12 @@
 	</h1>
 
 	<h2 class="style-contents-list-title govuk-heading-s">
-		Contents
+		{{ t('common.contents') }}
 	</h2>
 
 	<ol class="govuk-list style-contents-list">
 		<li>
-			<a class="govuk-link" href="#after-the-decision-is-made">After the decision is made</a>
+			<a class="govuk-link" href="#after-the-decision-is-made">{{ t('decisionMade.heading2') }}</a>
 		</li>
 	</ol>
 
@@ -25,16 +25,15 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="pins-step-by-step-section-main govuk-!-padding-top-4" style="border-top: 1px solid #707070;">
 				<h2 class="govuk-heading-m" id="after-the-decision-is-made">
-					After the decision is made
+					{{ t('decisionMade.heading2') }}
 				</h2>
 
 				<p class="govuk-body">
-					After the relevant Secretary of State has made their decision, there is a 6 week period where people can challenge the decision in the High Court.
-					This is called a judicial review.
+					{{ t('decisionMade.paragraph1') }}
 				</p>
 
 				<p class="govuk-body">
-					You can <a target="_blank" class="govuk-link" href="{{ govUK.administrativeCourtURL }}">find out more about the judicial review process and how it works (opens in a new tab)</a>.
+					{{ t('decisionMade.paragraph2', { link: '<a class="govuk-link" target="_blank" rel="noopener noreferrer" href="' + govUK.administrativeCourtURL + '">' + t('decisionMade.paragraph2LinkText') + '</a>' }) | safe }}
 				</p>
 			</div>
 		</div>
