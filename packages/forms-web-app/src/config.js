@@ -103,7 +103,6 @@ module.exports = {
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
-		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)',
 		publicSectorAccessibilityRegulationsURL:
 			'https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made'
 	},

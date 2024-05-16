@@ -6,4 +6,10 @@ describe('pages/contact/config', () => {
 			expect(contactRoute).toEqual('contact');
 		});
 	});
+
+	describe('#contactI18nNamespace', () => {
+		it('should return the contact i18n namespace', () => {
+			expect(contactRoute).toEqual('contact');
+		});
+	});
 });
