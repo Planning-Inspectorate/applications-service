@@ -1,6 +1,7 @@
 const { getAppData } = require('../../../services/applications.service');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const dayjs = require('dayjs');
+const { preserveLinebreaks } = require('../../../lib/preserve-line-breaks');
 
 const badDateToNull = (date) => (date === '0000-00-00' ? null : date);
 
@@ -22,7 +23,7 @@ const getApplicationData = async (case_ref) => {
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: data.Summary,
+		summary: preserveLinebreaks(data.Summary),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),

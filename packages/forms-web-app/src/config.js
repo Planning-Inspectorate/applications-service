@@ -84,6 +84,8 @@ module.exports = {
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},
 	govUK: {
+		accessibleDocumentsPolicy:
+			'https://www.gov.uk/search/all?keywords=accessible%20document%20policy',
 		adviceNotes:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
@@ -101,9 +103,15 @@ module.exports = {
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
-		pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)',
+		publicSectorAccessibilityRegulationsURL:
+			'https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made',
 		nsipNews:
 			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest'
+	},
+	externalURL: {
+		abilityNetURL: 'https://mcmw.abilitynet.org.uk/',
+		wcag21URL: 'https://www.w3.org/TR/WCAG21/',
+		eassURL: 'https://www.equalityadvisoryservice.com/'
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',

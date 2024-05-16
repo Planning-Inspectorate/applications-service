@@ -94,6 +94,30 @@ describe('#getApplicationData', () => {
 				});
 			});
 		});
+		describe('and the summary contains line breaks', () => {
+			let response;
+			const summary = `My list of items:
+    • Item 1
+    • Item 2
+    • Item 3
+    • Item 4`;
+			beforeEach(async () => {
+				getAppData.mockReturnValue({
+					data: {
+						...commonMockData,
+						Summary: summary,
+						Stage: 1
+					},
+					resp_code: 200
+				});
+				response = await getApplicationData('mock case ref');
+			});
+			it('should preserve formatting', () => {
+				expect(response.summary).toEqual(
+					'My list of items:<br>    • Item 1<br>    • Item 2<br>    • Item 3<br>    • Item 4'
+				);
+			});
+		});
 		describe('and the status code is not 200', () => {
 			beforeEach(() => {
 				getAppData.mockReturnValue({ data: 'mock data', resp_code: 500 });

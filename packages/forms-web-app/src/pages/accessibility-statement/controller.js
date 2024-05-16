@@ -1,5 +1,5 @@
 const logger = require('../../lib/logger');
-const { getPageData } = require('./utils/get-page-data');
+const { getPageData } = require('./_utils/get-page-data');
 
 const view = 'accessibility-statement/view.njk';
 

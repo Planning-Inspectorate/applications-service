@@ -1,215 +1,195 @@
 {% extends "layouts/default.njk" %}
 
+{% set pageTitle = t('accessibilityStatement.heading1') %}
+
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-xl">
-        {{ pageHeading }}
+        {{ t('accessibilityStatement.heading1') }}
       </h1>
 
       <p class="govuk-body-m">
-        This accessibility statement applies to {{ host }}.
+        {{ t('accessibilityStatement.paragraph1') }} {{ host }}.
       </p>
 
       <h2 class="govuk-heading-m">
-        Using this service
+        {{ t('accessibilityStatement.heading2') }}
       </h2>
 
       <p class="govuk-body">
-        This website is run by the Planning Inspectorate.
-        We want as many people as possible to be able to use this website. For example, that means you should be able to:
+        {{ t('accessibilityStatement.paragraph2') }}
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>change colours, contrast levels and fonts</li>
-        <li>zoom in up to 300% without the text spilling off the screen</li>
-        <li>navigate most of the website using just a keyboard</li>
-        <li>navigate most of the website using speech recognition software</li>
-        <li>listen to most of the website using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
+        <li>{{ t('accessibilityStatement.listItem1') }}</li>
+        <li>{{ t('accessibilityStatement.listItem2') }}</li>
+        <li>{{ t('accessibilityStatement.listItem3') }}</li>
+        <li>{{ t('accessibilityStatement.listItem4') }}</li>
+        <li>{{ t('accessibilityStatement.listItem5') }}</li>
       </ul>
 
       <p class="govuk-body">
-        We’ve also made the text as simple as possible to understand.
+        {{ t('accessibilityStatement.paragraph3') }}
       </p>
 
       <p class="govuk-body">
-        <a class="govuk-link" href="https://mcmw.abilitynet.org.uk/">AbilityNet</a> has advice on making your device easier to use if you have a disability.
+        {{ t('accessibilityStatement.paragraph4', { link: '<a class="govuk-link" href="' + externalURL.abilityNetURL + '">' + t('accessibilityStatement.paragraph4LinkText') + '</a>'}) | safe }}
       </p>
 
       <h2 class="govuk-heading-m">
-        How accessible this website is
+        {{ t('accessibilityStatement.heading3') }}
       </h2>
 
       <p class="govuk-body">
-        This service is partially compliant with the <a class="govuk-link" href="https://www.w3.org/TR/WCAG21/">Web Content Accessibility Guidelines version 2.1</a> AA standard.
+        {{ t('accessibilityStatement.paragraph5', { link: '<a class="govuk-link" href="' + externalURL.wcag21URL + '">' + t('accessibilityStatement.paragraph5LinkText') + '</a>'}) | safe }}
       </p>
 
       <p class="govuk-body">
-        We know some parts of this website are not fully accessible:
+        {{ t('accessibilityStatement.paragraph6') }}
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>some pages and document attachments are not written in plain English</li>
-        <li>many documents are in PDF format and are not accessible</li>
-        <li>there may be some links which do not provide enough context</li>
-        <li>people using assistive technology may find some parts of the site difficult to navigate</li>
+        <li>{{ t('accessibilityStatement.listItem6') }}</li>
+        <li>{{ t('accessibilityStatement.listItem7') }}</li>
+        <li>{{ t('accessibilityStatement.listItem8') }}</li>
+        <li>{{ t('accessibilityStatement.listItem9') }}</li>
       </ul>
 
       <p class="govuk-body">
-        The compliance status section below gives more detail on the areas of the site that are not fully accessible.
+        {{ t('accessibilityStatement.paragraph7') }}
       </p>
 
       <h2 class="govuk-heading-m">
-        Feedback and contact information
+        {{ t('accessibilityStatement.heading4') }}
       </h2>
 
       <p class="govuk-body">
-        If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:
+        {{ t('accessibilityStatement.paragraph8') }}
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li>Email: <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
-        </li>
-        <li>Call: <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
-        </li>
+        <li>{{ t('accessibilityStatement.listItem10') }} <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a></li>
+        <li>{{ t('accessibilityStatement.listItem11') }} <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a></li>
       </ul>
 
       <p class="govuk-body">
-        We’ll consider your request and get back to you in 10 working days.
+       {{ t('accessibilityStatement.paragraph9') }}
       </p>
 
       <h2 class="govuk-heading-m">
-        Reporting accessibility problems with this service
+         {{ t('accessibilityStatement.heading5') }}
       </h2>
 
       <p class="govuk-body">
-        We’re always looking to improve the accessibility of this website.
-        If you find any problems not listed on this page or think we’re not meeting accessibility requirements, email us at: <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
+        {{ t('accessibilityStatement.paragraph10') }} <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
       </p>
 
       <h2 class="govuk-heading-m">
-        Enforcement procedure
+        {{ t('accessibilityStatement.heading6') }}
       </h2>
 
       <p class="govuk-body">
-        If you contact us with a complaint and you’re not happy with our response <a class="govuk-link" href="https://www.equalityadvisoryservice.com/">contact the Equality Advisory and Support Service (EASS)</a>.
+       {{ t('accessibilityStatement.paragraph11', { link: '<a class="govuk-link" href="' + externalURL.eassURL + '">' + t('accessibilityStatement.paragraph11LinkText') + '</a>'}) | safe }}
       </p>
 
       <p class="govuk-body">
-        The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’).
+        {{ t('accessibilityStatement.paragraph12') }}
       </p>
 
       <h2 class="govuk-heading-m">
-        Technical information about this website’s accessibility
+        {{ t('accessibilityStatement.heading7') }}
       </h2>
 
       <p class="govuk-body">
-        The Planning Inspectorate is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
+        {{ t('accessibilityStatement.paragraph13') }}
       </p>
 
       <h3 class="govuk-heading-s">
-        Compliance status
+       {{ t('accessibilityStatement.heading8') }}
       </h3>
 
       <p class="govuk-body">
-        This website is partially compliant with the Web Content Accessibility Guidelines version 2.1 AA standard.
-        The non-compliances are listed below.
+        {{ t('accessibilityStatement.paragraph14') }}
       </p>
 
       <h2 class="govuk-heading-m">
-        Non-accessible content
+        {{ t('accessibilityStatement.heading9') }}
       </h2>
 
       <p class="govuk-body">
-        The content listed below is non-accessible for the following reasons.
+         {{ t('accessibilityStatement.paragraph15') }}
       </p>
 
       <h3 class="govuk-heading-s">
-        Non-compliance with the accessibility regulations
+        {{ t('accessibilityStatement.heading10') }}
       </h3>
 
       <ul class="govuk-list govuk-list--bullet">
         <li>
-          It has been observed that if a user is navigating the page with Dragon Naturally Speaking enabled, they are unable to expand the additional information on the Project Information details components.
-          This does not comply with WCAG Level A 2.1: 4.1.2 Name, Role, Value.
-          <br>
-          This issue requires a fix in Dragon Naturally Speaking.
-          As an alternative, users can use MouseGrid, a feature in the Windows Speech Recognition app.
+          {{ t('accessibilityStatement.listItem12') }}
         </li>
         <li>
-          If a user is navigating the page with iOS VoiceOver enabled, the user is not notified that there is additional information which has not been expanded on the screen.
-          Because of this, the user would not know that there is more information within the Project Information components to be heard.
-          If the user does click on the section to expand it, there is also no announcement to say this has happened.
-          This does not comply with WCAG Level A 2.1: Name, Role, Value.
+           {{ t('accessibilityStatement.listItem13') }}
         </li>
         <li>
-          For users of assistive technology the ability to upload files with Dragon Naturally Speaking software fails.
-          This does not comply with WCAG Level A 2.1: 4.1.2 Name, Role, Value.
+           {{ t('accessibilityStatement.listItem14') }}
         </li>
       </ul>
 
       <h3 class="govuk-heading-s">
-        PDFs and non-HTML documents
+        {{ t('accessibilityStatement.heading11') }}
       </h3>
 
       <p class="govuk-body">
-        Many documents are not accessible in a number of ways including missing text alternatives and missing document structure.
-        For example, they may not be structured so they’re accessible to a screen reader.
-        This does not meet WCAG 2.1 success criterion 4.1.2.
-        Some of our PDFs and Word documents are essential to providing our services.
-        For example, we have PDFs with information on how users can access our services, and forms published as Word documents.
+         {{ t('accessibilityStatement.paragraph16') }}
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
         <li>
-          some of our PDFs are not accessible as they are not tagged properly
+          {{ t('accessibilityStatement.listItem15') }}
         </li>
         <li>
-          some PDFs, Word and Excel documents fail on the perceivable and operable WCAG2 criteria
+           {{ t('accessibilityStatement.listItem16') }}
         </li>
         <li>
-          a few of our documents have diagrams. These images do not have a text alternative.
+           {{ t('accessibilityStatement.listItem17') }}
         </li>
         <li>
-          some of the documents we publish are produced by third parties.
-          We are not always able to make these fully compliant
+           {{ t('accessibilityStatement.listItem18') }}
         </li>
       </ul>
 
       <p class="govuk-body">
-        View the <a class="govuk-link" href="https://www.gov.uk/search/all?keywords=accessible%20document%20policy">accessible document policy</a> of the organisation that published the document to report any problems or request documents in an alternative format.
-        If more than one organisation is listed, view the accessible document policy of the first.
+        {{ t('accessibilityStatement.paragraph17', { link: '<a class="govuk-link" href="' + govUK.accessibleDocumentsPolicy + '">' + t('accessibilityStatement.paragraph17LinkText') + '</a>'}) | safe }}
       </p>
 
       <p class="govuk-body">
-        Where possible, we try to fix these as soon as we can.
+         {{ t('accessibilityStatement.paragraph18') }}
       </p>
 
       <h2 class="govuk-heading-m">
-        Content that’s not within the scope of the accessibility regulations
+        {{ t('accessibilityStatement.heading12') }}
       </h2>
 
       <h3 class="govuk-heading-s">
-        PDFs and other documents
+       {{ t('accessibilityStatement.heading13') }}
       </h3>
 
       <p class="govuk-body">
-        Some of our PDFs and Word documents are essential to providing our services.
-        For example, we have PDFs with information on how users can access our services, and forms published as Word documents.
+        {{ t('accessibilityStatement.paragraph19') }}
       </p>
 
       <p class="govuk-body">
-        The accessibility regulations <a class="govuk-link" href="https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made">do not require us to fix PDFs or other documents published before 23 September 2018</a> if they’re not essential to providing our services.
+        {{ t('accessibilityStatement.paragraph20', { link: '<a class="govuk-link" href="' + govUK.publicSectorAccessibilityRegulationsURL + '">' + t('accessibilityStatement.paragraph20LinkText') + '</a>'}) | safe }}
       </p>
 
       <h2 class="govuk-heading-m">
-        Preparation of this accessibility statement
+        {{ t('accessibilityStatement.heading14') }}
       </h2>
 
       <p class="govuk-body">
-        An accessibility report of the service took place in October 2023.
-        This statement was prepared and last reviewed on the 8th of November 2023.
-        This service is tested at least monthly by the team that maintains it, and periodically by external bodies.
+        {{ t('accessibilityStatement.paragraph21') }}
       </p>
 
     </div>

@@ -62,6 +62,7 @@ function nunjucksConfigure(app) {
 	nunjucksEnv.addGlobal('pinsPrivacyNoticeUrl', config.pinsPrivacyNoticeUrl);
 	nunjucksEnv.addGlobal('pinsURL', config.pinsURL);
 	nunjucksEnv.addGlobal('govUK', config.govUK);
+	nunjucksEnv.addGlobal('externalURL', config.externalURL);
 	nunjucksEnv.addGlobal('yearNow', getYearNow());
 
 	return nunjucksEnv;
