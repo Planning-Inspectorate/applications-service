@@ -1,3 +1,5 @@
 const contactRoute = 'contact';
 
-module.exports = { contactRoute };
+const contactI18nNamespace = 'contact';
+
+module.exports = { contactRoute, contactI18nNamespace };

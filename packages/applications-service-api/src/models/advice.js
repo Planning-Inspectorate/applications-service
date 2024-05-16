@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 			initiatedDate: { type: DataTypes.DATEONLY, field: 'InitiatedDate' },
 			dateEnquiryReceived: { type: DataTypes.DATE, field: 'DateEnquiryReceived' },
 			dateAdviceGiven: { type: DataTypes.DATEONLY, field: 'DateAdviceGiven' },
+			attachments: { type: DataTypes.STRING, field: 'Attachments' },
 			dateLastModified: { type: DataTypes.DATE, field: 'DateLastModified' },
 			dateCreated: { type: DataTypes.DATE, field: 'DateCreated' }
 		},

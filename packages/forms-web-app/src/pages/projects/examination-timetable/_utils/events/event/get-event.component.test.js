@@ -1,4 +1,12 @@
 const { getEvent } = require('./get-event');
+const { mockI18n } = require('../../../../../_mocks/i18n');
+const examinationTimetableTranslation_EN = require('../../../_translations/en.json');
+
+const examinationTimetableTranslations = {
+	examinationTimetable: examinationTimetableTranslation_EN
+};
+const i18n = mockI18n(examinationTimetableTranslations);
+
 jest.mock('../../../../../../utils/timetables/check-timetable-state', () => ({
 	...jest.requireActual('../../../../../../utils/timetables/check-timetable-state'),
 	hasDeadlineItemsList: jest.fn().mockReturnValue(true)
@@ -21,7 +29,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/get-even
 
 			beforeEach(() => {
 				jest.useFakeTimers().setSystemTime(new Date(datePresent));
-				result = getEvent(mockEvent);
+				result = getEvent(mockEvent, i18n);
 			});
 
 			it('should return the formatted event data', () => {

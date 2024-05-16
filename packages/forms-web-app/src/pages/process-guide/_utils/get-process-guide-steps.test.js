@@ -1,8 +1,13 @@
 const { getProcessGuideSteps } = require('./get-process-guide-steps');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
+const processGuideTranslations_EN = require('../_translations/en.json');
+const i18n = mockI18n({ processGuide: processGuideTranslations_EN });
+
 describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 	describe('When getting the steps', () => {
-		const processGuideSteps = getProcessGuideSteps();
+		const processGuideSteps = getProcessGuideSteps(i18n);
 		it('should return the steps', () => {
 			expect(processGuideSteps).toEqual({
 				activeStep: undefined,
@@ -46,7 +51,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 					},
 					preExamination: {
 						content: [
-							'The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.',
+							'The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say must be able to register at this stage.',
 							'The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.',
 							'The pre-examination stage usually takes about 3 months.'
 						],
@@ -54,7 +59,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 						title: 'Pre-examination',
 						url: '/decision-making-process-guide/pre-examination'
 					},
-					processGuide: {
+					index: {
 						content: null,
 						linkText: null,
 						title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)',
@@ -73,6 +78,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 	});
 	describe('When getting the pre-application page active step', () => {
 		const processGuideSteps = getProcessGuideSteps(
+			i18n,
 			'/decision-making-process-guide/pre-application'
 		);
 		it('should return the pre-application active step', () => {
@@ -86,6 +92,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 	});
 	describe('When getting the acceptance page active step', () => {
 		const processGuideSteps = getProcessGuideSteps(
+			i18n,
 			'/decision-making-process-guide/review-of-the-application'
 		);
 		it('should return the acceptance active step', () => {
@@ -99,6 +106,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 	});
 	describe('When getting the pre-examination page active step', () => {
 		const processGuideSteps = getProcessGuideSteps(
+			i18n,
 			'/decision-making-process-guide/pre-examination'
 		);
 		it('should return the pre-examination active step', () => {
@@ -112,6 +120,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 	});
 	describe('When getting the examination page active step', () => {
 		const processGuideSteps = getProcessGuideSteps(
+			i18n,
 			'/decision-making-process-guide/examination-of-the-application'
 		);
 		it('should return the examination active step', () => {
@@ -124,7 +133,10 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 		});
 	});
 	describe('When getting the recommendation page active step', () => {
-		const processGuideSteps = getProcessGuideSteps('/decision-making-process-guide/recommendation');
+		const processGuideSteps = getProcessGuideSteps(
+			i18n,
+			'/decision-making-process-guide/recommendation'
+		);
 		it('should return the recommendation active step', () => {
 			expect(processGuideSteps.activeStep).toEqual({
 				nextStepTitle: 'Decision',
@@ -135,7 +147,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 		});
 	});
 	describe('When getting the decision page active step', () => {
-		const processGuideSteps = getProcessGuideSteps('/decision-making-process-guide/decision');
+		const processGuideSteps = getProcessGuideSteps(i18n, '/decision-making-process-guide/decision');
 		it('should return the decision active step', () => {
 			expect(processGuideSteps.activeStep).toEqual({
 				nextStepTitle: 'What happens after the decision is made',
@@ -147,6 +159,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 	});
 	describe('When getting the post decision page active step', () => {
 		const processGuideSteps = getProcessGuideSteps(
+			i18n,
 			'/decision-making-process-guide/what-happens-after-the-decision-is-made'
 		);
 		it('should return the post decision active step', () => {

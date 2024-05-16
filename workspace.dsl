@@ -1,4 +1,7 @@
 workspace "Applications service" {
+
+	!docs architecture
+
 	model {
 		# Required for nested groups - https://docs.structurizr.com/dsl/cookbook/groups/
 		properties {
@@ -31,7 +34,7 @@ workspace "Applications service" {
 					tags "Database" "Microsoft Azure - Azure SQL"
 				}
 
-				group "Function Apps"{
+				group "Function Apps" {
 
 					containerFunctionAppAdvice = container "Advice" "Consumes Advice messages from Service Bus" "Function App, JavaScript"{
 						tags "Microsoft Azure - Function Apps", "FunctionApp"
@@ -138,16 +141,16 @@ workspace "Applications service" {
 
 		##################################################################################
 		# Releationships
-		userPublicIndividual -> containerFoWeb "Finds project information and registers interest" "HTTPS, HTML"
-		userMemberOfOrg -> containerFoWeb "Finds project information and registers interest" "HTTPS, HTML"
-		userAgent -> containerFoWeb "Finds project information and registers interest" "HTTPS, HTML"
+		userPublicIndividual -> containerFoWeb "Finds projects, registers for interest, and makes submissions", "HTTPS, HTML"
+		userMemberOfOrg -> containerFoWeb "Finds projects, registers for interest, and makes submissions", "HTTPS, HTML"
+		userAgent -> containerFoWeb "Finds projects, registers for interest, and makes submissions", "HTTPS, HTML"
 		userCaseWorker -> systemAppsBo "Manages cases through" "HTTPS, HTML, Active Directory Auth"
 
 		# Back-office
-		systemAppsBo -> systemOdw "Broadcasts message when entities change" "Azure Service Bus via topic XXX" "ServiceBus"
+		systemAppsBo -> systemOdw "Broadcasts message when entities change" "Azure Service Bus via topic subscriptions" "ServiceBus"
 		containerBoWeb -> containerBoApi "Renders page, gets and posts data using" "HTTPS, JSON"
 		containerBoApi -> containerBoAzureSql "Reads and writes case data to"
-
+		systemAppsBo -> systemAppsFo "Broadcasts message when entities change" "Azure Service Bus via topic subscriptions" "ServiceBus"
 
 		containerBoApi -> containerFunctionAppAdvice "Broadcasts message on Advice changes" "Azure Service via topic s51-advice" "ServiceBus"
 		containerBoApi -> containerFunctionAppAdviceUnpublish "Broadcasts message on Advice Unpublish changes" "Azure Service via topic s51-advice" "ServiceBus"
@@ -191,6 +194,8 @@ workspace "Applications service" {
 		containerFoApi -> containerFoKeyVault "Retrieves secrets from"
 		containerFoApi -> containerBoFileStorage "Sends file for submission" "HTTPS"
 
+
+		containerBoFileStorage -> containerFoApi "Reads published documents files"
 		# Misc
 		systemNiDatabase -> systemHorizon "Extracts project data including documents and interested party comments (representations)"
 

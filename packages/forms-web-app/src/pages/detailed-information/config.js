@@ -1,5 +1,8 @@
 const detailedInformationRoute = 'detailed-information';
 
+const detailedInformationI18nNamespace = 'detailedInformation';
+
 module.exports = {
-	detailedInformationRoute
+	detailedInformationRoute,
+	detailedInformationI18nNamespace
 };

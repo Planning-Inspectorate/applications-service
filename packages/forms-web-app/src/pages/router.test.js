@@ -12,6 +12,12 @@ const {
 const {
 	addIndexTranslationsMiddleware
 } = require('./index/_middleware/add-index-translations-middleware');
+const {
+	addDetailedInformationTranslationsMiddleware
+} = require('./detailed-information/_middleware/add-detailed-information-translations-middleware');
+const {
+	addContactTranslationsMiddleware
+} = require('./contact/_middleware/add-contact-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -24,13 +30,24 @@ jest.mock('./_middleware/i18n/add-common-translations-middleware', () => {
 		addCommonTranslationsMiddleware: jest.fn()
 	};
 });
-
 jest.mock('./index/_middleware/add-index-translations-middleware', () => {
 	return {
 		addIndexTranslationsMiddleware: jest.fn()
 	};
 });
-
+jest.mock(
+	'./detailed-information/_middleware/add-detailed-information-translations-middleware',
+	() => {
+		return {
+			addDetailedInformationTranslationsMiddleware: jest.fn()
+		};
+	}
+);
+jest.mock('./contact/_middleware/add-contact-translations-middleware', () => {
+	return {
+		addContactTranslationsMiddleware: jest.fn()
+	};
+});
 jest.mock('./cookies/_validators/validate-cookies', () => {
 	return {
 		cookiesValidationRules: jest.fn()
@@ -74,7 +91,12 @@ describe('pages/router', () => {
 				getIndexController
 			);
 
-			expect(get).toHaveBeenCalledWith('/contact', getContactController);
+			expect(get).toHaveBeenCalledWith(
+				'/contact',
+				addCommonTranslationsMiddleware,
+				addContactTranslationsMiddleware,
+				getContactController
+			);
 
 			expect(get).toHaveBeenCalledWith('/cookies', getCookiesController);
 			expect(post).toHaveBeenCalledWith(
@@ -86,7 +108,11 @@ describe('pages/router', () => {
 
 			expect(get).toHaveBeenCalledWith('/terms-and-conditions', getTermsAndConditionsController);
 
-			expect(get).toHaveBeenCalledWith('/detailed-information', getDetailedInformationController);
+			expect(get).toHaveBeenCalledWith(
+				'/detailed-information',
+				addDetailedInformationTranslationsMiddleware,
+				getDetailedInformationController
+			);
 
 			expect(get).toHaveBeenCalledWith('/project-search', getProjectSearchController);
 

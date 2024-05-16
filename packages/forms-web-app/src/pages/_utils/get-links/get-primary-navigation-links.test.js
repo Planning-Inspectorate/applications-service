@@ -4,6 +4,10 @@ const { mockI18n } = require('../../_mocks/i18n');
 
 const globalTranslation_EN = require('../../../locales/en/global.json');
 
+const primaryNavigationLinksTranslations = {
+	global: globalTranslation_EN
+};
+
 jest.mock('../../../config', () => {
 	const originalConfig = jest.requireActual('../../../config');
 
@@ -23,7 +27,7 @@ describe('pages/_utils/get-links/get-primary-navigation-links', () => {
 		beforeEach(() => {
 			primaryNavigationLinks = getPrimaryNavigationLinks(
 				mockPath,
-				mockI18n('global', globalTranslation_EN)
+				mockI18n(primaryNavigationLinksTranslations)
 			);
 		});
 		it('should return the primary navigation links', () => {

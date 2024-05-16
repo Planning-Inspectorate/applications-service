@@ -105,6 +105,9 @@ dist
 .idea
 *.iml
 
+# Vim swap files
+**/*.swp
+
 # Jest
 jest-reports
 junit.xml
@@ -134,3 +137,4 @@ __azurite_db*__.json
 # Structurizr
 workspace.json
 .structurizr/*
+build

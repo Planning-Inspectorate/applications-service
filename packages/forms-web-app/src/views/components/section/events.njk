@@ -2,7 +2,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
-{% macro sectionEvents(events) %}
+{% macro sectionEvents(events, t) %}
 	<div class="section-events">
 		{% for event in events %}
 			<section class="section-events__event">
@@ -34,7 +34,7 @@
 
 							{{ govukButton({
 								classes: "section-events__event-submit ",
-								text: "Have your say",
+								text: t('examinationTimetable.submitHaveYourSay'),
 								type: "Submit"
 							}) }}
 						</form>

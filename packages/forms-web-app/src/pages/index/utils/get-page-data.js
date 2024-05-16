@@ -1,4 +1,3 @@
-const { mapTitles } = require('../../_utils/map-titles');
 const { getContactURL } = require('../../contact/_utils/get-contact-url');
 const {
 	getDetailedInformationURL
@@ -15,8 +14,7 @@ const getPageData = () => {
 			projectSearch: projectSearchRoute,
 			contactURL: getContactURL(),
 			detailedInformationURL: getDetailedInformationURL()
-		},
-		...mapTitles('Welcome to Find a National Infrastructure Project')
+		}
 	};
 };
 
