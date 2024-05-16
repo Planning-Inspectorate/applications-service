@@ -6,6 +6,8 @@ const badDateToNull = (date) => (date === '0000-00-00' ? null : date);
 
 const add28DaysToDate = (date) => (date ? dayjs(date).add(28, 'days').toISOString() : null);
 
+const preserveLinebreaks = (text) => text.replace(/\r\n|\r|\n/g, '<br>');
+
 const getApplicationData = async (case_ref) => {
 	const { data, resp_code } = await getAppData(case_ref);
 	if (resp_code !== 200) throw new Error('Application response status not 200');
@@ -22,7 +24,7 @@ const getApplicationData = async (case_ref) => {
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: data.Summary,
+		summary: preserveLinebreaks(data.Summary),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),
