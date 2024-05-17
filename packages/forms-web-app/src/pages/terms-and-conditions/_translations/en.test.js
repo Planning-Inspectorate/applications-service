@@ -96,7 +96,7 @@ describe('pages/terms-and-conditions/_translations/en', () => {
 				paragraph3:
 					'We do not publish advice on {{-link}}. You should get professional or specialist advice before doing anything on the basis of the content.',
 				paragraph4:
-					'We’re not liable for any loss or damage that may come from using {{-link}}. This includes:',
+					"We're not liable for any loss or damage that may come from using {{-link}}. This includes:",
 				listItem6: 'any direct, indirect or consequential losses',
 				listItem7:
 					"any loss or damage caused by civil wrongs ('tort', including negligence), breach of contract or otherwise",
