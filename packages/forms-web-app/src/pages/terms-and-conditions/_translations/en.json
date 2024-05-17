@@ -8,8 +8,8 @@
 	"introduction": {
 		"heading1": "Terms and conditions",
 		"paragraph1": "This page and any pages it links to explains {{-link}} terms of use.",
-		"paragraph2": "You must agree to these to use {{-link}}.",
-		"linkText1": "National Infrastructure Project's"
+		"paragraph1LinkText": "National Infrastructure Project's",
+		"paragraph2": "You must agree to these to use {{-link}}."
 	},
 	"whoWeAre": {
 		"heading1": "Who we are",

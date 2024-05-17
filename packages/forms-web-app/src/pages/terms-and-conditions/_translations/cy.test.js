@@ -13,8 +13,8 @@ describe('pages/terms-and-conditions/_translations/cy', () => {
 				heading1: 'Telerau ac amodau',
 				paragraph1:
 					"Mae'r dudalen hon ac unrhyw dudalennau y mae'n cysylltu â nhw yn esbonio telerau defnydd {{-link}}.",
-				paragraph2: "Mae'n rhaid i chi gytuno â'r rhain i ddefnyddio {{-link}}.",
-				linkText1: 'Prosiectau Seilwaith Cenedlaethol'
+				paragraph1LinkText: 'Prosiectau Seilwaith Cenedlaethol',
+				paragraph2: "Mae'n rhaid i chi gytuno â'r rhain i ddefnyddio {{-link}}."
 			},
 			whoWeAre: {
 				heading1: 'Pwy ydym ni',
