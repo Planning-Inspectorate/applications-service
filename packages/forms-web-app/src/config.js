@@ -84,6 +84,8 @@ module.exports = {
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},
 	govUK: {
+		accessibleDocumentsPolicy:
+			'https://www.gov.uk/search/all?keywords=accessible%20document%20policy',
 		adviceNotes:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
@@ -100,7 +102,14 @@ module.exports = {
 			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements/nationally-significant-infrastructure-projects-national-policy-statements',
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
-			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance'
+			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
+		publicSectorAccessibilityRegulationsURL:
+			'https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made'
+	},
+	externalURL: {
+		abilityNetURL: 'https://mcmw.abilitynet.org.uk/',
+		wcag21URL: 'https://www.w3.org/TR/WCAG21/',
+		eassURL: 'https://www.equalityadvisoryservice.com/'
 	},
 	pinsPrivacyNoticeUrl:
 		'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
