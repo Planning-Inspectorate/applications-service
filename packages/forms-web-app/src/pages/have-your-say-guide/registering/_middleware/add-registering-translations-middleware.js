@@ -9,7 +9,7 @@ const addRegisteringTranslationsMiddleware = (req, res, next) => {
 
 	const translations = getTranslations(enTranslation, cyTranslation);
 
-	i18n.addResources(language, registeringI18nNamespace, translations[language]);
+	i18n.addResourceBundle(language, registeringI18nNamespace, translations[language]);
 
 	next();
 };

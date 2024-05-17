@@ -31,7 +31,7 @@ describe('pages/have-your-say-guide/get-involved/_middleware/add-get-involved-tr
 			it('should add the English translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'en',
-					'getInvolved',
+					'haveYourSayGuideGetInvolved',
 					'mock get English translations'
 				);
 			});
@@ -46,7 +46,7 @@ describe('pages/have-your-say-guide/get-involved/_middleware/add-get-involved-tr
 			it('should add the Welsh translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'cy',
-					'getInvolved',
+					'haveYourSayGuideGetInvolved',
 					'mock get Welsh translations'
 				);
 			});

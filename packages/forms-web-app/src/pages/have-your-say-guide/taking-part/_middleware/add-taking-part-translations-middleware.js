@@ -9,7 +9,7 @@ const addTakingPartTranslationsMiddleware = (req, res, next) => {
 
 	const translations = getTranslations(enTranslation, cyTranslation);
 
-	i18n.addResources(language, takingPartI18nNamespace, translations[language]);
+	i18n.addResourceBundle(language, takingPartI18nNamespace, translations[language]);
 
 	next();
 };

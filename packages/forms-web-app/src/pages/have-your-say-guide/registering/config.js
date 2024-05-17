@@ -4,7 +4,7 @@ const registeringRoute = 'registering-have-your-say';
 
 const registeringURL = getHaveYourSayGuidePageURL(registeringRoute);
 
-const registeringI18nNamespace = 'registering';
+const registeringI18nNamespace = 'haveYourSayGuideRegistering';
 
 module.exports = {
 	registeringURL,

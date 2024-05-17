@@ -31,7 +31,7 @@ describe('pages/have-your-say-guide/during-examination/_middleware/add-during-ex
 			it('should add the English translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'en',
-					'duringExamination',
+					'haveYourSayGuideDuringExamination',
 					'mock get English translations'
 				);
 			});
@@ -46,7 +46,7 @@ describe('pages/have-your-say-guide/during-examination/_middleware/add-during-ex
 			it('should add the Welsh translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'cy',
-					'duringExamination',
+					'haveYourSayGuideDuringExamination',
 					'mock get Welsh translations'
 				);
 			});

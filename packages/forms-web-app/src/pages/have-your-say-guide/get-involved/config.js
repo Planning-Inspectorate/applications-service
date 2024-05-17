@@ -4,7 +4,7 @@ const getInvolvedRoute = 'get-involved-preliminary-meeting';
 
 const getInvolvedURL = getHaveYourSayGuidePageURL(getInvolvedRoute);
 
-const getInvolvedI18nNamespace = 'getInvolved';
+const getInvolvedI18nNamespace = 'haveYourSayGuideGetInvolved';
 
 module.exports = {
 	getInvolvedURL,

@@ -31,7 +31,7 @@ describe('pages/have-your-say-guide/decision-made/_middleware/add-decision-made-
 			it('should add the English translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'en',
-					'decisionMade',
+					'haveYourSayGuideDecisionMade',
 					'mock get English translations'
 				);
 			});
@@ -46,7 +46,7 @@ describe('pages/have-your-say-guide/decision-made/_middleware/add-decision-made-
 			it('should add the Welsh translations', () => {
 				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'cy',
-					'decisionMade',
+					'haveYourSayGuideDecisionMade',
 					'mock get Welsh translations'
 				);
 			});

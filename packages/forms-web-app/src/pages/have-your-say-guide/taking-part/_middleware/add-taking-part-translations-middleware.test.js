@@ -16,7 +16,7 @@ describe('pages/have-your-say-guide/taking-part/_middleware/add-taking-part-tran
 		const req = {
 			i18n: {
 				language: null,
-				addResources: jest.fn()
+				addResourceBundle: jest.fn()
 			}
 		};
 		const res = {};
@@ -29,9 +29,9 @@ describe('pages/have-your-say-guide/taking-part/_middleware/add-taking-part-tran
 			});
 
 			it('should add the english translations', () => {
-				expect(req.i18n.addResources).toHaveBeenCalledWith(
+				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'en',
-					'takingPart',
+					'haveYourSayGuideTakingPart',
 					'mock get english translations'
 				);
 			});
@@ -44,9 +44,9 @@ describe('pages/have-your-say-guide/taking-part/_middleware/add-taking-part-tran
 			});
 
 			it('should add the welsh translations', () => {
-				expect(req.i18n.addResources).toHaveBeenCalledWith(
+				expect(req.i18n.addResourceBundle).toHaveBeenCalledWith(
 					'cy',
-					'takingPart',
+					'haveYourSayGuideTakingPart',
 					'mock get welsh translations'
 				);
 			});

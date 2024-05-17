@@ -4,7 +4,7 @@ const duringExaminationRoute = 'have-your-say-examination';
 
 const duringExaminationURL = getHaveYourSayGuidePageURL(duringExaminationRoute);
 
-const duringExaminationI18nNamespace = 'duringExamination';
+const duringExaminationI18nNamespace = 'haveYourSayGuideDuringExamination';
 
 module.exports = {
 	duringExaminationURL,
