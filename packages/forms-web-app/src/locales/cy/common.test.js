@@ -12,6 +12,8 @@ describe('locales/cy/common', () => {
 			close: 'Caeedig',
 			contents: 'Cynnwys',
 			next: 'Nesaf',
+			showAllSteps: 'Dangos pob cam',
+			hideAllSteps: 'Cuddio pob cam',
 			govUK: {
 				pressOfficeOpeningHours:
 					'9:00 tan 17:00 o ddydd Llun i ddydd Gwener (heblaw am wyliau cyhoeddus)'

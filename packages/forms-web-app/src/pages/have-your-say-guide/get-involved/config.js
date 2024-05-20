@@ -4,16 +4,9 @@ const getInvolvedRoute = 'get-involved-preliminary-meeting';
 
 const getInvolvedURL = getHaveYourSayGuidePageURL(getInvolvedRoute);
 
-const getInvolvedTitle = 'Get involved in the preliminary meeting';
-
-const getInvolvedContent =
-	'In the months after the registration period closes, the Examining Authority will hold a preliminary meeting. This meeting is to discuss the main issues the Examining Authority will be examining, and the timetable for the examination stage.';
-
-const getInvolvedLinkText = 'What you can do at the preliminary meeting.';
+const getInvolvedI18nNamespace = 'haveYourSayGuideGetInvolved';
 
 module.exports = {
 	getInvolvedURL,
-	getInvolvedTitle,
-	getInvolvedContent,
-	getInvolvedLinkText
+	getInvolvedI18nNamespace
 };
