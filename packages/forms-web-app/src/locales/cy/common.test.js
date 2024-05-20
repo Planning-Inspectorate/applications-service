@@ -8,6 +8,8 @@ describe('locales/cy/common', () => {
 			hide: 'Cuddio',
 			showAllSections: 'Dangos pob adran',
 			hideAllSections: 'Cuddio pob adran',
+			showAllSteps: 'Dangos pob cam',
+			hideAllSteps: 'Cuddio pob cam',
 			open: 'Agor',
 			close: 'Caeedig',
 			contents: 'Cynnwys',

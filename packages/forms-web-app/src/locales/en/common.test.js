@@ -8,6 +8,8 @@ describe('locales/en/common', () => {
 			hide: 'Hide',
 			showAllSections: 'Show all sections',
 			hideAllSections: 'Hide all sections',
+			showAllSteps: 'Show all steps',
+			hideAllSteps: 'Hide all steps',
 			open: 'Open',
 			close: 'Close',
 			contents: 'Contents',
