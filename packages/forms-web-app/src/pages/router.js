@@ -32,6 +32,9 @@ const {
 	addDetailedInformationTranslationsMiddleware
 } = require('./detailed-information/_middleware/add-detailed-information-translations-middleware');
 const {
+	addTermsAndConditionsTranslationsMiddleware
+} = require('./terms-and-conditions/_middleware/add-terms-and-conditions-translations-middleware');
+const {
 	addContactTranslationsMiddleware
 } = require('./contact/_middleware/add-contact-translations-middleware');
 
@@ -72,7 +75,11 @@ pagesRouter.get(projectSearchURL, getProjectSearchController);
 
 pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
 
-pagesRouter.get(termsAndConditionsURL, getTermsAndConditionsController);
+pagesRouter.get(
+	termsAndConditionsURL,
+	addTermsAndConditionsTranslationsMiddleware,
+	getTermsAndConditionsController
+);
 
 pagesRouter.get(cookiesURL, getCookiesController);
 pagesRouter.post(
