@@ -1,3 +1,5 @@
 const haveYourSayGuideSubdirectory = 'having-your-say-guide';
 
-module.exports = { haveYourSayGuideSubdirectory };
+const haveYourSayGuideI18nNamespace = 'haveYourSayGuide';
+
+module.exports = { haveYourSayGuideSubdirectory, haveYourSayGuideI18nNamespace };

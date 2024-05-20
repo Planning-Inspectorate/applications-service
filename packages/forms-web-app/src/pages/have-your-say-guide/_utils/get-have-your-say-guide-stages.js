@@ -1,79 +1,54 @@
-const { haveYourSayGuideTitle, haveYourSayGuideIndexURL } = require('../index/config');
-const {
-	decisionMadeTitle,
-	decisionMadeContent,
-	decisionMadeURL,
-	decisionMadeLinkText
-} = require('../decision-made/config');
-const {
-	duringExaminationTitle,
-	duringExaminationContent,
-	duringExaminationURL,
-	duringExaminationLinkText
-} = require('../during-examination/config');
-const {
-	getInvolvedTitle,
-	getInvolvedContent,
-	getInvolvedURL,
-	getInvolvedLinkText
-} = require('../get-involved/config');
-const {
-	registeringTitle,
-	registeringContent,
-	registeringURL,
-	registeringLinkText
-} = require('../registering/config');
-const {
-	takingPartTitle,
-	takingPartContent,
-	takingPartURL,
-	takingPartLinkText
-} = require('../taking-part/config');
+const { haveYourSayGuideIndexURL } = require('../index/config');
+const { takingPartURL } = require('../taking-part/config');
+const { decisionMadeURL } = require('../decision-made/config');
+const { duringExaminationURL } = require('../during-examination/config');
+const { getInvolvedURL } = require('../get-involved/config');
+const { registeringURL } = require('../registering/config');
 
-const haveYourSayGuideStagesViewModel = (title, content, url, linkText) => ({
+const haveYourSayGuideStagesViewModel = (title, content, linkText, url) => ({
 	title,
 	content,
-	url,
-	linkText
+	linkText,
+	url
 });
 
-const getHaveYourSayGuideStages = {
-	haveYourSayGuide: haveYourSayGuideStagesViewModel(
-		haveYourSayGuideTitle,
+const getHaveYourSayGuideStages = (i18n) => ({
+	index: haveYourSayGuideStagesViewModel(
+		i18n.t('haveYourSayGuide.index.heading1'),
 		null,
-		haveYourSayGuideIndexURL,
-		null
+		null,
+		haveYourSayGuideIndexURL
 	),
 	takingPart: haveYourSayGuideStagesViewModel(
-		takingPartTitle,
-		takingPartContent,
-		takingPartURL,
-		takingPartLinkText
+		i18n.t('haveYourSayGuide.takingPart.heading1'),
+		i18n.t('haveYourSayGuide.takingPart.paragraph1'),
+		i18n.t('haveYourSayGuide.takingPart.linkText'),
+		takingPartURL
 	),
 	registering: haveYourSayGuideStagesViewModel(
-		registeringTitle,
-		registeringContent,
-		registeringURL,
-		registeringLinkText
+		i18n.t('haveYourSayGuide.registering.heading1'),
+		i18n.t('haveYourSayGuide.registering.paragraph1'),
+		i18n.t('haveYourSayGuide.registering.linkText'),
+		registeringURL
 	),
 	getInvolved: haveYourSayGuideStagesViewModel(
-		getInvolvedTitle,
-		getInvolvedContent,
-		getInvolvedURL,
-		getInvolvedLinkText
+		i18n.t('haveYourSayGuide.getInvolved.heading1'),
+		i18n.t('haveYourSayGuide.getInvolved.paragraph1'),
+		i18n.t('haveYourSayGuide.getInvolved.linkText'),
+		getInvolvedURL
 	),
 	duringExamination: haveYourSayGuideStagesViewModel(
-		duringExaminationTitle,
-		duringExaminationContent,
-		duringExaminationURL,
-		duringExaminationLinkText
+		i18n.t('haveYourSayGuide.duringExamination.heading1'),
+		i18n.t('haveYourSayGuide.duringExamination.paragraph1'),
+		i18n.t('haveYourSayGuide.duringExamination.linkText'),
+		duringExaminationURL
 	),
 	decisionMade: haveYourSayGuideStagesViewModel(
-		decisionMadeTitle,
-		decisionMadeContent,
-		decisionMadeURL,
-		decisionMadeLinkText
+		i18n.t('haveYourSayGuide.decisionMade.heading1'),
+		i18n.t('haveYourSayGuide.decisionMade.paragraph1'),
+		i18n.t('haveYourSayGuide.decisionMade.linkText'),
+		decisionMadeURL
 	)
-};
+});
 
 module.exports = { getHaveYourSayGuideStages };

@@ -5,12 +5,19 @@
 
 	<div class="page-section__content">
 		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-one-third">
+			<div class="govuk-grid-column-one-half">
 				{{ chevronCard(
-          t('index.linkTitle5'),
-          homePageUrls.contactURL,
-          t('index.linkParagraph5')
-        ) }}
+					t('index.linkTitle5'),
+					homePageUrls.contactURL,
+					t('index.linkParagraph5')
+				)}}
+			</div>
+			<div class="govuk-grid-column-one-half">
+				{{ chevronCard(
+					t('index.linkTitle6'),
+					homePageUrls.nsipNewsURL,
+					t('index.linkParagraph6')
+				)}}
 			</div>
 		</div>
 	</div>

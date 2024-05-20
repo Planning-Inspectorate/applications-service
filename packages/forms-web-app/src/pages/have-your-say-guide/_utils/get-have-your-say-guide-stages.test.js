@@ -1,8 +1,14 @@
 const { getHaveYourSayGuideStages } = require('./get-have-your-say-guide-stages');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
+const haveYourSayGuideTranslations_EN = require('../_translations/en.json');
+const i18n = mockI18n({ haveYourSayGuide: haveYourSayGuideTranslations_EN });
+
 describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-stages', () => {
+	const haveYourSayGuideStages = getHaveYourSayGuideStages(i18n);
 	it('should return the process guide stages', () => {
-		expect(getHaveYourSayGuideStages).toEqual({
+		expect(haveYourSayGuideStages).toEqual({
 			decisionMade: {
 				content:
 					'Once a decision is made by the relevant Secretary of State, there is a 6 week period where people can challenge the decision in the High Court. This is called a judicial review.',
@@ -24,7 +30,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-stages', () =
 				title: 'Get involved in the preliminary meeting',
 				url: '/having-your-say-guide/get-involved-preliminary-meeting'
 			},
-			haveYourSayGuide: {
+			index: {
 				content: null,
 				linkText: null,
 				title: 'Have your say about a national infrastructure project',

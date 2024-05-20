@@ -4,9 +4,11 @@ const defaultPageData = {
 	homePageUrls: {
 		contactURL: '/contact',
 		detailedInformationURL: '/detailed-information',
-		haveYourSayGuide: 'having-your-say-guide',
-		processGuide: 'decision-making-process-guide',
-		projectSearch: 'project-search'
+		haveYourSayGuideURL: 'having-your-say-guide',
+		processGuideURL: 'decision-making-process-guide',
+		projectSearchURL: 'project-search',
+		nsipNewsURL:
+			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest'
 	}
 };
 
