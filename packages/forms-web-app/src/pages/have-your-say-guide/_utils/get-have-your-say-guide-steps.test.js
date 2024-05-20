@@ -1,8 +1,13 @@
 const { getHaveYourSayGuideSteps } = require('./get-have-your-say-guide-steps');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
+const haveYourSayGuideTranslations_EN = require('../_translations/en.json');
+const i18n = mockI18n({ haveYourSayGuide: haveYourSayGuideTranslations_EN });
+
 describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () => {
 	describe('When getting the steps', () => {
-		const haveYourSayGuideSteps = getHaveYourSayGuideSteps();
+		const haveYourSayGuideSteps = getHaveYourSayGuideSteps(i18n, null);
 		it('should return the steps', () => {
 			expect(haveYourSayGuideSteps).toEqual({
 				activeStep: undefined,
@@ -28,7 +33,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 						title: 'Get involved in the preliminary meeting',
 						url: '/having-your-say-guide/get-involved-preliminary-meeting'
 					},
-					haveYourSayGuide: {
+					index: {
 						content: null,
 						linkText: null,
 						title: 'Have your say about a national infrastructure project',
@@ -55,6 +60,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 	});
 	describe('When getting the taking-part-pre-application page active step', () => {
 		const haveYourSayGuideSteps = getHaveYourSayGuideSteps(
+			i18n,
 			'/having-your-say-guide/taking-part-pre-application'
 		);
 		it('should return the pre-application active step', () => {
@@ -68,6 +74,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 	});
 	describe('When getting the registering page active step', () => {
 		const haveYourSayGuideSteps = getHaveYourSayGuideSteps(
+			i18n,
 			'/having-your-say-guide/registering-have-your-say'
 		);
 		it('should return the registering active step', () => {
@@ -81,6 +88,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 	});
 	describe('When getting the get involved page active step', () => {
 		const haveYourSayGuideSteps = getHaveYourSayGuideSteps(
+			i18n,
 			'/having-your-say-guide/get-involved-preliminary-meeting'
 		);
 		it('should return the get involved active step', () => {
@@ -94,6 +102,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 	});
 	describe('When getting the during examination page active step', () => {
 		const haveYourSayGuideSteps = getHaveYourSayGuideSteps(
+			i18n,
 			'/having-your-say-guide/have-your-say-examination'
 		);
 		it('should return the during examination active step', () => {
@@ -107,6 +116,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 	});
 	describe('When getting the decision made page active step', () => {
 		const haveYourSayGuideSteps = getHaveYourSayGuideSteps(
+			i18n,
 			'/having-your-say-guide/what-happens-after-decision'
 		);
 		it('should return the decision made active step', () => {
