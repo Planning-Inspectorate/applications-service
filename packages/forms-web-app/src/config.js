@@ -104,7 +104,9 @@ module.exports = {
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
 		publicSectorAccessibilityRegulationsURL:
-			'https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made'
+			'https://www.legislation.gov.uk/uksi/2018/952/regulation/4/made',
+		nsipNews:
+			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest'
 	},
 	externalURL: {
 		abilityNetURL: 'https://mcmw.abilitynet.org.uk/',
