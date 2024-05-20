@@ -1,3 +1,4 @@
+const config = require('../../../config');
 const { getContactURL } = require('../../contact/_utils/get-contact-url');
 const {
 	getDetailedInformationURL
@@ -9,11 +10,12 @@ const { projectSearchRoute } = require('../../project-search/config');
 const getPageData = () => {
 	return {
 		homePageUrls: {
-			haveYourSayGuide: haveYourSayGuideSubdirectory,
-			processGuide: processGuideSubdirectory,
-			projectSearch: projectSearchRoute,
+			haveYourSayGuideURL: haveYourSayGuideSubdirectory,
+			processGuideURL: processGuideSubdirectory,
+			projectSearchURL: projectSearchRoute,
 			contactURL: getContactURL(),
-			detailedInformationURL: getDetailedInformationURL()
+			detailedInformationURL: getDetailedInformationURL(),
+			nsipNewsURL: config.govUK.nsipNews
 		}
 	};
 };

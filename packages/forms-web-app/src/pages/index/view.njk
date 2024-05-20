@@ -46,7 +46,7 @@
 						{{ t('index.paragraph4') }}
 					</p>
 
-					<form action="{{ homePageUrls.projectSearch }}" method="get">
+					<form action="{{ homePageUrls.projectSearchURL }}" method="get">
 						{{ uiSearchBar('homepage-search-bar', 'searchTerm', '', t('index.paragraph4'), t('common.search')) }}
 					</form>
 				</div>
@@ -56,7 +56,7 @@
 					</h2>
 
 					<p class="govuk-body">
-						{{ t('index.paragraph5', { link: '<a class="govuk-link" href="' + homePageUrls.projectSearch + '">' + t('index.paragraph5LinkText') + '</a>' }) | safe }}
+						{{ t('index.paragraph5', { link: '<a class="govuk-link" href="' + homePageUrls.projectSearchURL + '">' + t('index.paragraph5LinkText') + '</a>' }) | safe }}
 					</p>
 				</div>
 			</div>
