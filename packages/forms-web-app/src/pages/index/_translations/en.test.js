@@ -30,7 +30,9 @@ describe('pages/index/_translations/en', () => {
 			paragraph3LinkText: 'old website',
 			paragraph4: 'Search by project name or applicant',
 			paragraph5: 'See a {{-link}}',
-			paragraph5LinkText: 'complete list of all projects'
+			paragraph5LinkText: 'complete list of all projects',
+			linkTitle6: 'See the latest news',
+			linkParagraph6: 'See the latest NSIP news.'
 		});
 	});
 });

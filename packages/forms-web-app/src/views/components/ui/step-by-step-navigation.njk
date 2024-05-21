@@ -39,7 +39,7 @@
 
   {% endif %}
 
-<div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="{{ t('common.show') }}" data-hide-text="{{ t('common.hide') }}" data-show-all-text="{{ t('common.showAllSections') }}" data-hide-all-text="{{ t('common.hideAllSections') }}">
+  <div data-module="appstepnav" id="step-by-step-navigation" class="app-step-nav {{ navigationSize }} {{ navigationState }}" data-show-text="{{ t('common.show') }}" data-hide-text="{{ t('common.hide') }}" data-show-all-text="{{ t('common.showAllSteps') }}" data-hide-all-text="{{ t('common.hideAllSteps') }}">
     <ol class="app-step-nav__steps">
 
       {% for step in params.steps %}
@@ -53,7 +53,9 @@
               <span class="app-step-nav__circle app-step-nav__circle--number">
                 <span class="app-step-nav__circle-inner">
                   <span class="app-step-nav__circle-background">
-                    <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span> {{ loop.index }}<span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
+                    <span class="govuk-visually-hidden govuk-!-display-none-print">Step</span>
+                    {{ loop.index }}
+                    <span class="govuk-visually-hidden govuk-!-display-none-print" aria-hidden="true">:</span>
                   </span>
                 </span>
               </span>
@@ -66,13 +68,13 @@
           </div>
 
           <div class="app-step-nav__panel js-panel" id="app-step-nav__panel--{{ loop.index }}">
-              {% for text in [step.content.text].flat() %}
+            {% for text in[step.content.text].flat() %}
 
-                <p class="app-step-nav__paragraph">
-                  {{ text }}
-                </p>
+              <p class="app-step-nav__paragraph">
+                {{ text }}
+              </p>
 
-              {% endfor %}
+            {% endfor %}
 
             {% if step.subList | length %}
               <ol class="app-step-nav__list" data-length="{{ step.subList | length }}">
