@@ -15,10 +15,19 @@ const {
 	getProjectsExaminationTimetableURL
 } = require('./examination-timetable/_utils/get-projects-examination-timetable-url');
 
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
 const { projectsMiddleware } = require('./_middleware/middleware');
 const {
 	addProcessGuideTranslationsMiddleware
 } = require('../process-guide/_middleware/add-process-guide-translations-middleware');
+const {
+	addProjectsIndexTranslationsMiddleware
+} = require('./index/_middleware/add-projects-index-translations-middleware');
+const {
+	addExaminationTimetableTranslationsMiddleware
+} = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
 
 const { section51Router } = require('./section-51/router');
 const { representationsRouter } = require('./representations/router');
@@ -26,12 +35,6 @@ const { getUpdatesRouter } = require('./get-updates/router');
 const { registerRouter } = require('./register/router');
 
 const { featureFlag } = require('../../config');
-const {
-	addExaminationTimetableTranslationsMiddleware
-} = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
-const {
-	addCommonTranslationsMiddleware
-} = require('../_middleware/i18n/add-common-translations-middleware');
 
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
@@ -43,8 +46,10 @@ const projectsRouter = express.Router();
 if (featureFlag.allowProjectInformation) {
 	projectsRouter.get(
 		projectsIndexURL,
-		addProcessGuideTranslationsMiddleware,
 		projectsMiddleware,
+		addCommonTranslationsMiddleware,
+		addProcessGuideTranslationsMiddleware,
+		addProjectsIndexTranslationsMiddleware,
 		getProjectsIndexController
 	);
 	projectsRouter.get(projectsAllUpdatesURL, projectsMiddleware, getProjectsAllUpdatesController);

@@ -56,9 +56,13 @@ const processGuideStages = {
 	}
 };
 
+const projectsIndexTranslations_EN = require('./_translations/en.json');
 const processGuideTranslations_EN = require('../../process-guide/_translations/en.json');
 
-const i18n = mockI18n({ processGuide: processGuideTranslations_EN });
+const i18n = mockI18n({
+	processGuide: processGuideTranslations_EN,
+	projectsIndex: projectsIndexTranslations_EN
+});
 
 describe('pages/projects/index/controller', () => {
 	describe('#getProjectsIndexController', () => {
