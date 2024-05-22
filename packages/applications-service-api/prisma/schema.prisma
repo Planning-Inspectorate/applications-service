@@ -100,13 +100,16 @@ model Project {
   caseId                                            Int          @unique
   caseReference                                     String       @id
   projectName                                       String?
+  projectNameWelsh                                  String?
   projectDescription                                String?      @db.VarChar(2000)
+  projectDescriptionWelsh                           String?      @db.VarChar(2000)
   publishStatus                                     String?
   sector                                            String?
   projectType                                       String?
   sourceSystem                                      String?
   stage                                             String?
   projectLocation                                   String?
+  projectLocationWelsh                              String?
   projectEmailAddress                               String?
   regions                                           String?
   transboundary                                     Boolean?
