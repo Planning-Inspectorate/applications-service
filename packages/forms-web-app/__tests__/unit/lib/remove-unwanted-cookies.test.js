@@ -13,7 +13,7 @@ jest.mock('../../../src/lib/extract-root-domain-name-from-full-domain-name');
 describe('lib/remove-unwanted-cookies', () => {
 	describe('defaultKeepMeCookies', () => {
 		it('should have the expected cookie names', () => {
-			expect(defaultKeepMeCookies).toEqual(['connect.sid', cookieConfig.COOKIE_POLICY_KEY]);
+			expect(defaultKeepMeCookies).toEqual(['connect.sid', cookieConfig.COOKIE_POLICY_KEY, 'lang']);
 		});
 	});
 

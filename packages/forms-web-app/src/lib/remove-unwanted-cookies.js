@@ -1,10 +1,11 @@
 const cookieConfig = require('../scripts/cookie/cookie-config');
+const { localesQueryCookieID } = require('../locales/config');
 
 const {
 	extractRootDomainNameFromHostnameAndSubdomains
 } = require('./extract-root-domain-name-from-full-domain-name');
 
-const defaultKeepMeCookies = ['connect.sid', cookieConfig.COOKIE_POLICY_KEY];
+const defaultKeepMeCookies = ['connect.sid', cookieConfig.COOKIE_POLICY_KEY, localesQueryCookieID];
 
 /**
  * This is a brute force attempt at removing any unwanted cookies.
