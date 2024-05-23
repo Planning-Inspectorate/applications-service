@@ -100,6 +100,28 @@ describe('nsip-project', () => {
 			mockEnqueueDateTime
 		);
 	});
+	it('calls buildMergeQuery with correct parameters for welsh project', async () => {
+		const mockWelshMessage = {
+			...mockMessage,
+			projectNameWelsh: 'some welsh case',
+			projectDescriptionWelsh: 'some welsh desc',
+			projectLocationWelsh: 'some welsh location'
+		};
+
+		const mockWelshProject = {
+			...mockProject,
+			projectLocationWelsh: 'some welsh location',
+			projectNameWelsh: 'some welsh case',
+			projectDescriptionWelsh: 'some welsh desc'
+		};
+		await sendMessage(mockContext, mockWelshMessage);
+		expect(buildMergeQuery).toHaveBeenCalledWith(
+			'project',
+			'caseReference',
+			mockWelshProject,
+			mockEnqueueDateTime
+		);
+	});
 
 	it('upserts project', async () => {
 		await sendMessage(mockContext, mockMessage);
