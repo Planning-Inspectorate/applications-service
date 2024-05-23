@@ -37,6 +37,9 @@ const {
 const {
 	addContactTranslationsMiddleware
 } = require('./contact/_middleware/add-contact-translations-middleware');
+const {
+	addCookiesTranslationsMiddleware
+} = require('./cookies/_middleware/add-cookies-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -81,11 +84,18 @@ pagesRouter.get(
 	getTermsAndConditionsController
 );
 
-pagesRouter.get(cookiesURL, getCookiesController);
+pagesRouter.get(
+	cookiesURL,
+	addCommonTranslationsMiddleware,
+	addCookiesTranslationsMiddleware,
+	getCookiesController
+);
+
 pagesRouter.post(
 	cookiesURL,
 	cookiesValidationRules(),
 	validationErrorHandler,
+	addCookiesTranslationsMiddleware,
 	postCookiesController
 );
 

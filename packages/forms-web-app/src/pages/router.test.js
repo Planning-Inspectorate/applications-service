@@ -21,6 +21,9 @@ const {
 const {
 	addContactTranslationsMiddleware
 } = require('./contact/_middleware/add-contact-translations-middleware');
+const {
+	addCookiesTranslationsMiddleware
+} = require('./cookies/_middleware/add-cookies-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -101,7 +104,13 @@ describe('pages/router', () => {
 				getContactController
 			);
 
-			expect(get).toHaveBeenCalledWith('/cookies', getCookiesController);
+			expect(get).toHaveBeenCalledWith(
+				'/cookies',
+				addCommonTranslationsMiddleware,
+				addCookiesTranslationsMiddleware,
+				getCookiesController
+			);
+
 			expect(post).toHaveBeenCalledWith(
 				'/cookies',
 				cookiesValidationRules(),

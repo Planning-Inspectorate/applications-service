@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block pageTitle %}
-  Cookies - Application service - GOV.UK
+  {{ t('cookies.heading1') }}
 {% endblock %}
 
 {% block content %}
@@ -21,43 +21,40 @@
 
       {% include 'components/flash-message.njk' %}
 
-      <h1 class="govuk-heading-l cookie-settings__with-js govuk-!-display-none" data-cy="cookies-with-js-heading">Cookies on application service</h1>
-      <h1 class="govuk-heading-l cookie-settings__no-js" data-cy="cookies-without-js-heading">Cookies on application service</h1>
+      <h1 class="govuk-heading-l cookie-settings__with-js govuk-!-display-none" data-cy="cookies-with-js-heading">{{ t('cookies.heading1') }}</h1>
+      <h1 class="govuk-heading-l cookie-settings__no-js" data-cy="cookies-without-js-heading">{{ t('cookies.heading1') }}</h1>
 
-      <p data-cy="common-cookie-information">Cookies are files saved on your phone, tablet or computer when you visit a website. We use cookies to store
-        information about how you use the application service, such as the pages you
-        visit.</p>
+      <p data-cy="common-cookie-information">{{ t('cookies.paragraph1') }}</p>
 
-      <h2 class="govuk-heading-m">Cookie settings</h2>
+      <h2 class="govuk-heading-m">{{ t('cookies.heading2') }}</h2>
 
       {% include './_includes/cookies-without-js.njk' %}
 
       <div class="cookie-settings__with-js govuk-!-display-none" data-cy="cookies-with-js-content">
-        <p>We use different types of cookies. </p>
-        <p>You can choose which cookies you're happy for us to use and how the data is shared.</p>
-        <h2 class="govuk-heading-m">Strictly necessary cookies</h2>
-        <p>We use essential cookies to help you use the application service. These do things
-          such as:</p>
+        <p>{{ t('cookies.paragraph2') }}</p>
+        <p>{{ t('cookies.paragraph3') }}</p>
+        <h2 class="govuk-heading-m">{{ t('cookies.heading3') }}</h2>
+        <p>{{ t('cookies.paragraph4') }}</p>
         <ul class="govuk-list govuk-list--bullet">
-          <li>remember your progress through our service</li>
-          <li>remember you have seen the cookies message</li>
+          <li>{{ t('cookies.listItem1') }}</li>
+          <li>{{ t('cookies.listItem2') }}</li>
         </ul>
-        <p>These cookies need to be turned on below to give you the best experience using the service.</p>
+        <p>{{ t('cookies.paragraph5') }}</p>
 
         <form action="" method="post" accept-charset="utf-8">
           <div class="govuk-form-group">
               <span class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  Cookies used to improve application service
+                  {{ t('cookies.heading4') }}
               </span>
               <div id="optional-cookies-hint" class="govuk-hint">
               <span class="govuk-hint">
-                <p>We use Google Analytics to measure how you use the application service so we can improve it based on user needs. We do not allow Google to use or share the data about how you use this site.</p>
-                <p>You agree to the Planning Inspectorate using your data to help improve the application service.</p>
+                <p>{{ t('cookies.paragraph6') }}</p>
+                <p>{{ t('cookies.paragraph7') }}</p>
               </span>
               </div>
             <fieldset class="govuk-fieldset" aria-describedby="optional-cookies-hint">
 							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                Do you want to accept analytics cookies?
+                {{ t('cookies.legend1') }}
               </legend>
 
               {{ govukRadios({
@@ -66,13 +63,13 @@
                 items: [
                   {
                     value: "on",
-                    text: "Yes",
+                    text: t('common.yes'),
                     attributes: { "data-cy":"usage-cookies-yes"},
                     checked: cookiePolicy.usage == true
                   },
                   {
                     value: "off",
-                    text: "No",
+                    text: t('common.no'),
                     attributes: { "data-cy":"usage-cookies-no"},
                     checked: cookiePolicy.usage == false
                   }
@@ -96,3 +93,5 @@
   </div>
 
 {% endblock %}
+
+
