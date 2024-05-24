@@ -3,38 +3,54 @@ const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./map
 
 const NI_MAPPING = {
 	sector: [
-		{ ni: 'BC', api: 'business_and_commercial', label: 'Business and Commercial' },
-		{ ni: 'EN', api: 'energy', label: 'Energy' },
-		{ ni: 'TR', api: 'transport', label: 'Transport' },
-		{ ni: 'WA', api: 'water', label: 'Water' },
-		{ ni: 'WS', api: 'waste', label: 'Waste' },
-		{ ni: 'WW', api: 'waste_water', label: 'Waste Water' }
+		{
+			ni: 'BC',
+			api: 'business_and_commercial',
+			label: 'Business and Commercial',
+			label_cy: 'Busnes a Masnachol'
+		},
+		{ ni: 'EN', api: 'energy', label: 'Energy', label_cy: 'Ynni' },
+		{ ni: 'TR', api: 'transport', label: 'Transport', label_cy: 'Trafnidiaeth' },
+		{ ni: 'WA', api: 'water', label: 'Water', label_cy: 'Dŵr' },
+		{ ni: 'WS', api: 'waste', label: 'Waste', label_cy: 'Gwastraff' },
+		{ ni: 'WW', api: 'waste_water', label: 'Waste Water', label_cy: 'Dŵr Gwastraff' }
 	],
 	stage: [
-		{ ni: 0, api: 'draft', label: 'Draft' },
-		{ ni: 1, api: 'pre_application', label: 'Pre-application' },
-		{ ni: 2, api: 'acceptance', label: 'Acceptance' },
-		{ ni: 3, api: 'pre_examination', label: 'Pre-examination' },
-		{ ni: 4, api: 'examination', label: 'Examination' },
-		{ ni: 5, api: 'recommendation', label: 'Recommendation' },
-		{ ni: 6, api: 'decision', label: 'Decision' },
-		{ ni: 7, api: 'post_decision', label: 'Post-decision' },
-		{ ni: 8, api: 'withdrawn', label: 'Withdrawn' }
+		{ ni: 0, api: 'draft', label: 'Draft', label_cy: 'Drafft' },
+		{ ni: 1, api: 'pre_application', label: 'Pre-application', label_cy: 'Cyn-ymgeisio' },
+		{ ni: 2, api: 'acceptance', label: 'Acceptance', label_cy: 'Derbyn' },
+		{ ni: 3, api: 'pre_examination', label: 'Pre-examination', label_cy: 'Cyn-archwiliad' },
+		{ ni: 4, api: 'examination', label: 'Examination', label_cy: 'Archwiliad' },
+		{ ni: 5, api: 'recommendation', label: 'Recommendation', label_cy: 'Argymhelliad' },
+		{ ni: 6, api: 'decision', label: 'Decision', label_cy: 'Penderfyniad' },
+		{ ni: 7, api: 'post_decision', label: 'Post-decision', label_cy: 'Ôl-benderfyniad' },
+		{ ni: 8, api: 'withdrawn', label: 'Withdrawn', label_cy: "Tynnu'n ôl" }
 	],
 	region: [
-		{ ni: 'East Midlands', api: 'east_midlands', label: 'East Midlands' },
-		{ ni: 'Eastern', api: 'eastern', label: 'Eastern' },
-		{ ni: 'London', api: 'london', label: 'London' },
-		{ ni: 'North East', api: 'north_east', label: 'North East' },
-		{ ni: 'North West', api: 'north_west', label: 'North West' },
-		{ ni: 'South East', api: 'south_east', label: 'South East' },
-		{ ni: 'South West', api: 'south_west', label: 'South West' },
-		{ ni: 'Wales', api: 'wales', label: 'Wales' },
-		{ ni: 'West Midlands', api: 'west_midlands', label: 'West Midlands' },
+		{
+			ni: 'East Midlands',
+			api: 'east_midlands',
+			label: 'East Midlands',
+			label_cy: 'Dwyrain Canolbarth Lloegr'
+		},
+		{ ni: 'Eastern', api: 'eastern', label: 'Eastern', label_cy: 'Dwyreiniol' },
+		{ ni: 'London', api: 'london', label: 'London', label_cy: 'Llundain' },
+		{ ni: 'North East', api: 'north_east', label: 'North East', label_cy: 'Y Gogledd-ddwyrain' },
+		{ ni: 'North West', api: 'north_west', label: 'North West', label_cy: 'Y Gogledd-orllewin' },
+		{ ni: 'South East', api: 'south_east', label: 'South East', label_cy: 'Y De-ddwyrain' },
+		{ ni: 'South West', api: 'south_west', label: 'South West', label_cy: 'Y De-orllewin' },
+		{ ni: 'Wales', api: 'wales', label: 'Wales', label_cy: 'Cymru' },
+		{
+			ni: 'West Midlands',
+			api: 'west_midlands',
+			label: 'West Midlands',
+			label_cy: 'Gorllewin Canolbarth Lloegr'
+		},
 		{
 			ni: 'Yorkshire and the Humber',
 			api: 'yorkshire_and_the_humber',
-			label: 'Yorkshire and the Humber'
+			label: 'Yorkshire and the Humber',
+			label_cy: 'Swydd Efrog a’r Humber'
 		}
 	]
 };
@@ -42,11 +58,13 @@ const NI_MAPPING = {
 const mapColumnLabelToApi = (name, value) => {
 	switch (name) {
 		case 'stage':
-			return NI_MAPPING[name].find((mapping) => mapping.ni === Number(value))?.label;
+			return NI_MAPPING[name].find((mapping) => mapping.ni === Number(value));
 		default:
-			return NI_MAPPING[name].find((mapping) => mapping.ni === value)?.label;
+			return NI_MAPPING[name].find((mapping) => mapping.ni === value);
 	}
 };
+const mapColumnLabelToApiEn = (name, value) => mapColumnLabelToApi(name, value)?.label;
+const mapColumnLabelToApiCy = (name, value) => mapColumnLabelToApi(name, value)?.label_cy;
 
 const mapColumnValueToApi = (name, value) => {
 	switch (name) {
@@ -103,7 +121,8 @@ const buildApiFiltersFromNIApplications = (applications) => {
 			const filter = {
 				name: field,
 				value: mapColumnValueToApi(field, value),
-				label: mapColumnLabelToApi(field, value),
+				label: mapColumnLabelToApiEn(field, value),
+				label_cy: mapColumnLabelToApiCy(field, value),
 				count: count
 			};
 			filters.push(filter);
@@ -379,5 +398,6 @@ module.exports = {
 	mapResponseBackToNILegacyFormat,
 	buildApplicationsFiltersFromBOApplications,
 	mapNIApplicationsToApi,
-	mapColumnLabelToApi
+	mapColumnLabelToApi: mapColumnLabelToApiEn,
+	mapColumnLabelToApiCy
 };
