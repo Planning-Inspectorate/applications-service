@@ -35,17 +35,36 @@ describe('application.mapper', () => {
 			]);
 
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 1
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 2 },
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
 					value: 'business_and_commercial',
 					count: 2
 				},
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 1 }
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 1 }
 			]);
 		});
 
@@ -57,11 +76,24 @@ describe('application.mapper', () => {
 			]);
 
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
 					value: 'business_and_commercial',
 					count: 2
 				}
@@ -82,14 +114,33 @@ describe('application.mapper', () => {
 				{ stage: 'pre_application', regions: 'south_east', sector: null }
 			]);
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 2
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 1 },
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 2 },
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
 					value: 'business_and_commercial',
 					count: 1
 				}
@@ -102,14 +153,33 @@ describe('application.mapper', () => {
 				{ stage: 'pre_application', regions: 'south_east', sector: 'BC08 - Leisure' }
 			]);
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 1 },
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 1 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 1
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 1 },
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 1
+				},
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 1 },
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
 					value: 'business_and_commercial',
 					count: 1
 				}
@@ -131,17 +201,48 @@ describe('application.mapper', () => {
 				{ stage: 'acceptance', regions: 'south_west', sector: 'EN01 - Generating Stations' }
 			]);
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-				{ name: 'region', label: 'North West', value: 'north_west', count: 1 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 2 },
-				{ name: 'region', label: 'Wales', value: 'wales', count: 1 },
-				{ name: 'region', label: 'South West', value: 'south_west', count: 1 },
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 2
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 2 },
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North West',
+					label_cy: 'Y Gogledd-orllewin',
+					value: 'north_west',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 2
+				},
+				{ name: 'region', label: 'Wales', label_cy: 'Cymru', value: 'wales', count: 1 },
+				{
+					name: 'region',
+					label: 'South West',
+					label_cy: 'Y De-orllewin',
+					value: 'south_west',
+					count: 1
+				},
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 2 },
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
 					value: 'business_and_commercial',
 					count: 2
 				}
