@@ -319,6 +319,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'London Resort' } },
+									{ projectNameWelsh: { contains: 'London Resort' } },
 									{
 										OR: [
 											{ applicant: { organisationName: { contains: 'London' } } },
@@ -366,6 +367,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
+									{ projectNameWelsh: { contains: 'Nuclear' } },
 									{
 										OR: [
 											{ applicant: { organisationName: { contains: 'Nuclear' } } },
@@ -517,6 +519,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
+									{ projectNameWelsh: { contains: 'Nuclear' } },
 									{
 										OR: [
 											{ applicant: { organisationName: { contains: 'Nuclear' } } },

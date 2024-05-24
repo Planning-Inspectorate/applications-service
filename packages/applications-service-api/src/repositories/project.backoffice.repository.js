@@ -42,6 +42,7 @@ const getAllApplications = async (options = {}) => {
 		where['AND'].push({
 			OR: [
 				{ projectName: { contains: searchTerm } },
+				{ projectNameWelsh: { contains: searchTerm } },
 				...terms.map((term) => ({
 					OR: [
 						{ applicant: { organisationName: { contains: term } } },

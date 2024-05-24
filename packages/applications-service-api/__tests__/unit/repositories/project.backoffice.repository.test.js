@@ -109,6 +109,7 @@ describe('project repository', () => {
 						{
 							OR: [
 								{ projectName: { contains: searchTerm } },
+								{ projectNameWelsh: { contains: searchTerm } },
 								{
 									OR: [
 										{ applicant: { organisationName: { contains: 'test' } } },
@@ -184,6 +185,7 @@ describe('project repository', () => {
 						{
 							OR: [
 								{ projectName: { contains: searchTerm } },
+								{ projectNameWelsh: { contains: searchTerm } },
 								{
 									OR: [
 										{ applicant: { organisationName: { contains: searchTerm } } },
