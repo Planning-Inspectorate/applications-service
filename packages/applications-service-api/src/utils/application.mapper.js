@@ -1,5 +1,6 @@
 const { pick, omit } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
+const { featureFlag } = require('../lib/config');
 
 const NI_MAPPING = {
 	sector: [
@@ -118,14 +119,15 @@ const buildApiFiltersFromNIApplications = (applications) => {
 	const filters = [];
 	for (const [field, filterValues] of Object.entries(mappedFilters)) {
 		for (const [value, count] of Object.entries(filterValues)) {
-			const filter = {
+			filters.push({
 				name: field,
 				value: mapColumnValueToApi(field, value),
 				label: mapColumnLabelToApiEn(field, value),
-				label_cy: mapColumnLabelToApiCy(field, value),
-				count: count
-			};
-			filters.push(filter);
+				count: count,
+				...(featureFlag.allowWelshTranslation
+					? { label_cy: mapColumnLabelToApiCy(field, value) }
+					: {})
+			});
 		}
 	}
 
@@ -175,15 +177,12 @@ const mapNIApplicationToApi = (application) => {
 		? application.MapZoomLevel
 		: mapZoomLevel(application.MapZoomLevel);
 
-	return {
+	const apiStruct = {
 		caseReference: application.CaseReference,
 		projectName: application.ProjectName,
-		projectNameWelsh: application.ProjectNameWelsh,
 		projectType: application.Proposal,
 		projectDescription: application.Summary,
-		projectDescriptionWelsh: application.SummaryWelsh,
 		projectLocation: application.ProjectLocation,
-		projectLocationWelsh: application.ProjectLocationWelsh,
 		projectEmailAddress: application.ProjectEmailAddress,
 		applicantName: application.PromoterName,
 		applicantFirstName: application.PromoterFirstName,
@@ -219,6 +218,14 @@ const mapNIApplicationToApi = (application) => {
 		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
 		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline
 	};
+
+	if (featureFlag.allowWelshTranslation) {
+		apiStruct.projectNameWelsh = application.ProjectNameWelsh;
+		apiStruct.projectDescriptionWelsh = application.SummaryWelsh;
+		apiStruct.projectLocationWelsh = application.ProjectLocationWelsh;
+	}
+
+	return apiStruct;
 };
 
 /**
@@ -227,15 +234,13 @@ const mapNIApplicationToApi = (application) => {
  */
 const mapBackOfficeApplicationToApi = (application) => {
 	if (!application) return;
-	const data = pick(application, [
+
+	const fields = [
 		'caseReference',
 		'projectName',
-		'projectNameWelsh',
 		'projectType',
 		'projectDescription',
-		'projectDescriptionWelsh',
 		'projectLocation',
-		'projectLocationWelsh',
 		'projectEmailAddress',
 		'easting',
 		'northing',
@@ -262,7 +267,13 @@ const mapBackOfficeApplicationToApi = (application) => {
 		'stage4ExtensionToExamCloseDate',
 		'stage5ExtensionToDecisionDeadline',
 		'stage5ExtensionToRecommendationDeadline'
-	]);
+	];
+
+	if (featureFlag.allowWelshTranslation) {
+		fields.concat(['projectNameWelsh', 'projectDescriptionWelsh', 'projectLocationWelsh']);
+	}
+
+	const data = pick(application, fields);
 
 	return {
 		...data,
@@ -304,49 +315,56 @@ const addMapZoomLevelAndLongLat = (application) => {
 
 // map application data from API format back to NI format, for backward compatibility purposes
 // TODO remove this mapping and return the new data in new api format directly (breaking change for frontend)
-const mapResponseBackToNILegacyFormat = (application) => ({
-	CaseReference: application.caseReference,
-	ProjectName: application.projectName,
-	ProjectNameWelsh: application.projectNameWelsh,
-	Proposal: application.projectType,
-	Summary: application.projectDescription,
-	SummaryWelsh: application.projectDescriptionWelsh,
-	Stage: stageMap[application.stage],
-	PromoterName: application.applicantName,
-	PromoterFirstName: application.applicantFirstName,
-	PromoterLastName: application.applicantLastName,
-	ApplicantEmailAddress: application.applicantEmailAddress,
-	ApplicantPhoneNumber: application.applicantPhoneNumber,
-	WebAddress: application.applicantWebsite,
-	ProjectEmailAddress: application.projectEmailAddress,
-	Region: application.regions?.map((region) => regionMap[region]).join(','),
-	ProjectLocation: application.projectLocation,
-	ProjectLocationWelsh: application.projectLocationWelsh,
-	AnticipatedGridRefEasting: application.easting,
-	AnticipatedGridRefNorthing: application.northing,
-	MapZoomLevel: application.mapZoomLevel,
-	AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
-	AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
-	DateOfDCOSubmission: getValidDateInStringOrNull(application.dateOfDCOSubmission),
-	DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
-	DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
-	ConfirmedStartOfExamination: application.confirmedStartOfExamination,
-	DateTimeExaminationEnds: application.dateTimeExaminationEnds,
-	DateOfRepresentationPeriodOpen: application.dateOfRepresentationPeriodOpen,
-	DateOfRelevantRepresentationClose: application.dateOfRelevantRepresentationClose,
-	DateOfReOpenRelevantRepresentationStart: application.dateOfReOpenRelevantRepresentationStart,
-	DateOfReOpenRelevantRepresentationClose: application.dateOfReOpenRelevantRepresentationClose,
-	DateRRepAppearOnWebsite: application.dateRRepAppearOnWebsite,
-	Stage4ExtensiontoExamCloseDate: application.stage4ExtensionToExamCloseDate,
-	stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
-	Stage5ExtensiontoDecisionDeadline: application.stage5ExtensionToDecisionDeadline,
-	DateOfRecommendations: application.dateOfRecommendations,
-	ConfirmedDateOfDecision: getValidDateInStringOrNull(application.confirmedDateOfDecision),
-	DateProjectWithdrawn: application.dateProjectWithdrawn,
-	sourceSystem: application.sourceSystem,
-	dateOfNonAcceptance: application.dateOfNonAcceptance,
-	LongLat: application.longLat
-});
+const mapResponseBackToNILegacyFormat = (application) => {
+	const legacyStruct = {
+		CaseReference: application.caseReference,
+		ProjectName: application.projectName,
+		Proposal: application.projectType,
+		Summary: application.projectDescription,
+		Stage: stageMap[application.stage],
+		PromoterName: application.applicantName,
+		PromoterFirstName: application.applicantFirstName,
+		PromoterLastName: application.applicantLastName,
+		ApplicantEmailAddress: application.applicantEmailAddress,
+		ApplicantPhoneNumber: application.applicantPhoneNumber,
+		WebAddress: application.applicantWebsite,
+		ProjectEmailAddress: application.projectEmailAddress,
+		Region: application.regions?.map((region) => regionMap[region]).join(','),
+		ProjectLocation: application.projectLocation,
+		AnticipatedGridRefEasting: application.easting,
+		AnticipatedGridRefNorthing: application.northing,
+		MapZoomLevel: application.mapZoomLevel,
+		AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
+		AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
+		DateOfDCOSubmission: getValidDateInStringOrNull(application.dateOfDCOSubmission),
+		DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
+		DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
+		ConfirmedStartOfExamination: application.confirmedStartOfExamination,
+		DateTimeExaminationEnds: application.dateTimeExaminationEnds,
+		DateOfRepresentationPeriodOpen: application.dateOfRepresentationPeriodOpen,
+		DateOfRelevantRepresentationClose: application.dateOfRelevantRepresentationClose,
+		DateOfReOpenRelevantRepresentationStart: application.dateOfReOpenRelevantRepresentationStart,
+		DateOfReOpenRelevantRepresentationClose: application.dateOfReOpenRelevantRepresentationClose,
+		DateRRepAppearOnWebsite: application.dateRRepAppearOnWebsite,
+		Stage4ExtensiontoExamCloseDate: application.stage4ExtensionToExamCloseDate,
+		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
+		Stage5ExtensiontoDecisionDeadline: application.stage5ExtensionToDecisionDeadline,
+		DateOfRecommendations: application.dateOfRecommendations,
+		ConfirmedDateOfDecision: getValidDateInStringOrNull(application.confirmedDateOfDecision),
+		DateProjectWithdrawn: application.dateProjectWithdrawn,
+		sourceSystem: application.sourceSystem,
+		dateOfNonAcceptance: application.dateOfNonAcceptance,
+		LongLat: application.longLat
+	};
+
+	if (featureFlag.allowWelshTranslation) {
+		legacyStruct.ProjectNameWelsh = application.projectNameWelsh;
+		legacyStruct.SummaryWelsh = application.projectDescriptionWelsh;
+		legacyStruct.ProjectLocationWelsh = application.projectLocationWelsh;
+	}
+
+	return legacyStruct;
+};
 
 const mapNIApplicationsToApi = (applications) => {
 	return applications.map(addMapZoomLevelAndLongLat).map((application) => {
