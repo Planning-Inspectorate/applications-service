@@ -107,6 +107,7 @@ module.exports = {
 		}
 	},
 	featureFlag: {
-		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true'
+		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
+		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true'
 	}
 };
