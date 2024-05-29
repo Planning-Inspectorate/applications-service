@@ -13,7 +13,7 @@ System_Boundary("ApplicationsBackOffice_boundary", "Applications Back-Office", $
 }
 
 System_Boundary("ApplicationsFrontOffice_boundary", "Applications Front-Office", $tags="") {
-  AddBoundaryTag("Function Apps", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="Dashed", $borderThickness="1")
+  AddBoundaryTag("Function Apps", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
   Boundary(group_1, "Function Apps", $tags="Function Apps") {
     Container(ApplicationsFrontOffice.Advice, "Advice", $techn="Function App, JavaScript", $descr="Consumes Advice messages from Service Bus", $tags="", $link="")
     Container(ApplicationsFrontOffice.AdviceUnpublish, "Advice Unpublish", $techn="Function App, JavaScript", $descr="Consumes Advice unpublish messages from Service Bus", $tags="", $link="")
