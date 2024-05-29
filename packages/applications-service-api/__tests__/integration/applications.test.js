@@ -305,7 +305,48 @@ describe('/api/v1/applications', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			it('with search term applied', async () => {
+			it('with search term applied (FEATURE_ALLOW_WELSH_TRANSLATION=false)', async () => {
+				config.featureFlag.allowWelshTranslation = false;
+
+				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
+
+				expect(mockProjectFindMany).toBeCalledWith({
+					include: { applicant: true },
+					orderBy: { projectName: 'asc' },
+					skip: 0,
+					take: 25,
+					where: {
+						AND: [
+							{ regions: { not: { contains: 'wales' } } },
+							{
+								OR: [
+									{ projectName: { contains: 'London Resort' } },
+									{
+										OR: [
+											{ applicant: { organisationName: { contains: 'London' } } },
+											{ applicant: { firstName: { contains: 'London' } } },
+											{ applicant: { lastName: { contains: 'London' } } }
+										]
+									},
+									{
+										OR: [
+											{ applicant: { organisationName: { contains: 'Resort' } } },
+											{ applicant: { firstName: { contains: 'Resort' } } },
+											{ applicant: { lastName: { contains: 'Resort' } } }
+										]
+									}
+								]
+							}
+						]
+					}
+				});
+
+				expect(response.status).toEqual(200);
+			});
+
+			it('with search term applied (FEATURE_ALLOW_WELSH_TRANSLATION=true)', async () => {
+				config.featureFlag.allowWelshTranslation = true;
+
 				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
 
 				expect(mockProjectFindMany).toBeCalledWith({
