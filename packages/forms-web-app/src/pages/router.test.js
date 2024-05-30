@@ -115,6 +115,7 @@ describe('pages/router', () => {
 				'/cookies',
 				cookiesValidationRules(),
 				validationErrorHandler,
+				addCookiesTranslationsMiddleware,
 				postCookiesController
 			);
 

@@ -30,9 +30,10 @@ describe('pages/cookies/_translations/cy', () => {
 				linkText1: "Dychwelyd i'r dudalen yr oeddech yn edrych arni"
 			},
 			errorMessage: {
-				paragraph1: '',
-				listItem1: '',
-				listItem2: ''
+				paragraph1:
+					"Rydym yn defnyddio JavaScript i osod y rhan fwyaf o'n cwcis. Yn anffodus, nid yw JavaScript yn rhedeg ar eich porwr, felly ni allwch newid eich gosodiadau. Gallwch roi cynnig ar:",
+				listItem1: "ail-lwytho'r dudalen",
+				listItem2: 'troi ymlaen Javascript yn eich porwr'
 			}
 		});
 	});

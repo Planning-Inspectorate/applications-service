@@ -16,7 +16,7 @@ describe('locales/cy/common', () => {
 			hideAllSteps: 'Cuddio pob cam',
 			yes: 'Ydw',
 			no: 'Nac ydw',
-			saveChanges: '',
+			saveChanges: 'Achub newidiadau',
 			success: 'Llwyddiant',
 			govUK: {
 				pressOfficeOpeningHours:

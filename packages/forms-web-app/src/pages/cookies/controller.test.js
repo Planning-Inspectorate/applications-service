@@ -11,11 +11,22 @@ const { getCookiesURL } = require('./_utils/get-cookies-url');
 const view = 'cookies/view.njk';
 const cookiesUpdatedMessagePath = 'cookies/_includes/cookies-updated-successfully-message.njk';
 const cookiesURL = getCookiesURL();
+const { mockI18n } = require('../_mocks/i18n');
 
 jest.mock('../../../src/config');
 jest.mock('../../../src/lib/remove-unwanted-cookies');
 jest.mock('../../../src/lib/flash-message');
 jest.mock('../../../src/lib/get-previous-page-path');
+
+const cookiesTranslation_EN = {
+	cookies: {
+		successBanner: {
+			heading1: 'mock text 1',
+			paragraph1: 'mock text 2',
+			linkText1: 'mock text 3'
+		}
+	}
+};
 
 describe('pages/cookies/controller.js', () => {
 	const FIXED_SYSTEM_TIME = '2020-11-18T00:00:00Z';
@@ -30,7 +41,8 @@ describe('pages/cookies/controller.js', () => {
 		req = {
 			...mockReq(),
 			body: {},
-			cookies: {}
+			cookies: {},
+			i18n: mockI18n(cookiesTranslation_EN)
 		};
 		res = mockRes();
 
@@ -199,7 +211,12 @@ describe('pages/cookies/controller.js', () => {
 							template: {
 								path: cookiesUpdatedMessagePath,
 								vars: {
-									previousPagePath: expectedPreviousPagePath
+									previousPagePath: expectedPreviousPagePath,
+									successBanner: {
+										heading1: 'mock text 1',
+										paragraph1: 'mock text 2',
+										linkText1: 'mock text 3'
+									}
 								}
 							}
 						});

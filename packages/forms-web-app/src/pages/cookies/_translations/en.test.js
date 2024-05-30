@@ -31,9 +31,9 @@ describe('pages/cookies/_translations/en', () => {
 			},
 			errorMessage: {
 				paragraph1:
-					'We use Javascript to set most of our cookies. Unfortunately Javascript is not running on your browser, so you cannot change your settings. You can try:',
+					'We use JavaScript to set most of our cookies. Unfortunately Javascript is not running on your browser, so you cannot change your settings. You can try:',
 				listItem1: 'reloading the page',
-				listItem2: 'turning on Javascript in your browser'
+				listItem2: 'turning on JavaScript in your browser'
 			}
 		});
 	});
