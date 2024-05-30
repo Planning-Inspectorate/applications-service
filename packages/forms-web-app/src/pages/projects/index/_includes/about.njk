@@ -1,13 +1,25 @@
 <section>
-	<h2 class="govuk-heading-m">About the project</h2>
+	<h2 class="govuk-heading-m">
+		{{ t('projectsIndex.aboutProject.heading1') }}
+	</h2>
 
-	<p class="govuk-body">Type of application: {{ proposal }}</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.aboutProject.paragraph1') }}
+		{{ proposal }}
+	</p>
 
-	<p class="govuk-body">Name of applicant: {{ applicationData.promoterName }}</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.aboutProject.paragraph2') }}
+		{{ applicationData.promoterName }}
+	</p>
 
-	<p class="govuk-body">{{ applicationData.summary|safe }}</p>
+	<p class="govuk-body">
+		{{ applicationData.summary | safe }}
+	</p>
 
 	{% if applicationData.webAddress %}
-		<a class="govuk-link" href="{{ applicationData.webAddress }}">View the developer's website</a>
+		<a class="govuk-link" href="{{ applicationData.webAddress }}">
+			{{ t('projectsIndex.aboutProject.linkText1') }}
+		</a>
 	{% endif %}
 </section>

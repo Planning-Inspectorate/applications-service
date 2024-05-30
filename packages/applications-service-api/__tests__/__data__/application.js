@@ -591,15 +591,45 @@ const APPLICATIONS_BO_FILTER_COLUMNS = [
 ];
 
 const APPLICATIONS_FO_FILTERS = [
-	{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
-	{ name: 'stage', label: 'Recommendation', value: 'recommendation', count: 1 },
-	{ name: 'stage', label: 'Post-decision', value: 'post_decision', count: 2 },
-	{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-	{ name: 'region', label: 'North West', value: 'north_west', count: 1 },
-	{ name: 'region', label: 'South West', value: 'south_west', count: 1 },
-	{ name: 'region', label: 'Eastern', value: 'eastern', count: 1 },
-	{ name: 'sector', label: 'Business and Commercial', value: 'business_and_commercial', count: 1 },
-	{ name: 'sector', label: 'Energy', value: 'energy', count: 4 }
+	{
+		name: 'stage',
+		label: 'Pre-application',
+		label_cy: 'Cyn-ymgeisio',
+		value: 'pre_application',
+		count: 2
+	},
+	{
+		name: 'stage',
+		label: 'Recommendation',
+		label_cy: 'Argymhelliad',
+		value: 'recommendation',
+		count: 1
+	},
+	{
+		name: 'stage',
+		label: 'Post-decision',
+		label_cy: 'Ôl-benderfyniad',
+		value: 'post_decision',
+		count: 2
+	},
+	{ name: 'region', label: 'South East', label_cy: 'Y De-ddwyrain', value: 'south_east', count: 2 },
+	{
+		name: 'region',
+		label: 'North West',
+		label_cy: 'Y Gogledd-orllewin',
+		value: 'north_west',
+		count: 1
+	},
+	{ name: 'region', label: 'South West', label_cy: 'Y De-orllewin', value: 'south_west', count: 1 },
+	{ name: 'region', label: 'Eastern', label_cy: 'Dwyreiniol', value: 'eastern', count: 1 },
+	{
+		name: 'sector',
+		label: 'Business and Commercial',
+		label_cy: 'Busnes a Masnachol',
+		value: 'business_and_commercial',
+		count: 1
+	},
+	{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 4 }
 ];
 
 module.exports = {
