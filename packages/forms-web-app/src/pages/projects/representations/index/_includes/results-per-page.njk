@@ -1,7 +1,13 @@
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
 
 <p>
-  Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of <strong>{{ paginationData.totalItems }}</strong> representations, newest first.
+  {{ t('representationsIndex.phrase1') }} 
+  <strong>{{ paginationData.fromRange }}</strong>
+  {{ t('representationsIndex.phrase2') }}
+  <strong>{{ paginationData.toRange }}</strong> 
+  {{ t('representationsIndex.phrase3') }}
+  <strong>{{ paginationData.totalItems }}</strong> 
+  {{ t('representationsIndex.phrase4') }}
 </p>
 
 {{ uiResultsPerPage(resultsPerPage) }}
