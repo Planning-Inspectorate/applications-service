@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const { featureFlag } = require('../lib/config');
 
 const getByCaseReference = async (caseReference) => {
 	return prismaClient.project.findUnique({
@@ -42,6 +43,9 @@ const getAllApplications = async (options = {}) => {
 		where['AND'].push({
 			OR: [
 				{ projectName: { contains: searchTerm } },
+				...(featureFlag.allowWelshTranslation
+					? [{ projectNameWelsh: { contains: searchTerm } }]
+					: []),
 				...terms.map((term) => ({
 					OR: [
 						{ applicant: { organisationName: { contains: term } } },
