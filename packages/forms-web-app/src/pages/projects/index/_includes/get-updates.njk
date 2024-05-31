@@ -1,23 +1,23 @@
 <section>
 	<h2 class="govuk-heading-m">
-		Get updates
+		{{ t('projectsIndex.getUpdates.heading1') }}
 	</h2>
 
 	<p class="govuk-body">
-		Enter your email address to receive:
+		{{ t('projectsIndex.getUpdates.paragraph1') }}
 	</p>
 
 	<ul class="govuk-list govuk-list--bullet">
-		<li>updates on project progress</li>
-		<li>information on how to have your say</li>
-		<li>notifications when key documents are published</li>
+		<li>{{ t('projectsIndex.getUpdates.listItem1') }}</li>
+		<li>{{ t('projectsIndex.getUpdates.listItem2') }}</li>
+		<li>{{ t('projectsIndex.getUpdates.listItem3') }}</li>
 	</ul>
 
 	<div class="govuk-inset-text">
-		Read the <a class="govuk-link" href="https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice">privacy notice</a> to see how we handle your information.
+		{{ t('projectsIndex.getUpdates.paragraph2', { link: ' <a class="govuk-link" href="' + govUK.customerPrivacyNotice + '">' +  t('projectsIndex.getUpdates.paragraph2LinkText') + '</a>' }) | safe }}
 	</div>
 
 	<a class="govuk-button" href='{{ caseRef }}/get-updates/start'>
-		Get updates
+		{{ t('projectsIndex.getUpdates.heading1') }}
 	</a>
 </section>

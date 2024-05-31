@@ -1,3 +1,4 @@
+const { omit } = require('lodash');
 const {
 	buildApiFiltersFromNIApplications,
 	buildApplicationsFiltersFromBOApplications,
@@ -17,16 +18,30 @@ const {
 	APPLICATION_API_V1,
 	APPLICATION_DB
 } = require('../../__data__/application');
+const config = require('../../../src/lib/config');
 
 describe('application.mapper', () => {
 	describe('buildApiFiltersFromNIApplications', () => {
-		it('maps applications from NI database to filters in api format', () => {
+		it('maps applications from NI database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
+			config.featureFlag.allowWelshTranslation = true;
+
 			const result = buildApiFiltersFromNIApplications(APPLICATIONS_NI_FILTER_COLUMNS);
 
 			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
 		});
 
-		it('excludes undefined values from filter counts', () => {
+		it('maps applications from NI database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
+			config.featureFlag.allowWelshTranslation = false;
+
+			const result = buildApiFiltersFromNIApplications(APPLICATIONS_NI_FILTER_COLUMNS);
+
+			const filters = APPLICATIONS_FO_FILTERS.map((filter) => omit(filter, ['label_cy']));
+			expect(result).toEqual(filters);
+		});
+
+		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
+			config.featureFlag.allowWelshTranslation = true;
+
 			const result = buildApiFiltersFromNIApplications([
 				{ Stage: 1, Region: 'South East', Proposal: 'BC08 - Leisure' },
 				{ Stage: null, Region: 'North East', Proposal: 'EN01 - Generating Stations' },
@@ -35,10 +50,69 @@ describe('application.mapper', () => {
 			]);
 
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 1
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 2 },
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
+					value: 'business_and_commercial',
+					count: 2
+				},
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 1 }
+			]);
+		});
+
+		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
+			config.featureFlag.allowWelshTranslation = false;
+
+			const result = buildApiFiltersFromNIApplications([
+				{ Stage: 1, Region: 'South East', Proposal: 'BC08 - Leisure' },
+				{ Stage: null, Region: 'North East', Proposal: 'EN01 - Generating Stations' },
+				{ Stage: 2, Region: null, Proposal: 'BC08 - Leisure' },
+				{ Stage: 2, Region: 'South East', Proposal: null }
+			]);
+
+			expect(result).toEqual([
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					value: 'pre_application',
+					count: 1
+				},
 				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'region',
+					label: 'South East',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					value: 'north_east',
+					count: 1
+				},
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
@@ -49,7 +123,9 @@ describe('application.mapper', () => {
 			]);
 		});
 
-		it('excludes invalid values from filter counts', () => {
+		it('excludes invalid values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
+			config.featureFlag.allowWelshTranslation = true;
+
 			const result = buildApiFiltersFromNIApplications([
 				{ Stage: 1, Region: 'NOT A REGION', Proposal: 'BC08 - Leisure' },
 				{ Stage: null, Region: 'North East', Proposal: 'NOT A PROPOSAL' },
@@ -57,8 +133,52 @@ describe('application.mapper', () => {
 			]);
 
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
+					value: 'business_and_commercial',
+					count: 2
+				}
+			]);
+		});
+
+		it('excludes invalid values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
+			config.featureFlag.allowWelshTranslation = false;
+
+			const result = buildApiFiltersFromNIApplications([
+				{ Stage: 1, Region: 'NOT A REGION', Proposal: 'BC08 - Leisure' },
+				{ Stage: null, Region: 'North East', Proposal: 'NOT A PROPOSAL' },
+				{ Stage: 200, Region: null, Proposal: 'BC08 - Leisure' }
+			]);
+
+			expect(result).toEqual([
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					value: 'pre_application',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					value: 'north_east',
+					count: 1
+				},
 				{
 					name: 'sector',
 					label: 'Business and Commercial',
@@ -70,11 +190,21 @@ describe('application.mapper', () => {
 	});
 
 	describe('buildApplicationsFiltersFromBOApplications', () => {
-		it('maps applications from back office database to filters in api format', () => {
+		it('maps applications from back office database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
+			config.featureFlag.allowWelshTranslation = true;
 			const result = buildApplicationsFiltersFromBOApplications(APPLICATIONS_BO_FILTER_COLUMNS);
 			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
 		});
-		it('excludes undefined values from filter counts', () => {
+		it('maps applications from back office database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
+			config.featureFlag.allowWelshTranslation = false;
+			const result = buildApplicationsFiltersFromBOApplications(APPLICATIONS_BO_FILTER_COLUMNS);
+
+			const filters = APPLICATIONS_FO_FILTERS.map((filter) => omit(filter, ['label_cy']));
+			expect(result).toEqual(filters);
+		});
+		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
+			config.featureFlag.allowWelshTranslation = true;
+
 			const result = buildApplicationsFiltersFromBOApplications([
 				{ stage: 'acceptance', regions: 'south_east', sector: 'EN01 - Generating Stations' },
 				{ stage: null, regions: 'north_east', sector: 'EN01 - Generating Stations' },
@@ -82,10 +212,67 @@ describe('application.mapper', () => {
 				{ stage: 'pre_application', regions: 'south_east', sector: null }
 			]);
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 2
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 1 },
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 1
+				},
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 2 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
+					value: 'business_and_commercial',
+					count: 1
+				}
+			]);
+		});
+		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
+			config.featureFlag.allowWelshTranslation = false;
+
+			const result = buildApplicationsFiltersFromBOApplications([
+				{ stage: 'acceptance', regions: 'south_east', sector: 'EN01 - Generating Stations' },
+				{ stage: null, regions: 'north_east', sector: 'EN01 - Generating Stations' },
+				{ stage: 'pre_application', regions: null, sector: 'BC08 - Leisure' },
+				{ stage: 'pre_application', regions: 'south_east', sector: null }
+			]);
+			expect(result).toEqual([
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					value: 'pre_application',
+					count: 2
+				},
 				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
+				{
+					name: 'region',
+					label: 'South East',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					value: 'north_east',
+					count: 1
+				},
 				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
 				{
 					name: 'sector',
@@ -95,27 +282,9 @@ describe('application.mapper', () => {
 				}
 			]);
 		});
-		it('excludes invalid values from filter counts', () => {
-			const result = buildApplicationsFiltersFromBOApplications([
-				{ stage: 'acceptance', regions: 'NOT A REGION', sector: 'EN01 - Generating Stations' },
-				{ stage: 'NOT A STAGE', regions: 'north_east', sector: 'NOT A SECTOR' },
-				{ stage: 'pre_application', regions: 'south_east', sector: 'BC08 - Leisure' }
-			]);
-			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 1 },
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 1 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 1 },
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 1 },
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					value: 'business_and_commercial',
-					count: 1
-				}
-			]);
-		});
-		it('handles multiple regions in one application correctly', () => {
+		it('handles multiple regions in one application correctly (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
+			config.featureFlag.allowWelshTranslation = true;
+
 			const result = buildApplicationsFiltersFromBOApplications([
 				{
 					stage: 'acceptance',
@@ -131,13 +300,103 @@ describe('application.mapper', () => {
 				{ stage: 'acceptance', regions: 'south_west', sector: 'EN01 - Generating Stations' }
 			]);
 			expect(result).toEqual([
-				{ name: 'stage', label: 'Pre-application', value: 'pre_application', count: 2 },
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					label_cy: 'Cyn-ymgeisio',
+					value: 'pre_application',
+					count: 2
+				},
+				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 2 },
+				{
+					name: 'region',
+					label: 'South East',
+					label_cy: 'Y De-ddwyrain',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North West',
+					label_cy: 'Y Gogledd-orllewin',
+					value: 'north_west',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					label_cy: 'Y Gogledd-ddwyrain',
+					value: 'north_east',
+					count: 2
+				},
+				{ name: 'region', label: 'Wales', label_cy: 'Cymru', value: 'wales', count: 1 },
+				{
+					name: 'region',
+					label: 'South West',
+					label_cy: 'Y De-orllewin',
+					value: 'south_west',
+					count: 1
+				},
+				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 2 },
+				{
+					name: 'sector',
+					label: 'Business and Commercial',
+					label_cy: 'Busnes a Masnachol',
+					value: 'business_and_commercial',
+					count: 2
+				}
+			]);
+		});
+		it('handles multiple regions in one application correctly (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
+			config.featureFlag.allowWelshTranslation = false;
+
+			const result = buildApplicationsFiltersFromBOApplications([
+				{
+					stage: 'acceptance',
+					regions: 'south_east,north_west',
+					sector: 'EN01 - Generating Stations'
+				},
+				{ stage: 'pre_application', regions: 'south_east', sector: 'BC08 - Leisure' },
+				{
+					stage: 'pre_application',
+					regions: 'north_east,north_east,wales',
+					sector: 'BC08 - Leisure'
+				},
+				{ stage: 'acceptance', regions: 'south_west', sector: 'EN01 - Generating Stations' }
+			]);
+			expect(result).toEqual([
+				{
+					name: 'stage',
+					label: 'Pre-application',
+					value: 'pre_application',
+					count: 2
+				},
 				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
-				{ name: 'region', label: 'South East', value: 'south_east', count: 2 },
-				{ name: 'region', label: 'North West', value: 'north_west', count: 1 },
-				{ name: 'region', label: 'North East', value: 'north_east', count: 2 },
+				{
+					name: 'region',
+					label: 'South East',
+					value: 'south_east',
+					count: 2
+				},
+				{
+					name: 'region',
+					label: 'North West',
+					value: 'north_west',
+					count: 1
+				},
+				{
+					name: 'region',
+					label: 'North East',
+					value: 'north_east',
+					count: 2
+				},
 				{ name: 'region', label: 'Wales', value: 'wales', count: 1 },
-				{ name: 'region', label: 'South West', value: 'south_west', count: 1 },
+				{
+					name: 'region',
+					label: 'South West',
+					value: 'south_west',
+					count: 1
+				},
 				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
 				{
 					name: 'sector',

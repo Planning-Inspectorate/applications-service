@@ -1,3 +1,5 @@
 const projectsIndexRoute = '';
 
-module.exports = { projectsIndexRoute };
+const projectsIndexI18nNamespace = 'projectsIndex';
+
+module.exports = { projectsIndexRoute, projectsIndexI18nNamespace };
