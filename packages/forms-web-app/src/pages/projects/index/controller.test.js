@@ -43,7 +43,7 @@ const processGuideStages = {
 		title: 'Pre-application'
 	},
 	preExamination: {
-		html: '<p class="govuk-body">The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say must be able to register at this stage.</p><p class="govuk-body">The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.</p><p class="govuk-body">The pre-examination stage usually takes about 3 months.</p><a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the pre-examination stage.</a>',
+		html: '<p class="govuk-body">The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.</p><p class="govuk-body">The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.</p><p class="govuk-body">The pre-examination stage usually takes about 3 months.</p><a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the pre-examination stage.</a>',
 		title: 'Pre-examination'
 	},
 	index: {
@@ -56,9 +56,13 @@ const processGuideStages = {
 	}
 };
 
+const projectsIndexTranslations_EN = require('./_translations/en.json');
 const processGuideTranslations_EN = require('../../process-guide/_translations/en.json');
 
-const i18n = mockI18n({ processGuide: processGuideTranslations_EN });
+const i18n = mockI18n({
+	processGuide: processGuideTranslations_EN,
+	projectsIndex: projectsIndexTranslations_EN
+});
 
 describe('pages/projects/index/controller', () => {
 	describe('#getProjectsIndexController', () => {

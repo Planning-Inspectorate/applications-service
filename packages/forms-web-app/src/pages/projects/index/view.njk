@@ -8,8 +8,7 @@
 
 {% set activeId = "project-information" %}
 
-{% set pageHeading = "Project information" %}
-{% set pageTitle = projectName + " - " + pageHeading %}
+{% set pageTitle = projectName + " - " + t('projectsIndex.heading1') %}
 
 {% if mapAccessToken %}
 
@@ -39,9 +38,13 @@
 		</div>
 
 		<div class="govuk-grid-column-two-thirds">
-			<span class="govuk-caption-l">{{ applicationData.projectName }}</span>
+			<span class="govuk-caption-l">
+				{{ applicationData.projectName }}
+			</span>
 
-			<h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+			<h1 class="govuk-heading-xl">
+				{{ t('projectsIndex.heading1') }}
+			</h1>
 
 			{{ getLatestUpdate(latestUpdate, projectsAllUpdatesURL) }}
 
@@ -52,10 +55,8 @@
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
 			{% if applicationData.projectLocation or mapAccessToken %}
-
 				{% include "./_includes/location.njk" %}
 				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
-
 			{% endif %}
 
 			{% include "./_includes/get-updates.njk" %}

@@ -1,23 +1,25 @@
 <section>
 	<h2 class="govuk-heading-m">
-		Contact us
+		{{ t('projectsIndex.contact.heading1') }}
 	</h2>
 
 	<h3 class="govuk-heading-s">
-		Telephone
+		{{ t('projectsIndex.contact.heading2') }}
 	</h3>
 
 	<p class="govuk-body">
-		If you have an interested party number, have it with you when you call.
+		{{ t('projectsIndex.contact.paragraph1') }}
 	</p>
 
 	<p class="govuk-body">
-		Telephone: 0303 444 5000 <br>
-		{{ pinsContactDetails.csOpeningHours }}
+		{{ t('projectsIndex.contact.paragraph2') }}
+		{{ pinsContactDetails.supportTeamPhoneNumber }}
+		<br>
+		{{ t('common.pinsContactDetails.csOpeningHours') }}
 	</p>
 
 	<h3 class="govuk-heading-s">
-		Email
+		{{ t('projectsIndex.contact.heading3') }}
 	</h3>
 
 	<p class="govuk-body">
@@ -25,18 +27,18 @@
 	</p>
 
 	<p class="govuk-body">
-		When writing an email, quote the name of the project in the subject line.
+		{{ t('projectsIndex.contact.paragraph3') }}
 	</p>
 
 	<p class="govuk-body">
-		We aim to respond within 10 working days.
+		{{ t('projectsIndex.contact.paragraph4') }}
 	</p>
 
 	<h3 class="govuk-heading-s">
-		Alternative formats
+		{{ t('projectsIndex.contact.heading4') }}
 	</h3>
 
 	<p class="govuk-body">
-		Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.
+		{{ t('projectsIndex.contact.paragraph5') }}
 	</p>
 </section>

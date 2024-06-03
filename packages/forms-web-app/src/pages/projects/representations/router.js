@@ -8,6 +8,14 @@ const { getRepresentationURL } = require('./representation/_utils/get-representa
 
 const { projectsMiddleware } = require('../_middleware/middleware');
 
+const {
+	addCommonTranslationsMiddleware
+} = require('./../../_middleware/i18n/add-common-translations-middleware');
+
+const {
+	addRepresentationsIndexTranslationsMiddleware
+} = require('./index/_middleware/add-representations-index-translations-middleware');
+
 const representationsIndexURL = getRepresentationsIndexURL();
 const representationURL = getRepresentationURL();
 
@@ -16,6 +24,8 @@ const representationsRouter = express.Router();
 representationsRouter.get(
 	representationsIndexURL,
 	projectsMiddleware,
+	addCommonTranslationsMiddleware,
+	addRepresentationsIndexTranslationsMiddleware,
 	getRepresentationsIndexController
 );
 

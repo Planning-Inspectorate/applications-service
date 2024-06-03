@@ -4,43 +4,43 @@ describe('pages/process-guide/examination/_translations/cy', () => {
 	it('should return the welsh process guide examination page translations', () => {
 		expect(cyExaminationTranslations).toEqual({
 			heading2: "Ynglŷn â'r cam archwilio",
-			heading3: 'Beth fydd yn digwydd yn ystod y cam archwilio',
-			heading4: "Pan fyddwch wedi cofrestru i leisio'ch barn, fe allwch",
-			heading5: "Os ydych wedi methu'r dyddiad cau i gofrestru",
-			heading6:
-				'Os ydych wedi ennill buddiant yn ddiweddar mewn tir y mae datblygiad yn effeithio arno',
-			heading7: 'Rhagor o wybodaeth',
-			listItem1: 'wneud sylwadau ar y datblygiad arfaethedig',
-			listItem2: 'siarad mewn gwrandawiadau',
-			listItem3: 'mynychu archwiliad safle gyda chwmni',
 			paragraph1:
-				"Y cam archwilio yw'r adeg pan fydd yr Awdurdod Archwilio'n edrych ar y prosiect arfaethedig ac yn gofyn cwestiynau.",
-			paragraph10: 'I gael gwybod mwy, darllenwch ein {{-link}}.',
-			paragraph10LinkText: "canllaw ar leisio'ch barn ynglŷn â phrosiect seilwaith cenedlaethol",
-			paragraph11: 'Gallwch edrych ar y wybodaeth am y prosiect ond ni allwch gyflwyno sylw.',
-			paragraph12:
-				"Gallwch gysylltu â thîm y prosiect os nad oedd y datblygwr wedi dweud wrthych fod y cais wedi cael ei dderbyn neu os nad oeddech wedi cofrestru i leisio'ch barn. Bydd tîm y prosiect yn gofyn i'r Awdurdod Archwilio a allwch fod yn Barti â Buddiant a lleisio'ch barn.",
-			paragraph13:
-				'Mae cyfeiriad e-bost tîm y prosiect ar gael yn yr adran cysylltu â ni ar dudalen y prosiect.',
-			paragraph14:
-				'Bydd yr holl fanylion am y prosiect, gan gynnwys dogfennau, cwestiynau, sylwadau ac unrhyw gyngor a roddwyd, yn cael eu cyhoeddi ar y dudalen gwybodaeth am y prosiect.',
-			paragraph15: '{{-link}}.',
-			paragraph15LinkText: 'Gallwch hefyd ddarllen y gyfres lawn o nodiadau cyngor technegol',
+				"Y cam archwilio yw lle mae'r Awdurdod Archwilio yn edrych ar y prosiect arfaethedig ac yn gofyn cwestiynau.",
 			paragraph2:
 				"Gall yr ymgeisydd, unrhyw un sydd wedi cofrestru i leisio'i farn, cyrff swyddogol a phobl yr effeithir ar eu tir yn uniongyrchol wneud sylwadau ar y datblygiad arfaethedig neu ateb unrhyw un o'r cwestiynau erbyn pob terfyn amser.",
 			paragraph3:
 				"Gwneir hyn yn ysgrifenedig fel arfer. Bydd yr Awdurdod Archwilio'n cyhoeddi ei gwestiynau ar yr adegau a nodir yn amserlen yr archwiliad. Gallai'r archwiliad gynnwys gwrandawiadau hefyd os oes materion y mae angen eu trafod yn fanwl.",
 			paragraph4: "Mae'r cam hwn yn cymryd hyd at 6 mis.",
+			heading3: 'Beth fydd yn digwydd yn ystod y cam archwilio',
 			paragraph5:
 				"Y cam archwilio yw'r adeg pan fydd yr Awdurdod Archwilio'n ystyried y datblygiad arfaethedig ac yn gofyn cwestiynau.",
 			paragraph6:
 				"Gallwch anfon eich sylwadau trwy lenwi'r ffurflen ar-lein yn adran y prosiect ar y wefan hon.",
 			paragraph7:
 				"Gall unrhyw un sy'n cael trafferth defnyddio gwasanaethau ar-lein anfon gwybodaeth atom drwy e-bost neu'r post. Mae'r wybodaeth am y prosiect yn adran y prosiect ar y wefan hon yn cynnwys manylion cyswllt ar gyfer tîm achos y prosiect.",
+			heading4: "Pan fyddwch wedi cofrestru i leisio'ch barn, fe allwch",
+			listItem1: 'wneud sylwadau ar y datblygiad arfaethedig',
+			listItem2: 'siarad mewn gwrandawiadau',
+			listItem3: 'mynychu archwiliad safle gyda chwmni',
 			paragraph8:
 				"Bydd angen i chi gofrestru i leisio'ch barn er mwyn i'ch sylwadau gael eu hystyried.",
 			paragraph9:
-				"Rhoddir rhif cyfeirnod i chi pan fyddwch yn cofrestru. Mae'n rhaid i chi ddefnyddio'r rhif hwn wrth gyflwyno sylwadau."
+				"Rhoddir rhif cyfeirnod i chi pan fyddwch yn cofrestru. Mae'n rhaid i chi ddefnyddio'r rhif hwn wrth gyflwyno sylwadau.",
+			paragraph10: 'I gael gwybod mwy, darllenwch ein {{-link}}.',
+			paragraph10LinkText: "canllaw ar leisio'ch barn ynglŷn â phrosiect seilwaith cenedlaethol",
+			heading5: "Os ydych wedi methu'r dyddiad cau i gofrestru",
+			paragraph11: 'Gallwch edrych ar y wybodaeth am y prosiect ond ni allwch gyflwyno sylw.',
+			heading6:
+				'Os ydych wedi ennill buddiant yn ddiweddar mewn tir y mae datblygiad yn effeithio arno',
+			paragraph12:
+				"Gallwch gysylltu â thîm y prosiect os nad oedd y datblygwr wedi dweud wrthych fod y cais wedi cael ei dderbyn neu os nad oeddech wedi cofrestru i leisio'ch barn. Bydd tîm y prosiect yn gofyn i'r Awdurdod Archwilio a allwch fod yn Barti â Buddiant a lleisio'ch barn.",
+			paragraph13:
+				'Mae cyfeiriad e-bost tîm y prosiect ar gael yn yr adran cysylltu â ni ar dudalen y prosiect.',
+			heading7: 'Rhagor o wybodaeth',
+			paragraph14:
+				'Bydd yr holl fanylion am y prosiect, gan gynnwys dogfennau, cwestiynau, sylwadau ac unrhyw gyngor a roddwyd, yn cael eu cyhoeddi ar y dudalen gwybodaeth am y prosiect.',
+			paragraph15: '{{-link}}.',
+			paragraph15LinkText: 'Gallwch hefyd ddarllen y gyfres lawn o nodiadau cyngor technegol'
 		});
 	});
 });
