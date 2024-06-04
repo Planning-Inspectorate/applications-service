@@ -55,8 +55,11 @@ const documentPropertiesFromMessage = [
 	'origin',
 	'owner',
 	'author',
+	'authorWelsh',
 	'representative',
 	'description',
+	'descriptionWelsh',
 	'filter1',
+	'filter1Welsh',
 	'filter2'
 ];
