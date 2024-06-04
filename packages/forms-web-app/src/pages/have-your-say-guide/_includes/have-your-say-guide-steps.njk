@@ -74,7 +74,7 @@
 {# keep /index for e2e tests #}
 {% if templateID !== 'main' %}
   {% set params = {
-    pretitle: "Part of",
+    pretitle: t('common.partOf'),
     title: haveYourSayGuide.steps.index.title,
     url: haveYourSayGuide.steps.index.url,
     steps: params.steps

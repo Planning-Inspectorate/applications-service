@@ -14,6 +14,7 @@ describe('locales/cy/common', () => {
 			next: 'Nesaf',
 			showAllSteps: 'Dangos pob cam',
 			hideAllSteps: 'Cuddio pob cam',
+			partOf: 'Rhan o',
 			govUK: {
 				pressOfficeOpeningHours:
 					'9:00 tan 17:00 o ddydd Llun i ddydd Gwener (heblaw am wyliau cyhoeddus)'
