@@ -2,7 +2,7 @@
 
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
-{% set pageTitle = "Relevant Representations | " + projectName + "" %}
+{% set pageTitle = t('representationsIndex.pageTitle1') + " | "  + projectName %}
 
 {% block content %}
 	<form>
@@ -20,7 +20,7 @@
 				</span>
 
 				<h1 class="govuk-heading-xl">
-					Relevant representations (registration comments)
+					{{ t('representationsIndex.heading1') }}
 				</h1>
 
 				{% if showRepresentations or resultsNotFound %}
