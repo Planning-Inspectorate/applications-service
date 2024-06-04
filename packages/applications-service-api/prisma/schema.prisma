@@ -41,10 +41,13 @@ model Document {
   origin                 String?
   owner                  String?
   author                 String?
+  authorWelsh            String?
   representative         String?
   description            String?
+  descriptionWelsh       String?
   stage                  String?
   filter1                String?
+  filter1Welsh           String?
   filter2                String?
   createdAt              DateTime? @default(now())
   modifiedAt             DateTime? @default(now())
