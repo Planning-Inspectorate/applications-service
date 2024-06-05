@@ -68,8 +68,10 @@ const mapBackOfficeDocuments = (documents) =>
 		stage: document.stage,
 		type: document.documentType,
 		filter1: document.filter1,
+		filter1Welsh: document.filter1Welsh,
 		filter2: document.filter2,
 		description: document.description,
+		descriptionWelsh: document.descriptionWelsh,
 		size: document.size,
 		mime: document.mime,
 		path: document.publishedDocumentURI,
@@ -81,6 +83,7 @@ const mapBackOfficeDocuments = (documents) =>
 		// whoFrom: null, // no equivalent in BO schema
 		docReference: document.documentReference,
 		author: document.author,
+		authorWelsh: document.authorWelsh,
 		// details: '', // no equivalent in BO schema
 		lastModified: document.modifiedAt,
 		dateCreated: document.createdAt
@@ -105,6 +108,7 @@ const mapFilters = (input) => {
 		filterGroup[filterValue].count += filter.total;
 		filterGroup[filterValue].type.push({
 			value: filter.filter1,
+			value_cy: filter.filter1Welsh,
 			count: filter.total
 		});
 		return filterGroup;
