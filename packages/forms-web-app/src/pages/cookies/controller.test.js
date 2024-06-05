@@ -7,25 +7,20 @@ const { addFlashMessage } = require('../../lib/flash-message');
 const { removeUnwantedCookies } = require('../../lib/remove-unwanted-cookies');
 const { toBase64 } = require('../../lib/base64');
 const { getCookiesURL } = require('./_utils/get-cookies-url');
+const { mockI18n } = require('../_mocks/i18n');
+const cookiesTranslation_EN = require('./_translations/en.json');
 
 const view = 'cookies/view.njk';
 const cookiesUpdatedMessagePath = 'cookies/_includes/cookies-updated-successfully-message.njk';
 const cookiesURL = getCookiesURL();
-const { mockI18n } = require('../_mocks/i18n');
 
 jest.mock('../../../src/config');
 jest.mock('../../../src/lib/remove-unwanted-cookies');
 jest.mock('../../../src/lib/flash-message');
 jest.mock('../../../src/lib/get-previous-page-path');
 
-const cookiesTranslation_EN = {
-	cookies: {
-		successBanner: {
-			heading1: 'mock text 1',
-			paragraph1: 'mock text 2',
-			linkText1: 'mock text 3'
-		}
-	}
+const cookiesTranslations = {
+	cookies: cookiesTranslation_EN
 };
 
 describe('pages/cookies/controller.js', () => {
@@ -42,7 +37,7 @@ describe('pages/cookies/controller.js', () => {
 			...mockReq(),
 			body: {},
 			cookies: {},
-			i18n: mockI18n(cookiesTranslation_EN)
+			i18n: mockI18n(cookiesTranslations)
 		};
 		res = mockRes();
 
@@ -213,9 +208,10 @@ describe('pages/cookies/controller.js', () => {
 								vars: {
 									previousPagePath: expectedPreviousPagePath,
 									successBanner: {
-										heading1: 'mock text 1',
-										paragraph1: 'mock text 2',
-										linkText1: 'mock text 3'
+										heading1: 'Your cookie settings were saved',
+										paragraph1:
+											'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
+										linkText1: 'Go back to the page you were looking at'
 									}
 								}
 							}
