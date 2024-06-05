@@ -18,6 +18,7 @@ describe('locales/cy/common', () => {
 			no: 'Nac ydw',
 			saveChanges: 'Achub newidiadau',
 			success: 'Llwyddiant',
+			partOf: 'Rhan o',
 			govUK: {
 				pressOfficeOpeningHours:
 					'9:00 tan 17:00 o ddydd Llun i ddydd Gwener (heblaw am wyliau cyhoeddus)'

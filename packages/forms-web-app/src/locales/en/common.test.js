@@ -18,6 +18,7 @@ describe('locales/en/common', () => {
 			no: 'No',
 			saveChanges: 'Save changes',
 			success: 'Success',
+			partOf: 'Part of',
 			govUK: {
 				pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
 			},
