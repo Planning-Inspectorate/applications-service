@@ -61,18 +61,42 @@ extends:
           - name: Deploy API
             condition: eq(${{ parameters.deployAPI }}, 'true')
             steps:
+              # app name is different in the training env (had to be shorter)
+              - bash: |
+                  if [[ $ENVIRONMENT == "training" ]]; then
+                    echo "Name: api"
+                    echo "##vso[task.setvariable variable=appName;]api"
+                  else
+                    echo "Name: applications-api"
+                    echo "##vso[task.setvariable variable=appName;]applications-api"
+                  fi
+                displayName: Set app name
+                env:
+                  ENVIRONMENT: $(ENVIRONMENT)
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
-                  appName: pins-app-applications-service-applications-api-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
           - name: Deploy Web
             condition: eq(${{ parameters.deployWeb }}, 'true')
             steps:
+              # app name is different in the training env (had to be shorter)
+              - bash: |
+                  if [[ $ENVIRONMENT == "training" ]]; then
+                    echo "Name: wfe"
+                    echo "##vso[task.setvariable variable=appName;]wfe"
+                  else
+                    echo "Name: applications-wfe"
+                    echo "##vso[task.setvariable variable=appName;]applications-wfe"
+                  fi
+                displayName: Set app name
+                env:
+                  ENVIRONMENT: $(ENVIRONMENT)
               - template: ../steps/azure_web_app_deploy.yml
                 parameters:
-                  appName: pins-app-applications-service-applications-wfe-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
@@ -82,9 +106,21 @@ extends:
               sourcePipeline: Applications Service Build
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
             steps:
+              # app name is different in the training env (had to be shorter)
+              - bash: |
+                  if [[ $ENVIRONMENT == "training" ]]; then
+                    echo "Name: bo-subs"
+                    echo "##vso[task.setvariable variable=appName;]bo-subs"
+                  else
+                    echo "Name: bo-subscribers"
+                    echo "##vso[task.setvariable variable=appName;]bo-subscribers"
+                  fi
+                displayName: Set app name
+                env:
+                  ENVIRONMENT: $(ENVIRONMENT)
               - template: ../steps/function_app_deploy.yml
                 parameters:
-                  appName: pins-func-applications-service-bo-subscribers-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appName: pins-func-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   resourceGroup: $(resourceGroup)
           - name: Run Database Migration
             condition: eq(${{ parameters.runDbMigrations }}, 'true')
