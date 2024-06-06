@@ -42,6 +42,38 @@ describe('pages/projects/index/_translations/en', () => {
 				paragraph5:
 					'Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.'
 			},
+			getUpdates: {
+				heading1: 'Get updates',
+				listItem1: 'updates on project progress',
+				listItem2: 'information on how to have your say',
+				listItem3: 'notifications when key documents are published',
+				paragraph1: 'Enter your email address to receive:',
+				paragraph2: 'Read the {{-link}} to see how we handle your information.',
+				paragraph2LinkText: 'privacy notice'
+			},
+			heading1: 'Project information',
+			projectLocation: { heading1: 'Project location' },
+			projectStage: {
+				heading1: 'Project stage',
+				paragraph1: 'This project is at the {{-stage}} stage.'
+			},
+			projectStageExamination: {
+				paragraph1:
+					'During the examination stage, anyone who has registered to have their say can submit comments at the {{-link}}. You may also attend hearings, if hearings are held.',
+				linkText1: 'deadlines set out in the examination timetable',
+				paragraph2:
+					'You can also {{-link}} to find out more about what you can do during the examination stage.',
+				linkText2: 'view the rule 8 letter',
+				linkText3: 'Find out more about the examination of the application',
+				paragraph3: '{{-link}} stage.'
+			},
+			emailRequest: {
+				paragraph1:
+					'You may have recently gained an interest in land affected by a development. If the developer did not tell you the application was accepted or you did not register to have your say you can still request to be an interested party.',
+				paragraph2:
+					'You need to contact the project team, they will ask the Examining Authority if you can be an interested party and have your say.',
+				paragraph3: 'Email {{-link}} with your request to become an interested party.'
+			},
 			subsectors: {
 				BC01: 'Office use',
 				BC02: 'Research and Development of Products or Processes',

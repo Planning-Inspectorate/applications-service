@@ -44,6 +44,38 @@ describe('pages/projects/index/_translations/cy', () => {
 				paragraph5:
 					"Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille."
 			},
+			getUpdates: {
+				heading1: 'Cael diweddariadau',
+				listItem1: 'diweddariadau ar gynnydd y prosiect',
+				listItem2: "gwybodaeth ynglŷn â sut i leisio'ch barn",
+				listItem3: 'hysbysiadau pan fydd dogfennau allweddol yn cael eu cyhoeddi',
+				paragraph1: 'Rhowch eich cyfeiriad e-bost i gael:',
+				paragraph2: 'Darllenwch yr {{-link}} i gael gwybod sut rydym yn trin eich gwybodaeth.',
+				paragraph2LinkText: 'hysbysiad preifatrwydd'
+			},
+			heading1: 'Gwybodaeth am y prosiect',
+			projectLocation: { heading1: 'Lleoliad y prosiect' },
+			projectStage: {
+				heading1: 'Cam y prosiect',
+				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}."
+			},
+			projectStageExamination: {
+				paragraph1:
+					"Yn ystod y cam archwilio, gall unrhyw un sydd wedi cofrestru i leisio'i farn gyflwyno sylwadau erbyn y {{-link}}. Cewch fynychu gwrandawiadau hefyd, os cânt eu cynnal.",
+				linkText1: 'terfynau amser a nodir yn amserlen yr archwiliad',
+				paragraph2:
+					'Gallwch hefyd {{-link}} i gael gwybod mwy am yr hyn y gallwch ei wneud yn ystod y cam archwilio.',
+				linkText2: 'ddarllen y llythyr rheol 8',
+				linkText3: "Dysgwch fwy am y cam archwilio'r cais",
+				paragraph3: '{{-link}}.'
+			},
+			emailRequest: {
+				paragraph1:
+					"Efallai eich bod wedi ennill buddiant yn ddiweddar mewn tir y mae datblygiad yn effeithio arno. Os nad oedd y datblygwr wedi dweud wrthych fod y cais wedi cael ei dderbyn neu os na wnaethoch gofrestru i leisio'ch barn, gallwch ofyn am gael bod yn barti â buddiant o hyd.",
+				paragraph2:
+					"Mae angen i chi gysylltu â thîm y prosiect a fydd yn gofyn i'r Awdurdod Archwilio a allwch fod yn barti â buddiant a lleisio'ch barn.",
+				paragraph3: 'Anfonwch neges e-bost at {{-link}} i ofyn am gael bod yn barti â buddiant.'
+			},
 			subsectors: {
 				BC01: 'At Ddefnydd Swyddfa',
 				BC02: 'Ymchwil a Datblygiad Cynnyrch neu Brosesau',
