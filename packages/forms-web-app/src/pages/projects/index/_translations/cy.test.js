@@ -65,6 +65,13 @@ describe('pages/projects/index/_translations/cy', () => {
 				stage7name: 'ôl-benderfyniad.',
 				heading1: 'Cam y prosiect',
 				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}.",
+				preapplication: {
+					paragraph1: "Disgwylir i'r cais gael ei gyflwyno {{-date}}",
+					paragraph2:
+						"Pan fyddwn yn cael y cais, bydd gennym 28 niwrnod i benderfynu p'un ai ei dderbyn i'w archwilio.",
+					paragraph3:
+						"Os derbyniwn y cais, gallwch gofrestru i leisio'ch barn a gweld holl ddogfennau'r cais."
+				},
 				examination: {
 					paragraph1:
 						"Yn ystod y cam archwilio, gall unrhyw un sydd wedi cofrestru i leisio'i farn gyflwyno sylwadau erbyn y {{-link}}. Cewch fynychu gwrandawiadau hefyd, os cânt eu cynnal.",

@@ -63,6 +63,13 @@ describe('pages/projects/index/_translations/en', () => {
 				stage7name: 'Post-decision',
 				heading1: 'Project stage',
 				paragraph1: 'This project is at the {{-stage}} stage.',
+				preapplication: {
+					paragraph1: 'The application is expected to be submitted {{-date}}',
+					paragraph2:
+						'When we receive the application, we have 28 days to decide whether to accept it for examination.',
+					paragraph3:
+						'If we accept the application, you will then be able to register to have your say and view all the application documents.'
+				},
 				examination: {
 					paragraph1:
 						'During the examination stage, anyone who has registered to have their say can submit comments at the {{-link}}. You may also attend hearings, if hearings are held.',

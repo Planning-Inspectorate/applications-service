@@ -1,21 +1,14 @@
-{% set preApplicationText %}
-	{% if applicationData.anticipatedSubmissionDateNonSpecific %}
-		The application is expected to be submitted {{ applicationData.anticipatedSubmissionDateNonSpecific }}.
-	{% endif %}
-{% endset %}
-
-{% if preApplicationText | length %}
+{% if applicationData.anticipatedSubmissionDateNonSpecific %}
 	<p class="govuk-body">
-		{{ preApplicationText }}
+		{{ t("projectsIndex.projectStage.preapplication.paragraph1", { date: applicationData.anticipatedSubmissionDateNonSpecific }) }}
 	</p>
 {% endif %}
 
 <p class="govuk-body">
-	When we receive the application, we have 28 days to decide whether to accept it for examination.
+	{{ t('projectsIndex.projectStage.preapplication.paragraph2')}}
 </p>
 
 <p class="govuk-body">
-	If we accept the application, you will then be able to register to have your say and view all the application
-	documents.
+	{{ t('projectsIndex.projectStage.preapplication.paragraph3')}}
 </p>
 
