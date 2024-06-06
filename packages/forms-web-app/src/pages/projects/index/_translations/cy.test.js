@@ -56,18 +56,25 @@ describe('pages/projects/index/_translations/cy', () => {
 			heading1: 'Gwybodaeth am y prosiect',
 			projectLocation: { heading1: 'Lleoliad y prosiect' },
 			projectStage: {
+				stage1name: 'cyn-ymgeisio',
+				stage2name: 'derbyn',
+				stage3name: 'cyn-archwilio',
+				stage4name: 'archwilio',
+				stage5name: 'argymhelliad.',
+				stage6name: 'penderfyniad.',
+				stage7name: 'ôl-benderfyniad.',
 				heading1: 'Cam y prosiect',
-				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}."
-			},
-			projectStageExamination: {
-				paragraph1:
-					"Yn ystod y cam archwilio, gall unrhyw un sydd wedi cofrestru i leisio'i farn gyflwyno sylwadau erbyn y {{-link}}. Cewch fynychu gwrandawiadau hefyd, os cânt eu cynnal.",
-				linkText1: 'terfynau amser a nodir yn amserlen yr archwiliad',
-				paragraph2:
-					'Gallwch hefyd {{-link}} i gael gwybod mwy am yr hyn y gallwch ei wneud yn ystod y cam archwilio.',
-				linkText2: 'ddarllen y llythyr rheol 8',
-				linkText3: "Dysgwch fwy am y cam archwilio'r cais",
-				paragraph3: '{{-link}}.'
+				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}.",
+				examination: {
+					paragraph1:
+						"Yn ystod y cam archwilio, gall unrhyw un sydd wedi cofrestru i leisio'i farn gyflwyno sylwadau erbyn y {{-link}}. Cewch fynychu gwrandawiadau hefyd, os cânt eu cynnal.",
+					linkText1: 'terfynau amser a nodir yn amserlen yr archwiliad',
+					paragraph2:
+						'Gallwch hefyd {{-link}} i gael gwybod mwy am yr hyn y gallwch ei wneud yn ystod y cam archwilio.',
+					linkText2: 'ddarllen y llythyr rheol 8',
+					linkText3: "Dysgwch fwy am y cam archwilio'r cais",
+					paragraph3: '{{-link}}.'
+				}
 			},
 			emailRequest: {
 				paragraph1:

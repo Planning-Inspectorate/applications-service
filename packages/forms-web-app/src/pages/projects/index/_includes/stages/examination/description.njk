@@ -1,18 +1,18 @@
 <p class="govuk-body">
-	{{ t('projectsIndex.projectStageExamination.paragraph1', 
-	{ link: '<a class="govuk-link" href="/projects/' + applicationData.caseRef + '/examination-timetable">' + t('projectsIndex.projectStageExamination.linkText1') + '</a>' }) | safe }}
+	{{ t('projectsIndex.projectStage.examination.paragraph1', 
+	{ link: '<a class="govuk-link" href="/projects/' + applicationData.caseRef + '/examination-timetable">' + t('projectsIndex.projectStage.examination.linkText1') + '</a>' }) | safe }}
 </p>
 
 {% if rule8Document.path %}
 	<p class="govuk-body">
-		{{ t('projectsIndex.projectStageExamination.paragraph2', 
-		{ link: '<a class="govuk-link" href="' + rule8Document.path + 'target="_blank" rel="noopener noreferrer">' + t('projectsIndex.projectStageExamination.linkText2') + '</a>' }) | safe }}
+		{{ t('projectsIndex.projectStage.examination.paragraph2', 
+		{ link: '<a class="govuk-link" href="' + rule8Document.path + 'target="_blank" rel="noopener noreferrer">' + t('projectsIndex.projectStage.examination.linkText2') + '</a>' }) | safe }}
 	</p>
 {% endif %}
 
 <p class="govuk-body">
-	{{ t('projectsIndex.projectStageExamination.paragraph3', 
-	{ link: '<a class="govuk-link" href="/having-your-say-guide/have-your-say-examination">' + t('projectsIndex.projectStageExamination.linkText3') + '</a>'}) | safe }}
+	{{ t('projectsIndex.projectStage.examination.paragraph3', 
+	{ link: '<a class="govuk-link" href="/having-your-say-guide/have-your-say-examination">' + t('projectsIndex.projectStage.examination.linkText3') + '</a>'}) | safe }}
 </p>
 
 {% include '../_includes/email-request-text.njk' %}

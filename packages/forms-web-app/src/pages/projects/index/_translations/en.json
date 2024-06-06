@@ -11,16 +11,23 @@
 		"linkText1": "View the developer's website"
 	},
 	"projectStage": {
+		"stage1name": "Pre-application",
+		"stage2name": "Acceptance",
+		"stage3name": "Pre-examination",
+		"stage4name": "Examination",
+		"stage5name": "Recommendation",
+		"stage6name": "Decision",
+		"stage7name": "Post-decision",
 		"heading1": "Project stage",
-		"paragraph1": "This project is at the {{-stage}} stage."
-	},
-	"projectStageExamination": {
-		"paragraph1": "During the examination stage, anyone who has registered to have their say can submit comments at the {{-link}}. You may also attend hearings, if hearings are held.",
-		"linkText1": "deadlines set out in the examination timetable",
-		"paragraph2": "You can also {{-link}} to find out more about what you can do during the examination stage.",
-		"linkText2": "view the rule 8 letter",
-		"linkText3": "Find out more about the examination of the application",
-		"paragraph3": "{{-link}} stage."
+		"paragraph1": "This project is at the {{-stage}} stage.",
+		"examination": {
+			"paragraph1": "During the examination stage, anyone who has registered to have their say can submit comments at the {{-link}}. You may also attend hearings, if hearings are held.",
+			"linkText1": "deadlines set out in the examination timetable",
+			"paragraph2": "You can also {{-link}} to find out more about what you can do during the examination stage.",
+			"linkText2": "view the rule 8 letter",
+			"linkText3": "Find out more about the examination of the application",
+			"paragraph3": "{{-link}} stage."
+		}
 	},
 	"emailRequest": {
 		"paragraph1": "You may have recently gained an interest in land affected by a development. If the developer did not tell you the application was accepted or you did not register to have your say you can still request to be an interested party.",
