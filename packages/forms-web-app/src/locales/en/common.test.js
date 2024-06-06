@@ -14,6 +14,7 @@ describe('locales/en/common', () => {
 			next: 'Next',
 			showAllSteps: 'Show all steps',
 			hideAllSteps: 'Hide all steps',
+			partOf: 'Part of',
 			govUK: {
 				pressOfficeOpeningHours: '9:00 to 17:00 on Monday to Friday (except public holidays)'
 			},

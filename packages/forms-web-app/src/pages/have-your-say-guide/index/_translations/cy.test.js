@@ -3,7 +3,7 @@ const cyIndexTranslations = require('./cy.json');
 describe('pages/have-your-say-guide/index/_translations/cy', () => {
 	it('should return the welsh have your say guide index translations', () => {
 		expect(cyIndexTranslations).toEqual({
-			linkText1: 'Find a project and have your say',
+			linkText1: 'Dewch o hyd i brosiect a dweud eich dweud',
 			listItem1: 'ffermydd gwynt alltraeth',
 			listItem2: 'gorsafoedd pŵer a llinellau trydan',
 			listItem3: 'traffyrdd a phrif ffyrdd eraill',
