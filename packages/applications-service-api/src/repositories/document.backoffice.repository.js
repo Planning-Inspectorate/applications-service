@@ -3,12 +3,13 @@ const { prismaClient } = require('../lib/prisma');
 
 const getFilters = (caseReference) => {
 	const sql = Prisma.sql`
-		SELECT DISTINCT(stage), filter1, count(id) as total
+		SELECT DISTINCT(stage), filter1, filter1Welsh, count(id) as total
 		FROM Document
 		WHERE caseRef = ${caseReference}
 			AND (stage is not null and stage <> 'draft' and stage <> '0')
 			AND filter1 is not null
-		GROUP BY stage, filter1`;
+			AND filter1Welsh is not null
+		GROUP BY stage, filter1, filter1Welsh`;
 
 	return prismaClient.$queryRaw(sql);
 };
@@ -31,7 +32,9 @@ const getDocuments = async (query) => {
 		whereClause['AND'].push({
 			OR: [
 				{ description: { contains: query.searchTerm } },
+				{ descriptionWelsh: { contains: query.searchTerm } },
 				{ author: { contains: query.searchTerm } },
+				{ authorWelsh: { contains: query.searchTerm } },
 				{ representative: { contains: query.searchTerm } }
 			]
 		});
