@@ -21,9 +21,19 @@
 		"heading1": "Project stage",
 		"paragraph1": "This project is at the {{-stage}} stage.",
 		"preapplication": {
-			"paragraph1": "The application is expected to be submitted {{-date}}",
+			"paragraph1": "The application is expected to be submitted {{-date}}.",
 			"paragraph2": "When we receive the application, we have 28 days to decide whether to accept it for examination.",
 			"paragraph3": "If we accept the application, you will then be able to register to have your say and view all the application documents."
+		},
+		"acceptance": {
+			"paragraph1": "The decision whether to accept the application for examination will be made by {{-date}}.",
+			"paragraph2": "If the application is accepted, we will publish:",
+			"listItem1": "the acceptance decision",
+			"listItem2": "the consultation representations received from the local councils",
+			"paragraph3": "If the application is not accepted, we will:",
+			"listItem3": "publish the reasons why it was not accepted",
+			"listItem4": "remove any documentation that has been published from this project page",
+			"paragraph4": "There is no opportunity to make comments on the application at this stage."
 		},
 		"examination": {
 			"paragraph1": "During the examination stage, anyone who has registered to have their say can submit comments at the {{-link}}. You may also attend hearings, if hearings are held.",
