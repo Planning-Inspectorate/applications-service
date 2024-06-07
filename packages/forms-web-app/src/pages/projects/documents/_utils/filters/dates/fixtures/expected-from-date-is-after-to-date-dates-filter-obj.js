@@ -24,16 +24,19 @@ const expectedFromDateIsAfterToDateDatesFilterObj = {
 					inputs: [
 						{
 							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Day',
 							name: 'day',
 							value: '2'
 						},
 						{
 							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Month',
 							name: 'month',
 							value: '1'
 						},
 						{
 							classes: 'govuk-input--width-4 govuk-input--error',
+							label: 'Year',
 							name: 'year',
 							value: '2023'
 						}
@@ -53,16 +56,19 @@ const expectedFromDateIsAfterToDateDatesFilterObj = {
 					inputs: [
 						{
 							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Day',
 							name: 'day',
 							value: '1'
 						},
 						{
 							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Month',
 							name: 'month',
 							value: '1'
 						},
 						{
 							classes: 'govuk-input--width-4 govuk-input--error',
+							label: 'Year',
 							name: 'year',
 							value: '2023'
 						}

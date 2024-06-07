@@ -10,9 +10,9 @@ const expectedNoQueryValuesDatesFilterObj = {
 					id: 'docments-page-date-from-form-group',
 					inputNamePrefix: 'date-from',
 					inputs: [
-						{ classes: 'govuk-input--width-2', name: 'day', value: '' },
-						{ classes: 'govuk-input--width-2', name: 'month', value: '' },
-						{ classes: 'govuk-input--width-4', name: 'year', value: '' }
+						{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
+						{ classes: 'govuk-input--width-2', label: 'Month', name: 'month', value: '' },
+						{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 					],
 					name: 'date-from',
 					title: 'From'
@@ -23,9 +23,9 @@ const expectedNoQueryValuesDatesFilterObj = {
 					id: 'docments-page-date-to-form-group',
 					inputNamePrefix: 'date-to',
 					inputs: [
-						{ classes: 'govuk-input--width-2', name: 'day', value: '' },
-						{ classes: 'govuk-input--width-2', name: 'month', value: '' },
-						{ classes: 'govuk-input--width-4', name: 'year', value: '' }
+						{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
+						{ classes: 'govuk-input--width-2', label: 'Month', name: 'month', value: '' },
+						{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 					],
 					name: 'date-to',
 					title: 'To'
