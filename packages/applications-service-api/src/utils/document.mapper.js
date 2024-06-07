@@ -56,6 +56,7 @@ const mapDocuments = (documents) => {
 			let value = document[key];
 
 			if (key === 'path' && value) value = config.documentsHost.concat(value);
+			else if (key === 'stage') memo.stageLabel = mapDocumentFilterLabel('stage', value);
 
 			memo[toCamelCase(key)] = value;
 
@@ -71,6 +72,7 @@ const mapBackOfficeDocuments = (documents) =>
 		dataID: document.documentReference,
 		case_reference: document.caseRef,
 		stage: document.stage,
+		stageLabel: mapDocumentFilterLabel('stage', document.stage),
 		type: document.documentType,
 		filter1: document.filter1,
 		filter2: document.filter2,
