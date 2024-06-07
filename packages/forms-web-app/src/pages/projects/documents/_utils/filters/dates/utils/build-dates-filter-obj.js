@@ -4,11 +4,13 @@ const {
 	datesFilterFormGroupInputsConfig
 } = require('../../../dates/config');
 
-const buildDatesFilterObj = () => {
+const buildDatesFilterObj = (i18n) => {
 	const buildDatesFilterFormGroupInputs = () => {
 		return Object.keys(datesFilterFormGroupInputsConfig).map((datesFilterFormGroupInputKey) => {
+			const formGroupInputs = datesFilterFormGroupInputsConfig[datesFilterFormGroupInputKey];
 			return {
-				...datesFilterFormGroupInputsConfig[datesFilterFormGroupInputKey]
+				...formGroupInputs,
+				label: i18n.t(`common.${formGroupInputs.name}`)
 			};
 		});
 	};
@@ -21,14 +23,14 @@ const buildDatesFilterObj = () => {
 				id: getDatesFilterFormGroupId(datesFilterFormGroup.name),
 				inputs: buildDatesFilterFormGroupInputs(),
 				inputNamePrefix: datesFilterFormGroup.name,
-				title: datesFilterFormGroup.title
+				title: i18n.t(`common.${datesFilterFormGroup.title}`)
 			};
 		});
 	};
 
 	const datesFilterObj = {
 		errorSummaryList: [],
-		title: 'Date published',
+		title: i18n.t('common.datePublished'),
 		formGroups: buildDatesFilterFormGroups()
 	};
 
