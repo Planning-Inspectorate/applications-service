@@ -3,10 +3,12 @@
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
 {% macro uiCheckboxAccordion(display, sections, title, modalSubtitle, id, isModal, translations = {
+	applyFilters: 'Apply filters',
+	clearFilters: 'Clear filters',
 	hideAllSections: 'Hide all sections',
 	showAllSections: 'Show all sections',
-	clearFilters: 'Clear filters',
-	selectAllFilters: 'Select all filters'
+	selectAllFilters: 'Select all filters',
+	returnToResults: 'Return to results'
 }) %}
 	{% if display %}
 		<div
@@ -30,7 +32,7 @@
 								class="ui-checkbox-accordion__modal-close-btn"
 								type="button"
 							>
-								Return to results
+								{{ translations.returnToResults }}
 							</button>
 						</div>
 					</div>
@@ -121,7 +123,7 @@
 					{{ govukButton({
 						attributes: { "enterkeyhint": "search", "data-cy": "apply-filter-button" },
 						classes: "ui-checkbox-accordion__submit",
-						text: "Apply filters",
+						text: translations.applyFilters,
 						type: "Submit"
 					}) }}
 				</div>
