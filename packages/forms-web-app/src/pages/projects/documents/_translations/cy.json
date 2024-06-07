@@ -16,5 +16,8 @@
 	"noResults": {
 		"paragraph1": "Nid oes dogfennau cais prosiect ar gael i'w harddangos ar hyn o bryd.",
 		"linkText1": "Dychwelyd at Drosolwg y Prosiect"
+	},
+	"filteredResults": {
+		"heading1": "Canlyniadau wedi'u hidlo"
 	}
 }
