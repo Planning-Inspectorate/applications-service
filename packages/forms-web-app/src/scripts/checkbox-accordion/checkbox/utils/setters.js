@@ -3,18 +3,19 @@ const { isEveryCheckboxChecked } = require('./helpers');
 const setCheckboxesChecked = (checkboxes, isChecked) =>
 	checkboxes.forEach((checkbox) => (checkbox.checked = isChecked));
 
-const setCheckboxesSectionSwitchState = (checkboxes, checkboxesSectionSwitch) => {
-	if (isEveryCheckboxChecked(checkboxes)) checkboxesSectionSwitch.innerHTML = 'Clear filters';
-	else checkboxesSectionSwitch.innerHTML = 'Select all filters';
+const setCheckboxSectionSwitchState = (checkboxes, checkboxSectionSwitch, checkboxTranslations) => {
+	if (isEveryCheckboxChecked(checkboxes))
+		checkboxSectionSwitch.innerHTML = checkboxTranslations.clearFilters;
+	else checkboxSectionSwitch.innerHTML = checkboxTranslations.selectAllFilters;
 };
 
-const toggleAccordionSwitchState = (checkboxes, checkboxesSectionSwitch) => {
+const toggleAccordionSwitchState = (checkboxes, checkboxSectionSwitch, checkboxTranslations) => {
 	setCheckboxesChecked(checkboxes, !isEveryCheckboxChecked(checkboxes));
-	setCheckboxesSectionSwitchState(checkboxes, checkboxesSectionSwitch);
+	setCheckboxSectionSwitchState(checkboxes, checkboxSectionSwitch, checkboxTranslations);
 };
 
 module.exports = {
 	setCheckboxesChecked,
-	setCheckboxesSectionSwitchState,
+	setCheckboxSectionSwitchState,
 	toggleAccordionSwitchState
 };

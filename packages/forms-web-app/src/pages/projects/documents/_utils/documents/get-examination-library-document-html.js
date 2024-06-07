@@ -1,13 +1,13 @@
 const fileSizeDisplayHelper = require('../../../../../lib/file-size-display-helper');
 const fileTypeDisplayHelper = require('../../../../../lib/file-type-display-helper');
 
-const getExaminationLibraryDocumentHtml = (document) =>
+const getExaminationLibraryDocumentHtml = (i18n, document) =>
 	document
-		? `<p><a class="govuk-link" href="${
-				document.path
-		  }">View examination library (${fileTypeDisplayHelper(document.mime)}, ${fileSizeDisplayHelper(
-				document.size
-		  )})</a> containing document reference numbers</p>`
+		? i18n.t('projectsDocuments.paragraph1', {
+				link: `<a class="govuk-link" href="${document.path}">${i18n.t(
+					'projectsDocuments.paragraph1LinkText'
+				)} (${fileTypeDisplayHelper(document.mime)}, ${fileSizeDisplayHelper(document.size)})</a>`
+		  })
 		: null;
 
 module.exports = { getExaminationLibraryDocumentHtml };

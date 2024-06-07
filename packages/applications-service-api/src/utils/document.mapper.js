@@ -1,29 +1,34 @@
 const config = require('../lib/config');
 const toCamelCase = require('lodash').camelCase;
 
+const mappedLabel = (cy, en) => ({
+	cy,
+	en
+});
+
 const LABEL_MAPPING = {
 	stage: {
 		// NI mapping
-		1: 'Pre-application',
-		2: 'Acceptance',
-		3: 'Pre-examination',
-		4: 'Examination',
-		5: 'Recommendation',
-		6: 'Decision',
-		7: 'Post-decision',
+		1: mappedLabel('Cyn-ymgeisio', 'Pre-application'),
+		2: mappedLabel('Derbyn', 'Acceptance'),
+		3: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
+		4: mappedLabel('Archwiliad', 'Examination'),
+		5: mappedLabel('Argymhelliad', 'Recommendation'),
+		6: mappedLabel('Penderfyniad', 'Decision'),
+		7: mappedLabel('Ôl-benderfyniad', 'Post-decision'),
 
 		// back office mapping
-		'pre-application': 'Pre-application',
-		acceptance: 'Acceptance',
-		'pre-examination': 'Pre-examination',
-		examination: 'Examination',
-		recommendation: 'Recommendation',
-		decision: 'Decision',
-		'post-decision': 'Post-decision',
-		'developers-application': "Developer's application"
+		'pre-application': mappedLabel('Cyn-ymgeisio', 'Pre-application'),
+		acceptance: mappedLabel('Derbyn', 'Acceptance'),
+		'pre-examination': mappedLabel('Cyn-archwiliad', 'Pre-examination'),
+		examination: mappedLabel('Archwiliad', 'Examination'),
+		recommendation: mappedLabel('Argymhelliad', 'Recommendation'),
+		decision: mappedLabel('Penderfyniad', 'Decision'),
+		'post-decision': mappedLabel('Ôl-benderfyniad', 'Post-decision'),
+		'developers-application': mappedLabel('Cais y datblygwr', `Developer's application`)
 	},
 	category: {
-		developersapplication: "Developer's application"
+		developersapplication: mappedLabel('Cais y datblygwr', `Developer's application`)
 	}
 };
 

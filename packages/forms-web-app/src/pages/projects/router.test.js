@@ -22,6 +22,9 @@ const {
 	addProjectsIndexTranslationsMiddleware
 } = require('./index/_middleware/add-projects-index-translations-middleware');
 const {
+	addProjectsDocumentsTranslationsMiddleware
+} = require('./documents/_middleware/add-projects-documents-translations-middleware');
+const {
 	addExaminationTimetableTranslationsMiddleware
 } = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
 
@@ -73,6 +76,8 @@ describe('pages/projects/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/documents',
 				projectsMiddleware,
+				addCommonTranslationsMiddleware,
+				addProjectsDocumentsTranslationsMiddleware,
 				getProjectsDocumentsController
 			);
 
