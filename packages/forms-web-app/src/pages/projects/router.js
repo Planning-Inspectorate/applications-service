@@ -26,6 +26,9 @@ const {
 	addProjectsIndexTranslationsMiddleware
 } = require('./index/_middleware/add-projects-index-translations-middleware');
 const {
+	addProjectsDocumentsTranslationsMiddleware
+} = require('./documents/_middleware/add-projects-documents-translations-middleware');
+const {
 	addExaminationTimetableTranslationsMiddleware
 } = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
 
@@ -55,7 +58,13 @@ if (featureFlag.allowProjectInformation) {
 	projectsRouter.get(projectsAllUpdatesURL, projectsMiddleware, getProjectsAllUpdatesController);
 }
 
-projectsRouter.get(projectsDocumentsURL, projectsMiddleware, getProjectsDocumentsController);
+projectsRouter.get(
+	projectsDocumentsURL,
+	projectsMiddleware,
+	addCommonTranslationsMiddleware,
+	addProjectsDocumentsTranslationsMiddleware,
+	getProjectsDocumentsController
+);
 
 projectsRouter.get(
 	examinationTimetableURL,

@@ -1,4 +1,6 @@
 const { getProjectsDocumentsController } = require('./controller');
+
+const { mockI18n } = require('../../_mocks/i18n');
 const { searchDocumentsV3 } = require('../../../services/document.service');
 const { getAppData } = require('../../../services/applications.service');
 const {
@@ -15,6 +17,10 @@ jest.mock('./_utils/documents/search-examination-library-document', () => ({
 	searchExaminationLibraryDocument: jest.fn()
 }));
 
+const projectsDocumentsTranslations_EN = require('./_translations/en.json');
+
+const i18n = mockI18n({ projectsDocuments: projectsDocumentsTranslations_EN });
+
 describe('pages/projects/documents/controller', () => {
 	describe('#getProjectsDocumentsController', () => {
 		describe('When getting the documents for the document library', () => {
@@ -22,7 +28,8 @@ describe('pages/projects/documents/controller', () => {
 				const req = {
 					get: () => 'localhost',
 					query: { page: 2 },
-					params: { case_ref: 'mock-case-ref' }
+					params: { case_ref: 'mock-case-ref' },
+					i18n
 				};
 				const res = { render: jest.fn(), status: jest.fn(() => res) };
 
@@ -50,7 +57,10 @@ describe('pages/projects/documents/controller', () => {
 								{
 									name: 'mock filter',
 									value: '1',
-									label: 'mock label',
+									label: {
+										cy: 'welsh mock label',
+										en: 'english mock label'
+									},
 									count: 1,
 									type: [{ value: 'mock filter value', count: '1' }]
 								}
@@ -95,12 +105,12 @@ describe('pages/projects/documents/controller', () => {
 								{
 									idPrefix: 'mock-filter-1',
 									isOpen: false,
-									label: 'mock label',
+									label: 'english mock label',
 									items: [
 										{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
 									],
 									name: 'mock filter-1',
-									title: 'mock label (1)',
+									title: 'english mock label (1)',
 									type: 'checkbox'
 								},
 								{
@@ -185,17 +195,17 @@ describe('pages/projects/documents/controller', () => {
 							}
 						],
 						examinationLibraryDocumentHtml:
-							'<p><a class="govuk-link" href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers</p>',
+							'<a class="govuk-link" href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers',
 						filters: [
 							{
 								idPrefix: 'mock-filter-1',
 								isOpen: false,
-								label: 'mock label',
+								label: 'english mock label',
 								items: [
 									{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
 								],
 								name: 'mock filter-1',
-								title: 'mock label (1)',
+								title: 'english mock label (1)',
 								type: 'checkbox'
 							},
 							{
@@ -274,8 +284,6 @@ describe('pages/projects/documents/controller', () => {
 						projectName: 'mock project name',
 						queryUrl: '',
 						searchTerm: undefined,
-						title: 'Documents',
-						pageTitle: 'Documents | mock project name',
 						resultsPerPage: {
 							fifty: {
 								link: '?itemsPerPage=50',
@@ -300,7 +308,8 @@ describe('pages/projects/documents/controller', () => {
 				const req = {
 					get: () => 'localhost',
 					query: {},
-					params: { case_ref: 'mock-case-ref' }
+					params: { case_ref: 'mock-case-ref' },
+					i18n
 				};
 				const res = { render: jest.fn(), status: jest.fn(() => res) };
 

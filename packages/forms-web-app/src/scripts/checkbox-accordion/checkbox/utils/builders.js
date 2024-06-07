@@ -1,21 +1,21 @@
-const { checkboxesSectionSwitchClassId } = require('./config');
-const { setCheckboxesSectionSwitchState } = require('./setters');
+const { checkboxSectionSwitchClassId } = require('./config');
+const { setCheckboxSectionSwitchState } = require('./setters');
 
-const buildCheckboxesSectionSwitch = (checkboxes, checkboxesSection) => {
-	const checkboxesSectionSwitch = createCheckboxesSectionSwitch();
-	setCheckboxesSectionSwitchState(checkboxes, checkboxesSectionSwitch);
-	insertCheckboxesSectionSwitch(checkboxesSection, checkboxesSectionSwitch);
+const buildCheckboxSectionSwitch = (checkboxes, checkboxesSection, checkboxTranslations) => {
+	const checkboxesSectionSwitch = createCheckboxSectionSwitch();
+	setCheckboxSectionSwitchState(checkboxes, checkboxesSectionSwitch, checkboxTranslations);
+	insertCheckboxSectionSwitch(checkboxesSection, checkboxesSectionSwitch);
 };
 
-const createCheckboxesSectionSwitch = () => {
+const createCheckboxSectionSwitch = () => {
 	const checkboxesSectionSwitch = document.createElement('button');
 	checkboxesSectionSwitch.type = 'button';
-	checkboxesSectionSwitch.setAttribute('class', checkboxesSectionSwitchClassId);
+	checkboxesSectionSwitch.setAttribute('class', checkboxSectionSwitchClassId);
 	return checkboxesSectionSwitch;
 };
 
-const insertCheckboxesSectionSwitch = (checkboxesSection, checkboxesSectionSwitch) => {
+const insertCheckboxSectionSwitch = (checkboxesSection, checkboxesSectionSwitch) => {
 	checkboxesSection.prepend(checkboxesSectionSwitch);
 };
 
-module.exports = { buildCheckboxesSectionSwitch };
+module.exports = { buildCheckboxSectionSwitch };

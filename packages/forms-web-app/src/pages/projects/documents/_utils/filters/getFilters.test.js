@@ -4,6 +4,7 @@ const { orderFilters } = require('./order-filters');
 const { convertFiltersToPageView } = require('./convertFiltersToPageView');
 const { viewModel } = require('./view-model');
 const { getDatesFilter } = require('./dates/get-dates-filter');
+const { mockI18n } = require('../../../../_mocks/i18n');
 
 jest.mock('./order-filters', () => ({
 	orderFilters: jest.fn()
@@ -17,6 +18,8 @@ jest.mock('./view-model', () => ({
 jest.mock('./dates/get-dates-filter', () => ({
 	getDatesFilter: jest.fn()
 }));
+
+const i18n = mockI18n();
 
 describe('#getFilters', () => {
 	describe('When getting the filters', () => {
@@ -37,13 +40,13 @@ describe('#getFilters', () => {
 				datesFilter: ['mock dates filter'],
 				datesFilterErrorSummary: 'mock dates filter error summary'
 			});
-			result = getFilters(mockFilters, mockQuery);
+			result = getFilters(i18n, mockFilters, mockQuery);
 		});
 		it('should order the filters', () => {
 			expect(orderFilters).toHaveBeenCalledWith(mockFilters);
 		});
 		it('should convert filters to a page view', () => {
-			expect(convertFiltersToPageView).toHaveBeenCalledWith(mockOrderedFilters);
+			expect(convertFiltersToPageView).toHaveBeenCalledWith(i18n, mockOrderedFilters);
 		});
 		it('should map filters to the view model', () => {
 			expect(viewModel).toHaveBeenCalledWith(mockMappedFilters, mockQuery);

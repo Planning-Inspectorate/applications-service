@@ -1,16 +1,18 @@
-const { onCheckboxChange, onCheckboxesSectionSwitchClick } = require('./event-handlers');
+const { onCheckboxChange, onCheckboxSectionSwitchClick } = require('./event-handlers');
 
-const applyCheckboxEvent = (checkboxes, checkboxesSectionSwitch) =>
+const applyCheckboxEvent = (checkboxes, checkboxSectionSwitch, checkboxTranslations) =>
 	checkboxes.forEach((checkbox) =>
-		checkbox.addEventListener('change', () => onCheckboxChange(checkboxes, checkboxesSectionSwitch))
+		checkbox.addEventListener('change', () =>
+			onCheckboxChange(checkboxes, checkboxSectionSwitch, checkboxTranslations)
+		)
 	);
 
-const applyCheckboxesSectionSwitchEvent = (checkboxes, checkboxesSectionSwitch) =>
-	checkboxesSectionSwitch.addEventListener('click', () =>
-		onCheckboxesSectionSwitchClick(checkboxes, checkboxesSectionSwitch)
+const applyCheckboxSectionSwitchEvent = (checkboxes, checkboxSectionSwitch, checkboxTranslations) =>
+	checkboxSectionSwitch.addEventListener('click', () =>
+		onCheckboxSectionSwitchClick(checkboxes, checkboxSectionSwitch, checkboxTranslations)
 	);
 
 module.exports = {
 	applyCheckboxEvent,
-	applyCheckboxesSectionSwitchEvent
+	applyCheckboxSectionSwitchEvent
 };

@@ -8,12 +8,12 @@ const getDateNow = () => new Date();
 
 const getYearNow = () => getDateNow().getFullYear();
 
-function formatDate(date) {
+function formatDate(date, locale = 'en') {
 	const notValidDateString = !date || typeof date !== 'string';
 
 	if (notValidDateString) return '';
 
-	const formattedDate = moment(date, 'YYYY-MM-DD').format('DD MMMM YYYY');
+	const formattedDate = moment(date, 'YYYY-MM-DD').locale(locale).format('DD MMMM YYYY');
 	const formattedDateLength = formattedDate.length;
 	const formattedMonthAndYear = formattedDate.substring(2, formattedDateLength);
 	const dayWithoutZeroPrefix = Number(formattedDate.substring(0, 2));
