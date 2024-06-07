@@ -69,6 +69,10 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 			dataID: null,
 			case_reference: 'EN010009',
 			stage: 'pre-application',
+			stageLabel: {
+				cy: 'Cyn-ymgeisio',
+				en: 'Pre-application'
+			},
 			type: 'Dave',
 			filter1: 'CR-1234-A',
 			filter2: '',

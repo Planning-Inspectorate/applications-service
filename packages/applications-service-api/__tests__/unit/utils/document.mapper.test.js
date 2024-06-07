@@ -126,6 +126,10 @@ describe('document mapper functions', () => {
 					dataID: 'someref',
 					case_reference: 'EN0100085',
 					stage: 'examination',
+					stageLabel: {
+						cy: 'Archwiliad',
+						en: 'Examination'
+					},
 					type: 'Other Documents',
 					filter1: 'Deadline 6',
 					filter2: null,
