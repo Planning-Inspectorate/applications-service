@@ -67,7 +67,7 @@
 					{{ uiSearchBar('documents-page-search-bar', 'searchTerm', searchTerm, 'Search documents', t('common.search') ) }}
 				{% endif %}
 
-				{{ uiTagLinkList('Filtered results', activeFilters) }}
+				{{ uiTagLinkList(t('projectsDocuments.filteredResults.heading1'), activeFilters) }}
 
 				{% if documents.length > 0 %}
 					{% if displayClearAllFilters %}

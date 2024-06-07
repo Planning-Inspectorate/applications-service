@@ -16,5 +16,8 @@
 	"noResults": {
 		"paragraph1": "There are no project application documents available to display at the moment.",
 		"linkText1": "Return to the project overview"
+	},
+	"filteredResults": {
+		"heading1": "Filtered results"
 	}
 }

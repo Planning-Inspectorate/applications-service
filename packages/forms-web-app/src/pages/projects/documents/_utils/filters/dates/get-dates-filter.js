@@ -12,7 +12,7 @@ const getDatesFilter = (i18n, query) => {
 	return {
 		datesFilter,
 		datesFilterErrorSummary,
-		activeDateFilters: getActiveDateFilters(localQuery)
+		activeDateFilters: getActiveDateFilters(i18n, localQuery)
 	};
 };
 

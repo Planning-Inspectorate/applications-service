@@ -5,7 +5,7 @@ const {
 } = require('../../../dates/utils/get-dates-filter-published-dates');
 const { getActiveDateFilterViewModel } = require('../view-model/get-active-date-filter-view-model');
 
-const getActiveDateFilters = (query) => {
+const getActiveDateFilters = (i18n, query) => {
 	const activeFilterDatesArray = [];
 	const { datePublishedFrom, datePublishedTo } = getDatesFilterPublishedDates(query);
 
@@ -13,9 +13,9 @@ const getActiveDateFilters = (query) => {
 		activeFilterDatesArray.push(
 			getActiveDateFilterViewModel(
 				query,
-				'Date from',
+				i18n.t('common.dateFrom'),
 				`documents published before`,
-				formatDate(datePublishedFrom),
+				formatDate(datePublishedFrom, i18n.language),
 				datesFilterFormGroupsConfig.from.name
 			)
 		);
@@ -25,9 +25,9 @@ const getActiveDateFilters = (query) => {
 		activeFilterDatesArray.push(
 			getActiveDateFilterViewModel(
 				query,
-				'Date to',
+				i18n.t('common.dateTo'),
 				`documents published after`,
-				formatDate(datePublishedTo),
+				formatDate(datePublishedTo, i18n.language),
 				datesFilterFormGroupsConfig.to.name
 			)
 		);
