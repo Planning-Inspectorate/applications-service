@@ -3,11 +3,14 @@ const cyProjectsDocumentsTranslations = require('./cy.json');
 describe('pages/projects/documents/_translations/cy', () => {
 	it('should return the welsh projects documents page translations', () => {
 		expect(cyProjectsDocumentsTranslations).toEqual({
+			common: {
+				documents: 'dogfennau'
+			},
 			heading1: 'Dogfennau',
 			heading2: 'Chwilio dogfennau',
 			noResults: {
-				linkText1: 'Return to the project overview',
-				paragraph1: 'There are no project application documents available to display at the moment.'
+				linkText1: 'Dychwelyd at Drosolwg y Prosiect',
+				paragraph1: `Nid oes dogfennau cais prosiect ar gael i'w harddangos ar hyn o bryd.`
 			},
 			noResultsFound: {
 				linkText1: 'Clirio chwiliad a dewisiadau hidlo',

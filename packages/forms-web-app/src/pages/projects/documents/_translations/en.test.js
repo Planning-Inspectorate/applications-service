@@ -3,6 +3,9 @@ const enProjectsDocumentsTranslations = require('./en.json');
 describe('pages/projects/documents/_translations/en', () => {
 	it('should return the english projects documents page translations', () => {
 		expect(enProjectsDocumentsTranslations).toEqual({
+			common: {
+				documents: 'documents'
+			},
 			heading1: 'Documents',
 			heading2: 'Search documents',
 			noResults: {
