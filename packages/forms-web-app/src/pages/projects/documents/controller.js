@@ -14,7 +14,7 @@ const view = 'projects/documents/view.njk';
 
 const getProjectsDocumentsController = async (req, res) => {
 	try {
-		const { query, params } = req;
+		const { i18n, query, params } = req;
 		const { case_ref } = params;
 		const { searchTerm } = query;
 
@@ -30,8 +30,8 @@ const getProjectsDocumentsController = async (req, res) => {
 			query
 		);
 
-		const documentsView = getDocuments(documents, examinationLibraryDocument);
-		const filteredView = getFilters(filters, query);
+		const documentsView = getDocuments(i18n, documents, examinationLibraryDocument);
+		const filteredView = getFilters(i18n, filters, query);
 		const paginationView = getPagination(pagination);
 		const resultsPerPage = documentsPerPage(query);
 
@@ -46,11 +46,9 @@ const getProjectsDocumentsController = async (req, res) => {
 			activeFilters: filteredView.activeFilters,
 			errorSummary: filteredView.datesFilterErrorSummary,
 			projectName,
-			pageTitle: `Documents | ${projectName}`,
 			paginationUrl,
 			queryUrl,
 			searchTerm,
-			title: 'Documents',
 			resultsPerPage
 		});
 	} catch (e) {

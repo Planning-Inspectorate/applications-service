@@ -1,16 +1,30 @@
-const { checkboxesId, checkboxesSectionId, checkboxesSectionSwitchClassId } = require('./config');
+const { accordionId } = require('../../accordion/utils/config');
+const { checkboxId, checkboxSectionId, checkboxSectionSwitchClassId } = require('./config');
 
-const getCheckboxes = (checkboxesSection) => [
-	...checkboxesSection.querySelectorAll(`.${checkboxesId}`)
+const getChecboxAccordions = () => [...document.querySelectorAll(`.${accordionId}`)];
+
+const getCheckboxSections = (checboxAccordion) => [
+	...checboxAccordion.querySelectorAll(`.${checkboxSectionId}`)
 ];
 
-const getCheckboxesSections = () => [...document.querySelectorAll(`.${checkboxesSectionId}`)];
+const getCheckboxSectionSwitch = (checkboxSection) =>
+	checkboxSection.querySelector(`.${checkboxSectionSwitchClassId}`);
 
-const getCheckboxesSectionSwitch = (checkboxesSection) =>
-	checkboxesSection.querySelector(`.${checkboxesSectionSwitchClassId}`);
+const getCheckboxes = (checkboxSection) => [...checkboxSection.querySelectorAll(`.${checkboxId}`)];
+
+const getCheckboxTranslations = (checboxAccordion) => {
+	const { clearFilters, selectAllFilters } = JSON.parse(checboxAccordion.dataset.translations);
+
+	return {
+		clearFilters,
+		selectAllFilters
+	};
+};
 
 module.exports = {
+	getChecboxAccordions,
+	getCheckboxSections,
+	getCheckboxSectionSwitch,
 	getCheckboxes,
-	getCheckboxesSections,
-	getCheckboxesSectionSwitch
+	getCheckboxTranslations
 };

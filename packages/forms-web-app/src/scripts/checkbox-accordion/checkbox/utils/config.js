@@ -1,5 +1,5 @@
-const checkboxesId = 'govuk-checkboxes__input';
-const checkboxesSectionId = 'ui-checkbox-accordion__checkboxes-section';
-const checkboxesSectionSwitchClassId = 'ui-checkbox-accordion__checkboxes-section-switch';
+const checkboxId = 'govuk-checkboxes__input';
+const checkboxSectionId = 'ui-checkbox-accordion__checkboxes-section';
+const checkboxSectionSwitchClassId = 'ui-checkbox-accordion__checkboxes-section-switch';
 
-module.exports = { checkboxesId, checkboxesSectionId, checkboxesSectionSwitchClassId };
+module.exports = { checkboxId, checkboxSectionId, checkboxSectionSwitchClassId };
