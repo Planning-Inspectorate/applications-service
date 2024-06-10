@@ -1,28 +1,39 @@
-const { applyCheckboxEvent, applyCheckboxesSectionSwitchEvent } = require('./utils/appliers');
-const { buildCheckboxesSectionSwitch } = require('./utils/builders');
+const { applyCheckboxEvent, applyCheckboxSectionSwitchEvent } = require('./utils/appliers');
+const { buildCheckboxSectionSwitch } = require('./utils/builders');
 const {
-	getCheckboxesSections,
+	getChecboxAccordions,
+	getCheckboxSections,
+	getCheckboxSectionSwitch,
 	getCheckboxes,
-	getCheckboxesSectionSwitch
+	getCheckboxTranslations
 } = require('./utils/getters');
 
 const initiateCheckboxes = () => {
-	const checkboxesSections = getCheckboxesSections();
-	if (!checkboxesSections.length) return;
+	const checboxAccordions = getChecboxAccordions();
 
-	checkboxesSections.forEach((checkboxesSection) => {
-		const checkboxes = getCheckboxes(checkboxesSection);
+	if (!checboxAccordions.length) return;
 
-		if (!checkboxes.length) return;
+	checboxAccordions.forEach((checboxAccordion) => {
+		const checkboxSections = getCheckboxSections(checboxAccordion);
 
-		buildCheckboxesSectionSwitch(checkboxes, checkboxesSection);
+		if (!checkboxSections.length) return;
 
-		const checkboxesSectionSwitch = getCheckboxesSectionSwitch(checkboxesSection);
+		const checkboxTranslations = getCheckboxTranslations(checboxAccordion);
 
-		if (!checkboxesSectionSwitch) return;
+		checkboxSections.forEach((checkboxSection) => {
+			const checkboxes = getCheckboxes(checkboxSection);
 
-		applyCheckboxEvent(checkboxes, checkboxesSectionSwitch);
-		applyCheckboxesSectionSwitchEvent(checkboxes, checkboxesSectionSwitch);
+			if (!checkboxes.length) return;
+
+			buildCheckboxSectionSwitch(checkboxes, checkboxSection, checkboxTranslations);
+
+			const checkboxSectionSwitch = getCheckboxSectionSwitch(checkboxSection);
+
+			if (!checkboxSectionSwitch) return;
+
+			applyCheckboxEvent(checkboxes, checkboxSectionSwitch, checkboxTranslations);
+			applyCheckboxSectionSwitchEvent(checkboxes, checkboxSectionSwitch, checkboxTranslations);
+		});
 	});
 };
 

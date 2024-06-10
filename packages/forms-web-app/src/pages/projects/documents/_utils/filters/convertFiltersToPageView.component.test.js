@@ -1,4 +1,9 @@
 const { convertFiltersToPageView } = require('./convertFiltersToPageView');
+
+const { mockI18n } = require('../../../../_mocks/i18n');
+
+const i18n = mockI18n();
+
 describe('#convertFiltersToPageView', () => {
 	describe('When given a filter list from the API', () => {
 		describe('and there are filters to map', () => {
@@ -7,18 +12,24 @@ describe('#convertFiltersToPageView', () => {
 					name: 'mock name',
 					value: 'mock value',
 					count: '1',
-					label: 'mock label',
+					label: {
+						cy: 'mock label',
+						en: 'mock label'
+					},
 					type: [{ value: 'mock type value', count: '1' }]
 				},
 				{
 					name: 'second mock name',
 					value: 'second mock value',
 					count: '2',
-					label: 'second mock label',
+					label: {
+						cy: 'second mock label',
+						en: 'second mock label'
+					},
 					type: [{ value: 'second mock type value', count: '2' }]
 				}
 			];
-			const response = convertFiltersToPageView(filters);
+			const response = convertFiltersToPageView(i18n, filters);
 			it('should map the filter to correct structure', () => {
 				expect(response).toEqual([
 					{

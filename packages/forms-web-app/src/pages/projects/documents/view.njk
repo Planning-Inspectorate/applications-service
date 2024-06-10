@@ -12,6 +12,7 @@
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
 {% set section = 'project-documents' %}
+{% set pageTitle = '' + t('projectsDocuments.heading1') + ' | ' + projectName + '' %}
 
 {% block script %}
 	{% if displayFilters %}
@@ -43,11 +44,11 @@
 				{% endif %}
 
 				<span class="govuk-caption-l">
-          {{ projectName }}
-        </span>
+					{{ projectName }}
+				</span>
 
 				<h1 class="govuk-heading-xl">
-					{{ title }}
+					{{ t('projectsDocuments.heading1') }}
 				</h1>
 
 				{% if examinationLibraryDocumentHtml %}
@@ -56,51 +57,62 @@
 
 				{% if documents.length != 0 or queryUrl != '' %}
 					<h2 class="govuk-heading-m">
-						Search documents
+						{{ t('projectsDocuments.heading2') }}
 					</h2>
 
 					<p class="govuk-body">
-						Search by author, description or document type.
+						{{ t('projectsDocuments.paragraph2') }}
 					</p>
 
-					{{ uiSearchBar('documents-page-search-bar', 'searchTerm', searchTerm, 'Search documents') }}
+					{{ uiSearchBar('documents-page-search-bar', 'searchTerm', searchTerm, 'Search documents', t('common.search') ) }}
 				{% endif %}
 
 				{{ uiTagLinkList('Filtered results', activeFilters) }}
 
 				{% if documents.length > 0 %}
 					{% if displayClearAllFilters %}
-						<p>
+						<p class="govuk-body">
 							<a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}">
-								Clear all filters
+								{{ t('common.clearAllFilters') }}
 							</a>
 						</p>
 					{% endif %}
 
-					<p>
-						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
-						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
+					<p class="govuk-body">
+						{{ t('projectsDocuments.paragraph3', { from: '<strong>' + paginationData.fromRange + '</strong>', to: '<strong>' + paginationData.toRange + '</strong>', total: '<strong>' + paginationData.totalItems + '</strong>' }) | safe }}
 					</p>
 
-					{{ uiResultsPerPage(resultsPerPage) }}
+					{{ uiResultsPerPage(resultsPerPage, t('common.resultsPerPage')) }}
 
 					{{ sectionResults(documents) }}
 
-					{{ paginationBar(
-						pageOptions,
-						paginationData,
-						paginationUrl
-					) }}
+					{{ paginationBar(pageOptions, paginationData, paginationUrl) }}
 
 				{% elseif documents.length == 0 and queryUrl != '' %}
-					<p data-cy="no-docs-text">No results were found matching your search term or filters.</p>
-					<p>Would you like to clear your search and filters to view all available documents instead?</p>
-					<p><a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}"
-								data-cy="clear-search">Clear search and filters</a></p>
+					<p class="govuk-body" data-cy="no-docs-text">
+						{{ t('projectsDocuments.noResultsFound.paragraph1') }}
+					</p>
+
+					<p class="govuk-body">
+						{{ t('projectsDocuments.noResultsFound.paragraph2') }}
+					</p>
+
+					<p class="govuk-body">
+						<a class="govuk-link" href="{{ baseUrl }}/{{ pageUrl }}" data-cy="clear-search">
+							{{ t('projectsDocuments.noResultsFound.linkText1') }}
+						</a>
+					</p>
 
 				{% elseif documents.length == 0 %}
-					<p data-cy="no-docs-text">There are no project application documents available to display at the moment.</p>
-					<p><a class="govuk-link" href="{{ baseUrl }}">Return to the project overview</a></p>
+					<p class="govuk-body" data-cy="no-docs-text">
+						{{ t('projectsDocuments.noResults.paragraph1') }}
+					</p>
+
+					<p class="govuk-body">
+						<a class="govuk-link" href="{{ baseUrl }}">
+							{{ t('projectsDocuments.noResults.linkText1') }}
+						</a>
+					</p>
 				{% endif %}
 
 				<div class="visible-on visible-on--tablet">
