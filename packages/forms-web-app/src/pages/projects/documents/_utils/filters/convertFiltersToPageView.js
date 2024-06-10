@@ -4,8 +4,14 @@ const {
 const { formatName, formatNameWithCount } = require('./formatters');
 const { mapFilterTypeToCheckBox } = require('./mappers');
 
-const convertFilterToPageView = (filter, type) => {
-	const filterLabel = filter.label || filter.value;
+const getFilterLabel = (i18n, filter) => {
+	const { language } = i18n;
+
+	return filter.label[language] || filter.value;
+};
+
+const convertFilterToPageView = (i18n, filter, type) => {
+	const filterLabel = getFilterLabel(i18n, filter);
 
 	return {
 		idPrefix: formatValueToValidElementId(`${filter.name} ${filter.value}`),
@@ -18,8 +24,8 @@ const convertFilterToPageView = (filter, type) => {
 	};
 };
 
-const convertFiltersToPageView = (filters) =>
-	filters.map((filter) => convertFilterToPageView(filter, 'checkbox'));
+const convertFiltersToPageView = (i18n, filters) =>
+	filters.map((filter) => convertFilterToPageView(i18n, filter, 'checkbox'));
 
 module.exports = {
 	convertFiltersToPageView

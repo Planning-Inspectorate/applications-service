@@ -1,12 +1,19 @@
-const mockI18n = (translations) => ({
-	t: (i18nKey) => {
-		let translationObj = translations;
+const mockI18n = (translations, language = 'en') => ({
+	language,
+	t: (i18nKey, options) => {
+		let translation = translations;
 
 		i18nKey.split('.').forEach((key) => {
-			translationObj = translationObj[key];
+			translation = translation[key];
 		});
 
-		return translationObj;
+		if (!options) return translation;
+
+		Object.keys(options).forEach((option) => {
+			translation = translation.replace(`{{-${option}}}`, options[option]);
+		});
+
+		return translation;
 	}
 });
 

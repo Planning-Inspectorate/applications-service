@@ -3,7 +3,7 @@ const cyHaveYourSayGuideTranslations = require('./cy.json');
 describe('pages/have-your-say-guide/_translations/cy', () => {
 	it('should return the welsh have your say guide translations', () => {
 		expect(cyHaveYourSayGuideTranslations).toEqual({
-			common: { haveYourSayGuide: 'Have your say guide' },
+			common: { haveYourSayGuide: 'Canllaw gweud eich dweud' },
 			decisionMade: {
 				heading1: "Yr hyn y gallwch ei wneud ar ôl i'r penderfyniad gael ei wneud",
 				linkText: 'Beth fydd yn digwydd ar ôl i benderfyniad gael ei wneud?',
