@@ -3,6 +3,10 @@ const enProjectsIndexTranslations = require('./en.json');
 describe('pages/projects/index/_translations/en', () => {
 	it('should return the english projects index translations', () => {
 		expect(enProjectsIndexTranslations).toEqual({
+			latestUpdateBanner: {
+				latestUpdate: 'Latest update',
+				viewAllUpdates: 'View all updates'
+			},
 			aboutProject: {
 				heading1: 'About the project',
 				linkText1: "View the developer's website",

@@ -1,5 +1,9 @@
 {
 	"heading1": "Gwybodaeth am y prosiect",
+	"latestUpdateBanner": {
+		"latestUpdate": "Diweddariad diweddaraf",
+		"viewAllUpdates": "Gweld yr holl ddiweddariadau"
+	},
 	"aboutProject": {
 		"heading1": "Ynglŷn â'r prosiect",
 		"paragraph1": "Y math o gais:",

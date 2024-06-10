@@ -1,6 +1,6 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 
-{% macro getLatestUpdate(latestUpdateData, allUpdatesURL) %}
+{% macro getLatestUpdate(latestUpdateData, allUpdatesURL, t) %}
   {% if latestUpdateData %}
     {% set bannerHtml %}
       <div class="pins-rte">
@@ -8,13 +8,15 @@
       </div>
 
       <p class="govuk-body govuk-!-margin-top-4">
-        <a class="govuk-notification-banner__link" href="{{ allUpdatesURL }}">View all updates</a>.
+        <a class="govuk-notification-banner__link" href="{{ allUpdatesURL }}">{{ t('projectsIndex.latestUpdateBanner.viewAllUpdates') }}</a>.
       </p>
     {% endset %}
 
+    {% set latestUpdateText =  t('projectsIndex.latestUpdateBanner.latestUpdate') %}
+
     <section>
       {{ govukNotificationBanner({
-        titleText: "Latest update - " + latestUpdateData.date,
+        titleText: latestUpdateText + " - " + latestUpdateData.date,
         html: bannerHtml
       }) }}
     </section>

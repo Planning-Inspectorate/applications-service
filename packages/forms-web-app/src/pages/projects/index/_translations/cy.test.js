@@ -3,6 +3,10 @@ const cyProjectsIndexTranslations = require('./cy.json');
 describe('pages/projects/index/_translations/cy', () => {
 	it('should return the welsh projects index translations', () => {
 		expect(cyProjectsIndexTranslations).toEqual({
+			latestUpdateBanner: {
+				latestUpdate: 'Diweddariad diweddaraf',
+				viewAllUpdates: 'Gweld yr holl ddiweddariadau'
+			},
 			aboutProject: {
 				heading1: "Ynglŷn â'r prosiect",
 				linkText1: 'Gweld gwefan y datblygwr',
