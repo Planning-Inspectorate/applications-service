@@ -58,8 +58,6 @@ app.use(
 );
 app.use(cookieParser());
 app.use(session(sessionStoreConfig));
-app.use(flashMessageCleanupMiddleware);
-app.use(flashMessageToNunjucks(nunjucksEnv));
 app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
@@ -77,6 +75,9 @@ if (config.plannedServiceOutage.showOutagePage) app.use(plannedOutage);
 app.use(i18nRedirect);
 
 configureI18n(app);
+
+app.use(flashMessageCleanupMiddleware);
+app.use(flashMessageToNunjucks(nunjucksEnv));
 
 // Routes
 app.use('/', routes);
