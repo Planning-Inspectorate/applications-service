@@ -1,6 +1,13 @@
+{% set summaryHtml %}
+	<div class="summary-content">
+		<span>{{ processGuideStages.postDecision.title }}</span>
+		{{ stageProgressTag( applicationData.status.number, 7, t) }}
+	</div>
+{% endset %}
+
 {{ govukDetails({
-	summaryText: processGuideStages.postDecision.title,
+	summaryHtml: summaryHtml,
 	html: processGuideStages.postDecision.html,
 	open: applicationData.status.text === projectStages[7],
-	classes: 'govuk-!-margin-bottom-1'
+	classes: 'pins-modded-summary-full-width'
 }) }}

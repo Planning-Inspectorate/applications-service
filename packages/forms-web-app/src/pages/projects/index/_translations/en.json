@@ -63,5 +63,10 @@
 		"WW01": "Waste Water treatment Plants",
 		"WA01": "Dams and Reservoirs",
 		"WA02": "Transfer of Water Resources"
+	},
+	"stageProgress": {
+		"notStarted": "not started",
+		"inProgress": "in progress",
+		"completed": "completed"
 	}
 }

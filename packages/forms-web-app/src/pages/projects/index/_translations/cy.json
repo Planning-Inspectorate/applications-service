@@ -63,5 +63,10 @@
 		"WW01": "Gweithfeydd Trin Dŵr Gwastraff",
 		"WA01": "Argaeau a Chronfeydd Dŵr",
 		"WA02": "Trosglwyddo Adnoddau Dŵr"
+	},
+	"stageProgress": {
+		"notStarted": "dim wedi dechrau",
+		"inProgress": "mewn cynnydd",
+		"completed": "wedi cwblhau"
 	}
 }
