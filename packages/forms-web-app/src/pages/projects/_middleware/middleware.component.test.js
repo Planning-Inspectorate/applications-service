@@ -2,6 +2,7 @@ const { projectsMiddleware } = require('./middleware');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { fixturesTimetableResponse } = require('../../../services/__mocks__/timetable.fixtures');
+const { mockI18n } = require('../../_mocks/i18n');
 
 jest.mock('../_utils/get-application-data', () => ({
 	getApplicationData: jest.fn()
@@ -29,7 +30,11 @@ describe('projects _middleware', () => {
 			params: { case_ref: 'mock-case-ref' },
 			baseUrl: 'mock base url',
 			path: 'mock path',
-			session: {}
+			session: {},
+			i18n: {
+				...mockI18n({}),
+				language: 'mock-language'
+			}
 		};
 		const res = { locals: {} };
 		beforeEach(() => {
