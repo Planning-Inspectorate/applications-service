@@ -81,6 +81,39 @@ describe('pages/projects/index/_translations/en', () => {
 					listItem4: 'remove any documentation that has been published from this project page',
 					paragraph4: 'There is no opportunity to make comments on the application at this stage.'
 				},
+				preexamination: {
+					preReps: {
+						paragraph1:
+							'At this stage you can {{-link}} about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.',
+						linkText1: 'register to have your say',
+						linkText2: 'Find out more about registering to have your say.'
+					},
+					repsOpen: {
+						paragraph1: 'If you want to comment on this proposed project, you can now {{-link}}',
+						linkText1: 'register to have your say',
+						paragraph2: ' Registration closes on {{-date}} at 23:59.',
+						buttonText1: 'Register to have your say'
+					},
+					repsClosed: {
+						paragraph1:
+							'The registration period to have your say about this project has closed. If you are not registered and you submit information during the examination stage, this may not be included.',
+						paragraph2:
+							'Contact the project case team to find out more about how to get involved if you are not registered.'
+					},
+					repsPublished: {
+						paragraph1: 'We have now published all registration comments.',
+						paragraph2: 'You can {{-link}}.',
+						linkText1: 'view comments from other people who registered'
+					},
+					prelim: {
+						paragraph1: 'The preliminary meeting for this project is on: {{-date}}',
+						paragraph2: 'You can check the {{-link}} to find out how to get involved.',
+						linkText1: 'rule 6 letter',
+						paragraph3:
+							'In this meeting, the Examining Authority sets out how they examine the application. This includes the examination timetable and the issues they will focus on during examination.',
+						linkText2: 'Find out more about getting involved in the preliminary meeting'
+					}
+				},
 				examination: {
 					paragraph1:
 						'During the examination stage, anyone who has registered to have their say can submit comments at the {{-link}}. You may also attend hearings, if hearings are held.',

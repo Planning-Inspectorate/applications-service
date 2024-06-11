@@ -80,8 +80,43 @@ describe('pages/projects/index/_translations/cy', () => {
 					listItem2: 'y sylwadau ymgynghori a gafwyd gan y cynghorau lleol',
 					paragraph3: 'Os na dderbynnir y cais, byddwn yn:',
 					listItem3: "cyhoeddi'r rhesymau pam na chafodd ei dderbyn",
-					listItem4: 'dileu unrhyw ddogfennau a gyhoeddwyd o’r dudalen brosiect hon',
+					listItem4: "dileu unrhyw ddogfennau a gyhoeddwyd o'r dudalen brosiect hon",
 					paragraph4: 'Nid oes cyfle i wneud sylwadau ar y cais yn ystod y cam hwn.'
+				},
+				preexamination: {
+					preReps: {
+						paragraph1:
+							"Yn ystod y cam hwn, gallwch {{-link}} am y prosiect arfaethedig. Bydd y dudalen hon yn cael ei diweddaru pan fydd y cyfnod cofrestru'n agor. Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+						linkText1: "gofrestru i leisio'ch barn",
+						linkText2: "Dysgwch fwy am gofrestru i leisio'ch barn."
+					},
+					repsOpen: {
+						paragraph1:
+							'Os ydych eisiau gwneud sylwadau ar y prosiect arfaethedig hwn, gallwch {{-link}}.',
+						linkText1: "gofrestru i leisio'ch barn",
+						paragraph2: "Bydd y cyfnod cofrestru'n cau ar {{-date}} am 23:59.",
+						buttonText1: "Cofrestrwch i leisio'ch barn"
+					},
+					repsClosed: {
+						paragraph1:
+							"Mae'r cyfnod cofrestru i leisio'ch barn am y prosiect hwn wedi cau. Os nad ydych wedi cofrestru a'ch bod yn cyflwyno gwybodaeth yn ystod y cam archwilio, mae'n bosibl na fydd yn cael ei chynnwys.",
+						paragraph2:
+							'Cysylltwch â thîm achos y prosiect i gael gwybod mwy am sut i gymryd rhan os nad ydych wedi cofrestru.'
+					},
+					repsPublished: {
+						paragraph1: "Rydym bellach wedi cyhoeddi'r holl sylwadau cofrestredig.",
+						paragraph2: 'Gallwch {{-link}}.',
+						linkText1: 'weld sylwadau gan bobl eraill sydd wedi cofrestru'
+					},
+					prelim: {
+						paragraph1:
+							'Bydd y cyfarfod rhagarweiniol ar gyfer y prosiect hwn yn cael ei gynnal ar: {{-date}}',
+						paragraph2: 'Gallwch ddarllen y {{-link}} i gael gwybod sut i gymryd rhan.',
+						linkText1: 'llythyr rheol 6',
+						paragraph3:
+							"Yn y cyfarfod hwn, bydd yr Awdurdod Archwilio'n esbonio sut bydd yn archwilio'r cais. Bydd hyn yn cynnwys amserlen yr archwiliad a'r materion y bydd yn canolbwyntio arnynt yn ystod yr archwiliad.",
+						linkText2: 'Dysgwch fwy am gymryd rhan yn y cyfarfod rhagarweiniol'
+					}
 				},
 				examination: {
 					paragraph1:
