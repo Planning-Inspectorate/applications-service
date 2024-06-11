@@ -123,6 +123,9 @@ describe('pages/projects/index/_translations/en', () => {
 					linkText2: 'view the rule 8 letter',
 					linkText3: 'Find out more about the examination of the application',
 					paragraph3: '{{-link}} stage.'
+				},
+				recommendation: {
+					paragraph1: 'The date set for this to be completed is {{-date}}'
 				}
 			},
 			emailRequest: {

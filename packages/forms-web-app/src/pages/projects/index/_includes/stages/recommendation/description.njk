@@ -1,9 +1,5 @@
-{% if recommendationCompletedDate %}
-    {% set recommendationText %}
-        The date set for this to be completed is {{ recommendationCompletedDate | date }}
-    {% endset %}
-{% endif %}
-
 <p class="govuk-body">
-	{{ recommendationText }}
+    {% if recommendationCompletedDate %}
+        {{ t('projectsIndex.projectStage.recommendation.paragraph1', { date: recommendationCompletedDate | date }) }}
+    {% endif %}
 </p>

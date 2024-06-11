@@ -127,6 +127,9 @@ describe('pages/projects/index/_translations/cy', () => {
 					linkText2: 'ddarllen y llythyr rheol 8',
 					linkText3: "Dysgwch fwy am y cam archwilio'r cais",
 					paragraph3: '{{-link}}.'
+				},
+				recommendation: {
+					paragraph1: 'Y dyddiad a bennwyd ar gyfer cwblhau hyn yw {{-date}}'
 				}
 			},
 			emailRequest: {
