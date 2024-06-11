@@ -4,6 +4,6 @@ export class PO_ProjectPage {
 	}
 
 	findAndClickSidebarLinkLeft(string) {
-		cy.get('.ui-vertical-tabs__list-item').contains(string).click();
+		cy.get('.govuk-grid-column-one-third').contains(string).click();
 	}
 }

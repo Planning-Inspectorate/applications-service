@@ -4,11 +4,17 @@ export class BasePage {
 		allProjectsLink: () => cy.get('a[href*="/project-search"]'),
 		detailedInformationLink: () => cy.get('a[href*="/detailed-information"]'),
 		h1: () => cy.get('h1'),
+		h2: () => cy.get('h2'),
 		termsAndConditionsLink: () => cy.get('[data-cy="Terms and conditions"]'),
 		accessibliltyLink: () => cy.get('[data-cy="Accessibility statement"]'),
 		privacyNoticeLink: () => cy.get('[data-cy="Privacy"]'),
-		cookiesLink: () => cy.get('[data-cy="Cookies"]')
+		cookiesLink: () => cy.get('[data-cy="Cookies"]'),
+		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-regoster"]')
 	};
+
+	clickSaveAndContinueBtn() {
+		this.elements.saveAndContinueBtn().click();
+	}
 
 	clickHomeLink() {
 		this.elements.homeLink().click();
@@ -24,6 +30,10 @@ export class BasePage {
 
 	locateH1ByText(pageTitle) {
 		this.elements.h1().contains(pageTitle);
+	}
+
+	locateH2ByText(text) {
+		this.elements.h2().contains(text);
 	}
 
 	clickFooterLink(linkType) {
