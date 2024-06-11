@@ -22,19 +22,25 @@ describe('locales/en/common', () => {
 			hideAllSteps: 'Hide all steps',
 			month: 'Month',
 			next: 'Next',
+			no: 'No',
 			open: 'Open',
 			partOf: 'Part of',
-			pinsContactDetails: { csOpeningHours: 'Monday to Friday, 9am to 4pm (except bank holidays)' },
+			pinsContactDetails: {
+				csOpeningHours: 'Monday to Friday, 9am to 4pm (except bank holidays)'
+			},
 			resultsPerPage: 'Results per page',
 			returnToResults: 'Return to results',
+			saveChanges: 'Save changes',
 			search: 'Search',
 			selectAllFilters: 'Select all filters',
 			show: 'Show',
 			showAllSections: 'Show all sections',
 			showAllSteps: 'Show all steps',
 			showFilters: 'Show filters',
+			success: 'Success',
 			to: 'To',
-			year: 'Year'
+			year: 'Year',
+			yes: 'Yes'
 		});
 	});
 });

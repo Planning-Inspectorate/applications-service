@@ -23,6 +23,7 @@ describe('locales/cy/common', () => {
 			hideAllSteps: 'Cuddio pob cam',
 			month: 'Mis',
 			next: 'Nesaf',
+			no: 'Nac ydw',
 			open: 'Agor',
 			partOf: 'Rhan o',
 			pinsContactDetails: {
@@ -30,14 +31,17 @@ describe('locales/cy/common', () => {
 			},
 			resultsPerPage: 'Canlyniadau fesul tudalen',
 			returnToResults: 'Dychwelyd at ganlyniadau',
+			saveChanges: 'Achub newidiadau',
 			search: 'Chwilio',
 			selectAllFilters: 'Dewiswch bob hidlydd',
 			show: 'Dangos',
 			showAllSections: 'Dangos pob adran',
 			showAllSteps: 'Dangos pob cam',
 			showFilters: 'Dangos hidlydd',
+			success: 'Llwyddiant',
 			to: 'I',
-			year: 'Blwyddyn'
+			year: 'Blwyddyn',
+			yes: 'Ydw'
 		});
 	});
 });
