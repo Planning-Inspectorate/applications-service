@@ -1,3 +1,5 @@
 const cookiesRoute = 'cookies';
 
-module.exports = { cookiesRoute };
+const cookiesI18nNamespace = 'cookies';
+
+module.exports = { cookiesRoute, cookiesI18nNamespace };

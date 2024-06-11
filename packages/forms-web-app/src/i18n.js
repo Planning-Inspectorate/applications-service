@@ -47,7 +47,7 @@ const configureI18n = (app) => {
 		.use(i18nextBackend)
 		.init({
 			preload: [defaultLocale.code],
-			debug: true,
+			debug: false,
 			lang: defaultLocale.code,
 			fallbackLng: defaultLocale.code,
 			ns: ['global'],

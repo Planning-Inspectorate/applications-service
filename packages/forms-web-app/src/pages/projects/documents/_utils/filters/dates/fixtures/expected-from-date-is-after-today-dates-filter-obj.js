@@ -19,9 +19,24 @@ const expectedFromDateIsAfterTodayDatesFilterObj = {
 					id: 'docments-page-date-from-form-group',
 					inputNamePrefix: 'date-from',
 					inputs: [
-						{ classes: 'govuk-input--width-2 govuk-input--error', name: 'day', value: '2' },
-						{ classes: 'govuk-input--width-2 govuk-input--error', name: 'month', value: '1' },
-						{ classes: 'govuk-input--width-4 govuk-input--error', name: 'year', value: '2023' }
+						{
+							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Day',
+							name: 'day',
+							value: '2'
+						},
+						{
+							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Month',
+							name: 'month',
+							value: '1'
+						},
+						{
+							classes: 'govuk-input--width-4 govuk-input--error',
+							label: 'Year',
+							name: 'year',
+							value: '2023'
+						}
 					],
 					name: 'date-from',
 					title: 'From'
@@ -33,9 +48,9 @@ const expectedFromDateIsAfterTodayDatesFilterObj = {
 					id: 'docments-page-date-to-form-group',
 					inputNamePrefix: 'date-to',
 					inputs: [
-						{ classes: 'govuk-input--width-2', name: 'day', value: '' },
-						{ classes: 'govuk-input--width-2', name: 'month', value: '' },
-						{ classes: 'govuk-input--width-4', name: 'year', value: '' }
+						{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
+						{ classes: 'govuk-input--width-2', label: 'Month', name: 'month', value: '' },
+						{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 					],
 					name: 'date-to',
 					title: 'To'

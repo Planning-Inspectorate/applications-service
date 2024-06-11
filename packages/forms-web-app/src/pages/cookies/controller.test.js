@@ -7,6 +7,8 @@ const { addFlashMessage } = require('../../lib/flash-message');
 const { removeUnwantedCookies } = require('../../lib/remove-unwanted-cookies');
 const { toBase64 } = require('../../lib/base64');
 const { getCookiesURL } = require('./_utils/get-cookies-url');
+const { mockI18n } = require('../_mocks/i18n');
+const cookiesTranslation_EN = require('./_translations/en.json');
 
 const view = 'cookies/view.njk';
 const cookiesUpdatedMessagePath = 'cookies/_includes/cookies-updated-successfully-message.njk';
@@ -16,6 +18,10 @@ jest.mock('../../../src/config');
 jest.mock('../../../src/lib/remove-unwanted-cookies');
 jest.mock('../../../src/lib/flash-message');
 jest.mock('../../../src/lib/get-previous-page-path');
+
+const cookiesTranslations = {
+	cookies: cookiesTranslation_EN
+};
 
 describe('pages/cookies/controller.js', () => {
 	const FIXED_SYSTEM_TIME = '2020-11-18T00:00:00Z';
@@ -30,7 +36,8 @@ describe('pages/cookies/controller.js', () => {
 		req = {
 			...mockReq(),
 			body: {},
-			cookies: {}
+			cookies: {},
+			i18n: mockI18n(cookiesTranslations)
 		};
 		res = mockRes();
 
@@ -199,7 +206,13 @@ describe('pages/cookies/controller.js', () => {
 							template: {
 								path: cookiesUpdatedMessagePath,
 								vars: {
-									previousPagePath: expectedPreviousPagePath
+									previousPagePath: expectedPreviousPagePath,
+									successBanner: {
+										heading1: 'Your cookie settings were saved',
+										paragraph1:
+											'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
+										linkText1: 'Go back to the page you were looking at'
+									}
 								}
 							}
 						});

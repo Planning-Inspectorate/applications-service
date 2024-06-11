@@ -1,16 +1,28 @@
 const { isEveryAccordionSectionOpen } = require('./helpers');
 const { toggleAccordionSwitchState, setAccordionState } = require('./setters');
 
-const addAccordionSwitchClickEvent = (accordionSwitch, accordionSections) => {
+const addAccordionSwitchClickEvent = (
+	accordionSwitch,
+	accordionSections,
+	accordionTranslations
+) => {
 	accordionSwitch.addEventListener('click', () =>
-		toggleAccordionSwitchState(accordionSwitch, accordionSections)
+		toggleAccordionSwitchState(accordionSwitch, accordionSections, accordionTranslations)
 	);
 };
 
-const addAccordionSectionClickEvent = (accordionSwitch, accordionSections) => {
+const addAccordionSectionClickEvent = (
+	accordionSwitch,
+	accordionSections,
+	accordionTranslations
+) => {
 	accordionSections.forEach((accordionSection) => {
 		accordionSection.addEventListener('toggle', () => {
-			setAccordionState(accordionSwitch, isEveryAccordionSectionOpen(accordionSections));
+			setAccordionState(
+				accordionSwitch,
+				isEveryAccordionSectionOpen(accordionSections),
+				accordionTranslations
+			);
 		});
 	});
 };

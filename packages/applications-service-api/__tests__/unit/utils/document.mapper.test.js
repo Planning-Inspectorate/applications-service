@@ -129,6 +129,10 @@ describe('document mapper functions', () => {
 					dataID: 'someref',
 					case_reference: 'EN0100085',
 					stage: 'examination',
+					stageLabel: {
+						cy: 'Archwiliad',
+						en: 'Examination'
+					},
 					type: 'Other Documents',
 					filter1: 'Deadline 6',
 					filter1Welsh: 'Deadline 6 welsh',
@@ -154,25 +158,36 @@ describe('document mapper functions', () => {
 
 	describe('mapFilters', () => {
 		it.each([
-			['stage', 1, 'Pre-application'],
-			['stage', 2, 'Acceptance'],
-			['stage', 3, 'Pre-examination'],
-			['stage', 4, 'Examination'],
-			['stage', 5, 'Recommendation'],
-			['stage', 6, 'Decision'],
-			['stage', 7, 'Post-decision'],
-			['stage', 'pre-application', 'Pre-application'],
-			['stage', 'acceptance', 'Acceptance'],
-			['stage', 'Acceptance', 'Acceptance'],
-			['stage', 'pre-examination', 'Pre-examination'],
-			['stage', 'examination', 'Examination'],
-			['stage', 'recommendation', 'Recommendation'],
-			['stage', 'decision', 'Decision'],
-			['stage', 'post-decision', 'Post-decision'],
-			['stage', 'developers-application', "Developer's application"],
-			['category', "Developer's application", "Developer's application"],
-			['category', "Developer's application", "Developer's application"],
-			['category', 'developers_application', "Developer's application"],
+			['stage', 1, { cy: 'Cyn-ymgeisio', en: 'Pre-application' }],
+			['stage', 2, { cy: 'Derbyn', en: 'Acceptance' }],
+			['stage', 3, { cy: 'Cyn-archwiliad', en: 'Pre-examination' }],
+			['stage', 4, { cy: 'Archwiliad', en: 'Examination' }],
+			['stage', 5, { cy: 'Argymhelliad', en: 'Recommendation' }],
+			['stage', 6, { cy: 'Penderfyniad', en: 'Decision' }],
+			['stage', 7, { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
+			['stage', 'pre-application', { cy: 'Cyn-ymgeisio', en: 'Pre-application' }],
+			['stage', 'acceptance', { cy: 'Derbyn', en: 'Acceptance' }],
+			['stage', 'Acceptance', { cy: 'Derbyn', en: 'Acceptance' }],
+			['stage', 'pre-examination', { cy: 'Cyn-archwiliad', en: 'Pre-examination' }],
+			['stage', 'examination', { cy: 'Archwiliad', en: 'Examination' }],
+			['stage', 'recommendation', { cy: 'Argymhelliad', en: 'Recommendation' }],
+			['stage', 'decision', { cy: 'Penderfyniad', en: 'Decision' }],
+			['stage', 'post-decision', { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
+			[
+				'stage',
+				'developers-application',
+				{ cy: 'Cais y datblygwr', en: `Developer's application` }
+			],
+			[
+				'category',
+				"Developer's application",
+				{ cy: 'Cais y datblygwr', en: `Developer's application` }
+			],
+			[
+				'category',
+				'developers_application',
+				{ cy: 'Cais y datblygwr', en: `Developer's application` }
+			],
 			['category', 'other', 'other'],
 			['category', 'None', 'None'],
 			['stage', 99999, undefined]

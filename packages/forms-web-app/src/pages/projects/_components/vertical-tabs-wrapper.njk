@@ -10,10 +10,18 @@
 	{% set slots = (slots.push(uiCheckboxAccordion(
 		displayFilters,
 		filters,
-		"Filter",
-		paginationData.totalItems + " documents",
+		t('common.filter'),
+		paginationData.totalItems + " " + t('projectsDocuments.common.documents'),
 		"documents-page-filters",
-		'modal-on-tablet'
+		'modal-on-tablet',
+		{
+			applyFilters: t('common.applyFilters'),
+			hideAllSections: t('common.hideAllSections'),
+			showAllSections: t('common.showAllSections'),
+			clearFilters: t('common.clearFilters'),
+			selectAllFilters: t('common.selectAllFilters'),
+			returnToResults: t('common.returnToResults')
+		}
 	)), slots) %}
 {% endif %}
 

@@ -1,4 +1,13 @@
 const { getFilters } = require('./getFilters');
+
+const { mockI18n } = require('../../../../_mocks/i18n');
+
+const commonTranslations_EN = require('../../../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN
+});
+
 describe('component', () => {
 	describe('#getFilters', () => {
 		describe('When getting the filters for the UI', () => {
@@ -7,7 +16,7 @@ describe('component', () => {
 					name: 'filter-group',
 					value: '1',
 					count: '1',
-					label: 'filter group 1 label',
+					label: { cy: 'welsh filter group 1 label', en: 'english filter group 1 label' },
 					type: [
 						{ value: 'filter-group1-item-1', count: '1' },
 						{ value: 'should not be checked', count: '5' }
@@ -17,7 +26,7 @@ describe('component', () => {
 					name: 'filter-group',
 					value: '2',
 					count: '7',
-					label: 'filter group 2 label',
+					label: { cy: 'welsh filter group 2 label', en: 'english filter group 2 label' },
 					type: [
 						{ value: 'filter-group2-item-1', count: '2' },
 						{ value: 'filter-group2-item-2', count: '1' }
@@ -28,12 +37,12 @@ describe('component', () => {
 				'filter-group-1': 'filter-group1-item-1',
 				'filter-group-2': ['filter-group2-item-1', 'filter-group2-item-2']
 			};
-			const result = getFilters(mockFiltersFromAPI, mockQuery);
+			const result = getFilters(i18n, mockFiltersFromAPI, mockQuery);
 			it('should return the filters in mapped and in the view model', () => {
 				expect(result).toEqual({
 					activeFilters: [
 						{
-							label: 'filter group 1 label',
+							label: 'english filter group 1 label',
 							tags: [
 								{
 									icon: 'close',
@@ -44,7 +53,7 @@ describe('component', () => {
 							]
 						},
 						{
-							label: 'filter group 2 label',
+							label: 'english filter group 2 label',
 							tags: [
 								{
 									icon: 'close',
@@ -78,9 +87,9 @@ describe('component', () => {
 									value: 'should not be checked'
 								}
 							],
-							label: 'filter group 1 label',
+							label: 'english filter group 1 label',
 							name: 'filter-group-1',
-							title: 'filter group 1 label (1)',
+							title: 'english filter group 1 label (1)',
 							type: 'checkbox'
 						},
 						{
@@ -98,9 +107,9 @@ describe('component', () => {
 									value: 'filter-group2-item-2'
 								}
 							],
-							label: 'filter group 2 label',
+							label: 'english filter group 2 label',
 							name: 'filter-group-2',
-							title: 'filter group 2 label (7)',
+							title: 'english filter group 2 label (7)',
 							type: 'checkbox'
 						},
 						{
@@ -114,16 +123,19 @@ describe('component', () => {
 									inputs: [
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Day',
 											name: 'day',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Month',
 											name: 'month',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-4',
+											label: 'Year',
 											name: 'year',
 											value: ''
 										}
@@ -139,16 +151,19 @@ describe('component', () => {
 									inputs: [
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Day',
 											name: 'day',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Month',
 											name: 'month',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-4',
+											label: 'Year',
 											name: 'year',
 											value: ''
 										}
