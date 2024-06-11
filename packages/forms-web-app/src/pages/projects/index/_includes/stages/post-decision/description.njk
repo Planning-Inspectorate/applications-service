@@ -1,12 +1,10 @@
-{% set decisionText %}
-{% if applicationDecision and applicationData.confirmedDateOfDecision %}
-	This application was {{ applicationDecision }} on {{ applicationData.confirmedDateOfDecision | date }}.
-{% endif %}
-{% if not applicationDecision and applicationData.confirmedDateOfDecision %}
-	This application was decided on {{ applicationData.confirmedDateOfDecision | date }}.
-{% endif %}
-{% endset %}
-
 <p class="govuk-body">
-	{{ decisionText }}
+	{% if applicationDecision and applicationData.confirmedDateOfDecision %}
+		{{ t('projectsIndex.projectStage.postDecision.paragraph1', 
+		{ decision:  t('projectsIndex.projectStage.postDecision.' + applicationDecision ), date: applicationData.confirmedDateOfDecision | date })
+		}}
+	{% endif %}
+	{% if not applicationDecision and applicationData.confirmedDateOfDecision %}
+			This application was decided on {{ applicationData.confirmedDateOfDecision | date }}.
+	{% endif %}
 </p>

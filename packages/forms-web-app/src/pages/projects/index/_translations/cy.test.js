@@ -133,6 +133,11 @@ describe('pages/projects/index/_translations/cy', () => {
 				},
 				decision: {
 					paragraph1: 'Y dyddiad a bennwyd ar gyfer cwblhau hyn yw {{-date}}'
+				},
+				postDecision: {
+					paragraph1: '{{-decision}} y cais hwn ar {{-date}}.',
+					granted: 'Caniatawyd',
+					refused: 'Gwrthodwyd'
 				}
 			},
 			emailRequest: {

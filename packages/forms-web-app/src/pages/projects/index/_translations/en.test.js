@@ -129,6 +129,11 @@ describe('pages/projects/index/_translations/en', () => {
 				},
 				decision: {
 					paragraph1: 'The date set for this to be completed is {{-date}}'
+				},
+				postDecision: {
+					paragraph1: 'This application was {{-decision}} on {{-date}}.',
+					granted: 'granted',
+					refused: 'refused'
 				}
 			},
 			emailRequest: {
