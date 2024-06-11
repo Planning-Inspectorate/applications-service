@@ -126,6 +126,9 @@ describe('pages/projects/index/_translations/en', () => {
 				},
 				recommendation: {
 					paragraph1: 'The date set for this to be completed is {{-date}}'
+				},
+				decision: {
+					paragraph1: 'The date set for this to be completed is {{-date}}'
 				}
 			},
 			emailRequest: {

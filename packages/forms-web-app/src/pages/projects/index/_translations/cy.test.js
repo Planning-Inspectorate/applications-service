@@ -130,6 +130,9 @@ describe('pages/projects/index/_translations/cy', () => {
 				},
 				recommendation: {
 					paragraph1: 'Y dyddiad a bennwyd ar gyfer cwblhau hyn yw {{-date}}'
+				},
+				decision: {
+					paragraph1: 'Y dyddiad a bennwyd ar gyfer cwblhau hyn yw {{-date}}'
 				}
 			},
 			emailRequest: {
