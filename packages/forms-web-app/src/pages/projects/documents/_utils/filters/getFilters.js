@@ -7,7 +7,10 @@ const getFilters = (i18n, rawFilters, rawQuery) => {
 	const orderedFilters = orderFilters(rawFilters);
 	const mappedFilters = convertFiltersToPageView(i18n, orderedFilters);
 	const { filters, activeFilters } = viewModel(mappedFilters, rawQuery);
-	const { activeDateFilters, datesFilter, datesFilterErrorSummary } = getDatesFilter(rawQuery);
+	const { activeDateFilters, datesFilter, datesFilterErrorSummary } = getDatesFilter(
+		i18n,
+		rawQuery
+	);
 
 	return {
 		activeFilters: [...activeFilters, ...activeDateFilters],

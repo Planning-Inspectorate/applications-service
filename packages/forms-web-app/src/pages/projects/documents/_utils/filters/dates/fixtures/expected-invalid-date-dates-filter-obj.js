@@ -23,9 +23,24 @@ const expectedInvalidDateDatesFilterObj = {
 					id: 'docments-page-date-from-form-group',
 					inputNamePrefix: 'date-from',
 					inputs: [
-						{ classes: 'govuk-input--width-2 govuk-input--error', name: 'day', value: '32' },
-						{ classes: 'govuk-input--width-2 govuk-input--error', name: 'month', value: '1' },
-						{ classes: 'govuk-input--width-4 govuk-input--error', name: 'year', value: '2023' }
+						{
+							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Day',
+							name: 'day',
+							value: '32'
+						},
+						{
+							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Month',
+							name: 'month',
+							value: '1'
+						},
+						{
+							classes: 'govuk-input--width-4 govuk-input--error',
+							label: 'Year',
+							name: 'year',
+							value: '2023'
+						}
 					],
 					name: 'date-from',
 					title: 'From'
@@ -37,9 +52,24 @@ const expectedInvalidDateDatesFilterObj = {
 					id: 'docments-page-date-to-form-group',
 					inputNamePrefix: 'date-to',
 					inputs: [
-						{ classes: 'govuk-input--width-2 govuk-input--error', name: 'day', value: '2' },
-						{ classes: 'govuk-input--width-2 govuk-input--error', name: 'month', value: 'abc' },
-						{ classes: 'govuk-input--width-4 govuk-input--error', name: 'year', value: '2023' }
+						{
+							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Day',
+							name: 'day',
+							value: '2'
+						},
+						{
+							classes: 'govuk-input--width-2 govuk-input--error',
+							label: 'Month',
+							name: 'month',
+							value: 'abc'
+						},
+						{
+							classes: 'govuk-input--width-4 govuk-input--error',
+							label: 'Year',
+							name: 'year',
+							value: '2023'
+						}
 					],
 					name: 'date-to',
 					title: 'To'
