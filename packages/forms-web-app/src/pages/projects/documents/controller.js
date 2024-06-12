@@ -20,7 +20,7 @@ const getProjectsDocumentsController = async (req, res) => {
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
 
-		const { projectName } = await getApplicationData(case_ref);
+		const { projectName } = await getApplicationData(case_ref, i18n.language);
 
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = await pageData(case_ref);
