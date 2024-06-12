@@ -7,7 +7,7 @@
 
 {% endmacro %}
 
-{% macro sectionResults(results) %}
+{% macro sectionResults(results, langIsWelsh) %}
   <ul class="section-results">
     {% for result in results %}
       <li class="section-results__result">
@@ -18,7 +18,13 @@
           target="_blank"
         >
           <strong>
-            {{ getFileName(result.description, result.personal_name, result.path) }} ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
+            {{ getFileName(
+              result.descriptionWelsh if langIsWelsh else result.description,
+              result.personal_name,
+              result.path
+            ) }}
+            &nbsp;
+            ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
           </strong>
         </a>
 
