@@ -39,6 +39,8 @@ describe('pages/projects/index/_translations/en', () => {
 					'Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.'
 			},
 			projectStage: {
+				heading1: 'Project stage',
+				paragraph1: 'This project is at the {{-stage}} stage.',
 				stage1name: 'Pre-application',
 				stage2name: 'Acceptance',
 				stage3name: 'Pre-examination',
@@ -46,8 +48,6 @@ describe('pages/projects/index/_translations/en', () => {
 				stage5name: 'Recommendation',
 				stage6name: 'Decision',
 				stage7name: 'Post-decision',
-				heading1: 'Project stage',
-				paragraph1: 'This project is at the {{-stage}} stage.',
 				preapplication: {
 					paragraph1: 'The application is expected to be submitted {{-date}}.',
 					paragraph2:
@@ -120,6 +120,11 @@ describe('pages/projects/index/_translations/en', () => {
 					granted: 'granted',
 					refused: 'refused',
 					paragraph2: 'This application was decided on {{-date}}.'
+				},
+				withdrawn: {
+					paragraph1: 'This project has been withdrawn.',
+					paragraph2:
+						'You will be able to view any documents and information until the project is archived.'
 				}
 			},
 			emailRequest: {

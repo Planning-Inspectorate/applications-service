@@ -41,6 +41,8 @@ describe('pages/projects/index/_translations/cy', () => {
 					"Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille."
 			},
 			projectStage: {
+				heading1: 'Cam y prosiect',
+				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}.",
 				stage1name: 'cyn-ymgeisio',
 				stage2name: 'derbyn',
 				stage3name: 'cyn-archwilio',
@@ -48,8 +50,6 @@ describe('pages/projects/index/_translations/cy', () => {
 				stage5name: 'argymhelliad.',
 				stage6name: 'penderfyniad.',
 				stage7name: 'ôl-benderfyniad.',
-				heading1: 'Cam y prosiect',
-				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}.",
 				preapplication: {
 					paragraph1: "Disgwylir i'r cais gael ei gyflwyno {{-date}}.",
 					paragraph2:
@@ -124,6 +124,11 @@ describe('pages/projects/index/_translations/cy', () => {
 					granted: 'Caniatawyd',
 					refused: 'Gwrthodwyd',
 					paragraph2: 'Penderfynwyd y cais hwn ar {{-date}}.'
+				},
+				withdrawn: {
+					paragraph1: "Mae'r prosiect hwn wedi cael ei dynnu'n ôl.",
+					paragraph2:
+						'Gallwch weld unrhyw ddogfennau a gwybodaeth hyd nes bydd y prosiect yn cael ei archifo.'
 				}
 			},
 			emailRequest: {

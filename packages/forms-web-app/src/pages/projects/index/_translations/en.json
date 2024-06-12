@@ -10,7 +10,21 @@
 		"paragraph2": "Name of applicant:",
 		"linkText1": "View the developer's website"
 	},
+	"projectLocation": {
+		"heading1": "Project location"
+	},
+	"getUpdates": {
+		"heading1": "Get updates",
+		"paragraph1": "Enter your email address to receive:",
+		"listItem1": "updates on project progress",
+		"listItem2": "information on how to have your say",
+		"listItem3": "notifications when key documents are published",
+		"paragraph2": "Read the {{-link}} to see how we handle your information.",
+		"paragraph2LinkText": "privacy notice"
+	},
 	"projectStage": {
+		"heading1": "Project stage",
+		"paragraph1": "This project is at the {{-stage}} stage.",
 		"stage1name": "Pre-application",
 		"stage2name": "Acceptance",
 		"stage3name": "Pre-examination",
@@ -18,8 +32,6 @@
 		"stage5name": "Recommendation",
 		"stage6name": "Decision",
 		"stage7name": "Post-decision",
-		"heading1": "Project stage",
-		"paragraph1": "This project is at the {{-stage}} stage.",
 		"preapplication": {
 			"paragraph1": "The application is expected to be submitted {{-date}}.",
 			"paragraph2": "When we receive the application, we have 28 days to decide whether to accept it for examination.",
@@ -83,24 +95,16 @@
 			"granted": "granted",
 			"refused": "refused",
 			"paragraph2": "This application was decided on {{-date}}."
+		},
+		"withdrawn": {
+			"paragraph1": "This project has been withdrawn.",
+			"paragraph2": "You will be able to view any documents and information until the project is archived."
 		}
 	},
 	"emailRequest": {
 		"paragraph1": "You may have recently gained an interest in land affected by a development. If the developer did not tell you the application was accepted or you did not register to have your say you can still request to be an interested party.",
 		"paragraph2": "You need to contact the project team, they will ask the Examining Authority if you can be an interested party and have your say.",
 		"paragraph3": "Email {{-link}} with your request to become an interested party."
-	},
-	"projectLocation": {
-		"heading1": "Project location"
-	},
-	"getUpdates": {
-		"heading1": "Get updates",
-		"paragraph1": "Enter your email address to receive:",
-		"listItem1": "updates on project progress",
-		"listItem2": "information on how to have your say",
-		"listItem3": "notifications when key documents are published",
-		"paragraph2": "Read the {{-link}} to see how we handle your information.",
-		"paragraph2LinkText": "privacy notice"
 	},
 	"contact": {
 		"heading1": "Contact us",
