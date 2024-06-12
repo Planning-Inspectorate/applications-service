@@ -30,11 +30,19 @@
 
         {% if result.representative %}
           <p class="section-results__result-copy">
-            From {{ result.representative }} on behalf of {{ result.personal_name }}
+            {% if langIsWelsh %}
+              O {{ result.representative }} ar ran {{ result.personal_name }}
+            {% else %}
+              From {{ result.representative }} on behalf of {{ result.personal_name }}
+            {% endif %}
           </p>
         {% elseif result.description and result.personal_name %}
           <p class="section-results__result-copy">
-            From {{ result.personal_name }}
+            {% if langIsWelsh %}
+              O {{ result.personal_name }}
+            {% else %}
+              From {{ result.personal_name }}
+            {% endif %}
           </p>
         {% endif %}
 
