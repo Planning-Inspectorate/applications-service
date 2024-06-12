@@ -1,10 +1,12 @@
 <p class="govuk-body">
 	{% if applicationDecision and applicationData.confirmedDateOfDecision %}
 		{{ t('projectsIndex.projectStage.postDecision.paragraph1', 
-		{ decision:  t('projectsIndex.projectStage.postDecision.' + applicationDecision ), date: applicationData.confirmedDateOfDecision | date })
+		{ decision:  t('projectsIndex.projectStage.postDecision.' + applicationDecision ), date: applicationData.confirmedDateOfDecision | date('locale', language) | date })
 		}}
 	{% endif %}
 	{% if not applicationDecision and applicationData.confirmedDateOfDecision %}
-			This application was decided on {{ applicationData.confirmedDateOfDecision | date }}.
+		{{ t('projectsIndex.projectStage.postDecision.paragraph2',
+			{ date: applicationData.confirmedDateOfDecision | date('locale', language) | date }) 
+		}}
 	{% endif %}
 </p>

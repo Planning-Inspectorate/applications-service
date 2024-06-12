@@ -81,7 +81,8 @@
 		"postDecision": {
 			"paragraph1": "This application was {{-decision}} on {{-date}}.",
 			"granted": "granted",
-			"refused": "refused"
+			"refused": "refused",
+			"paragraph2": "This application was decided on {{-date}}."
 		}
 	},
 	"emailRequest": {

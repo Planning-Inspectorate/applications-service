@@ -14,7 +14,7 @@
 		{{ t('projectsIndex.projectStage.preexamination.repsOpen.paragraph1',
 		{ link: '<a href="/having-your-say-guide/registering-have-your-say" class="govuk-link">' + t('projectsIndex.projectStage.preexamination.repsOpen.linkText1') + '</a>'}) | safe }}
 		{% if applicationData.DateOfRelevantRepresentationClose %} 
-			{{ t('projectsIndex.projectStage.preexamination.repsOpen.paragraph2', { date: applicationData.DateOfRelevantRepresentationClose | date}) 
+			{{ t('projectsIndex.projectStage.preexamination.repsOpen.paragraph2', { date: applicationData.DateOfRelevantRepresentationClose |  date('locale', language) | date}) 
 			}} 
 		{% endif %}		
 	</p>
@@ -52,7 +52,7 @@
 {% set prelimDescText %}
 	{% if applicationData.DateOfPreliminaryMeeting %}
 		<p class="govuk-body">
-			{{ t('projectsIndex.projectStage.preexamination.prelim.paragraph1', { date: applicationData.DateOfPreliminaryMeeting | date}) }} 
+			{{ t('projectsIndex.projectStage.preexamination.prelim.paragraph1', { date: applicationData.DateOfPreliminaryMeeting |  date('locale', language) | date }) }} 
 		</p>
 	{% endif %}
 

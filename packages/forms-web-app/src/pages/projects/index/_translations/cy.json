@@ -81,7 +81,8 @@
 		"postDecision": {
 			"paragraph1": "{{-decision}} y cais hwn ar {{-date}}.",
 			"granted": "Caniatawyd",
-			"refused": "Gwrthodwyd"
+			"refused": "Gwrthodwyd",
+			"paragraph2": "Penderfynwyd y cais hwn ar {{-date}}."
 		}
 	},
 	"emailRequest": {

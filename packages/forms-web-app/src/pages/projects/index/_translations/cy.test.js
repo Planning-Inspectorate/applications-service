@@ -14,10 +14,6 @@ describe('pages/projects/index/_translations/cy', () => {
 				paragraph2: "Enw'r ymgeisydd:",
 				linkText1: 'Gweld gwefan y datblygwr'
 			},
-			projectStage: {
-				heading1: 'Cam y prosiect',
-				paragraph1: "Mae'r prosiect hwn ar y cam {{-stage}}."
-			},
 			projectLocation: {
 				heading1: 'Lleoliad y prosiect'
 			},
@@ -44,17 +40,6 @@ describe('pages/projects/index/_translations/cy', () => {
 				paragraph5:
 					"Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille."
 			},
-			getUpdates: {
-				heading1: 'Cael diweddariadau',
-				listItem1: 'diweddariadau ar gynnydd y prosiect',
-				listItem2: "gwybodaeth ynglŷn â sut i leisio'ch barn",
-				listItem3: 'hysbysiadau pan fydd dogfennau allweddol yn cael eu cyhoeddi',
-				paragraph1: 'Rhowch eich cyfeiriad e-bost i gael:',
-				paragraph2: 'Darllenwch yr {{-link}} i gael gwybod sut rydym yn trin eich gwybodaeth.',
-				paragraph2LinkText: 'hysbysiad preifatrwydd'
-			},
-			heading1: 'Gwybodaeth am y prosiect',
-			projectLocation: { heading1: 'Lleoliad y prosiect' },
 			projectStage: {
 				stage1name: 'cyn-ymgeisio',
 				stage2name: 'derbyn',
@@ -137,7 +122,8 @@ describe('pages/projects/index/_translations/cy', () => {
 				postDecision: {
 					paragraph1: '{{-decision}} y cais hwn ar {{-date}}.',
 					granted: 'Caniatawyd',
-					refused: 'Gwrthodwyd'
+					refused: 'Gwrthodwyd',
+					paragraph2: 'Penderfynwyd y cais hwn ar {{-date}}.'
 				}
 			},
 			emailRequest: {

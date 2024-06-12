@@ -1,4 +1,4 @@
-{% set decisionDate = applicationData.DateOfDCOSubmission | date %}
+{% set decisionDate = applicationData.DateOfDCOSubmission | date('locale', language) | date %}
 
 {% if applicationData.DateOfDCOSubmission %}
 	<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph1", { date: decisionDate }) }} </p>

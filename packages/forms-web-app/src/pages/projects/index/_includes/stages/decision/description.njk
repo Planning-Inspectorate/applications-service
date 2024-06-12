@@ -1,5 +1,5 @@
 <p class="govuk-body">
     {% if decisionCompletedDate %}
-	    {{ t('projectsIndex.projectStage.decision.paragraph1', { date: decisionCompletedDate | date}) }}
+	    {{ t('projectsIndex.projectStage.decision.paragraph1', { date: decisionCompletedDate | date('locale', language) | date}) }}
     {% endif %}
 </p>

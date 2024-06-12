@@ -14,10 +14,6 @@ describe('pages/projects/index/_translations/en', () => {
 				paragraph2: 'Name of applicant:',
 				linkText1: "View the developer's website"
 			},
-			projectStage: {
-				heading1: 'Project stage',
-				paragraph1: 'This project is at the {{-stage}} stage.'
-			},
 			projectLocation: {
 				heading1: 'Project location'
 			},
@@ -42,17 +38,6 @@ describe('pages/projects/index/_translations/en', () => {
 				paragraph5:
 					'Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.'
 			},
-			getUpdates: {
-				heading1: 'Get updates',
-				listItem1: 'updates on project progress',
-				listItem2: 'information on how to have your say',
-				listItem3: 'notifications when key documents are published',
-				paragraph1: 'Enter your email address to receive:',
-				paragraph2: 'Read the {{-link}} to see how we handle your information.',
-				paragraph2LinkText: 'privacy notice'
-			},
-			heading1: 'Project information',
-			projectLocation: { heading1: 'Project location' },
 			projectStage: {
 				stage1name: 'Pre-application',
 				stage2name: 'Acceptance',
@@ -133,7 +118,8 @@ describe('pages/projects/index/_translations/en', () => {
 				postDecision: {
 					paragraph1: 'This application was {{-decision}} on {{-date}}.',
 					granted: 'granted',
-					refused: 'refused'
+					refused: 'refused',
+					paragraph2: 'This application was decided on {{-date}}.'
 				}
 			},
 			emailRequest: {
