@@ -1,25 +1,23 @@
-<p class="govuk-body">
-	The decision whether to accept the application for examination will be made by {% if applicationData.DateOfDCOSubmission %}{{ applicationData.DateOfDCOSubmission | date }}{% endif %}.
-</p>
+{% set decisionDate = applicationData.DateOfDCOSubmission | date('locale', language) | date %}
 
-<p class="govuk-body">
-	If the application is accepted, we will publish:
-</p>
+{% if applicationData.DateOfDCOSubmission %}
+	<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph1", { date: decisionDate }) }} </p>
+{% endif %}
 
-<ul class="govuk-list govuk-list--bullet">
-	<li>the acceptance decision</li>
-	<li>the consultation representations received from the local councils</li>
-</ul>
-
-<p class="govuk-body">
-	If the application is not accepted, we will:
-</p>
+<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph2") }} </p>
 
 <ul class="govuk-list govuk-list--bullet">
-	<li>publish the reasons why it was not accepted</li>
-	<li>remove any documentation that has been published from this project page</li>
+	<li> {{ t("projectsIndex.projectStage.acceptance.listItem1") }} </li>
+	<li> {{ t("projectsIndex.projectStage.acceptance.listItem2") }} </li>
 </ul>
 
-<p class="govuk-body">There is no opportunity to make comments on the application at this stage.</p>
+<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph3") }} </p>
+
+<ul class="govuk-list govuk-list--bullet">
+	<li> {{ t("projectsIndex.projectStage.acceptance.listItem3") }} </li>	
+	<li> {{ t("projectsIndex.projectStage.acceptance.listItem4") }} </li>
+</ul>
+
+<p class="govuk-body">	{{ t("projectsIndex.projectStage.acceptance.paragraph4") }} </p>
 
 

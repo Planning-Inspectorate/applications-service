@@ -2,12 +2,13 @@ const { getAppData } = require('../../../services/applications.service');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const dayjs = require('dayjs');
 const { preserveLinebreaks } = require('../../../lib/preserve-line-breaks');
+const { isLangWelsh } = require('../../_utils/is-lang-welsh');
 
 const badDateToNull = (date) => (date === '0000-00-00' ? null : date);
 
 const add28DaysToDate = (date) => (date ? dayjs(date).add(28, 'days').toISOString() : null);
 
-const getApplicationData = async (case_ref) => {
+const getApplicationData = async (case_ref, lang = 'en') => {
 	const { data, resp_code } = await getAppData(case_ref);
 	if (resp_code !== 200) throw new Error('Application response status not 200');
 
@@ -19,11 +20,13 @@ const getApplicationData = async (case_ref) => {
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);
 
 	return {
-		projectName: data.ProjectName,
+		projectName: isLangWelsh(lang) ? data.ProjectNameWelsh : data.ProjectName,
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: preserveLinebreaks(data.Summary),
+		summary: isLangWelsh(lang)
+			? preserveLinebreaks(data.SummaryWelsh)
+			: preserveLinebreaks(data.Summary),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),
@@ -49,7 +52,7 @@ const getApplicationData = async (case_ref) => {
 		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline),
 		longLat: data.LongLat,
 		mapZoomLevel: data.MapZoomLevel,
-		projectLocation: data.ProjectLocation
+		projectLocation: isLangWelsh(lang) ? data.ProjectLocationWelsh : data.ProjectLocation
 	};
 };
 

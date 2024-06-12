@@ -7,15 +7,15 @@ const {
 const { formatProcessGuideStages } = require('./format-process-guide-stages');
 const { getProposal } = require('./get-proposal');
 
-const getLatestUpdate = (projectUpdates) =>
+const getLatestUpdate = (projectUpdates, lang = 'en') =>
 	Array.isArray(projectUpdates) && projectUpdates.length
-		? formatProjectUpdate(projectUpdates[0])
+		? formatProjectUpdate(projectUpdates[0], lang)
 		: null;
 
 const getPageData = (i18n, { caseRef, contactEmailAddress, proposal }, projectUpdates) => ({
 	contactEmailAddress: contactEmailAddress || pinsContactDetails.enquiriesEmailAddress,
 	proposal: getProposal(i18n, proposal),
-	latestUpdate: getLatestUpdate(projectUpdates),
+	latestUpdate: getLatestUpdate(projectUpdates, i18n.language),
 	processGuideStages: formatProcessGuideStages(getProcessGuideStages(i18n)),
 	projectsAllUpdatesURL: getProjectsAllUpdatesURL(caseRef)
 });

@@ -1,72 +1,79 @@
 {% set preRepsDescText %}
-<p class="govuk-body">
-	At this stage you can <a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">register to have your say</a> about the proposed project.
-	This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.
-</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.preReps.paragraph1',
+		{ link: '<a href="/having-your-say-guide/registering-have-your-say" class="govuk-link">' + t('projectsIndex.projectStage.preexamination.preReps.linkText1') + '</a>'}) | safe }}
+	</p>
 
-<p class="govuk-body">
-	<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">
-		Find out more about registering to have your say.
-	</a>
-</p>
+	<p class="govuk-body">
+		<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">{{t('projectsIndex.projectStage.preexamination.preReps.linkText2')}}</a>
+	</p>
 {% endset %}
 
 {% set repsOpenDescText %}
-<p class="govuk-body">
-		If you want to comment on this proposed project, you can now <a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">register to have your say</a>.
-		{% if applicationData.DateOfRelevantRepresentationClose %}Registration closes on {{ applicationData.DateOfRelevantRepresentationClose | date }} at 23:59.{% endif %}
-</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.repsOpen.paragraph1',
+		{ link: '<a href="/having-your-say-guide/registering-have-your-say" class="govuk-link">' + t('projectsIndex.projectStage.preexamination.repsOpen.linkText1') + '</a>'}) | safe }}
+		{% if applicationData.DateOfRelevantRepresentationClose %} 
+			{{ t('projectsIndex.projectStage.preexamination.repsOpen.paragraph2', { date: applicationData.DateOfRelevantRepresentationClose |  date('locale', language) | date}) 
+			}} 
+		{% endif %}		
+	</p>
 
-<a href='/projects/{{ caseRef }}/register/register-have-your-say' class="govuk-button">
-	Register to have your say
-</a>
+	<a href='/projects/{{ caseRef }}/register/register-have-your-say' class="govuk-button">
+		{{ t('projectsIndex.projectStage.preexamination.repsOpen.buttonText1') }}
+	</a>
 {% endset %}
 
 {% set repsClosedDescText %}
-<p class="govuk-body">
-	The registration period to have your say about this project has closed.
-	If you are not registered and you submit information during the examination stage, this may not be included.
-</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.repsClosed.paragraph1') }}
+	</p>
 
-<p class="govuk-body">
-	Contact the project case team to find out more about how to get involved if you are not registered.
-</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.repsClosed.paragraph2') }}
+	</p>
 
-{% include '../_includes/email-request-text.njk' %}
+	{% include '../_includes/email-request-text.njk' %}
 {% endset %}
 
 {% set repsPublishedDescText %}
-<p class="govuk-body">
-	We have now published all registration comments.
-</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.repsPublished.paragraph1') }}
+	</p>
 
-<p class="govuk-body">
-	You can <a href='/projects/{{ caseRef }}/representations' class="govuk-link">view comments from other people who registered</a>.
-</p>
-
-{% include '../_includes/email-request-text.njk' %}
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.repsPublished.paragraph2',
+		{ link: '<a href="/projects/' + caseRef +  '/representations" class="govuk-link">' + t('projectsIndex.projectStage.preexamination.repsPublished.linkText1') + '</a>'}) | safe }}
+	</p>
+	
+	{% include '../_includes/email-request-text.njk' %}
 {% endset %}
 
-{% set preLimDescText %}
-{% if applicationData.DateOfPreliminaryMeeting %}
+{% set prelimDescText %}
+	{% if applicationData.DateOfPreliminaryMeeting %}
+		<p class="govuk-body">
+			{{ t('projectsIndex.projectStage.preexamination.prelim.paragraph1', { date: applicationData.DateOfPreliminaryMeeting |  date('locale', language) | date }) }} 
+		</p>
+	{% endif %}
+
 	<p class="govuk-body">
-			The preliminary meeting for this project is on: {{ applicationData.DateOfPreliminaryMeeting  | date }}
+		{% if rule6Document.path %}
+			{{ t('projectsIndex.projectStage.preexamination.prelim.paragraph2',
+			{ link: '<a href="' + rule6Document.path + '"" class="govuk-link" target="_blank" rel="noopener noreferrer">' + t('projectsIndex.projectStage.preexamination.prelim.linkText1') + '</a>'}) | safe }}
+		{% endif %}		
 	</p>
-{% endif %}
 
-<p class="govuk-body">
-	You can check the <a href='{{ rule6Document.path }}' target="_blank" rel="noopener noreferrer"  class="govuk-link">rule 6 letter</a> to find out how to get involved.
-</p>
+	<p class="govuk-body">
+		{{ t('projectsIndex.projectStage.preexamination.prelim.paragraph3') }}
+	</p>
 
-<p class="govuk-body">
-	In this meeting, the Examining Authority sets out how they examine the application. This includes the examination timetable and the issues they will focus on during examination.
-</p>
+	<p class="govuk-body">
+		<a href='/having-your-say-guide/get-involved-preliminary-meeting' class="govuk-link">
+			{{ t('projectsIndex.projectStage.preexamination.prelim.linkText2') }}
+		</a>
+	</p>
 
-<p class="govuk-body">
-	<a href='/having-your-say-guide/get-involved-preliminary-meeting' class="govuk-link">Find out more about getting involved in the preliminary meeting</a>
-</p>
-
-{% include '../_includes/email-request-text.njk' %}
+	{% include '../_includes/email-request-text.njk' %}
 {% endset %}
 
 {% if preExamSubStages.PRE_REPS %}
@@ -78,5 +85,5 @@
 {% elseif preExamSubStages.PUBLISHED_REPS %}
 	{{ repsPublishedDescText | safe }}
 {% elseif preExamSubStages.RULE_6_PUBLISHED_REPS %}
-	{{ preLimDescText | safe }}
+	{{ prelimDescText | safe }}
 {% endif %}
