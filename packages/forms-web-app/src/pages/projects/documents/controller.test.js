@@ -17,9 +17,13 @@ jest.mock('./_utils/documents/search-examination-library-document', () => ({
 	searchExaminationLibraryDocument: jest.fn()
 }));
 
+const commonTranslations_EN = require('../../../locales/en/common.json');
 const projectsDocumentsTranslations_EN = require('./_translations/en.json');
 
-const i18n = mockI18n({ projectsDocuments: projectsDocumentsTranslations_EN });
+const i18n = mockI18n({
+	common: commonTranslations_EN,
+	projectsDocuments: projectsDocumentsTranslations_EN
+});
 
 describe('pages/projects/documents/controller', () => {
 	describe('#getProjectsDocumentsController', () => {
@@ -49,6 +53,10 @@ describe('pages/projects/documents/controller', () => {
 									size: 'mock size',
 									representative: 'mock representative',
 									stage: 'mock stage',
+									stageLabel: {
+										cy: 'mock stage label welsh',
+										en: 'mock stage label english'
+									},
 									filter1: 'mock filter',
 									extra: 'i should be ignored'
 								}
@@ -84,19 +92,22 @@ describe('pages/projects/documents/controller', () => {
 						expect.objectContaining({
 							documents: [
 								{
+									Stage: 'mock stage',
 									date_published: '1 January 2022',
 									description: 'mock description',
-									personal_name: 'mock personal name',
+									filter_1: 'mock filter',
 									mime: 'mock mime',
-									size: 'mock size',
+									path: undefined,
+									personal_name: 'mock personal name',
 									representative: 'mock representative',
-									Stage: 'mock stage',
-									filter_1: 'mock filter'
+									size: 'mock size',
+									stageLabel: 'mock stage label english'
 								}
 							]
 						})
 					);
 				});
+
 				it('should return the mapped filters', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'projects/documents/view.njk',
@@ -105,10 +116,10 @@ describe('pages/projects/documents/controller', () => {
 								{
 									idPrefix: 'mock-filter-1',
 									isOpen: false,
-									label: 'english mock label',
 									items: [
 										{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
 									],
+									label: 'english mock label',
 									name: 'mock filter-1',
 									title: 'english mock label (1)',
 									type: 'checkbox'
@@ -122,21 +133,14 @@ describe('pages/projects/documents/controller', () => {
 											id: 'docments-page-date-from-form-group',
 											inputNamePrefix: 'date-from',
 											inputs: [
+												{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
 												{
 													classes: 'govuk-input--width-2',
-													name: 'day',
-													value: ''
-												},
-												{
-													classes: 'govuk-input--width-2',
+													label: 'Month',
 													name: 'month',
 													value: ''
 												},
-												{
-													classes: 'govuk-input--width-4',
-													name: 'year',
-													value: ''
-												}
+												{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 											],
 											name: 'date-from',
 											title: 'From'
@@ -147,21 +151,14 @@ describe('pages/projects/documents/controller', () => {
 											id: 'docments-page-date-to-form-group',
 											inputNamePrefix: 'date-to',
 											inputs: [
+												{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
 												{
 													classes: 'govuk-input--width-2',
-													name: 'day',
-													value: ''
-												},
-												{
-													classes: 'govuk-input--width-2',
+													label: 'Month',
 													name: 'month',
 													value: ''
 												},
-												{
-													classes: 'govuk-input--width-4',
-													name: 'year',
-													value: ''
-												}
+												{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 											],
 											name: 'date-to',
 											title: 'To'
@@ -175,35 +172,40 @@ describe('pages/projects/documents/controller', () => {
 						})
 					);
 				});
+
 				it('should return the view and page data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/documents/view.njk', {
+						activeFilters: [],
+						allowProjectInformation: true,
 						baseUrl: '/projects/mock-case-ref',
 						caseRef: 'mock-case-ref',
 						displayClearAllFilters: false,
 						displayFilters: true,
-						errorSummary: null,
 						documents: [
 							{
+								Stage: 'mock stage',
 								date_published: '1 January 2022',
 								description: 'mock description',
-								personal_name: 'mock personal name',
+								filter_1: 'mock filter',
 								mime: 'mock mime',
-								size: 'mock size',
+								path: undefined,
+								personal_name: 'mock personal name',
 								representative: 'mock representative',
-								Stage: 'mock stage',
-								filter_1: 'mock filter'
+								size: 'mock size',
+								stageLabel: 'mock stage label english'
 							}
 						],
+						errorSummary: null,
 						examinationLibraryDocumentHtml:
 							'<a class="govuk-link" href="mock/path">View examination library (PDF, 225KB)</a> containing document reference numbers',
 						filters: [
 							{
 								idPrefix: 'mock-filter-1',
 								isOpen: false,
-								label: 'english mock label',
 								items: [
 									{ checked: false, text: 'mock filter value (1)', value: 'mock filter value' }
 								],
+								label: 'english mock label',
 								name: 'mock filter-1',
 								title: 'english mock label (1)',
 								type: 'checkbox'
@@ -217,21 +219,9 @@ describe('pages/projects/documents/controller', () => {
 										id: 'docments-page-date-from-form-group',
 										inputNamePrefix: 'date-from',
 										inputs: [
-											{
-												classes: 'govuk-input--width-2',
-												name: 'day',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-2',
-												name: 'month',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-4',
-												name: 'year',
-												value: ''
-											}
+											{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
+											{ classes: 'govuk-input--width-2', label: 'Month', name: 'month', value: '' },
+											{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 										],
 										name: 'date-from',
 										title: 'From'
@@ -242,21 +232,9 @@ describe('pages/projects/documents/controller', () => {
 										id: 'docments-page-date-to-form-group',
 										inputNamePrefix: 'date-to',
 										inputs: [
-											{
-												classes: 'govuk-input--width-2',
-												name: 'day',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-2',
-												name: 'month',
-												value: ''
-											},
-											{
-												classes: 'govuk-input--width-4',
-												name: 'year',
-												value: ''
-											}
+											{ classes: 'govuk-input--width-2', label: 'Day', name: 'day', value: '' },
+											{ classes: 'govuk-input--width-2', label: 'Month', name: 'month', value: '' },
+											{ classes: 'govuk-input--width-4', label: 'Year', name: 'year', value: '' }
 										],
 										name: 'date-to',
 										title: 'To'
@@ -267,40 +245,26 @@ describe('pages/projects/documents/controller', () => {
 								type: 'date'
 							}
 						],
-						activeFilters: [],
 						hideAllExaminationDocumentsLink: true,
-						allowProjectInformation: true,
 						pageOptions: [1, 2, 3, '...', 5, 'next'],
 						pageUrl: 'documents',
 						paginationData: {
+							currentPage: 1,
+							fromRange: 1,
 							itemsPerPage: 20,
 							toRange: 20,
 							totalItems: 100,
-							totalPages: 5,
-							currentPage: 1,
-							fromRange: 1
+							totalPages: 5
 						},
 						paginationUrl: 'documents?page=:page',
 						projectName: 'mock project name',
 						queryUrl: '',
-						searchTerm: undefined,
 						resultsPerPage: {
-							fifty: {
-								link: '?itemsPerPage=50',
-								size: 50,
-								active: false
-							},
-							oneHundred: {
-								link: '?itemsPerPage=100',
-								size: 100,
-								active: false
-							},
-							twentyFive: {
-								link: '?itemsPerPage=25',
-								size: 25,
-								active: true
-							}
-						}
+							fifty: { active: false, link: '?itemsPerPage=50', size: 50 },
+							oneHundred: { active: false, link: '?itemsPerPage=100', size: 100 },
+							twentyFive: { active: true, link: '?itemsPerPage=25', size: 25 }
+						},
+						searchTerm: undefined
 					});
 				});
 			});

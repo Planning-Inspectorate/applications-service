@@ -2,7 +2,11 @@ const { getFilters } = require('./getFilters');
 
 const { mockI18n } = require('../../../../_mocks/i18n');
 
-const i18n = mockI18n();
+const commonTranslations_EN = require('../../../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN
+});
 
 describe('component', () => {
 	describe('#getFilters', () => {
@@ -119,16 +123,19 @@ describe('component', () => {
 									inputs: [
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Day',
 											name: 'day',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Month',
 											name: 'month',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-4',
+											label: 'Year',
 											name: 'year',
 											value: ''
 										}
@@ -144,16 +151,19 @@ describe('component', () => {
 									inputs: [
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Day',
 											name: 'day',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-2',
+											label: 'Month',
 											name: 'month',
 											value: ''
 										},
 										{
 											classes: 'govuk-input--width-4',
+											label: 'Year',
 											name: 'year',
 											value: ''
 										}

@@ -85,6 +85,6 @@ export class PO_HaveYourSay {
 	}
 
 	findAndClickDecleration(string) {
-		cy.get('.govuk-button govuk-button').contains(string).click();
+		cy.get('.govuk-button').contains(string).click();
 	}
 }

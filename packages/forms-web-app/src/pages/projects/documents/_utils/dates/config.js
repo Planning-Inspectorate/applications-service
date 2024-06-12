@@ -12,8 +12,8 @@ const validUserInputDateStringFormats = [
 ];
 
 const datesFilterFormGroupsConfig = {
-	from: mapDatesFilterFormGroupsConfig('from', 'date-from', 'From'),
-	to: mapDatesFilterFormGroupsConfig('to', 'date-to', 'To')
+	from: mapDatesFilterFormGroupsConfig('from', 'date-from', 'from'),
+	to: mapDatesFilterFormGroupsConfig('to', 'date-to', 'to')
 };
 
 const datesFilterFormGroupInputsConfig = {

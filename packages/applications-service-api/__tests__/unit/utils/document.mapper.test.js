@@ -106,8 +106,10 @@ describe('document mapper functions', () => {
 					stage: 'examination',
 					documentType: 'Other Documents',
 					filter1: 'Deadline 6',
+					filter1Welsh: 'Deadline 6 welsh',
 					filter2: null,
 					description: 'Deadline 6 Submission - Cover Letter',
+					descriptionWelsh: 'description welsh',
 					size: 209077,
 					mime: 'application/pdf',
 					publishedDocumentURI: 'https://example.org/file.pdf',
@@ -115,6 +117,7 @@ describe('document mapper functions', () => {
 					representative: 'somerep',
 					documentReference: 'someref',
 					author: 'someone',
+					authorWelsh: 'author welsh',
 					modifiedAt: '2023-06-19T10:50:31.957Z',
 					createdAt: '2023-06-19T10:50:31.957Z'
 				}
@@ -126,10 +129,16 @@ describe('document mapper functions', () => {
 					dataID: 'someref',
 					case_reference: 'EN0100085',
 					stage: 'examination',
+					stageLabel: {
+						cy: 'Archwiliad',
+						en: 'Examination'
+					},
 					type: 'Other Documents',
 					filter1: 'Deadline 6',
+					filter1Welsh: 'Deadline 6 welsh',
 					filter2: null,
 					description: 'Deadline 6 Submission - Cover Letter',
+					descriptionWelsh: 'description welsh',
 					size: 209077,
 					mime: 'application/pdf',
 					path: 'https://example.org/file.pdf',
@@ -137,6 +146,7 @@ describe('document mapper functions', () => {
 					representative: 'somerep',
 					docReference: 'someref',
 					author: 'someone',
+					authorWelsh: 'author welsh',
 					lastModified: '2023-06-19T10:50:31.957Z',
 					dateCreated: '2023-06-19T10:50:31.957Z'
 				}
@@ -188,6 +198,7 @@ describe('document mapper functions', () => {
 					{
 						[filterName]: filterValue,
 						filter1: 'something',
+						filter1Welsh: 'filter 1 welsh',
 						total: 1
 					}
 				];
@@ -205,7 +216,8 @@ describe('document mapper functions', () => {
 						type: [
 							{
 								count: 1,
-								value: 'something'
+								value: 'something',
+								value_cy: 'filter 1 welsh'
 							}
 						]
 					})
@@ -250,11 +262,16 @@ describe('document mapper functions', () => {
 
 		it('merges stages with uppercase and lowercase value combinations into a single filter)', () => {
 			const mappedFilters = mapFilters([
-				{ stage: 'decision', filter1: 'something', total: 1 },
-				{ stage: 'examination', filter1: 'something', total: 6 },
-				{ stage: 'Examination', filter1: 'something', total: 3 },
-				{ stage: 'pre-application', filter1: 'something', total: 1 },
-				{ stage: 'Pre-application', filter1: 'something', total: 3 }
+				{ stage: 'decision', filter1: 'something', filter1Welsh: 'filter 1 welsh', total: 1 },
+				{ stage: 'examination', filter1: 'something', filter1Welsh: 'filter 1 welsh', total: 6 },
+				{ stage: 'Examination', filter1: 'something', filter1Welsh: 'filter 1 welsh', total: 3 },
+				{
+					stage: 'pre-application',
+					filter1: 'something',
+					filter1Welsh: 'filter 1 welsh',
+					total: 1
+				},
+				{ stage: 'Pre-application', filter1: 'something', filter1Welsh: 'filter 1 welsh', total: 3 }
 			]);
 
 			expect(mappedFilters.length).toEqual(3);

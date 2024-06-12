@@ -1,4 +1,7 @@
 {
+	"common": {
+		"documents": "documents"
+	},
 	"heading1": "Documents",
 	"paragraph1": "{{-link}} containing document reference numbers",
 	"paragraph1LinkText": "View examination library",
@@ -13,5 +16,8 @@
 	"noResults": {
 		"paragraph1": "There are no project application documents available to display at the moment.",
 		"linkText1": "Return to the project overview"
+	},
+	"filteredResults": {
+		"heading1": "Filtered results"
 	}
 }
