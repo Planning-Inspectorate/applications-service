@@ -3,38 +3,44 @@ const enProjectsIndexTranslations = require('./en.json');
 describe('pages/projects/index/_translations/en', () => {
 	it('should return the english projects index translations', () => {
 		expect(enProjectsIndexTranslations).toEqual({
+			heading1: 'Project information',
+			latestUpdateBanner: {
+				latestUpdate: 'Latest update',
+				viewAllUpdates: 'View all updates'
+			},
 			aboutProject: {
 				heading1: 'About the project',
-				linkText1: "View the developer's website",
 				paragraph1: 'Type of application:',
-				paragraph2: 'Name of applicant:'
+				paragraph2: 'Name of applicant:',
+				linkText1: "View the developer's website"
+			},
+			projectStage: {
+				heading1: 'Project stage',
+				paragraph1: 'This project is at the {{-stage}} stage.'
+			},
+			projectLocation: {
+				heading1: 'Project location'
+			},
+			getUpdates: {
+				heading1: 'Get updates',
+				paragraph1: 'Enter your email address to receive:',
+				listItem1: 'updates on project progress',
+				listItem2: 'information on how to have your say',
+				listItem3: 'notifications when key documents are published',
+				paragraph2: 'Read the {{-link}} to see how we handle your information.',
+				paragraph2LinkText: 'privacy notice'
 			},
 			contact: {
 				heading1: 'Contact us',
 				heading2: 'Telephone',
-				heading3: 'Email',
-				heading4: 'Alternative formats',
 				paragraph1: 'If you have an interested party number, have it with you when you call.',
 				paragraph2: 'Telephone:',
+				heading3: 'Email',
 				paragraph3: 'When writing an email, quote the name of the project in the subject line.',
 				paragraph4: 'We aim to respond within 10 working days.',
+				heading4: 'Alternative formats',
 				paragraph5:
 					'Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.'
-			},
-			getUpdates: {
-				heading1: 'Get updates',
-				listItem1: 'updates on project progress',
-				listItem2: 'information on how to have your say',
-				listItem3: 'notifications when key documents are published',
-				paragraph1: 'Enter your email address to receive:',
-				paragraph2: 'Read the {{-link}} to see how we handle your information.',
-				paragraph2LinkText: 'privacy notice'
-			},
-			heading1: 'Project information',
-			projectLocation: { heading1: 'Project location' },
-			projectStage: {
-				heading1: 'Project stage',
-				paragraph1: 'This project is at the {{-stage}} stage.'
 			},
 			subsectors: {
 				BC01: 'Office use',
@@ -58,10 +64,15 @@ describe('pages/projects/index/_translations/en', () => {
 				TR03: 'Harbour Facilities',
 				TR04: 'Railways',
 				TR05: 'Rail Freight Interchanges',
-				WA01: 'Dams and Reservoirs',
-				WA02: 'Transfer of Water Resources',
 				WS01: 'Hazardous Waste Facilities',
-				WW01: 'Waste Water treatment Plants'
+				WW01: 'Waste Water treatment Plants',
+				WA01: 'Dams and Reservoirs',
+				WA02: 'Transfer of Water Resources'
+			},
+			stageProgress: {
+				notStarted: 'not started',
+				inProgress: 'in progress',
+				completed: 'completed'
 			}
 		});
 	});

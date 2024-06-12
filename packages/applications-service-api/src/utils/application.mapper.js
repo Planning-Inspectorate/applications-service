@@ -235,7 +235,7 @@ const mapNIApplicationToApi = (application) => {
 const mapBackOfficeApplicationToApi = (application) => {
 	if (!application) return;
 
-	const fields = [
+	let fields = [
 		'caseReference',
 		'projectName',
 		'projectType',
@@ -270,7 +270,7 @@ const mapBackOfficeApplicationToApi = (application) => {
 	];
 
 	if (featureFlag.allowWelshTranslation) {
-		fields.concat(['projectNameWelsh', 'projectDescriptionWelsh', 'projectLocationWelsh']);
+		fields = fields.concat(['projectNameWelsh', 'projectDescriptionWelsh', 'projectLocationWelsh']);
 	}
 
 	const data = pick(application, fields);

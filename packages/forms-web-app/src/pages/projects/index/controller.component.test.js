@@ -166,7 +166,7 @@ describe('projects/index/controller.component', () => {
 					);
 
 					expect(response.status).toEqual(200);
-					expect(preApplicationStageTag.innerHTML).toContain('Not started');
+					expect(preApplicationStageTag.innerHTML).toContain('not started');
 				});
 			});
 			describe('In progress', () => {
@@ -186,7 +186,7 @@ describe('projects/index/controller.component', () => {
 					);
 
 					expect(response.status).toEqual(200);
-					expect(preApplicationStageTag.innerHTML).toContain('In progress');
+					expect(preApplicationStageTag.innerHTML).toContain('in progress');
 				});
 			});
 			describe('Completed', () => {
@@ -205,7 +205,7 @@ describe('projects/index/controller.component', () => {
 					);
 
 					expect(response.status).toEqual(200);
-					expect(preApplicationStageTag.innerHTML).toContain('Completed');
+					expect(preApplicationStageTag.innerHTML).toContain('completed');
 				});
 			});
 		});

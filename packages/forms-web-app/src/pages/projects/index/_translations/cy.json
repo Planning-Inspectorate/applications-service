@@ -1,5 +1,9 @@
 {
 	"heading1": "Gwybodaeth am y prosiect",
+	"latestUpdateBanner": {
+		"latestUpdate": "Diweddariad diweddaraf",
+		"viewAllUpdates": "Gweld yr holl ddiweddariadau"
+	},
 	"aboutProject": {
 		"heading1": "Ynglŷn â'r prosiect",
 		"paragraph1": "Y math o gais:",
@@ -59,5 +63,10 @@
 		"WW01": "Gweithfeydd Trin Dŵr Gwastraff",
 		"WA01": "Argaeau a Chronfeydd Dŵr",
 		"WA02": "Trosglwyddo Adnoddau Dŵr"
+	},
+	"stageProgress": {
+		"notStarted": "dim wedi dechrau",
+		"inProgress": "mewn cynnydd",
+		"completed": "wedi cwblhau"
 	}
 }

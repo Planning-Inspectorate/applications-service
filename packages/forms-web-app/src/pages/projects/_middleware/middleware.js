@@ -11,8 +11,11 @@ async function projectsMiddleware(req, res, next) {
 	try {
 		const { params, baseUrl, path, session } = req;
 		const { case_ref } = params;
+		const {
+			i18n: { language }
+		} = req;
 
-		const applicationData = await getApplicationData(case_ref);
+		const applicationData = await getApplicationData(case_ref, language);
 
 		const showExaminationLink = await getShowExaminationLink(path, session, case_ref);
 		const showRepresentationsLink = hasRepresentationsAvailable(

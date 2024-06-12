@@ -1,5 +1,9 @@
 {
 	"heading1": "Project information",
+	"latestUpdateBanner": {
+		"latestUpdate": "Latest update",
+		"viewAllUpdates": "View all updates"
+	},
 	"aboutProject": {
 		"heading1": "About the project",
 		"paragraph1": "Type of application:",
@@ -59,5 +63,10 @@
 		"WW01": "Waste Water treatment Plants",
 		"WA01": "Dams and Reservoirs",
 		"WA02": "Transfer of Water Resources"
+	},
+	"stageProgress": {
+		"notStarted": "not started",
+		"inProgress": "in progress",
+		"completed": "completed"
 	}
 }
