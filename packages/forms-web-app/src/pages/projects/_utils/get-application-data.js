@@ -19,8 +19,16 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);
 
+	const projectName = (() => {
+		if (data.ProjectNameWelsh && isLangWelsh(lang)) {
+			return data.ProjectNameWelsh;
+		}
+
+		return data.ProjectName;
+	})();
+
 	return {
-		projectName: isLangWelsh(lang) ? data.ProjectNameWelsh : data.ProjectName,
+		projectName,
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
