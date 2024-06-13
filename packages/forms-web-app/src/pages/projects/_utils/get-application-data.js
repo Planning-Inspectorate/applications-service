@@ -24,9 +24,7 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: isLangWelsh(lang)
-			? preserveLinebreaks(data.SummaryWelsh)
-			: preserveLinebreaks(data.Summary),
+		summary: preserveLinebreaks(isLangWelsh(lang) ? data.SummaryWelsh : data.Summary),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),

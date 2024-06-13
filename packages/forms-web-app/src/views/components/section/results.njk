@@ -7,7 +7,7 @@
 
 {% endmacro %}
 
-{% macro sectionResults(results) %}
+{% macro sectionResults(results, langIsWelsh) %}
   <ul class="section-results">
     {% for result in results %}
       <li class="section-results__result">
@@ -18,17 +18,31 @@
           target="_blank"
         >
           <strong>
-            {{ getFileName(result.description, result.personal_name, result.path) }} ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
+            {{ getFileName(
+              result.description_welsh if langIsWelsh else result.description,
+              result.personal_name,
+              result.path
+            ) }}
+            &nbsp;
+            ({{ result.mime | formatMimeType }}, {{ result.size | formatBytes }})
           </strong>
         </a>
 
         {% if result.representative %}
           <p class="section-results__result-copy">
-            From {{ result.representative }} on behalf of {{ result.personal_name }}
+            {% if langIsWelsh %}
+              O {{ result.representative }} ar ran {{ result.personal_name }}
+            {% else %}
+              From {{ result.representative }} on behalf of {{ result.personal_name }}
+            {% endif %}
           </p>
         {% elseif result.description and result.personal_name %}
           <p class="section-results__result-copy">
-            From {{ result.personal_name }}
+            {% if langIsWelsh %}
+              O {{ result.personal_name }}
+            {% else %}
+              From {{ result.personal_name }}
+            {% endif %}
           </p>
         {% endif %}
 
@@ -47,7 +61,7 @@
 
           <div class="section-results__result-meta-data-item">
             <span class="section-results__result-meta-data-item-text" data-cy="published-title">
-              {{ result.filter_1 }}
+              {{ result.filter_1_welsh if langIsWelsh else result.filter_1 }}
             </span>
           </div>
         </div>

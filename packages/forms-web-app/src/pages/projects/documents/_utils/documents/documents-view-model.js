@@ -5,6 +5,7 @@ const getStageLabel = (stageLabel, language) => (stageLabel ? stageLabel[languag
 const formatDocumentToViewModel = (document, { language }) => ({
 	date_published: formatDate(document.datePublished, language),
 	description: document.description,
+	description_welsh: document.descriptionWelsh,
 	personal_name: document.personalName,
 	mime: document.mime,
 	size: document.size,
@@ -12,6 +13,7 @@ const formatDocumentToViewModel = (document, { language }) => ({
 	Stage: document.stage,
 	path: document.path,
 	filter_1: document.filter1,
+	filter_1_welsh: document.filter1Welsh,
 	stageLabel: getStageLabel(document.stageLabel, language)
 });
 

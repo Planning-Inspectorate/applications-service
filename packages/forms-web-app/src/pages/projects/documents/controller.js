@@ -8,6 +8,7 @@ const { searchDocuments } = require('./_utils/documents/searchDocuments');
 const { getApplicationData } = require('../_utils/get-application-data');
 const { isClearAllFiltersDisplayed } = require('./_utils/is-clear-all-filters-displayed');
 const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
+const { isLangWelsh } = require('../../_utils/is-lang-welsh');
 const { isFiltersDisplayed } = require('./_utils/is-filters-displayed');
 
 const view = 'projects/documents/view.njk';
@@ -20,7 +21,7 @@ const getProjectsDocumentsController = async (req, res) => {
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
 
-		const { projectName } = await getApplicationData(case_ref);
+		const { projectName } = await getApplicationData(case_ref, i18n.language);
 
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = await pageData(case_ref);
@@ -49,7 +50,8 @@ const getProjectsDocumentsController = async (req, res) => {
 			paginationUrl,
 			queryUrl,
 			searchTerm,
-			resultsPerPage
+			resultsPerPage,
+			langIsWelsh: isLangWelsh(i18n.language)
 		});
 	} catch (e) {
 		logger.error(e);
