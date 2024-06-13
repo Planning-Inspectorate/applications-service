@@ -19,7 +19,7 @@
         >
           <strong>
             {{ getFileName(
-              result.descriptionWelsh if langIsWelsh else result.description,
+              result.description_welsh if langIsWelsh else result.description,
               result.personal_name,
               result.path
             ) }}
@@ -61,7 +61,7 @@
 
           <div class="section-results__result-meta-data-item">
             <span class="section-results__result-meta-data-item-text" data-cy="published-title">
-              {{ result.filter_1 }}
+              {{ result.filter_1_welsh if langIsWelsh else result.filter_1 }}
             </span>
           </div>
         </div>
