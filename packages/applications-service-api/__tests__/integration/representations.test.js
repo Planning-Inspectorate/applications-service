@@ -258,7 +258,7 @@ describe('api/v1/representations', () => {
 			});
 			it('with search term', async () => {
 				// Arrange
-				const queryParameters = ['caseReference=EN010009', 'searchTerm=foo'].join('&');
+				const queryParameters = ['caseReference=EN010009', 'searchTerm=foo bar'].join('&');
 				mockNIRepresentationFindAndCountAll.mockResolvedValue({
 					rows: REPRESENTATION_NI_DATA,
 					count: 1
@@ -273,9 +273,20 @@ describe('api/v1/representations', () => {
 							{ CaseReference: 'EN010009' },
 							{
 								[Op.or]: [
-									{ PersonalName: { [Op.like]: '%foo%' } },
-									{ RepresentationRedacted: { [Op.like]: '%foo%' } },
-									{ Representative: { [Op.like]: '%foo%' } }
+									{
+										[Op.or]: [
+											{ PersonalName: { [Op.like]: `%foo%` } },
+											{ RepresentationRedacted: { [Op.like]: `%foo%` } },
+											{ Representative: { [Op.like]: `%foo%` } }
+										]
+									},
+									{
+										[Op.or]: [
+											{ PersonalName: { [Op.like]: `%bar%` } },
+											{ RepresentationRedacted: { [Op.like]: `%bar%` } },
+											{ Representative: { [Op.like]: `%bar%` } }
+										]
+									}
 								]
 							}
 						]
@@ -311,9 +322,13 @@ describe('api/v1/representations', () => {
 							{ RepFrom: { [Op.in]: ['foo'] } },
 							{
 								[Op.or]: [
-									{ PersonalName: { [Op.like]: '%bar%' } },
-									{ RepresentationRedacted: { [Op.like]: '%bar%' } },
-									{ Representative: { [Op.like]: '%bar%' } }
+									{
+										[Op.or]: [
+											{ PersonalName: { [Op.like]: `%bar%` } },
+											{ RepresentationRedacted: { [Op.like]: `%bar%` } },
+											{ Representative: { [Op.like]: `%bar%` } }
+										]
+									}
 								]
 							}
 						]

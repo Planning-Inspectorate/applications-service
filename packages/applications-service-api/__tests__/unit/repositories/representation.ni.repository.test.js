@@ -99,7 +99,7 @@ describe('representation ni repository', () => {
 			// Arrange
 			const mockOptionsWithSearchTerm = {
 				...mockOptions,
-				searchTerm: 'foo'
+				searchTerm: 'foo bar'
 			};
 
 			// Act
@@ -114,11 +114,20 @@ describe('representation ni repository', () => {
 						{ CaseReference: mockOptionsWithSearchTerm.caseReference },
 						{
 							[Op.or]: [
-								{ PersonalName: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } },
 								{
-									RepresentationRedacted: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` }
+									[Op.or]: [
+										{ PersonalName: { [Op.like]: `%foo%` } },
+										{ RepresentationRedacted: { [Op.like]: `%foo%` } },
+										{ Representative: { [Op.like]: `%foo%` } }
+									]
 								},
-								{ Representative: { [Op.like]: `%${mockOptionsWithSearchTerm.searchTerm}%` } }
+								{
+									[Op.or]: [
+										{ PersonalName: { [Op.like]: `%bar%` } },
+										{ RepresentationRedacted: { [Op.like]: `%bar%` } },
+										{ Representative: { [Op.like]: `%bar%` } }
+									]
+								}
 							]
 						}
 					]
