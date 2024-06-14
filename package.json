@@ -14,7 +14,7 @@
 	],
 	"scripts": {
 		"commit": "cz",
-		"commitlint": "commitlint --from=$(git log origin/main..$(git rev-parse HEAD) --pretty=format:\"%H\" | tail -n 1)",
+		"commitlint": "commitlint --from=$(git rev-parse $(git cherry main | head -n 1 | cut -c 3-)^1)",
 		"dev": "docker compose up",
 		"dev:api": "docker compose run --rm --service-ports applications-service-api",
 		"dev:web": "docker compose run --rm --service-ports applications-web-app",
