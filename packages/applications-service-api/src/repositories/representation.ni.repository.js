@@ -23,11 +23,14 @@ const getRepresentationsWithCount = async (options = {}) => {
 	}
 
 	if (options.searchTerm) {
-		const orOptions = [
-			{ PersonalName: { [Op.like]: `%${options.searchTerm}%` } },
-			{ RepresentationRedacted: { [Op.like]: `%${options.searchTerm}%` } },
-			{ Representative: { [Op.like]: `%${options.searchTerm}%` } }
-		];
+		const terms = options.searchTerm.split(' ');
+		const orOptions = terms.map((term) => ({
+			[Op.or]: [
+				{ PersonalName: { [Op.like]: `%${term}%` } },
+				{ RepresentationRedacted: { [Op.like]: `%${term}%` } },
+				{ Representative: { [Op.like]: `%${term}%` } }
+			]
+		}));
 
 		findOptions.where[Op.and].push({
 			[Op.or]: orOptions
