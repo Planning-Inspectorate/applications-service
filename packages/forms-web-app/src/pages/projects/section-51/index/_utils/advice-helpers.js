@@ -8,7 +8,7 @@ const {
 
 const getAdviceName = ({ organisation, firstName, lastName }) => {
 	let name = 'Anonymous';
-	if (organisation) name = organisation;
+	if (organisation?.trim()) name = organisation.trim();
 	else if (firstName && lastName) name = `${firstName} ${lastName}`;
 	return name;
 };
