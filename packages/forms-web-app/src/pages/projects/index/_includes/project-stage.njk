@@ -10,7 +10,7 @@
 	{% else %}
 
 		<p class="govuk-body">
-			{{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + applicationData.status.text | lower + '</strong>' }) | safe }}
+			{{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + t("projectsIndex.projectStage.stage" + applicationData.status.number + "name" ) | lower + '</strong>' }) | safe }}
 		</p>
 
 		{% if applicationData.status.text === projectStages[1] %}
