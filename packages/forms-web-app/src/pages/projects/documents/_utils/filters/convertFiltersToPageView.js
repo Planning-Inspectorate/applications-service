@@ -16,7 +16,7 @@ const convertFilterToPageView = (i18n, filter, type) => {
 	return {
 		idPrefix: formatValueToValidElementId(`${filter.name} ${filter.value}`),
 		isOpen: false,
-		items: mapFilterTypeToCheckBox(filter.type),
+		items: mapFilterTypeToCheckBox(i18n, filter.type),
 		label: filterLabel,
 		name: formatName(filter),
 		title: formatNameWithCount(filterLabel, filter.count),
