@@ -1,0 +1,54 @@
+const enRegisterTranslations = require('./en.json');
+
+describe('pages/projects/register/_translations/en', () => {
+	it('should return the english register translations', () => {
+		expect(enRegisterTranslations).toEqual({
+			titles: {
+				pageHeading: 'Register to have your say about a national infrastructure project',
+				pageTitle:
+					'Register to have your say about a national infrastructure project - National Infrastructure Planning'
+			},
+			index: {
+				open: {
+					heading1: 'You are registering to have your say about the {{-project}}',
+					paragraph1:
+						'Use this service to have your say about a national infrastructure project. We need your personal details and your comments about the {{-project}}.',
+					heading2: 'Writing your comments',
+					paragraph2:
+						'You must include comments with your registration. Your comments must be about what you consider to be the main issues and impacts. You should include as much detail as possible and cover anything that may affect your day-to-day life.',
+					paragraph3: 'This information will be:',
+					listItem1: 'seen by the examining authority',
+					listItem2: 'published on our website',
+					paragraph4:
+						'You will be able to submit further comments during the examination of the application once you have registered.',
+					paragraph5: 'You must submit your registration before 23:59 on {{-date}}.',
+					buttonText: 'Start now',
+					heading3: 'Before you start',
+					heading4: 'If you are registering yourself as an individual',
+					paragraph6: 'You will need your:',
+					listItem3: 'full name',
+					listItem4: 'address',
+					listItem5: 'email address and telephone number',
+					listItem6: 'registration comments about the project',
+					heading5: 'If you are registering for an organisation you work or volunteer for',
+					paragraph7: 'You will need:',
+					listItem7: 'your full name',
+					listItem8: 'the name of the charity or organisation you work for',
+					listItem9: 'your work address',
+					listItem10: 'email address and telephone number',
+					listItem11: 'registration comments about the project',
+					heading6: 'If you are registering on behalf of another person or organisation',
+					paragraph8: 'You will need:',
+					listItem12: 'your full name',
+					listItem13: 'your address',
+					listItem14: 'your email address and telephone number',
+					listItem15: 'the details of the person, household or organisation you are representing',
+					listItem16: 'their registration comments about the project'
+				},
+				closed: {
+					paragraph1: 'The time period to register to have your say has closed.'
+				}
+			}
+		});
+	});
+});

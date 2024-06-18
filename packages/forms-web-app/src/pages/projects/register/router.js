@@ -11,6 +11,9 @@ const { getRegisteringForURL } = require('./registering-for/_utils/get-registeri
 
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { registerMiddleware } = require('./_middleware/register-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('./_middleware/add-register-translations-middleware');
 
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
@@ -26,8 +29,18 @@ const registeringForURL = getRegisteringForURL();
 
 const registerRouter = express.Router({ mergeParams: true });
 
-registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
-registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
+registerRouter.get(
+	registerIndexURL,
+	addRegisterTranslationsMiddleware,
+	projectsMiddleware,
+	getRegisterIndexController
+);
+registerRouter.get(
+	`${registerIndexURL}/start`,
+	addRegisterTranslationsMiddleware,
+	projectsMiddleware,
+	getRegisterIndexController
+);
 
 registerRouter.get(registeringForURL, registerMiddleware, getRegisteringForController);
 registerRouter.post(

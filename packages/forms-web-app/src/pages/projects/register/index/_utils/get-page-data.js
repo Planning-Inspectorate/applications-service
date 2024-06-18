@@ -22,12 +22,10 @@ const getPageData = (
 	caseRef,
 	{ DateOfRelevantRepresentationClose, DateOfReOpenRelevantRepresentationClose },
 	registrationOpen,
-	registrationReOpened
+	registrationReOpened,
+	i18n
 ) => ({
-	...mapTitles(
-		'Register to have your say about a national infrastructure project',
-		'Register to have your say about a national infrastructure project - National Infrastructure Planning'
-	),
+	...mapTitles(i18n.t('register.titles.pageHeading'), i18n.t('register.titles.pageTitle')),
 	activeId: 'register-index',
 	closeDate: getCloseDate(
 		registrationOpen,

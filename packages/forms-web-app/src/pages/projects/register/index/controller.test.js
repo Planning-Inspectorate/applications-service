@@ -2,6 +2,11 @@ const { getRegisterIndexController } = require('./controller');
 
 const { getAppData } = require('../../../../services/applications.service');
 const { mockReq, mockRes } = require('../../../../../__tests__/unit/mocks');
+const { mockI18n } = require('../../../_mocks/i18n');
+
+const registerTranslation_EN = require('../_translations/en.json');
+const registerTranslations = { register: registerTranslation_EN };
+const i18n = mockI18n(registerTranslations);
 
 jest.mock('../../../../lib/logger');
 
@@ -29,7 +34,8 @@ describe('projects/register/index/controller', () => {
 			},
 			params: {
 				case_ref: 'mock-case-ref'
-			}
+			},
+			i18n: i18n
 		};
 		res = {
 			...mockRes(),
