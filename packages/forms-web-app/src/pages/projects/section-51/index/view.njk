@@ -10,7 +10,7 @@
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 {% from "projects/section-51/index/_components/results.njk" import sectionResults %}
 
-{% set pageTitle = title %}
+{% set pageTitle = t('section51Index.heading1') %}
 
 {% block content %}
 	<form>
@@ -27,53 +27,54 @@
 				</span>
 
 				<h1 class="govuk-heading-xl">
-					{{ title }}
+					{{ t('section51Index.heading1') }}
 				</h1>
 
-				{% if advice.length > 0 or(advice.length == 0 and queryUrl != '') %}
-					<p class="govuk-body">The list below includes a record of advice we have provided for this project.</p>
+				{% if adviceExists or (not adviceExists and searchAttempted) %}
+					<p class="govuk-body">{{ t('section51Index.paragraph1') }}</p>
 
 				{% else %}
 					<h2 class="govuk-heading-m">
-						There is no advice to show for this project
+						{{ t('section51Index.paragraph6') }}
 					</h2>
+
 				{% endif %}
 
 				<p class="govuk-body">
-					There is a statutory duty, under <a class="govuk-link" href="https://www.legislation.gov.uk/ukpga/2008/29/section/51">section 51 of the Planning Act 2008</a>, around an application or potential application.
-					This includes recording the name of the person who requested advice and the advice given.
-					This information has to be made publicly available.
+					{{ t('section51Index.paragraph2', { link: '<a class="govuk-link" href="' + "https://www.legislation.gov.uk/ukpga/2008/29/section/51" + '">' + t('section51Index.paragraph2LinkText1') + '</a>' }) | safe }}
 				</p>
 
-				{% if advice.length > 0 or queryUrl != '' %}
+				{% if adviceExists or searchAttempted %}
 					<h2 class="govuk-heading-m">
-						Search advice
+						{{ t('section51Index.heading2') }}
 					</h2>
 
 					<p class="govuk-body">
-  					Search by key words or the name of person the advice was given to.
+  					{{ t('section51Index.paragraph3') }}
 					</p>
 
-					{{ uiSearchBar('section-51-page-search-bar', 'searchTerm', searchTerm, 'Search by key words or the name of person the advice was given to.') }}
+					{{ uiSearchBar('section-51-page-search-bar', 'searchTerm', searchTerm, t('section51Index.paragraph3'), t('common.search') ) }}
 				{% endif %}
 
-				{% if advice.length == 0 and queryUrl != '' %}
-					<p class="govuk-body">No advice was found matching your search term.</p>
-					<p class="govuk-body">Would you like to clear your search to view all available advice instead?</p>
+				{% if not adviceExists and searchAttempted %}
+					<p class="govuk-body">{{ t('section51Index.paragraph4') }}</p>
+					<p class="govuk-body">{{ t('section51Index.paragraph5') }}</p>
 					<p class="govuk-body">
-						<a class="govuk-link" href="{{ baseUrl }}{{ path }}">Clear search</a>
+						<a class="govuk-link" href="{{ baseUrl }}{{ path }}">{{ t('common.clearSearch') }}</a>
 					</p>
 				{% endif %}
 
-				{% if advice.length > 0 %}
+				{% if adviceExists %}
 					<p>
-						Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of
-						<strong>{{ paginationData.totalItems }}</strong> documents, newest first.
+						{{ t('section51Index.phrase1') }} <strong>{{ paginationData.fromRange }}</strong>
+						{{ t('section51Index.phrase2') }} <strong>{{ paginationData.toRange }}</strong>
+						{{ t('section51Index.phrase3') }} <strong>{{ paginationData.totalItems }}</strong>
+						{{ t('section51Index.phrase4') }}
 					</p>
 
 					{{ uiResultsPerPage(resultsPerPage) }}
 
-					{{ sectionResults(advice) }}
+					{{ sectionResults(adviceViewModel) }}
 
 					{{ paginationBar(
 						pageOptions,

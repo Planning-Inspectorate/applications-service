@@ -6,6 +6,7 @@ describe('locales/en/common', () => {
 			applyFilters: 'Apply filters',
 			clearAllFilters: 'Clear all filters',
 			clearFilters: 'Clear filters',
+			clearSearch: 'Clear search',
 			close: 'Close',
 			contents: 'Contents',
 			dateFrom: 'Date from',

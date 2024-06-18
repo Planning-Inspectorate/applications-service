@@ -53,7 +53,7 @@ describe('pages/projects/section-51/index/controller', () => {
 				beforeEach(async () => {
 					getPaginationUrl.mockReturnValue({
 						paginationUrl: 'mock pagination url',
-						queryUrl: 'mock query url'
+						queryUrl: 'mock search url'
 					});
 					getPagination.mockReturnValue({ pagination: 'mock pagination' });
 					documentsPerPage.mockReturnValue('mock results per page');
@@ -71,13 +71,13 @@ describe('pages/projects/section-51/index/controller', () => {
 				});
 				it('should render the section 51 page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/section-51/index/view.njk', {
-						title: 'Section 51 advice',
 						pagination: 'mock pagination',
 						paginationUrl: 'mock pagination url',
 						resultsPerPage: 'mock results per page',
-						queryUrl: 'mock query url',
 						searchTerm: 'mock search term',
-						advice: [
+						adviceExists: true,
+						searchAttempted: true,
+						adviceViewModel: [
 							{
 								enquiryDetail: 'mock enquiry detail',
 								adviceGivenBy: 'mock organisation',

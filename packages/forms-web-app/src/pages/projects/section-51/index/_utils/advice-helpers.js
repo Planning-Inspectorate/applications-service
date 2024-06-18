@@ -41,6 +41,16 @@ const getAdviceLink = (caseRef, { adviceID }) =>
 		? getRegisterOfAdviceDetailURL(adviceID)
 		: getSection51AdviceDetailURL(caseRef, adviceID);
 
+const doesAdviceExist = (advice) => {
+	return advice.length > 0;
+};
+
+// We need to know if no advice items returned from an api is a result of a search with 0 results, or because there is no advice present.
+
+const wasSearchAttempted = (queryUrl) => {
+	return queryUrl.includes('search');
+};
+
 module.exports = {
 	getAdviceLinkTitle,
 	getAdviceLink,
@@ -49,5 +59,7 @@ module.exports = {
 	getAdviceTypeLabel,
 	getAdviceDateText,
 	getAdviceName,
-	getAdviceEnquiryText
+	getAdviceEnquiryText,
+	doesAdviceExist,
+	wasSearchAttempted
 };

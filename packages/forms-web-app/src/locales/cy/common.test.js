@@ -6,6 +6,7 @@ describe('locales/cy/common', () => {
 			applyFilters: 'Cynnig hidlydd',
 			clearAllFilters: 'Clirio pob hidlydd',
 			clearFilters: 'Cliriwch hidlydd',
+			clearSearch: 'Clirio chwiliad',
 			close: 'Caeedig',
 			contents: 'Cynnwys',
 			dateFrom: 'Dyddiad o',

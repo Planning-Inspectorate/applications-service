@@ -3,6 +3,7 @@ const { listAdvice } = require('../../../../services/advice.service');
 const { getPagination, getPaginationUrl } = require('../../_utils/pagination/pagination');
 const logger = require('../../../../lib/logger');
 const { getAdviceViewModel } = require('./_utils/get-advice-view-model');
+const { doesAdviceExist, wasSearchAttempted } = require('./_utils/advice-helpers');
 
 async function getSection51IndexController(req, res, next) {
 	try {
@@ -19,16 +20,19 @@ async function getSection51IndexController(req, res, next) {
 		const { paginationUrl, queryUrl } = getPaginationUrl(req, 's51Advice');
 		const paginationView = getPagination(pagination);
 		const resultsPerPage = documentsPerPage(query);
+		const adviceViewModel = getAdviceViewModel(advice, caseRef);
+		const adviceExists = doesAdviceExist(adviceViewModel);
+		const searchAttempted = wasSearchAttempted(queryUrl);
 
 		return res.render('projects/section-51/index/view.njk', {
-			title: 'Section 51 advice',
-			advice: getAdviceViewModel(advice, caseRef),
+			adviceViewModel,
+			adviceExists,
+			searchAttempted,
 			pagination,
 			resultsPerPage,
 			...paginationView,
 			paginationUrl,
-			searchTerm,
-			queryUrl
+			searchTerm
 		});
 	} catch (error) {
 		logger.error(error);
