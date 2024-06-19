@@ -9,13 +9,25 @@ const {
 } = require('./advice-detail/_utils/get-section-51-advice-detail-url');
 
 const { projectsMiddleware } = require('../_middleware/middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../pages/_middleware/i18n/add-common-translations-middleware');
+const {
+	addSection51IndexTranslationsMiddleware
+} = require('./index/_middleware/add-section-51-index-translations-middleware');
 
 const section51IndexURL = getSection51IndexURL();
 const section51AdviceDetailURL = getSection51AdviceDetailURL();
 
 const section51Router = express.Router();
 
-section51Router.get(section51IndexURL, projectsMiddleware, getSection51IndexController);
+section51Router.get(
+	section51IndexURL,
+	addCommonTranslationsMiddleware,
+	addSection51IndexTranslationsMiddleware,
+	projectsMiddleware,
+	getSection51IndexController
+);
 
 section51Router.get(
 	section51AdviceDetailURL,
