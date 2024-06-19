@@ -10,6 +10,7 @@
 	"datePublished": "Date published",
 	"dateTo": "Date to",
 	"day": "Day",
+	"error": "Error",
 	"filter": "Filter",
 	"from": "From",
 	"govUK": {
@@ -37,6 +38,7 @@
 	"showFilters": "Show filters",
 	"startNow": "Start now",
 	"success": "Success",
+	"thereIsAProblem": "There is a problem",
 	"to": "To",
 	"validationErrors": {
 		"emailAddress": {

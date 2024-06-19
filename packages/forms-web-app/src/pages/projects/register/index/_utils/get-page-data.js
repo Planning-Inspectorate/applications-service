@@ -25,7 +25,7 @@ const getPageData = (
 	registrationReOpened,
 	i18n
 ) => ({
-	...mapTitles(i18n.t('register.titles.pageHeading'), i18n.t('register.titles.pageTitle')),
+	...mapTitles(i18n.t('register.index.pageHeading'), i18n.t('register.index.pageTitle')),
 	activeId: 'register-index',
 	closeDate: getCloseDate(
 		registrationOpen,

@@ -3,12 +3,10 @@ const cyRegisterTranslations = require('./cy.json');
 describe('pages/projects/register/_translations/cy', () => {
 	it('should return the english register translations', () => {
 		expect(cyRegisterTranslations).toEqual({
-			titles: {
-				pageHeading: "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol",
-				pageTitle:
-					"Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol"
-			},
 			index: {
+				pageTitle:
+					"Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
+				pageHeading: "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol",
 				open: {
 					heading1: "Rydych yn cofrestru i leisio'ch barn ynghylch {{-project}}",
 					paragraph1:
@@ -49,6 +47,15 @@ describe('pages/projects/register/_translations/cy', () => {
 				closed: {
 					paragraph1: "Mae'r cyfnod amser i gofrestru i ddweud eich dweud wedi cau."
 				}
+			},
+			registerFor: {
+				validationErrorMessage: "Dewiswch ar ran pwy rydych chi'n cofrestru",
+				pageTitle:
+					"Ar ran pwy ydych chi'n cofrestru - Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
+				pageHeading: "Ar ran pwy ydych chi'n cofrestru?",
+				option1: 'Fi fy hun',
+				option2: "Sefydliad rwyf yn gweithio neu'n gwirfoddoli iddo",
+				option3: 'Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo'
 			}
 		});
 	});

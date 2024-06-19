@@ -25,5 +25,6 @@
 		"home": "Home",
 		"projectSearch": "All projects",
 		"detailedInformation": "Detailed information"
-	}
+	},
+	"backLinkText": "Back"
 }

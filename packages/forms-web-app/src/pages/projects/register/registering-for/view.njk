@@ -4,11 +4,11 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-{% set title = "Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning" %}
+{% set title = t('register.registerFor.pageTitle') %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title = "Error: " + title %}
+    {% set title = t('common.error') + ': ' + title %}
   {% endif %}
 
   {{ title }}
@@ -19,7 +19,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% if errors %}
         {{ govukErrorSummary({
-          titleText: "There is a problem",
+          titleText: t('common.thereIsAProblem'),
           errorList: errorSummary
         }) }}
       {% endif %}
@@ -33,7 +33,7 @@
           },
           fieldset: {
             legend: {
-              text: "Who are you registering for?",
+              text: t('register.registerFor.pageHeading'),
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
@@ -41,19 +41,19 @@
           items: [
             {
               value: "myself",
-              text: "Myself",
+              text: t('register.registerFor.option1'),
               attributes: { "data-cy": "answer-mySay"},
               checked: type === "myself"
             },
             {
               value: "organisation",
-              text: "An organisation I work or volunteer for",
+              text: t('register.registerFor.option2'),
               attributes: { "data-cy": "answer-organisation"},
               checked: type === "organisation"
             },
             {
               value: "behalf",
-              text: "On behalf of another person, a household or an organisation I do not work for",
+              text: t('register.registerFor.option3'),
               attributes: { "data-cy": "answer-behalf"},
               checked: type === "behalf"
             }
@@ -61,7 +61,7 @@
         }) }}
 
         {{ govukButton({
-            text: "Continue",
+            text: t('common.continue'),
             type: "submit",
             attributes: { "data-cy":"button-save-and-continue"}
         }) }}

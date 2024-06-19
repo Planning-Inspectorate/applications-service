@@ -14,6 +14,7 @@ describe('locales/cy/common', () => {
 			datePublished: 'Dyddiad cyhoeddi',
 			dateTo: 'Dyddiad i',
 			day: 'Diwrnod',
+			error: 'Gwall',
 			filter: 'Hidlydd',
 			from: 'Oddi wrth',
 			govUK: {
@@ -42,6 +43,7 @@ describe('locales/cy/common', () => {
 			showFilters: 'Dangos hidlydd',
 			startNow: 'Dechrau nawr',
 			success: 'Llwyddiant',
+			thereIsAProblem: 'Mae yna broblem',
 			to: 'I',
 			validationErrors: {
 				emailAddress: {

@@ -14,6 +14,7 @@ describe('locales/en/common', () => {
 			datePublished: 'Date published',
 			dateTo: 'Date to',
 			day: 'Day',
+			error: 'Error',
 			filter: 'Filter',
 			from: 'From',
 			govUK: {
@@ -41,6 +42,7 @@ describe('locales/en/common', () => {
 			showFilters: 'Show filters',
 			startNow: 'Start now',
 			success: 'Success',
+			thereIsAProblem: 'There is a problem',
 			to: 'To',
 			validationErrors: {
 				emailAddress: {

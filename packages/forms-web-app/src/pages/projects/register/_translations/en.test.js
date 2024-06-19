@@ -3,12 +3,10 @@ const enRegisterTranslations = require('./en.json');
 describe('pages/projects/register/_translations/en', () => {
 	it('should return the english register translations', () => {
 		expect(enRegisterTranslations).toEqual({
-			titles: {
-				pageHeading: 'Register to have your say about a national infrastructure project',
-				pageTitle:
-					'Register to have your say about a national infrastructure project - National Infrastructure Planning'
-			},
 			index: {
+				pageTitle:
+					'Register to have your say about a national infrastructure project - National Infrastructure Planning',
+				pageHeading: 'Register to have your say about a national infrastructure project',
 				open: {
 					heading1: 'You are registering to have your say about the {{-project}}',
 					paragraph1:
@@ -48,6 +46,15 @@ describe('pages/projects/register/_translations/en', () => {
 				closed: {
 					paragraph1: 'The time period to register to have your say has closed.'
 				}
+			},
+			registerFor: {
+				validationErrorMessage: 'Select who you are registering for',
+				pageTitle:
+					'Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning',
+				pageHeading: 'Who are you registering for?',
+				option1: 'Myself',
+				option2: 'An organisation I work or volunteer for',
+				option3: 'On behalf of another person, a household or an organisation I do not work for'
 			}
 		});
 	});

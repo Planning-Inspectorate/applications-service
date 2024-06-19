@@ -14,6 +14,9 @@ const { registerMiddleware } = require('./_middleware/register-middleware');
 const {
 	addRegisterTranslationsMiddleware
 } = require('./_middleware/add-register-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../pages/_middleware/i18n/add-common-translations-middleware');
 
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 const {
@@ -42,9 +45,17 @@ registerRouter.get(
 	getRegisterIndexController
 );
 
-registerRouter.get(registeringForURL, registerMiddleware, getRegisteringForController);
+registerRouter.get(
+	registeringForURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisteringForController
+);
 registerRouter.post(
 	registeringForURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	validateRegisteringForOptions(),
 	validationErrorHandler,

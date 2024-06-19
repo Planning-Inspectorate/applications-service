@@ -4,7 +4,9 @@ const { registeringForOptions } = require('../config');
 const validateRegisteringForOptions = () => [
 	body('type-of-party')
 		.notEmpty()
-		.withMessage('Select who you are registering for')
+		.withMessage((_, { req }) => {
+			return req.i18n.t('register.registerFor.validationErrorMessage');
+		})
 		.bail()
 		.isIn(Object.values(registeringForOptions))
 ];
