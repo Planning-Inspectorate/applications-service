@@ -17,10 +17,13 @@ const isAdviceMeeting = (enquiryMethod) => enquiryMethod === 'Meeting';
 const getAdviceDateText = (enquiryMethod) =>
 	isAdviceMeeting(enquiryMethod) ? 'Date of meeting' : 'Date advice given';
 
-const getAdviceTitle = (advice) =>
-	isAdviceMeeting(advice.enquiryMethod)
+const getAdviceTitle = (advice) => {
+	if (advice.title) return advice.title;
+
+	return isAdviceMeeting(advice.enquiryMethod)
 		? `Meeting with ${getAdviceName(advice)}`
 		: `Advice to ${getAdviceName(advice)}`;
+};
 
 const getAdviceTypeLabel = (advice) =>
 	isAdviceMeeting(advice.enquiryMethod) ? `Meeting with` : `Enquiry from`;
