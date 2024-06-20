@@ -24,8 +24,14 @@ const sortApplications = (applications, sort = '+ProjectName') => {
 			return applications.sort(sortByNumberKeyInObject(key, direction));
 	}
 };
+
+const notNullOrUndefined = (value) => !value && value !== 0;
 const sortByNumberKeyInObject = (key, direction) => (a, b) => {
-	const difference = a[key] - b[key];
+	// defaulting to 1 (pre_application) if the value is null or undefined (but not 0 / draft stage)
+	const aValue = notNullOrUndefined(a[key]) ? 1 : a[key];
+	const bValue = notNullOrUndefined(b[key]) ? 1 : b[key];
+
+	const difference = aValue - bValue;
 	return direction === 'asc' ? difference : -difference;
 };
 
