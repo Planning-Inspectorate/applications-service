@@ -19,7 +19,7 @@ const {
 const { addErrorsToEmptyValuesFormGroup } = require('./add-errors-to-empty-values-form-group');
 const { addErrorsToInvalidDateFormGroup } = require('./add-errors-to-invalid-date-form-group');
 
-const handleDatesFilterFormGroup = (query, datesFilterFormGroup) => {
+const handleDatesFilterFormGroup = (i18n, query, datesFilterFormGroup) => {
 	const allDatesFilterFormGroupInputValues = getAllDatesFilterFormGroupInputValues(
 		query,
 		datesFilterFormGroup.inputNamePrefix
@@ -29,10 +29,15 @@ const handleDatesFilterFormGroup = (query, datesFilterFormGroup) => {
 	let formGroup = JSON.parse(JSON.stringify(datesFilterFormGroup));
 	let errorMessageSummary;
 	let newFormGroup;
+
 	if (datesFilterFormGroupInputsHaveEmptyValues(year, month, day))
-		newFormGroup = addErrorsToEmptyValuesFormGroup(formGroup, allDatesFilterFormGroupInputValues);
+		newFormGroup = addErrorsToEmptyValuesFormGroup(
+			i18n,
+			formGroup,
+			allDatesFilterFormGroupInputValues
+		);
 	else if (isDatesFilterFormGroupValueInvalidDate(year, month, day))
-		newFormGroup = addErrorsToInvalidDateFormGroup(formGroup);
+		newFormGroup = addErrorsToInvalidDateFormGroup(i18n, formGroup);
 	else newFormGroup = formGroup;
 
 	if (newFormGroup.errorMessageText)
@@ -47,12 +52,13 @@ const handleDatesFilterFormGroup = (query, datesFilterFormGroup) => {
 	};
 };
 
-const handleDatesFilterFormGroups = (query, datesFilter) => {
+const handleDatesFilterFormGroups = (i18n, query, datesFilter) => {
 	const localDatesFilter = JSON.parse(JSON.stringify(datesFilter));
 	const fromGroups = [];
 	let errorSummaryList = [];
 	localDatesFilter.formGroups.forEach((datesFilterFormGroup) => {
 		const { formGroup, errorMessageSummary } = handleDatesFilterFormGroup(
+			i18n,
 			query,
 			datesFilterFormGroup
 		);
@@ -65,16 +71,16 @@ const handleDatesFilterFormGroups = (query, datesFilter) => {
 	return localDatesFilter;
 };
 
-const validateDatesFilterObj = (query, datesFilterObj) => {
+const validateDatesFilterObj = (i18n, query, datesFilterObj) => {
 	let localDatesFilterObj = JSON.parse(JSON.stringify(datesFilterObj));
 
-	localDatesFilterObj = handleDatesFilterFormGroups(query, localDatesFilterObj);
+	localDatesFilterObj = handleDatesFilterFormGroups(i18n, query, localDatesFilterObj);
 
 	if (localDatesFilterObj.errorSummaryList.length === 0) {
 		if (isFromDateAfterToDate(query))
-			localDatesFilterObj = addErrorsToFromDateAfterToDateFormGroups(localDatesFilterObj);
+			localDatesFilterObj = addErrorsToFromDateAfterToDateFormGroups(i18n, localDatesFilterObj);
 		else if (isFromDateAfterToday(query))
-			localDatesFilterObj = addErrorsToFromDateAfterTodayFormGroup(localDatesFilterObj);
+			localDatesFilterObj = addErrorsToFromDateAfterTodayFormGroup(i18n, localDatesFilterObj);
 	}
 
 	return localDatesFilterObj;
