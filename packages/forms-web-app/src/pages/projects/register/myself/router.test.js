@@ -36,9 +36,7 @@ const {
 } = require('../../../../pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
-const {
-	rules: areYou18ValidationRules
-} = require('../../../../validators/register/myself/are-you-18-over');
+const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
@@ -67,7 +65,7 @@ jest.mock('../../../../validators/shared/full-name', () => {
 		rules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/myself/are-you-18-over', () => {
+jest.mock('../../../../validators/shared/are-you-18-over', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -133,11 +131,15 @@ describe('pages/projects/register/myself/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/are-you-18-over',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAreYou18Controller
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/are-you-18-over',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				areYou18ValidationRules(),
 				validationErrorHandler,

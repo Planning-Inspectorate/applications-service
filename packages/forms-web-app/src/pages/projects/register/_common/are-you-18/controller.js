@@ -1,6 +1,6 @@
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
-const { viewModel } = require('./_utils/viewModel');
+const { getViewModel } = require('./_utils/viewModel');
 const logger = require('../../../../../lib/logger');
 const { getRedirectUrl } = require('./_utils/get-redirect-url');
 
@@ -9,9 +9,10 @@ const areYouOver18Key = 'over-18';
 
 const getRegisterAreYou18Controller = (req, res) => {
 	try {
-		const { session, originalUrl } = req;
+		const { session, originalUrl, i18n } = req;
 		const key = getKeyFromUrl(originalUrl);
 		const over18 = getSession(session, key)[areYouOver18Key];
+		const viewModel = getViewModel(i18n);
 		return res.render(view, {
 			...viewModel[key],
 			over18
@@ -24,8 +25,9 @@ const getRegisterAreYou18Controller = (req, res) => {
 
 const postRegisterAreYou18Controller = (req, res) => {
 	try {
-		const { body, originalUrl, query, session } = req;
+		const { body, originalUrl, query, session, i18n } = req;
 		const key = getKeyFromUrl(originalUrl);
+		const viewModel = getViewModel(i18n);
 		const { errors = {}, errorSummary = [] } = body;
 		if (errors[areYouOver18Key] || Object.keys(errors).length > 0) {
 			return res.render(view, {

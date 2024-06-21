@@ -18,7 +18,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/myself/full-name',
 					session: { mySelfRegdata: { ['full-name']: 'mock full name' } },
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					getRegisterNameController(req, res);
@@ -37,7 +37,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/full-name',
 					session: { orgRegdata: { ['full-name']: 'mock full name' } },
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					getRegisterNameController(req, res);
@@ -55,7 +55,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/agent/full-name',
 					session: { behalfRegdata: { representor: { ['full-name']: 'mock full name' } } },
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					getRegisterNameController(req, res);
@@ -112,7 +112,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 						errors: { ['full-name']: 'an error' },
 						errorSummary: [{ text: 'Error summary', href: '#' }]
 					},
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					postRegisterNameController(req, res);
@@ -143,7 +143,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 						errors: { ['full-name']: 'an error' },
 						errorSummary: [{ text: 'Error summary', href: '#' }]
 					},
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					postRegisterNameController(req, res);
@@ -167,7 +167,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 						['full-name']: 'mock full name'
 					},
 					query: { mode: 'edit' },
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					postRegisterNameController(req, res);
@@ -186,7 +186,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 						['full-name']: 'mock full name'
 					},
 					query: {},
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					postRegisterNameController(req, res);
@@ -205,7 +205,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 						['full-name']: 'mock full name'
 					},
 					query: {},
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					postRegisterNameController(req, res);
@@ -224,7 +224,7 @@ describe('pages/projects/register/_common/name/controller', () => {
 						['full-name']: 'mock full name'
 					},
 					query: {},
-					i18n: i18n
+					i18n
 				};
 				beforeEach(() => {
 					postRegisterNameController(req, res);

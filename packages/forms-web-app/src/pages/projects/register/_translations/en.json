@@ -59,5 +59,11 @@
 	"name": {
 		"pageHeading": "What is your full name?",
 		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
+	},
+	"areYou18": {
+		"pageHeading": "Are you 18 or over?",
+		"hint": "You can still register to have your say if you are under 18, but we will process your personal details in a different way.",
+		"yesHiddenText": "I'm 18 or older",
+		"noHiddenText": "I'm under 18"
 	}
 }

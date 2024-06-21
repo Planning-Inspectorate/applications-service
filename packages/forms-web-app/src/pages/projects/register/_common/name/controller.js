@@ -13,12 +13,10 @@ const getRegisterNameController = (req, res) => {
 		const key = getKeyFromUrl(req.originalUrl);
 		const fullName = getSession(session, key)[fullNameKey];
 		const viewModel = getViewModel(i18n);
-		const pageHeading = viewModel.pageHeading;
 
 		return res.render(view, {
 			...viewModel[key],
-			fullName,
-			pageHeading
+			fullName
 		});
 	} catch (e) {
 		logger.error(e);
@@ -33,13 +31,11 @@ const postRegisterNameController = (req, res) => {
 
 		const key = getKeyFromUrl(originalUrl);
 		const viewModel = getViewModel(i18n);
-		const pageHeading = viewModel.pageHeading;
 
 		if (errors[fullNameKey] || Object.keys(errors).length > 0) {
 			return res.render(view, {
 				errors,
 				errorSummary,
-				pageHeading,
 				...viewModel[key]
 			});
 		}

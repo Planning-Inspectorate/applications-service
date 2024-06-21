@@ -58,7 +58,8 @@ describe('locales/cy/common', () => {
 				fullName: {
 					message1: 'Nodwch eich enw llawn',
 					message2: "Mae'n rhaid i'ch enw llawn gynnwys rhwng 3 a 64 o nodau"
-				}
+				},
+				areYou18: "Dewiswch 'ydw' os ydych yn 18 oed neu'n hŷn"
 			}
 		});
 	});

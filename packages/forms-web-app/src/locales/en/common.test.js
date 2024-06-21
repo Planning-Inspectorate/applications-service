@@ -57,7 +57,8 @@ describe('locales/en/common', () => {
 				fullName: {
 					message1: 'Enter your full name',
 					message2: 'Full name must be between 3 and 64 characters'
-				}
+				},
+				areYou18: 'Select yes if you are 18 or over'
 			}
 		});
 	});

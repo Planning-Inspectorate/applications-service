@@ -64,9 +64,7 @@ const {
 } = require('../../../../pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
-const {
-	rules: areYou18ValidationRules
-} = require('../../../../validators/register/myself/are-you-18-over');
+const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
 const {
@@ -110,11 +108,15 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAreYou18URL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAreYou18Controller
 );
 registerMyselfRouter.post(
 	registerMyselfAreYou18URL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	areYou18ValidationRules(),
 	validationErrorHandler,

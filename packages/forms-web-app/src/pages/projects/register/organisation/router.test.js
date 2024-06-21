@@ -50,9 +50,7 @@ const {
 } = require('../../../../pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
-const {
-	rules: areYou18ValidationRules
-} = require('../../../../validators/register/organisation/are-you-18-over');
+const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
 const {
 	rules: jobTitleValidationRules
@@ -81,7 +79,7 @@ jest.mock('../../../../validators/shared/full-name', () => {
 		rules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/organisation/are-you-18-over', () => {
+jest.mock('../../../../validators/shared/are-you-18-over', () => {
 	return {
 		rules: jest.fn()
 	};

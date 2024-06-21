@@ -69,6 +69,12 @@ describe('pages/projects/register/_translations/cy', () => {
 			name: {
 				pageHeading: "Beth yw'ch enw llawn?",
 				hint: "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>"
+			},
+			areYou18: {
+				pageHeading: "A ydych chi'n 18 oed neu'n hŷn?",
+				hint: "Gallwch gofrestru i leisio'ch barn os ydych yn iau na 18 oed hefyd, ond byddwn yn prosesu'ch manylion personol mewn ffordd wahanol.",
+				yesHiddenText: 'rwyf yn 18 oed neu’n hŷn',
+				noHiddenText: 'rwyf yn iau na 18 oed'
 			}
 		});
 	});
