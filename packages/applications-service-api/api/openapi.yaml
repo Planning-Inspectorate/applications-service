@@ -1819,9 +1819,15 @@ components:
         title:
           type: string
           example: 'Deadline 1A'
+        titleWelsh:
+          type: string
+          example: 'Deadline 1A'
         description:
           type: string
           example: 'The ExA is under a duty to complete the Examination of the application by the end of the period of six months'
+        descriptionWelsh:
+          type: string
+          example: 'Mae’r Arolygydd wedi’i dyletswyddu i gwblhau’r Archwiliad o’r cais erbyn diwedd y cyfnod o chwe mis'
         dateOfEvent:
           type: string
           example: '2020-02-19 11:21:42'

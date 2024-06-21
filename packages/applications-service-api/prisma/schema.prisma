@@ -186,7 +186,9 @@ model ExaminationTimetable {
   caseReference          String
   type                   String
   eventTitle             String
+  eventTitleWelsh        String?
   description            String
+  descriptionWelsh       String?
   eventDeadlineStartDate DateTime?
   date                   DateTime?
   createdAt              DateTime?                       @default(now())
@@ -197,10 +199,11 @@ model ExaminationTimetable {
 }
 
 model ExaminationTimetableEventItem {
-  id                       Int                   @unique @default(autoincrement())
-  eventLineItemDescription String                @db.NText
-  eventId                  Int
-  ExaminationTimetable     ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
+  id                            Int                   @unique @default(autoincrement())
+  eventLineItemDescription      String                @db.NText
+  eventLineItemDescriptionWelsh String?               @db.NText
+  eventId                       Int
+  ExaminationTimetable          ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
 }
 
 model Advice {

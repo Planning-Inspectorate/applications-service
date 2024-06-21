@@ -62,6 +62,7 @@ const TIMETABLES_BACKOFFICE_RESPONSE = [
 		title: 'Deadline 1A',
 		description:
 			'The ExA is under a duty to complete the Examination of the application by the end of the period of six months \n* description 1\r\n* description 2\r\n',
+		descriptionWelsh: '',
 		dateOfEvent: '2020-02-19 11:21:42',
 		typeOfEvent: 'Deadline',
 		dateTimeDeadlineStart: '2020-05-16 15:44:52',
@@ -73,6 +74,7 @@ const TIMETABLES_BACKOFFICE_RESPONSE = [
 		caseReference: 'BACKOFFICE-CASEID',
 		title: 'PRELIMINARY MEETING A1',
 		description: 'Preliminary meeting for the application by the end of the period of six months',
+		descriptionWelsh: '',
 		dateOfEvent: '2020-08-19 11:21:42',
 		typeOfEvent: 'Preliminary Meeting',
 		dateTimeDeadlineStart: '2020-05-16 15:44:52',
@@ -112,9 +114,34 @@ const TIMETABLES_BACKOFFICE_DATA = [
 	}
 ];
 
+const TIMETABLES_BACKOFFICE_DATA_WITH_WELSH = TIMETABLES_BACKOFFICE_DATA.map((timetable) => ({
+	...timetable,
+	descriptionWelsh: 'Welsh description',
+	eventTitleWelsh: 'Welsh title',
+	eventLineItems: timetable.eventLineItems.map((item) => ({
+		...item,
+		eventLineItemDescriptionWelsh: 'Welsh description'
+	}))
+}));
+
+const TIMETABLES_BACKOFFICE_RESPONSE_WITH_WELSH = [
+	{
+		...TIMETABLES_BACKOFFICE_RESPONSE[0],
+		titleWelsh: 'Welsh title',
+		descriptionWelsh: 'Welsh description \n* Welsh description\r\n* Welsh description\r\n'
+	},
+	{
+		...TIMETABLES_BACKOFFICE_RESPONSE[1],
+		titleWelsh: 'Welsh title',
+		descriptionWelsh: 'Welsh description'
+	}
+];
+
 module.exports = {
 	TIMETABLES_NI_RESPONSE,
 	TIMETABLES_NI_DATA,
 	TIMETABLES_BACKOFFICE_RESPONSE,
-	TIMETABLES_BACKOFFICE_DATA
+	TIMETABLES_BACKOFFICE_DATA,
+	TIMETABLES_BACKOFFICE_DATA_WITH_WELSH,
+	TIMETABLES_BACKOFFICE_RESPONSE_WITH_WELSH
 };
