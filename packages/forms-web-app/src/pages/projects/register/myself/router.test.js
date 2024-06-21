@@ -49,6 +49,12 @@ const {
 } = require('../../../../validators/register/tell-us-about-project');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
 
 jest.mock('../../../../middleware/decode-uri', () => {
 	return {
@@ -108,11 +114,15 @@ describe('pages/projects/register/myself/router', () => {
 		it('should call the register myself routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/full-name',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/full-name',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				fullNameValidationRules(),

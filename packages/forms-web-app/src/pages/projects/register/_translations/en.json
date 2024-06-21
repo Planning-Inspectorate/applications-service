@@ -46,5 +46,18 @@
 		"option1": "Myself",
 		"option2": "An organisation I work or volunteer for",
 		"option3": "On behalf of another person, a household or an organisation I do not work for"
+	},
+	"myself": {
+		"pageTitleSuffix": "Registering for myself"
+	},
+	"organisation": {
+		"pageTitleSuffix": "Registering for an organisation"
+	},
+	"agent": {
+		"pageTitleSuffix": "Registering on behalf of someone else"
+	},
+	"name": {
+		"pageHeading": "What is your full name?",
+		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
 	}
 }

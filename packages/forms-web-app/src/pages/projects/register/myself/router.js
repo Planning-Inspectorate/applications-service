@@ -52,6 +52,12 @@ const {
 } = require('./complete/_utils/get-register-myself-complete-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const {
 	addCommonTranslationsMiddleware
@@ -84,9 +90,17 @@ const registerMyselfCheckAnswersURL = getRegisterMyselfCheckAnswersURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
-registerMyselfRouter.get(registerMyselfNameURL, registerMiddleware, getRegisterNameController);
+registerMyselfRouter.get(
+	registerMyselfNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterNameController
+);
 registerMyselfRouter.post(
 	registerMyselfNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),

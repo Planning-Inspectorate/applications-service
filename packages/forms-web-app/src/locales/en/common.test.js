@@ -52,7 +52,13 @@ describe('locales/en/common', () => {
 				}
 			},
 			year: 'Year',
-			yes: 'Yes'
+			yes: 'Yes',
+			validationErrors: {
+				fullName: {
+					message1: 'Enter your full name',
+					message2: 'Full name must be between 3 and 64 characters'
+				}
+			}
 		});
 	});
 });

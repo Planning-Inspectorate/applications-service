@@ -53,7 +53,13 @@ describe('locales/cy/common', () => {
 				}
 			},
 			year: 'Blwyddyn',
-			yes: 'Ydw'
+			yes: 'Ydw',
+			validationErrors: {
+				fullName: {
+					message1: 'Nodwch eich enw llawn',
+					message2: "Mae'n rhaid i'ch enw llawn gynnwys rhwng 3 a 64 o nodau"
+				}
+			}
 		});
 	});
 });

@@ -54,6 +54,12 @@ const {
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const {
 	addCommonTranslationsMiddleware
@@ -182,11 +188,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				fullNameValidationRules(),

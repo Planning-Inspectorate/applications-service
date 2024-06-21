@@ -8,7 +8,7 @@
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set title = "Error: " + title %}
+		{% set title = t('common.error') + ": " + title %}
 	{% endif %}
 
 	{{ title }}
@@ -19,7 +19,7 @@
 		<div class="govuk-grid-column-two-thirds">
 			{% if errorSummary %}
 				{{ govukErrorSummary({
-					titleText: "There is a problem",
+					titleText: t('common.thereIsAProblem'),
 					errorList: errorSummary
 				}) }}
 			{% endif %}
@@ -28,7 +28,7 @@
 				<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
 					{{ govukInput({
 						label: {
-							text: "What is your full name?",
+							text: pageHeading,
 							classes: "govuk-label--l",
 							isPageHeading: true
 						},
@@ -47,7 +47,7 @@
 				</div>
 
 				{{ govukButton({
-					text: "Continue",
+					text: t('common.continue'),
 					type: "Submit",
 					attributes: { "data-cy": "button-save-and-continue"}
 				}) }}

@@ -1,5 +1,5 @@
 const { keys } = require('../../../../../../controllers/register/common/keys');
-const { pageTitle } = require('../../../../../../controllers/register/common/common-veiw-model');
+const { pageTitle } = require('../../../../../../controllers/register/common/common-view-model');
 
 const pageTitlePrefix = 'Declaration';
 

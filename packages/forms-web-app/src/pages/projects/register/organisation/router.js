@@ -74,6 +74,12 @@ const {
 } = require('./complete/_utils/get-register-organisation-complete-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const {
 	addCommonTranslationsMiddleware
@@ -116,11 +122,15 @@ const registerOrganisationRouter = express.Router({ mergeParams: true });
 
 registerOrganisationRouter.get(
 	registerOrganisationNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterNameController
 );
 registerOrganisationRouter.post(
 	registerOrganisationNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),

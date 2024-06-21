@@ -56,6 +56,19 @@ describe('pages/projects/register/_translations/cy', () => {
 				option1: 'Fi fy hun',
 				option2: "Sefydliad rwyf yn gweithio neu'n gwirfoddoli iddo",
 				option3: 'Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo'
+			},
+			myself: {
+				pageTitleSuffix: '!!! translation required !!!'
+			},
+			organisation: {
+				pageTitleSuffix: '!!! org translation required !!!'
+			},
+			agent: {
+				pageTitleSuffix: '!!! agent translation required !!!'
+			},
+			name: {
+				pageHeading: "Beth yw'ch enw llawn?",
+				hint: "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>"
 			}
 		});
 	});

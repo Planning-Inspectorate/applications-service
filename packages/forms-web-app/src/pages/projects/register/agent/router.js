@@ -100,6 +100,12 @@ const {
 } = require('./complete/_utils/get-register-agent-complete-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const {
 	addCommonTranslationsMiddleware
@@ -158,9 +164,17 @@ const registerAgentCompleteURL = getRegisterAgentCompleteURL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
-registerAgentRouter.get(registerAgentNameURL, registerMiddleware, getRegisterNameController);
+registerAgentRouter.get(
+	registerAgentNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterNameController
+);
 registerAgentRouter.post(
 	registerAgentNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),

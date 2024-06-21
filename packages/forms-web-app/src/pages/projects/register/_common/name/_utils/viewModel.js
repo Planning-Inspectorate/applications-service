@@ -1,21 +1,25 @@
 const { keys } = require('../../../../../../controllers/register/common/keys');
-const { pageTitle } = require('../../../../../../controllers/register/common/common-veiw-model');
+const { getPageTitle } = require('../../../../../../controllers/register/common/common-view-model');
 
-const pageTitlePrefix = 'What is your full name?';
-
-const viewModel = {
-	[keys.myself]: {
-		pageTitle: pageTitlePrefix + pageTitle[keys.myself],
-		hint: `<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>`
-	},
-	[keys.organisation]: {
-		pageTitle: pageTitlePrefix + pageTitle[keys.organisation]
-	},
-	[keys.agent]: {
-		pageTitle: pageTitlePrefix + pageTitle[keys.agent]
-	}
+const getViewModel = (i18n) => {
+	const pageTitlePrefix = i18n.t('register.name.pageHeading');
+	const hint = i18n.t('register.name.hint');
+	const pageTitle = getPageTitle(i18n);
+	return {
+		pageHeading: i18n.t('register.name.pageHeading'),
+		[keys.myself]: {
+			pageTitle: pageTitlePrefix + pageTitle[keys.myself],
+			hint: hint
+		},
+		[keys.organisation]: {
+			pageTitle: pageTitlePrefix + pageTitle[keys.organisation]
+		},
+		[keys.agent]: {
+			pageTitle: pageTitlePrefix + pageTitle[keys.agent]
+		}
+	};
 };
 
 module.exports = {
-	viewModel
+	getViewModel
 };
