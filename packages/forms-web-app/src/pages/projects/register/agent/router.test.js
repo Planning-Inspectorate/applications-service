@@ -70,7 +70,7 @@ const {
 	rules: organisationNameValidationRules
 } = require('../../../../validators/register/agent/name-of-organisation');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: representingWhoValidationRules
 } = require('../../../../validators/register/agent/who-representing');
@@ -119,7 +119,7 @@ jest.mock('../../../../validators/shared/email-address', () => {
 		emailValidationRules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/myself/address', () => {
+jest.mock('../../../../validators/shared/address', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -237,11 +237,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAddressController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				addressValidationRules(),
 				validationErrorHandler,

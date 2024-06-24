@@ -66,7 +66,7 @@ const {
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
@@ -143,11 +143,15 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAddressController
 );
 registerMyselfRouter.post(
 	registerMyselfAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,

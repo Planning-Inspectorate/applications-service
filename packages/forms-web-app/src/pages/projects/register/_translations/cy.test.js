@@ -75,6 +75,14 @@ describe('pages/projects/register/_translations/cy', () => {
 			email: {
 				pageHeading: "Beth yw'ch cyfeiriad e-bost?",
 				hint: "Byddwn yn defnyddio'ch cyfeiriad e-bost i anfon gwybodaeth atoch am y prosiect hwn. Ni fyddwn yn cyhoeddi eich cyfeiriad e-bost."
+			},
+			address: {
+				pageHeading: "Beth yw'ch cyfeiriad?",
+				line1: "Llinell gyfeiriad 1<span class='govuk-visually-hidden'> o 3</span>",
+				line2: "Llinell gyfeiriad 2<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+				line3: "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+				postcode: 'Cod post',
+				country: 'Gwlad'
 			}
 		});
 	});

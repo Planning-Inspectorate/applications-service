@@ -59,6 +59,16 @@
 			"message1": "Enter your full name",
 			"message2": "Full name must be between 3 and 64 characters"
 		},
-		"areYou18": "Select yes if you are 18 or over"
+		"areYou18": "Select yes if you are 18 or over",
+		"address": {
+			"line1Empty": "Enter address line 1",
+			"line1Length": "Address line 1 must be 255 characters or less",
+			"line2Length": "Address line 2 must be 96 characters or less",
+			"line3Length": "Town or city must be 64 characters or less",
+			"postcodeEmpty": "Enter a postcode",
+			"postcodeLength": "Postcode must be 16 characters or less",
+			"countryEmpty": "Enter a country",
+			"countryLength": "Country must be 64 characters or less"
+		}
 	}
 }

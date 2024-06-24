@@ -19,9 +19,7 @@ describe('pages/projects/register/_common/address/controller', () => {
 				});
 				it('should render the registration address page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
-						pageTitle:
-							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						title: 'What is your address?',
+						key: 'myself',
 						address: {
 							text: 'mock address body'
 						}
@@ -38,9 +36,7 @@ describe('pages/projects/register/_common/address/controller', () => {
 				});
 				it('should render the registration address page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
-						pageTitle:
-							'What is your address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						title: 'What is your address?',
+						key: 'organisation',
 						address: {
 							text: 'mock address body'
 						}
@@ -59,9 +55,7 @@ describe('pages/projects/register/_common/address/controller', () => {
 				});
 				it('should render the registration address page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/address/view.njk', {
-						pageTitle:
-							'What is your address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						title: 'What is your address?',
+						key: 'agent',
 						address: {
 							text: 'mock address body'
 						}
@@ -147,9 +141,7 @@ describe('pages/projects/register/_common/address/controller', () => {
 						},
 						errorSummary: [{ href: '#', text: 'Error summary' }],
 						errors: { address: 'an error' },
-						pageTitle:
-							'What is your address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						title: 'What is your address?'
+						key: 'myself'
 					});
 				});
 			});

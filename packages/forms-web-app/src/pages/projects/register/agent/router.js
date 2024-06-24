@@ -116,7 +116,7 @@ const {
 	rules: organisationNameValidationRules
 } = require('../../../../validators/register/agent/name-of-organisation');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: representingWhoValidationRules
 } = require('../../../../validators/register/agent/who-representing');
@@ -213,9 +213,17 @@ registerAgentRouter.post(
 	postRegisterEmailController
 );
 
-registerAgentRouter.get(registerAgentAddressURL, registerMiddleware, getRegisterAddressController);
+registerAgentRouter.get(
+	registerAgentAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterAddressController
+);
 registerAgentRouter.post(
 	registerAgentAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,

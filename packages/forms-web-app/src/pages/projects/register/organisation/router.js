@@ -91,7 +91,7 @@ const { emailValidationRules } = require('../../../../validators/shared/email-ad
 const {
 	rules: jobTitleValidationRules
 } = require('../../../../validators/register/organisation/what-job-title-or-role');
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/register/myself/telephone');
@@ -200,11 +200,15 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAddressController
 );
 registerOrganisationRouter.post(
 	registerOrganisationAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,

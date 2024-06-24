@@ -74,6 +74,14 @@ describe('pages/projects/register/_translations/en', () => {
 			email: {
 				pageHeading: 'What is your email address?',
 				hint: 'We will use your email address to send you information about this project. We will not publish your email address.'
+			},
+			address: {
+				pageHeading: 'What is your address?',
+				line1: "Address line 1 <span class='govuk-visually-hidden'>of 3</span>",
+				line2: "Address line 2 <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+				line3: "Town or city <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+				postcode: 'Postcode',
+				country: 'Country'
 			}
 		});
 	});
