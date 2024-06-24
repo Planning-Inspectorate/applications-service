@@ -5,14 +5,17 @@ const ADVICE_BACKOFFICE_DATA = [
 		caseReference: 'BACKOFFICE-CASEID',
 		caseId: 130,
 		title: 'Advice title',
+		titleWelsh: 'Advice title in Welsh',
 		from: 'Advice Org',
 		agent: 'Advice agent name',
 		method: 'Advice method',
 		enquiryDate: '2021-06-01',
 		enquiryDetails: 'Advice enquiry details',
+		enquiryDetailsWelsh: 'Advice enquiry details in Welsh',
 		adviceGivenBy: 'Advice given by',
 		adviceDate: '2021-08-01',
 		adviceDetails: 'Advice details',
+		adviceDetailsWelsh: 'Advice details in Welsh',
 		status: 'Advice status',
 		redactionStatus: 'Advice redaction status',
 		attachmentIds: '1,2,3',
@@ -31,13 +34,16 @@ const ADVICE_BACKOFFICE_RESPONSE = ADVICE_BACKOFFICE_DATA.map((advice) => ({
 	lastName: advice?.agent?.split(' ').slice(1).join(' '),
 	organisation: advice?.from,
 	enquiryDetail: advice?.enquiryDetails,
+	enquiryDetailWelsh: advice?.enquiryDetailsWelsh,
 	adviceGiven: advice?.adviceDetails,
+	adviceGivenWelsh: advice?.adviceDetailsWelsh,
 	respondedBy: advice?.adviceGivenBy,
 	dateEnquiryReceived: advice?.enquiryDate,
 	dateAdviceGiven: advice?.adviceDate,
 	dateLastModified: advice?.modifiedAt,
 	dateCreated: advice?.createdAt,
-	title: advice?.title
+	title: advice?.title,
+	titleWelsh: advice?.titleWelsh
 }));
 
 const ADVICE_NI_DATA = [

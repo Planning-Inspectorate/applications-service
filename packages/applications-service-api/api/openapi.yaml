@@ -1961,6 +1961,9 @@ components:
         title:
           type: string
           example: 'Advice title'
+        titleWelsh:
+          type: string
+          example: 'Advice title in Welsh'
         enquiryDate:
           type: string
           format: date
@@ -1986,9 +1989,15 @@ components:
         enquiryDetail:
           type: string
           example: 'Do we need more energy'
+        enquiryDetailWelsh:
+          type: string
+          example: 'Do we need more energy in Welsh'
         adviceGiven:
           type: string
           example: 'Yes we do'
+        adviceGivenWelsh:
+          type: string
+          example: 'Yes we do in Welsh'
         respondedBy:
           type: string
           example: 'Joe Bloggs'

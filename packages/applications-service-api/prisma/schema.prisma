@@ -207,22 +207,25 @@ model ExaminationTimetableEventItem {
 }
 
 model Advice {
-  adviceId        Int       @unique
-  adviceReference String?
-  caseReference   String?
-  caseId          Int
-  title           String?
-  from            String?
-  agent           String?
-  method          String?
-  enquiryDate     DateTime
-  enquiryDetails  String?   @db.NText
-  adviceGivenBy   String?
-  adviceDate      DateTime
-  adviceDetails   String?   @db.NText
-  status          String?
-  redactionStatus String?
-  attachmentIds   String?
-  createdAt       DateTime? @default(now())
-  modifiedAt      DateTime? @default(now())
+  adviceId            Int       @unique
+  adviceReference     String?
+  caseReference       String?
+  caseId              Int
+  title               String?
+  titleWelsh          String?
+  from                String?
+  agent               String?
+  method              String?
+  enquiryDate         DateTime
+  enquiryDetails      String?   @db.NText
+  enquiryDetailsWelsh String?   @db.VarChar(4000)
+  adviceGivenBy       String?
+  adviceDate          DateTime
+  adviceDetails       String?   @db.NText
+  adviceDetailsWelsh  String?   @db.VarChar(4000)
+  status              String?
+  redactionStatus     String?
+  attachmentIds       String?
+  createdAt           DateTime? @default(now())
+  modifiedAt          DateTime? @default(now())
 }
