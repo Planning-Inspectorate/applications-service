@@ -29,13 +29,16 @@ const mapCommonAdviceFieldsToApi = (advice) => {
 		lastName: lastName?.join(' ') || '',
 		organisation: advice?.from,
 		enquiryDetail: advice?.enquiryDetails,
+		enquiryDetailWelsh: advice?.enquiryDetailsWelsh,
 		adviceGiven: advice?.adviceDetails,
+		adviceGivenWelsh: advice?.adviceDetailsWelsh,
 		respondedBy: advice?.adviceGivenBy,
 		dateEnquiryReceived: advice?.enquiryDate,
 		dateAdviceGiven: advice?.adviceDate,
 		dateLastModified: advice?.modifiedAt,
 		dateCreated: advice?.createdAt,
-		title: advice?.title
+		title: advice?.title,
+		titleWelsh: advice?.titleWelsh
 	};
 };
 
