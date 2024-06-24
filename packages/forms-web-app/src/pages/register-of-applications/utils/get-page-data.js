@@ -8,9 +8,9 @@ const {
 	getRegisterOfApplicationsSortByLinks
 } = require('./get-register-of-applications-sort-by-links');
 
-const getPageData = (applications, query, pagination) => ({
+const getPageData = (i18n, applications, query, pagination) => ({
 	...mapTitles('Register of applications', 'Register of applications'),
-	applications: mapApplications(applications),
+	applications: mapApplications(i18n, applications),
 	applicationsDownloadURL,
 	totalApplicationsWithoutFilters: pagination.totalItemsWithoutFilters,
 	pagination: getPagination(pagination),

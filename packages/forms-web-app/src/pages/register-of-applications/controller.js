@@ -9,13 +9,13 @@ const view = 'register-of-applications/view.njk';
 
 const getRegisterOfApplicationsController = async (req, res, next) => {
 	try {
-		const { query } = req;
+		const { i18n, query } = req;
 
 		const { applications, pagination } = await getApplications(
 			getRegisterOfApplicationsQueryString(query)
 		);
 
-		res.render(view, getPageData(applications, query, pagination));
+		res.render(view, getPageData(i18n, applications, query, pagination));
 	} catch (error) {
 		logger.error(error);
 		next(error);

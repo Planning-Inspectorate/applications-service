@@ -1,3 +1,8 @@
+const mapStageTranslations = (en, cy) => ({
+	en,
+	cy
+});
+
 const documentProjectStages = {
 	1: {
 		name: 'Pre-application',
@@ -36,6 +41,20 @@ const projectStages = {
 	8: 'Withdrawn'
 };
 
+const projectStagesTranslations = {
+	1: mapStageTranslations('Pre-application', 'Cyn-ymgeisio'),
+	2: mapStageTranslations(
+		'Acceptance (review of the application)',
+		'Acceptance (review of the application)'
+	),
+	3: mapStageTranslations('Pre-examination', 'Cyn-archwiliad'),
+	4: mapStageTranslations('Examination', 'Archwiliad'),
+	5: mapStageTranslations('Recommendation', 'Argymhelliad'),
+	6: mapStageTranslations('Decision', 'Penderfyniad'),
+	7: mapStageTranslations('Decided', 'Decided'),
+	8: mapStageTranslations('Withdrawn', `Wedi'i dynnu'n ôl`)
+};
+
 const projectInfoProjectStages = {
 	1: 'Pre-application',
 	2: 'Acceptance',
@@ -60,6 +79,7 @@ const registerOfApplicationsStages = [
 module.exports = {
 	documentProjectStages,
 	projectStages,
+	projectStagesTranslations,
 	projectInfoProjectStages,
 	registerOfApplicationsStages
 };
