@@ -4,6 +4,16 @@ const { getAllProjectList } = require('../../lib/application-api-wrapper');
 
 const { getApplicationsFixture } = require('../_fixtures');
 
+const { mockI18n } = require('../_mocks/i18n');
+
+const commonTranslations_EN = require('../../locales/en/common.json');
+const projectSearchTranslations_EN = require('./_translations/en.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN,
+	projectSearch: projectSearchTranslations_EN
+});
+
 jest.mock('../../lib/application-api-wrapper', () => ({
 	getAllProjectList: jest.fn()
 }));
@@ -15,6 +25,7 @@ describe('pages/project-search/controller', () => {
 
 	beforeEach(() => {
 		req = {
+			i18n,
 			query: {}
 		};
 		res = { render: jest.fn() };
@@ -194,8 +205,6 @@ describe('pages/project-search/controller', () => {
 							type: 'checkbox'
 						}
 					],
-					pageHeading: 'Projects',
-					pageTitle: 'Project search',
 					pagination: {
 						pageOptions: [1, 2, 3, '...', 7, 'next'],
 						paginationData: {

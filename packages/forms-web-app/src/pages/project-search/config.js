@@ -1,3 +1,5 @@
 const projectSearchRoute = 'project-search';
 
-module.exports = { projectSearchRoute };
+const projectSearchI18nNamespace = 'projectSearch';
+
+module.exports = { projectSearchRoute, projectSearchI18nNamespace };

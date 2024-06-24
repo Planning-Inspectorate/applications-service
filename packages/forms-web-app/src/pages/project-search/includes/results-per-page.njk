@@ -1,7 +1,7 @@
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
 
-<p>
-  Showing <strong>{{ pagination.paginationData.fromRange }}</strong> to <strong>{{ pagination.paginationData.toRange }}</strong> of <strong>{{ pagination.paginationData.totalItems }}</strong> projects.
+<p class="govuk-body">
+  {{ t('projectSearch.paragraph2', { from: '<strong>' + pagination.paginationData.fromRange + '</strong>', to: '<strong>' + pagination.paginationData.toRange + '</strong>', total: '<strong>' + pagination.paginationData.totalItems + '</strong>' }) | safe }}
 </p>
 
-{{ uiResultsPerPage(resultsPerPage) }}
+{{ uiResultsPerPage(resultsPerPage, t('common.resultsPerPage')) }}

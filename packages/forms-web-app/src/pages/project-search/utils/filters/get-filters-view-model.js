@@ -30,18 +30,7 @@ const orderFilterGroups = (filterGroups) => {
 	return filterGroups;
 };
 
-const getFilterLabel = (name) => {
-	switch (name) {
-		case 'region':
-			return 'Location';
-		case 'sector':
-			return 'Sector';
-		case 'stage':
-			return 'Stage';
-		default:
-			return name;
-	}
-};
+const getFilterLabel = (i18n, name) => i18n.t(`projectSearch.filterLabels.${name}`) || name;
 
 const filterGroupTypeViewModel = ({ count, label, value }) => ({
 	checked: false,
@@ -53,8 +42,8 @@ const filterGroupTypeViewModel = ({ count, label, value }) => ({
 const getFilterGroupIndex = (filterGroups, filter) =>
 	filterGroups.findIndex((filterGroup) => filterGroup.name === filter.name);
 
-const filterGroupViewModel = ({ name }) => {
-	const filterLabel = getFilterLabel(name);
+const filterGroupViewModel = (i18n, { name }) => {
+	const filterLabel = getFilterLabel(i18n, name);
 
 	return {
 		idPrefix: formatValueToValidElementId(`${name} option`),
@@ -70,11 +59,12 @@ const filterGroupViewModel = ({ name }) => {
 const hasFilterGroup = (filterGroups, filter) =>
 	filterGroups.find((filterGroup) => filterGroup.name === filter.name);
 
-const getFiltersViewModel = (filters) => {
+const getFiltersViewModel = (i18n, filters) => {
 	const filterGroups = [];
 
 	filters.forEach((filter) => {
-		if (!hasFilterGroup(filterGroups, filter)) filterGroups.push(filterGroupViewModel(filter));
+		if (!hasFilterGroup(filterGroups, filter))
+			filterGroups.push(filterGroupViewModel(i18n, filter));
 
 		filterGroups[getFilterGroupIndex(filterGroups, filter)].items.push(
 			filterGroupTypeViewModel(filter)
