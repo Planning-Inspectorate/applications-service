@@ -4,7 +4,14 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-{% set title = pageTitle %}
+{% set pageHeading = t('register.areYou18.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% set hint = t('register.areYou18.hint') %}
+{% set yesHiddenText = t('register.areYou18.yesHiddenText') %}
+{% set noHiddenText = t('register.areYou18.noHiddenText')%}
 
 {% block pageTitle %}
 	{% if errors %}

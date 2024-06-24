@@ -4,7 +4,14 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = pageTitle %}
+{% set pageHeading = t('register.name.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% if key == 'myself' %}
+	{% set hint = t('register.name.hint') %}
+{% endif %}
 
 {% block pageTitle %}
 	{% if errors %}

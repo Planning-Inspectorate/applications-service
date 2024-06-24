@@ -47,14 +47,10 @@
 		"option2": "Sefydliad rwyf yn gweithio neu'n gwirfoddoli iddo",
 		"option3": "Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo"
 	},
-	"myself": {
-		"pageTitleSuffix": "!!! translation required !!!"
-	},
-	"organisation": {
-		"pageTitleSuffix": "!!! org translation required !!!"
-	},
-	"agent": {
-		"pageTitleSuffix": "!!! agent translation required !!!"
+	"whoRegisteringFor": {
+		"myself": "Cofrestru i mi fy hun",
+		"organisation": "Cofrestru ar gyfer sefydliad",
+		"agent": "Cofrestru ar ran rhywun arall"
 	},
 	"name": {
 		"pageHeading": "Beth yw'ch enw llawn?",
@@ -63,7 +59,11 @@
 	"areYou18": {
 		"pageHeading": "A ydych chi'n 18 oed neu'n hŷn?",
 		"hint": "Gallwch gofrestru i leisio'ch barn os ydych yn iau na 18 oed hefyd, ond byddwn yn prosesu'ch manylion personol mewn ffordd wahanol.",
-		"yesHiddenText": "rwyf yn 18 oed neu’n hŷn",
+		"yesHiddenText": "rwyf yn 18 oed neu'n hŷn",
 		"noHiddenText": "rwyf yn iau na 18 oed"
+	},
+	"email": {
+		"pageHeading": "Beth yw'ch cyfeiriad e-bost?",
+		"hint": "Byddwn yn defnyddio'ch cyfeiriad e-bost i anfon gwybodaeth atoch am y prosiect hwn. Ni fyddwn yn cyhoeddi eich cyfeiriad e-bost."
 	}
 }

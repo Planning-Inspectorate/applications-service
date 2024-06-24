@@ -1,9 +1,4 @@
 const { getRegisterAreYou18Controller, postRegisterAreYou18Controller } = require('./controller');
-const { mockI18n } = require('../../../../_mocks/i18n');
-
-const registerTranslations_EN = require('../../_translations/en.json');
-const registerTranslations = { register: registerTranslations_EN };
-const i18n = mockI18n(registerTranslations);
 
 describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/controller', () => {
 	describe('#getRegisterAreYou18Controller', () => {
@@ -17,42 +12,30 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 			describe('and the user has selected myself', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/myself/over18',
-					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } },
-					i18n
+					session: { mySelfRegdata: { ['over-18']: 'mock are you over 18' } }
 				};
 				beforeEach(() => {
 					getRegisterAreYou18Controller(req, res);
 				});
 				it('should render the registration are you over 18 page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
-						pageHeading: 'Are you 18 or over?',
-						pageTitle:
-							'Are you 18 or over? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						over18: 'mock are you over 18',
-						noHiddenText: "I'm under 18",
-						yesHiddenText: "I'm 18 or older",
-						hint: 'You can still register to have your say if you are under 18, but we will process your personal details in a different way.'
+						key: 'myself'
 					});
 				});
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
 					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/over18',
-					session: { orgRegdata: { ['over-18']: 'mock are you over 18' } },
-					i18n
+					session: { orgRegdata: { ['over-18']: 'mock are you over 18' } }
 				};
 				beforeEach(() => {
 					getRegisterAreYou18Controller(req, res);
 				});
 				it('should render the registration are you over 18 page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
-						pageHeading: 'Are you 18 or over?',
-						pageTitle:
-							'Are you 18 or over? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
 						over18: 'mock are you over 18',
-						noHiddenText: "I'm under 18",
-						yesHiddenText: "I'm 18 or older",
-						hint: 'You can still register to have your say if you are under 18, but we will process your personal details in a different way.'
+						key: 'organisation'
 					});
 				});
 			});
@@ -98,8 +81,7 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 					body: {
 						errors: { ['over-18']: 'an error' },
 						errorSummary: [{ text: 'Error summary', href: '#' }]
-					},
-					i18n
+					}
 				};
 				beforeEach(() => {
 					postRegisterAreYou18Controller(req, res);
@@ -115,12 +97,7 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 						errors: {
 							'over-18': 'an error'
 						},
-						pageHeading: 'Are you 18 or over?',
-						pageTitle:
-							'Are you 18 or over? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						noHiddenText: "I'm under 18",
-						yesHiddenText: "I'm 18 or older",
-						hint: 'You can still register to have your say if you are under 18, but we will process your personal details in a different way.'
+						key: 'myself'
 					});
 				});
 			});
@@ -131,8 +108,7 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 					body: {
 						['over18']: 'mock are you over 18'
 					},
-					query: { mode: 'edit' },
-					i18n
+					query: { mode: 'edit' }
 				};
 				beforeEach(() => {
 					postRegisterAreYou18Controller(req, res);
@@ -150,8 +126,7 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 					body: {
 						['over18']: 'mock are you over 18'
 					},
-					query: {},
-					i18n
+					query: {}
 				};
 				beforeEach(() => {
 					postRegisterAreYou18Controller(req, res);
@@ -169,8 +144,7 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 					body: {
 						['over-18']: 'mock are you over 18'
 					},
-					query: {},
-					i18n
+					query: {}
 				};
 				beforeEach(() => {
 					postRegisterAreYou18Controller(req, res);

@@ -56,14 +56,10 @@ describe('pages/projects/register/_translations/en', () => {
 				option2: 'An organisation I work or volunteer for',
 				option3: 'On behalf of another person, a household or an organisation I do not work for'
 			},
-			myself: {
-				pageTitleSuffix: 'Registering for myself'
-			},
-			organisation: {
-				pageTitleSuffix: 'Registering for an organisation'
-			},
-			agent: {
-				pageTitleSuffix: 'Registering on behalf of someone else'
+			whoRegisteringFor: {
+				myself: 'Registering for myself',
+				organisation: 'Registering for an organisation',
+				agent: 'Registering on behalf of someone else'
 			},
 			name: {
 				pageHeading: 'What is your full name?',
@@ -74,6 +70,10 @@ describe('pages/projects/register/_translations/en', () => {
 				hint: 'You can still register to have your say if you are under 18, but we will process your personal details in a different way.',
 				yesHiddenText: "I'm 18 or older",
 				noHiddenText: "I'm under 18"
+			},
+			email: {
+				pageHeading: 'What is your email address?',
+				hint: 'We will use your email address to send you information about this project. We will not publish your email address.'
 			}
 		});
 	});

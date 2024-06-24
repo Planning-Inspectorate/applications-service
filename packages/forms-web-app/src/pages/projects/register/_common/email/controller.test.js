@@ -21,8 +21,7 @@ describe('pages/projects/register/_common/email/controller', () => {
 
 				it('should render the registration email page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
-						pageTitle:
-							'What is your email address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						key: 'myself',
 						email: 'mock email'
 					});
 				});
@@ -38,8 +37,7 @@ describe('pages/projects/register/_common/email/controller', () => {
 				});
 				it('should render the registration email page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
-						pageTitle:
-							'What is your email address? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						key: 'organisation',
 						email: 'mock email'
 					});
 				});
@@ -55,8 +53,7 @@ describe('pages/projects/register/_common/email/controller', () => {
 				});
 				it('should render the registration email page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
-						pageTitle:
-							'What is your email address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						key: 'agent',
 						email: 'mock email'
 					});
 				});
@@ -131,8 +128,7 @@ describe('pages/projects/register/_common/email/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/email/view.njk', {
 						errorSummary: [{ href: '#', text: 'Error summary' }],
 						errors: { email: 'an error' },
-						pageTitle:
-							'What is your email address? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						key: 'myself'
 					});
 				});
 			});

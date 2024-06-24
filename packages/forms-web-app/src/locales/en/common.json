@@ -50,6 +50,11 @@
 	"year": "Year",
 	"yes": "Yes",
 	"validationErrors": {
+		"emailAddress": {
+			"empty": "Enter your email address",
+			"length": "Email address must be between 3 and 255 characters",
+			"format": "Enter an email address in the correct format, like name@example.com"
+		},
 		"fullName": {
 			"message1": "Enter your full name",
 			"message2": "Full name must be between 3 and 64 characters"

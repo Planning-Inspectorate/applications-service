@@ -1,6 +1,5 @@
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getRedirectUrl } = require('./_utils/get-redirect-url');
-const { getViewModel } = require('./_utils/viewModel');
 const logger = require('../../../../../lib/logger');
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 
@@ -9,13 +8,12 @@ const fullNameKey = 'full-name';
 
 const getRegisterNameController = (req, res) => {
 	try {
-		const { session, i18n } = req;
+		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
 		const fullName = getSession(session, key)[fullNameKey];
-		const viewModel = getViewModel(i18n);
 
 		return res.render(view, {
-			...viewModel[key],
+			key,
 			fullName
 		});
 	} catch (e) {
@@ -26,17 +24,16 @@ const getRegisterNameController = (req, res) => {
 
 const postRegisterNameController = (req, res) => {
 	try {
-		const { body, query, originalUrl, session, i18n } = req;
+		const { body, query, originalUrl, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		const key = getKeyFromUrl(originalUrl);
-		const viewModel = getViewModel(i18n);
 
 		if (errors[fullNameKey] || Object.keys(errors).length > 0) {
 			return res.render(view, {
 				errors,
 				errorSummary,
-				...viewModel[key]
+				key
 			});
 		}
 

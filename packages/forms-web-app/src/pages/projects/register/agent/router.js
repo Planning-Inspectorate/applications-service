@@ -195,9 +195,17 @@ registerAgentRouter.post(
 	postRegisterAgentOrgNameController
 );
 
-registerAgentRouter.get(registerAgentEmailURL, registerMiddleware, getRegisterEmailController);
+registerAgentRouter.get(
+	registerAgentEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterEmailController
+);
 registerAgentRouter.post(
 	registerAgentEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addCommonTranslationsMiddleware,
 	emailValidationRules(),

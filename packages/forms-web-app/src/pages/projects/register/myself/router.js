@@ -123,9 +123,17 @@ registerMyselfRouter.post(
 	postRegisterAreYou18Controller
 );
 
-registerMyselfRouter.get(registerMyselfEmailURL, registerMiddleware, getRegisterEmailController);
+registerMyselfRouter.get(
+	registerMyselfEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterEmailController
+);
 registerMyselfRouter.post(
 	registerMyselfEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addCommonTranslationsMiddleware,
 	emailValidationRules(),
