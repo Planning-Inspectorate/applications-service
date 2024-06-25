@@ -86,6 +86,7 @@ const returnData = {
 };
 
 jest.mock('../../../src/lib/config.js', () => ({
+	...jest.requireActual('../../../src/lib/config.js'),
 	logger: {
 		level: process.env.LOGGER_LEVEL || 'info'
 	}
