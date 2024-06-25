@@ -11,11 +11,9 @@ async function projectsMiddleware(req, res, next) {
 	try {
 		const { params, baseUrl, path, session } = req;
 		const { case_ref } = params;
-		const {
-			i18n: { language }
-		} = req;
+		const { i18n } = req;
 
-		const applicationData = await getApplicationData(case_ref, language);
+		const applicationData = await getApplicationData(case_ref, i18n.language);
 
 		const showExaminationLink = await getShowExaminationLink(path, session, case_ref);
 		const showRepresentationsLink = hasRepresentationsAvailable(
@@ -29,6 +27,7 @@ async function projectsMiddleware(req, res, next) {
 		res.locals.path = path;
 		res.locals.projectStages = projectInfoProjectStages;
 		res.locals.verticalTabs = getVerticalTabs(
+			i18n,
 			case_ref,
 			applicationData,
 			showExaminationLink,
