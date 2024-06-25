@@ -12,8 +12,8 @@ const SequelizeMock = require('sequelize-mock');
 let sequelize;
 
 // Training env will only use BO and cannot connect to NI, so we use a mock DB to avoid connection errors
-const shouldMockDB = getAllApplications === 'BO';
-if (shouldMockDB) {
+const shouldMockDB = () => getAllApplications === 'BO';
+if (shouldMockDB()) {
 	console.log('Training environment - using mock DB for NI');
 	sequelize = new SequelizeMock();
 } else {
