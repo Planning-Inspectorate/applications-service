@@ -69,7 +69,7 @@ const { emailValidationRules } = require('../../../../validators/shared/email-ad
 const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: telephoneValidationRules
-} = require('../../../../validators/register/myself/telephone');
+} = require('../../../../validators/shared/telephone-number');
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
@@ -158,9 +158,17 @@ registerMyselfRouter.post(
 	postRegisterAddressController
 );
 
-registerMyselfRouter.get(registerMyselfNumberURL, registerMiddleware, getRegisterNumberController);
+registerMyselfRouter.get(
+	registerMyselfNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterNumberController
+);
 registerMyselfRouter.post(
 	registerMyselfNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,

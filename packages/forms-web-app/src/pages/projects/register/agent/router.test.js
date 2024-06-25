@@ -79,7 +79,7 @@ const {
 } = require('../../../../validators/register/agent/name-person-representing');
 const {
 	rules: telephoneValidationRules
-} = require('../../../../validators/register/myself/telephone');
+} = require('../../../../validators/shared/telephone-number');
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
@@ -134,7 +134,7 @@ jest.mock('../../../../validators/register/agent/name-person-representing', () =
 		rules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/myself/telephone', () => {
+jest.mock('../../../../validators/shared/telephone-number', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -306,11 +306,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNumberController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				telephoneValidationRules(),
 				validationErrorHandler,

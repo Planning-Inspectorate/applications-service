@@ -94,7 +94,7 @@ const {
 const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: telephoneValidationRules
-} = require('../../../../validators/register/myself/telephone');
+} = require('../../../../validators/shared/telephone-number');
 const {
 	rules: organisationOrgNameValidationRules
 } = require('../../../../validators/register/organisation/name-of-organisation-or-charity');
@@ -217,11 +217,15 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterNumberController
 );
 registerOrganisationRouter.post(
 	registerOrganisationNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,

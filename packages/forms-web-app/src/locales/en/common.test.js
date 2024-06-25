@@ -60,8 +60,8 @@ describe('locales/en/common', () => {
 					format: 'Enter an email address in the correct format, like name@example.com'
 				},
 				fullName: {
-					message1: 'Enter your full name',
-					message2: 'Full name must be between 3 and 64 characters'
+					empty: 'Enter your full name',
+					length: 'Full name must be between 3 and 64 characters'
 				},
 				areYou18: 'Select yes if you are 18 or over',
 				address: {
@@ -73,6 +73,11 @@ describe('locales/en/common', () => {
 					postcodeLength: 'Postcode must be 16 characters or less',
 					countryEmpty: 'Enter a country',
 					countryLength: 'Country must be 64 characters or less'
+				},
+				telephone: {
+					empty: 'Enter your telephone number',
+					length: 'Telephone number must be 255 characters or less',
+					format: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192'
 				}
 			}
 		});

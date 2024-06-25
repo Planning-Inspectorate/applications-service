@@ -125,7 +125,7 @@ const {
 } = require('../../../../validators/register/agent/name-person-representing');
 const {
 	rules: telephoneValidationRules
-} = require('../../../../validators/register/myself/telephone');
+} = require('../../../../validators/shared/telephone-number');
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
@@ -282,9 +282,17 @@ registerAgentRouter.post(
 	postRegisterAgentRepresentingNameController
 );
 
-registerAgentRouter.get(registerAgentNumberURL, registerMiddleware, getRegisterNumberController);
+registerAgentRouter.get(
+	registerAgentNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterNumberController
+);
 registerAgentRouter.post(
 	registerAgentNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,

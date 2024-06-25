@@ -83,6 +83,10 @@ describe('pages/projects/register/_translations/cy', () => {
 				line3: "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
 				postcode: 'Cod post',
 				country: 'Gwlad'
+			},
+			number: {
+				pageHeading: "Beth yw'ch rhif ffôn?",
+				hint: "Byddwn yn defnyddio'ch rhif ffôn i gysylltu â chi ynglŷn â'r prosiect os na allwn gysylltu â chi trwy e-bost. Ni fyddwn yn cyhoeddi eich rhif ffôn."
 			}
 		});
 	});

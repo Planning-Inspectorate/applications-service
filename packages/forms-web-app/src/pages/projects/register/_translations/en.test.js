@@ -82,6 +82,10 @@ describe('pages/projects/register/_translations/en', () => {
 				line3: "Town or city <span class='govuk-visually-hidden'>of 3</span> (Optional)",
 				postcode: 'Postcode',
 				country: 'Country'
+			},
+			number: {
+				pageHeading: 'What is your telephone number?',
+				hint: 'We will use your phone number to contact you about the project if we cannot reach you by email. We will not publish your telephone number.'
 			}
 		});
 	});
