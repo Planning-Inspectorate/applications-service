@@ -27,14 +27,17 @@ const mockMessage = {
 	caseReference: 'BC0110001',
 	caseId: 130,
 	title: 'Advice title',
+	titleWelsh: 'Advice title in Welsh',
 	from: 'Advice from',
 	agent: 'Advice agent',
 	method: 'Advice method',
 	enquiryDate: new Date('2021-06-01'),
 	enquiryDetails: 'Advice enquiry details',
+	enquiryDetailsWelsh: 'Advice enquiry details in Welsh',
 	adviceGivenBy: 'Advice given by',
 	adviceDate: new Date('2021-08-01'),
 	adviceDetails: 'Advice details',
+	adviceDetailsWelsh: 'Advice details in Welsh',
 	status: 'published',
 	redactionStatus: 'unredacted',
 	attachmentIds: ['1', '2', '3']
@@ -86,7 +89,7 @@ describe('nsip-advice', () => {
 		const statements = receivedStatement.split('\n');
 		expect(statements[0].trim()).toBe('MERGE INTO [advice] AS Target');
 		expect(statements[1].trim()).toBe(
-			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17) AS Source ([adviceId], [adviceReference], [caseReference], [caseId], [title], [from], [agent], [method], [enquiryDate], [enquiryDetails], [adviceGivenBy], [adviceDate], [adviceDetails], [status], [redactionStatus], [attachmentIds], [modifiedAt])'
+			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17, @P18, @P19, @P20) AS Source ([adviceId], [adviceReference], [caseReference], [caseId], [title], [titleWelsh], [from], [agent], [method], [enquiryDate], [enquiryDetails], [enquiryDetailsWelsh], [adviceGivenBy], [adviceDate], [adviceDetails], [adviceDetailsWelsh], [status], [redactionStatus], [attachmentIds], [modifiedAt])'
 		);
 		expect(statements[2].trim()).toBe('ON Target.[adviceId] = Source.[adviceId]');
 		expect(statements[3].trim()).toBe('WHEN MATCHED');
@@ -94,10 +97,10 @@ describe('nsip-advice', () => {
 			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
 		);
 		expect(statements[5].trim()).toBe(
-			'THEN UPDATE SET Target.[adviceReference] = Source.[adviceReference], Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[title] = Source.[title], Target.[from] = Source.[from], Target.[agent] = Source.[agent], Target.[method] = Source.[method], Target.[enquiryDate] = Source.[enquiryDate], Target.[enquiryDetails] = Source.[enquiryDetails], Target.[adviceGivenBy] = Source.[adviceGivenBy], Target.[adviceDate] = Source.[adviceDate], Target.[adviceDetails] = Source.[adviceDetails], Target.[status] = Source.[status], Target.[redactionStatus] = Source.[redactionStatus], Target.[attachmentIds] = Source.[attachmentIds], Target.[modifiedAt] = Source.[modifiedAt]'
+			'THEN UPDATE SET Target.[adviceReference] = Source.[adviceReference], Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[title] = Source.[title], Target.[titleWelsh] = Source.[titleWelsh], Target.[from] = Source.[from], Target.[agent] = Source.[agent], Target.[method] = Source.[method], Target.[enquiryDate] = Source.[enquiryDate], Target.[enquiryDetails] = Source.[enquiryDetails], Target.[enquiryDetailsWelsh] = Source.[enquiryDetailsWelsh], Target.[adviceGivenBy] = Source.[adviceGivenBy], Target.[adviceDate] = Source.[adviceDate], Target.[adviceDetails] = Source.[adviceDetails], Target.[adviceDetailsWelsh] = Source.[adviceDetailsWelsh], Target.[status] = Source.[status], Target.[redactionStatus] = Source.[redactionStatus], Target.[attachmentIds] = Source.[attachmentIds], Target.[modifiedAt] = Source.[modifiedAt]'
 		);
 		expect(statements[6].trim()).toBe(
-			'WHEN NOT MATCHED THEN INSERT ([adviceId], [adviceReference], [caseReference], [caseId], [title], [from], [agent], [method], [enquiryDate], [enquiryDetails], [adviceGivenBy], [adviceDate], [adviceDetails], [status], [redactionStatus], [attachmentIds], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17);'
+			'WHEN NOT MATCHED THEN INSERT ([adviceId], [adviceReference], [caseReference], [caseId], [title], [titleWelsh], [from], [agent], [method], [enquiryDate], [enquiryDetails], [enquiryDetailsWelsh], [adviceGivenBy], [adviceDate], [adviceDetails], [adviceDetailsWelsh], [status], [redactionStatus], [attachmentIds], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15, @P16, @P17, @P18, @P19, @P20);'
 		);
 		const expectedParameters = Object.values(mockAdvice);
 		expect(receivedParameters.length).toBe(expectedParameters.length);

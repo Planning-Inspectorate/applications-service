@@ -40,7 +40,14 @@ const getAdviceById = async (adviceID) => {
 
 const mapSearchTermToQuery = (searchTerm) => {
 	if (searchTerm) {
-		const searchStatements = ['from', 'agent', 'enquiryDetails', 'adviceDetails'].map((field) => ({
+		const searchStatements = [
+			'from',
+			'agent',
+			'enquiryDetails',
+			'enquiryDetailsWelsh',
+			'adviceDetails',
+			'adviceDetailsWelsh'
+		].map((field) => ({
 			[field]: { contains: searchTerm }
 		}));
 		return { OR: searchStatements };

@@ -35,14 +35,18 @@ const mockMessage = {
 			eventId: 1,
 			type: 'Preliminary Meeting',
 			eventTitle: 'Example Preliminary Meeting',
+			eventTitleWelsh: 'Example Preliminary Meeting Welsh',
 			description: 'A preliminary meeting will be held to discuss the examination process.',
+			descriptionWelsh: 'Bydd cyfarfod rhagarol yn cael ei gynnal i drafod y broses archwilio.',
 			date: '2023-06-10',
 			eventLineItems: [
 				{
-					description: 'Item 1 Preliminary Description'
+					description: 'Item 1 Preliminary Description',
+					descriptionWelsh: 'Item 1 Preliminary Description Welsh'
 				},
 				{
-					description: 'Item 2 Preliminary Description'
+					description: 'Item 2 Preliminary Description',
+					descriptionWelsh: 'Item 2 Preliminary Description Welsh'
 				}
 			]
 		},
@@ -50,16 +54,19 @@ const mockMessage = {
 			eventId: 2,
 			type: 'Deadline',
 			eventTitle: 'Deadline Event',
+			eventTitleWelsh: 'Deadline Event Welsh',
 			description: 'A deadline meeting description',
+			descriptionWelsh: 'A deadline meeting description Welsh',
 			eventDeadlineStartDate: '2023-05-10',
-
 			date: '2023-05-10',
 			eventLineItems: [
 				{
-					description: 'Item 1 Deadline Description'
+					description: 'Item 1 Deadline Description',
+					descriptionWelsh: 'Item 1 Deadline Description Welsh'
 				},
 				{
-					description: 'Item 2 Deadline Description'
+					description: 'Item 2 Deadline Description',
+					descriptionWelsh: 'Item 2 Deadline Description Welsh'
 				}
 			]
 		}
@@ -74,7 +81,9 @@ const assertEventsCreated = (message) => {
 				caseReference: message.caseReference,
 				type: event.type,
 				eventTitle: event.eventTitle,
+				eventTitleWelsh: event.eventTitleWelsh,
 				description: event.description,
+				descriptionWelsh: event.descriptionWelsh,
 				...(event.eventDeadlineStartDate && {
 					eventDeadlineStartDate: new Date(event.eventDeadlineStartDate)
 				}),
@@ -82,7 +91,8 @@ const assertEventsCreated = (message) => {
 				eventId: event.eventId,
 				eventLineItems: {
 					create: event.eventLineItems?.map((eventLineItem) => ({
-						eventLineItemDescription: eventLineItem.description
+						eventLineItemDescription: eventLineItem.description,
+						eventLineItemDescriptionWelsh: eventLineItem.descriptionWelsh
 					}))
 				},
 				createdAt: new Date('2023-01-01T00:00:00.000Z'),

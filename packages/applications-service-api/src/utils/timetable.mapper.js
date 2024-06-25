@@ -1,23 +1,53 @@
 const mapBackOfficeTimetableToApi = (timetables) =>
-	timetables.map((t) => ({
-		id: t.eventId,
-		uniqueId: t.eventId.toString(),
-		caseReference: t.caseReference,
-		title: t.eventTitle,
-		description: createBackOfficeDescription(t.description, t.type, t.eventLineItems),
-		dateOfEvent: t.date,
-		typeOfEvent: t.type,
-		dateTimeDeadlineStart: t.eventDeadlineStartDate,
-		sourceSystem: 'BACK_OFFICE'
-	}));
+	timetables.map(
+		({
+			eventId,
+			caseReference,
+			eventTitle,
+			eventTitleWelsh,
+			description,
+			descriptionWelsh,
+			type,
+			eventLineItems,
+			date,
+			eventDeadlineStartDate
+		}) => {
+			const { descriptions, descriptionsWelsh } = eventLineItems.reduce(
+				(acc, { eventLineItemDescription, eventLineItemDescriptionWelsh }) => {
+					acc.descriptions.push(eventLineItemDescription);
+					acc.descriptionsWelsh.push(eventLineItemDescriptionWelsh);
+					return acc;
+				},
+				{ descriptions: [], descriptionsWelsh: [] }
+			);
 
-const createBackOfficeDescription = (timetableDescription, eventType, eventLineItems) => {
+			return {
+				id: eventId,
+				uniqueId: eventId.toString(),
+				caseReference,
+				title: eventTitle,
+				titleWelsh: eventTitleWelsh,
+				description: createBackOfficeDescription(description, type, descriptions),
+				descriptionWelsh: createBackOfficeDescription(descriptionWelsh, type, descriptionsWelsh),
+				dateOfEvent: date,
+				typeOfEvent: type,
+				dateTimeDeadlineStart: eventDeadlineStartDate,
+				sourceSystem: 'BACK_OFFICE'
+			};
+		}
+	);
+
+const createBackOfficeDescription = (
+	timetableDescription,
+	eventType,
+	eventLineItemsDescriptions
+) => {
+	if (!timetableDescription) return '';
+
 	let description = timetableDescription;
 	if (eventType === 'Deadline') {
-		description += ' \n';
-		eventLineItems.forEach((item) => {
-			description += '* ' + item.eventLineItemDescription + '\r\n';
-		});
+		const filteredDescriptions = eventLineItemsDescriptions.filter(Boolean);
+		description += ' \n' + filteredDescriptions.map((desc) => `* ${desc}\r\n`).join('');
 	}
 	return description;
 };

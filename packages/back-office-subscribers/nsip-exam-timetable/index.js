@@ -44,7 +44,9 @@ module.exports = async (context, message) => {
 						caseReference,
 						type: event.type,
 						eventTitle: event.eventTitle,
+						...(event.eventTitleWelsh && { eventTitleWelsh: event.eventTitleWelsh }),
 						description: event.description,
+						...(event.descriptionWelsh && { descriptionWelsh: event.descriptionWelsh }),
 						...(event.eventDeadlineStartDate && {
 							eventDeadlineStartDate: new Date(event.eventDeadlineStartDate)
 						}),
@@ -52,7 +54,10 @@ module.exports = async (context, message) => {
 						eventId: event.eventId,
 						eventLineItems: {
 							create: event.eventLineItems?.map((eventLineItem) => ({
-								eventLineItemDescription: eventLineItem.description
+								eventLineItemDescription: eventLineItem.description,
+								...(eventLineItem.descriptionWelsh && {
+									eventLineItemDescriptionWelsh: eventLineItem.descriptionWelsh
+								})
 							}))
 						},
 						createdAt: currentTime,
