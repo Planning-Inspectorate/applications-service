@@ -34,7 +34,9 @@ describe('advice.backoffice.repository', () => {
 								{ from: { contains: 'searchTerm' } },
 								{ agent: { contains: 'searchTerm' } },
 								{ enquiryDetails: { contains: 'searchTerm' } },
-								{ adviceDetails: { contains: 'searchTerm' } }
+								{ enquiryDetailsWelsh: { contains: 'searchTerm' } },
+								{ adviceDetails: { contains: 'searchTerm' } },
+								{ adviceDetailsWelsh: { contains: 'searchTerm' } }
 							]
 						}
 					]
