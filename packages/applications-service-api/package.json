@@ -55,6 +55,7 @@
 		"prisma": "^4.16.2",
 		"ramda": "^0.27.1",
 		"sequelize": "^6.33.0",
+		"sequelize-mock": "^0.10.2",
 		"swagger-ui-express": "^4.1.6",
 		"tcp-ping": "^0.1.1",
 		"uuid": "^8.3.1"
@@ -69,7 +70,6 @@
 		"node-mocks-http": "^1.11.0",
 		"nodemon": "^2.0.12",
 		"pino-pretty": "^4.8.0",
-		"sequelize-mock": "^0.10.2",
 		"supertest": "^6.3.3"
 	}
 }
