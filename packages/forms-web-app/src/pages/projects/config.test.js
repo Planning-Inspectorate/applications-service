@@ -1,4 +1,4 @@
-const { projectsRoute, projectsRouteParam } = require('./config');
+const { projectsRoute, projectsRouteParam, projectsI18nNamespace } = require('./config');
 
 describe('pages/projects/config', () => {
 	describe('#projectsRoute', () => {
@@ -9,6 +9,11 @@ describe('pages/projects/config', () => {
 	describe('#projectsRouteParam', () => {
 		it('should return the projects route param', () => {
 			expect(projectsRouteParam).toEqual('case_ref');
+		});
+	});
+	describe('#projectsI18nNamespace', () => {
+		it('should return the projects i18n namespace', () => {
+			expect(projectsI18nNamespace).toEqual('projects');
 		});
 	});
 });
