@@ -12,6 +12,9 @@ const { getUpdatesRouter } = require('./get-updates/router');
 const { registerRouter } = require('./register/router');
 
 const {
+	addProjectsTranslationsMiddleware
+} = require('./_middleware/add-projects-translations-middleware');
+const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
 const { projectsMiddleware } = require('./_middleware/middleware');
@@ -58,6 +61,8 @@ describe('pages/projects/router', () => {
 		});
 
 		it('should call the projects routes and controllers', () => {
+			expect(use).toBeCalledWith(addProjectsTranslationsMiddleware);
+
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref',
 				projectsMiddleware,
@@ -104,7 +109,7 @@ describe('pages/projects/router', () => {
 
 			expect(get).toBeCalledTimes(4);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(4);
+			expect(use).toBeCalledTimes(5);
 		});
 	});
 });

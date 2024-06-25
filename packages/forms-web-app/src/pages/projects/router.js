@@ -16,6 +16,9 @@ const {
 } = require('./examination-timetable/_utils/get-projects-examination-timetable-url');
 
 const {
+	addProjectsTranslationsMiddleware
+} = require('./_middleware/add-projects-translations-middleware');
+const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
 const { projectsMiddleware } = require('./_middleware/middleware');
@@ -45,6 +48,8 @@ const projectsDocumentsURL = getProjectsDocumentsURL();
 const examinationTimetableURL = getProjectsExaminationTimetableURL();
 
 const projectsRouter = express.Router();
+
+projectsRouter.use(addProjectsTranslationsMiddleware);
 
 if (featureFlag.allowProjectInformation) {
 	projectsRouter.get(
