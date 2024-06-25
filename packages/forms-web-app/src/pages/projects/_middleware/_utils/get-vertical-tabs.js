@@ -12,12 +12,18 @@ const { getRegisterIndexURL } = require('../../register/index/_utils/get-registe
 const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
 
-function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepresentationsLink) {
+function getVerticalTabs(
+	i18n,
+	caseRef,
+	applicationData,
+	showExaminationLink,
+	showRepresentationsLink
+) {
 	return [
 		{
 			hidden: featureFlag.allowProjectInformation != true,
 			id: 'project-information',
-			name: 'Project information',
+			name: i18n.t('projects.navigation.index'),
 			url: getProjectsIndexURL(caseRef)
 		},
 		{
@@ -29,37 +35,37 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 		{
 			hidden: false,
 			id: 'project-documents',
-			name: 'Documents',
+			name: i18n.t('projects.navigation.documents'),
 			url: getProjectsDocumentsURL(caseRef)
 		},
 		{
 			hidden: !isRegistrationOpen(applicationData),
 			id: 'register-index',
-			name: 'Register to have your say',
+			name: i18n.t('projects.navigation.register'),
 			url: getRegisterIndexURL(caseRef)
 		},
 		{
 			hidden: !showRepresentationsLink,
 			id: 'representations',
-			name: 'Relevant representations (registration comments)',
+			name: i18n.t('projects.navigation.representations'),
 			url: getRepresentationsIndexURL(caseRef)
 		},
 		{
 			hidden: !showExaminationLink,
 			id: 'project-examination-timetable',
-			name: 'Examination timetable',
+			name: i18n.t('projects.navigation.examinationTimetable'),
 			url: getProjectsExaminationTimetableURL(caseRef)
 		},
 		{
 			hidden: !showExaminationLink,
 			id: 'project-have-your-say',
-			name: 'Have your say',
+			name: i18n.t('projects.navigation.haveYourSay'),
 			url: '/projects/' + caseRef + '/examination/have-your-say-during-examination'
 		},
 		{
 			hidden: false,
 			id: 'get-updates',
-			name: 'Get updates',
+			name: i18n.t('projects.navigation.getUpdates'),
 			url: getUpdatesIndexURL(caseRef)
 		},
 		{
@@ -71,7 +77,7 @@ function getVerticalTabs(caseRef, applicationData, showExaminationLink, showRepr
 		{
 			hidden: false,
 			id: 'section-51',
-			name: 'Section 51 advice',
+			name: i18n.t('projects.navigation.section51'),
 			url: getSection51IndexURL(caseRef)
 		}
 	];

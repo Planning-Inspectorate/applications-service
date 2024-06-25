@@ -1,13 +1,18 @@
 const { getVerticalTabs } = require('./get-vertical-tabs');
+
 const { featureHideLink, featureFlag } = require('../../../../config');
+const { mockI18n } = require('../../../_mocks/i18n');
+const projectsTranslations__EN = require('../../_translations/en.json');
+
+const i18n = mockI18n({ projects: projectsTranslations__EN });
 
 jest.mock('../../../../config', () => ({
 	featureFlag: {},
 	featureHideLink: {}
 }));
 
-describe('#getVerticalTabs', () => {
-	describe('When getting the vertical tabs for the projects layout', () => {
+describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
+	describe('#getVerticalTabs', () => {
 		const mockApplicationData = {
 			DateOfRepresentationPeriodOpen: '2023-01-03',
 			DateOfRelevantRepresentationClose: '2023-01-04'
@@ -25,7 +30,7 @@ describe('#getVerticalTabs', () => {
 				featureFlag.hideProjectTimelineLink = false;
 				featureHideLink.hideAllExaminationDocumentsLink = true;
 
-				result = getVerticalTabs('mock-case-ref', mockApplicationData, true, true);
+				result = getVerticalTabs(i18n, 'mock-case-ref', mockApplicationData, true, true);
 			});
 
 			it('should return the vertical tabs', () => {
@@ -102,7 +107,7 @@ describe('#getVerticalTabs', () => {
 			});
 
 			it('should return the vertical tabs', () => {
-				const result = getVerticalTabs('mock-case-ref', mockApplicationData, false, false);
+				const result = getVerticalTabs(i18n, 'mock-case-ref', mockApplicationData, false, false);
 				expect(result).toEqual([
 					{
 						hidden: false,
@@ -175,6 +180,7 @@ describe('#getVerticalTabs', () => {
 
 					it('should return the vertical tabs excluding "Have your say"', () => {
 						const result = getVerticalTabs(
+							i18n,
 							're-opened-registration-case-ref',
 							mockApplicationData,
 							false,
