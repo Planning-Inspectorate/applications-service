@@ -59,7 +59,7 @@ const repFromToWelsh = (englishDesc = '') => {
 		'parish councils': 'Cyngor Plwyf'
 	};
 	const englishDescLower = englishDesc?.toLowerCase();
-	return repFromWelshDictionary[englishDescLower] || '';
+	return repFromWelshDictionary[englishDescLower];
 };
 
 module.exports = {
