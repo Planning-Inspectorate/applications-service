@@ -1,4 +1,3 @@
-const { mapTitles } = require('../../../_utils/map-titles');
 const { getProjectSearchURL } = require('../../../project-search/utils/get-project-search-url');
 const { documentsPerPage } = require('../../../projects/_utils/pagination/documentsPerPage');
 const {
@@ -16,7 +15,6 @@ const getPageData = (req, query, caseRef, searchTerm, advice, pagination) => {
 	const resultsPerPage = documentsPerPage(query);
 
 	return {
-		...mapTitles('Register of advice'),
 		...paginationView,
 		advice: getAdviceViewModel(advice, caseRef, req.i18n),
 		itemsPerPage: pagination.itemsPerPage,
