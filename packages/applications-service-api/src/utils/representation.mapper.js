@@ -43,14 +43,24 @@ const mapCommonRepresentationBOFieldsToApi = (representation) => {
 		Representative,
 		OrgOnBhalfName: represented.organisationName,
 		RepFrom: representation.representationType,
+		repFromWelsh: repFromWelshDictionary[representation.representationType],
 		RepresentationRedacted: representation.representationComment,
 		DateRrepReceived: representation.dateReceived,
 		Attachments: representation.attachmentIds
 	};
 };
 
+const repFromWelshDictionary = {
+	'Local Authorities': 'Awdurdodau Lleol',
+	'Members of the public/businesses': "Aelodau'r Cyhoedd/Busnesau",
+	'Non-statutory organisations': 'Sefydliadau Anstatudol',
+	'Other statutory consultees': 'Ymgyngoreion Statudol Eraill',
+	'Parish councils': 'Cyngorau Plwyf'
+};
+
 module.exports = {
 	mapBackOfficeRepresentationToApi,
 	mapBackOfficeRepresentationsToApi,
-	mapNIRepresentationToApi
+	mapNIRepresentationToApi,
+	repFromWelshDictionary
 };
