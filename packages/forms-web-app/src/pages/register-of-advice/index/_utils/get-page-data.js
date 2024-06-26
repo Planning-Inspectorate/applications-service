@@ -7,6 +7,7 @@ const {
 const {
 	getAdviceViewModel
 } = require('../../../projects/section-51/index/_utils/get-advice-view-model');
+const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 const { getRegisterOfAdviceIndexURL } = require('./get-register-of-advice-index-url');
 
 const getPageData = (req, query, caseRef, searchTerm, advice, pagination) => {
@@ -23,7 +24,8 @@ const getPageData = (req, query, caseRef, searchTerm, advice, pagination) => {
 		resultsPerPage,
 		searchTerm,
 		projectSearchURL: getProjectSearchURL(),
-		registerOfAdviceIndexURL: getRegisterOfAdviceIndexURL()
+		registerOfAdviceIndexURL: getRegisterOfAdviceIndexURL(),
+    isWelsh: isLangWelsh(req.i18n.language)
 	};
 };
 
