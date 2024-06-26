@@ -17,7 +17,7 @@ const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
 const {
-	addRegisterOfAdviceTranslationsMiddleware
+	registerOfAdviceTranslationsMiddleware
 } = require('./index/_middleware/register-of-advice-middleware');
 
 const registerOfAdviceIndexURL = getRegisterOfAdviceIndexURL();
@@ -29,7 +29,7 @@ registerOfAdviceRouter.get(
 	registerOfAdviceIndexURL,
 	addCommonTranslationsMiddleware,
   addSection51TranslationsMiddleware,
-	addRegisterOfAdviceTranslationsMiddleware,
+	registerOfAdviceTranslationsMiddleware,
 	getRegisterOfAdviceController
 );
 

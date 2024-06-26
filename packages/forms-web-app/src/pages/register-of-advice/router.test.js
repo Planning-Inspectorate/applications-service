@@ -9,7 +9,7 @@ const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
 const {
-	addRegisterOfAdviceTranslationsMiddleware
+	registerOfAdviceTranslationsMiddleware
 } = require('./index/_middleware/register-of-advice-middleware');
 
 describe('pages/register-of-advice/router', () => {
@@ -33,7 +33,7 @@ describe('pages/register-of-advice/router', () => {
 				'/register-of-advice',
 				addCommonTranslationsMiddleware,
         addSection51TranslationsMiddleware,
-				addRegisterOfAdviceTranslationsMiddleware,
+				registerOfAdviceTranslationsMiddleware,
 				getRegisterOfAdviceController
 			);
 
