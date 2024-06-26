@@ -3,7 +3,7 @@ const enTranslation = require('../_translations/en.json');
 const cyTranslation = require('../_translations/cy.json');
 const { registerOfAdviceI18nNamespace } = require('../config');
 
-const addRegisterOfAdviceTranslationsMiddleware = (req, res, next) => {
+const registerOfAdviceTranslationsMiddleware = (req, res, next) => {
 	const { i18n } = req;
 	const { language } = i18n;
 
@@ -14,4 +14,4 @@ const addRegisterOfAdviceTranslationsMiddleware = (req, res, next) => {
 	next();
 };
 
-module.exports = { addRegisterOfAdviceTranslationsMiddleware };
+module.exports = { registerOfAdviceTranslationsMiddleware };

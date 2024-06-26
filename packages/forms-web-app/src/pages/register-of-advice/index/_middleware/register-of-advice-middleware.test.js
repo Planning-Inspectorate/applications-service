@@ -1,4 +1,4 @@
-const { addRegisterOfAdviceTranslationsMiddleware } = require('./register-of-advice-middleware');
+const { registerOfAdviceTranslationsMiddleware } = require('./register-of-advice-middleware');
 
 jest.mock('../../../_utils/get-translations', () => {
 	return {
@@ -23,7 +23,7 @@ describe('pages/register-of-advice/_middleware/register-of-advice-middleware', (
 		describe('When the language is set to English', () => {
 			beforeEach(() => {
 				req.i18n.language = 'en';
-				addRegisterOfAdviceTranslationsMiddleware(req, res, next);
+				registerOfAdviceTranslationsMiddleware(req, res, next);
 			});
 
 			it('should add the English translations', () => {
@@ -38,7 +38,7 @@ describe('pages/register-of-advice/_middleware/register-of-advice-middleware', (
 		describe('When the language is set to Welsh', () => {
 			beforeEach(() => {
 				req.i18n.language = 'cy';
-				addRegisterOfAdviceTranslationsMiddleware(req, res, next);
+				registerOfAdviceTranslationsMiddleware(req, res, next);
 			});
 
 			it('should add the Welsh translations', () => {
