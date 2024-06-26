@@ -9,6 +9,7 @@ describe('locales/cy/common', () => {
 			clearSearch: 'Clirio chwiliad',
 			close: 'Caeedig',
 			contents: 'Cynnwys',
+			continue: 'Parhau',
 			dateFrom: 'Dyddiad o',
 			datePublished: 'Dyddiad cyhoeddi',
 			dateTo: 'Dyddiad i',
@@ -39,8 +40,16 @@ describe('locales/cy/common', () => {
 			showAllSections: 'Dangos pob adran',
 			showAllSteps: 'Dangos pob cam',
 			showFilters: 'Dangos hidlydd',
+			startNow: 'Dechrau nawr',
 			success: 'Llwyddiant',
 			to: 'I',
+			validationErrors: {
+				emailAddress: {
+					empty: 'Nodwch eich cyfeiriad e-bost',
+					length: "Mae'n rhaid i'ch cyfeiriad e-bost gynnwys rhwng 3 a 255 o nodau",
+					format: 'Nodwch gyfeiriad e-bost yn y fformat cywir, fel enw@enghraifft.com'
+				}
+			},
 			year: 'Blwyddyn',
 			yes: 'Ydw'
 		});

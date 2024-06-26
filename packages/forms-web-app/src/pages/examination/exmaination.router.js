@@ -13,6 +13,9 @@ const {
 
 const { decodeUri } = require('../../middleware/decode-uri');
 const { projectsMiddleware } = require('../projects/_middleware/middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../src/pages/_middleware/i18n/add-common-translations-middleware');
 
 const {
 	routesConfig: {
@@ -112,7 +115,13 @@ router.get(`/${checkYourAnswers.route}`, getCheckYourAnswers);
 router.get(`/${haveYourSay.route}`, projectsMiddleware, getHaveYourSay);
 
 router.get(`/${email.route}`, getEmail);
-router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);
+router.post(
+	`/${email.route}`,
+	addCommonTranslationsMiddleware,
+	emailValidationRules(email),
+	validationErrorHandler,
+	postEmail
+);
 
 router.get(`/${evidenceOrComment.route}`, getEvidenceOrComment);
 router.post(

@@ -1,11 +1,18 @@
 const { mapTitles } = require('../../../../_utils/map-titles');
 
-const titles = {
-	204: mapTitles('Get updates success'),
-	400: mapTitles('Your email verification link has expired', 'Verification link expired'),
-	500: mapTitles('There has been a problem with our system', 'Email system problem')
+const getTitles = (responseCode, i18n) => {
+	const titles = {
+		204: mapTitles(i18n.t('getUpdatesSubscribed.successful.title1')),
+		400: mapTitles(
+			i18n.t('getUpdatesSubscribed.linkExpired.heading1'),
+			i18n.t('getUpdatesSubscribed.linkExpired.title1')
+		),
+		500: mapTitles(
+			i18n.t('getUpdatesSubscribed.unsuccessful.heading1'),
+			i18n.t('getUpdatesSubscribed.unsuccessful.title1')
+		)
+	};
+	return titles[responseCode];
 };
-
-const getTitles = (responseCode) => titles[responseCode];
 
 module.exports = { getTitles };

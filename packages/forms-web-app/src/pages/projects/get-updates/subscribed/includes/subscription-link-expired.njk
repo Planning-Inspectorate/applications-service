@@ -3,5 +3,6 @@
 </h1>
 
 <p class="govuk-body">
-  To receive email updates please visit  <a class="govuk-link" href="{{ getUpdatesStartRoute }}">the Get Updates page</a> and verify your email address within 48 hours.
+  {{ t('getUpdatesSubscribed.linkExpired.phrase1', { link: '<a class="govuk-link" href="' + getUpdatesStartRoute + '">' + t('getUpdatesSubscribed.linkExpired.phrase1LinkText1') + '</a>' }) | safe }}
+  {{ t('getUpdatesSubscribed.linkExpired.phrase2') }}
 </p>

@@ -27,9 +27,7 @@ describe('projects/get-updates/confirm-your-email/controller', () => {
 				expect(res.render).toHaveBeenCalledWith(
 					'projects/get-updates/confirm-your-email/view.njk',
 					{
-						email: 'mock@email.com',
-						pageHeading: 'Confirm you want to get emails',
-						pageTitle: 'Get updates and confirm email'
+						email: 'mock@email.com'
 					}
 				);
 			});
