@@ -340,11 +340,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentAboutProjectController
 );
 registerAgentRouter.post(
 	registerAgentAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),

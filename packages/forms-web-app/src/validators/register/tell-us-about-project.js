@@ -5,12 +5,16 @@ const validate = () => {
 	return [
 		body('comment')
 			.notEmpty()
-			.withMessage('Enter what you want to tell us about this proposed project'),
+			.withMessage((_, { req }) => {
+				return req.i18n.t('common.validationErrors.aboutProject.empty');
+			}),
 		body('comment')
 			.isLength({ min: 1, max: config.applications.maxCharacters })
-			.withMessage(
-				`What you want to tell us must be ${config.applications.maxCharacters} characters or less`
-			)
+			.withMessage((_, { req }) => {
+				return req.i18n.t('common.validationErrors.aboutProject.length', {
+					maxCharacters: config.applications.maxCharacters
+				});
+			})
 	];
 };
 

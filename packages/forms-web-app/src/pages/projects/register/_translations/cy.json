@@ -77,5 +77,36 @@
 	"number": {
 		"pageHeading": "Beth yw'ch rhif ffôn?",
 		"hint": "Byddwn yn defnyddio'ch rhif ffôn i gysylltu â chi ynglŷn â'r prosiect os na allwn gysylltu â chi trwy e-bost. Ni fyddwn yn cyhoeddi eich rhif ffôn."
+	},
+	"aboutProject": {
+		"pageHeading": "Beth ydych chi eisiau ei ddweud wrthym am y prosiect arfaethedig hwn?",
+		"paragraph1": "Mae'n rhaid i chi gynnwys sylwadau gyda'ch cofrestriad. Mae'n rhaid i'ch sylwadau ymwneud â'r prif faterion ac effeithiau, yn eich barn chi. Dylech gynnwys cymaint o fanylion â phosibl a sôn am unrhyw beth a allai effeithio ar eich bywyd beunyddiol.",
+		"paragraph2": "Bydd y wybodaeth hon:",
+		"listItem1": "yn cael ei gweld gan yr Awdurdod Archwilio",
+		"listItem2": "yn cael ei chyhoeddi ar ein gwefan",
+		"paragraph3": "Gallwch gyflwyno mwy o sylwadau yn ystod yr archwiliad o'r cais pan fyddwch wedi cofrestru.",
+		"textAreaLabel": "Sylwadau cofrestru",
+		"details": {
+			"summaryText": "Peidiwch â chynnwys y manylion hyn.",
+			"heading1": "Defnydd o iaith, hyperddolenni a gwybodaeth sensitif",
+			"paragraph1": "Ni ddylech ddefnyddio iaith hiliol, ymfflamychol na difrïol, na chynnwys gwybodaeth sensitif (a elwir yn wybodaeth categori arbennig hefyd) amdanoch chi'ch hun neu bobl eraill yn eich sylwadau.",
+			"paragraph2": "Peidiwch â chynnwys dolenni i wefannau trydydd parti. Gallwch gynnwys dolenni i naill ai GOV.UK neu wefannau ar gyfer sefydliadau proffesiynol siartredig fel y Sefydliad Rheoli ac Asesu Amgylcheddol (IEMA).",
+			"heading2": "Enghreifftiau o wybodaeth sensitif",
+			"paragraph3": "Mae gwybodaeth sensitif yn cyfeirio at:",
+			"listItem1": "sylwadau gan blant",
+			"listItem2": "gwybodaeth yn ymwneud â phlant",
+			"listItem3": "gwybodaeth yn ymwneud ag iechyd",
+			"listItem4": "gwybodaeth yn ymwneud â throseddu",
+			"paragraph4": "Mae hefyd yn golygu unrhyw wybodaeth sy'n ymwneud â nodweddion canlynol unigolyn:",
+			"listItem5": "hil",
+			"listItem6": "tarddiad ethnig",
+			"listItem7": "gwleidyddiaeth",
+			"listItem8": "crefydd",
+			"listItem9": "aelodaeth ag undeb llafur",
+			"listItem10": "geneteg",
+			"listItem11": "nodweddion corfforol",
+			"listItem12": "bywyd rhywiol",
+			"listItem13": "cyfeiriadedd rhywiol"
+		}
 	}
 }

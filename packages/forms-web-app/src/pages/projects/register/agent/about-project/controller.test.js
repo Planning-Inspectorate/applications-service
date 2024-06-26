@@ -36,8 +36,9 @@ describe('pages/projects/register/agent/about-project/controller', () => {
 	describe('#getRegisterAgentAboutProjectController', () => {
 		it('should call the correct template', () => {
 			getRegisterAgentAboutProjectController(req, res);
-			expect(res.render).toHaveBeenCalledWith('projects/register/agent/about-project/view.njk', {
-				comment: undefined
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
+				comment: undefined,
+				key: 'agent'
 			});
 		});
 
@@ -53,8 +54,9 @@ describe('pages/projects/register/agent/about-project/controller', () => {
 				}
 			};
 			getRegisterAgentAboutProjectController(req, res);
-			expect(res.render).toHaveBeenCalledWith('projects/register/agent/about-project/view.njk', {
-				comment: 'test'
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
+				comment: 'test',
+				key: 'agent'
 			});
 		});
 	});
@@ -129,10 +131,11 @@ describe('pages/projects/register/agent/about-project/controller', () => {
 			await postRegisterAgentAboutProjectController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith('projects/register/agent/about-project/view.njk', {
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
 				errors: { a: 'b' },
 				errorSummary: [{ href: '#', text: 'There were errors here' }],
-				comment: undefined
+				comment: undefined,
+				key: 'agent'
 			});
 		});
 	});
@@ -183,7 +186,7 @@ describe('pages/projects/register/agent/about-project/controller', () => {
 			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.render).toBeCalledWith(
-				'projects/register/agent/about-project/view.njk',
+				'projects/register/_common/about-project/view.njk',
 				expect.objectContaining(mockRequest.body)
 			);
 		});

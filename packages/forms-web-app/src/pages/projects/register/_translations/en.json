@@ -77,5 +77,36 @@
 	"number": {
 		"pageHeading": "What is your telephone number?",
 		"hint": "We will use your phone number to contact you about the project if we cannot reach you by email. We will not publish your telephone number."
+	},
+	"aboutProject": {
+		"pageHeading": "What do you want to tell us about this proposed project?",
+		"paragraph1": "You must include comments with your registration. Your comments must be about what you consider to be the main issues and impacts. You should include as much detail as possible and cover anything that may affect your day-to-day life.",
+		"paragraph2": "This information will be:",
+		"listItem1": "seen by the examining authority",
+		"listItem2": "published on our website",
+		"paragraph3": "You will be able to submit further comments during the examination of the application once you have registered",
+		"textAreaLabel": "Registration comments",
+		"details": {
+			"summaryText": "Do not include these details.",
+			"heading1": "Use of language, hyperlinks and sensitive information",
+			"paragraph1": "You should not use racist, inflammatory or abusive language, or include sensitive information (also called special category information) about yourself or others in your comments.",
+			"paragraph2": "Do not include links to third party websites. You can include links to either GOV.UK or websites for chartered professional institutes like IEMA.",
+			"heading2": "Examples of sensitive information",
+			"paragraph3": "Sensitive information refers to:",
+			"listItem1": "comments from children",
+			"listItem2": "information relating to children",
+			"listItem3": "information relating to health",
+			"listItem4": "information relating to crime",
+			"paragraph4": "It also means any information relating to an individual&#39;s:",
+			"listItem5": "race",
+			"listItem6": "ethnic origin",
+			"listItem7": "politics",
+			"listItem8": "religion",
+			"listItem9": "trade union membership",
+			"listItem10": "genetics",
+			"listItem11": "physical characteristics",
+			"listItem12": "sex life",
+			"listItem13": "sexual orientation"
+		}
 	}
 }

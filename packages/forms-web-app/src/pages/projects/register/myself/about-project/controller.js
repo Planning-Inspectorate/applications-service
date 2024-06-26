@@ -7,11 +7,12 @@ const {
 } = require('../../../../../services/registration.service');
 const config = require('../../../../../config');
 
-const view = 'projects/register/myself/about-project/view.njk';
+const view = 'projects/register/_common/about-project/view.njk';
+const key = 'myself';
 
 const getRegisterMyselfAboutProjectController = (req, res) => {
 	const { comment } = req.session;
-	return res.render(view, { comment });
+	return res.render(view, { comment, key });
 };
 
 const postRegisterMyselfAboutProjectController = async (req, res) => {
@@ -29,7 +30,8 @@ const postRegisterMyselfAboutProjectController = async (req, res) => {
 		return res.render(view, {
 			errors,
 			errorSummary,
-			comment
+			comment,
+			key
 		});
 	}
 

@@ -34,6 +34,7 @@ describe('locales/cy/common', () => {
 			},
 			resultsPerPage: 'Canlyniadau fesul tudalen',
 			returnToResults: 'Dychwelyd at ganlyniadau',
+			saveAndExit: 'Arbed a Gadael',
 			saveChanges: 'Achub newidiadau',
 			search: 'Chwilio',
 			selectAllFilters: 'Dewiswch bob hidlydd',
@@ -79,6 +80,11 @@ describe('locales/cy/common', () => {
 					empty: 'Nodwch eich rhif ffôn',
 					length: "Mae'n rhaid i'ch rhif ffôn gynnwys 255 o nodau neu lai",
 					format: 'Nodwch rif ffôn, fel 01632 960 001, 07700 900 982 neu 44 808 157 0192'
+				},
+				aboutProject: {
+					empty: 'Nodwch yr hyn rydych eisiau ei ddweud wrthym am y prosiect arfaethedig hwn',
+					length:
+						"Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
 				}
 			}
 		});

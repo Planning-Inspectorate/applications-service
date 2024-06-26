@@ -200,11 +200,15 @@ describe('pages/projects/register/myself/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/tell-us-about-project',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterMyselfAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/tell-us-about-project',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				aboutProjectValidationRules(),

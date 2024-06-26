@@ -234,11 +234,15 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationAboutProjectController
 );
 registerOrganisationRouter.post(
 	registerOrganisationAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),

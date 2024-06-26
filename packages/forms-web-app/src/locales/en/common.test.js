@@ -33,6 +33,7 @@ describe('locales/en/common', () => {
 			},
 			resultsPerPage: 'Results per page',
 			returnToResults: 'Return to results',
+			saveAndExit: 'Save & Exit',
 			saveChanges: 'Save changes',
 			search: 'Search',
 			selectAllFilters: 'Select all filters',
@@ -78,6 +79,10 @@ describe('locales/en/common', () => {
 					empty: 'Enter your telephone number',
 					length: 'Telephone number must be 255 characters or less',
 					format: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192'
+				},
+				aboutProject: {
+					empty: 'Enter what you want to tell us about this proposed project',
+					length: 'What you want to tell us must be {{-maxCharacters}} characters or less'
 				}
 			}
 		});

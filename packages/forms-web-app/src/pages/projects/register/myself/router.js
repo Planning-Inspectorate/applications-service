@@ -177,11 +177,15 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterMyselfAboutProjectController
 );
 registerMyselfRouter.post(
 	registerMyselfAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),

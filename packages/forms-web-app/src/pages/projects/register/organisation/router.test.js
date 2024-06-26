@@ -252,11 +252,15 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/tell-us-about-project',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/tell-us-about-project',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				aboutProjectValidationRules(),
