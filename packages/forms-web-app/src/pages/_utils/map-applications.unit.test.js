@@ -2,10 +2,14 @@ const { mapApplications } = require('./map-applications');
 
 const { getApplicationsFixture } = require('../_fixtures');
 
+const { mockI18n } = require('../_mocks/i18n');
+
+const i18n = mockI18n();
+
 describe('_utils/map-applications', () => {
 	describe('#mapApplications', () => {
 		it('should take applications API response and returned correctly mapped data', () => {
-			const result = mapApplications(getApplicationsFixture.data.applications);
+			const result = mapApplications(i18n, getApplicationsFixture.data.applications);
 
 			expect(result).toEqual([
 				{

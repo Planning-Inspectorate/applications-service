@@ -24,6 +24,9 @@ const {
 const {
 	addCookiesTranslationsMiddleware
 } = require('./cookies/_middleware/add-cookies-translations-middleware');
+const {
+	addProjectSearchTranslationsMiddleware
+} = require('./project-search/_middleware/add-project-search-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -52,6 +55,11 @@ jest.mock(
 jest.mock('./contact/_middleware/add-contact-translations-middleware', () => {
 	return {
 		addContactTranslationsMiddleware: jest.fn()
+	};
+});
+jest.mock('./project-search/_middleware/add-project-search-translations-middleware', () => {
+	return {
+		addProjectSearchTranslationsMiddleware: jest.fn()
 	};
 });
 jest.mock('./cookies/_validators/validate-cookies', () => {
@@ -131,7 +139,12 @@ describe('pages/router', () => {
 				getDetailedInformationController
 			);
 
-			expect(get).toHaveBeenCalledWith('/project-search', getProjectSearchController);
+			expect(get).toHaveBeenCalledWith(
+				'/project-search',
+				addCommonTranslationsMiddleware,
+				addProjectSearchTranslationsMiddleware,
+				getProjectSearchController
+			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/register-of-applications',
