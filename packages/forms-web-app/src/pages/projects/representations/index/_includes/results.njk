@@ -25,7 +25,7 @@
 
       <div class="ui-results__result-meta-data">
         <div class="ui-results__result-meta-data-item ui-results__result-meta-data-item--fill-width" data-cy="published-stage">
-          <strong>Submitted by:</strong> {{ representation.submittedBy }}
+          <strong>Submitted by:</strong> {{  representation.submittedByWelsh if langIsWelsh else representation.submittedBy }}
         </div>
 
         <div class="ui-results__result-meta-data-item" data-cy="published-date">
