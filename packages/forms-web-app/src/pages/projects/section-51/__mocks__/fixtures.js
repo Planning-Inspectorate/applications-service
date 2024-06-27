@@ -8,7 +8,9 @@ const adviceList = [
 		],
 		dateAdviceGiven: '2023-01-01',
 		enquiryDetail: 'mock enquiry detail',
+		enquiryDetailWelsh: 'mock enquiry detail in Welsh',
 		adviceGiven: 'mock advice given',
+		adviceGivenWelsh: 'mock advice given in Welsh',
 		organisation: 'mock organisation'
 	},
 	{
@@ -16,7 +18,8 @@ const adviceList = [
 		enquiryMethod: 'Meeting',
 		organisation: 'mock organisation',
 		dateAdviceGiven: 'mock date given 2',
-		enquiryDetail: 'mock enquiry detail 2'
+		enquiryDetail: 'mock enquiry detail 2',
+		enquiryDetailWelsh: 'mock enquiry detail 2 in Welsh'
 	},
 	{
 		adviceID: 'mock advice id 3',
@@ -24,14 +27,17 @@ const adviceList = [
 		lastName: 'mock last name',
 		enquiryMethod: 'Email',
 		dateAdviceGiven: 'mock date given 3',
-		enquiryDetail: 'mock enquiry detail 3'
+		enquiryDetail: 'mock enquiry detail 3',
+		enquiryDetailWelsh: 'mock enquiry detail 3 in Welsh'
 	},
 	{
 		adviceID: 'mock advice id 4',
 		enquiryMethod: 'Email',
 		dateAdviceGiven: 'mock date given 4',
 		adviceGiven: 'mock advice given 4',
-		enquiryDetail: 'mock enquiry detail 4'
+		adviceGivenWelsh: 'mock advice given 4 in Welsh',
+		enquiryDetail: 'mock enquiry detail 4',
+		enquiryDetailWelsh: 'mock enquiry detail 4 in Welsh'
 	}
 ];
 

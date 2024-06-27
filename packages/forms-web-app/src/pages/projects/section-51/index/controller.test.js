@@ -3,6 +3,9 @@ const { listAdvice } = require('../../../../services/advice.service');
 const { getPaginationUrl, getPagination } = require('../../_utils/pagination/pagination');
 const { documentsPerPage } = require('../../_utils/pagination/documentsPerPage');
 const { adviceList } = require('../__mocks__/fixtures');
+const { mockI18n } = require('../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../locales/en/common.json');
+const section51Translations_EN = require('../_translations/en.json');
 
 jest.mock('../../../../services/advice.service', () => ({
 	listAdvice: jest.fn()
@@ -15,6 +18,11 @@ jest.mock('../../_utils/pagination/pagination', () => ({
 	getPagination: jest.fn()
 }));
 
+const i18n = mockI18n({
+	common: commonTranslations_EN,
+	section51: section51Translations_EN
+});
+
 describe('pages/projects/section-51/index/controller', () => {
 	describe('#getSection51IndexController', () => {
 		describe('When getting the section 51 advice', () => {
@@ -24,7 +32,8 @@ describe('pages/projects/section-51/index/controller', () => {
 						searchTerm: '',
 						page: '',
 						itemsPerPage: ''
-					}
+					},
+					i18n
 				};
 				const res = { render: jest.fn(), locals: { caseRef: 'mock case ref' } };
 				const next = jest.fn();
@@ -46,7 +55,8 @@ describe('pages/projects/section-51/index/controller', () => {
 						searchTerm: 'mock search term',
 						page: 'mock page',
 						itemsPerPage: 'mock items per page'
-					}
+					},
+					i18n
 				};
 				const res = { render: jest.fn(), locals: { caseRef: 'mock case ref' } };
 				const next = jest.fn();
