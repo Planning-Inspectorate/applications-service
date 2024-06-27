@@ -39,6 +39,7 @@ describe('locales/cy/common', () => {
 			showAllSections: 'Dangos pob adran',
 			showAllSteps: 'Dangos pob cam',
 			showFilters: 'Dangos hidlydd',
+			startNow: 'Dechrau nawr',
 			success: 'Llwyddiant',
 			to: 'I',
 			year: 'Blwyddyn',

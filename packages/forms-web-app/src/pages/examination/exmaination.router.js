@@ -13,6 +13,12 @@ const {
 
 const { decodeUri } = require('../../middleware/decode-uri');
 const { projectsMiddleware } = require('../projects/_middleware/middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../pages/_middleware/i18n/add-common-translations-middleware');
+const {
+	addExaminationHaveYourSayTranslationsMiddleware
+} = require('./have-your-say/_middleware/add-examination-have-your-say-translations-middleware');
 
 const {
 	routesConfig: {
@@ -96,6 +102,8 @@ const chooseDeadlineRouter = require('./choose-deadline/router');
 
 const router = express.Router({ mergeParams: true });
 
+router.use(addCommonTranslationsMiddleware);
+
 router.get(`/${applicant.route}`, getApplicant);
 router.post(
 	`/${applicant.route}`,
@@ -109,7 +117,12 @@ router.post(`/${checkSubmissionItem.route}`, postCheckSubmissionItem);
 
 router.get(`/${checkYourAnswers.route}`, getCheckYourAnswers);
 
-router.get(`/${haveYourSay.route}`, projectsMiddleware, getHaveYourSay);
+router.get(
+	`/${haveYourSay.route}`,
+	addExaminationHaveYourSayTranslationsMiddleware,
+	projectsMiddleware,
+	getHaveYourSay
+);
 
 router.get(`/${email.route}`, getEmail);
 router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);

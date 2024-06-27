@@ -38,6 +38,7 @@ describe('locales/en/common', () => {
 			showAllSections: 'Show all sections',
 			showAllSteps: 'Show all steps',
 			showFilters: 'Show filters',
+			startNow: 'Start now',
 			success: 'Success',
 			to: 'To',
 			year: 'Year',
