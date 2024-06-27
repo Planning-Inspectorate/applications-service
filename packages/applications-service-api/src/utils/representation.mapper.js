@@ -43,7 +43,7 @@ const mapCommonRepresentationBOFieldsToApi = (representation) => {
 		Representative,
 		OrgOnBhalfName: represented.organisationName,
 		RepFrom: representation.representationType,
-		repFromWelsh: repFromToWelsh(representation.representationType),
+		RepFromWelsh: repFromToWelsh(representation.representationType),
 		RepresentationRedacted: representation.representationComment,
 		DateRrepReceived: representation.dateReceived,
 		Attachments: representation.attachmentIds
