@@ -37,9 +37,6 @@ const {
 	addRegisterTranslationsMiddleware
 } = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
-const {
-	addCommonTranslationsMiddleware
-} = require('../../../../pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');

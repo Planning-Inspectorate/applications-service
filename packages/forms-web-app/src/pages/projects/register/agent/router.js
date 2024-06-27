@@ -107,9 +107,6 @@ const {
 	addRegisterTranslationsMiddleware
 } = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
-const {
-	addCommonTranslationsMiddleware
-} = require('../../../../../src/pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {

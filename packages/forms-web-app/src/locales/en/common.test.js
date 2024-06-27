@@ -52,15 +52,6 @@ describe('locales/en/common', () => {
 					empty: 'Enter your email address',
 					length: 'Email address must be between 3 and 255 characters',
 					format: 'Enter an email address in the correct format, like name@example.com'
-				}
-			},
-			year: 'Year',
-			yes: 'Yes',
-			validationErrors: {
-				emailAddress: {
-					empty: 'Enter your email address',
-					length: 'Email address must be between 3 and 255 characters',
-					format: 'Enter an email address in the correct format, like name@example.com'
 				},
 				fullName: {
 					empty: 'Enter your full name',
@@ -89,7 +80,9 @@ describe('locales/en/common', () => {
 					empty: 'Enter what you want to tell us about this proposed project',
 					length: 'What you want to tell us must be {{-maxCharacters}} characters or less'
 				}
-			}
+			},
+			year: 'Year',
+			yes: 'Yes'
 		});
 	});
 });

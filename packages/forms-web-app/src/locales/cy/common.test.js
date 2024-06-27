@@ -53,15 +53,6 @@ describe('locales/cy/common', () => {
 					empty: 'Nodwch eich cyfeiriad e-bost',
 					length: "Mae'n rhaid i'ch cyfeiriad e-bost gynnwys rhwng 3 a 255 o nodau",
 					format: 'Nodwch gyfeiriad e-bost yn y fformat cywir, fel enw@enghraifft.com'
-				}
-			},
-			year: 'Blwyddyn',
-			yes: 'Ydw',
-			validationErrors: {
-				emailAddress: {
-					empty: 'Nodwch eich cyfeiriad e-bost',
-					length: "Mae'n rhaid i'ch cyfeiriad e-bost gynnwys rhwng 3 a 255 o nodau",
-					format: 'Nodwch gyfeiriad e-bost yn y fformat cywir, fel enw@enghraifft.com'
 				},
 				fullName: {
 					empty: 'Nodwch eich enw llawn',
@@ -91,7 +82,9 @@ describe('locales/cy/common', () => {
 					length:
 						"Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
 				}
-			}
+			},
+			year: 'Blwyddyn',
+			yes: 'Ydw'
 		});
 	});
 });
