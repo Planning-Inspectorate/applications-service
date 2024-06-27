@@ -3,6 +3,9 @@ const { getRegisterOfAdviceController } = require('./controller');
 const { adviceFixture } = require('../../_fixtures/advice');
 
 const { handler } = require('../../../lib/application-api-wrapper');
+const { mockI18n } = require('../../_mocks/i18n');
+const commonTranslations_EN = require('../../../locales/en/common.json');
+const section51Translations_EN = require('../../projects/section-51/_translations/en.json');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	handler: jest.fn()
@@ -44,7 +47,11 @@ describe('pages/register-of-advice/index/controller', () => {
 							searchTerm: '',
 							page: '',
 							itemsPerPage: ''
-						}
+						},
+						i18n: mockI18n({
+							common: commonTranslations_EN,
+							section51: section51Translations_EN
+						})
 					};
 					const res = { render: jest.fn() };
 					const next = jest.fn();
@@ -111,7 +118,11 @@ describe('pages/register-of-advice/index/controller', () => {
 							searchTerm: '',
 							page: '',
 							itemsPerPage: ''
-						}
+						},
+						i18n: mockI18n({
+							common: commonTranslations_EN,
+							section51: section51Translations_EN
+						})
 					};
 					const res = { render: jest.fn() };
 					const next = jest.fn();

@@ -1,5 +1,13 @@
 const { getFilters } = require('./get-filters');
 
+const { mockI18n } = require('../../../_mocks/i18n');
+
+const projectSearchTranslations_EN = require('../../_translations/en.json');
+
+const i18n = mockI18n({
+	projectSearch: projectSearchTranslations_EN
+});
+
 describe('project-search/utils/filters/get-filters', () => {
 	describe('#getFilters', () => {
 		describe('When getting the filters for the project search page', () => {
@@ -51,7 +59,7 @@ describe('project-search/utils/filters/get-filters', () => {
 				let filters;
 
 				beforeEach(() => {
-					filters = getFilters({}, mockFilters);
+					filters = getFilters(i18n, {}, mockFilters);
 				});
 				it('should return the filters view model with no active filters', () => {
 					expect(filters).toEqual({
@@ -133,6 +141,7 @@ describe('project-search/utils/filters/get-filters', () => {
 
 				beforeEach(() => {
 					filters = getFilters(
+						i18n,
 						{
 							region: 'north_west',
 							sector: ['mock_value_3', 'mock_value_4'],

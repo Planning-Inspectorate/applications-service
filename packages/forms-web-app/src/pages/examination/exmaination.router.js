@@ -125,7 +125,13 @@ router.get(
 );
 
 router.get(`/${email.route}`, getEmail);
-router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);
+router.post(
+	`/${email.route}`,
+	addCommonTranslationsMiddleware,
+	emailValidationRules(email),
+	validationErrorHandler,
+	postEmail
+);
 
 router.get(`/${evidenceOrComment.route}`, getEvidenceOrComment);
 router.post(

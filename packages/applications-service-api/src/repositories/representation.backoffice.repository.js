@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const { repFromToWelsh } = require('../utils/representation.mapper');
 
 const commonWhereFilters = {
 	status: {
@@ -104,6 +105,7 @@ const getFilters = async (caseReference) => {
 
 	return options.map((option) => ({
 		name: option.representationType,
+		name_cy: repFromToWelsh(option.representationType),
 		count: option._count.id
 	}));
 };

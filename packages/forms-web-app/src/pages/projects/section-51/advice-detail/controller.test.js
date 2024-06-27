@@ -3,6 +3,12 @@ const { getSection51AdviceDetailController } = require('./controller');
 const { getAdviceDetailData } = require('../../../../services/advice.service');
 const { adviceList } = require('../__mocks__/fixtures');
 
+const { mockI18n } = require('../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../locales/en/common.json');
+const section51Translations_EN = require('../_translations/en.json');
+const commonTranslations_CY = require('../../../../locales/cy/common.json');
+const section51Translations_CY = require('../_translations/cy.json');
+
 jest.mock('../../../../services/advice.service', () => ({
 	getAdviceDetailData: jest.fn()
 }));
@@ -28,7 +34,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 					getAdviceDetailData.mockReturnValue(adviceList[0]);
 				});
 
-				describe('and the user is on the section 51 detail page', () => {
+				describe('and the user is on the section 51 detail page in English', () => {
 					beforeEach(async () => {
 						mockReq = {
 							...mockReq,
@@ -36,7 +42,11 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 								case_ref: 'mock-case-ref',
 								id: 'mock-advice-detail-id'
 							},
-							path: '/projects/mock-case-ref/s51advice/mock-advice-detail-id'
+							path: '/projects/mock-case-ref/s51advice/mock-advice-detail-id',
+							i18n: mockI18n({
+								common: commonTranslations_EN,
+								section51: section51Translations_EN
+							})
 						};
 						await getSection51AdviceDetailController(mockReq, mockRes, mockNext);
 					});
@@ -69,14 +79,21 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 					});
 				});
 
-				describe('and the user is on the register of advice detail page', () => {
+				describe('and the user is on the register of advice detail page in Welsh', () => {
 					beforeEach(async () => {
 						mockReq = {
 							...mockReq,
 							params: {
 								id: 'mock-advice-detail-id'
 							},
-							path: '/register-of-advice/mock-advice-detail-id'
+							path: '/register-of-advice/mock-advice-detail-id',
+							i18n: mockI18n(
+								{
+									common: commonTranslations_CY,
+									section51: section51Translations_CY
+								},
+								'cy'
+							)
 						};
 						await getSection51AdviceDetailController(mockReq, mockRes, mockNext);
 					});
@@ -84,7 +101,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 					it('should call the register of advice detail template with the page data', () => {
 						expect(mockRes.render).toHaveBeenCalledWith('register-of-advice/detail/view.njk', {
 							activeId: 'section-51',
-							adviceGiven: '<p>mock advice given</p>',
+							adviceGiven: '<p>mock advice given in Welsh</p>',
 							attachments: [
 								{ text: 'View advice (PDF)', url: 'mock document URI 1' },
 								{ text: 'View advice (Word)', url: 'mock document URI 2' }
@@ -92,13 +109,16 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							backToListUrl: '/register-of-advice',
 							breadcrumbsItems: null,
 							enquirySummaryList: [
-								{ key: { text: 'From' }, value: { text: 'mock organisation' } },
-								{ key: { text: 'Date advice given' }, value: { text: '1 January 2023' } },
-								{ key: { text: 'Enquiry type' }, value: { text: 'Email' } }
+								{ key: { text: 'Oddi wrth' }, value: { text: 'mock organisation' } },
+								{
+									key: { text: 'Dyddiad y rhoddwyd y cyngor' },
+									value: { text: '1 January 2023' }
+								},
+								{ key: { text: 'Math o ymholiad' }, value: { text: 'Email' } }
 							],
-							enquiryText: '<p>mock enquiry detail</p>',
-							pageTitle: 'mock enquiry detail',
-							title: 'Advice to mock organisation'
+							enquiryText: '<p>mock enquiry detail in Welsh</p>',
+							pageTitle: 'mock enquiry detail in Welsh',
+							title: 'Cyngor i mock organisation'
 						});
 					});
 				});

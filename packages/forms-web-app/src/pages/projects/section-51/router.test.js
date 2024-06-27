@@ -44,7 +44,7 @@ describe('pages/projects/section-51/router', () => {
 
 			expect(get).toBeCalledTimes(2);
 			expect(post).toBeCalledTimes(0);
-			expect(use).toBeCalledTimes(0);
+			expect(use).toBeCalledTimes(1);
 		});
 	});
 });

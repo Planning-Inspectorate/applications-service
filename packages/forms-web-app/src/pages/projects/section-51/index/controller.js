@@ -7,7 +7,7 @@ const { doesAdviceExist, wasSearchAttempted } = require('./_utils/advice-helpers
 
 async function getSection51IndexController(req, res, next) {
 	try {
-		const { query } = req;
+		const { i18n, query } = req;
 		const { searchTerm, page, itemsPerPage } = query;
 		const { locals } = res;
 		const { caseRef } = locals;
@@ -20,7 +20,7 @@ async function getSection51IndexController(req, res, next) {
 		const { paginationUrl, queryUrl } = getPaginationUrl(req, 's51Advice');
 		const paginationView = getPagination(pagination);
 		const resultsPerPage = documentsPerPage(query);
-		const adviceViewModel = getAdviceViewModel(advice, caseRef);
+		const adviceViewModel = getAdviceViewModel(advice, caseRef, i18n);
 		const adviceExists = doesAdviceExist(adviceViewModel);
 		const searchAttempted = wasSearchAttempted(queryUrl);
 

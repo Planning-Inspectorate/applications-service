@@ -1,13 +1,14 @@
 <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
 <p class="govuk-body">
-  Go back and submit your update preference again.
+  {{ t('getUpdatesHowOften.error.paragraph1') }}
 </p>
 
 <p class="govuk-body">
-  You can try again later.
+  {{ t('getUpdatesHowOften.error.paragraph2') }}
 </p>
 
 <p class="govuk-body">
-  Or phone the Planning Inspectorate support team for help on {{ pinsContactDetails.supportTeamPhoneNumber }} or email <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
+  {{ t('getUpdatesHowOften.error.phrase1') }} {{ pinsContactDetails.supportTeamPhoneNumber }} 
+  {{ t('getUpdatesHowOften.error.phrase2') }} <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
 </p>

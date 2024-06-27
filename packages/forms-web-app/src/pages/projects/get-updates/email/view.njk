@@ -6,12 +6,23 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
+{% set pageTitle = t('getUpdatesEmail.heading1') %}
+{% set emailHtml %}
+	<p>{{ t('getUpdatesEmail.paragraph1') }}</p>
+	<p>{{ t('getUpdatesEmail.paragraph2') }}</p>
+	<p>{{ t('getUpdatesEmail.paragraph3') }}</p>
+	<ul>
+		<li>{{ t('getUpdatesEmail.listItem1') }}</li>
+		<li>{{ t('getUpdatesEmail.listItem2') }}</li>
+	</ul>
+	<p>{{ t('getUpdatesEmail.paragraph4', { link: '<a class="govuk-link" href="' + pinsPrivacyNoticeUrl + '">' + t('getUpdatesEmail.paragraph4LinkText1') + '</a>' }) | safe }}</p>
+{% endset %}
 
 {% block content %}
 
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t('getUpdatesEmail.errorMessage'),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
@@ -33,23 +44,13 @@
 					}
 				}) }}
 
-
 				{{ govukDetails({
-					summaryText: "How we use your information",
-					html: "
-						<p>Planning Inspectorate email updates will only store information you have provided.</p>
-						<p>You can access, update or permanently delete your email updates and the information associated with them at any time.</p>
-						<p>We will never:</p>
-						<ul>
-							<li>sell or rent your information to third parties</li>
-							<li>share your information with third parties for marketing purposes</li>
-						</ul>
-						<p>You can read the <a class='govuk-link' href=" + pinsPrivacyNoticeUrl + ">full privacy notice</a> for more detail on how your information is stored, shared and used.</p>
-					"
+					summaryText: t('getUpdatesEmail.linkText1'),
+					html: emailHtml
 				}) }}
 
 				{{ govukButton({
-					text: "Continue"
+					text: t('common.continue')
 				}) }}
 
 			</div>

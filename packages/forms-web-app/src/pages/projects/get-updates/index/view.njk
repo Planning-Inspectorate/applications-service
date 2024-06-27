@@ -1,6 +1,8 @@
 {% extends "layouts/default.njk" %}
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 
+{% set pageTitle = '' + t('getUpdatesIndex.title1') + ' | ' + projectName + '' %}
+
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-third">
@@ -16,7 +18,7 @@
 			</span>
 
 			<h1 class="govuk-heading-xl">
-				{{ pageHeading }}
+				{{ t('getUpdatesIndex.heading1') }}
 			</h1>
 
 			{% if applicationData.status.number >= 7 or decisionDatePassed %}

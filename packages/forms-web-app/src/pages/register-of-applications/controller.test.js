@@ -4,6 +4,10 @@ const { getAllProjectList } = require('../../lib/application-api-wrapper');
 
 const { getApplicationsFixture } = require('../_fixtures');
 
+const { mockI18n } = require('../_mocks/i18n');
+
+const i18n = mockI18n();
+
 jest.mock('../../lib/application-api-wrapper', () => ({
 	getAllProjectList: jest.fn()
 }));
@@ -15,6 +19,7 @@ describe('pages/register-of-applications/controller', () => {
 
 	beforeEach(() => {
 		req = {
+			i18n,
 			query: {}
 		};
 		res = { render: jest.fn() };

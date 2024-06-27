@@ -1,3 +1,5 @@
 const getUpdatesEmailRoute = 'email';
 
-module.exports = { getUpdatesEmailRoute };
+const getUpdatesEmailI18nNamespace = 'getUpdatesEmail';
+
+module.exports = { getUpdatesEmailRoute, getUpdatesEmailI18nNamespace };

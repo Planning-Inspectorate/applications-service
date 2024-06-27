@@ -1,17 +1,18 @@
 const dayjs = require('dayjs');
-const { projectStages } = require('../../utils/project-stages');
+const { projectStagesTranslations } = require('../../utils/project-stages');
+const { getProjectsIndexURL } = require('../projects/index/_utils/get-projects-index-url');
 
 const formatDate = (date, format = 'DD MMM YYYY') => (date ? dayjs(date).format(format) : '');
 
-const mapApplications = (applications) =>
+const mapApplications = ({ language }, applications) =>
 	applications.map((application) => ({
 		applicant: application.PromoterName,
 		applicationDate: formatDate(application.DateOfDCOSubmission),
 		decisionDate: formatDate(application.ConfirmedDateOfDecision),
 		location: application.ProjectLocation,
-		pageURL: `/projects/${application.CaseReference}`,
+		pageURL: getProjectsIndexURL(application.CaseReference),
 		projectName: application.ProjectName,
-		stage: projectStages[application.Stage]
+		stage: projectStagesTranslations[application.Stage][language]
 	}));
 
 module.exports = { mapApplications };

@@ -7,15 +7,25 @@ const emailValidationRules = (object) => {
 	return [
 		body(id ?? 'email')
 			.notEmpty()
-			.withMessage(onError?.message?.notEmpty ?? 'Enter your email address'),
+			.withMessage((_, { req }) => {
+				return (
+					onError?.message?.notEmpty ?? req.i18n.t('common.validationErrors.emailAddress.empty')
+				);
+			}),
 		body(id ?? 'email')
 			.isLength(onError?.minMaxOptions ?? { min: 3, max: 255 })
-			.withMessage(
-				onError?.message?.checkLength ?? 'Email address must be between 3 and 255 characters'
-			),
+			.withMessage((_, { req }) => {
+				return (
+					onError?.message?.checkLength ?? req.i18n.t('common.validationErrors.emailAddress.length')
+				);
+			}),
 		body(id ?? 'email')
 			.isEmail()
-			.withMessage('Enter an email address in the correct format, like name@example.com')
+			.withMessage((_, { req }) => {
+				return (
+					onError?.message?.checkLength ?? req.i18n.t('common.validationErrors.emailAddress.format')
+				);
+			})
 	];
 };
 

@@ -1,10 +1,14 @@
 const { mapTitles } = require('../../../../_utils/map-titles');
 
-const titles = {
-	index: mapTitles('How often do you want to get emails about the project?'),
-	error: mapTitles('There has been a problem with our system', 'There has been a problem')
+const getTitles = (view, i18n) => {
+	const titles = {
+		index: mapTitles(i18n.t('getUpdatesHowOften.index.heading1')),
+		error: mapTitles(
+			i18n.t('getUpdatesHowOften.error.heading1'),
+			i18n.t('getUpdatesHowOften.error.title1')
+		)
+	};
+	return titles[view];
 };
-
-const getTitles = (responseCode) => titles[responseCode];
 
 module.exports = { getTitles };

@@ -1,11 +1,11 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 
 {{ govukPanel({
-  titleText: "Success",
-  text: "You have subscribed to emails about this project",
+  titleText: t('getUpdatesSubscribed.successful.panelTitle1'),
+  text: t('getUpdatesSubscribed.successful.panelText1'),
   classes: "govuk-!-margin-bottom-8"
 }) }}
 
 <a href="/projects/{{ caseRef }}" class="govuk-link">
-  View {{ projectName }} project information
+  {{ t('getUpdatesSubscribed.successful.phrase1') }} {{ projectName }} {{ t('getUpdatesSubscribed.successful.phrase2') }}
 </a>

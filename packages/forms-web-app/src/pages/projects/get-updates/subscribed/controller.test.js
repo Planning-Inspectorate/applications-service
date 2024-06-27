@@ -1,6 +1,11 @@
 const { getUpdatesSubscribedController } = require('./controller');
-
 const { putGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
+const { mockI18n } = require('../../../_mocks/i18n');
+const getUpdatesSubscribedTranslations_EN = require('./_translations/en.json');
+const getUpdatesSubscribedTranslation = {
+	getUpdatesSubscribed: getUpdatesSubscribedTranslations_EN
+};
+const i18n = mockI18n(getUpdatesSubscribedTranslation);
 
 jest.mock('../../../../lib/application-api-wrapper', () => ({
 	putGetUpdatesSubscription: jest.fn()
@@ -14,7 +19,8 @@ describe('projects/get-updates/subscribed/controller', () => {
 			},
 			query: {
 				subscriptionDetails: 'mock subscription details'
-			}
+			},
+			i18n
 		};
 		const res = {
 			render: jest.fn(),

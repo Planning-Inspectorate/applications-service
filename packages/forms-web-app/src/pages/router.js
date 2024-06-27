@@ -40,6 +40,9 @@ const {
 const {
 	addCookiesTranslationsMiddleware
 } = require('./cookies/_middleware/add-cookies-translations-middleware');
+const {
+	addProjectSearchTranslationsMiddleware
+} = require('./project-search/_middleware/add-project-search-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -74,7 +77,12 @@ if (featureFlag.allowHomepage) {
 	pagesRouter.use(registerOfAdviceRouter);
 }
 
-pagesRouter.get(projectSearchURL, getProjectSearchController);
+pagesRouter.get(
+	projectSearchURL,
+	addCommonTranslationsMiddleware,
+	addProjectSearchTranslationsMiddleware,
+	getProjectSearchController
+);
 
 pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
 

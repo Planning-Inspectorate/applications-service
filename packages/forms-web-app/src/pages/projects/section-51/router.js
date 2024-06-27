@@ -15,11 +15,16 @@ const {
 const {
 	addSection51IndexTranslationsMiddleware
 } = require('./index/_middleware/add-section-51-index-translations-middleware');
+const {
+	addSection51TranslationsMiddleware
+} = require('./_middleware/add-section-51-translations-middleware');
 
 const section51IndexURL = getSection51IndexURL();
 const section51AdviceDetailURL = getSection51AdviceDetailURL();
 
 const section51Router = express.Router();
+
+section51Router.use(addSection51TranslationsMiddleware);
 
 section51Router.get(
 	section51IndexURL,

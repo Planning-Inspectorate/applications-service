@@ -1,0 +1,29 @@
+const enGetUpdatesSubscribedTranslations = require('./en.json');
+
+describe('pages/projects/get-updates/subscribed/_translations/en.json', () => {
+	it('should return the English get updates subscribed page translations', () => {
+		expect(enGetUpdatesSubscribedTranslations).toEqual({
+			linkExpired: {
+				title1: 'Verification link expired',
+				heading1: 'Your email verification link has expired',
+				phrase1: 'To receive email updates please visit {{-link}}',
+				phrase1LinkText1: 'the Get Updates page',
+				phrase2: 'and verify your email address within 48 hours.'
+			},
+			successful: {
+				title1: 'Get updates success',
+				panelTitle1: 'Success',
+				panelText1: 'You have subscribed to emails about this project',
+				phrase1: 'View',
+				phrase2: 'project information'
+			},
+			unsuccessful: {
+				title1: 'Email system problem',
+				heading1: 'There has been a problem with our system',
+				paragraph1: 'Try clicking the link from your email again.',
+				phrase1: 'Or phone the Planning Inspectorate support team for help on',
+				phrase2: 'or email'
+			}
+		});
+	});
+});

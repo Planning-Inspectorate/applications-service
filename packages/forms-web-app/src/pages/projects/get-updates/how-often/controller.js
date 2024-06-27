@@ -18,11 +18,11 @@ const view = 'projects/get-updates/how-often/view.njk';
 
 const getGetUpdatesHowOftenController = (req, res, next) => {
 	const {
+		i18n,
 		params: { case_ref: caseRef }
 	} = req;
-
 	try {
-		return res.render(view, getPageData(indexView, caseRef));
+		return res.render(view, getPageData(indexView, caseRef, i18n));
 	} catch (error) {
 		logger.error(error);
 		next(error);
@@ -30,14 +30,14 @@ const getGetUpdatesHowOftenController = (req, res, next) => {
 };
 
 const postGetUpdatesHowOftenController = async (req, res) => {
-	const { body, params, session } = req;
+	const { body, params, session, i18n } = req;
 	const { errors, errorSummary } = body;
 	const { case_ref: caseRef } = params;
 
 	try {
 		if (errors) {
 			return res.render(view, {
-				...getPageData(indexView, caseRef),
+				...getPageData(indexView, caseRef, i18n),
 				errors,
 				errorSummary
 			});
@@ -53,7 +53,7 @@ const postGetUpdatesHowOftenController = async (req, res) => {
 		return res.redirect(getUpdatesConfirmYourEmailURL(caseRef));
 	} catch (error) {
 		logger.error(error);
-		return res.status(500).render(view, getPageData(errorView, caseRef));
+		return res.status(500).render(view, getPageData(errorView, caseRef, i18n));
 	}
 };
 

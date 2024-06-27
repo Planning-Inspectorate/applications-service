@@ -20,7 +20,6 @@ describe('projects/get-updates/email/controller', () => {
 
 			it('should render the page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/email/view.njk', {
-					pageTitle: 'What is your email address?',
 					backLinkUrl: '/projects/mock-case-ref/get-updates/start'
 				});
 			});
@@ -81,7 +80,6 @@ describe('projects/get-updates/email/controller', () => {
 
 				it('should show error if no email entered', async () => {
 					expect(res.render).toHaveBeenCalledWith('projects/get-updates/email/view.njk', {
-						pageTitle: 'What is your email address?',
 						backLinkUrl: '/projects/mock-case-ref/get-updates/start',
 						email: '',
 						errors: {

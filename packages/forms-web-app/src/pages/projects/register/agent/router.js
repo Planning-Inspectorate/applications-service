@@ -101,6 +101,9 @@ const {
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../../../src/pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {
@@ -182,6 +185,7 @@ registerAgentRouter.get(registerAgentEmailURL, registerMiddleware, getRegisterEm
 registerAgentRouter.post(
 	registerAgentEmailURL,
 	registerMiddleware,
+	addCommonTranslationsMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
 	postRegisterEmailController

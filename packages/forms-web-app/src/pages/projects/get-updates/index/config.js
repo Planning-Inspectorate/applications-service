@@ -1,3 +1,5 @@
 const getUpdatesIndexRoute = 'start';
 
-module.exports = { getUpdatesIndexRoute };
+const getUpdatesIndexI18nNamespace = 'getUpdatesIndex';
+
+module.exports = { getUpdatesIndexRoute, getUpdatesIndexI18nNamespace };

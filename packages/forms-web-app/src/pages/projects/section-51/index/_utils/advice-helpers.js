@@ -5,38 +5,50 @@ const { registerOfAdviceCaseRef } = require('../../../../register-of-advice/inde
 const {
 	getSection51AdviceDetailURL
 } = require('../../advice-detail/_utils/get-section-51-advice-detail-url');
+const { isLangWelsh } = require('../../../../_utils/is-lang-welsh');
 
-const getAdviceName = ({ organisation, firstName, lastName }) => {
-	let name = 'Anonymous';
+const getAdviceName = ({ organisation, firstName, lastName }, i18n) => {
+	let name = i18n.t('section51.anonymous');
 	if (organisation?.trim()) name = organisation.trim();
 	else if (firstName && lastName) name = `${firstName} ${lastName}`;
 	return name;
 };
 
 const isAdviceMeeting = (enquiryMethod) => enquiryMethod === 'Meeting';
-const getAdviceDateText = (enquiryMethod) =>
-	isAdviceMeeting(enquiryMethod) ? 'Date of meeting' : 'Date advice given';
-
-const getAdviceTitle = (advice) => {
-	if (advice.title) return advice.title;
-
-	return isAdviceMeeting(advice.enquiryMethod)
-		? `Meeting with ${getAdviceName(advice)}`
-		: `Advice to ${getAdviceName(advice)}`;
+const getAdviceDateText = (enquiryMethod, i18n) => {
+	return isAdviceMeeting(enquiryMethod)
+		? i18n.t('section51.dateOfMeeting')
+		: i18n.t('section51.dateAdviceGiven');
 };
 
-const getAdviceTypeLabel = (advice) =>
-	isAdviceMeeting(advice.enquiryMethod) ? `Meeting with` : `Enquiry from`;
-
-const getAdviceEnquiryText = (enquiryMethod) =>
-	isAdviceMeeting(enquiryMethod) ? 'Meeting with' : 'From';
-
-const getAdviceLinkTitle = (advice) => {
+const getAdviceTitle = (advice, i18n) => {
+	if (isLangWelsh(i18n.language) && advice.titleWelsh) return advice.titleWelsh;
 	if (advice.title) return advice.title;
 
 	return isAdviceMeeting(advice.enquiryMethod)
-		? `View meeting with ${getAdviceName(advice)}`
-		: `View advice to ${getAdviceName(advice)}`;
+		? `${i18n.t('section51.meetingWith')} ${getAdviceName(advice, i18n)}`
+		: `${i18n.t('section51.adviceTo')} ${getAdviceName(advice, i18n)}`;
+};
+
+const getAdviceTypeLabel = (enquiryMethod, i18n) => {
+	return isAdviceMeeting(enquiryMethod)
+		? i18n.t('section51.meetingWith')
+		: i18n.t('section51.enquiryFrom');
+};
+
+const getAdviceEnquiryText = (enquiryMethod, i18n) => {
+	return isAdviceMeeting(enquiryMethod)
+		? i18n.t('section51.meetingWith')
+		: i18n.t('section51.from');
+};
+
+const getAdviceLinkTitle = (advice, i18n) => {
+	if (isLangWelsh(i18n.language) && advice.titleWelsh) return advice.titleWelsh;
+	if (advice.title) return advice.title;
+
+	return isAdviceMeeting(advice.enquiryMethod)
+		? `${i18n.t('section51.viewMeetingWith')} ${getAdviceName(advice, i18n)}`
+		: `${i18n.t('section51.viewAdviceTo')} ${getAdviceName(advice, i18n)}`;
 };
 
 const getAdviceLink = (caseRef, { adviceID }) =>

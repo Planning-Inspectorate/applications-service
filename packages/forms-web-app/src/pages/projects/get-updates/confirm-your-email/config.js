@@ -1,3 +1,5 @@
 const getUpdatesConfirmYourEmailRoute = 'confirm-your-email';
 
-module.exports = { getUpdatesConfirmYourEmailRoute };
+const getUpdatesConfirmYourEmailI18nNamespace = 'getUpdatesConfirmYourEmail';
+
+module.exports = { getUpdatesConfirmYourEmailRoute, getUpdatesConfirmYourEmailI18nNamespace };

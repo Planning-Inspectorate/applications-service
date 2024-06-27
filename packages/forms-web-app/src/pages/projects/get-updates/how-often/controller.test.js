@@ -2,8 +2,11 @@ const {
 	getGetUpdatesHowOftenController,
 	postGetUpdatesHowOftenController
 } = require('./controller');
-
 const { postGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
+const { mockI18n } = require('../../../_mocks/i18n');
+const getUpdatesHowOftenTranslations_EN = require('./_translations/en.json');
+const getUpdatesHowOftenTranslation = { getUpdatesHowOften: getUpdatesHowOftenTranslations_EN };
+const i18n = mockI18n(getUpdatesHowOftenTranslation);
 
 jest.mock('../../../../lib/application-api-wrapper', () => ({
 	postGetUpdatesSubscription: jest.fn()
@@ -13,7 +16,8 @@ describe('projects/get-updates/how-often/controller', () => {
 	describe('#getGetUpdatesHowOftenController', () => {
 		describe('and there are no issues', () => {
 			const req = {
-				params: { case_ref: 'mock-case-ref' }
+				params: { case_ref: 'mock-case-ref' },
+				i18n
 			};
 			const res = {
 				render: jest.fn()
@@ -23,6 +27,8 @@ describe('projects/get-updates/how-often/controller', () => {
 			beforeEach(() => {
 				getGetUpdatesHowOftenController(req, res, next);
 			});
+
+			console.log('test:>>', i18n);
 
 			it('should render the page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/how-often/view.njk', {
@@ -78,7 +84,8 @@ describe('projects/get-updates/how-often/controller', () => {
 					params: {
 						case_ref: 'mock-case-ref'
 					},
-					session: {}
+					session: {},
+					i18n
 				};
 				const res = {
 					render: jest.fn()
@@ -135,7 +142,8 @@ describe('projects/get-updates/how-often/controller', () => {
 					params: {
 						case_ref: 'mock-case-ref'
 					},
-					session: {}
+					session: {},
+					i18n
 				};
 				const res = {
 					render: jest.fn()
@@ -180,7 +188,8 @@ describe('projects/get-updates/how-often/controller', () => {
 						getUpdates: {
 							email: 'mock@email.com'
 						}
-					}
+					},
+					i18n
 				};
 				const res = {
 					render: jest.fn(),
@@ -216,7 +225,8 @@ describe('projects/get-updates/how-often/controller', () => {
 						getUpdates: {
 							email: 'mock@email.com'
 						}
-					}
+					},
+					i18n
 				};
 				const res = {
 					redirect: jest.fn()

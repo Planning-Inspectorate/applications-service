@@ -3,9 +3,10 @@
 </h1>
 
 <p class="govuk-body">
-  Try clicking the link from your email again.
+  {{ t('getUpdatesSubscribed.unsuccessful.paragraph1') }}
 </p>
 
 <p class="govuk-body">
-  Or phone the Planning Inspectorate support team for help on {{ pinsContactDetails.supportTeamPhoneNumber }} or email <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
+  {{ t('getUpdatesSubscribed.unsuccessful.phrase1') }} {{ pinsContactDetails.supportTeamPhoneNumber }}   
+  {{ t('getUpdatesSubscribed.unsuccessful.phrase2') }} <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
 </p>
