@@ -14,16 +14,16 @@ const getEnquirySummaryListItemViewModel = (keyText, valueText) => ({
 	}
 });
 
-const getEnquirySummaryList = (pageData) => [
+const getEnquirySummaryList = (pageData, i18n) => [
 	getEnquirySummaryListItemViewModel(
-		getAdviceEnquiryText(pageData.enquiryMethod),
-		getAdviceName(pageData)
+		getAdviceEnquiryText(pageData.enquiryMethod, i18n),
+		getAdviceName(pageData, i18n)
 	),
 	getEnquirySummaryListItemViewModel(
-		getAdviceDateText(pageData.enquiryMethod),
+		getAdviceDateText(pageData.enquiryMethod, i18n),
 		formatDate(pageData.dateAdviceGiven)
 	),
-	getEnquirySummaryListItemViewModel('Enquiry type', pageData.enquiryMethod)
+	getEnquirySummaryListItemViewModel(i18n.t('section51.enquiryType'), pageData.enquiryMethod)
 ];
 
 module.exports = { getEnquirySummaryList };

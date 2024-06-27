@@ -6,7 +6,7 @@ const { getView } = require('./_utils/get-view');
 
 const getSection51AdviceDetailController = async (req, res, next) => {
 	try {
-		const { params, path } = req;
+		const { i18n, params, path } = req;
 		const { case_ref, id } = params;
 
 		const caseRef = case_ref || registerOfAdviceCaseRef;
@@ -17,7 +17,10 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 
 		const view = getView(path, id);
 
-		return res.render(view, await getPageViewModel(refURL, path, case_ref, id, adviceDetailData));
+		return res.render(
+			view,
+			await getPageViewModel(refURL, path, case_ref, id, adviceDetailData, i18n)
+		);
 	} catch (error) {
 		logger.error(error);
 		if (error.message === 'NOT_FOUND') return res.status(404).render('error/not-found');

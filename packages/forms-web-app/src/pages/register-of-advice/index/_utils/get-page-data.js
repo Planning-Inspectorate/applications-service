@@ -18,7 +18,7 @@ const getPageData = (req, query, caseRef, searchTerm, advice, pagination) => {
 	return {
 		...mapTitles('Register of advice'),
 		...paginationView,
-		advice: getAdviceViewModel(advice, caseRef),
+		advice: getAdviceViewModel(advice, caseRef, req.i18n),
 		itemsPerPage: pagination.itemsPerPage,
 		paginationUrl,
 		queryUrl,
