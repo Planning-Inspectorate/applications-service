@@ -13,6 +13,7 @@ const getRepresentationViewModel = (
 		ID,
 		PersonalName,
 		RepFrom,
+		RepFromWelsh,
 		RepresentationRedacted,
 		Representative
 	},
@@ -26,6 +27,7 @@ const getRepresentationViewModel = (
 	name: PersonalName,
 	representative: Representative,
 	submittedBy: titleCase(RepFrom),
+	submittedByWelsh: titleCase(RepFromWelsh),
 	URL: getRepresentationURL(caseRef, ID)
 });
 

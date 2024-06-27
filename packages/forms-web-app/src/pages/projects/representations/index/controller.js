@@ -13,12 +13,13 @@ const { getRepresentationsViewModel } = require('./_utils/get-representations-vi
 const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getFilters } = require('./_utils/get-filters');
 const { hasRepresentationsAvailable } = require('./_utils/has-representations-available');
+const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 
 const view = 'projects/representations/index/view.njk';
 
 const getRepresentationsIndexController = async (req, res, next) => {
 	try {
-		const { params, query } = req;
+		const { i18n, params, query } = req;
 		const { case_ref } = params;
 		const { searchTerm } = query;
 		const { locals } = res;
@@ -44,8 +45,9 @@ const getRepresentationsIndexController = async (req, res, next) => {
 		const hasNoResultsPostDecision =
 			representations.length === 0 && applicationData.status.number >= 7;
 
+		const langIsWelsh = isLangWelsh(i18n.language);
 		return res.render(view, {
-			...getFilters(query, typeFilters),
+			...getFilters(query, typeFilters, langIsWelsh),
 			projectName: applicationData.projectName,
 			caseRef: case_ref,
 			allowProjectInformation,
@@ -60,7 +62,8 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			resultsPerPage: documentsPerPage(query),
 			paginationQueryString: buildPaginationQueryString(query),
 			querySearchOrTypePresent: isQuerySearchOrTypePresent(query),
-			relevantRepresentationsURL: getRepresentationsURL(case_ref)
+			relevantRepresentationsURL: getRepresentationsURL(case_ref),
+			langIsWelsh
 		});
 	} catch (error) {
 		logger.error(error);

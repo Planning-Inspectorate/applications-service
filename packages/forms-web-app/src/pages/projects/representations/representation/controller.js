@@ -8,12 +8,13 @@ const {
 	featureHideLink: { hideAllExaminationDocumentsLink },
 	featureFlag: { allowProjectInformation }
 } = require('../../../../config');
+const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 
 const view = 'projects/representations/representation/view.njk';
 
 const getRepresentationController = async (req, res, next) => {
 	try {
-		const { params } = req;
+		const { params, i18n } = req;
 		const { case_ref, id } = params;
 
 		const { data: applicationData } = await getAppData(case_ref);
@@ -29,7 +30,8 @@ const getRepresentationController = async (req, res, next) => {
 			backToListUrl: getRepresentationsURL(case_ref),
 			projectName: ProjectName,
 			allowProjectInformation,
-			hideAllExaminationDocumentsLink
+			hideAllExaminationDocumentsLink,
+			langIsWelsh: isLangWelsh(i18n.language)
 		});
 	} catch (error) {
 		logger.error(error);
