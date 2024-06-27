@@ -1,14 +1,12 @@
-const dayjs = require('dayjs');
 const { projectStagesTranslations } = require('../../utils/project-stages');
 const { getProjectsIndexURL } = require('../projects/index/_utils/get-projects-index-url');
-
-const formatDate = (date, format = 'DD MMM YYYY') => (date ? dayjs(date).format(format) : '');
+const { formatDate } = require('../../utils/date-utils');
 
 const mapApplications = ({ language }, applications) =>
 	applications.map((application) => ({
 		applicant: application.PromoterName,
-		applicationDate: formatDate(application.DateOfDCOSubmission),
-		decisionDate: formatDate(application.ConfirmedDateOfDecision),
+		applicationDate: formatDate(application.DateOfDCOSubmission, language, 'DD MMM YYYY'),
+		decisionDate: formatDate(application.ConfirmedDateOfDecision, language, 'DD MMM YYYY'),
 		location: application.ProjectLocation,
 		pageURL: getProjectsIndexURL(application.CaseReference),
 		projectName: application.ProjectName,

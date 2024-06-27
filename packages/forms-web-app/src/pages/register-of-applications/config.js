@@ -1,3 +1,5 @@
 const registerOfApplicationsRoute = 'register-of-applications';
 
-module.exports = { registerOfApplicationsRoute };
+const registerOfApplicationsI18nNamespace = 'registerOfApplications';
+
+module.exports = { registerOfApplicationsRoute, registerOfApplicationsI18nNamespace };

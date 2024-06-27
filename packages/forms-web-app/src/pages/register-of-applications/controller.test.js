@@ -2,15 +2,19 @@ const { getRegisterOfApplicationsController } = require('./controller');
 
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 
-const { getApplicationsFixture } = require('../_fixtures');
-
 const { mockI18n } = require('../_mocks/i18n');
 
-const i18n = mockI18n();
+const registerOfApplicationsTranslations__EN = require('./_translations/en.json');
+
+const { getApplicationsFixture } = require('../_fixtures');
 
 jest.mock('../../lib/application-api-wrapper', () => ({
 	getAllProjectList: jest.fn()
 }));
+
+const i18n = mockI18n({
+	registerOfApplications: registerOfApplicationsTranslations__EN
+});
 
 describe('pages/register-of-applications/controller', () => {
 	let req;
@@ -54,7 +58,7 @@ describe('pages/register-of-applications/controller', () => {
 					applications: [
 						{
 							applicant: 'EDF',
-							applicationDate: '01 Jan 2018',
+							applicationDate: '1 Jan 2018',
 							decisionDate: '',
 							location: 'Somerset - Monday PM 23/12',
 							pageURL: '/projects/TR010001',
@@ -72,7 +76,7 @@ describe('pages/register-of-applications/controller', () => {
 						},
 						{
 							applicant: 'EDF',
-							applicationDate: '01 Jan 2018',
+							applicationDate: '1 Jan 2018',
 							decisionDate: '',
 							location: 'Somerset - cache test 03-02 15:44',
 							pageURL: '/projects/tr033005',
@@ -80,8 +84,6 @@ describe('pages/register-of-applications/controller', () => {
 							stage: 'Acceptance (review of the application)'
 						}
 					],
-					pageHeading: 'Register of applications',
-					pageTitle: 'Register of applications',
 					pagination: {
 						pageOptions: [1, 2, 3, '...', 7, 'next'],
 						paginationData: {
