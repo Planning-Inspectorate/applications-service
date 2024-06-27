@@ -75,6 +75,9 @@ const {
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../../pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {
@@ -159,6 +162,7 @@ registerOrganisationRouter.get(
 registerOrganisationRouter.post(
 	registerOrganisationEmailURL,
 	registerMiddleware,
+	addCommonTranslationsMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
 	postRegisterEmailController

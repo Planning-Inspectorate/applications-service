@@ -1,5 +1,7 @@
 {% extends "layouts/default.njk" %}
 
+{% set pageTitle = t('projectSearch.pageTitle') %}
+
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
 		{ src: "/public/scripts/checkbox-accordion.script.js" },
@@ -14,28 +16,30 @@
 	<form method="get">
 		<div class="govuk-grid-row">
 			<div class="govuk-grid-column-one-third">
-
 				{% include "./includes/sidebar.njk" %}
-
 			</div>
 
 			<div class="govuk-grid-column-two-thirds">
-				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">{{ pageHeading }}</h1>
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+					{{ t('projectSearch.heading1') }}
+				</h1>
+
+				{% if featureFlag.allowWelshTranslation == false %}
+					<p class="govuk-body">
+						This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
+					</p>
+				{% endif %}
 
 				<p class="govuk-body">
-					This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
-				</p>
-
-				<p class="govuk-body">
-					This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.
+					{{ t('projectSearch.paragraph1') }}
 				</p>
 
 				{% if applications | length %}
-
 					<p class="govuk-body">
-						<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>Download a table containing a complete list of all {{ totalApplicationsWithoutFilters }} projects (CSV)</a>
+						<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
+							{{ t('projectSearch.linkText1', { totalApplications: totalApplicationsWithoutFilters  }) }}
+						</a>
 					</p>
-
 				{% endif %}
 
 				{% include "./includes/search.njk" %}
@@ -44,15 +48,15 @@
 
 				{% if applications | length %}
 
-					{% if featureFlag.allowApplicationsPagination == true %}
-					    {% include "./includes/results-per-page.njk" %}
-                	{% endif %}
+					{% if featureFlag.allowApplicationsPagination == false %}
+						{% include "./includes/results-per-page.njk" %}
+					{% endif %}
 
 					{% include "./includes/projects.njk" %}
 
-					{% if featureFlag.allowApplicationsPagination == true %}
-					    {% include "./includes/pagination.njk" %}
-                	{% endif %}
+					{% if featureFlag.allowApplicationsPagination == false %}
+						{% include "./includes/pagination.njk" %}
+					{% endif %}
 
 				{% else %}
 

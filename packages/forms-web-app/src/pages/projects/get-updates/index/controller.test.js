@@ -15,7 +15,6 @@ describe('projects/get-updates/index/controller', () => {
 						const res = {
 							render: jest.fn(),
 							locals: {
-								projectName: 'mock project name',
 								applicationData: {
 									confirmedDateOfDecision: '2025-03-10',
 									status: {
@@ -28,8 +27,6 @@ describe('projects/get-updates/index/controller', () => {
 						await getGetUpdatesIndexController(req, res);
 						expect(res.render).toHaveBeenCalledWith('projects/get-updates/index/view.njk', {
 							nextPageRoute: '/projects/mock case ref/get-updates/email',
-							pageHeading: 'Get updates about this project',
-							pageTitle: 'Get updates | mock project name',
 							decisionDatePassed: false
 						});
 						expect(req.session.getUpdates).toBeUndefined();
@@ -49,7 +46,6 @@ describe('projects/get-updates/index/controller', () => {
 						const res = {
 							render: jest.fn(),
 							locals: {
-								projectName: 'mock project name',
 								applicationData: {
 									confirmedDateOfDecision: '2023-03-10',
 									status: {
@@ -62,8 +58,6 @@ describe('projects/get-updates/index/controller', () => {
 						await getGetUpdatesIndexController(req, res);
 						expect(res.render).toHaveBeenCalledWith('projects/get-updates/index/view.njk', {
 							nextPageRoute: '/projects/mock case ref/get-updates/email',
-							pageHeading: 'Get updates about this project',
-							pageTitle: 'Get updates | mock project name',
 							decisionDatePassed: true
 						});
 						expect(req.session.getUpdates).toBeUndefined();
@@ -81,7 +75,6 @@ describe('projects/get-updates/index/controller', () => {
 						const res = {
 							render: jest.fn(),
 							locals: {
-								projectName: 'mock project name',
 								applicationData: {
 									confirmedDateOfDecision: '2025-03-10',
 									status: {
@@ -94,8 +87,6 @@ describe('projects/get-updates/index/controller', () => {
 						await getGetUpdatesIndexController(req, res);
 						expect(res.render).toHaveBeenCalledWith('projects/get-updates/index/view.njk', {
 							nextPageRoute: '/projects/mock case ref/get-updates/email',
-							pageHeading: 'Get updates about this project',
-							pageTitle: 'Get updates | mock project name',
 							decisionDatePassed: false
 						});
 						expect(req.session).toEqual({ getUpdates: { caseRef: 'mock case ref' } });

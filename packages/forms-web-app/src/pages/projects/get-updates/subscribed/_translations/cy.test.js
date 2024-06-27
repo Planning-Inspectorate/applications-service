@@ -1,0 +1,29 @@
+const cyGetUpdatesSubscribedTranslations = require('./cy.json');
+
+describe('pages/projects/get-updates/subscribed/_translations/cy.json', () => {
+	it('should return the Welsh get updates subscribed page translations', () => {
+		expect(cyGetUpdatesSubscribedTranslations).toEqual({
+			linkExpired: {
+				title1: 'Dolen dilysu wedi dod i ben',
+				heading1: 'Mae eich cyswllt dilysu e-bost wedi dod i ben',
+				phrase1: "I dderbyn diweddariadau e-bost ewch i'r {{-link}}",
+				phrase1LinkText1: 'dudalen Cael Diweddariadau',
+				phrase2: 'a gwiriwch eich cyfeiriad e-bost o fewn 48 awr.'
+			},
+			successful: {
+				title1: 'Llwyddiant cael diweddariadau',
+				panelTitle1: 'Llwyddiant',
+				panelText1: 'Rydych wedi tanysgrifio i e-byst am y prosiect hwn',
+				phrase1: 'Gweld',
+				phrase2: 'gwybodaeth prosiect'
+			},
+			unsuccessful: {
+				title1: 'Problem system e-bost',
+				heading1: 'Bu problem yn ein system',
+				paragraph1: "Ceisiwch glicio ar y ddolen o'ch e-bost eto.",
+				phrase1: 'Neu ffoniwch dîm cymorth yr Arolygiaeth Gynllunio am gymorth ar ',
+				phrase2: 'neu e-bostiwch'
+			}
+		});
+	});
+});

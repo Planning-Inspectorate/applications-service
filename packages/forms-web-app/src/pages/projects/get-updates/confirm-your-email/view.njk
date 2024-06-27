@@ -3,6 +3,14 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
+{% set pageTitle = t('getUpdatesConfirmYourEmail.title1') %}
+{% set pageHeading = t('getUpdatesConfirmYourEmail.heading1') %}
+
+{% set confirmHtml %}
+	<p>{{ t('getUpdatesConfirmYourEmail.paragraph4') }}</p>
+	<p>{{ t('getUpdatesConfirmYourEmail.paragraph5', { link: '<a class="govuk-link" href="' + "email" + '">' + t('getUpdatesConfirmYourEmail.paragraph5LinkText1') + '</a>' }) | safe }}</p> 
+{% endset %}
+
 {% block content %}
 
   <div class="govuk-grid-row">
@@ -10,11 +18,11 @@
       <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
 
       <p class="govuk-body-l">
-        We have sent an email to <strong>{{ email }}</strong>
+        {{ t('getUpdatesConfirmYourEmail.paragraph1')}} <strong>{{ email }}</strong>
       </p>
 
       <p class="govuk-body">
-        Check your email and confirm you want to get updates about:
+        {{ t('getUpdatesConfirmYourEmail.paragraph2')}}
       </p>
 
       <p class="govuk-body">
@@ -22,15 +30,12 @@
       </p>
 
       <p class="govuk-body">
-        The link will stop working after 48 hours.
+        {{ t('getUpdatesConfirmYourEmail.paragraph3')}}
       </p>
 
       {{ govukDetails({
-        html: '
-          <p class="govuk-body">If you have not received an email to your inbox, check your spam or junk folder.</p>
-          <p class="govuk-body">If this does not work, <a class="govuk-link" href="email">request a new email notification</a>.</p>
-        ',
-        summaryText: "Not received an email?"
+        html: confirmHtml,
+        summaryText: t('getUpdatesConfirmYourEmail.linkText1')
       }) }}
     </div>
   </div>
