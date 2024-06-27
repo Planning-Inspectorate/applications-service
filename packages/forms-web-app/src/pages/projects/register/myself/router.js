@@ -195,6 +195,8 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfCheckAnswersURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterMyselfCheckAnswersController
 );

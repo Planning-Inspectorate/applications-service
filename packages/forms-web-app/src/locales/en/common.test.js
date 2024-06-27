@@ -3,7 +3,9 @@ const enCommonTranslations = require('./common.json');
 describe('locales/en/common', () => {
 	it('should return the english common translations', () => {
 		expect(enCommonTranslations).toEqual({
+			acceptAndContinue: 'Accept and continue',
 			applyFilters: 'Apply filters',
+			change: 'Change',
 			clearAllFilters: 'Clear all filters',
 			clearFilters: 'Clear filters',
 			clearSearch: 'Clear search',
@@ -79,6 +81,9 @@ describe('locales/en/common', () => {
 					empty: 'Enter your telephone number',
 					length: 'Telephone number must be 255 characters or less',
 					format: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192'
+				},
+				registeringFor: {
+					empty: 'Select who you are registering for'
 				},
 				aboutProject: {
 					empty: 'Enter what you want to tell us about this proposed project',

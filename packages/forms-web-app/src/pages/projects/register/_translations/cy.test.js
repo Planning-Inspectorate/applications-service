@@ -1,7 +1,7 @@
 const cyRegisterTranslations = require('./cy.json');
 
 describe('pages/projects/register/_translations/cy', () => {
-	it('should return the english register translations', () => {
+	it('should return the Welsh register translations', () => {
 		expect(cyRegisterTranslations).toEqual({
 			index: {
 				pageTitle:
@@ -49,7 +49,6 @@ describe('pages/projects/register/_translations/cy', () => {
 				}
 			},
 			registerFor: {
-				validationErrorMessage: "Dewiswch ar ran pwy rydych chi'n cofrestru",
 				pageTitle:
 					"Ar ran pwy ydych chi'n cofrestru - Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
 				pageHeading: "Ar ran pwy ydych chi'n cofrestru?",
@@ -123,6 +122,25 @@ describe('pages/projects/register/_translations/cy', () => {
 					listItem12: 'bywyd rhywiol',
 					listItem13: 'cyfeiriadedd rhywiol'
 				}
+			},
+			checkYourAnswers: {
+				pageHeading: 'Gwiriwch eich atebion cyn cofrestru',
+				heading1: 'Manylion personol',
+				registeringFor: "Ar ran pwy ydych chi'n cofrestru?",
+				changeRegisteringForHiddenText: "ar ran pwy ydych chi'n cofrestru",
+				myself: 'Fy hun',
+				name: 'Enw llawn',
+				changeNameHiddenText: 'eich enw llawn',
+				areYou18: "A ydych chi'n 18 oed neu'n hŷn?",
+				changeAreYou18HiddenText: "os ydych yn 18 oed neu'n hŷn",
+				email: 'Cyfeiriad e-bost',
+				changeEmailHiddenText: 'eich cyfeiriad e-bost',
+				address: 'Cyfeiriad',
+				changeAddressHiddenText: 'eich cyfeiriad',
+				number: 'Rhif ffôn',
+				changeNumberHiddenText: 'eich rhif ffôn',
+				comments: 'Sylwadau cofrestru',
+				changeCommentsHiddenText: 'sylwadau cofrestru'
 			}
 		});
 	});

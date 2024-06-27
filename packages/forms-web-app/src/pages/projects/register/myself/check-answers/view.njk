@@ -3,8 +3,13 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "macros/summary-field.njk" import summaryField %}
 
+{% set pageHeading = t('register.checkYourAnswers.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.myself') %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
 {% block pageTitle %}
-	Check your answers before registering - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning
+	{{title}}
 {% endblock %}
 
 {% set address %}
@@ -24,11 +29,11 @@
 		<div class="govuk-grid-column-two-thirds-from-desktop">
 
 			<h1 class="govuk-heading-xl">
-				Check your answers before registering
+				{{ t('register.checkYourAnswers.pageHeading') }}
 			</h1>
 
 			<h2 class="govuk-heading-m">
-				Personal details
+				{{ t('register.checkYourAnswers.heading1') }}
 			</h2>
 
 			{{ govukSummaryList({
@@ -36,17 +41,17 @@
 				rows: [
 					{
 						key: {
-						text: "Who are you registering for?"
+						text: t('register.checkYourAnswers.registeringFor')
 					},
 						value: {
-						text: summaryField( "Myself", { 'data-cy': "type-of-party" })
+						text: summaryField( t('register.checkYourAnswers.myself'), { 'data-cy': "type-of-party" })
 					},
 						actions: {
 						items: [
 							{
 								href: baseUrl + "/register/who-registering-for?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "who are you registering for",
+								text: t('common.change'),
+								visuallyHiddenText: t('register.checkYourAnswers.changeRegisteringForHiddenText'),
 								attributes: { "data-cy": "who-are-you" }
 							}
 						]
@@ -54,7 +59,7 @@
 					},
 					{
 						key: {
-						text: "Full name"
+						text: t('register.checkYourAnswers.name')
 					},
 						value: {
 						text: summaryField( data['full-name'], { 'data-cy': "full-name" })
@@ -63,8 +68,8 @@
 						items: [
 							{
 								href: baseUrl + "/register/myself/full-name?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "your full name",
+								text: t('common.change'),
+								visuallyHiddenText: t('register.checkYourAnswers.changeNameHiddenText'),
 								attributes: { "data-cy": "full-name" }
 							}
 						]
@@ -72,7 +77,7 @@
 					},
 					{
 						key: {
-						text: "Are you 18 or over?"
+						text: t('register.checkYourAnswers.areYou18')
 					},
 						value: {
 						text: summaryField( data['over-18'] | title, { 'data-cy': "are-you-18-over" })
@@ -81,8 +86,9 @@
 						items: [
 							{
 								href: baseUrl + "/register/myself/are-you-18-over?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "if you are over 18",
+								text: t('common.change'),
+								visuallyHiddenText: t('register.checkYourAnswers.changeAreYou18HiddenText')
+								,
 								attributes: { "data-cy": "over-18" }
 							}
 						]
@@ -90,7 +96,7 @@
 					},
 					{
 						key: {
-						text: "Email address"
+						text: t('register.checkYourAnswers.email')
 					},
 						value: {
 						text: summaryField( data['email'], { 'data-cy': "email" })
@@ -99,8 +105,8 @@
 						items: [
 							{
 								href: baseUrl + "/register/myself/email-address?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "your email address",
+								text: t('common.change'),
+								visuallyHiddenText: t('register.checkYourAnswers.changeEmailHiddenText'),
 								attributes: { "data-cy": "email" }
 							}
 						]
@@ -108,7 +114,7 @@
 					},
 					{
 						key: {
-						text: "Address"
+						text: t('register.checkYourAnswers.address')
 					},
 						value: {
 						html: address
@@ -117,8 +123,8 @@
 						items: [
 							{
 								href: baseUrl + "/register/myself/address?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "your address",
+								text: t('common.change'),
+								visuallyHiddenText: t('register.checkYourAnswers.changeAddressHiddenText'),
 								attributes: { "data-cy": "address" }
 							}
 						]
@@ -126,7 +132,7 @@
 					},
 					{
 						key: {
-						text: "Telephone number"
+						text: t('register.checkYourAnswers.number')
 					},
 						value: {
 						text: summaryField( data['telephone'], { 'data-cy': "telephone" })
@@ -135,7 +141,7 @@
 						items: [
 							{
 								href: baseUrl + "/register/myself/telephone-number?mode=edit",
-								text: "Change",
+								text: t('common.change'),
 								visuallyHiddenText: "your telephone number",
 								attributes: { "data-cy": "telephone" }
 							}
@@ -144,7 +150,7 @@
 					},
 					{
 						key: {
-						text: "Registration comments"
+						text: t('register.checkYourAnswers.comments')
 					},
 						value: {
 						text: summaryField( data['comment'], { "class": "-white-space--pre-line", 'data-cy': "comment" })
@@ -153,8 +159,8 @@
 						items: [
 							{
 								href: baseUrl + "/register/myself/tell-us-about-project?mode=edit",
-								text: "Change",
-								visuallyHiddenText: "registration comments",
+								text: t('common.change'),
+								visuallyHiddenText: t('register.checkYourAnswers.changeCommentsHiddenText'),
 								attributes: { "data-cy": "comment" }
 							}
 						]
@@ -169,7 +175,7 @@
 			}) }}
 
 			<a href="{{ registerMyselfDeclarationURL }}" role="button" class="govuk-button govuk-button" data-module="govuk-button">
-				Accept and continue
+				{{ t('common.acceptAndContinue') }}
 			</a>
 		</div>
 	</div>

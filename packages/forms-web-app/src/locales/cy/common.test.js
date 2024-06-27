@@ -3,7 +3,9 @@ const cyCommonTranslations = require('./common.json');
 describe('locales/cy/common', () => {
 	it('should return the welsh common translations', () => {
 		expect(cyCommonTranslations).toEqual({
+			acceptAndContinue: 'Derbyn a pharhau',
 			applyFilters: 'Cynnig hidlydd',
+			change: 'Newid',
 			clearAllFilters: 'Clirio pob hidlydd',
 			clearFilters: 'Cliriwch hidlydd',
 			clearSearch: 'Clirio chwiliad',
@@ -80,6 +82,9 @@ describe('locales/cy/common', () => {
 					empty: 'Nodwch eich rhif ffôn',
 					length: "Mae'n rhaid i'ch rhif ffôn gynnwys 255 o nodau neu lai",
 					format: 'Nodwch rif ffôn, fel 01632 960 001, 07700 900 982 neu 44 808 157 0192'
+				},
+				registeringFor: {
+					empty: "Dewiswch ar ran pwy rydych chi'n cofrestru"
 				},
 				aboutProject: {
 					empty: 'Nodwch yr hyn rydych eisiau ei ddweud wrthym am y prosiect arfaethedig hwn',

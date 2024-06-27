@@ -40,7 +40,6 @@
 		}
 	},
 	"registerFor": {
-		"validationErrorMessage": "Select who you are registering for",
 		"pageTitle": "Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning",
 		"pageHeading": "Who are you registering for?",
 		"option1": "Myself",
@@ -108,5 +107,24 @@
 			"listItem12": "sex life",
 			"listItem13": "sexual orientation"
 		}
+	},
+	"checkYourAnswers": {
+		"pageHeading": "Check your answers before registering",
+		"heading1": "Personal details",
+		"registeringFor": "Who are you registering for?",
+		"changeRegisteringForHiddenText": "who are you registering for",
+		"myself": "Myself",
+		"name": "Full name",
+		"changeNameHiddenText": "your full name",
+		"areYou18": "Are you 18 or over?",
+		"changeAreYou18HiddenText": "if you are over 18",
+		"email": "Email address",
+		"changeEmailHiddenText": "your email address",
+		"address": "Address",
+		"changeAddressHiddenText": "your address",
+		"number": "Telephone number",
+		"changeNumberHiddenText": "your telephone number",
+		"comments": "Registration comments",
+		"changeCommentsHiddenText": "registration comments"
 	}
 }
