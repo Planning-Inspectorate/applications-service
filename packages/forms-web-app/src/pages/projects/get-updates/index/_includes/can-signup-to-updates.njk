@@ -1,8 +1,8 @@
 <p class="govuk-body-l">
-    You are signing up for email updates about <strong>{{ projectName }}</strong>
+	{{ t('getUpdatesIndex.canSignupToUpdates.paragraph1') }} <strong>{{ projectName }}</strong>
 </p>
 
-<p>We will send email updates when information about the proposed development is added to the website.</p>
+<p>{{ t('getUpdatesIndex.canSignupToUpdates.paragraph2') }}</p>
 
 <a
 	href="{{ nextPageRoute }}"
@@ -11,7 +11,7 @@
 	class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8"
 	data-module="govuk-button"
 >
-	Start now
+	{{ t('common.startNow') }}
 
     <svg
 	    class="govuk-button__start-icon"

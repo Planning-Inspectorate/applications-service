@@ -1,5 +1,8 @@
 const getUpdatesSubscribedRoute = 'subscribed';
 
+const getUpdatesSubscribedI18nNamespace = 'getUpdatesSubscribed';
+
 module.exports = {
-	getUpdatesSubscribedRoute
+	getUpdatesSubscribedRoute,
+	getUpdatesSubscribedI18nNamespace
 };

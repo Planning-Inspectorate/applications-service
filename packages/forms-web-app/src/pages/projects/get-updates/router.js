@@ -2,8 +2,27 @@ const express = require('express');
 
 const getUpdatesRouter = express.Router();
 
+const {
+	addCommonTranslationsMiddleware
+} = require('../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addGetUpdatesIndexTranslationsMiddleware
+} = require('./index/_middleware/add-get-updates-index-translations-middleware');
+const {
+	addGetUpdatesEmailTranslationsMiddleware
+} = require('./email/_middleware/add-get-updates-email-translations-middleware');
+const {
+	addGetUpdatesHowOftenTranslationsMiddleware
+} = require('./how-often/_middleware/add-get-updates-how-often-translations-middleware');
+const {
+	addGetUpdatesConfirmYourEmailTranslationsMiddleware
+} = require('./confirm-your-email/_middleware/add-get-updates-confirm-your-email-translations-middleware');
+const {
+	addGetUpdatesSubscribedTranslationsMiddleware
+} = require('./subscribed/_middleware/add-get-updates-subscribed-translations-middleware');
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
+
 const { getGetUpdatesIndexController } = require('./index/controller');
 const {
 	getGetUpdatesEmailController,
@@ -42,9 +61,21 @@ const updatesSubscribedURL = getUpdatesSubscribedURL();
 const updatesUnsubscribeURL = getUpdatesUnsubscribeURL();
 const updatesUnsubscribedURL = getUpdatesUnsubscribedURL();
 
-getUpdatesRouter.get(updatesIndexURL, projectsMiddleware, getGetUpdatesIndexController);
+getUpdatesRouter.use(addCommonTranslationsMiddleware);
 
-getUpdatesRouter.get(updatesEmailURL, getUpdatesMiddleware, getGetUpdatesEmailController);
+getUpdatesRouter.get(
+	updatesIndexURL,
+	addGetUpdatesIndexTranslationsMiddleware,
+	projectsMiddleware,
+	getGetUpdatesIndexController
+);
+
+getUpdatesRouter.get(
+	updatesEmailURL,
+	addGetUpdatesEmailTranslationsMiddleware,
+	getUpdatesMiddleware,
+	getGetUpdatesEmailController
+);
 getUpdatesRouter.post(
 	updatesEmailURL,
 	emailValidationRules(),
@@ -52,7 +83,12 @@ getUpdatesRouter.post(
 	postGetUpdatesEmailController
 );
 
-getUpdatesRouter.get(updatesHowOftenURL, getUpdatesMiddleware, getGetUpdatesHowOftenController);
+getUpdatesRouter.get(
+	updatesHowOftenURL,
+	addGetUpdatesHowOftenTranslationsMiddleware,
+	getUpdatesMiddleware,
+	getGetUpdatesHowOftenController
+);
 getUpdatesRouter.post(
 	updatesHowOftenURL,
 	howOftenValidationRules(),
@@ -62,12 +98,18 @@ getUpdatesRouter.post(
 
 getUpdatesRouter.get(
 	updatesConfirmYourEmailURL,
+	addGetUpdatesConfirmYourEmailTranslationsMiddleware,
 	projectsMiddleware,
 	getUpdatesMiddleware,
 	getUpdatesConfirmYourEmailController
 );
 
-getUpdatesRouter.get(updatesSubscribedURL, projectsMiddleware, getUpdatesSubscribedController);
+getUpdatesRouter.get(
+	updatesSubscribedURL,
+	addGetUpdatesSubscribedTranslationsMiddleware,
+	projectsMiddleware,
+	getUpdatesSubscribedController
+);
 
 getUpdatesRouter.get(updatesUnsubscribeURL, projectsMiddleware, getGetUpdatesUnsubscribeController);
 getUpdatesRouter.post(updatesUnsubscribeURL, postGetUpdatesUnsubscribeController);
