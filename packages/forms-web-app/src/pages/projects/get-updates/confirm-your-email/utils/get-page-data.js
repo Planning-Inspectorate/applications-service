@@ -9,9 +9,7 @@ const getEmail = (session) => {
 };
 
 const getPageData = (session) => ({
-	email: getEmail(session),
-	pageTitle: 'Get updates and confirm email',
-	pageHeading: 'Confirm you want to get emails'
+	email: getEmail(session)
 });
 
 module.exports = { getPageData };

@@ -13,7 +13,7 @@
 
 {% if errorSummary %}
 	{{ govukErrorSummary({
-		titleText: "There is a problem",
+		titleText: t('getUpdatesHowOften.index.validationErrorTitle1'),
 		errorList: errorSummary
 	}) }}
 {% endif %}
@@ -32,23 +32,23 @@
 		items: [
 			{
 				value: "allUpdates",
-				text: "Each time we update the project (you may get more than one email a day)",
+				text: t('getUpdatesHowOften.index.paragraph1'),
 				behaviour: "exclusive"
 			},
 			{
-				divider: "or"
+				divider: t('getUpdatesHowOften.index.paragraph2')
 			},
 			{
 				value: "applicationSubmitted",
-				text: "When the application is submitted"
+				text: t('getUpdatesHowOften.index.paragraph3')
 			},
 			{
 				value: "registrationOpen",
-				text: "When you can register to have your say"
+				text: t('getUpdatesHowOften.index.paragraph4')
 			},
 			{
 				value: "applicationDecided",
-				text: "When the final decision has been made"
+				text: t('getUpdatesHowOften.index.paragraph5')
 			}
 		],
 		errorMessage: errors[inputNameId] and {
@@ -57,7 +57,7 @@
 	}) }}
 
 	{{ govukButton({
-		text: "Continue"
+		text: t('common.continue')
 	}) }}
 
 </form>

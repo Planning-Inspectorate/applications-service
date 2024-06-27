@@ -5,6 +5,7 @@
 	"clearSearch": "Clear search",
 	"close": "Close",
 	"contents": "Contents",
+	"continue": "Continue",
 	"dateFrom": "Date from",
 	"datePublished": "Date published",
 	"dateTo": "Date to",
@@ -34,8 +35,16 @@
 	"showAllSections": "Show all sections",
 	"showAllSteps": "Show all steps",
 	"showFilters": "Show filters",
+	"startNow": "Start now",
 	"success": "Success",
 	"to": "To",
+	"validationErrors": {
+		"emailAddress": {
+			"empty": "Enter your email address",
+			"length": "Email address must be between 3 and 255 characters",
+			"format": "Enter an email address in the correct format, like name@example.com"
+		}
+	},
 	"year": "Year",
 	"yes": "Yes"
 }

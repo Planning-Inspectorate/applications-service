@@ -1,3 +1,21 @@
+const {
+	addCommonTranslationsMiddleware
+} = require('../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addGetUpdatesIndexTranslationsMiddleware
+} = require('./index/_middleware/add-get-updates-index-translations-middleware');
+const {
+	addGetUpdatesEmailTranslationsMiddleware
+} = require('./email/_middleware/add-get-updates-email-translations-middleware');
+const {
+	addGetUpdatesHowOftenTranslationsMiddleware
+} = require('./how-often/_middleware/add-get-updates-how-often-translations-middleware');
+const {
+	addGetUpdatesConfirmYourEmailTranslationsMiddleware
+} = require('./confirm-your-email/_middleware/add-get-updates-confirm-your-email-translations-middleware');
+const {
+	addGetUpdatesSubscribedTranslationsMiddleware
+} = require('./subscribed/_middleware/add-get-updates-subscribed-translations-middleware');
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const { getGetUpdatesIndexController } = require('./index/controller');
@@ -51,14 +69,18 @@ describe('pages/projects/get-updates/router', () => {
 		});
 
 		it('it should call get updates routes and controllers', () => {
+			expect(use).toHaveBeenCalledWith(addCommonTranslationsMiddleware);
+
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/start',
+				addGetUpdatesIndexTranslationsMiddleware,
 				projectsMiddleware,
 				getGetUpdatesIndexController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/email',
+				addGetUpdatesEmailTranslationsMiddleware,
 				getUpdatesMiddleware,
 				getGetUpdatesEmailController
 			);
@@ -72,6 +94,7 @@ describe('pages/projects/get-updates/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/how-often',
+				addGetUpdatesHowOftenTranslationsMiddleware,
 				getUpdatesMiddleware,
 				getGetUpdatesHowOftenController
 			);
@@ -85,6 +108,7 @@ describe('pages/projects/get-updates/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/confirm-your-email',
+				addGetUpdatesConfirmYourEmailTranslationsMiddleware,
 				projectsMiddleware,
 				getUpdatesMiddleware,
 				getUpdatesConfirmYourEmailController
@@ -92,6 +116,7 @@ describe('pages/projects/get-updates/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/subscribed',
+				addGetUpdatesSubscribedTranslationsMiddleware,
 				projectsMiddleware,
 				getUpdatesSubscribedController
 			);

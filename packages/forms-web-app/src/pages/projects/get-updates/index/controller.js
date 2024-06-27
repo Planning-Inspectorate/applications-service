@@ -23,8 +23,6 @@ const getGetUpdatesIndexController = (req, res) => {
 
 	return res.render(view, {
 		nextPageRoute: getUpdatesEmailURL(caseRef),
-		pageHeading: 'Get updates about this project',
-		pageTitle: `Get updates | ${res.locals.projectName}`,
 		decisionDatePassed
 	});
 };

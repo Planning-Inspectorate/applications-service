@@ -55,6 +55,9 @@ const { getRegisterCompleteController } = require('../_common/complete/controlle
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../../../../src/pages/_middleware/i18n/add-common-translations-middleware');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {
@@ -212,6 +215,7 @@ describe('pages/projects/register/agent/router', () => {
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/email-address',
 				registerMiddleware,
+				addCommonTranslationsMiddleware,
 				emailValidationRules(),
 				validationErrorHandler,
 				postRegisterEmailController
