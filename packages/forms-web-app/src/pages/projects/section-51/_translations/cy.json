@@ -1,12 +1,12 @@
 {
 	"anonymous": "Dienw",
 	"dateOfMeeting": "Dyddiad y cyfarfod",
-	"dateAdviceGiven": "Dyddiad y rhoddwyd y cyngor",
-	"meetingWith": "Cyfarfod â",
+	"dateAdviceGiven": "Y dyddiad y rhoddwyd y cyngor",
+	"meetingWith": "Cyfarfod gyda",
 	"adviceTo": "Cyngor i",
 	"enquiryFrom": "Ymholiad gan",
 	"enquiryType": "Math o ymholiad",
-	"from": "Oddi wrth",
+	"from": "Oddiwrth",
 	"viewMeetingWith": "Gweld cyfarfod gyda",
 	"viewAdviceTo": "Gweld cyngor i"
 }
