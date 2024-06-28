@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/have-your-say-guide/_translations should return the correct English translations 1`] = `
+{
+  "common": {
+    "haveYourSayGuide": "Have your say guide",
+  },
+  "decisionMade": {
+    "heading1": "What you can do after the decision has been made",
+    "linkText": "What happens after a decision has been made?",
+    "paragraph1": "Once a decision is made by the relevant Secretary of State, there is a 6 week period where people can challenge the decision in the High Court. This is called a judicial review.",
+  },
+  "duringExamination": {
+    "heading1": "Have your say during the examination of the application",
+    "linkText": "Submitting comments during the examination stage.",
+    "paragraph1": "At this stage the Examining Authority asks questions about the proposed development. The applicant and anyone who has registered to have their say can make comments by the deadlines in the examination timetable. Anyone can attend hearings that may take place during this stage. The examination can take up to 6 months.",
+  },
+  "getInvolved": {
+    "heading1": "Get involved in the preliminary meeting",
+    "linkText": "What you can do at the preliminary meeting.",
+    "paragraph1": "In the months after the registration period closes, the Examining Authority will hold a preliminary meeting. This meeting is to discuss the main issues the Examining Authority will be examining, and the timetable for the examination stage.",
+  },
+  "index": {
+    "heading1": "Have your say about a national infrastructure project",
+  },
+  "registering": {
+    "heading1": "Registering to have your say about a national infrastructure project",
+    "linkText": "How to register to have your say about a national infrastructure project.",
+    "paragraph1": "To get involved after the application is submitted to the Planning Inspectorate, you must register to have your say at the pre-examination stage. Pre-examination is where we prepare for an examination. We will identify an inspector or a panel of inspectors called the Examining Authority and make a plan for the examination stage. Registration is open for at least 30 days. The pre-examination stage takes about 3 months.",
+  },
+  "takingPart": {
+    "heading1": "Taking part at the pre-application stage",
+    "linkText": "Taking part before the application is submitted to the Planning Inspectorate.",
+    "paragraph1": "Pre-application is the first stage of the process. This is where the applicant must consult with people and organisations. The applicant must provide information about how you can submit your comments to them. It is important to get involved at this stage as you can influence the application before the applicant sends it to the Planning Inspectorate.",
+  },
+}
+`;
+
+exports[`pages/have-your-say-guide/_translations should return the correct Welsh translations 1`] = `
+{
+  "common": {
+    "haveYourSayGuide": "Canllaw gweud eich dweud",
+  },
+  "decisionMade": {
+    "heading1": "Yr hyn y gallwch ei wneud ar ôl i'r penderfyniad gael ei wneud",
+    "linkText": "Beth fydd yn digwydd ar ôl i benderfyniad gael ei wneud?",
+    "paragraph1": "Pan fydd yr Ysgrifennydd Gwladol perthnasol wedi gwneud penderfyniad, mae cyfnod 6 wythnos pryd y gall pobl herio'r penderfyniad yn yr Uchel Lys. Gelwir hyn yn adolygiad barnwrol.",
+  },
+  "duringExamination": {
+    "heading1": "Lleisio'ch barn yn ystod yr archwiliad o'r cais",
+    "linkText": "Cyflwyno sylwadau yn ystod y cam archwilio.",
+    "paragraph1": "Yn ystod y cam hwn, mae'r Awdurdod Archwilio'n gofyn cwestiynau am y datblygiad arfaethedig. Gall yr ymgeisydd ac unrhyw un sydd wedi cofrestru i leisio'i farn wneud sylwadau erbyn y terfynau amser yn amserlen yr archwiliad. Gall unrhyw un fynychu gwrandawiadau a allai gael eu cynnal yn ystod y cam hwn. Gall yr archwiliad gymryd hyd at 6 mis.",
+  },
+  "getInvolved": {
+    "heading1": "Cymryd rhan yn y cyfarfod rhagarweiniol",
+    "linkText": "Yr hyn y gallwch ei wneud yn y cyfarfod rhagarweiniol.",
+    "paragraph1": "Yn ystod y misoedd ar ôl i'r cyfnod cofrestru gau, bydd yr Awdurdod Archwilio'n cynnal cyfarfod rhagarweiniol. Diben y cyfarfod hwn yw trafod y prif faterion y bydd yr Awdurdod Archwilio'n eu harchwilio, a'r amserlen ar gyfer y cam archwilio.",
+  },
+  "index": {
+    "heading1": "Lleisio'ch barn am brosiect seilwaith cenedlaethol",
+  },
+  "registering": {
+    "heading1": "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol",
+    "linkText": "Sut i gofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol.",
+    "paragraph1": "I gymryd rhan ar ôl i'r cais gael ei gyflwyno i'r Arolygiaeth Gynllunio, mae'n rhaid i chi gofrestru i leisio'ch barn yn ystod y cam cyn-archwilio. Dyma'r adeg pan fyddwn yn paratoi ar gyfer archwiliad. Byddwn yn amlygu arolygydd neu banel o arolygwyr a elwir yn Awdurdod Archwilio ac yn llunio cynllun ar gyfer y cam archwilio. Bydd y cyfnod cofrestru ar agor am 30 niwrnod o leiaf. Bydd y cam cyn-archwilio'n cymryd tua 3 mis.",
+  },
+  "takingPart": {
+    "heading1": "Cymryd rhan yn ystod y cam cyn-ymgeisio",
+    "linkText": "Cymryd rhan cyn i'r cais gael ei gyflwyno i'r Arolygiaeth Gynllunio.",
+    "paragraph1": "Y cam cyn-ymgeisio yw cam cyntaf y broses. Dyma pryd mae'n rhaid i'r ymgeisydd ymgynghori â phobl a sefydliadau. Mae'n rhaid i'r ymgeisydd ddarparu gwybodaeth am sut gallwch gyflwyno'ch sylwadau iddo. Mae'n bwysig cymryd rhan yn ystod y cam hwn oherwydd gallwch ddylanwadu ar y cais cyn i'r ymgeisydd ei anfon at yr Arolygiaeth Gynllunio.",
+  },
+}
+`;

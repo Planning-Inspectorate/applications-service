@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/project-search/_translations should return the correct English translations 1`] = `
+{
+  "accessibilityText1": "Search projects",
+  "common": {
+    "projects": "projects",
+  },
+  "filterLabels": {
+    "region": "Location",
+    "sector": "Sector",
+    "stage": "Stage",
+  },
+  "heading1": "Projects",
+  "heading2": "Filtered results",
+  "linkText1": "Download a table containing a complete list of all {{-totalApplications}} projects (CSV)",
+  "noResultsFound": {
+    "linkText1": "Clear search and filters",
+    "paragraph1": "No results were found matching your search terms and filters.",
+    "paragraph2": "Would you like to clear your search and filters to view all projects instead?",
+  },
+  "pageTitle": "Project search",
+  "paragraph1": "This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.",
+  "paragraph2": "Showing {{-from}} to {{-to}} of {{-total}} projects.",
+  "sortByLinks": {
+    "projectName": "Project name",
+    "promoterName": "Applicant",
+    "stage": "Stage",
+  },
+}
+`;
+
+exports[`pages/project-search/_translations should return the correct Welsh translations 1`] = `
+{
+  "accessibilityText1": "Chwilio am brosiect",
+  "common": {
+    "projects": "prosiectau",
+  },
+  "filterLabels": {
+    "region": "Location",
+    "sector": "Sector",
+    "stage": "Cam",
+  },
+  "heading1": "Prosiectau",
+  "heading2": "Canlyniadau wedi'u hidlo",
+  "linkText1": "Lawrlwythwch dabl sy'n cynnwys rhestr lawn o bob un o'r {{-totalApplications}} o brosiectau (CSV)",
+  "noResultsFound": {
+    "linkText1": "Clirio chwiliad a dewisiadau hidlo",
+    "paragraph1": "Ni ddaethpwyd o hyd i unrhyw ganlyniadau sy'n cyfateb i'ch termau chwilio a'ch dewisiadau hidlo.",
+    "paragraph2": "A hoffech chi glirio'ch chwiliad a'ch dewisiadau hidlo i weld yr holl brosiectau yn lle hynny?",
+  },
+  "pageTitle": "Project search",
+  "paragraph1": "Dyma restr o'r holl brosiectau. I ddod o hyd i brosiect penodol, defnyddiwch yr opsiynau hidlo neu chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
+  "paragraph2": "Yn dangos {{-from}} i {{-to}} o {{-total}} brosiectau.",
+  "sortByLinks": {
+    "projectName": "Enw'r Prosiect",
+    "promoterName": "Ymgeisydd",
+    "stage": "Cam",
+  },
+}
+`;

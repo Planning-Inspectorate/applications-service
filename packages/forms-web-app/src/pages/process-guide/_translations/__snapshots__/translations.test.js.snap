@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/process-guide/_translations should return the correct English translations 1`] = `
+{
+  "acceptance": {
+    "heading1": "Acceptance",
+    "linkText": "How the acceptance stage works and what happens next.",
+    "paragraph1": "This is when the applicant sends us their application documents. We check if we can accept the application for examination. We have 28 days to make this decision.",
+  },
+  "common": {
+    "processGuide": "Process guide",
+  },
+  "decision": {
+    "heading1": "Decision",
+    "linkText": "Who makes the final decision.",
+    "paragraph1": "The decision stage is when the relevant Secretary of State then reviews the report and makes the final decision. They have 3 months to make a decision.",
+  },
+  "examination": {
+    "heading1": "Examination",
+    "linkText": "What happens at the examination stage?",
+    "paragraph1": "The Examining Authority will ask questions about the proposed development. The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 6 months.",
+  },
+  "index": {
+    "heading1": "The process for Nationally Significant Infrastructure Projects (NSIPs)",
+  },
+  "postDecision": {
+    "heading1": "What happens after the decision is made",
+    "linkText": "What you can do after the decision has been made.",
+    "paragraph1": "Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.",
+  },
+  "preApplication": {
+    "heading1": "Pre-application",
+    "linkText": "Find out what you can do at this stage and check our detailed guides.",
+    "paragraph1": "This is where the applicant starts to create their application. The applicant is required to consult with people and organisations in the area. They must also create detailed documents about the impact the project could have on the environment.",
+    "paragraph2": "It is important to get involved at this stage to influence the application before the applicant sends it to the Planning Inspectorate.",
+  },
+  "preExamination": {
+    "heading1": "Pre-examination",
+    "linkText": "What happens during the pre-examination stage.",
+    "paragraph1": "The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.",
+    "paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.",
+    "paragraph3": "The pre-examination stage usually takes about 3 months.",
+  },
+  "recommendation": {
+    "heading1": "Recommendation",
+    "linkText": "Making a recommendation.",
+    "paragraph1": "The Examining Authority writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 3 months of the end of examination stage.",
+  },
+}
+`;
+
+exports[`pages/process-guide/_translations should return the correct Welsh translations 1`] = `
+{
+  "acceptance": {
+    "heading1": "Derbyn",
+    "linkText": "Sut mae'r cam derbyn yn gweithio a beth fydd yn digwydd nesaf.",
+    "paragraph1": "Dyma'r adeg pan fydd yr ymgeisydd yn anfon ei ddogfennau cais atom. Byddwn yn gwirio a allwn dderbyn y cais i'w archwilio. Mae gennym 28 niwrnod i wneud y penderfyniad hwn.",
+  },
+  "common": {
+    "processGuide": "Canllaw proses",
+  },
+  "decision": {
+    "heading1": "Penderfyniad",
+    "linkText": "Pwy sy'n gwneud y penderfyniad terfynol.",
+    "paragraph1": "Y cam penderfynu yw'r adeg pan fydd yr Ysgrifennydd Gwladol perthnasol yn adolygu'r adroddiad ac yn gwneud y penderfyniad terfynol. Mae ganddo 3 mis i wneud penderfyniad.",
+  },
+  "examination": {
+    "heading1": "Archwiliad",
+    "linkText": "Beth sy'n digwydd yn ystod y cam archwilio?",
+    "paragraph1": "Bydd yr Awdurdod Archwilio'n gofyn cwestiynau am y datblygiad arfaethedig. Gall yr ymgeisydd ac unrhyw un sydd wedi cofrestru i leisio'i farn gymryd rhan a chyflwyno sylwadau erbyn pob terfyn amser yn yr amserlen. Gallwch hefyd fynychu gwrandawiadau a allai gael eu cynnal. Mae'r cam hwn yn cymryd hyd at 6 mis.",
+  },
+  "index": {
+    "heading1": "Y broses ar gyfer Prosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPau)",
+  },
+  "postDecision": {
+    "heading1": "Beth sy'n digwydd ar ôl i'r penderfyniad gael ei wneud",
+    "linkText": "Yr hyn y gallwch ei wneud ar ôl i'r penderfyniad gael ei wneud.",
+    "paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, mae cyfnod o 6 wythnos pryd y gall pobl herio'r penderfyniad yn yr Uchel Lys. Yr enw ar hyn yw adolygiad barnwrol.",
+  },
+  "preApplication": {
+    "heading1": "Cyn-ymgeisio",
+    "linkText": "Dysgwch beth allwch chi ei wneud yn ystod y cam hwn a gwiriwch ein canllawiau manwl.",
+    "paragraph1": "Dyma'r adeg pan fydd yr ymgeisydd yn dechrau creu ei gais. Mae'n ofynnol i'r ymgeisydd ymgynghori â phobl a sefydliadau yn yr ardal. Mae'n rhaid iddo hefyd greu dogfennau manwl ynglŷn â'r effaith y gallai'r prosiect ei chael ar yr amgylchedd.",
+    "paragraph2": "Mae'n bwysig cymryd rhan yn ystod y cam hwn er mwyn dylanwadu ar y cais cyn i'r ymgeisydd ei anfon at yr Arolygiaeth Gynllunio.",
+  },
+  "preExamination": {
+    "heading1": "Cyn-archwilio",
+    "linkText": "Beth sy'n digwydd yn ystod y cam cyn-archwilio.",
+    "paragraph1": "Penodir Awdurdod Archwilio sy'n cynnwys un neu fwy o arolygwyr. Mae'n rhaid i unrhyw un sydd eisiau lleisio'i farn allu cofrestru yn ystod y cam hwn.",
+    "paragraph2": "Mae'n rhaid i'r ymgeisydd gyhoeddi bod y cais wedi cael ei dderbyn gennym. Bydd yn cynnwys pryd a sut y gall partïon gofrestru i gymryd rhan. Mae'r cyfnod ar gyfer cofrestru'n cael ei osod gan yr ymgeisydd, ond mae'n rhaid iddo beidio â bod yn llai na 28 niwrnod.",
+    "paragraph3": "Mae'r cam cyn-archwilio'n cymryd oddeutu 3 mis fel arfer.",
+  },
+  "recommendation": {
+    "heading1": "Argymhelliad",
+    "linkText": "Gwneud argymhelliad.",
+    "paragraph1": "Mae'r Awdurdod Archwilio'n ysgrifennu ei adroddiad argymhelliad. Mae'n rhaid i hwn gael ei gwblhau a'i anfon at yr Ysgrifennydd Gwladol perthnasol o fewn 3 mis o ddiwedd y cam archwilio.",
+  },
+}
+`;
