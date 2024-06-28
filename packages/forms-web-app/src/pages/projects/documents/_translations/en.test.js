@@ -25,6 +25,17 @@ describe('pages/projects/documents/_translations/en', () => {
 			},
 			filteredResults: {
 				heading1: 'Filtered results'
+			},
+			errors: {
+				fromDateAfterToDate: 'The from date entered should start before the to date',
+				fromDatePast: 'The from date must be in the past',
+				emptyValue: 'The {{-formGroup}} date must include {{-emptyValue}}',
+				emptyValues: '{{-errorMessage}} and {{-emptyValue}}',
+				mustBeRealDate: 'The {{-formGroup}} date must be a real date',
+				title: {
+					from: 'from',
+					to: 'to'
+				}
 			}
 		});
 	});
