@@ -1,5 +1,4 @@
-const mapDatesFilterFormGroupsConfig = (errorMessageTitle, name, title) => ({
-	errorMessageTitle,
+const mapDatesFilterFormGroupsConfig = (name, title) => ({
 	name,
 	title
 });

@@ -26,6 +26,17 @@ describe('pages/projects/documents/_translations/cy', () => {
 			},
 			filteredResults: {
 				heading1: "Canlyniadau wedi'u hidlo"
+			},
+			errors: {
+				fromDateAfterToDate: 'The from date entered should start before the to date',
+				fromDatePast: 'The from date must be in the past',
+				emptyValue: "Rhaid i'r {{-formGroup}} gynnwys {{-emptyValue}}",
+				emptyValues: '{{-errorMessage}} a {{-emptyValue}}',
+				mustBeRealDate: "Rhaid i'r {{-formGroup}} fod yn ddyddiad go iawn",
+				title: {
+					from: 'dyddiad o',
+					to: 'i'
+				}
 			}
 		});
 	});

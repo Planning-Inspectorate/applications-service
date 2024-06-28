@@ -3,12 +3,14 @@ const { getFilters } = require('./getFilters');
 const { mockI18n } = require('../../../../_mocks/i18n');
 
 const commonTranslations_EN = require('../../../../../locales/en/common.json');
+const projectsDocumentsTranslations__EN = require('../../_translations/en.json');
 
 const i18n = mockI18n({
-	common: commonTranslations_EN
+	common: commonTranslations_EN,
+	projectsDocuments: projectsDocumentsTranslations__EN
 });
 
-describe('component', () => {
+describe('pages/projects/documents/_utils/filters/getFilters', () => {
 	describe('#getFilters', () => {
 		describe('When getting the filters for the UI', () => {
 			const mockFiltersFromAPI = [

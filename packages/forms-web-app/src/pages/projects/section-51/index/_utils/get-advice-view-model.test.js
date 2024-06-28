@@ -86,14 +86,14 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 						enquiryDetail: 'mock enquiry detail in Welsh',
 						date: {
 							date: '2023-01-01',
-							text: 'Dyddiad y rhoddwyd y cyngor:'
+							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 1',
 						linkTitle: 'Gweld cyngor i mock organisation'
 					},
 					{
 						adviceGivenBy: 'mock organisation',
-						adviceTypeLabel: 'Cyfarfod â',
+						adviceTypeLabel: 'Cyfarfod gyda',
 						enquiryDetail: 'mock enquiry detail 2 in Welsh',
 						date: {
 							date: 'mock date given 2',
@@ -108,7 +108,7 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 						enquiryDetail: 'mock enquiry detail 3 in Welsh',
 						date: {
 							date: 'mock date given 3',
-							text: 'Dyddiad y rhoddwyd y cyngor:'
+							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 3',
 						linkTitle: 'Gweld cyngor i mock first name mock last name'
@@ -119,7 +119,7 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 						enquiryDetail: 'mock enquiry detail 4 in Welsh',
 						date: {
 							date: 'mock date given 4',
-							text: 'Dyddiad y rhoddwyd y cyngor:'
+							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 4',
 						linkTitle: 'Gweld cyngor i Dienw'

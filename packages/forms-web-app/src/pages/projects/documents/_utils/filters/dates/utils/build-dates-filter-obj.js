@@ -23,7 +23,8 @@ const buildDatesFilterObj = (i18n) => {
 				id: getDatesFilterFormGroupId(datesFilterFormGroup.name),
 				inputs: buildDatesFilterFormGroupInputs(),
 				inputNamePrefix: datesFilterFormGroup.name,
-				title: i18n.t(`common.${datesFilterFormGroup.title}`)
+				title: i18n.t(`common.${datesFilterFormGroup.title}`),
+				errorMessageTitle: i18n.t(`projectsDocuments.errors.title.${datesFilterFormGroup.title}`)
 			};
 		});
 	};

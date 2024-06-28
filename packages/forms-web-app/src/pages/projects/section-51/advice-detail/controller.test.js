@@ -109,9 +109,9 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							backToListUrl: '/register-of-advice',
 							breadcrumbsItems: null,
 							enquirySummaryList: [
-								{ key: { text: 'Oddi wrth' }, value: { text: 'mock organisation' } },
+								{ key: { text: 'Oddiwrth' }, value: { text: 'mock organisation' } },
 								{
-									key: { text: 'Dyddiad y rhoddwyd y cyngor' },
+									key: { text: 'Y dyddiad y rhoddwyd y cyngor' },
 									value: { text: '1 January 2023' }
 								},
 								{ key: { text: 'Math o ymholiad' }, value: { text: 'Email' } }
