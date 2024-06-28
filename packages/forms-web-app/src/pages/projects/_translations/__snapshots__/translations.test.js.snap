@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/_translations should return the correct English translations 1`] = `
+{
+  "navigation": {
+    "documents": "Documents",
+    "examinationTimetable": "Examination timetable",
+    "getUpdates": "Get updates",
+    "haveYourSay": "Have your say",
+    "index": "Project information",
+    "register": "Register to have your say",
+    "representations": "Relevant representations (registration comments)",
+    "section51": "Section 51 advice",
+  },
+}
+`;
+
+exports[`pages/projects/_translations should return the correct Welsh translations 1`] = `
+{
+  "navigation": {
+    "documents": "Dogfennau",
+    "examinationTimetable": "Amserlen yr archwiliad",
+    "getUpdates": "Cael diweddariadau",
+    "haveYourSay": "Dweud eich dweud",
+    "index": "Gwybodaeth am y prosiect",
+    "register": "Cofrestru i leisio'ch barn",
+    "representations": "Sylwadau perthnasol (sylwadau cofrestru)",
+    "section51": "Cyngor Adran 51",
+  },
+}
+`;

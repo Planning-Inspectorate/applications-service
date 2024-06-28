@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/index/_translations should return the correct English translations 1`] = `
+{
+  "heading1": "Welcome to Find a National Infrastructure Project",
+  "heading2": "I am looking for a project",
+  "heading3": "I want to view all projects",
+  "heading4": "Information for members of the public",
+  "heading5": "Information for professional users",
+  "heading6": "Updates and contact information",
+  "linkParagraph1": "Here you can view the stages that an application goes through from start to finish.",
+  "linkParagraph2": "Find out everything you need to know about sharing your views on a project.",
+  "linkParagraph3": "Find advice notes, relevant legislation and national policy statements.",
+  "linkParagraph4": "If you want to build a new development, this is what you need to know before you start.",
+  "linkParagraph5": "How to get in contact with us.",
+  "linkParagraph6": "See the latest NSIP news.",
+  "linkTitle1": "See the process",
+  "linkTitle2": "How to have your say on a project",
+  "linkTitle3": "View detailed information",
+  "linkTitle4": "See the process of submitting a project",
+  "linkTitle5": "I need help",
+  "linkTitle6": "See the latest news",
+  "paragraph1": "Here you can find more information about Nationally Significant Infrastructure Projects (NSIPs). These are large scale projects like power stations, highways and power lines. They are treated separately from normal local authority planning because of their size and importance to wider communities.",
+  "paragraph2": "This site is managed by the Planning Inspectorate, the government agency responsible for examining applications of this size and scale in England and Wales.",
+  "paragraph3": "This is a new service. If you are visiting for information on a Welsh project, visit our {{-link}}.",
+  "paragraph3LinkText": "old website",
+  "paragraph4": "Search by project name or applicant",
+  "paragraph5": "See a {{-link}}",
+  "paragraph5LinkText": "complete list of all projects",
+}
+`;
+
+exports[`pages/index/_translations should return the correct Welsh translations 1`] = `
+{
+  "heading1": "Croeso i Gynllunio Seilwaith Cenedlaethol",
+  "heading2": "Rwy'n chwilio am brosiect",
+  "heading3": "Rwyf eisiau gweld yr holl brosiectau",
+  "heading4": "Gwybodaeth ar gyfer y cyhoedd",
+  "heading5": "Gwybodaeth ar gyfer defnyddwyr proffesiynol",
+  "heading6": "Diweddariadau a gwybodaeth gyswllt",
+  "linkParagraph1": "Gallwch weld y camau y mae cais yn mynd trwyddynt, o'r dechrau i'r diwedd.",
+  "linkParagraph2": "Dysgwch bopeth y mae angen i chi ei wybod am rannu eich safbwyntiau ar brosiect.",
+  "linkParagraph3": "Dewch o hyd i nodiadau cyngor, deddfwriaeth berthnasol a datganiadau polisi cenedlaethol.",
+  "linkParagraph4": "Os ydych eisiau adeiladu datblygiad newydd, dyma'r hyn y mae angen i chi ei wybod cyn dechrau.",
+  "linkParagraph5": "Sut i gysylltu â ni.",
+  "linkParagraph6": "Gweld y newyddion NSIP diweddaraf.",
+  "linkTitle1": "Gweld y broses",
+  "linkTitle2": "Sut i leisio'ch barn am brosiect",
+  "linkTitle3": "Gweld gwybodaeth fanwl",
+  "linkTitle4": "Gweld y broses o gyflwyno prosiect",
+  "linkTitle5": "Mae arnaf angen cymorth",
+  "linkTitle6": "Gweld y newyddion diweddaraf",
+  "paragraph1": "Mae rhagor o wybodaeth ar gael yma ynglŷn â Phrosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPau). Prosiectau mawr yw'r rhain fel gorsafoedd pŵer, priffyrdd a llinellau pŵer. Maen nhw'n cael eu trin ar wahân i gynllunio awdurdod lleol arferol oherwydd eu maint a'u pwysigrwydd i gymunedau ehangach.",
+  "paragraph2": "Mae'r safle hwn yn cael ei reoli gan yr Arolygiaeth Gynllunio, sef asiantaeth y llywodraeth sy'n gyfrifol am archwilio ceisiadau ar y raddfa hon yng Nghymru a Lloegr.",
+  "paragraph3": "This is a new service. If you are visiting for information on a Welsh project, visit our {{-link}}.",
+  "paragraph3LinkText": "old website",
+  "paragraph4": "Brig y Ffurflen",
+  "paragraph5": "Gweld {{-link}}",
+  "paragraph5LinkText": "rhestr lawn o'r holl brosiectau",
+}
+`;
