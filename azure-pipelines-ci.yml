@@ -42,15 +42,3 @@ extends:
             parameters:
               condition: succeededOrFailed()
               script: npm run test:cov
-          - template: ../steps/check_changed_files.yml
-            parameters:
-              pathFilters:
-                - name: api
-                  path: packages/applications-service-api
-                - name: common
-                  path: packages/common
-                - name: web
-                  path: packages/forms-web-app
-                - name: back-office-subscribers
-                  path: packages/back-office-subscribers
-              stepName: check_files
