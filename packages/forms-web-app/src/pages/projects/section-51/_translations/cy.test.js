@@ -5,12 +5,12 @@ describe('pages/projects/section-51/_translations/cy', () => {
 		expect(section51Translations__CY).toEqual({
 			adviceTo: 'Cyngor i',
 			anonymous: 'Dienw',
-			dateAdviceGiven: 'Dyddiad y rhoddwyd y cyngor',
+			dateAdviceGiven: 'Y dyddiad y rhoddwyd y cyngor',
 			dateOfMeeting: 'Dyddiad y cyfarfod',
 			enquiryFrom: 'Ymholiad gan',
 			enquiryType: 'Math o ymholiad',
-			from: 'Oddi wrth',
-			meetingWith: 'Cyfarfod â',
+			from: 'Oddiwrth',
+			meetingWith: 'Cyfarfod gyda',
 			viewAdviceTo: 'Gweld cyngor i',
 			viewMeetingWith: 'Gweld cyfarfod gyda'
 		});
