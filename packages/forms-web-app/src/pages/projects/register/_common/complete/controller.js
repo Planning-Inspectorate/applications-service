@@ -1,7 +1,6 @@
 const { getProjectsIndexURL } = require('../../../index/_utils/get-projects-index-url');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const logger = require('../../../../../lib/logger');
-const { viewModel } = require('./_utils/viewModel');
 const {
 	getSessionBase,
 	getSession
@@ -16,7 +15,7 @@ const getRegisterCompleteController = (req, res) => {
 		const { email } = getSession(session, key);
 
 		return res.render('projects/register/_common/complete/view.njk', {
-			...viewModel[key],
+			key,
 			ipRefNo,
 			email,
 			projectsIndexURL: getProjectsIndexURL(caseRef)

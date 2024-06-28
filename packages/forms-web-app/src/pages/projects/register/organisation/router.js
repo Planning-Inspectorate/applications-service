@@ -270,6 +270,8 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationCompleteURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );

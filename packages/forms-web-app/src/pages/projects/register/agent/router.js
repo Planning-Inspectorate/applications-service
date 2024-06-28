@@ -389,6 +389,8 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentCompleteURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );

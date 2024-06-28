@@ -136,5 +136,21 @@
 		"listItem2": "rhoi gwybod i chi pryd y gallwch gyflwyno mwy o wybodaeth",
 		"paragraph4": "Rydych hefyd yn cytuno i'r holl sylwadau a gyflwynwch, ynghyd â'ch enw, gael eu cyhoeddi ar y wefan hon. Ni fydd unrhyw fanylion cyswllt yn cael eu cyhoeddi.",
 		"paragraph5": "Pan fyddwn yn cyhoeddi'ch sylwadau, ni ellir eu dileu o'r wefan. Gallwch dynnu'ch sylwadau cofrestru yn ôl o'r archwiliad o'r prosiect ac ni fyddant yn cael eu hystyried mwyach."
+	},
+	"complete": {
+		"pageHeading": "Cofrestru wedi'i gwblhau",
+		"panel1": "Eich rhif cyfeirnod",
+		"paragraph1": "Rydym wedi anfon e-bost cadarnhau at: {{-email}}",
+		"paragraph2": "Byddwn yn cysylltu â chi os bydd arnom angen mwy o wybodaeth am y sylwadau a roddwyd gennych ar y ffurflen gofrestru.",
+		"heading1": "Cymryd rhan yn y cyfarfod rhagarweiniol",
+		"paragraph3": "Ar ôl i'r cyfnod cofrestru gau, bydd llythyr a elwir yn llythyr rheol 6 yn cael ei anfon atoch, sy'n dweud wrthych pryd a ble y bydd y cyfarfod rhagarweiniol yn cael ei gynnal. Diben y cyfarfod hwn yw trafod sut bydd y cais yn cael ei archwilio. Bydd hefyd yn cynnwys amserlen ddrafft ar gyfer yr archwiliad o'r cais.",
+		"heading2": "Sut a phryd i gyflwyno mwy o wybodaeth",
+		"paragraph4": "Byddwn yn rhoi gwybod i chi pan fydd yr archwiliad o'r cais hwn yn dechrau.",
+		"paragraph5": "Gallwch gyflwyno mwy o wybodaeth trwy lenwi'r ffurflen ar dudalen y prosiect. Bydd arnoch angen eich rhif cyfeirnod parti â buddiant i sicrhau bod eich sylwadau'n cael eu cynnwys yn yr archwiliad o'r cais.",
+		"paragraph6": "Gallwch wirio ein canllaw i {{-link}}",
+		"paragraph6LinkText": "gael gwybod mwy am leisio'ch barn yn ystod yr archwiliad o'r cais (sy'n agor mewn tab newydd).",
+		"paragraph7LinkText": "Dychwelyd i dudalen y prosiect",
+		"paragraph8": "{{-link}} trwy gwblhau arolwg byr.",
+		"paragraph8LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn"
 	}
 }

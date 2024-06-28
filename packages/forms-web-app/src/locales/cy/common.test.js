@@ -36,7 +36,7 @@ describe('locales/cy/common', () => {
 			},
 			resultsPerPage: 'Canlyniadau fesul tudalen',
 			returnToResults: 'Dychwelyd at ganlyniadau',
-			saveAndExit: 'Arbed a Gadael',
+			saveAndExit: 'Cadw & Gadael',
 			saveChanges: 'Achub newidiadau',
 			search: 'Chwilio',
 			selectAllFilters: 'Dewiswch bob hidlydd',

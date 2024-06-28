@@ -213,6 +213,8 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfCompleteURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );
