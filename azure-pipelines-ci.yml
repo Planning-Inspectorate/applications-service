@@ -42,3 +42,5 @@ extends:
             parameters:
               condition: succeededOrFailed()
               script: npm run test:cov
+
+#### TEST
