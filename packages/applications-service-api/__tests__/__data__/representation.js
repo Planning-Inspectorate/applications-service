@@ -60,7 +60,7 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 		REPRESENTATIVE_BACKOFFICE_DATA.firstName + ' ' + REPRESENTATIVE_BACKOFFICE_DATA.lastName,
 	OrgOnBhalfName: REPRESENTED_BACKOFFICE_DATA.organisationName,
 	RepFrom: REPRESENTATION_BACKOFFICE_DATA.representationType,
-	repFromWelsh: 'Cyngor Plwyf',
+	RepFromWelsh: 'Cyngor Plwyf',
 	RepresentationRedacted: REPRESENTATION_BACKOFFICE_DATA.representationComment,
 	DateRrepReceived: REPRESENTATION_BACKOFFICE_DATA.dateReceived,
 	Attachments: REPRESENTATION_BACKOFFICE_DATA.attachmentIds,

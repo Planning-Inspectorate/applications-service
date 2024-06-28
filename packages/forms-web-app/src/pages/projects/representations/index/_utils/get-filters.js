@@ -5,8 +5,8 @@ const {
 
 const filterNameID = 'type';
 
-const getFilterViewModel = ({ count, name }) => {
-	const filterName = titleCase(name);
+const getFilterViewModel = ({ count, name, name_cy }, langIsWelsh) => {
+	const filterName = titleCase(langIsWelsh ? name_cy : name);
 	return {
 		checked: false,
 		label: filterName,
@@ -15,18 +15,18 @@ const getFilterViewModel = ({ count, name }) => {
 	};
 };
 
-const getFiltersViewModel = (filters) => [
+const getFiltersViewModel = (filters, langIsWelsh) => [
 	{
-		items: filters.map((filter) => getFilterViewModel(filter)),
+		items: filters.map((filter) => getFilterViewModel(filter, langIsWelsh)),
 		name: filterNameID
 	}
 ];
 
-const getFilters = (query, rawFilters) => {
+const getFilters = (query, rawFilters, langIsWelsh) => {
 	const queryTypeValues = {
 		[filterNameID]: query[filterNameID]
 	};
-	const filtersViewModel = getFiltersViewModel(rawFilters);
+	const filtersViewModel = getFiltersViewModel(rawFilters, langIsWelsh);
 	const { activeFilters, filters } = getActiveFiltersViewModel(queryTypeValues, filtersViewModel);
 
 	return {

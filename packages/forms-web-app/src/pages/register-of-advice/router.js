@@ -13,14 +13,25 @@ const {
 	addSection51TranslationsMiddleware
 } = require('../projects/section-51/_middleware/add-section-51-translations-middleware');
 
+const {
+	addCommonTranslationsMiddleware
+} = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	registerOfAdviceTranslationsMiddleware
+} = require('./index/_middleware/register-of-advice-middleware');
+
 const registerOfAdviceIndexURL = getRegisterOfAdviceIndexURL();
 const registerOfAdviceDetailURL = getRegisterOfAdviceDetailURL();
 
 const registerOfAdviceRouter = express.Router();
 
-registerOfAdviceRouter.use(addSection51TranslationsMiddleware);
-
-registerOfAdviceRouter.get(registerOfAdviceIndexURL, getRegisterOfAdviceController);
+registerOfAdviceRouter.get(
+	registerOfAdviceIndexURL,
+	addCommonTranslationsMiddleware,
+  addSection51TranslationsMiddleware,
+	registerOfAdviceTranslationsMiddleware,
+	getRegisterOfAdviceController
+);
 
 registerOfAdviceRouter.get(registerOfAdviceDetailURL, getSection51AdviceDetailController);
 
