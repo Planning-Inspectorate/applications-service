@@ -15,6 +15,9 @@ describe('pages/projects/representations/representation/controller', () => {
 	beforeEach(() => {
 		jest.resetAllMocks();
 		req = {
+			i18n: {
+				language: 'en'
+			},
 			params: {
 				case_ref: caseRef
 			},
@@ -46,6 +49,7 @@ describe('pages/projects/representations/representation/controller', () => {
 			OrgOnBhalfName: null,
 			AgentOrgOnBhalfContactName: null,
 			RepFrom: 'Members of the public/businesses',
+			RepFromWelsh: 'Welsh members of the public/businesses',
 			InterestInLand: null,
 			SpecifyOther: null,
 			CompulsoryAcquisitionHearing: null,
@@ -85,6 +89,7 @@ describe('pages/projects/representations/representation/controller', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'projects/representations/representation/view.njk',
 						{
+							langIsWelsh: false,
 							allowProjectInformation: true,
 							backToListUrl: '/projects/EN010009/representations',
 							hideAllExaminationDocumentsLink: true,
@@ -100,7 +105,8 @@ describe('pages/projects/representations/representation/controller', () => {
 								hasAttachments: true,
 								name: 'Test (Test)',
 								representative: null,
-								submittedBy: 'Members of the public/businesses'
+								submittedBy: 'Members of the public/businesses',
+								submittedByWelsh: 'Welsh members of the public/businesses'
 							}
 						}
 					);

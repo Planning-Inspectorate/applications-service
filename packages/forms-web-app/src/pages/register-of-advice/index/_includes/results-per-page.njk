@@ -1,7 +1,11 @@
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
 
 <p class="govuk-body">
-  Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of <strong>{{ paginationData.totalItems }}</strong> entries, newest first.
+  {% if isWelsh %}
+    Yn dangos <strong>{{ paginationData.fromRange }}</strong> i <strong>{{ paginationData.toRange }}</strong> o <strong>{{ paginationData.totalItems }}</strong> o gofnodion, gyda’r rhai mwyaf newydd yn gyntaf.
+  {% else %}
+    Showing <strong>{{ paginationData.fromRange }}</strong> to <strong>{{ paginationData.toRange }}</strong> of <strong>{{ paginationData.totalItems }}</strong> entries, newest first.
+  {% endif %}
 </p>
 
-{{ uiResultsPerPage(resultsPerPage) }}
+{{ uiResultsPerPage(resultsPerPage, t('common.resultsPerPage')) }}
