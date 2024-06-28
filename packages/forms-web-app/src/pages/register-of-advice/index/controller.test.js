@@ -84,9 +84,7 @@ describe('pages/register-of-advice/index/controller', () => {
 								}
 							],
 							itemsPerPage: 25,
-							pageHeading: 'Register of advice',
 							pageOptions: [1],
-							pageTitle: 'Register of advice',
 							paginationData: {
 								currentPage: 1,
 								fromRange: 1,
@@ -104,7 +102,8 @@ describe('pages/register-of-advice/index/controller', () => {
 								oneHundred: { active: false, link: '?searchTerm=&itemsPerPage=100', size: 100 },
 								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25', size: 25 }
 							},
-							searchTerm: ''
+							searchTerm: '',
+							isWelsh: false
 						});
 					});
 				});
@@ -154,9 +153,7 @@ describe('pages/register-of-advice/index/controller', () => {
 								}
 							],
 							itemsPerPage: 50,
-							pageHeading: 'Register of advice',
 							pageOptions: [1],
-							pageTitle: 'Register of advice',
 							paginationData: {
 								currentPage: 1,
 								fromRange: 1,
@@ -174,7 +171,8 @@ describe('pages/register-of-advice/index/controller', () => {
 								oneHundred: { active: false, link: '?searchTerm=&itemsPerPage=100', size: 100 },
 								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25', size: 25 }
 							},
-							searchTerm: ''
+							searchTerm: '',
+							isWelsh: false
 						});
 					});
 				});

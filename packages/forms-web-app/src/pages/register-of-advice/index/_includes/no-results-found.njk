@@ -1,11 +1,11 @@
 <p class="govuk-body">
-  No advice was found matching your search term.
+  {{ t('registerOfAdvice.noResultsParagraph1') }}
 </p>
 
 <p class="govuk-body">
-  Would you like to clear your search to view all available advice instead?
+  {{ t('registerOfAdvice.noResultsParagraph2') }}
 </p>
 
 <p class="govuk-body">
-	<a class="govuk-link" href="{{ registerOfAdviceIndexURL }}">Clear search</a>
+<a class="govuk-link" href="{{ registerOfAdviceIndexURL }}">{{ t('registerOfAdvice.noResultsClearLink') }}</a>
 </p>
