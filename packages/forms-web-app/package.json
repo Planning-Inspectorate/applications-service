@@ -22,6 +22,7 @@
 		"test": "jest",
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watch --runInBand",
+		"test:update": "jest -u",
 		"watch:sass": "nodemon -e scss -x \"npm run build:sass\""
 	},
 	"dependencies": {
