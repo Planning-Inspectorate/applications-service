@@ -11,6 +11,6 @@ describe('pages/register-of-advice/_translations', () => {
 	});
 
 	it('should returning matching keys for both English and Welsh translations', () => {
-		expect(Object.keys(enTranslations).sort()).toStrictEqual(Object.keys(cyTranslations).sort());
+		expect(enTranslations).toHaveSameKeys(cyTranslations);
 	});
 });
