@@ -70,14 +70,15 @@ app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.
 // View Engine
 app.set('view engine', 'njk');
 
-if (config.plannedServiceOutage.showOutagePage) app.use(plannedOutage);
-
 app.use(i18nRedirect);
 
 configureI18n(app);
 
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(nunjucksEnv));
+
+// Outage page blocking access to the site when active
+if (config.plannedServiceOutage.showOutagePage) app.use(plannedOutage);
 
 // Routes
 app.use('/', routes);
