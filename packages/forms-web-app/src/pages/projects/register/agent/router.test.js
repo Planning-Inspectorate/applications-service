@@ -391,12 +391,16 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/check-answers',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentCheckAnswersController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/declaration',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);

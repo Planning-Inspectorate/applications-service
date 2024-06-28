@@ -224,6 +224,8 @@ describe('pages/projects/register/myself/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/myself/declaration',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);

@@ -200,6 +200,8 @@ registerMyselfRouter.get(
 
 registerMyselfRouter.get(
 	registerMyselfDeclarationURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterDeclarationController
 );

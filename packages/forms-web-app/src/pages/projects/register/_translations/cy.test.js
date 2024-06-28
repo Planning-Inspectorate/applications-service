@@ -141,6 +141,20 @@ describe('pages/projects/register/_translations/cy', () => {
 				changeNumberHiddenText: 'eich rhif ffôn',
 				comments: 'Sylwadau cofrestru',
 				changeCommentsHiddenText: 'sylwadau cofrestru'
+			},
+			declaration: {
+				pageHeading: 'Datganiad',
+				paragraph1:
+					"Trwy gyflwyno'r ffurflen hon, rydych yn cofrestru i leisio'ch barn a rhoi eich sylwadau cofrestru i ni.",
+				paragraph2:
+					"Mae'n rhaid i'r Awdurdod Archwilio ystyried eich safbwyntiau pan fydd yn argymell a ddylai'r prosiect fynd ymlaen. Byddwn yn cysylltu â chi os bydd arnom angen mwy o wybodaeth am y sylwadau a roddwyd gennych ar y ffurflen gofrestru.",
+				paragraph3: "Rydych yn cytuno i ni ddefnyddio'ch manylion i:",
+				listItem1: "gysylltu â chi ynglŷn â'r prosiect neu os bydd arnom angen mwy o wybodaeth",
+				listItem2: 'rhoi gwybod i chi pryd y gallwch gyflwyno mwy o wybodaeth',
+				paragraph4:
+					"Rydych hefyd yn cytuno i'r holl sylwadau a gyflwynwch, ynghyd â'ch enw, gael eu cyhoeddi ar y wefan hon. Ni fydd unrhyw fanylion cyswllt yn cael eu cyhoeddi.",
+				paragraph5:
+					"Pan fyddwn yn cyhoeddi'ch sylwadau, ni ellir eu dileu o'r wefan. Gallwch dynnu'ch sylwadau cofrestru yn ôl o'r archwiliad o'r prosiect ac ni fyddant yn cael eu hystyried mwyach."
 			}
 		});
 	});

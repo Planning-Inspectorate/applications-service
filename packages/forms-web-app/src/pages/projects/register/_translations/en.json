@@ -126,5 +126,15 @@
 		"changeNumberHiddenText": "your telephone number",
 		"comments": "Registration comments",
 		"changeCommentsHiddenText": "registration comments"
+	},
+	"declaration": {
+		"pageHeading": "Declaration",
+		"paragraph1": "By submitting this form, you are registering to have your say and telling us your registration comments.",
+		"paragraph2": "The Examining Authority must consider your views when they recommend if the project should go ahead. We will contact you if we need more information about the comments you provided in the registration form.",
+		"paragraph3": "You are agreeing that we will use your details to:",
+		"listItem1": "contact you about the project or if we need more information",
+		"listItem2": "let you know when you can submit more information",
+		"paragraph4": "You are also agreeing that all comments you submit, along with your name, will be published on this website. No contact details will be made public.",
+		"paragraph5": "Once we publish your comments, they cannot be removed from the website. You can withdraw your registration comments from the examination of the project and they will no longer be taken into account."
 	}
 }

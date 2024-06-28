@@ -368,12 +368,16 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentCheckAnswersURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentCheckAnswersController
 );
 
 registerAgentRouter.get(
 	registerAgentDeclarationURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterDeclarationController
 );

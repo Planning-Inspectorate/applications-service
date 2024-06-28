@@ -2,49 +2,52 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %},
 
+{% set pageHeading = t('register.declaration.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle')%}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
 {% block pageTitle %}
-	{{ pageTitle }}
+	{{ title }}
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds-from-desktop">
 			<h1 class="govuk-heading-xl">
-				Declaration
+				{{ pageHeading }}
 			</h1>
 
 			<p class="govuk-body">
-				By submitting this form, you are registering to have your say and telling us your registration comments.
+				{{ t('register.declaration.paragraph1') }}
 			</p>
 
 			<p class="govuk-body">
-				The Examining Authority must consider your views when they recommend if the project should go ahead.
-				We will contact you if we need more information about the comments you provided in the registration form.
+				{{ t('register.declaration.paragraph2') }}
 			</p>
 
 			<p class="govuk-body">
-				You are agreeing that we will use your details to:
+				{{ t('register.declaration.paragraph3') }}
 			</p>
 
 			<ul class="govuk-list govuk-list--bullet">
-				<li>contact you about the project or if we need more information</li>
-				<li>let you know when you can submit more information</li>
+				<li>{{ t('register.declaration.listItem1') }}</li>
+				<li>{{ t('register.declaration.listItem2') }}</li>
 			</ul>
 
 			<p class="govuk-body">
-				You are also agreeing that all comments you submit, along with your name, will be published on this website. No contact details will be made public.
+				{{ t('register.declaration.paragraph4') }}
 			</p>
 
 			<p class="govuk-body">
-				Once we publish your comments, they cannot be removed from the website.
-				You can withdraw your registration comments from the examination of the project and they will no longer be taken into account.
+				{{ t('register.declaration.paragraph5') }}
 			</p>
 
 			<form autocomplete="off" method="post" novalidate>
 				<input type="hidden" name="declaration-confirmed" value="true">
 
 				{{ govukButton({
-					text: "Accept and continue",
+					text: t('common.acceptAndContinue'),
 					type: "Submit",
 					attributes: { "data-cy": "button-accept-and-regoster"}
 				}) }}

@@ -249,12 +249,16 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationCheckAnswersURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationCheckAnswersController
 );
 
 registerOrganisationRouter.get(
 	registerOrganisationDeclarationURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
