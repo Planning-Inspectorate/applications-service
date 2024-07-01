@@ -61,7 +61,7 @@ describe('pages/project-search/controller', () => {
 					applications: [
 						{
 							applicant: 'EDF',
-							applicationDate: '01 Jan 2018',
+							applicationDate: '1 Jan 2018',
 							decisionDate: '',
 							location: 'Somerset - Monday PM 23/12',
 							pageURL: '/projects/TR010001',
@@ -79,7 +79,7 @@ describe('pages/project-search/controller', () => {
 						},
 						{
 							applicant: 'EDF',
-							applicationDate: '01 Jan 2018',
+							applicationDate: '1 Jan 2018',
 							decisionDate: '',
 							location: 'Somerset - cache test 03-02 15:44',
 							pageURL: '/projects/tr033005',
