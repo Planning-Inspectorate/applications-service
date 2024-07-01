@@ -1,3 +1,5 @@
 const getUpdatesUnsubscribedRoute = 'unsubscribed';
 
-module.exports = { getUpdatesUnsubscribedRoute };
+const getUpdatesUnsubscribedNamespace = 'getUpdatesUnsubscribed';
+
+module.exports = { getUpdatesUnsubscribedRoute, getUpdatesUnsubscribedNamespace };
