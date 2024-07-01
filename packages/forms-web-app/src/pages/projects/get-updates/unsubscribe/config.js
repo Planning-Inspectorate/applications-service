@@ -1,3 +1,5 @@
 const getUpdatesUnsubscribeRoute = 'unsubscribe-confirm';
 
-module.exports = { getUpdatesUnsubscribeRoute };
+const getUpdatesUnsubscribeNamespace = 'getUpdatesUnsubscribe';
+
+module.exports = { getUpdatesUnsubscribeRoute, getUpdatesUnsubscribeNamespace };
