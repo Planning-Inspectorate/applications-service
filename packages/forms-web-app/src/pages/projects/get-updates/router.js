@@ -23,6 +23,9 @@ const {
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const {
+	getUpdatesUnsubscribedTranslationsMiddleware
+} = require('./unsubscribed/_middleware/unsubscribed-translations-middleware');
+const {
 	getUpdatesUnsubscribeTranslationsMiddleware
 } = require('./unsubscribe/_middleware/unsubscribe-translations-middleware');
 
@@ -122,6 +125,11 @@ getUpdatesRouter.get(
 );
 getUpdatesRouter.post(updatesUnsubscribeURL, postGetUpdatesUnsubscribeController);
 
-getUpdatesRouter.get(updatesUnsubscribedURL, projectsMiddleware, getUpdatesUnsubscribedController);
+getUpdatesRouter.get(
+	updatesUnsubscribedURL,
+	projectsMiddleware,
+	getUpdatesUnsubscribedTranslationsMiddleware,
+	getUpdatesUnsubscribedController
+);
 
 module.exports = { getUpdatesRouter };
