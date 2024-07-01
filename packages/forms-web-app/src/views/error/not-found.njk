@@ -1,27 +1,27 @@
 {% extends "layouts/default.njk" %}
 
 {% block pageTitle %}
-  Page not found - Application service - GOV.UK
+  {{ t('errors.pageNotFound.title') }}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">Page not found</h1>
+      <h1 class="govuk-heading-l">{{ t('errors.pageNotFound.title') }}</h1>
       <p class="govuk-body">
-        If you typed the web address, check it is correct.
+        {{ t('errors.pageNotFound.paragraph1') }}
       </p>
       <p class="govuk-body">
-        If you pasted the web address, check you copied the entire address.
+        {{ t('errors.pageNotFound.paragraph2') }}
       </p>
       <p class="govuk-body">
-        If the web address is correct or you selected a link or button, contact The Planning Inspectorate Customer Support:
+        {{ t('errors.pageNotFound.paragraph3') }}
       </p>
 
       <h2 class="govuk-heading-s">Telephone</h2>
       <ul class="govuk-list">
-        <li>Telephone: 0303 444 5000</li>
-        <li>Monday to Friday, 9am to midday (except public holidays)</li>
+        <li>{{ t('errors.pageNotFound.telephoneNumber') }}</li>
+        <li>{{ t('errors.pageNotFound.telephoneTimes') }}</li>
       </ul>
       <h2 class="govuk-heading-s">Email</h2>
       <p>
