@@ -6,5 +6,10 @@
 	"pageNotFound.paragraph3": "Os yw’r cyfeiriad gwe’n gywir neu os dewisoch ddolen neu fotwm, cysylltwch â Chymorth Cwsmeriaid yr Arolygiaeth Gynllunio:",
 	"pageNotFound.telephoneNumber": "Rhif ffôn: 0303 444 5000",
 	"plannedOutage.title": "Yn anffodus, nid yw’r gwasanaeth ar gael",
-	"plannedOutage.urgentQuestions": "Os oes gennych gwestiynau brys:"
+	"plannedOutage.urgentQuestions": "Os oes gennych gwestiynau brys:",
+	"registerJourney.title": "Mae yna broblem",
+	"registerJourney.paragraph": "Ni ellir cwblhau eich cofrestriad",
+	"registerJourney.retryLink": "Ailgofnodwch eich manylion",
+	"registerJourney.contactLink": "Cysylltwch â Chymorth Cwsmeriaid yr Arolygiaeth Gynllunio",
+	"registerJourney.contactSuffix": "os oes arnoch angen cymorth."
 }

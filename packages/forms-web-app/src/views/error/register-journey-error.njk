@@ -3,18 +3,14 @@
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-			<h1 class="govuk-heading-l">There is a problem</h1>
+      <h1 class="govuk-heading-l">{{ t('registerJourney.title') }}</h1>
+      <p class="govuk-body">{{ t('registerJourney.paragraph') }}</p>
 			<p class="govuk-body">
-
-				Your registration cannot be completed </p>
-			<p class="govuk-body">
-				<a href="{{ detailsLink }}" class="govuk-link">Re-enter your details</a>
+        <a href="{{ detailsLink }}" class="govuk-link">{{ t('registerJourney.retryLink') }}</a>
 			</p>
 
 			<p class="govuk-body">
-				<a class="govuk-link" data-cy="Enquiries" href="mailto:enquiries@planninginspectorate.gov.uk">Contact the
-					Planning Inspectorate Customer Support</a> if you
-				need help.
+        <a class="govuk-link" data-cy="Enquiries" href="mailto:enquiries@planninginspectorate.gov.uk">{{ t('registerJourney.contactLink') }}</a> {{ t('registerJourney.contactSuffix') }}
 			</p>
 		</div>
 	</div>
