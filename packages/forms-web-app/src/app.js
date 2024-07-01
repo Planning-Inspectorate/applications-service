@@ -15,6 +15,9 @@ const {
 	setLocalslDisplayCookieBannerValue
 } = require('./middleware/set-locals-display-cookie-banner-value');
 const {
+	addCommonTranslationsMiddleware
+} = require('./pages/_middleware/i18n/add-common-translations-middleware');
+const {
 	addErrorTranslationsMiddleware
 } = require('./pages/_middleware/i18n/add-error-translations.middleware');
 const fileUpload = require('express-fileupload');
@@ -89,7 +92,7 @@ app.use('/', routes);
 // For working with req.subdomains, primarily for cookie control.
 app.set('subdomain offset', config.server.subdomainOffset);
 
-app.use(addErrorTranslationsMiddleware);
+app.use(addCommonTranslationsMiddleware, addErrorTranslationsMiddleware);
 
 // Error handling
 app
