@@ -6,5 +6,10 @@
 	"pageNotFound.paragraph3": "If the web address is correct or you selected a link or button, contact The Planning Inspectorate Customer Support:",
 	"pageNotFound.telephoneNumber": "Telephone: 0303 444 5000",
 	"plannedOutage.title": "Sorry, the service is unavailable",
-	"plannedOutage.urgentQuestions": "For urgent questions:"
+	"plannedOutage.urgentQuestions": "For urgent questions:",
+	"registerJourney.title": "There is a problem",
+	"registerJourney.paragraph": "Your registration cannot be completed",
+	"registerJourney.retryLink": "Re-enter your details",
+	"registerJourney.contactLink": "Contact the Planning Inspectorate Customer Support",
+	"registerJourney.contactSuffix": "if you need help."
 }
