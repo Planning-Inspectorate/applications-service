@@ -5,11 +5,7 @@ describe('pages/_middleware/i18n/add-common-translations-middleware', () => {
 		describe('When there is an error', () => {
 			const req = {
 				i18n: {
-					loadNamespaces: () => {
-						return new Promise((resolve, reject) => {
-							reject();
-						});
-					}
+					loadNamespaces: () => Promise.reject()
 				}
 			};
 			const res = {
@@ -30,11 +26,7 @@ describe('pages/_middleware/i18n/add-common-translations-middleware', () => {
 		describe('When there is no error', () => {
 			const req = {
 				i18n: {
-					loadNamespaces: () => {
-						return new Promise((resolve) => {
-							resolve();
-						});
-					}
+					loadNamespaces: () => Promise.resolve()
 				}
 			};
 			const res = {
