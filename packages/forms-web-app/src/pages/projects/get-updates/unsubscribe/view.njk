@@ -2,20 +2,22 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
+{% set pageTitle = t('getUpdatesUnsubscribe.pageTitle') %}
+
 {% block content %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
+      <h1 class="govuk-heading-l">{{ t('getUpdatesUnsubscribe.pageHeading') }}</h1>
 
       <p class="govuk-body">
-        You will no longer be sent updates about {{ projectName }}.
+        {{ t('getUpdatesUnsubscribe.paragraph') }} {{ projectName }}.
       </p>
 
       <form method="POST" novalidate>
         {{ govukButton({
           name: "email",
-          text: "Unsubscribe",
+          text: t('getUpdatesUnsubscribe.unsubscribeLink'),
           value: email
         }) }}
       </form>
