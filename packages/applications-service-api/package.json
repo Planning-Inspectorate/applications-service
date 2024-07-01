@@ -48,7 +48,7 @@
 		"jspdf": "^2.5.1",
 		"lodash": "^4.17.21",
 		"moment": "^2.29.1",
-		"mysql2": "^2.3.2",
+		"mysql2": "^3.9.8",
 		"openapi-request-validator": "^12.0.2",
 		"ospoint": "^0.2.1",
 		"pino": "^6.13.2",
