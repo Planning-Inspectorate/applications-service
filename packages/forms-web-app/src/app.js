@@ -19,7 +19,7 @@ const {
 } = require('./pages/_middleware/i18n/add-common-translations-middleware');
 const {
 	addErrorTranslationsMiddleware
-} = require('./pages/_middleware/i18n/add-error-translations.middleware');
+} = require('./pages/_middleware/i18n/add-error-translations-middleware');
 const fileUpload = require('express-fileupload');
 
 require('express-async-errors');
