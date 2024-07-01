@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`locales/global should return the correct English global translations 1`] = `
+{
+  "backLinkText": "Back",
+  "betaBanner": {
+    "content": "This is a beta service - your {{-link}} will help us to improve it",
+    "feedback": "feedback",
+  },
+  "footer": {
+    "content": "All content is available under the {{-link}}, except where otherwise stated",
+    "contentLinkText": "Open Government Licence v3.0",
+    "copyright": "Crown copyright",
+    "links": {
+      "accessibility": "Accessibility statement",
+      "contact": "Contact",
+      "cookies": "Cookies",
+      "privacy": "Privacy",
+      "t&c": "Terms and conditions",
+    },
+  },
+  "headerTitle": {
+    "default": "Find a National Infrastructure Project",
+    "examination": "Have your say on an application",
+    "getUpdates": "Get updates about this project",
+    "register": "Register to have your say",
+  },
+  "primaryNavigation": {
+    "detailedInformation": "Detailed information",
+    "home": "Home",
+    "projectSearch": "All projects",
+  },
+}
+`;
+
+exports[`locales/global should return the correct Welsh global translations 1`] = `
+{
+  "backLinkText": "Yn ôl",
+  "betaBanner": {
+    "content": "Gwasanaeth beta yw hwn - bydd eich {{-link}} yn ein helpu i'w wella.",
+    "feedback": "adborth",
+  },
+  "footer": {
+    "content": "Mae'r holl gynnwys ar gael o dan {{-link}}, ac eithrio lle nodir yn wahanol",
+    "contentLinkText": "Drwydded Llywodraeth Agored v3.0",
+    "copyright": "Hawlfraint y Goron",
+    "links": {
+      "accessibility": "Datganiad hygyrchedd",
+      "contact": "Cysylltu â ni",
+      "cookies": "Cwcis",
+      "privacy": "Preifatrwydd",
+      "t&c": "Telerau ac amodau",
+    },
+  },
+  "headerTitle": {
+    "default": "Dod o hyd i Brosiect Seilwaith Cenedlaethol",
+    "examination": "Lleisio'ch barn am gais",
+    "getUpdates": "Cael diweddariadau ynglŷn â'r prosiect hwn",
+    "register": "Cofrestru i leisio'ch barn",
+  },
+  "primaryNavigation": {
+    "detailedInformation": "Gwybodaeth fanwl",
+    "home": "Hafan",
+    "projectSearch": "Pob prosiect",
+  },
+}
+`;
