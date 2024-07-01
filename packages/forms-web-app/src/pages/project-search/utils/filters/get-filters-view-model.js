@@ -1,6 +1,7 @@
 const {
 	formatValueToValidElementId
 } = require('../../../../utils/format-value-to-valid-element-id');
+const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 
 const orderFilterGroups = (filterGroups) => {
 	const regionIndex = filterGroups.findIndex((filterGroup) => filterGroup.name === 'region');
@@ -32,12 +33,15 @@ const orderFilterGroups = (filterGroups) => {
 
 const getFilterLabel = (i18n, name) => i18n.t(`projectSearch.filterLabels.${name}`) || name;
 
-const filterGroupTypeViewModel = ({ count, label, value }) => ({
-	checked: false,
-	label,
-	text: `${label} (${count})`,
-	value
-});
+const filterGroupTypeViewModel = (i18n, { count, label, label_cy, value }) => {
+	const filterName = isLangWelsh(i18n.language) ? label_cy : label;
+	return {
+		checked: false,
+		label: filterName,
+		text: `${filterName} (${count})`,
+		value
+	};
+};
 
 const getFilterGroupIndex = (filterGroups, filter) =>
 	filterGroups.findIndex((filterGroup) => filterGroup.name === filter.name);
@@ -67,7 +71,7 @@ const getFiltersViewModel = (i18n, filters) => {
 			filterGroups.push(filterGroupViewModel(i18n, filter));
 
 		filterGroups[getFilterGroupIndex(filterGroups, filter)].items.push(
-			filterGroupTypeViewModel(filter)
+			filterGroupTypeViewModel(i18n, filter)
 		);
 	});
 
