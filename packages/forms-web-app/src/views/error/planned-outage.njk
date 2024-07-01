@@ -8,7 +8,7 @@
                 <p class="govuk-body">{{ outageResumeText }}</p>
             {% endif %}
             <p class="govuk-body">{{ t('errors.plannedOutage.urgentQuestions') }}</p>
-            <p class="govuk-body">Email: <a href="mailto:{{ pinsContactDetails.enquiriesEmailAddress}}">{{ pinsContactDetails.enquiriesEmailAddress }}</a></p>
+            <p class="govuk-body">{{ t('common.email') }}: <a href="mailto:{{ pinsContactDetails.enquiriesEmailAddress}}">{{ pinsContactDetails.enquiriesEmailAddress }}</a></p>
             <p class="govuk-body">{{ t('common.telephone') }}: {{ pinsContactDetails.supportTeamPhoneNumber}} </p>
             <p class="govuk-body">{{ t('errors.telephoneTimes') }}</p>
         </div>
