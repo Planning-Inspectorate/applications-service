@@ -8,7 +8,6 @@ const pageTitle = {
 	[keys.organisation]: ` - Registering for an organisation ${commonPageTitle}`,
 	[keys.agent]: ` - Registering on behalf of someone else ${commonPageTitle}`
 };
-
 module.exports = {
 	pageTitle
 };
