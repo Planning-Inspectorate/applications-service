@@ -11,5 +11,9 @@
 	"registerJourney.paragraph": "Your registration cannot be completed",
 	"registerJourney.retryLink": "Re-enter your details",
 	"registerJourney.contactLink": "Contact the Planning Inspectorate Customer Support",
-	"registerJourney.contactSuffix": "if you need help."
+	"registerJourney.contactSuffix": "if you need help.",
+	"unhandledException.title": "Sorry, the service is unavailable",
+	"unhandledException.paragraph1": "You will be able to use the service again later.",
+	"unhandledException.paragraph2": "We are working to restore the service as quickly as possible.",
+	"unhandledException.paragraph3": "If you have any questions, please contact:"
 }
