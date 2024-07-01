@@ -1,0 +1,112 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+
+{% set pageHeading = t('register.aboutProject.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% if errors %}
+	{% set title = t('common.error') + ": " + title %}
+{% endif %}
+
+{% block pageTitle %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if errorSummary %}
+        {{ govukErrorSummary({
+          titleText: t('common.thereIsAProblem'),
+          errorList: errorSummary
+        }) }}
+      {% endif %}
+
+      <form method="POST" novalidate>
+        <h1 class="govuk-heading-l">{{ t('register.aboutProject.pageHeading') }}</h1>
+
+        <p class="govuk-body">{{ t('register.aboutProject.paragraph1') }}</p>
+
+        <p class="govuk-body">{{ t('register.aboutProject.paragraph2')}}</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            {{ t('register.aboutProject.listItem1') }}
+          </li>
+
+          <li>
+            {{ t('register.aboutProject.listItem2') }}
+          </li>
+        </ul>
+
+        <p class="govuk-body">{{ t('register.aboutProject.paragraph3') }}</p>
+
+        {{ govukTextarea({
+          label: {
+            text: t('register.aboutProject.textAreaLabel'),
+            classes: "govuk-label--s",
+            isPageHeading: true
+          },
+          id: "comment",
+          name: "comment",
+          value: comment or errors['comment'].value,
+          attributes: {"data-cy": "comment", maxLength: "130468"},
+          errorMessage: errors['comment'] and {
+              text: errors['comment'].msg
+          }
+        }) }}
+
+        {{ govukDetails({
+          summaryText: t('register.aboutProject.details.summaryText'),
+          html: '
+            <h2 class="govuk-heading-m">' + t('register.aboutProject.details.heading1') + '</h2>
+            <p class="govuk-body">' + t('register.aboutProject.details.paragraph1') + '</p>
+            <p class="govuk-body">' + t('register.aboutProject.details.paragraph2') + '</p>
+            <h2 class="govuk-heading-m">' + t('register.aboutProject.details.heading2') + '</h2>
+            <p class="govuk-body">' + t('register.aboutProject.details.paragraph3') + '</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>' + t('register.aboutProject.details.listItem1') + '</li>
+              <li>' + t('register.aboutProject.details.listItem2') + '</li>
+              <li>' + t('register.aboutProject.details.listItem3') + '</li>
+              <li>' + t('register.aboutProject.details.listItem4') + '</li>
+            </ul>
+            <p class="govuk-body">' + t('register.aboutProject.details.paragraph4') + '</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>' + t('register.aboutProject.details.listItem5') + '</li>
+              <li>' + t('register.aboutProject.details.listItem6') + '</li>
+              <li>' + t('register.aboutProject.details.listItem7') + '</li>
+              <li>' + t('register.aboutProject.details.listItem8') + '</li>
+              <li>' + t('register.aboutProject.details.listItem9') + '</li>
+              <li>' + t('register.aboutProject.details.listItem10') + '</li>
+              <li>' + t('register.aboutProject.details.listItem11') + '</li>
+              <li>' + t('register.aboutProject.details.listItem12') + '</li>
+              <li>' + t('register.aboutProject.details.listItem13') + '</li>
+            </ul>'
+        }) }}
+
+        {{ govukButton({
+          text: t('common.continue'),
+          type: "Submit",
+          attributes: { "data-cy": "button-save-and-continue"}
+        }) }}
+
+        {% if featureFlag.allowSaveAndExitOption %}
+          {{ govukButton({
+            text: t('common.saveAndExit'),
+            type: "Submit",
+            attributes: { "data-cy": "button-save-and-return"},
+            classes: "govuk-button--secondary",
+            name: "mode",
+            value: "draft"
+          }) }}
+        {% endif %}
+      </form>
+    </div>
+  </div>
+{% endblock %}

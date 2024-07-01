@@ -6,6 +6,12 @@ const {
 
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { registerMiddleware } = require('./_middleware/register-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('./_middleware/add-register-translations-middleware');
+const {
+	addCommonTranslationsMiddleware
+} = require('../../_middleware/i18n/add-common-translations-middleware');
 const { validationErrorHandler } = require('../../../validators/validation-error-handler');
 
 const {
@@ -41,23 +47,29 @@ describe('pages/projects/register/router', () => {
 		it('should call the register routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/register-have-your-say',
+				addRegisterTranslationsMiddleware,
 				projectsMiddleware,
 				getRegisterIndexController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/register-have-your-say/start',
+				addRegisterTranslationsMiddleware,
 				projectsMiddleware,
 				getRegisterIndexController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/who-registering-for',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisteringForController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/who-registering-for',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				validateRegisteringForOptions(),
 				validationErrorHandler,

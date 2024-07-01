@@ -10,7 +10,7 @@ const { getPageData } = require('./_utils/get-page-data');
 const view = 'projects/register/index/view.njk';
 
 const getRegisterIndexController = async (req, res) => {
-	const { params } = req;
+	const { params, i18n } = req;
 	const { case_ref } = params;
 	const {
 		locals: { applicationData }
@@ -49,7 +49,10 @@ const getRegisterIndexController = async (req, res) => {
 		req.session.projectName = appData.ProjectName;
 		req.session.registerJourneyStarted = registrationOpen || registrationReOpened;
 
-		return res.render(view, getPageData(case_ref, appData, registrationOpen, registrationReOpened));
+		return res.render(
+			view,
+			getPageData(case_ref, appData, registrationOpen, registrationReOpened, i18n)
+		);
 	} else {
 		logger.warn(`No project found with ID ${case_ref} for registration`);
 		return res.status(404).render('error/not-found');

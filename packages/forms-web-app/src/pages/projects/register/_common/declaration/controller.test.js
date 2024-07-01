@@ -27,8 +27,7 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'projects/register/_common/declaration/view.njk',
 						{
-							pageTitle:
-								'Declaration - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+							key: 'myself'
 						}
 					);
 				});
@@ -44,8 +43,7 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'projects/register/_common/declaration/view.njk',
 						{
-							pageTitle:
-								'Declaration - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+							key: 'organisation'
 						}
 					);
 				});
@@ -61,8 +59,7 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'projects/register/_common/declaration/view.njk',
 						{
-							pageTitle:
-								'Declaration - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+							key: 'agent'
 						}
 					);
 				});

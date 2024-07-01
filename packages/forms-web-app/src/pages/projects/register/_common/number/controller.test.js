@@ -19,8 +19,7 @@ describe('pages/projects/register/_common/number/controller', () => {
 				});
 				it('should render the registration telephone number page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
-						pageTitle:
-							'What is your telephone number? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						key: 'myself',
 						telephone: 'mock telephone number'
 					});
 				});
@@ -35,8 +34,7 @@ describe('pages/projects/register/_common/number/controller', () => {
 				});
 				it('should render the registration telephone number page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
-						pageTitle:
-							'What is your telephone number? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						key: 'organisation',
 						telephone: 'mock telephone number'
 					});
 				});
@@ -53,8 +51,7 @@ describe('pages/projects/register/_common/number/controller', () => {
 				});
 				it('should render the registration telephone number page with the agent data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/number/view.njk', {
-						pageTitle:
-							'What is your telephone number? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning',
+						key: 'agent',
 						telephone: 'mock telephone number'
 					});
 				});
@@ -137,8 +134,7 @@ describe('pages/projects/register/_common/number/controller', () => {
 						errors: {
 							telephone: 'an error'
 						},
-						pageTitle:
-							'What is your telephone number? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						key: 'myself'
 					});
 				});
 			});

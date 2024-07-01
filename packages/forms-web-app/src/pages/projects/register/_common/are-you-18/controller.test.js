@@ -19,9 +19,8 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 				});
 				it('should render the registration are you over 18 page with the myself data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
-						pageTitle:
-							'Are you 18 or over? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						over18: 'mock are you over 18'
+						over18: 'mock are you over 18',
+						key: 'myself'
 					});
 				});
 			});
@@ -35,9 +34,8 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 				});
 				it('should render the registration are you over 18 page with the organisation data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/are-you-18/view.njk', {
-						pageTitle:
-							'Are you 18 or over? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						over18: 'mock are you over 18'
+						over18: 'mock are you over 18',
+						key: 'organisation'
 					});
 				});
 			});
@@ -99,8 +97,7 @@ describe('packages/forms-web-app/src/pages/projects/register/_common/are-you-18/
 						errors: {
 							'over-18': 'an error'
 						},
-						pageTitle:
-							'Are you 18 or over? - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						key: 'myself'
 					});
 				});
 			});

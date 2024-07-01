@@ -27,8 +27,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 						email: 'mock-email',
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						pageTitle:
-							'Registration complete - Registering for myself - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						key: 'myself'
 					});
 				});
 			});
@@ -50,8 +49,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 						email: 'mock-email',
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						pageTitle:
-							'Registration complete - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						key: 'organisation'
 					});
 				});
 			});
@@ -73,8 +71,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 						email: 'mock-email',
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						pageTitle:
-							'Registration complete - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+						key: 'agent'
 					});
 				});
 			});

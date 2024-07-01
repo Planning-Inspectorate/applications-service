@@ -36,12 +36,10 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 	describe('#getRegisterOrganisationAboutProjectController', () => {
 		it('should call the correct template', () => {
 			getRegisterOrganisationAboutProjectController(req, res);
-			expect(res.render).toHaveBeenCalledWith(
-				'projects/register/organisation/about-project/view.njk',
-				{
-					comment: undefined
-				}
-			);
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
+				comment: undefined,
+				key: 'organisation'
+			});
 		});
 
 		it('should call the correct template in edit mode', () => {
@@ -56,12 +54,10 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 				}
 			};
 			getRegisterOrganisationAboutProjectController(req, res);
-			expect(res.render).toHaveBeenCalledWith(
-				'projects/register/organisation/about-project/view.njk',
-				{
-					comment: 'test'
-				}
-			);
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
+				comment: 'test',
+				key: 'organisation'
+			});
 		});
 	});
 
@@ -113,14 +109,12 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 			await postRegisterOrganisationAboutProjectController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith(
-				'projects/register/organisation/about-project/view.njk',
-				{
-					errors: { a: 'b' },
-					errorSummary: [{ href: '#', text: 'There were errors here' }],
-					comment: undefined
-				}
-			);
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
+				errors: { a: 'b' },
+				errorSummary: [{ href: '#', text: 'There were errors here' }],
+				comment: undefined,
+				key: 'organisation'
+			});
 		});
 	});
 
@@ -170,7 +164,7 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 			await postRegisterOrganisationAboutProjectController(mockRequest, res);
 
 			expect(res.render).toBeCalledWith(
-				'projects/register/organisation/about-project/view.njk',
+				'projects/register/_common/about-project/view.njk',
 				expect.objectContaining(mockRequest.body)
 			);
 		});

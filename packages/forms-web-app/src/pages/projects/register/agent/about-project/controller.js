@@ -5,11 +5,12 @@ const {
 } = require('../../../../../services/registration.service');
 const config = require('../../../../../config');
 
-const view = 'projects/register/agent/about-project/view.njk';
+const view = 'projects/register/_common/about-project/view.njk';
+const key = 'agent';
 
 const getRegisterAgentAboutProjectController = (req, res) => {
 	const { comment } = req.session;
-	return res.render(view, { comment });
+	return res.render(view, { comment, key });
 };
 
 const postRegisterAgentAboutProjectController = async (req, res) => {
@@ -27,7 +28,8 @@ const postRegisterAgentAboutProjectController = async (req, res) => {
 		res.render(view, {
 			errors,
 			errorSummary,
-			comment
+			comment,
+			key
 		});
 
 		return;

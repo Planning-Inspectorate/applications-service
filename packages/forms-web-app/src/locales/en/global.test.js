@@ -29,7 +29,8 @@ describe('locales/en/global', () => {
 				detailedInformation: 'Detailed information',
 				home: 'Home',
 				projectSearch: 'All projects'
-			}
+			},
+			backLinkText: 'Back'
 		});
 	});
 });

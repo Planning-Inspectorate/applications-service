@@ -3,7 +3,9 @@ const enCommonTranslations = require('./common.json');
 describe('locales/en/common', () => {
 	it('should return the english common translations', () => {
 		expect(enCommonTranslations).toEqual({
+			acceptAndContinue: 'Accept and continue',
 			applyFilters: 'Apply filters',
+			change: 'Change',
 			clearAllFilters: 'Clear all filters',
 			clearFilters: 'Clear filters',
 			clearSearch: 'Clear search',
@@ -14,6 +16,7 @@ describe('locales/en/common', () => {
 			datePublished: 'Date published',
 			dateTo: 'Date to',
 			day: 'Day',
+			error: 'Error',
 			filter: 'Filter',
 			from: 'From',
 			govUK: {
@@ -32,6 +35,7 @@ describe('locales/en/common', () => {
 			},
 			resultsPerPage: 'Results per page',
 			returnToResults: 'Return to results',
+			saveAndExit: 'Save & Exit',
 			saveChanges: 'Save changes',
 			search: 'Search',
 			selectAllFilters: 'Select all filters',
@@ -41,12 +45,40 @@ describe('locales/en/common', () => {
 			showFilters: 'Show filters',
 			startNow: 'Start now',
 			success: 'Success',
+			thereIsAProblem: 'There is a problem',
 			to: 'To',
 			validationErrors: {
 				emailAddress: {
 					empty: 'Enter your email address',
 					length: 'Email address must be between 3 and 255 characters',
 					format: 'Enter an email address in the correct format, like name@example.com'
+				},
+				fullName: {
+					empty: 'Enter your full name',
+					length: 'Full name must be between 3 and 64 characters'
+				},
+				areYou18: 'Select yes if you are 18 or over',
+				address: {
+					line1Empty: 'Enter address line 1',
+					line1Length: 'Address line 1 must be 255 characters or less',
+					line2Length: 'Address line 2 must be 96 characters or less',
+					line3Length: 'Town or city must be 64 characters or less',
+					postcodeEmpty: 'Enter a postcode',
+					postcodeLength: 'Postcode must be 16 characters or less',
+					countryEmpty: 'Enter a country',
+					countryLength: 'Country must be 64 characters or less'
+				},
+				telephone: {
+					empty: 'Enter your telephone number',
+					length: 'Telephone number must be 255 characters or less',
+					format: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192'
+				},
+				registeringFor: {
+					empty: 'Select who you are registering for'
+				},
+				aboutProject: {
+					empty: 'Enter what you want to tell us about this proposed project',
+					length: 'What you want to tell us must be {{-maxCharacters}} characters or less'
 				}
 			},
 			year: 'Year',

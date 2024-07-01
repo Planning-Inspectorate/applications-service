@@ -1,6 +1,5 @@
 const { postRegistrationData } = require('../../../../../services/registration.service');
 const logger = require('../../../../../lib/logger');
-const { viewModel } = require('./_utils/viewModel');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getSessionBase } = require('../../../../../controllers/register/common/session');
 const { getRedirectUrl } = require('./_utils/get-redirect-url');
@@ -11,7 +10,7 @@ const getRegisterDeclarationController = (req, res) => {
 	try {
 		const key = getKeyFromUrl(req.originalUrl);
 		return res.render(view, {
-			...viewModel[key]
+			key
 		});
 	} catch (e) {
 		logger.error(e);

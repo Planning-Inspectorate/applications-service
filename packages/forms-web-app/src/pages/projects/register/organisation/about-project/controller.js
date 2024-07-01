@@ -5,11 +5,12 @@ const {
 } = require('../../../../../services/registration.service');
 const config = require('../../../../../config');
 
-const view = 'projects/register/organisation/about-project/view.njk';
+const view = 'projects/register/_common/about-project/view.njk';
+const key = 'organisation';
 
 const getRegisterOrganisationAboutProjectController = (req, res) => {
 	const { comment } = req.session;
-	return res.render(view, { comment });
+	return res.render(view, { comment, key });
 };
 
 const postRegisterOrganisationAboutProjectController = async (req, res) => {
@@ -27,7 +28,8 @@ const postRegisterOrganisationAboutProjectController = async (req, res) => {
 		return res.render(view, {
 			errors,
 			errorSummary,
-			comment
+			comment,
+			key
 		});
 	}
 

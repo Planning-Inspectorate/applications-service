@@ -29,7 +29,8 @@ describe('locales/cy/global', () => {
 				detailedInformation: 'Gwybodaeth fanwl',
 				home: 'Hafan',
 				projectSearch: 'Pob prosiect'
-			}
+			},
+			backLinkText: 'Yn ôl'
 		});
 	});
 });

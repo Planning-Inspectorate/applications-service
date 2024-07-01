@@ -3,7 +3,6 @@ const { getKeyFromUrl } = require('../../../../../controllers/register/common/ge
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 const { addressToObj } = require('./_utils/addressHandler');
 const { getRedirectURL } = require('./_utils/get-redirect-url');
-const { viewModel } = require('./_utils/viewModel');
 
 const view = 'projects/register/_common/address/view.njk';
 const addressKey = 'address';
@@ -16,7 +15,7 @@ const getRegisterAddressController = (req, res) => {
 		const address = getSession(session, key)[addressKey];
 
 		return res.render(view, {
-			...viewModel[key],
+			key,
 			address
 		});
 	} catch (e) {
@@ -37,7 +36,7 @@ const postRegisterAddressController = (req, res) => {
 			return res.render(view, {
 				errors,
 				errorSummary,
-				...viewModel[key],
+				key,
 				address: addressToObj(body)
 			});
 		}

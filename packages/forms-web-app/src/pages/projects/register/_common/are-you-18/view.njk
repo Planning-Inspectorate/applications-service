@@ -4,11 +4,18 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-{% set title = pageTitle %}
+{% set pageHeading = t('register.areYou18.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% set hint = t('register.areYou18.hint') %}
+{% set yesHiddenText = t('register.areYou18.yesHiddenText') %}
+{% set noHiddenText = t('register.areYou18.noHiddenText')%}
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set title = "Error: " + title %}
+		{% set title = t('common.error') + ": " + title %}
 	{% endif %}
 	{{ title }}
 {% endblock %}
@@ -19,7 +26,7 @@
 		<div class="govuk-grid-column-two-thirds">
 			{% if errorSummary %}
 				{{ govukErrorSummary({
-					titleText: "There is a problem",
+					titleText: t('common.thereIsAProblem'),
 					errorList: errorSummary
 				}) }}
 			{% endif %}
@@ -28,26 +35,26 @@
 					{{ govukRadios({
 						fieldset: {
 							legend: {
-								text: "Are you 18 or over?",
+								text: pageHeading,
 								isPageHeading: true,
 								classes: "govuk-label--l"
 							}
 						},
 						hint: {
-							text: "You can still register to have your say if you are under 18, but we will process your personal details in a different way."
+							text: hint
 						},
 						idPrefix: "over-18",
 						name: "over-18",
 						items: [
 							{
 								value: "yes",
-								html: "Yes <span class='govuk-visually-hidden'>, I’m 18 or older</span>",
+								html: t('common.yes') + "<span class='govuk-visually-hidden'>, " + yesHiddenText +"</span>",
 								attributes: { "data-cy": "answer-yes"},
 								checked: over18 === "yes"
 							},
 							{
 								value: "no",
-								html: "No <span class='govuk-visually-hidden'>, I’m under 18</span>",
+								html: t('common.no') + "<span class='govuk-visually-hidden'>, " + noHiddenText + "</span>",
 								attributes: { "data-cy": "answer-no"},
 								checked: over18 === "no"
 							}
@@ -56,7 +63,7 @@
 				</div>
 
 				{{ govukButton({
-					text: "Continue",
+					text: t('common.continue'),
 					type: "Submit",
 					attributes: { "data-cy":"button-save-and-continue"}
 				}) }}

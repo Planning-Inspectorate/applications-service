@@ -4,11 +4,16 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = pageTitle %}
+{% set pageHeading = t('register.email.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle')%}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% set hint = t('register.email.hint') %}
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set title = "Error: " + title %}
+		{% set title = t('common.error') + ": " + title %}
 	{% endif %}
 
 	{{ title }}
@@ -19,7 +24,7 @@
 		<div class="govuk-grid-column-two-thirds">
 			{% if errorSummary %}
 				{{ govukErrorSummary({
-					titleText: "There is a problem",
+					titleText: t('common.thereIsAProblem'),
 					errorList: errorSummary
 				}) }}
 			{% endif %}
@@ -28,12 +33,12 @@
 				<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
 					{{ govukInput({
 						label: {
-							text: "What is your email address?",
+							text: pageHeading,
 							classes: "govuk-label--l",
 							isPageHeading: true
 						},
 						hint: {
-							text: "We will use your email address to send you information about this project. We will not publish your email address."
+							text: hint	
 						},
 						id: "email",
 						name: "email",
@@ -49,7 +54,7 @@
 				</div>
 
 				{{ govukButton({
-					text: "Continue",
+					text: t('common.continue'),
 					type: "Submit",
 					attributes: { "data-cy":"button-save-and-continue"}
 				}) }}

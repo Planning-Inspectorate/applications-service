@@ -52,20 +52,21 @@ const {
 } = require('./complete/_utils/get-register-myself-complete-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
-const { decodeUri } = require('../../../../middleware/decode-uri');
 const {
 	addCommonTranslationsMiddleware
-} = require('../../../../pages/_middleware/i18n/add-common-translations-middleware');
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
+const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
-const {
-	rules: areYou18ValidationRules
-} = require('../../../../validators/register/myself/are-you-18-over');
+const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: telephoneValidationRules
-} = require('../../../../validators/register/myself/telephone');
+} = require('../../../../validators/shared/telephone-number');
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
@@ -84,9 +85,17 @@ const registerMyselfCheckAnswersURL = getRegisterMyselfCheckAnswersURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
-registerMyselfRouter.get(registerMyselfNameURL, registerMiddleware, getRegisterNameController);
+registerMyselfRouter.get(
+	registerMyselfNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterNameController
+);
 registerMyselfRouter.post(
 	registerMyselfNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),
@@ -96,20 +105,32 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAreYou18URL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAreYou18Controller
 );
 registerMyselfRouter.post(
 	registerMyselfAreYou18URL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	areYou18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreYou18Controller
 );
 
-registerMyselfRouter.get(registerMyselfEmailURL, registerMiddleware, getRegisterEmailController);
+registerMyselfRouter.get(
+	registerMyselfEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterEmailController
+);
 registerMyselfRouter.post(
 	registerMyselfEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addCommonTranslationsMiddleware,
 	emailValidationRules(),
@@ -119,20 +140,32 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAddressController
 );
 registerMyselfRouter.post(
 	registerMyselfAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
 	postRegisterAddressController
 );
 
-registerMyselfRouter.get(registerMyselfNumberURL, registerMiddleware, getRegisterNumberController);
+registerMyselfRouter.get(
+	registerMyselfNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
+	registerMiddleware,
+	getRegisterNumberController
+);
 registerMyselfRouter.post(
 	registerMyselfNumberURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,
@@ -141,11 +174,15 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterMyselfAboutProjectController
 );
 registerMyselfRouter.post(
 	registerMyselfAboutProjectURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),
@@ -155,12 +192,16 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfCheckAnswersURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterMyselfCheckAnswersController
 );
 
 registerMyselfRouter.get(
 	registerMyselfDeclarationURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
@@ -172,6 +213,8 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfCompleteURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );

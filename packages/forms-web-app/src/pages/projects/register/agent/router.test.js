@@ -54,17 +54,20 @@ const {
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
-const { decodeUri } = require('../../../../middleware/decode-uri');
 const {
 	addCommonTranslationsMiddleware
-} = require('../../../../../src/pages/_middleware/i18n/add-common-translations-middleware');
+} = require('../../../_middleware/i18n/add-common-translations-middleware');
+const {
+	addRegisterTranslationsMiddleware
+} = require('../_middleware/add-register-translations-middleware');
+const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {
 	rules: organisationNameValidationRules
 } = require('../../../../validators/register/agent/name-of-organisation');
 const { emailValidationRules } = require('../../../../validators/shared/email-address');
-const { rules: addressValidationRules } = require('../../../../validators/register/myself/address');
+const { rules: addressValidationRules } = require('../../../../validators/shared/address');
 const {
 	rules: representingWhoValidationRules
 } = require('../../../../validators/register/agent/who-representing');
@@ -73,7 +76,7 @@ const {
 } = require('../../../../validators/register/agent/name-person-representing');
 const {
 	rules: telephoneValidationRules
-} = require('../../../../validators/register/myself/telephone');
+} = require('../../../../validators/shared/telephone-number');
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
@@ -113,7 +116,7 @@ jest.mock('../../../../validators/shared/email-address', () => {
 		emailValidationRules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/myself/address', () => {
+jest.mock('../../../../validators/shared/address', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -128,7 +131,7 @@ jest.mock('../../../../validators/register/agent/name-person-representing', () =
 		rules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/myself/telephone', () => {
+jest.mock('../../../../validators/shared/telephone-number', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -182,11 +185,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				fullNameValidationRules(),
@@ -209,11 +216,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/email-address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterEmailController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/email-address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				addCommonTranslationsMiddleware,
 				emailValidationRules(),
@@ -223,11 +234,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAddressController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				addressValidationRules(),
 				validationErrorHandler,
@@ -288,11 +303,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNumberController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				telephoneValidationRules(),
 				validationErrorHandler,
@@ -340,11 +359,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/tell-us-about-project',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/tell-us-about-project',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				aboutProjectValidationRules(),
@@ -368,12 +391,16 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/check-answers',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentCheckAnswersController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/declaration',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);
@@ -385,6 +412,8 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/registration-complete',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterCompleteController
 			);

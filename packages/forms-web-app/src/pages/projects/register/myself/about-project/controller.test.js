@@ -35,8 +35,9 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 	describe('#getRegisterMyselfAboutProjectController', () => {
 		it('should call the correct template', () => {
 			getRegisterMyselfAboutProjectController(req, res);
-			expect(res.render).toHaveBeenCalledWith('projects/register/myself/about-project/view.njk', {
-				comment: undefined
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
+				comment: undefined,
+				key: 'myself'
 			});
 		});
 
@@ -54,10 +55,11 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 				}
 			};
 			getRegisterMyselfAboutProjectController(req, res);
-			expect(res.render).toHaveBeenCalledWith('projects/register/myself/about-project/view.njk', {
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
 				comment: {
 					comment: 'test'
-				}
+				},
+				key: 'myself'
 			});
 		});
 	});
@@ -134,10 +136,11 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 			await postRegisterMyselfAboutProjectController(mockRequest, res);
 			expect(res.redirect).not.toHaveBeenCalled();
 
-			expect(res.render).toHaveBeenCalledWith('projects/register/myself/about-project/view.njk', {
+			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
 				errors: { a: 'b' },
 				errorSummary: [{ href: '#', text: 'There were errors here' }],
-				comment: ''
+				comment: '',
+				key: 'myself'
 			});
 		});
 	});
@@ -188,7 +191,7 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.render).toBeCalledWith(
-				'projects/register/myself/about-project/view.njk',
+				'projects/register/_common/about-project/view.njk',
 				expect.objectContaining(mockRequest.body)
 			);
 		});

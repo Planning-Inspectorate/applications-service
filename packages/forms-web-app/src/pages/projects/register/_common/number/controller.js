@@ -2,7 +2,6 @@ const logger = require('../../../../../lib/logger');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 const { getRedirectURL } = require('./_utils/get-redirect-url');
-const { viewModel } = require('./_utils/viewModel');
 
 const view = 'projects/register/_common/number/view.njk';
 const telephoneNumberKey = 'telephone';
@@ -14,7 +13,7 @@ const getRegisterNumberController = (req, res) => {
 		const telephone = getSession(session, key)[telephoneNumberKey];
 
 		return res.render(view, {
-			...viewModel[key],
+			key,
 			telephone
 		});
 	} catch (e) {
@@ -35,7 +34,7 @@ const postRegisterNumberController = (req, res) => {
 			return res.render(view, {
 				errors,
 				errorSummary,
-				...viewModel[key]
+				key
 			});
 		}
 

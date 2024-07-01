@@ -1,6 +1,5 @@
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getRedirectUrl } = require('./_utils/get-redirect-url');
-const { viewModel } = require('./_utils/viewModel');
 const logger = require('../../../../../lib/logger');
 const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 
@@ -14,7 +13,7 @@ const getRegisterNameController = (req, res) => {
 		const fullName = getSession(session, key)[fullNameKey];
 
 		return res.render(view, {
-			...viewModel[key],
+			key,
 			fullName
 		});
 	} catch (e) {
@@ -34,7 +33,7 @@ const postRegisterNameController = (req, res) => {
 			return res.render(view, {
 				errors,
 				errorSummary,
-				...viewModel[key]
+				key
 			});
 		}
 

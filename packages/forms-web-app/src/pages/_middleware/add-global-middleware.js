@@ -11,7 +11,8 @@ const addGlobalMiddleware = (req, res, next) => {
 		headerTitle: getHeaderTitle(path, i18n),
 		footerLinks: getFooterLinks(i18n),
 		localeSelectorLinks: getLocaleSelectorLinks(cookies, path, query),
-		primaryNavigationLinks: getPrimaryNavigationLinks(path, i18n)
+		primaryNavigationLinks: getPrimaryNavigationLinks(path, i18n),
+		backLinkText: i18n.t('global.backLinkText')
 	};
 
 	next();
