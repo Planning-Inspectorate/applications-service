@@ -27,11 +27,9 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 				await getGetUpdatesUnsubscribeController(req, res, next);
 			});
 
-			it('it should call the correct with the page data', async () => {
+			it('it should call the correct view with the page data', async () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/unsubscribe/view.njk', {
-					email: 'mock@email.com',
-					pageHeading: 'Are you sure you want to unsubscribe?',
-					pageTitle: 'Unsubscribe confirmation'
+					email: 'mock@email.com'
 				});
 			});
 		});

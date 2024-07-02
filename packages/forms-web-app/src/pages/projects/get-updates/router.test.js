@@ -16,6 +16,12 @@ const {
 const {
 	addGetUpdatesSubscribedTranslationsMiddleware
 } = require('./subscribed/_middleware/add-get-updates-subscribed-translations-middleware');
+const {
+	getUpdatesUnsubscribeTranslationsMiddleware
+} = require('./unsubscribe/_middleware/unsubscribe-translations-middleware');
+const {
+	getUpdatesUnsubscribedTranslationsMiddleware
+} = require('./unsubscribed/_middleware/unsubscribed-translations-middleware');
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
 const { getGetUpdatesIndexController } = require('./index/controller');
@@ -124,6 +130,7 @@ describe('pages/projects/get-updates/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/unsubscribe-confirm',
 				projectsMiddleware,
+				getUpdatesUnsubscribeTranslationsMiddleware,
 				getGetUpdatesUnsubscribeController
 			);
 
@@ -135,6 +142,7 @@ describe('pages/projects/get-updates/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/get-updates/unsubscribed',
 				projectsMiddleware,
+				getUpdatesUnsubscribedTranslationsMiddleware,
 				getUpdatesUnsubscribedController
 			);
 		});
