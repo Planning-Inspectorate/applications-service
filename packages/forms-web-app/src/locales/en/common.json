@@ -75,6 +75,10 @@
 		"aboutProject": {
 			"empty": "Enter what you want to tell us about this proposed project",
 			"length": "What you want to tell us must be {{-maxCharacters}} characters or less"
+		},
+		"organisationName": {
+			"empty": "Enter your organisation or charity name",
+			"length": "Name of your organisation or charity name must be 255 characters or less"
 		}
 	},
 	"year": "Year",

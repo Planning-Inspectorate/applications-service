@@ -152,11 +152,15 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationOrgNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationOrgNameController
 );
 registerOrganisationRouter.post(
 	registerOrganisationOrgNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	organisationOrgNameValidationRules(),
 	validationErrorHandler,
