@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/subscribed/_translations should return the correct English translations 1`] = `
+{
+  "linkExpired": {
+    "heading1": "Your email verification link has expired",
+    "phrase1": "To receive email updates please visit {{-link}}",
+    "phrase1LinkText1": "the Get Updates page",
+    "phrase2": "and verify your email address within 48 hours.",
+    "title1": "Verification link expired",
+  },
+  "successful": {
+    "panelText1": "You have subscribed to emails about this project",
+    "panelTitle1": "Success",
+    "phrase1": "View",
+    "phrase2": "project information",
+    "title1": "Get updates success",
+  },
+  "unsuccessful": {
+    "heading1": "There has been a problem with our system",
+    "paragraph1": "Try clicking the link from your email again.",
+    "phrase1": "Or phone the Planning Inspectorate support team for help on",
+    "phrase2": "or email",
+    "title1": "Email system problem",
+  },
+}
+`;
+
+exports[`pages/projects/get-updates/subscribed/_translations should return the correct Welsh translations 1`] = `
+{
+  "linkExpired": {
+    "heading1": "Mae eich cyswllt dilysu e-bost wedi dod i ben",
+    "phrase1": "I dderbyn diweddariadau e-bost ewch i'r {{-link}}",
+    "phrase1LinkText1": "dudalen Cael Diweddariadau",
+    "phrase2": "a gwiriwch eich cyfeiriad e-bost o fewn 48 awr.",
+    "title1": "Dolen dilysu wedi dod i ben",
+  },
+  "successful": {
+    "panelText1": "Rydych wedi tanysgrifio i e-byst am y prosiect hwn",
+    "panelTitle1": "Llwyddiant",
+    "phrase1": "Gweld",
+    "phrase2": "gwybodaeth prosiect",
+    "title1": "Llwyddiant cael diweddariadau",
+  },
+  "unsuccessful": {
+    "heading1": "Bu problem yn ein system",
+    "paragraph1": "Ceisiwch glicio ar y ddolen o'ch e-bost eto.",
+    "phrase1": "Neu ffoniwch dîm cymorth yr Arolygiaeth Gynllunio am gymorth ar ",
+    "phrase2": "neu e-bostiwch",
+    "title1": "Problem system e-bost",
+  },
+}
+`;

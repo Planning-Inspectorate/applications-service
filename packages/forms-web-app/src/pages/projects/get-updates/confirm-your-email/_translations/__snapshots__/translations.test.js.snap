@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/confirm-your-email/_translations should return the correct English translations 1`] = `
+{
+  "heading1": "Confirm you want to get emails",
+  "linkText1": "Not received an email?",
+  "paragraph1": "We have sent an email to",
+  "paragraph2": "Check your email and confirm you want to get updates about:",
+  "paragraph3": "The link will stop working after 48 hours.",
+  "paragraph4": "If you have not received an email to your inbox, check your spam or junk folder.",
+  "paragraph5": "If this does not work, {{-link}}",
+  "paragraph5LinkText1": "request a new email notification",
+  "title1": "Get updates and confirm email",
+}
+`;
+
+exports[`pages/projects/get-updates/confirm-your-email/_translations should return the correct Welsh translations 1`] = `
+{
+  "heading1": "Cadarnhewch eich bod eisiau cael negeseuon e-bost",
+  "linkText1": "Heb dderbyn neges e-bost?",
+  "paragraph1": "Rydym wedi anfon neges e-bost at",
+  "paragraph2": "Gwiriwch eich e-bost a chadarnhewch eich bod eisiau cael diweddariadau ynghylch:",
+  "paragraph3": "Ni fydd y ddolen yn gweithio mwyach ar ôl 48 awr.",
+  "paragraph4": "Os nad yw'r neges e-bost wedi cyrraedd eich mewnflwch, gwiriwch eich ffolder sbam neu sothach.",
+  "paragraph5": "Os nad yw hyn yn gweithio, {{-link}}",
+  "paragraph5LinkText1": "gofynnwch am hysbysiad e-bost newydd.",
+  "title1": "Cael diweddariadau a chadarnhau e-bost",
+}
+`;

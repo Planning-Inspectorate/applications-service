@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/how-often/_translations should return the correct English translations 1`] = `
+{
+  "error": {
+    "heading1": "There has been a problem with our system",
+    "paragraph1": "Go back and submit your update preference again.",
+    "paragraph2": "You can try again later.",
+    "phrase1": "Or phone the Planning Inspectorate support team for help on",
+    "phrase2": "or email",
+    "title1": "There has been a problem",
+  },
+  "index": {
+    "heading1": "How often do you want to get emails about the project?",
+    "paragraph1": "Each time we update the project (you may get more than one email a day)",
+    "paragraph2": "or",
+    "paragraph3": "When the application is submitted",
+    "paragraph4": "When you can register to have your say",
+    "paragraph5": "When the final decision has been made",
+    "validationErrorMessage1": "Select the top checkbox only OR select as many of the bottom three checkboxes as needed",
+    "validationErrorTitle1": "There is a problem",
+  },
+}
+`;
+
+exports[`pages/projects/get-updates/how-often/_translations should return the correct Welsh translations 1`] = `
+{
+  "error": {
+    "heading1": "Bu problem gyda'n system",
+    "paragraph1": "Ewch yn ôl a chyflwynwch eich dewis diweddaru eto.",
+    "paragraph2": "Gallwch geisio eto yn nes ymlaen.",
+    "phrase1": "Neu ffoniwch dîm cymorth yr Arolygiaeth Gynllunio am gymorth ar",
+    "phrase2": "neu e-bostiwch",
+    "title1": "Mae problem wedi bod",
+  },
+  "index": {
+    "heading1": "Pa mor aml ydych chi eisiau cael negeseuon e-bost ynglŷn â'r prosiect?",
+    "paragraph1": "Bob tro y byddwn yn diweddaru'r prosiect (efallai byddwch yn cael mwy nag un neges e-bost y dydd)",
+    "paragraph2": "neu",
+    "paragraph3": "Pan fydd y cais yn cael ei gyflwyno",
+    "paragraph4": "Pan allwch gofrestru i leisio'ch barn",
+    "paragraph5": "Pan fydd y penderfyniad terfynol wedi cael ei wneud",
+    "validationErrorMessage1": "Dewiswch y blwch ticio uchaf yn unig NEU dewiswch gynifer o'r tri blwch ticio isaf ag sydd angen",
+    "validationErrorTitle1": "Mae yna broblem",
+  },
+}
+`;
