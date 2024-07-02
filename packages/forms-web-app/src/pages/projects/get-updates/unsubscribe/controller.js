@@ -1,6 +1,6 @@
 const logger = require('../../../../lib/logger');
 const { deleteGetUpdatesSubscription } = require('../../../../lib/application-api-wrapper');
-const { getPageData } = require('./utils/get-page-data');
+const { getEmail } = require('./utils/get-email');
 const { setGetUpdatesSession } = require('../_session/get-updates');
 const { setGetUpdatesUnsubscribedSession } = require('../_session');
 const { getUpdatesUnsubscribedURL } = require('../unsubscribed/utils/get-updates-unsubscribed-url');
@@ -11,7 +11,7 @@ const getGetUpdatesUnsubscribeController = (req, res, next) => {
 	try {
 		const { query } = req;
 
-		return res.render(view, getPageData(query));
+		return res.render(view, { email: getEmail(query) });
 	} catch (error) {
 		logger.error(error);
 		next(error);
