@@ -144,6 +144,10 @@ exports[`pages/cookies/_translations should return the correct English translati
     "hint": "We will use your phone number to contact you about the project if we cannot reach you by email. We will not publish your telephone number.",
     "pageHeading": "What is your telephone number?",
   },
+  "organisationName": {
+    "hint": "We will publish your organisation name on the website along with your comments about the project.",
+    "pageHeading": "What is the name of your organisation or charity?",
+  },
   "registerFor": {
     "option1": "Myself",
     "option2": "An organisation I work or volunteer for",
@@ -302,6 +306,10 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
   "number": {
     "hint": "Byddwn yn defnyddio'ch rhif ffôn i gysylltu â chi ynglŷn â'r prosiect os na allwn gysylltu â chi trwy e-bost. Ni fyddwn yn cyhoeddi eich rhif ffôn.",
     "pageHeading": "Beth yw'ch rhif ffôn?",
+  },
+  "organisationName": {
+    "hint": "Byddwn yn cyhoeddi enw eich sefydliad ar y wefan ynghyd â'ch sylwadau ynglŷn â'r prosiect.",
+    "pageHeading": "Beth yw enw eich sefydliad neu'ch elusen?",
   },
   "registerFor": {
     "option1": "Fi fy hun",

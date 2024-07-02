@@ -4,11 +4,14 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = "What is the name of the organisation or charity? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+{% set pageHeading = t('register.organisationName.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.organisation') %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title = "Error: " + title %}
+    {% set title = t('common.error') + ": " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -19,7 +22,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
         {{ govukErrorSummary({
-          titleText: "There is a problem",
+          titleText: t('common.thereIsAProblem'),
           errorList: errorSummary
         }) }}
       {% endif %}
@@ -28,12 +31,12 @@
 
           {{ govukInput({
             label: {
-                text: "What is the name of your organisation or charity?",
+                text: t('register.organisationName.pageHeading'),
                 classes: "govuk-label--l",
                 isPageHeading: true
             },
             hint: {
-                text: "We will publish your organisation name on the website along with your comments about the project."
+                text: t('register.organisationName.hint')
             },
             id: "organisation-name",
             name: "organisation-name",
@@ -47,7 +50,7 @@
         </div>
 
         {{ govukButton({
-          text: "Continue",
+          text: t('common.continue'),
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
