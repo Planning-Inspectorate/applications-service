@@ -56,8 +56,8 @@ Feature: Project Application documents page
 			| Additional Submission accepted at the discretion of the Examining Authority Ã¢â‚¬â€œ Agreed Statement of Common Ground between the Applicant and Public Health England (PDF, 268KB)                                                   | 23 May 2019      | Additional Submissions                 | Additional Submissions  |
 			| Deadline 3 Submission - 11.4.9 Letters of no Impediment to the Applicant from Natural England (PDF, 470KB)                                                                                                                            | 8 February 2019  | Examination                            | Deadline 3              |
 			| Deadline 3 Submission - A statement on Climate Change and Carbon Sequestration, supported by a partial transcript of evidence given by the Chairman of Natural England to the Environmental Audit Committee on 23rd July (PDF, 580KB) | 8 February 2019  | Examination                            | Deadline 3              |
-			| 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB)         	From NULL on behalf of Removed                                                                                | 23 November 2018 | Acceptance (review of the application) | Environmental Statement |
-			| 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB)      	From NULL on behalf of Removed                                                                                                                | 23 November 2018 | Acceptance (review of the application) | Environmental Statement |
+			| 6.4.8.9 Environmental Statement - Letter of No Impediment Request and Response From Natural England (PDF, 9MB)         	From NULL on behalf of Removed                                                                                | 23 November 2018 | Acceptance                             | Environmental Statement |
+			| 6.4.8.8 Environmental Statement - Natural England Initial Advice DAS (PDF, 246KB)      	From NULL on behalf of Removed                                                                                                                | 23 November 2018 | Acceptance                             | Environmental Statement |
 		When I enter text "" into search field
 		And I click on search button
 		Then I verify text "Showing 1 to 25 of 987 results" is present on the page
@@ -141,7 +141,7 @@ Feature: Project Application documents page
 		And I click on Apply button to apply filters
 		Then I can verify that below project documents were returned
 			| Document                                                                               | Date             | Stage                                  | Title                                   |
-			| NULL (PDF, 92KB) From NULL on behalf of Notification of Decision to Accept Application | 14 December 2018 | Acceptance (review of the application) | Acceptance letter                       |
+			| NULL (PDF, 92KB) From NULL on behalf of Notification of Decision to Accept Application | 14 December 2018 | Acceptance                             | Acceptance letter                       |
 			| Late scoping consultation response (PDF, 79KB)                                         | 25 January 2018  | Pre-application                        | Environmental Impact Assessment Scoping |
 			| Adopted by the Secretary of State on 19 January 2018 (PDF, 5MB)                        | 19 January 2018  | Pre-application                        | Environmental Impact Assessment Scoping |
 			| Late scoping consultation response (PDF, 191KB)                                        | 11 January 2018  | Pre-application                        | Environmental Impact Assessment Scoping |
