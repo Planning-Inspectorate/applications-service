@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/index/_translations should return the correct English translations 1`] = `
+{
+  "canSignupToUpdates": {
+    "paragraph1": "You are signing up for email updates about",
+    "paragraph2": "We will send email updates when information about the proposed development is added to the website.",
+  },
+  "cannotSignupToUpdates": {
+    "paragraph1": "You can no longer get email updates about",
+    "paragraph2": "The decision on this project has been made.",
+  },
+  "heading1": "Get updates about this project",
+  "title1": "Get updates",
+}
+`;
+
+exports[`pages/projects/get-updates/index/_translations should return the correct Welsh translations 1`] = `
+{
+  "canSignupToUpdates": {
+    "paragraph1": "Rydych yn cofrestru i gael diweddariadau e-bost ynghylch",
+    "paragraph2": "Byddwn yn anfon diweddariadau e-bost pan fydd gwybodaeth am y datblygiad arfaethedig yn cael ei hychwanegu at y wefan.",
+  },
+  "cannotSignupToUpdates": {
+    "paragraph1": "Ni allwch bellach gael diweddariadau e-bost am",
+    "paragraph2": "Mae'r penderfyniad ar y prosiect hwn wedi'i wneud.",
+  },
+  "heading1": "Cael diweddariadau ynglŷn â'r prosiect hwn",
+  "title1": "Cael diweddariadau",
+}
+`;

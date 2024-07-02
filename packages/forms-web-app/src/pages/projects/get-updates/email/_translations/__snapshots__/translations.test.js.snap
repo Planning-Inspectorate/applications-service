@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/email/_translations should return the correct English translations 1`] = `
+{
+  "errorMessage": "There is a problem",
+  "heading1": "What is your email address?",
+  "linkText1": "How we use your information",
+  "listItem1": "sell or rent your information to third parties",
+  "listItem2": "share your information with third parties for marketing purposes",
+  "paragraph1": "Planning Inspectorate email updates will only store information you have provided.",
+  "paragraph2": "You can access, update or permanently delete your email updates and the information associated with them at any time.",
+  "paragraph3": "We will never:",
+  "paragraph4": "You can read the {{-link}} for more detail on how your information is stored, shared and used.",
+  "paragraph4LinkText1": "full privacy notice",
+}
+`;
+
+exports[`pages/projects/get-updates/email/_translations should return the correct Welsh translations 1`] = `
+{
+  "errorMessage": "Mae yna broblem",
+  "heading1": "Beth yw'ch cyfeiriad e-bost?",
+  "linkText1": "Sut rydym yn defnyddio'ch gwybodaeth",
+  "listItem1": "yn gwerthu nac yn rhentu eich gwybodaeth i drydydd parti",
+  "listItem2": "yn rhannu eich gwybodaeth gyda thrydydd parti at ddibenion marchnata",
+  "paragraph1": "Bydd diweddariadau e-bost yr Arolygiaeth Gynllunio yn storio gwybodaeth a ddarparwyd gennych yn unig.",
+  "paragraph2": "Gallwch gael at eich diweddariadau e-bost a'r wybodaeth sy'n gysylltiedig â nhw, eu diweddaru neu eu dileu'n barhaol unrhyw bryd.",
+  "paragraph3": "Ni fyddwn byth:",
+  "paragraph4": "Gallwch ddarllen yr {{-link}} i gael rhagor o fanylion am sut mae eich gwybodaeth yn cael ei storio, ei rhannu a'i defnyddio.",
+  "paragraph4LinkText1": "hysbysiad preifatrwydd llawn",
+}
+`;
