@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/unsubscribe/_translations should return the correct English translations 1`] = `
+{
+  "pageHeading": "Are you sure you want to unsubscribe?",
+  "pageTitle": "Unsubscribe confirmation",
+  "paragraph": "You will no longer be sent updates about",
+  "unsubscribeLink": "Unsubscribe",
+}
+`;
+
+exports[`pages/projects/get-updates/unsubscribe/_translations should return the correct Welsh translations 1`] = `
+{
+  "pageHeading": "A ydych chi’n siŵr eich bod eisiau datdanysgrifio?",
+  "pageTitle": "Unsubscribe confirmation",
+  "paragraph": "Ni fydd diweddariadau’n cael eu hanfon atoch mwyach ynghylch Immingham Green Energy Terminal.",
+  "unsubscribeLink": "Datdanysgrifio",
+}
+`;
