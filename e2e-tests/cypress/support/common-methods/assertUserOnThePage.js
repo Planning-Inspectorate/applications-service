@@ -342,7 +342,7 @@ module.exports = (pageName) => {
 		case 'what do you want to tell us about this proposed project? agent':
 			cy.title().should(
 				'eq',
-				'What do you want to tell us about the proposed project? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'What do you want to tell us about this proposed project? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')
@@ -737,7 +737,7 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/what-happens-after-the-decision-is-made');
 			break;
 		case 'cookies settings':
-			cy.title().should('eq', 'Cookies - Application service - GOV.UK');
+			cy.title().should('eq', 'Cookies on application service');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {
