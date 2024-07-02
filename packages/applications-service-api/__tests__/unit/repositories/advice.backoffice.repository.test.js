@@ -31,12 +31,16 @@ describe('advice.backoffice.repository', () => {
 						{ caseReference: 'backoffice' },
 						{
 							OR: [
-								{ from: { contains: 'searchTerm' } },
-								{ agent: { contains: 'searchTerm' } },
-								{ enquiryDetails: { contains: 'searchTerm' } },
-								{ enquiryDetailsWelsh: { contains: 'searchTerm' } },
-								{ adviceDetails: { contains: 'searchTerm' } },
-								{ adviceDetailsWelsh: { contains: 'searchTerm' } }
+								{
+									OR: [
+										{ from: { contains: 'searchTerm' } },
+										{ agent: { contains: 'searchTerm' } },
+										{ enquiryDetails: { contains: 'searchTerm' } },
+										{ enquiryDetailsWelsh: { contains: 'searchTerm' } },
+										{ adviceDetails: { contains: 'searchTerm' } },
+										{ adviceDetailsWelsh: { contains: 'searchTerm' } }
+									]
+								}
 							]
 						}
 					]

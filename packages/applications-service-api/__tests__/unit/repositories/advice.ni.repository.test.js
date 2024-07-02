@@ -25,11 +25,15 @@ describe('advice.ni.repository', () => {
 						{ caseReference: 'ni' },
 						{
 							[Op.or]: [
-								{ firstName: { [Op.like]: '%searchTerm%' } },
-								{ lastName: { [Op.like]: '%searchTerm%' } },
-								{ organisation: { [Op.like]: '%searchTerm%' } },
-								{ enquiryDetail: { [Op.like]: '%searchTerm%' } },
-								{ adviceGiven: { [Op.like]: '%searchTerm%' } }
+								{
+									[Op.or]: [
+										{ firstName: { [Op.like]: '%searchTerm%' } },
+										{ lastName: { [Op.like]: '%searchTerm%' } },
+										{ organisation: { [Op.like]: '%searchTerm%' } },
+										{ enquiryDetail: { [Op.like]: '%searchTerm%' } },
+										{ adviceGiven: { [Op.like]: '%searchTerm%' } }
+									]
+								}
 							]
 						}
 					]

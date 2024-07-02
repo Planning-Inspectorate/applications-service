@@ -1,5 +1,6 @@
 const db = require('../models');
 const { Op } = require('sequelize');
+const { mapNISearchTermToQuery } = require('../utils/queries');
 
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
 	const where = {
@@ -8,7 +9,15 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 				caseReference
 			},
 			{
-				...(searchTerm ? mapSearchTermToQuery(searchTerm) : {})
+				...(searchTerm
+					? mapNISearchTermToQuery(searchTerm, [
+							'firstName',
+							'lastName',
+							'organisation',
+							'enquiryDetail',
+							'adviceGiven'
+					  ])
+					: {})
 			}
 		]
 	};
@@ -36,21 +45,6 @@ const getAdviceById = async (adviceID) => {
 		},
 		raw: true
 	});
-};
-
-const mapSearchTermToQuery = (searchTerm) => {
-	if (searchTerm) {
-		const searchStatements = [
-			'firstName',
-			'lastName',
-			'organisation',
-			'enquiryDetail',
-			'adviceGiven'
-		].map((field) => ({
-			[field]: { [Op.like]: `%${searchTerm}%` }
-		}));
-		return { [Op.or]: searchStatements };
-	}
 };
 
 module.exports = {
