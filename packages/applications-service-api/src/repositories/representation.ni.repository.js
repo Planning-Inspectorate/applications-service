@@ -1,6 +1,7 @@
 const db = require('../models');
 const { pick } = require('lodash');
 const { Op } = require('sequelize');
+const { mapNISearchTermToQuery } = require('../utils/queries');
 
 const getRepresentationById = async (ID) => {
 	return db.Representation.findOne({ where: { ID }, raw: true });
@@ -23,18 +24,13 @@ const getRepresentationsWithCount = async (options = {}) => {
 	}
 
 	if (options.searchTerm) {
-		const terms = options.searchTerm.split(' ');
-		const orOptions = terms.map((term) => ({
-			[Op.or]: [
-				{ PersonalName: { [Op.like]: `%${term}%` } },
-				{ RepresentationRedacted: { [Op.like]: `%${term}%` } },
-				{ Representative: { [Op.like]: `%${term}%` } }
-			]
-		}));
-
-		findOptions.where[Op.and].push({
-			[Op.or]: orOptions
-		});
+		findOptions.where[Op.and].push(
+			mapNISearchTermToQuery(options.searchTerm, [
+				'PersonalName',
+				'RepresentationRedacted',
+				'Representative'
+			])
+		);
 	}
 
 	const { rows, count } = await db.Representation.findAndCountAll(findOptions);
