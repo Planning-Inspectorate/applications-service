@@ -1,7 +1,7 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const { pick } = require('lodash');
-
+const { mapNISearchTermToQuery } = require('../utils/queries');
 const getApplication = async (caseReference) =>
 	db.Project.findOne({ where: { CaseReference: caseReference } });
 
@@ -31,19 +31,13 @@ const getAllApplications = async (options = {}) => {
 		filterStatements.push({ [Op.or]: sectorStatements });
 	}
 
-	// search
-	const searchTermStatements = [];
-	if (searchTerm) {
-		searchTermStatements.push({ ProjectName: { [Op.like]: `%${searchTerm}%` } });
-		searchTermStatements.push({ PromoterName: { [Op.like]: `%${searchTerm}%` } });
-	}
+	const searchTermStatements = mapNISearchTermToQuery(searchTerm, ['ProjectName', 'PromoterName']);
 
 	// build where clause
 	if (filterStatements.length > 0)
 		findAllOptions.where = { ...findAllOptions.where, [Op.and]: filterStatements };
-	if (searchTermStatements.length > 0)
-		findAllOptions.where = { ...findAllOptions.where, [Op.or]: searchTermStatements };
-
+	if (searchTermStatements)
+		findAllOptions.where = { ...findAllOptions.where, ...searchTermStatements };
 	const { rows, count } = await db.Project.findAndCountAll({
 		...findAllOptions,
 		raw: true
