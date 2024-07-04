@@ -187,11 +187,15 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationJobTitleURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationJobTitleController
 );
 registerOrganisationRouter.post(
 	registerOrganisationJobTitleURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['role']),
 	jobTitleValidationRules(),

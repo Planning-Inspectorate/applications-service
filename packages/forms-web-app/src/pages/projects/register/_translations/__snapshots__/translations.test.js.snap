@@ -136,6 +136,9 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageHeading": "Register to have your say about a national infrastructure project",
     "pageTitle": "Register to have your say about a national infrastructure project - National Infrastructure Planning",
   },
+  "jobTitleOrRole": {
+    "pageHeading": "What is your job title or volunteer role?",
+  },
   "name": {
     "hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>",
     "pageHeading": "What is your full name?",
@@ -298,6 +301,9 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     },
     "pageHeading": "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol",
     "pageTitle": "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
+  },
+  "jobTitleOrRole": {
+    "pageHeading": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?",
   },
   "name": {
     "hint": "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>",

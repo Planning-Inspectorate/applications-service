@@ -59,6 +59,9 @@
 		"pageHeading": "What is the name of your organisation or charity?",
 		"hint": "We will publish your organisation name on the website along with your comments about the project."
 	},
+	"jobTitleOrRole": {
+		"pageHeading": "What is your job title or volunteer role?"
+	},
 	"areYou18": {
 		"pageHeading": "Are you 18 or over?",
 		"hint": "You can still register to have your say if you are under 18, but we will process your personal details in a different way.",

@@ -59,6 +59,9 @@
 		"pageHeading": "Beth yw enw eich sefydliad neu'ch elusen?",
 		"hint": "Byddwn yn cyhoeddi enw eich sefydliad ar y wefan ynghyd â'ch sylwadau ynglŷn â'r prosiect."
 	},
+	"jobTitleOrRole": {
+		"pageHeading": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?"
+	},
 	"areYou18": {
 		"pageHeading": "A ydych chi'n 18 oed neu'n hŷn?",
 		"hint": "Gallwch gofrestru i leisio'ch barn os ydych yn iau na 18 oed hefyd, ond byddwn yn prosesu'ch manylion personol mewn ffordd wahanol.",

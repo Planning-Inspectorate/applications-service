@@ -204,11 +204,15 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationJobTitleController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				jobTitleValidationRules(),

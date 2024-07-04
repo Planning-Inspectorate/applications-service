@@ -79,6 +79,10 @@
 		"organisationName": {
 			"empty": "Enter your organisation or charity name",
 			"length": "Name of your organisation or charity name must be 255 characters or less"
+		},
+		"jobTitleOrRole": {
+			"empty": "Enter your job title or volunteer role",
+			"length": "Your job title or volunteer role must be 64 characters or less"
 		}
 	},
 	"year": "Year",
