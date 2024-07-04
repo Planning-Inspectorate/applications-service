@@ -13,7 +13,11 @@
       }) }}
 
       <a href="/projects/{{ caseRef }}" class="govuk-link">
-        View {{ projectName }} project information
+        {% if isWelsh %}
+          Gweld gwybodaeth prosiect {{ projectName }}
+        {% else %}
+          View {{ projectName }} project information
+        {% endif %}
       </a>
     </div>
   </div>
