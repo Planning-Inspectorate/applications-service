@@ -163,6 +163,16 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageHeading": "Who are you registering for?",
     "pageTitle": "Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning",
   },
+  "validationErrors": {
+    "jobTitleOrRole": {
+      "empty": "Enter your job title or volunteer role",
+      "length": "Your job title or volunteer role must be 64 characters or less",
+    },
+    "organisationName": {
+      "empty": "Enter your organisation or charity name",
+      "length": "Name of your organisation or charity name must be 255 characters or less",
+    },
+  },
   "whoRegisteringFor": {
     "agent": "Registering on behalf of someone else",
     "myself": "Registering for myself",
@@ -333,6 +343,16 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "option3": "Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo",
     "pageHeading": "Ar ran pwy ydych chi'n cofrestru?",
     "pageTitle": "Ar ran pwy ydych chi'n cofrestru - Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
+  },
+  "validationErrors": {
+    "jobTitleOrRole": {
+      "empty": "Nodwch deitl eich swydd neu'ch rôl wirfoddoli",
+      "length": "Mae'n rhaid i deitl eich swydd neu'ch rôl wirfoddoli gynnwys 64 o nodau neu lai",
+    },
+    "organisationName": {
+      "empty": "Nodwch enw eich sefydliad neu'ch elusen",
+      "length": "Mae'n rhaid i enw eich sefydliad neu'ch elusen gynnwys 255 o nodau neu lai",
+    },
   },
   "whoRegisteringFor": {
     "agent": "Cofrestru ar ran rhywun arall",

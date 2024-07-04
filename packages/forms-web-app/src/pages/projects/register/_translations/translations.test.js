@@ -1,16 +1,16 @@
-const enCookiesTranslations = require('./en.json');
-const cyCookiesTranslations = require('./cy.json');
+const enTranslations = require('./en.json');
+const cyTranslations = require('./cy.json');
 
 describe('pages/cookies/_translations', () => {
 	it('should return the correct English translations', () => {
-		expect(enCookiesTranslations).toMatchSnapshot();
+		expect(enTranslations).toMatchSnapshot();
 	});
 
 	it('should return the correct Welsh translations', () => {
-		expect(cyCookiesTranslations).toMatchSnapshot();
+		expect(cyTranslations).toMatchSnapshot();
 	});
 
 	it('should return the same keys for English and Welsh translations', () => {
-		expect(enCookiesTranslations).toHaveSameKeys(cyCookiesTranslations);
+		expect(enTranslations).toHaveSameKeys(cyTranslations);
 	});
 });

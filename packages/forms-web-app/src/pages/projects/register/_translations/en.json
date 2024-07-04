@@ -164,5 +164,15 @@
 		"paragraph7LinkText": "Go back to the project page",
 		"paragraph8": "{{-link}} by completing a short survey.",
 		"paragraph8LinkText": "Tell us what you thought about this service"
+	},
+	"validationErrors": {
+		"organisationName": {
+			"empty": "Enter your organisation or charity name",
+			"length": "Name of your organisation or charity name must be 255 characters or less"
+		},
+		"jobTitleOrRole": {
+			"empty": "Enter your job title or volunteer role",
+			"length": "Your job title or volunteer role must be 64 characters or less"
+		}
 	}
 }

@@ -76,14 +76,6 @@
 		"aboutProject": {
 			"empty": "Nodwch yr hyn rydych eisiau ei ddweud wrthym am y prosiect arfaethedig hwn",
 			"length": "Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
-		},
-		"organisationName": {
-			"empty": "Nodwch enw eich sefydliad neu'ch elusen",
-			"length": "Mae'n rhaid i enw eich sefydliad neu'ch elusen gynnwys 255 o nodau neu lai"
-		},
-		"jobTitleOrRole": {
-			"empty": "Nodwch deitl eich swydd neu'ch rôl wirfoddoli",
-			"length": "Mae'n rhaid i deitl eich swydd neu'ch rôl wirfoddoli gynnwys 64 o nodau neu lai"
 		}
 	},
 	"year": "Blwyddyn",
