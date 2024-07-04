@@ -2,6 +2,14 @@ const {
 	getRegisterOfApplicationsSortByLinks
 } = require('./get-register-of-applications-sort-by-links');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
+const registerOfApplicationsTranslations__EN = require('../_translations/en.json');
+
+const i18n = mockI18n({
+	registerOfApplications: registerOfApplicationsTranslations__EN
+});
+
 describe('register-of-applications/utils/get-register-of-applications-sort-by-links', () => {
 	describe('#getRegisterOfApplicationsSortByLinks', () => {
 		describe('When getting the register of applications sort by links', () => {
@@ -9,7 +17,7 @@ describe('register-of-applications/utils/get-register-of-applications-sort-by-li
 				let registerOfApplicationsSortByLinks;
 
 				beforeEach(() => {
-					registerOfApplicationsSortByLinks = getRegisterOfApplicationsSortByLinks({});
+					registerOfApplicationsSortByLinks = getRegisterOfApplicationsSortByLinks(i18n, {});
 				});
 
 				it('should return the default register of applications sort by links', () => {
@@ -36,7 +44,7 @@ describe('register-of-applications/utils/get-register-of-applications-sort-by-li
 				let registerOfApplicationsSortByLinks;
 
 				beforeEach(() => {
-					registerOfApplicationsSortByLinks = getRegisterOfApplicationsSortByLinks({
+					registerOfApplicationsSortByLinks = getRegisterOfApplicationsSortByLinks(i18n, {
 						sortBy: '+ProjectName'
 					});
 				});
