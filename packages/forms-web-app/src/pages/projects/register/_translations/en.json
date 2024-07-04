@@ -121,6 +121,7 @@
 		"registeringFor": "Who are you registering for?",
 		"changeRegisteringForHiddenText": "who are you registering for",
 		"myself": "Myself",
+		"organisation": "An organisation I work or volunteer for",
 		"name": "Full name",
 		"changeNameHiddenText": "your full name",
 		"areYou18": "Are you 18 or over?",
@@ -132,7 +133,11 @@
 		"number": "Telephone number",
 		"changeNumberHiddenText": "your telephone number",
 		"comments": "Registration comments",
-		"changeCommentsHiddenText": "registration comments"
+		"changeCommentsHiddenText": "registration comments",
+		"organisationName": "What is the name of your organisation or charity?",
+		"changeOrganisationNameHiddenText": "the name of your organisation or charity",
+		"jobTitleOrRole": "What is your job title or volunteer role?",
+		"changeJobTitleOrRoleHiddenText": "your job title or volunteer role"
 	},
 	"declaration": {
 		"pageHeading": "Declaration",

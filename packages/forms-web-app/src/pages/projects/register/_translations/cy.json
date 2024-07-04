@@ -121,6 +121,7 @@
 		"registeringFor": "Ar ran pwy ydych chi'n cofrestru?",
 		"changeRegisteringForHiddenText": "ar ran pwy ydych chi'n cofrestru",
 		"myself": "Fy hun",
+		"organisation": "Sefydliad rwyf yn gweithio neu'n gwirfoddoli iddo",
 		"name": "Enw llawn",
 		"changeNameHiddenText": "eich enw llawn",
 		"areYou18": "A ydych chi'n 18 oed neu'n hŷn?",
@@ -132,7 +133,11 @@
 		"number": "Rhif ffôn",
 		"changeNumberHiddenText": "eich rhif ffôn",
 		"comments": "Sylwadau cofrestru",
-		"changeCommentsHiddenText": "sylwadau cofrestru"
+		"changeCommentsHiddenText": "sylwadau cofrestru",
+		"organisationName": "Beth yw enw eich sefydliad neu'ch elusen?",
+		"changeOrganisationNameHiddenText": "enw eich sefydliad neu'ch elusen",
+		"jobTitleOrRole": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?",
+		"changeJobTitleOrRoleHiddenText": "teitl eich swydd neu'ch rôl wirfoddoli"
 	},
 	"declaration": {
 		"pageHeading": "Datganiad",
