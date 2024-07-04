@@ -1,7 +1,7 @@
 {% from "components/ui/search-bar.njk" import uiSearchBar %}
 
 <form action="" method="get">
-    {{ uiSearchBar('register-of-applications-search-bar', 'searchTerm', query.searchTerm, 'Search applications register') }}
-    <input type="hidden" name="itemsPerPage" value="{{ query.itemsPerPage }}">
-    <input type="hidden" name="sortBy" value="{{ query.sortBy }}">
+  {{ uiSearchBar('register-of-applications-search-bar', 'searchTerm', query.searchTerm, 'Search applications register', t('common.search')) }}
+  <input type="hidden" name="itemsPerPage" value="{{ query.itemsPerPage }}">
+  <input type="hidden" name="sortBy" value="{{ query.sortBy }}">
 </form>

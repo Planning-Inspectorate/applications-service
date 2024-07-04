@@ -4,17 +4,18 @@ const { getApplicationsFixture } = require('../_fixtures');
 
 const { mockI18n } = require('../_mocks/i18n');
 
-const i18n = mockI18n();
-
-describe('_utils/map-applications', () => {
+describe('pages/_utils/map-applications', () => {
 	describe('#mapApplications', () => {
-		describe('should take applications API response and returned correctly mapped data', () => {
-			it('when the language is English', () => {
+		describe('When the selected language is English', () => {
+			const i18n = mockI18n({}, 'en');
+
+			it('should take applications API response and returned correctly mapped data', () => {
 				const result = mapApplications(i18n, getApplicationsFixture.data.applications);
+
 				expect(result).toEqual([
 					{
 						applicant: 'EDF',
-						applicationDate: '01 Jan 2018',
+						applicationDate: '1 Jan 2018',
 						decisionDate: '',
 						location: 'Somerset - Monday PM 23/12',
 						pageURL: '/projects/TR010001',
@@ -32,7 +33,7 @@ describe('_utils/map-applications', () => {
 					},
 					{
 						applicant: 'EDF',
-						applicationDate: '01 Jan 2018',
+						applicationDate: '1 Jan 2018',
 						decisionDate: '',
 						location: 'Somerset - cache test 03-02 15:44',
 						pageURL: '/projects/tr033005',
@@ -41,16 +42,18 @@ describe('_utils/map-applications', () => {
 					}
 				]);
 			});
-			it('when the language is Welsh', () => {
-				const result = mapApplications(
-					{ language: 'cy' },
-					getApplicationsFixture.data.applications
-				);
+		});
+
+		describe('When the selected language is Welsh', () => {
+			const i18n = mockI18n({}, 'cy');
+
+			it('should take applications API response and returned correctly mapped data', () => {
+				const result = mapApplications(i18n, getApplicationsFixture.data.applications);
 
 				expect(result).toEqual([
 					{
 						applicant: 'EDF',
-						applicationDate: '01 Jan 2018',
+						applicationDate: '1 Ion 2018',
 						decisionDate: '',
 						location: 'Somerset - Monday PM 23/12 Welsh',
 						pageURL: '/projects/TR010001',
@@ -68,7 +71,7 @@ describe('_utils/map-applications', () => {
 					},
 					{
 						applicant: 'EDF',
-						applicationDate: '01 Jan 2018',
+						applicationDate: '1 Ion 2018',
 						decisionDate: '',
 						location: 'Somerset - cache test 03-02 15:44 Welsh',
 						pageURL: '/projects/tr033005',
