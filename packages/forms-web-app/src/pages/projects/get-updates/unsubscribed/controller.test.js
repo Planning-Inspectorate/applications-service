@@ -8,6 +8,9 @@ describe('projects/get-updates/unsubscribed/controller', () => {
 					getUpdates: {
 						unsubscribed: true
 					}
+				},
+				i18n: {
+					language: 'en'
 				}
 			};
 			const res = {
@@ -22,7 +25,8 @@ describe('projects/get-updates/unsubscribed/controller', () => {
 			it('should render the unsubscribed page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/unsubscribed/view.njk', {
 					pageHeading: 'Unsubscribe success',
-					pageTitle: 'Successfully unsubscribed'
+					pageTitle: 'Successfully unsubscribed',
+					isWelsh: false
 				});
 			});
 		});
