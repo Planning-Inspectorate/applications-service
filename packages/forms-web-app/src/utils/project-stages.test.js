@@ -40,14 +40,14 @@ describe('utils/project-stages', () => {
 			expect(projectStagesTranslations).toEqual({
 				1: { cy: 'Cyn-ymgeisio', en: 'Pre-application' },
 				2: {
-					cy: 'Acceptance (review of the application)',
+					cy: `Derbyn (adolygiad o'r cais)`,
 					en: 'Acceptance (review of the application)'
 				},
 				3: { cy: 'Cyn-archwiliad', en: 'Pre-examination' },
 				4: { cy: 'Archwiliad', en: 'Examination' },
 				5: { cy: 'Argymhelliad', en: 'Recommendation' },
 				6: { cy: 'Penderfyniad', en: 'Decision' },
-				7: { cy: 'Decided', en: 'Decided' },
+				7: { cy: 'Wedi penderfynu', en: 'Decided' },
 				8: { cy: "Wedi'i dynnu'n ôl", en: 'Withdrawn' }
 			});
 		});

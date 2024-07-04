@@ -21,8 +21,8 @@
 		"heading1": "Canlyniadau wedi'u hidlo"
 	},
 	"errors": {
-		"fromDateAfterToDate": "The from date entered should start before the to date",
-		"fromDatePast": "The from date must be in the past",
+		"fromDateAfterToDate": "Dylai'r dyddiad o a nodir ddechrau cyn y dyddiad i",
+		"fromDatePast": "Rhaid i'r dyddiad o fod yn y gorffennol",
 		"emptyValue": "Rhaid i'r {{-formGroup}} gynnwys {{-emptyValue}}",
 		"emptyValues": "{{-errorMessage}} a {{-emptyValue}}",
 		"mustBeRealDate": "Rhaid i'r {{-formGroup}} fod yn ddyddiad go iawn",
