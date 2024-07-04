@@ -43,15 +43,12 @@ const projectStages = {
 
 const projectStagesTranslations = {
 	1: mapStageTranslations('Pre-application', 'Cyn-ymgeisio'),
-	2: mapStageTranslations(
-		'Acceptance (review of the application)',
-		'Acceptance (review of the application)'
-	),
+	2: mapStageTranslations('Acceptance (review of the application)', `Derbyn (adolygiad o'r cais)`),
 	3: mapStageTranslations('Pre-examination', 'Cyn-archwiliad'),
 	4: mapStageTranslations('Examination', 'Archwiliad'),
 	5: mapStageTranslations('Recommendation', 'Argymhelliad'),
 	6: mapStageTranslations('Decision', 'Penderfyniad'),
-	7: mapStageTranslations('Decided', 'Decided'),
+	7: mapStageTranslations('Decided', 'Wedi penderfynu'),
 	8: mapStageTranslations('Withdrawn', `Wedi'i dynnu'n ôl`)
 };
 

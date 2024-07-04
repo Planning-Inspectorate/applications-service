@@ -2,7 +2,7 @@
 	"common": {
 		"projects": "prosiectau"
 	},
-	"pageTitle": "Project search",
+	"pageTitle": "Chwilio prosiect",
 	"heading1": "Prosiectau",
 	"paragraph1": "Dyma restr o'r holl brosiectau. I ddod o hyd i brosiect penodol, defnyddiwch yr opsiynau hidlo neu chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
 	"linkText1": "Lawrlwythwch dabl sy'n cynnwys rhestr lawn o bob un o'r {{-totalApplications}} o brosiectau (CSV)",
@@ -15,7 +15,7 @@
 		"linkText1": "Clirio chwiliad a dewisiadau hidlo"
 	},
 	"filterLabels": {
-		"region": "Location",
+		"region": "Lleoliad",
 		"sector": "Sector",
 		"stage": "Cam"
 	},
