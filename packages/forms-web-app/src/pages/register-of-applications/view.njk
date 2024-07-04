@@ -1,20 +1,26 @@
 {% extends "layouts/default.njk" %}
 
+{% set pageTitle = t('registerOfApplications.heading1') %}
+
 {% block content %}
 	<section>
-		<h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+		<h1 class="govuk-heading-xl">
+			{{ t('registerOfApplications.heading1') }}
+		</h1>
 
 		<p class="govuk-body">
-			Below is a list of all applications submitted since 2008. This complies with Section 39 of the Planning Act 2008.
+			{{ t('registerOfApplications.paragraph1') }}
 		</p>
 
 		<p class="govuk-body">
-			Search by project name or applicant.
+			{{ t('registerOfApplications.paragraph2') }}
 		</p>
 
 		{% if applications | length %}
 			<p class="govuk-body">
-				<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>Download a table containing a complete list of all {{ totalApplicationsWithoutFilters }} projects (CSV)</a>
+				<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
+					{{ t('registerOfApplications.linkText1', { totalApplications: totalApplicationsWithoutFilters }) }}
+				</a>
 			</p>
 		{% endif %}
 
@@ -22,15 +28,15 @@
 
 		{% if applications | length %}
 
-            {% if featureFlag.allowApplicationsPagination == true %}
-                {% include "./includes/results-per-page.njk" %}
-            {% endif %}
+			{% if featureFlag.allowApplicationsPagination == true %}
+				{% include "./includes/results-per-page.njk" %}
+			{% endif %}
 
 			{% include "./includes/applications-table.njk" %}
 
-            {% if featureFlag.allowApplicationsPagination == true %}
-                {% include "./includes/pagination.njk" %}
-            {% endif %}
+			{% if featureFlag.allowApplicationsPagination == true %}
+				{% include "./includes/pagination.njk" %}
+			{% endif %}
 
 		{% else %}
 			{% include "./includes/no-matching-results.njk" %}

@@ -41,6 +41,9 @@ const {
 	addCookiesTranslationsMiddleware
 } = require('./cookies/_middleware/add-cookies-translations-middleware');
 const {
+	addRegisterOfApplicationsTranslationsMiddleware
+} = require('./register-of-applications/_middleware/add-register-of-applications-translations-middleware');
+const {
 	addProjectSearchTranslationsMiddleware
 } = require('./project-search/_middleware/add-project-search-translations-middleware');
 
@@ -84,7 +87,12 @@ pagesRouter.get(
 	getProjectSearchController
 );
 
-pagesRouter.get(registerOfApplicationsURL, getRegisterOfApplicationsController);
+pagesRouter.get(
+	registerOfApplicationsURL,
+	addCommonTranslationsMiddleware,
+	addRegisterOfApplicationsTranslationsMiddleware,
+	getRegisterOfApplicationsController
+);
 
 pagesRouter.get(
 	termsAndConditionsURL,
