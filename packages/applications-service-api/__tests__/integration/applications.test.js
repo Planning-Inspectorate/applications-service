@@ -170,8 +170,18 @@ describe('/api/v1/applications', () => {
 						where: {
 							Region: { [Op.ne]: 'Wales' },
 							[Op.or]: [
-								{ ProjectName: { [Op.like]: '%London Resort%' } },
-								{ PromoterName: { [Op.like]: '%London Resort%' } }
+								{
+									[Op.or]: [
+										{ ProjectName: { [Op.like]: '%London%' } },
+										{ PromoterName: { [Op.like]: '%London%' } }
+									]
+								},
+								{
+									[Op.or]: [
+										{ ProjectName: { [Op.like]: '%Resort%' } },
+										{ PromoterName: { [Op.like]: '%Resort%' } }
+									]
+								}
 							]
 						}
 					})
@@ -220,8 +230,12 @@ describe('/api/v1/applications', () => {
 								}
 							],
 							[Op.or]: [
-								{ ProjectName: { [Op.like]: '%Nuclear%' } },
-								{ PromoterName: { [Op.like]: '%Nuclear%' } }
+								{
+									[Op.or]: [
+										{ ProjectName: { [Op.like]: '%Nuclear%' } },
+										{ PromoterName: { [Op.like]: '%Nuclear%' } }
+									]
+								}
 							]
 						}
 					})
@@ -602,8 +616,12 @@ describe('/api/v1/applications', () => {
 							}
 						],
 						[Op.or]: [
-							{ ProjectName: { [Op.like]: '%Nuclear%' } },
-							{ PromoterName: { [Op.like]: '%Nuclear%' } }
+							{
+								[Op.or]: [
+									{ ProjectName: { [Op.like]: '%Nuclear%' } },
+									{ PromoterName: { [Op.like]: '%Nuclear%' } }
+								]
+							}
 						]
 					})
 				});
