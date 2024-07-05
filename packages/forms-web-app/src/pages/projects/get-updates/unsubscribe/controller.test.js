@@ -16,7 +16,10 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 				query: {
 					email: 'mock@email.com'
 				},
-				session: {}
+				session: {},
+				i18n: {
+					language: 'en'
+				}
 			};
 			const res = {
 				render: jest.fn()
@@ -29,7 +32,8 @@ describe('projects/get-updates/unsubscribe/controller', () => {
 
 			it('it should call the correct view with the page data', async () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/unsubscribe/view.njk', {
-					email: 'mock@email.com'
+					email: 'mock@email.com',
+					isWelsh: false
 				});
 			});
 		});

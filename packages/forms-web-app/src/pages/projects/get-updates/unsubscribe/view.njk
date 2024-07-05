@@ -10,8 +10,14 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ t('getUpdatesUnsubscribe.pageHeading') }}</h1>
 
+      {% if isWelsh and projectNameWelsh %}
+        {% set name = projectNameWelsh %}
+      {% else %}
+        {% set name = projectName %}
+      {% endif %}
+
       <p class="govuk-body">
-        {{ t('getUpdatesUnsubscribe.paragraph') }} {{ projectName }}.
+        {{ t('getUpdatesUnsubscribe.paragraph') }} {{ name }}.
       </p>
 
       <form method="POST" novalidate>

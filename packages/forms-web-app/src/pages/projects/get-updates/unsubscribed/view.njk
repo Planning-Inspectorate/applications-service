@@ -14,7 +14,7 @@
 
       <a href="/projects/{{ caseRef }}" class="govuk-link">
         {% if isWelsh %}
-          Gweld gwybodaeth prosiect {{ projectName }}
+          Gweld gwybodaeth prosiect {{ projectNameWelsh if projectNameWelsh else projectName }}
         {% else %}
           View {{ projectName }} project information
         {% endif %}
