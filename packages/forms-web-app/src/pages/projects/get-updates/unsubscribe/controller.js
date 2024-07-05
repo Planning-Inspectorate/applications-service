@@ -4,14 +4,18 @@ const { getEmail } = require('./utils/get-email');
 const { setGetUpdatesSession } = require('../_session/get-updates');
 const { setGetUpdatesUnsubscribedSession } = require('../_session');
 const { getUpdatesUnsubscribedURL } = require('../unsubscribed/utils/get-updates-unsubscribed-url');
+const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 
 const view = 'projects/get-updates/unsubscribe/view.njk';
 
 const getGetUpdatesUnsubscribeController = (req, res, next) => {
 	try {
-		const { query } = req;
+		const { query, i18n } = req;
 
-		return res.render(view, { email: getEmail(query) });
+		return res.render(view, {
+			email: getEmail(query),
+			isWelsh: isLangWelsh(i18n.language)
+		});
 	} catch (error) {
 		logger.error(error);
 		next(error);
