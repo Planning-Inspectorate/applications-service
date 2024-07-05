@@ -55,6 +55,13 @@
 		"pageHeading": "What is your full name?",
 		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
 	},
+	"organisationName": {
+		"pageHeading": "What is the name of your organisation or charity?",
+		"hint": "We will publish your organisation name on the website along with your comments about the project."
+	},
+	"jobTitleOrRole": {
+		"pageHeading": "What is your job title or volunteer role?"
+	},
 	"areYou18": {
 		"pageHeading": "Are you 18 or over?",
 		"hint": "You can still register to have your say if you are under 18, but we will process your personal details in a different way.",
@@ -114,6 +121,7 @@
 		"registeringFor": "Who are you registering for?",
 		"changeRegisteringForHiddenText": "who are you registering for",
 		"myself": "Myself",
+		"organisation": "An organisation I work or volunteer for",
 		"name": "Full name",
 		"changeNameHiddenText": "your full name",
 		"areYou18": "Are you 18 or over?",
@@ -125,7 +133,11 @@
 		"number": "Telephone number",
 		"changeNumberHiddenText": "your telephone number",
 		"comments": "Registration comments",
-		"changeCommentsHiddenText": "registration comments"
+		"changeCommentsHiddenText": "registration comments",
+		"organisationName": "What is the name of your organisation or charity?",
+		"changeOrganisationNameHiddenText": "the name of your organisation or charity",
+		"jobTitleOrRole": "What is your job title or volunteer role?",
+		"changeJobTitleOrRoleHiddenText": "your job title or volunteer role"
 	},
 	"declaration": {
 		"pageHeading": "Declaration",
@@ -152,5 +164,15 @@
 		"paragraph7LinkText": "Go back to the project page",
 		"paragraph8": "{{-link}} by completing a short survey.",
 		"paragraph8LinkText": "Tell us what you thought about this service"
+	},
+	"validationErrors": {
+		"organisationName": {
+			"empty": "Enter your organisation or charity name",
+			"length": "Name of your organisation or charity name must be 255 characters or less"
+		},
+		"jobTitleOrRole": {
+			"empty": "Enter your job title or volunteer role",
+			"length": "Your job title or volunteer role must be 64 characters or less"
+		}
 	}
 }

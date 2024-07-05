@@ -169,11 +169,15 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationOrgNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				organisationOrgNameValidationRules(),
 				validationErrorHandler,
@@ -200,11 +204,15 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationJobTitleController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				jobTitleValidationRules(),

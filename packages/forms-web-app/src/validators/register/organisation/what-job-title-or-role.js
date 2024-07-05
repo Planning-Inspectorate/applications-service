@@ -2,10 +2,16 @@ const { body } = require('express-validator');
 
 const rules = () => {
 	return [
-		body('role').notEmpty().withMessage('Enter your job title or volunteer role'),
+		body('role')
+			.notEmpty()
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.jobTitleOrRole.empty');
+			}),
 		body('role')
 			.isLength({ min: 1, max: 64 })
-			.withMessage('Your job title or volunteer role must be 64 characters or less')
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.jobTitleOrRole.length');
+			})
 	];
 };
 
