@@ -203,11 +203,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-of-organisation',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentOrgNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-of-organisation',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				organisationNameValidationRules(),
 				validationErrorHandler,

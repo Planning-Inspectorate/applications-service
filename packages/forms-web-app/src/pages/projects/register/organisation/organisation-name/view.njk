@@ -4,7 +4,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set pageHeading = t('register.organisationName.pageHeading')%}
+{% set pageHeading = t('register.organisationOrCharityName.pageHeading')%}
 {% set whoRegisteringFor = t('register.whoRegisteringFor.organisation') %}
 {% set commonPageTitle = t('register.index.pageTitle') %}
 {% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
@@ -36,7 +36,7 @@
                 isPageHeading: true
             },
             hint: {
-                text: t('register.organisationName.hint')
+                text: t('register.organisationOrCharityName.hint')
             },
             id: "organisation-name",
             name: "organisation-name",

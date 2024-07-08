@@ -56,6 +56,11 @@
 		"hint": "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>"
 	},
 	"organisationName": {
+		"pageHeading": "Beth yw enw'r sefydliad rydych yn gweithio iddo?",
+		"hint": "Byddwn yn cyhoeddi enw eich sefydliad, enw eich cleient a'i sylwadau ar y wefan.",
+		"linkText1": "I don't work for an organisation"
+	},
+	"organisationOrCharityName": {
 		"pageHeading": "Beth yw enw eich sefydliad neu'ch elusen?",
 		"hint": "Byddwn yn cyhoeddi enw eich sefydliad ar y wefan ynghyd â'ch sylwadau ynglŷn â'r prosiect."
 	},
@@ -167,6 +172,10 @@
 	},
 	"validationErrors": {
 		"organisationName": {
+			"empty": "Nodwch enw'r sefydliad rydych yn gweithio iddo",
+			"length": "Mae'n rhaid i enw'r sefydliad rydych yn gweithio iddo gynnwys 255 o nodau neu lai"
+		},
+		"organisationOrCharityName": {
 			"empty": "Nodwch enw eich sefydliad neu'ch elusen",
 			"length": "Mae'n rhaid i enw eich sefydliad neu'ch elusen gynnwys 255 o nodau neu lai"
 		},

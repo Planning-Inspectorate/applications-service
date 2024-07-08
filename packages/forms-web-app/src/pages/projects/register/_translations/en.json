@@ -56,6 +56,11 @@
 		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
 	},
 	"organisationName": {
+		"pageHeading": "What is the name of the organisation you work for?",
+		"hint": "We will publish your organisation name, your client's name and their comments on the website.",
+		"linkText1": "I don't work for an organisation"
+	},
+	"organisationOrCharityName": {
 		"pageHeading": "What is the name of your organisation or charity?",
 		"hint": "We will publish your organisation name on the website along with your comments about the project."
 	},
@@ -167,6 +172,10 @@
 	},
 	"validationErrors": {
 		"organisationName": {
+			"empty": "Enter the name of the organisation you work for",
+			"length": "The name of the organisation you work for must be 255 characters or less"
+		},
+		"organisationOrCharityName": {
 			"empty": "Enter your organisation or charity name",
 			"length": "Name of your organisation or charity name must be 255 characters or less"
 		},

@@ -181,11 +181,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentOrgNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentOrgNameController
 );
 registerAgentRouter.post(
 	registerAgentOrgNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	organisationNameValidationRules(),
 	validationErrorHandler,
