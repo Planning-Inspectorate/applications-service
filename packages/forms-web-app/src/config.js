@@ -79,6 +79,7 @@ module.exports = {
 	},
 	pinsURL: {
 		index: 'https://infrastructure.planninginspectorate.gov.uk',
+		indexCY: 'https://infrastructure.planninginspectorate.gov.uk/cy/',
 		adviceNotes:
 			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
 	},

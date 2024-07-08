@@ -52,9 +52,9 @@ exports[`pages/index/_translations should return the correct Welsh translations 
   "linkTitle6": "Gweld y newyddion diweddaraf",
   "paragraph1": "Mae rhagor o wybodaeth ar gael yma ynglŷn â Phrosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPau). Prosiectau mawr yw'r rhain fel gorsafoedd pŵer, priffyrdd a llinellau pŵer. Maen nhw'n cael eu trin ar wahân i gynllunio awdurdod lleol arferol oherwydd eu maint a'u pwysigrwydd i gymunedau ehangach.",
   "paragraph2": "Mae'r safle hwn yn cael ei reoli gan yr Arolygiaeth Gynllunio, sef asiantaeth y llywodraeth sy'n gyfrifol am archwilio ceisiadau ar y raddfa hon yng Nghymru a Lloegr.",
-  "paragraph3": "This is a new service. If you are visiting for information on a Welsh project, visit our {{-link}}.",
-  "paragraph3LinkText": "old website",
-  "paragraph4": "Brig y Ffurflen",
+  "paragraph3": "Mae hwn yn wasanaeth newydd. Os ydych yn ymweld am wybodaeth am brosiect Cymraeg, ewch i'n {{-link}}.",
+  "paragraph3LinkText": "wefan hen",
+  "paragraph4": "Chwilio yn ôl enw'r prosiect neu'r ymgeisydd",
   "paragraph5": "Gweld {{-link}}",
   "paragraph5LinkText": "rhestr lawn o'r holl brosiectau",
 }
