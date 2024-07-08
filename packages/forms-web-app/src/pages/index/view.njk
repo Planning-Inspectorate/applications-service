@@ -4,6 +4,10 @@
 
 {% set pageTitle = t('index.heading1') %}
 {% set mainClasses = "pins-modded-no-padding" %}
+{% set pinsIndexURL = pinsURL.index %}
+{% if language == 'cy' %}
+	{% set pinsIndexURL = pinsURL.indexCY %}
+{% endif %}
 
 {% block content %}
 	<div class="masthead masthead--full-width masthead--bg-teal">
@@ -22,11 +26,9 @@
 						{{ t('index.paragraph2') }}
 					</p>
 
-					{% if not featureFlag.allowWelshTranslation %}
-						<p class="masthead__text">
-							{{ t('index.paragraph3', { link: '<a class="govuk-link govuk-link--inverse" href="' + pinsURL.index + '">' + t('index.paragraph3LinkText') + '</a>' }) | safe }}
-						</p>
-					{% endif %}
+					<p class="masthead__text">
+						{{ t('index.paragraph3', { link: '<a class="govuk-link govuk-link--inverse" href="' + pinsIndexURL + '">' + t('index.paragraph3LinkText') + '</a>' }) | safe }}
+					</p>
 				</div>
 			</div>
 		</div>
