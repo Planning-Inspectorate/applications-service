@@ -3,6 +3,12 @@ const { getSummaryListItemHasInterestedPartyNumber } = require('./has-interested
 const { getDeadlineDetailsHasInterestedPartyNumber } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
 const { getSelectedOptionText } = require('./helpers');
+const { mockI18n } = require('../../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN
+});
 
 jest.mock('../../../_session/deadline', () => ({
 	getDeadlineDetailsHasInterestedPartyNumber: jest.fn()
@@ -17,14 +23,15 @@ jest.mock('./helpers', () => ({
 describe('examination/check-your-answers/utils/summary-list-item/has-interested-party-number', () => {
 	describe('#getSummaryListItemHasInterestedPartyNumber', () => {
 		const req = {
-			session: { mockSession: 'mock session' }
+			session: { mockSession: 'mock session' },
+			i18n
 		};
 		describe('When getting the has interested party number summary list item for the check your answers page', () => {
 			describe('and the has interested party number retrived from the session is NOT yes or no', () => {
 				it('should throw an error', () => {
-					expect(() => getSummaryListItemHasInterestedPartyNumber(req.session)).toThrowError(
-						'Has interested party number text is undefined'
-					);
+					expect(() =>
+						getSummaryListItemHasInterestedPartyNumber(req.session, req.i18n)
+					).toThrowError('Has interested party number text is undefined');
 				});
 			});
 			describe('and the has interested party number retrived from the session is yes or no', () => {
@@ -38,7 +45,7 @@ describe('examination/check-your-answers/utils/summary-list-item/has-interested-
 					getDeadlineDetailsHasInterestedPartyNumber.mockReturnValue(mockHasInterestedPartyNumber);
 					getSelectedOptionText.mockReturnValue(mockHasInterestedPartyNumberText);
 					getSummaryListItem.mockReturnValue(mockSummaryListItem);
-					result = getSummaryListItemHasInterestedPartyNumber(req.session);
+					result = getSummaryListItemHasInterestedPartyNumber(req.session, req.i18n);
 				});
 				it('should use the has interested party number options to get the has interested party number option text', () => {
 					expect(getSelectedOptionText).toHaveBeenCalledWith(

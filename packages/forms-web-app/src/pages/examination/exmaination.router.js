@@ -5,6 +5,12 @@ const {
 	validateNotEmptyAndLength,
 	emailValidationRules
 } = require('../../validators/shared');
+const {
+	validateHasInterestedPartyNumber
+} = require('../../validators/examination/has-interested-party-number');
+const {
+	validateYourInterestedPartyNumber
+} = require('../../validators/examination/your-interested-party-number');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
 const { forwardView } = require('../../middleware/forward-view');
 const {
@@ -15,7 +21,10 @@ const { decodeUri } = require('../../middleware/decode-uri');
 const { projectsMiddleware } = require('../projects/_middleware/middleware');
 const {
 	addCommonTranslationsMiddleware
-} = require('../../../src/pages/_middleware/i18n/add-common-translations-middleware');
+} = require('../../pages/_middleware/i18n/add-common-translations-middleware');
+const {
+	addExaminationTranslationsMiddleware
+} = require('./_middleware/add-examination-translations-middleware');
 
 const {
 	routesConfig: {
@@ -99,6 +108,8 @@ const chooseDeadlineRouter = require('./choose-deadline/router');
 
 const router = express.Router({ mergeParams: true });
 
+router.use(addCommonTranslationsMiddleware, addExaminationTranslationsMiddleware);
+
 router.get(`/${applicant.route}`, getApplicant);
 router.post(
 	`/${applicant.route}`,
@@ -143,7 +154,7 @@ router.post(
 router.get(`/${hasInterestedPartyNumber.route}`, getHasInterestedPartyNumber);
 router.post(
 	`/${hasInterestedPartyNumber.route}`,
-	validateNotEmpty(hasInterestedPartyNumber),
+	validateHasInterestedPartyNumber(hasInterestedPartyNumber),
 	validationErrorHandler,
 	postHasInterestedPartyNumber
 );
@@ -265,7 +276,7 @@ router.post(
 router.get(`/${yourInterestedPartyNumber.route}`, getYourInterestedPartyNumber);
 router.post(
 	`/${yourInterestedPartyNumber.route}`,
-	validateNotEmptyAndLength(yourInterestedPartyNumber),
+	validateYourInterestedPartyNumber(yourInterestedPartyNumber),
 	validationErrorHandler,
 	postYourInterestedPartyNumber
 );

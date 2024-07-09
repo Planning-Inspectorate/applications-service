@@ -2,57 +2,56 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set pageTitle = 'Have your say on an application' %}
+{% set pageTitle = t('examination.haveYourSay.common.title1') %}
 {% set preTitle = projectName %}
-{% set title = 'Have your say on an application' %}
+{% set title = t('examination.haveYourSay.common.title1') %}
 
 {% block pageContent %}
 	<p>
-		Use this service to have your say about the <strong>{{ projectName }}</strong> at the examination stage.
+		{{ t('examination.haveYourSay.deadlinesOpen.phrase1') }} <strong>{{ projectName }}</strong> {{ t('examination.haveYourSay.deadlinesOpen.phrase2') }}
 	</p>
 
 	<p>
-		We&#39;ll ask for your personal details and your examination comments about this project.
+		{{ t('examination.haveYourSay.deadlinesOpen.paragraph1') }}
 	</p>
 
 	{{ govukButton({
-		text: "Start now",
+		text: t('common.startNow'),
 		href: startNowUrl,
 		isStartButton: true
 	}) }}
 
-	<h2 class="govuk-heading-m">Before you start</h2>
+	<h2 class="govuk-heading-m">{{ t('examination.haveYourSay.deadlinesOpen.heading1') }}</h2>
 
 	<p>
-		<b>If you&#39;re an individual and have registered as an interested party</b>
+		<b>{{ t('examination.haveYourSay.deadlinesOpen.paragraph2') }}</b>
 	</p>
 
-	<p>You&#39;ll need your:</p>
+	<p>{{ t('examination.haveYourSay.deadlinesOpen.paragraph3') }}</p>
 
 	<ul class="govuk-list govuk-list--bullet">
-		<li>interested party number</li>
+		<li>{{ t('examination.haveYourSay.deadlinesOpen.listItem1') }}</li>
 
-		<li>email address</li>
+		<li>{{ t('examination.haveYourSay.deadlinesOpen.listItem2') }}</li>
 
-		<li>documents to support your comments if you plan to upload them</li>
+		<li>{{ t('examination.haveYourSay.deadlinesOpen.listItem3') }}</li>
 	</ul>
 
-	<p>If you have not registered as an interested party, we&#39;ll ask you for your personal details and documents to
-		support your comments if you plan to upload them.</p>
+	<p>{{ t('examination.haveYourSay.deadlinesOpen.paragraph4') }}</p>
 
 	<p>
-		<b>If you&#39;re submitting comments as an organisation you work for</b>
+		<b>{{ t('examination.haveYourSay.deadlinesOpen.paragraph5') }}</b>
 	</p>
 
-	<p>You&#39;ll need your organisation&#39;s:</p>
+	<p>{{ t('examination.haveYourSay.deadlinesOpen.paragraph6') }}</p>
 
 	<ul class="govuk-list govuk-list--bullet">
-		<li>name</li>
+		<li>{{ t('examinationHaveYourSay.deadlinesOpen.listItem4') }}</li>
 
-		<li>interested party number</li>
+		<li>{{ t('examination.haveYourSay.deadlinesOpen.listItem5') }}</li>
 
-		<li>email address</li>
+		<li>{{ t('examination.haveYourSay.deadlinesOpen.listItem6') }}</li>
 
-		<li>supporting documents if you plan to upload your documents</li>
+		<li>{{ t('examination.haveYourSay.deadlinesOpen.listItem7') }}</li>
 	</ul>
 {% endblock %}

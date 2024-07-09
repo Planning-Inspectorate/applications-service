@@ -1,11 +1,11 @@
 {% extends "projects/_components/project-pages-template.njk" %}
 
-{% set pageTitle = 'No Deadlines - Have your say on an application' %}
+{% set pageTitle = t('examination.haveYourSay.noOpenDeadlines.title1') %}
 {% set preTitle = projectName %}
-{% set title = 'Have your say on an application' %}
+{% set title = t('examination.haveYourSay.common.title1') %}
 
 {% block pageContent %}
 	<p>
-		You cannot submit anything as there are no open deadlines.
+		{{ t('examination.haveYourSay.noOpenDeadlines.paragraph1') }}
 	</p>
 {% endblock %}

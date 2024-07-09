@@ -1,0 +1,39 @@
+{
+	"hasInterestedPartyNumber": {
+		"title1": "A oes gennych chi rif cyfeirnod parti â buddiant?",
+		"paragraph1": "Rhif cyfeirnod unigryw yw hwn sy'n eich adnabod fel parti â buddiant. Byddwch wedi cael y rhif hwn pan wnaethoch gofrestru.",
+		"errorMessage1": "Dewiswch 'oes' os oes gennych rif parti â buddiant"
+	},
+	"haveYourSay": {
+		"common": {
+			"title1": "Lleisio'ch barn am gais"
+		},
+		"deadlinesOpen": {
+			"phrase1": "Defnyddiwch y gwasanaeth hwn i leisio'ch barn am",
+			"phrase2": "yn ystod y cam archwilio.",
+			"paragraph1": "Byddwn yn gofyn am eich manylion personol a'ch sylwadau archwiliad ynglŷn â'r prosiect hwn.",
+			"heading1": "Cyn i chi ddechrau",
+			"paragraph2": "Os ydych yn unigolyn ac wedi cofrestru fel parti â buddiant",
+			"paragraph3": "Bydd arnoch angen:",
+			"listItem1": "eich rhif parti â buddiant",
+			"listItem2": "eich cyfeiriad e-bost",
+			"listItem3": "dogfennau i gefnogi'ch sylwadau os ydych yn bwriadu eu lanlwytho",
+			"paragraph4": "Os nad ydych wedi cofrestreu fel parti â buddiant, byddwn yn gofyn am eich manylion personol a dogfennau i gefnogi'ch sylwadau os ydych yn bwriadu eu lanlwytho.",
+			"paragraph5": "Os ydych yn cyflwyno sylwadau fel sefydliad rydych yn gweithio iddo",
+			"paragraph6": "Bydd arnoch angen y canlynol ar gyfer eich sefydliad:",
+			"listItem4": "enw",
+			"listItem5": "rhif parti â buddiant",
+			"listItem6": "cyfeiriad e-bost",
+			"listItem7": "dogfennau ategol os ydych yn bwriadu lanlwytho'ch dogfennau"
+		},
+		"noOpenDeadlines": {
+			"title1": "Dim Dyddiadau Cau - Lleisio'ch barn am gais",
+			"paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor."
+		}
+	},
+	"yourInterestedPartyNumber": {
+		"pageTitle1": "Beth yw'ch rhif cyfeirnod parti â buddiant?",
+		"errorMessage1": "Nodwch eich rhif parti â buddiant",
+		"errorMessage2": "Mae'n rhaid i'ch rhif parti â buddiant gynnwys rhwng 3 ac 20 o nodau"
+	}
+}

@@ -111,21 +111,6 @@ const routesConfig = {
 			hasInterestedPartyNumber: {
 				id: 'examination-has-interested-party-number',
 				name: 'Do you have an interested party reference number?',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you have an interested party reference number'
-					}
-				},
-				options: {
-					1: {
-						value: 'yes',
-						text: 'Yes'
-					},
-					2: {
-						value: 'no',
-						text: 'No'
-					}
-				},
 				route: 'have-an-interested-party-number',
 				view: 'pages/examination/has-interested-party-number'
 			},
@@ -321,17 +306,6 @@ const routesConfig = {
 			yourInterestedPartyNumber: {
 				id: 'examination-your-interested-party-number',
 				name: "What's your interested party reference number?",
-				onError: {
-					message: {
-						checkLength:
-							'Your interested party reference number must be between 3 and 20 characters',
-						notEmpty: 'Enter your interested party reference number'
-					},
-					minMaxOptions: {
-						min: 3,
-						max: 20
-					}
-				},
 				route: 'your-interested-party-number',
 				view: 'pages/examination/your-interested-party-number'
 			},

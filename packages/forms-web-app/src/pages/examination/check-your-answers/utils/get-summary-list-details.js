@@ -11,12 +11,12 @@ const {
 	getSummaryListItemEmail
 } = require('./summary-list-item');
 
-const getSummaryListDetails = (session) => {
+const getSummaryListDetails = (session, i18n) => {
 	const summaryListDetails = [];
 	const userHasInterestedPartyNumber = getUserHasInterestedPartyNumber(session);
 	const userApplicant = isUserApplicant(session);
 
-	summaryListDetails.push(getSummaryListItemHasInterestedPartyNumber(session));
+	summaryListDetails.push(getSummaryListItemHasInterestedPartyNumber(session, i18n));
 	if (userHasInterestedPartyNumber)
 		summaryListDetails.push(getSummaryListItemInterestedPartyNumber(session));
 	if (!userApplicant) summaryListDetails.push(getSummaryListItemSubmittingFor(session));

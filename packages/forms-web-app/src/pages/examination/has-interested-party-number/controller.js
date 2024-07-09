@@ -8,30 +8,25 @@ const {
 				applicant: { route: applicantRoute },
 				checkYourAnswers: { route: checkYourAnswersRoute },
 				hasInterestedPartyNumber,
-				haveYourSay: { route: examinationHaveYourSayRoute },
 				yourInterestedPartyNumber: { route: yourInterestedPartyNumberRoute }
 			}
 		}
 	}
 } = require('../../../routes/config');
-
 const {
-	options: { 1: yesOption, 2: noOption }
-} = hasInterestedPartyNumber;
-
-const pageData = {
-	backLinkUrl: `${examinationHaveYourSayRoute}`,
-	hintHtml:
-		'This is a unique reference number that identifies you as an interested party.<br />You will have been given this number when you registered.',
-	id: hasInterestedPartyNumber.id,
-	options: [hasInterestedPartyNumber.options[1], hasInterestedPartyNumber.options[2]],
-	pageTitle: hasInterestedPartyNumber.name,
-	title: hasInterestedPartyNumber.name
-};
+	getHasInterestedPartyNumberOptions
+} = require('./utils/get-has-interested-party-number-options');
+const { getPageData } = require('./utils/get-page-data');
 
 const view = 'examination/has-interested-party-number/view.njk';
 
 const getHasInterestedPartyNumber = (req, res) => {
+	const { i18n } = req;
+
+	const hasInterestedPartyNumberOptions = getHasInterestedPartyNumberOptions(i18n);
+
+	const pageData = getPageData(hasInterestedPartyNumberOptions);
+
 	const setPageData = { ...pageData };
 
 	const examinationSessionInterestedPartyNumber =
@@ -40,7 +35,7 @@ const getHasInterestedPartyNumber = (req, res) => {
 		];
 
 	if (examinationSessionInterestedPartyNumber) {
-		const interestedPartyNumberValues = { ...hasInterestedPartyNumber.options };
+		const interestedPartyNumberValues = { ...hasInterestedPartyNumberOptions };
 
 		const updatedInterestedPartyNumberValues = Object.keys(interestedPartyNumberValues).map(
 			(value) => {
@@ -63,6 +58,14 @@ const getHasInterestedPartyNumber = (req, res) => {
 };
 
 const postHasInterestedPartyNumber = (req, res) => {
+	const { i18n } = req;
+
+	const hasInterestedPartyNumberOptions = getHasInterestedPartyNumberOptions(i18n);
+
+	const pageData = getPageData(hasInterestedPartyNumberOptions);
+
+	const { 1: yesOption, 2: noOption } = hasInterestedPartyNumberOptions;
+
 	const { session = {} } = req;
 
 	const examinationSession = session?.[examinationSessionStorage.name];
@@ -86,10 +89,10 @@ const postHasInterestedPartyNumber = (req, res) => {
 
 	if (!hasInterestedPartyNoValue) return res.status(404).render('error/not-found');
 
-	const hasValidValue = Object.keys(hasInterestedPartyNumber.options).find(
+	const hasValidValue = Object.keys(hasInterestedPartyNumberOptions).find(
 		(hasInterestedPartyNumberOption) => {
 			return (
-				hasInterestedPartyNumber.options[hasInterestedPartyNumberOption].value ===
+				hasInterestedPartyNumberOptions[hasInterestedPartyNumberOption].value ===
 				hasInterestedPartyNoValue
 			);
 		}
@@ -100,11 +103,11 @@ const postHasInterestedPartyNumber = (req, res) => {
 	examinationSession[examinationSessionStorage.property.hasInterestedPartyNo] =
 		hasInterestedPartyNoValue;
 
-	if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[1].value) {
+	if (hasInterestedPartyNoValue === yesOption.value) {
 		examinationSession[examinationSessionStorage.property.applicant] = '';
 	}
 
-	if (hasInterestedPartyNoValue === hasInterestedPartyNumber.options[2].value) {
+	if (hasInterestedPartyNoValue === noOption.value) {
 		examinationSession[examinationSessionStorage.property.interestedPartyNumber] = '';
 	}
 
