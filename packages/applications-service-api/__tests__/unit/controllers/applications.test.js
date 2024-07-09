@@ -14,9 +14,9 @@ const mockGetNIApplication =
 
 jest.mock('../../../src/services/application.backoffice.service');
 const getAllApplicationsDownloadService =
-	require('../../../src/services/application.backoffice.service').getAllApplicationsDownload;
+	require('../../../src/services/application.service').getAllApplicationsDownload;
 const getAllApplicationsService =
-	require('../../../src/services/application.backoffice.service').getAllApplications;
+	require('../../../src/services/application.service').getAllApplications;
 describe('getApplication', () => {
 	afterEach(() => mockGetNIApplication.mockClear());
 

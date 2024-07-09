@@ -5,7 +5,7 @@ const {
 	getDocuments,
 	getFilters,
 	getDocumentsByType
-} = require('../../../src/repositories/document.backoffice.repository');
+} = require('../../../src/repositories/document.repository');
 const {
 	BACK_OFFICE_DB_DOCUMENTS,
 	RESPONSE_DOCUMENTS,
@@ -16,7 +16,7 @@ const {
 	fetchBackOfficeDocuments,
 	fetchBackOfficeDocumentFilters,
 	fetchBackOfficeDocumentsByType
-} = require('../../../src/services/document.backoffice.service');
+} = require('../../../src/services/document.service');
 const { mapBackOfficeDocuments, mapFilters } = require('../../../src/utils/document.mapper');
 
 describe('document back office service', () => {

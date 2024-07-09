@@ -18,10 +18,10 @@ const {
 	getRepresentationById: getRepresentationByBORepository,
 	getRepresentations: getRepresentationsBORepository,
 	getFilters: getBOFilters
-} = require('../../../src/repositories/representation.backoffice.repository');
+} = require('../../../src/repositories/representation.repository');
 const {
 	getDocumentsByIds: getDocumentsByIdsBORepository
-} = require('../../../src/repositories/document.backoffice.repository');
+} = require('../../../src/repositories/document.repository');
 const {
 	REPRESENTATION_BACKOFFICE_DATA,
 	REPRESENTATION_BACKOFFICE_RESPONSE,

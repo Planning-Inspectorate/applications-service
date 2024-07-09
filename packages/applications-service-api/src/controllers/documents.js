@@ -1,28 +1,16 @@
 const { StatusCodes } = require('http-status-codes');
 const {
-	fetchNIDocuments,
-	fetchNIDocumentFilters,
-	fetchNIDocumentsByType
-} = require('../services/document.ni.service');
-const {
-	fetchBackOfficeDocuments,
-	fetchBackOfficeDocumentFilters,
-	fetchBackOfficeDocumentsByType
-} = require('../services/document.backoffice.service');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
+	fetchDocuments,
+	fetchDocumentsByType,
+	fetchDocumentFilters
+} = require('../services/document.service');
 
-const getBackOfficeDocuments = (req, res) =>
-	getDocuments(req, res, fetchBackOfficeDocuments, fetchBackOfficeDocumentFilters);
-
-const getNIDocuments = (req, res) =>
-	getDocuments(req, res, fetchNIDocuments, fetchNIDocumentFilters);
-
-const getDocuments = async (req, res, getDocumentsFn, getFiltersFn) => {
+const getDocuments = async (req, res) => {
 	const requestFilters = buildFilters(req);
 
 	const [documents, availableFilters] = await Promise.all([
-		getDocumentsFn(requestFilters),
-		getFiltersFn(requestFilters.caseReference)
+		fetchDocuments(requestFilters),
+		fetchDocumentFilters(requestFilters.caseReference)
 	]);
 
 	const responseBody = {
@@ -52,20 +40,12 @@ const getDocumentByCaseReference = async (req, res) => {
 	const { caseReference } = req.params;
 	let { type } = req.query;
 
-	if (isBackOfficeCaseReference(caseReference)) {
-		const { data } = await fetchBackOfficeDocumentsByType({
-			caseReference,
-			type
-		});
+	const { data } = await fetchDocumentsByType({
+		caseReference,
+		type
+	});
 
-		response = data;
-	} else {
-		const { data } = await fetchNIDocumentsByType({
-			caseReference,
-			type
-		});
-		response = data;
-	}
+	response = data;
 
 	if (!response)
 		return res
@@ -76,7 +56,6 @@ const getDocumentByCaseReference = async (req, res) => {
 };
 
 module.exports = {
-	getNIDocuments,
-	getBackOfficeDocuments,
+	getDocuments,
 	getDocumentByCaseReference
 };

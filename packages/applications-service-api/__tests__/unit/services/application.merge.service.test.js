@@ -8,7 +8,7 @@ const {
 } = require('../../../src/repositories/project.ni.repository');
 const {
 	getAllApplications: getAllBOApplications
-} = require('../../../src/repositories/project.backoffice.repository');
+} = require('../../../src/repositories/project.repository');
 const { mapNIApplicationsToApi } = require('../../../src/utils/application.mapper');
 const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
 const {

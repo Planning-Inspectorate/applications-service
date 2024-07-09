@@ -3,8 +3,7 @@ const httpMocks = require('node-mocks-http');
 jest.mock('../../../src/services/application.backoffice.service');
 
 jest.mock('../../../src/services/application.backoffice.service');
-const mockGetApplication =
-	require('../../../src/services/application.backoffice.service').getApplication;
+const mockGetApplication = require('../../../src/services/application.service').getApplication;
 
 const { getApplication } = require('../../../src/controllers/applications.v2');
 const { APPLICATION_API, APPLICATION_API_V1 } = require('../../__data__/application');

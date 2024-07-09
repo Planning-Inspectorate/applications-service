@@ -1,19 +1,4 @@
-const { Op } = require('sequelize');
-
-const mapNISearchTermToQuery = (searchTerm, keys) => {
-	if (!searchTerm) return {};
-	const terms = searchTerm.split(' ');
-	const mappedTerms = terms.map((term) => ({
-		[Op.or]: keys.map((key) => ({
-			[key]: { [Op.like]: `%${term}%` }
-		}))
-	}));
-	return {
-		[Op.or]: mappedTerms
-	};
-};
-
-const mapBOSearchTermToQuery = (searchTerm, keys) => {
+const mapSearchTermToQuery = (searchTerm, keys) => {
 	if (!searchTerm) return {};
 	const terms = searchTerm.split(' ');
 	const mappedTerms = terms.map((term) => ({
@@ -27,6 +12,5 @@ const mapBOSearchTermToQuery = (searchTerm, keys) => {
 };
 
 module.exports = {
-	mapNISearchTermToQuery,
-	mapBOSearchTermToQuery
+	mapSearchTermToQuery
 };

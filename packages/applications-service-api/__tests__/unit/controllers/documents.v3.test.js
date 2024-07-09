@@ -3,11 +3,9 @@ const { StatusCodes } = require('http-status-codes');
 const {
 	getNIDocuments,
 	getDocumentByCaseReference
-} = require('../../../src/controllers/documents.v3');
+} = require('../../../src/controllers/documents');
 const { RESPONSE_FILTERS, RESPONSE_DOCUMENTS } = require('../../__data__/documents');
-const {
-	fetchBackOfficeDocumentsByType
-} = require('../../../src/services/document.backoffice.service');
+const { fetchBackOfficeDocumentsByType } = require('../../../src/services/document.service');
 const { fetchNIDocumentsByType } = require('../../../src/services/document.ni.service');
 const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 

@@ -1,28 +1,17 @@
 const {
-	getByCaseReference: getBackOfficeApplication,
-	getAllApplications: getAllBOApplicationsRepository
-} = require('../repositories/project.backoffice.repository');
-const { getAllNIApplications } = require('./application.ni.service');
+	getByCaseReference: getApplicationRepository,
+	getAllApplications: getAllApplicationsRepository
+} = require('../repositories/project.repository');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
-const {
-	getAllMergedApplications,
-	getAllMergedApplicationsDownload
-} = require('./application.merge.service');
-const { getNIApplication, getAllNIApplicationsDownload } = require('./application.ni.service');
-const config = require('../lib/config');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const { isEmpty } = require('lodash');
 const {
-	mapNIApplicationToApi,
-	mapBackOfficeApplicationToApi,
-	mapBackOfficeApplicationsToApi,
-	buildApplicationsFiltersFromBOApplications
+	mapApplicationToApi,
+	mapApplicationsToApi,
+	buildApplicationsFiltersFromApplications
 } = require('../utils/application.mapper');
 
 const getApplication = async (caseReference) =>
-	isBackOfficeCaseReference(caseReference)
-		? mapBackOfficeApplicationToApi(await getBackOfficeApplication(caseReference))
-		: mapNIApplicationToApi(await getNIApplication(caseReference));
+	mapApplicationToApi(await getApplicationRepository(caseReference));
 
 const createQueryFilters = (query) => {
 	// Pagination
@@ -72,26 +61,13 @@ const createQueryFilters = (query) => {
 	};
 };
 const getAllApplications = async (query) => {
-	const getApplications = config.backOfficeIntegration.getAllApplications;
-	switch (getApplications) {
-		case 'BO':
-			return getAllBOApplications(query);
-		case 'MERGE':
-			return getAllMergedApplications(query);
-		// NI is the default
-		default:
-			return getAllNIApplications(query);
-	}
-};
-
-const getAllBOApplications = async (query) => {
 	const { pageNo, ...queryOptions } = createQueryFilters(query);
-	const { applications, count } = await getAllBOApplicationsRepository(queryOptions);
+	const { applications, count } = await getAllApplicationsRepository(queryOptions);
 	const { applications: allApplications, count: totalItemsWithoutFilters } =
-		await getAllBOApplicationsRepository();
-	const filters = buildApplicationsFiltersFromBOApplications(allApplications);
+		await getAllApplicationsRepository();
+	const filters = buildApplicationsFiltersFromApplications(allApplications);
 	return {
-		applications: mapBackOfficeApplicationsToApi(applications),
+		applications: mapApplicationsToApi(applications),
 		totalItems: count,
 		totalItemsWithoutFilters,
 		itemsPerPage: queryOptions.size,
@@ -102,23 +78,11 @@ const getAllBOApplications = async (query) => {
 };
 
 const getAllApplicationsDownload = async () => {
-	const getApplications = config.backOfficeIntegration.getAllApplications;
-	switch (getApplications) {
-		case 'BO':
-			return getAllBOApplicationsDownload();
-		case 'MERGE':
-			return getAllMergedApplicationsDownload();
-		// NI is the default
-		default:
-			return getAllNIApplicationsDownload();
-	}
-};
-
-const getAllBOApplicationsDownload = async () => {
-	const { applications } = await getAllBOApplicationsRepository();
-	const mappedToAPIApplications = mapBackOfficeApplicationsToApi(applications);
+	const { applications } = await getAllApplicationsRepository();
+	const mappedToAPIApplications = mapApplicationsToApi(applications);
 	return mapApplicationsToCSV(mappedToAPIApplications);
 };
+
 module.exports = {
 	createQueryFilters,
 	getApplication,

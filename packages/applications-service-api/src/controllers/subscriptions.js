@@ -1,12 +1,12 @@
 const { encrypt, decrypt } = require('../lib/crypto');
 const { sendSubscriptionCreateNotification } = require('../lib/notify');
-const { getApplication } = require('../services/application.backoffice.service');
+const { getApplication } = require('../services/application.service');
 const ApiError = require('../error/apiError');
 const moment = require('moment');
 const {
 	publishCreateNSIPSubscription,
 	publishDeleteNSIPSubscription
-} = require('../services/backoffice.publish.service');
+} = require('../services/publish.service');
 const logger = require('../lib/logger');
 
 const createSubscription = async (req, res) => {

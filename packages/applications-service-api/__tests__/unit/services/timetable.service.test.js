@@ -7,7 +7,7 @@ const {
 } = require('../../__data__/timetables');
 const {
 	getTimetablesByCaseReference: getBackOfficeTimetable
-} = require('../../../src/repositories/timetable.backoffice.repository');
+} = require('../../../src/repositories/timetable.repository');
 const {
 	getTimetablesByCaseReference: getNITimetable
 } = require('../../../src/repositories/timetable.ni.repository');

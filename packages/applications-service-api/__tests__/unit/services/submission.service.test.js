@@ -7,8 +7,8 @@ const {
 	generateRepresentationPDF,
 	uploadSubmissionFileToBlobStorage
 } = require('../../../src/utils/file');
-const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
-const { getApplication } = require('../../../src/services/application.backoffice.service');
+const { publishDeadlineSubmission } = require('../../../src/services/publish.service');
+const { getApplication } = require('../../../src/services/application.service');
 const { sendSubmissionNotification } = require('../../../src/lib/notify');
 const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 

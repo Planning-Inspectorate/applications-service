@@ -2,13 +2,13 @@ const {
 	getApplication,
 	getAllApplications,
 	getAllApplicationsDownload
-} = require('../../../src/services/application.backoffice.service');
+} = require('../../../src/services/application.service');
 const config = require('../../../src/lib/config');
 jest.mock('../../../src/repositories/project.backoffice.repository');
 const {
 	getByCaseReference,
 	getAllApplications: getAllApplicationsRepository
-} = require('../../../src/repositories/project.backoffice.repository');
+} = require('../../../src/repositories/project.repository');
 const {
 	getAllNIApplications,
 	getNIApplication,

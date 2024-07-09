@@ -2,7 +2,7 @@ const {
 	getRepresentationById,
 	getRepresentations,
 	getFilters
-} = require('../../../src/repositories/representation.backoffice.repository');
+} = require('../../../src/repositories/representation.repository');
 const { REPRESENTATION_BACKOFFICE_DATA } = require('../../__data__/representation');
 
 const mockFindFirst = jest.fn();

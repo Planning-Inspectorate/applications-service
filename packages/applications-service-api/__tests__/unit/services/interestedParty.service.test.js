@@ -11,9 +11,7 @@ const {
 } = require('../../../src/services/interestedParty.ni.service');
 
 jest.mock('../../../src/services/backoffice.publish.service');
-const {
-	publishRegisterRepresentation
-} = require('../../../src/services/backoffice.publish.service');
+const { publishRegisterRepresentation } = require('../../../src/services/publish.service');
 
 jest.mock('../../../src/utils/interestedParty.mapper');
 const { mapInterestedParty } = require('../../../src/utils/interestedParty.mapper');
@@ -22,7 +20,7 @@ jest.mock('../../../src/lib/notify');
 const { sendIPRegistrationConfirmationEmailToIP } = require('../../../src/lib/notify');
 
 jest.mock('../../../src/services/application.backoffice.service');
-const { getApplication } = require('../../../src/services/application.backoffice.service');
+const { getApplication } = require('../../../src/services/application.service');
 
 jest.mock('../../../src/utils/date-utils');
 const { getDate } = require('../../../src/utils/date-utils');

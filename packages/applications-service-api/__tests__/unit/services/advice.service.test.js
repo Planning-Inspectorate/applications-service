@@ -9,7 +9,7 @@ const {
 const {
 	getAllAdviceByCaseReference: getAllBackOfficeAdviceBORepository,
 	getAdviceById: getBackOfficeAdviceByIdRepository
-} = require('../../../src/repositories/advice.backoffice.repository');
+} = require('../../../src/repositories/advice.repository');
 const {
 	getAllAdviceByCaseReference: getAllBackOfficeAdviceNIRepository,
 	getAdviceById: getNIAdviceByIdRepository

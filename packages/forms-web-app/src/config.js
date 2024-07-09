@@ -58,7 +58,6 @@ module.exports = {
 		openRegistrationCaseReferences: splitStringToArray(
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
 		),
-		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
 		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true'
 	},
 	featureHideLink: {

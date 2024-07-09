@@ -3,7 +3,7 @@ const { validateRequestWithOpenAPI } = require('../../../src/middleware/validato
 
 describe('routes/documentsV3', () => {
 	beforeEach(() => {
-		require('../../../src/routes/documents.v3');
+		require('../../../src/routes/documents');
 	});
 
 	afterEach(() => {

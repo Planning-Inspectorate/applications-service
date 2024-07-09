@@ -3,7 +3,7 @@ jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/lib/crypto');
 jest.mock('../../../src/services/backoffice.publish.service');
 
-const { getApplication } = require('../../../src/services/application.backoffice.service');
+const { getApplication } = require('../../../src/services/application.service');
 const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify');
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
 const {
@@ -16,7 +16,7 @@ const { when } = require('jest-when');
 const {
 	publishCreateNSIPSubscription,
 	publishDeleteNSIPSubscription
-} = require('../../../src/services/backoffice.publish.service');
+} = require('../../../src/services/publish.service');
 const { APPLICATION_API } = require('../../__data__/application');
 
 describe('subscriptions controller', () => {
