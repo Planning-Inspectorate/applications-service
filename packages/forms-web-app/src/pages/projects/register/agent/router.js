@@ -119,7 +119,7 @@ const {
 } = require('../../../../validators/register/agent/who-representing');
 const {
 	rules: representingNameValidationRules
-} = require('../../../../validators/register/agent/name-person-representing');
+} = require('../../../../validators/register/agent/name-representing');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/shared/telephone-number');
@@ -250,11 +250,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingPersonNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingPersonNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
@@ -263,11 +267,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingOrgNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingOrgNameURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
@@ -276,11 +284,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingHouseholdURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingHouseholdURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,

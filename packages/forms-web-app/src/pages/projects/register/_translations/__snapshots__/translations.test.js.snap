@@ -148,6 +148,15 @@ exports[`pages/cookies/_translations should return the correct English translati
     "hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>",
     "pageHeading": "What is your full name?",
   },
+  "nameHouseholdRepresenting": {
+    "pageHeading": "What is the name of the household you are representing?",
+  },
+  "nameOrganisationRepresenting": {
+    "pageHeading": "What is the full name of the organisation or charity that you are representing?",
+  },
+  "namePersonRepresenting": {
+    "pageHeading": "What is the full name of the person you are representing?",
+  },
   "number": {
     "hint": "We will use your phone number to contact you about the project if we cannot reach you by email. We will not publish your telephone number.",
     "pageHeading": "What is your telephone number?",
@@ -172,6 +181,18 @@ exports[`pages/cookies/_translations should return the correct English translati
     "jobTitleOrRole": {
       "empty": "Enter your job title or volunteer role",
       "length": "Your job title or volunteer role must be 64 characters or less",
+    },
+    "nameHouseholdRepresenting": {
+      "empty": "Enter the name of the household you are representing",
+      "length": "Full name of the household you are representing must be between 3 and 64 characters",
+    },
+    "nameOrganisationRepresenting": {
+      "empty": "Enter the full name of the organisation you are representing",
+      "length": "Full name of the organisation you are representing must be between 3 and 64 characters",
+    },
+    "namePersonRepresenting": {
+      "empty": "Enter the full name of the person you are representing",
+      "length": "Full name of the person you are representing must be between 3 and 64 characters",
     },
     "organisationName": {
       "empty": "Enter the name of the organisation you work for",
@@ -347,6 +368,15 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "hint": "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>",
     "pageHeading": "Beth yw'ch enw llawn?",
   },
+  "nameHouseholdRepresenting": {
+    "pageHeading": "Beth yw enw'r aelwyd rydych chi'n ei chynrychioli?",
+  },
+  "nameOrganisationRepresenting": {
+    "pageHeading": "Beth yw enw llawn y sefydliad neu'r elusen rydych chi'n ei gynrychioli/chynrychioli?",
+  },
+  "namePersonRepresenting": {
+    "pageHeading": "Beth yw enw llawn yr unigolyn rydych chi'n ei gynrychioli?",
+  },
   "number": {
     "hint": "Byddwn yn defnyddio'ch rhif ffôn i gysylltu â chi ynglŷn â'r prosiect os na allwn gysylltu â chi trwy e-bost. Ni fyddwn yn cyhoeddi eich rhif ffôn.",
     "pageHeading": "Beth yw'ch rhif ffôn?",
@@ -371,6 +401,18 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "jobTitleOrRole": {
       "empty": "Nodwch deitl eich swydd neu'ch rôl wirfoddoli",
       "length": "Mae'n rhaid i deitl eich swydd neu'ch rôl wirfoddoli gynnwys 64 o nodau neu lai",
+    },
+    "nameHouseholdRepresenting": {
+      "empty": "Enter the name of the household you are representing",
+      "length": "Full name of the household you are representing must be between 3 and 64 characters",
+    },
+    "nameOrganisationRepresenting": {
+      "empty": "Enter the full name of the organisation you are representing",
+      "length": "Full name of the organisation you are representing must be between 3 and 64 characters",
+    },
+    "namePersonRepresenting": {
+      "empty": "Nodwch enw llawn yr unigolyn rydych chi'n ei gynrychioli",
+      "length": "Mae'n rhaid i enw llawn yr unigolyn rydych chi'n ei gynrychioli gynnwys rhwng 3 a 64 o nodau",
     },
     "organisationName": {
       "empty": "Nodwch enw'r sefydliad rydych yn gweithio iddo",

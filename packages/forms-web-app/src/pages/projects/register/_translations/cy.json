@@ -61,6 +61,15 @@
 		"pageHeading": "Beth yw'ch enw llawn?",
 		"hint": "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>"
 	},
+	"namePersonRepresenting": {
+		"pageHeading": "Beth yw enw llawn yr unigolyn rydych chi'n ei gynrychioli?"
+	},
+	"nameOrganisationRepresenting": {
+		"pageHeading": "Beth yw enw llawn y sefydliad neu'r elusen rydych chi'n ei gynrychioli/chynrychioli?"
+	},
+	"nameHouseholdRepresenting": {
+		"pageHeading": "Beth yw enw'r aelwyd rydych chi'n ei chynrychioli?"
+	},
 	"organisationName": {
 		"pageHeading": "Beth yw enw'r sefydliad rydych yn gweithio iddo?",
 		"hint": "Byddwn yn cyhoeddi enw eich sefydliad, enw eich cleient a'i sylwadau ar y wefan.",
@@ -191,6 +200,18 @@
 		},
 		"whoRepresenting": {
 			"empty": "Dewiswch bwy rydych chi'n ei gynrychioli"
+		},
+		"namePersonRepresenting": {
+			"empty": "Nodwch enw llawn yr unigolyn rydych chi'n ei gynrychioli",
+			"length": "Mae'n rhaid i enw llawn yr unigolyn rydych chi'n ei gynrychioli gynnwys rhwng 3 a 64 o nodau"
+		},
+		"nameOrganisationRepresenting": {
+			"empty": "Enter the full name of the organisation you are representing",
+			"length": "Full name of the organisation you are representing must be between 3 and 64 characters"
+		},
+		"nameHouseholdRepresenting": {
+			"empty": "Enter the name of the household you are representing",
+			"length": "Full name of the household you are representing must be between 3 and 64 characters"
 		}
 	}
 }

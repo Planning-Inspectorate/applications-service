@@ -73,7 +73,7 @@ const {
 } = require('../../../../validators/register/agent/who-representing');
 const {
 	rules: representingNameValidationRules
-} = require('../../../../validators/register/agent/name-person-representing');
+} = require('../../../../validators/register/agent/name-representing');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/shared/telephone-number');
@@ -126,7 +126,7 @@ jest.mock('../../../../validators/register/agent/who-representing', () => {
 		rules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/agent/name-person-representing', () => {
+jest.mock('../../../../validators/register/agent/name-representing', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -272,11 +272,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-person-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentRepresentingNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-person-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				representingNameValidationRules(),
 				validationErrorHandler,
@@ -285,11 +289,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-organisation-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentRepresentingNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-organisation-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				representingNameValidationRules(),
 				validationErrorHandler,
@@ -298,11 +306,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-household-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentRepresentingNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/name-household-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				representingNameValidationRules(),
 				validationErrorHandler,

@@ -61,6 +61,15 @@
 		"pageHeading": "What is your full name?",
 		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
 	},
+	"namePersonRepresenting": {
+		"pageHeading": "What is the full name of the person you are representing?"
+	},
+	"nameOrganisationRepresenting": {
+		"pageHeading": "What is the full name of the organisation or charity that you are representing?"
+	},
+	"nameHouseholdRepresenting": {
+		"pageHeading": "What is the name of the household you are representing?"
+	},
 	"organisationName": {
 		"pageHeading": "What is the name of the organisation you work for?",
 		"hint": "We will publish your organisation name, your client's name and their comments on the website.",
@@ -191,6 +200,18 @@
 		},
 		"whoRepresenting": {
 			"empty": "Select who you are representing"
+		},
+		"namePersonRepresenting": {
+			"empty": "Enter the full name of the person you are representing",
+			"length": "Full name of the person you are representing must be between 3 and 64 characters"
+		},
+		"nameOrganisationRepresenting": {
+			"empty": "Enter the full name of the organisation you are representing",
+			"length": "Full name of the organisation you are representing must be between 3 and 64 characters"
+		},
+		"nameHouseholdRepresenting": {
+			"empty": "Enter the name of the household you are representing",
+			"length": "Full name of the household you are representing must be between 3 and 64 characters"
 		}
 	}
 }
