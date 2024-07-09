@@ -2,16 +2,13 @@ const { getDeadlineDetailsHasInterestedPartyNumber } = require('../../../_sessio
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
 const { getSelectedOptionText } = require('./helpers');
 const {
-	routesConfig: {
-		examination: {
-			pages: { hasInterestedPartyNumber }
-		}
-	}
-} = require('../../../../../routes/config');
+	getHasInterestedPartyNumberOptions
+} = require('../../../has-interested-party-number/utils/get-has-interested-party-number-options');
 
-const getSummaryListItemHasInterestedPartyNumber = (session) => {
+const getSummaryListItemHasInterestedPartyNumber = (session, i18n) => {
+	const hasInterestedPartyNumberOptions = getHasInterestedPartyNumberOptions(i18n);
 	const hasInterestedPartyNumberText = getSelectedOptionText(
-		hasInterestedPartyNumber.options,
+		hasInterestedPartyNumberOptions,
 		getDeadlineDetailsHasInterestedPartyNumber(session)
 	);
 	if (!hasInterestedPartyNumberText)

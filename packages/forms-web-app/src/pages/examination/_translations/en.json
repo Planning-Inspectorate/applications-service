@@ -1,0 +1,39 @@
+{
+	"hasInterestedPartyNumber": {
+		"title1": "Do you have an interested party reference number?",
+		"paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
+		"errorMessage1": "Select yes if you have an interested party reference number"
+	},
+	"haveYourSay": {
+		"common": {
+			"title1": "Have your say on an application"
+		},
+		"deadlinesOpen": {
+			"phrase1": "Use this service to have your say about the",
+			"phrase2": "at the examination stage.",
+			"paragraph1": "We'll ask for your personal details and your examination comments about this project.",
+			"heading1": "Before you start",
+			"paragraph2": "If you're an individual and have registered as an interested party",
+			"paragraph3": "You'll need your:",
+			"listItem1": "interested party number",
+			"listItem2": "email address",
+			"listItem3": "documents to support your comments if you plan to upload them",
+			"paragraph4": "If you have not registered as an interested party, we'll ask you for your personal details and documents to support your comments if you plan to upload them.",
+			"paragraph5": "If you're submitting comments as an organisation you work for",
+			"paragraph6": "You'll need your organisation's:",
+			"listItem4": "name",
+			"listItem5": "interested party number",
+			"listItem6": "email address",
+			"listItem7": "supporting documents if you plan to upload your documents"
+		},
+		"noOpenDeadlines": {
+			"title1": "No Deadlines - Have your say on an application",
+			"paragraph1": "You cannot submit anything as there are no open deadlines."
+		}
+	},
+	"yourInterestedPartyNumber": {
+		"pageTitle1": "What's your interested party reference number?",
+		"errorMessage1": "Enter your interested party number",
+		"errorMessage2": "Your interested party number must be between 3 and 20 characters"
+	}
+}

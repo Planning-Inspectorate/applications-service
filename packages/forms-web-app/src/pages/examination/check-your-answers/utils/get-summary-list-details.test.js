@@ -12,6 +12,12 @@ const {
 	getUserHasInterestedPartyNumber,
 	isUserApplicant
 } = require('../../_session/deadline/helpers');
+const { mockI18n } = require('../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN
+});
 
 jest.mock('./summary-list-item', () => ({
 	getSummaryListItemHasInterestedPartyNumber: jest.fn(),
@@ -29,7 +35,8 @@ jest.mock('../../_session/deadline/helpers', () => ({
 describe('controllers/examination/check-your-answers/utils/get-summary-list-details', () => {
 	describe('#getSummaryListDetails', () => {
 		const req = {
-			session: { mockSession: 'mock session' }
+			session: { mockSession: 'mock session' },
+			i18n
 		};
 		const mockSummaryListItemHasInterestedPartyNumber = {
 			mockHasInterestedPartyNumber: 'mock has interested party number'
@@ -60,10 +67,13 @@ describe('controllers/examination/check-your-answers/utils/get-summary-list-deta
 				beforeEach(() => {
 					getUserHasInterestedPartyNumber.mockReturnValue(true);
 					isUserApplicant.mockReturnValue(false);
-					result = getSummaryListDetails(req.session);
+					result = getSummaryListDetails(req.session, req.i18n);
 				});
 				it('should call the functions', () => {
-					expect(getSummaryListItemHasInterestedPartyNumber).toHaveBeenCalledWith(req.session);
+					expect(getSummaryListItemHasInterestedPartyNumber).toHaveBeenCalledWith(
+						req.session,
+						req.i18n
+					);
 					expect(getSummaryListItemInterestedPartyNumber).toHaveBeenCalledWith(req.session);
 					expect(getSummaryListItemSubmittingFor).toHaveBeenCalledWith(req.session);
 					expect(getSummaryListName).toHaveBeenCalledWith(req.session);
@@ -84,10 +94,13 @@ describe('controllers/examination/check-your-answers/utils/get-summary-list-deta
 				beforeEach(() => {
 					getUserHasInterestedPartyNumber.mockReturnValue(false);
 					isUserApplicant.mockReturnValue(true);
-					result = getSummaryListDetails(req.session);
+					result = getSummaryListDetails(req.session, req.i18n);
 				});
 				it('should call the functions', () => {
-					expect(getSummaryListItemHasInterestedPartyNumber).toHaveBeenCalledWith(req.session);
+					expect(getSummaryListItemHasInterestedPartyNumber).toHaveBeenCalledWith(
+						req.session,
+						req.i18n
+					);
 					expect(getSummaryListApplicant).toHaveBeenCalledWith(req.session);
 					expect(getSummaryListItemEmail).toHaveBeenCalledWith(req.session);
 				});

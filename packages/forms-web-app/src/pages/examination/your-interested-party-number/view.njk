@@ -4,10 +4,12 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
+{% set pageTitle = t('examination.yourInterestedPartyNumber.pageTitle1') %}
+
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t('common.thereIsAProblem'),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
@@ -18,7 +20,7 @@
 				{{ govukInput({
 					attributes: { "data-cy": id },
 					label: {
-							text: title,
+							text: t('examination.yourInterestedPartyNumber.pageTitle1'),
 							classes: "govuk-label--l",
 							isPageHeading: true
 					},
@@ -33,7 +35,7 @@
 
 				{{ govukButton({
 					attributes: { "data-cy": "button-submit-and-continue"},
-					text: "Continue",
+					text: t('common.continue'),
 					type: "Submit"
 				}) }}
 			</form>

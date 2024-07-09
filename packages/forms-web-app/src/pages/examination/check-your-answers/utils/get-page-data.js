@@ -9,13 +9,13 @@ const {
 	}
 } = require('../../../../routes/config');
 
-const getPageData = (session) => {
+const getPageData = (session, i18n) => {
 	return {
 		backLinkUrl: `${addAnotherDeadlineItem.route}`,
 		deadlineTitle: getDeadlineTitle(session),
 		nextPageUrl: `${processSubmission.route}`,
 		pageTitle: checkYourAnswers.name,
-		summaryListDetails: getSummaryListDetails(session),
+		summaryListDetails: getSummaryListDetails(session, i18n),
 		summaryListDetailsTitle: 'Your details',
 		summaryListSubmissionItems: getSummaryListSubmissionItems(session),
 		summaryListSubmissionItemsTitle: 'Your submissions',

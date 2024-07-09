@@ -28,7 +28,8 @@ exports[`locales/common should return the correct English common translations 1`
   "hideAllSteps": "Hide all steps",
   "month": "Month",
   "next": "Next",
-  "no": "No",
+  "no1": "No",
+  "no2": "No",
   "open": "Open",
   "partOf": "Part of",
   "pinsContactDetails": {
@@ -84,7 +85,8 @@ exports[`locales/common should return the correct English common translations 1`
     },
   },
   "year": "Year",
-  "yes": "Yes",
+  "yes1": "Yes",
+  "yes2": "Yes",
 }
 `;
 
@@ -116,7 +118,8 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "hideAllSteps": "Cuddio pob cam",
   "month": "Mis",
   "next": "Nesaf",
-  "no": "Nac ydw",
+  "no1": "Nac ydw",
+  "no2": "Nac oes",
   "open": "Agor",
   "partOf": "Rhan o",
   "pinsContactDetails": {
@@ -172,6 +175,7 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
     },
   },
   "year": "Blwyddyn",
-  "yes": "Ydw",
+  "yes1": "Ydw",
+  "yes2": "Oes",
 }
 `;

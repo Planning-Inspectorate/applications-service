@@ -24,7 +24,8 @@
 	"hideAllSteps": "Cuddio pob cam",
 	"month": "Mis",
 	"next": "Nesaf",
-	"no": "Nac ydw",
+	"no1": "Nac ydw",
+	"no2": "Nac oes",
 	"open": "Agor",
 	"partOf": "Rhan o",
 	"pinsContactDetails": {
@@ -79,7 +80,8 @@
 		}
 	},
 	"year": "Blwyddyn",
-	"yes": "Ydw",
+	"yes1": "Ydw",
+	"yes2": "Oes",
 	"telephone": "Rhif ffôn",
 	"email": "E-bost"
 }
