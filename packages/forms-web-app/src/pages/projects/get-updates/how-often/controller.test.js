@@ -28,8 +28,6 @@ describe('projects/get-updates/how-often/controller', () => {
 				getGetUpdatesHowOftenController(req, res, next);
 			});
 
-			console.log('test:>>', i18n);
-
 			it('should render the page', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/get-updates/how-often/view.njk', {
 					backLinkUrl: '/projects/mock-case-ref/get-updates/email',
