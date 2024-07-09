@@ -31,6 +31,16 @@
 			"paragraph1": "You cannot submit anything as there are no open deadlines."
 		}
 	},
+	"submittingFor": {
+		"title1": "Who are you making the submission for?",
+		"options": {
+			"agent": "On behalf of another person, a household or another organisation I do not work for",
+			"myself": "Myself",
+			"organisation": "An organisation I work for"
+		},
+		"hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
+		"errorMessage1": "Select who you are submitting for"
+	},
 	"yourInterestedPartyNumber": {
 		"pageTitle1": "What's your interested party reference number?",
 		"errorMessage1": "Enter your interested party number",

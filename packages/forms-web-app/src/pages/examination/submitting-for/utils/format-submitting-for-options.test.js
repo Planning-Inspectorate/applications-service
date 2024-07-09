@@ -1,18 +1,23 @@
-const { getSubmittingForOptions } = require('./get-submitting-for-options');
+const { formatSubmittingForOptions } = require('./format-submitting-for-options');
 
-const { getUserIsSubmittingFor } = require('../../_session/deadline/helpers');
+const { mockI18n } = require('../../../_mocks/i18n');
 
-jest.mock('../../_session/deadline/helpers', () => ({
-	getUserIsSubmittingFor: jest.fn()
-}));
+const examinationTranslations__EN = require('../../_translations/en.json');
 
-describe('examination/submitting-for/utils/get-back-link-url', () => {
-	describe('#getSubmittingForOptions', () => {
+const i18n = mockI18n({
+	examination: examinationTranslations__EN
+});
+
+describe('pages/examination/submitting-for/utils/format-submitting-for-options', () => {
+	describe('#formatSubmittingForOptions', () => {
 		describe('When getting the options for the submitting for page', () => {
 			describe('and the user has not previously selected an option', () => {
 				let result;
+
+				const mockSession = { examination: {} };
+
 				beforeEach(() => {
-					result = getSubmittingForOptions();
+					result = formatSubmittingForOptions(i18n, mockSession);
 				});
 				it('should return the options for the submitting for page', () => {
 					expect(result).toEqual([
@@ -33,9 +38,11 @@ describe('examination/submitting-for/utils/get-back-link-url', () => {
 			});
 			describe('and the user has previously selected an option', () => {
 				let result;
+
+				const mockSession = { examination: { submittingFor: 'myself' } };
+
 				beforeEach(() => {
-					getUserIsSubmittingFor.mockReturnValue('myself');
-					result = getSubmittingForOptions();
+					result = formatSubmittingForOptions(i18n, mockSession);
 				});
 				it('should return the options for the submitting for page with the selected option checked', () => {
 					expect(result).toEqual([

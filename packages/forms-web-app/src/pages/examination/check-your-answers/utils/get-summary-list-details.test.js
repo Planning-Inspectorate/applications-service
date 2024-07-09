@@ -32,7 +32,7 @@ jest.mock('../../_session/deadline/helpers', () => ({
 	isUserApplicant: jest.fn()
 }));
 
-describe('controllers/examination/check-your-answers/utils/get-summary-list-details', () => {
+describe('pages/examination/check-your-answers/utils/get-summary-list-details', () => {
 	describe('#getSummaryListDetails', () => {
 		const req = {
 			session: { mockSession: 'mock session' },
@@ -75,7 +75,7 @@ describe('controllers/examination/check-your-answers/utils/get-summary-list-deta
 						req.i18n
 					);
 					expect(getSummaryListItemInterestedPartyNumber).toHaveBeenCalledWith(req.session);
-					expect(getSummaryListItemSubmittingFor).toHaveBeenCalledWith(req.session);
+					expect(getSummaryListItemSubmittingFor).toHaveBeenCalledWith(req.session, req.i18n);
 					expect(getSummaryListName).toHaveBeenCalledWith(req.session);
 					expect(getSummaryListItemEmail).toHaveBeenCalledWith(req.session);
 				});

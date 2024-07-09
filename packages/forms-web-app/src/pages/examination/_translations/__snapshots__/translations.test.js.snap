@@ -34,6 +34,16 @@ exports[`pages/examination/_translations should return the correct English trans
       "title1": "No Deadlines - Have your say on an application",
     },
   },
+  "submittingFor": {
+    "errorMessage1": "Select who you are submitting for",
+    "hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
+    "options": {
+      "agent": "On behalf of another person, a household or another organisation I do not work for",
+      "myself": "Myself",
+      "organisation": "An organisation I work for",
+    },
+    "title1": "Who are you making the submission for?",
+  },
   "yourInterestedPartyNumber": {
     "errorMessage1": "Enter your interested party number",
     "errorMessage2": "Your interested party number must be between 3 and 20 characters",
@@ -75,6 +85,16 @@ exports[`pages/examination/_translations should return the correct Welsh transla
       "paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor.",
       "title1": "Dim Dyddiadau Cau - Lleisio'ch barn am gais",
     },
+  },
+  "submittingFor": {
+    "errorMessage1": "Dewiswch ar ran pwy rydych chi'n cyflwyno",
+    "hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
+    "options": {
+      "agent": "Ar ran unigolyn arall, aelwyd neu sefydliad arall nad wyf yn gweithio iddo",
+      "myself": "Fi fy hun",
+      "organisation": "Sefydliad rwyf yn gweithio iddo",
+    },
+    "title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",
   },
   "yourInterestedPartyNumber": {
     "errorMessage1": "Nodwch eich rhif parti â buddiant",

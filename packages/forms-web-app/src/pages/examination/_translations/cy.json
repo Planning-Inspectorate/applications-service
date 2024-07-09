@@ -31,6 +31,16 @@
 			"paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor."
 		}
 	},
+	"submittingFor": {
+		"title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",
+		"options": {
+			"agent": "Ar ran unigolyn arall, aelwyd neu sefydliad arall nad wyf yn gweithio iddo",
+			"myself": "Fi fy hun",
+			"organisation": "Sefydliad rwyf yn gweithio iddo"
+		},
+		"hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
+		"errorMessage1": "Dewiswch ar ran pwy rydych chi'n cyflwyno"
+	},
 	"yourInterestedPartyNumber": {
 		"pageTitle1": "Beth yw'ch rhif cyfeirnod parti â buddiant?",
 		"errorMessage1": "Nodwch eich rhif parti â buddiant",

@@ -6,22 +6,23 @@ const { getSummaryListItem } = require('../../../../../controllers/utils/get-sum
 const {
 	routesConfig: {
 		examination: {
-			pages: { submittingFor, nameMyself, nameAgent, nameOrganisation }
+			pages: { nameMyself, nameAgent, nameOrganisation }
 		}
 	}
 } = require('../../../../../routes/config');
 const { editQuery } = require('../../../../../controllers/utils/queryMode');
+const { submittingForOptionValues } = require('../../../submitting-for/config');
 
 const getSummaryListItemName = (session) => {
 	switch (getDeadlineDetailsSubmittingFor(session)) {
-		case submittingFor.options[1].value:
+		case submittingForOptionValues[1]:
 			return { name: 'Full name', url: `${nameMyself.route}${editQuery}` };
-		case submittingFor.options[2].value:
+		case submittingForOptionValues[2]:
 			return {
 				name: `Organisation's name`,
 				url: `${nameOrganisation.route}${editQuery}`
 			};
-		case submittingFor.options[3].value:
+		case submittingForOptionValues[3]:
 			return { name: 'Submitting on behalf of', url: `${nameAgent.route}${editQuery}` };
 		default:
 			throw new Error('Summary list item name can not be assigned');
