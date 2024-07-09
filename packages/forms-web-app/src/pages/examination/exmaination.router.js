@@ -12,6 +12,8 @@ const {
 	validateYourInterestedPartyNumber
 } = require('../../validators/examination/your-interested-party-number');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
+
 const { forwardView } = require('../../middleware/forward-view');
 const {
 	unsetEditModeSubmissionItemId
@@ -268,7 +270,7 @@ router.post(`/${selectFile.route}`, postSelectFile);
 router.get(`/${submittingFor.route}`, getSubmittingFor);
 router.post(
 	`/${submittingFor.route}`,
-	validateNotEmpty(submittingFor),
+	validateSubmittingFor(),
 	validationErrorHandler,
 	postSubmittingFor
 );

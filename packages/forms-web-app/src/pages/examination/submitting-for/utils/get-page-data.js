@@ -1,5 +1,5 @@
 const { getBackLinkUrl } = require('./get-back-link-url');
-const { getSubmittingForOptions } = require('./get-submitting-for-options');
+const { formatSubmittingForOptions } = require('./format-submitting-for-options');
 const { getDeadlineDetailsInterestedPartyNumberOrDefault } = require('../../_session/deadline');
 
 const {
@@ -10,13 +10,11 @@ const {
 	}
 } = require('../../../../routes/config');
 
-const getPageData = (query, session) => ({
+const getPageData = (i18n, query, session) => ({
 	backLinkUrl: getBackLinkUrl(query, session),
 	id: submittingFor.id,
 	interestedPartyNumber: getDeadlineDetailsInterestedPartyNumberOrDefault(session),
-	options: getSubmittingForOptions(session),
-	pageTitle: submittingFor.name,
-	title: submittingFor.name
+	options: formatSubmittingForOptions(i18n, session)
 });
 
 module.exports = { getPageData };

@@ -3,6 +3,8 @@ const { getSummaryListItemSubmittingFor } = require('./submitting-for');
 const { getDeadlineDetailsSubmittingFor } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
 const { getSelectedOptionText } = require('./helpers');
+const { mockI18n } = require('../../../../_mocks/i18n');
+const examinationTranslations__EN = require('../../../_translations/en.json');
 
 jest.mock('../../../_session/deadline', () => ({
 	getDeadlineDetailsSubmittingFor: jest.fn()
@@ -14,19 +16,25 @@ jest.mock('./helpers', () => ({
 	getSelectedOptionText: jest.fn()
 }));
 
-describe('controllers/examination/check-your-answers/utils/summary-list-item/submitting-for', () => {
+const i18n = mockI18n({
+	examination: examinationTranslations__EN
+});
+
+describe('pages/examination/check-your-answers/utils/summary-list-item/submitting-for', () => {
 	describe('#getSummaryListItemSubmittingFor', () => {
 		const req = {
+			i18n,
 			session: { mockSession: 'mock session' }
 		};
 		describe('When getting the submitting for summary list item for the check your answers page', () => {
 			describe('and the submitting for value retrived from the session is NOT myself, organisation or agent', () => {
 				it('should throw an error', () => {
-					expect(() => getSummaryListItemSubmittingFor(req.session)).toThrowError(
+					expect(() => getSummaryListItemSubmittingFor(req.session, req.i18n)).toThrowError(
 						'Submitting for text is undefined'
 					);
 				});
 			});
+
 			describe('and the submitting for value retrived from the session is myself, organisation or agent', () => {
 				let result;
 				const mockSubmittingFor = 'myself/organisation/agent';
@@ -38,7 +46,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/sub
 					getDeadlineDetailsSubmittingFor.mockReturnValue(mockSubmittingFor);
 					getSelectedOptionText.mockReturnValue(mockSubmittingForText);
 					getSummaryListItem.mockReturnValue(mockSummaryListItem);
-					result = getSummaryListItemSubmittingFor(req.session);
+					result = getSummaryListItemSubmittingFor(req.session, req.i18n);
 				});
 				it('should use the submitting for options to get the submitting for option text', () => {
 					expect(getSelectedOptionText).toHaveBeenCalledWith(

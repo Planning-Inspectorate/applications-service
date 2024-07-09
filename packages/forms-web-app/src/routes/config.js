@@ -279,29 +279,7 @@ const routesConfig = {
 			},
 			submittingFor: {
 				id: 'examination-submitting-for',
-				errorMessage: 'Select who you are submitting for',
-				name: 'Who are you making the submission for?',
-				onError: {
-					message: {
-						isEmpty: 'Select who you are submitting for'
-					}
-				},
-				options: {
-					1: {
-						value: 'myself',
-						text: 'Myself'
-					},
-					2: {
-						value: 'organisation',
-						text: 'An organisation I work for'
-					},
-					3: {
-						value: 'agent',
-						text: 'On behalf of another person, a household or another organisation I do not work for'
-					}
-				},
-				route: 'who-are-you-submitting-for',
-				view: 'pages/examination/submitting-for'
+				route: 'who-are-you-submitting-for'
 			},
 			yourInterestedPartyNumber: {
 				id: 'examination-your-interested-party-number',
