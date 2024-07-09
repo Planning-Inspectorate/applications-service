@@ -48,13 +48,13 @@
 
 				{% if applications | length %}
 
-					{% if featureFlag.allowApplicationsPagination == false %}
+					{% if featureFlag.allowApplicationsPagination == true %}
 						{% include "./includes/results-per-page.njk" %}
 					{% endif %}
 
 					{% include "./includes/projects.njk" %}
 
-					{% if featureFlag.allowApplicationsPagination == false %}
+					{% if featureFlag.allowApplicationsPagination == true %}
 						{% include "./includes/pagination.njk" %}
 					{% endif %}
 
