@@ -233,11 +233,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingWhoURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingWhoController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingWhoURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingWhoValidationRules(),
 	validationErrorHandler,

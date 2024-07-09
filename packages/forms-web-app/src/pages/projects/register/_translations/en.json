@@ -51,6 +51,12 @@
 		"organisation": "Registering for an organisation",
 		"agent": "Registering on behalf of someone else"
 	},
+	"whoRepresenting": {
+		"pageHeading": "Who are you representing?",
+		"option1": "A person",
+		"option2": "An organisation or charity I do not work for",
+		"option3": "A household"
+	},
 	"name": {
 		"pageHeading": "What is your full name?",
 		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
@@ -182,6 +188,9 @@
 		"jobTitleOrRole": {
 			"empty": "Enter your job title or volunteer role",
 			"length": "Your job title or volunteer role must be 64 characters or less"
+		},
+		"whoRepresenting": {
+			"empty": "Select who you are representing"
 		}
 	}
 }

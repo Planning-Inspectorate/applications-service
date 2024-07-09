@@ -255,11 +255,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/who-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentRepresentingWhoController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/who-representing',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				representingWhoValidationRules(),
 				validationErrorHandler,

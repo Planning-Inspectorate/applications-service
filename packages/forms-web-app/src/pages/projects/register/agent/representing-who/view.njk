@@ -4,11 +4,14 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
-{% set title = "Who are you representing? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+{% set pageHeading = t('register.whoRepresenting.pageHeading') %}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.organisation') %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title = "Error: " + title %}
+    {% set title = t('common.error') + ": " + title %}
   {% endif %}
 
   {{ title }}
@@ -19,7 +22,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% if errors %}
         {{ govukErrorSummary({
-          titleText: "There is a problem",
+          titleText: t('common.thereIsAProblem'),
           errorList: errorSummary
         }) }}
       {% endif %}
@@ -33,7 +36,7 @@
           },
           fieldset: {
             legend: {
-              text: "Who are you representing?",
+              text: pageHeading,
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
@@ -41,19 +44,19 @@
           items: [
             {
               value: "person",
-              text: "A person",
+              text: t('register.whoRepresenting.option1'),
               attributes: { "data-cy": "answer-person"},
               checked: representing === "person"
             },
             {
               value: "organisation",
-              text: "An organisation or charity I do not work for",
+              text: t('register.whoRepresenting.option2'),
               attributes: { "data-cy": "answer-organisation"},
               checked: representing === "organisation"
             },
             {
               value: "family",
-              text: "A household",
+              text: t('register.whoRepresenting.option3'),
               attributes: { "data-cy": "answer-family"},
               checked: representing === "family"
             }
@@ -61,7 +64,7 @@
         }) }}
 
         {{ govukButton({
-          text: "Continue",
+          text: t('common.continue'),
           type: "submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}

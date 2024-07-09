@@ -181,11 +181,20 @@ exports[`pages/cookies/_translations should return the correct English translati
       "empty": "Enter your organisation or charity name",
       "length": "Name of your organisation or charity name must be 255 characters or less",
     },
+    "whoRepresenting": {
+      "empty": "Select who you are representing",
+    },
   },
   "whoRegisteringFor": {
     "agent": "Registering on behalf of someone else",
     "myself": "Registering for myself",
     "organisation": "Registering for an organisation",
+  },
+  "whoRepresenting": {
+    "option1": "A person",
+    "option2": "An organisation or charity I do not work for",
+    "option3": "A household",
+    "pageHeading": "Who are you representing?",
   },
 }
 `;
@@ -344,7 +353,7 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
   },
   "organisationName": {
     "hint": "Byddwn yn cyhoeddi enw eich sefydliad, enw eich cleient a'i sylwadau ar y wefan.",
-    "linkText1": "I don't work for an organisation",
+    "linkText1": "Dydw i ddim yn gweithio i sefydliad",
     "pageHeading": "Beth yw enw'r sefydliad rydych yn gweithio iddo?",
   },
   "organisationOrCharityName": {
@@ -371,11 +380,20 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
       "empty": "Nodwch enw eich sefydliad neu'ch elusen",
       "length": "Mae'n rhaid i enw eich sefydliad neu'ch elusen gynnwys 255 o nodau neu lai",
     },
+    "whoRepresenting": {
+      "empty": "Dewiswch bwy rydych chi'n ei gynrychioli",
+    },
   },
   "whoRegisteringFor": {
     "agent": "Cofrestru ar ran rhywun arall",
     "myself": "Cofrestru i mi fy hun",
     "organisation": "Cofrestru ar gyfer sefydliad",
+  },
+  "whoRepresenting": {
+    "option1": "Unigolyn",
+    "option2": "Sefydliad neu elusen nad wyf yn gweithio iddo/iddi",
+    "option3": "Aelwyd",
+    "pageHeading": "Pwy ydych chi'n ei gynrychioli? ",
   },
 }
 `;
