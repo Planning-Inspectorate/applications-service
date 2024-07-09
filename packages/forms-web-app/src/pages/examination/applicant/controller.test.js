@@ -1,5 +1,12 @@
 const { getApplicant, postApplicant } = require('./controller');
 const { mockReq, mockRes } = require('../../../../__tests__/unit/mocks');
+const { mockI18n } = require('../../_mocks/i18n');
+
+const commonTranslations__EN = require('../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations__EN
+});
 
 const applicantOptions = {
 	1: {
@@ -16,17 +23,17 @@ const pageData = {
 	backLinkUrl: 'have-an-interested-party-number',
 	id: 'examination-applicant',
 	options: [applicantOptions[1], applicantOptions[2]],
-	pageTitle: 'Are you Mock promoter name?',
-	title: 'Are you Mock promoter name?'
+	projectName: 'Mock promoter name'
 };
 
-describe('examination/applicant', () => {
+describe('pages/examination/applicant/controller', () => {
 	let req;
 	let res;
 
 	beforeEach(() => {
 		req = {
 			...mockReq(),
+			i18n,
 			session: {
 				appData: {
 					ProjectName: 'Test Project Name'

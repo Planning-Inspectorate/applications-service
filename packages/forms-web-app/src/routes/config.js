@@ -12,24 +12,7 @@ const routesConfig = {
 			},
 			applicant: {
 				id: 'examination-applicant',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you are #'
-					}
-				},
-				options: {
-					1: {
-						value: 'yes',
-						text: 'Yes'
-					},
-					2: {
-						value: 'no',
-						text: 'No'
-					}
-				},
-				route: 'are-you-applicant',
-				title: 'Are you #?',
-				view: 'pages/examination/applicant'
+				route: 'are-you-applicant'
 			},
 			checkSubmissionItem: {
 				id: 'examination-check-submission-item',

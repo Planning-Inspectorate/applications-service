@@ -3,6 +3,8 @@ const { getSummaryListApplicant } = require('./applicant');
 const { getDeadlineDetailsApplicant } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
 const { getSelectedOptionText } = require('./helpers');
+const { mockI18n } = require('../../../../_mocks/i18n');
+const commonTranslations__EN = require('../../../../../locales/en/common.json');
 
 jest.mock('../../../_session/deadline', () => ({
 	getDeadlineDetailsApplicant: jest.fn()
@@ -14,15 +16,20 @@ jest.mock('./helpers', () => ({
 	getSelectedOptionText: jest.fn()
 }));
 
-describe('controllers/examination/check-your-answers/utils/summary-list-item/applicant', () => {
+const i18n = mockI18n({
+	common: commonTranslations__EN
+});
+
+describe('pages/examination/check-your-answers/utils/summary-list-item/applicant', () => {
 	describe('#getSummaryListApplicant', () => {
 		const req = {
+			i18n,
 			session: { mockSession: 'mock session' }
 		};
 		describe('When getting the applicant summary list item for the check your answers page', () => {
 			describe('and the applicant value retrived from the session is NOT yes or no', () => {
 				it('should throw an error', () => {
-					expect(() => getSummaryListApplicant(req.session)).toThrowError(
+					expect(() => getSummaryListApplicant(req.session, req.i18n)).toThrowError(
 						'Applicant text is undefined'
 					);
 				});
@@ -38,7 +45,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/app
 					getDeadlineDetailsApplicant.mockReturnValue(mockApplicant);
 					getSelectedOptionText.mockReturnValue(mockApplicantText);
 					getSummaryListItem.mockReturnValue(mockSummaryListItem);
-					result = getSummaryListApplicant(req.session);
+					result = getSummaryListApplicant(req.session, req.i18n);
 				});
 				it('should use the applicant options to get the applicant option text', () => {
 					expect(getSelectedOptionText).toHaveBeenCalledWith(

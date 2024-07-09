@@ -12,6 +12,7 @@ const {
 	validateYourInterestedPartyNumber
 } = require('../../validators/examination/your-interested-party-number');
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
+const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 
 const { forwardView } = require('../../middleware/forward-view');
@@ -113,12 +114,7 @@ const router = express.Router({ mergeParams: true });
 router.use(addCommonTranslationsMiddleware, addExaminationTranslationsMiddleware);
 
 router.get(`/${applicant.route}`, getApplicant);
-router.post(
-	`/${applicant.route}`,
-	validateNotEmpty(applicant),
-	validationErrorHandler,
-	postApplicant
-);
+router.post(`/${applicant.route}`, validateApplicant(), validationErrorHandler, postApplicant);
 
 router.get(`/${checkSubmissionItem.route}`, getCheckSubmissionItem);
 router.post(`/${checkSubmissionItem.route}`, postCheckSubmissionItem);
