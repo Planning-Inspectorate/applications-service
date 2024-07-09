@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/examination/_translations should return the correct English translations 1`] = `
+{
+  "hasInterestedPartyNumber": {
+    "errorMessage1": "Select yes if you have an interested party reference number",
+    "paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
+    "title1": "Do you have an interested party reference number?",
+  },
+  "haveYourSay": {
+    "common": {
+      "title1": "Have your say on an application",
+    },
+    "deadlinesOpen": {
+      "heading1": "Before you start",
+      "listItem1": "interested party number",
+      "listItem2": "email address",
+      "listItem3": "documents to support your comments if you plan to upload them",
+      "listItem4": "name",
+      "listItem5": "interested party number",
+      "listItem6": "email address",
+      "listItem7": "supporting documents if you plan to upload your documents",
+      "paragraph1": "We'll ask for your personal details and your examination comments about this project.",
+      "paragraph2": "If you're an individual and have registered as an interested party",
+      "paragraph3": "You'll need your:",
+      "paragraph4": "If you have not registered as an interested party, we'll ask you for your personal details and documents to support your comments if you plan to upload them.",
+      "paragraph5": "If you're submitting comments as an organisation you work for",
+      "paragraph6": "You'll need your organisation's:",
+      "phrase1": "Use this service to have your say about the",
+      "phrase2": "at the examination stage.",
+    },
+    "noOpenDeadlines": {
+      "paragraph1": "You cannot submit anything as there are no open deadlines.",
+      "title1": "No Deadlines - Have your say on an application",
+    },
+  },
+  "yourInterestedPartyNumber": {
+    "errorMessage1": "Enter your interested party number",
+    "errorMessage2": "Your interested party number must be between 3 and 20 characters",
+    "pageTitle1": "What's your interested party reference number?",
+  },
+}
+`;
+
+exports[`pages/examination/_translations should return the correct Welsh translations 1`] = `
+{
+  "hasInterestedPartyNumber": {
+    "errorMessage1": "Dewiswch 'oes' os oes gennych rif parti â buddiant",
+    "paragraph1": "Rhif cyfeirnod unigryw yw hwn sy'n eich adnabod fel parti â buddiant. Byddwch wedi cael y rhif hwn pan wnaethoch gofrestru.",
+    "title1": "A oes gennych chi rif cyfeirnod parti â buddiant?",
+  },
+  "haveYourSay": {
+    "common": {
+      "title1": "Lleisio'ch barn am gais",
+    },
+    "deadlinesOpen": {
+      "heading1": "Cyn i chi ddechrau",
+      "listItem1": "eich rhif parti â buddiant",
+      "listItem2": "eich cyfeiriad e-bost",
+      "listItem3": "dogfennau i gefnogi'ch sylwadau os ydych yn bwriadu eu lanlwytho",
+      "listItem4": "enw",
+      "listItem5": "rhif parti â buddiant",
+      "listItem6": "cyfeiriad e-bost",
+      "listItem7": "dogfennau ategol os ydych yn bwriadu lanlwytho'ch dogfennau",
+      "paragraph1": "Byddwn yn gofyn am eich manylion personol a'ch sylwadau archwiliad ynglŷn â'r prosiect hwn.",
+      "paragraph2": "Os ydych yn unigolyn ac wedi cofrestru fel parti â buddiant",
+      "paragraph3": "Bydd arnoch angen:",
+      "paragraph4": "Os nad ydych wedi cofrestreu fel parti â buddiant, byddwn yn gofyn am eich manylion personol a dogfennau i gefnogi'ch sylwadau os ydych yn bwriadu eu lanlwytho.",
+      "paragraph5": "Os ydych yn cyflwyno sylwadau fel sefydliad rydych yn gweithio iddo",
+      "paragraph6": "Bydd arnoch angen y canlynol ar gyfer eich sefydliad:",
+      "phrase1": "Defnyddiwch y gwasanaeth hwn i leisio'ch barn am",
+      "phrase2": "yn ystod y cam archwilio.",
+    },
+    "noOpenDeadlines": {
+      "paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor.",
+      "title1": "Dim Dyddiadau Cau - Lleisio'ch barn am gais",
+    },
+  },
+  "yourInterestedPartyNumber": {
+    "errorMessage1": "Nodwch eich rhif parti â buddiant",
+    "errorMessage2": "Mae'n rhaid i'ch rhif parti â buddiant gynnwys rhwng 3 ac 20 o nodau",
+    "pageTitle1": "Beth yw'ch rhif cyfeirnod parti â buddiant?",
+  },
+}
+`;

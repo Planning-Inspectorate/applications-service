@@ -1,5 +1,11 @@
 const { getHasInterestedPartyNumber, postHasInterestedPartyNumber } = require('./controller');
 const { mockReq, mockRes } = require('../../../../__tests__/unit/mocks');
+const { mockI18n } = require('../../_mocks/i18n');
+const commonTranslations_EN = require('../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN
+});
 
 const hasInterestedPartyNumberOptions = {
 	1: {
@@ -14,12 +20,8 @@ const hasInterestedPartyNumberOptions = {
 
 const pageData = {
 	backLinkUrl: 'have-your-say-during-examination',
-	hintHtml:
-		'This is a unique reference number that identifies you as an interested party.<br />You will have been given this number when you registered.',
 	id: 'examination-has-interested-party-number',
-	options: [hasInterestedPartyNumberOptions[1], hasInterestedPartyNumberOptions[2]],
-	pageTitle: 'Do you have an interested party reference number?',
-	title: 'Do you have an interested party reference number?'
+	options: [hasInterestedPartyNumberOptions[1], hasInterestedPartyNumberOptions[2]]
 };
 
 describe('controllers/examination/has-interested-party-number', () => {
@@ -41,7 +43,8 @@ describe('controllers/examination/has-interested-party-number', () => {
 	describe('getHasInterestedPartyNumber', () => {
 		it('should call the correct template: no session', () => {
 			const mockRequest = {
-				...req
+				...req,
+				i18n
 			};
 
 			getHasInterestedPartyNumber(mockRequest, res);
@@ -58,7 +61,8 @@ describe('controllers/examination/has-interested-party-number', () => {
 					examination: {
 						hasInterestedPartyNo: 'yes'
 					}
-				}
+				},
+				i18n
 			};
 
 			const setPageData = { ...pageData };
@@ -96,7 +100,8 @@ describe('controllers/examination/has-interested-party-number', () => {
 				body: {
 					errors: { a: 'b' },
 					errorSummary: [{ text: 'There were errors here', href: '#' }]
-				}
+				},
+				i18n
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
@@ -120,7 +125,8 @@ describe('controllers/examination/has-interested-party-number', () => {
 					examination: {
 						hasInterestedPartyNo: 'yes'
 					}
-				}
+				},
+				i18n
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
@@ -132,7 +138,8 @@ describe('controllers/examination/has-interested-party-number', () => {
 				...req,
 				body: {
 					'examination-has-interested-party-number': 'yes'
-				}
+				},
+				i18n
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);
@@ -144,7 +151,8 @@ describe('controllers/examination/has-interested-party-number', () => {
 				...req,
 				body: {
 					'examination-has-interested-party-number': 'no'
-				}
+				},
+				i18n
 			};
 
 			postHasInterestedPartyNumber(mockRequest, res);

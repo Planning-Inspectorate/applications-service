@@ -11,9 +11,7 @@ const {
 const getPageData = (session, query) => {
 	return {
 		id: yourInterestedPartyNumber.id,
-		backLinkUrl: getBackLinkUrl(query),
-		pageTitle: yourInterestedPartyNumber.name,
-		title: yourInterestedPartyNumber.name
+		backLinkUrl: getBackLinkUrl(query)
 	};
 };
 

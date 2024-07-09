@@ -24,7 +24,8 @@
 	"hideAllSteps": "Hide all steps",
 	"month": "Month",
 	"next": "Next",
-	"no": "No",
+	"no1": "No",
+	"no2": "No",
 	"open": "Open",
 	"partOf": "Part of",
 	"pinsContactDetails": {
@@ -79,7 +80,8 @@
 		}
 	},
 	"year": "Year",
-	"yes": "Yes",
+	"yes1": "Yes",
+	"yes2": "Yes",
 	"telephone": "Telephone",
 	"email": "Email"
 }

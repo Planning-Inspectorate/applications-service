@@ -17,9 +17,7 @@ describe('#getPageData', () => {
 			it('should return the page data', () => {
 				expect(result).toEqual({
 					backLinkUrl: 'back link url',
-					id: 'examination-your-interested-party-number',
-					pageTitle: "What's your interested party reference number?",
-					title: "What's your interested party reference number?"
+					id: 'examination-your-interested-party-number'
 				});
 			});
 		});
