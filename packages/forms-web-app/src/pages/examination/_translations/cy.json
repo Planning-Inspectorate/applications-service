@@ -1,4 +1,8 @@
 {
+	"applicant": {
+		"title1": "A ydych chi'n {{-applicant}}?",
+		"errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}"
+	},
 	"hasInterestedPartyNumber": {
 		"title1": "A oes gennych chi rif cyfeirnod parti â buddiant?",
 		"paragraph1": "Rhif cyfeirnod unigryw yw hwn sy'n eich adnabod fel parti â buddiant. Byddwch wedi cael y rhif hwn pan wnaethoch gofrestru.",

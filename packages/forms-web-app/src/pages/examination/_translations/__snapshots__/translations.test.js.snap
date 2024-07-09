@@ -2,6 +2,10 @@
 
 exports[`pages/examination/_translations should return the correct English translations 1`] = `
 {
+  "applicant": {
+    "errorMessage1": "Select yes if you are {{-applicant}}",
+    "title1": "Are you {{-applicant}}?",
+  },
   "hasInterestedPartyNumber": {
     "errorMessage1": "Select yes if you have an interested party reference number",
     "paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
@@ -54,6 +58,10 @@ exports[`pages/examination/_translations should return the correct English trans
 
 exports[`pages/examination/_translations should return the correct Welsh translations 1`] = `
 {
+  "applicant": {
+    "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
+    "title1": "A ydych chi'n {{-applicant}}?",
+  },
   "hasInterestedPartyNumber": {
     "errorMessage1": "Dewiswch 'oes' os oes gennych rif parti â buddiant",
     "paragraph1": "Rhif cyfeirnod unigryw yw hwn sy'n eich adnabod fel parti â buddiant. Byddwch wedi cael y rhif hwn pan wnaethoch gofrestru.",

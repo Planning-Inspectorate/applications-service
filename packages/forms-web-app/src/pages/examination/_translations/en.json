@@ -1,4 +1,8 @@
 {
+	"applicant": {
+		"title1": "Are you {{-applicant}}?",
+		"errorMessage1": "Select yes if you are {{-applicant}}"
+	},
 	"hasInterestedPartyNumber": {
 		"title1": "Do you have an interested party reference number?",
 		"paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",

@@ -1,7 +1,7 @@
 const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode-edit');
 const { getUserHasInterestedPartyNumber } = require('../../_session/deadline/helpers');
 const { getExaminationApplicantValue } = require('../../_session/deadline/details/applicant');
-
+const { applicantOptionValues } = require('../../applicant/config');
 const {
 	routesConfig: {
 		examination: {
@@ -16,7 +16,7 @@ const getBackLinkUrl = (query, session) => {
 	if (isQueryModeEdit(query)) backLinkUrl = `${checkYourAnswers.route}`;
 	else if (getUserHasInterestedPartyNumber(session))
 		backLinkUrl = `${yourInterestedPartyNumber.route}`;
-	else if (getExaminationApplicantValue(session) === applicant.options[2].value)
+	else if (getExaminationApplicantValue(session) === applicantOptionValues[2])
 		backLinkUrl = `${applicant.route}`;
 	else throw new Error('Submitting for page back link URL can not be set');
 

@@ -1,17 +1,13 @@
 const { getDeadlineDetailsApplicant } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
 const { getSelectedOptionText } = require('./helpers');
-const {
-	routesConfig: {
-		examination: {
-			pages: { applicant }
-		}
-	}
-} = require('../../../../../routes/config');
+const { getApplicantOptions } = require('../../../applicant/config');
 
-const getSummaryListApplicant = (session) => {
+const getSummaryListApplicant = (session, i18n) => {
+	const applicantOptions = getApplicantOptions(i18n);
+
 	const applicantText = getSelectedOptionText(
-		applicant.options,
+		applicantOptions,
 		getDeadlineDetailsApplicant(session)
 	);
 	if (!applicantText) throw new Error('Applicant text is undefined');

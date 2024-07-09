@@ -101,7 +101,7 @@ describe('pages/examination/check-your-answers/utils/get-summary-list-details', 
 						req.session,
 						req.i18n
 					);
-					expect(getSummaryListApplicant).toHaveBeenCalledWith(req.session);
+					expect(getSummaryListApplicant).toHaveBeenCalledWith(req.session, req.i18n);
 					expect(getSummaryListItemEmail).toHaveBeenCalledWith(req.session);
 				});
 				it('should return the summary list items', () => {
