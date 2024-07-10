@@ -98,6 +98,10 @@
 		"pageHeading": "Beth yw'ch cyfeiriad e-bost?",
 		"hint": "Byddwn yn defnyddio'ch cyfeiriad e-bost i anfon gwybodaeth atoch am y prosiect hwn. Ni fyddwn yn cyhoeddi eich cyfeiriad e-bost."
 	},
+	"theirEmail": {
+		"pageHeading": "Beth yw ei gyfeiriad e-bost?",
+		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn."
+	},
 	"address": {
 		"pageHeading": "Beth yw'ch cyfeiriad?",
 		"line1": "Llinell gyfeiriad 1<span class='govuk-visually-hidden'> o 3</span>",
@@ -106,9 +110,22 @@
 		"postcode": "Cod post",
 		"country": "Gwlad"
 	},
+	"theirAddress": {
+		"pageHeading": "Beth yw ei gyfeiriad?",
+		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
+		"line1": "Ei gyfeiriad - llinell 1<span class='govuk-visually-hidden'> o 3</span>",
+		"line2": "Ei gyfeiriad - llinell 2<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+		"line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+		"postcode": "Cod post",
+		"country": "Gwlad"
+	},
 	"number": {
 		"pageHeading": "Beth yw'ch rhif ffôn?",
 		"hint": "Byddwn yn defnyddio'ch rhif ffôn i gysylltu â chi ynglŷn â'r prosiect os na allwn gysylltu â chi trwy e-bost. Ni fyddwn yn cyhoeddi eich rhif ffôn."
+	},
+	"theirNumber": {
+		"pageHeading": "Beth yw ei rif ffôn?",
+		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn."
 	},
 	"aboutProject": {
 		"pageHeading": "Beth ydych chi eisiau ei ddweud wrthym am y prosiect arfaethedig hwn?",
@@ -221,6 +238,16 @@
 		},
 		"areThey18": {
 			"empty": "Dewiswch 'ydyw' os yw'n 18 oed neu'n hŷn"
+		},
+		"theirTelephoneNumber": {
+			"empty": "Nodwch eich rhif ffôn",
+			"length": "Mae'n rhaid i'ch rhif ffôn gynnwys 255 o nodau neu lai",
+			"format": "Nodwch rif ffôn, fel 01632 960 001, 07700 900 982 neu 44 808 157 0192"
+		},
+		"theirEmailAddress": {
+			"empty": "Nodwch eich cyfeiriad e-bost",
+			"length": "Mae'n rhaid i'ch cyfeiriad e-bost gynnwys rhwng 3 a 255 o nodau",
+			"format": "Nodwch gyfeiriad e-bost yn y fformat cywir, fel enw@enghraifft.com"
 		}
 	}
 }

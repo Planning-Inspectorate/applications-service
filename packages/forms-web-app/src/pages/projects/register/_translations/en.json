@@ -98,6 +98,10 @@
 		"pageHeading": "What is your email address?",
 		"hint": "We will use your email address to send you information about this project. We will not publish your email address."
 	},
+	"theirEmail": {
+		"pageHeading": "What is their email address?",
+		"hint": "We will not contact anyone using these contact details."
+	},
 	"address": {
 		"pageHeading": "What is your address?",
 		"line1": "Address line 1 <span class='govuk-visually-hidden'>of 3</span>",
@@ -106,9 +110,22 @@
 		"postcode": "Postcode",
 		"country": "Country"
 	},
+	"theirAddress": {
+		"pageHeading": "What is their address?",
+		"hint": "We will not contact anyone using these contact details.",
+		"line1": "Their Address line 1 <span class='govuk-visually-hidden'>of 3</span>",
+		"line2": "Their address line 2 <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+		"line3": "Town or city <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+		"postcode": "Postcode",
+		"country": "Country"
+	},
 	"number": {
 		"pageHeading": "What is your telephone number?",
 		"hint": "We will use your phone number to contact you about the project if we cannot reach you by email. We will not publish your telephone number."
+	},
+	"theirNumber": {
+		"pageHeading": "What is their telephone number?",
+		"hint": "We will not contact anyone using these contact details."
 	},
 	"aboutProject": {
 		"pageHeading": "What do you want to tell us about this proposed project?",
@@ -221,6 +238,16 @@
 		},
 		"areThey18": {
 			"empty": "Select yes if they are 18 or over"
+		},
+		"theirTelephoneNumber": {
+			"empty": "Enter their telephone number",
+			"length": "Telephone number must be 255 characters or less",
+			"format": "Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192"
+		},
+		"theirEmailAddress": {
+			"empty": "Enter their email address",
+			"length": "Email address must be between 3 and 255 characters",
+			"format": "Enter an email address in the correct format, like name@example.com"
 		}
 	}
 }

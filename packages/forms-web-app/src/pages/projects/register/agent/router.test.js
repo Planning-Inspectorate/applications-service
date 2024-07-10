@@ -81,9 +81,6 @@ const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
 const {
-	rules: theirAddressValidationRules
-} = require('../../../../validators/register/agent/their-postal-address');
-const {
 	rules: theirEmailValidationRules
 } = require('../../../../validators/register/agent/their-email-address');
 const {
@@ -137,11 +134,6 @@ jest.mock('../../../../validators/shared/telephone-number', () => {
 	};
 });
 jest.mock('../../../../validators/register/agent/are-they-18-over', () => {
-	return {
-		rules: jest.fn()
-	};
-});
-jest.mock('../../../../validators/register/agent/their-postal-address', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -357,24 +349,32 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-postal-address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentTheirAddressController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-postal-address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
-				theirAddressValidationRules(),
+				addressValidationRules(),
 				validationErrorHandler,
 				postRegisterAgentTheirAddressController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-email-address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentTheirEmailController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-email-address',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				theirEmailValidationRules(),
 				validationErrorHandler,
@@ -402,11 +402,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-telephone-number',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentTheirTelephoneController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-telephone-number',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				theirTelephoneValidationRules(),
 				validationErrorHandler,

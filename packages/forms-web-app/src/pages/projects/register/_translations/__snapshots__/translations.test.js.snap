@@ -183,6 +183,23 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageHeading": "Who are you registering for?",
     "pageTitle": "Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning",
   },
+  "theirAddress": {
+    "country": "Country",
+    "hint": "We will not contact anyone using these contact details.",
+    "line1": "Their Address line 1 <span class='govuk-visually-hidden'>of 3</span>",
+    "line2": "Their address line 2 <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+    "line3": "Town or city <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+    "pageHeading": "What is their address?",
+    "postcode": "Postcode",
+  },
+  "theirEmail": {
+    "hint": "We will not contact anyone using these contact details.",
+    "pageHeading": "What is their email address?",
+  },
+  "theirNumber": {
+    "hint": "We will not contact anyone using these contact details.",
+    "pageHeading": "What is their telephone number?",
+  },
   "validationErrors": {
     "areThey18": {
       "empty": "Select yes if they are 18 or over",
@@ -210,6 +227,16 @@ exports[`pages/cookies/_translations should return the correct English translati
     "organisationOrCharityName": {
       "empty": "Enter your organisation or charity name",
       "length": "Name of your organisation or charity name must be 255 characters or less",
+    },
+    "theirEmailAddress": {
+      "empty": "Enter their email address",
+      "format": "Enter an email address in the correct format, like name@example.com",
+      "length": "Email address must be between 3 and 255 characters",
+    },
+    "theirTelephoneNumber": {
+      "empty": "Enter their telephone number",
+      "format": "Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192",
+      "length": "Telephone number must be 255 characters or less",
     },
     "whoRepresenting": {
       "empty": "Select who you are representing",
@@ -412,6 +439,23 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "pageHeading": "Ar ran pwy ydych chi'n cofrestru?",
     "pageTitle": "Ar ran pwy ydych chi'n cofrestru - Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
   },
+  "theirAddress": {
+    "country": "Gwlad",
+    "hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
+    "line1": "Ei gyfeiriad - llinell 1<span class='govuk-visually-hidden'> o 3</span>",
+    "line2": "Ei gyfeiriad - llinell 2<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+    "line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+    "pageHeading": "Beth yw ei gyfeiriad?",
+    "postcode": "Cod post",
+  },
+  "theirEmail": {
+    "hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
+    "pageHeading": "Beth yw ei gyfeiriad e-bost?",
+  },
+  "theirNumber": {
+    "hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
+    "pageHeading": "Beth yw ei rif ffôn?",
+  },
   "validationErrors": {
     "areThey18": {
       "empty": "Dewiswch 'ydyw' os yw'n 18 oed neu'n hŷn",
@@ -439,6 +483,16 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "organisationOrCharityName": {
       "empty": "Nodwch enw eich sefydliad neu'ch elusen",
       "length": "Mae'n rhaid i enw eich sefydliad neu'ch elusen gynnwys 255 o nodau neu lai",
+    },
+    "theirEmailAddress": {
+      "empty": "Nodwch eich cyfeiriad e-bost",
+      "format": "Nodwch gyfeiriad e-bost yn y fformat cywir, fel enw@enghraifft.com",
+      "length": "Mae'n rhaid i'ch cyfeiriad e-bost gynnwys rhwng 3 a 255 o nodau",
+    },
+    "theirTelephoneNumber": {
+      "empty": "Nodwch eich rhif ffôn",
+      "format": "Nodwch rif ffôn, fel 01632 960 001, 07700 900 982 neu 44 808 157 0192",
+      "length": "Mae'n rhaid i'ch rhif ffôn gynnwys 255 o nodau neu lai",
     },
     "whoRepresenting": {
       "empty": "Dewiswch bwy rydych chi'n ei gynrychioli",

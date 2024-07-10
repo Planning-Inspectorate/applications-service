@@ -127,9 +127,6 @@ const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
 const {
-	rules: theirAddressValidationRules
-} = require('../../../../validators/register/agent/their-postal-address');
-const {
 	rules: theirEmailValidationRules
 } = require('../../../../validators/register/agent/their-email-address');
 const {
@@ -335,24 +332,32 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirAddressController
 );
 registerAgentRouter.post(
 	registerAgentTheirAddressURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
-	theirAddressValidationRules(),
+	addressValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentTheirAddressController
 );
 
 registerAgentRouter.get(
 	registerAgentTheirEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirEmailController
 );
 registerAgentRouter.post(
 	registerAgentTheirEmailURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	theirEmailValidationRules(),
 	validationErrorHandler,
@@ -379,11 +384,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirTelephoneURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirTelephoneController
 );
 registerAgentRouter.post(
 	registerAgentTheirTelephoneURL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	theirTelephoneValidationRules(),
 	validationErrorHandler,
