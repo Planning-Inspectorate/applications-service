@@ -6,22 +6,24 @@ const {
 	getAllApplications,
 	getAllApplicationsDownload
 } = require('../../../src/controllers/applications');
-const { APPLICATION_FO } = require('../../__data__/application');
+const {
+	APPLICATION_FO,
+	APPLICATION_API_V1,
+	APPLICATION_API
+} = require('../../__data__/application');
 
-jest.mock('../../../src/services/application.ni.service');
-const mockGetNIApplication =
-	require('../../../src/services/application.ni.service').getNIApplication;
-
-jest.mock('../../../src/services/application.backoffice.service');
+jest.mock('../../../src/services/application.service');
 const getAllApplicationsDownloadService =
 	require('../../../src/services/application.service').getAllApplicationsDownload;
 const getAllApplicationsService =
 	require('../../../src/services/application.service').getAllApplications;
+const getApplicationService = require('../../../src/services/application.service').getApplication;
 describe('getApplication', () => {
-	afterEach(() => mockGetNIApplication.mockClear());
-
 	it('should get application from mock', async () => {
-		mockGetNIApplication.mockResolvedValueOnce(APPLICATION_FO);
+		getApplicationService.mockResolvedValueOnce({
+			...APPLICATION_API,
+			sourceSystem: 'ODT'
+		});
 
 		const req = httpMocks.createRequest({
 			params: {
@@ -37,11 +39,15 @@ describe('getApplication', () => {
 		delete data.updatedAt;
 
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual(APPLICATION_FO);
+		expect(data).toEqual({
+			...APPLICATION_API_V1,
+			DateOfDCOAcceptance_NonAcceptance: null,
+			sourceSystem: 'ODT'
+		});
 	});
 
 	it('should throw application not found', async () => {
-		mockGetNIApplication.mockResolvedValueOnce(null);
+		getApplicationService.mockResolvedValueOnce(null);
 
 		const req = httpMocks.createRequest({
 			params: {

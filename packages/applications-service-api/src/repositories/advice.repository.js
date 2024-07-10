@@ -1,5 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
-const { mapBOSearchTermToQuery } = require('../utils/queries');
+const { mapSearchTermToQuery } = require('../utils/queries');
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
 	const where = {
 		AND: [
@@ -8,7 +8,7 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 			},
 			{
 				...(searchTerm
-					? mapBOSearchTermToQuery(searchTerm, [
+					? mapSearchTermToQuery(searchTerm, [
 							'from',
 							'agent',
 							'enquiryDetails',

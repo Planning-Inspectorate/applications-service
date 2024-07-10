@@ -1,6 +1,5 @@
-jest.mock('../../../src/repositories/document.backoffice.repository');
+jest.mock('../../../src/repositories/document.repository');
 jest.mock('../../../src/utils/document.mapper');
-
 const {
 	getDocuments,
 	getFilters,
@@ -13,14 +12,14 @@ const {
 	RESPONSE_FILTERS
 } = require('../../__data__/documents');
 const {
-	fetchBackOfficeDocuments,
-	fetchBackOfficeDocumentFilters,
-	fetchBackOfficeDocumentsByType
+	fetchDocuments,
+	fetchDocumentsByType,
+	fetchDocumentFilters
 } = require('../../../src/services/document.service');
-const { mapBackOfficeDocuments, mapFilters } = require('../../../src/utils/document.mapper');
+const { mapDocuments, mapFilters } = require('../../../src/utils/document.mapper');
 
 describe('document back office service', () => {
-	describe('fetchBackOfficeDocuments', () => {
+	describe('fetchDocuments', () => {
 		it('queries repository, invokes mapper with db data, then returns result', async () => {
 			const filters = { caseReference: 'EN000001' };
 
@@ -28,11 +27,11 @@ describe('document back office service', () => {
 				count: 1,
 				rows: BACK_OFFICE_DB_DOCUMENTS
 			});
-			mapBackOfficeDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
+			mapDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
 
-			const result = await fetchBackOfficeDocuments(filters);
+			const result = await fetchDocuments(filters);
 
-			expect(mapBackOfficeDocuments).toBeCalledWith(BACK_OFFICE_DB_DOCUMENTS);
+			expect(mapDocuments).toBeCalledWith(BACK_OFFICE_DB_DOCUMENTS);
 			expect(result).toEqual({
 				count: 1,
 				data: RESPONSE_DOCUMENTS
@@ -40,19 +39,19 @@ describe('document back office service', () => {
 		});
 	});
 
-	describe('fetchBackOfficeDocumentFilters', () => {
+	describe('fetchDocumentFilters', () => {
 		it('calls getFilters then passes result to mapper', async () => {
 			getFilters.mockResolvedValueOnce(DB_FILTERS);
 			mapFilters.mockReturnValueOnce(RESPONSE_FILTERS);
 
-			const result = await fetchBackOfficeDocumentFilters('EN000001');
+			const result = await fetchDocumentFilters('EN000001');
 
 			expect(mapFilters).toBeCalledWith(DB_FILTERS);
 			expect(result).toEqual(RESPONSE_FILTERS);
 		});
 	});
 
-	describe('fetchBackOfficeDocumentsByType', () => {
+	describe('fetchDocumentsByType', () => {
 		describe('when document type is in wrong letter case for BO', () => {
 			test.each`
 				type                         | expectedResult
@@ -63,8 +62,8 @@ describe('document back office service', () => {
 				${'DECISION_LETTER_REFUSE'}  | ${'DCO decision letter (SoS)(refuse)'}
 			`('"$type" should map to "$expectedResult"', async ({ type, expectedResult }) => {
 				getDocumentsByType.mockResolvedValueOnce(BACK_OFFICE_DB_DOCUMENTS[0]);
-				mapBackOfficeDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
-				const result = await fetchBackOfficeDocumentsByType({
+				mapDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
+				const result = await fetchDocumentsByType({
 					caseReference: 'BO CASE REF',
 					type: type
 				});
@@ -76,10 +75,10 @@ describe('document back office service', () => {
 				expect(result).toEqual({ data: RESPONSE_DOCUMENTS[0] });
 			});
 		});
-		it('calls fetchBackOfficeDocumentsByType then passes result to repository', async () => {
+		it('calls fetchDocumentsByType then passes result to repository', async () => {
 			getDocumentsByType.mockResolvedValueOnce(BACK_OFFICE_DB_DOCUMENTS[0]);
-			mapBackOfficeDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
-			const result = await fetchBackOfficeDocumentsByType({
+			mapDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
+			const result = await fetchDocumentsByType({
 				caseReference: 'BO CASE REF',
 				type: 'RULE_6_LETTER'
 			});

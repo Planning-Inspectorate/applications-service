@@ -321,5 +321,6 @@ module.exports = {
 	mapApplicationToApi,
 	mapApplicationsToApi,
 	mapResponseBackToNILegacyFormat,
-	addMapZoomLevelAndLongLat
+	addMapZoomLevelAndLongLat,
+	mapColumnLabelToApi: mapColumnLabelToApiEn
 };

@@ -1,7 +1,7 @@
 const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const { getTimetables } = require('../../../src/controllers/timetables');
-const { TIMETABLES_NI_RESPONSE } = require('../../__data__/timetables');
+const { TIMETABLES_BACKOFFICE_RESPONSE } = require('../../__data__/timetables');
 
 const { getTimetables: getTimetablesService } = require('../../../src/services/timetable.service');
 jest.mock('../../../src/services/timetable.service');
@@ -16,12 +16,12 @@ describe('getTimetables', () => {
 	it('should return response with data if service returns timetable data', async () => {
 		const res = httpMocks.createResponse();
 
-		getTimetablesService.mockResolvedValueOnce(TIMETABLES_NI_RESPONSE);
+		getTimetablesService.mockResolvedValueOnce(TIMETABLES_BACKOFFICE_RESPONSE);
 
 		await getTimetables(req, res);
 
 		expect(res._getData()).toEqual({
-			timetables: TIMETABLES_NI_RESPONSE,
+			timetables: TIMETABLES_BACKOFFICE_RESPONSE,
 			totalItems: 2,
 			itemsPerPage: 100,
 			totalPages: 1,
