@@ -1,7 +1,7 @@
 const {
 	getAllAdviceByCaseReference,
 	getAdviceById
-} = require('../../../src/repositories/advice.backoffice.repository');
+} = require('../../../src/repositories/advice.repository');
 const { ADVICE_BACKOFFICE_DATA } = require('../../__data__/advice');
 
 const mockFindMany = jest.fn();

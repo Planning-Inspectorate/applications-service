@@ -1,59 +1,3 @@
-const TIMETABLES_NI_RESPONSE = [
-	{
-		id: 1,
-		uniqueId: 'WS010006-34601',
-		caseReference: 'NI-CASEID',
-		title: 'Deadline 1A',
-		description:
-			'The ExA is under a duty to complete the Examination of the application by the end of the period of six months',
-		dateOfEvent: '2020-02-19 11:21:42',
-		timetableType: 'Exams',
-		typeOfEvent: 'Deadline',
-		dateTimeDeadlineStart: '2020-05-16 15:44:52',
-		sourceSystem: 'Horizon'
-	},
-	{
-		id: 2,
-		uniqueId: 'WS010006-34602',
-		caseReference: 'NI-CASEID',
-		title: 'Deadline 2',
-		description: 'Pre examination for the application by the end of the period of six months',
-		dateOfEvent: '2020-08-19 11:21:42',
-		timetableType: 'Exams',
-		typeOfEvent: 'Deadline',
-		dateTimeDeadlineStart: '2020-05-16 15:44:52',
-		sourceSystem: 'Horizon'
-	}
-];
-
-const TIMETABLES_NI_DATA = [
-	{
-		id: 1,
-		unique_id: 'WS010006-34601',
-		case_reference: 'NI-CASEID',
-		title: 'Deadline 1A',
-		description:
-			'The ExA is under a duty to complete the Examination of the application by the end of the period of six months',
-		date_of_event: '2020-02-19 11:21:42',
-		timetable_type: 'Exams',
-		type_of_event: 'Deadline',
-		dateTimeDeadlineStart: '2020-05-16 15:44:52',
-		sourceSystem: 'Horizon'
-	},
-	{
-		id: 2,
-		unique_id: 'WS010006-34602',
-		case_reference: 'NI-CASEID',
-		title: 'Deadline 2',
-		description: 'Pre examination for the application by the end of the period of six months',
-		date_of_event: '2020-08-19 11:21:42',
-		timetable_type: 'Exams',
-		type_of_event: 'Deadline',
-		dateTimeDeadlineStart: '2020-05-16 15:44:52',
-		sourceSystem: 'Horizon'
-	}
-];
-
 const TIMETABLES_BACKOFFICE_RESPONSE = [
 	{
 		id: 1,
@@ -138,8 +82,6 @@ const TIMETABLES_BACKOFFICE_RESPONSE_WITH_WELSH = [
 ];
 
 module.exports = {
-	TIMETABLES_NI_RESPONSE,
-	TIMETABLES_NI_DATA,
 	TIMETABLES_BACKOFFICE_RESPONSE,
 	TIMETABLES_BACKOFFICE_DATA,
 	TIMETABLES_BACKOFFICE_DATA_WITH_WELSH,

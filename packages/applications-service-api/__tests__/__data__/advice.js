@@ -46,34 +46,7 @@ const ADVICE_BACKOFFICE_RESPONSE = ADVICE_BACKOFFICE_DATA.map((advice) => ({
 	titleWelsh: advice?.titleWelsh
 }));
 
-const ADVICE_NI_DATA = [
-	{
-		adviceID: 'NI-CASEID',
-		enquiryDate: '2020-02-19',
-		enquiryMethod: 'Email',
-		industrySector: 'Energy',
-		caseReference: 'EN010009',
-		firstName: 'Joe',
-		lastName: 'Bloggs',
-		organisation: 'The organisation',
-		enquiryDetail: 'Do we need more energy',
-		adviceGiven: 'Yes we do',
-		respondedBy: 'Joe Bloggs',
-		section51Enquiry: true,
-		initiatedDate: '2016-04-28',
-		dateEnquiryReceived: '2016-04-28 08:42:58',
-		dateAdviceGiven: '2016-04-28',
-		dateLastModified: '2016-04-28 08:42:58',
-		dateCreated: '2016-04-28 08:42:58',
-		attachments: 'attachment1,attachment2,attachment3'
-	}
-];
-
-const ADVICE_NI_RESPONSE = [...ADVICE_NI_DATA];
-
 module.exports = {
 	ADVICE_BACKOFFICE_RESPONSE,
-	ADVICE_BACKOFFICE_DATA,
-	ADVICE_NI_RESPONSE,
-	ADVICE_NI_DATA
+	ADVICE_BACKOFFICE_DATA
 };

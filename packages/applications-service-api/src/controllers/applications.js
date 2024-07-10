@@ -1,27 +1,12 @@
 const { StatusCodes } = require('http-status-codes');
 const logger = require('../lib/logger');
-const { getNIApplication } = require('../services/application.ni.service');
 const {
-	getAllApplicationsDownload: getAllApplicationsDownloadService
-} = require('../services/application.backoffice.service');
-const {
-	getAllApplications: getAllApplicationsService
-} = require('../services/application.backoffice.service');
+	getAllApplicationsDownload: getAllApplicationsDownloadService,
+	getAllApplications: getAllApplicationsService,
+	getApplication: getApplicationService
+} = require('../services/application.service');
 const ApiError = require('../error/apiError');
-
-const getApplication = async (req, res) => {
-	const { caseReference } = req.params;
-
-	logger.debug(`Retrieving application ${caseReference} ...`);
-
-	const application = await getNIApplication(caseReference);
-
-	if (!application) throw ApiError.applicationNotFound(caseReference);
-
-	logger.debug(`Application ${caseReference} retrieved`);
-
-	res.status(StatusCodes.OK).send(application);
-};
+const { mapResponseBackToNILegacyFormat } = require('../utils/application.mapper');
 
 const getAllApplications = async (req, res) => {
 	const {
@@ -58,8 +43,20 @@ const getAllApplicationsDownload = async (req, res) => {
 	res.status(StatusCodes.OK).send(response);
 };
 
+const getApplication = async (req, res) => {
+	const { caseReference } = req.params;
+
+	const application = await getApplicationService(caseReference);
+
+	if (!application) throw ApiError.applicationNotFound(caseReference);
+
+	const applicationResponse = mapResponseBackToNILegacyFormat(application);
+
+	res.status(StatusCodes.OK).send(applicationResponse);
+};
+
 module.exports = {
-	getApplication,
 	getAllApplications,
-	getAllApplicationsDownload
+	getAllApplicationsDownload,
+	getApplication
 };

@@ -1,10 +1,8 @@
-const { documentsHost } = require('../lib/config');
-
-const mapBackOfficeAdviceListToApi = (backOfficeAdvice) => {
-	return backOfficeAdvice.map((advice) => mapCommonAdviceFieldsToApi(advice));
+const mapAdviceListToApi = (advices) => {
+	return advices.map((advice) => mapCommonAdviceFieldsToApi(advice));
 };
 
-const mapBackOfficeAdviceToApi = (advice) => {
+const mapAdviceToApi = (advice) => {
 	return {
 		...mapCommonAdviceFieldsToApi(advice),
 		attachments: advice?.attachments?.map((attachment) => ({
@@ -42,20 +40,7 @@ const mapCommonAdviceFieldsToApi = (advice) => {
 	};
 };
 
-const mapNIAdviceToApi = (advice) => {
-	return {
-		...advice,
-		attachments: advice?.attachments?.map((attachment) => ({
-			documentDataID: attachment.dataID,
-			mime: attachment.mime,
-			size: attachment.size,
-			documentURI: attachment.path ? `${documentsHost}${attachment.path}` : null
-		}))
-	};
-};
-
 module.exports = {
-	mapBackOfficeAdviceListToApi,
-	mapBackOfficeAdviceToApi,
-	mapNIAdviceToApi
+	mapAdviceListToApi,
+	mapAdviceToApi
 };

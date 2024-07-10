@@ -95,111 +95,6 @@ const INTERESTED_PARTY_AGENT_FAMILY_API = {
 	}
 };
 
-// format for NI database
-const INTERESTED_PARTY_SELF_NI = {
-	caseref: 'EN010116',
-	behalf: 'me',
-	therep: 'this is the representation',
-	mename: 'Joe Bloggs',
-	memail: 'joe@example.org',
-	mephone: '07700900000',
-	mebuild: '123 Some Street',
-	mestreet: 'Kings Cross',
-	metown: 'London',
-	mecode: 'N1 9BE',
-	mecountry: 'England',
-	mecounty: 'over18'
-};
-
-const INTERESTED_PARTY_ORGANISATION_NI = {
-	caseref: 'BC0110002',
-	behalf: 'them',
-	therep: 'this is the representation',
-	orgname: 'Example Company',
-	contactname: 'Joe Bloggs',
-	contactjob: 'CEO',
-	orgbuild: '123 Some Street',
-	orgstreet: 'Kings Cross',
-	orgtown: 'London',
-	orgcode: 'N1 9BE',
-	orgcountry: 'England',
-	orgmail: 'joe@example.org',
-	orgphone: '07700900000',
-	orgcounty: 'over18'
-};
-
-const INTERESTED_PARTY_AGENT_PERSON_NI = {
-	caseref: 'BC0110002',
-	behalf: 'you',
-	therep: 'this is the representation',
-	youname: 'Joe Bloggs',
-	youcounty: 'over18',
-	youmail: 'joe@example.org',
-	youphone: '07700900000',
-	youbuild: '123 Some Street',
-	youstreet: 'Kings Cross',
-	youtown: 'London',
-	youcode: 'N1 9BE',
-	youcountry: 'England',
-	agname: 'A.N. Other',
-	agbuild: 'Flat 1',
-	agstreet: '72 South Street',
-	agtown: 'London',
-	agcode: 'N1 9BE',
-	agcountry: 'England',
-	agmail: 'another@example.org',
-	agphone: '07700900001',
-	agorgname: 'Example Company'
-};
-
-const INTERESTED_PARTY_AGENT_ORGANISATION_NI = {
-	caseref: 'BC0110002',
-	behalf: 'you',
-	therep: 'this is the representation',
-	youname: 'Another Org',
-	youcounty: '',
-	youmail: 'another@example.org',
-	youphone: '07700900000',
-	youbuild: 'Unit 1',
-	youstreet: '921 North Street',
-	youtown: 'London',
-	youcode: 'N1 9BE',
-	youcountry: 'England',
-	agname: 'A.N. Other',
-	agbuild: 'Flat 1',
-	agstreet: '72 South Street',
-	agtown: 'London',
-	agcode: 'N1 9BE',
-	agcountry: 'England',
-	agmail: 'another@example.org',
-	agphone: '07700900001',
-	agorgname: 'Example Company'
-};
-
-const INTERESTED_PARTY_AGENT_FAMILY_NI = {
-	caseref: 'BC0110002',
-	behalf: 'you',
-	therep: 'this is the representation',
-	youname: 'Robinson Family',
-	youcounty: 'over18',
-	youmail: 'robinsons@example.org',
-	youphone: '07700900002',
-	youbuild: '123 Some Street',
-	youstreet: 'Kings Cross',
-	youtown: 'London',
-	youcode: 'N1 9BE',
-	youcountry: 'England',
-	agname: 'A.N. Other',
-	agbuild: 'Flat 1',
-	agstreet: '72 South Street',
-	agtown: 'London',
-	agcode: 'N1 9BE',
-	agcountry: 'England',
-	agmail: 'another@example.org',
-	agphone: '07700900001',
-	agorgname: 'Example Company'
-};
-
 // format for Back Office `register-representation` message
 const INTERESTED_PARTY_SELF_BACK_OFFICE = {
 	referenceId: 'BC0110002-091222133021123',
@@ -307,13 +202,6 @@ module.exports = {
 	INTERESTED_PARTY_AGENT_PERSON_API,
 	INTERESTED_PARTY_AGENT_ORGANISATION_API,
 	INTERESTED_PARTY_AGENT_FAMILY_API,
-
-	INTERESTED_PARTY_SELF_NI,
-	INTERESTED_PARTY_ORGANISATION_NI,
-	INTERESTED_PARTY_AGENT_PERSON_NI,
-	INTERESTED_PARTY_AGENT_ORGANISATION_NI,
-	INTERESTED_PARTY_AGENT_FAMILY_NI,
-
 	INTERESTED_PARTY_SELF_BACK_OFFICE,
 	INTERESTED_PARTY_ORGANISATION_BACK_OFFICE,
 	INTERESTED_PARTY_AGENT_PERSON_BACK_OFFICE,

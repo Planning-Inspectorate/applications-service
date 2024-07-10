@@ -1,29 +1,16 @@
-const { mapBackOfficeDocuments } = require('./document.mapper');
-const config = require('../lib/config');
-const mapBackOfficeRepresentationToApi = (representation, documents = []) => {
+const { mapDocuments } = require('./document.mapper');
+const mapRepresentationToApi = (representation, documents = []) => {
 	return {
-		...mapCommonRepresentationBOFieldsToApi(representation),
-		attachments: mapBackOfficeDocuments(documents)
+		...mapCommonRepresentationToApi(representation),
+		attachments: mapDocuments(documents)
 	};
 };
 
-const mapNIRepresentationToApi = (representation, documents = []) => {
-	return {
-		...representation,
-		attachments: documents.map((doc) => ({
-			...doc,
-			path: doc.path ? `${config.documentsHost}${doc.path}` : null
-		}))
-	};
+const mapRepresentationsToApi = (representation) => {
+	return representation.map((representation) => mapCommonRepresentationToApi(representation));
 };
 
-const mapBackOfficeRepresentationsToApi = (representation) => {
-	return representation.map((representation) =>
-		mapCommonRepresentationBOFieldsToApi(representation)
-	);
-};
-
-const mapCommonRepresentationBOFieldsToApi = (representation) => {
+const mapCommonRepresentationToApi = (representation) => {
 	const represented = representation?.represented;
 	const representative = representation?.representative;
 	let PersonalName = '';
@@ -63,8 +50,7 @@ const repFromToWelsh = (englishDesc = '') => {
 };
 
 module.exports = {
-	mapBackOfficeRepresentationToApi,
-	mapBackOfficeRepresentationsToApi,
-	mapNIRepresentationToApi,
+	mapRepresentationToApi,
+	mapRepresentationsToApi,
 	repFromToWelsh
 };

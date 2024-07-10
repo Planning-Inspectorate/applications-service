@@ -1,4 +1,4 @@
-const mapBackOfficeTimetableToApi = (timetables) =>
+const mapTimetableToAPI = (timetables) =>
 	timetables.map(
 		({
 			eventId,
@@ -27,8 +27,8 @@ const mapBackOfficeTimetableToApi = (timetables) =>
 				caseReference,
 				title: eventTitle,
 				titleWelsh: eventTitleWelsh,
-				description: createBackOfficeDescription(description, type, descriptions),
-				descriptionWelsh: createBackOfficeDescription(descriptionWelsh, type, descriptionsWelsh),
+				description: createDescription(description, type, descriptions),
+				descriptionWelsh: createDescription(descriptionWelsh, type, descriptionsWelsh),
 				dateOfEvent: date,
 				typeOfEvent: type,
 				dateTimeDeadlineStart: eventDeadlineStartDate,
@@ -37,11 +37,7 @@ const mapBackOfficeTimetableToApi = (timetables) =>
 		}
 	);
 
-const createBackOfficeDescription = (
-	timetableDescription,
-	eventType,
-	eventLineItemsDescriptions
-) => {
+const createDescription = (timetableDescription, eventType, eventLineItemsDescriptions) => {
 	if (!timetableDescription) return '';
 
 	let description = timetableDescription;
@@ -52,21 +48,6 @@ const createBackOfficeDescription = (
 	return description;
 };
 
-const mapNITimetableToApi = (timetables) =>
-	timetables.map((t) => ({
-		id: t.id,
-		uniqueId: t.unique_id,
-		caseReference: t.case_reference,
-		title: t.title,
-		description: t.description,
-		dateOfEvent: t.date_of_event,
-		timetableType: t.timetable_type,
-		typeOfEvent: t.type_of_event,
-		dateTimeDeadlineStart: t.dateTimeDeadlineStart,
-		sourceSystem: t.sourceSystem
-	}));
-
 module.exports = {
-	mapBackOfficeTimetableToApi,
-	mapNITimetableToApi
+	mapTimetableToAPI
 };

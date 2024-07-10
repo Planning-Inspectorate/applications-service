@@ -1,60 +1,17 @@
-const { mapNISearchTermToQuery, mapBOSearchTermToQuery } = require('../../../src/utils/queries');
-const { Op } = require('sequelize');
+const { mapSearchTermToQuery } = require('../../../src/utils/queries');
 describe('queries', () => {
 	const searchTerm = 'this is a searchTerm';
 	const keys = ['key1', 'key2', 'key3'];
-	describe('mapNISearchTermToQuery', () => {
-		it('should return an empty object if no searchTerm is provided', () => {
-			const result = mapNISearchTermToQuery();
-			expect(result).toEqual({});
-		});
-		it('should return correct object with search term split', () => {
-			const result = mapNISearchTermToQuery(searchTerm, keys);
-			const expected = {
-				[Op.or]: [
-					{
-						[Op.or]: [
-							{ key1: { [Op.like]: '%this%' } },
-							{ key2: { [Op.like]: '%this%' } },
-							{ key3: { [Op.like]: '%this%' } }
-						]
-					},
-					{
-						[Op.or]: [
-							{ key1: { [Op.like]: '%is%' } },
-							{ key2: { [Op.like]: '%is%' } },
-							{ key3: { [Op.like]: '%is%' } }
-						]
-					},
-					{
-						[Op.or]: [
-							{ key1: { [Op.like]: '%a%' } },
-							{ key2: { [Op.like]: '%a%' } },
-							{ key3: { [Op.like]: '%a%' } }
-						]
-					},
-					{
-						[Op.or]: [
-							{ key1: { [Op.like]: '%searchTerm%' } },
-							{ key2: { [Op.like]: '%searchTerm%' } },
-							{ key3: { [Op.like]: '%searchTerm%' } }
-						]
-					}
-				]
-			};
-			expect(result).toEqual(expected);
-		});
-	});
-	describe('mapBOSearchTermToQuery', () => {
+	describe('mapTimetableToAPI', () => {
 		describe('when no searchTerm is provided', () => {
 			it('should return an empty object', () => {
-				const result = mapBOSearchTermToQuery();
+				const result = mapSearchTermToQuery();
 				expect(result).toEqual({});
 			});
 		});
 		describe('when a searchTerm is provided', () => {
 			it('should return correct object with search term split', () => {
-				const result = mapBOSearchTermToQuery(searchTerm, keys);
+				const result = mapSearchTermToQuery(searchTerm, keys);
 				const expected = {
 					OR: [
 						{

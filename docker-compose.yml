@@ -22,17 +22,7 @@ services:
       APPLICATIONS_WEB_BASE_URL: http://forms-web-app:9004
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_URL: http://localhost:10000/
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_CONTAINER: application-submission-documents
-      BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES: BC0110001,BC0110003,BC0110004,BC0110005
-      # Commented as BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES replaces them all
-      # BACK_OFFICE_INTEGRATION_GET_APPLICATION_CASE_REFERENCES: BC0110001,EN0110004,EN0310004
-      # BACK_OFFICE_INTEGRATION_GET_DOCUMENTS_CASE_REFERENCES: BC0110001,EN0100085,EN0110004,EN0310004
-      # BACK_OFFICE_INTEGRATION_GET_TIMETABLE_CASE_REFERENCES: BC0110001
-      # BACK_OFFICE_INTEGRATION_GET_ADVICE_CASE_REFERENCES: BC0110001
-      # BACK_OFFICE_INTEGRATION_POST_INTERESTED_PARTY_CASE_REFERENCES: BC0110001
-      # BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES: BC0110001
-      # BACK_OFFICE_INTEGRATION_GET_REPRESENTATION_CASE_REFERENCES: BC0110001
       BACK_OFFICE_SERVICE_BUS_ENABLED: false
-      BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: MERGE
       BACK_OFFICE_SERVICE_BUS_HOSTNAME: pins-sb-back-office-dev-ukw-001.servicebus.windows.net
       DATABASE_URL: sqlserver://mssql:1433;database=pins_applications_development;user=sa;password=dbPASSw0_rd;trustServerCertificate=true
       DOCS_API_PATH: /opt/app/packages/applications-service-api/api
@@ -43,13 +33,6 @@ services:
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
       FEATURE_APPLICATION_INSIGHTS: 'false'
       FILE_UPLOADS_PATH: /opt/app/uploads
-      LOGGER_LEVEL: debug
-      MYSQL_USERNAME: pins
-      MYSQL_PASSWORD: pins
-      MYSQL_DATABASE: ipclive
-      MYSQL_HOST: db
-      MYSQL_PORT: 3306
-      MYSQL_DIALECT: mysql
       NODE_ENV: local
       NI_API_HOST: api-mock-server:1080
       NI_OAUTH_CLIENT_ID: some-client-id
@@ -83,7 +66,6 @@ services:
     container_name: applications-web-app
     environment:
       ACTIVATE_PLANNED_OUTAGE: 'false'
-      BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: MERGE
       APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
@@ -100,6 +82,7 @@ services:
       FILE_UPLOAD_DEBUG: 'false'
       FILE_UPLOAD_MAX_FILE_SIZE_BYTES: 15000000
       FILE_UPLOAD_TMP_PATH: /tmp
+      LOGGER_LEVEL: debug
       FILE_UPLOAD_USE_TEMP_FILES: 'true'
       GOOGLE_ANALYTICS_ID: G-X21W2S2FN3
       HOST_URL: http://localhost:9004/
@@ -128,27 +111,6 @@ services:
       - applications-service-api
     depends_on:
       - applications-service-api
-
-  db:
-    image: mysql:5.6.51
-    platform: linux/x86_64
-    container_name: ni_db
-    cap_add:
-      - SYS_NICE # CAP_SYS_NICE
-    command: |
-      --default-authentication-plugin=mysql_native_password
-      --sql-mode=STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ipclive
-      MYSQL_USER: pins
-      MYSQL_PASSWORD: pins
-      MYSQL_ROOT_HOST: '%'
-    ports:
-      - 3306:3306
-    volumes:
-      - ./init:/docker-entrypoint-initdb.d
 
   api-mock-server:
     image: mockserver/mockserver:5.14.0

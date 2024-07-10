@@ -1,6 +1,3 @@
-const config = require('../lib/config');
-const toCamelCase = require('lodash').camelCase;
-
 const mappedLabel = (cy, en) => ({
 	cy,
 	en
@@ -8,16 +5,6 @@ const mappedLabel = (cy, en) => ({
 
 const LABEL_MAPPING = {
 	stage: {
-		// NI mapping
-		1: mappedLabel('Cyn-ymgeisio', 'Pre-application'),
-		2: mappedLabel('Derbyn', 'Acceptance'),
-		3: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
-		4: mappedLabel('Archwiliad', 'Examination'),
-		5: mappedLabel('Argymhelliad', 'Recommendation'),
-		6: mappedLabel('Penderfyniad', 'Decision'),
-		7: mappedLabel('Ôl-benderfyniad', 'Post-decision'),
-
-		// back office mapping
 		'pre-application': mappedLabel('Cyn-ymgeisio', 'Pre-application'),
 		acceptance: mappedLabel('Derbyn', 'Acceptance'),
 		'pre-examination': mappedLabel('Cyn-archwiliad', 'Pre-examination'),
@@ -50,23 +37,7 @@ const mapDocumentFilterLabel = (filterName, filterValue) => {
 	}
 };
 
-const mapDocuments = (documents) => {
-	const attributesToLowerCase = (document) =>
-		Object.keys(document).reduce((memo, key) => {
-			let value = document[key];
-
-			if (key === 'path' && value) value = config.documentsHost.concat(value);
-			else if (key === 'stage') memo.stageLabel = mapDocumentFilterLabel('stage', value);
-
-			memo[toCamelCase(key)] = value;
-
-			return memo;
-		}, {});
-
-	return documents.map(attributesToLowerCase);
-};
-
-const mapBackOfficeDocuments = (documents) =>
+const mapDocuments = (documents) =>
 	documents.map((document) => ({
 		id: document.id,
 		dataID: document.documentReference,
@@ -144,7 +115,6 @@ const sortFunction = (a, b) => {
 };
 
 module.exports = {
-	mapDocuments,
 	mapFilters,
-	mapBackOfficeDocuments
+	mapDocuments
 };

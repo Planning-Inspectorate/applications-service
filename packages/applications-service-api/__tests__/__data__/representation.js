@@ -1,33 +1,4 @@
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('./serviceUser');
-const REPRESENTATION_NI_DATA = [
-	{
-		ID: 2,
-		ProjectName: 'SPT Feb 2020',
-		CaseReference: 'EN010009',
-		DataID: null,
-		UniqueReference: 'WS010006-34601',
-		WebReference: null,
-		PersonalName: 'Test (Test)',
-		Representative: null,
-		IndvdlOnBhalfName: null,
-		OrgOnBhalfName: null,
-		AgentOrgOnBhalfContactName: null,
-		RepFrom: 'Members of the Public/Businesses',
-		InterestInLand: null,
-		SpecifyOther: null,
-		CompulsoryAcquisitionHearing: null,
-		RepresentationOriginal: null,
-		RepresentationRedacted: 'Some comments',
-		RelevantOrNot: null,
-		SubmitFurtherWrittenReps: null,
-		PreliminaryMeeting: null,
-		OpenFloorHearings: null,
-		IssuesSpecificHearings: null,
-		DateRrepReceived: '2020-02-19T00:00:00.000Z',
-		DoNotPublish: null,
-		Attachments: 'WS010006-000002'
-	}
-];
 
 const REPRESENTED_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[0];
 const REPRESENTATIVE_BACKOFFICE_DATA = SERVICE_USERS_BACKOFFICE_DATA[1];
@@ -95,10 +66,7 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 let { attachments, ...REPRESENTATIONS_BACKOFFICE_RESPONSE } = REPRESENTATION_BACKOFFICE_RESPONSE;
 REPRESENTATIONS_BACKOFFICE_RESPONSE = Array(20).fill(REPRESENTATIONS_BACKOFFICE_RESPONSE);
 
-const FILTERS_NI_DB = [];
 module.exports = {
-	REPRESENTATION_NI_DATA,
-	FILTERS_NI_DB,
 	REPRESENTATION_BACKOFFICE_DATA,
 	REPRESENTATION_BACKOFFICE_RESPONSE,
 	REPRESENTATIONS_BACKOFFICE_DATA,

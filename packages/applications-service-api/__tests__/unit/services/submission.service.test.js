@@ -1,17 +1,11 @@
 const { generateId } = require('../../../src/utils/generate-id');
 const {
-	createNISubmission,
-	completeNISubmission
-} = require('../../../src/services/submission.ni.service');
-const {
 	generateRepresentationPDF,
 	uploadSubmissionFileToBlobStorage
 } = require('../../../src/utils/file');
-const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
-const { getApplication } = require('../../../src/services/application.backoffice.service');
+const { publishDeadlineSubmission } = require('../../../src/services/publish.service');
+const { getApplication } = require('../../../src/services/application.service');
 const { sendSubmissionNotification } = require('../../../src/lib/notify');
-const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
-
 const {
 	createSubmission,
 	completeSubmission
@@ -19,7 +13,7 @@ const {
 const { REQUEST_FILE_DATA } = require('../../__data__/file');
 const { SUBMISSION_DATA } = require('../../__data__/submission');
 const { APPLICATION_API } = require('../../__data__/application');
-const BACK_OFFICE_CASE_REFERENCE = 'BC0110001';
+const CASE_REFERENCE = 'BC0110001';
 
 jest.mock('../../../src/lib/config', () => ({
 	backOfficeIntegration: {
@@ -38,207 +32,164 @@ jest.mock('../../../src/lib/config', () => ({
 }));
 
 jest.mock('../../../src/utils/file');
-jest.mock('../../../src/services/submission.ni.service');
-jest.mock('../../../src/services/backoffice.publish.service');
-jest.mock('../../../src/services/application.backoffice.service');
+jest.mock('../../../src/services/publish.service');
+jest.mock('../../../src/services/application.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/utils/generate-id');
-jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('submission.service', () => {
-	beforeAll(() => {
-		isBackOfficeCaseReference.mockImplementation(
-			(caseReference) => caseReference === BACK_OFFICE_CASE_REFERENCE
-		);
-	});
 	describe('createSubmission', () => {
-		describe('Back Office case', () => {
-			const mockGuid = 'd3ae5a1c-6b97-4708-a61f-217670ebaba1';
-			beforeEach(() => uploadSubmissionFileToBlobStorage.mockResolvedValueOnce(mockGuid));
+		const mockGuid = 'd3ae5a1c-6b97-4708-a61f-217670ebaba1';
+		beforeEach(() => uploadSubmissionFileToBlobStorage.mockResolvedValueOnce(mockGuid));
 
-			describe('submission with submissionId supplied', () => {
-				describe('submission with user uploaded file', () => {
-					it('publishes message with submission metadata and uploads user file', async () => {
-						const submission = {
-							metadata: {
-								...SUBMISSION_DATA.metadata,
-								caseReference: BACK_OFFICE_CASE_REFERENCE,
-								representation: undefined
-							},
-							file: REQUEST_FILE_DATA
-						};
+		describe('submission with submissionId supplied', () => {
+			describe('submission with user uploaded file', () => {
+				it('publishes message with submission metadata and uploads user file', async () => {
+					const submission = {
+						metadata: {
+							...SUBMISSION_DATA.metadata,
+							caseReference: CASE_REFERENCE,
+							representation: undefined
+						},
+						file: REQUEST_FILE_DATA
+					};
 
-						const result = await createSubmission(submission);
+					const result = await createSubmission(submission);
 
-						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
-						expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
-						expect(result).toEqual({ submissionId: submission.metadata.submissionId });
-					});
-				});
-
-				describe('submission with written representation', () => {
-					it('publishes message with submission metadata and uploads generated file', async () => {
-						const submission = {
-							metadata: {
-								...SUBMISSION_DATA.metadata,
-								caseReference: BACK_OFFICE_CASE_REFERENCE,
-								representation: 'some rep'
-							}
-						};
-
-						const generatedRepresentationFileData = {
-							name: 'Written-Representation-123.pdf',
-							originalName: 'Written-Representation-123.pdf',
-							buffer: Buffer.from([0]),
-							size: 1,
-							md5: 'examplemd5',
-							mimeType: 'application/pdf'
-						};
-
-						generateRepresentationPDF.mockReturnValueOnce(generatedRepresentationFileData);
-
-						const result = await createSubmission(submission);
-
-						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(
-							generatedRepresentationFileData
-						);
-						expect(publishDeadlineSubmission).toBeCalledWith(
-							{
-								...submission,
-								file: generatedRepresentationFileData
-							},
-							mockGuid
-						);
-						expect(result).toEqual({ submissionId: submission.metadata.submissionId });
-					});
+					expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
+					expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
+					expect(result).toEqual({ submissionId: submission.metadata.submissionId });
 				});
 			});
 
-			describe('submission without submissionId', () => {
-				beforeAll(() => {
-					generateId.mockReturnValue('S3AAB2CF4');
-				});
+			describe('submission with written representation', () => {
+				it('publishes message with submission metadata and uploads generated file', async () => {
+					const submission = {
+						metadata: {
+							...SUBMISSION_DATA.metadata,
+							caseReference: CASE_REFERENCE,
+							representation: 'some rep'
+						}
+					};
 
-				describe('submission with user uploaded file', () => {
-					it('publishes message with submission metadata and uploads user file', async () => {
-						const submission = {
-							metadata: {
-								...SUBMISSION_DATA.metadata,
-								caseReference: BACK_OFFICE_CASE_REFERENCE,
-								representation: undefined,
-								submissionId: undefined
-							},
-							file: REQUEST_FILE_DATA
-						};
+					const generatedRepresentationFileData = {
+						name: 'Written-Representation-123.pdf',
+						originalName: 'Written-Representation-123.pdf',
+						buffer: Buffer.from([0]),
+						size: 1,
+						md5: 'examplemd5',
+						mimeType: 'application/pdf'
+					};
 
-						const result = await createSubmission(submission);
+					generateRepresentationPDF.mockReturnValueOnce(generatedRepresentationFileData);
 
-						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
-						expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
-						expect(result).toEqual({ submissionId: 'S3AAB2CF4' });
-					});
-				});
+					const result = await createSubmission(submission);
 
-				describe('submission with written representation', () => {
-					it('publishes message with submission metadata and uploads generated file', async () => {
-						const submission = {
-							metadata: {
-								...SUBMISSION_DATA.metadata,
-								caseReference: BACK_OFFICE_CASE_REFERENCE,
-								representation: 'some rep',
-								submissionId: undefined
-							}
-						};
-
-						const generatedRepresentationFileData = {
-							name: 'Written-Representation-BC0110001-301223110613245.pdf',
-							originalName: 'Written-Representation-BC0110001-301223110613245.pdf',
-							buffer: Buffer.from([0]),
-							size: 1,
-							md5: 'examplemd5',
-							mimeType: 'application/pdf'
-						};
-
-						generateRepresentationPDF.mockReturnValueOnce(generatedRepresentationFileData);
-
-						const result = await createSubmission(submission);
-
-						expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(
-							generatedRepresentationFileData
-						);
-						expect(publishDeadlineSubmission).toBeCalledWith(
-							{
-								...submission,
-								file: generatedRepresentationFileData
-							},
-							mockGuid
-						);
-						expect(result).toEqual({ submissionId: 'S3AAB2CF4' });
-					});
+					expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(generatedRepresentationFileData);
+					expect(publishDeadlineSubmission).toBeCalledWith(
+						{
+							...submission,
+							file: generatedRepresentationFileData
+						},
+						mockGuid
+					);
+					expect(result).toEqual({ submissionId: submission.metadata.submissionId });
 				});
 			});
 		});
 
-		describe('NI case', () => {
-			const submission = {
-				metadata: {
-					...SUBMISSION_DATA,
-					caseReference: 'EN010009'
-				}
-			};
+		describe('submission without submissionId', () => {
+			beforeAll(() => {
+				generateId.mockReturnValue('S3AAB2CF4');
+			});
 
-			it('invokes createNISubmission', async () => {
-				await createSubmission(submission);
+			describe('submission with user uploaded file', () => {
+				it('publishes message with submission metadata and uploads user file', async () => {
+					const submission = {
+						metadata: {
+							...SUBMISSION_DATA.metadata,
+							caseReference: CASE_REFERENCE,
+							representation: undefined,
+							submissionId: undefined
+						},
+						file: REQUEST_FILE_DATA
+					};
 
-				expect(createNISubmission).toBeCalledWith(submission);
+					const result = await createSubmission(submission);
+
+					expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(submission.file);
+					expect(publishDeadlineSubmission).toBeCalledWith(submission, mockGuid);
+					expect(result).toEqual({ submissionId: 'S3AAB2CF4' });
+				});
+			});
+
+			describe('submission with written representation', () => {
+				it('publishes message with submission metadata and uploads generated file', async () => {
+					const submission = {
+						metadata: {
+							...SUBMISSION_DATA.metadata,
+							caseReference: CASE_REFERENCE,
+							representation: 'some rep',
+							submissionId: undefined
+						}
+					};
+
+					const generatedRepresentationFileData = {
+						name: 'Written-Representation-BC0110001-301223110613245.pdf',
+						originalName: 'Written-Representation-BC0110001-301223110613245.pdf',
+						buffer: Buffer.from([0]),
+						size: 1,
+						md5: 'examplemd5',
+						mimeType: 'application/pdf'
+					};
+
+					generateRepresentationPDF.mockReturnValueOnce(generatedRepresentationFileData);
+
+					const result = await createSubmission(submission);
+
+					expect(uploadSubmissionFileToBlobStorage).toBeCalledWith(generatedRepresentationFileData);
+					expect(publishDeadlineSubmission).toBeCalledWith(
+						{
+							...submission,
+							file: generatedRepresentationFileData
+						},
+						mockGuid
+					);
+					expect(result).toEqual({ submissionId: 'S3AAB2CF4' });
+				});
 			});
 		});
 	});
-
 	describe('completeSubmission', () => {
-		describe('Back Office case', () => {
-			const submissionDetails = {
+		const submissionDetails = {
+			submissionId: 1,
+			caseReference: CASE_REFERENCE,
+			email: 'person@example.org'
+		};
+
+		it('sends submission notification', async () => {
+			getApplication.mockResolvedValueOnce(APPLICATION_API);
+
+			await completeSubmission(submissionDetails);
+
+			expect(sendSubmissionNotification).toBeCalledWith({
 				submissionId: 1,
-				caseReference: BACK_OFFICE_CASE_REFERENCE,
-				email: 'person@example.org'
-			};
-
-			it('sends submission notification', async () => {
-				getApplication.mockResolvedValueOnce(APPLICATION_API);
-
-				await completeSubmission(submissionDetails);
-
-				expect(sendSubmissionNotification).toBeCalledWith({
-					submissionId: 1,
-					email: 'person@example.org',
-					project: {
-						name: APPLICATION_API.projectName,
-						email: APPLICATION_API.projectEmailAddress
-					}
-				});
-			});
-
-			it('throws error if application not found', async () => {
-				getApplication.mockResolvedValueOnce(null);
-
-				await expect(() => completeSubmission(submissionDetails)).rejects.toEqual({
-					code: 404,
-					message: {
-						errors: ['Project with case reference BC0110001 not found']
-					}
-				});
+				email: 'person@example.org',
+				project: {
+					name: APPLICATION_API.projectName,
+					email: APPLICATION_API.projectEmailAddress
+				}
 			});
 		});
 
-		describe('NI case', () => {
-			it('invokes createNISubmission', async () => {
-				await completeSubmission({
-					caseReference: 'EN010120',
-					email: 'person@example.org',
-					submissionId: 1
-				});
+		it('throws error if application not found', async () => {
+			getApplication.mockResolvedValueOnce(null);
 
-				expect(completeNISubmission).toBeCalledWith(1);
+			await expect(() => completeSubmission(submissionDetails)).rejects.toEqual({
+				code: 404,
+				message: {
+					errors: ['Project with case reference BC0110001 not found']
+				}
 			});
 		});
 	});

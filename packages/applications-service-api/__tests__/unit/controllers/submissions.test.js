@@ -4,8 +4,6 @@ const { REQUEST_FILE_DATA } = require('../../__data__/file');
 const { createSubmission, completeSubmission } = require('../../../src/controllers/submissions');
 
 jest.mock('../../../src/services/submission.service');
-jest.mock('../../../src/services/submission.ni.service');
-jest.mock('../../../src/services/ni.file.service');
 jest.mock('../../../src/utils/date-utils');
 
 const { getDate } = require('../../../src/utils/date-utils');
