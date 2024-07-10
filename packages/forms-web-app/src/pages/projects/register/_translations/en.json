@@ -88,6 +88,12 @@
 		"yesHiddenText": "I'm 18 or older",
 		"noHiddenText": "I'm under 18"
 	},
+	"areThey18": {
+		"pageHeading": "Are they 18 or over?",
+		"hint": "You can still register for them if they are under 18, but we will process their personal details in a different way.",
+		"yesHiddenText": "they're 18 or over",
+		"noHiddenText": "they're under 18"
+	},
 	"email": {
 		"pageHeading": "What is your email address?",
 		"hint": "We will use your email address to send you information about this project. We will not publish your email address."
@@ -212,6 +218,9 @@
 		"nameHouseholdRepresenting": {
 			"empty": "Enter the name of the household you are representing",
 			"length": "Full name of the household you are representing must be between 3 and 64 characters"
+		},
+		"areThey18": {
+			"empty": "Select yes if they are 18 or over"
 		}
 	}
 }

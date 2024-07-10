@@ -340,11 +340,15 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/are-they-18-over',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAreThey18Controller
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/are-they-18-over',
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				areThey18ValidationRules(),
 				validationErrorHandler,

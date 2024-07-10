@@ -1,7 +1,11 @@
 const { body } = require('express-validator');
 
 const ruleOver18 = () =>
-	body('over-18').notEmpty().withMessage('Select yes if they are 18 or over');
+	body('over-18')
+		.notEmpty()
+		.withMessage((_, { req }) => {
+			return req.i18n.t('register.validationErrors.areThey18.empty');
+		});
 
 const rules = () => [ruleOver18()];
 

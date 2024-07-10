@@ -41,6 +41,12 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageHeading": "What is your address?",
     "postcode": "Postcode",
   },
+  "areThey18": {
+    "hint": "You can still register for them if they are under 18, but we will process their personal details in a different way.",
+    "noHiddenText": "they're under 18",
+    "pageHeading": "Are they 18 or over?",
+    "yesHiddenText": "they're 18 or over",
+  },
   "areYou18": {
     "hint": "You can still register to have your say if you are under 18, but we will process your personal details in a different way.",
     "noHiddenText": "I'm under 18",
@@ -178,6 +184,9 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageTitle": "Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning",
   },
   "validationErrors": {
+    "areThey18": {
+      "empty": "Select yes if they are 18 or over",
+    },
     "jobTitleOrRole": {
       "empty": "Enter your job title or volunteer role",
       "length": "Your job title or volunteer role must be 64 characters or less",
@@ -260,6 +269,12 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
     "pageHeading": "Beth yw'ch cyfeiriad?",
     "postcode": "Cod post",
+  },
+  "areThey18": {
+    "hint": "Gallwch gofrestru ar ei ran o hyd os yw'n iau na 18 oed, ond byddwn yn prosesu ei fanylion personol mewn ffordd wahanol.",
+    "noHiddenText": "maen nhw o dan 18 oed",
+    "pageHeading": "A yw'n 18 oed neu'n hŷn?",
+    "yesHiddenText": "maen nhw'n 18 oed neu'n hŷn",
   },
   "areYou18": {
     "hint": "Gallwch gofrestru i leisio'ch barn os ydych yn iau na 18 oed hefyd, ond byddwn yn prosesu'ch manylion personol mewn ffordd wahanol.",
@@ -398,17 +413,20 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "pageTitle": "Ar ran pwy ydych chi'n cofrestru - Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
   },
   "validationErrors": {
+    "areThey18": {
+      "empty": "Dewiswch 'ydyw' os yw'n 18 oed neu'n hŷn",
+    },
     "jobTitleOrRole": {
       "empty": "Nodwch deitl eich swydd neu'ch rôl wirfoddoli",
       "length": "Mae'n rhaid i deitl eich swydd neu'ch rôl wirfoddoli gynnwys 64 o nodau neu lai",
     },
     "nameHouseholdRepresenting": {
-      "empty": "Enter the name of the household you are representing",
-      "length": "Full name of the household you are representing must be between 3 and 64 characters",
+      "empty": "Rhowch enw'r cartref yr ydych yn ei gynrychioli",
+      "length": "Rhaid i enw llawn y cartref yr ydych yn ei gynrychioli fod rhwng 3 a 64 nod",
     },
     "nameOrganisationRepresenting": {
-      "empty": "Enter the full name of the organisation you are representing",
-      "length": "Full name of the organisation you are representing must be between 3 and 64 characters",
+      "empty": "Rhowch enw llawn y sefydliad yr ydych yn ei gynrychioli",
+      "length": "Rhaid i enw llawn y sefydliad yr ydych yn ei gynrychioli fod rhwng 3 a 64 nod",
     },
     "namePersonRepresenting": {
       "empty": "Nodwch enw llawn yr unigolyn rydych chi'n ei gynrychioli",

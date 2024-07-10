@@ -318,11 +318,15 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentAreTheyOver18URL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAreThey18Controller
 );
 registerAgentRouter.post(
 	registerAgentAreTheyOver18URL,
+	addCommonTranslationsMiddleware,
+	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	areThey18ValidationRules(),
 	validationErrorHandler,
