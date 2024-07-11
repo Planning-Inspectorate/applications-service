@@ -10,9 +10,9 @@ const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const {
 	validateHasInterestedPartyNumber
 } = require('../../validators/examination/has-interested-party-number');
-const { validateNameAgent } = require('./name/_validators/validate-name-agent');
-const { validateNameMyself } = require('./name/_validators/validate-name-myself');
-const { validateNameOrganisation } = require('./name/_validators/validate-name-organisation');
+const { validateNameAgent } = require('./name/utils/_validators/validate-name-agent');
+const { validateNameMyself } = require('./name/utils/_validators/validate-name-myself');
+const { validateNameOrganisation } = require('./name/utils/_validators/validate-name-organisation');
 const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
@@ -129,13 +129,7 @@ router.get(`/${checkYourAnswers.route}`, getCheckYourAnswers);
 router.get(`/${haveYourSay.route}`, projectsMiddleware, getHaveYourSay);
 
 router.get(`/${email.route}`, getEmail);
-router.post(
-	`/${email.route}`,
-	addCommonTranslationsMiddleware,
-	emailValidationRules(email),
-	validationErrorHandler,
-	postEmail
-);
+router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);
 
 router.get(`/${evidenceOrComment.route}`, getEvidenceOrComment);
 router.post(

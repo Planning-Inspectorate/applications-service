@@ -3,6 +3,11 @@
 		"title1": "Are you {{-applicant}}?",
 		"errorMessage1": "Select yes if you are {{-applicant}}"
 	},
+	"email": {
+		"title": "What's your email address?",
+		"heading1": "What's your email address?",
+		"hintText1": "We'll use your email address to confirm we've received your submission. We will not publish your email address."
+	},
 	"hasInterestedPartyNumber": {
 		"title1": "Do you have an interested party reference number?",
 		"paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
