@@ -98,7 +98,7 @@ describe('documentV3 service', () => {
 				caseReference: 'EN010085',
 				page: 1,
 				itemsPerPage: 25,
-				searchTerm: 'foo'
+				searchTerm: 'foo bar'
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
@@ -109,10 +109,22 @@ describe('documentV3 service', () => {
 						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
-								{ description: { [Op.like]: '%foo%' } },
-								{ personal_name: { [Op.like]: '%foo%' } },
-								{ representative: { [Op.like]: '%foo%' } },
-								{ mime: { [Op.like]: '%foo%' } }
+								{
+									[Op.or]: [
+										{ description: { [Op.like]: '%foo%' } },
+										{ personal_name: { [Op.like]: '%foo%' } },
+										{ representative: { [Op.like]: '%foo%' } },
+										{ mime: { [Op.like]: '%foo%' } }
+									]
+								},
+								{
+									[Op.or]: [
+										{ description: { [Op.like]: '%bar%' } },
+										{ personal_name: { [Op.like]: '%bar%' } },
+										{ representative: { [Op.like]: '%bar%' } },
+										{ mime: { [Op.like]: '%bar%' } }
+									]
+								}
 							]
 						}
 					]
@@ -198,7 +210,7 @@ describe('documentV3 service', () => {
 				caseReference: 'EN010085',
 				page: 1,
 				itemsPerPage: 25,
-				searchTerm: 'foo',
+				searchTerm: 'foo bar',
 				filters: [
 					{
 						name: 'stage',
@@ -216,10 +228,22 @@ describe('documentV3 service', () => {
 						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
-								{ description: { [Op.like]: '%foo%' } },
-								{ personal_name: { [Op.like]: '%foo%' } },
-								{ representative: { [Op.like]: '%foo%' } },
-								{ mime: { [Op.like]: '%foo%' } }
+								{
+									[Op.or]: [
+										{ description: { [Op.like]: '%foo%' } },
+										{ personal_name: { [Op.like]: '%foo%' } },
+										{ representative: { [Op.like]: '%foo%' } },
+										{ mime: { [Op.like]: '%foo%' } }
+									]
+								},
+								{
+									[Op.or]: [
+										{ description: { [Op.like]: '%bar%' } },
+										{ personal_name: { [Op.like]: '%bar%' } },
+										{ representative: { [Op.like]: '%bar%' } },
+										{ mime: { [Op.like]: '%bar%' } }
+									]
+								}
 							]
 						},
 						{

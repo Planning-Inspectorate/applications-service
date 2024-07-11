@@ -41,15 +41,32 @@ describe('document repository', () => {
 		it('calls findMany and count with searchTerm if provided', async () => {
 			await getDocuments({
 				caseReference: caseReference,
-				searchTerm: 'someterm'
+				searchTerm: 'some term'
 			});
 
-			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].description.contains).toEqual(
-				'someterm'
-			);
-			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].description.contains).toEqual(
-				'someterm'
-			);
+			const expectedSearchTermQuery = [
+				{
+					OR: [
+						{ description: { contains: 'some' } },
+						{ descriptionWelsh: { contains: 'some' } },
+						{ author: { contains: 'some' } },
+						{ authorWelsh: { contains: 'some' } },
+						{ representative: { contains: 'some' } }
+					]
+				},
+				{
+					OR: [
+						{ description: { contains: 'term' } },
+						{ descriptionWelsh: { contains: 'term' } },
+						{ author: { contains: 'term' } },
+						{ authorWelsh: { contains: 'term' } },
+						{ representative: { contains: 'term' } }
+					]
+				}
+			];
+
+			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR).toEqual(expectedSearchTermQuery);
+			expect(mockCount.mock.calls[0][0].where.AND[2].OR).toEqual(expectedSearchTermQuery);
 		});
 
 		it('calls findMany and count with filters if provided', async () => {
