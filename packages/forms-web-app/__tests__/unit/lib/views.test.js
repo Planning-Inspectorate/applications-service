@@ -6,7 +6,6 @@ describe('lib/views', () => {
 			APPLICATION_NUMBER: 'application-number',
 			PROJECTS: {
 				PROJECT: 'projects/index',
-				PROJECT_TIMELINE: 'projects/project-timeline',
 				DOCUMENTS: 'projects/documents',
 				REPRESENTATION: 'projects/representation',
 				REPRESENTATIONS: 'projects/representations',
