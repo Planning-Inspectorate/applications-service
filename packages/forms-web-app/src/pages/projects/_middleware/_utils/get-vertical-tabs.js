@@ -27,12 +27,6 @@ function getVerticalTabs(
 			url: getProjectsIndexURL(caseRef)
 		},
 		{
-			hidden: featureFlag.hideProjectTimelineLink != true,
-			id: 'project-timeline',
-			name: 'Project timeline',
-			url: '/projects/project-timeline'
-		},
-		{
 			hidden: false,
 			id: 'project-documents',
 			name: i18n.t('projects.navigation.documents'),
