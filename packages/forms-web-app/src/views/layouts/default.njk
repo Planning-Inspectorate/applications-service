@@ -4,7 +4,7 @@
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set pageTitle = "Error: " + pageTitle %}
+		{% set pageTitle = t('common.error') + ": " + pageTitle %}
 	{% endif %}
 
 	{{ pageTitle }}
