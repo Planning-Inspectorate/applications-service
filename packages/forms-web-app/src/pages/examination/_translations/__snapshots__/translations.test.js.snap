@@ -38,6 +38,26 @@ exports[`pages/examination/_translations should return the correct English trans
       "title1": "No Deadlines - Have your say on an application",
     },
   },
+  "name": {
+    "agent": {
+      "errorMessage1": "Enter the full name of the person, household or organisation",
+      "errorMessage2": "The full name of the person, household or organisation organisation's name must be between 1 and 255 characters",
+      "heading1": "What's the full name of the person, household or organisation?",
+      "title": "What's the full name of the person, household or organisation?",
+    },
+    "myself": {
+      "errorMessage1": "Enter your full name",
+      "errorMessage2": "Full name must be between 3 and 64 characters",
+      "heading1": "What is your full name?",
+      "title": "What is your full name?",
+    },
+    "organisation": {
+      "errorMessage1": "Enter your organisation's name",
+      "errorMessage2": "Your organisation's name must be between 1 and 255 characters",
+      "heading1": "What's your organisation's name?",
+      "title": "What's your organisation's name?",
+    },
+  },
   "submittingFor": {
     "errorMessage1": "Select who you are submitting for",
     "hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
@@ -92,6 +112,26 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "noOpenDeadlines": {
       "paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor.",
       "title1": "Dim Dyddiadau Cau - Lleisio'ch barn am gais",
+    },
+  },
+  "name": {
+    "agent": {
+      "errorMessage1": "Nodwch enw llawn yr unigolyn, yr aelwyd neu'r sefydliad",
+      "errorMessage2": "Mae'n rhaid i enw llawn yr unigolyn, yr aelwyd neu'r sefydliad gynnwys rhwng 1 a 255 o nodau",
+      "heading1": "Beth yw enw llawn yr unigolyn, yr aelwyd neu'r sefydliad?",
+      "title": "Beth yw enw llawn yr unigolyn, yr aelwyd neu'r sefydliad?",
+    },
+    "myself": {
+      "errorMessage1": "Nodwch eich enw llawn",
+      "errorMessage2": "Mae'n rhaid i'ch enw llawn gynnwys rhwng 3 a 64 o nodau",
+      "heading1": "Beth yw'ch enw llawn?",
+      "title": "Beth yw'ch enw llawn?",
+    },
+    "organisation": {
+      "errorMessage1": "Nodwch enw eich sefydliad",
+      "errorMessage2": "Rhaid i enw eich sefydliad fod rhwng 1 a 255 nod",
+      "heading1": "Beth yw enw eich sefydliad?",
+      "title": "Beth yw enw eich sefydliad?",
     },
   },
   "submittingFor": {

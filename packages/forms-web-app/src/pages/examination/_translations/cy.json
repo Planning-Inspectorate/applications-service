@@ -35,6 +35,26 @@
 			"paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor."
 		}
 	},
+	"name": {
+		"agent": {
+			"title": "Beth yw enw llawn yr unigolyn, yr aelwyd neu'r sefydliad?",
+			"heading1": "Beth yw enw llawn yr unigolyn, yr aelwyd neu'r sefydliad?",
+			"errorMessage1": "Nodwch enw llawn yr unigolyn, yr aelwyd neu'r sefydliad",
+			"errorMessage2": "Mae'n rhaid i enw llawn yr unigolyn, yr aelwyd neu'r sefydliad gynnwys rhwng 1 a 255 o nodau"
+		},
+		"myself": {
+			"title": "Beth yw'ch enw llawn?",
+			"heading1": "Beth yw'ch enw llawn?",
+			"errorMessage1": "Nodwch eich enw llawn",
+			"errorMessage2": "Mae'n rhaid i'ch enw llawn gynnwys rhwng 3 a 64 o nodau"
+		},
+		"organisation": {
+			"title": "Beth yw enw eich sefydliad?",
+			"heading1": "Beth yw enw eich sefydliad?",
+			"errorMessage1": "Nodwch enw eich sefydliad",
+			"errorMessage2": "Rhaid i enw eich sefydliad fod rhwng 1 a 255 nod"
+		}
+	},
 	"submittingFor": {
 		"title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",
 		"options": {

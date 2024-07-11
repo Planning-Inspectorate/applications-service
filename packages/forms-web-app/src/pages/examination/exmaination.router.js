@@ -5,15 +5,20 @@ const {
 	validateNotEmptyAndLength,
 	emailValidationRules
 } = require('../../validators/shared');
+
+const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const {
 	validateHasInterestedPartyNumber
 } = require('../../validators/examination/has-interested-party-number');
+const { validateNameAgent } = require('./name/_validators/validate-name-agent');
+const { validateNameMyself } = require('./name/_validators/validate-name-myself');
+const { validateNameOrganisation } = require('./name/_validators/validate-name-organisation');
+const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
 } = require('../../validators/examination/your-interested-party-number');
+
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
-const { validateApplicant } = require('./applicant/_utils/validate-applicant');
-const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 
 const { forwardView } = require('../../middleware/forward-view');
 const {
@@ -161,7 +166,7 @@ router.get(`/${nameAgent.route}`, forwardView(nameAgent), getName);
 router.post(
 	`/${nameAgent.route}`,
 	decodeUri('body', [nameAgent.id]),
-	validateNotEmptyAndLength(nameAgent),
+	validateNameAgent(nameAgent.id),
 	validationErrorHandler,
 	forwardView(nameAgent),
 	postName
@@ -171,7 +176,7 @@ router.get(`/${nameMyself.route}`, forwardView(nameMyself), getName);
 router.post(
 	`/${nameMyself.route}`,
 	decodeUri('body', [nameMyself.id]),
-	validateNotEmptyAndLength(nameMyself),
+	validateNameMyself(nameMyself.id),
 	validationErrorHandler,
 	forwardView(nameMyself),
 	postName
@@ -181,7 +186,7 @@ router.get(`/${nameOrganisation.route}`, forwardView(nameOrganisation), getName)
 router.post(
 	`/${nameOrganisation.route}`,
 	decodeUri('body', [nameOrganisation.id]),
-	validateNotEmptyAndLength(nameOrganisation),
+	validateNameOrganisation(nameOrganisation.id),
 	validationErrorHandler,
 	forwardView(nameOrganisation),
 	postName
