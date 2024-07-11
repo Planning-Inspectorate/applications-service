@@ -7,7 +7,7 @@
 {% block content %}
   {% if errorSummary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: t("common.thereIsAProblem"),
       errorList: errorSummary
     }) }}
   {% endif %}
@@ -33,7 +33,7 @@
 
         {{ govukButton({
           attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
+          text: t("common.continue"),
           type: "Submit"
         }) }}
       </form>

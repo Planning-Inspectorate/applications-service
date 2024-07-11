@@ -35,6 +35,26 @@
 			"paragraph1": "You cannot submit anything as there are no open deadlines."
 		}
 	},
+	"name": {
+		"agent": {
+			"title": "What's the full name of the person, household or organisation?",
+			"heading1": "What's the full name of the person, household or organisation?",
+			"errorMessage1": "Enter the full name of the person, household or organisation",
+			"errorMessage2": "The full name of the person, household or organisation organisation's name must be between 1 and 255 characters"
+		},
+		"myself": {
+			"title": "What is your full name?",
+			"heading1": "What is your full name?",
+			"errorMessage1": "Enter your full name",
+			"errorMessage2": "Full name must be between 3 and 64 characters"
+		},
+		"organisation": {
+			"title": "What's your organisation's name?",
+			"heading1": "What's your organisation's name?",
+			"errorMessage1": "Enter your organisation's name",
+			"errorMessage2": "Your organisation's name must be between 1 and 255 characters"
+		}
+	},
 	"submittingFor": {
 		"title1": "Who are you making the submission for?",
 		"options": {

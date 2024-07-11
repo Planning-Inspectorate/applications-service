@@ -12,8 +12,8 @@ const validateSubmittingFor = () => {
 	return [
 		body(submittingFor.id)
 			.notEmpty()
-			.withMessage((_, { req }) => {
-				return req.i18n.t('examination.submittingFor.errorMessage1');
+			.withMessage((_, { req: { i18n } }) => {
+				return i18n.t('examination.submittingFor.errorMessage1');
 			})
 	];
 };
