@@ -32,10 +32,10 @@ describe('mapApplicationsToCsv', () => {
 		const lines = result.split('\n');
 		expect(lines.length).toEqual(3);
 		expect(lines[0]).toMatchInlineSnapshot(
-			`""Project reference","Project name","Applicant name","Application type","Region","Location","Grid reference - Easting","Grid reference - Northing:","GPS co-ordinates","Stage","Description","Anticipated submission date","Anticipated submission period","Date of application","Date application accepted","Date Examination started","Date Examination closed","Date of recommendation","Date of decision","Date withdrawn""`
+			`""Project reference","Project name","Applicant name","Application type","Region","Location","Grid reference - Easting","Grid reference - Northing:","GPS co-ordinates","Stage","Description","Anticipated submission period","Date of application","Date application accepted","Date Examination started","Date Examination closed","Date of recommendation","Date of decision","Date withdrawn""`
 		); // headers
 		expect(lines[1]).toMatchInlineSnapshot(
-			`""EN000001","Test Project","Test Promoter","Test Proposal","Test Region","Test Location","Test Easting","Test Northing","Test Long, Test Lat","Pre-application","Test Summary","Test Date Of Submission","Test Submission Date Non Specific","Test Date Of DCO Submission","Test Date Of DCO Acceptance Non Acceptance","Test Confirmed Start Of Examination","2024-01-01","Test Date Of Recommendations","Test Confirmed Date Of Decision","Test Date Project Withdrawn""`
+			`""EN000001","Test Project","Test Promoter","Test Proposal","Test Region","Test Location","Test Easting","Test Northing","Test Long, Test Lat","Pre-application","Test Summary","Test Submission Date Non Specific","Test Date Of DCO Submission","Test Date Of DCO Acceptance Non Acceptance","Test Confirmed Start Of Examination","2024-01-01","Test Date Of Recommendations","Test Confirmed Date Of Decision","Test Date Project Withdrawn""`
 		); // first value
 		expect(lines[2]).toEqual(''); // last line is empty
 	});

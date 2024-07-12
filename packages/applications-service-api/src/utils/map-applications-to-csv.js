@@ -17,7 +17,6 @@ const mapApplicationsToCSV = (applications) => {
 		'GPS co-ordinates': application.LongLat?.join(', ') || '',
 		Stage: mapColumnLabelToApi('stage', application.Stage),
 		Description: application.Summary,
-		'Anticipated submission date': application.AnticipatedDateOfSubmission,
 		'Anticipated submission period': application.AnticipatedSubmissionDateNonSpecific,
 		'Date of application': application.DateOfDCOSubmission,
 		'Date application accepted': application.DateOfDCOAcceptance_NonAcceptance,
