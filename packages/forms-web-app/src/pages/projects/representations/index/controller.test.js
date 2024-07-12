@@ -100,7 +100,6 @@ describe('pages/projects/representations/index/controller', () => {
 			caseRef: 'EN010009',
 			filterNameID: 'type',
 			filters: [],
-			hideAllExaminationDocumentsLink: true,
 			pageOptions: [1],
 			paginationData: {
 				currentPage: 1,
