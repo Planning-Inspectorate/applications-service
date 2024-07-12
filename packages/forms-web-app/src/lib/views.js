@@ -2,7 +2,6 @@ const VIEW = {
 	APPLICATION_NUMBER: 'application-number',
 	PROJECTS: {
 		PROJECT: 'projects/index',
-		PROJECT_TIMELINE: 'projects/project-timeline',
 		DOCUMENTS: 'projects/documents',
 		REPRESENTATIONS: 'projects/representations',
 		TIMETABLE: 'projects/examination-timetable',

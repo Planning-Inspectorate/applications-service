@@ -12,9 +12,6 @@ Feature: Overview page
         When I click on register to have your say about national infrastructure project link
         Then I am on the "register to have your say" page
 
-    Scenario: click on Project timeline link
-        When I click on "Project timeline" link
-
     Scenario: click on Relevant Representations (Registration comments) link
         When I click on "Relevant Representations (Registration comments)" link
         Then I click on required "Return to the project overview" link

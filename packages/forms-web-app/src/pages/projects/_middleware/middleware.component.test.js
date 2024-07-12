@@ -17,8 +17,7 @@ jest.mock('../../../config', () => {
 		...originalConfig,
 		featureFlag: {
 			...originalConfig.featureFlag,
-			allowProjectInformation: false,
-			hideProjectTimelineLink: false
+			allowProjectInformation: false
 		}
 	};
 });
@@ -73,12 +72,6 @@ describe('pages/projects/_middleware/middleware', () => {
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'
-					},
-					{
-						hidden: true,
-						id: 'project-timeline',
-						name: 'Project timeline',
-						url: '/projects/project-timeline'
 					},
 					{
 						hidden: false,

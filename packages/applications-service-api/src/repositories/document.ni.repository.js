@@ -1,5 +1,6 @@
 const { Op, fn, col, literal } = require('sequelize');
 const db = require('../models');
+const { mapNISearchTermToQuery } = require('../utils/queries');
 
 const fetchDocuments = async (requestQuery) => {
 	const where = {
@@ -60,7 +61,12 @@ const buildWhereStatements = (caseReference, searchTerm, filters, datePublished)
 	];
 
 	if (searchTerm) {
-		const searchTermStatement = mapSearchTermToQuery(searchTerm);
+		const searchTermStatement = mapNISearchTermToQuery(searchTerm, [
+			'description',
+			'personal_name',
+			'representative',
+			'mime'
+		]);
 		if (searchTermStatement) statements.push(searchTermStatement);
 	}
 
@@ -86,17 +92,6 @@ const mapFiltersToQuery = (filters) => {
 			return filterStatement;
 		});
 		if (filtersQuery.length > 0) return { [Op.or]: filtersQuery };
-	}
-};
-
-const mapSearchTermToQuery = (searchTerm) => {
-	if (searchTerm) {
-		const searchStatements = ['description', 'personal_name', 'representative', 'mime'].map(
-			(field) => ({
-				[field]: { [Op.like]: `%${searchTerm}%` }
-			})
-		);
-		return { [Op.or]: searchStatements };
 	}
 };
 

@@ -26,8 +26,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = false;
-				featureFlag.hideProjectTimelineLink = false;
-
 				result = getVerticalTabs(i18n, 'mock-case-ref', mockApplicationData, true, true);
 			});
 
@@ -38,12 +36,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'
-					},
-					{
-						hidden: true,
-						id: 'project-timeline',
-						name: 'Project timeline',
-						url: '/projects/project-timeline'
 					},
 					{
 						hidden: false,
@@ -94,7 +86,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 		describe('and feature flags are set', () => {
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = true;
-				featureFlag.hideProjectTimelineLink = true;
 			});
 
 			it('should return the vertical tabs', () => {
@@ -105,12 +96,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'
-					},
-					{
-						hidden: false,
-						id: 'project-timeline',
-						name: 'Project timeline',
-						url: '/projects/project-timeline'
 					},
 					{
 						hidden: false,
@@ -177,12 +162,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 								id: 'project-information',
 								name: 'Project information',
 								url: '/projects/re-opened-registration-case-ref'
-							},
-							{
-								hidden: false,
-								id: 'project-timeline',
-								name: 'Project timeline',
-								url: '/projects/project-timeline'
 							},
 							{
 								hidden: false,
