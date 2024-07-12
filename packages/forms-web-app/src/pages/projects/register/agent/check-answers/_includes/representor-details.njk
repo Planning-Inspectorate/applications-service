@@ -10,24 +10,24 @@
 {{ data.representor.address.country }}
 {% endset %}
 
-<h2 class="govuk-heading-m">Your details</h2>
+<h2 class="govuk-heading-m">{{ t('register.checkYourAnswers.heading2') }}</h2>
 
 {{ govukSummaryList({
 	classes: "govuk-!-margin-bottom-9",
 	rows: [
 		{
 			key: {
-			text: "Who are you registering for?"
+			text: t('register.checkYourAnswers.registeringFor')
 		},
 			value: {
-			text: summaryField( "On behalf of another person, a household or an organisation I do not work for", { 'data-cy': "type-of-party" })
+			text: summaryField( t('register.checkYourAnswers.agent'), { 'data-cy': "type-of-party" })
 		},
 			actions: {
 			items: [
 				{
 					href: baseUrl + "/register/who-registering-for?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "who are you registering for",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeRegisteringForHiddenText'),
 					attributes: { "data-cy": "registering-for" }
 				}
 			]
@@ -35,7 +35,7 @@
 		},
 		{
 			key: {
-			text: "Full name"
+			text: t('register.checkYourAnswers.name')
 		},
 			value: {
 			text: summaryField( data.representor['full-name'], { 'data-cy': "full-name" })
@@ -44,8 +44,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/full-name?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "your full name",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeNameHiddenText'),
 					attributes: { "data-cy": "full-name" }
 				}
 			]
@@ -53,7 +53,7 @@
 		},
 		{
 			key: {
-			text: "Organisation name"
+			text: t('register.checkYourAnswers.organisationName2')
 		},
 			value: {
 			text: summaryField( data.representor['organisation-name'], { 'data-cy': "organisation-name" })
@@ -62,8 +62,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/name-of-organisation?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "your organisation name",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeOrganisationNameHiddenText2'),
 					attributes: { "data-cy": "organisation-name" }
 				}
 			]
@@ -71,7 +71,7 @@
 		},
 		{
 			key: {
-			text: "Email address"
+			text: t('register.checkYourAnswers.email')
 		},
 			value: {
 			text: summaryField( data.representor['email'], { 'data-cy': "email" })
@@ -80,8 +80,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/email-address?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "your email address",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeEmailHiddenText'),
 					attributes: { "data-cy": "email" }
 				}
 			]
@@ -89,7 +89,7 @@
 		},
 		{
 			key: {
-			text: "Address"
+			text: t('register.checkYourAnswers.address')
 		},
 			value: {
 			html: address
@@ -98,8 +98,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/address?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "your address",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeAddressHiddenText'),
 					attributes: { "data-cy": "address" }
 				}
 			]
@@ -107,7 +107,7 @@
 		},
 		{
 			key: {
-			text: "Telephone number"
+			text: t('register.checkYourAnswers.number')
 		},
 			value: {
 			text: summaryField( data.representor['telephone'], { 'data-cy': "telephone" })
@@ -116,8 +116,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/telephone-number?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "your telephone number",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeNumberHiddenText'),
 					attributes: { "data-cy": "telephone" }
 				}
 			]

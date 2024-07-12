@@ -11,22 +11,22 @@
 {% endset %}
 
 {% if data.representing === 'person' %}
-	{% set representing = "A person" %}
-	{% set representingTxt = "The name of the person you are representing" %}
-	{% set representingHiddenText = "the name of the person you are representing" %}
+	{% set representing = t('register.checkYourAnswers.representingPerson') %}
+	{% set representingTxt = t('register.checkYourAnswers.personName') %}
+	{% set representingHiddenText = t('register.checkYourAnswers.changePersonNameHiddenText') %}
 {% elseif data.representing === 'organisation' %}
-	{% set representing = "An organisation or charity I do not work for" %}
-	{% set representingTxt = "The name of the organisation or charity that you are representing" %}
-	{% set representingHiddenText = "the name of the organisation or charity that you are representing" %}
+	{% set representing = t('register.checkYourAnswers.representingOrganisation') %}
+	{% set representingTxt = t('register.checkYourAnswers.organisationName3') %}
+	{% set representingHiddenText = t('register.checkYourAnswers.changeOrganisationNameHiddenText3') %}
 {% elseif data.representing === 'family' %}
-	{% set representing = "A household" %}
-	{% set representingTxt = "The name of the household you are representing" %}
-	{% set representingHiddenText = "the name of the household you are representing " %}
+	{% set representing = "t('register.checkYourAnswers.representingHousehold')" %}
+	{% set representingTxt = t('register.checkYourAnswers.householdName') %}
+	{% set representingHiddenText = t('register.checkYourAnswers.changeHouseholdNameHiddenText') %}
 {% endif %}
 
 {% set rows = [{
 	key: {
-		text: "Who are you representing?"
+		text: t('register.checkYourAnswers.whoRepresenting')
 	},
 	value: {
 		text: summaryField( representing, { 'data-cy': "representing" })
@@ -35,8 +35,8 @@
 		items: [
 			{
 				href: baseUrl + "/register/agent/who-representing?mode=edit",
-				text: "Change",
-				visuallyHiddenText: "who are you representing for",
+				text: t('common.change'),
+				visuallyHiddenText: t('register.checkYourAnswers.changeWhoRepresentingHiddenText'),
 				attributes: { "data-cy": "representing" }
 			}
 		]
@@ -53,7 +53,7 @@
 		items: [
 			{
 				href: baseUrl + "/register/agent/name-person-representing?mode=edit",
-				text: "Change",
+				text: t('common.change'),
 				visuallyHiddenText: representingHiddenText,
 				attributes: { "data-cy": "full-name" }
 			}
@@ -64,7 +64,7 @@
 {% if data.representing !== 'organisation' %}
 	{% set rows = (rows.push({
 		key: {
-			text: "Are they 18 or over?"
+			text: t('register.checkYourAnswers.areThey18')
 		},
 		value: {
 			text: summaryField( data.representee['over-18'] | title, { 'data-cy': "over-18" })
@@ -73,8 +73,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/are-they-18-over?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "if they are over 18",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeAreThey18HiddenText'),
 					attributes: { "data-cy": "over-18" }
 				}
 			]
@@ -85,7 +85,7 @@
 {% set rows = (rows.push(
 	{
 		key: {
-			text: "Their email address"
+			text: t('register.checkYourAnswers.theirEmail')
 		},
 		value: {
 			text: summaryField( data.representee['email'], { 'data-cy': "email" })
@@ -94,8 +94,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/their-email-address?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "their email address",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeTheirEmailHiddenText'),
 					attributes: { "data-cy": "email" }
 				}
 			]
@@ -103,7 +103,7 @@
 	},
 	{
 		key: {
-			text: "Their address"
+			text:t('register.checkYourAnswers.theirAddress')
 		},
 		value: {
 			html: address
@@ -112,8 +112,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/their-postal-address?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "their address",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeTheirAddressHiddenText'),
 					attributes: { "data-cy": "address" }
 				}
 			]
@@ -121,7 +121,7 @@
 	},
 	{
 		key: {
-		text: "Their telephone number"
+		text: t('register.checkYourAnswers.theirNumber')
 	},
 		value: {
 		text: summaryField( data.representee['telephone'], { 'data-cy': "telephone" })
@@ -130,8 +130,8 @@
 			items: [
 				{
 					href: baseUrl + "/register/agent/their-telephone-number?mode=edit",
-					text: "Change",
-					visuallyHiddenText: "their telephone number",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeTheirNumberHiddenText'),
 					attributes: { "data-cy": "telephone" }
 				}
 			]
@@ -139,7 +139,7 @@
 	},
 	{
 		key: {
-		text: "Registration comments"
+		text: t('register.checkYourAnswers.comments')
 	},
 		value: {
 		text: summaryField( data['comment'], { "class": "-white-space--pre-line", 'data-cy': "comment" })
@@ -148,15 +148,15 @@
 		items: [
 			{
 				href: baseUrl + "/register/agent/tell-us-about-project?mode=edit",
-				text: "Change",
-				visuallyHiddenText: "registration comments",
+				text: t('common.change'),
+				visuallyHiddenText: t('register.checkYourAnswers.changeCommentsHiddenText'),
 				attributes: { "data-cy": "comment" }
 			}
 		]
 	}
 	}), rows) %}
 
-<h2 class="govuk-heading-m">Who you are representing</h2>
+<h2 class="govuk-heading-m">{{ t('register.checkYourAnswers.heading3') }}</h2>
 
 {{ govukSummaryList({
 	classes: "govuk-!-margin-bottom-9",
