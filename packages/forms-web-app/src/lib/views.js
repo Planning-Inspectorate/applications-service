@@ -6,7 +6,6 @@ const VIEW = {
 		DOCUMENTS: 'projects/documents',
 		REPRESENTATIONS: 'projects/representations',
 		TIMETABLE: 'projects/examination-timetable',
-		ALL_EXAMINATION_DOCUMENTS: 'projects/all-examination-documents',
 		RECOMMENDATIONS: 'projects/recommendations',
 		REPRESENTATION: 'projects/representation'
 	},

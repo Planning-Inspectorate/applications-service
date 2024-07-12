@@ -1,14 +1,13 @@
 const { getVerticalTabs } = require('./get-vertical-tabs');
 
-const { featureHideLink, featureFlag } = require('../../../../config');
+const { featureFlag } = require('../../../../config');
 const { mockI18n } = require('../../../_mocks/i18n');
 const projectsTranslations__EN = require('../../_translations/en.json');
 
 const i18n = mockI18n({ projects: projectsTranslations__EN });
 
 jest.mock('../../../../config', () => ({
-	featureFlag: {},
-	featureHideLink: {}
+	featureFlag: {}
 }));
 
 describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
@@ -28,7 +27,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = false;
 				featureFlag.hideProjectTimelineLink = false;
-				featureHideLink.hideAllExaminationDocumentsLink = true;
 
 				result = getVerticalTabs(i18n, 'mock-case-ref', mockApplicationData, true, true);
 			});
@@ -84,12 +82,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 						url: '/projects/mock-case-ref/get-updates/start'
 					},
 					{
-						hidden: true,
-						id: 'all-examination-documents',
-						name: 'All Examination documents',
-						url: '/projects/all-examination-documents'
-					},
-					{
 						hidden: false,
 						id: 'section-51',
 						name: 'Section 51 advice',
@@ -103,7 +95,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 			beforeEach(() => {
 				featureFlag.allowProjectInformation = true;
 				featureFlag.hideProjectTimelineLink = true;
-				featureHideLink.hideAllExaminationDocumentsLink = false;
 			});
 
 			it('should return the vertical tabs', () => {
@@ -156,12 +147,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock-case-ref/get-updates/start'
-					},
-					{
-						hidden: false,
-						id: 'all-examination-documents',
-						name: 'All Examination documents',
-						url: '/projects/all-examination-documents'
 					},
 					{
 						hidden: false,
@@ -234,12 +219,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 								id: 'get-updates',
 								name: 'Get updates',
 								url: '/projects/re-opened-registration-case-ref/get-updates/start'
-							},
-							{
-								hidden: false,
-								id: 'all-examination-documents',
-								name: 'All Examination documents',
-								url: '/projects/all-examination-documents'
 							},
 							{
 								hidden: false,

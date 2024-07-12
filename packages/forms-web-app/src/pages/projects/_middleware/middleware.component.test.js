@@ -18,8 +18,7 @@ jest.mock('../../../config', () => {
 		featureFlag: {
 			...originalConfig.featureFlag,
 			allowProjectInformation: false,
-			hideProjectTimelineLink: false,
-			hideAllExaminationDocumentsLink: false
+			hideProjectTimelineLink: false
 		}
 	};
 });
@@ -116,12 +115,6 @@ describe('pages/projects/_middleware/middleware', () => {
 						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock-case-ref/get-updates/start'
-					},
-					{
-						hidden: true,
-						id: 'all-examination-documents',
-						name: 'All Examination documents',
-						url: '/projects/all-examination-documents'
 					},
 					{
 						hidden: false,

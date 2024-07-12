@@ -1,4 +1,4 @@
-const { featureHideLink, featureFlag } = require('../../../../config');
+const { featureFlag } = require('../../../../config');
 const { getProjectsDocumentsURL } = require('../../documents/_utils/get-projects-documents-url');
 const { getProjectsIndexURL } = require('../../index/_utils/get-projects-index-url');
 const {
@@ -67,12 +67,6 @@ function getVerticalTabs(
 			id: 'get-updates',
 			name: i18n.t('projects.navigation.getUpdates'),
 			url: getUpdatesIndexURL(caseRef)
-		},
-		{
-			hidden: featureHideLink.hideAllExaminationDocumentsLink,
-			id: 'all-examination-documents',
-			name: 'All Examination documents',
-			url: '/projects/all-examination-documents'
 		},
 		{
 			hidden: false,

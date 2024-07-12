@@ -92,7 +92,6 @@ describe('pages/projects/representations/representation/controller', () => {
 							langIsWelsh: false,
 							allowProjectInformation: true,
 							backToListUrl: '/projects/EN010009/representations',
-							hideAllExaminationDocumentsLink: true,
 							pageHeading: 'Representation by Test (Test)',
 							pageTitle: 'Relevant Representations | Representation by Test (Test)',
 							projectName: 'ABC',
