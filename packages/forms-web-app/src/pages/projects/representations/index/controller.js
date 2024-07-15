@@ -2,7 +2,6 @@ const logger = require('../../../../lib/logger');
 const { searchRepresentations } = require('../../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../../lib/pagination');
 const {
-	featureHideLink: { hideAllExaminationDocumentsLink },
 	featureFlag: { allowProjectInformation }
 } = require('../../../../config');
 const { getRelevantRepresentationsQuery } = require('./_utils/get-relevant-representations-query');
@@ -51,7 +50,6 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			projectName: applicationData.projectName,
 			caseRef: case_ref,
 			allowProjectInformation,
-			hideAllExaminationDocumentsLink,
 			representations: getRepresentationsViewModel(representations, case_ref),
 			paginationData,
 			pageOptions,

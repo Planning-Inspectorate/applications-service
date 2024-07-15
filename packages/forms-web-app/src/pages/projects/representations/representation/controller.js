@@ -5,7 +5,6 @@ const { mapTitles } = require('../../../_utils/map-titles');
 const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getRepresentationViewModel } = require('../index/_utils/get-representations-view-model');
 const {
-	featureHideLink: { hideAllExaminationDocumentsLink },
 	featureFlag: { allowProjectInformation }
 } = require('../../../../config');
 const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
@@ -30,7 +29,6 @@ const getRepresentationController = async (req, res, next) => {
 			backToListUrl: getRepresentationsURL(case_ref),
 			projectName: ProjectName,
 			allowProjectInformation,
-			hideAllExaminationDocumentsLink,
 			langIsWelsh: isLangWelsh(i18n.language)
 		});
 	} catch (error) {
