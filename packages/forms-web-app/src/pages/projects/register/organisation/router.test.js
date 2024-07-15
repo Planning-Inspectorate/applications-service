@@ -38,12 +38,6 @@ const {
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
-const {
-	addCommonTranslationsMiddleware
-} = require('../../../_middleware/i18n/add-common-translations-middleware');
-const {
-	addRegisterTranslationsMiddleware
-} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
@@ -133,15 +127,11 @@ describe('pages/projects/register/organisation/router', () => {
 		it('should call the register organisation routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/full-name',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/full-name',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				fullNameValidationRules(),
@@ -152,15 +142,11 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/are-you-18-over',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAreYou18Controller
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/are-you-18-over',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				areYou18ValidationRules(),
 				validationErrorHandler,
@@ -169,15 +155,11 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationOrgNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				organisationOrgNameValidationRules(),
 				validationErrorHandler,
@@ -186,17 +168,12 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterEmailController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
-				addCommonTranslationsMiddleware,
 				emailValidationRules(),
 				validationErrorHandler,
 				postRegisterEmailController
@@ -204,15 +181,11 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationJobTitleController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				jobTitleValidationRules(),
@@ -223,15 +196,11 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAddressController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				addressValidationRules(),
 				validationErrorHandler,
@@ -240,15 +209,11 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/telephone-number',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNumberController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/telephone-number',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				telephoneValidationRules(),
 				validationErrorHandler,
@@ -257,15 +222,11 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/tell-us-about-project',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/tell-us-about-project',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				aboutProjectValidationRules(),
@@ -276,16 +237,12 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/check-answers',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationCheckAnswersController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/declaration',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);
@@ -297,8 +254,6 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/registration-complete',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterCompleteController
 			);

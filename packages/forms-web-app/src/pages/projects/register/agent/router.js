@@ -100,12 +100,6 @@ const {
 } = require('./complete/_utils/get-register-agent-complete-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
-const {
-	addCommonTranslationsMiddleware
-} = require('../../../_middleware/i18n/add-common-translations-middleware');
-const {
-	addRegisterTranslationsMiddleware
-} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
@@ -158,17 +152,9 @@ const registerAgentCompleteURL = getRegisterAgentCompleteURL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
-registerAgentRouter.get(
-	registerAgentNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
-	registerMiddleware,
-	getRegisterNameController
-);
+registerAgentRouter.get(registerAgentNameURL, registerMiddleware, getRegisterNameController);
 registerAgentRouter.post(
 	registerAgentNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),
@@ -178,50 +164,29 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentOrgNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentOrgNameController
 );
 registerAgentRouter.post(
 	registerAgentOrgNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	organisationNameValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentOrgNameController
 );
 
-registerAgentRouter.get(
-	registerAgentEmailURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
-	registerMiddleware,
-	getRegisterEmailController
-);
+registerAgentRouter.get(registerAgentEmailURL, registerMiddleware, getRegisterEmailController);
 registerAgentRouter.post(
 	registerAgentEmailURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
-	addCommonTranslationsMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
 	postRegisterEmailController
 );
 
-registerAgentRouter.get(
-	registerAgentAddressURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
-	registerMiddleware,
-	getRegisterAddressController
-);
+registerAgentRouter.get(registerAgentAddressURL, registerMiddleware, getRegisterAddressController);
 registerAgentRouter.post(
 	registerAgentAddressURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
@@ -230,15 +195,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingWhoURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingWhoController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingWhoURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingWhoValidationRules(),
 	validationErrorHandler,
@@ -247,15 +208,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingPersonNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingPersonNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
@@ -264,15 +221,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingOrgNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingOrgNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
@@ -281,32 +234,20 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingHouseholdURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingHouseholdURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentRepresentingNameController
 );
 
-registerAgentRouter.get(
-	registerAgentNumberURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
-	registerMiddleware,
-	getRegisterNumberController
-);
+registerAgentRouter.get(registerAgentNumberURL, registerMiddleware, getRegisterNumberController);
 registerAgentRouter.post(
 	registerAgentNumberURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,
@@ -315,15 +256,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentAreTheyOver18URL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAreThey18Controller
 );
 registerAgentRouter.post(
 	registerAgentAreTheyOver18URL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	areThey18ValidationRules(),
 	validationErrorHandler,
@@ -332,15 +269,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirAddressURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirAddressController
 );
 registerAgentRouter.post(
 	registerAgentTheirAddressURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
@@ -349,15 +282,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirEmailURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirEmailController
 );
 registerAgentRouter.post(
 	registerAgentTheirEmailURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	theirEmailValidationRules(),
 	validationErrorHandler,
@@ -366,15 +295,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentAboutProjectURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentAboutProjectController
 );
 registerAgentRouter.post(
 	registerAgentAboutProjectURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),
@@ -384,15 +309,11 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirTelephoneURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirTelephoneController
 );
 registerAgentRouter.post(
 	registerAgentTheirTelephoneURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	theirTelephoneValidationRules(),
 	validationErrorHandler,
@@ -401,16 +322,12 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentCheckAnswersURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAgentCheckAnswersController
 );
 
 registerAgentRouter.get(
 	registerAgentDeclarationURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
@@ -422,8 +339,6 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentCompleteURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );
