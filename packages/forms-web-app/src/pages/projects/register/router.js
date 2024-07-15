@@ -32,30 +32,14 @@ const registeringForURL = getRegisteringForURL();
 
 const registerRouter = express.Router({ mergeParams: true });
 
-registerRouter.get(
-	registerIndexURL,
-	addRegisterTranslationsMiddleware,
-	projectsMiddleware,
-	getRegisterIndexController
-);
-registerRouter.get(
-	`${registerIndexURL}/start`,
-	addRegisterTranslationsMiddleware,
-	projectsMiddleware,
-	getRegisterIndexController
-);
+registerRouter.use(addCommonTranslationsMiddleware, addRegisterTranslationsMiddleware);
 
-registerRouter.get(
-	registeringForURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
-	registerMiddleware,
-	getRegisteringForController
-);
+registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
+registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
+
+registerRouter.get(registeringForURL, registerMiddleware, getRegisteringForController);
 registerRouter.post(
 	registeringForURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	validateRegisteringForOptions(),
 	validationErrorHandler,

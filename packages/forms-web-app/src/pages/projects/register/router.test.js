@@ -45,31 +45,30 @@ describe('pages/projects/register/router', () => {
 		});
 
 		it('should call the register routes and controllers', () => {
+			expect(use).toHaveBeenCalledWith(
+				addCommonTranslationsMiddleware,
+				addRegisterTranslationsMiddleware
+			);
+
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/register-have-your-say',
-				addRegisterTranslationsMiddleware,
 				projectsMiddleware,
 				getRegisterIndexController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/register-have-your-say/start',
-				addRegisterTranslationsMiddleware,
 				projectsMiddleware,
 				getRegisterIndexController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/who-registering-for',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisteringForController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/who-registering-for',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				validateRegisteringForOptions(),
 				validationErrorHandler,
@@ -84,7 +83,7 @@ describe('pages/projects/register/router', () => {
 
 			expect(get).toBeCalledTimes(3);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(3);
+			expect(use).toBeCalledTimes(4);
 		});
 	});
 });

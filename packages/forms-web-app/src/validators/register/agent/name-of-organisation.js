@@ -4,10 +4,14 @@ const rules = () => {
 	return [
 		body('organisation-name')
 			.notEmpty()
-			.withMessage('Enter the name of the organisation you work for'),
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.organisationName.empty');
+			}),
 		body('organisation-name')
 			.isLength({ min: 1, max: 255 })
-			.withMessage('The name of the organisation you work for must be 255 characters or less')
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.organisationName.length');
+			})
 	];
 };
 

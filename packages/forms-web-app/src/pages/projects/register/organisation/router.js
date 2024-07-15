@@ -74,12 +74,6 @@ const {
 } = require('./complete/_utils/get-register-organisation-complete-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
-const {
-	addCommonTranslationsMiddleware
-} = require('../../../_middleware/i18n/add-common-translations-middleware');
-const {
-	addRegisterTranslationsMiddleware
-} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
@@ -117,15 +111,11 @@ const registerOrganisationRouter = express.Router({ mergeParams: true });
 
 registerOrganisationRouter.get(
 	registerOrganisationNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterNameController
 );
 registerOrganisationRouter.post(
 	registerOrganisationNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),
@@ -135,15 +125,11 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAreYouOver18URL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAreYou18Controller
 );
 registerOrganisationRouter.post(
 	registerOrganisationAreYouOver18URL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	areYou18ValidationRules(),
 	validationErrorHandler,
@@ -152,15 +138,11 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationOrgNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationOrgNameController
 );
 registerOrganisationRouter.post(
 	registerOrganisationOrgNameURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	organisationOrgNameValidationRules(),
 	validationErrorHandler,
@@ -169,17 +151,12 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationEmailURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterEmailController
 );
 registerOrganisationRouter.post(
 	registerOrganisationEmailURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
-	addCommonTranslationsMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
 	postRegisterEmailController
@@ -187,15 +164,11 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationJobTitleURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationJobTitleController
 );
 registerOrganisationRouter.post(
 	registerOrganisationJobTitleURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['role']),
 	jobTitleValidationRules(),
@@ -205,15 +178,11 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAddressURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterAddressController
 );
 registerOrganisationRouter.post(
 	registerOrganisationAddressURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
@@ -222,15 +191,11 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationNumberURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterNumberController
 );
 registerOrganisationRouter.post(
 	registerOrganisationNumberURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,
@@ -239,15 +204,11 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAboutProjectURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationAboutProjectController
 );
 registerOrganisationRouter.post(
 	registerOrganisationAboutProjectURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),
@@ -257,16 +218,12 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationCheckAnswersURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationCheckAnswersController
 );
 
 registerOrganisationRouter.get(
 	registerOrganisationDeclarationURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
@@ -278,8 +235,6 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationCompleteURL,
-	addCommonTranslationsMiddleware,
-	addRegisterTranslationsMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );
