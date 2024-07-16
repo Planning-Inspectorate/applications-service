@@ -9,7 +9,7 @@ const documentProjectStages = {
 		value: '1'
 	},
 	2: {
-		name: 'Acceptance (review of the application)',
+		name: 'Acceptance',
 		value: '2'
 	},
 	3: {
@@ -32,7 +32,7 @@ const documentProjectStages = {
 
 const projectStages = {
 	1: 'Pre-application',
-	2: 'Acceptance (review of the application)',
+	2: 'Acceptance',
 	3: 'Pre-examination',
 	4: 'Examination',
 	5: 'Recommendation',
@@ -43,7 +43,7 @@ const projectStages = {
 
 const projectStagesTranslations = {
 	1: mapStageTranslations('Pre-application', 'Cyn-ymgeisio'),
-	2: mapStageTranslations('Acceptance (review of the application)', `Derbyn (adolygiad o'r cais)`),
+	2: mapStageTranslations('Acceptance', `Derbyn`),
 	3: mapStageTranslations('Pre-examination', 'Cyn-archwiliad'),
 	4: mapStageTranslations('Examination', 'Archwiliad'),
 	5: mapStageTranslations('Recommendation', 'Argymhelliad'),

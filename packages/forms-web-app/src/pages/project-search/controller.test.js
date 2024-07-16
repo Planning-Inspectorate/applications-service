@@ -84,7 +84,7 @@ describe('pages/project-search/controller', () => {
 							location: 'Somerset - cache test 03-02 15:44',
 							pageURL: '/projects/tr033005',
 							projectName: 'Azure Performance Test',
-							stage: 'Acceptance (review of the application)'
+							stage: 'Acceptance'
 						}
 					],
 					filters: [
