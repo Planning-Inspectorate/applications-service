@@ -57,4 +57,23 @@ export class BasePage {
 				cy.get('[data-cy="Contact"]').click();
 		}
 	}
+
+	localeSwitcher(language) {
+		switch (language) {
+			case 'en':
+				return cy.get('a[href*="?lang=en"]');
+			case 'cy':
+				return cy.get('a[href*="?lang=cy"]');
+			default:
+				throw new Error('Language not supported');
+		}
+	}
+
+	selectLanguage(language) {
+		this.localeSwitcher(language).click();
+	}
+
+	languageVisible(language) {
+		this.localeSwitcher(language).should('be.visible');
+	}
 }
