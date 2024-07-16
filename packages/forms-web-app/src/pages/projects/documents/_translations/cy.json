@@ -28,7 +28,7 @@
 		"mustBeRealDate": "Rhaid i'r {{-formGroup}} fod yn ddyddiad go iawn",
 		"title": {
 			"from": "dyddiad o",
-			"to": "i"
+			"to": "dyddiad i"
 		}
 	}
 }
