@@ -17,7 +17,7 @@
 	"filter": "Hidlydd",
 	"from": "Oddi wrth",
 	"govUK": {
-		"pressOfficeOpeningHours": "9:00 tan 17:00 o ddydd Llun i ddydd Gwener (heblaw am wyliau cyhoeddus)"
+		"pressOfficeOpeningHours": "9am to 5pm on Monday to Thursday and from 9am to 4pm on Friday (closed on weekends and bank holidays)"
 	},
 	"hide": "Cuddio",
 	"hideAllSections": "Cuddio pob adran",
@@ -29,7 +29,7 @@
 	"open": "Agor",
 	"partOf": "Rhan o",
 	"pinsContactDetails": {
-		"csOpeningHours": "Dydd Llun i ddydd Gwener, 9am tan 4pm (heblaw am wyliau cyhoeddus)"
+		"csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)"
 	},
 	"resultsPerPage": "Canlyniadau fesul tudalen",
 	"returnToResults": "Dychwelyd at ganlyniadau",
