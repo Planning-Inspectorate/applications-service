@@ -45,9 +45,9 @@ The version in use is defined in the [.nvmrc file](./.nvmrc). It is recommended 
 Example, using `nvm`: 
 
 ```
-nvm install 18.18.0
-nvm use 18.18.0
-nvm alias default 18
+nvm install 20.11.1
+nvm use 20.11.1
+nvm alias default 20
 ```
 
 The Node.js version in use should closely follow [what is supported by the Azure App Service runtime](https://github.com/Azure/app-service-linux-docs/blob/master/Runtime_Support/node_support.md). From time to time, it may be necessary to update Node.js version to a newer LTS release when support for the current version is ending.
