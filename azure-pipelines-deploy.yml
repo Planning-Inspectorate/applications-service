@@ -133,6 +133,7 @@ extends:
                       variable: DATABASE_URL
               - template: ../steps/node_script.yml
                 parameters:
+                  nodeVersion: 20
                   environmentVariables:
                     DATABASE_URL: $(DATABASE_URL)
                   script: npm run db:migrate:deploy --workspace=@pins/applications-service-api

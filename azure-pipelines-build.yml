@@ -40,16 +40,20 @@ extends:
             displayName: Fetch main branch
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               script: cd packages/applications-service-api && npx prisma generate
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               condition: succeededOrFailed()
               script: npm run lint
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               condition: succeededOrFailed()
               script: npm run test:cov
           - template: ../steps/check_changed_files.yml
@@ -146,6 +150,7 @@ extends:
               workingDirectory: $(Build.Repository.LocalPath)
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               script: npm run db:generate
           - script: mv node_modules packages/back-office-subscribers/node_modules
             workingDirectory: $(Build.Repository.LocalPath)
