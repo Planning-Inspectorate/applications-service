@@ -15,7 +15,7 @@ services:
       - 6379:6379
 
   applications-service-api:
-    image: node:18-alpine
+    image: node:20-alpine
     user: node
     container_name: applications-service-api
     environment:
@@ -78,7 +78,7 @@ services:
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
-    image: node:18-alpine
+    image: node:20-alpine
     user: node
     container_name: applications-web-app
     environment:
