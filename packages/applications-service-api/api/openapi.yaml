@@ -223,7 +223,7 @@ paths:
                 type: string
                 format: binary
                 example: |
-                  "Project reference","Project name","Applicant name","Application type","Region","Location","Grid reference - Easting","Grid reference - Northing:","GPS co-ordinates","Stage","Description","Anticipated submission date","Anticipated submission period","Date of application","Date application accepted","Date Examination started","Date Examination closed","Date of recommendation","Date of decision","Date withdrawn"
+                  "Project reference","Project name","Applicant name","Application type","Region","Location","Grid reference - Easting","Grid reference - Northing:","GPS co-ordinates","Stage","Description","Anticipated submission period","Date of application","Date application accepted","Date Examination started","Date Examination closed","Date of recommendation","Date of decision","Date withdrawn"
                   "TR010001","Accessibility Test","EDF","EN01 - Generating Stations","South West","Somerset - Monday PM 23/12",594934,5636170," -11.543792740342, 100.58954279911",4,"MC 5 09-01-2019 part 3","2020-01-01","","2018-01-01","2019-06-06",,,,,
 
         '404':
