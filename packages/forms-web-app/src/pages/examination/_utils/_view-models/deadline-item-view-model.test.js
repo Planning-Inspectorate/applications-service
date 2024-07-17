@@ -1,6 +1,6 @@
 const {
 	deadlineItemViewModel,
-	getDeadlineItemViewModelLocale
+	getDeadlineItemViewModelByLocale
 } = require('./deadline-item-view-model');
 
 const { mockI18n } = require('../../../_mocks/i18n');
@@ -15,7 +15,7 @@ describe('pages/examination/_utils/_view-models/deadline-item-view-model', () =>
 		});
 	});
 
-	describe('#getDeadlineItemViewModelLocale', () => {
+	describe('#getDeadlineItemViewModelByLocale ', () => {
 		describe('When getting the deadline item view model locale', () => {
 			const mockDeadlineItem = {
 				text: 'mock text en',
@@ -25,7 +25,7 @@ describe('pages/examination/_utils/_view-models/deadline-item-view-model', () =>
 
 			describe('and the selected locale is English', () => {
 				it('should return the deadline item view model with English text', () => {
-					expect(getDeadlineItemViewModelLocale(mockI18n({}), mockDeadlineItem)).toEqual({
+					expect(getDeadlineItemViewModelByLocale(mockI18n({}), mockDeadlineItem)).toEqual({
 						text: 'mock text en',
 						value: 'mock value'
 					});
@@ -34,7 +34,7 @@ describe('pages/examination/_utils/_view-models/deadline-item-view-model', () =>
 
 			describe('and the selected locale is Welsh', () => {
 				it('should return the deadline item view model with Welsh text', () => {
-					expect(getDeadlineItemViewModelLocale(mockI18n({}, 'cy'), mockDeadlineItem)).toEqual({
+					expect(getDeadlineItemViewModelByLocale(mockI18n({}, 'cy'), mockDeadlineItem)).toEqual({
 						text: 'mock text cy',
 						value: 'mock value'
 					});
