@@ -171,20 +171,12 @@ const routesConfig = {
 			},
 			selectDeadline: {
 				id: 'examination-select-deadline',
-				name: 'Deadline item',
-				onError: {
-					message: {
-						isEmpty: 'Select an item'
-					}
-				},
 				route: 'select-deadline-item',
 				sessionId: {
 					1: 'submissionId',
 					2: 'submissionItem',
 					3: 'submissionChecked'
-				},
-				title: 'Which item would you like to submit against for this deadline?',
-				view: 'pages/examination/select-deadline'
+				}
 			},
 			selectFile: {
 				id: 'examination-select-file',

@@ -6,6 +6,13 @@ exports[`pages/examination/_translations should return the correct English trans
     "errorMessage1": "Select yes if you are {{-applicant}}",
     "title1": "Are you {{-applicant}}?",
   },
+  "chooseDeadline": {
+    "deadlineSummaryText": "View deadline items",
+    "deadlineTitle": "{{-title}} closes on {{-date}}",
+    "errorMessage1": "Select a deadline",
+    "heading1": "Which deadline would you like to submit against?",
+    "title": "Which deadline would you like to submit against?",
+  },
   "email": {
     "heading1": "What's your email address?",
     "hintText1": "We'll use your email address to confirm we've received your submission. We will not publish your email address.",
@@ -63,6 +70,12 @@ exports[`pages/examination/_translations should return the correct English trans
       "title": "What's your organisation's name?",
     },
   },
+  "selectDeadline": {
+    "errorMessage1": "Select an item",
+    "heading1": "Which item would you like to submit against for this deadline?",
+    "hintText1": "Select the item you want to submit against. You can submit against another item later.",
+    "title": "Which item would you like to submit against for this deadline?",
+  },
   "submittingFor": {
     "errorMessage1": "Select who you are submitting for",
     "hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
@@ -86,6 +99,13 @@ exports[`pages/examination/_translations should return the correct Welsh transla
   "applicant": {
     "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
     "title1": "A ydych chi'n {{-applicant}}?",
+  },
+  "chooseDeadline": {
+    "deadlineSummaryText": "Gweld sitemap terfyn amser",
+    "deadlineTitle": "{{-title}} yn cau ar {{-date}}",
+    "errorMessage1": "Dewiswch derfyn amser",
+    "heading1": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
+    "title": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
   },
   "email": {
     "heading1": "Beth yw'ch cyfeiriad e-bost?",
@@ -143,6 +163,12 @@ exports[`pages/examination/_translations should return the correct Welsh transla
       "heading1": "Beth yw enw eich sefydliad?",
       "title": "Beth yw enw eich sefydliad?",
     },
+  },
+  "selectDeadline": {
+    "errorMessage1": "Dewiswch eitem",
+    "heading1": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
+    "hintText1": "Dewiswch yr eitem yr hoffech wneud cyflwyniad ynglŷn â hi. Gallwch wneud cyflwyniad ynglŷn ag eitem arall yn ddiweddarach.",
+    "title": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
   },
   "submittingFor": {
     "errorMessage1": "Dewiswch ar ran pwy rydych chi'n cyflwyno",

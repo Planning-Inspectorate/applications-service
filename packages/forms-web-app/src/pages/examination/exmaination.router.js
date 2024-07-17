@@ -113,6 +113,9 @@ const { getProcessSubmission, postProcessSubmission } = require('./process-submi
 const { getSubmissionComplete } = require('./submission-complete/controller');
 const { getSubmissionError } = require('./submission-error/controller');
 const chooseDeadlineRouter = require('./choose-deadline/router');
+const {
+	validateExaminationSelectDeadline
+} = require('./select-deadline/utils/validate-examination-select-deadline');
 
 const router = express.Router({ mergeParams: true });
 
@@ -254,7 +257,7 @@ router.post(
 router.get(`/${selectDeadline.route}`, getSelectDeadline);
 router.post(
 	`/${selectDeadline.route}`,
-	validateNotEmpty(selectDeadline),
+	validateExaminationSelectDeadline(),
 	validationErrorHandler,
 	postSelectDeadline
 );

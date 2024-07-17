@@ -6,19 +6,33 @@ const {
 const {
 	getOpenEventDeadlineTimetables
 } = require('../../../../utils/timetables/get-timetables-state');
+const { getContentByLocale } = require('../../../_utils/get-content-by-locale');
 
-const getTitle = (title, dateOfEvent) => `${title} closes on ${formatDate(dateOfEvent)}`;
+const getTitle = (i18n, title, dateOfEvent) =>
+	i18n.t('examination.chooseDeadline.deadlineTitle', {
+		title,
+		date: formatDate(dateOfEvent, i18n.language)
+	});
 
-const getTimetableViewModel = (session, { uniqueId, title, description, dateOfEvent }) => ({
-	checked: getExaminationSession(session).examinationTimetableId === uniqueId,
-	items: removeTimetableItemFormatting(description),
-	title: getTitle(title, dateOfEvent),
-	value: uniqueId
-});
+const getTimetableViewModel = (
+	i18n,
+	session,
+	{ dateOfEvent, description, descriptionWelsh, title, titleWelsh, uniqueId }
+) => {
+	const titleByLocale = getContentByLocale(i18n, title, titleWelsh);
+	const descriptionByLocale = getContentByLocale(i18n, description, descriptionWelsh);
 
-const getOpenTimetablesViewModel = (session) =>
+	return {
+		checked: getExaminationSession(session).examinationTimetableId === uniqueId,
+		items: removeTimetableItemFormatting(descriptionByLocale),
+		title: getTitle(i18n, titleByLocale, dateOfEvent),
+		value: uniqueId
+	};
+};
+
+const getOpenTimetablesViewModel = (i18n, session) =>
 	getOpenEventDeadlineTimetables(getExaminationSession(session).timetables).map((timetable) =>
-		getTimetableViewModel(session, timetable)
+		getTimetableViewModel(i18n, session, timetable)
 	);
 
 module.exports = { getOpenTimetablesViewModel };

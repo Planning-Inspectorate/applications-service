@@ -3,6 +3,13 @@
 		"title1": "Are you {{-applicant}}?",
 		"errorMessage1": "Select yes if you are {{-applicant}}"
 	},
+	"chooseDeadline": {
+		"title": "Which deadline would you like to submit against?",
+		"heading1": "Which deadline would you like to submit against?",
+		"deadlineTitle": "{{-title}} closes on {{-date}}",
+		"deadlineSummaryText": "View deadline items",
+		"errorMessage1": "Select a deadline"
+	},
 	"email": {
 		"title": "What's your email address?",
 		"heading1": "What's your email address?",
@@ -59,6 +66,12 @@
 			"errorMessage1": "Enter your organisation's name",
 			"errorMessage2": "Your organisation's name must be between 1 and 255 characters"
 		}
+	},
+	"selectDeadline": {
+		"title": "Which item would you like to submit against for this deadline?",
+		"heading1": "Which item would you like to submit against for this deadline?",
+		"hintText1": "Select the item you want to submit against. You can submit against another item later.",
+		"errorMessage1": "Select an item"
 	},
 	"submittingFor": {
 		"title1": "Who are you making the submission for?",

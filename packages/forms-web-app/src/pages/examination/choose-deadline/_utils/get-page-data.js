@@ -1,10 +1,10 @@
 const { chooseDeadlineId } = require('../config');
 const { getOpenTimetablesViewModel } = require('./get-open-timetables-view-model');
 
-const getPageData = (session) => ({
+const getPageData = (i18n, session) => ({
 	backLinkUrl: 'your-email-address',
 	id: chooseDeadlineId,
-	timetables: getOpenTimetablesViewModel(session)
+	timetables: getOpenTimetablesViewModel(i18n, session)
 });
 
 module.exports = { getPageData };

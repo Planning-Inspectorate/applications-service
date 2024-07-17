@@ -122,6 +122,7 @@ const setActiveSubmissionItem = (session, submissionItem) => {
 		examinationSession.submissionItems.push({
 			itemId: submissionItem.value,
 			submissionItem: submissionItem.text,
+			submissionItemWelsh: submissionItem.textWelsh,
 			submitted: false
 		});
 
