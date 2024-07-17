@@ -111,7 +111,7 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "filter": "Hidlydd",
   "from": "Oddi wrth",
   "govUK": {
-    "pressOfficeOpeningHours": "9am to 5pm on Monday to Thursday and from 9am to 4pm on Friday (closed on weekends and bank holidays)",
+    "pressOfficeOpeningHours": "9yb a 5yp o ddydd Llun i ddydd Iau a rhwng 9yb a 4yp ddydd Gwener (ar gau ar benwythnosau a gwyliau banc)",
   },
   "hide": "Cuddio",
   "hideAllSections": "Cuddio pob adran",
@@ -123,7 +123,7 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "open": "Agor",
   "partOf": "Rhan o",
   "pinsContactDetails": {
-    "csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)",
+    "csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)",
   },
   "resultsPerPage": "Canlyniadau fesul tudalen",
   "returnToResults": "Dychwelyd at ganlyniadau",
