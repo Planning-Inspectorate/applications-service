@@ -3,6 +3,13 @@
 		"title1": "A ydych chi'n {{-applicant}}?",
 		"errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}"
 	},
+	"chooseDeadline": {
+		"title": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
+		"heading1": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
+		"deadlineTitle": "{{-title}} yn cau ar {{-date}}",
+		"deadlineSummaryText": "Gweld sitemap terfyn amser",
+		"errorMessage1": "Dewiswch derfyn amser"
+	},
 	"email": {
 		"title": "Beth yw'ch cyfeiriad e-bost?",
 		"heading1": "Beth yw'ch cyfeiriad e-bost?",
@@ -59,6 +66,12 @@
 			"errorMessage1": "Nodwch enw eich sefydliad",
 			"errorMessage2": "Rhaid i enw eich sefydliad fod rhwng 1 a 255 nod"
 		}
+	},
+	"selectDeadline": {
+		"title": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
+		"heading1": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
+		"hintText1": "Dewiswch yr eitem yr hoffech wneud cyflwyniad ynglŷn â hi. Gallwch wneud cyflwyniad ynglŷn ag eitem arall yn ddiweddarach.",
+		"errorMessage1": "Dewiswch eitem"
 	},
 	"submittingFor": {
 		"title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",

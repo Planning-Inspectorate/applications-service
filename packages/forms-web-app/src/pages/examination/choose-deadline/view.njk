@@ -5,8 +5,8 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-{% set title = 'Which deadline would you like to submit against?' %}
-{% set pageTitle = 'Which deadline would you like to submit against?' %}
+{% set title = t("examination.chooseDeadline.title") %}
+{% set pageTitle = t("examination.chooseDeadline.heading1") %}
 
 {% set radioItems = [] %}
 {% for timetable in timetables %}
@@ -24,7 +24,7 @@
         <p class="govuk-body govuk-!-margin-bottom-1">' + timetable.title + '</p>
         ' + govukDetails({
           classes: "govuk-!-margin-0",
-          summaryText: "View deadline items",
+          summaryText: t("examination.chooseDeadline.deadlineSummaryText"),
           html: timetableItemsHtml
         }) + '',
       value: timetable.value
@@ -34,7 +34,7 @@
 {% block content %}
   {% if errorSummary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: t("common.thereIsAProblem"),
       errorList: errorSummary
     }) }}
   {% endif %}
@@ -60,7 +60,7 @@
 
         {{ govukButton({
           attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
+          text: t("common.continue"),
           type: "Submit"
         }) }}
       </form>

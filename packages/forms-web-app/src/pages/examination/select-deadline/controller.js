@@ -13,10 +13,12 @@ const {
 } = require('../../../routes/config');
 
 const view = 'examination/select-deadline/view.njk';
+
 const getSelectDeadline = (req, res) => {
 	try {
-		const { query, session } = req;
-		return res.render(view, getPageData(query, session));
+		const { i18n, query, session } = req;
+
+		return res.render(view, getPageData(i18n, query, session));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -25,23 +27,25 @@ const getSelectDeadline = (req, res) => {
 
 const postSelectDeadline = (req, res) => {
 	try {
-		const { body, query, session } = req;
+		const { body, i18n, query, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[selectDeadline.id] || Object.keys(errors).length > 0) {
 			return res.render(view, {
-				...getPageData(query, session),
+				...getPageData(i18n, query, session),
 				errors,
 				errorSummary
 			});
 		}
 
 		const selectedDeadline = body[selectDeadline.id];
+
 		if (!selectedDeadline) throw new Error('No selected deadline');
 
 		const selectedDeadlineOption = findDeadlineItemByValue(session, selectedDeadline);
 
 		setActiveSubmissionItem(session, selectedDeadlineOption);
+
 		handleEditModeSubmissionItemId(query, session, selectedDeadlineOption.value);
 
 		return res.redirect(getRedirectUrl(query));

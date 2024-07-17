@@ -2,20 +2,30 @@ const { getChooseDeadline, postChooseDeadline } = require('./controller');
 
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 
+const { mockI18n } = require('../../_mocks/i18n');
+
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn()
 }));
 
+const examinationTranslations__EN = require('../_translations/en.json');
+
+const i18n = mockI18n({
+	examination: examinationTranslations__EN
+});
+
 const { datePresent, timetables } = require('./__mocks__/fixtures');
 
 describe('pages/examination/choose-deadline/controller', () => {
+	beforeEach(() => {
+		jest.useFakeTimers().setSystemTime(new Date(datePresent));
+	});
+
 	describe('#getChooseDeadline', () => {
-		beforeEach(() => {
-			jest.useFakeTimers().setSystemTime(new Date(datePresent));
-		});
 		describe('When getting the choose deadline page', () => {
 			describe('and there are no errors', () => {
 				const req = {
+					i18n,
 					session: {
 						caseRef: 'mock case ref',
 						examination: { mock: 'examination' }
@@ -51,6 +61,7 @@ describe('pages/examination/choose-deadline/controller', () => {
 
 			describe('and there is an error', () => {
 				const req = {
+					i18n,
 					session: {
 						caseRef: 'mock case ref',
 						examination: { mock: 'examination' }
@@ -58,6 +69,7 @@ describe('pages/examination/choose-deadline/controller', () => {
 				};
 				const res = { render: jest.fn(), status: jest.fn(() => res) };
 				const next = jest.fn();
+
 				beforeEach(async () => {
 					getTimetables.mockRejectedValue(new Error('something went wrong'));
 					await getChooseDeadline(req, res, next);
@@ -79,6 +91,7 @@ describe('pages/examination/choose-deadline/controller', () => {
 					},
 					errorSummary: ['mock error summary']
 				},
+				i18n,
 				session: {
 					caseRef: 'mock case ref',
 					examination: { mock: 'examination', timetables: [...timetables.data.timetables] }
@@ -86,9 +99,11 @@ describe('pages/examination/choose-deadline/controller', () => {
 			};
 			const res = { render: jest.fn() };
 			const next = jest.fn();
+
 			beforeEach(() => {
 				postChooseDeadline(req, res, next);
 			});
+
 			it('should render the view with errors', () => {
 				expect(res.render).toBeCalledWith('examination/choose-deadline/view.njk', {
 					backLinkUrl: 'your-email-address',
@@ -106,6 +121,7 @@ describe('pages/examination/choose-deadline/controller', () => {
 				});
 			});
 		});
+
 		describe('and there are no errors', () => {
 			const req = {
 				body: {
@@ -132,9 +148,9 @@ describe('pages/examination/choose-deadline/controller', () => {
 			it('should remove the timetables from the examination session and the selected timetable', () => {
 				expect(req.session.examination).toEqual({
 					deadlineItems: [
-						{ text: 'mock timetable item 1', value: '0' },
-						{ text: 'mock timetable item 2', value: '1' },
-						{ text: 'mock timetable item 3', value: '2' }
+						{ text: 'mock timetable item 1', textWelsh: 'mock timetable item 1 Welsh', value: '0' },
+						{ text: 'mock timetable item 2', textWelsh: 'mock timetable item 2 Welsh', value: '1' },
+						{ text: 'mock timetable item 3', textWelsh: 'mock timetable item 3 Welsh', value: '2' }
 					],
 					examinationTimetableId: 'mock uid 1',
 					mock: 'examination',

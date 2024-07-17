@@ -12,13 +12,15 @@ const timetableSessionKey = 'timetables';
 
 const getChooseDeadline = async (req, res, next) => {
 	try {
-		const { session } = req;
+		const { i18n, session } = req;
 		const { caseRef } = session;
 		const {
 			data: { timetables }
 		} = await getTimetables(caseRef);
+
 		getExaminationSession(session)[timetableSessionKey] = timetables;
-		return res.render(view, getPageData(session));
+
+		return res.render(view, getPageData(i18n, session));
 	} catch (error) {
 		logger.error(error);
 		next(error);
@@ -27,12 +29,12 @@ const getChooseDeadline = async (req, res, next) => {
 
 const postChooseDeadline = (req, res, next) => {
 	try {
-		const { body, session } = req;
+		const { body, i18n, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[chooseDeadlineId] || Object.keys(errors).length > 0) {
 			return res.render(view, {
-				...getPageData(session),
+				...getPageData(i18n, session),
 				errors,
 				errorSummary
 			});
@@ -44,6 +46,7 @@ const postChooseDeadline = (req, res, next) => {
 		);
 
 		addSelectedTimetableToSession(session, selectedTimetableItems, selectedTimetable);
+
 		getExaminationSession(session)[timetableSessionKey] = null;
 
 		return res.redirect('select-deadline-item');

@@ -32,17 +32,21 @@ describe('utils/timetables/get-selected-timetable', () => {
 						dateTimeDeadlineStart: '2023-01-01',
 						description:
 							'* mock timetable item 1\n * mock timetable item 2\n * mock timetable item 3',
+						descriptionWelsh:
+							'* mock timetable item 1 Welsh\n * mock timetable item 2 Welsh\n * mock timetable item 3 Welsh',
 						title: 'mock title 2',
+						titleWelsh: 'mock title 2 Welsh',
 						typeOfEvent: 'Deadline',
 						uniqueId: 'mock id 2'
 					},
 					selectedTimetableItems: [
-						{ text: 'mock timetable item 1', value: '0' },
+						{ text: 'mock timetable item 1', textWelsh: 'mock timetable item 1 Welsh', value: '0' },
 						{
 							text: 'mock timetable item 2',
+							textWelsh: 'mock timetable item 2 Welsh',
 							value: '1'
 						},
-						{ text: 'mock timetable item 3', value: '2' }
+						{ text: 'mock timetable item 3', textWelsh: 'mock timetable item 3 Welsh', value: '2' }
 					]
 				});
 			});
@@ -62,12 +66,21 @@ describe('utils/timetables/get-selected-timetable', () => {
 				expect(session).toEqual({
 					examination: {
 						deadlineItems: [
-							{ text: 'mock timetable item 1', value: '0' },
+							{
+								text: 'mock timetable item 1',
+								textWelsh: 'mock timetable item 1 Welsh',
+								value: '0'
+							},
 							{
 								text: 'mock timetable item 2',
+								textWelsh: 'mock timetable item 2 Welsh',
 								value: '1'
 							},
-							{ text: 'mock timetable item 3', value: '2' }
+							{
+								text: 'mock timetable item 3',
+								textWelsh: 'mock timetable item 3 Welsh',
+								value: '2'
+							}
 						],
 						examinationTimetableId: 'mock id 2',
 						title: 'mock title 2'

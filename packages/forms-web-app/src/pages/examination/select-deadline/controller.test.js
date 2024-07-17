@@ -24,10 +24,11 @@ jest.mock('./utils/get-redirect-url', () => ({
 
 const mockPageDataValue = { page: 'data' };
 
-describe('examination/select-deadline/controller', () => {
+describe('pages/examination/select-deadline/controller', () => {
 	describe('#getSelectDeadline', () => {
 		describe('When rendering the select a deadline page', () => {
 			const req = {
+				i18n: jest.fn(),
 				query: {
 					mockQuery: 'mock query'
 				},
@@ -35,6 +36,7 @@ describe('examination/select-deadline/controller', () => {
 					mockSession: 'mock session'
 				}
 			};
+
 			const res = {
 				render: jest.fn(),
 				status: jest.fn(() => res)
@@ -45,9 +47,11 @@ describe('examination/select-deadline/controller', () => {
 					getPageData.mockReturnValue(mockPageDataValue);
 					getSelectDeadline(req, res);
 				});
+
 				it('should call the functions', () => {
-					expect(getPageData).toHaveBeenCalledWith(req.query, req.session);
+					expect(getPageData).toHaveBeenCalledWith(req.i18n, req.query, req.session);
 				});
+
 				it('should render the selected deadline as checked', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'examination/select-deadline/view.njk',
@@ -55,6 +59,7 @@ describe('examination/select-deadline/controller', () => {
 					);
 				});
 			});
+
 			describe('and there is an error', () => {
 				beforeEach(() => {
 					getPageData.mockImplementation(() => {
@@ -62,6 +67,7 @@ describe('examination/select-deadline/controller', () => {
 					});
 					getSelectDeadline(req, res);
 				});
+
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
@@ -69,23 +75,26 @@ describe('examination/select-deadline/controller', () => {
 			});
 		});
 	});
+
 	describe('#postSelectDeadline', () => {
 		describe('When handling a selected deadline post', () => {
-			const res = {
-				render: jest.fn(),
-				redirect: jest.fn(),
-				status: jest.fn(() => res)
-			};
 			const req = {
 				body: {
 					mockBody: 'mock body'
 				},
+				i18n: jest.fn(),
 				query: {
 					mockQuery: 'mock query'
 				},
 				session: {
 					mockSession: 'mock session'
 				}
+			};
+
+			const res = {
+				render: jest.fn(),
+				redirect: jest.fn(),
+				status: jest.fn(() => res)
 			};
 
 			describe('and there is an error', () => {
@@ -104,7 +113,7 @@ describe('examination/select-deadline/controller', () => {
 				});
 
 				it('should call the functions', () => {
-					expect(getPageData).toHaveBeenCalledWith(req.query, req.session);
+					expect(getPageData).toHaveBeenCalledWith(req.i18n, req.query, req.session);
 				});
 
 				it('should render the page with errors', () => {

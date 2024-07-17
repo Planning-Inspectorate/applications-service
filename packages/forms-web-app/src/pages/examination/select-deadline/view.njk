@@ -4,10 +4,12 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
+{% set pageTitle = t("examination.selectDeadline.title") %}
+
 {% block content %}
   {% if errorSummary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: t("common.thereIsAProblem"),
       errorList: errorSummary
     }) }}
   {% endif %}
@@ -24,20 +26,20 @@
           },
           fieldset: {
             legend: {
-              text: title,
+              text: t("examination.selectDeadline.heading1"),
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
           },
           hint: {
-            text: hintText
+            text: t("examination.selectDeadline.hintText1")
           },
           items: options
         }) }}
 
         {{ govukButton({
           attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
+          text: t("common.continue"),
           type: "Submit"
         }) }}
       </form>

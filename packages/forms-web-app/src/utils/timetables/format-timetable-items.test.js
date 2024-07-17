@@ -21,14 +21,17 @@ describe('utils/timetables/format-timetable-items', () => {
 				expect(response).toEqual([
 					{
 						text: 'mock timetable item 1',
+						textWelsh: null,
 						value: '0'
 					},
 					{
 						text: 'mock timetable item 2',
+						textWelsh: null,
 						value: '1'
 					},
 					{
 						text: 'mock timetable item 3',
+						textWelsh: null,
 						value: '2'
 					}
 				]);
