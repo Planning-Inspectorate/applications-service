@@ -5,10 +5,10 @@ const deadlineItemViewModel = (text, value) => ({
 	value
 });
 
-const getDeadlineItemViewModelLocale = (i18n, { text, textWelsh, value }) => {
+const getDeadlineItemViewModelByLocale = (i18n, { text, textWelsh, value }) => {
 	const textByLocale = getContentByLocale(i18n, text, textWelsh);
 
 	return deadlineItemViewModel(textByLocale, value);
 };
 
-module.exports = { deadlineItemViewModel, getDeadlineItemViewModelLocale };
+module.exports = { deadlineItemViewModel, getDeadlineItemViewModelByLocale };
