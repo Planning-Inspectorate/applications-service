@@ -1,6 +1,5 @@
 const { Prisma } = require('@prisma/client');
 const { prismaClient } = require('../lib/prisma');
-const { mapBOSearchTermToQuery } = require('../utils/queries');
 
 const getFilters = (caseReference) => {
 	const sql = Prisma.sql`
@@ -29,15 +28,15 @@ const getDocuments = async (query) => {
 	};
 
 	if (query.searchTerm) {
-		whereClause['AND'].push(
-			mapBOSearchTermToQuery(query.searchTerm, [
-				'description',
-				'descriptionWelsh',
-				'author',
-				'authorWelsh',
-				'representative'
-			])
-		);
+		whereClause['AND'].push({
+			OR: [
+				{ description: { contains: query.searchTerm } },
+				{ descriptionWelsh: { contains: query.searchTerm } },
+				{ author: { contains: query.searchTerm } },
+				{ authorWelsh: { contains: query.searchTerm } },
+				{ representative: { contains: query.searchTerm } }
+			]
+		});
 	}
 
 	if (query.filters) {
