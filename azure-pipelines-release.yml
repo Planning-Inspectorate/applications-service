@@ -27,6 +27,7 @@ extends:
         deploymentJobs:
           - name: Stage API
             condition: eq(stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiRelease'], 'true')
+            timeoutInMinutes: 30
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
                 parameters:
@@ -46,6 +47,7 @@ extends:
                 value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiVersion'] ]
           - name: Stage Web
             condition: eq(stageDependencies.semantic_release.run_semantic_release.outputs['versions.webRelease'], 'true')
+            timeoutInMinutes: 30
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
                 parameters:
@@ -68,6 +70,7 @@ extends:
           - Stage
         deploymentJobs:
           - name: Deploy API
+            timeoutInMinutes: 30
             steps:
               - template: ../steps/azure_web_app_slot_swap.yml
                 parameters:
@@ -87,6 +90,7 @@ extends:
       - name: Semantic Release
         jobs:
           - name: Run Semantic Release
+            timeoutInMinutes: 30
             steps:
               - checkout: self
                 clean: true
