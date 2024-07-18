@@ -90,13 +90,14 @@ module.exports = {
 			serviceId: process.env.SRV_NOTIFY_SERVICE_ID,
 			apiKey: process.env.SRV_NOTIFY_API_KEY,
 			templates: {
-				IPRegistrationConfirmationEmailToIP:
-					process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
+				IPRegistrationConfirmationEmailToIP: {
+					en: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
+					cy: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP_WELSH
+				},
 				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
 				submissionCompleteEmail: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
 				subscriptionCreateEmail: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL
 			},
-			preliminaryMeetingUrl: process.env.APPLICATIONS_WEB_BASE_URL,
 			havingYourSayUrl: `${process.env.APPLICATIONS_WEB_BASE_URL}/having-your-say-guide`,
 			magicLinkDomain: process.env.APPLICATIONS_WEB_BASE_URL,
 			subscriptionCreateDomain: process.env.APPLICATIONS_WEB_BASE_URL

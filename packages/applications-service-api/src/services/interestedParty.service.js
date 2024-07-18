@@ -31,13 +31,18 @@ const createBackOfficeInterestedParty = async (createInterestedPartyRequest) => 
 
 const sendEmailConfirmation = async (interestedParty, application) => {
 	const contact = interestedParty.representative || interestedParty.represented;
-	await sendIPRegistrationConfirmationEmailToIP({
+	const isProjectWelsh = application.regions.includes('wales');
+	const details = {
 		email: contact.email,
 		projectName: application.projectName,
 		ipName: `${contact.firstName} ${contact.lastName}`,
 		ipRef: interestedParty.referenceId,
-		projectEmail: application.projectEmailAddress
-	});
+		projectEmail: application.projectEmailAddress,
+		...(isProjectWelsh && {
+			projectNameWelsh: application.projectNameWelsh || application.projectName
+		})
+	};
+	await sendIPRegistrationConfirmationEmailToIP(details);
 };
 
 module.exports = { createInterestedParty };

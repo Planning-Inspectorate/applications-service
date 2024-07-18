@@ -10,12 +10,14 @@ jest.mock('../../../src/lib/config', () => ({
 	services: {
 		notify: {
 			templates: {
-				IPRegistrationConfirmationEmailToIP: 'registration_confirmation_template_id',
+				IPRegistrationConfirmationEmailToIP: {
+					en: 'registration_confirmation_template_id',
+					cy: 'registration_confirmation_cy_template_id'
+				},
 				MagicLinkEmail: 'magic_link_template_id',
 				submissionCompleteEmail: 'submission_complete_template_id',
 				subscriptionCreateEmail: 'subscription_create_template_id'
 			},
-			preliminaryMeetingUrl: 'somedomain.example.com',
 			havingYourSayUrl: 'somedomain.example.com/having-your-say-guide',
 			magicLinkDomain: 'somedomain.example.com',
 			subscriptionCreateDomain: 'somedomain.example.com'
@@ -47,7 +49,7 @@ describe('notify lib', () => {
 	});
 
 	describe('sendIPRegistrationConfirmationEmailToIP', () => {
-		it('should send an email', async () => {
+		it('should send an email - en template if no projectNameWelsh provided', async () => {
 			const details = {
 				email: 'elvin.ali@planninginspectorate.gov.uk',
 				projectName: 'St James Barton Giant Wind Turbine',
@@ -69,7 +71,37 @@ describe('notify lib', () => {
 				project_name: details.projectName,
 				interested_party_name: details.ipName,
 				interested_party_ref: details.ipRef,
-				preliminary_meeting_url: 'somedomain.example.com',
+				having_your_say_url: 'somedomain.example.com/having-your-say-guide',
+				project_email: details.projectEmail
+			});
+			expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
+			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+		});
+
+		it('should send an email - cy template if projectNameWelsh provided', async () => {
+			const details = {
+				email: 'elvin.ali@planninginspectorate.gov.uk',
+				projectName: 'St James Barton Giant Wind Turbine',
+				projectNameWelsh: 'A Welsh Project Name',
+				ipName: 'David White',
+				ipRef: '30000120',
+				projectEmail: 'david.white@pins.gsi.gov.uk'
+			};
+			await sendIPRegistrationConfirmationEmailToIP(details);
+
+			expect(notifyBuilder.reset).toHaveBeenCalled();
+			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
+				'registration_confirmation_cy_template_id'
+			);
+			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith(
+				'elvin.ali@planninginspectorate.gov.uk'
+			);
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				'email address': details.email,
+				project_name: details.projectName,
+				project_name_welsh: details.projectNameWelsh,
+				interested_party_name: details.ipName,
+				interested_party_ref: details.ipRef,
 				having_your_say_url: 'somedomain.example.com/having-your-say-guide',
 				project_email: details.projectEmail
 			});
