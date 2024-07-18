@@ -14,18 +14,23 @@ const buildNotifyClient = () => {
 
 const sendIPRegistrationConfirmationEmailToIP = async (details) => {
 	try {
-		const { email, projectName, ipName, ipRef, projectEmail } = details;
+		const { email, projectName, projectNameWelsh, ipName, ipRef, projectEmail } = details;
+
 		await buildNotifyClient()
-			.setTemplateId(config.services.notify.templates.IPRegistrationConfirmationEmailToIP)
+			.setTemplateId(
+				config.services.notify.templates.IPRegistrationConfirmationEmailToIP[
+					projectNameWelsh ? 'cy' : 'en'
+				]
+			)
 			.setDestinationEmailAddress(email)
 			.setTemplateVariablesFromObject({
 				'email address': email,
 				project_name: projectName,
 				interested_party_name: ipName,
 				interested_party_ref: ipRef,
-				preliminary_meeting_url: config.services.notify.preliminaryMeetingUrl,
 				having_your_say_url: config.services.notify.havingYourSayUrl,
-				project_email: projectEmail
+				project_email: projectEmail,
+				...(projectNameWelsh && { project_name_welsh: projectNameWelsh })
 			})
 			.setReference(ipRef)
 			.sendEmail();
