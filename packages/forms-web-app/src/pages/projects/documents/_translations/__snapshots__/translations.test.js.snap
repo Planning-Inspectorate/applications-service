@@ -50,7 +50,7 @@ exports[`pages/projects/documents/_translations should return the correct Welsh 
     "mustBeRealDate": "Rhaid i'r {{-formGroup}} fod yn ddyddiad go iawn",
     "title": {
       "from": "dyddiad o",
-      "to": "i",
+      "to": "dyddiad i",
     },
   },
   "filteredResults": {

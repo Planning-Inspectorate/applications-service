@@ -25,7 +25,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.11.0
+      ref: refs/tags/release/3.16.1
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -40,16 +40,20 @@ extends:
             displayName: Fetch main branch
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               script: npm ci
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               script: cd packages/applications-service-api && npx prisma generate
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               condition: succeededOrFailed()
               script: npm run lint
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               condition: succeededOrFailed()
               script: npm run test:cov
           - template: ../steps/check_changed_files.yml
@@ -141,11 +145,12 @@ extends:
         steps:
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 18
+              nodeVersion: 20
               script: npm ci --omit=dev --workspace=@pins/back-office-subscribers
               workingDirectory: $(Build.Repository.LocalPath)
           - template: ../steps/node_script.yml
             parameters:
+              nodeVersion: 20
               script: npm run db:generate
           - script: mv node_modules packages/back-office-subscribers/node_modules
             workingDirectory: $(Build.Repository.LocalPath)
