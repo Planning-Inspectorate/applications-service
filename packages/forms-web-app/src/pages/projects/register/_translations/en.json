@@ -51,11 +51,31 @@
 		"organisation": "Registering for an organisation",
 		"agent": "Registering on behalf of someone else"
 	},
+	"whoRepresenting": {
+		"pageHeading": "Who are you representing?",
+		"option1": "A person",
+		"option2": "An organisation or charity I do not work for",
+		"option3": "A household"
+	},
 	"name": {
 		"pageHeading": "What is your full name?",
 		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
 	},
+	"namePersonRepresenting": {
+		"pageHeading": "What is the full name of the person you are representing?"
+	},
+	"nameOrganisationRepresenting": {
+		"pageHeading": "What is the full name of the organisation or charity that you are representing?"
+	},
+	"nameHouseholdRepresenting": {
+		"pageHeading": "What is the name of the household you are representing?"
+	},
 	"organisationName": {
+		"pageHeading": "What is the name of the organisation you work for?",
+		"hint": "We will publish your organisation name, your client's name and their comments on the website.",
+		"linkText1": "I don't work for an organisation"
+	},
+	"organisationOrCharityName": {
 		"pageHeading": "What is the name of your organisation or charity?",
 		"hint": "We will publish your organisation name on the website along with your comments about the project."
 	},
@@ -68,9 +88,19 @@
 		"yesHiddenText": "I'm 18 or older",
 		"noHiddenText": "I'm under 18"
 	},
+	"areThey18": {
+		"pageHeading": "Are they 18 or over?",
+		"hint": "You can still register for them if they are under 18, but we will process their personal details in a different way.",
+		"yesHiddenText": "they're 18 or over",
+		"noHiddenText": "they're under 18"
+	},
 	"email": {
 		"pageHeading": "What is your email address?",
 		"hint": "We will use your email address to send you information about this project. We will not publish your email address."
+	},
+	"theirEmail": {
+		"pageHeading": "What is their email address?",
+		"hint": "We will not contact anyone using these contact details."
 	},
 	"address": {
 		"pageHeading": "What is your address?",
@@ -80,9 +110,22 @@
 		"postcode": "Postcode",
 		"country": "Country"
 	},
+	"theirAddress": {
+		"pageHeading": "What is their address?",
+		"hint": "We will not contact anyone using these contact details.",
+		"line1": "Their Address line 1 <span class='govuk-visually-hidden'>of 3</span>",
+		"line2": "Their address line 2 <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+		"line3": "Town or city <span class='govuk-visually-hidden'>of 3</span> (Optional)",
+		"postcode": "Postcode",
+		"country": "Country"
+	},
 	"number": {
 		"pageHeading": "What is your telephone number?",
 		"hint": "We will use your phone number to contact you about the project if we cannot reach you by email. We will not publish your telephone number."
+	},
+	"theirNumber": {
+		"pageHeading": "What is their telephone number?",
+		"hint": "We will not contact anyone using these contact details."
 	},
 	"aboutProject": {
 		"pageHeading": "What do you want to tell us about this proposed project?",
@@ -118,26 +161,50 @@
 	"checkYourAnswers": {
 		"pageHeading": "Check your answers before registering",
 		"heading1": "Personal details",
+		"heading2": "Your details",
+		"heading3": "Who you are representing",
 		"registeringFor": "Who are you registering for?",
 		"changeRegisteringForHiddenText": "who are you registering for",
 		"myself": "Myself",
 		"organisation": "An organisation I work or volunteer for",
+		"agent": "On behalf of another person, a household or an organisation I do not work for",
+		"whoRepresenting": "Who are you representing?",
+		"changeWhoRepresentingHiddenText": "who are you representing for",
+		"representingPerson": "A person",
+		"representingOrganisation": "An organisation or charity I do not work for",
+		"representingHousehold": "A household",
 		"name": "Full name",
 		"changeNameHiddenText": "your full name",
-		"areYou18": "Are you 18 or over?",
-		"changeAreYou18HiddenText": "if you are over 18",
-		"email": "Email address",
-		"changeEmailHiddenText": "your email address",
-		"address": "Address",
-		"changeAddressHiddenText": "your address",
-		"number": "Telephone number",
-		"changeNumberHiddenText": "your telephone number",
-		"comments": "Registration comments",
-		"changeCommentsHiddenText": "registration comments",
+		"personName": "The name of the person you are representing",
+		"changePersonNameHiddenText": "the name of the person you are representing",
 		"organisationName": "What is the name of your organisation or charity?",
 		"changeOrganisationNameHiddenText": "the name of your organisation or charity",
+		"organisationName2": "Organisation name",
+		"changeOrganisationNameHiddenText2": "your organisation name",
+		"organisationName3": "The name of the organisation or charity that you are representing",
+		"changeOrganisationNameHiddenText3": "the name of the organisation or charity that you are representing",
+		"householdName": "The name of the household you are representing",
+		"changeHouseholdNameHiddenText": "the name of the household you are representing",
 		"jobTitleOrRole": "What is your job title or volunteer role?",
-		"changeJobTitleOrRoleHiddenText": "your job title or volunteer role"
+		"changeJobTitleOrRoleHiddenText": "your job title or volunteer role",
+		"areYou18": "Are you 18 or over?",
+		"changeAreYou18HiddenText": "if you are over 18",
+		"areThey18": "Are they 18 or over?",
+		"changeAreThey18HiddenText": "if they are over 18",
+		"email": "Email address",
+		"changeEmailHiddenText": "your email address",
+		"theirEmail": "Their email address",
+		"changeTheirEmailHiddenText": "their email address",
+		"address": "Address",
+		"changeAddressHiddenText": "your address",
+		"theirAddress": "Their address",
+		"changeTheirAddressHiddenText": "their address",
+		"number": "Telephone number",
+		"changeNumberHiddenText": "your telephone number",
+		"theirNumber": "Their telephone number",
+		"changeTheirNumberHiddenText": "their telephone number",
+		"comments": "Registration comments",
+		"changeCommentsHiddenText": "registration comments"
 	},
 	"declaration": {
 		"pageHeading": "Declaration",
@@ -167,12 +234,44 @@
 	},
 	"validationErrors": {
 		"organisationName": {
+			"empty": "Enter the name of the organisation you work for",
+			"length": "The name of the organisation you work for must be 255 characters or less"
+		},
+		"organisationOrCharityName": {
 			"empty": "Enter your organisation or charity name",
 			"length": "Name of your organisation or charity name must be 255 characters or less"
 		},
 		"jobTitleOrRole": {
 			"empty": "Enter your job title or volunteer role",
 			"length": "Your job title or volunteer role must be 64 characters or less"
+		},
+		"whoRepresenting": {
+			"empty": "Select who you are representing"
+		},
+		"namePersonRepresenting": {
+			"empty": "Enter the full name of the person you are representing",
+			"length": "Full name of the person you are representing must be between 3 and 64 characters"
+		},
+		"nameOrganisationRepresenting": {
+			"empty": "Enter the full name of the organisation you are representing",
+			"length": "Full name of the organisation you are representing must be between 3 and 64 characters"
+		},
+		"nameHouseholdRepresenting": {
+			"empty": "Enter the name of the household you are representing",
+			"length": "Full name of the household you are representing must be between 3 and 64 characters"
+		},
+		"areThey18": {
+			"empty": "Select yes if they are 18 or over"
+		},
+		"theirTelephoneNumber": {
+			"empty": "Enter their telephone number",
+			"length": "Telephone number must be 255 characters or less",
+			"format": "Enter a telephone number, like 01632 960 001, 07700 900 982 or 44 808 157 0192"
+		},
+		"theirEmailAddress": {
+			"empty": "Enter their email address",
+			"length": "Email address must be between 3 and 255 characters",
+			"format": "Enter an email address in the correct format, like name@example.com"
 		}
 	}
 }

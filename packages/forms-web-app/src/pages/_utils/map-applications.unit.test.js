@@ -38,7 +38,7 @@ describe('pages/_utils/map-applications', () => {
 						location: 'Somerset - cache test 03-02 15:44',
 						pageURL: '/projects/tr033005',
 						projectName: 'Azure Performance Test',
-						stage: 'Acceptance (review of the application)'
+						stage: 'Acceptance'
 					}
 				]);
 			});
@@ -76,7 +76,7 @@ describe('pages/_utils/map-applications', () => {
 						location: 'Somerset - cache test 03-02 15:44 Welsh',
 						pageURL: '/projects/tr033005',
 						projectName: 'Azure Performance Test Welsh',
-						stage: `Derbyn (adolygiad o'r cais)`
+						stage: `Derbyn`
 					}
 				]);
 			});

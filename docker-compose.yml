@@ -15,7 +15,7 @@ services:
       - 6379:6379
 
   applications-service-api:
-    image: node:18-alpine
+    image: node:20-alpine
     user: node
     container_name: applications-service-api
     environment:
@@ -78,7 +78,7 @@ services:
     command: npm run start:dev --workspace=packages/applications-service-api
 
   applications-web-app:
-    image: node:18-alpine
+    image: node:20-alpine
     user: node
     container_name: applications-web-app
     environment:
@@ -93,7 +93,6 @@ services:
       FEATURE_REDIS_SESSION_STORE: 'true'
       FEATURE_SAVE_AND_EXIT_OPTION: 'false'
       FEATURE_SHOW_AFFECTED_AREA_SECTION: 'false'
-      FEATURE_PROJECT_TIMELINE_LINK: 'false'
       FEATURE_ENABLED_CONTENT_SECURITY_POLICY: 'true'
       FEATURE_ENABLE_GENERALISED_FORM_SANITISATION: 'true'
       FEATURE_PROJECT_INFORMATION: 'true'

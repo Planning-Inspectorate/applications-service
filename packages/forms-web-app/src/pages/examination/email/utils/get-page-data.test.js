@@ -16,10 +16,7 @@ describe('#getPageData', () => {
 		it('should return the expected page data', () => {
 			expect(response).toEqual({
 				backLinkUrl: 'mock back link',
-				hint: "We'll use your email address to confirm we've received your submission. We will not publish your email address.",
-				id: 'examination-email',
-				pageTitle: "What's your email address?",
-				title: "What's your email address?"
+				id: 'examination-email'
 			});
 		});
 	});

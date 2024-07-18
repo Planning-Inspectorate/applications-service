@@ -16,7 +16,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.1.1
+      ref: refs/tags/release/3.16.1
 
 extends:
   template: stages/wrapper_cd.yml@templates
@@ -27,6 +27,7 @@ extends:
         deploymentJobs:
           - name: Stage API
             condition: eq(stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiRelease'], 'true')
+            timeoutInMinutes: 30
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
                 parameters:
@@ -46,6 +47,7 @@ extends:
                 value: $[ stageDependencies.semantic_release.run_semantic_release.outputs['versions.apiVersion'] ]
           - name: Stage Web
             condition: eq(stageDependencies.semantic_release.run_semantic_release.outputs['versions.webRelease'], 'true')
+            timeoutInMinutes: 30
             steps:
               - template: ../steps/azure_web_app_docker_tag.yml
                 parameters:
@@ -68,6 +70,7 @@ extends:
           - Stage
         deploymentJobs:
           - name: Deploy API
+            timeoutInMinutes: 30
             steps:
               - template: ../steps/azure_web_app_slot_swap.yml
                 parameters:
@@ -87,18 +90,22 @@ extends:
       - name: Semantic Release
         jobs:
           - name: Run Semantic Release
+            timeoutInMinutes: 30
             steps:
               - checkout: self
                 clean: true
                 persistCredentials: true
               - template: ../steps/node_script.yml
                 parameters:
+                  nodeVersion: 20
                   script: npm ci
               - template: ../steps/node_script.yml
                 parameters:
+                  nodeVersion: 20
                   script: cd packages/applications-service-api && npx prisma generate
               - template: ../steps/node_script.yml
                 parameters:
+                  nodeVersion: 20
                   script: npm run release
                   environmentVariables:
                     GH_TOKEN: $(GH_TOKEN)

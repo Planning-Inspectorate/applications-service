@@ -4,10 +4,12 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
+{% set pageTitle = t("examination.applicant.title1", {applicant: projectName}) %}}
+
 {% block content %}
   {% if errorSummary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: t("common.thereIsAProblem"),
       errorList: errorSummary
     }) }}
   {% endif %}
@@ -25,7 +27,7 @@
           },
           fieldset: {
             legend: {
-              text: title,
+              text: pageTitle,
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
@@ -38,7 +40,7 @@
 
         {{ govukButton({
           attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
+          text: t("common.continue"),
           type: "Submit"
         }) }}
       </form>

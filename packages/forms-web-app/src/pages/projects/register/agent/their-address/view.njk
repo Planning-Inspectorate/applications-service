@@ -5,11 +5,14 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 
-{% set title = "What is their address? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+{% set pageHeading = t('register.theirAddress.pageHeading') %}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.agent') %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title = "Error: " + title %}
+    {% set title = t('common.error') + ": " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -20,7 +23,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
         {{ govukErrorSummary({
-          titleText: "There is a problem",
+          titleText: t('common.thereIsAProblem'),
           errorList: errorSummary
         }) }}
       {% endif %}
@@ -30,16 +33,16 @@
 
           {% call govukFieldset({
             legend: {
-              text: "What is their address?",
+              text: pageHeading,
               classes: "govuk-fieldset__legend--l",
               isPageHeading: true
             }
           }) %}
-          <p class="govuk-hint">We will not contact anyone using these contact details.</p>
+          <p class="govuk-hint">{{ t('register.theirAddress.hint') }}</p>
 
           {{ govukInput({
               label: {
-                html: "Their Address line 1 <span class='govuk-visually-hidden'>of 3</span>"
+                html: t('register.theirAddress.line1')
               },
               classes: "{{ 'govuk-form-group--error' if errors }}",
               id: "line1",
@@ -53,7 +56,7 @@
 
           {{ govukInput({
               label: {
-                html: "Their Address line 2 <span class='govuk-visually-hidden'>of 3</span> (Optional)"
+                html: t('register.theirAddress.line2')
               },
               classes: "{{ 'govuk-form-group--error' if errors }}",
               id: "line2",
@@ -67,7 +70,7 @@
 
           {{ govukInput({
               label: {
-                html: "Town or city <span class='govuk-visually-hidden'>of 3</span> (Optional)"
+                html: t('register.theirAddress.line3')
               },
               classes: "govuk-!-width-two-thirds {{ 'govuk-form-group--error' if errors }}",
               id: "line3",
@@ -81,7 +84,7 @@
 
           {{ govukInput({
               label: {
-                text: "Postcode"
+                text: t('register.theirAddress.postcode')
               },
               classes: "govuk-input--width-10 {{ 'govuk-form-group--error' if errors }}",
               id: "postcode",
@@ -95,7 +98,7 @@
 
           {{ govukInput({
               label: {
-                text: "Country"
+                text: t('register.theirAddress.country')
               },
               classes: "govuk-!-width-two-thirds {{ 'govuk-form-group--error' if errors }}",
               id: "country",
@@ -111,7 +114,7 @@
         </div>
 
         {{ govukButton({
-          text: "Continue",
+          text: t('common.continue'),
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}

@@ -1,22 +1,14 @@
 const { getBackLinkUrl } = require('./get-back-link-url');
+const { getDeadlineDetailsNameOrDefault } = require('../../_session/deadline');
+const { getTitles } = require('./get-titles');
 
-const {
-	routesConfig: {
-		examination: {
-			pages: { nameMyself }
-		}
-	}
-} = require('../../../../routes/config');
-
-const getPageData = (session, query) => {
-	const { id, pageTitle, title } = session.currentView;
+const getPageData = (i18n, session, query) => {
+	const { id, route } = session.currentView;
 	return {
+		...getTitles(i18n, route),
 		backLinkUrl: getBackLinkUrl(query),
 		id,
-		pageTitle,
-		title,
-		view: 'examination/name/view.njk',
-		url: nameMyself.route
+		name: getDeadlineDetailsNameOrDefault(session)
 	};
 };
 

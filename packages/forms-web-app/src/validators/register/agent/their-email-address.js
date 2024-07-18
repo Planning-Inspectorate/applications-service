@@ -2,13 +2,21 @@ const { body } = require('express-validator');
 
 const rules = () => {
 	return [
-		body('email').notEmpty().withMessage('Enter your email address'),
+		body('email')
+			.notEmpty()
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.theirEmailAddress.empty');
+			}),
 		body('email')
 			.isLength({ min: 3, max: 255 })
-			.withMessage('Email address must be between 3 and 255 characters'),
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.theirEmailAddress.length');
+			}),
 		body('email')
 			.isEmail()
-			.withMessage('Enter an email address in the correct format, like name@example.com')
+			.withMessage((_, { req }) => {
+				return req.i18n.t('register.validationErrors.theirEmailAddress.format');
+			})
 	];
 };
 

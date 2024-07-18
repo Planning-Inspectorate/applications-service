@@ -4,11 +4,14 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
-{% set title = "What is the name of the organisation you work for? - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning" %}
+{% set pageHeading = t('register.organisationName.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.agent') %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
 
 {% block pageTitle %}
   {% if errors %}
-    {% set title = "Error: " + title %}
+    {% set title = t('common.error') + ": " + title %}
   {% endif %}
   {{ title }}
 {% endblock %}
@@ -18,7 +21,7 @@
     <div class="govuk-grid-column-two-thirds">
       {% if errorSummary %}
         {{ govukErrorSummary({
-          titleText: "There is a problem",
+          titleText: t('common.thereIsAProblem'),
           errorList: errorSummary
         }) }}
       {% endif %}
@@ -27,12 +30,12 @@
         <div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
           {{ govukInput({
             label: {
-              text: "What is the name of the organisation you work for?",
+              text: pageHeading,
               classes: "govuk-label--l",
               isPageHeading: true
             },
             hint: {
-              text: "We will publish your organisation name, your client's name and their comments on the website."
+              text: t('register.organisationName.hint')
             },
             id: registerAgentOrgNameInputID,
             name: registerAgentOrgNameInputID,
@@ -46,13 +49,13 @@
         </div>
 
         {{ govukButton({
-          text: "Continue",
+          text: t('common.continue'),
           type: "Submit",
           attributes: { "data-cy":"button-save-and-continue"}
         }) }}
       </form>
 
-      <a class="govuk-body govuk-link" href="{{ registerAgentEmailURL }}">I don't work for an organisation</a>
+      <a class="govuk-body govuk-link" href="{{ registerAgentEmailURL }}">{{ t('register.organisationName.linkText1') }}</a>
     </div>
   </div>
 {% endblock %}

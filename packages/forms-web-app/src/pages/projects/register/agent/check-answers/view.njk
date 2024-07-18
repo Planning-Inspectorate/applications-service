@@ -5,15 +5,20 @@
 {% from "macros/bool-to-sentence-case.njk" import boolToSentenceCaseField %}
 {% from "macros/summary-field.njk" import summaryField %}
 
+{% set pageHeading = t('register.checkYourAnswers.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.agent') %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
 {% block pageTitle %}
-	Check your answers before registering - Registering on behalf of someone else - Register to have your say about a national infrastructure project - National Infrastructure Planning
+	{{ title }}
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds-from-desktop">
 			<h1 class="govuk-heading-xl">
-				Check your answers before registering
+				{{ pageHeading }}
 			</h1>
 
 			{% include './_includes/representor-details.njk' %}
@@ -21,7 +26,7 @@
 			{% include './_includes/representee-details.njk' %}
 
 			<a href="{{ registerAgentDeclarationURL }}" role="button" class="govuk-button govuk-button" data-module="govuk-button">
-				Continue to declaration
+				{{ t('common.continueToDeclaration') }}
 			</a>
 		</div>
 	</div>

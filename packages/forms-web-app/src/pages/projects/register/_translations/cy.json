@@ -25,8 +25,8 @@
 			"listItem7": "eich enw llawn",
 			"listItem8": "enw'r elusen neu'r sefydliad rydych yn gweithio iddi/iddo",
 			"listItem9": "eich cyfeiriad gwaith",
-			"listItem10": "email address and telephone number",
-			"listItem11": "registration comments about the project",
+			"listItem10": "cyfeiriad e-bost a rhif ffôn",
+			"listItem11": "sylwadau cofrestru ynglŷn â'r prosiect",
 			"heading6": "Os ydych yn cofrestru ar ran unigolyn neu sefydliad arall",
 			"paragraph8": "Bydd arnoch angen:",
 			"listItem12": "eich enw llawn",
@@ -51,11 +51,31 @@
 		"organisation": "Cofrestru ar gyfer sefydliad",
 		"agent": "Cofrestru ar ran rhywun arall"
 	},
+	"whoRepresenting": {
+		"pageHeading": "Pwy ydych chi'n ei gynrychioli?",
+		"option1": "Unigolyn",
+		"option2": "Sefydliad neu elusen nad wyf yn gweithio iddo/iddi",
+		"option3": "Aelwyd"
+	},
 	"name": {
 		"pageHeading": "Beth yw'ch enw llawn?",
 		"hint": "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>"
 	},
+	"namePersonRepresenting": {
+		"pageHeading": "Beth yw enw llawn yr unigolyn rydych chi'n ei gynrychioli?"
+	},
+	"nameOrganisationRepresenting": {
+		"pageHeading": "Beth yw enw llawn y sefydliad neu'r elusen rydych chi'n ei gynrychioli/chynrychioli?"
+	},
+	"nameHouseholdRepresenting": {
+		"pageHeading": "Beth yw enw'r aelwyd rydych chi'n ei chynrychioli?"
+	},
 	"organisationName": {
+		"pageHeading": "Beth yw enw'r sefydliad rydych yn gweithio iddo?",
+		"hint": "Byddwn yn cyhoeddi enw eich sefydliad, enw eich cleient a'i sylwadau ar y wefan.",
+		"linkText1": "Dydw i ddim yn gweithio i sefydliad"
+	},
+	"organisationOrCharityName": {
 		"pageHeading": "Beth yw enw eich sefydliad neu'ch elusen?",
 		"hint": "Byddwn yn cyhoeddi enw eich sefydliad ar y wefan ynghyd â'ch sylwadau ynglŷn â'r prosiect."
 	},
@@ -68,9 +88,19 @@
 		"yesHiddenText": "rwyf yn 18 oed neu'n hŷn",
 		"noHiddenText": "rwyf yn iau na 18 oed"
 	},
+	"areThey18": {
+		"pageHeading": "A yw'n 18 oed neu'n hŷn?",
+		"hint": "Gallwch gofrestru ar ei ran o hyd os yw'n iau na 18 oed, ond byddwn yn prosesu ei fanylion personol mewn ffordd wahanol.",
+		"yesHiddenText": "maen nhw'n 18 oed neu'n hŷn",
+		"noHiddenText": "maen nhw o dan 18 oed"
+	},
 	"email": {
 		"pageHeading": "Beth yw'ch cyfeiriad e-bost?",
 		"hint": "Byddwn yn defnyddio'ch cyfeiriad e-bost i anfon gwybodaeth atoch am y prosiect hwn. Ni fyddwn yn cyhoeddi eich cyfeiriad e-bost."
+	},
+	"theirEmail": {
+		"pageHeading": "Beth yw ei gyfeiriad e-bost?",
+		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn."
 	},
 	"address": {
 		"pageHeading": "Beth yw'ch cyfeiriad?",
@@ -80,9 +110,22 @@
 		"postcode": "Cod post",
 		"country": "Gwlad"
 	},
+	"theirAddress": {
+		"pageHeading": "Beth yw ei gyfeiriad?",
+		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
+		"line1": "Ei gyfeiriad - llinell 1<span class='govuk-visually-hidden'> o 3</span>",
+		"line2": "Ei gyfeiriad - llinell 2<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+		"line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
+		"postcode": "Cod post",
+		"country": "Gwlad"
+	},
 	"number": {
 		"pageHeading": "Beth yw'ch rhif ffôn?",
 		"hint": "Byddwn yn defnyddio'ch rhif ffôn i gysylltu â chi ynglŷn â'r prosiect os na allwn gysylltu â chi trwy e-bost. Ni fyddwn yn cyhoeddi eich rhif ffôn."
+	},
+	"theirNumber": {
+		"pageHeading": "Beth yw ei rif ffôn?",
+		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn."
 	},
 	"aboutProject": {
 		"pageHeading": "Beth ydych chi eisiau ei ddweud wrthym am y prosiect arfaethedig hwn?",
@@ -118,26 +161,50 @@
 	"checkYourAnswers": {
 		"pageHeading": "Gwiriwch eich atebion cyn cofrestru",
 		"heading1": "Manylion personol",
+		"heading2": "Eich manylion",
+		"heading3": "Pwy rydych chi'n ei gynrychioli",
 		"registeringFor": "Ar ran pwy ydych chi'n cofrestru?",
-		"changeRegisteringForHiddenText": "ar ran pwy ydych chi'n cofrestru",
+		"changeRegisteringForHiddenText": "pwy ydych chi'n cofrestru am",
 		"myself": "Fy hun",
 		"organisation": "Sefydliad rwyf yn gweithio neu'n gwirfoddoli iddo",
+		"agent": "Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo",
+		"whoRepresenting": "Pwy ydych chi'n ei gynrychioli?",
+		"changeWhoRepresentingHiddenText": "pwy ydych chi'n cynrychioli am",
+		"representingPerson": "Unigolyn",
+		"representingOrganisation": "Sefydliad neu elusen nad wyf yn gweithio iddo/iddi",
+		"representingHousehold": "Aelwyd",
 		"name": "Enw llawn",
 		"changeNameHiddenText": "eich enw llawn",
+		"personName": "Enw'r person yr ydych yn ei gynrychioli",
+		"changePersonNameHiddenText": "enw'r person rydych chi'n ei gynrychioli",
+		"organisationName": "Beth yw enw eich sefydliad neu'ch elusen?",
+		"changeOrganisationNameHiddenText": "enw eich sefydliad neu elusen",
+		"organisationName2": "Enw'r sefydliad",
+		"changeOrganisationNameHiddenText2": "enw eich sefydliad",
+		"organisationName3": "Enw'r sefydliad neu elusen yr ydych yn ei gynrychioli",
+		"changeOrganisationNameHiddenText3": "enw'r sefydliad neu elusen yr ydych yn ei gynrychioli",
+		"householdName": "Enw'r aelwyd rydych chi'n ei chynrychioli",
+		"changeHouseholdNameHiddenText": "enw'r cartref rydych chi'n ei gynrychioli",
+		"jobTitleOrRole": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?",
+		"changeJobTitleOrRoleHiddenText": "teitl eich swydd neu rôl gwirfoddolwr",
 		"areYou18": "A ydych chi'n 18 oed neu'n hŷn?",
-		"changeAreYou18HiddenText": "os ydych yn 18 oed neu'n hŷn",
+		"changeAreYou18HiddenText": "os ydych dros 18",
+		"areThey18": "A yw'n 18 oed neu'n hŷn?",
+		"changeAreThey18HiddenText": "os ydyn nhw dros 18",
 		"email": "Cyfeiriad e-bost",
 		"changeEmailHiddenText": "eich cyfeiriad e-bost",
+		"theirEmail": "Ei gyfeiriad e-bost",
+		"changeTheirEmailHiddenText": "eu cyfeiriad e-bost",
 		"address": "Cyfeiriad",
 		"changeAddressHiddenText": "eich cyfeiriad",
+		"theirAddress": "Ei gyfeiriad",
+		"changeTheirAddressHiddenText": "eu cyfeiriad ",
 		"number": "Rhif ffôn",
 		"changeNumberHiddenText": "eich rhif ffôn",
+		"theirNumber": "Ei rif ffôn",
+		"changeTheirNumberHiddenText": "eu rhif ffôn",
 		"comments": "Sylwadau cofrestru",
-		"changeCommentsHiddenText": "sylwadau cofrestru",
-		"organisationName": "Beth yw enw eich sefydliad neu'ch elusen?",
-		"changeOrganisationNameHiddenText": "enw eich sefydliad neu'ch elusen",
-		"jobTitleOrRole": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?",
-		"changeJobTitleOrRoleHiddenText": "teitl eich swydd neu'ch rôl wirfoddoli"
+		"changeCommentsHiddenText": "sylwadau cofrestru"
 	},
 	"declaration": {
 		"pageHeading": "Datganiad",
@@ -167,12 +234,44 @@
 	},
 	"validationErrors": {
 		"organisationName": {
+			"empty": "Nodwch enw'r sefydliad rydych yn gweithio iddo",
+			"length": "Mae'n rhaid i enw'r sefydliad rydych yn gweithio iddo gynnwys 255 o nodau neu lai"
+		},
+		"organisationOrCharityName": {
 			"empty": "Nodwch enw eich sefydliad neu'ch elusen",
 			"length": "Mae'n rhaid i enw eich sefydliad neu'ch elusen gynnwys 255 o nodau neu lai"
 		},
 		"jobTitleOrRole": {
 			"empty": "Nodwch deitl eich swydd neu'ch rôl wirfoddoli",
 			"length": "Mae'n rhaid i deitl eich swydd neu'ch rôl wirfoddoli gynnwys 64 o nodau neu lai"
+		},
+		"whoRepresenting": {
+			"empty": "Dewiswch bwy rydych chi'n ei gynrychioli"
+		},
+		"namePersonRepresenting": {
+			"empty": "Nodwch enw llawn yr unigolyn rydych chi'n ei gynrychioli",
+			"length": "Mae'n rhaid i enw llawn yr unigolyn rydych chi'n ei gynrychioli gynnwys rhwng 3 a 64 o nodau"
+		},
+		"nameOrganisationRepresenting": {
+			"empty": "Rhowch enw llawn y sefydliad yr ydych yn ei gynrychioli",
+			"length": "Rhaid i enw llawn y sefydliad yr ydych yn ei gynrychioli fod rhwng 3 a 64 nod"
+		},
+		"nameHouseholdRepresenting": {
+			"empty": "Rhowch enw'r cartref yr ydych yn ei gynrychioli",
+			"length": "Rhaid i enw llawn y cartref yr ydych yn ei gynrychioli fod rhwng 3 a 64 nod"
+		},
+		"areThey18": {
+			"empty": "Dewiswch 'ydyw' os yw'n 18 oed neu'n hŷn"
+		},
+		"theirTelephoneNumber": {
+			"empty": "Nodwch eich rhif ffôn",
+			"length": "Mae'n rhaid i'ch rhif ffôn gynnwys 255 o nodau neu lai",
+			"format": "Nodwch rif ffôn, fel 01632 960 001, 07700 900 982 neu 44 808 157 0192"
+		},
+		"theirEmailAddress": {
+			"empty": "Nodwch eich cyfeiriad e-bost",
+			"length": "Mae'n rhaid i'ch cyfeiriad e-bost gynnwys rhwng 3 a 255 o nodau",
+			"format": "Nodwch gyfeiriad e-bost yn y fformat cywir, fel enw@enghraifft.com"
 		}
 	}
 }

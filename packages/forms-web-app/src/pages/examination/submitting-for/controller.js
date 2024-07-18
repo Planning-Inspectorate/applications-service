@@ -14,8 +14,8 @@ const view = 'examination/submitting-for/view.njk';
 
 const getSubmittingFor = (req, res) => {
 	try {
-		const { query, session } = req;
-		res.render(view, getPageData(query, session));
+		const { i18n, query, session } = req;
+		res.render(view, getPageData(i18n, query, session));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -24,12 +24,12 @@ const getSubmittingFor = (req, res) => {
 
 const postSubmittingFor = (req, res) => {
 	try {
-		const { body, query, session = {} } = req;
+		const { body, i18n, query, session = {} } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[submittingFor.id] || Object.keys(errors).length > 0) {
 			res.render(view, {
-				...getPageData(query, session),
+				...getPageData(i18n, query, session),
 				errors,
 				errorSummary
 			});

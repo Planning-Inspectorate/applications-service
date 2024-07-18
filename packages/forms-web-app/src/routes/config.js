@@ -12,24 +12,7 @@ const routesConfig = {
 			},
 			applicant: {
 				id: 'examination-applicant',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you are #'
-					}
-				},
-				options: {
-					1: {
-						value: 'yes',
-						text: 'Yes'
-					},
-					2: {
-						value: 'no',
-						text: 'No'
-					}
-				},
-				route: 'are-you-applicant',
-				title: 'Are you #?',
-				view: 'pages/examination/applicant'
+				route: 'are-you-applicant'
 			},
 			checkSubmissionItem: {
 				id: 'examination-check-submission-item',
@@ -45,19 +28,7 @@ const routesConfig = {
 			},
 			email: {
 				id: 'examination-email',
-				name: `What's your email address?`,
-				route: 'your-email-address',
-				view: 'pages/examination/email',
-				onError: {
-					message: {
-						checkLength: 'Your email address must be between 3 and 255 characters',
-						notEmpty: 'Enter your email address'
-					},
-					minMaxOptions: {
-						min: 3,
-						max: 255
-					}
-				}
+				route: 'your-email-address'
 			},
 			enterComment: {
 				id: 'examination-enter-comment',
@@ -116,58 +87,15 @@ const routesConfig = {
 			},
 			nameAgent: {
 				id: 'examination-name',
-				name: 'Name of person or group',
-				title: "What's the full name of the person, household or organisation?",
-				pageTitle: "What's the full name of the person, household or organisation?",
-				onError: {
-					message: {
-						checkLength:
-							"The full name of the person, household or organisation organisation's name must be between 1 and 255 characters",
-						notEmpty: 'Enter the full name of the person, household or organisation'
-					},
-					minMaxOptions: {
-						min: 1,
-						max: 255
-					}
-				},
-				route: 'name-of-person-or-group',
-				view: 'pages/examination/name'
+				route: 'name-of-person-or-group'
 			},
 			nameMyself: {
 				id: 'examination-name',
-				name: 'What is your full name?',
-				title: 'What is your full name?',
-				pageTitle: 'What is your full name?',
-				onError: {
-					message: {
-						checkLength: 'Full name must be between 3 and 64 characters',
-						notEmpty: 'Enter your full name'
-					},
-					minMaxOptions: {
-						min: 3,
-						max: 64
-					}
-				},
-				route: 'your-name',
-				view: 'pages/examination/name'
+				route: 'your-name'
 			},
 			nameOrganisation: {
 				id: 'examination-name',
-				name: 'Name of organisation',
-				title: `What’s your organisation's name?`,
-				pageTitle: `What’s your organisation's name?`,
-				onError: {
-					message: {
-						checkLength: "Your organisation's name must be between 1 and 255 characters",
-						notEmpty: "Enter your organisation's name"
-					},
-					minMaxOptions: {
-						min: 1,
-						max: 255
-					}
-				},
-				route: 'your-organisation-name',
-				view: 'pages/examination/name'
+				route: 'your-organisation-name'
 			},
 			personalInformation: {
 				name: 'Personal information',
@@ -279,29 +207,7 @@ const routesConfig = {
 			},
 			submittingFor: {
 				id: 'examination-submitting-for',
-				errorMessage: 'Select who you are submitting for',
-				name: 'Who are you making the submission for?',
-				onError: {
-					message: {
-						isEmpty: 'Select who you are submitting for'
-					}
-				},
-				options: {
-					1: {
-						value: 'myself',
-						text: 'Myself'
-					},
-					2: {
-						value: 'organisation',
-						text: 'An organisation I work for'
-					},
-					3: {
-						value: 'agent',
-						text: 'On behalf of another person, a household or another organisation I do not work for'
-					}
-				},
-				route: 'who-are-you-submitting-for',
-				view: 'pages/examination/submitting-for'
+				route: 'who-are-you-submitting-for'
 			},
 			yourInterestedPartyNumber: {
 				id: 'examination-your-interested-party-number',

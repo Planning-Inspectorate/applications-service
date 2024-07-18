@@ -8,7 +8,6 @@ const getFilters = (caseReference) => {
 		WHERE caseRef = ${caseReference}
 			AND (stage is not null and stage <> 'draft' and stage <> '0')
 			AND filter1 is not null
-			AND filter1Welsh is not null
 		GROUP BY stage, filter1, filter1Welsh`;
 
 	return prismaClient.$queryRaw(sql);

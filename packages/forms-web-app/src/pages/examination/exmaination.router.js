@@ -5,13 +5,21 @@ const {
 	validateNotEmptyAndLength,
 	emailValidationRules
 } = require('../../validators/shared');
+
+const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const {
 	validateHasInterestedPartyNumber
 } = require('../../validators/examination/has-interested-party-number');
+const { validateNameAgent } = require('./name/utils/_validators/validate-name-agent');
+const { validateNameMyself } = require('./name/utils/_validators/validate-name-myself');
+const { validateNameOrganisation } = require('./name/utils/_validators/validate-name-organisation');
+const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
 } = require('../../validators/examination/your-interested-party-number');
+
 const { validationErrorHandler } = require('../../validators/validation-error-handler');
+
 const { forwardView } = require('../../middleware/forward-view');
 const {
 	unsetEditModeSubmissionItemId
@@ -111,12 +119,7 @@ const router = express.Router({ mergeParams: true });
 router.use(addCommonTranslationsMiddleware, addExaminationTranslationsMiddleware);
 
 router.get(`/${applicant.route}`, getApplicant);
-router.post(
-	`/${applicant.route}`,
-	validateNotEmpty(applicant),
-	validationErrorHandler,
-	postApplicant
-);
+router.post(`/${applicant.route}`, validateApplicant(), validationErrorHandler, postApplicant);
 
 router.get(`/${checkSubmissionItem.route}`, getCheckSubmissionItem);
 router.post(`/${checkSubmissionItem.route}`, postCheckSubmissionItem);
@@ -126,13 +129,7 @@ router.get(`/${checkYourAnswers.route}`, getCheckYourAnswers);
 router.get(`/${haveYourSay.route}`, projectsMiddleware, getHaveYourSay);
 
 router.get(`/${email.route}`, getEmail);
-router.post(
-	`/${email.route}`,
-	addCommonTranslationsMiddleware,
-	emailValidationRules(email),
-	validationErrorHandler,
-	postEmail
-);
+router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandler, postEmail);
 
 router.get(`/${evidenceOrComment.route}`, getEvidenceOrComment);
 router.post(
@@ -163,7 +160,7 @@ router.get(`/${nameAgent.route}`, forwardView(nameAgent), getName);
 router.post(
 	`/${nameAgent.route}`,
 	decodeUri('body', [nameAgent.id]),
-	validateNotEmptyAndLength(nameAgent),
+	validateNameAgent(nameAgent.id),
 	validationErrorHandler,
 	forwardView(nameAgent),
 	postName
@@ -173,7 +170,7 @@ router.get(`/${nameMyself.route}`, forwardView(nameMyself), getName);
 router.post(
 	`/${nameMyself.route}`,
 	decodeUri('body', [nameMyself.id]),
-	validateNotEmptyAndLength(nameMyself),
+	validateNameMyself(nameMyself.id),
 	validationErrorHandler,
 	forwardView(nameMyself),
 	postName
@@ -183,7 +180,7 @@ router.get(`/${nameOrganisation.route}`, forwardView(nameOrganisation), getName)
 router.post(
 	`/${nameOrganisation.route}`,
 	decodeUri('body', [nameOrganisation.id]),
-	validateNotEmptyAndLength(nameOrganisation),
+	validateNameOrganisation(nameOrganisation.id),
 	validationErrorHandler,
 	forwardView(nameOrganisation),
 	postName
@@ -268,7 +265,7 @@ router.post(`/${selectFile.route}`, postSelectFile);
 router.get(`/${submittingFor.route}`, getSubmittingFor);
 router.post(
 	`/${submittingFor.route}`,
-	validateNotEmpty(submittingFor),
+	validateSubmittingFor(),
 	validationErrorHandler,
 	postSubmittingFor
 );

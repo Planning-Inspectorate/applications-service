@@ -2,6 +2,15 @@
 
 exports[`pages/examination/_translations should return the correct English translations 1`] = `
 {
+  "applicant": {
+    "errorMessage1": "Select yes if you are {{-applicant}}",
+    "title1": "Are you {{-applicant}}?",
+  },
+  "email": {
+    "heading1": "What's your email address?",
+    "hintText1": "We'll use your email address to confirm we've received your submission. We will not publish your email address.",
+    "title": "What's your email address?",
+  },
   "hasInterestedPartyNumber": {
     "errorMessage1": "Select yes if you have an interested party reference number",
     "paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
@@ -34,6 +43,36 @@ exports[`pages/examination/_translations should return the correct English trans
       "title1": "No Deadlines - Have your say on an application",
     },
   },
+  "name": {
+    "agent": {
+      "errorMessage1": "Enter the full name of the person, household or organisation",
+      "errorMessage2": "The full name of the person, household or organisation organisation's name must be between 1 and 255 characters",
+      "heading1": "What's the full name of the person, household or organisation?",
+      "title": "What's the full name of the person, household or organisation?",
+    },
+    "myself": {
+      "errorMessage1": "Enter your full name",
+      "errorMessage2": "Full name must be between 3 and 64 characters",
+      "heading1": "What is your full name?",
+      "title": "What is your full name?",
+    },
+    "organisation": {
+      "errorMessage1": "Enter your organisation's name",
+      "errorMessage2": "Your organisation's name must be between 1 and 255 characters",
+      "heading1": "What's your organisation's name?",
+      "title": "What's your organisation's name?",
+    },
+  },
+  "submittingFor": {
+    "errorMessage1": "Select who you are submitting for",
+    "hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
+    "options": {
+      "agent": "On behalf of another person, a household or another organisation I do not work for",
+      "myself": "Myself",
+      "organisation": "An organisation I work for",
+    },
+    "title1": "Who are you making the submission for?",
+  },
   "yourInterestedPartyNumber": {
     "errorMessage1": "Enter your interested party number",
     "errorMessage2": "Your interested party number must be between 3 and 20 characters",
@@ -44,6 +83,15 @@ exports[`pages/examination/_translations should return the correct English trans
 
 exports[`pages/examination/_translations should return the correct Welsh translations 1`] = `
 {
+  "applicant": {
+    "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
+    "title1": "A ydych chi'n {{-applicant}}?",
+  },
+  "email": {
+    "heading1": "Beth yw'ch cyfeiriad e-bost?",
+    "hintText1": "Byddwn yn defnyddio'ch cyfeiriad e-bost i gadarnhau ein bod wedi derbyn eich cyflwyniad. Ni fyddwn yn cyhoeddi eich cyfeiriad e-bost.",
+    "title": "Beth yw'ch cyfeiriad e-bost?",
+  },
   "hasInterestedPartyNumber": {
     "errorMessage1": "Dewiswch 'oes' os oes gennych rif parti â buddiant",
     "paragraph1": "Rhif cyfeirnod unigryw yw hwn sy'n eich adnabod fel parti â buddiant. Byddwch wedi cael y rhif hwn pan wnaethoch gofrestru.",
@@ -75,6 +123,36 @@ exports[`pages/examination/_translations should return the correct Welsh transla
       "paragraph1": "Ni allwch gyflwyno unrhyw beth gan nad oes dyddiadau cau ar agor.",
       "title1": "Dim Dyddiadau Cau - Lleisio'ch barn am gais",
     },
+  },
+  "name": {
+    "agent": {
+      "errorMessage1": "Nodwch enw llawn yr unigolyn, yr aelwyd neu'r sefydliad",
+      "errorMessage2": "Mae'n rhaid i enw llawn yr unigolyn, yr aelwyd neu'r sefydliad gynnwys rhwng 1 a 255 o nodau",
+      "heading1": "Beth yw enw llawn yr unigolyn, yr aelwyd neu'r sefydliad?",
+      "title": "Beth yw enw llawn yr unigolyn, yr aelwyd neu'r sefydliad?",
+    },
+    "myself": {
+      "errorMessage1": "Nodwch eich enw llawn",
+      "errorMessage2": "Mae'n rhaid i'ch enw llawn gynnwys rhwng 3 a 64 o nodau",
+      "heading1": "Beth yw'ch enw llawn?",
+      "title": "Beth yw'ch enw llawn?",
+    },
+    "organisation": {
+      "errorMessage1": "Nodwch enw eich sefydliad",
+      "errorMessage2": "Rhaid i enw eich sefydliad fod rhwng 1 a 255 nod",
+      "heading1": "Beth yw enw eich sefydliad?",
+      "title": "Beth yw enw eich sefydliad?",
+    },
+  },
+  "submittingFor": {
+    "errorMessage1": "Dewiswch ar ran pwy rydych chi'n cyflwyno",
+    "hintText1": "Os nad ydych wedi cofrestru fel parti â diddordeb gallwch gyflwyno sylwadau o hyd, ond efallai na fyddwn yn eu derbyn.",
+    "options": {
+      "agent": "Ar ran unigolyn arall, aelwyd neu sefydliad arall nad wyf yn gweithio iddo",
+      "myself": "Fi fy hun",
+      "organisation": "Sefydliad rwyf yn gweithio iddo",
+    },
+    "title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",
   },
   "yourInterestedPartyNumber": {
     "errorMessage1": "Nodwch eich rhif parti â buddiant",

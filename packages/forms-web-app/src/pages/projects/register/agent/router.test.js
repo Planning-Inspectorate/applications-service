@@ -54,12 +54,6 @@ const {
 const { getRegisterCompleteController } = require('../_common/complete/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
-const {
-	addCommonTranslationsMiddleware
-} = require('../../../_middleware/i18n/add-common-translations-middleware');
-const {
-	addRegisterTranslationsMiddleware
-} = require('../_middleware/add-register-translations-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
@@ -73,16 +67,13 @@ const {
 } = require('../../../../validators/register/agent/who-representing');
 const {
 	rules: representingNameValidationRules
-} = require('../../../../validators/register/agent/name-person-representing');
+} = require('../../../../validators/register/agent/name-representing');
 const {
 	rules: telephoneValidationRules
 } = require('../../../../validators/shared/telephone-number');
 const {
 	rules: areThey18ValidationRules
 } = require('../../../../validators/register/agent/are-they-18-over');
-const {
-	rules: theirAddressValidationRules
-} = require('../../../../validators/register/agent/their-postal-address');
 const {
 	rules: theirEmailValidationRules
 } = require('../../../../validators/register/agent/their-email-address');
@@ -126,7 +117,7 @@ jest.mock('../../../../validators/register/agent/who-representing', () => {
 		rules: jest.fn()
 	};
 });
-jest.mock('../../../../validators/register/agent/name-person-representing', () => {
+jest.mock('../../../../validators/register/agent/name-representing', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -137,11 +128,6 @@ jest.mock('../../../../validators/shared/telephone-number', () => {
 	};
 });
 jest.mock('../../../../validators/register/agent/are-they-18-over', () => {
-	return {
-		rules: jest.fn()
-	};
-});
-jest.mock('../../../../validators/register/agent/their-postal-address', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -185,15 +171,11 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/full-name',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				fullNameValidationRules(),
@@ -216,17 +198,12 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/email-address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterEmailController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/email-address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
-				addCommonTranslationsMiddleware,
 				emailValidationRules(),
 				validationErrorHandler,
 				postRegisterEmailController
@@ -234,15 +211,11 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAddressController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/address',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				addressValidationRules(),
 				validationErrorHandler,
@@ -303,15 +276,11 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterNumberController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/telephone-number',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				telephoneValidationRules(),
 				validationErrorHandler,
@@ -339,7 +308,7 @@ describe('pages/projects/register/agent/router', () => {
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-postal-address',
 				registerMiddleware,
-				theirAddressValidationRules(),
+				addressValidationRules(),
 				validationErrorHandler,
 				postRegisterAgentTheirAddressController
 			);
@@ -359,15 +328,11 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/tell-us-about-project',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/tell-us-about-project',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				aboutProjectValidationRules(),
@@ -391,16 +356,12 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/check-answers',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterAgentCheckAnswersController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/declaration',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);
@@ -412,8 +373,6 @@ describe('pages/projects/register/agent/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/registration-complete',
-				addCommonTranslationsMiddleware,
-				addRegisterTranslationsMiddleware,
 				registerMiddleware,
 				getRegisterCompleteController
 			);

@@ -4,7 +4,6 @@ describe('#featureToggles', () => {
 		const response = featureToggles();
 		it('should return the config variables', () => {
 			expect(response).toEqual({
-				hideAllExaminationDocumentsLink: true,
 				allowProjectInformation: true
 			});
 		});

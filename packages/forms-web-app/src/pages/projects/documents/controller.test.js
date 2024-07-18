@@ -245,7 +245,6 @@ describe('pages/projects/documents/controller', () => {
 								type: 'date'
 							}
 						],
-						hideAllExaminationDocumentsLink: true,
 						langIsWelsh: false,
 						pageOptions: [1, 2, 3, '...', 5, 'next'],
 						pageUrl: 'documents',

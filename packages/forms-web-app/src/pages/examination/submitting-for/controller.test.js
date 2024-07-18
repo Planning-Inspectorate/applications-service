@@ -3,6 +3,8 @@ const { getSubmittingFor, postSubmittingFor } = require('./controller');
 const { getPageData } = require('./utils/get-page-data');
 const { getRedirectUrl } = require('./utils/get-redirect-url');
 const { setDeadlineDetailsSubmittingFor } = require('../_session/deadline');
+const { mockI18n } = require('../../_mocks/i18n');
+const examinationTranslations__EN = require('../_translations/en.json');
 
 jest.mock('./utils/get-page-data', () => ({
 	getPageData: jest.fn()
@@ -14,9 +16,14 @@ jest.mock('../_session/deadline', () => ({
 	setDeadlineDetailsSubmittingFor: jest.fn()
 }));
 
-describe('examination/submitting-for/controller', () => {
+const i18n = mockI18n({
+	examination: examinationTranslations__EN
+});
+
+describe('pages/examination/submitting-for/controller', () => {
 	const req = {
 		body: {},
+		i18n,
 		session: { examination: {} },
 		query: { mock: 'query' }
 	};
@@ -33,7 +40,7 @@ describe('examination/submitting-for/controller', () => {
 					getSubmittingFor(req, res);
 				});
 				it('should get the page data', () => {
-					expect(getPageData).toHaveBeenCalledWith(req.query, req.session);
+					expect(getPageData).toHaveBeenCalledWith(req.i18n, req.query, req.session);
 				});
 				it('should render the submitting for page with the page data', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/submitting-for/view.njk', {
@@ -41,6 +48,7 @@ describe('examination/submitting-for/controller', () => {
 					});
 				});
 			});
+
 			describe('and there is an issue', () => {
 				beforeEach(() => {
 					getPageData.mockImplementation(() => {
