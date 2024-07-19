@@ -1,6 +1,8 @@
-const { getActiveSubmissionItem } = require('../../_session/submission-items-session');
+const {
+	getSubmissionItemTitleByLocale
+} = require('../../_utils/get-content/get-submission-item-title-by-locale');
 const { getSubmissionItemPageUrl } = require('../../_utils/get-submission-item-page-url');
-const { markActiveChecked } = require('../../_utils/mark-active-checked');
+const { formatEvidenceOrCommentOptions } = require('./format-evidence-or-comment-options');
 const {
 	routesConfig: {
 		examination: {
@@ -9,25 +11,11 @@ const {
 	}
 } = require('../../../../routes/config');
 
-const getPageData = (query, session) => {
-	const activeSubmissionItem = getActiveSubmissionItem(session);
-	const pageData = {
-		activeSubmissionItemTitle: activeSubmissionItem[selectDeadline.sessionId[2]],
-		backLinkUrl: getSubmissionItemPageUrl(query, selectDeadline.route),
-		id: evidenceOrComment.id,
-		options: [
-			evidenceOrComment.options[1],
-			evidenceOrComment.options[2],
-			evidenceOrComment.options[3]
-		],
-		pageTitle: evidenceOrComment.title,
-		title: evidenceOrComment.title
-	};
-
-	if (activeSubmissionItem[evidenceOrComment.sessionId])
-		pageData.options = markActiveChecked(pageData.options, activeSubmissionItem.submissionType);
-
-	return pageData;
-};
+const getPageData = (i18n, query, session) => ({
+	submissionItemTitle: getSubmissionItemTitleByLocale(i18n, session),
+	backLinkUrl: getSubmissionItemPageUrl(query, selectDeadline.route),
+	id: evidenceOrComment.id,
+	options: formatEvidenceOrCommentOptions(i18n, session)
+});
 
 module.exports = { getPageData };

@@ -13,13 +13,15 @@ const {
 		}
 	}
 } = require('../../../routes/config');
+
 const getCheckSubmissionItem = (req, res) => {
 	try {
-		const { query, session } = req;
+		const { i18n, query, session } = req;
+
 		res.render('examination/check-submission-item/view.njk', {
 			...getPageData(),
 			...getBackLinkUrl(query, session),
-			...getSummaryList(session)
+			...getSummaryList(i18n, session)
 		});
 	} catch (error) {
 		logger.error(error);

@@ -1,7 +1,8 @@
+const { evidenceOrCommentValues } = require('../config');
 const {
 	routesConfig: {
 		examination: {
-			pages: { enterComment, evidenceOrComment, selectFile }
+			pages: { enterComment, selectFile }
 		}
 	}
 } = require('../../../../routes/config');
@@ -10,13 +11,13 @@ const getRedirectRoute = (value) => {
 	let redirectUrl;
 
 	switch (value) {
-		case evidenceOrComment.options[1].value:
+		case evidenceOrCommentValues[1]:
 			redirectUrl = enterComment.route;
 			break;
-		case evidenceOrComment.options[2].value:
+		case evidenceOrCommentValues[2]:
 			redirectUrl = selectFile.route;
 			break;
-		case evidenceOrComment.options[3].value:
+		case evidenceOrCommentValues[3]:
 			redirectUrl = enterComment.route;
 			break;
 		default:

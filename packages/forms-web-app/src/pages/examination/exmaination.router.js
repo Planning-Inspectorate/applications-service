@@ -8,6 +8,12 @@ const {
 
 const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const {
+	validateExaminationSelectDeadline
+} = require('./select-deadline/utils/validate-examination-select-deadline');
+const {
+	validateEvidenceOrComment
+} = require('./evidence-or-comment/utils/validate-evidence-or-comment');
+const {
 	validateHasInterestedPartyNumber
 } = require('../../validators/examination/has-interested-party-number');
 const { validateNameAgent } = require('./name/utils/_validators/validate-name-agent');
@@ -113,9 +119,6 @@ const { getProcessSubmission, postProcessSubmission } = require('./process-submi
 const { getSubmissionComplete } = require('./submission-complete/controller');
 const { getSubmissionError } = require('./submission-error/controller');
 const chooseDeadlineRouter = require('./choose-deadline/router');
-const {
-	validateExaminationSelectDeadline
-} = require('./select-deadline/utils/validate-examination-select-deadline');
 
 const router = express.Router({ mergeParams: true });
 
@@ -137,7 +140,7 @@ router.post(`/${email.route}`, emailValidationRules(email), validationErrorHandl
 router.get(`/${evidenceOrComment.route}`, getEvidenceOrComment);
 router.post(
 	`/${evidenceOrComment.route}`,
-	validateNotEmpty(evidenceOrComment),
+	validateEvidenceOrComment(),
 	validationErrorHandler,
 	postEvidenceOrComment
 );

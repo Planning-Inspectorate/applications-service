@@ -36,6 +36,7 @@ describe('pages/examination/submitting-for/utils/format-submitting-for-options',
 					]);
 				});
 			});
+
 			describe('and the user has previously selected an option', () => {
 				let result;
 

@@ -1,4 +1,5 @@
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
+const { evidenceOrCommentValues } = require('../../../evidence-or-comment/config');
 const {
 	routesConfig: {
 		examination: {
@@ -38,13 +39,13 @@ const getChangeUrl = (submissionItem) => {
 	const evidenceOrCommentSessionValue = submissionItem[evidenceOrComment.sessionId];
 
 	switch (evidenceOrCommentSessionValue) {
-		case evidenceOrComment.options[1].value:
+		case evidenceOrCommentValues[1]:
 			changeUrl = `${personalInformationComment.route}`;
 			break;
-		case evidenceOrComment.options[2].value:
+		case evidenceOrCommentValues[2]:
 			changeUrl = `${personalInformationFiles.route}`;
 			break;
-		case evidenceOrComment.options[3].value:
+		case evidenceOrCommentValues[3]:
 			changeUrl = `${personalInformationCommentFiles.route}`;
 			break;
 		default:
