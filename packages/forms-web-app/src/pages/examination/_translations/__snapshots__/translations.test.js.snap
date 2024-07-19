@@ -18,6 +18,16 @@ exports[`pages/examination/_translations should return the correct English trans
     "hintText1": "We'll use your email address to confirm we've received your submission. We will not publish your email address.",
     "title": "What's your email address?",
   },
+  "evidenceOrComment": {
+    "errorMessage1": "Select if you want to upload supporting evidence or write a comment",
+    "heading1": "How would you like to submit comments?",
+    "options": {
+      "both": "Make a comment and upload files",
+      "comment": "Make a comment",
+      "upload": "Upload files",
+    },
+    "title": "How would you like to submit comments?",
+  },
   "hasInterestedPartyNumber": {
     "errorMessage1": "Select yes if you have an interested party reference number",
     "paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
@@ -111,6 +121,16 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "heading1": "Beth yw'ch cyfeiriad e-bost?",
     "hintText1": "Byddwn yn defnyddio'ch cyfeiriad e-bost i gadarnhau ein bod wedi derbyn eich cyflwyniad. Ni fyddwn yn cyhoeddi eich cyfeiriad e-bost.",
     "title": "Beth yw'ch cyfeiriad e-bost?",
+  },
+  "evidenceOrComment": {
+    "errorMessage1": "Dewiswch a ydych eisiau lanlwytho tystiolaeth ategol neu ysgrifennu sylw",
+    "heading1": "Sut hoffech chi gyflwyno sylwadau?",
+    "options": {
+      "both": "Gwneud sylw a lanlwytho ffeiliau",
+      "comment": "Gwneud sylw",
+      "upload": "Lanlwytho ffeiliau",
+    },
+    "title": "Sut hoffech chi gyflwyno sylwadau?",
   },
   "hasInterestedPartyNumber": {
     "errorMessage1": "Dewiswch 'oes' os oes gennych rif parti â buddiant",

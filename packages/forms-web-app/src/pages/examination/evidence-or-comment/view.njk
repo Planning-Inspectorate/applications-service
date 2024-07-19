@@ -4,10 +4,12 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
+{% set pageTitle = t("examination.evidenceOrComment.title") %}
+
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t("common.thereIsAProblem"),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
@@ -15,7 +17,7 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<span class="govuk-caption-l">
-				{{ activeSubmissionItemTitle }}
+				{{ submissionItemTitle }}
 			</span>
 
 			<form action="" method="POST" novalidate>
@@ -28,7 +30,7 @@
 					},
 					fieldset: {
 						legend: {
-							text: title,
+							text: t("examination.evidenceOrComment.heading1"),
 							isPageHeading: true,
 							classes: "govuk-fieldset__legend--l"
 						}
@@ -38,7 +40,7 @@
 
 				{{ govukButton({
 					attributes: { "data-cy": "button-submit-and-continue" },
-					text: "Continue",
+					text: t("common.continue"),
 					type: "Submit"
 				}) }}
 			</form>

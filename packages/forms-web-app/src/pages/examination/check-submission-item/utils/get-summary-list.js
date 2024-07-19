@@ -16,12 +16,12 @@ const submissionItemHasFiles = (submissionItem) =>
 
 const submissionItemHasComment = (submissionItem) => submissionItem.comment;
 
-const getSummaryList = (session) => {
+const getSummaryList = (i18n, session) => {
 	const activeSubmissionItem = getActiveSubmissionItem(session);
 	const summaryList = [];
 
 	summaryList.push(getSummaryListItemSubmissionItem(activeSubmissionItem, session));
-	summaryList.push(getSummaryListItemEvidenceOrComment(activeSubmissionItem));
+	summaryList.push(getSummaryListItemEvidenceOrComment(i18n, activeSubmissionItem));
 
 	if (submissionItemHasFiles(activeSubmissionItem))
 		summaryList.push(getSummaryListItemSelectFile(activeSubmissionItem));

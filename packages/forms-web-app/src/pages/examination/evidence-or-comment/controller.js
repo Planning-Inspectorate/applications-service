@@ -12,10 +12,12 @@ const {
 } = require('../../../routes/config');
 
 const view = 'examination/evidence-or-comment/view.njk';
+
 const getEvidenceOrComment = async (req, res) => {
 	try {
-		const { query, session } = req;
-		return res.render(view, getPageData(query, session));
+		const { i18n, query, session } = req;
+
+		return res.render(view, getPageData(i18n, query, session));
 	} catch (error) {
 		logger.error('Error: ', error);
 		return res.status(500).render('error/unhandled-exception');
@@ -24,12 +26,12 @@ const getEvidenceOrComment = async (req, res) => {
 
 const postEvidenceOrComment = async (req, res) => {
 	try {
-		const { body, query, session } = req;
+		const { body, i18n, query, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[evidenceOrComment.id] || Object.keys(errors).length > 0) {
 			return res.render(view, {
-				...getPageData(query, session),
+				...getPageData(i18n, query, session),
 				errors,
 				errorSummary
 			});

@@ -5,12 +5,12 @@ const {
 	getActiveSubmissionItem
 } = require('../../_session/submission-items-session');
 const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode-edit');
+const { evidenceOrCommentValues } = require('../../evidence-or-comment/config');
 const {
 	routesConfig: {
 		examination: {
 			pages: {
 				addAnotherDeadlineItem,
-				evidenceOrComment,
 				personalInformation,
 				personalInformationComment,
 				personalInformationCommentFiles,
@@ -43,14 +43,14 @@ const getBackLinkUrl = (query, session) => {
 
 	if (isQueryModeEdit(query)) {
 		backLinkUrl = `${addAnotherDeadlineItem.route}`;
-	} else if (submissionItemType === evidenceOrComment.options[1].value) {
+	} else if (submissionItemType === evidenceOrCommentValues[1]) {
 		backLinkUrl = `${personalInformationComment.route}`;
-	} else if (submissionItemType === evidenceOrComment.options[2].value) {
+	} else if (submissionItemType === evidenceOrCommentValues[2]) {
 		backLinkUrl = getOptionTwoBackLinkUrl(
 			getActiveSubmissionItemFiles(session),
 			hasPersonalInformation
 		);
-	} else if (submissionItemType === evidenceOrComment.options[3].value) {
+	} else if (submissionItemType === evidenceOrCommentValues[3]) {
 		backLinkUrl = getOptionThreeBackLinkUrl(hasPersonalInformation);
 	}
 

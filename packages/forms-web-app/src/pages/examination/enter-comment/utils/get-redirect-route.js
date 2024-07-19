@@ -2,10 +2,13 @@ const {
 	getActiveSubmissionItem,
 	getSubmissionItemType
 } = require('../../_session/submission-items-session');
+
+const { evidenceOrCommentValues } = require('../../evidence-or-comment/config');
+
 const {
 	routesConfig: {
 		examination: {
-			pages: { evidenceOrComment, personalInformationComment, selectFile }
+			pages: { personalInformationComment, selectFile }
 		}
 	}
 } = require('../../../../routes/config');
@@ -17,10 +20,10 @@ const getRedirectRoute = (session) => {
 	let redirectUrl;
 
 	switch (activeSubmissionItemType) {
-		case evidenceOrComment.options[1].value:
+		case evidenceOrCommentValues[1]:
 			redirectUrl = personalInformationComment.route;
 			break;
-		case evidenceOrComment.options[3].value:
+		case evidenceOrCommentValues[3]:
 			redirectUrl = selectFile.route;
 			break;
 		default:

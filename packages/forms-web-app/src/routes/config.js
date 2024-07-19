@@ -49,29 +49,8 @@ const routesConfig = {
 			},
 			evidenceOrComment: {
 				id: 'examination-evidence-or-comment',
-				onError: {
-					message: {
-						isEmpty: 'Select if you want to upload supporting evidence or write a comment'
-					}
-				},
-				options: {
-					1: {
-						value: 'comment',
-						text: 'Make a comment'
-					},
-					2: {
-						value: 'upload',
-						text: 'Upload files'
-					},
-					3: {
-						value: 'both',
-						text: 'Make a comment and upload files'
-					}
-				},
 				route: 'select-upload-evidence-or-comment',
-				sessionId: 'submissionType',
-				title: 'How would you like to submit comments?',
-				view: 'pages/examination/evidence-or-comment'
+				sessionId: 'submissionType'
 			},
 			haveYourSay: {
 				id: 'examination-have-your-say',

@@ -15,6 +15,16 @@
 		"heading1": "What's your email address?",
 		"hintText1": "We'll use your email address to confirm we've received your submission. We will not publish your email address."
 	},
+	"evidenceOrComment": {
+		"title": "How would you like to submit comments?",
+		"heading1": "How would you like to submit comments?",
+		"options": {
+			"comment": "Make a comment",
+			"upload": "Upload files",
+			"both": "Make a comment and upload files"
+		},
+		"errorMessage1": "Select if you want to upload supporting evidence or write a comment"
+	},
 	"hasInterestedPartyNumber": {
 		"title1": "Do you have an interested party reference number?",
 		"paragraph1": "This is a unique reference number that identifies you as an interested party. You will have been given this number when you registered.",
