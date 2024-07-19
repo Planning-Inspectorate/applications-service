@@ -10,7 +10,7 @@ describe('pages/_utils/get-content-by-locale', () => {
 		describe('When the selected locale is English', () => {
 			const contentByLocale = getContentByLocale(mockI18n({}), mockContentEN, mockContentCY);
 
-			it('should return the english content', () => {
+			it('should return the English content', () => {
 				expect(contentByLocale).toEqual('mock content EN');
 			});
 		});
@@ -18,7 +18,7 @@ describe('pages/_utils/get-content-by-locale', () => {
 		describe('When the selected locale is Welsh', () => {
 			const contentByLocale = getContentByLocale(mockI18n({}, 'cy'), mockContentEN, mockContentCY);
 
-			it('should return the english content', () => {
+			it('should return the Welsh content', () => {
 				expect(contentByLocale).toEqual('mock content CY');
 			});
 		});
