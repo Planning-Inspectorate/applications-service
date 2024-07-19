@@ -25,7 +25,7 @@
 		"seed": "node ./prisma/seed.js"
 	},
 	"dependencies": {
-		"@azure/identity": "^3.2.3",
+		"@azure/identity": "^4.2.1",
 		"@azure/service-bus": "^7.9.0",
 		"@azure/storage-blob": "^12.16.0",
 		"@pins/common": "file:../common",
@@ -48,7 +48,7 @@
 		"jspdf": "^2.5.1",
 		"lodash": "^4.17.21",
 		"moment": "^2.29.1",
-		"mysql2": "^2.3.2",
+		"mysql2": "^3.9.8",
 		"openapi-request-validator": "^12.0.2",
 		"ospoint": "^0.2.1",
 		"pino": "^6.13.2",
