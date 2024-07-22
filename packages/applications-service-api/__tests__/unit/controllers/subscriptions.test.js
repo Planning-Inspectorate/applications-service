@@ -40,7 +40,7 @@ describe('subscriptions controller', () => {
 			}
 		};
 
-		it('invokes notify with correct project and subscription details', async () => {
+		it('invokes notify with correct project and subscription details - non-Welsh region', async () => {
 			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			encrypt.mockReturnValueOnce('some_encrypted_string');
 
@@ -55,6 +55,64 @@ describe('subscriptions controller', () => {
 				project: {
 					email: 'webteam@planninginspectorate.gov.uk',
 					name: 'North Lincolnshire Green Energy Park',
+					caseReference: 'EN010116'
+				}
+			});
+			expect(mockRes.send).toBeCalledWith({
+				subscriptionDetails: 'some_encrypted_string'
+			});
+		});
+
+		it('invokes notify with correct project and subscription details - Welsh region, no Welsh project name', async () => {
+			getApplication.mockResolvedValueOnce({
+				...APPLICATION_API,
+				regions: ['wales'],
+				projectName: 'A Welsh Project',
+				projectNameWelsh: null
+			});
+			encrypt.mockReturnValueOnce('some_encrypted_string');
+
+			await createSubscription(req, mockRes);
+
+			expect(encrypt).toBeCalledWith(
+				'{"email":"user@example.org","subscriptionTypes":["applicationSubmitted","applicationDecided"],"date":"2023-07-06T11:06:00.000Z"}'
+			);
+			expect(sendSubscriptionCreateNotification).toBeCalledWith({
+				email: 'user@example.org',
+				subscriptionDetails: 'some_encrypted_string',
+				project: {
+					email: 'webteam@planninginspectorate.gov.uk',
+					name: 'A Welsh Project',
+					welshName: 'A Welsh Project',
+					caseReference: 'EN010116'
+				}
+			});
+			expect(mockRes.send).toBeCalledWith({
+				subscriptionDetails: 'some_encrypted_string'
+			});
+		});
+
+		it('invokes notify with correct project and subscription details - Welsh region, with Welsh project name', async () => {
+			getApplication.mockResolvedValueOnce({
+				...APPLICATION_API,
+				regions: ['wales'],
+				projectName: 'A Welsh Project',
+				projectNameWelsh: 'A project name in Welsh'
+			});
+			encrypt.mockReturnValueOnce('some_encrypted_string');
+
+			await createSubscription(req, mockRes);
+
+			expect(encrypt).toBeCalledWith(
+				'{"email":"user@example.org","subscriptionTypes":["applicationSubmitted","applicationDecided"],"date":"2023-07-06T11:06:00.000Z"}'
+			);
+			expect(sendSubscriptionCreateNotification).toBeCalledWith({
+				email: 'user@example.org',
+				subscriptionDetails: 'some_encrypted_string',
+				project: {
+					email: 'webteam@planninginspectorate.gov.uk',
+					name: 'A Welsh Project',
+					welshName: 'A project name in Welsh',
 					caseReference: 'EN010116'
 				}
 			});

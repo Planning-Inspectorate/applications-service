@@ -16,7 +16,10 @@ jest.mock('../../../src/lib/config', () => ({
 				},
 				MagicLinkEmail: 'magic_link_template_id',
 				submissionCompleteEmail: 'submission_complete_template_id',
-				subscriptionCreateEmail: 'subscription_create_template_id'
+				subscriptionCreateEmail: {
+					en: 'subscription_create_template_id',
+					cy: 'subscription_create_cy_template_id'
+				}
 			},
 			havingYourSayUrl: 'somedomain.example.com/having-your-say-guide',
 			magicLinkDomain: 'somedomain.example.com',
@@ -185,7 +188,7 @@ describe('notify lib', () => {
 	});
 
 	describe('sendSubscriptionCreateNotification', () => {
-		it('should send an email', async () => {
+		it('should send an email - en template if no Welsh name provided', async () => {
 			const details = {
 				email: 'a@example.com',
 				subscriptionDetails: 'some_encrypted_string',
@@ -205,6 +208,37 @@ describe('notify lib', () => {
 					'somedomain.example.com/projects/BC0110001/get-updates/subscribed?subscriptionDetails=some_encrypted_string',
 				project_name: 'some project',
 				project_email: 'project@example.com'
+			});
+			expect(notifyBuilder.setReference).toHaveBeenCalledWith(
+				'Subscription BC0110001 a@example.com'
+			);
+			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+		});
+
+		it('should send an email - cy template if Welsh name provided', async () => {
+			const details = {
+				email: 'a@example.com',
+				subscriptionDetails: 'some_encrypted_string',
+				project: {
+					name: 'some project',
+					welshName: 'Welsh project name',
+					email: 'project@example.com',
+					caseReference: 'BC0110001'
+				}
+			};
+			await sendSubscriptionCreateNotification(details);
+
+			expect(notifyBuilder.reset).toHaveBeenCalled();
+			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
+				'subscription_create_cy_template_id'
+			);
+			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('a@example.com');
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				subscription_url:
+					'somedomain.example.com/projects/BC0110001/get-updates/subscribed?subscriptionDetails=some_encrypted_string',
+				project_name: 'some project',
+				project_email: 'project@example.com',
+				project_name_welsh: 'Welsh project name'
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith(
 				'Subscription BC0110001 a@example.com'

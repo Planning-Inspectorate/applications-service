@@ -23,15 +23,22 @@ const createSubscription = async (req, res) => {
 		})
 	);
 
-	await sendSubscriptionCreateNotification({
+	const isProjectWelsh = project.regions.includes('wales');
+
+	const details = {
 		email: email,
 		subscriptionDetails: subscriptionDetails,
 		project: {
 			email: project.projectEmailAddress || 'NIEnquiries@planninginspectorate.gov.uk',
 			name: project.projectName,
-			caseReference: project.caseReference
+			caseReference: project.caseReference,
+			...(isProjectWelsh && {
+				welshName: project.projectNameWelsh || project.projectName
+			})
 		}
-	});
+	};
+
+	await sendSubscriptionCreateNotification(details);
 
 	res.send({
 		subscriptionDetails: subscriptionDetails
