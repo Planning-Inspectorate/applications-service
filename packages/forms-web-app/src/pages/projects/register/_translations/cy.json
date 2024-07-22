@@ -113,7 +113,7 @@
 	"theirAddress": {
 		"pageHeading": "Beth yw ei gyfeiriad?",
 		"hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
-		"line1": "Ei gyfeiriad - llinell 1<span class='govuk-visually-hidden'> o 3</span>",
+		"line1": "Ei gyfeiriad <span class='govuk-visually-hidden'> o 3</span>",
 		"line2": "Ei gyfeiriad - llinell 2<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
 		"line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
 		"postcode": "Cod post",
@@ -162,7 +162,7 @@
 		"pageHeading": "Gwiriwch eich atebion cyn cofrestru",
 		"heading1": "Manylion personol",
 		"heading2": "Eich manylion",
-		"heading3": "Pwy rydych chi'n ei gynrychioli",
+		"heading3": "Pwy ydych chi'n ei gynrychioli?",
 		"registeringFor": "Ar ran pwy ydych chi'n cofrestru?",
 		"changeRegisteringForHiddenText": "pwy ydych chi'n cofrestru am",
 		"myself": "Fy hun",
