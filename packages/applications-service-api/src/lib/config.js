@@ -96,7 +96,10 @@ module.exports = {
 				},
 				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
 				submissionCompleteEmail: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
-				subscriptionCreateEmail: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL
+				subscriptionCreateEmail: {
+					en: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL,
+					cy: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL_WELSH
+				}
 			},
 			havingYourSayUrl: `${process.env.APPLICATIONS_WEB_BASE_URL}/having-your-say-guide`,
 			magicLinkDomain: process.env.APPLICATIONS_WEB_BASE_URL,
