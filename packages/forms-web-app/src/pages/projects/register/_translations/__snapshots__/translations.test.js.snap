@@ -360,7 +360,7 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "email": "Cyfeiriad e-bost",
     "heading1": "Manylion personol",
     "heading2": "Eich manylion",
-    "heading3": "Pwy ydych chi'n ei gynrychioli?",
+    "heading3": "Pwy rydych chi'n ei gynrychioli",
     "householdName": "Enw'r aelwyd rydych chi'n ei chynrychioli",
     "jobTitleOrRole": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?",
     "myself": "Fy hun",
