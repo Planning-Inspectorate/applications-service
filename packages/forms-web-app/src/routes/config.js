@@ -32,20 +32,8 @@ const routesConfig = {
 			},
 			enterComment: {
 				id: 'examination-enter-comment',
-				onError: {
-					message: {
-						checkLength: 'Your comment must be 65,234 characters or less',
-						notEmpty: 'Enter a comment'
-					},
-					minMaxOptions: {
-						min: 1,
-						max: 65234
-					}
-				},
 				route: 'enter-a-comment',
-				sessionId: 'comment',
-				title: 'Make a comment',
-				view: 'pages/examination/enter-comment'
+				sessionId: 'comment'
 			},
 			evidenceOrComment: {
 				id: 'examination-evidence-or-comment',
