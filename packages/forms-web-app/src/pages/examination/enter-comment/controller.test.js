@@ -18,9 +18,17 @@ jest.mock('../_utils/get-submission-item-page-url', () => ({
 	getSubmissionItemPageUrl: jest.fn()
 }));
 
+const { mockI18n } = require('../../_mocks/i18n');
+const examinationTranslationsEN = require('../_translations/en.json');
+
+const i18n = mockI18n({
+	examination: examinationTranslationsEN
+});
+
 describe('examination/enter-comment/controller', () => {
 	const req = {
 		body: {},
+		i18n,
 		session: {},
 		query: {}
 	};
@@ -45,20 +53,25 @@ describe('examination/enter-comment/controller', () => {
 					getPageData.mockReturnValue(pageData);
 					getEnterComment(req, res);
 				});
+
 				it('should call the functions', () => {
-					expect(getPageData).toHaveBeenCalledWith(req.session, req.query);
+					expect(getPageData).toHaveBeenCalledWith(req.i18n, req.session, req.query);
 				});
+
 				it('should render the page', () => {
-					expect(res.render).toHaveBeenCalledWith(pageData.view, pageData);
+					expect(res.render).toHaveBeenCalledWith('examination/enter-comment/view.njk', pageData);
 				});
 			});
+
 			describe('and an error is thrown', () => {
 				beforeEach(() => {
 					getPageData.mockImplementation(() => {
 						throw new Error('something went wrong');
 					});
+
 					getEnterComment(req, res);
 				});
+
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
@@ -80,10 +93,11 @@ describe('examination/enter-comment/controller', () => {
 						...req,
 						body: error
 					};
+
 					getPageData.mockReturnValue(pageData);
 					postEnterComment(mockReq, res);
 
-					expect(res.render).toHaveBeenCalledWith(pageData.view, {
+					expect(res.render).toHaveBeenCalledWith('examination/enter-comment/view.njk', {
 						...pageData,
 						...error
 					});
@@ -94,6 +108,7 @@ describe('examination/enter-comment/controller', () => {
 				beforeEach(() => {
 					postEnterComment(req, res);
 				});
+
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
@@ -107,12 +122,14 @@ describe('examination/enter-comment/controller', () => {
 						'examination-enter-comment': 'mock comment value'
 					}
 				};
+
 				beforeEach(() => {
 					addKeyValueToActiveSubmissionItem.mockReturnValue(true);
 					getRedirectRoute.mockReturnValue('/route');
 					getSubmissionItemPageUrl.mockReturnValue('/directory/route');
 					postEnterComment(mockReq, res);
 				});
+
 				it('should call the functions', () => {
 					expect(addKeyValueToActiveSubmissionItem).toHaveBeenCalledWith(
 						req.session,
@@ -122,6 +139,7 @@ describe('examination/enter-comment/controller', () => {
 					expect(getRedirectRoute).toHaveBeenCalledWith(req.session);
 					expect(getSubmissionItemPageUrl).toHaveBeenCalledWith(req.query, '/route');
 				});
+
 				it('should redirect to', () => {
 					expect(res.redirect).toHaveBeenCalledWith('/directory/route');
 				});
@@ -133,6 +151,7 @@ describe('examination/enter-comment/controller', () => {
 							'examination-enter-comment': 'mock comment value'
 						}
 					};
+
 					beforeEach(() => {
 						addKeyValueToActiveSubmissionItem.mockReturnValue(true);
 						getRedirectRoute.mockReturnValue('/route');
@@ -140,6 +159,7 @@ describe('examination/enter-comment/controller', () => {
 						getPageData.mockReturnValue(pageData);
 						postEnterComment(mockReq, res);
 					});
+
 					it('should call the functions', () => {
 						expect(addKeyValueToActiveSubmissionItem).toHaveBeenCalledWith(
 							req.session,
@@ -149,6 +169,7 @@ describe('examination/enter-comment/controller', () => {
 						expect(getRedirectRoute).toHaveBeenCalledWith(req.session);
 						expect(getSubmissionItemPageUrl).toHaveBeenCalledWith(req.query, '/route');
 					});
+
 					it('should send response to redirect to the next page to be sent', () => {
 						expect(res.redirect).toHaveBeenCalledWith('/directory/route');
 					});

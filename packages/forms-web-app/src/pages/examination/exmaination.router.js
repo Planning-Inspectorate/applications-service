@@ -1,12 +1,9 @@
 const express = require('express');
 
-const {
-	validateNotEmpty,
-	validateNotEmptyAndLength,
-	emailValidationRules
-} = require('../../validators/shared');
+const { validateNotEmpty, emailValidationRules } = require('../../validators/shared');
 
 const { validateApplicant } = require('./applicant/_utils/validate-applicant');
+const { validateEnterComment } = require('./enter-comment/utils/validate-enter-comment');
 const {
 	validateExaminationSelectDeadline
 } = require('./select-deadline/utils/validate-examination-select-deadline');
@@ -149,7 +146,7 @@ router.get(`/${enterComment.route}`, getEnterComment);
 router.post(
 	`/${enterComment.route}`,
 	decodeUri('body', [enterComment.id]),
-	validateNotEmptyAndLength(enterComment),
+	validateEnterComment(),
 	validationErrorHandler,
 	postEnterComment
 );

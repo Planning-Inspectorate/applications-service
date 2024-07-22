@@ -4,48 +4,62 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
+{% set pageTitle = t("examination.enterComment.title") %}
+
 {% set detailsHtml %}
-	<p class="govuk-body">Sensitive information refers to:</p>
-	<ul class="govuk-list govuk-list--bullet">
-		<li>comments from children</li>
-		<li>information relating to children</li>
-		<li>information relating to health</li>
-		<li>information relating to crime</li>
-	</ul>
-	<p class="govuk-body">It also means any information relating to an individual's:</p>
-	<ul class="govuk-list govuk-list--bullet">
-		<li>race</li>
-		<li>ethnic origin</li>
-		<li>politics</li>
-		<li>religion</li>
-		<li>trade union membership</li>
-		<li>genetics</li>
-		<li>physical characteristics</li>
-		<li>sex life</li>
-		<li>sexual orientation</li>
-	</ul>
+<p class="govuk-body">
+	{{ t("examination.enterComment.paragraph1") }}
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+	<li>{{ t("examination.enterComment.listItem1") }}</li>
+	<li>{{ t("examination.enterComment.listItem2") }}</li>
+	<li>{{ t("examination.enterComment.listItem3") }}</li>
+	<li>{{ t("examination.enterComment.listItem4") }}</li>
+</ul>
+
+<p class="govuk-body">
+	{{ t("examination.enterComment.paragraph2") }}
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+	<li>{{ t("examination.enterComment.listItem5") }}</li>
+	<li>{{ t("examination.enterComment.listItem6") }}</li>
+	<li>{{ t("examination.enterComment.listItem7") }}</li>
+	<li>{{ t("examination.enterComment.listItem8") }}</li>
+	<li>{{ t("examination.enterComment.listItem9") }}</li>
+	<li>{{ t("examination.enterComment.listItem10") }}</li>
+	<li>{{ t("examination.enterComment.listItem11") }}</li>
+	<li>{{ t("examination.enterComment.listItem12") }}</li>
+	<li>{{ t("examination.enterComment.listItem13") }}</li>
+</ul>
 {% endset %}
 
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t("common.thereIsAProblem"),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
+
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<form action="" method="POST" novalidate>
-				<span class="govuk-caption-l">{{ activeSubmissionItemTitle }}</span>
+				<span class="govuk-caption-l">
+					{{ submissionItemTitle }}
+				</span>
 
-				<h1 class="govuk-heading-l">{{ title }}</h1>
+				<h1 class="govuk-heading-l">
+					{{ t("examination.enterComment.heading1") }}
+				</h1>
+
 				<p class="govuk-hint">
-					You should not use racist, inflammatory or abusive language, or include personal information (also called special category information) about yourself or others in your comments.
+					{{ t("examination.enterComment.hintText1") }}
 				</p>
 
-
 				{{ govukDetails({
-					summaryText: "Examples of personal information",
+					summaryText: t("examination.enterComment.summaryText1"),
 					html: detailsHtml
 				}) }}
 
@@ -60,7 +74,7 @@
 
 				{{ govukButton({
 					attributes: { "data-cy": "button-submit-and-continue" },
-					text: "Continue",
+					text: t("common.continue"),
 					type: "Submit"
 				}) }}
 			</form>
