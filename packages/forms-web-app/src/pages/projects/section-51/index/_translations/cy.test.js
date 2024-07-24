@@ -3,7 +3,6 @@ const cySection51IndexTranslations = require('./cy.json');
 describe('pages/projects/section-51/index/_translations/cy.json', () => {
 	it('should return the Welsh section 51 index page translations', () => {
 		expect(cySection51IndexTranslations).toEqual({
-			heading1: 'Cyngor Adran 51',
 			paragraph1:
 				"Mae'r rhestr isod yn cynnwys cofnod o gyngor a roddwyd gennym ar gyfer y prosiect hwn.",
 			paragraph2:

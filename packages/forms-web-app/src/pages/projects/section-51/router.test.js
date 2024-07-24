@@ -38,6 +38,7 @@ describe('pages/projects/section-51/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/s51advice/:id',
+				addCommonTranslationsMiddleware,
 				projectsMiddleware,
 				getSection51AdviceDetailController
 			);

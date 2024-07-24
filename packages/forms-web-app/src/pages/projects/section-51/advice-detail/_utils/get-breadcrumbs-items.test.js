@@ -1,5 +1,5 @@
 const { getBreadcrumbsItems } = require('./get-breadcrumbs-items');
-
+const { mockI18n } = require('../../../../_mocks/i18n');
 describe('pages/projects/section-51/advice-detail/_utils/get-breadcrumbs-items', () => {
 	describe('#getBreadcrumbsItems', () => {
 		describe('When getting the breadcrumbs items', () => {
@@ -11,7 +11,7 @@ describe('pages/projects/section-51/advice-detail/_utils/get-breadcrumbs-items',
 				const id = 'mock-id';
 
 				beforeEach(() => {
-					breadcrumbsItems = getBreadcrumbsItems(path, caseRef, id);
+					breadcrumbsItems = getBreadcrumbsItems(path, caseRef, id, mockI18n({}));
 				});
 				it('should return null', () => {
 					expect(breadcrumbsItems).toEqual(null);
@@ -26,7 +26,19 @@ describe('pages/projects/section-51/advice-detail/_utils/get-breadcrumbs-items',
 				const id = 'mock-id';
 
 				beforeEach(() => {
-					breadcrumbsItems = getBreadcrumbsItems(path, caseRef, id);
+					breadcrumbsItems = getBreadcrumbsItems(
+						path,
+						caseRef,
+						id,
+						mockI18n({
+							section51: {
+								heading: 'Section 51 advice',
+								details: {
+									adviceInDetail: 'Advice in detail'
+								}
+							}
+						})
+					);
 				});
 				it('should return the breadcrumbs for the section 51 advice detail page', () => {
 					expect(breadcrumbsItems).toEqual([

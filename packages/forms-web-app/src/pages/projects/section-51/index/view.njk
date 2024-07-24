@@ -10,7 +10,7 @@
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
 {% from "projects/section-51/index/_components/results.njk" import sectionResults %}
 
-{% set pageTitle = t('section51Index.heading1') %}
+{% set pageTitle = t('section51.heading') %}
 
 {% block content %}
 	<form>
@@ -27,7 +27,7 @@
 				</span>
 
 				<h1 class="govuk-heading-xl">
-					{{ t('section51Index.heading1') }}
+					{{ t('section51.heading') }}
 				</h1>
 
 				{% if adviceExists or (not adviceExists and searchAttempted) %}

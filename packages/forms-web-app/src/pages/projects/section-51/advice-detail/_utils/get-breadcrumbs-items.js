@@ -3,12 +3,15 @@ const {
 	isRegisterOfAdviceDetailURL
 } = require('../../../../register-of-advice/detail/_utils/is-register-of-advice-detail-url');
 
-const getBreadcrumbsItems = (path, caseRef, id) =>
+const getBreadcrumbsItems = (path, caseRef, id, i18n) =>
 	isRegisterOfAdviceDetailURL(path, id)
 		? null
 		: [
-				{ href: getSection51IndexURL(caseRef), text: 'Section 51 advice' },
-				{ text: 'Advice in detail' }
+				{
+					href: getSection51IndexURL(caseRef),
+					text: i18n.t('section51.heading')
+				},
+				{ text: i18n.t('section51.details.adviceInDetail') }
 		  ];
 
 module.exports = { getBreadcrumbsItems };
