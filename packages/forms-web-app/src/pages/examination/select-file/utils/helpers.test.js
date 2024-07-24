@@ -10,6 +10,16 @@ const {
 
 jest.mock('../../../../config');
 
+const { mockI18n } = require('../../../_mocks/i18n');
+
+const commonTranslations_EN = require('../../../../locales/en/common.json');
+const examinationTranslations_EN = require('../../_translations/en.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN,
+	examination: examinationTranslations_EN
+});
+
 describe('examination/file-upload/utils', () => {
 	describe('#calcMaxFileSizeLimit', () => {
 		describe('when calculating the max file size limit using the default limit', () => {
@@ -32,7 +42,7 @@ describe('examination/file-upload/utils', () => {
 	describe('#mapUploadedFilesToSummaryList', () => {
 		describe('when mapping an array of uploaded files to a govuk summary list ', () => {
 			describe('and there are no files in the array', () => {
-				const result = mapUploadedFilesToSummaryList([]);
+				const result = mapUploadedFilesToSummaryList([], i18n);
 				it('should return an empty array', function () {
 					expect(result).toEqual([]);
 				});
@@ -40,7 +50,7 @@ describe('examination/file-upload/utils', () => {
 			describe('and there are files in the array', () => {
 				const fileItem = { fileName: 'file name', uniqueFileName: 'unique file name' };
 				const fileArray = [fileItem];
-				const result = mapUploadedFilesToSummaryList(fileArray);
+				const result = mapUploadedFilesToSummaryList(fileArray, i18n);
 				it('should return an array of files', function () {
 					expect(result).toEqual([
 						{

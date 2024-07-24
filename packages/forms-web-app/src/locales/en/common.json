@@ -31,12 +31,14 @@
 	"pinsContactDetails": {
 		"csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)"
 	},
+	"remove": "Remove",
 	"resultsPerPage": "Results per page",
 	"returnToResults": "Return to results",
 	"saveAndExit": "Save & Exit",
 	"saveChanges": "Save changes",
 	"search": "Search",
 	"selectAllFilters": "Select all filters",
+	"selectFiles": "Select files",
 	"show": "Show",
 	"showAllSections": "Show all sections",
 	"showAllSteps": "Show all steps",
@@ -45,6 +47,8 @@
 	"success": "Success",
 	"thereIsAProblem": "There is a problem",
 	"to": "To",
+	"uploadAFile": "Upload a file",
+	"uploadFile": "Upload file",
 	"validationErrors": {
 		"emailAddress": {
 			"empty": "Enter your email address",

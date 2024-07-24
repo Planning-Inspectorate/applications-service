@@ -6,6 +6,8 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 
+{% set pageTitle = t("examination.selectFile.title") %}
+
 {% block script %}
 	<style>
 		.dropZone.dragging::before {
@@ -15,69 +17,82 @@
 {% endblock %}
 
 {% set detailsHtml %}
-	<p class="govuk-body">Sensitive information refers to:</p>
-	<ul class="govuk-list govuk-list--bullet">
-		<li>comments from children</li>
-		<li>information relating to children</li>
-		<li>information relating to health</li>
-		<li>information relating to crime</li>
-	</ul>
-	<p class="govuk-body">It also means any information relating to an individual's:</p>
-	<ul class="govuk-list govuk-list--bullet">
-		<li>race</li>
-		<li>ethnic origin</li>
-		<li>politics</li>
-		<li>religion</li>
-		<li>trade union membership</li>
-		<li>genetics</li>
-		<li>physical characteristics</li>
-		<li>sex life</li>
-		<li>sexual orientation</li>
-	</ul>
+<p class="govuk-body">
+	{{ t("examination.selectFile.paragraph2") }}
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+	<li>{{ t("examination.selectFile.listItem4") }}</li>
+	<li>{{ t("examination.selectFile.listItem5") }}</li>
+	<li>{{ t("examination.selectFile.listItem6") }}</li>
+	<li>{{ t("examination.selectFile.listItem7") }}</li>
+</ul>
+
+<p class="govuk-body">
+	{{ t("examination.selectFile.paragraph3") }}
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+	<li>{{ t("examination.selectFile.listItem8") }}</li>
+	<li>{{ t("examination.selectFile.listItem9") }}</li>
+	<li>{{ t("examination.selectFile.listItem10") }}</li>
+	<li>{{ t("examination.selectFile.listItem11") }}</li>
+	<li>{{ t("examination.selectFile.listItem12") }}</li>
+	<li>{{ t("examination.selectFile.listItem13") }}</li>
+	<li>{{ t("examination.selectFile.listItem14") }}</li>
+	<li>{{ t("examination.selectFile.listItem15") }}</li>
+	<li>{{ t("examination.selectFile.listItem16") }}</li>
+</ul>
 {% endset %}
 
 {% block content %}
 	{% if errorSummary.length > 0 %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t("common.thereIsAProblem"),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
+
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<span class="govuk-caption-l">
-				{{ activeSubmissionItemTitle }}
+				{{ submissionItemTitle }}
 			</span>
-			<h1 class="govuk-heading-l">Upload files</h1>
-			<p class="govuk-body">Your files need to be:</p>
+
+			<h1 class="govuk-heading-l">
+				{{ t("examination.selectFile.heading1") }}
+			</h1>
+
+			<p class="govuk-body">
+				{{ t("examination.selectFile.paragraph1") }}
+			</p>
+
 			<ul class="govuk-list govuk-list--bullet">
-				<li>PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS or XSLX</li>
-				<li>a single document not compressed as a zip file</li>
-				<li>smaller than {{ maxFileSizeInMb }}mb</li>
+				<li>{{ t("examination.selectFile.listItem1") }}</li>
+				<li>{{ t("examination.selectFile.listItem2") }}</li>
+				<li>{{ t("examination.selectFile.listItem3", { maxFileSizeInMb: maxFileSizeInMb }) }}</li>
 			</ul>
 
 			<div class="govuk-inset-text">
-				You cannot submit the same file against multiple deadline items.
+				{{ t("examination.selectFile.insetText1") }}
 			</div>
 
 			<p class="govuk-hint">
-				You should not use racist, inflammatory or abusive language, or include personal information (also called special category information) about yourself or others in your comments.
+				{{ t("examination.selectFile.hintText1") }}
 			</p>
 
-			
 			{{ govukDetails({
-				summaryText: "Examples of personal information",
+				summaryText: t("examination.selectFile.summaryText1"),
 				html: detailsHtml
 			}) }}
 
 			<form
 				name="fileUploadForm"
-				action="select-a-file"
 				method="post"
 				enctype="multipart/form-data"
 			>
 				<h2 class="govuk-heading-m govuk-!-margin-bottom-0">
-					Upload files
+					{{ t("examination.selectFile.heading2") }}
 				</h2>
 
 				<dl class="govuk-summary-list">
@@ -86,6 +101,7 @@
 							<dd class="govuk-summary-list__value">
 								{{ item.originalFileName }}
 							</dd>
+
 							<dd class="govuk-summary-list__actions">
 								<button
 									name="delete"
@@ -96,6 +112,7 @@
 									<span class="govuk-visually-hidden">
 										{{ item.originalFileName }}
 									</span>
+
 									<span class="govuk-link">
 										{{ item.deleteButton.text }}
 									</span>
@@ -103,13 +120,15 @@
 							</dd>
 						</div>
 					{% endfor %}
+
 					{% if isJsEnabled === 'true' %}
 						{% for item in errorSummary %}
 							<div class="govuk-summary-list__row">
 								<dd class="govuk-summary-list__value">
 									<div class="govuk-form-group govuk-form-group--error">
 										<p id="{{ item.uniqueID }}" class="govuk-error-message">
-											<span class="govuk-visually-hidden">Error:</span>
+											<span class="govuk-visually-hidden">{{ t("common.error") }}:</span>
+
 											{{ item.text }}
 										</p>
 									</div>
@@ -124,7 +143,7 @@
 						id: id,
 						name: "documents",
 						label: {
-							text: "Upload a file",
+							text: t("common.uploadAFile"),
 							classes: 'govuk-label--m'
 						},
 						attributes: { multiple: 'multiple', accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png,.tif,.tiff,.xls,.xlsx", type: "file" },
@@ -132,7 +151,7 @@
 					}) }}
 
 					{{ govukButton({
-						text: 'Upload file',
+						text: t("common.uploadFile"),
 						classes: 'govuk-button--secondary moj-multi-file-upload__button',
 						name: 'upload'
 					}) }}
@@ -150,7 +169,11 @@
 				<div class="visible-on visible-on--js-enabled">
 					<div class="moj-multi-file-upload__dropzone pins-modded-file-upload__dropzone">
 						<input type="hidden" id="upload" name="upload" value="true">
-						<p>Drag and drop files here or</p>
+
+						<p>
+							{{ t("examination.selectFile.helperText1") }}
+						</p>
+
 						<input
 							class="dropZone govuk-file-upload moj-multi-file-upload__input ui-file-upload__input"
 							id="file-upload"
@@ -159,11 +182,12 @@
 							accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
 							name="documents"
 						>
+
 						<label
 							for="file-upload"
 							class="govuk-button govuk-button--secondary ui-file-upload__label"
 						>
-							Select files
+							{{ t("common.selectFiles") }}
 						</label>
 					</div>
 				</div>
@@ -175,7 +199,7 @@
 					value="continue"
 					data-module="govuk-button"
 				>
-					Continue
+					{{ t("common.continue") }}
 				</button>
 			</form>
 

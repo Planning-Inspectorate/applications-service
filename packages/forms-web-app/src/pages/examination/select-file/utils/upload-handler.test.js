@@ -7,6 +7,14 @@ const {
 } = require('./errors/handleMultipleFileUploadsWithErrors');
 const { getSubmissionFilesLength } = require('../../_session/submission-items-session');
 
+const { mockI18n } = require('../../../_mocks/i18n');
+
+const examinationTranslations_EN = require('../../_translations/en.json');
+
+const i18n = mockI18n({
+	examination: examinationTranslations_EN
+});
+
 jest.mock('./helpers', () => ({
 	mapErrorMessage: jest.fn(),
 	makeIntoArray: jest.fn(),
@@ -36,7 +44,7 @@ describe('examination/file-upload/fileValidation', () => {
 				beforeEach(async () => {
 					noFileSelected.mockReturnValue(noFileSelectedError);
 					mapErrorMessage.mockReturnValue(noFileSelectedError);
-					result = await uploadHandler(session, files);
+					result = await uploadHandler(i18n, session, files);
 				});
 				it('should return the no file selected error response', () => {
 					expect(result).toEqual(noFileSelectedError);
@@ -53,10 +61,10 @@ describe('examination/file-upload/fileValidation', () => {
 					getSubmissionFilesLength.mockReturnValue('');
 					mapErrorMessage.mockReturnValue(moreThanXAmountFilesError);
 					moreThanXAmountFiles.mockReturnValue(moreThanXAmountFilesError);
-					result = await uploadHandler(session, files);
+					result = await uploadHandler(i18n, session, files);
 				});
 				it('should turn a single file into an array if not already', () => {
-					expect(moreThanXAmountFiles).toHaveBeenCalledWith([{ name: 'file-name' }], '');
+					expect(moreThanXAmountFiles).toHaveBeenCalledWith(i18n, [{ name: 'file-name' }], '');
 				});
 
 				it('should return the more files than allowed error response', () => {
@@ -77,10 +85,11 @@ describe('examination/file-upload/fileValidation', () => {
 					makeIntoArray.mockReturnValue([{ name: 'file-name' }]);
 					handleMultipleFileUploadsWithErrors.mockResolvedValue(multipleErrors);
 					mapMultipleFileUploadErrors.mockReturnValue(mappedFileErrors);
-					result = await uploadHandler(session, files);
+					result = await uploadHandler(i18n, session, files);
 				});
 				it('should call the multiple file upload error function with session and an array of files', () => {
 					expect(handleMultipleFileUploadsWithErrors).toHaveBeenCalledWith(
+						i18n,
 						session,
 						files.documents
 					);
@@ -107,10 +116,11 @@ describe('examination/file-upload/fileValidation', () => {
 					makeIntoArray.mockReturnValue([{ name: 'file-name' }]);
 					handleMultipleFileUploadsWithErrors.mockResolvedValue(multipleErrors);
 					mapMultipleFileUploadErrors.mockReturnValue('');
-					result = await uploadHandler(session, files);
+					result = await uploadHandler(i18n, session, files);
 				});
 				it('should call the multiple file upload error function with session and an array of files', () => {
 					expect(handleMultipleFileUploadsWithErrors).toHaveBeenCalledWith(
+						i18n,
 						session,
 						files.documents
 					);

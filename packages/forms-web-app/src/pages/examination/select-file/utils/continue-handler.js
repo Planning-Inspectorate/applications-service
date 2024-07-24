@@ -6,9 +6,9 @@ const { mapErrorMessage } = require('./helpers');
 const { postRenderView } = require('./render-view');
 
 const continueHandler = (req, res) => {
-	const { session } = req;
+	const { i18n, session } = req;
 	const uploadedFiles = getUploadedFilesFromSession(session);
-	const noFileError = noFileSelected(uploadedFiles);
+	const noFileError = noFileSelected(i18n, uploadedFiles);
 	if (noFileError) return postRenderView(req, res, session, mapErrorMessage(noFileError));
 	const redirectUrl = getSubmissionItemPageUrl(req, getRedirectRoute(session));
 	res.redirect(redirectUrl);

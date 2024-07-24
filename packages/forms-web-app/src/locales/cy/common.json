@@ -31,12 +31,14 @@
 	"pinsContactDetails": {
 		"csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)"
 	},
+	"remove": "Dileu",
 	"resultsPerPage": "Canlyniadau fesul tudalen",
 	"returnToResults": "Dychwelyd at ganlyniadau",
 	"saveAndExit": "Cadw & Gadael",
 	"saveChanges": "Achub newidiadau",
 	"search": "Chwilio",
 	"selectAllFilters": "Dewiswch bob hidlydd",
+	"selectFiles": "Dewiswch ffeiliau",
 	"show": "Dangos",
 	"showAllSections": "Dangos pob adran",
 	"showAllSteps": "Dangos pob cam",
@@ -45,6 +47,8 @@
 	"success": "Llwyddiant",
 	"thereIsAProblem": "Mae yna broblem",
 	"to": "I",
+	"uploadAFile": "Upload a file",
+	"uploadFile": "Upload file",
 	"validationErrors": {
 		"emailAddress": {
 			"empty": "Nodwch eich cyfeiriad e-bost",
