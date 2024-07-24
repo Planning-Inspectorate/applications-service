@@ -73,6 +73,7 @@ services:
       - ./node_modules:/opt/app/node_modules
       - ./packages/common:/opt/app/packages/common
       - ./packages/applications-service-api:/opt/app/packages/applications-service-api
+      - ./packages/common:/opt/app/node_modules/@pins/common
       - ./uploads:/opt/app/uploads
     #    command: npm run start:dev:debug --workspace=packages/applications-service-api
     command: npm run start:dev --workspace=packages/applications-service-api
@@ -116,6 +117,7 @@ services:
       - ./node_modules:/opt/app/node_modules
       - ./packages/common:/opt/app/packages/common
       - ./packages/forms-web-app:/opt/app/packages/forms-web-app
+      - ./packages/common:/opt/app/node_modules/@pins/common
       - ./uploads:/opt/app/uploads
     # if enabling debug, be sure to uncomment / expose the debug port below.
     command: npm run start:dev --workspace=packages/forms-web-app
