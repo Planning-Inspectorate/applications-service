@@ -1,5 +1,7 @@
 {% extends "govuk/template.njk" %}
 
+{% set htmlLang = language %}
+
 {%- set initiateScriptsConfig = [{ src: "/public/scripts/index.script.js" }] -%}
 
 {% block pageTitle %}

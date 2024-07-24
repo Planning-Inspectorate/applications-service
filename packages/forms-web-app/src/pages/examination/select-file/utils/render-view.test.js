@@ -15,7 +15,7 @@ jest.mock('./helpers', () => ({
 
 describe('Rendering Views for ', () => {
 	describe('#getRenderView', () => {
-		const req = {};
+		const req = { i18n: {} };
 		const res = { render: jest.fn() };
 		describe('When rendering a view for a get select file', () => {
 			describe('and the use is only uploading files', () => {
@@ -26,12 +26,10 @@ describe('Rendering Views for ', () => {
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
-						activeSubmissionItemTitle: 'mock submission item',
 						backLinkUrl: 'select-upload-evidence-or-comment',
 						id: 'examination-select-file',
 						maxFileSizeInMb: 50,
-						pageTitle: 'Select a file',
-						title: 'Select a file',
+						submissionItemTitle: 'mock submission item',
 						uploadedFiles: 'mapped list'
 					});
 				});
@@ -47,12 +45,10 @@ describe('Rendering Views for ', () => {
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
-						activeSubmissionItemTitle: 'mock submission item',
 						backLinkUrl: 'enter-a-comment',
 						id: 'examination-select-file',
 						maxFileSizeInMb: 50,
-						pageTitle: 'Select a file',
-						title: 'Select a file',
+						submissionItemTitle: 'mock submission item',
 						uploadedFiles: 'mapped list'
 					});
 				});
@@ -60,7 +56,7 @@ describe('Rendering Views for ', () => {
 		});
 	});
 	describe('#postRenderView', () => {
-		const req = { body: {} };
+		const req = { body: {}, i18n: {} };
 		const res = { render: jest.fn() };
 		const error = {
 			errorMessage: 'mock error',
@@ -81,15 +77,13 @@ describe('Rendering Views for ', () => {
 				});
 				it('should render the page with the correct data', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
-						activeSubmissionItemTitle: 'mock submission item',
+						submissionItemTitle: 'mock submission item',
 						backLinkUrl: 'select-upload-evidence-or-comment',
 						errorMessage: 'mock error',
 						errorSummary: 'mocked href summary',
 						id: 'examination-select-file',
 						isJsEnabled: true,
 						maxFileSizeInMb: 50,
-						pageTitle: 'Select a file',
-						title: 'Select a file',
 						uploadedFiles: 'mock map uploaded summary list'
 					});
 				});
@@ -110,15 +104,13 @@ describe('Rendering Views for ', () => {
 				});
 				it('should render the page with the correct data', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/select-file/view.njk', {
-						activeSubmissionItemTitle: 'mock submission item',
+						submissionItemTitle: 'mock submission item',
 						backLinkUrl: 'select-upload-evidence-or-comment',
 						errorMessage: 'mock error',
 						errorSummary: 'mocked href summary',
 						id: 'examination-select-file',
 						isJsEnabled: false,
 						maxFileSizeInMb: 50,
-						pageTitle: 'Select a file',
-						title: 'Select a file',
 						uploadedFiles: 'mock map uploaded summary list'
 					});
 				});

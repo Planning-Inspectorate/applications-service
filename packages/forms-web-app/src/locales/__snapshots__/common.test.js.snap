@@ -35,12 +35,14 @@ exports[`locales/common should return the correct English common translations 1`
   "pinsContactDetails": {
     "csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)",
   },
+  "remove": "Remove",
   "resultsPerPage": "Results per page",
   "returnToResults": "Return to results",
   "saveAndExit": "Save & Exit",
   "saveChanges": "Save changes",
   "search": "Search",
   "selectAllFilters": "Select all filters",
+  "selectFiles": "Select files",
   "show": "Show",
   "showAllSections": "Show all sections",
   "showAllSteps": "Show all steps",
@@ -50,6 +52,8 @@ exports[`locales/common should return the correct English common translations 1`
   "telephone": "Telephone",
   "thereIsAProblem": "There is a problem",
   "to": "To",
+  "uploadAFile": "Upload a file",
+  "uploadFile": "Upload file",
   "validationErrors": {
     "aboutProject": {
       "empty": "Enter what you want to tell us about this proposed project",
@@ -125,12 +129,14 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "pinsContactDetails": {
     "csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)",
   },
+  "remove": "Dileu",
   "resultsPerPage": "Canlyniadau fesul tudalen",
   "returnToResults": "Dychwelyd at ganlyniadau",
   "saveAndExit": "Cadw & Gadael",
   "saveChanges": "Achub newidiadau",
   "search": "Chwilio",
   "selectAllFilters": "Dewiswch bob hidlydd",
+  "selectFiles": "Dewiswch ffeiliau",
   "show": "Dangos",
   "showAllSections": "Dangos pob adran",
   "showAllSteps": "Dangos pob cam",
@@ -140,6 +146,8 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "telephone": "Rhif ffôn",
   "thereIsAProblem": "Mae yna broblem",
   "to": "I",
+  "uploadAFile": "Upload a file",
+  "uploadFile": "Upload file",
   "validationErrors": {
     "aboutProject": {
       "empty": "Nodwch yr hyn rydych eisiau ei ddweud wrthym am y prosiect arfaethedig hwn",

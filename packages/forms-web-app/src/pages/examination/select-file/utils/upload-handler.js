@@ -5,17 +5,23 @@ const {
 } = require('./errors/handleMultipleFileUploadsWithErrors');
 const { getSubmissionFilesLength } = require('../../_session/submission-items-session');
 
-const uploadHandler = async (session, files) => {
-	const noFileError = noFileSelected(files);
+const uploadHandler = async (i18n, session, files) => {
+	const noFileError = noFileSelected(i18n, files);
+
 	if (noFileError) return mapErrorMessage(noFileError);
 
 	const filesToUpload = makeIntoArray(files.documents);
 
-	const moreThanError = moreThanXAmountFiles(filesToUpload, getSubmissionFilesLength(session));
+	const moreThanError = moreThanXAmountFiles(
+		i18n,
+		filesToUpload,
+		getSubmissionFilesLength(session)
+	);
 
 	if (moreThanError) return mapErrorMessage(moreThanError);
 
-	const multipleErrors = await handleMultipleFileUploadsWithErrors(session, filesToUpload);
+	const multipleErrors = await handleMultipleFileUploadsWithErrors(i18n, session, filesToUpload);
+
 	if (multipleErrors.length > 0) return mapMultipleFileUploadErrors(multipleErrors);
 
 	return {

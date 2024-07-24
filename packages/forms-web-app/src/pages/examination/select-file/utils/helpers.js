@@ -4,12 +4,12 @@ const megabyte = 1024 * 1024;
 
 const calcMaxFileSizeLimit = () => megabyte * fileUpload.maxFileSizeInMb;
 
-const mapUploadedFilesToSummaryList = (uploadedFiles) => {
+const mapUploadedFilesToSummaryList = (uploadedFiles, i18n) => {
 	const files = [];
 	for (const file of uploadedFiles) {
 		files.push({
 			message: { html: file.fileName },
-			deleteButton: { text: 'Remove' },
+			deleteButton: { text: i18n.t('common.remove') },
 			originalFileName: file.fileName,
 			fileName: file.uniqueFileName
 		});

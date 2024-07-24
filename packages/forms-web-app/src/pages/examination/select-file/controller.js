@@ -23,7 +23,8 @@ const getSelectFile = (req, res) => {
 
 const postSelectFile = async (req, res) => {
 	try {
-		const { body, session, files } = req;
+		const { body, i18n, session, files } = req;
+
 		if ('delete' in body) {
 			await deleteHandler(session, body.delete);
 			return res.redirect(`${selectFile.route}`);
@@ -32,7 +33,7 @@ const postSelectFile = async (req, res) => {
 		if ('continue' in body) return continueHandler(req, res);
 
 		if ('upload' in body) {
-			const errors = await uploadHandler(session, files);
+			const errors = await uploadHandler(i18n, session, files);
 			return postRenderView(req, res, session, errors);
 		}
 	} catch (error) {

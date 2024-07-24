@@ -15,11 +15,12 @@ const {
 const {
 	fileUpload: { maxFileSizeInMb }
 } = require('../../../../config');
+const {
+	getSubmissionItemTitleByLocale
+} = require('../../_utils/get-content/get-submission-item-title-by-locale');
 
 const pageData = {
 	id: selectFile.id,
-	pageTitle: selectFile.name,
-	title: selectFile.name,
 	maxFileSizeInMb
 };
 
@@ -32,28 +33,31 @@ const getBackLinkUrl = (submissionType) => {
 };
 
 const getRenderView = (req, res) => {
-	const { session } = req;
-	const { submissionItem, submissionType } = getActiveSubmissionItem(session);
-	res.render(view, {
+	const { i18n, session } = req;
+	const { submissionType } = getActiveSubmissionItem(session);
+
+	return res.render(view, {
 		...pageData,
 		backLinkUrl: getBackLinkUrl(submissionType),
-		activeSubmissionItemTitle: submissionItem,
-		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(session))
+		submissionItemTitle: getSubmissionItemTitleByLocale(i18n, session),
+		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(session), i18n)
 	});
 };
 
 const postRenderView = (req, res, session, { errorMessage, errorSummary }) => {
+	const { i18n } = req;
 	const isJsEnabled = req.body.isJsEnabled || false;
 	const href = isJsEnabled ? '#file-upload' : `#${selectFile.id}`;
-	const { submissionItem, submissionType } = getActiveSubmissionItem(session);
+	const { submissionType } = getActiveSubmissionItem(session);
+
 	return res.render(view, {
 		...pageData,
 		backLinkUrl: getBackLinkUrl(submissionType),
 		isJsEnabled,
-		activeSubmissionItemTitle: submissionItem,
+		submissionItemTitle: getSubmissionItemTitleByLocale(i18n, session),
 		errorMessage,
 		errorSummary: addHrefToErrorSummary(errorSummary, href),
-		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(session))
+		uploadedFiles: mapUploadedFilesToSummaryList(getUploadedFilesFromSession(session), i18n)
 	});
 };
 

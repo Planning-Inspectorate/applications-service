@@ -2,12 +2,23 @@ const { saveFileToDisk } = require('../../../_utils/file-upload/fileManagement')
 const { handleMultipleFileUploadsWithErrors } = require('./handleMultipleFileUploadsWithErrors');
 const { addFileToSession } = require('../../../_utils/file-upload/fileSessionManagement');
 
+const { mockI18n } = require('../../../../_mocks/i18n');
+
+const commonTranslations_EN = require('../../../../../locales/en/common.json');
+const examinationTranslations_EN = require('../../../_translations/en.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN,
+	examination: examinationTranslations_EN
+});
+
 jest.mock('../../../_utils/file-upload/fileManagement', () => ({
 	saveFileToDisk: jest.fn()
 }));
 jest.mock('../../../_utils/file-upload/fileSessionManagement', () => ({
 	addFileToSession: jest.fn()
 }));
+
 describe('#handleMultipleFileUploadsWithErrors', () => {
 	describe('When an array of files could have file errors', () => {
 		const goodFile = { name: 'mock file', size: 100, mimetype: 'application/pdf' };
@@ -30,7 +41,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 			let result;
 			beforeEach(async () => {
 				saveFileToDisk.mockResolvedValue(saveFileDiskMockResponse);
-				result = await handleMultipleFileUploadsWithErrors(session, files);
+				result = await handleMultipleFileUploadsWithErrors(i18n, session, files);
 			});
 
 			it('should save files to disk', () => {
@@ -55,7 +66,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 			let result;
 			beforeEach(async () => {
 				saveFileToDisk.mockResolvedValue(saveFileDiskMockResponse);
-				result = await handleMultipleFileUploadsWithErrors(session, files);
+				result = await handleMultipleFileUploadsWithErrors(i18n, session, files);
 			});
 
 			it('should save the good file to disk', () => {
@@ -82,7 +93,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 			const session = {};
 			let result;
 			beforeEach(async () => {
-				result = await handleMultipleFileUploadsWithErrors(session, files);
+				result = await handleMultipleFileUploadsWithErrors(i18n, session, files);
 			});
 
 			it('should return errors', () => {
@@ -96,7 +107,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 			const session = {};
 			let result;
 			beforeEach(async () => {
-				result = await handleMultipleFileUploadsWithErrors(session, files);
+				result = await handleMultipleFileUploadsWithErrors(i18n, session, files);
 			});
 
 			it('should return errors', () => {
@@ -108,7 +119,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 			const session = {};
 			let result;
 			beforeEach(async () => {
-				result = await handleMultipleFileUploadsWithErrors(session, files);
+				result = await handleMultipleFileUploadsWithErrors(i18n, session, files);
 			});
 
 			it('should return errors', () => {
