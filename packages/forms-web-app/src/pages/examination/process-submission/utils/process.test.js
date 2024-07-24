@@ -31,6 +31,7 @@ describe('#process', () => {
 		const session = {
 			caseRef: 'mock-case-ref',
 			examination: {
+				email: 'test@example.com',
 				submissionItems: ['mock submission item', 'another mock submission item']
 			}
 		};
@@ -80,8 +81,11 @@ describe('#process', () => {
 				expect(postSubmission).toHaveBeenCalledTimes(4);
 			});
 
-			it('should call submission complete with submission Id ', () => {
-				expect(postSubmissionComplete).toHaveBeenNthCalledWith(1, '1234');
+			it('should call submission complete with submission Id and body details', () => {
+				expect(postSubmissionComplete).toHaveBeenNthCalledWith(1, '1234', {
+					caseReference: 'mock-case-ref',
+					email: 'test@example.com'
+				});
 			});
 		});
 		describe('and there is an error', () => {

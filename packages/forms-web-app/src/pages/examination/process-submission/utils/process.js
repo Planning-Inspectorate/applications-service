@@ -27,7 +27,11 @@ const handleProcessSubmission = async (session) => {
 		logger.info('Processing files complete');
 		setExaminationSubmissionComplete(session, true);
 		setExaminationSubmissionId(session, submissionId);
-		await postSubmissionComplete(submissionId);
+
+		await postSubmissionComplete(submissionId, {
+			caseReference: session.caseRef,
+			email: session.examination.email
+		});
 	} catch (error) {
 		logger.error(error);
 		throw new Error('Process Submission failed');
