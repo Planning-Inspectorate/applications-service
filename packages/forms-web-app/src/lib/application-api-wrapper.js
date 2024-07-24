@@ -178,10 +178,10 @@ exports.wrappedSearchDocumentsV3 = async (body) => {
 	});
 };
 
-exports.wrappedPostSubmissionComplete = async (submissionId) => {
+exports.wrappedPostSubmissionComplete = async (submissionId, body) => {
 	const URL = `/api/v1/submissions/${submissionId}/complete`;
 	const method = 'POST';
-	return handler('postSubmissionComplete', URL, method, {});
+	return handler('postSubmissionComplete', URL, method, { body: JSON.stringify(body) });
 };
 
 exports.postGetUpdatesSubscription = async (caseRef, payload) => {
