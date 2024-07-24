@@ -490,7 +490,7 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
   "theirAddress": {
     "country": "Gwlad",
     "hint": "Ni fyddwn yn cysylltu â neb gan ddefnyddio'r manylion cyswllt hyn.",
-    "line1": "Ei gyfeiriad - llinell 1<span class='govuk-visually-hidden'> o 3</span>",
+    "line1": "Ei gyfeiriad <span class='govuk-visually-hidden'> o 3</span>",
     "line2": "Ei gyfeiriad - llinell 2<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
     "line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
     "pageHeading": "Beth yw ei gyfeiriad?",

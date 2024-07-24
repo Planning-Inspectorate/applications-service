@@ -47,9 +47,9 @@ describe('pages/projects/index/_translations/cy', () => {
 				stage2name: 'derbyn',
 				stage3name: 'cyn-archwilio',
 				stage4name: 'archwilio',
-				stage5name: 'argymhelliad.',
-				stage6name: 'penderfyniad.',
-				stage7name: 'ôl-benderfyniad.',
+				stage5name: 'argymhelliad',
+				stage6name: 'penderfyniad',
+				stage7name: 'ôl-benderfyniad',
 				preapplication: {
 					paragraph1: "Disgwylir i'r cais gael ei gyflwyno {{-date}}.",
 					paragraph2:

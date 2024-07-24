@@ -32,7 +32,9 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: preserveLinebreaks(isLangWelsh(lang) ? data.SummaryWelsh : data.Summary),
+		summary: preserveLinebreaks(
+			isLangWelsh(lang) && data.SummaryWelsh ? data.SummaryWelsh : data.Summary
+		),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),
@@ -58,7 +60,10 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline),
 		longLat: data.LongLat,
 		mapZoomLevel: data.MapZoomLevel,
-		projectLocation: isLangWelsh(lang) ? data.ProjectLocationWelsh : data.ProjectLocation
+		projectLocation:
+			isLangWelsh(lang) && data.ProjectLocationWelsh
+				? data.ProjectLocationWelsh
+				: data.ProjectLocation
 	};
 };
 
