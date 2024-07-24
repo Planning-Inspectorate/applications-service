@@ -2,6 +2,7 @@ const enTranslation = require('./en.json');
 const cyTranslation = require('./cy.json');
 
 const expectedTranslationKeys = [
+	'heading',
 	'anonymous',
 	'dateOfMeeting',
 	'dateAdviceGiven',
@@ -11,7 +12,8 @@ const expectedTranslationKeys = [
 	'enquiryType',
 	'from',
 	'viewMeetingWith',
-	'viewAdviceTo'
+	'viewAdviceTo',
+	'details'
 ].sort();
 
 describe('pages/projects/section-51/_translations', () => {

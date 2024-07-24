@@ -14,6 +14,25 @@ const getEnquirySummaryListItemViewModel = (keyText, valueText) => ({
 	}
 });
 
+const getEnquiryTypeText = {
+	phone: {
+		en: 'phone',
+		cy: 'ffôn'
+	},
+	email: {
+		en: 'email',
+		cy: 'e-bost'
+	},
+	post: {
+		en: 'post',
+		cy: 'post'
+	},
+	meeting: {
+		en: 'meeting',
+		cy: 'cyfarfod'
+	}
+};
+
 const getEnquirySummaryList = (pageData, i18n) => [
 	getEnquirySummaryListItemViewModel(
 		getAdviceEnquiryText(pageData.enquiryMethod, i18n),
@@ -21,9 +40,14 @@ const getEnquirySummaryList = (pageData, i18n) => [
 	),
 	getEnquirySummaryListItemViewModel(
 		getAdviceDateText(pageData.enquiryMethod, i18n),
-		formatDate(pageData.dateAdviceGiven)
+		formatDate(pageData.dateAdviceGiven, i18n.language)
 	),
-	getEnquirySummaryListItemViewModel(i18n.t('section51.enquiryType'), pageData.enquiryMethod)
+	getEnquirySummaryListItemViewModel(
+		i18n.t('section51.enquiryType'),
+		getEnquiryTypeText[pageData.enquiryMethod]
+			? getEnquiryTypeText[pageData.enquiryMethod?.toLowerCase()][i18n.language]
+			: pageData.enquiryMethod
+	)
 ];
 
 module.exports = { getEnquirySummaryList };

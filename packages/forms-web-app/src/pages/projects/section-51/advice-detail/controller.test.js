@@ -103,8 +103,8 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							activeId: 'section-51',
 							adviceGiven: '<p>mock advice given in Welsh</p>',
 							attachments: [
-								{ text: 'View advice (PDF)', url: 'mock document URI 1' },
-								{ text: 'View advice (Word)', url: 'mock document URI 2' }
+								{ text: 'Gweld y cyngor (PDF)', url: 'mock document URI 1' },
+								{ text: 'Gweld y cyngor (Word)', url: 'mock document URI 2' }
 							],
 							backToListUrl: '/register-of-advice',
 							breadcrumbsItems: null,
@@ -112,7 +112,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 								{ key: { text: 'Oddiwrth' }, value: { text: 'mock organisation' } },
 								{
 									key: { text: 'Y dyddiad y rhoddwyd y cyngor' },
-									value: { text: '1 January 2023' }
+									value: { text: '1 Ionawr 2023' }
 								},
 								{ key: { text: 'Math o ymholiad' }, value: { text: 'Email' } }
 							],

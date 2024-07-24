@@ -36,6 +36,7 @@ section51Router.get(
 
 section51Router.get(
 	section51AdviceDetailURL,
+	addCommonTranslationsMiddleware,
 	projectsMiddleware,
 	getSection51AdviceDetailController
 );
