@@ -1,4 +1,5 @@
 {
+	"heading": "Cyngor Adran 51",
 	"anonymous": "Dienw",
 	"dateOfMeeting": "Dyddiad y cyfarfod",
 	"dateAdviceGiven": "Y dyddiad y rhoddwyd y cyngor",
@@ -8,5 +9,13 @@
 	"enquiryType": "Math o ymholiad",
 	"from": "Oddiwrth",
 	"viewMeetingWith": "Gweld cyfarfod gyda",
-	"viewAdviceTo": "Gweld cyngor i"
+	"viewAdviceTo": "Gweld cyngor i",
+	"details": {
+		"adviceInDetail": "Cyngor mewn manylder",
+		"backToList": "Yn ôl i'r rhestr",
+		"enquiry": "Ymholiad",
+		"adviceGiven": "Cyngor a roddwyd",
+		"attachments": "Atodiadau",
+		"viewAdvice": "Gweld y cyngor"
+	}
 }

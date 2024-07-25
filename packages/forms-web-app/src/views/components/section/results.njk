@@ -31,17 +31,17 @@
         {% if result.representative %}
           <p class="section-results__result-copy">
             {% if langIsWelsh %}
-              O {{ result.representative }} ar ran {{ result.personal_name }}
+              O {{ result.representative }} ar ran {{ result.author_welsh or result.author or result.personal_name }}
             {% else %}
-              From {{ result.representative }} on behalf of {{ result.personal_name }}
+              From {{ result.representative }} on behalf of {{ result.personal_name or result.author }}
             {% endif %}
           </p>
-        {% elseif result.description and result.personal_name %}
+        {% elseif result.description and (result.personal_name or result.author or result.author_welsh) %}
           <p class="section-results__result-copy">
             {% if langIsWelsh %}
-              O {{ result.personal_name }}
+              O {{ result.author_welsh or result.author or result.personal_name }}
             {% else %}
-              From {{ result.personal_name }}
+              From {{ result.personal_name or result.author }}
             {% endif %}
           </p>
         {% endif %}

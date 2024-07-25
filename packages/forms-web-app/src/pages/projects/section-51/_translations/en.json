@@ -1,4 +1,5 @@
 {
+	"heading": "Section 51 advice",
 	"anonymous": "Anonymous",
 	"dateOfMeeting": "Date of meeting",
 	"dateAdviceGiven": "Date advice given",
@@ -8,5 +9,13 @@
 	"enquiryType": "Enquiry type",
 	"from": "From",
 	"viewMeetingWith": "View meeting with",
-	"viewAdviceTo": "View advice to"
+	"viewAdviceTo": "View advice to",
+	"details": {
+		"adviceInDetail": "Advice in detail",
+		"backToList": "Back to list",
+		"enquiry": "Enquiry",
+		"adviceGiven": "Advice given",
+		"attachments": "Attachments",
+		"viewAdvice": "View advice"
+	}
 }

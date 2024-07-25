@@ -4,12 +4,12 @@
 {{ govukBackLink({
   classes: 'govuk-!-margin-top-0',
   href: backToListUrl,
-  text: 'Back to list'
+  text: t('section51.details.backToList')
 }) }}
 
 {% if enquirySummaryList or enquiryText %}
   <h2 class="govuk-heading-m">
-    Enquiry
+    {{ t('section51.details.enquiry') }}
   </h2>
 
   {% if enquirySummaryList %}
@@ -27,7 +27,7 @@
 
 {% if adviceGiven %}
   <h2 class="govuk-heading-m">
-    Advice given
+   {{ t('section51.details.adviceGiven') }}
   </h2>
 
   <div class="pins-rte">
@@ -37,7 +37,7 @@
 
 {% if attachments.length %}
   <h2 class="govuk-heading-m">
-    Attachments
+    {{ t('section51.details.attachments') }}
   </h2>
 
   {% for attachment in attachments %}
