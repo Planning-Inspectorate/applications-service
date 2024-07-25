@@ -4,17 +4,43 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
+{% set pageTitle = t('examination.personalInformation.title') %}
+
+{% set hintHtml %}
+<span>{{ t('examination.personalInformation.paragraph1') }}</span>
+<ul>
+  <li>{{ t('examination.personalInformation.listItem1') }}</li>
+  <li>{{ t('examination.personalInformation.listItem2') }}</li>
+  <li>{{ t('examination.personalInformation.listItem3') }}</li>
+</ul>
+<span>{{ t('examination.personalInformation.paragraph2') }}</span>
+<ul>
+  <li>{{ t('examination.personalInformation.listItem4') }}</li>
+  <li>{{ t('examination.personalInformation.listItem5') }}</li>
+  <li>{{ t('examination.personalInformation.listItem6') }}</li>
+  <li>{{ t('examination.personalInformation.listItem7') }}</li>
+  <li>{{ t('examination.personalInformation.listItem8') }}</li>
+  <li>{{ t('examination.personalInformation.listItem9') }}</li>
+  <li>{{ t('examination.personalInformation.listItem10') }}</li>
+  <li>{{ t('examination.personalInformation.listItem11') }}</li>
+  <li>{{ t('examination.personalInformation.listItem12') }}</li>
+</ul>
+{% endset %}
+
 {% block content %}
   {% if errorSummary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: t("common.thereIsAProblem"),
       errorList: errorSummary
     }) }}
   {% endif %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-l">{{ activeSubmissionItemTitle }}</span>
+      <span class="govuk-caption-l">
+        {{ submissionItemTitle }}
+      </span>
+
       <form action="" method="POST" novalidate>
         {{ govukRadios({
           attributes: { "data-cy": id },
@@ -26,7 +52,7 @@
           },
           fieldset: {
             legend: {
-              text: title,
+              text: t('examination.personalInformation.heading1'),
               isPageHeading: true,
               classes: "govuk-fieldset__legend--l"
             }
@@ -39,7 +65,7 @@
 
         {{ govukButton({
           attributes: { "data-cy": "button-submit-and-continue" },
-          text: "Continue",
+          text: t("common.continue"),
           type: "Submit"
         }) }}
       </form>

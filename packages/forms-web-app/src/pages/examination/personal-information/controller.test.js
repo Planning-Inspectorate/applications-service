@@ -8,6 +8,8 @@ let { addKeyValueToActiveSubmissionItem } = require('../_session/submission-item
 const {
 	clearAllPersonalInformationFlags
 } = require('../personal-information-which/utils/savePersonalInformationFlags');
+const { mockI18n } = require('../../_mocks/i18n');
+const commonTranslations_EN = require('../../../locales/en/common.json');
 
 jest.mock('../personal-information-which/utils/savePersonalInformationFlags', () => ({
 	clearAllPersonalInformationFlags: jest.fn()
@@ -15,25 +17,26 @@ jest.mock('../personal-information-which/utils/savePersonalInformationFlags', ()
 jest.mock('./utils/page-data', () => ({
 	getPageData: jest.fn()
 }));
-
 jest.mock('./utils/get-redirect-url', () => ({
 	getRedirectUrl: jest.fn()
 }));
-
 jest.mock('../_session/submission-items-session', () => ({
 	addKeyValueToActiveSubmissionItem: jest.fn()
 }));
 
 describe('examination/personal-information/controller', () => {
 	const mockSession = 'mock session';
+	const req = {
+		body: 'mock body',
+		i18n: mockI18n({
+			common: commonTranslations_EN
+		}),
+		session: mockSession
+	};
 	const res = {
 		redirect: jest.fn(),
 		render: jest.fn(),
 		status: jest.fn(() => res)
-	};
-	const req = {
-		body: 'mock body',
-		session: mockSession
 	};
 	const mockPageDataValue = { id: 'examination-personal-information' };
 
@@ -65,6 +68,7 @@ describe('examination/personal-information/controller', () => {
 			});
 		});
 	});
+
 	describe('#postPersonalInformation', () => {
 		describe('When handling a personal information post', () => {
 			describe('and there is an error', () => {
@@ -97,7 +101,7 @@ describe('examination/personal-information/controller', () => {
 					postPersonalInformation(req, res);
 				});
 				it('should call the functions', () => {
-					expect(getPageData).toHaveBeenCalledWith(mockSession);
+					expect(getPageData).toHaveBeenCalledWith(req.i18n, mockSession);
 					expect(addKeyValueToActiveSubmissionItem).toHaveBeenCalledWith(
 						mockSession,
 						'personalInformation',

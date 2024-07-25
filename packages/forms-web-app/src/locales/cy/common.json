@@ -26,6 +26,7 @@
 	"next": "Nesaf",
 	"no1": "Nac ydw",
 	"no2": "Nac oes",
+	"no3": "Nac ydyw",
 	"open": "Agor",
 	"partOf": "Rhan o",
 	"pinsContactDetails": {
@@ -86,6 +87,7 @@
 	"year": "Blwyddyn",
 	"yes1": "Ydw",
 	"yes2": "Oes",
+	"yes3": "Ydyw",
 	"telephone": "Rhif ffôn",
 	"email": "E-bost"
 }

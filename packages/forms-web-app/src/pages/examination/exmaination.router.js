@@ -16,6 +16,9 @@ const {
 const { validateNameAgent } = require('./name/utils/_validators/validate-name-agent');
 const { validateNameMyself } = require('./name/utils/_validators/validate-name-myself');
 const { validateNameOrganisation } = require('./name/utils/_validators/validate-name-organisation');
+const {
+	validatePersonalInformation
+} = require('./personal-information/utils/validate-personal-information');
 const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
@@ -196,7 +199,7 @@ router.get(
 );
 router.post(
 	`/${personalInformationComment.route}`,
-	validateNotEmpty(personalInformationComment),
+	validatePersonalInformation(personalInformationComment),
 	validationErrorHandler,
 	forwardView(personalInformationComment),
 	postPersonalInformation
@@ -209,7 +212,7 @@ router.get(
 );
 router.post(
 	`/${personalInformationCommentFiles.route}`,
-	validateNotEmpty(personalInformationCommentFiles),
+	validatePersonalInformation(personalInformationCommentFiles),
 	validationErrorHandler,
 	forwardView(personalInformationCommentFiles),
 	postPersonalInformation
@@ -222,7 +225,7 @@ router.get(
 );
 router.post(
 	`/${personalInformationFiles.route}`,
-	validateNotEmpty(personalInformationFiles),
+	validatePersonalInformation(personalInformationFiles),
 	validationErrorHandler,
 	forwardView(personalInformationFiles),
 	postPersonalInformation

@@ -1,5 +1,12 @@
 const { getSummaryListItemPersonalInformation } = require('./index');
 
+const { mockI18n } = require('../../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslations_EN
+});
+
 describe('examination/check-submission-item/utils/summary-list-item', () => {
 	describe('#getSummaryListItemPersonalInformation', () => {
 		describe('When getting the personal information summary list item', () => {
@@ -12,7 +19,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 								submissionType: 'comment'
 							};
 
-							const result = getSummaryListItemPersonalInformation(mockSubmissionItem);
+							const result = getSummaryListItemPersonalInformation(i18n, mockSubmissionItem);
 
 							it('should return a summary list item', () => {
 								expect(result).toEqual({
@@ -36,7 +43,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 								submissionType: 'upload'
 							};
 
-							const result = getSummaryListItemPersonalInformation(mockSubmissionItem);
+							const result = getSummaryListItemPersonalInformation(i18n, mockSubmissionItem);
 
 							it('should return a summary list item', () => {
 								expect(result).toEqual({
@@ -60,7 +67,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 								submissionType: 'both'
 							};
 
-							const result = getSummaryListItemPersonalInformation(mockSubmissionItem);
+							const result = getSummaryListItemPersonalInformation(i18n, mockSubmissionItem);
 
 							it('should return a summary list item', () => {
 								expect(result).toEqual({
@@ -85,9 +92,9 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 							};
 
 							it('should return throw an error', () => {
-								expect(() => getSummaryListItemPersonalInformation(mockSubmissionItem)).toThrow(
-									'Submission item submission type value does not match a required option'
-								);
+								expect(() =>
+									getSummaryListItemPersonalInformation(i18n, mockSubmissionItem)
+								).toThrow('Submission item submission type value does not match a required option');
 							});
 						});
 					});
@@ -98,7 +105,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 						submissionType: 'comment'
 					};
 
-					const result = getSummaryListItemPersonalInformation(mockSubmissionItem);
+					const result = getSummaryListItemPersonalInformation(i18n, mockSubmissionItem);
 
 					it('should return a summary list item', () => {
 						expect(result).toEqual({
@@ -122,7 +129,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 					};
 
 					it('should return throw an error', () => {
-						expect(() => getSummaryListItemPersonalInformation(mockSubmissionItem)).toThrow(
+						expect(() => getSummaryListItemPersonalInformation(i18n, mockSubmissionItem)).toThrow(
 							'Submission item personal information value is not a required option'
 						);
 					});

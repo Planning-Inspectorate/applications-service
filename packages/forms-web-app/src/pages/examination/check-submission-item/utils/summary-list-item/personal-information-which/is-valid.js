@@ -4,18 +4,12 @@ const {
 	getSubmissionItemFiles
 } = require('../../../../_session/submission-items-session');
 const { evidenceOrCommentValues } = require('../../../../evidence-or-comment/config');
-const {
-	routesConfig: {
-		examination: {
-			pages: { personalInformation }
-		}
-	}
-} = require('../../../../../../routes/config');
+const { personalInformationOptionValues } = require('../../../../personal-information/config');
 
 const personalInformationWhichIsValid = (submissionItem) => {
 	const submissionItemPersonalInformation = getSubmissionItemPersonalInformation(submissionItem);
 	const hasPersonalInformation =
-		submissionItemPersonalInformation === personalInformation.options[1].value;
+		submissionItemPersonalInformation === personalInformationOptionValues[1];
 
 	if (!hasPersonalInformation) return false;
 

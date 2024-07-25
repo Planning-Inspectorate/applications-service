@@ -30,6 +30,7 @@ exports[`locales/common should return the correct English common translations 1`
   "next": "Next",
   "no1": "No",
   "no2": "No",
+  "no3": "No",
   "open": "Open",
   "partOf": "Part of",
   "pinsContactDetails": {
@@ -91,6 +92,7 @@ exports[`locales/common should return the correct English common translations 1`
   "year": "Year",
   "yes1": "Yes",
   "yes2": "Yes",
+  "yes3": "Yes",
 }
 `;
 
@@ -124,6 +126,7 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "next": "Nesaf",
   "no1": "Nac ydw",
   "no2": "Nac oes",
+  "no3": "Nac ydyw",
   "open": "Agor",
   "partOf": "Rhan o",
   "pinsContactDetails": {
@@ -185,5 +188,6 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "year": "Blwyddyn",
   "yes1": "Ydw",
   "yes2": "Oes",
+  "yes3": "Ydyw",
 }
 `;

@@ -16,10 +16,11 @@ const {
 } = require('../personal-information-which/utils/savePersonalInformationFlags');
 
 const view = 'examination/personal-information/view.njk';
+
 const getPersonalInformation = (req, res) => {
 	try {
-		const { session } = req;
-		return res.render(view, getPageData(session));
+		const { i18n, session } = req;
+		return res.render(view, getPageData(i18n, session));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -28,9 +29,9 @@ const getPersonalInformation = (req, res) => {
 
 const postPersonalInformation = (req, res) => {
 	try {
-		const { body, session } = req;
+		const { body, i18n, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
-		const setPageData = getPageData(session);
+		const setPageData = getPageData(i18n, session);
 
 		if (errors[personalInformation.id] || Object.keys(errors).length > 0) {
 			return res.render(view, {

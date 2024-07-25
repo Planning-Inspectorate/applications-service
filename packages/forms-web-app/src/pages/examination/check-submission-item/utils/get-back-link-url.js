@@ -6,12 +6,12 @@ const {
 } = require('../../_session/submission-items-session');
 const { isQueryModeEdit } = require('../../../../controllers/utils/is-query-mode-edit');
 const { evidenceOrCommentValues } = require('../../evidence-or-comment/config');
+const { personalInformationOptionValues } = require('../../personal-information/config');
 const {
 	routesConfig: {
 		examination: {
 			pages: {
 				addAnotherDeadlineItem,
-				personalInformation,
 				personalInformationComment,
 				personalInformationCommentFiles,
 				personalInformationFiles,
@@ -37,7 +37,7 @@ const getBackLinkUrl = (query, session) => {
 	const submissionItemType = getSubmissionItemType(activeSubmissionItem);
 	const hasPersonalInformation =
 		getSubmissionItemPersonalInformation(activeSubmissionItem) ===
-		personalInformation.options[1].value;
+		personalInformationOptionValues[1];
 
 	let backLinkUrl;
 

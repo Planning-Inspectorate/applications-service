@@ -100,6 +100,25 @@
 			"errorMessage2": "Rhaid i enw eich sefydliad fod rhwng 1 a 255 nod"
 		}
 	},
+	"personalInformation": {
+		"title": "Submission has personal information or not",
+		"heading1": "A yw'ch cyflwyniad yn cynnwys gwybodaeth bersonol?",
+		"errorMessage1": "Dewiswch 'ydyw' os yw'ch cyflwyniad yn cynnwys gwybodaeth bersonol",
+		"paragraph1": "Gwiriwch a yw'ch cyflwyniad yn cynnwys gwybodaeth am:",
+		"listItem1": "blant",
+		"listItem2": "iechyd",
+		"listItem3": "troseddu",
+		"paragraph2": "Mae hyn hefyd yn cynnwys unrhyw wybodaeth sy'n ymwneud â nodweddion canlynol unigolyn:",
+		"listItem4": "hil",
+		"listItem5": "tarddiad ethnig",
+		"listItem6": "gwleidyddiaeth",
+		"listItem7": "crefydd",
+		"listItem8": "aelodaeth ag undeb llafur",
+		"listItem9": "geneteg",
+		"listItem10": "biometreg",
+		"listItem11": "bywyd rhywiol",
+		"listItem12": "cyfeiriadedd rhywiol"
+	},
 	"selectDeadline": {
 		"title": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
 		"heading1": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
