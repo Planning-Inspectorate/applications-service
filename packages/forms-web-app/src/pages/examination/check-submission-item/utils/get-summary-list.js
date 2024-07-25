@@ -29,7 +29,7 @@ const getSummaryList = (i18n, session) => {
 	if (submissionItemHasComment(activeSubmissionItem))
 		summaryList.push(getSummaryListItemEnterComment(activeSubmissionItem));
 
-	summaryList.push(getSummaryListItemPersonalInformation(activeSubmissionItem));
+	summaryList.push(getSummaryListItemPersonalInformation(i18n, activeSubmissionItem));
 
 	if (personalInformationWhichIsValid(activeSubmissionItem)) {
 		const summaryListItemPersonalInformationWhich =

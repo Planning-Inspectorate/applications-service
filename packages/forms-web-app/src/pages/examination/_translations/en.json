@@ -100,6 +100,25 @@
 			"errorMessage2": "Your organisation's name must be between 1 and 255 characters"
 		}
 	},
+	"personalInformation": {
+		"title": "Submission has personal information or not",
+		"heading1": "Does your submission contain personal information?",
+		"errorMessage1": "Select yes if your submission contains personal information",
+		"paragraph1": "Check if your submission contains information about:",
+		"listItem1": "children",
+		"listItem2": "health",
+		"listItem3": "crime",
+		"paragraph2": "This also includes any information relating to an individual's:",
+		"listItem4": "race",
+		"listItem5": "ethnic origin",
+		"listItem6": "politics",
+		"listItem7": "religion",
+		"listItem8": "trade union membership",
+		"listItem9": "genetics",
+		"listItem10": "biometrics",
+		"listItem11": "sex life",
+		"listItem12": "sexual orientation"
+	},
 	"selectFile": {
 		"title": "Select a file",
 		"heading1": "Select a file",

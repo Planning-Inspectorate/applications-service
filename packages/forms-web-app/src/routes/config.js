@@ -66,52 +66,19 @@ const routesConfig = {
 			},
 			personalInformation: {
 				name: 'Personal information',
-				options: {
-					1: {
-						value: 'yes',
-						text: 'Yes'
-					},
-					2: {
-						value: 'no',
-						text: 'No'
-					}
-				},
-				sessionId: 'personalInformation',
-				view: 'pages/examination/personal-information'
+				sessionId: 'personalInformation'
 			},
 			personalInformationComment: {
 				id: 'examination-personal-information-comment',
-				name: '',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if your submission contains personal information'
-					}
-				},
-				pageTitle: 'Submission has personal information or not',
-				route: 'comment-has-personal-information-or-not',
-				title: 'Does your submission contain personal information?'
+				route: 'comment-has-personal-information-or-not'
 			},
 			personalInformationCommentFiles: {
 				id: 'examination-personal-information-comment-files',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if your submission contains personal information'
-					}
-				},
-				pageTitle: 'Submission has personal information or not',
-				route: 'comment-file-has-personal-information-or-not',
-				title: 'Does your submission contain personal information?'
+				route: 'comment-file-has-personal-information-or-not'
 			},
 			personalInformationFiles: {
 				id: 'examination-personal-information-files',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if your submission contains personal information'
-					}
-				},
-				pageTitle: 'Submission has personal information or not',
-				route: 'files-have-personal-information-or-not',
-				title: 'Does your submission contain personal information?'
+				route: 'files-have-personal-information-or-not'
 			},
 			personalInformationWhich: {
 				view: 'pages/examination/personal-information-which'

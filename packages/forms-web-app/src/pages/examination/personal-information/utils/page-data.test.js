@@ -1,16 +1,20 @@
 const { getPageData } = require('./page-data');
+
 let { getActiveSubmissionItem } = require('../../_session/submission-items-session');
 let { getBackLinkUrl } = require('./get-back-link-url');
 let { getCurrentViewSession } = require('../../../../controllers/session/current-view-session');
 
+const { mockI18n } = require('../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../locales/en/common.json');
+
+const i18n = mockI18n({ common: commonTranslations_EN }, 'en');
+
 jest.mock('../../_session/submission-items-session', () => ({
 	getActiveSubmissionItem: jest.fn()
 }));
-
 jest.mock('./get-back-link-url', () => ({
 	getBackLinkUrl: jest.fn()
 }));
-
 jest.mock('../../../../controllers/session/current-view-session', () => ({
 	getCurrentViewSession: jest.fn()
 }));
@@ -20,8 +24,6 @@ describe('#getPageData', () => {
 		backLinkUrl: 'back link url'
 	};
 	const mockPageData = {
-		hintHtml:
-			"<span>Check if your submission contains information about:</span><ul><li>children</li><li>health</li><li>crime</li></ul><span>This also includes any information relating to an individual's:</span><ul><li>race</li><li>ethnic origin</li><li>politics</li><li>religion</li><li>trade union membership</li><li>genetics</li><li>biometrics</li><li>sex life</li><li>sexual orientation</li></ul>",
 		options: [
 			{
 				text: 'Yes',
@@ -34,9 +36,7 @@ describe('#getPageData', () => {
 		]
 	};
 	const mockSessionCurrentView = {
-		id: 'id',
-		pageTitle: 'pageTitle',
-		title: 'title'
+		id: 'id'
 	};
 	describe('when setting the page data', () => {
 		describe('and there is not a personalInformation value', () => {
@@ -45,7 +45,7 @@ describe('#getPageData', () => {
 				getActiveSubmissionItem.mockReturnValue({});
 				getCurrentViewSession.mockReturnValue(mockSessionCurrentView);
 				getBackLinkUrl.mockReturnValue(mockBackLinkUrl.backLinkUrl);
-				result = getPageData({});
+				result = getPageData(i18n, {});
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
@@ -61,7 +61,7 @@ describe('#getPageData', () => {
 				getActiveSubmissionItem.mockReturnValue({ personalInformation: 'yes' });
 				getCurrentViewSession.mockReturnValue(mockSessionCurrentView);
 				getBackLinkUrl.mockReturnValue(mockBackLinkUrl.backLinkUrl);
-				result = getPageData({});
+				result = getPageData(i18n, {});
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
