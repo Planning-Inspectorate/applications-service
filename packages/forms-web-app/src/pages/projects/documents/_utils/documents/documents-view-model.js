@@ -14,7 +14,9 @@ const formatDocumentToViewModel = (document, { language }) => ({
 	path: document.path,
 	filter_1: document.filter1,
 	filter_1_welsh: document.filter1Welsh,
-	stageLabel: getStageLabel(document.stageLabel, language)
+	stageLabel: getStageLabel(document.stageLabel, language),
+	author: document.author,
+	author_welsh: document.authorWelsh
 });
 
 const mapDocumentsToViewModel = (i18n, documents) =>
