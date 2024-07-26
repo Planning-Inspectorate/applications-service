@@ -10,7 +10,7 @@
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set pageTitle = "Error: " + pageTitle %}
+		{% set pageTitle = t("common.error") + ": " + pageTitle %}
 	{% endif %}
 
 	{{ pageTitle }}
@@ -19,7 +19,7 @@
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t("common.thereIsAProblem"),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
@@ -27,12 +27,12 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<span class="govuk-caption-l">
-        Deadline item:
-        <br/>
-				{{ activeSubmissionItemTitle }}
+				{{ t("examination.personalInformationWhich.common.pretitle") }}
+				<br/>
+				{{ submissionItemTitle }}
 			</span>
 
-			<form action="{{ route }}" method="POST" novalidate>
+			<form method="POST" novalidate>
 				{{ govukCheckboxes({
 					attributes: { "data-cy": id },
 					idPrefix: id,
@@ -41,7 +41,7 @@
 						text: errors[id].msg
 					},
 					hint: {
-						text: "Select all that apply"
+						text: t("examination.personalInformationWhich.common.hintText1")
 					},
 					fieldset: {
 						legend: {
@@ -55,7 +55,7 @@
 
 				{{ govukButton({
 					attributes: { "data-cy": "button-submit-and-continue" },
-					text: "Continue",
+					text: t("common.continue"),
 					type: "Submit"
 				}) }}
 			</form>

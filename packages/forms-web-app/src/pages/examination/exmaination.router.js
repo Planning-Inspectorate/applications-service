@@ -19,6 +19,10 @@ const { validateNameOrganisation } = require('./name/utils/_validators/validate-
 const {
 	validatePersonalInformation
 } = require('./personal-information/utils/validate-personal-information');
+const {
+	validatePersonalInformationWhichCommentFiles,
+	validatePersonalInformationWhichFiles
+} = require('./personal-information-which/utils/validate-personal-information-which');
 const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
@@ -36,6 +40,9 @@ const { projectsMiddleware } = require('../projects/_middleware/middleware');
 const {
 	addCommonTranslationsMiddleware
 } = require('../../pages/_middleware/i18n/add-common-translations-middleware');
+const {
+	addErrorTranslationsMiddleware
+} = require('../_middleware/i18n/add-error-translations-middleware');
 const {
 	addExaminationTranslationsMiddleware
 } = require('./_middleware/add-examination-translations-middleware');
@@ -122,7 +129,11 @@ const chooseDeadlineRouter = require('./choose-deadline/router');
 
 const router = express.Router({ mergeParams: true });
 
-router.use(addCommonTranslationsMiddleware, addExaminationTranslationsMiddleware);
+router.use(
+	addCommonTranslationsMiddleware,
+	addErrorTranslationsMiddleware,
+	addExaminationTranslationsMiddleware
+);
 
 router.get(`/${applicant.route}`, getApplicant);
 router.post(`/${applicant.route}`, validateApplicant(), validationErrorHandler, postApplicant);
@@ -238,7 +249,7 @@ router.get(
 );
 router.post(
 	`/${personalInformationWhichCommentFiles.route}`,
-	validateNotEmpty(personalInformationWhichCommentFiles),
+	validatePersonalInformationWhichCommentFiles(),
 	validationErrorHandler,
 	forwardView(personalInformationWhichCommentFiles),
 	postPersonalInformationWhich
@@ -251,7 +262,7 @@ router.get(
 );
 router.post(
 	`/${personalInformationWhichFiles.route}`,
-	validateNotEmpty(personalInformationWhichFiles),
+	validatePersonalInformationWhichFiles(),
 	validationErrorHandler,
 	forwardView(personalInformationWhichFiles),
 	postPersonalInformationWhich

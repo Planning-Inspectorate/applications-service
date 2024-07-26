@@ -1,9 +1,13 @@
 const { getCommentOption, getFileOptions } = require('./getOptions');
 const { getUploadedFilesFromSession } = require('../../_utils/file-upload/fileSessionManagement');
+const { mockI18n } = require('../../../_mocks/i18n');
+const examinationTranslations_EN = require('../../_translations/en.json');
 
 jest.mock('../../_utils/file-upload/fileSessionManagement', () => ({
 	getUploadedFilesFromSession: jest.fn()
 }));
+
+const i18n = mockI18n({ examination: examinationTranslations_EN });
 
 describe('examination/personal-information-which/utils/getOptions', () => {
 	describe('#getFileOptions', () => {
@@ -56,7 +60,7 @@ describe('examination/personal-information-which/utils/getOptions', () => {
 	describe('#getCommentOption', () => {
 		describe('When getting the comment radio option', () => {
 			describe('and the the personal information flag is set', () => {
-				const result = getCommentOption({ commentPersonalInformation: 'yes' });
+				const result = getCommentOption(i18n, { commentPersonalInformation: 'yes' });
 				it('should check the option', () => {
 					expect(result).toEqual({
 						text: 'My comment',
@@ -66,7 +70,7 @@ describe('examination/personal-information-which/utils/getOptions', () => {
 				});
 			});
 			describe('and the the personal information flag is NOT set', () => {
-				const result = getCommentOption({});
+				const result = getCommentOption(i18n, {});
 				it('should NOT check the option', () => {
 					expect(result).toEqual({
 						text: 'My comment',

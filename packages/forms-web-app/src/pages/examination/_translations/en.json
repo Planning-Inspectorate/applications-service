@@ -119,6 +119,25 @@
 		"listItem11": "sex life",
 		"listItem12": "sexual orientation"
 	},
+	"personalInformationWhich": {
+		"common": {
+			"pretitle": "Deadline item:",
+			"hintText1": "Select all that apply",
+			"options": {
+				"comment": "My comment"
+			}
+		},
+		"commentFiles": {
+			"title": "Which files and comments contain personal information?",
+			"heading1": "Which files and comments contain personal information?",
+			"errorMessage1": "Select files and comments that contain personal information"
+		},
+		"files": {
+			"title": "Which files contain personal information?",
+			"heading1": "Which files contain personal information?",
+			"errorMessage1": "Select files that contain personal information"
+		}
+	},
 	"selectFile": {
 		"title": "Select a file",
 		"heading1": "Select a file",
