@@ -122,6 +122,25 @@ exports[`pages/examination/_translations should return the correct English trans
     "paragraph2": "This also includes any information relating to an individual's:",
     "title": "Submission has personal information or not",
   },
+  "personalInformationWhich": {
+    "commentFiles": {
+      "errorMessage1": "Select files and comments that contain personal information",
+      "heading1": "Which files and comments contain personal information?",
+      "title": "Which files and comments contain personal information?",
+    },
+    "common": {
+      "hintText1": "Select all that apply",
+      "options": {
+        "comment": "My comment",
+      },
+      "pretitle": "Deadline item:",
+    },
+    "files": {
+      "errorMessage1": "Select files that contain personal information",
+      "heading1": "Which files contain personal information?",
+      "title": "Which files contain personal information?",
+    },
+  },
   "selectDeadline": {
     "errorMessage1": "Select an item",
     "heading1": "Which item would you like to submit against for this deadline?",
@@ -300,6 +319,25 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "paragraph1": "Gwiriwch a yw'ch cyflwyniad yn cynnwys gwybodaeth am:",
     "paragraph2": "Mae hyn hefyd yn cynnwys unrhyw wybodaeth sy'n ymwneud â nodweddion canlynol unigolyn:",
     "title": "Submission has personal information or not",
+  },
+  "personalInformationWhich": {
+    "commentFiles": {
+      "errorMessage1": "Dewiswch y ffeiliau a'r sylwadau sy'n cynnwys gwybodaeth bersonol",
+      "heading1": "Pa ffeiliau a sylwadau sy'n cynnwys gwybodaeth bersonol?",
+      "title": "Pa ffeiliau a sylwadau sy'n cynnwys gwybodaeth bersonol?",
+    },
+    "common": {
+      "hintText1": "Dewiswch bob un sy'n berthnasol",
+      "options": {
+        "comment": "Fy sylw",
+      },
+      "pretitle": "Eitem terfyn amser:",
+    },
+    "files": {
+      "errorMessage1": "Select files that contain personal information",
+      "heading1": "Which files contain personal information?",
+      "title": "Which files contain personal information?",
+    },
   },
   "selectDeadline": {
     "errorMessage1": "Dewiswch eitem",

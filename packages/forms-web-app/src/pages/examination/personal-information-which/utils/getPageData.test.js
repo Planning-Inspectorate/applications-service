@@ -1,15 +1,18 @@
+const { getPageData } = require('./getPageData');
 const { getActiveSubmissionItem } = require('../../_session/submission-items-session');
 const { getFileOptions, getCommentOption } = require('./getOptions');
-const { getPageData } = require('./getPageData');
+const { mockI18n } = require('../../../_mocks/i18n');
+const examinationTranslations_EN = require('../../_translations/en.json');
 
 jest.mock('../../_session/submission-items-session', () => ({
 	getActiveSubmissionItem: jest.fn()
 }));
-
 jest.mock('./getOptions', () => ({
 	getFileOptions: jest.fn(),
 	getCommentOption: jest.fn()
 }));
+
+const i18n = mockI18n({ examination: examinationTranslations_EN });
 
 describe('examination/personal-information-which/utils/getPageData', () => {
 	describe('#getPageData', () => {
@@ -23,7 +26,7 @@ describe('examination/personal-information-which/utils/getPageData', () => {
 				getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
 				getFileOptions.mockReturnValue(mockFileOptions);
 				getCommentOption.mockReturnValue(mockCommentOption);
-				result = getPageData(mockSession);
+				result = getPageData(i18n, mockSession);
 			});
 			it('should return the comment and files page data (both)', () => {
 				expect(result).toEqual({
@@ -44,7 +47,7 @@ describe('examination/personal-information-which/utils/getPageData', () => {
 			beforeEach(() => {
 				getActiveSubmissionItem.mockReturnValue(mockActiveSubmissionItem);
 				getFileOptions.mockReturnValue(mockFileOptions);
-				result = getPageData(mockSession);
+				result = getPageData(i18n, mockSession);
 			});
 			it('should return the files page data', () => {
 				expect(result).toEqual({

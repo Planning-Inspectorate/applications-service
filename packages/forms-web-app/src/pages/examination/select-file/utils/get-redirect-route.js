@@ -5,10 +5,11 @@ const {
 const {
 	routesConfig: {
 		examination: {
-			pages: { evidenceOrComment, personalInformationCommentFiles, personalInformationFiles }
+			pages: { personalInformationCommentFiles, personalInformationFiles }
 		}
 	}
 } = require('../../../../routes/config');
+const { evidenceOrCommentValues } = require('../../evidence-or-comment/config');
 
 const getRedirectRoute = (session) => {
 	const activeSubmissionItem = getActiveSubmissionItem(session);
@@ -16,9 +17,9 @@ const getRedirectRoute = (session) => {
 
 	let redirectUrl;
 
-	if (activeSubmissionItemType === evidenceOrComment.options[2].value)
+	if (activeSubmissionItemType === evidenceOrCommentValues[2])
 		redirectUrl = personalInformationFiles.route;
-	else if (activeSubmissionItemType === evidenceOrComment.options[3].value)
+	else if (activeSubmissionItemType === evidenceOrCommentValues[3])
 		redirectUrl = personalInformationCommentFiles.route;
 
 	if (!redirectUrl) throw new Error('Value does not match a required submission type');

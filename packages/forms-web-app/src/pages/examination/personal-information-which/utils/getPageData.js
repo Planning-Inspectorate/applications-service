@@ -1,3 +1,8 @@
+const { getActiveSubmissionItem } = require('../../_session/submission-items-session');
+const {
+	getSubmissionItemTitleByLocale
+} = require('../../_utils/get-content/get-submission-item-title-by-locale');
+const { getFileOptions, getCommentOption } = require('./getOptions');
 const {
 	routesConfig: {
 		examination: {
@@ -10,40 +15,38 @@ const {
 		}
 	}
 } = require('../../../../routes/config');
-const { getActiveSubmissionItem } = require('../../_session/submission-items-session');
-const { getFileOptions, getCommentOption } = require('./getOptions');
 
-const pageData = {
+const pageData = (i18n) => ({
 	backLinkUrl: `${personalInformationFiles.route}`,
 	id: personalInformationWhichFiles.id,
-	pageTitle: personalInformationWhichFiles.name,
-	title: personalInformationWhichFiles.name,
+	pageTitle: i18n.t('examination.personalInformationWhich.files.title'),
+	title: i18n.t('examination.personalInformationWhich.files.heading1'),
 	route: `${personalInformationWhichFiles.route}`
-};
+});
 
-const bothCommentAndFilesPageData = {
+const bothCommentAndFilesPageData = (i18n) => ({
 	id: personalInformationWhichCommentFiles.id,
-	pageTitle: personalInformationWhichCommentFiles.name,
-	title: personalInformationWhichCommentFiles.name,
+	pageTitle: i18n.t('examination.personalInformationWhich.commentFiles.title'),
+	title: i18n.t('examination.personalInformationWhich.commentFiles.heading1'),
 	backLinkUrl: `${personalInformationCommentFiles.route}`,
 	route: `${personalInformationWhichCommentFiles.route}`
-};
+});
 
-const getPageData = (session) => {
-	let setPageData = { ...pageData };
+const getPageData = (i18n, session) => {
+	let setPageData = { ...pageData(i18n) };
 
 	const activeSubmissionItem = getActiveSubmissionItem(session);
 
 	const options = getFileOptions(session);
 
 	if (activeSubmissionItem.submissionType === 'both') {
-		setPageData = { ...bothCommentAndFilesPageData };
-		options.unshift(getCommentOption(activeSubmissionItem));
+		setPageData = { ...bothCommentAndFilesPageData(i18n) };
+		options.unshift(getCommentOption(i18n, activeSubmissionItem));
 	}
 
 	return {
 		...setPageData,
-		activeSubmissionItemTitle: activeSubmissionItem.submissionItem,
+		submissionItemTitle: getSubmissionItemTitleByLocale(i18n, session),
 		radioOptions: options
 	};
 };

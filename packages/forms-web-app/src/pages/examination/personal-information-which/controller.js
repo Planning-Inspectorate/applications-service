@@ -1,3 +1,9 @@
+const logger = require('../../../lib/logger');
+const { getPageData } = require('./utils/getPageData');
+const {
+	savePersonalInformationFlags,
+	clearAllPersonalInformationFlags
+} = require('./utils/savePersonalInformationFlags');
 const {
 	routesConfig: {
 		examination: {
@@ -5,19 +11,14 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const logger = require('../../../lib/logger');
-const { getPageData } = require('./utils/getPageData');
-const {
-	savePersonalInformationFlags,
-	clearAllPersonalInformationFlags
-} = require('./utils/savePersonalInformationFlags');
 
 const view = 'examination/personal-information-which/view.njk';
+
 const getPersonalInformationWhich = (req, res) => {
 	try {
-		const { session } = req;
+		const { i18n, session } = req;
 
-		const pageData = getPageData(session);
+		const pageData = getPageData(i18n, session);
 
 		return res.render(view, {
 			...pageData
@@ -30,11 +31,11 @@ const getPersonalInformationWhich = (req, res) => {
 
 const postPersonalInformationWhich = (req, res) => {
 	try {
-		const { session, body } = req;
+		const { i18n, session, body } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		clearAllPersonalInformationFlags(session);
-		const pageData = getPageData(session);
+		const pageData = getPageData(i18n, session);
 
 		if (errors[pageData.id] || Object.keys(errors).length > 0) {
 			return res.render(view, {

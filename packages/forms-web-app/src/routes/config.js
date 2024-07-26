@@ -80,28 +80,13 @@ const routesConfig = {
 				id: 'examination-personal-information-files',
 				route: 'files-have-personal-information-or-not'
 			},
-			personalInformationWhich: {
-				view: 'pages/examination/personal-information-which'
-			},
 			personalInformationWhichCommentFiles: {
 				id: 'examination-personal-information-which-comment-files',
-				name: 'Which files and comments contain personal information?',
-				route: 'select-which-files-comments-have-personal-information',
-				onError: {
-					message: {
-						isEmpty: 'Select files and comments that contain personal information'
-					}
-				}
+				route: 'select-which-files-comments-have-personal-information'
 			},
 			personalInformationWhichFiles: {
 				id: 'examination-personal-information-which-files',
-				name: 'Which files contain personal information?',
-				route: 'which-files-have-personal-information-or-not',
-				onError: {
-					message: {
-						isEmpty: 'Select files that contain personal information'
-					}
-				}
+				route: 'which-files-have-personal-information-or-not'
 			},
 			selectDeadline: {
 				id: 'examination-select-deadline',
