@@ -44,14 +44,21 @@ const completeBackOfficeSubmission = async (submissionDetails) => {
 	if (!application)
 		throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
 
-	await sendSubmissionNotification({
+	const isProjectWelsh = application.regions.includes('wales');
+
+	const details = {
 		submissionId: submissionId,
 		email: email,
 		project: {
 			name: application.projectName,
-			email: application.projectEmailAddress
+			email: application.projectEmailAddress,
+			...(isProjectWelsh && {
+				welshName: application.projectNameWelsh || application.projectName
+			})
 		}
-	});
+	};
+
+	await sendSubmissionNotification(details);
 };
 
 module.exports = {

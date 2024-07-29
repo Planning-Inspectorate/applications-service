@@ -256,7 +256,10 @@ describe('/api/v1/submissions', () => {
 		describe('Back Office case reference', () => {
 			const submissionId = '123';
 
-			afterEach(() => mockFindUnique.mockReset());
+			afterEach(() => {
+				mockFindUnique.mockReset();
+				notifyBuilder.sendEmail.mockReset();
+			});
 
 			it('sends email and returns success response', async () => {
 				mockFindUnique.mockResolvedValueOnce({
@@ -277,6 +280,58 @@ describe('/api/v1/submissions', () => {
 					'email address': 'person@example.org',
 					submission_id: submissionId,
 					project_name: 'North Lincolnshire Green Energy Park',
+					project_email: 'webteam@planninginspectorate.gov.uk'
+				});
+				expect(notifyBuilder.setReference).toHaveBeenCalledWith(`Submission ${submissionId}`);
+				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+			});
+
+			it('sends email and returns success response - Welsh region, no Welsh project name', async () => {
+				mockFindUnique.mockResolvedValueOnce({
+					...{ ...APPLICATION_DB, regions: 'wales' },
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					email: 'person@example.org',
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				expect(response.status).toEqual(204);
+
+				expect(notifyBuilder.reset).toHaveBeenCalled();
+				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('person@example.org');
+				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+					'email address': 'person@example.org',
+					submission_id: submissionId,
+					project_name: 'North Lincolnshire Green Energy Park',
+					project_name_welsh: 'North Lincolnshire Green Energy Park',
+					project_email: 'webteam@planninginspectorate.gov.uk'
+				});
+				expect(notifyBuilder.setReference).toHaveBeenCalledWith(`Submission ${submissionId}`);
+				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+			});
+
+			it('sends email and returns success response - Welsh region, Welsh project name', async () => {
+				mockFindUnique.mockResolvedValueOnce({
+					...{ ...APPLICATION_DB, regions: 'wales', projectNameWelsh: 'A Welsh project name' },
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				const response = await request.post(`/api/v1/submissions/${submissionId}/complete`).send({
+					email: 'person@example.org',
+					caseReference: BACK_OFFICE_CASE_REFERENCE
+				});
+
+				expect(response.status).toEqual(204);
+
+				expect(notifyBuilder.reset).toHaveBeenCalled();
+				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('person@example.org');
+				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+					'email address': 'person@example.org',
+					submission_id: submissionId,
+					project_name: 'North Lincolnshire Green Energy Park',
+					project_name_welsh: 'A Welsh project name',
 					project_email: 'webteam@planninginspectorate.gov.uk'
 				});
 				expect(notifyBuilder.setReference).toHaveBeenCalledWith(`Submission ${submissionId}`);

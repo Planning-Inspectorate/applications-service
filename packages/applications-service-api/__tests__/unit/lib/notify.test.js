@@ -15,7 +15,10 @@ jest.mock('../../../src/lib/config', () => ({
 					cy: 'registration_confirmation_cy_template_id'
 				},
 				MagicLinkEmail: 'magic_link_template_id',
-				submissionCompleteEmail: 'submission_complete_template_id',
+				submissionCompleteEmail: {
+					en: 'submission_complete_template_id',
+					cy: 'submission_complete_cy_template_id'
+				},
 				subscriptionCreateEmail: {
 					en: 'subscription_create_template_id',
 					cy: 'subscription_create_cy_template_id'
@@ -161,6 +164,34 @@ describe('notify lib', () => {
 				'email address': 'a@example.com',
 				submission_id: 1,
 				project_name: 'some project',
+				project_email: 'project@example.com'
+			});
+			expect(notifyBuilder.setReference).toHaveBeenCalledWith('Submission 1');
+			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+		});
+
+		it('should send an email - Welsh project name provided', async () => {
+			const details = {
+				email: 'a@example.com',
+				submissionId: 1,
+				project: {
+					name: 'some project',
+					welshName: 'some project Welsh name',
+					email: 'project@example.com'
+				}
+			};
+			await sendSubmissionNotification(details);
+
+			expect(notifyBuilder.reset).toHaveBeenCalled();
+			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith(
+				'submission_complete_cy_template_id'
+			);
+			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('a@example.com');
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				'email address': 'a@example.com',
+				submission_id: 1,
+				project_name: 'some project',
+				project_name_welsh: 'some project Welsh name',
 				project_email: 'project@example.com'
 			});
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('Submission 1');
