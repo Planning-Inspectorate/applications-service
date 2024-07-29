@@ -95,7 +95,10 @@ module.exports = {
 					cy: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP_WELSH
 				},
 				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
-				submissionCompleteEmail: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
+				submissionCompleteEmail: {
+					en: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
+					cy: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL_WELSH
+				},
 				subscriptionCreateEmail: {
 					en: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL,
 					cy: process.env.SRV_NOTIFY_SUBSCRIPTION_CREATE_EMAIL_WELSH

@@ -64,13 +64,18 @@ const sendMagicLinkToIP = async (details) => {
 
 const sendSubmissionNotification = async (details) => {
 	await buildNotifyClient()
-		.setTemplateId(config.services.notify.templates.submissionCompleteEmail)
+		.setTemplateId(
+			config.services.notify.templates.submissionCompleteEmail[
+				details.project.welshName ? 'cy' : 'en'
+			]
+		)
 		.setDestinationEmailAddress(details.email)
 		.setTemplateVariablesFromObject({
 			'email address': details.email,
 			submission_id: details.submissionId,
 			project_name: details.project.name,
-			project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk'
+			project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk',
+			...(details.project.welshName && { project_name_welsh: details.project.welshName })
 		})
 		.setReference(`Submission ${details.submissionId}`)
 		.sendEmail();
