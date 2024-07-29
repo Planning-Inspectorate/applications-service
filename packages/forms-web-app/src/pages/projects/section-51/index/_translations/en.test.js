@@ -3,7 +3,6 @@ const enSection51IndexTranslations = require('./en.json');
 describe('pages/projects/section-51/index/_translations/en.json', () => {
 	it('should return the English section 51 index page translations', () => {
 		expect(enSection51IndexTranslations).toEqual({
-			heading1: 'Section 51 advice',
 			paragraph1: 'The list below includes a record of advice we have provided for this project.',
 			paragraph2:
 				'There is a statutory duty, under {{-link}}, around an application or potential application. This includes recording the name of the person who requested advice and the advice given. This information has to be made publicly available.',
