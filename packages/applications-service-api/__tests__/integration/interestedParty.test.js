@@ -335,94 +335,52 @@ describe('/api/v1/interested-party', () => {
 				getDate.mockReturnValue(mockDate);
 				uuid.v4.mockReturnValue('3aab2cf4c4d34e3e8');
 			});
-			it('sends email confirmation with Welsh project name if it exists', async () => {
-				mockProjectFindUnique.mockResolvedValueOnce({
-					...APPLICATION_DB,
-					regions: 'wales',
-					projectNameWelsh: 'A Welsh project name',
-					caseReference: BACK_OFFICE_CASE_REFERENCE
-				});
-				await request.post('/api/v1/interested-party').send(INTERESTED_PARTY_SELF_API);
 
-				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('joe@example.org');
-				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
-					'email address': 'joe@example.org',
-					project_name: 'North Lincolnshire Green Energy Park',
-					project_name_welsh: 'A Welsh project name',
-					interested_party_name: 'Joe Bloggs',
-					interested_party_ref: mockReferenceId,
-					having_your_say_url: config.services.notify.havingYourSayUrl,
-					project_email: 'webteam@planninginspectorate.gov.uk'
-				});
-				expect(notifyBuilder.setReference).toHaveBeenCalledWith(mockReferenceId);
-				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
-			});
-			it('sends email confirmation with Welsh project name populated with English project name when projectNameWelsh empty', async () => {
-				mockProjectFindUnique.mockResolvedValueOnce({
-					...APPLICATION_DB,
-					regions: 'wales',
-					projectNameWelsh: null,
-					caseReference: BACK_OFFICE_CASE_REFERENCE
-				});
-				await request.post('/api/v1/interested-party').send(INTERESTED_PARTY_SELF_API);
+			it.each([
+				[
+					'Welsh project name supplied',
+					'wales',
+					'this is a Welsh Project Name',
+					'this is a Welsh Project Name'
+				],
+				['no Welsh project name supplied', 'wales', null, 'North Lincolnshire Green Energy Park'],
+				[
+					'Welsh project name supplied and multiregions',
+					'south_west,wales',
+					'Welsh project Name',
+					'Welsh project Name'
+				],
+				[
+					'no Welsh project name supplied and multiregions',
+					'wales,south_east',
+					null,
+					'North Lincolnshire Green Energy Park'
+				]
+			])(
+				'Send email confirmation when Welsh region project and %s',
+				async (str, regions, projectNameWelsh, expectedProjectNameWelsh) => {
+					mockProjectFindUnique.mockResolvedValueOnce({
+						...APPLICATION_DB,
+						regions: regions,
+						projectNameWelsh: projectNameWelsh,
+						caseReference: BACK_OFFICE_CASE_REFERENCE
+					});
+					await request.post('/api/v1/interested-party').send(INTERESTED_PARTY_SELF_API);
 
-				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('joe@example.org');
-				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
-					'email address': 'joe@example.org',
-					project_name: 'North Lincolnshire Green Energy Park',
-					project_name_welsh: 'North Lincolnshire Green Energy Park',
-					interested_party_name: 'Joe Bloggs',
-					interested_party_ref: mockReferenceId,
-					having_your_say_url: config.services.notify.havingYourSayUrl,
-					project_email: 'webteam@planninginspectorate.gov.uk'
-				});
-				expect(notifyBuilder.setReference).toHaveBeenCalledWith(mockReferenceId);
-				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
-			});
-			it('sends email confirmation with Welsh project name populated when numerous regions including Wales', async () => {
-				mockProjectFindUnique.mockResolvedValueOnce({
-					...APPLICATION_DB,
-					regions: 'south_west,wales',
-					projectNameWelsh: 'this is a Welsh project name',
-					caseReference: BACK_OFFICE_CASE_REFERENCE
-				});
-				await request.post('/api/v1/interested-party').send(INTERESTED_PARTY_SELF_API);
-
-				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('joe@example.org');
-				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
-					'email address': 'joe@example.org',
-					project_name: 'North Lincolnshire Green Energy Park',
-					project_name_welsh: 'this is a Welsh project name',
-					interested_party_name: 'Joe Bloggs',
-					interested_party_ref: mockReferenceId,
-					having_your_say_url: config.services.notify.havingYourSayUrl,
-					project_email: 'webteam@planninginspectorate.gov.uk'
-				});
-				expect(notifyBuilder.setReference).toHaveBeenCalledWith(mockReferenceId);
-				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
-			});
-
-			it('sends email confirmation with Welsh project name populated with English project name when projectNameWelsh empty and numerous regions including Wales', async () => {
-				mockProjectFindUnique.mockResolvedValueOnce({
-					...APPLICATION_DB,
-					regions: 'north_east,wales',
-					caseReference: BACK_OFFICE_CASE_REFERENCE
-				});
-				await request.post('/api/v1/interested-party').send(INTERESTED_PARTY_SELF_API);
-
-				expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('joe@example.org');
-				expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
-					'email address': 'joe@example.org',
-					project_name: 'North Lincolnshire Green Energy Park',
-					project_name_welsh: 'North Lincolnshire Green Energy Park',
-					interested_party_name: 'Joe Bloggs',
-					interested_party_ref: mockReferenceId,
-					having_your_say_url: config.services.notify.havingYourSayUrl,
-					project_email: 'webteam@planninginspectorate.gov.uk'
-				});
-				expect(notifyBuilder.setReference).toHaveBeenCalledWith(mockReferenceId);
-				expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
-			});
+					expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('joe@example.org');
+					expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+						'email address': 'joe@example.org',
+						project_name: 'North Lincolnshire Green Energy Park',
+						project_name_welsh: expectedProjectNameWelsh,
+						interested_party_name: 'Joe Bloggs',
+						interested_party_ref: mockReferenceId,
+						having_your_say_url: config.services.notify.havingYourSayUrl,
+						project_email: 'webteam@planninginspectorate.gov.uk'
+					});
+					expect(notifyBuilder.setReference).toHaveBeenCalledWith(mockReferenceId);
+					expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+				}
+			);
 		});
 
 		describe('request with missing required properties', () => {
