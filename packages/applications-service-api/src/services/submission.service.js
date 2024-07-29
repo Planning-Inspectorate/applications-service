@@ -6,6 +6,7 @@ const { getApplication } = require('./application.backoffice.service');
 const { sendSubmissionNotification } = require('../lib/notify');
 const { generateId } = require('../utils/generate-id');
 const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
+const { isProjectRegionWales } = require('../utils/is-project-region-wales');
 const createSubmission = async (submission) =>
 	isBackOfficeCaseReference(submission.metadata.caseReference)
 		? createBackOfficeSubmission(submission)
@@ -44,15 +45,13 @@ const completeBackOfficeSubmission = async (submissionDetails) => {
 	if (!application)
 		throw ApiError.notFound(`Project with case reference ${caseReference} not found`);
 
-	const isProjectWelsh = application.regions.includes('wales');
-
 	const details = {
 		submissionId: submissionId,
 		email: email,
 		project: {
 			name: application.projectName,
 			email: application.projectEmailAddress,
-			...(isProjectWelsh && {
+			...(isProjectRegionWales(application.regions) && {
 				welshName: application.projectNameWelsh || application.projectName
 			})
 		}
