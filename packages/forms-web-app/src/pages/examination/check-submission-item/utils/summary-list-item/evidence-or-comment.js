@@ -34,7 +34,8 @@ const getSummaryListItemEvidenceOrComment = (i18n, submissionItem) => {
 	}
 
 	return getSummaryListItem(
-		`How you've submitted your representation`,
+		i18n,
+		i18n.t('examination.checkSubmissionItem.summaryListHeading2'),
 		evidenceOrCommentValueText,
 		`${evidenceOrComment.route}${editQuery}`
 	);

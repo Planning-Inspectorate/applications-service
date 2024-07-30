@@ -1,4 +1,4 @@
-const getSummaryListItem = (keyText, valueText, actionItemHref) => {
+const getSummaryListItem = (i18n, keyText, valueText, actionItemHref) => {
 	const summaryListItem = {
 		key: {
 			text: keyText
@@ -13,7 +13,7 @@ const getSummaryListItem = (keyText, valueText, actionItemHref) => {
 			items: [
 				{
 					href: actionItemHref,
-					text: 'Change',
+					text: i18n.t('common.change'),
 					visuallyHiddenText: keyText
 				}
 			]

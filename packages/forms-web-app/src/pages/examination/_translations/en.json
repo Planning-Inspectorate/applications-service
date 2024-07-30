@@ -3,6 +3,17 @@
 		"title1": "Are you {{-applicant}}?",
 		"errorMessage1": "Select yes if you are {{-applicant}}"
 	},
+	"checkSubmissionItem": {
+		"title": "Check your answers",
+		"heading1": "Check your answers",
+		"summaryListHeading1": "Deadline item",
+		"summaryListHeading2": "How you've submitted your representation",
+		"summaryListHeading3": "Documents uploaded",
+		"summaryListHeading4": "Your comment",
+		"summaryListHeading5": "Personal information",
+		"summaryListHeading6": "Documents containing personal information",
+		"summaryListHeading7": "Documents or comments containing personal information"
+	},
 	"chooseDeadline": {
 		"title": "Which deadline would you like to submit against?",
 		"heading1": "Which deadline would you like to submit against?",

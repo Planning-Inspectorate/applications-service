@@ -8,13 +8,14 @@ const {
 	}
 } = require('../../../../../routes/config');
 
-const getSummaryListItemEnterComment = (submissionItem) => {
+const getSummaryListItemEnterComment = (i18n, submissionItem) => {
 	const submissionItemComment = submissionItem.comment;
 
 	if (!submissionItemComment) throw new Error('Submission item does not have a comment');
 
 	return getSummaryListItem(
-		'Your comment',
+		i18n,
+		i18n.t('examination.checkSubmissionItem.summaryListHeading4'),
 		submissionItemComment,
 		`${enterComment.route}${editQuery}`
 	);

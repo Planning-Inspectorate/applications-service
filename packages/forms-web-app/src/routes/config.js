@@ -16,9 +16,7 @@ const routesConfig = {
 			},
 			checkSubmissionItem: {
 				id: 'examination-check-submission-item',
-				name: 'Check your answers',
-				route: 'check-your-deadline-item',
-				view: 'pages/examination/check-submission-item'
+				route: 'check-your-deadline-item'
 			},
 			checkYourAnswers: {
 				id: 'examination-check-your-answers',
@@ -65,7 +63,6 @@ const routesConfig = {
 				route: 'your-organisation-name'
 			},
 			personalInformation: {
-				name: 'Personal information',
 				sessionId: 'personalInformation'
 			},
 			personalInformationComment: {
