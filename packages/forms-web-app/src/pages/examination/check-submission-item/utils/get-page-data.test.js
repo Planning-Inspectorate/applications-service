@@ -7,9 +7,7 @@ describe('examination/check-submission-item/utils/get-page-data', () => {
 			it('should return the page data', () => {
 				expect(result).toEqual({
 					id: 'examination-check-submission-item',
-					nextPageUrl: 'add-another-deadline-item',
-					pageTitle: 'Check your answers',
-					title: 'Check your answers'
+					nextPageUrl: 'add-another-deadline-item'
 				});
 			});
 		});

@@ -6,6 +6,17 @@ exports[`pages/examination/_translations should return the correct English trans
     "errorMessage1": "Select yes if you are {{-applicant}}",
     "title1": "Are you {{-applicant}}?",
   },
+  "checkSubmissionItem": {
+    "heading1": "Check your answers",
+    "summaryListHeading1": "Deadline item",
+    "summaryListHeading2": "How you've submitted your representation",
+    "summaryListHeading3": "Documents uploaded",
+    "summaryListHeading4": "Your comment",
+    "summaryListHeading5": "Personal information",
+    "summaryListHeading6": "Documents containing personal information",
+    "summaryListHeading7": "Documents or comments containing personal information",
+    "title": "Check your answers",
+  },
   "chooseDeadline": {
     "deadlineSummaryText": "View deadline items",
     "deadlineTitle": "{{-title}} closes on {{-date}}",
@@ -203,6 +214,17 @@ exports[`pages/examination/_translations should return the correct Welsh transla
   "applicant": {
     "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
     "title1": "A ydych chi'n {{-applicant}}?",
+  },
+  "checkSubmissionItem": {
+    "heading1": "Gwiriwch eich atebion",
+    "summaryListHeading1": "Eitem terfyn amser",
+    "summaryListHeading2": "Sut rydych wedi cyflwyno'ch sylw",
+    "summaryListHeading3": "Dogfennau wedi'u lanlwytho",
+    "summaryListHeading4": "Eich sylw",
+    "summaryListHeading5": "Gwybodaeth bersonol",
+    "summaryListHeading6": "Documents containing personal information",
+    "summaryListHeading7": "Documents or comments containing personal information",
+    "title": "Gwiriwch eich atebion",
   },
   "chooseDeadline": {
     "deadlineSummaryText": "Gweld sitemap terfyn amser",

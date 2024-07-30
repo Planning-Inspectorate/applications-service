@@ -1,5 +1,11 @@
 const { getSummaryListItemSelectFile } = require('./index');
 
+const { mockI18n } = require('../../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../../locales/en/common.json');
+const examinationTranslations_EN = require('../../../_translations/en.json');
+
+const i18n = mockI18n({ common: commonTranslations_EN, examination: examinationTranslations_EN });
+
 describe('examination/check-submission-item/utils/summary-list-item', () => {
 	describe('#getSummaryListItemSelectFile', () => {
 		describe('When invoking the getSummaryListItemSelectFile function', () => {
@@ -7,7 +13,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 				describe('and the submission item does not have files', () => {
 					const mockSubmissionItem = {};
 					it('should throw an error', () => {
-						expect(() => getSummaryListItemSelectFile(mockSubmissionItem)).toThrow(
+						expect(() => getSummaryListItemSelectFile(i18n, mockSubmissionItem)).toThrow(
 							'No files for submission item'
 						);
 					});
@@ -20,7 +26,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 							}
 						]
 					};
-					const result = getSummaryListItemSelectFile(mockSubmissionItem);
+					const result = getSummaryListItemSelectFile(i18n, mockSubmissionItem);
 					it('should return the summary list item', () => {
 						expect(result).toEqual({
 							actions: {
@@ -48,7 +54,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 							}
 						]
 					};
-					const result = getSummaryListItemSelectFile(mockSubmissionItem);
+					const result = getSummaryListItemSelectFile(i18n, mockSubmissionItem);
 					it('should return the summary list item', () => {
 						expect(result).toEqual({
 							actions: {

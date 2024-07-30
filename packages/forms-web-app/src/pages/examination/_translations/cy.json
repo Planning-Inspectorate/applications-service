@@ -3,6 +3,17 @@
 		"title1": "A ydych chi'n {{-applicant}}?",
 		"errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}"
 	},
+	"checkSubmissionItem": {
+		"title": "Gwiriwch eich atebion",
+		"heading1": "Gwiriwch eich atebion",
+		"summaryListHeading1": "Eitem terfyn amser",
+		"summaryListHeading2": "Sut rydych wedi cyflwyno'ch sylw",
+		"summaryListHeading3": "Dogfennau wedi'u lanlwytho",
+		"summaryListHeading4": "Eich sylw",
+		"summaryListHeading5": "Gwybodaeth bersonol",
+		"summaryListHeading6": "Documents containing personal information",
+		"summaryListHeading7": "Documents or comments containing personal information"
+	},
 	"chooseDeadline": {
 		"title": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
 		"heading1": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
