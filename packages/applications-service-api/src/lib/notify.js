@@ -29,7 +29,7 @@ const sendIPRegistrationConfirmationEmailToIP = async (details) => {
 				interested_party_name: ipName,
 				interested_party_ref: ipRef,
 				having_your_say_url: config.services.notify.havingYourSayUrl,
-				project_email: projectEmail,
+				project_email: projectEmail || 'NIEnquiries@planninginspectorate.gov.uk',
 				...(projectNameWelsh && { project_name_welsh: projectNameWelsh })
 			})
 			.setReference(ipRef)

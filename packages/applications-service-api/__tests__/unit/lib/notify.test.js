@@ -114,6 +114,25 @@ describe('notify lib', () => {
 			expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
 			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
 		});
+
+		it("should use generic project email if one isn't provided", async () => {
+			const details = {
+				email: 'test@example.com',
+				projectName: 'St James Barton Giant Wind Turbine',
+				ipName: 'A Person',
+				ipRef: '30000120'
+			};
+			await sendIPRegistrationConfirmationEmailToIP(details);
+
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				'email address': details.email,
+				project_name: details.projectName,
+				interested_party_name: details.ipName,
+				interested_party_ref: details.ipRef,
+				having_your_say_url: 'somedomain.example.com/having-your-say-guide',
+				project_email: 'NIEnquiries@planninginspectorate.gov.uk'
+			});
+		});
 	});
 
 	describe('sendMagicLinkToIP', () => {
