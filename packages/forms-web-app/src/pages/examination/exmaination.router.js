@@ -2,6 +2,9 @@ const express = require('express');
 
 const { validateNotEmpty, emailValidationRules } = require('../../validators/shared');
 
+const {
+	validateAddAnotherDeadlineItem
+} = require('./add-another-deadline-item/utils/validate-add-another-deadline-item');
 const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const { validateEnterComment } = require('./enter-comment/utils/validate-enter-comment');
 const {
@@ -303,15 +306,7 @@ router.get(
 router.post(`/${addAnotherDeadlineItem.changeADeadlineItem.route}`, postChangeADeadlineItem);
 router.post(
 	`/${addAnotherDeadlineItem.route}`,
-	validateNotEmpty(addAnotherDeadlineItem),
-	validationErrorHandler,
-	postAddAnotherDeadlineItem
-);
-
-router.get(`/${addAnotherDeadlineItem.route}`, getAddAnotherDeadlineItem);
-router.post(
-	`/${addAnotherDeadlineItem.route}`,
-	validateNotEmpty(addAnotherDeadlineItem),
+	validateAddAnotherDeadlineItem(),
 	validationErrorHandler,
 	postAddAnotherDeadlineItem
 );

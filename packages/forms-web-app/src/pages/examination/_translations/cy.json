@@ -1,4 +1,14 @@
 {
+	"addAnotherDeadlineItem": {
+		"title": "Rydych wedi ychwanegu un eitem terfyn amser",
+		"heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
+		"hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+		"noDeadlineItems": {
+			"heading1": "You have not added a deadline item",
+			"ctaText1": "Add a deadline item"
+		},
+		"errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall "
+	},
 	"applicant": {
 		"title1": "A ydych chi'n {{-applicant}}?",
 		"errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}"

@@ -111,19 +111,9 @@ const routesConfig = {
 			},
 			addAnotherDeadlineItem: {
 				id: 'examination-add-another-deadline-item',
-				name: 'You added one deadline item',
-				title: 'You added one deadline item',
-				pageTitle: 'You added one deadline item',
 				route: 'add-another-deadline-item',
-				view: 'pages/examination/add-another-deadline-item',
-				comment: '',
 				changeADeadlineItem: {
 					route: 'change-a-deadline-item'
-				},
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you want to add another deadline item'
-					}
 				}
 			},
 			selectIfYouWantToDeleteData: {
