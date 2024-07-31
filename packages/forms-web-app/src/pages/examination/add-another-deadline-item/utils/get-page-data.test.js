@@ -3,6 +3,12 @@ const { getPageData } = require('./get-page-data');
 const { mapSubmissionItems } = require('./mapSubmissionItems');
 const { hasMoreDeadlineItemsToSubmit } = require('./hasMoreDeadlineItemsToSubmit');
 const { getBackLinkUrl } = require('./get-back-link-url');
+const { mockI18n } = require('../../../_mocks/i18n');
+const commonTranslationsEN = require('../../../../locales/en/common.json');
+
+const i18n = mockI18n({
+	common: commonTranslationsEN
+});
 
 jest.mock('./mapSubmissionItems', () => ({
 	mapSubmissionItems: jest.fn()
@@ -25,13 +31,11 @@ describe('#getPageData', () => {
 				mapSubmissionItems.mockReturnValue(mockedSubmissionItems);
 				hasMoreDeadlineItemsToSubmit.mockReturnValue(mockedDeadlineItemsToSubmit);
 				getBackLinkUrl.mockReturnValue('mock back link');
-				result = getPageData(mockSession);
+				result = getPageData(i18n, mockSession);
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
-					hintHtml: 'Do you need to add another deadline item?',
 					id: 'examination-add-another-deadline-item',
-					name: 'You added one deadline item',
 					options: [
 						{
 							text: 'Yes',
@@ -43,9 +47,7 @@ describe('#getPageData', () => {
 						}
 					],
 					moreDeadlineItems: 'mocked deadline items to submit',
-					pageTitle: 'You added one deadline item',
 					submissionItems: 'mock items',
-					title: 'You added one deadline item',
 					backLinkUrl: 'mock back link'
 				});
 			});
@@ -59,13 +61,11 @@ describe('#getPageData', () => {
 				mapSubmissionItems.mockReturnValue(mockedSubmissionItems);
 				hasMoreDeadlineItemsToSubmit.mockReturnValue(mockedDeadlineItemsToSubmit);
 				getBackLinkUrl.mockReturnValue('mock back link');
-				result = getPageData(mockSession);
+				result = getPageData(i18n, mockSession);
 			});
 			it('should return the page data', () => {
 				expect(result).toEqual({
-					hintHtml: 'Do you need to add another deadline item?',
 					id: 'examination-add-another-deadline-item',
-					name: 'You added one deadline item',
 					options: [
 						{
 							text: 'Yes',
@@ -77,9 +77,7 @@ describe('#getPageData', () => {
 						}
 					],
 					moreDeadlineItems: 'mocked deadline items to submit',
-					pageTitle: 'You added one deadline item',
 					hasNoSubmissionItems: true,
-					title: 'You added one deadline item',
 					backLinkUrl: 'mock back link'
 				});
 			});

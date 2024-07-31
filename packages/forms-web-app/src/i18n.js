@@ -14,12 +14,12 @@ const {
 const { buildQueryString } = require('./pages/_utils/build-query-string');
 
 const i18nRedirect = (req, res, next) => {
-	const { cookies, path, query } = req;
-
+	const { cookies, path, method, query } = req;
 	const localesQuery = query[localesQueryStringID];
 	const localesCookie = cookies[localesQueryCookieID];
 
 	if (
+		method === 'GET' &&
 		allowWelshTranslation &&
 		!localesQuery &&
 		localesCookie &&

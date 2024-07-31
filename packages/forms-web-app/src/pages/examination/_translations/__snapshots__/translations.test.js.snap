@@ -2,6 +2,16 @@
 
 exports[`pages/examination/_translations should return the correct English translations 1`] = `
 {
+  "addAnotherDeadlineItem": {
+    "errorMessage1": "Select yes if you want to add another deadline item",
+    "heading1": "You added one deadline item",
+    "hintText1": "Do you need to add another deadline item?",
+    "noDeadlineItems": {
+      "ctaText1": "Add a deadline item",
+      "heading1": "You have not added a deadline item",
+    },
+    "title": "You added one deadline item",
+  },
   "applicant": {
     "errorMessage1": "Select yes if you are {{-applicant}}",
     "title1": "Are you {{-applicant}}?",
@@ -211,6 +221,16 @@ exports[`pages/examination/_translations should return the correct English trans
 
 exports[`pages/examination/_translations should return the correct Welsh translations 1`] = `
 {
+  "addAnotherDeadlineItem": {
+    "errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall ",
+    "heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
+    "hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+    "noDeadlineItems": {
+      "ctaText1": "Add a deadline item",
+      "heading1": "You have not added a deadline item",
+    },
+    "title": "Rydych wedi ychwanegu un eitem terfyn amser",
+  },
   "applicant": {
     "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
     "title1": "A ydych chi'n {{-applicant}}?",

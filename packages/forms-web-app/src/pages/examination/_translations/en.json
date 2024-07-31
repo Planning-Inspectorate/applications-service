@@ -1,4 +1,14 @@
 {
+	"addAnotherDeadlineItem": {
+		"title": "You added one deadline item",
+		"heading1": "You added one deadline item",
+		"hintText1": "Do you need to add another deadline item?",
+		"noDeadlineItems": {
+			"heading1": "You have not added a deadline item",
+			"ctaText1": "Add a deadline item"
+		},
+		"errorMessage1": "Select yes if you want to add another deadline item"
+	},
 	"applicant": {
 		"title1": "Are you {{-applicant}}?",
 		"errorMessage1": "Select yes if you are {{-applicant}}"
