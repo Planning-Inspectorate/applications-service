@@ -218,6 +218,42 @@ describe('submission.service', () => {
 				});
 			});
 
+			it('sends submission notification - Welsh region case, Welsh project name', async () => {
+				getApplication.mockResolvedValueOnce({
+					...APPLICATION_API,
+					regions: ['wales'],
+					projectNameWelsh: 'Welsh project name'
+				});
+
+				await completeSubmission(submissionDetails);
+
+				expect(sendSubmissionNotification).toBeCalledWith({
+					submissionId: 1,
+					email: 'person@example.org',
+					project: {
+						name: APPLICATION_API.projectName,
+						welshName: 'Welsh project name',
+						email: APPLICATION_API.projectEmailAddress
+					}
+				});
+			});
+
+			it('sends submission notification - Welsh region case, no Welsh project name', async () => {
+				getApplication.mockResolvedValueOnce({ ...APPLICATION_API, regions: ['wales'] });
+
+				await completeSubmission(submissionDetails);
+
+				expect(sendSubmissionNotification).toBeCalledWith({
+					submissionId: 1,
+					email: 'person@example.org',
+					project: {
+						name: APPLICATION_API.projectName,
+						welshName: APPLICATION_API.projectName,
+						email: APPLICATION_API.projectEmailAddress
+					}
+				});
+			});
+
 			it('throws error if application not found', async () => {
 				getApplication.mockResolvedValueOnce(null);
 

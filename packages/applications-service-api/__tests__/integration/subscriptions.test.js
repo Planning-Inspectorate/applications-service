@@ -79,6 +79,36 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 			});
 		});
 
+		it('given Back Office Welsh region case with caseReference exists, returns 200', async () => {
+			dateSpy.mockImplementation(() => mockTime.getTime());
+			mockFindUnique.mockResolvedValueOnce({
+				...APPLICATION_DB,
+				projectNameWelsh: 'Welsh project name',
+				regions: 'wales'
+			});
+
+			const response = await request.post('/api/v1/subscriptions/EN010116').send({
+				email: 'test@example.org',
+				subscriptionTypes: ['applicationSubmitted', 'applicationDecided']
+			});
+
+			expect(response.status).toEqual(200);
+			expect(decrypt(response.body.subscriptionDetails)).toEqual(
+				JSON.stringify({
+					email: 'test@example.org',
+					subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
+					date: mockTime
+				})
+			);
+			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('test@example.org');
+			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+				subscription_url: `http://forms-web-app:9004/projects/EN010116/get-updates/subscribed?subscriptionDetails=${response.body.subscriptionDetails}`,
+				project_name: 'North Lincolnshire Green Energy Park',
+				project_email: 'webteam@planninginspectorate.gov.uk',
+				project_name_welsh: 'Welsh project name'
+			});
+		});
+
 		it('given NI case with caseReference exists, returns 200', async () => {
 			isBackOfficeCaseReference.mockReturnValue(false);
 			dateSpy.mockImplementation(() => mockTime.getTime());

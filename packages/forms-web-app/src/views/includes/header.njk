@@ -1,6 +1,11 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/skip-link/macro.njk" import govukSkipLink %}
 
+{% set logo = "pins-logo.njk" %}
+{% if language == 'cy' %}
+	{% set logo = "pins-logo-cy.njk"%}
+{% endif %}
+
 <header role="banner">
 	{{ govukSkipLink({
 		href: '#main-content',
@@ -11,7 +16,7 @@
 		<div class="govuk-header__container pins-header__container govuk-width-container">
 			<div class="govuk-header__logo">
 				<span class="govuk-header__logotype">
-					{% include "components/core/pins-logo.njk" %}
+					{% include "components/core/" + logo %}
 				</span>
 			</div>
 			<div class="govuk-header__content">

@@ -120,7 +120,6 @@ describe('/api/v1/interested-party', () => {
 						project_name: 'North Lincolnshire Green Energy Park',
 						interested_party_name: 'Joe Bloggs',
 						interested_party_ref: mockReferenceId,
-						preliminary_meeting_url: config.services.notify.preliminaryMeetingUrl,
 						having_your_say_url: config.services.notify.havingYourSayUrl,
 						project_email: 'webteam@planninginspectorate.gov.uk'
 					});
@@ -316,7 +315,6 @@ describe('/api/v1/interested-party', () => {
 							project_name: 'North Lincolnshire Green Energy Park',
 							interested_party_name: expectedName,
 							interested_party_ref: mockReferenceId,
-							preliminary_meeting_url: config.services.notify.preliminaryMeetingUrl,
 							having_your_say_url: config.services.notify.havingYourSayUrl,
 							project_email: 'webteam@planninginspectorate.gov.uk'
 						});
@@ -325,6 +323,64 @@ describe('/api/v1/interested-party', () => {
 					}
 				);
 			});
+		});
+
+		describe('Back office - Welsh region', () => {
+			const BACK_OFFICE_CASE_REFERENCE = 'BC0110002';
+			const mockReferenceId = 'F3AAB2CF4';
+			const mockDate = new Date('2022-12-09 13:30:21:123');
+
+			beforeEach(() => {
+				isBackOfficeCaseReference.mockReturnValue(true);
+				getDate.mockReturnValue(mockDate);
+				uuid.v4.mockReturnValue('3aab2cf4c4d34e3e8');
+			});
+
+			it.each([
+				[
+					'Welsh project name supplied',
+					'wales',
+					'this is a Welsh Project Name',
+					'this is a Welsh Project Name'
+				],
+				['no Welsh project name supplied', 'wales', null, 'North Lincolnshire Green Energy Park'],
+				[
+					'Welsh project name supplied and multiregions',
+					'south_west,wales',
+					'Welsh project Name',
+					'Welsh project Name'
+				],
+				[
+					'no Welsh project name supplied and multiregions',
+					'wales,south_east',
+					null,
+					'North Lincolnshire Green Energy Park'
+				]
+			])(
+				'Send email confirmation when Welsh region project and %s',
+				async (str, regions, projectNameWelsh, expectedProjectNameWelsh) => {
+					mockProjectFindUnique.mockResolvedValueOnce({
+						...APPLICATION_DB,
+						regions: regions,
+						projectNameWelsh: projectNameWelsh,
+						caseReference: BACK_OFFICE_CASE_REFERENCE
+					});
+					await request.post('/api/v1/interested-party').send(INTERESTED_PARTY_SELF_API);
+
+					expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('joe@example.org');
+					expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
+						'email address': 'joe@example.org',
+						project_name: 'North Lincolnshire Green Energy Park',
+						project_name_welsh: expectedProjectNameWelsh,
+						interested_party_name: 'Joe Bloggs',
+						interested_party_ref: mockReferenceId,
+						having_your_say_url: config.services.notify.havingYourSayUrl,
+						project_email: 'webteam@planninginspectorate.gov.uk'
+					});
+					expect(notifyBuilder.setReference).toHaveBeenCalledWith(mockReferenceId);
+					expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+				}
+			);
 		});
 
 		describe('request with missing required properties', () => {

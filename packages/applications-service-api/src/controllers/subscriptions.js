@@ -8,6 +8,7 @@ const {
 	publishDeleteNSIPSubscription
 } = require('../services/backoffice.publish.service');
 const logger = require('../lib/logger');
+const { isProjectRegionWales } = require('../utils/is-project-region-wales');
 
 const createSubscription = async (req, res) => {
 	const { email, subscriptionTypes } = req.body;
@@ -23,15 +24,20 @@ const createSubscription = async (req, res) => {
 		})
 	);
 
-	await sendSubscriptionCreateNotification({
+	const details = {
 		email: email,
 		subscriptionDetails: subscriptionDetails,
 		project: {
 			email: project.projectEmailAddress || 'NIEnquiries@planninginspectorate.gov.uk',
 			name: project.projectName,
-			caseReference: project.caseReference
+			caseReference: project.caseReference,
+			...(isProjectRegionWales(project.regions) && {
+				welshName: project.projectNameWelsh || project.projectName
+			})
 		}
-	});
+	};
+
+	await sendSubscriptionCreateNotification(details);
 
 	res.send({
 		subscriptionDetails: subscriptionDetails

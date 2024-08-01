@@ -14,18 +14,23 @@ const buildNotifyClient = () => {
 
 const sendIPRegistrationConfirmationEmailToIP = async (details) => {
 	try {
-		const { email, projectName, ipName, ipRef, projectEmail } = details;
+		const { email, projectName, projectNameWelsh, ipName, ipRef, projectEmail } = details;
+
 		await buildNotifyClient()
-			.setTemplateId(config.services.notify.templates.IPRegistrationConfirmationEmailToIP)
+			.setTemplateId(
+				config.services.notify.templates.IPRegistrationConfirmationEmailToIP[
+					projectNameWelsh ? 'cy' : 'en'
+				]
+			)
 			.setDestinationEmailAddress(email)
 			.setTemplateVariablesFromObject({
 				'email address': email,
 				project_name: projectName,
 				interested_party_name: ipName,
 				interested_party_ref: ipRef,
-				preliminary_meeting_url: config.services.notify.preliminaryMeetingUrl,
 				having_your_say_url: config.services.notify.havingYourSayUrl,
-				project_email: projectEmail
+				project_email: projectEmail || 'NIEnquiries@planninginspectorate.gov.uk',
+				...(projectNameWelsh && { project_name_welsh: projectNameWelsh })
 			})
 			.setReference(ipRef)
 			.sendEmail();
@@ -59,21 +64,30 @@ const sendMagicLinkToIP = async (details) => {
 
 const sendSubmissionNotification = async (details) => {
 	await buildNotifyClient()
-		.setTemplateId(config.services.notify.templates.submissionCompleteEmail)
+		.setTemplateId(
+			config.services.notify.templates.submissionCompleteEmail[
+				details.project.welshName ? 'cy' : 'en'
+			]
+		)
 		.setDestinationEmailAddress(details.email)
 		.setTemplateVariablesFromObject({
 			'email address': details.email,
 			submission_id: details.submissionId,
 			project_name: details.project.name,
-			project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk'
+			project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk',
+			...(details.project.welshName && { project_name_welsh: details.project.welshName })
 		})
 		.setReference(`Submission ${details.submissionId}`)
 		.sendEmail();
 };
 
-const sendSubscriptionCreateNotification = async (details) =>
-	buildNotifyClient()
-		.setTemplateId(config.services.notify.templates.subscriptionCreateEmail)
+const sendSubscriptionCreateNotification = async (details) => {
+	await buildNotifyClient()
+		.setTemplateId(
+			config.services.notify.templates.subscriptionCreateEmail[
+				details.project.welshName ? 'cy' : 'en'
+			]
+		)
 		.setDestinationEmailAddress(details.email)
 		.setTemplateVariablesFromObject({
 			subscription_url: config.services.notify.subscriptionCreateDomain.concat(
@@ -83,10 +97,12 @@ const sendSubscriptionCreateNotification = async (details) =>
 				details.subscriptionDetails
 			),
 			project_name: details.project.name,
-			project_email: details.project.email
+			project_email: details.project.email,
+			...(details.project.welshName && { project_name_welsh: details.project.welshName })
 		})
 		.setReference(`Subscription ${details.project.caseReference} ${details.email}`)
 		.sendEmail();
+};
 
 module.exports = {
 	sendIPRegistrationConfirmationEmailToIP,
