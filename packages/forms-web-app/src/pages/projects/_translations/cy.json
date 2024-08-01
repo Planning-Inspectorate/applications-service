@@ -8,5 +8,11 @@
 		"haveYourSay": "Dweud eich dweud",
 		"getUpdates": "Cael diweddariadau",
 		"section51": "Cyngor Adran 51"
+	},
+	"relatedGuides": {
+		"heading": "Related guides ** Needs welsh translation",
+		"process": "The process for Nationally Significant Infrastructure Projects (NSIPs) ** Needs welsh translation",
+		"haveYourSay": "Have your say about a national infrastructure project ** Needs welsh translation",
+		"navigationLabel": "Related guides navigation ** Needs welsh translation"
 	}
 }

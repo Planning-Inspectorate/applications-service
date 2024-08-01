@@ -7,7 +7,7 @@
 {% from "components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
 {% from "macros/pagination-bar.njk" import paginationBar %}
-{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper with context %}
 {% from "projects/section-51/index/_components/results.njk" import sectionResults %}
 
 {% set pageTitle = t('section51.heading') %}

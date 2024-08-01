@@ -3,19 +3,19 @@
 {% macro relatedGuidesWrapper(featureHideLink, styles) %}
 	<div class="{{ styles }}">
 		{{ uiVerticalTabs(
-			"Related guides",
+			t('projects.relatedGuides.heading'),
 			null,
 			[
 				{
-					name: "The process for Nationally Significant Infrastructure Projects (NSIPs)",
+					name: t('projects.relatedGuides.process'),
 					url:"/decision-making-process-guide"
 				},
 				{
-					name: "Have your say about a national infrastructure project",
+					name: t('projects.relatedGuides.haveYourSay'),
 					url:"/having-your-say-guide"
 				}
 			],
-			"Related guides navigation",
+			t('projects.relatedGuides.navigationLabel'),
 			"h2"
 		) }}
 	</div>

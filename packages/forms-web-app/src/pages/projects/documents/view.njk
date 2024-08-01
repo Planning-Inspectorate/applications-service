@@ -9,7 +9,7 @@
 {% from "components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
 {% from "macros/pagination-bar.njk" import paginationBar %}
-{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper with context %}
 
 {% set section = 'project-documents' %}
 {% set pageTitle = '' + t('projectsDocuments.heading1') + ' | ' + projectName + '' %}
