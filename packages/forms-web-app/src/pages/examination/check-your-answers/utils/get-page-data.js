@@ -1,26 +1,22 @@
-const { getDeadlineTitle } = require('../../_session/deadline');
 const { getSummaryListDetails } = require('./get-summary-list-details');
 const { getSummaryListSubmissionItems } = require('./get-summary-list-submission-items');
 const {
+	getDeadlineTitleByLocale
+} = require('../../_utils/get-content/get-deadline-title-by-locale');
+const {
 	routesConfig: {
 		examination: {
-			pages: { addAnotherDeadlineItem, checkYourAnswers, processSubmission }
+			pages: { addAnotherDeadlineItem, processSubmission }
 		}
 	}
 } = require('../../../../routes/config');
 
-const getPageData = (session, i18n) => {
-	return {
-		backLinkUrl: `${addAnotherDeadlineItem.route}`,
-		deadlineTitle: getDeadlineTitle(session),
-		nextPageUrl: `${processSubmission.route}`,
-		pageTitle: checkYourAnswers.name,
-		summaryListDetails: getSummaryListDetails(session, i18n),
-		summaryListDetailsTitle: 'Your details',
-		summaryListSubmissionItems: getSummaryListSubmissionItems(session),
-		summaryListSubmissionItemsTitle: 'Your submissions',
-		title: checkYourAnswers.name
-	};
-};
+const getPageData = (i18n, session) => ({
+	backLinkUrl: `${addAnotherDeadlineItem.route}`,
+	deadlineTitle: getDeadlineTitleByLocale(i18n, session),
+	nextPageUrl: `${processSubmission.route}`,
+	summaryListDetails: getSummaryListDetails(i18n, session),
+	summaryListSubmissionItems: getSummaryListSubmissionItems(i18n, session)
+});
 
 module.exports = { getPageData };

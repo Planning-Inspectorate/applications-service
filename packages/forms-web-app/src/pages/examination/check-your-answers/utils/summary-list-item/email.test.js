@@ -2,6 +2,10 @@ const { getSummaryListItemEmail } = require('./email');
 
 const { getDeadlineDetailsEmail } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
+const { mockI18n } = require('../../../../_mocks/i18n');
+const examinationTranslationsEN = require('../../../_translations/en.json');
+
+const i18n = mockI18n({ examination: examinationTranslationsEN });
 
 jest.mock('../../../_session/deadline', () => ({
 	getDeadlineDetailsEmail: jest.fn()
@@ -24,10 +28,11 @@ describe('examination/check-your-answers/utils/summary-list-item/email', () => {
 			beforeEach(() => {
 				getDeadlineDetailsEmail.mockReturnValue(mockDeadlineEmailValue);
 				getSummaryListItem.mockReturnValue(mockSummaryListItem);
-				result = getSummaryListItemEmail(req.session);
+				result = getSummaryListItemEmail(i18n, req.session);
 			});
 			it('should get the summary list item with the email address title and value', () => {
 				expect(getSummaryListItem).toHaveBeenCalledWith(
+					i18n,
 					'Email Address',
 					mockDeadlineEmailValue,
 					'your-email-address?mode=edit'

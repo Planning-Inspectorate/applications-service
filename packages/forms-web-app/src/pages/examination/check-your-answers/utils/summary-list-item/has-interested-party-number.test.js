@@ -5,9 +5,11 @@ const { getSummaryListItem } = require('../../../../../controllers/utils/get-sum
 const { getSelectedOptionText } = require('./helpers');
 const { mockI18n } = require('../../../../_mocks/i18n');
 const commonTranslations_EN = require('../../../../../locales/en/common.json');
+const examinationTranslationsEN = require('../../../_translations/en.json');
 
 const i18n = mockI18n({
-	common: commonTranslations_EN
+	common: commonTranslations_EN,
+	examination: examinationTranslationsEN
 });
 
 jest.mock('../../../_session/deadline', () => ({
@@ -30,7 +32,7 @@ describe('examination/check-your-answers/utils/summary-list-item/has-interested-
 			describe('and the has interested party number retrived from the session is NOT yes or no', () => {
 				it('should throw an error', () => {
 					expect(() =>
-						getSummaryListItemHasInterestedPartyNumber(req.session, req.i18n)
+						getSummaryListItemHasInterestedPartyNumber(req.i18n, req.session)
 					).toThrowError('Has interested party number text is undefined');
 				});
 			});
@@ -45,7 +47,7 @@ describe('examination/check-your-answers/utils/summary-list-item/has-interested-
 					getDeadlineDetailsHasInterestedPartyNumber.mockReturnValue(mockHasInterestedPartyNumber);
 					getSelectedOptionText.mockReturnValue(mockHasInterestedPartyNumberText);
 					getSummaryListItem.mockReturnValue(mockSummaryListItem);
-					result = getSummaryListItemHasInterestedPartyNumber(req.session, req.i18n);
+					result = getSummaryListItemHasInterestedPartyNumber(req.i18n, req.session);
 				});
 				it('should use the has interested party number options to get the has interested party number option text', () => {
 					expect(getSelectedOptionText).toHaveBeenCalledWith(
@@ -58,6 +60,7 @@ describe('examination/check-your-answers/utils/summary-list-item/has-interested-
 				});
 				it('should get the summary list item with the has interested party number title and selected option text', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
+						req.i18n,
 						'Interested party reference number available',
 						mockHasInterestedPartyNumberText
 					);

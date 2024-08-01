@@ -113,7 +113,7 @@
 				{% else %}
 					{{ govukWarningText({
 						text: moreDeadlineItems.message,
-						iconFallbackText: "Warning"
+						iconFallbackText: t("common.warning")
 					}) }}
 
 					<form action="{{ moreDeadlineItems.continueLink }}" method="get" novalidate>

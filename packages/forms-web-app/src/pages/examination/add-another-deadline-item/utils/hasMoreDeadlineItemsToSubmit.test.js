@@ -2,6 +2,10 @@ const { hasMoreDeadlineItemsToSubmit } = require('./hasMoreDeadlineItemsToSubmit
 
 const { getDeadlineItemStillToSubmit } = require('../../_session/deadlineItems-session');
 const { getRedirectUrl } = require('./get-redirect-url');
+const { mockI18n } = require('../../../_mocks/i18n');
+const examinationTranslationsEN = require('../../_translations/en.json');
+
+const i18n = mockI18n({ examination: examinationTranslationsEN });
 
 jest.mock('../../_session/deadlineItems-session', () => ({
 	getDeadlineItemStillToSubmit: jest.fn()
@@ -19,7 +23,7 @@ describe('#hasMoreDeadlineItemsToSubmit', () => {
 			beforeEach(() => {
 				getDeadlineItemStillToSubmit.mockReturnValue([]);
 				getRedirectUrl.mockReturnValue(mockLink);
-				result = hasMoreDeadlineItemsToSubmit(mockSession);
+				result = hasMoreDeadlineItemsToSubmit(i18n, mockSession);
 			});
 			it('should return false', () => {
 				expect(result).toEqual({
@@ -36,7 +40,7 @@ describe('#hasMoreDeadlineItemsToSubmit', () => {
 			beforeEach(() => {
 				getDeadlineItemStillToSubmit.mockReturnValue(['mock item']);
 				getRedirectUrl.mockReturnValue(mockLink);
-				result = hasMoreDeadlineItemsToSubmit(mockSession);
+				result = hasMoreDeadlineItemsToSubmit(i18n, mockSession);
 			});
 			it('should return false', () => {
 				expect(result).toEqual({

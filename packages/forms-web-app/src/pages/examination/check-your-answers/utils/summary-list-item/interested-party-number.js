@@ -10,9 +10,10 @@ const {
 } = require('../../../../../routes/config');
 
 const { editQuery } = require('../../../../../controllers/utils/queryMode');
-const getSummaryListItemInterestedPartyNumber = (session) =>
+const getSummaryListItemInterestedPartyNumber = (i18n, session) =>
 	getSummaryListItem(
-		'Interested party number',
+		i18n,
+		i18n.t('examination.checkYourAnswers.details.summaryListHeading2'),
 		getDeadlineDetailsInterestedPartyNumber(session),
 		`${yourInterestedPartyNumber.route}${editQuery}`
 	);

@@ -29,7 +29,7 @@ describe('pages/examination/check-your-answers/utils/summary-list-item/submittin
 		describe('When getting the submitting for summary list item for the check your answers page', () => {
 			describe('and the submitting for value retrived from the session is NOT myself, organisation or agent', () => {
 				it('should throw an error', () => {
-					expect(() => getSummaryListItemSubmittingFor(req.session, req.i18n)).toThrowError(
+					expect(() => getSummaryListItemSubmittingFor(req.i18n, req.session)).toThrowError(
 						'Submitting for text is undefined'
 					);
 				});
@@ -46,7 +46,7 @@ describe('pages/examination/check-your-answers/utils/summary-list-item/submittin
 					getDeadlineDetailsSubmittingFor.mockReturnValue(mockSubmittingFor);
 					getSelectedOptionText.mockReturnValue(mockSubmittingForText);
 					getSummaryListItem.mockReturnValue(mockSummaryListItem);
-					result = getSummaryListItemSubmittingFor(req.session, req.i18n);
+					result = getSummaryListItemSubmittingFor(req.i18n, req.session);
 				});
 				it('should use the submitting for options to get the submitting for option text', () => {
 					expect(getSelectedOptionText).toHaveBeenCalledWith(
@@ -63,6 +63,7 @@ describe('pages/examination/check-your-answers/utils/summary-list-item/submittin
 				});
 				it('should get the summary list item with the submitting for title and selected option text', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
+						req.i18n,
 						'Making submission for',
 						mockSubmittingForText,
 						'who-are-you-submitting-for?mode=edit'

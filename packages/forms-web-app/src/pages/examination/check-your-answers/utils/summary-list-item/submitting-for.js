@@ -11,7 +11,7 @@ const {
 const { editQuery } = require('../../../../../controllers/utils/queryMode');
 const { getSubmittingForOptions } = require('../../../submitting-for/config');
 
-const getSummaryListItemSubmittingFor = (session, i18n) => {
+const getSummaryListItemSubmittingFor = (i18n, session) => {
 	const submittingForOptions = getSubmittingForOptions(i18n);
 	const submittingForText = getSelectedOptionText(
 		submittingForOptions,
@@ -20,7 +20,8 @@ const getSummaryListItemSubmittingFor = (session, i18n) => {
 	if (!submittingForText) throw new Error('Submitting for text is undefined');
 
 	return getSummaryListItem(
-		'Making submission for',
+		i18n,
+		i18n.t('examination.checkYourAnswers.details.summaryListHeading3'),
 		submittingForText,
 		`${submittingFor.route}${editQuery}`
 	);
