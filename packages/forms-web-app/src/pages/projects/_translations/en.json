@@ -8,5 +8,11 @@
 		"haveYourSay": "Have your say",
 		"getUpdates": "Get updates",
 		"section51": "Section 51 advice"
+	},
+	"relatedGuides": {
+		"heading": "Related guides",
+		"process": "The process for Nationally Significant Infrastructure Projects (NSIPs)",
+		"haveYourSay": "Have your say about a national infrastructure project",
+		"navigationLabel": "Related guides navigation"
 	}
 }

@@ -1,6 +1,6 @@
 {% extends "layouts/default.njk" %}
 
-{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper with context %}
 
 {% set pageTitle = t('representationsIndex.pageTitle1') + " | "  + projectName %}
 

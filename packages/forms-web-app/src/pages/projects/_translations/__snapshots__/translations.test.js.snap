@@ -12,6 +12,12 @@ exports[`pages/projects/_translations should return the correct English translat
     "representations": "Relevant representations (registration comments)",
     "section51": "Section 51 advice",
   },
+	"relatedGuides": {
+		"heading": "Related guides",
+		"process": "The process for Nationally Significant Infrastructure Projects (NSIPs)",
+		"haveYourSay": "Have your say about a national infrastructure project",
+		"navigationLabel": "Related guides navigation"
+	}
 }
 `;
 
@@ -27,5 +33,11 @@ exports[`pages/projects/_translations should return the correct Welsh translatio
     "representations": "Sylwadau perthnasol (sylwadau cofrestru)",
     "section51": "Cyngor Adran 51",
   },
+	"relatedGuides": {
+		"heading": "Related guides ** Needs welsh translation",
+		"process": "The process for Nationally Significant Infrastructure Projects (NSIPs) ** Needs welsh translation",
+		"haveYourSay": "Have your say about a national infrastructure project ** Needs welsh translation",
+		"navigationLabel": "Related guides navigation ** Needs welsh translation"
+	}
 }
 `;
