@@ -6,6 +6,9 @@ exports[`pages/examination/_translations should return the correct English trans
     "errorMessage1": "Select yes if you want to add another deadline item",
     "heading1": "You added one deadline item",
     "hintText1": "Do you need to add another deadline item?",
+    "moreDeadlineItems": {
+      "message1": "You have submitted against all available deadline items",
+    },
     "noDeadlineItems": {
       "ctaText1": "Add a deadline item",
       "heading1": "You have not added a deadline item",
@@ -26,6 +29,29 @@ exports[`pages/examination/_translations should return the correct English trans
     "summaryListHeading6": "Documents containing personal information",
     "summaryListHeading7": "Documents or comments containing personal information",
     "title": "Check your answers",
+  },
+  "checkYourAnswers": {
+    "details": {
+      "heading1": "Your details",
+      "summaryListHeading1": "Interested party reference number available",
+      "summaryListHeading2": "Interested party number",
+      "summaryListHeading3": "Making submission for",
+      "summaryListHeading4": "Applicant or not",
+      "summaryListHeading5": {
+        "behalf": "Submitting on behalf of",
+        "fullName": "Full name",
+        "orgName": "Organisation's name",
+      },
+      "summaryListHeading6": "Email Address",
+    },
+    "heading1": "Check your answers",
+    "submissions": {
+      "heading1": "Your submissions",
+      "summaryListHeading1": "Deadline items added",
+    },
+    "title": "Check your answers",
+    "warningText1": "You cannot make any further changes after you press submit.",
+    "warningText2": "You cannot make any further changes after you press continue.",
   },
   "chooseDeadline": {
     "deadlineSummaryText": "View deadline items",
@@ -225,6 +251,9 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall ",
     "heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
     "hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+    "moreDeadlineItems": {
+      "message1": "You have submitted against all available deadline items",
+    },
     "noDeadlineItems": {
       "ctaText1": "Add a deadline item",
       "heading1": "You have not added a deadline item",
@@ -245,6 +274,29 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "summaryListHeading6": "Documents containing personal information",
     "summaryListHeading7": "Documents or comments containing personal information",
     "title": "Gwiriwch eich atebion",
+  },
+  "checkYourAnswers": {
+    "details": {
+      "heading1": "Eich manylion",
+      "summaryListHeading1": "Rhif cyfeirnod parti â buddiant ar gael",
+      "summaryListHeading2": "Eich rhif parti â buddiant",
+      "summaryListHeading3": "Yn gwneud cyflwyniad ar ran",
+      "summaryListHeading4": "Applicant or not",
+      "summaryListHeading5": {
+        "behalf": "Yn cyflwyno ar ran",
+        "fullName": "Enw llawn",
+        "orgName": "Organisation's name",
+      },
+      "summaryListHeading6": "Cyfeiriad e-bost",
+    },
+    "heading1": "Gwiriwch eich atebion",
+    "submissions": {
+      "heading1": "Your submissions",
+      "summaryListHeading1": "Eitemau terfyn amser wedi'u hychwanegu",
+    },
+    "title": "Gwiriwch eich atebion",
+    "warningText1": "Ni allwch wneud unrhyw newidiadau pellach ar ôl i chi wasgu cyflwyno.",
+    "warningText2": "You cannot make any further changes after you press continue.",
   },
   "chooseDeadline": {
     "deadlineSummaryText": "Gweld sitemap terfyn amser",

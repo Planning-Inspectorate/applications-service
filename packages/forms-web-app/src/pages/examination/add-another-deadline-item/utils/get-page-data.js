@@ -17,7 +17,7 @@ const getPageData = (i18n, session, query) => ({
 	...mapSubmissionItems(i18n, session),
 	backLinkUrl: getBackLinkUrl(query),
 	id: addAnotherDeadlineItem.id,
-	moreDeadlineItems: hasMoreDeadlineItemsToSubmit(session),
+	moreDeadlineItems: hasMoreDeadlineItemsToSubmit(i18n, session),
 	options: formatAddAnotherDeadlineItemOptions(getAddAnotherDeadlineOptions(i18n))
 });
 

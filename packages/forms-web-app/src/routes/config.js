@@ -20,9 +20,7 @@ const routesConfig = {
 			},
 			checkYourAnswers: {
 				id: 'examination-check-your-answers',
-				name: 'Check your answers',
-				route: 'check-your-answers',
-				view: 'pages/examination/check-your-answers'
+				route: 'check-your-answers'
 			},
 			email: {
 				id: 'examination-email',

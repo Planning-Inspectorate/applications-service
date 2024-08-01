@@ -7,6 +7,9 @@
 			"heading1": "You have not added a deadline item",
 			"ctaText1": "Add a deadline item"
 		},
+		"moreDeadlineItems": {
+			"message1": "You have submitted against all available deadline items"
+		},
 		"errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall "
 	},
 	"applicant": {
@@ -23,6 +26,29 @@
 		"summaryListHeading5": "Gwybodaeth bersonol",
 		"summaryListHeading6": "Documents containing personal information",
 		"summaryListHeading7": "Documents or comments containing personal information"
+	},
+	"checkYourAnswers": {
+		"title": "Gwiriwch eich atebion",
+		"heading1": "Gwiriwch eich atebion",
+		"details": {
+			"heading1": "Eich manylion",
+			"summaryListHeading1": "Rhif cyfeirnod parti â buddiant ar gael",
+			"summaryListHeading2": "Eich rhif parti â buddiant",
+			"summaryListHeading3": "Yn gwneud cyflwyniad ar ran",
+			"summaryListHeading4": "Applicant or not",
+			"summaryListHeading5": {
+				"fullName": "Enw llawn",
+				"orgName": "Organisation's name",
+				"behalf": "Yn cyflwyno ar ran"
+			},
+			"summaryListHeading6": "Cyfeiriad e-bost"
+		},
+		"submissions": {
+			"heading1": "Your submissions",
+			"summaryListHeading1": "Eitemau terfyn amser wedi'u hychwanegu"
+		},
+		"warningText1": "Ni allwch wneud unrhyw newidiadau pellach ar ôl i chi wasgu cyflwyno.",
+		"warningText2": "You cannot make any further changes after you press continue."
 	},
 	"chooseDeadline": {
 		"title": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",

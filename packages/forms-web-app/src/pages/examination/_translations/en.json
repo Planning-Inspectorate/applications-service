@@ -7,6 +7,9 @@
 			"heading1": "You have not added a deadline item",
 			"ctaText1": "Add a deadline item"
 		},
+		"moreDeadlineItems": {
+			"message1": "You have submitted against all available deadline items"
+		},
 		"errorMessage1": "Select yes if you want to add another deadline item"
 	},
 	"applicant": {
@@ -23,6 +26,29 @@
 		"summaryListHeading5": "Personal information",
 		"summaryListHeading6": "Documents containing personal information",
 		"summaryListHeading7": "Documents or comments containing personal information"
+	},
+	"checkYourAnswers": {
+		"title": "Check your answers",
+		"heading1": "Check your answers",
+		"details": {
+			"heading1": "Your details",
+			"summaryListHeading1": "Interested party reference number available",
+			"summaryListHeading2": "Interested party number",
+			"summaryListHeading3": "Making submission for",
+			"summaryListHeading4": "Applicant or not",
+			"summaryListHeading5": {
+				"fullName": "Full name",
+				"orgName": "Organisation's name",
+				"behalf": "Submitting on behalf of"
+			},
+			"summaryListHeading6": "Email Address"
+		},
+		"submissions": {
+			"heading1": "Your submissions",
+			"summaryListHeading1": "Deadline items added"
+		},
+		"warningText1": "You cannot make any further changes after you press submit.",
+		"warningText2": "You cannot make any further changes after you press continue."
 	},
 	"chooseDeadline": {
 		"title": "Which deadline would you like to submit against?",
