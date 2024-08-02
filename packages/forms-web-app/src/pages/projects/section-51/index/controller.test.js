@@ -93,7 +93,7 @@ describe('pages/projects/section-51/index/controller', () => {
 								adviceGivenBy: 'mock organisation',
 								adviceTypeLabel: 'Enquiry from',
 								date: {
-									date: '2023-01-01',
+									date: '1 January 2023',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 1',
@@ -104,7 +104,7 @@ describe('pages/projects/section-51/index/controller', () => {
 								adviceGivenBy: 'mock organisation',
 								adviceTypeLabel: 'Meeting with',
 								date: {
-									date: 'mock date given 2',
+									date: '6 June 2024',
 									text: 'Date of meeting:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 2',
@@ -115,7 +115,7 @@ describe('pages/projects/section-51/index/controller', () => {
 								adviceGivenBy: 'mock first name mock last name',
 								adviceTypeLabel: 'Enquiry from',
 								date: {
-									date: 'mock date given 3',
+									date: '12 December 2024',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 3',
@@ -126,7 +126,7 @@ describe('pages/projects/section-51/index/controller', () => {
 								adviceGivenBy: 'Anonymous',
 								adviceTypeLabel: 'Enquiry from',
 								date: {
-									date: 'mock date given 4',
+									date: '10 October 2023',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 4',

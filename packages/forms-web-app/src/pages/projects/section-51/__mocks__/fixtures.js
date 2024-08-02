@@ -17,7 +17,7 @@ const adviceList = [
 		adviceID: 'mock advice id 2',
 		enquiryMethod: 'Meeting',
 		organisation: 'mock organisation',
-		dateAdviceGiven: 'mock date given 2',
+		dateAdviceGiven: '2024-06-06',
 		enquiryDetail: 'mock enquiry detail 2',
 		enquiryDetailWelsh: 'mock enquiry detail 2 in Welsh'
 	},
@@ -26,14 +26,14 @@ const adviceList = [
 		firstName: 'mock first name',
 		lastName: 'mock last name',
 		enquiryMethod: 'Email',
-		dateAdviceGiven: 'mock date given 3',
+		dateAdviceGiven: '2024-12-12',
 		enquiryDetail: 'mock enquiry detail 3',
 		enquiryDetailWelsh: 'mock enquiry detail 3 in Welsh'
 	},
 	{
 		adviceID: 'mock advice id 4',
 		enquiryMethod: 'Email',
-		dateAdviceGiven: 'mock date given 4',
+		dateAdviceGiven: '2023-10-10',
 		adviceGiven: 'mock advice given 4',
 		adviceGivenWelsh: 'mock advice given 4 in Welsh',
 		enquiryDetail: 'mock enquiry detail 4',
