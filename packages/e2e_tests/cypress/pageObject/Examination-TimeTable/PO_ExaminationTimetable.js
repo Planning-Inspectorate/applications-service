@@ -115,6 +115,10 @@ export class PO_ExaminationTimetable {
 		return cy.get('.govuk-accordion__show-all-text').click();
 	}
 
+	getAllEvents() {
+		return cy.get('.section-events__event');
+	}
+
 	timeTableLink() {
 		return cy.get("a[href='/projects/EN010118/examination-timetable']").click(); //timetable link
 	}
