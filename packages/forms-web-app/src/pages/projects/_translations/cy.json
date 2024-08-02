@@ -7,12 +7,13 @@
 		"examinationTimetable": "Amserlen yr archwiliad",
 		"haveYourSay": "Dweud eich dweud",
 		"getUpdates": "Cael diweddariadau",
-		"section51": "Cyngor Adran 51"
+		"section51": "Cyngor Adran 51",
+		"projectNavigation": "Cyfeiri prosiect"
 	},
 	"relatedGuides": {
-		"heading": "Related guides ** Needs welsh translation",
-		"process": "The process for Nationally Significant Infrastructure Projects (NSIPs) ** Needs welsh translation",
-		"haveYourSay": "Have your say about a national infrastructure project ** Needs welsh translation",
-		"navigationLabel": "Related guides navigation ** Needs welsh translation"
+		"heading": "Canllawiau cysylltiedig",
+		"process": "Y broses ar gyfer Prosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPau)",
+		"haveYourSay": "LLeisio'ch barn am brosiect seilwaith cenedlaethol",
+		"navigationLabel": "Cyfeiri canllawiau cysylltiedig"
 	}
 }
