@@ -11,6 +11,7 @@ describe('pages/projects/section-51/_translations/cy', () => {
 			enquiryFrom: 'Ymholiad gan',
 			enquiryType: 'Math o ymholiad',
 			from: 'Oddiwrth',
+			readMore: 'Darllen mwy',
 			meetingWith: 'Cyfarfod gyda',
 			viewAdviceTo: 'Gweld cyngor i',
 			viewMeetingWith: 'Gweld cyfarfod gyda',

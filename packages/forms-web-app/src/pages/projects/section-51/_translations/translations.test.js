@@ -11,6 +11,7 @@ const expectedTranslationKeys = [
 	'enquiryFrom',
 	'enquiryType',
 	'from',
+	'readMore',
 	'viewMeetingWith',
 	'viewAdviceTo',
 	'details'
