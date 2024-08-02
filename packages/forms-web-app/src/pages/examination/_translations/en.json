@@ -224,6 +224,22 @@
 		"hintText1": "Select the item you want to submit against. You can submit against another item later.",
 		"errorMessage1": "Select an item"
 	},
+	"submissionComplete": {
+		"title": "Submission Complete",
+		"heading1": "Submission Complete",
+		"notificationText1": "Your submission reference number",
+		"paragraph1": "We've sent a confirmation email to {{-emailAddress}} to confirm we have received your submission.",
+		"heading2": "Contact us",
+		"heading3": "Telephone",
+		"paragraph2": "If you have an interested party reference number, have it with you when you call.",
+		"heading4": "Email",
+		"paragraph3": "When you're writing an email, quote the name of the project in the subject line.",
+		"paragraph4": "We aim to respond within 10 working days.",
+		"heading5": "Alternative formats",
+		"paragraph5": "Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.",
+		"paragraph6": "{{-link}} by completing a short survey",
+		"paragraph6LinkText": "Tell us what you thought about this service"
+	},
 	"submittingFor": {
 		"title1": "Who are you making the submission for?",
 		"options": {
