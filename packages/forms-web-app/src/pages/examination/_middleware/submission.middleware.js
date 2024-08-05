@@ -10,17 +10,23 @@ const {
 		}
 	}
 } = require('../../../routes/config');
+const { buildQueryString } = require('../../_utils/build-query-string');
 
 const allowableRoutes = [submissionComplete.route, submissionError.route, haveYourSay.route];
 
 const isProcessingSubmission = (req, res, next) => {
-	const { url, session } = req;
-	if (allowableRoutes.includes(url.replace('/', ''))) return next();
+	const { query, path, session } = req;
 
-	if (getExaminationSubmissionComplete(session)) return res.redirect(`${submissionComplete.route}`);
+	if (allowableRoutes.includes(path.replace('/', ''))) return next();
+
+	if (getExaminationSubmissionComplete(session)) {
+		const queryString = Object.keys(query).length ? buildQueryString(query) : '';
+		return res.redirect(`${submissionComplete.route}${queryString}`);
+	}
 
 	if (getExaminationUploadingState(session))
 		return res.status(500).render('error/unhandled-exception');
+
 	next();
 };
 
