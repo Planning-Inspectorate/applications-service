@@ -187,13 +187,13 @@
 	},
 	"processingSubmission": {
 		"title": "Prosesu'r cyflwyniad",
-		"heading1": "Processing submission",
+		"heading1": "Prosesu cyflwyniad",
 		"heading1NoScript": "Prosesu'r cyflwyniad",
-		"subTitle1": "We are processing {{-itemCount}} item",
-		"subTitle2": "We are processing {{-itemCount}} items",
+		"subTitle1": "Rydym yn prosesu {{-itemCount}} eitem",
+		"subTitle2": "Rydym yn prosesu {{-itemCount}} eitem",
 		"paragraph1": "Fe allai hyn gymryd ychydig funudau.",
 		"ctaText1": "Prosesu'r cyflwyniad",
-		"warningTextJSEnabled": "This may take several minutes. Do not refresh this page.",
+		"warningTextJSEnabled": "Gall hyn gymryd sawl munud. Peidiwch ag adnewyddu'r dudalen hon.",
 		"warningTextNoScript": "Peidiwch ag adnewyddu'r dudalen hon na llywio i ffwrdd hyd nes bod y cam prosesu wedi'i gwblhau."
 	},
 	"selectDeadline": {
