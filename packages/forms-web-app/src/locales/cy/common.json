@@ -48,8 +48,8 @@
 	"success": "Llwyddiant",
 	"thereIsAProblem": "Mae yna broblem",
 	"to": "I",
-	"uploadAFile": "Upload a file",
-	"uploadFile": "Upload file",
+	"uploadAFile": "Lanlwytho ffeil",
+	"uploadFile": "Lanlwytho ffeil",
 	"validationErrors": {
 		"emailAddress": {
 			"empty": "Nodwch eich cyfeiriad e-bost",

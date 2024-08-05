@@ -149,8 +149,8 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "telephone": "Rhif ffôn",
   "thereIsAProblem": "Mae yna broblem",
   "to": "I",
-  "uploadAFile": "Upload a file",
-  "uploadFile": "Upload file",
+  "uploadAFile": "Lanlwytho ffeil",
+  "uploadFile": "Lanlwytho ffeil",
   "validationErrors": {
     "aboutProject": {
       "empty": "Nodwch yr hyn rydych eisiau ei ddweud wrthym am y prosiect arfaethedig hwn",

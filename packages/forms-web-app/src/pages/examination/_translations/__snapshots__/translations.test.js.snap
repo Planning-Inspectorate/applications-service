@@ -318,7 +318,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "listItem9": "geneteg",
     "paragraph1": "Gwiriwch a yw'ch cyflwyniad yn cynnwys gwybodaeth am:",
     "paragraph2": "Mae hyn hefyd yn cynnwys unrhyw wybodaeth sy'n ymwneud â nodweddion canlynol unigolyn:",
-    "title": "Submission has personal information or not",
+    "title": "Mae gan y cyflwyniad wybodaeth bersonol neu ddim",
   },
   "personalInformationWhich": {
     "commentFiles": {
@@ -335,8 +335,8 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     },
     "files": {
       "errorMessage1": "Select files that contain personal information",
-      "heading1": "Which files contain personal information?",
-      "title": "Which files contain personal information?",
+      "heading1": "Pa ffeiliau sy'n cynnwys gwybodaeth bersonol?",
+      "title": "Pa ffeiliau sy'n cynnwys gwybodaeth bersonol?",
     },
   },
   "selectDeadline": {
@@ -346,7 +346,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "title": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
   },
   "selectFile": {
-    "errorMessage1": "Select a File",
+    "errorMessage1": "Dewiswch ffeil",
     "errorMessage2": "Mae {{-fileToUploadName}} yn wag",
     "errorMessage3": "Mae'n rhaid i'r ffeil {{-fileToUploadName}} a ddewisir fod yn JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX neu PDF.",
     "errorMessage4": "Mae'n rhaid i {{-fileToUploadName}} fod yn llai na {{-size}}mb.",
