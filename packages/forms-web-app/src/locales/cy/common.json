@@ -46,7 +46,7 @@
 	"showAllSteps": "Dangos pob cam",
 	"showFilters": "Dangos hidlydd",
 	"startNow": "Dechrau nawr",
-	"submit": "Submit",
+	"submit": "Cyflwyno",
 	"success": "Llwyddiant",
 	"telephone": "Rhif ffôn",
 	"thereIsAProblem": "Mae yna broblem",
@@ -87,7 +87,7 @@
 			"length": "Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
 		}
 	},
-	"warning": "Warning",
+	"warning": "Rhybudd",
 	"year": "Blwyddyn",
 	"yes1": "Ydw",
 	"yes2": "Oes",
