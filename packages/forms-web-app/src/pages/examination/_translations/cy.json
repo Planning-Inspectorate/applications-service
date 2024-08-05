@@ -185,6 +185,17 @@
 			"errorMessage1": "Select files that contain personal information"
 		}
 	},
+	"processingSubmission": {
+		"title": "Prosesu'r cyflwyniad",
+		"heading1": "Processing submission",
+		"heading1NoScript": "Prosesu'r cyflwyniad",
+		"subTitle1": "We are processing {{-itemCount}} item",
+		"subTitle2": "We are processing {{-itemCount}} items",
+		"paragraph1": "Fe allai hyn gymryd ychydig funudau.",
+		"ctaText1": "Prosesu'r cyflwyniad",
+		"warningTextJSEnabled": "This may take several minutes. Do not refresh this page.",
+		"warningTextNoScript": "Peidiwch ag adnewyddu'r dudalen hon na llywio i ffwrdd hyd nes bod y cam prosesu wedi'i gwblhau."
+	},
 	"selectDeadline": {
 		"title": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
 		"heading1": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
@@ -237,7 +248,7 @@
 		"paragraph4": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
 		"heading5": "Fformatau amgen",
 		"paragraph5": "Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille.",
-		"paragraph6": "{{-link}} rwy gwblhau arolwg byr",
+		"paragraph6": "{{-link}} rwy gwblhau arolwg byr.",
 		"paragraph6LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn"
 	},
 	"submittingFor": {
