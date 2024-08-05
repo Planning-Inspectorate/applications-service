@@ -130,9 +130,7 @@ const routesConfig = {
 			},
 			processSubmission: {
 				id: 'examination-process-submission',
-				pageTitle: 'Process submission',
-				route: 'process-submission',
-				view: 'pages/examination/process-submission'
+				route: 'process-submission'
 			},
 			submissionComplete: {
 				route: 'submission-complete',

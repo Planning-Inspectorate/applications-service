@@ -34,14 +34,7 @@ describe('examination/process-submission/controller', () => {
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/process-submission/view.njk', {
-						submittingItemsSubtitle: 'mock submitting items subtitle copy',
-						submittingItemsTitle: 'Processing submission',
-						text: 'This may take a few minutes.',
-						title: 'Process submission',
-						pageTitle: 'Process submission',
-						warningTextJSEnabled: 'This may take several minutes. Do not refresh this page.',
-						warningTextNoScript:
-							'Do not refresh this page or navigate away until processing is complete.'
+						submittingItemsSubtitle: 'mock submitting items subtitle copy'
 					});
 				});
 			});
