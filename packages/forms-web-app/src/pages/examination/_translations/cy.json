@@ -101,7 +101,7 @@
 		}
 	},
 	"personalInformation": {
-		"title": "Submission has personal information or not",
+		"title": "Mae gan y cyflwyniad wybodaeth bersonol neu ddim",
 		"heading1": "A yw'ch cyflwyniad yn cynnwys gwybodaeth bersonol?",
 		"errorMessage1": "Dewiswch 'ydyw' os yw'ch cyflwyniad yn cynnwys gwybodaeth bersonol",
 		"paragraph1": "Gwiriwch a yw'ch cyflwyniad yn cynnwys gwybodaeth am:",
@@ -133,8 +133,8 @@
 			"errorMessage1": "Dewiswch y ffeiliau a'r sylwadau sy'n cynnwys gwybodaeth bersonol"
 		},
 		"files": {
-			"title": "Which files contain personal information?",
-			"heading1": "Which files contain personal information?",
+			"title": "Pa ffeiliau sy'n cynnwys gwybodaeth bersonol?",
+			"heading1": "Pa ffeiliau sy'n cynnwys gwybodaeth bersonol?",
 			"errorMessage1": "Select files that contain personal information"
 		}
 	},
@@ -171,7 +171,7 @@
 		"listItem16": "cyfeiriadedd rhywiol",
 		"heading2": "Lanlwytho ffeiliau",
 		"helperText1": "Llusgwch a gollyngwch ffeiliau yma neu",
-		"errorMessage1": "Select a File",
+		"errorMessage1": "Dewiswch ffeil",
 		"errorMessage2": "Mae {{-fileToUploadName}} yn wag",
 		"errorMessage3": "Mae'n rhaid i'r ffeil {{-fileToUploadName}} a ddewisir fod yn JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX neu PDF.",
 		"errorMessage4": "Mae'n rhaid i {{-fileToUploadName}} fod yn llai na {{-size}}mb.",

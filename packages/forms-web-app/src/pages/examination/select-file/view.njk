@@ -91,7 +91,7 @@
 				method="post"
 				enctype="multipart/form-data"
 			>
-				<h2 class="govuk-heading-m govuk-!-margin-bottom-0">
+				<h2 class="govuk-heading-m govuk-!-margin-bottom-0 visible-on visible-on--js-enabled">
 					{{ t("examination.selectFile.heading2") }}
 				</h2>
 
@@ -159,7 +159,7 @@
 					<br>
 
 					{{ govukButton({
-						text: 'Continue',
+						text: t("common.continue"),
 						classes: 'govuk-button',
 						name: 'continue',
 						value: 'continue'
@@ -190,17 +190,17 @@
 							{{ t("common.selectFiles") }}
 						</label>
 					</div>
-				</div>
 
-				<button
-					id="continue-form-button"
-					class="govuk-button"
-					name="continue"
-					value="continue"
-					data-module="govuk-button"
-				>
-					{{ t("common.continue") }}
-				</button>
+					<button
+						id="continue-form-button"
+						class="govuk-button"
+						name="continue"
+						value="continue"
+						data-module="govuk-button"
+					>
+						{{ t("common.continue") }}
+					</button>
+				</div>
 			</form>
 
 			<script
