@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { validateNotEmpty, emailValidationRules } = require('../../validators/shared');
+const { emailValidationRules } = require('../../validators/shared');
 
 const {
 	validateAddAnotherDeadlineItem
@@ -26,6 +26,9 @@ const {
 	validatePersonalInformationWhichCommentFiles,
 	validatePersonalInformationWhichFiles
 } = require('./personal-information-which/utils/validate-personal-information-which');
+const {
+	validateSelectIfWantToDeleteData
+} = require('./select-if-want-to-delete-data/utils/validate-select-if-want-to-delete-date');
 const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
@@ -314,7 +317,7 @@ router.post(
 router.get(`/${selectIfYouWantToDeleteData.route}`, getSelectIfYouWantToDeleteData);
 router.post(
 	`/${selectIfYouWantToDeleteData.route}`,
-	validateNotEmpty(selectIfYouWantToDeleteData),
+	validateSelectIfWantToDeleteData(selectIfYouWantToDeleteData),
 	validationErrorHandler,
 	postSelectIfYouWantToDeleteData
 );

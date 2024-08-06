@@ -235,6 +235,11 @@
 		"errorMessage4": "Mae'n rhaid i {{-fileToUploadName}} fod yn llai na {{-size}}mb.",
 		"errorMessage5": "Gallwch ddewis cyfanswm o {{-limit}} o ffeiliau yn unig fesul cyflwyniad"
 	},
+	"selectIfWantToDeleteData": {
+		"title": "Ydych chi'n siŵr eich bod am ddileu data ar gyfer yr eitem hon?",
+		"heading1": "Ydych chi'n siŵr eich bod am ddileu data ar gyfer yr eitem hon?",
+		"errorMessage1": "Dewiswch ie os oes angen i chi ddileu data ar gyfer yr eitem hon"
+	},
 	"submissionComplete": {
 		"title": "Cyflwyniad wedi'i Gwblhau",
 		"heading1": "Cyflwyniad wedi'i Gwblhau",

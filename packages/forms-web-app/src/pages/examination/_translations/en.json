@@ -235,6 +235,11 @@
 		"errorMessage4": "{{-fileToUploadName}} must be smaller than {{-size}}mb.",
 		"errorMessage5": "You can only select a total of {{-limit}} files per submission"
 	},
+	"selectIfWantToDeleteData": {
+		"title": "Are you sure you want to delete data for this item?",
+		"heading1": "Are you sure you want to delete data for this item?",
+		"errorMessage1": "Select yes if you need to delete data for this item"
+	},
 	"submissionComplete": {
 		"title": "Submission Complete",
 		"heading1": "Submission Complete",

@@ -238,6 +238,11 @@ exports[`pages/examination/_translations should return the correct English trans
     "summaryText1": "Examples of personal information",
     "title": "Select a file",
   },
+  "selectIfWantToDeleteData": {
+    "errorMessage1": "Select yes if you need to delete data for this item",
+    "heading1": "Are you sure you want to delete data for this item?",
+    "title": "Are you sure you want to delete data for this item?",
+  },
   "submissionComplete": {
     "heading1": "Submission Complete",
     "heading2": "Contact us",
@@ -509,6 +514,11 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "paragraph3": "Mae hefyd yn golygu unrhyw wybodaeth sy'n ymwneud â nodweddion canlynol unigolyn:",
     "summaryText1": "Enghreifftiau o wybodaeth bersonol",
     "title": "Lanlwytho ffeiliau",
+  },
+  "selectIfWantToDeleteData": {
+    "errorMessage1": "Dewiswch ie os oes angen i chi ddileu data ar gyfer yr eitem hon",
+    "heading1": "Ydych chi'n siŵr eich bod am ddileu data ar gyfer yr eitem hon?",
+    "title": "Ydych chi'n siŵr eich bod am ddileu data ar gyfer yr eitem hon?",
   },
   "submissionComplete": {
     "heading1": "Cyflwyniad wedi'i Gwblhau",
