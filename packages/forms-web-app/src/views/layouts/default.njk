@@ -4,7 +4,7 @@
 
 {%- set initiateScriptsConfig = [{ src: "/public/scripts/index.script.js" }] -%}
 
-{% set imagePath = '/public' %}
+{% set publicPath = '/public' %}
 
 {% block pageTitle %}
 	{% if errors %}
@@ -16,11 +16,11 @@
 
 {# Note this block can be removed as well as the relevent images in /public/images when updating to v5 of the govuk-frontend node module #}
 {% block headIcons %}
-	<link rel="icon" sizes="48x48" href="{{ imagePath }}/images/favicon.ico">
-	<link rel="icon" sizes="any" href="{{ imagePath }}/images/favicon.svg" type="image/svg+xml">
-	<link rel="mask-icon" href="{{ imagePath }}/images/govuk-icon-mask.svg" color="{{ themeColor | default("#0b0c0c") }}"> {#- Hardcoded value of $govuk-black #}
-	<link rel="apple-touch-icon" href="{{ imagePath }}/images/govuk-icon-180.png">
-	<link rel="manifest" href="{{ imagePath }}/manifest.json">
+	<link rel="icon" sizes="48x48" href="{{ publicPath }}/images/favicon.ico">
+	<link rel="icon" sizes="any" href="{{ publicPath }}/images/favicon.svg" type="image/svg+xml">
+	<link rel="mask-icon" href="{{ publicPath }}/images/govuk-icon-mask.svg" color="{{ themeColor | default("#0b0c0c") }}"> {#- Hardcoded value of $govuk-black #}
+	<link rel="apple-touch-icon" href="{{ publicPath }}/images/govuk-icon-180.png">
+	<link rel="manifest" href="{{ publicPath }}/manifest.json">
 {% endblock %}
 
 {% block head %}
