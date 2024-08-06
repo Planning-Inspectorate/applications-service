@@ -7,6 +7,13 @@
 		"examinationTimetable": "Amserlen yr archwiliad",
 		"haveYourSay": "Dweud eich dweud",
 		"getUpdates": "Cael diweddariadau",
-		"section51": "Cyngor Adran 51"
+		"section51": "Cyngor Adran 51",
+		"projectNavigation": "Cyfeiri prosiect"
+	},
+	"relatedGuides": {
+		"heading": "Canllawiau cysylltiedig",
+		"process": "Y broses ar gyfer Prosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPau)",
+		"haveYourSay": "LLeisio'ch barn am brosiect seilwaith cenedlaethol",
+		"navigationLabel": "Cyfeiri canllawiau cysylltiedig"
 	}
 }

@@ -307,3 +307,19 @@ Or:
 We use the logger [Pino](http://getpino.io), and [express-pino-logger](https://github.com/pinojs/express-pino-logger). Import the logger and use `logger.info`, `logger.error`, etc rather than `console.log` as this will ensure logs are formatted in a way that Azure can collect.
 
 Please see [Confluence](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/edit-v2/554205478) for further information
+
+### Tests
+
+Run unit tests from the /applications-service/packages/forms-web-app folder with:
+
+```shell
+npm run test
+```
+
+If snapshots need to be updated, from the /applications-service/packages/forms-web-app folder run:
+
+```shell
+npm run test:update
+```
+
+

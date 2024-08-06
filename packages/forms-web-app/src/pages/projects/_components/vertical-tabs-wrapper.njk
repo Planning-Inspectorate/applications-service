@@ -1,10 +1,10 @@
 {% from "components/layout/slots.njk" import layoutSlots %}
 {% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
-{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper %}
+{% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper with context %}
 {% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
 {% from "components/ui/checkboxes.njk" import uiCheckboxes %}
 
-{% set slots = [uiVerticalTabs(null, activeId, verticalTabs, "Project navigation")] %}
+{% set slots = [uiVerticalTabs(null, activeId, verticalTabs, t('projects.navigation.projectNavigation'))] %}
 
 {% if displayFilters %}
 	{% set slots = (slots.push(uiCheckboxAccordion(

@@ -8,9 +8,16 @@ exports[`pages/projects/_translations should return the correct English translat
     "getUpdates": "Get updates",
     "haveYourSay": "Have your say",
     "index": "Project information",
+    "projectNavigation": "Project navigation",
     "register": "Register to have your say",
     "representations": "Relevant representations (registration comments)",
     "section51": "Section 51 advice",
+  },
+  "relatedGuides": {
+    "haveYourSay": "Have your say about a national infrastructure project",
+    "heading": "Related guides",
+    "navigationLabel": "Related guides navigation",
+    "process": "The process for Nationally Significant Infrastructure Projects (NSIPs)",
   },
 }
 `;
@@ -23,9 +30,16 @@ exports[`pages/projects/_translations should return the correct Welsh translatio
     "getUpdates": "Cael diweddariadau",
     "haveYourSay": "Dweud eich dweud",
     "index": "Gwybodaeth am y prosiect",
+    "projectNavigation": "Cyfeiri prosiect",
     "register": "Cofrestru i leisio'ch barn",
     "representations": "Sylwadau perthnasol (sylwadau cofrestru)",
     "section51": "Cyngor Adran 51",
+  },
+  "relatedGuides": {
+    "haveYourSay": "LLeisio'ch barn am brosiect seilwaith cenedlaethol",
+    "heading": "Canllawiau cysylltiedig",
+    "navigationLabel": "Cyfeiri canllawiau cysylltiedig",
+    "process": "Y broses ar gyfer Prosiectau Seilwaith o Arwyddocâd Cenedlaethol (NSIPau)",
   },
 }
 `;
