@@ -1,51 +1,49 @@
 {% extends "layouts/default.njk" %}
 
-{% block pageTitle %}
-	{{ pageTitle }}
-{% endblock %}
+{% set pageTitle = t("examination.submissionError.title") %}
 
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<h1 class="govuk-heading-l">
-				Sorry, there is a problem with the service
+				{{ t("examination.submissionError.heading1") }}
 			</h1>
 
 			<p class="govuk-body">
-				You'll be able to use the service again later.
+				{{ t("examination.submissionError.paragraph1") }}
 			</p>
 
 			<p class="govuk-body">
-				Sorry, your information has not been saved.
+				{{ t("examination.submissionError.paragraph2") }}
 			</p>
 
 			<p class="govuk-body">
-				You will need to <a class="govuk-link" href="{{ submitCommentsURL }}" data-cy="submit-comments">retry and process your submission again.</a>
+				{{ t("examination.submissionError.paragraph3", { link: '<a class="govuk-link" href="' + submitCommentsURL + '" data-cy="submit-comments">' + t("examination.submissionError.paragraph3LinkText")  + '</a>' }) | safe }}
 			</p>
 
 			<h2 class="govuk-heading-s">
-				Telephone
+				{{ t("common.telephone") }}
 			</h2>
 
 			<p class="govuk-body">
-				If you have an interested party number, have it with you when you call.
+				{{ t("examination.submissionError.paragraph4") }}
 			</p>
 
 			<ul class="govuk-list">
-				<li>Telephone: 0303 444 5000</li>
-				<li>Monday to Friday, 9am to 12pm (except public holidays)</li>
+				<li>{{ t('common.telephone') }}: {{ pinsContactDetails.supportTeamPhoneNumber }}</li>
+				<li>{{ t("common.pinsContactDetails.csOpeningHours") }}</li>
 			</ul>
 
 			<h2 class="govuk-heading-s">
-				Email
+				{{ t("common.email") }}
 			</h2>
 
 			<p>
-				<a class="govuk-link" data-cy="project-enquiries" href="mailto:{{ projectEmail }}" aria-label="Send an email to the project team">{{ projectEmail }}</a>
+				<a class="govuk-link" data-cy="project-enquiries" href="mailto:{{ projectEmail }}" aria-label="{{ t("examination.submissionError.ariaLabel1") }}">{{ projectEmail }}</a>
 			</p>
 
 			<p>
-				We aim to respond within 10 working days.
+				{{ t("examination.submissionError.paragraph5") }}
 			</p>
 		</div>
 	</div>

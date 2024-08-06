@@ -131,8 +131,7 @@ const routesConfig = {
 			},
 			submissionError: {
 				id: 'examination-submission-error',
-				route: 'submission-error',
-				view: 'error/examination-submission-error'
+				route: 'submission-error'
 			}
 		}
 	},

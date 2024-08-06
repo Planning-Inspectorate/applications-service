@@ -259,6 +259,17 @@ exports[`pages/examination/_translations should return the correct English trans
     "paragraph6LinkText": "Tell us what you thought about this service",
     "title": "Submission Complete",
   },
+  "submissionError": {
+    "ariaLabel1": "Send an email to the project team",
+    "heading1": "Sorry, there is a problem with the service",
+    "paragraph1": "You'll be able to use the service again later.",
+    "paragraph2": "Sorry, your information has not been saved.",
+    "paragraph3": "You will need to {{-link}}.",
+    "paragraph3LinkText": "retry and process your submission again",
+    "paragraph4": "If you have an interested party number, have it with you when you call.",
+    "paragraph5": "We aim to respond within 10 working days.",
+    "title": "Sorry, there is a problem with the service",
+  },
   "submittingFor": {
     "errorMessage1": "Select who you are submitting for",
     "hintText1": "If you've not registered as an interested party you can still submit comments, but we may not accept them.",
@@ -284,7 +295,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
     "hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
     "moreDeadlineItems": {
-      "message1": "You have submitted against all available deadline items",
+      "message1": "Rydych wedi cyflwyno yn erbyn yr holl eitemau dyddiad terfyn amser sydd ar gael",
     },
     "noDeadlineItems": {
       "ctaText1": "Ychwanegu eitem dyddiad cau",
@@ -535,6 +546,17 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "paragraph6": "{{-link}} rwy gwblhau arolwg byr.",
     "paragraph6LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn",
     "title": "Cyflwyniad wedi'i Gwblhau",
+  },
+  "submissionError": {
+    "ariaLabel1": "Anfonwch neges e-bost at dîm y prosiect",
+    "heading1": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
+    "paragraph1": "Fe allwch ddefnyddio'r gwasanaeth eto yn ddiweddarach.",
+    "paragraph2": "Yn anffodus, nid yw'ch gwybodaeth wedi cael ei harbed.",
+    "paragraph3": "Bydd angen i chi {{-link}}.",
+    "paragraph3LinkText": "roi cynnig arall arni a phrosesu eich cyflwyniad eto",
+    "paragraph4": "Os oes gennych rif parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
+    "paragraph5": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
+    "title": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
   },
   "submittingFor": {
     "errorMessage1": "Dewiswch ar ran pwy rydych chi'n cyflwyno",
