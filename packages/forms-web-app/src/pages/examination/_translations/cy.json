@@ -8,7 +8,7 @@
 			"ctaText1": "Ychwanegu eitem dyddiad cau"
 		},
 		"moreDeadlineItems": {
-			"message1": "You have submitted against all available deadline items"
+			"message1": "Rydych wedi cyflwyno yn erbyn yr holl eitemau dyddiad terfyn amser sydd ar gael"
 		},
 		"errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall "
 	},
@@ -255,6 +255,17 @@
 		"paragraph5": "Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille.",
 		"paragraph6": "{{-link}} rwy gwblhau arolwg byr.",
 		"paragraph6LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn"
+	},
+	"submissionError": {
+		"title": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
+		"heading1": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
+		"paragraph1": "Fe allwch ddefnyddio'r gwasanaeth eto yn ddiweddarach.",
+		"paragraph2": "Yn anffodus, nid yw'ch gwybodaeth wedi cael ei harbed.",
+		"paragraph3": "Bydd angen i chi {{-link}}.",
+		"paragraph3LinkText": "roi cynnig arall arni a phrosesu eich cyflwyniad eto",
+		"paragraph4": "Os oes gennych rif parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
+		"paragraph5": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
+		"ariaLabel1": "Anfonwch neges e-bost at dîm y prosiect"
 	},
 	"submittingFor": {
 		"title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",

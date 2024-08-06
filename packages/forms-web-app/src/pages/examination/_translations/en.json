@@ -256,6 +256,17 @@
 		"paragraph6": "{{-link}} by completing a short survey.",
 		"paragraph6LinkText": "Tell us what you thought about this service"
 	},
+	"submissionError": {
+		"title": "Sorry, there is a problem with the service",
+		"heading1": "Sorry, there is a problem with the service",
+		"paragraph1": "You'll be able to use the service again later.",
+		"paragraph2": "Sorry, your information has not been saved.",
+		"paragraph3": "You will need to {{-link}}.",
+		"paragraph3LinkText": "retry and process your submission again",
+		"paragraph4": "If you have an interested party number, have it with you when you call.",
+		"paragraph5": "We aim to respond within 10 working days.",
+		"ariaLabel1": "Send an email to the project team"
+	},
 	"submittingFor": {
 		"title1": "Who are you making the submission for?",
 		"options": {

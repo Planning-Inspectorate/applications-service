@@ -27,9 +27,7 @@ describe('examination/submission-error/utils/get-page-data', () => {
 				expect(result).toEqual({
 					id: 'examination-submission-error',
 					projectEmail: mockProjectEmailAddress,
-					submitCommentsURL: mockSubmitCommentsURL,
-					pageTitle: 'Sorry, there is a problem with the service',
-					title: 'Sorry, there is a problem with the service'
+					submitCommentsURL: mockSubmitCommentsURL
 				});
 			});
 		});

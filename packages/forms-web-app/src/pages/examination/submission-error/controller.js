@@ -4,6 +4,7 @@ const logger = require('../../../lib/logger');
 const { handleProcessSubmissionRetry } = require('./utils/handleProcessSubmissionRetry');
 
 const view = 'examination/submission-error/view.njk';
+
 const getSubmissionError = (req, res) => {
 	try {
 		const { session, query } = req;

@@ -30,8 +30,6 @@ const getProcessSubmission = (req, res) => {
 
 const postProcessSubmission = async (req, res) => {
 	try {
-		// throw new Error('this is an error');
-
 		const { session } = req;
 		setExaminationUploadingState(session, true);
 		await handleProcessSubmission(session);
