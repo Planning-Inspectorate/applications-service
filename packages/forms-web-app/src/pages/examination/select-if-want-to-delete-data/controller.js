@@ -9,23 +9,26 @@ const {
 } = require('../../../routes/config');
 
 const { setDeadlineItemToDelete } = require('../_session/deadlineItems-session');
+const { getSelectIfWantToDeleteDataOptions } = require('./config');
 const { yesDeleteSubmissionItem } = require('./utils/yes-delete-submission-item');
 
 const view = 'examination/select-if-want-to-delete-data/view.njk';
 
-const pageData = {
-	backLinkUrl: `${addAnotherDeadlineItem.route}`,
-	id: selectIfYouWantToDeleteData.id,
-	pageTitle: selectIfYouWantToDeleteData.pageTitle,
-	options: [
-		{ text: 'Yes', value: 'yes' },
-		{ text: 'No', value: 'no' }
-	]
+const pageData = (i18n) => {
+	const selectIfWantToDeleteDataOptions = getSelectIfWantToDeleteDataOptions(i18n);
+	return {
+		backLinkUrl: `${addAnotherDeadlineItem.route}`,
+		id: selectIfYouWantToDeleteData.id,
+		pageTitle: selectIfYouWantToDeleteData.pageTitle,
+		options: [selectIfWantToDeleteDataOptions[1], selectIfWantToDeleteDataOptions[2]]
+	};
 };
 
 const getSelectIfYouWantToDeleteData = (req, res) => {
 	try {
-		const setPageData = { ...pageData };
+		const { i18n } = req;
+
+		const setPageData = { ...pageData(i18n) };
 
 		return res.render(view, setPageData);
 	} catch (error) {
@@ -52,12 +55,12 @@ const postMarkDeadlineItemForDelete = (req, res) => {
 
 const postSelectIfYouWantToDeleteData = async (req, res) => {
 	try {
-		const { body, session } = req;
+		const { body, i18n, session } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[selectIfYouWantToDeleteData.id] || Object.keys(errors).length > 0) {
 			return res.render(view, {
-				...pageData,
+				...pageData(i18n),
 				errors,
 				errorSummary
 			});

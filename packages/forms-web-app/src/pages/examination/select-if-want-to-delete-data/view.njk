@@ -5,11 +5,11 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% set backLinkUrl = backLinkUrl %}
-{% set pageTitle = pageTitle %}
+{% set pageTitle = t("examination.selectIfWantToDeleteData.title") %}
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set pageTitle = "Error: " + pageTitle %}
+		{% set pageTitle = t("common.error") + ": " + pageTitle %}
 	{% endif %}
 	{{ pageTitle }}
 {% endblock %}
@@ -17,15 +17,18 @@
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t("common.thereIsAProblem"),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
 
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-			<h1 class="govuk-heading-l">{{ pageTitle }}</h1>
-			<form action="" method="POST" novalidate>
+			<h1 class="govuk-heading-l">
+				{{ t("examination.selectIfWantToDeleteData.heading1") }}
+			</h1>
+
+			<form method="POST" novalidate>
 				{{ govukRadios({
 					attributes: { "data-cy": id },
 					classes: "govuk-radios--inline",
@@ -48,11 +51,10 @@
 				}) }}
 				{{ govukButton({
 					attributes: { "data-cy": "button-submit-and-continue" },
-					text: "Continue",
+					text: t("common.continue"),
 					type: "Submit"
 				}) }}
 			</form>
 		</div>
 	</div>
-
 {% endblock %}
