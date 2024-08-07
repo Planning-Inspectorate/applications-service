@@ -11,6 +11,7 @@ describe('pages/projects/section-51/_translations/en', () => {
 			enquiryFrom: 'Enquiry from',
 			enquiryType: 'Enquiry type',
 			from: 'From',
+			readMore: 'Read more',
 			meetingWith: 'Meeting with',
 			viewAdviceTo: 'View advice to',
 			viewMeetingWith: 'View meeting with',
