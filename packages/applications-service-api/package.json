@@ -10,6 +10,7 @@
 	"scripts": {
 		"db:migrate:dev": "npx prisma migrate dev",
 		"db:generate": "npx prisma generate",
+		"db:reset": "npx prisma migrate reset --force",
 		"db:seed": "npx prisma db seed",
 		"db:migrate:deploy": "npx prisma migrate deploy",
 		"lint": "eslint ./",
