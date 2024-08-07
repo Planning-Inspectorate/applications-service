@@ -20,6 +20,7 @@
 		"dev:web": "docker compose run --rm --service-ports applications-web-app",
 		"db:migrate:dev": "npm run db:migrate:dev --workspace @pins/applications-service-api",
 		"db:generate": "npm run db:generate --workspace @pins/applications-service-api",
+		"db:reset": "npm run db:reset --workspace @pins/applications-service-api",
 		"db:seed": "npm run db:seed --workspace @pins/applications-service-api",
 		"db:migrate:deploy": "npm run db:migrate:deploy --workspace @pins/applications-service-api",
 		"format": "prettier --write \"**/*.{js,ts,json,md}\"",

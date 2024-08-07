@@ -209,6 +209,14 @@ This probably happens, because you built Prisma Client on a different platform.
 
 - Add the platform (in this case `"linux-musl"`) to `binaryTargets` in `prisma.schema` then run `npm run db:generate` 
 
+On running `npm run db:seed` you may see the error: 
+
+```shell
+prisma:error Violation of PRIMARY KEY constraint 'ServiceUser_pkey'. Cannot insert duplicate key in object 'dbo.ServiceUser'. The duplicate key value is (99)
+```
+
+- Run `npm run db:reset` which will reset the database, apply all migrations and run the seed script
+  
 ## Branching
 
 Please follow the established [branching strategy](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/425132090/Branching+strategy).
