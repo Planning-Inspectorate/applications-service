@@ -1,7 +1,54 @@
 {
+	"addAnotherDeadlineItem": {
+		"title": "Rydych wedi ychwanegu un eitem terfyn amser",
+		"heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
+		"hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+		"noDeadlineItems": {
+			"heading1": "Nid ydych wedi ychwanegu eitem dyddiad cau",
+			"ctaText1": "Ychwanegu eitem dyddiad cau"
+		},
+		"moreDeadlineItems": {
+			"message1": "Rydych wedi cyflwyno yn erbyn yr holl eitemau dyddiad terfyn amser sydd ar gael"
+		},
+		"errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall "
+	},
 	"applicant": {
 		"title1": "A ydych chi'n {{-applicant}}?",
 		"errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}"
+	},
+	"checkSubmissionItem": {
+		"title": "Gwiriwch eich atebion",
+		"heading1": "Gwiriwch eich atebion",
+		"summaryListHeading1": "Eitem terfyn amser",
+		"summaryListHeading2": "Sut rydych wedi cyflwyno'ch sylw",
+		"summaryListHeading3": "Dogfennau wedi'u lanlwytho",
+		"summaryListHeading4": "Eich sylw",
+		"summaryListHeading5": "Gwybodaeth bersonol",
+		"summaryListHeading6": "Dogfennau sy'n cynnwys gwybodaeth bersonol",
+		"summaryListHeading7": "Dogfennau neu sylwadau sy’n cynnwys gwybodaeth bersonol"
+	},
+	"checkYourAnswers": {
+		"title": "Gwiriwch eich atebion",
+		"heading1": "Gwiriwch eich atebion",
+		"details": {
+			"heading1": "Eich manylion",
+			"summaryListHeading1": "Rhif cyfeirnod parti â buddiant ar gael",
+			"summaryListHeading2": "Eich rhif parti â buddiant",
+			"summaryListHeading3": "Yn gwneud cyflwyniad ar ran",
+			"summaryListHeading4": "Ymgeisydd neu ddim",
+			"summaryListHeading5": {
+				"fullName": "Enw llawn",
+				"orgName": "Enw'r sefydliad",
+				"behalf": "Yn cyflwyno ar ran"
+			},
+			"summaryListHeading6": "Cyfeiriad e-bost"
+		},
+		"submissions": {
+			"heading1": "Eich cyflwyniadau",
+			"summaryListHeading1": "Eitemau terfyn amser wedi'u hychwanegu"
+		},
+		"warningText1": "Ni allwch wneud unrhyw newidiadau pellach ar ôl i chi wasgu cyflwyno.",
+		"warningText2": "Ni allwch wneud unrhyw newidiadau pellach ar ôl i chi bwyso parhau."
 	},
 	"chooseDeadline": {
 		"title": "Pa derfyn amser y mae'ch cyflwyniad yn berthnasol iddo?",
@@ -138,6 +185,17 @@
 			"errorMessage1": "Select files that contain personal information"
 		}
 	},
+	"processingSubmission": {
+		"title": "Prosesu'r cyflwyniad",
+		"heading1": "Prosesu cyflwyniad",
+		"heading1NoScript": "Prosesu'r cyflwyniad",
+		"subTitle1": "Rydym yn prosesu {{-itemCount}} eitem",
+		"subTitle2": "Rydym yn prosesu {{-itemCount}} eitem",
+		"paragraph1": "Fe allai hyn gymryd ychydig funudau.",
+		"ctaText1": "Prosesu'r cyflwyniad",
+		"warningTextJSEnabled": "Gall hyn gymryd sawl munud. Peidiwch ag adnewyddu'r dudalen hon.",
+		"warningTextNoScript": "Peidiwch ag adnewyddu'r dudalen hon na llywio i ffwrdd hyd nes bod y cam prosesu wedi'i gwblhau."
+	},
 	"selectDeadline": {
 		"title": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
 		"heading1": "Pa eitem yr hoffech wneud cyflwyniad ynglŷn â hi ar gyfer y terfyn amser hwn?",
@@ -176,6 +234,38 @@
 		"errorMessage3": "Mae'n rhaid i'r ffeil {{-fileToUploadName}} a ddewisir fod yn JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX neu PDF.",
 		"errorMessage4": "Mae'n rhaid i {{-fileToUploadName}} fod yn llai na {{-size}}mb.",
 		"errorMessage5": "Gallwch ddewis cyfanswm o {{-limit}} o ffeiliau yn unig fesul cyflwyniad"
+	},
+	"selectIfWantToDeleteData": {
+		"title": "Ydych chi'n siŵr eich bod am ddileu data ar gyfer yr eitem hon?",
+		"heading1": "Ydych chi'n siŵr eich bod am ddileu data ar gyfer yr eitem hon?",
+		"errorMessage1": "Dewiswch ie os oes angen i chi ddileu data ar gyfer yr eitem hon"
+	},
+	"submissionComplete": {
+		"title": "Cyflwyniad wedi'i Gwblhau",
+		"heading1": "Cyflwyniad wedi'i Gwblhau",
+		"notificationText1": "Rhif cyfeirnod eich cyflwyniad",
+		"paragraph1": "Rydym wedi anfon e-bost cadarnhau at {{-emailAddress}} i gadarnhau ein bod wedi derbyn eich cyflwyniad.",
+		"heading2": "Cysylltu â ni",
+		"heading3": "Ffoniwch",
+		"paragraph2": "Os oes gennych rif cyfeirnod parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
+		"heading4": "Anfonwch neges e-bost",
+		"paragraph3": "Pan fyddwch yn ysgrifennu neges e-bost, rhowch enw'r prosiect yn y llinell bwnc.",
+		"paragraph4": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
+		"heading5": "Fformatau amgen",
+		"paragraph5": "Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille.",
+		"paragraph6": "{{-link}} rwy gwblhau arolwg byr.",
+		"paragraph6LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn"
+	},
+	"submissionError": {
+		"title": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
+		"heading1": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
+		"paragraph1": "Fe allwch ddefnyddio'r gwasanaeth eto yn ddiweddarach.",
+		"paragraph2": "Yn anffodus, nid yw'ch gwybodaeth wedi cael ei harbed.",
+		"paragraph3": "Bydd angen i chi {{-link}}.",
+		"paragraph3LinkText": "roi cynnig arall arni a phrosesu eich cyflwyniad eto",
+		"paragraph4": "Os oes gennych rif parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
+		"paragraph5": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
+		"ariaLabel1": "Anfonwch neges e-bost at dîm y prosiect"
 	},
 	"submittingFor": {
 		"title1": "Ar ran pwy ydych chi'n gwneud y cyflwyniad? ",

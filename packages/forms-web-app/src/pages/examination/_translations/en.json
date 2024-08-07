@@ -1,7 +1,54 @@
 {
+	"addAnotherDeadlineItem": {
+		"title": "You added one deadline item",
+		"heading1": "You added one deadline item",
+		"hintText1": "Do you need to add another deadline item?",
+		"noDeadlineItems": {
+			"heading1": "You have not added a deadline item",
+			"ctaText1": "Add a deadline item"
+		},
+		"moreDeadlineItems": {
+			"message1": "You have submitted against all available deadline items"
+		},
+		"errorMessage1": "Select yes if you want to add another deadline item"
+	},
 	"applicant": {
 		"title1": "Are you {{-applicant}}?",
 		"errorMessage1": "Select yes if you are {{-applicant}}"
+	},
+	"checkSubmissionItem": {
+		"title": "Check your answers",
+		"heading1": "Check your answers",
+		"summaryListHeading1": "Deadline item",
+		"summaryListHeading2": "How you've submitted your representation",
+		"summaryListHeading3": "Documents uploaded",
+		"summaryListHeading4": "Your comment",
+		"summaryListHeading5": "Personal information",
+		"summaryListHeading6": "Documents containing personal information",
+		"summaryListHeading7": "Documents or comments containing personal information"
+	},
+	"checkYourAnswers": {
+		"title": "Check your answers",
+		"heading1": "Check your answers",
+		"details": {
+			"heading1": "Your details",
+			"summaryListHeading1": "Interested party reference number available",
+			"summaryListHeading2": "Interested party number",
+			"summaryListHeading3": "Making submission for",
+			"summaryListHeading4": "Applicant or not",
+			"summaryListHeading5": {
+				"fullName": "Full name",
+				"orgName": "Organisation's name",
+				"behalf": "Submitting on behalf of"
+			},
+			"summaryListHeading6": "Email Address"
+		},
+		"submissions": {
+			"heading1": "Your submissions",
+			"summaryListHeading1": "Deadline items added"
+		},
+		"warningText1": "You cannot make any further changes after you press submit.",
+		"warningText2": "You cannot make any further changes after you press continue."
 	},
 	"chooseDeadline": {
 		"title": "Which deadline would you like to submit against?",
@@ -138,6 +185,23 @@
 			"errorMessage1": "Select files that contain personal information"
 		}
 	},
+	"processingSubmission": {
+		"title": "Process submission",
+		"heading1": "Processing submission",
+		"heading1NoScript": "Process submission",
+		"subTitle1": "We are processing {{-itemCount}} item",
+		"subTitle2": "We are processing {{-itemCount}} items",
+		"paragraph1": "This may take a few minutes.",
+		"ctaText1": "Process submission",
+		"warningTextJSEnabled": "This may take several minutes. Do not refresh this page.",
+		"warningTextNoScript": "Do not refresh this page or navigate away until processing is complete."
+	},
+	"selectDeadline": {
+		"title": "Which item would you like to submit against for this deadline?",
+		"heading1": "Which item would you like to submit against for this deadline?",
+		"hintText1": "Select the item you want to submit against. You can submit against another item later.",
+		"errorMessage1": "Select an item"
+	},
 	"selectFile": {
 		"title": "Select a file",
 		"heading1": "Select a file",
@@ -171,11 +235,37 @@
 		"errorMessage4": "{{-fileToUploadName}} must be smaller than {{-size}}mb.",
 		"errorMessage5": "You can only select a total of {{-limit}} files per submission"
 	},
-	"selectDeadline": {
-		"title": "Which item would you like to submit against for this deadline?",
-		"heading1": "Which item would you like to submit against for this deadline?",
-		"hintText1": "Select the item you want to submit against. You can submit against another item later.",
-		"errorMessage1": "Select an item"
+	"selectIfWantToDeleteData": {
+		"title": "Are you sure you want to delete data for this item?",
+		"heading1": "Are you sure you want to delete data for this item?",
+		"errorMessage1": "Select yes if you need to delete data for this item"
+	},
+	"submissionComplete": {
+		"title": "Submission Complete",
+		"heading1": "Submission Complete",
+		"notificationText1": "Your submission reference number",
+		"paragraph1": "We've sent a confirmation email to {{-emailAddress}} to confirm we have received your submission.",
+		"heading2": "Contact us",
+		"heading3": "Telephone",
+		"paragraph2": "If you have an interested party reference number, have it with you when you call.",
+		"heading4": "Email",
+		"paragraph3": "When you're writing an email, quote the name of the project in the subject line.",
+		"paragraph4": "We aim to respond within 10 working days.",
+		"heading5": "Alternative formats",
+		"paragraph5": "Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.",
+		"paragraph6": "{{-link}} by completing a short survey.",
+		"paragraph6LinkText": "Tell us what you thought about this service"
+	},
+	"submissionError": {
+		"title": "Sorry, there is a problem with the service",
+		"heading1": "Sorry, there is a problem with the service",
+		"paragraph1": "You'll be able to use the service again later.",
+		"paragraph2": "Sorry, your information has not been saved.",
+		"paragraph3": "You will need to {{-link}}.",
+		"paragraph3LinkText": "retry and process your submission again",
+		"paragraph4": "If you have an interested party number, have it with you when you call.",
+		"paragraph5": "We aim to respond within 10 working days.",
+		"ariaLabel1": "Send an email to the project team"
 	},
 	"submittingFor": {
 		"title1": "Who are you making the submission for?",

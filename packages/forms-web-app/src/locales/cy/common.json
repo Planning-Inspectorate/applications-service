@@ -13,6 +13,7 @@
 	"datePublished": "Dyddiad cyhoeddi",
 	"dateTo": "Dyddiad i",
 	"day": "Diwrnod",
+	"email": "E-bost",
 	"error": "Gwall",
 	"filter": "Hidlydd",
 	"from": "Oddi wrth",
@@ -45,7 +46,9 @@
 	"showAllSteps": "Dangos pob cam",
 	"showFilters": "Dangos hidlydd",
 	"startNow": "Dechrau nawr",
+	"submit": "Cyflwyno",
 	"success": "Llwyddiant",
+	"telephone": "Rhif ffôn",
 	"thereIsAProblem": "Mae yna broblem",
 	"to": "I",
 	"uploadAFile": "Lanlwytho ffeil",
@@ -84,10 +87,9 @@
 			"length": "Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
 		}
 	},
+	"warning": "Rhybudd",
 	"year": "Blwyddyn",
 	"yes1": "Ydw",
 	"yes2": "Oes",
-	"yes3": "Ydyw",
-	"telephone": "Rhif ffôn",
-	"email": "E-bost"
+	"yes3": "Ydyw"
 }

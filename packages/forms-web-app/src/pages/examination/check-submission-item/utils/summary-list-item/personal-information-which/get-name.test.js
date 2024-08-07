@@ -2,9 +2,15 @@ const { getPersonalInformationWhichName } = require('./get-name');
 
 let { getSubmissionItemType } = require('../../../../_session/submission-items-session');
 
+const { mockI18n } = require('../../../../../_mocks/i18n');
+const commonTranslations_EN = require('../../../../../../locales/en/common.json');
+const examinationTranslations_EN = require('../../../../_translations/en.json');
+
 jest.mock('../../../../_session/submission-items-session', () => ({
 	getSubmissionItemType: jest.fn()
 }));
+
+const i18n = mockI18n({ common: commonTranslations_EN, examination: examinationTranslations_EN });
 
 describe('controllers/examination/check-submission-item/utils/summary-list-item/personal-information-which/get-name', () => {
 	describe('#getPersonalInformationWhichName', () => {
@@ -14,7 +20,7 @@ describe('controllers/examination/check-submission-item/utils/summary-list-item/
 
 				beforeEach(() => {
 					getSubmissionItemType.mockReturnValue('upload');
-					result = getPersonalInformationWhichName();
+					result = getPersonalInformationWhichName(i18n, {});
 				});
 
 				it('should return', () => {
@@ -27,7 +33,7 @@ describe('controllers/examination/check-submission-item/utils/summary-list-item/
 
 				beforeEach(() => {
 					getSubmissionItemType.mockReturnValue('both');
-					result = getPersonalInformationWhichName();
+					result = getPersonalInformationWhichName(i18n, []);
 				});
 
 				it('should return', () => {
@@ -41,7 +47,7 @@ describe('controllers/examination/check-submission-item/utils/summary-list-item/
 				});
 
 				it('should throw an error', () => {
-					expect(() => getPersonalInformationWhichName()).toThrow(
+					expect(() => getPersonalInformationWhichName(i18n, {})).toThrow(
 						'Submission item type does not match an option'
 					);
 				});

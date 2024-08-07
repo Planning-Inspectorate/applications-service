@@ -5,6 +5,7 @@ const {
 	setActiveSubmissionItemId,
 	setEditModeSubmissionItemId
 } = require('../_session/submission-items-session');
+const { editQuery } = require('../../../controllers/utils/queryMode');
 const {
 	routesConfig: {
 		examination: {
@@ -12,12 +13,13 @@ const {
 		}
 	}
 } = require('../../../routes/config');
-const { editQuery } = require('../../../controllers/utils/queryMode');
+
 const view = 'examination/add-another-deadline-item/view.njk';
+
 const getAddAnotherDeadlineItem = (req, res) => {
 	try {
-		const { query, session } = req;
-		return res.render(view, getPageData(session, query));
+		const { i18n, query, session } = req;
+		return res.render(view, getPageData(i18n, session, query));
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
@@ -35,6 +37,7 @@ const postChangeADeadlineItem = (req, res) => {
 
 		setActiveSubmissionItemId(session, itemIdToChange);
 		setEditModeSubmissionItemId(session, itemIdToChange);
+
 		return res.redirect(`${checkSubmissionItem.route}${editQuery}`);
 	} catch (error) {
 		logger.error(error);
@@ -44,11 +47,11 @@ const postChangeADeadlineItem = (req, res) => {
 
 const postAddAnotherDeadlineItem = (req, res) => {
 	try {
-		const { body, session, query } = req;
+		const { body, i18n, session, query } = req;
 		const { errors = {}, errorSummary = [] } = body;
 
 		if (errors[addAnotherDeadlineItem.id] || Object.keys(errors).length > 0) {
-			const setPageData = getPageData(session, query);
+			const setPageData = getPageData(i18n, session, query);
 			return res.render(view, {
 				...setPageData,
 				errors,

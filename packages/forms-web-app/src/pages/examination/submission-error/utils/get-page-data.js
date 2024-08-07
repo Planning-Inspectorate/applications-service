@@ -13,9 +13,7 @@ const { getExaminationSubmitCommentsURL } = require('./get-examination-submit-co
 const getPageData = (session) => ({
 	id: submissionError.id,
 	projectEmail: getProjectEmailAddress(session),
-	submitCommentsURL: getExaminationSubmitCommentsURL(),
-	pageTitle: 'Sorry, there is a problem with the service',
-	title: 'Sorry, there is a problem with the service'
+	submitCommentsURL: getExaminationSubmitCommentsURL()
 });
 
 module.exports = { getPageData };

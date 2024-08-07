@@ -13,6 +13,7 @@
 	"datePublished": "Date published",
 	"dateTo": "Date to",
 	"day": "Day",
+	"email": "Email",
 	"error": "Error",
 	"filter": "Filter",
 	"from": "From",
@@ -46,6 +47,8 @@
 	"showFilters": "Show filters",
 	"startNow": "Start now",
 	"success": "Success",
+	"submit": "Submit",
+	"telephone": "Telephone",
 	"thereIsAProblem": "There is a problem",
 	"to": "To",
 	"uploadAFile": "Upload a file",
@@ -84,10 +87,9 @@
 			"length": "What you want to tell us must be {{-maxCharacters}} characters or less"
 		}
 	},
+	"warning": "Warning",
 	"year": "Year",
 	"yes1": "Yes",
 	"yes2": "Yes",
-	"yes3": "Yes",
-	"telephone": "Telephone",
-	"email": "Email"
+	"yes3": "Yes"
 }

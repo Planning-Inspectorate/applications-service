@@ -1,10 +1,12 @@
 const { getSummaryListItemPersonalInformation } = require('./index');
 
 const { mockI18n } = require('../../../../_mocks/i18n');
-const commonTranslations_EN = require('../../../../../locales/en/common.json');
+const commonTranslationsEN = require('../../../../../locales/en/common.json');
+const examinationTranslationsEN = require('../../../_translations/en.json');
 
 const i18n = mockI18n({
-	common: commonTranslations_EN
+	common: commonTranslationsEN,
+	examination: examinationTranslationsEN
 });
 
 describe('examination/check-submission-item/utils/summary-list-item', () => {

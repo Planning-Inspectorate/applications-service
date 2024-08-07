@@ -20,20 +20,22 @@ const getSummaryList = (i18n, session) => {
 	const activeSubmissionItem = getActiveSubmissionItem(session);
 	const summaryList = [];
 
-	summaryList.push(getSummaryListItemSubmissionItem(activeSubmissionItem, session));
+	summaryList.push(getSummaryListItemSubmissionItem(i18n, session));
 	summaryList.push(getSummaryListItemEvidenceOrComment(i18n, activeSubmissionItem));
 
 	if (submissionItemHasFiles(activeSubmissionItem))
-		summaryList.push(getSummaryListItemSelectFile(activeSubmissionItem));
+		summaryList.push(getSummaryListItemSelectFile(i18n, activeSubmissionItem));
 
 	if (submissionItemHasComment(activeSubmissionItem))
-		summaryList.push(getSummaryListItemEnterComment(activeSubmissionItem));
+		summaryList.push(getSummaryListItemEnterComment(i18n, activeSubmissionItem));
 
 	summaryList.push(getSummaryListItemPersonalInformation(i18n, activeSubmissionItem));
 
 	if (personalInformationWhichIsValid(activeSubmissionItem)) {
-		const summaryListItemPersonalInformationWhich =
-			getSummaryListItemPersonalInformationWhich(activeSubmissionItem);
+		const summaryListItemPersonalInformationWhich = getSummaryListItemPersonalInformationWhich(
+			i18n,
+			activeSubmissionItem
+		);
 
 		summaryList.push(summaryListItemPersonalInformationWhich);
 	}

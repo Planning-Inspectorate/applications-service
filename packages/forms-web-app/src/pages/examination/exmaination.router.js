@@ -1,7 +1,10 @@
 const express = require('express');
 
-const { validateNotEmpty, emailValidationRules } = require('../../validators/shared');
+const { emailValidationRules } = require('../../validators/shared');
 
+const {
+	validateAddAnotherDeadlineItem
+} = require('./add-another-deadline-item/utils/validate-add-another-deadline-item');
 const { validateApplicant } = require('./applicant/_utils/validate-applicant');
 const { validateEnterComment } = require('./enter-comment/utils/validate-enter-comment');
 const {
@@ -23,6 +26,9 @@ const {
 	validatePersonalInformationWhichCommentFiles,
 	validatePersonalInformationWhichFiles
 } = require('./personal-information-which/utils/validate-personal-information-which');
+const {
+	validateSelectIfWantToDeleteData
+} = require('./select-if-want-to-delete-data/utils/validate-select-if-want-to-delete-date');
 const { validateSubmittingFor } = require('./submitting-for/utils/validate-submitting-for');
 const {
 	validateYourInterestedPartyNumber
@@ -303,15 +309,7 @@ router.get(
 router.post(`/${addAnotherDeadlineItem.changeADeadlineItem.route}`, postChangeADeadlineItem);
 router.post(
 	`/${addAnotherDeadlineItem.route}`,
-	validateNotEmpty(addAnotherDeadlineItem),
-	validationErrorHandler,
-	postAddAnotherDeadlineItem
-);
-
-router.get(`/${addAnotherDeadlineItem.route}`, getAddAnotherDeadlineItem);
-router.post(
-	`/${addAnotherDeadlineItem.route}`,
-	validateNotEmpty(addAnotherDeadlineItem),
+	validateAddAnotherDeadlineItem(),
 	validationErrorHandler,
 	postAddAnotherDeadlineItem
 );
@@ -319,7 +317,7 @@ router.post(
 router.get(`/${selectIfYouWantToDeleteData.route}`, getSelectIfYouWantToDeleteData);
 router.post(
 	`/${selectIfYouWantToDeleteData.route}`,
-	validateNotEmpty(selectIfYouWantToDeleteData),
+	validateSelectIfWantToDeleteData(selectIfYouWantToDeleteData),
 	validationErrorHandler,
 	postSelectIfYouWantToDeleteData
 );
