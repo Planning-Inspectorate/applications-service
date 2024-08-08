@@ -1,1 +1,1 @@
-module.exports = (nunjucks) => (path, vars) => nunjucks.render(path, vars);
+module.exports = (nunjucks) => (path, vars, t) => nunjucks.render(path, { ...vars, t });
