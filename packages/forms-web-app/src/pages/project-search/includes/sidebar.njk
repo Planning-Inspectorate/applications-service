@@ -1,4 +1,4 @@
-{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion %}
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion with context %}
 {% from "components/layout/slots.njk" import layoutSlots %}
 {% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 
@@ -9,15 +9,7 @@
     t('common.filter'),
     pagination.paginationData.totalItems + " " + t('projectSearch.common.projects'),
     "project-search-page-filters",
-    'modal-on-tablet',
-    {
-			applyFilters: t('common.applyFilters'),
-			hideAllSections: t('common.hideAllSections'),
-			showAllSections: t('common.showAllSections'),
-			clearFilters: t('common.clearFilters'),
-			selectAllFilters: t('common.selectAllFilters'),
-			returnToResults: t('common.returnToResults')
-		}
+    'modal-on-tablet'
   ),
   uiVerticalTabs(
     "Related content",
