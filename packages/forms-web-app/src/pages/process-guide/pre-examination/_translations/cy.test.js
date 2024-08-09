@@ -26,7 +26,7 @@ describe('pages/process-guide/pre-examination/_translations/cy', () => {
 			paragraph12:
 				"Anfonir y llythyr rheol 8 at bawb a gofrestrodd, yn ogystal â chyrff swyddogol a phobl yr effeithir ar eu tir yn uniongyrchol. Mae'r llythyr hwn yn rhoi manylion am yr archwiliad, gan gynnwys yr amserlen derfynol gyda'r holl derfynau amser ar gyfer cyflwyno sylwadau i'r archwiliad.",
 			paragraph13: 'Gallwch ddod o hyd i {{-link}}.',
-			paragraph13LinkText: 'gyngor manylach yn ein nodiadau cyngor',
+			paragraph13LinkText: 'gyngor manylach yn ein tudalennau cyngor',
 			paragraph2:
 				"Bydd yr Awdurdod Archwilio'n gwneud asesiad cychwynnol o'r materion y bydd angen eu trafod.",
 			paragraph3: 'Bydd yr Awdurdod Archwilio yn:',

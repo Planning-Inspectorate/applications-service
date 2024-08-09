@@ -27,13 +27,13 @@ describe('pages/process-guide/pre-application/_translations/cy', () => {
 			listItem8: "gwirio bod ymgeiswyr wedi dilyn yr holl gamau sy'n ofynnol",
 			heading4: 'Cyngor i awdurdodau lleol yn ystod y cam cyn-ymgeisio',
 			paragraph8:
-				"Gallwch ddarllen ein nodiadau cyngor sy'n cynnwys rhagor o wybodaeth am {{-link}}.",
+				"Gallwch ddarllen ein tudalennau cyngor sy'n cynnwys rhagor o wybodaeth am {{-link}}.",
 			paragraph8LinkText:
 				'yr hyn y mae angen i chi ei wneud os ydych yn cynrychioli awdurdod lleol',
 			heading5: 'Cyngor manylach',
 			paragraph9:
-				'Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein nodiadau cyngor i gael rhagor o wybodaeth.',
-			paragraph10LinkText: 'Darllenwch y gyfres lawn o nodiadau cyngor manwl'
+				'Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein tudalennau cyngor i gael rhagor o wybodaeth.',
+			paragraph10LinkText: 'Darllenwch y gyfres lawn o tudalennau cyngor manwl'
 		});
 	});
 });
