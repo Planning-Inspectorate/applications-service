@@ -76,13 +76,13 @@ module.exports = {
 	pinsURL: {
 		index: 'https://infrastructure.planninginspectorate.gov.uk',
 		indexCY: 'https://infrastructure.planninginspectorate.gov.uk/cy/',
-		adviceNotes:
-			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
+		advicePages:
+			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes'
 	},
 	govUK: {
 		accessibleDocumentsPolicy:
 			'https://www.gov.uk/search/all?keywords=accessible%20document%20policy',
-		adviceNotes:
+		advicePages:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		crownCopyright:

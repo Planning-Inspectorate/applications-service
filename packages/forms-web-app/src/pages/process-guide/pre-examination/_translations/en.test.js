@@ -25,7 +25,7 @@ describe('pages/process-guide/pre-examination/_translations/en', () => {
 			paragraph12:
 				'The rule 8 letter is sent to everyone who registered, as well as official bodies and people whose land is directly affected. This letter gives details of the examination including the finalised timetable with all deadlines for examination comments.',
 			paragraph13: 'You can find more {{-link}}.',
-			paragraph13LinkText: 'detailed advice in our advice notes',
+			paragraph13LinkText: 'detailed advice in our advice pages',
 			paragraph2:
 				'This involves the Examining Authority making an initial assessment of the issues which will need to be discussed.',
 			paragraph3: 'The Examining Authority will:',
