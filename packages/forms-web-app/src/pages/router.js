@@ -23,6 +23,9 @@ const {
 } = require('./register-of-applications/utils/get-register-of-applications-url');
 
 const {
+	addCheckboxAccordionTranslationsMiddleware
+} = require('./_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware');
+const {
 	addCommonTranslationsMiddleware
 } = require('./_middleware/i18n/add-common-translations-middleware');
 const {
@@ -82,6 +85,7 @@ if (featureFlag.allowHomepage) {
 
 pagesRouter.get(
 	projectSearchURL,
+	addCheckboxAccordionTranslationsMiddleware,
 	addCommonTranslationsMiddleware,
 	addProjectSearchTranslationsMiddleware,
 	getProjectSearchController

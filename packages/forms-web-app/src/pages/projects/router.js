@@ -21,6 +21,9 @@ const {
 const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	addCheckboxAccordionTranslationsMiddleware
+} = require('../_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware');
 const { projectsMiddleware } = require('./_middleware/middleware');
 const {
 	addProcessGuideTranslationsMiddleware
@@ -66,6 +69,7 @@ if (featureFlag.allowProjectInformation) {
 projectsRouter.get(
 	projectsDocumentsURL,
 	projectsMiddleware,
+	addCheckboxAccordionTranslationsMiddleware,
 	addCommonTranslationsMiddleware,
 	addProjectsDocumentsTranslationsMiddleware,
 	getProjectsDocumentsController
