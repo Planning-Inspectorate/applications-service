@@ -8,7 +8,7 @@
 {% from "components/ui/search-bar.njk" import uiSearchBar %}
 {% from "components/ui/tag-link-list.njk" import uiTagLinkList %}
 {% from "components/ui/results-per-page.njk" import uiResultsPerPage %}
-{% from "macros/pagination-bar.njk" import paginationBar %}
+{% from "macros/pagination-bar.njk" import paginationBar with context%}
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper with context %}
 
 {% set section = 'project-documents' %}

@@ -6,8 +6,8 @@
 
 {% macro paginationBar(pageOptions = [], paginationData = {}, pageLinkHrefTemplate = "?page=:page") -%}
     {% if paginationData.totalPages !== 1 %}
-        <nav class="moj-pagination" id="pagination-label">
-          <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+        <nav class="moj-pagination" aria-labelledby="pagination-label">
+          <p class="govuk-visually-hidden" id="pagination-label">{{ t('global.paginationNavigation') }}</p>
           <ul class="moj-pagination__list">
             {% for page in pageOptions %}
               {% if page === 'prev' %}

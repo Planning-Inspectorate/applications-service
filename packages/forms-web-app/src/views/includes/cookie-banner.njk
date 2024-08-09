@@ -5,7 +5,7 @@
 {% set displayCookieBanner = displayCookieBanner %}
 
 {% if displayCookieBanner %}
-  <div id="global-cookie-message" role="region" aria-label="cookie banner" data-nosnippet="">
+  <div id="global-cookie-message" role="region" aria-label="{{ t('global.cookieBanner') }}" data-nosnippet="">
     {{ cookieBanner() }}
     {{ cookieBannerAccepted() }}
     {{ cookieBannerRejected() }}
