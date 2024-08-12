@@ -1172,6 +1172,9 @@ components:
         dateOfNonAcceptance:
           type: string
           example: ''
+        isMaterialChange:
+          type: boolean
+          example: true
 
     InterestedParty:
       type: object

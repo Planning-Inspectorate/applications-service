@@ -216,7 +216,8 @@ const mapNIApplicationToApi = (application) => {
 		sourceSystem: application.sourceSystem,
 		stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
 		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
-		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline
+		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
+		isMaterialChange: application.isMaterialChange
 	};
 
 	if (featureFlag.allowWelshTranslation) {
@@ -266,7 +267,8 @@ const mapBackOfficeApplicationToApi = (application) => {
 		'sourceSystem',
 		'stage4ExtensionToExamCloseDate',
 		'stage5ExtensionToDecisionDeadline',
-		'stage5ExtensionToRecommendationDeadline'
+		'stage5ExtensionToRecommendationDeadline',
+		'isMaterialChange'
 	];
 
 	if (featureFlag.allowWelshTranslation) {
@@ -354,7 +356,8 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		DateProjectWithdrawn: application.dateProjectWithdrawn,
 		sourceSystem: application.sourceSystem,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
-		LongLat: application.longLat
+		LongLat: application.longLat,
+		isMaterialChange: application.isMaterialChange
 	};
 
 	if (featureFlag.allowWelshTranslation) {
