@@ -17,7 +17,6 @@ module.exports = async (context, message) => {
 			where: {
 				caseReference
 			},
-			rejectOnNotFound: false,
 			take: 1
 		});
 
