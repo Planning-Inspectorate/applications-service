@@ -5,7 +5,7 @@ const section51 = new PO_Section51();
 describe('User can review and search Section 51 advice', () => {
 	it('can navigate to the Section 51 page', () => {
 		cy.clearCookies();
-		cy.visit('/projects/BC0910150/');
+		cy.visit('/projects/EN010120/');
 		section51.clickSection51Link();
 		cy.url().should('include', '/s51advice');
 		section51.checkMainH1Visible();
