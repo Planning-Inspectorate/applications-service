@@ -6,10 +6,13 @@ const haveYourSay = new PO_HaveYourSay();
 const projectSearch = new PO_ProjectSearch();
 const projectPage = new PO_ProjectPage();
 
+before(() => {
+	cy.clearCookies();
+});
+
 describe('User registers to have their say and submits a comment against a project', () => {
 	it('Navigate to projects search page', () => {
-		cy.clearCookies();
-		cy.visit('/projects/WA020002/register/register-have-your-say');
+		cy.visit('/projects/BC0910150/register/register-have-your-say');
 	});
 
 	it('Clicks to start the registration journey', () => {

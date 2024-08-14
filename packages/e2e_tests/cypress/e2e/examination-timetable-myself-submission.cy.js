@@ -7,7 +7,7 @@ const projectPage = new PO_ProjectPage();
 describe('User registers as themselves to have their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
-		cy.visit('/projects/EN010120/examination-timetable');
+		cy.visit('/projects/BC0910150/examination-timetable');
 		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
 		examinationTimetable.clickLink();
 		examinationTimetable.clickStartNowButton();
