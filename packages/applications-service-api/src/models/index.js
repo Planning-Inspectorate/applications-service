@@ -21,12 +21,14 @@ const modelsToMock = [
 let db = {};
 
 // Training env will only use BO and cannot connect to NI, so we use a mock DB to avoid connection errors
-const shouldMockDB = () => getAllApplications === 'BO';
-if (shouldMockDB()) {
+if (getAllApplications === 'BO') {
 	console.log('Training environment - using mock DB for NI');
 	db = new SequelizeMock();
 
-	modelsToMock.forEach((name) => db.define(name, {}));
+	modelsToMock.forEach((name) => {
+		const modelMock = db.define(name, {});
+		db[name] = modelMock;
+	});
 } else {
 	const sequelize = new Sequelize(config.database, config.username, config.password, config);
 	fs.readdirSync(__dirname)
