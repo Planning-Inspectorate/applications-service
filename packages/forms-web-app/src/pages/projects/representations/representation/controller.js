@@ -1,7 +1,6 @@
 const logger = require('../../../../lib/logger');
 const { getAppData } = require('../../../../services/applications.service');
 const { getRepresentation } = require('../../../../services/representation.service');
-const { mapTitles } = require('../../../_utils/map-titles');
 const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getRepresentationViewModel } = require('../index/_utils/get-representations-view-model');
 const {
@@ -17,17 +16,15 @@ const getRepresentationController = async (req, res, next) => {
 		const { case_ref, id } = params;
 
 		const { data: applicationData } = await getAppData(case_ref);
-		const { ProjectName } = applicationData;
+		const { ProjectName, ProjectNameWelsh } = applicationData;
 
 		const { data: representation } = await getRepresentation(id, case_ref);
 
-		const pageHeading = `Representation by ${representation.PersonalName}`;
-
 		return res.render(view, {
-			...mapTitles(pageHeading, `Relevant Representations | ${pageHeading}`),
-			representation: getRepresentationViewModel(representation),
+			representation: getRepresentationViewModel(representation, i18n.language),
 			backToListUrl: getRepresentationsURL(case_ref),
 			projectName: ProjectName,
+			projectNameWelsh: ProjectNameWelsh,
 			allowProjectInformation,
 			langIsWelsh: isLangWelsh(i18n.language)
 		});

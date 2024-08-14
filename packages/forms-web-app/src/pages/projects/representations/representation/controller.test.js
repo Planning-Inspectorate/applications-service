@@ -44,7 +44,7 @@ describe('pages/projects/representations/representation/controller', () => {
 			UniqueReference: 'WS010006-34601',
 			WebReference: null,
 			PersonalName: 'Test (Test)',
-			Representative: null,
+			Representative: 'a representative',
 			IndvdlOnBhalfName: null,
 			OrgOnBhalfName: null,
 			AgentOrgOnBhalfContactName: null,
@@ -92,9 +92,8 @@ describe('pages/projects/representations/representation/controller', () => {
 							langIsWelsh: false,
 							allowProjectInformation: true,
 							backToListUrl: '/projects/EN010009/representations',
-							pageHeading: 'Representation by Test (Test)',
-							pageTitle: 'Relevant Representations | Representation by Test (Test)',
 							projectName: 'ABC',
+							projectNameWelsh: undefined,
 							representation: {
 								URL: '/projects/:case_ref/representations/2',
 								attachments: [],
@@ -103,7 +102,7 @@ describe('pages/projects/representations/representation/controller', () => {
 								dateSubmitted: '19 February 2020',
 								hasAttachments: true,
 								name: 'Test (Test)',
-								representative: null,
+								representative: 'a representative',
 								submittedBy: 'Members of the public/businesses',
 								submittedByWelsh: 'Welsh members of the public/businesses'
 							}

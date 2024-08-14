@@ -19,7 +19,7 @@
 
 {% if displayRepresentationsFilters %}
 	{% set slots = (slots.push(
-		uiCheckboxes("Filter", "Apply filters", filterNameID, filters, { "data-cy": "apply-filter-button" })
+		uiCheckboxes(t('common.filter'), t('common.applyFilters'), filterNameID, filters, { "data-cy": "apply-filter-button" })
 	), slots) %}
 {% endif %}
 

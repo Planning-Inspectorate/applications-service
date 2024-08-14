@@ -5,11 +5,11 @@
         <a href="{{ representation.URL }}" class="ui-results__result-title-link">
           <strong>
             {% if representation.representative %}
-              {{ representation.representative }} {% if representation.name %} on behalf of {{ representation.name }} {% endif %}
+              {{ representation.representative }} {% if representation.name %} {{ t('representationsIndex.onBehalfOf') }} {{ representation.name }} {% endif %}
             {% elseif representation.name %}
               {{ representation.name }}
             {% else %}
-              Unknown
+              {{ t('representationsIndex.unknown')}}
             {% endif %}
           </strong>
         </a>
@@ -19,24 +19,24 @@
         {{ representation.comment | truncate(200) }}
 
         {% if representation.comment.length > 200 %}
-          <a href="{{ representation.URL }}" class="govuk-link" data-cy="read-more">Read more</a>
+          <a href="{{ representation.URL }}" class="govuk-link" data-cy="read-more">{{ t('representationsIndex.readMore') }}</a>
         {% endif %}
       </p>
 
       <div class="ui-results__result-meta-data">
         <div class="ui-results__result-meta-data-item ui-results__result-meta-data-item--fill-width" data-cy="published-stage">
-          <strong>Submitted by:</strong> {{  representation.submittedByWelsh if langIsWelsh else representation.submittedBy }}
+          <strong>{{ t('representationsIndex.submittedBy') }}:</strong> {{  representation.submittedByWelsh if langIsWelsh and representation.submittedByWelsh else representation.submittedBy }}
         </div>
 
         <div class="ui-results__result-meta-data-item" data-cy="published-date">
-          <span class="-white-space--nowrap"><strong>Date submitted:</strong> {{ representation.dateSubmitted }}</span>
+          <span class="-white-space--nowrap"><strong>{{ t('representationsIndex.dateSubmitted') }}:</strong> {{ representation.dateSubmitted }}</span>
         </div>
       </div>
 
       {% if representation.hasAttachments %}
         <div class="ui-results__result-meta-data">
           <div class="ui-results__result-meta-data-item" data-cy="contains-attachments">
-            Contains attachment(s)
+            {{ t('representationsIndex.containsAttachments') }}
           </div>
         </div>
       {% endif %}

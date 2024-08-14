@@ -29,6 +29,11 @@ representationsRouter.get(
 	getRepresentationsIndexController
 );
 
-representationsRouter.get(representationURL, projectsMiddleware, getRepresentationController);
+representationsRouter.get(
+	representationURL,
+	projectsMiddleware,
+	addRepresentationsIndexTranslationsMiddleware,
+	getRepresentationController
+);
 
 module.exports = { representationsRouter };

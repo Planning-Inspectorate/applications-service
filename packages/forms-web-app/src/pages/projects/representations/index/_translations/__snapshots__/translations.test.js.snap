@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/representations/index/translations should return the correct English translations 1`] = `
+{
+  "attachments": "Attachment(s)",
+  "backToList": "Back to list",
+  "containsAttachments": "Contains attachment(s)",
+  "dateSubmitted": "Date submitted",
+  "filteredResults": "Filtered results",
+  "heading1": "Relevant representations (registration comments)",
+  "linkText1": "Clear all filters",
+  "linkText2": "Clear search and filters",
+  "onBehalfOf": "on behalf of",
+  "opensInNewWindow": "opens in new window",
+  "pageTitle1": "Relevant Representations",
+  "paragraph1": "Search by the person or group making the submission or the content of the submission.",
+  "paragraph5": "The relevant representations for this project have been archived and are no longer available on this site.",
+  "paragraph6": "There are no registration comments to display. Registration comments will be published after the registration period has closed.",
+  "paragraph7": "No results were found matching your search term or filters.",
+  "paragraph8": "Would you like to clear your search and filters to view all relevant representations instead?",
+  "phrase1": "Showing",
+  "phrase2": "to",
+  "phrase3": "of",
+  "phrase4": "representations, newest first.",
+  "readMore": "Read more",
+  "representationBy": "Representation by",
+  "submittedBy": "Submitted by",
+  "unknown": "Unknown",
+}
+`;
+
+exports[`pages/projects/representations/index/translations should return the correct Welsh translations 1`] = `
+{
+  "attachments": "Atodiad(au)",
+  "backToList": "Yn ôl i'r rhestr",
+  "containsAttachments": "Yn cynnwys atodiad(au)",
+  "dateSubmitted": "Dyddiad cyflwyno",
+  "filteredResults": "Canlyniadau wedi'u hidlo",
+  "heading1": "Sylwadau perthnasol (sylwadau cofrestru)",
+  "linkText1": "Clirio pob hidlydd",
+  "linkText2": "Clirio chwiliad a dewisiadau hidlo",
+  "onBehalfOf": "ar ran",
+  "opensInNewWindow": "yn agor mewn ffenestr newydd",
+  "pageTitle1": "Sylwadau Perthnasol",
+  "paragraph1": "Chwiliwch yn ôl yr unigolyn neu'r grŵp sy'n gwneud y cyflwyniad neu gynnwys y cyflwyniad.",
+  "paragraph5": "Mae'r sylwadau perthnasol ar gyfer y prosiect hwn wedi cael eu harchifo ac nid ydynt ar gael ar y safle hwn mwyach.",
+  "paragraph6": "Nid oes unrhyw sylwadau cofrestru i'w harddangos.  Bydd sylwadau cofrestru yn cael eu cyhoeddi ar ôl i'r cyfnod cofrestru gau.",
+  "paragraph7": "Ni ddaethpwyd o hyd i unrhyw ganlyniadau sy'n cyfateb i'ch term chwilio na'ch dewisiadau hidlo.",
+  "paragraph8": "A hoffech chi glirio'ch chwiliad a'ch dewisiadau hidlo i weld yr holl sylwadau perthnasol yn lle?",
+  "phrase1": "Yn dangos",
+  "phrase2": "i",
+  "phrase3": "o",
+  "phrase4": "o sylwadau, gyda'r rhai mwyaf newydd yn gyntaf.",
+  "readMore": "Darllen mwy",
+  "representationBy": "Cynrychiolaeth gan",
+  "submittedBy": "Cyflwynwyd gan",
+  "unknown": "Anhysbys",
+}
+`;
