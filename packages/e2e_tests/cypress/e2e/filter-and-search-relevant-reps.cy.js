@@ -1,12 +1,14 @@
 import { PO_RelevantReps } from '../pageObject/Relevant-representations/PO_RelevantReps';
+import { BasePage } from '../pageObject/basePage';
 
 const relevantReps = new PO_RelevantReps();
+const basePage = new BasePage();
 
 describe('User can view, filter and search the relevant reps page for a project', () => {
 	it('should navigate to the relevant reps page for a project', () => {
 		cy.clearCookies();
 		cy.visit('/projects/EN010120/');
-		relevantReps.clickRelevantRepsLink();
+		relevantReps.clickRelevantRepsLink('Relevant representations');
 		cy.url().should('include', '/representations');
 	});
 

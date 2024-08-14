@@ -1,6 +1,6 @@
 export class PO_RelevantReps {
 	elements = {
-		relevantRepsLink: () => cy.get('a[href*="representations"]'),
+		relevantRepsLink: () => cy.get('a[href*="/representations"]'),
 		listOfRelevantReps: () => cy.get('[data-cy="representation"]'),
 		paginationLink: () => cy.get('.moj-pagination__link'),
 		resultsPerPage: () => cy.get('.govuk-link'),
@@ -13,8 +13,8 @@ export class PO_RelevantReps {
 		backToResultsLink: () => cy.get('[data-cy="back')
 	};
 
-	clickRelevantRepsLink() {
-		this.elements.relevantRepsLink().click();
+	clickRelevantRepsLink(string) {
+		this.elements.relevantRepsLink().contains(string).click();
 	}
 
 	returnListOfRepresentations() {

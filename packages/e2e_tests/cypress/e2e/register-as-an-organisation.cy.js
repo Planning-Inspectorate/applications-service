@@ -2,7 +2,6 @@ import { PO_HaveYourSay } from '../pageObject/Register-to-have-your-say/PO_HaveY
 import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
 import { PO_ProjectSearch } from '../pageObject/Search-and-project-pages/PO_ProjectSearch';
 import { BasePage } from '../pageObject/basePage';
-import { base64StringToBlob } from 'blob-util';
 
 const haveYourSay = new PO_HaveYourSay();
 const projectPage = new PO_ProjectPage();

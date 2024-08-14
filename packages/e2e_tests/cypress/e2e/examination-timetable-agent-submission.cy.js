@@ -5,7 +5,7 @@ const examinationTimetable = new PO_ExaminationTimetable();
 describe('Agent has their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.clearCookies();
-		cy.visit('/projects/EN010120/examination-timetable');
+		cy.visit('/projects/BC0910150/examination-timetable');
 		examinationTimetable.clickLink();
 		examinationTimetable.clickStartNowButton();
 	});
