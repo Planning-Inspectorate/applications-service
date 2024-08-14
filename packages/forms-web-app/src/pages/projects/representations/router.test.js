@@ -52,6 +52,7 @@ describe('representations/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/representations/:id',
 				projectsMiddleware,
+				addRepresentationsIndexTranslationsMiddleware,
 				getRepresentationController
 			);
 

@@ -50,7 +50,7 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			projectName: applicationData.projectName,
 			caseRef: case_ref,
 			allowProjectInformation,
-			representations: getRepresentationsViewModel(representations, case_ref),
+			representations: getRepresentationsViewModel(representations, i18n.language, case_ref),
 			paginationData,
 			pageOptions,
 			searchTerm,
