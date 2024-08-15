@@ -23,5 +23,9 @@
 		"projectName": "Project name",
 		"promoterName": "Applicant",
 		"stage": "Stage"
+	},
+	"sidebar": {
+		"relatedContent": "Related content",
+		"registerOfApplications": "Register of applications"
 	}
 }
