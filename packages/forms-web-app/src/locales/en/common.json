@@ -29,6 +29,11 @@
 	"no2": "No",
 	"no3": "No",
 	"open": "Open",
+	"paginationShowing": "Showing {{-from}} to {{-to}} of {{-total}} results",
+	"paginationNext": "Next",
+	"paginationPrevious": "Previous",
+	"paginationAccessibilityText1": "",
+	"paginationAccessibilityText2": "set of pages",
 	"partOf": "Part of",
 	"pinsContactDetails": {
 		"csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)"

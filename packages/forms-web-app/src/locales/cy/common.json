@@ -29,6 +29,11 @@
 	"no2": "Nac oes",
 	"no3": "Nac ydyw",
 	"open": "Agor",
+	"paginationShowing": "Yn dangos {{-from}} i {{-to}} o {{-total}} canlyniadau",
+	"paginationNext": "Nesaf",
+	"paginationPrevious": "Flaenorol",
+	"paginationAccessibilityText1": "Set",
+	"paginationAccessibilityText2": "o dudalennau",
 	"partOf": "Rhan o",
 	"pinsContactDetails": {
 		"csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)"
