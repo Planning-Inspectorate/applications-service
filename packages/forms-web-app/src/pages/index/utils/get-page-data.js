@@ -7,7 +7,7 @@ const { haveYourSayGuideSubdirectory } = require('../../have-your-say-guide/conf
 const { processGuideSubdirectory } = require('../../process-guide/config');
 const { projectSearchRoute } = require('../../project-search/config');
 
-const getPageData = () => {
+const getPageData = (locale = 'en') => {
 	return {
 		homePageUrls: {
 			haveYourSayGuideURL: haveYourSayGuideSubdirectory,
@@ -15,7 +15,9 @@ const getPageData = () => {
 			projectSearchURL: projectSearchRoute,
 			contactURL: getContactURL(),
 			detailedInformationURL: getDetailedInformationURL(),
-			nsipNewsURL: config.govUK.nsipNews
+			nsipNewsURL: config.govUK.nsipNews,
+			developmentConsentURL:
+				locale === 'cy' ? config.govUK.developmentConsentWelsh : config.govUK.developmentConsent
 		}
 	};
 };
