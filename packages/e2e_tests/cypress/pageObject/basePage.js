@@ -9,7 +9,8 @@ export class BasePage {
 		accessibliltyLink: () => cy.get('[data-cy="Accessibility statement"]'),
 		privacyNoticeLink: () => cy.get('[data-cy="Privacy"]'),
 		cookiesLink: () => cy.get('[data-cy="Cookies"]'),
-		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-regoster"]')
+		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-regoster"]'),
+		govInput: () => cy.get('.govuk-input')
 	};
 
 	clickSaveAndContinueBtn() {
@@ -75,5 +76,9 @@ export class BasePage {
 
 	languageVisible(language) {
 		this.localeSwitcher(language).should('be.visible');
+	}
+
+	govInputType(string) {
+		this.elements.govInput().type(string);
 	}
 }
