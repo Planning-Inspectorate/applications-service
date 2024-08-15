@@ -94,10 +94,16 @@ module.exports = {
 		dataProtection: 'https://www.gov.uk/data-protection',
 		developmentConsent:
 			'https://www.gov.uk/government/collections/nationally-significant-infrastructure-projects-development-consent',
+		developmentConsentWelsh:
+			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-caniatad-datblygu.cy',
 		developmentConsentAndAdvice:
-			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-development-consent-legislation/nationally-significant-infrastructure-projects-development-consent-legislation',
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation',
+		developmentConsentAndAdviceWelsh:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation.cy',
 		nationalPolicyStatements:
-			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements/nationally-significant-infrastructure-projects-national-policy-statements',
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-national-policy-statements',
+		nationalPolicyStatementsWelsh:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-national-policy-statements.cy',
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',
