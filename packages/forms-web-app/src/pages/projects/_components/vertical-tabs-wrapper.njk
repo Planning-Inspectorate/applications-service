@@ -23,6 +23,6 @@
 	), slots) %}
 {% endif %}
 
-{% set slots = (slots.push(relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--desktop"])), slots) %}
+{% set slots = (slots.push(relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--desktop"],applicationData.isMaterialChange)), slots) %}
 
 {{ layoutSlots(slots) }}
