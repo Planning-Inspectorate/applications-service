@@ -5,7 +5,7 @@ const getUpdates = new PO_GetUpdates();
 describe('when user subscribes to get updates about a project', () => {
 	it('should navigate to the Get Updates start page', () => {
 		cy.clearCookies();
-		cy.visit('/projects/EN010120/get-updates/start');
+		cy.visit('/projects/BC0910150/get-updates/start');
 		getUpdates.clickStartButton();
 	});
 
@@ -17,7 +17,7 @@ describe('when user subscribes to get updates about a project', () => {
 	it('should check update frequency and navigate to confirm your email page', () => {
 		getUpdates.checkUpdateFrequency('allUpdates');
 		getUpdates.clickButton('Continue');
-		cy.url().should('include', '/projects/EN010120/get-updates/confirm-your-email');
+		cy.url().should('include', '/projects/BC0910150/get-updates/confirm-your-email');
 	});
 
 	it('should navigate to the success page via the url from the confirmation email', () => {

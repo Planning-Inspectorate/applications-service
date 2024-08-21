@@ -87,6 +87,18 @@
 	&__section-state-text {
 		&::before {
 			content: 'show';
+
+			[lang='cy'] & {
+				content: 'ddangos';
+			}
+
+			[open] & {
+				content: 'hide';
+
+				[lang='cy'] & {
+					content: 'guddio';
+				}
+			}
 		}
 	}
 

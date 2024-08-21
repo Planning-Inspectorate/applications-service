@@ -4,7 +4,6 @@ export class PO_Documents {
 		numberOfResults: () => cy.get('.govuk-link'),
 		expandFilterOption: () => cy.get('.ui-checkbox-accordion__section-switch-title'),
 		selectFilter: (id) => cy.get(`#${id}`),
-		clearAllFilters: () => cy.contains('Clear all filters'),
 		enterSearchText: () => cy.get('input[name="searchTerm"]'),
 		searchButton: () => cy.get('#search-button').contains('Search')
 	};
@@ -43,10 +42,6 @@ export class PO_Documents {
 					expect(matches).to.eq(true);
 				});
 		});
-	}
-
-	clearAllFilters() {
-		this.elements.clearAllFilters().click();
 	}
 
 	searchDocuments(text) {

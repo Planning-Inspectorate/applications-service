@@ -164,6 +164,7 @@ model Project {
   applicant                                         ServiceUser? @relation("Applicant", fields: [applicantId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
   createdAt                                         DateTime?    @default(now())
   modifiedAt                                        DateTime?    @default(now())
+  isMaterialChange                                  Boolean?     @default(false)
 }
 
 model ProjectUpdate {
