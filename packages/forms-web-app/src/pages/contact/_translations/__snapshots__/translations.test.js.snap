@@ -18,7 +18,6 @@ exports[`pages/contact/_translations should return the correct English translati
   "paragraph4": "Email: {{-link}}",
   "paragraph5": "If you are contacting us about a specific project, put the project name in the subject line. At busy times we may not be able to respond immediately.",
   "paragraph6": "Telephone customer services:",
-  "paragraph7": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)",
   "paragraph8": "Address:",
   "paragraph9": "Follow us on X:",
 }
@@ -42,7 +41,6 @@ exports[`pages/contact/_translations should return the correct Welsh translation
   "paragraph4": "E-bost: {{-link}}",
   "paragraph5": "Os ydych yn cysylltu â ni ynglŷn â phrosiect penodol, rhowch enw'r prosiect yn y llinell bwnc. Mae'n bosibl na fyddwn yn gallu ymateb ar unwaith ar adegau prysur. ",
   "paragraph6": "Ffoniwch y gwasanaethau cwsmeriaid:",
-  "paragraph7": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)",
   "paragraph8": "Cyfeiriad:",
   "paragraph9": "Dilynwch ni ar X:",
 }
