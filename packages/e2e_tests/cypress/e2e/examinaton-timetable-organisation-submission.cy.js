@@ -10,7 +10,7 @@ before(() => {
 	cy.clearCookies();
 });
 
-describe('User registers as themselves to have their say against the examination timetable', () => {
+describe('User registers as an organisation to have their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
 		cy.visit('/projects/BC0910150');
 		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
@@ -18,14 +18,14 @@ describe('User registers as themselves to have their say against the examination
 		examinationTimetable.clickStartNowButton();
 	});
 
-	it('Selects no for interested party number and to member of project', () => {
+	it('Selects yes for interested party number and to member of project', () => {
 		examinationTimetable.findAndSelectRadioOption('yes');
 		examinationTimetable.clickContinueButton();
 		basePage.govInputType('123456');
 		examinationTimetable.clickContinueButton();
 	});
 
-	it('Selects myself, enters full-name and email addres and continues', () => {
+	it('Selects organisation, enters full-name and email addres and continues', () => {
 		examinationTimetable.findAndSelectRadioOption('organisation');
 		examinationTimetable.clickContinueButton();
 		examinationTimetable.enterTextInField('examination-name', 'John Tester');
