@@ -80,6 +80,8 @@ app.use(i18nRedirect);
 
 configureI18n(app);
 
+app.use(addCommonTranslationsMiddleware, addErrorTranslationsMiddleware);
+
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(nunjucksEnv));
 
@@ -91,8 +93,6 @@ app.use('/', routes);
 
 // For working with req.subdomains, primarily for cookie control.
 app.set('subdomain offset', config.server.subdomainOffset);
-
-app.use(addCommonTranslationsMiddleware, addErrorTranslationsMiddleware);
 
 // Error handling
 app
