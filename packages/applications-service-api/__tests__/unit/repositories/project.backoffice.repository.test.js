@@ -36,17 +36,7 @@ describe('project repository', () => {
 
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
-				where: {
-					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						}
-					]
-				}
+				where: {}
 			});
 		});
 		it('calls findMany with the excludeNullDateOfSubmission option', async () => {
@@ -59,10 +49,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
-					AND: [
-						{ regions: { not: { contains: 'wales' } } },
-						{ OR: [{ dateOfDCOSubmission: { not: null } }] }
-					]
+					AND: [{ OR: [{ dateOfDCOSubmission: { not: null } }] }]
 				}
 			});
 		});
@@ -76,17 +63,7 @@ describe('project repository', () => {
 
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
-				where: {
-					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						}
-					]
-				},
+				where: {},
 				orderBy: { projectName: 'asc' },
 				skip: 0,
 				take: 10
@@ -99,13 +76,6 @@ describe('project repository', () => {
 				include: { applicant: true },
 				where: {
 					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						},
 						{
 							OR: [
 								{ projectName: { contains: searchTerm } },
@@ -143,13 +113,6 @@ describe('project repository', () => {
 				where: {
 					AND: [
 						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						},
-						{
 							OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
 						},
 						{
@@ -175,13 +138,6 @@ describe('project repository', () => {
 				include: { applicant: true },
 				where: {
 					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						},
 						{
 							OR: [
 								{ projectName: { contains: searchTerm } },
@@ -212,17 +168,7 @@ describe('project repository', () => {
 		it('calls count', async () => {
 			await getAllApplications();
 			expect(mockCount).toBeCalledWith({
-				where: {
-					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						}
-					]
-				}
+				where: {}
 			});
 		});
 		it('returns all applications', async () => {
