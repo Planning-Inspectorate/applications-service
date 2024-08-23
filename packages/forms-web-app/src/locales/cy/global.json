@@ -3,6 +3,20 @@
 		"content": "Gwasanaeth beta yw hwn - bydd eich {{-link}} yn ein helpu i'w wella.",
 		"feedback": "adborth"
 	},
+	"cookieBanner": {
+		"headingPrefix": "Cwcis ar y",
+		"headingDefaultService": "gwasanaeth ymgeisio",
+		"paragraph1": "We use some essential cookies to make this service work. ** WELSH **",
+		"paragraph2": "We'd also like to use analytics cookies so we can understand how you use the service and make improvements. ** WELSH **",
+		"acceptButtonText": "Accept analytics cookies ** WELSH **",
+		"rejectButtonText": "Reject analytics cookies ** WELSH **",
+		"viewCookiesLinkText": "View cookies ** WELSH **",
+		"cookieBannerAriaLabel": "cwci baner",
+		"acceptedCookiesText": "You’ve accepted analytics cookies. You can {{-link}} at any time.  ** WELSH **",
+		"rejectedCookiesText": "You’ve rejected analytics cookies. You can {{-link}} at any time.  ** WELSH **",
+		"actionCookiesLinkText": "change your cookie settings ** WELSH **",
+		"hideMessage": "Hide this message ** WELSH **"
+	},
 	"footer": {
 		"content": "Mae'r holl gynnwys ar gael o dan {{-link}}, ac eithrio lle nodir yn wahanol",
 		"contentLinkText": "Drwydded Llywodraeth Agored v3.0",
@@ -28,7 +42,6 @@
 		"primaryNavigationAria": "Cyfeiri cynradd"
 	},
 	"backLinkText": "Yn ôl",
-	"cookieBanner": "cwci baner",
 	"relatedContentNavigation": "Cyfeiri cynnwys cysylltiedig",
 	"paginationNavigation": "tudalen cyfeiri"
 }

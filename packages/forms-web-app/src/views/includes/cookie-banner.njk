@@ -1,11 +1,11 @@
-{% from "../macros/cookie-banner.njk" import cookieBanner %}
-{% from "../macros/cookie-banner-accepted.njk" import cookieBannerAccepted %}
-{% from "../macros/cookie-banner-rejected.njk" import cookieBannerRejected %}
+{% from "../macros/cookie-banner.njk" import cookieBanner with context %}
+{% from "../macros/cookie-banner-accepted.njk" import cookieBannerAccepted with context %}
+{% from "../macros/cookie-banner-rejected.njk" import cookieBannerRejected with context %}
 
 {% set displayCookieBanner = displayCookieBanner %}
 
 {% if displayCookieBanner %}
-  <div id="global-cookie-message" role="region" aria-label="{{ t('global.cookieBanner') }}" data-nosnippet="">
+  <div id="global-cookie-message" role="region" aria-label="{{ t('global.cookieBanner.cookieBannerAriaLabel') }}" data-nosnippet="">
     {{ cookieBanner() }}
     {{ cookieBannerAccepted() }}
     {{ cookieBannerRejected() }}

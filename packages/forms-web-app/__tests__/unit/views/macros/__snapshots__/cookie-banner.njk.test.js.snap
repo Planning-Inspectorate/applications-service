@@ -3,10 +3,9 @@
 exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath 1`] = `
 "
   
-
+  
   
 
-  
 
   
 
@@ -24,7 +23,8 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
 
         <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
-    <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+
+    <p>We&#39;d also like to use analytics cookies so we can understand how you use the service and make improvements. </p>
   </div>
       </div>
     </div>
@@ -63,10 +63,9 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
 exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`] = `
 "
   
-
+  
   
 
-  
 
   
 
@@ -84,7 +83,8 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
 
         <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
-    <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+
+    <p>We&#39;d also like to use analytics cookies so we can understand how you use the service and make improvements. </p>
   </div>
       </div>
     </div>
@@ -123,10 +123,9 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
 exports[`views/macros/cookie-banner should allow setting all custom attributes 1`] = `
 "
   
-
+  
   
 
-  
 
   
 
@@ -144,7 +143,8 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
 
         <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
-    <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+
+    <p>We&#39;d also like to use analytics cookies so we can understand how you use the service and make improvements. </p>
   </div>
       </div>
     </div>
@@ -183,10 +183,9 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
 exports[`views/macros/cookie-banner should have sensible default attributes 1`] = `
 "
   
-
+  
   
 
-  
 
   
 
@@ -204,7 +203,8 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
 
         <div class="govuk-cookie-banner__content">
     <p>We use some essential cookies to make this service work.</p>
-    <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+
+    <p>We&#39;d also like to use analytics cookies so we can understand how you use the service and make improvements. </p>
   </div>
       </div>
     </div>
