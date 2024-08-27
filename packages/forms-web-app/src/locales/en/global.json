@@ -24,7 +24,11 @@
 	"primaryNavigation": {
 		"home": "Home",
 		"projectSearch": "All projects",
-		"detailedInformation": "Detailed information"
+		"detailedInformation": "Detailed information",
+		"primaryNavigationAria": "Primary navigation"
 	},
-	"backLinkText": "Back"
+	"backLinkText": "Back",
+	"cookieBanner": "cookie banner",
+	"relatedContentNavigation": "Related content navigation",
+	"paginationNavigation": "Pagination navigation"
 }

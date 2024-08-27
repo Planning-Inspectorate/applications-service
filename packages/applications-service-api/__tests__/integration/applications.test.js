@@ -303,7 +303,6 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
 							},
@@ -331,7 +330,6 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'London Resort' } },
@@ -370,7 +368,6 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'London Resort' } },
@@ -418,7 +415,6 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
@@ -570,7 +566,6 @@ describe('/api/v1/applications', () => {
 					orderBy: { projectName: 'asc' },
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
@@ -598,9 +593,7 @@ describe('/api/v1/applications', () => {
 				});
 				expect(mockProjectFindMany).toHaveBeenNthCalledWith(2, {
 					include: { applicant: true },
-					where: {
-						AND: [{ regions: { not: { contains: 'wales' } } }]
-					}
+					where: {}
 				});
 				// NI Searches
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(1, {

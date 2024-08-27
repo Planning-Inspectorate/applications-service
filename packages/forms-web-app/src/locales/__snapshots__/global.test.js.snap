@@ -7,6 +7,7 @@ exports[`locales/global should return the correct English global translations 1`
     "content": "This is a beta service - your {{-link}} will help us to improve it",
     "feedback": "feedback",
   },
+  "cookieBanner": "cookie banner",
   "footer": {
     "content": "All content is available under the {{-link}}, except where otherwise stated",
     "contentLinkText": "Open Government Licence v3.0",
@@ -25,11 +26,14 @@ exports[`locales/global should return the correct English global translations 1`
     "getUpdates": "Get updates about this project",
     "register": "Register to have your say",
   },
+  "paginationNavigation": "Pagination navigation",
   "primaryNavigation": {
     "detailedInformation": "Detailed information",
     "home": "Home",
+    "primaryNavigationAria": "Primary navigation",
     "projectSearch": "All projects",
   },
+  "relatedContentNavigation": "Related content navigation",
 }
 `;
 
@@ -40,6 +44,7 @@ exports[`locales/global should return the correct Welsh global translations 1`] 
     "content": "Gwasanaeth beta yw hwn - bydd eich {{-link}} yn ein helpu i'w wella.",
     "feedback": "adborth",
   },
+  "cookieBanner": "cwci baner",
   "footer": {
     "content": "Mae'r holl gynnwys ar gael o dan {{-link}}, ac eithrio lle nodir yn wahanol",
     "contentLinkText": "Drwydded Llywodraeth Agored v3.0",
@@ -58,10 +63,13 @@ exports[`locales/global should return the correct Welsh global translations 1`] 
     "getUpdates": "Cael diweddariadau ynglŷn â'r prosiect hwn",
     "register": "Cofrestru i leisio'ch barn",
   },
+  "paginationNavigation": "tudalen cyfeiri",
   "primaryNavigation": {
     "detailedInformation": "Gwybodaeth fanwl",
     "home": "Hafan",
+    "primaryNavigationAria": "Cyfeiri cynradd",
     "projectSearch": "Pob prosiect",
   },
+  "relatedContentNavigation": "Cyfeiri cynnwys cysylltiedig",
 }
 `;

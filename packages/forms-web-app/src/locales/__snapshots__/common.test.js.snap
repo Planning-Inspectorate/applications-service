@@ -32,6 +32,11 @@ exports[`locales/common should return the correct English common translations 1`
   "no2": "No",
   "no3": "No",
   "open": "Open",
+  "paginationAccessibilityText1": "",
+  "paginationAccessibilityText2": "set of pages",
+  "paginationNext": "Next",
+  "paginationPrevious": "Previous",
+  "paginationShowing": "Showing {{-from}} to {{-to}} of {{-total}} results",
   "partOf": "Part of",
   "pinsContactDetails": {
     "csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)",
@@ -130,6 +135,11 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "no2": "Nac oes",
   "no3": "Nac ydyw",
   "open": "Agor",
+  "paginationAccessibilityText1": "Set",
+  "paginationAccessibilityText2": "o dudalennau",
+  "paginationNext": "Nesaf",
+  "paginationPrevious": "Flaenorol",
+  "paginationShowing": "Yn dangos {{-from}} i {{-to}} o {{-total}} canlyniadau",
   "partOf": "Rhan o",
   "pinsContactDetails": {
     "csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)",

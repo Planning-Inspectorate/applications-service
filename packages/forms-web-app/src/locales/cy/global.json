@@ -24,7 +24,11 @@
 	"primaryNavigation": {
 		"home": "Hafan",
 		"projectSearch": "Pob prosiect",
-		"detailedInformation": "Gwybodaeth fanwl"
+		"detailedInformation": "Gwybodaeth fanwl",
+		"primaryNavigationAria": "Cyfeiri cynradd"
 	},
-	"backLinkText": "Yn ôl"
+	"backLinkText": "Yn ôl",
+	"cookieBanner": "cwci baner",
+	"relatedContentNavigation": "Cyfeiri cynnwys cysylltiedig",
+	"paginationNavigation": "tudalen cyfeiri"
 }
