@@ -110,7 +110,7 @@
       </h3>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph14') }}
+        {{ t('accessibilityStatement.paragraph14', { link: '<a class="govuk-link" href="' + externalURL.wcag21URL + '">' + t('accessibilityStatement.paragraph14LinkText') + '</a>'}) | safe }}
       </p>
 
       <h2 class="govuk-heading-m">
@@ -177,11 +177,11 @@
       </h3>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph19') }}
+        {{ t('accessibilityStatement.paragraph19', { link: '<a class="govuk-link" href="' + govUK.publicSectorAccessibilityRegulationsURL + '">' + t('accessibilityStatement.paragraph19LinkText') + '</a>'}) | safe }}
       </p>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph20', { link: '<a class="govuk-link" href="' + govUK.publicSectorAccessibilityRegulationsURL + '">' + t('accessibilityStatement.paragraph20LinkText') + '</a>'}) | safe }}
+        {{ t('accessibilityStatement.paragraph20') }}
       </p>
 
       <h2 class="govuk-heading-m">

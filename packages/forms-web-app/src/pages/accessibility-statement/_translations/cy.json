@@ -34,7 +34,8 @@
 	"heading7": "Gwybodaeth dechnegol am hygyrchedd y wefan hon",
 	"paragraph13": "Mae'r Arolygiaeth Gynllunio wedi ymrwymo i wneud ei gwefannau'n hygyrch, yn unol â Rheoliadau Hygyrchedd Cyrff Sector Cyhoeddus (Gwefannau a Chymwysiadau Symudol) (Rhif 2) 2018.",
 	"heading8": "Statws cydymffurfio",
-	"paragraph14": "Mae'r wefan hon yn cydymffurfio'n rhannol â safon AA y Canllawiau Hygyrchedd Cynnwys Gwe fersiwn 2.1. Rhestrir yr achosion o ddiffyg cydymffurfio isod.",
+	"paragraph14": "Mae'r wefan hon yn cydymffurfio'n rhannol â safon AA {{-link}} oherwydd yr achosion o ddiffyg cydymffurfio a restrir isod.",
+	"paragraph14LinkText": "Canllawiau Hygyrchedd Cynnwys Gwe fersiwn 2.1",
 	"heading9": "Cynnwys nad yw'n hygyrch",
 	"paragraph15": "Mae'r cynnwys a restrir isod yn anhygyrch am y rhesymau canlynol.",
 	"heading10": "Diffyg cydymffurfio â'r rheoliadau hygyrchedd",
@@ -52,9 +53,9 @@
 	"paragraph18": "Ceisiwn ddatrys y rhain cyn gynted ag y gallwn, lle y bo'n bosibl.",
 	"heading12": "Cynnwys nad yw o fewn cwmpas y rheoliadau hygyrchedd",
 	"heading13": "Dogfennau PDF a dogfennau eraill",
-	"paragraph19": "Mae rhai o'n dogfennau PDF a Word yn hanfodol i ddarparu ein gwasanaethau. Er enghraifft, mae gennym ddogfennau PDF sy'n cynnwys gwybodaeth am sut gall defnyddwyr gael at ein gwasanaethau, a ffurflenni wedi'u cyhoeddi fel dogfennau Word.",
-	"paragraph20": "{{-link}} os nad ydynt yn hanfodol i ddarparu ein gwasanaethau.",
-	"paragraph20LinkText": "Nid yw'r rheoliadau hygyrchedd yn mynnu ein bod yn cywiro dogfennau PDF na dogfennau eraill a gyhoeddwyd cyn 23 Medi 2018",
+	"paragraph19": "{{-link}} os nad ydynt yn hanfodol i ddarparu ein gwasanaethau.",
+	"paragraph19LinkText": "Nid yw'r rheoliadau hygyrchedd yn mynnu ein bod yn cywiro dogfennau PDF na dogfennau eraill a gyhoeddwyd cyn 23 Medi 2018",
+	"paragraph20": "Bydd unrhyw PDFs neu ddogfennau Word newydd a gyhoeddir gennym yn bodloni safonau hygyrchedd.",
 	"heading14": "Paratoi'r datganiad hygyrchedd hwn",
 	"paragraph21": "Lluniwyd adroddiad hygyrchedd ar y gwasanaeth ym mis Hydref 2023. Paratowyd y datganiad hwn ac fe'i hadolygwyd ddiwethaf ar 8 Tachwedd 2023. Mae'r gwasanaeth hwn yn cael ei brofi'n fisol o leiaf gan y tîm sy'n ei gynnal, ac yn gyfnodol gan gyrff allanol."
 }
