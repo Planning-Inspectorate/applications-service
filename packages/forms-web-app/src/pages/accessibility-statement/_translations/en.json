@@ -34,7 +34,8 @@
 	"heading7": "Technical information about this website's accessibility",
 	"paragraph13": "The Planning Inspectorate is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.",
 	"heading8": "Compliance status",
-	"paragraph14": "This website is partially compliant with the Web Content Accessibility Guidelines version 2.1 AA standard. The non-compliances are listed below.",
+	"paragraph14": "This website is partially compliant with the {{-link}} AA standard due to the non-compliances listed below.",
+	"paragraph14LinkText": "Web Content Accessibility Guidelines version 2.1",
 	"heading9": "Non-accessible content",
 	"paragraph15": "The content listed below is non-accessible for the following reasons.",
 	"heading10": "Non-compliance with the accessibility regulations",
@@ -52,9 +53,9 @@
 	"paragraph18": "Where possible, we try to fix these as soon as we can.",
 	"heading12": "Content that's not within the scope of the accessibility regulations",
 	"heading13": "PDFs and other documents",
-	"paragraph19": "Some of our PDFs and Word documents are essential to providing our services. For example, we have PDFs with information on how users can access our services, and forms published as Word documents.",
-	"paragraph20": "The accessibility regulations {{-link}} if they're not essential to providing our services.",
-	"paragraph20LinkText": "do not require us to fix PDFs or other documents published before 23 September 2018",
+	"paragraph19": "The accessibility regulations {{-link}} if they're not essential to providing our services.",
+	"paragraph19LinkText": "do not require us to fix PDFs or other documents published before 23 September 2018",
+	"paragraph20": "Any new PDFs or Word documents we publish will meet accessibility standards.",
 	"heading14": "Preparation of this accessibility statement ",
 	"paragraph21": "An accessibility report of the service took place in October 2023. This statement was prepared and last reviewed on the 8th of November 2023. This service is tested at least monthly by the team that maintains it, and periodically by external bodies."
 }
