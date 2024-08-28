@@ -101,9 +101,6 @@ extends:
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
           - name: Deploy Back Office Subscriber Functions
-            artifact:
-              name: back-office-subscribers
-              sourcePipeline: Applications Service Build
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
             steps:
               # app name is different in the training env (had to be shorter)
@@ -118,10 +115,14 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
+              - download: build
+                artifact: back-office-subscribers
+                displayName: Download back-office-subscribers
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   resourceGroup: $(resourceGroup)
+                  workingDirectory: $(Pipeline.Workspace)/build/back-office-subscribers
           - name: Run Database Migration
             condition: eq(${{ parameters.runDbMigrations }}, 'true')
             steps:
