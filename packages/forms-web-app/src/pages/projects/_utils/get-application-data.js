@@ -19,22 +19,20 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);
 
-	const projectName = (() => {
-		if (data.ProjectNameWelsh && isLangWelsh(lang)) {
-			return data.ProjectNameWelsh;
+	const translatedField = (englishField, welshField) => {
+		if (data.Region === 'Wales' && isLangWelsh(lang) && data[welshField]) {
+			return data[welshField];
 		}
 
-		return data.ProjectName;
-	})();
+		return data[englishField];
+	};
 
 	return {
-		projectName,
+		projectName: translatedField('ProjectName', 'ProjectNameWelsh'),
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: preserveLinebreaks(
-			isLangWelsh(lang) && data.SummaryWelsh ? data.SummaryWelsh : data.Summary
-		),
+		summary: preserveLinebreaks(translatedField('Summary', 'SummaryWelsh')),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),
@@ -60,10 +58,7 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline),
 		longLat: data.LongLat,
 		mapZoomLevel: data.MapZoomLevel,
-		projectLocation:
-			isLangWelsh(lang) && data.ProjectLocationWelsh
-				? data.ProjectLocationWelsh
-				: data.ProjectLocation,
+		projectLocation: translatedField('ProjectLocation', 'ProjectLocationWelsh'),
 		isMaterialChange: data.isMaterialChange
 	};
 };
