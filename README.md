@@ -6,6 +6,7 @@ Monorepo for all Applications Service services
 
 - `npm i`
 - create a `.env` file in `./packages/applications-service-api`. Copy the values from `.env.development`
+- create a `.env` file in the applications service root folder `/`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values
 - `npm run db:generate` to create database
 - `npm run db:migrate:dev` to create tables
 - `npm run db:seed` to populate tables with some data 
@@ -92,6 +93,9 @@ nvm alias default 20
 
 The Node.js version in use should closely follow [what is supported by the Azure App Service runtime](https://github.com/Azure/app-service-linux-docs/blob/master/Runtime_Support/node_support.md). From time to time, it may be necessary to update Node.js version to a newer LTS release when support for the current version is ending.
 
+## Environment Setup
+
+Create a `.env` file in the applications service root folder `\`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values
 
 ## Running
 
