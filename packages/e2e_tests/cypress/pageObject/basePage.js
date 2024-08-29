@@ -82,11 +82,12 @@ export class BasePage {
 	
 	govInputType(string) {
 		this.elements.govInput().type(string);
+	}
 		
 	selectCheckBox(string) {
 		this.elements.checkBox().check(string);
 	}
-
+	
 	clickGovLink(string) {
 		this.elements.govLink().contains(string).click();
 	}
