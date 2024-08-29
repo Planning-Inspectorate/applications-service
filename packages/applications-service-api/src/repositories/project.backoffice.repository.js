@@ -14,17 +14,7 @@ const getByCaseReference = async (caseReference) => {
 
 const getAllApplications = async (options = {}) => {
 	const { filters, searchTerm, orderBy, offset, size, excludeNullDateOfSubmission } = options;
-	const where = {
-		AND: [
-			{
-				regions: {
-					not: {
-						contains: 'wales'
-					}
-				}
-			}
-		]
-	};
+	const where = excludeNullDateOfSubmission || searchTerm || filters ? { AND: [] } : {};
 
 	if (excludeNullDateOfSubmission) {
 		where['AND'].push({

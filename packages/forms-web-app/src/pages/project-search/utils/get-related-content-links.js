@@ -7,8 +7,11 @@ const relatedContentLinkViewModel = (name, url) => ({
 	url
 });
 
-const getRelatedContentLinks = [
-	relatedContentLinkViewModel('Register of applications', getRegisterOfApplicationsURL())
+const getRelatedContentLinks = (i18n) => [
+	relatedContentLinkViewModel(
+		i18n.t('projectSearch.sidebar.registerOfApplications'),
+		getRegisterOfApplicationsURL()
+	)
 ];
 
 module.exports = { getRelatedContentLinks };

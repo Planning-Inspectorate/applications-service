@@ -63,7 +63,8 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		projectLocation:
 			isLangWelsh(lang) && data.ProjectLocationWelsh
 				? data.ProjectLocationWelsh
-				: data.ProjectLocation
+				: data.ProjectLocation,
+		isMaterialChange: data.isMaterialChange
 	};
 };
 

@@ -7,6 +7,9 @@ const { getProjectSearchController } = require('./project-search/controller');
 const { getRegisterOfApplicationsController } = require('./register-of-applications/controller');
 
 const {
+	addCheckboxAccordionTranslationsMiddleware
+} = require('./_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware');
+const {
 	addCommonTranslationsMiddleware
 } = require('./_middleware/i18n/add-common-translations-middleware');
 const {
@@ -37,6 +40,14 @@ const { validationErrorHandler } = require('../validators/validation-error-handl
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
 
+jest.mock(
+	'./_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware',
+	() => {
+		return {
+			addCheckboxAccordionTranslationsMiddleware: jest.fn()
+		};
+	}
+);
 jest.mock('./_middleware/i18n/add-common-translations-middleware', () => {
 	return {
 		addCommonTranslationsMiddleware: jest.fn()
@@ -144,6 +155,7 @@ describe('pages/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/project-search',
+				addCheckboxAccordionTranslationsMiddleware,
 				addCommonTranslationsMiddleware,
 				addProjectSearchTranslationsMiddleware,
 				getProjectSearchController

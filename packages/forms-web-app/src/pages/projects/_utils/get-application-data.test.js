@@ -15,7 +15,8 @@ const commonMockData = {
 	DateOfRepresentationPeriodOpen: '2020-01-01',
 	DateOfRelevantRepresentationClose: '2020-01-01',
 	DateRRepAppearOnWebsite: '2020-01-01',
-	DateOfPreliminaryMeeting: '2020-01-01'
+	DateOfPreliminaryMeeting: '2020-01-01',
+	isMaterialChange: false
 };
 
 describe('#getApplicationData', () => {
@@ -48,7 +49,8 @@ describe('#getApplicationData', () => {
 					DateOfRepresentationPeriodOpen: '2020-01-01',
 					DateRRepAppearOnWebsite: '2020-01-01',
 					summary: 'I am the project summary data',
-					webAddress: 'mock-web-address'
+					webAddress: 'mock-web-address',
+					isMaterialChange: false
 				});
 			});
 
@@ -74,7 +76,7 @@ describe('#getApplicationData', () => {
 				});
 				response = await getApplicationData('mock case ref');
 			});
-			it('should return the project name in an obejct', () => {
+			it('should return the project name in an object', () => {
 				expect(response).toEqual({
 					contactEmailAddress: 'mock@email.com',
 					dateOfNonAcceptance: null,
@@ -90,7 +92,8 @@ describe('#getApplicationData', () => {
 						text: 'Pre-application'
 					},
 					summary: 'I am the project summary data',
-					webAddress: 'mock-web-address'
+					webAddress: 'mock-web-address',
+					isMaterialChange: false
 				});
 			});
 		});

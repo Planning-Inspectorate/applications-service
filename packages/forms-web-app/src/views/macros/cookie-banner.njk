@@ -1,16 +1,16 @@
-{% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner %}
+{% from "govuk/components/cookie-banner/macro.njk" import govukCookieBanner%}
 
 {% macro cookieBanner(attributes = {}) -%}
-  {% set serviceName = attributes.serviceName | default('application service', true) %}
+  {% set serviceName = attributes.serviceName | default(t('global.cookieBanner.headingDefaultService'), true) %}
   {% set cookiePagePath = attributes.cookiePagePath | default('/cookies', true) %}
+  {% set headingText = t('global.cookieBanner.headingPrefix') + ' %serviceName%' | replace('%serviceName%', serviceName) %}
+  {% set ariaLabel = t('global.cookieBanner.headingPrefix') + ' %serviceName%' | replace('%serviceName%', serviceName) %}
 
-  {% set headingText = 'Cookies on %serviceName%' | replace('%serviceName%', serviceName) %}
-
-  {% set ariaLabel = 'Cookies on %serviceName%' | replace('%serviceName%', serviceName) %}
 
   {% set html %}
-    <p>We use some essential cookies to make this service work.</p>
-    <p>We'd also like to use analytics cookies so we can understand how you use the service and make improvements.</p>
+    <p>{{ t('global.cookieBanner.paragraph1') }}</p>
+
+    <p>{{ t('global.cookieBanner.paragraph2') }} </p>
   {% endset %}
 
   {{ govukCookieBanner({
@@ -25,7 +25,7 @@
         html: html,
         actions: [
           {
-            text: "Accept analytics cookies",
+            text: t('global.cookieBanner.acceptButtonText'),
             type: "submit",
             name: "cookie_banner",
             value: "accept",
@@ -33,7 +33,7 @@
             classes: "govuk-!-display-none"
           },
           {
-            text: "Reject analytics cookies",
+            text: t('global.cookieBanner.rejectButtonText'),
             type: "submit",
             name: "cookie_banner",
             value: "reject",
@@ -41,7 +41,7 @@
             classes: "govuk-!-display-none"
           },
           {
-            text: "View cookies",
+            text: t('global.cookieBanner.viewCookiesLinkText'),
             href: cookiePagePath,
             attributes: { "data-cy": "cookie-banner-view-cookies" }
           }

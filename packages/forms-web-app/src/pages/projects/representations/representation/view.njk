@@ -4,6 +4,17 @@
 
 {% from "components/wrappers/related-guides-wrapper.njk" import relatedGuidesWrapper with context %}
 
+{% set name = representation.name if representation.name else t('representationsIndex.unknown') %}
+{% if representation.representative %}
+	{% set name = representation.representative + ' ' + t('representationsIndex.onBehalfOf') + ' ' + name %}
+{% endif %}
+{% set pageHeading = t('representationsIndex.representationBy') + " " + name %}
+
+
+{% block pageTitle %}
+	{{ t('representationsIndex.pageTitle1') + ' | ' + pageHeading }}
+{% endblock %}
+
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-third">
@@ -14,11 +25,11 @@
 
 		<div class="govuk-grid-column-two-thirds" data-cy="representaion">
 			<a class="govuk-back-link govuk-!-margin-top-0" href="{{ backToListUrl }}" data-cy="back">
-				Back to list
+				{{ t('representationsIndex.backToList') }}
 			</a>
 
 			<span class="govuk-caption-l">
-				{{ projectName }}
+				{{ projectNameWelsh if langIsWelsh and projectNameWelsh else projectName }} 
 			</span>
 
 			<h1 class="govuk-heading-l">
@@ -29,7 +40,7 @@
 				rows: [
 					{
 						key: {
-							text: "Date submitted"
+							text: t('representationsIndex.dateSubmitted')
 						},
 						value: {
 							text: representation.dateSubmitted
@@ -37,10 +48,10 @@
 					},
 					{
 						key: {
-							text: "Submitted by"
+							text: t('representationsIndex.submittedBy')
 						},
 						value: {
-							text: representation.submittedByWelsh if langIsWelsh else representation.submittedBy
+							text: representation.submittedByWelsh if langIsWelsh and representation.submittedByWelsh else representation.submittedBy
 						}
 					}
 				]
@@ -51,14 +62,14 @@
 			</div>
 
 			{% if representation.attachments | length > 0 %}
-				<h2 class="govuk-heading-m">Attachment(s)</h2>
+				<h2 class="govuk-heading-m">{{t('representationsIndex.attachments')}}</h2>
 
 				<ul class="govuk-list">
 					{% for attachment in representation.attachments %}
 						<li>
 							<p class="govuk-body">
 								<a class="govuk-link" href="{{ attachment.path }}" target="_blank">
-									{{ attachment.description or attachment.personal_name }} ({{ attachment.mime | formatMimeType }}, {{ attachment.size | formatBytes }}) (opens in new window)
+									{{ attachment.description or attachment.personal_name }} ({{ attachment.mime | formatMimeType }}, {{ attachment.size | formatBytes }}) ({{ t('representationsIndex.opensInNewWindow') }})
 								</a>
 							</p>
 						</li>
@@ -70,7 +81,7 @@
 				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible ">
 			</div>
 
-			{{ relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--tablet"]) }}
+			{{ relatedGuidesWrapper(featureHideLink, ["visible-on visible-on--tablet"], applicationData.isMaterialChange) }}
 		</div>
 	</div>
 {% endblock %}

@@ -17,7 +17,7 @@ const getPageData = (i18n, query, applications, filters, pagination) => ({
 	query,
 	resultsPerPage: documentsPerPage(query),
 	sortByLinks: getProjectSearchSortByLinks(i18n, query),
-	relatedContentLinks: getRelatedContentLinks
+	relatedContentLinks: getRelatedContentLinks(i18n)
 });
 
 module.exports = {
