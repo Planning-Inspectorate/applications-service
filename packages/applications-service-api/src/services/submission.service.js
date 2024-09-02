@@ -40,7 +40,7 @@ const createBackOfficeSubmission = async (submission) => {
 };
 
 const buildRepresentationFileName = (metadata) =>
-	`${metadata.name.replace(/\s+/g, '-')}-Written-Representation.pdf`;
+	`${metadata.name.replace(/\s+/g, '-')}-Written-Representation-${metadata.submissionId}.pdf`;
 
 const completeBackOfficeSubmission = async (submissionDetails) => {
 	const { submissionId, caseReference, email } = submissionDetails;
