@@ -13,7 +13,7 @@ describe('User navigates to the documents page and can filter or search project 
 		projectPage.findAndClickSidebarLinkLeft('Documents');
 	});
 
-	it('Sees a list of 3 Documents and can chancge view to 50 Documents', () => {
+	it('Sees a list of 4 Documents and can chancge view to 50 Documents', () => {
 		documents.returnListOfDocuments().should('be.visible');
 		documents.returnListOfDocuments().should('have.length', 4);
 		documents.chooseNumberOfResults('50');
