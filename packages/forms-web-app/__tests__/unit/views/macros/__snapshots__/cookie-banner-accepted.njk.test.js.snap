@@ -19,7 +19,7 @@ exports[`views/macros/cookie-banner-accepted should allow setting a custom cooki
         
 
         <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/some/path/here">change your cookie settings</a> at any time.</p>
+		<p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/some/path/here">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
@@ -60,7 +60,7 @@ exports[`views/macros/cookie-banner-accepted should allow setting a custom servi
         
 
         <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+		<p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ exports[`views/macros/cookie-banner-accepted should allow setting all custom att
         
 
         <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/a/b/c">change your cookie settings</a> at any time.</p>
+		<p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/a/b/c">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>
@@ -142,7 +142,7 @@ exports[`views/macros/cookie-banner-accepted should have sensible default attrib
         
 
         <div class="govuk-cookie-banner__content">
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
+		<p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="/cookies">change your cookie settings</a> at any time.</p>
   </div>
       </div>
     </div>

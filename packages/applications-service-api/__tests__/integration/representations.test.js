@@ -88,7 +88,7 @@ describe('api/v1/representations', () => {
 				const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
 				expect(response.status).toEqual(500);
 				expect(response.text).toEqual(
-					'{"code":500,"message":{"errors":["Unexpected internal server error while handling API call"]}}'
+					'{"code":500,"errors":["Unexpected internal server error while handling API call"]}'
 				);
 			});
 		});
@@ -156,7 +156,7 @@ describe('api/v1/representations', () => {
 				const response = await request.get('/api/v1/representations?caseReference=BC0110001');
 				expect(response.status).toEqual(500);
 				expect(response.text).toEqual(
-					'{"code":500,"message":{"errors":["Unexpected internal server error while handling API call"]}}'
+					'{"code":500,"errors":["Unexpected internal server error while handling API call"]}'
 				);
 			});
 		});

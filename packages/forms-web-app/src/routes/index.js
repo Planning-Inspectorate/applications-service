@@ -16,6 +16,9 @@ const { haveYourSayGuideRouter } = require('../pages/have-your-say-guide/router'
 const { accessibilityStatementRouter } = require('../pages/accessibility-statement/router');
 
 const { addGlobalMiddleware } = require('../pages/_middleware/add-global-middleware');
+const {
+	examinationMiddleware
+} = require('../pages/examination/_middleware/examination.middleware');
 
 router.use(addGlobalMiddleware);
 
@@ -25,6 +28,7 @@ router.use(accessibilityStatementRouter);
 
 router.use(
 	`/projects/:case_ref/${routesConfig.examination.baseDirectory}`,
+	examinationMiddleware,
 	isProcessingSubmission,
 	examinationRouter
 );

@@ -3,6 +3,20 @@
 		"content": "This is a beta service - your {{-link}} will help us to improve it",
 		"feedback": "feedback"
 	},
+	"cookieBanner": {
+		"headingPrefix": "Cookies on",
+		"headingDefaultService": "application service",
+		"paragraph1": "We use some essential cookies to make this service work.",
+		"paragraph2": "We'd also like to use analytics cookies so we can understand how you use the service and make improvements.",
+		"acceptButtonText": "Accept analytics cookies",
+		"rejectButtonText": "Reject analytics cookies",
+		"viewCookiesLinkText": "View cookies",
+		"cookieBannerAriaLabel": "cookie banner",
+		"acceptedCookiesText": "You’ve accepted analytics cookies. You can {{-link}} at any time.",
+		"rejectedCookiesText": "You’ve rejected analytics cookies. You can {{-link}} at any time.",
+		"actionCookiesLinkText": "change your cookie settings",
+		"hideMessage": "Hide this message"
+	},
 	"footer": {
 		"content": "All content is available under the {{-link}}, except where otherwise stated",
 		"contentLinkText": "Open Government Licence v3.0",
@@ -28,7 +42,6 @@
 		"primaryNavigationAria": "Primary navigation"
 	},
 	"backLinkText": "Back",
-	"cookieBanner": "cookie banner",
 	"relatedContentNavigation": "Related content navigation",
 	"paginationNavigation": "Pagination navigation"
 }
