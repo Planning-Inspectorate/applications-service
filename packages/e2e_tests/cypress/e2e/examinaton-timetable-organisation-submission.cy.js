@@ -83,7 +83,7 @@ describe('User registers as an organisation to have their say against the examin
 			'123456',
 			'An organisation I work for',
 			'John Tester',
-			'test@test11.com'
+			'test@test.com'
 		]);
 		examinationTimetable.clickButton('Submit');
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
