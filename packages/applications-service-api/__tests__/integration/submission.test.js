@@ -108,7 +108,7 @@ describe('/api/v1/submissions', () => {
 			let response;
 
 			describe('submission with written representation', () => {
-				const generatedPDFFileName = `Joe-Bloggs-Written-Representation-${mockSubmissionId}.pdf`;
+				const generatedPDFFileName = `Joe-Bloggs-Comments-on-LIRs-${mockSubmissionId}.pdf`;
 
 				describe('request with submissionId provided', () => {
 					beforeEach(async () => {
