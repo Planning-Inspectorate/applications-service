@@ -6,6 +6,7 @@ const session = require('express-session');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 const { configureSessionStore } = require('./lib/session');
+const { NotFoundError } = require('./lib/errors');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
@@ -102,6 +103,10 @@ app
 	})
 	.use((err, req, res, next) => {
 		logger.error({ err }, 'Unhandled exception');
+
+		if (err instanceof NotFoundError) {
+			return res.status(404).render('error/not-found');
+		}
 
 		res.status(500).render('error/unhandled-exception');
 		next();

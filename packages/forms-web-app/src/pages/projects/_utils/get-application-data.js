@@ -1,4 +1,5 @@
 const { getProjectData } = require('../../../lib/application-api-wrapper');
+const { NotFoundError } = require('../../../lib/errors');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const dayjs = require('dayjs');
 const { preserveLinebreaks } = require('../../../lib/preserve-line-breaks');
@@ -10,7 +11,14 @@ const add28DaysToDate = (date) => (date ? dayjs(date).add(28, 'days').toISOStrin
 
 const getApplicationData = async (case_ref, lang = 'en') => {
 	const { data, resp_code } = await getProjectData(case_ref);
-	if (resp_code !== 200) throw new Error('Application response status not 200');
+
+	if (resp_code === 404) {
+		throw new NotFoundError(`Project with reference ${case_ref}`);
+	}
+
+	if (resp_code !== 200) {
+		throw new Error('Application response status not 200');
+	}
 
 	const status = {
 		number: data.Stage,
