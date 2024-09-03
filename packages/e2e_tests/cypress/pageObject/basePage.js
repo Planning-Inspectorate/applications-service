@@ -11,7 +11,8 @@ export class BasePage {
 		cookiesLink: () => cy.get('[data-cy="Cookies"]'),
 		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-regoster"]'),
 		checkBox: () => cy.get('[type="checkbox"]'),
-		govLink: () => cy.get('.govuk-link')
+		govLink: () => cy.get('.govuk-link'),
+		govInput: () => cy.get('.govuk-input')
 	};
 
 	clickSaveAndContinueBtn() {
@@ -85,5 +86,9 @@ export class BasePage {
 
 	clickGovLink(string) {
 		this.elements.govLink().contains(string).click();
+	}
+
+	govInputType(string) {
+		this.elements.govInput().type(string);
 	}
 }
