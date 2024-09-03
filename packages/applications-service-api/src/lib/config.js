@@ -112,7 +112,6 @@ module.exports = {
 		encryption: {
 			algorithm: 'aes-256-ctr',
 			secretKey: process.env.ENCRYPTION_SECRET_KEY
-			//secretKey: process.env.ENCRYPTION_SECRET_KEY || 'dummy_encryption_key'
 		}
 	},
 	featureFlag: {
