@@ -23,10 +23,11 @@ const createBackOfficeSubmission = async (submission) => {
 	if (!metadata.submissionId) metadata.submissionId = generateId('S');
 
 	if (metadata.representation) {
+		const fileName = buildRepresentationFileName(metadata);
 		submission.file = generateRepresentationPDF(
 			metadata.submissionId,
 			metadata.representation,
-			'Written-Representation.pdf'
+			fileName
 		);
 	}
 
@@ -37,6 +38,9 @@ const createBackOfficeSubmission = async (submission) => {
 		submissionId: metadata.submissionId
 	};
 };
+
+const buildRepresentationFileName = (metadata) =>
+	`${metadata.name.replace(/\s+/g, '-')}-Written-Representation-${metadata.submissionId}.pdf`;
 
 const completeBackOfficeSubmission = async (submissionDetails) => {
 	const { submissionId, caseReference, email } = submissionDetails;
