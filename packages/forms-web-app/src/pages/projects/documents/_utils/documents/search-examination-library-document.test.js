@@ -1,9 +1,9 @@
 const { searchExaminationLibraryDocument } = require('./search-examination-library-document');
 
-const { searchDocumentsV3 } = require('../../../../../services/document.service');
+const { wrappedSearchDocumentsV3 } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('../../../../../services/document.service', () => ({
-	searchDocumentsV3: jest.fn()
+jest.mock('../../../../../lib/application-api-wrapper', () => ({
+	wrappedSearchDocumentsV3: jest.fn()
 }));
 
 describe('controllers/projects/documents/utils/documents/search-examination-library-document', () => {
@@ -16,7 +16,7 @@ describe('controllers/projects/documents/utils/documents/search-examination-libr
 					type: 'Examination Library'
 				};
 
-				searchDocumentsV3.mockReturnValueOnce({
+				wrappedSearchDocumentsV3.mockReturnValueOnce({
 					data: {
 						documents: [
 							mockExamLibraryDocument,
@@ -33,7 +33,7 @@ describe('controllers/projects/documents/utils/documents/search-examination-libr
 			});
 
 			describe('and there is no an examination library document returned in an array', () => {
-				searchDocumentsV3.mockReturnValueOnce({
+				wrappedSearchDocumentsV3.mockReturnValueOnce({
 					data: {
 						documents: []
 					}
@@ -47,7 +47,7 @@ describe('controllers/projects/documents/utils/documents/search-examination-libr
 			});
 
 			describe('and there is no an document with type of examination library returned in an array', () => {
-				searchDocumentsV3.mockReturnValueOnce({
+				wrappedSearchDocumentsV3.mockReturnValueOnce({
 					data: {
 						documents: [
 							{ name: 'some examination library document', type: 'not examination library' }

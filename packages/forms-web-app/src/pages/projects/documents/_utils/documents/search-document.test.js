@@ -1,10 +1,10 @@
 const { searchDocuments } = require('./searchDocuments');
-const { searchDocumentsV3 } = require('../../../../../services/document.service');
+const { wrappedSearchDocumentsV3 } = require('../../../../../lib/application-api-wrapper');
 const { searchExaminationLibraryDocument } = require('./search-examination-library-document');
 const { getBody } = require('./body/getBody');
 
-jest.mock('../../../../../services/document.service', () => ({
-	searchDocumentsV3: jest.fn()
+jest.mock('../../../../../lib/application-api-wrapper', () => ({
+	wrappedSearchDocumentsV3: jest.fn()
 }));
 jest.mock('./body/getBody', () => ({
 	getBody: jest.fn()
@@ -19,7 +19,7 @@ describe('#searchDocuments', () => {
 		const mockQuery = {};
 		beforeEach(async () => {
 			getBody.mockReturnValue({ text: 'mock body' });
-			searchDocumentsV3.mockReturnValue({
+			wrappedSearchDocumentsV3.mockReturnValue({
 				data: {
 					documents: ['mock documents'],
 					filters: ['mock filters'],
@@ -50,7 +50,7 @@ describe('#searchDocuments', () => {
 			});
 
 			it('should call the search documents service', () => {
-				expect(searchDocumentsV3).toHaveBeenCalledWith({ text: 'mock body' });
+				expect(wrappedSearchDocumentsV3).toHaveBeenCalledWith({ text: 'mock body' });
 			});
 			it('should call the examination library document', () => {
 				expect(searchExaminationLibraryDocument).toHaveBeenCalledWith(mockCaseRef);

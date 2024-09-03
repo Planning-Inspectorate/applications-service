@@ -1,10 +1,11 @@
 const { getRepresentationController } = require('./controller');
 
-const { getProjectData } = require('../../../../lib/application-api-wrapper');
-const { getRepresentation } = require('../../../../services/representation.service');
+const {
+	getProjectData,
+	getRepresentationById
+} = require('../../../../lib/application-api-wrapper');
 
 jest.mock('../../../../lib/application-api-wrapper');
-jest.mock('../../../../services/representation.service');
 
 describe('pages/projects/representations/representation/controller', () => {
 	let req;
@@ -78,7 +79,7 @@ describe('pages/projects/representations/representation/controller', () => {
 							data: { CaseReference: applicationCaseRef, ProjectName: 'ABC' }
 						})
 					);
-					getRepresentation.mockImplementation(() =>
+					getRepresentationById.mockImplementation(() =>
 						Promise.resolve({
 							data: { ...representations[0] }
 						})

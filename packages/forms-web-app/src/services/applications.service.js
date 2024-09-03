@@ -1,4 +1,4 @@
-const { getProjectData, getAllProjectList } = require('../lib/application-api-wrapper');
+const { getAllProjectList } = require('../lib/application-api-wrapper');
 
 const getApplications = async (queryString) => {
 	const response = await getAllProjectList(queryString);
@@ -20,13 +20,4 @@ const getApplications = async (queryString) => {
 	};
 };
 
-// eslint-disable-next-line camelcase
-const getAppData = async (case_ref) => {
-	const projectData = await getProjectData(case_ref);
-	return projectData;
-};
-
-module.exports = {
-	getApplications,
-	getAppData
-};
+module.exports = { getApplications };

@@ -1,4 +1,4 @@
-const { getAppData } = require('../../../../../services/applications.service');
+const { getProjectData } = require('../../../../../lib/application-api-wrapper');
 const { setupHasComeDirect } = require('./setup-has-come-direct');
 const {
 	getExaminationTimetableId,
@@ -13,7 +13,7 @@ const hasComeFromTheExaminationTimetablePage = (session) =>
 	hasExaminationSession(session) && getExaminationTimetableId(session);
 
 const setupExaminationJourney = async (session, caseRef) => {
-	const { data: applicationData } = await getAppData(caseRef);
+	const { data: applicationData } = await getProjectData(caseRef);
 	setBaseSessionData(session, caseRef, applicationData);
 
 	const examinationTimetableId = session.examination?.examinationTimetableId;

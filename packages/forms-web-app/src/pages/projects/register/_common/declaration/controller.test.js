@@ -2,10 +2,10 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('./controller');
-const { postRegistrationData } = require('../../../../../services/registration.service');
+const { postRegistration } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('../../../../../../src/services/registration.service', () => ({
-	postRegistrationData: jest.fn()
+jest.mock('../../../../../../src/lib/application-api-wrapper', () => ({
+	postRegistration: jest.fn()
 }));
 describe('pages/projects/register/_common/declaration/controller', () => {
 	describe('#getRegisterDeclarationController', () => {
@@ -111,11 +111,11 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 					}
 				};
 				beforeEach(async () => {
-					postRegistrationData.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
+					postRegistration.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
 					await postRegisterDeclarationController(req, res);
 				});
 				it('should get he ip ref no from the interested party endpoint ', () => {
-					expect(postRegistrationData).toHaveBeenCalledWith(
+					expect(postRegistration).toHaveBeenCalledWith(
 						'{"text":"mock session key data","case_ref":"mock case ref","comment":"mock comment"}'
 					);
 				});
