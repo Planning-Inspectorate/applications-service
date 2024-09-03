@@ -15,9 +15,9 @@ describe('User navigates to the documents page and can filter or search project 
 
 	it('Sees a list of 3 Documents and can chancge view to 50 Documents', () => {
 		documents.returnListOfDocuments().should('be.visible');
-		documents.returnListOfDocuments().should('have.length', 3);
+		documents.returnListOfDocuments().should('have.length', 4);
 		documents.chooseNumberOfResults('50');
-		documents.returnListOfDocuments().should('have.length', 3);
+		documents.returnListOfDocuments().should('have.length', 4);
 	});
 
 	it('Can search for a document by typing a description', () => {
