@@ -95,7 +95,9 @@ The Node.js version in use should closely follow [what is supported by the Azure
 
 ## Environment Setup
 
-Create a `.env` file in the applications service root folder `\`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values
+Create a `.env` file in the applications service root folder `\`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values.
+
+Create a `.env` file in `./packages/applications-service-api`.  Copy the variables from `.env.example` (in the same folder).  Speak to a colleague to get the actual variable values.  This file will also include a `DATABASE_URL` environment variable which is documented in the SQL Server section of this document below.
 
 ## Running
 
