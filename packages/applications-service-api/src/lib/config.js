@@ -9,6 +9,9 @@
 const path = require('path');
 const { parseCSV } = require('../utils/parse');
 
+//This is required for an issue on Windows machines whereby local ".env" variables are not being picked up causing an error in some tests e.g. crypto.test.js
+require('dotenv').config();
+
 module.exports = {
 	backOfficeIntegration: {
 		caseReferences: parseCSV(process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES),
@@ -110,7 +113,8 @@ module.exports = {
 		},
 		encryption: {
 			algorithm: 'aes-256-ctr',
-			secretKey: process.env.ENCRYPTION_SECRET_KEY || 'dummy_value'
+			secretKey: process.env.ENCRYPTION_SECRET_KEY
+			//secretKey: process.env.ENCRYPTION_SECRET_KEY || 'dummy_encryption_key'
 		}
 	},
 	featureFlag: {
