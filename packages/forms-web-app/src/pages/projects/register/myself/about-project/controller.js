@@ -1,10 +1,7 @@
 const {
 	VIEW: { REGISTER: registerRoute }
 } = require('../../../../../lib/views');
-const {
-	postRegistrationData,
-	postCommentsData
-} = require('../../../../../services/registration.service');
+const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
 const config = require('../../../../../config');
 
 const view = 'projects/register/_common/about-project/view.njk';
@@ -53,7 +50,7 @@ const postRegisterMyselfAboutProjectController = async (req, res) => {
 				req.session.mySelfRegdata.case_ref = req.session.caseRef;
 
 				const registrationData = JSON.stringify(req.session.mySelfRegdata);
-				const response = await postRegistrationData(registrationData);
+				const response = await postRegistration(registrationData);
 
 				ipRefNo = response.data;
 				req.session.mySelfRegdata.ipRefNo = ipRefNo;
@@ -64,7 +61,7 @@ const postRegisterMyselfAboutProjectController = async (req, res) => {
 				mode: req.session.mode
 			});
 
-			if (commentsData) await postCommentsData(ipRefNo, commentsData);
+			if (commentsData) await putComments(ipRefNo, commentsData);
 			return res.redirect(`${res.locals.baseUrl}${routes.registrationComplete}`);
 		} else {
 			req.session.mode = 'final';

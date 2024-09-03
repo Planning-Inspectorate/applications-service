@@ -1,4 +1,4 @@
-const { getAppData } = require('../../../../services/applications.service');
+const { getProjectData } = require('../../../../lib/application-api-wrapper');
 const logger = require('../../../../lib/logger');
 const {
 	isRegistrationOpen,
@@ -32,7 +32,7 @@ const getRegisterIndexController = async (req, res) => {
 	delete req.session.comment;
 	delete req.session.typeOfParty;
 
-	const response = await getAppData(case_ref);
+	const response = await getProjectData(case_ref);
 
 	if (response.resp_code === 200) {
 		const appData = response.data;

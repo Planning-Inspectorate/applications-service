@@ -1,5 +1,5 @@
 const logger = require('../../../lib/logger');
-const { getAppData } = require('../../../services/applications.service');
+const { getProjectData } = require('../../../lib/application-api-wrapper');
 const { getPageData } = require('./_utils/get-page-data');
 const {
 	routesConfig: {
@@ -22,7 +22,7 @@ const getProjectsExaminationTimetableController = async (req, res) => {
 	try {
 		const { params, i18n } = req;
 		const { case_ref } = params;
-		const { data } = await getAppData(case_ref);
+		const { data } = await getProjectData(case_ref);
 		const examinationTimetableData = data;
 		const projectName = examinationTimetableData?.ProjectName;
 		const pageData = getPageData(case_ref, projectName, examinationTimetableData, i18n);
