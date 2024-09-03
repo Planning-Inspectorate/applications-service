@@ -7,10 +7,15 @@ const ApiError = require('../error/apiError');
 
 module.exports = {
 	async getTimetables(req, res) {
-		const { caseRef } = req.params;
+		const caseRef = encodeURIComponent(req.params.caseRef);
 
-		logger.debug(`Retrieving timetables by case reference ${caseRef} ...`);
 		try {
+			logger.debug(`Retrieving timetables by case reference ${caseRef} ...`);
+
+			if (caseRef !== req.query.caseRef) {
+				throw ApiError.badRequest('Invalid caseReference');
+			}
+
 			const timetables = await getTimetables(caseRef);
 
 			if (!timetables.length) {
