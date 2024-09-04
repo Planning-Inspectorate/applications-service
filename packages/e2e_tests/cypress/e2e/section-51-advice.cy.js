@@ -34,6 +34,6 @@ describe('User can review and search Section 51 advice', () => {
 
 	it('can navigate back to the results page', () => {
 		cy.get('a').contains('Back to list').click();
-		section51.checkMainH1Visible();
+		basePage.locateH1ByText('Section 51 advice');
 	});
 });
