@@ -3,7 +3,6 @@ export class PO_ExaminationTimetable {
 		govukLinkHaveYourSay: () => cy.get('a.govuk-button'),
 		startNow: () => cy.get('a[href*="interested-party-number"]'),
 		radioButton: () => cy.get('[type="radio"]'),
-		continueButton: () => cy.get('[data-cy="button-submit-and-continue"]'),
 		continueButton2: () => cy.get('.govuk-button'),
 		firstDeadline: () => cy.get('#choose-deadline'),
 		firstDeadlineItem: () => cy.get('#examination-select-deadline'),
@@ -24,14 +23,6 @@ export class PO_ExaminationTimetable {
 		this.elements.startNow().click();
 	}
 
-	findAndSelectRadioOption(string) {
-		this.elements.radioButton().check(string).click();
-	}
-
-	clickContinueButton() {
-		this.elements.continueButton().click();
-	}
-
 	clickContinueButton2() {
 		this.elements.continueButton2().contains('Continue').click();
 	}
@@ -40,9 +31,9 @@ export class PO_ExaminationTimetable {
 		this.elements.continueButtonFileUpload().click();
 	}
 
-	enterTextInField(textFieldId, text) {
-		cy.get(`#${textFieldId}`).type(text);
-	}
+	// enterTextInField(textFieldId, text) {
+	// 	cy.get(`#${textFieldId}`).type(text);
+	// }
 
 	clearTextInField(textFieldId) {
 		cy.get(`#${textFieldId}`).clear();
@@ -84,7 +75,7 @@ export class PO_ExaminationTimetable {
 		});
 	}
 
-	checkAnswersSecondtPage(expectedAnswers) {
+	checkAnswersSecondPage(expectedAnswers) {
 		this.getAllAnswers().then((answers) => {
 			const myAnswers = [];
 			cy.wrap(answers)

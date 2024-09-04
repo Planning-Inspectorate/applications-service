@@ -1,46 +1,51 @@
+import { BasePage } from '../pageObject/basePage';
 import { PO_ExaminationTimetable } from '../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
 
 const examinationTimetable = new PO_ExaminationTimetable();
+const basePage = new BasePage();
+
+before(() => {
+	cy.clearCookies();
+});
 
 describe('Agent has their say against the examination timetable', () => {
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
-		cy.clearCookies();
 		cy.visit('/projects/BC0910150/examination-timetable');
-		examinationTimetable.clickLink();
+		basePage.clickProjectInformationMenuLink('have-your-say');
 		examinationTimetable.clickStartNowButton();
 	});
 
 	it('Selects no for interested party number and to member of project', () => {
-		examinationTimetable.findAndSelectRadioOption('no');
-		examinationTimetable.clickContinueButton();
-		examinationTimetable.findAndSelectRadioOption('no');
-		examinationTimetable.clickContinueButton();
+		basePage.checkGovRadioBtn('no');
+		basePage.clickContiuneBtn();
+		basePage.checkGovRadioBtn('no');
+		basePage.clickContiuneBtn();
 	});
 
 	it('Selects Agent, enters organisation name and email addres and continues', () => {
-		examinationTimetable.findAndSelectRadioOption('agent');
-		examinationTimetable.clickContinueButton();
-		examinationTimetable.enterTextInField('examination-name', 'Testing Organisation');
-		examinationTimetable.clickContinueButton();
-		examinationTimetable.enterTextInField('examination-email', 'test@test.com');
-		examinationTimetable.clickContinueButton();
+		basePage.checkGovRadioBtn('agent');
+		basePage.clickContiuneBtn();
+		basePage.typeGovInput('Testing Organisation');
+		basePage.clickContiuneBtn();
+		basePage.typeGovInput('test@test.com');
+		basePage.clickContiuneBtn();
 	});
 
 	it('Select first deadline and clicks continue,', () => {
 		examinationTimetable.checkFirstRadioButton();
-		examinationTimetable.clickContinueButton();
+		basePage.clickContiuneBtn();
 	});
 
 	it('Selects first item and choose to upload comments and files', () => {
 		examinationTimetable.checkFirstRadioButton();
-		examinationTimetable.clickContinueButton();
-		examinationTimetable.findAndSelectRadioOption('both');
-		examinationTimetable.clickContinueButton();
+		basePage.clickContiuneBtn();
+		basePage.checkGovRadioBtn('both');
+		basePage.clickContiuneBtn();
 	});
 
 	it('Types a comment and and uploads a PDF file and submits', () => {
 		examinationTimetable.typeComment('This is a test comment');
-		examinationTimetable.clickContinueButton();
+		basePage.clickContiuneBtn();
 		cy.get('.moj-multi-file-upload__dropzone').selectFile(
 			'cypress/e2e/cypress/fixtures/Testing.pdf',
 			{ action: 'drag-drop' }
@@ -49,11 +54,11 @@ describe('Agent has their say against the examination timetable', () => {
 	});
 
 	it('Selects yes to personal information and ticks comments and files ', () => {
-		examinationTimetable.findAndSelectRadioOption('yes');
-		examinationTimetable.clickContinueButton();
+		basePage.checkGovRadioBtn('yes');
+		basePage.clickContiuneBtn();
 		cy.get('#examination-personal-information-which-comment-files').check();
 		cy.get('#examination-personal-information-which-comment-files-2').check();
-		examinationTimetable.clickContinueButton();
+		basePage.clickContiuneBtn();
 	});
 
 	it('Checks answers are correct', () => {
@@ -64,8 +69,8 @@ describe('Agent has their say against the examination timetable', () => {
 			'Yes',
 			'My commentTesting.pdf'
 		]);
-		examinationTimetable.clickContinueButton();
-		examinationTimetable.findAndSelectRadioOption('no');
+		basePage.clickContiuneBtn();
+		basePage.checkGovRadioBtn('no');
 		examinationTimetable.clickButton('Continue');
 	});
 
@@ -75,19 +80,19 @@ describe('Agent has their say against the examination timetable', () => {
 
 	it('Changes the organisation name and saves', () => {
 		examinationTimetable.clearTextInField('examination-name');
-		examinationTimetable.enterTextInField('examination-name', 'Test Organisation');
-		examinationTimetable.clickContinueButton();
+		basePage.typeGovInput('Test Organisation');
+		basePage.clickContiuneBtn();
 	});
 
 	it('Decides to change email address', () => {
 		examinationTimetable.clickChangeLink(2);
 		examinationTimetable.clearTextInField('examination-email');
-		examinationTimetable.enterTextInField('examination-email', 'tester@tester.com');
-		examinationTimetable.clickContinueButton();
+		basePage.typeGovInput('tester@tester.com');
+		basePage.clickContiuneBtn();
 	});
 
 	it('Final check that answers have updates successfully', () => {
-		examinationTimetable.checkAnswersSecondtPage([
+		examinationTimetable.checkAnswersSecondPage([
 			'No',
 			'On behalf of another person, a household or another organisation I do not work for',
 			'Test Organisation',

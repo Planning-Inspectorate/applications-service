@@ -1,14 +1,19 @@
 import { PO_Section51 } from '../pageObject/section-51-advice/PO_Section51';
+import { BasePage } from '../pageObject/basePage';
 
 const section51 = new PO_Section51();
+const basePage = new BasePage();
+
+before(() => {
+	cy.clearCookies();
+});
 
 describe('User can review and search Section 51 advice', () => {
 	it('can navigate to the Section 51 page', () => {
-		cy.clearCookies();
 		cy.visit('/projects/EN010120/');
-		section51.clickSection51Link();
+		basePage.clickProjectInformationMenuLink('s51');
 		cy.url().should('include', '/s51advice');
-		section51.checkMainH1Visible();
+		basePage.locateH1ByText('Section 51 advice');
 	});
 
 	it('can change the number of s51 results displays to 50', () => {
