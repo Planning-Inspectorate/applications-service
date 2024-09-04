@@ -25,9 +25,9 @@ describe('Agent has their say against the examination timetable', () => {
 	it('Selects Agent, enters organisation name and email addres and continues', () => {
 		basePage.checkGovRadioBtn('agent');
 		basePage.clickContiuneBtn();
-		basePage.typeGovInput('Testing Organisation');
+		basePage.govInputType('Testing Organisation');
 		basePage.clickContiuneBtn();
-		basePage.typeGovInput('test@test.com');
+		basePage.govInputType('test@test.com');
 		basePage.clickContiuneBtn();
 	});
 
@@ -80,14 +80,14 @@ describe('Agent has their say against the examination timetable', () => {
 
 	it('Changes the organisation name and saves', () => {
 		examinationTimetable.clearTextInField('examination-name');
-		basePage.typeGovInput('Test Organisation');
+		basePage.govInputType('Test Organisation');
 		basePage.clickContiuneBtn();
 	});
 
 	it('Decides to change email address', () => {
 		examinationTimetable.clickChangeLink(2);
 		examinationTimetable.clearTextInField('examination-email');
-		basePage.typeGovInput('tester@tester.com');
+		basePage.govInputType('tester@tester.com');
 		basePage.clickContiuneBtn();
 	});
 
