@@ -1,17 +1,17 @@
 const { getProjectsDocumentsController } = require('./controller');
 
 const { mockI18n } = require('../../_mocks/i18n');
-const { searchDocumentsV3 } = require('../../../services/document.service');
-const { getAppData } = require('../../../services/applications.service');
+const {
+	getProjectData,
+	wrappedSearchDocumentsV3
+} = require('../../../lib/application-api-wrapper');
 const {
 	searchExaminationLibraryDocument
 } = require('./_utils/documents/search-examination-library-document');
 
-jest.mock('../../../services/applications.service', () => ({
-	getAppData: jest.fn()
-}));
-jest.mock('../../../services/document.service', () => ({
-	searchDocumentsV3: jest.fn()
+jest.mock('../../../lib/application-api-wrapper', () => ({
+	getProjectData: jest.fn(),
+	wrappedSearchDocumentsV3: jest.fn()
 }));
 jest.mock('./_utils/documents/search-examination-library-document', () => ({
 	searchExaminationLibraryDocument: jest.fn()
@@ -38,11 +38,11 @@ describe('pages/projects/documents/controller', () => {
 				const res = { render: jest.fn(), status: jest.fn(() => res) };
 
 				beforeEach(async () => {
-					getAppData.mockReturnValue({
+					getProjectData.mockReturnValue({
 						data: { ProjectName: 'mock project name' },
 						resp_code: 200
 					});
-					searchDocumentsV3.mockReturnValue({
+					wrappedSearchDocumentsV3.mockReturnValue({
 						data: {
 							documents: [
 								{
@@ -278,7 +278,7 @@ describe('pages/projects/documents/controller', () => {
 				const res = { render: jest.fn(), status: jest.fn(() => res) };
 
 				beforeEach(async () => {
-					getAppData.mockReturnValue({
+					getProjectData.mockReturnValue({
 						data: { ProjectName: 'mock project name' },
 						resp_code: 500
 					});

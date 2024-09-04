@@ -1,6 +1,6 @@
 const { getRegisterIndexController } = require('./controller');
 
-const { getAppData } = require('../../../../services/applications.service');
+const { getProjectData } = require('../../../../lib/application-api-wrapper');
 const { mockReq, mockRes } = require('../../../../../__tests__/unit/mocks');
 const { mockI18n } = require('../../../_mocks/i18n');
 
@@ -10,7 +10,7 @@ const i18n = mockI18n(registerTranslations);
 
 jest.mock('../../../../lib/logger');
 
-jest.mock('../../../../services/applications.service');
+jest.mock('../../../../lib/application-api-wrapper');
 
 describe('projects/register/index/controller', () => {
 	const dateBeforeYesterday = '2023-01-01';
@@ -56,7 +56,7 @@ describe('projects/register/index/controller', () => {
 	describe('#getRegisterIndexController', () => {
 		describe('When there is an issue', () => {
 			beforeEach(async () => {
-				getAppData.mockImplementation(() =>
+				getProjectData.mockImplementation(() =>
 					Promise.resolve({
 						resp_code: 404
 					})
@@ -72,7 +72,7 @@ describe('projects/register/index/controller', () => {
 		describe('Registration open dates', () => {
 			describe('When the registration open period has not started', () => {
 				beforeEach(async () => {
-					getAppData.mockImplementation(() =>
+					getProjectData.mockImplementation(() =>
 						Promise.resolve({
 							resp_code: 200,
 							data: {
@@ -94,7 +94,7 @@ describe('projects/register/index/controller', () => {
 			});
 			describe('When the registration open period has started', () => {
 				beforeEach(async () => {
-					getAppData.mockImplementation(() =>
+					getProjectData.mockImplementation(() =>
 						Promise.resolve({
 							resp_code: 200,
 							data: {
@@ -139,7 +139,7 @@ describe('projects/register/index/controller', () => {
 			});
 			describe('When the registration open period has ended', () => {
 				beforeEach(async () => {
-					getAppData.mockImplementation(() =>
+					getProjectData.mockImplementation(() =>
 						Promise.resolve({
 							resp_code: 200,
 							data: {
@@ -187,7 +187,7 @@ describe('projects/register/index/controller', () => {
 		describe('Registration re-opened dates', () => {
 			describe('When the registration re-opened period has not started', () => {
 				beforeEach(async () => {
-					getAppData.mockImplementation(() =>
+					getProjectData.mockImplementation(() =>
 						Promise.resolve({
 							resp_code: 200,
 							data: {
@@ -233,7 +233,7 @@ describe('projects/register/index/controller', () => {
 
 			describe('When the registration re-opened period has started', () => {
 				beforeEach(async () => {
-					getAppData.mockImplementation(() =>
+					getProjectData.mockImplementation(() =>
 						Promise.resolve({
 							resp_code: 200,
 							data: {
@@ -279,7 +279,7 @@ describe('projects/register/index/controller', () => {
 
 			describe('When the registration re-opened period has ended', () => {
 				beforeEach(async () => {
-					getAppData.mockImplementation(() =>
+					getProjectData.mockImplementation(() =>
 						Promise.resolve({
 							resp_code: 200,
 							data: {

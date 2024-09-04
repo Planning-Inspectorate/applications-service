@@ -1,7 +1,7 @@
 const { getApplicationData } = require('./get-application-data');
-const { getAppData } = require('../../../services/applications.service');
-jest.mock('../../../services/applications.service', () => ({
-	getAppData: jest.fn()
+const { getProjectData } = require('../../../lib/application-api-wrapper');
+jest.mock('../../../lib/application-api-wrapper', () => ({
+	getProjectData: jest.fn()
 }));
 
 const commonMockData = {
@@ -24,7 +24,7 @@ describe('#getApplicationData', () => {
 		describe('and the response is 200', () => {
 			let response;
 			beforeEach(async () => {
-				getAppData.mockReturnValue({
+				getProjectData.mockReturnValue({
 					data: {
 						...commonMockData,
 						Stage: 1
@@ -61,7 +61,7 @@ describe('#getApplicationData', () => {
 		describe('and the dates are 0000-00-00', () => {
 			let response;
 			beforeEach(async () => {
-				getAppData.mockReturnValue({
+				getProjectData.mockReturnValue({
 					data: {
 						...commonMockData,
 						dateOfNonAcceptance: '0000-00-00',
@@ -105,7 +105,7 @@ describe('#getApplicationData', () => {
     • Item 3
     • Item 4`;
 			beforeEach(async () => {
-				getAppData.mockReturnValue({
+				getProjectData.mockReturnValue({
 					data: {
 						...commonMockData,
 						Summary: summary,
@@ -123,7 +123,7 @@ describe('#getApplicationData', () => {
 		});
 		describe('and the status code is not 200', () => {
 			beforeEach(() => {
-				getAppData.mockReturnValue({ data: 'mock data', resp_code: 500 });
+				getProjectData.mockReturnValue({ data: 'mock data', resp_code: 500 });
 			});
 			it('should throw an error', async () => {
 				await expect(getApplicationData('mock-case-ref')).rejects.toThrow(

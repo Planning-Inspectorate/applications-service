@@ -94,7 +94,6 @@ module.exports = {
 					en: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
 					cy: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP_WELSH
 				},
-				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
 				submissionCompleteEmail: {
 					en: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
 					cy: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL_WELSH
@@ -105,7 +104,6 @@ module.exports = {
 				}
 			},
 			havingYourSayUrl: `${process.env.APPLICATIONS_WEB_BASE_URL}/having-your-say-guide`,
-			magicLinkDomain: process.env.APPLICATIONS_WEB_BASE_URL,
 			subscriptionCreateDomain: process.env.APPLICATIONS_WEB_BASE_URL
 		},
 		encryption: {
