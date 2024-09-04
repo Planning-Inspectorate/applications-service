@@ -10,9 +10,9 @@ module.exports = {
 		const caseRef = encodeURIComponent(req.params.caseRef);
 
 		try {
-			logger.debug(`Retrieving timetables by case reference ${caseRef} ...`);
+			logger.debug(`Retrieving timetables by case reference ${req.params.caseRef} ...`);
 
-			if (caseRef !== req.query.caseRef) {
+			if (caseRef !== req.params.caseRef) {
 				throw ApiError.badRequest('Invalid caseReference');
 			}
 
