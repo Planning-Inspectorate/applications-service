@@ -1,7 +1,10 @@
 const { getApplicationData } = require('../_utils/get-application-data');
 const { getVerticalTabs } = require('./_utils/get-vertical-tabs');
 const logger = require('../../../lib/logger');
-const { projectInfoProjectStages } = require('../../../utils/project-stages');
+const {
+	projectInfoProjectStages,
+	materialChangeProjectStages
+} = require('../../../utils/project-stages');
 const {
 	hasRepresentationsAvailable
 } = require('../representations/index/_utils/has-representations-available');
@@ -25,7 +28,9 @@ async function projectsMiddleware(req, res, next) {
 		res.locals.applicationData = applicationData;
 		res.locals.baseUrl = baseUrl;
 		res.locals.path = path;
-		res.locals.projectStages = projectInfoProjectStages;
+		res.locals.projectStages = applicationData.isMaterialChange
+			? materialChangeProjectStages
+			: projectInfoProjectStages;
 		res.locals.verticalTabs = getVerticalTabs(
 			i18n,
 			case_ref,
