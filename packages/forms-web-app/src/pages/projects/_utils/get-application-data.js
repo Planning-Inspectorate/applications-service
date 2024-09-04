@@ -1,6 +1,9 @@
+const {
+	projectInfoProjectStages,
+	materialChangeProjectStages
+} = require('../../../utils/project-stages');
 const { getProjectData } = require('../../../lib/application-api-wrapper');
 const { NotFoundError } = require('../../../lib/errors');
-const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const dayjs = require('dayjs');
 const { preserveLinebreaks } = require('../../../lib/preserve-line-breaks');
 const { isLangWelsh } = require('../../_utils/is-lang-welsh');
@@ -22,7 +25,9 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 
 	const status = {
 		number: data.Stage,
-		text: projectInfoProjectStages[data.Stage] || ''
+		text: data.isMaterialChange
+			? materialChangeProjectStages[data.Stage]
+			: projectInfoProjectStages[data.Stage] || ''
 	};
 
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);

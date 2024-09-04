@@ -22,6 +22,15 @@
 		"paragraph2": "Read the {{-link}} to see how we handle your information.",
 		"paragraph2LinkText": "privacy notice"
 	},
+	"materialChangeProjectStage": {
+		"stage1name": "Pre-application",
+		"stage2name": "Application received",
+		"stage3name": "Application published",
+		"stage4name": "Examination",
+		"stage5name": "Recommendation",
+		"stage6name": "Decision",
+		"stage7name": "Post-decision"
+	},
 	"projectStage": {
 		"heading1": "Project stage",
 		"paragraph1": "This project is at the {{-stage}} stage.",

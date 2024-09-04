@@ -1,0 +1,39 @@
+<section>
+  <h2 class="govuk-heading-m">
+    {{ t('projectsIndex.projectStage.heading1') }}
+  </h2>
+
+  {% if applicationData.status.text === projectStages[8] %}
+
+    {% include "./material-change-stages/withdrawn/description.njk" %}
+
+  {% else %}
+
+    <p class="govuk-body">
+      {{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + t("projectsIndex.materialChangeProjectStage.stage" + applicationData.status.number + "name" ) | lower + '</strong>' }) | safe }}
+    </p>
+
+    <div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-!-margin-top-6">
+      {% include "./material-change-stages/pre-application/details.njk" %}
+    </div>
+    <div id="project-stage-{{ projectStages[2] | lower }}">
+      {% include "./material-change-stages/application-received/details.njk" %}
+    </div>
+    <div id="project-stage-{{ projectStages[3] | lower }}">
+      {% include "./material-change-stages/application-published/details.njk" %}
+    </div>
+    <div id="project-stage-{{ projectStages[4] | lower }}">
+      {% include "./material-change-stages/examination/details.njk" %}
+    </div>
+    <div id="project-stage-{{ projectStages[5] | lower }}">
+      {% include "./material-change-stages/recommendation/details.njk" %}
+    </div>
+    <div id="project-stage-{{ projectStages[6] | lower }}">
+      {% include "./material-change-stages/decision/details.njk" %}
+    </div>
+    <div id="project-stage-{{ projectStages[7] | lower }}">
+      {% include "./material-change-stages/post-decision/details.njk" %}
+    </div>
+
+  {% endif %}
+</section>

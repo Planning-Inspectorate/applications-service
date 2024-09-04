@@ -22,6 +22,15 @@
 		"paragraph2": "Darllenwch yr {{-link}} i gael gwybod sut rydym yn trin eich gwybodaeth.",
 		"paragraph2LinkText": "hysbysiad preifatrwydd"
 	},
+	"materialChangeProjectStage": {
+		"stage1name": "Pre-application",
+		"stage2name": "Application received",
+		"stage3name": "Application published",
+		"stage4name": "Examination",
+		"stage5name": "Recommendation",
+		"stage6name": "Decision",
+		"stage7name": "Post-decision"
+	},
 	"projectStage": {
 		"heading1": "Cam y prosiect",
 		"paragraph1": "Mae'r prosiect hwn ar y cam {{-stage}}.",
