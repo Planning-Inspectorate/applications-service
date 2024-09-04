@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pages/examination/_translations should return the correct English translations 1`] = `
+exports[`pages/_translations/components/checkbox-accordion/translations should return the correct English translations 1`] = `
 {
   "accessibility": {
     "filterOptions": {
@@ -12,7 +12,7 @@ exports[`pages/examination/_translations should return the correct English trans
 }
 `;
 
-exports[`pages/examination/_translations should return the correct Welsh translations 1`] = `
+exports[`pages/_translations/components/checkbox-accordion/translations should return the correct Welsh translations 1`] = `
 {
   "accessibility": {
     "filterOptions": {
