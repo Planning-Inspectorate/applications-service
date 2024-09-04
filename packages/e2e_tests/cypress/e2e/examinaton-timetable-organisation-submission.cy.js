@@ -78,7 +78,7 @@ describe('User registers as an organisation to have their say against the examin
 	});
 
 	it('Checks other answers correct and submission can be completed', () => {
-		examinationTimetable.checkAnswersSecondtPage([
+		examinationTimetable.checkAnswersSecondPage([
 			'Yes',
 			'123456',
 			'An organisation I work for',
