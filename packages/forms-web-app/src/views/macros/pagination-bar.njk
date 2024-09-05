@@ -12,13 +12,13 @@
             {% for page in pageOptions %}
               {% if page === 'prev' %}
                 <li class="moj-pagination__item  moj-pagination__item--prev">
-                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage - 1) }}"><span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText1') }}</span>{{ t('common.paginationPrevious') }}<span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText2') }}</span></a>
+                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage - 1) }}"><span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText1') }}</span>{{ t('common.paginationPrevious') }} <span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText2') }}</span></a>
                 </li>
               {% elif page === paginationData.currentPage %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
                 <li class="moj-pagination__item  moj-pagination__item--next">
-                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage + 1) }}"><span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText1') }}</span>{{ t('common.paginationNext') }}<span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText2') }}</span></a>
+                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage + 1) }}"><span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText1') }}</span>{{ t('common.paginationNext') }} <span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText2') }}</span></a>
                 </li>
               {% elif page === '...' %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
