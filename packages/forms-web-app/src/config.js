@@ -51,6 +51,7 @@ module.exports = {
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
+		useGeneralS51BackOffice: process.env.FEATURE_GENERAL_S51_BO === 'true',
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
