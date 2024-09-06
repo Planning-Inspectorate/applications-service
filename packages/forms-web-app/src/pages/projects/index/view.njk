@@ -51,10 +51,12 @@
 			{% include "./_includes/about.njk" %}
 			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
-			{% if not applicationData.isMaterialChange %}
+			{% if applicationData.isMaterialChange %}
+				{% include "./_includes/material-change-project-stage.njk" %}
+			{% else %}
 				{% include "./_includes/project-stage.njk" %}
-				<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 			{% endif %}
+			<hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible"/>
 
 			{% if applicationData.projectLocation or mapAccessToken %}
 				{% include "./_includes/location.njk" %}

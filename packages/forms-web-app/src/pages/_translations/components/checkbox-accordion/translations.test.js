@@ -1,7 +1,7 @@
 const enTranslations = require('./en.json');
 const cyTranslations = require('./cy.json');
 
-describe('pages/examination/_translations', () => {
+describe('pages/_translations/components/checkbox-accordion/translations', () => {
 	it('should return the correct English translations', () => {
 		expect(enTranslations).toMatchSnapshot();
 	});

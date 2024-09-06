@@ -4,9 +4,9 @@ const HTMLParser = require('node-html-parser');
 const app = require('../../../app');
 const request = supertest(app);
 const { getProjectUpdatesSuccessfulFixture } = require('../../_fixtures');
-const { getAppData } = require('../../../services/applications.service');
 const {
 	getTimetables,
+	getProjectData,
 	getProjectUpdates,
 	getDocumentByType
 } = require('../../../lib/application-api-wrapper');
@@ -14,12 +14,9 @@ const { getMapAccessToken } = require('../../_services');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn(),
+	getProjectData: jest.fn(),
 	getProjectUpdates: jest.fn(),
 	getDocumentByType: jest.fn()
-}));
-
-jest.mock('../../../services/applications.service', () => ({
-	getAppData: jest.fn()
 }));
 
 jest.mock('../../_services', () => ({
@@ -62,7 +59,7 @@ describe('projects/index/controller.component', () => {
 		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
 			describe('pre application ', () => {
 				it('should render the page for pre application (stage 1) - with anticipatedSubmissionDateNonSpecific', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 1
@@ -75,7 +72,7 @@ describe('projects/index/controller.component', () => {
 					expect(response.text).toContain('The application is expected to be submitted Q4 2023');
 				});
 				it('should render the page for pre application (stage 1) - without the time period section if anticipatedSubmissionDateNonSpecific is not available', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							AnticipatedSubmissionDateNonSpecific: null,
@@ -91,7 +88,7 @@ describe('projects/index/controller.component', () => {
 			});
 			describe('acceptance', () => {
 				it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							DateOfDCOSubmission: '2020-01-01',
@@ -110,7 +107,7 @@ describe('projects/index/controller.component', () => {
 				});
 
 				it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							DateOfDCOSubmission: null,
@@ -129,7 +126,7 @@ describe('projects/index/controller.component', () => {
 			});
 			describe('pre examination', () => {
 				it('should render the page for Pre examination (stage 3) - Pre Reps', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							DateOfDCOSubmission: '2020-01-01',
@@ -151,7 +148,7 @@ describe('projects/index/controller.component', () => {
 		describe('Stage progress tag - test the stage progress tag has correct value depending on stage progress', () => {
 			describe('Not started', () => {
 				it('should render the pre application stage with correct project progress tag text', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 1
@@ -171,7 +168,7 @@ describe('projects/index/controller.component', () => {
 			});
 			describe('In progress', () => {
 				it('should render the pre application stage with correct project progress tag text', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 1
@@ -191,7 +188,7 @@ describe('projects/index/controller.component', () => {
 			});
 			describe('Completed', () => {
 				it('should render the pre application stage with correct project progress tag text', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 3

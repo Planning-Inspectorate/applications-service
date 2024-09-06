@@ -63,6 +63,17 @@ const projectInfoProjectStages = {
 	8: 'Withdrawn'
 };
 
+const materialChangeProjectStages = {
+	1: 'Pre-application',
+	2: 'Application received',
+	3: 'Application published',
+	4: 'Examination',
+	5: 'Recommendation',
+	6: 'Decision',
+	7: 'What happens after the decision is made',
+	8: 'Withdrawn'
+};
+
 const registerOfApplicationsStages = [
 	'acceptance',
 	'pre_examination',
@@ -78,5 +89,6 @@ module.exports = {
 	projectStages,
 	projectStagesTranslations,
 	projectInfoProjectStages,
+	materialChangeProjectStages,
 	registerOfApplicationsStages
 };

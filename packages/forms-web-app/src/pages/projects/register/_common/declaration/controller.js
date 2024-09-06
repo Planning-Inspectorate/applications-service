@@ -1,4 +1,4 @@
-const { postRegistrationData } = require('../../../../../services/registration.service');
+const { postRegistration } = require('../../../../../lib/application-api-wrapper');
 const logger = require('../../../../../lib/logger');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
 const { getSessionBase } = require('../../../../../controllers/register/common/session');
@@ -32,7 +32,7 @@ const postRegisterDeclarationController = async (req, res) => {
 			comment: session.comment
 		};
 
-		const response = await postRegistrationData(JSON.stringify(registrationData));
+		const response = await postRegistration(JSON.stringify(registrationData));
 		sessionForKey.ipRefNo = response.data?.referenceId;
 
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);

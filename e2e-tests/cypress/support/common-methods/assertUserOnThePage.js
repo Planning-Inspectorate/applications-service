@@ -474,7 +474,7 @@ module.exports = (pageName) => {
 		case 'what is the name of your organisation or charity?':
 			cy.title().should(
 				'eq',
-				'What is the name of the organisation or charity? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
+				'What is the name of your organisation or charity? - Registering for an organisation - Register to have your say about a national infrastructure project - National Infrastructure Planning'
 			);
 			cy.get('h1')
 				.invoke('text')

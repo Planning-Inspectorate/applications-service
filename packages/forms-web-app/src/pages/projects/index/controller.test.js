@@ -47,7 +47,7 @@ const processGuideStages = {
 		title: 'Pre-examination'
 	},
 	index: {
-		html: '<p class="govuk-body">null</p><a class="govuk-link" href="/decision-making-process-guide">null</a>',
+		html: '<p class="govuk-body">null</p>',
 		title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)'
 	},
 	recommendation: {

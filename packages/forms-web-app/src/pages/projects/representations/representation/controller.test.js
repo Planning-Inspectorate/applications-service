@@ -1,10 +1,8 @@
 const { getRepresentationController } = require('./controller');
 
-const { getProjectData } = require('../../../../lib/application-api-wrapper');
-const { getRepresentation } = require('../../../../services/representation.service');
+const { getRepresentationById } = require('../../../../lib/application-api-wrapper');
 
 jest.mock('../../../../lib/application-api-wrapper');
-jest.mock('../../../../services/representation.service');
 
 describe('pages/projects/representations/representation/controller', () => {
 	let req;
@@ -28,7 +26,7 @@ describe('pages/projects/representations/representation/controller', () => {
 		res = {
 			locals: {
 				applicationData: {
-					projectName: 'mock project name'
+					projectName: 'ABC'
 				}
 			},
 			render: jest.fn()
@@ -72,13 +70,7 @@ describe('pages/projects/representations/representation/controller', () => {
 		describe('When getting the representation page', () => {
 			describe('and there are no issues', () => {
 				beforeEach(async () => {
-					getProjectData.mockImplementation((applicationCaseRef) =>
-						Promise.resolve({
-							resp_code: 200,
-							data: { CaseReference: applicationCaseRef, ProjectName: 'ABC' }
-						})
-					);
-					getRepresentation.mockImplementation(() =>
+					getRepresentationById.mockImplementation(() =>
 						Promise.resolve({
 							data: { ...representations[0] }
 						})
@@ -93,7 +85,6 @@ describe('pages/projects/representations/representation/controller', () => {
 							allowProjectInformation: true,
 							backToListUrl: '/projects/EN010009/representations',
 							projectName: 'ABC',
-							projectNameWelsh: undefined,
 							representation: {
 								URL: '/projects/:case_ref/representations/2',
 								attachments: [],

@@ -73,7 +73,7 @@ describe('User registers as themselves to have their say against the examination
 	});
 
 	it('Checks other answers correct and submission can be completed', () => {
-		examinationTimetable.checkAnswersSecondtPage(['No', 'Myself', 'John Tester', 'test@test.com']);
+		examinationTimetable.checkAnswersSecondPage(['No', 'Myself', 'John Tester', 'test@test.com']);
 		examinationTimetable.clickButton('Submit');
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
 	});

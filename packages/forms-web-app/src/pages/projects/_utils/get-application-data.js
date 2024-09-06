@@ -1,5 +1,9 @@
-const { getAppData } = require('../../../services/applications.service');
-const { projectInfoProjectStages } = require('../../../utils/project-stages');
+const {
+	projectInfoProjectStages,
+	materialChangeProjectStages
+} = require('../../../utils/project-stages');
+const { getProjectData } = require('../../../lib/application-api-wrapper');
+const { NotFoundError } = require('../../../lib/errors');
 const dayjs = require('dayjs');
 const { preserveLinebreaks } = require('../../../lib/preserve-line-breaks');
 const { isLangWelsh } = require('../../_utils/is-lang-welsh');
@@ -9,32 +13,39 @@ const badDateToNull = (date) => (date === '0000-00-00' ? null : date);
 const add28DaysToDate = (date) => (date ? dayjs(date).add(28, 'days').toISOString() : null);
 
 const getApplicationData = async (case_ref, lang = 'en') => {
-	const { data, resp_code } = await getAppData(case_ref);
-	if (resp_code !== 200) throw new Error('Application response status not 200');
+	const { data, resp_code } = await getProjectData(case_ref);
+
+	if (resp_code === 404) {
+		throw new NotFoundError(`Project with reference ${case_ref}`);
+	}
+
+	if (resp_code !== 200) {
+		throw new Error('Application response status not 200');
+	}
 
 	const status = {
 		number: data.Stage,
-		text: projectInfoProjectStages[data.Stage] || ''
+		text: data.isMaterialChange
+			? materialChangeProjectStages[data.Stage]
+			: projectInfoProjectStages[data.Stage] || ''
 	};
 
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);
 
-	const projectName = (() => {
-		if (data.ProjectNameWelsh && isLangWelsh(lang)) {
-			return data.ProjectNameWelsh;
+	const translatedField = (englishField, welshField) => {
+		if (data.Region === 'Wales' && isLangWelsh(lang) && data[welshField]) {
+			return data[welshField];
 		}
 
-		return data.ProjectName;
-	})();
+		return data[englishField];
+	};
 
 	return {
-		projectName,
+		projectName: translatedField('ProjectName', 'ProjectNameWelsh'),
 		promoterName: data.PromoterName,
 		caseRef: data.CaseReference,
 		proposal: data.Proposal,
-		summary: preserveLinebreaks(
-			isLangWelsh(lang) && data.SummaryWelsh ? data.SummaryWelsh : data.Summary
-		),
+		summary: preserveLinebreaks(translatedField('Summary', 'SummaryWelsh')),
 		confirmedDateOfDecision: badDateToNull(data.ConfirmedDateOfDecision),
 		webAddress: data.WebAddress,
 		dateOfNonAcceptance: badDateToNull(data.dateOfNonAcceptance),
@@ -60,10 +71,7 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		stage5ExtensionToDecisionDeadline: badDateToNull(data.Stage5ExtensiontoDecisionDeadline),
 		longLat: data.LongLat,
 		mapZoomLevel: data.MapZoomLevel,
-		projectLocation:
-			isLangWelsh(lang) && data.ProjectLocationWelsh
-				? data.ProjectLocationWelsh
-				: data.ProjectLocation,
+		projectLocation: translatedField('ProjectLocation', 'ProjectLocationWelsh'),
 		isMaterialChange: data.isMaterialChange
 	};
 };

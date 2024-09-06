@@ -13,7 +13,7 @@
 		"viewCookiesLinkText": "Gweld cwcis",
 		"cookieBannerAriaLabel": "cwci baner",
 		"acceptedCookiesText": "Rydych chi wedi derbyn cwcis dadansoddol. Gallwch {{-link}} ar unrhyw adeg.",
-		"rejectedCookiesText": "Rydych chi wedi gwrthod cwcis dadansoddol. You can {{-link}} ar unrhyw adeg.",
+		"rejectedCookiesText": "Rydych chi wedi gwrthod cwcis dadansoddol. Gallwch {{-link}} ar unrhyw adeg.",
 		"actionCookiesLinkText": "newid eich gosodiadau cwci",
 		"hideMessage": "Cuddio'r neges hon"
 	},

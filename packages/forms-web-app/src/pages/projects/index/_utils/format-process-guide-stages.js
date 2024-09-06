@@ -1,5 +1,6 @@
 const getProcessGuideStageHtml = (processGuideStage) => {
 	let processGuideHtml = '';
+	let processGuideLink = '';
 
 	const { content, linkText, url } = processGuideStage;
 
@@ -10,7 +11,11 @@ const getProcessGuideStageHtml = (processGuideStage) => {
 			(processGuideHtml = `${processGuideHtml}<p class="govuk-body">${contentItem}</p>`)
 	);
 
-	return `${processGuideHtml}<a class="govuk-link" href="${url}">${linkText}</a>`;
+	if (url && linkText) {
+		processGuideLink = `<a class="govuk-link" href="${url}">${linkText}</a>`;
+	}
+
+	return `${processGuideHtml}${processGuideLink}`;
 };
 
 const formatProcessGuideStages = (processGuideStages) => {
