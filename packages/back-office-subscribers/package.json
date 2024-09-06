@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.17.0",
-		"axios": "^1.6.8",
+		"axios": "^1.7.4",
 		"lodash.pick": "^4.4.0"
 	},
 	"devDependencies": {
