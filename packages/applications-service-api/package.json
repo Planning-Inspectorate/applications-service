@@ -30,7 +30,7 @@
 		"@azure/service-bus": "^7.9.0",
 		"@azure/storage-blob": "^12.16.0",
 		"@pins/common": "file:../common",
-		"@planning-inspectorate/pins-notify": "^1.0.2",
+		"@planning-inspectorate/pins-notify": "^1.0.3",
 		"@prisma/client": "^5.17.0",
 		"applicationinsights": "^2.9.0",
 		"axios": "^1.6.0",
