@@ -151,6 +151,32 @@ const buildApplicationsFiltersFromBOApplications = (applications) => {
 };
 
 /**
+ * Takes two lists of Applications API filters and merges them,
+ * combining counts when duplicates are encountered.
+ *
+ * @typedef {{name: string, value: string, count: number}} MergeFiltersItem
+ *
+ * @param {MergeFiltersItem[]} filtersA
+ * @param {MergeFiltersItem[]} filtersB
+ * @returns {MergeFiltersItem[]}
+ * */
+const mergeFilters = (filtersA, filtersB) => {
+	let merged = structuredClone(filtersA);
+
+	for (const f of filtersB) {
+		const idx = merged.findIndex((e) => e.name === f.name && e.value === f.value);
+		if (idx === -1) {
+			merged.push(f);
+			continue;
+		}
+
+		merged[idx].count += f.count;
+	}
+
+	return merged;
+};
+
+/**
  * Map API filters back to values for querying against NI database
  * @param {{ stage?: string[], region?: string[], sector?: string[] }} query
  * @returns {{ stage?: string[], region?: string[], sector?: string[] }}
@@ -421,5 +447,6 @@ module.exports = {
 	buildApplicationsFiltersFromBOApplications,
 	mapNIApplicationsToApi,
 	mapColumnLabelToApi: mapColumnLabelToApiEn,
-	mapColumnLabelToApiCy
+	mapColumnLabelToApiCy,
+	mergeFilters
 };
