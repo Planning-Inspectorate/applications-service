@@ -296,10 +296,11 @@ const mapBackOfficeApplicationToApi = (application) => {
  * Map Applications array from Back Office to legacy API format
  * @param applications
  */
-const mapBackOfficeApplicationsToApi = (applications) => {
-	const mappedToApi = applications.map(mapBackOfficeApplicationToApi);
-	return mappedToApi.map(mapResponseBackToNILegacyFormat);
-};
+const mapBackOfficeApplicationsToApi = (applications) =>
+	applications.map((application) => {
+		const mappedToApi = mapBackOfficeApplicationToApi(application);
+		return mapResponseBackToNILegacyFormat(mappedToApi);
+	});
 
 /**
  * Adds MapZoomLevel and LongLat properties to NI Application
