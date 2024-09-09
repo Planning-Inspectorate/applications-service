@@ -14,14 +14,14 @@
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"dependencies": {
-		"@godaddy/terminus": "^4.7.1",
-		"pino": "^6.11.3"
+		"@godaddy/terminus": "*",
+		"pino": "*"
 	},
 	"devDependencies": {
-		"eslint": "^8.17.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-jest": "^24.1.0",
-		"jest": "^28.1.1",
-		"jest-junit": "^13.2.0"
+		"eslint": "*",
+		"eslint-config-prettier": "*",
+		"eslint-plugin-jest": "*",
+		"jest": "*",
+		"jest-junit": "*"
 	}
 }
