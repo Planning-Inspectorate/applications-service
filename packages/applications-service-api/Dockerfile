@@ -22,7 +22,7 @@ COPY packages/applications-service-api/.sequelizerc ./packages/applications-serv
 RUN mkdir uploads && \
     chown node:node uploads
 
-RUN npm ci
+RUN npm ci --workspaces --if-present
 
 # Stage 2/2: Run app
 FROM build AS app

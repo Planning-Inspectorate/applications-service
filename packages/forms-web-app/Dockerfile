@@ -19,7 +19,7 @@ COPY packages/forms-web-app/package.json ./packages/forms-web-app/package.json
 RUN mkdir uploads && \
     chown node:node uploads
 
-RUN npm ci
+RUN npm ci --workspaces --if-present
 RUN npm run build
 
 # Stage 2/2: Run app
