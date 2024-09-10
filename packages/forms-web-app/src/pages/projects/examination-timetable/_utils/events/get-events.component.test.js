@@ -63,7 +63,7 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 								state: {
 									isSubmissionOpen: false,
 									tag: {
-										classes: 'govuk-tag',
+										classes: '',
 										text: 'Closed'
 									}
 								},
