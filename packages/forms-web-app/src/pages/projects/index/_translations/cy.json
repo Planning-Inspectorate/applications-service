@@ -154,8 +154,8 @@
 		"WA02": "Trosglwyddo Adnoddau Dŵr"
 	},
 	"stageProgress": {
-		"notStarted": "dim wedi dechrau",
-		"inProgress": "mewn cynnydd",
-		"completed": "wedi cwblhau"
+		"notStarted": "Dim wedi dechrau",
+		"inProgress": "Mewn cynnydd",
+		"completed": "Wedi cwblhau"
 	}
 }

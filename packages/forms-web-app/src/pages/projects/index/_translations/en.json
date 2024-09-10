@@ -154,8 +154,8 @@
 		"WA02": "Transfer of Water Resources"
 	},
 	"stageProgress": {
-		"notStarted": "not started",
-		"inProgress": "in progress",
-		"completed": "completed"
+		"notStarted": "Not started",
+		"inProgress": "In progress",
+		"completed": "Completed"
 	}
 }
