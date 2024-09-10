@@ -26,7 +26,7 @@
 		"watch:sass": "nodemon -e scss -x \"npm run build:sass\""
 	},
 	"dependencies": {
-		"@ministryofjustice/frontend": "^0.2.0",
+		"@ministryofjustice/frontend": "^2.2.0",
 		"@pins/common": "file:../common",
 		"@planning-inspectorate/pins-components": "^2.2.6",
 		"@testing-library/dom": "^7.31.2",
@@ -46,7 +46,7 @@
 		"express-session": "^1.17.2",
 		"express-validator": "^6.12.1",
 		"form-data": "^4.0.0",
-		"govuk-frontend": "^4.2.0",
+		"govuk-frontend": "^5.6.0",
 		"helmet": "^6.0.1",
 		"html-escaper": "^2.0.2",
 		"i18next": "^23.11.1",
