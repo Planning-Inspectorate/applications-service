@@ -44,7 +44,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 				it('should return the event state object', () => {
 					expect(result).toEqual({
 						isSubmissionOpen: true,
-						tag: { classes: 'govuk-tag govuk-tag--blue', text: 'Open' }
+						tag: { classes: 'govuk-tag govuk-tag--yellow', text: 'Open' }
 					});
 				});
 			});
@@ -58,7 +58,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 				it('should return the event state object', () => {
 					expect(result).toEqual({
 						isSubmissionOpen: false,
-						tag: { classes: '', text: 'Closed' }
+						tag: { classes: 'govuk-tag govuk-tag--blue', text: 'Closed' }
 					});
 				});
 			});
@@ -72,7 +72,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 						const result = getEventState(mockEvent, i18n);
 						expect(result).toEqual({
 							isSubmissionOpen: true,
-							tag: { classes: 'govuk-tag govuk-tag--blue', text: 'Open' }
+							tag: { classes: 'govuk-tag govuk-tag--yellow', text: 'Open' }
 						});
 					});
 				});
@@ -82,7 +82,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/utils/ge
 						const result = getEventState(mockEvent, i18n);
 						expect(result).toEqual({
 							isSubmissionOpen: false,
-							tag: { classes: '', text: 'Closed' }
+							tag: { classes: 'govuk-tag govuk-tag--blue', text: 'Closed' }
 						});
 					});
 				});

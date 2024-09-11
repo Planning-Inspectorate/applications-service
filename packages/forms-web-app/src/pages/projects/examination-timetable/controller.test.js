@@ -111,7 +111,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 										state: {
 											isSubmissionOpen: false,
 											tag: {
-												classes: '',
+												classes: 'govuk-tag govuk-tag--blue',
 												text: 'Closed'
 											}
 										},
@@ -126,7 +126,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 										state: {
 											isSubmissionOpen: false,
 											tag: {
-												classes: '',
+												classes: 'govuk-tag govuk-tag--blue',
 												text: 'Closed'
 											}
 										},
@@ -160,7 +160,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 										state: {
 											isSubmissionOpen: true,
 											tag: {
-												classes: 'govuk-tag govuk-tag--blue',
+												classes: 'govuk-tag govuk-tag--yellow',
 												text: 'Open'
 											}
 										},

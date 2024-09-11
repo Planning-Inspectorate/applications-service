@@ -22,10 +22,13 @@ const getEventState = (event, i18n) => {
 	if (isSubmissionOpen)
 		eventStateTag = eventStateTagMapper(
 			i18n.t('examinationTimetable.tagTextOpen'),
-			'govuk-tag govuk-tag--blue'
+			'govuk-tag govuk-tag--yellow'
 		);
 	else if (isTimetableDateOfEventPast(event.dateOfEvent)) {
-		eventStateTag = eventStateTagMapper(i18n.t('examinationTimetable.tagTextClosed'), '');
+		eventStateTag = eventStateTagMapper(
+			i18n.t('examinationTimetable.tagTextClosed'),
+			'govuk-tag govuk-tag--blue'
+		);
 	}
 
 	return {
