@@ -83,6 +83,7 @@
 		"pino-pretty": "*",
 		"sass": "*",
 		"supertest": "*",
+		"turbo": "*",
 		"webpack": "*",
 		"webpack-cli": "*",
 		"webpack-merge": "*"
