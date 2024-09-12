@@ -43,8 +43,8 @@ model Document {
   author                 String?
   authorWelsh            String?
   representative         String?
-  description            String?
-  descriptionWelsh       String?
+  description            String?   @db.NText
+  descriptionWelsh       String?   @db.NText
   stage                  String?
   filter1                String?
   filter1Welsh           String?
@@ -188,8 +188,8 @@ model ExaminationTimetable {
   type                   String
   eventTitle             String
   eventTitleWelsh        String?
-  description            String
-  descriptionWelsh       String?
+  description            String                          @db.NText
+  descriptionWelsh       String?                         @db.NText
   eventDeadlineStartDate DateTime?
   date                   DateTime?
   createdAt              DateTime?                       @default(now())
