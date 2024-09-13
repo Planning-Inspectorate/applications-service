@@ -90,7 +90,7 @@
 	"dependencies": {
 		"@prisma/client": "^5.17.0",
 		"axios": "^1.6.8",
-		"express": "4.19.2",
+		"express": "4.20.0",
 		"sequelize": "6.33.0"
 	}
 }
