@@ -4,7 +4,7 @@ Monorepo for all Applications Service services
 
 ## TL;DR
 
-- `npm i`
+- `npm ci` from the project root - see [Dependencies](#dependencies-npm) below
 - create a `.env` file in `./packages/applications-service-api`. Copy the values from `.env.development`
 - create a `.env` file in the applications service root folder `/`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values
 - `npm run db:generate` to create database
@@ -92,6 +92,24 @@ nvm alias default 20
 ```
 
 The Node.js version in use should closely follow [what is supported by the Azure App Service runtime](https://github.com/Azure/app-service-linux-docs/blob/master/Runtime_Support/node_support.md). From time to time, it may be necessary to update Node.js version to a newer LTS release when support for the current version is ending.
+
+## Dependencies (npm)
+
+The repo uses [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces). This allows us to have a single root node_modules that holds all the project dependencies and a root package.json + package-lock.json that has every dependency + version that's used in the repository listed in it. The individual packages do *not* require package-lock.json files.
+
+The current list of workspaces can be found in the root package.json file.
+
+Each workspace in the repo also has a package.json file where its dependency list contains only the dependencies that the workspace requires: the versions are denoted as `*` - they rely on the root package.json for  versioning which helps us keep versioning consistent across the repo. 
+
+**First time installing dependencies**:
+- run `npm ci` from the root of the project (this will use the project's package-lock.json file to sort your local node_modules directory and will avoid creating package-lock.json diffs where they're not expected).
+
+**To add a dependency**:
+- Add the name and desired version of the dependency to the root package.json (preferably prefixed with a `^` to ensure the most recent minor version is used)
+- Add the name of the dependency with the version marked as a `*` to the relevant workspace's package.json file
+- Run `npm install` from root - avoid creating + merging package-lock.json files within workspaces
+
+*Note that on build, your dependency will not be available to any workspace in the repo that does not have the dependency listed in its respective package.json file (the code build process ensures that only the necessary dependencies are included in the build (the API and web app packages use `npm ci --workspaces --if-present` in their Dockerfiles to ensure this))*
 
 ## Environment Setup
 
