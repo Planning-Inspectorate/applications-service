@@ -3,11 +3,15 @@
 {% set links = [] %}
 
 {% for sortByLink in sortByLinks %}
+  {% set sortDirection = 'descending' if sortByLink.sort == 'ascending' else 
+    'ascending' %}
+  {% set ariaLabel = "" + sortByLink.name + ": activate to sort column " + sortDirection + "" %}
+
   {% set linkHtml %}
   {% if sortByLink.sort !== 'none' %}
-    <a autofocus class="govuk-link" href="{{ sortByLink.link }}">{{ sortByLink.name }}</a>
+    <a aria-label="{{ ariaLabel }}" autofocus class="govuk-link" href="{{ sortByLink.link }}">{{ sortByLink.name }}</a>
   {% else %}
-    <a class="govuk-link" href="{{ sortByLink.link }}">{{ sortByLink.name }}</a>
+    <a aria-label="{{ ariaLabel }}" class="govuk-link" href="{{ sortByLink.link }}">{{ sortByLink.name }}</a>
   {% endif %}
   {% endset %}
 
