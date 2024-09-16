@@ -69,6 +69,7 @@ app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
 
+app.use('/robots.txt', express.static(path.join(__dirname, 'robots.txt')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
 app.use(
