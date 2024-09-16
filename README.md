@@ -95,7 +95,7 @@ The Node.js version in use should closely follow [what is supported by the Azure
 
 ## Dependencies (npm)
 
-The repo uses [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces). This allows us to have a single root node_modules that holds all the project dependencies and a root package.json + package-lock.json that has every dependency + version that's used in the repository listed in it. The individual packages do *not* require package-lock.json files.
+The repo uses [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces). This allows us to have a single root node_modules that holds all the project dependencies and a root package.json + package-lock.json that has every dependency + version that's used in the repository listed in it. The individual packages do *not* require package-lock.json files (be careful if using Red Hat Dependency Analytics extension in VS Code as this may automatically generate package-lock.json files when you view individual package.json files).
 
 The current list of workspaces can be found in the root package.json file.
 
