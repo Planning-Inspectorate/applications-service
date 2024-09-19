@@ -46,23 +46,37 @@ const getRepresentations = async (options) => {
 	};
 
 	if (options.searchTerm) {
-		const terms = options.searchTerm.split(' ');
+		const searchTerm = options.searchTerm.trim().split(' ');
+		const firstPart = searchTerm[0];
+		const lastPart = searchTerm[1] || '';
+
+		// Common base query
+		const baseConditions = [
+			{ representationComment: { contains: options.searchTerm } },
+			{ representative: { organisationName: { contains: options.searchTerm } } },
+			{ represented: { organisationName: { contains: options.searchTerm } } }
+		];
+
+		// name queries
+		const nameConditions = lastPart
+			? [
+					{ represented: { firstName: { contains: firstPart } } },
+					{ represented: { lastName: { contains: lastPart } } },
+					{ representative: { firstName: { contains: firstPart } } },
+					{ representative: { lastName: { contains: lastPart } } }
+			  ]
+			: [
+					{ represented: { firstName: { contains: firstPart } } },
+					{ represented: { lastName: { contains: firstPart } } },
+					{ representative: { firstName: { contains: firstPart } } },
+					{ representative: { lastName: { contains: firstPart } } }
+			  ];
+
 		where['AND'].push({
-			OR: [
-				{ representationComment: { contains: options.searchTerm } },
-				{ representative: { organisationName: { contains: options.searchTerm } } },
-				{ represented: { organisationName: { contains: options.searchTerm } } },
-				...terms.map((term) => ({
-					OR: [
-						{ represented: { firstName: { contains: term } } },
-						{ represented: { lastName: { contains: term } } },
-						{ representative: { firstName: { contains: term } } },
-						{ representative: { lastName: { contains: term } } }
-					]
-				}))
-			]
+			OR: [...baseConditions, { OR: nameConditions }]
 		});
 	}
+
 	if (options.type) {
 		where['AND'].push({
 			representationType: {
