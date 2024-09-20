@@ -1,4 +1,4 @@
-const { pick, omit } = require('lodash');
+const { pick, omit, invert } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
 const { featureFlag } = require('../lib/config');
 
@@ -411,6 +411,7 @@ const getValidDateInStringOrNull = (date) => {
 	if (date === '0000-00-00') return null;
 	return date;
 };
+
 const stageMap = {
 	draft: 0,
 	pre_application: 1,
@@ -422,6 +423,8 @@ const stageMap = {
 	post_decision: 7,
 	withdrawn: 8
 };
+
+const stageNameFromValue = (stage) => invert(stageMap)[stage];
 
 const regionMap = {
 	east_midlands: 'East Midlands',
@@ -448,5 +451,6 @@ module.exports = {
 	mapNIApplicationsToApi,
 	mapColumnLabelToApi: mapColumnLabelToApiEn,
 	mapColumnLabelToApiCy,
-	mergeFilters
+	mergeFilters,
+	stageNameFromValue
 };
