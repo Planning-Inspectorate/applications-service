@@ -8,7 +8,8 @@ const {
 	addMapZoomLevelAndLongLat,
 	mapBackOfficeApplicationsToApi,
 	mapNIApplicationsToApi,
-	mergeFilters
+	mergeFilters,
+	stageNameFromValue
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
@@ -670,6 +671,25 @@ describe('application.mapper', () => {
 					label_cy: 'Cymru'
 				}
 			]);
+		});
+	});
+	describe('stageNameFromValue', () => {
+		it('Should return the correct string stage value for each corresponding integer value', () => {
+			const expectedStageValues = [
+				'draft',
+				'pre_application',
+				'acceptance',
+				'pre_examination',
+				'examination',
+				'recommendation',
+				'decision',
+				'post_decision',
+				'withdrawn'
+			];
+
+			expectedStageValues.forEach((stage, index) => {
+				expect(stageNameFromValue(index)).toEqual(stage);
+			});
 		});
 	});
 });
