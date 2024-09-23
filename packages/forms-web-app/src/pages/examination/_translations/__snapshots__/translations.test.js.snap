@@ -4,8 +4,8 @@ exports[`pages/examination/_translations should return the correct English trans
 {
   "addAnotherDeadlineItem": {
     "errorMessage1": "Select yes if you want to add another deadline item",
-    "heading1": "You added one deadline item",
-    "hintText1": "Do you need to add another deadline item?",
+    "heading1": "Your responses to deadline items",
+    "hintText1": "Do you need to respond to another deadline item?",
     "moreDeadlineItems": {
       "message1": "You have submitted against all available deadline items",
     },
@@ -13,7 +13,7 @@ exports[`pages/examination/_translations should return the correct English trans
       "ctaText1": "Add a deadline item",
       "heading1": "You have not added a deadline item",
     },
-    "title": "You added one deadline item",
+    "title": "Your responses to deadline items",
   },
   "applicant": {
     "errorMessage1": "Select yes if you are {{-applicant}}",
@@ -292,8 +292,8 @@ exports[`pages/examination/_translations should return the correct Welsh transla
 {
   "addAnotherDeadlineItem": {
     "errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall ",
-    "heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
-    "hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+    "heading1": "Eich ymatebion i eitemau dyddiad cau",
+    "hintText1": "Oes angen i chi ymateb i eitem dyddiad cau arall?",
     "moreDeadlineItems": {
       "message1": "Rydych wedi cyflwyno yn erbyn yr holl eitemau dyddiad terfyn amser sydd ar gael",
     },
@@ -301,7 +301,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
       "ctaText1": "Ychwanegu eitem dyddiad cau",
       "heading1": "Nid ydych wedi ychwanegu eitem dyddiad cau",
     },
-    "title": "Rydych wedi ychwanegu un eitem terfyn amser",
+    "title": "Eich ymatebion i eitemau dyddiad cau",
   },
   "applicant": {
     "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
