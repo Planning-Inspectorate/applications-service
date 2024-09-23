@@ -3,14 +3,26 @@
 {% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l">{{ t('errors.plannedOutage.title') }}</h1>
+            <h1 class="govuk-heading-l">{{ t('errors.common.serviceUnavailable') }}</h1>
             {% if outageResumeText %}
                 <p class="govuk-body">{{ outageResumeText }}</p>
             {% endif %}
-            <p class="govuk-body">{{ t('errors.plannedOutage.urgentQuestions') }}</p>
-            <p class="govuk-body">{{ t('common.email') }}: <a href="mailto:{{ pinsContactDetails.enquiriesEmailAddress}}">{{ pinsContactDetails.enquiriesEmailAddress }}</a></p>
-            <p class="govuk-body">{{ t('common.telephone') }}: {{ pinsContactDetails.supportTeamPhoneNumber}} </p>
-            <p class="govuk-body">{{ t('common.pinsContactDetails.csOpeningHours') }}</p>
+            <p class="govuk-body">
+                <strong>{{ t('errors.common.online') }}</strong>
+                <br>
+                <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}">{{ t('errors.common.contactFormLinkText') }}</a>
+            </p>
+
+			<p class="govuk-body">
+				<strong>{{ t('errors.common.phone') }}</strong>
+				<br>
+				{{ pinsContactDetails.supportTeamPhoneNumber }}
+				<p>
+					{{ t("common.pinsContactDetails.csOpeningHoursLine1") }}
+					<br>
+					{{ t("common.pinsContactDetails.csOpeningHoursLine2") }}
+				</p>
+			</p>
         </div>
     </div>
 {% endblock %}
