@@ -36,7 +36,8 @@
 	"paginationAccessibilityText2": "o dudalennau",
 	"partOf": "Rhan o",
 	"pinsContactDetails": {
-		"csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)"
+		"csOpeningHoursLine1": "Ar agor o ddydd Llun i ddydd Gwener: 9yb i 4yp",
+		"csOpeningHoursLine2": "Ar gau ar benwythnosau a gwyliau banc."
 	},
 	"remove": "Dileu",
 	"resultsPerPage": "Canlyniadau fesul tudalen",
