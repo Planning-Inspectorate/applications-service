@@ -1,8 +1,8 @@
 {
 	"addAnotherDeadlineItem": {
-		"title": "You added one deadline item",
-		"heading1": "You added one deadline item",
-		"hintText1": "Do you need to add another deadline item?",
+		"title": "Your responses to deadline items",
+		"heading1": "Your responses to deadline items",
+		"hintText1": "Do you need to respond to another deadline item?",
 		"noDeadlineItems": {
 			"heading1": "You have not added a deadline item",
 			"ctaText1": "Add a deadline item"

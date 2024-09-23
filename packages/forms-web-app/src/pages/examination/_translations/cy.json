@@ -1,8 +1,8 @@
 {
 	"addAnotherDeadlineItem": {
-		"title": "Rydych wedi ychwanegu un eitem terfyn amser",
-		"heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
-		"hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+		"title": "Eich ymatebion i eitemau dyddiad cau",
+		"heading1": "Eich ymatebion i eitemau dyddiad cau",
+		"hintText1": "Oes angen i chi ymateb i eitem dyddiad cau arall?",
 		"noDeadlineItems": {
 			"heading1": "Nid ydych wedi ychwanegu eitem dyddiad cau",
 			"ctaText1": "Ychwanegu eitem dyddiad cau"
