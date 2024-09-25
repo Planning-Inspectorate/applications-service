@@ -24,9 +24,9 @@ Object.defineProperty(global, 'clients', {
 	}
 });
 
-describe('scripts/unregister-sw', () => {
+describe('scripts/unregister-service-worker', () => {
 	it('unregisters the service worker', async () => {
-		require('../../../src/public/scripts/unregister-sw.script.js');
+		require('../../../src/public/scripts/unregister-service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		expect(mockUnregister).toHaveBeenCalled();
