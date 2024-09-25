@@ -1,7 +1,4 @@
-const {
-	getExaminationSubmissionId,
-	getExaminationEmailAddress
-} = require('../_session/examination-session');
+const { getExaminationSubmissionId } = require('../_session/examination-session');
 
 const logger = require('../../../lib/logger');
 const { getProjectEmailAddress } = require('../../../controllers/session/app-data-session');
@@ -12,8 +9,7 @@ const getSubmissionComplete = (req, res) => {
 
 		const pageData = {
 			submissionId: getExaminationSubmissionId(session),
-			projectEmail: getProjectEmailAddress(session),
-			emailAddress: getExaminationEmailAddress(session)
+			projectEmail: getProjectEmailAddress(session)
 		};
 
 		return res.render(view, pageData);
