@@ -26,11 +26,12 @@ function handleFormPost(event) {
 				const request = event.request.clone();
 				const formData = await request.formData();
 
-				let formDataValues = {}
+				let formDataValues = {};
 
 				for (const formDataKey of formData.keys()) {
-					const allFormDataNameValues = formData.getAll(formDataKey)
-					formDataValues[formDataKey] = allFormDataNameValues.length === 1 ? allFormDataNameValues[0] : allFormDataNameValues
+					const allFormDataNameValues = formData.getAll(formDataKey);
+					formDataValues[formDataKey] =
+						allFormDataNameValues.length === 1 ? allFormDataNameValues[0] : allFormDataNameValues;
 				}
 
 				return fetch(request.url, {
