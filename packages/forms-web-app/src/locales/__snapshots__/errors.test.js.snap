@@ -7,7 +7,7 @@ exports[`locales/errors should return the correct English errors translations 1`
   "common.phone": "Phone:",
   "common.questions": "If you have any questions, you can contact us:",
   "common.serviceUnavailable": "Sorry, the service is unavailable",
-  "haveYourSayJourney.paragraph1": "Try again later",
+  "haveYourSayJourney.paragraph1": "Try again later.",
   "haveYourSayJourney.paragraph2": "We have not saved your answers.",
   "haveYourSayJourney.paragraph3": "When the service is available, you'll have to start again.",
   "haveYourSayJourney.title": "Sorry, there's a problem with the service",
