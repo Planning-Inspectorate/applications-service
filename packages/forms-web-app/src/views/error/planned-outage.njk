@@ -8,21 +8,10 @@
                 <p class="govuk-body">{{ outageResumeText }}</p>
             {% endif %}
             <p class="govuk-body">
-                <strong>{{ t('errors.common.online') }}</strong>
-                <br>
-                <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}">{{ t('errors.common.contactFormLinkText') }}</a>
+                {{ t('errors.common.questions') }}
             </p>
-
-			<p class="govuk-body">
-				<strong>{{ t('errors.common.phone') }}</strong>
-				<br>
-				{{ pinsContactDetails.supportTeamPhoneNumber }}
-				<p>
-					{{ t("common.pinsContactDetails.csOpeningHoursLine1") }}
-					<br>
-					{{ t("common.pinsContactDetails.csOpeningHoursLine2") }}
-				</p>
-			</p>
+            
+            {% include "error/_includes/contact-details.njk" %}
         </div>
     </div>
 {% endblock %}
