@@ -45,7 +45,9 @@ exports[`pages/process-guide/_translations should return the correct English tra
     },
     "examination": {
       "heading1": "Examination",
-      "paragraph1": "The Examining Body asks questions about the proposed development. The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 4 months.",
+      "paragraph1": "The Examining Body asks questions about the proposed changes to the Development Consent Order.",
+      "paragraph2": "The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place.",
+      "paragraph3": "This stage takes up to 4 months.",
     },
     "postDecision": {
       "heading1": "What happens after the decision is made",
@@ -134,7 +136,9 @@ exports[`pages/process-guide/_translations should return the correct Welsh trans
     },
     "examination": {
       "heading1": "Examination",
-      "paragraph1": "The Examining Body asks questions about the proposed development. The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 4 months.",
+      "paragraph1": "The Examining Body asks questions about the proposed changes to the Development Consent Order.",
+      "paragraph2": "The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place.",
+      "paragraph3": "This stage takes up to 4 months.",
     },
     "postDecision": {
       "heading1": "What happens after the decision is made",
