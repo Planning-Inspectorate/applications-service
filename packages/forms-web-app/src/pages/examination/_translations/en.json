@@ -244,7 +244,7 @@
 		"title": "Submission Complete",
 		"heading1": "Submission Complete",
 		"notificationText1": "Your submission reference number",
-		"paragraph1": "We've sent a confirmation email to {{-emailAddress}} to confirm we have received your submission.",
+		"paragraph1": "We have received your submission. Make a note of your reference number.",
 		"heading2": "Contact us",
 		"heading3": "Telephone",
 		"paragraph2": "If you have an interested party reference number, have it with you when you call.",
