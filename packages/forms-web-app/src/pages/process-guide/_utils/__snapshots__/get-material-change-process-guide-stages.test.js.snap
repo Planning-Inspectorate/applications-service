@@ -13,7 +13,7 @@ exports[`pages/process-guide/_utils/get-material-change-process-guide-stages #ge
     "title": "Application published",
   },
   "applicationReceived": {
-    "content": "The Planning Inspectorate publishes the application when they receive it.",
+    "content": "We will publish the application when we receive it.",
     "title": "Application received",
   },
   "decision": {
