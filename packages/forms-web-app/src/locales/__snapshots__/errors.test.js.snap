@@ -15,7 +15,6 @@ exports[`locales/errors should return the correct English errors translations 1`
   "pageNotFound.paragraph1": "If you typed the web address, check it is correct.",
   "pageNotFound.paragraph2": "If you pasted the web address, check you copied the entire address.",
   "pageNotFound.paragraph3": "If the web address is correct or you selected a link or button, you can contact us:",
-  "pageNotFound.title": "Page not found - Application service - GOV.UK",
   "unhandledException.paragraph1": "You'll be able to use the service again later.",
 }
 `;
@@ -35,7 +34,6 @@ exports[`locales/errors should return the correct Welsh errors translations 1`] 
   "pageNotFound.paragraph1": "Os teipioch chi'r cyfeiriad gwe, gwiriwch ei fod yn gywir.",
   "pageNotFound.paragraph2": "Os gludoch chi'r cyfeiriad gwe, gwiriwch eich bod wedi copïo'r cyfeiriad cyfan.",
   "pageNotFound.paragraph3": "Os yw'r cyfeiriad gwe'n gywir neu os dewisoch ddolen neu fotwm, cysylltwch â Chymorth Cwsmeriaid yr Arolygiaeth Gynllunio:",
-  "pageNotFound.title": "Tudalen heb ei chanfod",
   "unhandledException.paragraph1": "Byddwch yn gallu defnyddio'r gwasanaeth eto yn nes ymlaen.",
 }
 `;
