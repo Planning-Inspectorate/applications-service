@@ -1,9 +1,8 @@
 const db = require('../models');
 const { pick } = require('lodash');
 const { Op } = require('sequelize');
-//const { mapNISearchTermToQuery } = require('../utils/queries');
 const stopWords = require('../utils/stopwords');
-const stopWordsAll = [...stopWords.english, ...stopWords.welsh];
+const stopWordList = stopWords.english;
 
 const getRepresentationById = async (ID) => {
 	return db.Representation.findOne({ where: { ID }, raw: true });
@@ -28,7 +27,7 @@ const getRepresentationsWithCount = async (options = {}) => {
 	if (options.searchTerm) {
 		const terms = options.searchTerm
 			.split(' ')
-			.filter((term) => !stopWordsAll.includes(term.toLowerCase()));
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
 		// Ensure that each search term is found in at least one of the three fields
 		terms.forEach((term) => {
 			findOptions.where[Op.and].push({
