@@ -28,9 +28,9 @@ const fetchBackOfficeDocumentsByType = async ({ caseReference, type }) => {
 	};
 };
 
-const fetchBackOfficeDocumentFilters = async (caseReference) => {
+const fetchBackOfficeDocumentFilters = async (caseReference, isMaterialChange) => {
 	const availableFilters = await getFilters(caseReference);
-	return mapFilters(availableFilters);
+	return mapFilters(availableFilters, isMaterialChange);
 };
 
 module.exports = {
