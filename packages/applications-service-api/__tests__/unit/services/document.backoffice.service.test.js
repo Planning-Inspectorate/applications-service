@@ -44,10 +44,11 @@ describe('document back office service', () => {
 		it('calls getFilters then passes result to mapper', async () => {
 			getFilters.mockResolvedValueOnce(DB_FILTERS);
 			mapFilters.mockReturnValueOnce(RESPONSE_FILTERS);
+			const mockIsMaterialChange = false;
 
-			const result = await fetchBackOfficeDocumentFilters('EN000001');
+			const result = await fetchBackOfficeDocumentFilters('EN000001', mockIsMaterialChange);
 
-			expect(mapFilters).toBeCalledWith(DB_FILTERS);
+			expect(mapFilters).toBeCalledWith(DB_FILTERS, mockIsMaterialChange);
 			expect(result).toEqual(RESPONSE_FILTERS);
 		});
 	});

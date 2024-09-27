@@ -44,10 +44,11 @@ describe('document ni service', () => {
 		it('calls getFilters then passes result to mapper', async () => {
 			getAvailableFilters.mockResolvedValueOnce(DB_FILTERS);
 			mapFilters.mockReturnValueOnce(RESPONSE_FILTERS);
+			const mockIsMaterialChange = false;
 
-			const result = await fetchNIDocumentFilters('EN000001');
+			const result = await fetchNIDocumentFilters('EN000001', mockIsMaterialChange);
 
-			expect(mapFilters).toBeCalledWith(DB_FILTERS);
+			expect(mapFilters).toBeCalledWith(DB_FILTERS, false);
 			expect(result).toEqual(RESPONSE_FILTERS);
 		});
 	});
