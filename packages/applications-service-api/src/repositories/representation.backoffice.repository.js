@@ -109,8 +109,6 @@ const getRepresentations = async (options) => {
 
 	const count = await prismaClient.representation.count({ where });
 
-	console.log('EXPECTED QUERY:', JSON.stringify(where, null, 2));
-
 	return { representations, count };
 };
 

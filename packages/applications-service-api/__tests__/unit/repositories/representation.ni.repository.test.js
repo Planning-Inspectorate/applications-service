@@ -129,9 +129,7 @@ describe('representation ni repository', () => {
 			// Act
 			await getRepresentationsWithCount(mockOptionsWithSearchTerm);
 
-			console.log('TEST QUERY:', JSON.stringify(expectedWhereClause, null, 2));
 			// Assert
-			// Currently failing - needs investigation
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				caseReference: undefined,
