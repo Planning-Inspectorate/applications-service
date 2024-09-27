@@ -32,9 +32,7 @@ services:
       # BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES: BC0110001
       # BACK_OFFICE_INTEGRATION_GET_REPRESENTATION_CASE_REFERENCES: BC0110001
       BACK_OFFICE_SERVICE_BUS_ENABLED: false
-      #BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: MERGE
-      BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: BO
-      #BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: NI
+      BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: MERGE
       BACK_OFFICE_SERVICE_BUS_HOSTNAME: pins-sb-back-office-dev-ukw-001.servicebus.windows.net
       DATABASE_URL: sqlserver://mssql:1433;database=pins_applications_development;user=sa;password=dbPASSw0_rd;trustServerCertificate=true
       DOCS_API_PATH: /opt/app/packages/applications-service-api/api
