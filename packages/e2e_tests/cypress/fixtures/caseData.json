@@ -1,0 +1,85 @@
+{
+	"contactDetails": {
+		"firstName": "John",
+		"lastName": "Tester",
+		"organisationName": "Test Organisation",
+		"email": "test@planninginspectorate.gov.uk",
+		"jobTitle": "Tester",
+		"telephoneNumber": "03034445325"
+	},
+
+	"caseAddress": {
+		"addressLine1": "2 The Square",
+		"addressLine2": "TQH",
+		"testTown": "Birstol",
+		"testContury": "United Kingdom",
+		"addressPostcode": "BS1 6PN"
+	},
+
+	"behalfContactDetails": {
+		"firstName": "Tom",
+		"lastName": "Testo",
+		"email": "test123@planninginspectorate.gov.uk",
+		"jobTitle": "Tester",
+		"telephoneNumber": "03034445368",
+		"organisationName": "Another Test Organisation"
+	},
+
+	"behalfCaseAddress": {
+		"addressLine1": "36 The Square",
+		"addressLine2": "HQ",
+		"testTown": "Birstol",
+		"testContury": "United Kingdom",
+		"addressPostcode": "BS1 6PN"
+	},
+
+	"representing": {
+		"person": "Tom Testo",
+		"organisation": "Test Organisation",
+		"household": "Test HouseHold"
+	},
+
+	"updatedContactDetials": {
+		"firstName": "Chris",
+		"lastName": "Testo",
+		"organisationName": "Changed Test Organisation",
+		"email": "test456@planninginspectorate.gov.uk",
+		"jobTitle": "Tester",
+		"telephoneNumber": "03034445999"
+	},
+
+	"updatedCaseAddress": {
+		"addressLine1": "The Square, 123",
+		"addressLine2": "HQ2",
+		"testTown": "Birstol",
+		"testContury": "United Kingdom",
+		"addressPostcode": "BS1 6PO"
+	},
+
+	"commentOnCase": "This is a test comment, that is more than one line. This is a comment, that is more than one line.",
+	"updatedCommentOnCase": "Updated test comment, that is more than one line. Updated test comment, that is more than one line",
+
+	"headingText": {
+		"yourAddressPage": "What is your address?",
+		"yourEmailAdressPage": "What is your email address?",
+		"yourAgePage": "Are you 18 or over?",
+		"registeringForPage": "Who are you registering for?",
+		"yourFullNamePage": "What is your full name?",
+		"yourTelephoneNumberPage": "What is your telephone number?",
+		"yourOrgOrCharityPage": "What is the name of your organisation or charity?",
+		"addCommentPage": "What do you want to tell us about this proposed project?",
+		"checkYourAnswersPage": "Check your answers before registering",
+		"declarationPage": "Declaration",
+		"projectInformationPage": "Project information",
+		"yourOrganisationPage": "What is the name of the organisation you work for?",
+		"yourJobTitlePage": "What is your job title or volunteer role?",
+		"theirTelePhoneNumberPage": "What is their telephone number?",
+		"theirAddressPage": "What is their address?",
+		"theirEmailAddressPage": "What is their email address?",
+		"theirAgePage": "Are they 18 or over?",
+		"theirHouseholdNamePage": "What is the name of the household you are representing?",
+		"theirFullNamePage": "What is the full name of the person you are representing?",
+		"theirOrganisationPage": "What is the full name of the organisation or charity that you are representing?",
+		"representingPage": "Who are you representing?"
+	}
+}

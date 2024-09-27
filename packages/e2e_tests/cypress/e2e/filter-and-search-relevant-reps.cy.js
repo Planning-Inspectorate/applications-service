@@ -5,10 +5,13 @@ const relevantReps = new PO_RelevantReps();
 const basePage = new BasePage();
 
 describe('User can view, filter and search the relevant reps page for a project', () => {
-	it('should navigate to the relevant reps page for a project', () => {
+	before(() => {
 		cy.clearCookies();
-		cy.visit('/projects/EN010120/');
-		relevantReps.clickRelevantRepsLink('Relevant representations');
+		cy.navigateAndSearch('Front Office Auto Test');
+	});
+
+	it('should navigate to the relevant reps page for a project', () => {
+		basePage.clickProjectInformationMenuLink('representations');
 		cy.url().should('include', '/representations');
 	});
 
@@ -41,7 +44,7 @@ describe('User can view, filter and search the relevant reps page for a project'
 	});
 
 	it('can search for a relevant rep and see results', () => {
-		relevantReps.enterSearchTerm('Planning');
+		relevantReps.enterSearchTerm('Test');
 		relevantReps.clickSearchButton();
 		relevantReps.returnListOfRepresentations().should('be.visible');
 	});

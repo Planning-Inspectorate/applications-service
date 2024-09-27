@@ -15,13 +15,16 @@ export class BasePage {
 		checkBox: () => cy.get('[type="checkbox"]'),
 		govLink: () => cy.get('.govuk-link'),
 		govInput: () => cy.get('.govuk-input'),
-		govLink: () => cy.get('.govuk-link'),
 		projectInformationMenu: () => cy.get('nav[aria-label="Project navigation"]'),
 		govRadioBtn: () => cy.get('[type="radio"]'),
 		govBody: () => cy.get('.govuk-body'),
 		govBtn: () => cy.get('.govuk-button'),
 		govMap: () => cy.get('.pins-map'),
-		govInset: () => cy.get('.govuk-inset-text')
+		govInset: () => cy.get('.govuk-inset-text'),
+		govDetails: () => cy.get('.govuk-details__summary-text'),
+		govSearchTerm: () => cy.get('#searchTerm'),
+		govSearchBtn: () => cy.get('[data-cy="search-button"]'),
+		govBodyCy: () => cy.get('[data-cy="no-docs-text"]')
 	};
 
 	clickSaveAndContinueBtn() {
@@ -97,16 +100,32 @@ export class BasePage {
 		this.elements.govLink().contains(string).click();
 	}
 
+	assertGovLink(string) {
+		this.elements.govLink().contains(string).should('be.visible');
+	}
+
 	govInputType(string) {
 		this.elements.govInput().type(string);
+	}
+
+	govSearchTermType(string) {
+		this.elements.govSearchTerm().type(string);
 	}
 
 	clickContiuneBtn() {
 		this.elements.contiuneBtn().click();
 	}
 
+	clickGovSearchBtn() {
+		this.elements.govSearchBtn().click();
+	}
+
 	checkGovRadioBtn(string) {
 		this.elements.govRadioBtn().check(string);
+	}
+
+	clickDetailsBtn() {
+		this.elements.govDetails().click();
 	}
 
 	clickProjectInformationMenuLink(link) {
@@ -122,7 +141,7 @@ export class BasePage {
 					cy.get('a[href*="/examination-timetable"]').click();
 					break;
 				case 'have-your-say':
-					cy.get('a[href*="/have-your-say-during-examination"]').click();
+					cy.get('a[href*="/register-have-your-say"]').click();
 					break;
 				case 'get-updates':
 					cy.get('a[href*="/start"]').click();
@@ -162,5 +181,46 @@ export class BasePage {
 
 	locateH3ByText(string) {
 		this.elements.h3().contains(string);
+	}
+
+	typeInputField(inputFieldId, text) {
+		cy.get(`#${inputFieldId}`).clear().type(text);
+	}
+
+	assertDropDownDetails(firstH2Text, secondH2Text) {
+		this.clickDetailsBtn();
+		cy.get('.govuk-details__summary-text').should('be.visible');
+		cy.contains('h2', firstH2Text).should('be.visible');
+		cy.contains('h2', secondH2Text).should('be.visible');
+	}
+
+	checkConfirmationMessage(expectedH1Text, expectedReferenceNumberLength) {
+		// Assert the confirmation message container is visible
+		cy.get('.govuk-panel').should('be.visible');
+
+		// Assert the H1 text inside the confirmation message
+		this.locateH1ByText(expectedH1Text);
+
+		// Assert the body message contains the reference number and validate its length
+		cy.get('.govuk-panel__body')
+			.invoke('text')
+			.then((bodyText) => {
+				// Check that the body contains the expected message
+				expect(bodyText).to.contain('Your reference number');
+
+				// Extract the reference number
+				const referenceNumber = bodyText.replace('Your reference number', '').trim();
+
+				// Assert the reference number has the correct length
+				expect(referenceNumber.length).to.equal(expectedReferenceNumberLength);
+			});
+	}
+
+	visibleGovBodyCy(string) {
+		this.elements.govBodyCy().contains(string).should('be.visible');
+	}
+
+	selectFilterOptions(option) {
+		this.elements.govLink().contains(option).click();
 	}
 }
