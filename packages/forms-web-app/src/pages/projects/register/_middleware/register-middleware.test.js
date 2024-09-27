@@ -36,9 +36,7 @@ describe('#registerMiddleware', () => {
 				render: jest.fn()
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/a-case-ref/register/register-have-your-say'
-			});
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
 		});
 		it('registerMiddleware - no case_ref in params', () => {
 			const next = jest.fn();
@@ -55,9 +53,7 @@ describe('#registerMiddleware', () => {
 				render: jest.fn()
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/:case_ref/register/register-have-your-say'
-			});
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
 		});
 		it('registerMiddleware - no caseRef in session', () => {
 			const next = jest.fn();
@@ -75,9 +71,7 @@ describe('#registerMiddleware', () => {
 				render: jest.fn()
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/a-case-ref/register/register-have-your-say'
-			});
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
 		});
 		it('registerMiddleware - no caseRef in session', () => {
 			const next = jest.fn();
@@ -96,9 +90,7 @@ describe('#registerMiddleware', () => {
 				render: jest.fn()
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/a-case-ref/register/register-have-your-say'
-			});
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
 		});
 	});
 });
