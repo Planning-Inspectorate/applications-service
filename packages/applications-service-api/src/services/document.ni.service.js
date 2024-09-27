@@ -28,9 +28,9 @@ const fetchNIDocumentsByType = async ({ caseReference, type }) => {
 	};
 };
 
-const fetchNIDocumentFilters = async (caseReference) => {
+const fetchNIDocumentFilters = async (caseReference, isMaterialChange) => {
 	const availableFilters = await getAvailableFilters(caseReference);
-	return mapFilters(availableFilters);
+	return mapFilters(availableFilters, isMaterialChange);
 };
 
 module.exports = {
