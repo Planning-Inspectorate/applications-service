@@ -96,7 +96,7 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 				});
 
 				it('should render the error page', () => {
-					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+					expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
 				});
 			});
 			describe('and the user has submitted a declaration for myself', () => {
