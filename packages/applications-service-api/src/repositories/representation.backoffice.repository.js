@@ -1,5 +1,7 @@
 const { prismaClient } = require('../lib/prisma');
 const { repFromToWelsh } = require('../utils/representation.mapper');
+const stopWords = require('../utils/stopwords');
+const stopWordList = stopWords.english;
 
 const commonWhereFilters = {
 	status: {
@@ -46,34 +48,41 @@ const getRepresentations = async (options) => {
 	};
 
 	if (options.searchTerm) {
-		const searchTerm = options.searchTerm.trim().split(' ');
-		const firstPart = searchTerm[0];
-		const lastPart = searchTerm[1] || '';
+		const terms = options.searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
 
-		// Common base query
-		const baseConditions = [
-			{ representationComment: { contains: options.searchTerm } },
-			{ representative: { organisationName: { contains: options.searchTerm } } },
-			{ represented: { organisationName: { contains: options.searchTerm } } }
-		];
-
-		// name queries
-		const nameConditions = lastPart
-			? [
-					{ represented: { firstName: { contains: firstPart } } },
-					{ represented: { lastName: { contains: lastPart } } },
-					{ representative: { firstName: { contains: firstPart } } },
-					{ representative: { lastName: { contains: lastPart } } }
-			  ]
-			: [
-					{ represented: { firstName: { contains: firstPart } } },
-					{ represented: { lastName: { contains: firstPart } } },
-					{ representative: { firstName: { contains: firstPart } } },
-					{ representative: { lastName: { contains: firstPart } } }
-			  ];
-
+		// Match all terms in either the representationComment or organizationName fields
 		where['AND'].push({
-			OR: [...baseConditions, { OR: nameConditions }]
+			OR: [
+				// All terms must match in the representationComment field
+				{
+					AND: terms.map((term) => ({
+						representationComment: { contains: term }
+					}))
+				},
+				// All terms must match in the representative.organisationName field
+				{
+					AND: terms.map((term) => ({
+						representative: { organisationName: { contains: term } }
+					}))
+				},
+				// All terms must match in the represented.organisationName field
+				{
+					AND: terms.map((term) => ({
+						represented: { organisationName: { contains: term } }
+					}))
+				},
+				// Match any term in the firstName or lastName fields
+				{
+					OR: terms.flatMap((term) => [
+						{ represented: { firstName: { contains: term } } },
+						{ represented: { lastName: { contains: term } } },
+						{ representative: { firstName: { contains: term } } },
+						{ representative: { lastName: { contains: term } } }
+					])
+				}
+			]
 		});
 	}
 
@@ -88,7 +97,7 @@ const getRepresentations = async (options) => {
 	const representations = await prismaClient.representation.findMany({
 		where,
 		orderBy: {
-			dateReceived: 'asc'
+			dateReceived: 'desc'
 		},
 		skip: options.offset,
 		take: options.limit,
@@ -99,6 +108,9 @@ const getRepresentations = async (options) => {
 	});
 
 	const count = await prismaClient.representation.count({ where });
+
+	console.log('EXPECTED QUERY:', JSON.stringify(where, null, 2));
+
 	return { representations, count };
 };
 
