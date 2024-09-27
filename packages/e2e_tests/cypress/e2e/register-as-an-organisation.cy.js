@@ -1,102 +1,206 @@
 import { PO_HaveYourSay } from '../pageObject/Register-to-have-your-say/PO_HaveYourSay';
-import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
-import { PO_ProjectSearch } from '../pageObject/Search-and-project-pages/PO_ProjectSearch';
 import { BasePage } from '../pageObject/basePage';
 
 const haveYourSay = new PO_HaveYourSay();
-const projectPage = new PO_ProjectPage();
-const projectSearch = new PO_ProjectSearch();
 const basePage = new BasePage();
 
-before(() => {
-	cy.clearAllCookies();
-});
+let caseData;
 
 describe('Register as an organisation to have your say', () => {
-	it('Navigating to project search', () => {
-		cy.visit('/projects/BC0110005');
+	before(() => {
+		cy.clearCookies();
+		cy.fixture('caseData').then((data) => {
+			// Assign the loaded fixture data
+			caseData = data;
+		});
+		cy.navigateAndSearch('Front Office Auto Test');
 	});
 
-	it('It should click on register to have your say link', () => {
-		projectPage.findAndClickSidebarLinkLeft('Register to have your say');
+	it('Should click on register to have your say link and assert page content', () => {
+		basePage.clickProjectInformationMenuLink('have-your-say');
+		cy.url().should('include', '/register/register-have-your-say');
+		basePage.locateH1ByText('Register to have your say about a national infrastructure project');
 	});
 
-	it('It should click start now button', () => {
-		projectPage.findAndClickButton('Start now');
+	it('Should start the registration journey', () => {
+		basePage.clickGovBtn('Start now');
 	});
 
-	it('It should check An organisation I work or volunteer for', () => {
-		haveYourSay.findAndSelectRadioButton('organisation');
-		projectPage.findAndClickButton('Continue');
+	it('Should check an organisation I work or volunteer for', () => {
+		cy.url().should('include', '/register/who-registering-for');
+		basePage.locateH1ByText(caseData.headingText.registeringForPage);
+		basePage.checkGovRadioBtn('organisation');
+		cy.saveAndContinue();
 	});
 
-	it('Enters their full name and clicks continue', () => {
-		haveYourSay.findFieldAndEnterText('full-name', 'John Tester');
-		projectPage.findAndClickButton('Continue');
+	it('Should enter your full name and continue', () => {
+		const fullName = `${caseData.contactDetails.firstName} ${caseData.contactDetails.lastName}`;
+
+		basePage.locateH1ByText(caseData.headingText.yourFullNamePage);
+		basePage.typeInputField('full-name', fullName);
+		cy.saveAndContinue();
 	});
 
-	it('Confirms they are over 18 and clicks continue', () => {
-		haveYourSay.findAndSelectRadioButton('yes');
-		projectPage.findAndClickButton('Continue');
+	it('Should confirm you are over 18 and continue', () => {
+		basePage.locateH1ByText(caseData.headingText.yourAgePage);
+		basePage.checkGovRadioBtn('yes');
+		cy.saveAndContinue();
 	});
 
-	it('Enters organisation name and clicks continue', () => {
-		haveYourSay.findFieldAndEnterText('organisation-name', 'Test Organisation');
-		projectPage.findAndClickButton('Continue');
+	it('Shpould enter your organisation name and continue', () => {
+		basePage.locateH1ByText(caseData.headingText.yourOrgOrCharityPage);
+		basePage.typeInputField('organisation-name', caseData.contactDetails.organisationName);
+		cy.saveAndContinue();
 	});
 
-	it('Enters job title or volunteer role', () => {
-		haveYourSay.findFieldAndEnterText('role', 'Test Manager');
-		projectPage.findAndClickButton('Continue');
+	it('Should enter your job title or volunteer role and contiune', () => {
+		basePage.locateH1ByText(caseData.headingText.yourJobTitlePage);
+		basePage.typeInputField('role', caseData.contactDetails.jobTitle);
+		cy.saveAndContinue();
 	});
 
-	it('Enters their email address and clicks continue', () => {
-		haveYourSay.findFieldAndEnterText('email', 'pinsemail@examplePINS.com');
-		projectPage.findAndClickButton('Continue');
+	it('Should enter your email address and continue', () => {
+		basePage.locateH1ByText(caseData.headingText.yourEmailAdressPage);
+		basePage.typeInputField('email', caseData.contactDetails.email);
+		cy.saveAndContinue();
 	});
 
-	it('Enters their address details and clicks continue', () => {
-		haveYourSay.findFieldAndEnterText('line1', 'TQH');
-		haveYourSay.findFieldAndEnterText('line2', '2 The Square');
-		haveYourSay.findFieldAndEnterText('line3', 'Bristol');
-		haveYourSay.findFieldAndEnterText('postcode', 'BS1 6PN');
-		haveYourSay.findFieldAndEnterText('country', 'United Kingdomw');
-		projectPage.findAndClickButton('Continue');
+	it('Enter your address and continue', () => {
+		basePage.locateH1ByText(caseData.headingText.yourAddressPage);
+		basePage.typeInputField('line1', caseData.caseAddress.addressLine1);
+		basePage.typeInputField('line2', caseData.caseAddress.addressLine2);
+		basePage.typeInputField('line3', caseData.caseAddress.testTown);
+		basePage.typeInputField('postcode', caseData.caseAddress.addressPostcode);
+		basePage.typeInputField('country', caseData.caseAddress.testContury);
+		cy.saveAndContinue();
 	});
 
-	it('Enters their telephone number and clicks continue', () => {
-		haveYourSay.findFieldAndEnterText('telephone', '03034445325');
-		projectPage.findAndClickButton('Continue');
+	it('Should enter your telephone number and continue', () => {
+		basePage.locateH1ByText(caseData.headingText.yourTelephoneNumberPage);
+		basePage.typeInputField('telephone', caseData.contactDetails.telephoneNumber);
+		cy.saveAndContinue();
 	});
 
-	it('Adds a comment against a project and clicks continue', () => {
-		haveYourSay.findFieldAndEnterText(
-			'comment',
-			'This is a test comment against the this specific project for automation testing purposes.'
+	it('Should add a comment against a project and continue', () => {
+		basePage.locateH1ByText(caseData.headingText.addCommentPage);
+		basePage.typeInputField('comment', caseData.commentOnCase);
+		basePage.assertDropDownDetails(
+			'Use of language, hyperlinks and sensitive information',
+			'Examples of sensitive information'
 		);
-		cy.get('.govuk-details__summary-text').click();
-		basePage.locateH2ByText('Use of language, hyperlinks and sensitive information');
-		projectPage.findAndClickButton('Continue');
+		cy.saveAndContinue();
 	});
 
-	it('Should navigate to check answers page', () => {
-		basePage.locateH1ByText('Check your answers before registering');
+	it('Should assert the information entered and make changes to entered information', () => {
+		const inputData = [
+			{
+				field: 'full-name',
+				originalValue: `${caseData.contactDetails.firstName} ${caseData.contactDetails.lastName}`,
+				updatedValue: `${caseData.updatedContactDetials.firstName} ${caseData.updatedContactDetials.lastName}`,
+				pageHeading: caseData.headingText.yourFullNamePage
+			},
+			{
+				field: 'telephone',
+				originalValue: caseData.contactDetails.telephoneNumber,
+				updatedValue: caseData.updatedContactDetials.telephoneNumber,
+				pageHeading: caseData.headingText.yourTelephoneNumberPage
+			},
+			{
+				field: 'address',
+				originalValue: caseData.caseAddress.addressLine1,
+				updatedValue: caseData.updatedCaseAddress.addressLine1,
+				pageHeading: caseData.headingText.yourAddressPage
+			},
+			{
+				field: 'email',
+				originalValue: caseData.contactDetails.email,
+				updatedValue: caseData.updatedContactDetials.email,
+				pageHeading: caseData.headingText.yourEmailAdressPage
+			},
+			{
+				field: 'comment',
+				originalValue: caseData.commentOnCase,
+				updatedValue: caseData.updatedCommentOnCase,
+				pageHeading: caseData.headingText.addCommentPage
+			},
+			{
+				field: 'organisation-name',
+				originalValue: caseData.contactDetails.organisationName,
+				updatedValue: caseData.updatedContactDetials.organisationName,
+				pageHeading: caseData.headingText.organisationNamePage
+			}
+		];
+
+		basePage.locateH1ByText(caseData.headingText.checkYourAnswersPage);
 		basePage.locateH2ByText('Personal details');
-		projectPage.findAndClickButton('Continue to declaration');
+
+		inputData.forEach(({ field, originalValue, updatedValue, pageHeading }) => {
+			if (field === 'address' || field === 'organisation-name') {
+				// Handle fields without a unique data-cy tag (address and organisationName)
+				cy.contains(originalValue); // Use contains to find the value
+				haveYourSay.clickChangeButton(field); // Click Change button
+
+				// Enter updated data for address or organisationName
+				if (field === 'address') {
+					basePage.typeInputField('line1', caseData.updatedCaseAddress.addressLine1);
+					basePage.typeInputField('line2', caseData.updatedCaseAddress.addressLine2);
+					basePage.typeInputField('line3', caseData.updatedCaseAddress.testTown);
+					basePage.typeInputField('postcode', caseData.updatedCaseAddress.addressPostcode);
+					basePage.typeInputField('country', caseData.updatedCaseAddress.testContury);
+				} else if (field === 'organisation-name') {
+					basePage.typeInputField(
+						'organisation-name',
+						caseData.updatedContactDetials.organisationName
+					);
+				}
+
+				// Save and continue
+				cy.saveAndContinue();
+
+				// Assert that the updated data is correctly displayed on the summary page
+				cy.contains(updatedValue);
+			} else {
+				// Handle fields that have data-cy tags
+				haveYourSay.assertYourEnteredData(field, originalValue);
+
+				// Click the "Change" button to modify the field's data
+				haveYourSay.clickChangeButton(field);
+
+				// Assert url to ensure you're on the right page
+				cy.url().should('include', '?mode=edit');
+
+				// Assert page heading to ensure you're on the correct page
+				basePage.locateH1ByText(pageHeading);
+
+				// Enter the updated data into the field
+				basePage.typeInputField(field, updatedValue);
+
+				// Submit the form to return to the summary page
+				cy.saveAndContinue();
+
+				// Assert that the updated data is correctly displayed on the summary page
+				haveYourSay.assertYourEnteredData(field, updatedValue);
+			}
+		});
+
+		// Final submission
+		basePage.clickGovBtn('Continue to declaration');
 	});
 
-	it('Should accept Declaration', () => {
-		basePage.locateH1ByText('Declaration');
-		basePage.clickSaveAndContinueBtn();
+	it('Should agree to the declaration continue', () => {
+		basePage.locateH1ByText(caseData.headingText.declarationPage);
+		basePage.clickGovBtn('Accept and continue');
 	});
 
-	it('Should verify application complete page', () => {
-		basePage.locateH1ByText('Registration complete');
-		// TODO:add test for reference number
-		cy.get('#project-link').click();
+	it('Should be taken to the registration complete page', () => {
+		basePage.checkConfirmationMessage('Registration complete', 9);
+		basePage.locateH2ByText('Getting involved in the preliminary meeting');
+		basePage.locateH2ByText('How and when to submit more information');
+		basePage.clickGovLink('Go back to the project page');
 	});
 
-	it('Should verify taken back to project page', () => {
-		cy.url().should('include', '/BC0110005');
+	it('Should verify you are taken back to project page', () => {
+		cy.url().should('include', '/projects');
+		basePage.locateH1ByText('Project information');
 	});
 });

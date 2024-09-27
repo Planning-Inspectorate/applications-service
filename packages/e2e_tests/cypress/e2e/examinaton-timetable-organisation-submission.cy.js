@@ -1,20 +1,18 @@
 import { BasePage } from '../pageObject/basePage';
 import { PO_ExaminationTimetable } from '../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
-import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
 
 const examinationTimetable = new PO_ExaminationTimetable();
-const projectPage = new PO_ProjectPage();
 const basePage = new BasePage();
 
-before(() => {
-	cy.clearCookies();
-});
-
 describe('User registers as an organisation to have their say against the examination timetable', () => {
+	before(() => {
+		cy.clearCookies();
+		cy.navigateAndSearch('Front Office Auto Test');
+	});
+
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
-		cy.visit('/projects/BC0910150');
-		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
-		examinationTimetable.clickLink();
+		basePage.clickProjectInformationMenuLink('examination-timetable');
+		basePage.clickGovBtn('Have your say');
 		examinationTimetable.clickStartNowButton();
 	});
 
