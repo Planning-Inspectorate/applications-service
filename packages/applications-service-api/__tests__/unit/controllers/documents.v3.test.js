@@ -38,7 +38,8 @@ describe('documentsV3 controller', () => {
 			await getNIDocuments(
 				{
 					body: {
-						caseReference: 'EN000001'
+						caseReference: 'EN000001',
+						isMaterialChange: false
 					}
 				},
 				res
@@ -51,7 +52,7 @@ describe('documentsV3 controller', () => {
 			};
 
 			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters);
-			expect(fetchNIDocumentFiltersMock).toBeCalledWith('EN000001');
+			expect(fetchNIDocumentFiltersMock).toBeCalledWith('EN000001', false);
 
 			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 			expect(res._getData()).toEqual({
