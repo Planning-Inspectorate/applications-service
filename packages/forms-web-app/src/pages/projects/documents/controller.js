@@ -18,6 +18,9 @@ const getProjectsDocumentsController = async (req, res) => {
 		const { i18n, query, params } = req;
 		const { case_ref } = params;
 		const { searchTerm } = query;
+		const { locals } = res;
+		const { applicationData } = locals;
+		const { isMaterialChange } = applicationData;
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
 
@@ -28,7 +31,7 @@ const getProjectsDocumentsController = async (req, res) => {
 
 		const { documents, examinationLibraryDocument, filters, pagination } = await searchDocuments(
 			case_ref,
-			query
+			{ ...query, isMaterialChange }
 		);
 
 		const documentsView = getDocuments(i18n, documents, examinationLibraryDocument);

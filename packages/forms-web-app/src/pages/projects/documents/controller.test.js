@@ -35,7 +35,11 @@ describe('pages/projects/documents/controller', () => {
 					params: { case_ref: 'mock-case-ref' },
 					i18n
 				};
-				const res = { render: jest.fn(), status: jest.fn(() => res) };
+				const res = {
+					locals: { applicationData: { isMaterialChange: false } },
+					render: jest.fn(),
+					status: jest.fn(() => res)
+				};
 
 				beforeEach(async () => {
 					getProjectData.mockReturnValue({
@@ -275,7 +279,11 @@ describe('pages/projects/documents/controller', () => {
 					params: { case_ref: 'mock-case-ref' },
 					i18n
 				};
-				const res = { render: jest.fn(), status: jest.fn(() => res) };
+				const res = {
+					locals: { applicationData: { isMaterialChange: false } },
+					render: jest.fn(),
+					status: jest.fn(() => res)
+				};
 
 				beforeEach(async () => {
 					getProjectData.mockReturnValue({
