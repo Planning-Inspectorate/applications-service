@@ -1,13 +1,13 @@
 {% extends "layouts/default.njk" %}
 
 {% block pageTitle %}
-  {{ t('errors.pageNotFound.title') }}
+  {{ t('errors.pageNotFound.heading') }}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ t('errors.pageNotFound.title') }}</h1>
+      <h1 class="govuk-heading-l">{{ t('errors.pageNotFound.heading') }}</h1>
       <p class="govuk-body">
         {{ t('errors.pageNotFound.paragraph1') }}
       </p>
@@ -17,16 +17,8 @@
       <p class="govuk-body">
         {{ t('errors.pageNotFound.paragraph3') }}
       </p>
-
-      <h2 class="govuk-heading-s">{{ t('common.telephone') }}</h2>
-      <ul class="govuk-list">
-        <li>{{ t('common.telephone') }}: 0303 444 5000</li>
-        <li>{{ t('common.pinsContactDetails.csOpeningHours') }}</li>
-      </ul>
-      <h2 class="govuk-heading-s">{{ t('common.email') }}</h2>
-      <p>
-        <a class="govuk-link" data-cy="Enquiries" href="mailto:enquiries@planninginspectorate.gov.uk">enquiries@planninginspectorate.gov.uk</a>
-      </p>
+      
+      {% include "error/_includes/contact-details.njk" %}
     </div>
   </div>
 {% endblock %}

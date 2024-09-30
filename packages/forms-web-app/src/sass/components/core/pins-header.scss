@@ -1,6 +1,6 @@
 .pins-header {
-	padding-top: 13px;
-	padding-bottom: 13px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 	color: govuk-colour('white');
 	background-color: #074745;
 	border-bottom: 10px solid #13a19b;
@@ -8,6 +8,11 @@
 	&__container {
 		border-bottom: 0;
 		padding: 0;
+	}
+
+	.govuk-header__logotype {
+		position: static;
+		top: 0;
 	}
 
 	&__logo {

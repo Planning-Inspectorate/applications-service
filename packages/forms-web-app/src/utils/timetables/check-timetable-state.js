@@ -1,9 +1,4 @@
-const {
-	setTimeToEndOfDay,
-	getDateNow,
-	setTimeToStartOfDay,
-	isNullSQLDate
-} = require('../date-utils');
+const { setTimeToEndOfDay, getDateNow, getDate, isNullSQLDate } = require('../date-utils');
 
 const eventTypeTriggers = {
 	deadline: 'deadline',
@@ -27,8 +22,7 @@ const isTimetableTypeOfEventActionable = (typeOfEvent) => {
 const isTimetableDateOfEventPast = (dateOfEvent) => setTimeToEndOfDay(dateOfEvent) < getDateNow();
 
 const hasTimetableDeadlineStarted = (dateTimeDeadlineStart) =>
-	setTimeToStartOfDay(dateTimeDeadlineStart) <= getDateNow() ||
-	isNullSQLDate(new Date(dateTimeDeadlineStart));
+	getDate(dateTimeDeadlineStart) <= getDateNow() || isNullSQLDate(new Date(dateTimeDeadlineStart));
 
 const hasDeadlineItemsList = (description) => description?.includes('* ');
 

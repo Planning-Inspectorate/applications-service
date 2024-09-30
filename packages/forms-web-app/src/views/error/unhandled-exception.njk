@@ -1,29 +1,21 @@
 {% extends "layouts/default.njk" %}
 
 {% block pageTitle %}
-  {{ t('errors.unhandledException.title') }} - National Infrastructure Planning
+  {{ t('errors.common.serviceUnavailable') }}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ t('errors.unhandledException.title') }}</h1>
+      <h1 class="govuk-heading-l">{{ t('errors.common.serviceUnavailable') }}</h1>
       <p class="govuk-body">
         {{ t('errors.unhandledException.paragraph1') }}
       </p>
       <p class="govuk-body">
-        {{ t('errors.unhandledException.paragraph2') }}
-      </p>
-      <p class="govuk-body">
-        {{ t('errors.unhandledException.paragraph3') }}
+        {{ t('errors.common.questions') }}
       </p>
 
-      <ul class="govuk-list">
-        <li>
-          <a class="govuk-link" data-cy="Enquiries" href="mailto:NIEnquiries@planninginspectorate.gov.uk">NIEnquiries@planninginspectorate.gov.uk</a>
-        </li>
-        <li>{{ t('common.telephone') }}: 0303 444 5000</li>
-      </ul>
+      {% include "error/_includes/contact-details.njk" %}
     </div>
   </div>
 

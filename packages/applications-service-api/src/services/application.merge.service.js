@@ -5,7 +5,9 @@ const {
 	mapBackOfficeApplicationsToApi,
 	mapApplicationFiltersToNI,
 	buildApiFiltersFromNIApplications,
-	mapNIApplicationsToApi
+	buildApplicationsFiltersFromBOApplications,
+	mapNIApplicationsToApi,
+	mergeFilters
 } = require('../utils/application.mapper');
 const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
 const {
@@ -20,19 +22,24 @@ const sortApplications = require('../utils/sort-applications.merge');
  */
 
 const getAllMergedApplications = async (query) => {
-	const { applications: niApplications, allApplications: allNIApplications } =
-		await getNIApplicationsWithoutPagination(query);
-	const { applications: boApplications, allApplications: allBOApplications } =
-		await getBOApplicationsWithoutPagination(query);
-	const { applications, allApplications, totalItems, totalItemsWithoutFilters } =
-		mergeApplicationsAndCounts(
-			boApplications,
-			niApplications,
-			allBOApplications,
-			allNIApplications
-		);
+	const {
+		applications: niApplications,
+		allApplications: allNIApplications,
+		filters: filtersNI
+	} = await getNIApplicationsWithoutPagination(query);
+	const {
+		applications: boApplications,
+		allApplications: allBOApplications,
+		filters: filtersBO
+	} = await getBOApplicationsWithoutPagination(query);
+	const { applications, totalItems, totalItemsWithoutFilters } = mergeApplicationsAndCounts(
+		boApplications,
+		niApplications,
+		allBOApplications,
+		allNIApplications
+	);
 
-	const filters = buildApiFiltersFromNIApplications(allApplications);
+	const filters = mergeFilters(filtersNI, filtersBO);
 	const sortedApplications = sortApplications(applications, query?.sort);
 	return {
 		applications: sortedApplications,
@@ -77,7 +84,8 @@ const getBOApplicationsWithoutPagination = async (query) => {
 	const { applications: allApplications } = await getAllBOApplicationsRepository();
 	return {
 		applications: mapBackOfficeApplicationsToApi(applications),
-		allApplications: mapBackOfficeApplicationsToApi(allApplications)
+		allApplications: mapBackOfficeApplicationsToApi(allApplications),
+		filters: buildApplicationsFiltersFromBOApplications(allApplications)
 	};
 };
 
@@ -87,7 +95,8 @@ const getNIApplicationsWithoutPagination = async (query) => {
 	const { applications: allApplications } = await getAllNIApplicationsRepository();
 	return {
 		applications: mapNIApplicationsToApi(applications),
-		allApplications: mapNIApplicationsToApi(allApplications)
+		allApplications: mapNIApplicationsToApi(allApplications),
+		filters: buildApiFiltersFromNIApplications(allApplications)
 	};
 };
 

@@ -1,4 +1,4 @@
-const { pick, omit } = require('lodash');
+const { pick, omit, invert } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
 const { featureFlag } = require('../lib/config');
 
@@ -151,6 +151,32 @@ const buildApplicationsFiltersFromBOApplications = (applications) => {
 };
 
 /**
+ * Takes two lists of Applications API filters and merges them,
+ * combining counts when duplicates are encountered.
+ *
+ * @typedef {{name: string, value: string, count: number}} MergeFiltersItem
+ *
+ * @param {MergeFiltersItem[]} filtersA
+ * @param {MergeFiltersItem[]} filtersB
+ * @returns {MergeFiltersItem[]}
+ * */
+const mergeFilters = (filtersA, filtersB) => {
+	let merged = structuredClone(filtersA);
+
+	for (const f of filtersB) {
+		const idx = merged.findIndex((e) => e.name === f.name && e.value === f.value);
+		if (idx === -1) {
+			merged.push(f);
+			continue;
+		}
+
+		merged[idx].count += f.count;
+	}
+
+	return merged;
+};
+
+/**
  * Map API filters back to values for querying against NI database
  * @param {{ stage?: string[], region?: string[], sector?: string[] }} query
  * @returns {{ stage?: string[], region?: string[], sector?: string[] }}
@@ -296,10 +322,11 @@ const mapBackOfficeApplicationToApi = (application) => {
  * Map Applications array from Back Office to legacy API format
  * @param applications
  */
-const mapBackOfficeApplicationsToApi = (applications) => {
-	const mappedToApi = applications.map(mapBackOfficeApplicationToApi);
-	return mappedToApi.map(mapResponseBackToNILegacyFormat);
-};
+const mapBackOfficeApplicationsToApi = (applications) =>
+	applications.map((application) => {
+		const mappedToApi = mapBackOfficeApplicationToApi(application);
+		return mapResponseBackToNILegacyFormat(mappedToApi);
+	});
 
 /**
  * Adds MapZoomLevel and LongLat properties to NI Application
@@ -384,6 +411,7 @@ const getValidDateInStringOrNull = (date) => {
 	if (date === '0000-00-00') return null;
 	return date;
 };
+
 const stageMap = {
 	draft: 0,
 	pre_application: 1,
@@ -395,6 +423,8 @@ const stageMap = {
 	post_decision: 7,
 	withdrawn: 8
 };
+
+const stageNameFromValue = (stage) => invert(stageMap)[stage];
 
 const regionMap = {
 	east_midlands: 'East Midlands',
@@ -420,5 +450,7 @@ module.exports = {
 	buildApplicationsFiltersFromBOApplications,
 	mapNIApplicationsToApi,
 	mapColumnLabelToApi: mapColumnLabelToApiEn,
-	mapColumnLabelToApiCy
+	mapColumnLabelToApiCy,
+	mergeFilters,
+	stageNameFromValue
 };

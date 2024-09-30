@@ -13,7 +13,7 @@ exports[`pages/process-guide/_utils/get-material-change-process-guide-stages #ge
     "title": "Application published",
   },
   "applicationReceived": {
-    "content": "The Planning Inspectorate publishes the application when they receive it.",
+    "content": "We will publish the application when we receive it.",
     "title": "Application received",
   },
   "decision": {
@@ -26,7 +26,11 @@ exports[`pages/process-guide/_utils/get-material-change-process-guide-stages #ge
     "title": "Decision",
   },
   "examination": {
-    "content": "The Examining Body asks questions about the proposed development. The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 4 months.",
+    "content": [
+      "The Examining Body asks questions about the proposed changes to the Development Consent Order.",
+      "The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place.",
+      "This stage takes up to 4 months.",
+    ],
     "title": "Examination",
   },
   "postDecision": {

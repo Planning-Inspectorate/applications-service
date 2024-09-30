@@ -19,7 +19,7 @@
 	{% set representingTxt = t('register.checkYourAnswers.organisationName3') %}
 	{% set representingHiddenText = t('register.checkYourAnswers.changeOrganisationNameHiddenText3') %}
 {% elseif data.representing === 'family' %}
-	{% set representing = "t('register.checkYourAnswers.representingHousehold')" %}
+	{% set representing = t('register.checkYourAnswers.representingHousehold') %}
 	{% set representingTxt = t('register.checkYourAnswers.householdName') %}
 	{% set representingHiddenText = t('register.checkYourAnswers.changeHouseholdNameHiddenText') %}
 {% endif %}

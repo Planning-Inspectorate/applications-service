@@ -130,9 +130,9 @@ exports[`pages/examination/_translations should return the correct English trans
     },
   },
   "stageProgress": {
-    "completed": "completed",
-    "inProgress": "in progress",
-    "notStarted": "not started",
+    "completed": "Completed",
+    "inProgress": "In progress",
+    "notStarted": "Not started",
   },
   "subsectors": {
     "BC01": "Office use",
@@ -294,9 +294,9 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     },
   },
   "stageProgress": {
-    "completed": "wedi cwblhau",
-    "inProgress": "mewn cynnydd",
-    "notStarted": "dim wedi dechrau",
+    "completed": "Wedi cwblhau",
+    "inProgress": "Mewn cynnydd",
+    "notStarted": "Dim wedi dechrau",
   },
   "subsectors": {
     "BC01": "At Ddefnydd Swyddfa",

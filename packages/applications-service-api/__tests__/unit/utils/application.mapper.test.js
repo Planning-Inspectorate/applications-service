@@ -7,7 +7,9 @@ const {
 	mapBackOfficeApplicationToApi,
 	addMapZoomLevelAndLongLat,
 	mapBackOfficeApplicationsToApi,
-	mapNIApplicationsToApi
+	mapNIApplicationsToApi,
+	mergeFilters,
+	stageNameFromValue
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
@@ -598,6 +600,96 @@ describe('application.mapper', () => {
 					]);
 				}
 			);
+		});
+	});
+	describe('mergeFilters', () => {
+		it('Should accept two lists of filters with non-overlapping names and simply concatenate them', () => {
+			const aFilters = [
+				{
+					name: 'name-a',
+					value: 'value',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			const bFilters = [
+				{
+					name: 'name-b',
+					value: 'value',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			expect(mergeFilters(aFilters, bFilters)).toEqual([...aFilters, ...bFilters]);
+		});
+
+		it('Should accept two lists of filters with non-overlapping values and simply concatenate them', () => {
+			const aFilters = [
+				{
+					name: 'name',
+					value: 'value-a',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			const bFilters = [
+				{
+					name: 'name',
+					value: 'value-b',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			expect(mergeFilters(aFilters, bFilters)).toEqual([...aFilters, ...bFilters]);
+		});
+
+		it('Should combine the counts of any items with matching name AND value', () => {
+			const filters = [
+				{
+					name: 'region',
+					value: 'wales',
+					label: 'Wales',
+					count: 1,
+					label_cy: 'Cymru'
+				}
+			];
+
+			expect(mergeFilters(filters, filters)).toEqual([
+				{
+					name: 'region',
+					value: 'wales',
+					label: 'Wales',
+					count: 2,
+					label_cy: 'Cymru'
+				}
+			]);
+		});
+	});
+	describe('stageNameFromValue', () => {
+		it('Should return the correct string stage value for each corresponding integer value', () => {
+			const expectedStageValues = [
+				'draft',
+				'pre_application',
+				'acceptance',
+				'pre_examination',
+				'examination',
+				'recommendation',
+				'decision',
+				'post_decision',
+				'withdrawn'
+			];
+
+			expectedStageValues.forEach((stage, index) => {
+				expect(stageNameFromValue(index)).toEqual(stage);
+			});
 		});
 	});
 });

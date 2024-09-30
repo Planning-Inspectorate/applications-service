@@ -1,8 +1,8 @@
 {
 	"addAnotherDeadlineItem": {
-		"title": "Rydych wedi ychwanegu un eitem terfyn amser",
-		"heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
-		"hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+		"title": "Eich ymatebion i eitemau dyddiad cau",
+		"heading1": "Eich ymatebion i eitemau dyddiad cau",
+		"hintText1": "Oes angen i chi ymateb i eitem dyddiad cau arall?",
 		"noDeadlineItems": {
 			"heading1": "Nid ydych wedi ychwanegu eitem dyddiad cau",
 			"ctaText1": "Ychwanegu eitem dyddiad cau"
@@ -244,7 +244,7 @@
 		"title": "Cyflwyniad wedi'i Gwblhau",
 		"heading1": "Cyflwyniad wedi'i Gwblhau",
 		"notificationText1": "Rhif cyfeirnod eich cyflwyniad",
-		"paragraph1": "Rydym wedi anfon e-bost cadarnhau at {{-emailAddress}} i gadarnhau ein bod wedi derbyn eich cyflwyniad.",
+		"paragraph1": "Rydym wedi derbyn eich cyflwyniad. Gwnewch nodyn o'ch rhif cyfeirnod.",
 		"heading2": "Cysylltu â ni",
 		"heading3": "Ffoniwch",
 		"paragraph2": "Os oes gennych rif cyfeirnod parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",

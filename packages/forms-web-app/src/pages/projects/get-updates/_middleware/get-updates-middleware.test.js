@@ -60,6 +60,18 @@ describe('pages/projects/get-updates/_middleware/get-updates-middleware.test.js'
 					expect(next).toHaveBeenCalledWith();
 				});
 			});
+
+			it('Should redirect to the project root when there is no get-updates session', () => {
+				const req = {
+					params: { case_ref: 'testCaseRef1' },
+					session: {}
+				};
+
+				getUpdatesMiddleware(req, res, next);
+
+				expect(res.redirect).toHaveBeenCalledWith('/projects/testCaseRef1');
+				expect(next).not.toHaveBeenCalled();
+			});
 		});
 	});
 });
