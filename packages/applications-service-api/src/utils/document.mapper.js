@@ -11,10 +11,10 @@ const GET_LABEL_MAPPING = (isMaterialChange = false) => ({
 		// NI mapping
 		1: mappedLabel('Cyn-ymgeisio', 'Pre-application'),
 		2: isMaterialChange
-			? mappedLabel('Application received', 'Application received')
+			? mappedLabel('Cais wedi ei dderbyn', 'Application received')
 			: mappedLabel('Derbyn', 'Acceptance'),
 		3: isMaterialChange
-			? mappedLabel('Application published', 'Application published')
+			? mappedLabel(`Cais wedi'i gyhoeddi`, 'Application published')
 			: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
 		4: mappedLabel('Archwiliad', 'Examination'),
 		5: mappedLabel('Argymhelliad', 'Recommendation'),
