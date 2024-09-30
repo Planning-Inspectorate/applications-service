@@ -52,7 +52,7 @@
 		},
 		"applicationReceived": {
 			"heading1": "Application received",
-			"paragraph1": "The Planning Inspectorate publishes the application when they receive it."
+			"paragraph1": "We will publish the application when we receive it."
 		},
 		"applicationPublished": {
 			"heading1": "Application published",
@@ -64,7 +64,9 @@
 		},
 		"examination": {
 			"heading1": "Examination",
-			"paragraph1": "The Examining Body asks questions about the proposed development. The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place. This stage takes up to 4 months."
+			"paragraph1": "The Examining Body asks questions about the proposed changes to the Development Consent Order.",
+			"paragraph2": "The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place.",
+			"paragraph3": "This stage takes up to 4 months."
 		},
 		"recommendation": {
 			"heading1": "Recommendation",

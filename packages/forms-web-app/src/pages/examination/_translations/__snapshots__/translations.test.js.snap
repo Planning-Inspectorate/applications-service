@@ -4,8 +4,8 @@ exports[`pages/examination/_translations should return the correct English trans
 {
   "addAnotherDeadlineItem": {
     "errorMessage1": "Select yes if you want to add another deadline item",
-    "heading1": "You added one deadline item",
-    "hintText1": "Do you need to add another deadline item?",
+    "heading1": "Your responses to deadline items",
+    "hintText1": "Do you need to respond to another deadline item?",
     "moreDeadlineItems": {
       "message1": "You have submitted against all available deadline items",
     },
@@ -13,7 +13,7 @@ exports[`pages/examination/_translations should return the correct English trans
       "ctaText1": "Add a deadline item",
       "heading1": "You have not added a deadline item",
     },
-    "title": "You added one deadline item",
+    "title": "Your responses to deadline items",
   },
   "applicant": {
     "errorMessage1": "Select yes if you are {{-applicant}}",
@@ -250,7 +250,7 @@ exports[`pages/examination/_translations should return the correct English trans
     "heading4": "Email",
     "heading5": "Alternative formats",
     "notificationText1": "Your submission reference number",
-    "paragraph1": "We've sent a confirmation email to {{-emailAddress}} to confirm we have received your submission.",
+    "paragraph1": "We have received your submission. Make a note of your reference number.",
     "paragraph2": "If you have an interested party reference number, have it with you when you call.",
     "paragraph3": "When you're writing an email, quote the name of the project in the subject line.",
     "paragraph4": "We aim to respond within 10 working days.",
@@ -292,8 +292,8 @@ exports[`pages/examination/_translations should return the correct Welsh transla
 {
   "addAnotherDeadlineItem": {
     "errorMessage1": "Dewiswch 'oes' os ydych eisiau ychwanegu eitem terfyn amser arall ",
-    "heading1": "Rydych wedi ychwanegu un eitem terfyn amser",
-    "hintText1": "A oes angen i chi ychwanegu eitem terfyn amser arall?",
+    "heading1": "Eich ymatebion i eitemau dyddiad cau",
+    "hintText1": "Oes angen i chi ymateb i eitem dyddiad cau arall?",
     "moreDeadlineItems": {
       "message1": "Rydych wedi cyflwyno yn erbyn yr holl eitemau dyddiad terfyn amser sydd ar gael",
     },
@@ -301,7 +301,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
       "ctaText1": "Ychwanegu eitem dyddiad cau",
       "heading1": "Nid ydych wedi ychwanegu eitem dyddiad cau",
     },
-    "title": "Rydych wedi ychwanegu un eitem terfyn amser",
+    "title": "Eich ymatebion i eitemau dyddiad cau",
   },
   "applicant": {
     "errorMessage1": "Dewiswch 'ydw' os ydych chi'n {{-applicant}}",
@@ -538,7 +538,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "heading4": "Anfonwch neges e-bost",
     "heading5": "Fformatau amgen",
     "notificationText1": "Rhif cyfeirnod eich cyflwyniad",
-    "paragraph1": "Rydym wedi anfon e-bost cadarnhau at {{-emailAddress}} i gadarnhau ein bod wedi derbyn eich cyflwyniad.",
+    "paragraph1": "Rydym wedi derbyn eich cyflwyniad. Gwnewch nodyn o'ch rhif cyfeirnod.",
     "paragraph2": "Os oes gennych rif cyfeirnod parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
     "paragraph3": "Pan fyddwch yn ysgrifennu neges e-bost, rhowch enw'r prosiect yn y llinell bwnc.",
     "paragraph4": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",

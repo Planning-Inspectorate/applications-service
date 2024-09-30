@@ -4,7 +4,7 @@ Monorepo for all Applications Service services
 
 ## TL;DR
 
-- `npm ci` from the project root - see [Dependencies](#dependencies-npm) below
+- `npm ci` from the project root and in the `e2e-tests` directory- see [Dependencies](#dependencies-npm) below
 - create a `.env` file in `./packages/applications-service-api`. Copy the values from `.env.development`
 - create a `.env` file in the applications service root folder `/`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values
 - `npm run db:generate` to create database
@@ -95,14 +95,15 @@ The Node.js version in use should closely follow [what is supported by the Azure
 
 ## Dependencies (npm)
 
-The repo uses [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces). This allows us to have a single root node_modules that holds all the project dependencies and a root package.json + package-lock.json that has every dependency + version that's used in the repository listed in it. The individual packages do *not* require package-lock.json files (be careful if using Red Hat Dependency Analytics extension in VS Code as this may automatically generate package-lock.json files when you view individual package.json files).
+The repo uses [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces). This allows us to have one node_modules in the root workspace that holds all the project dependencies and a root package.json + package-lock.json that has every dependency + version that's used in the repository listed in it. The individual packages do *not* require package-lock.json files (be careful if using Red Hat Dependency Analytics extension in VS Code as this may automatically generate package-lock.json files when you view individual package.json files). There is an additional node_modules in the `e2e-tests` directory because this is not included in the root workspace.
 
 The current list of workspaces can be found in the root package.json file.
 
 Each workspace in the repo also has a package.json file where its dependency list contains only the dependencies that the workspace requires: the versions are denoted as `*` - they rely on the root package.json for  versioning which helps us keep versioning consistent across the repo. 
 
 **First time installing dependencies**:
-- run `npm ci` from the root of the project (this will use the project's package-lock.json file to sort your local node_modules directory and will avoid creating package-lock.json diffs where they're not expected).
+- Run `npm ci` from the root of the project (this will use the project's package-lock.json file to sort your local node_modules directory and will avoid creating package-lock.json diffs where they're not expected).
+- Run `npm ci` in the `e2e-tests` directory.
 
 **To add a dependency**:
 - Add the name and desired version of the dependency to the root package.json (preferably prefixed with a `^` to ensure the most recent minor version is used)

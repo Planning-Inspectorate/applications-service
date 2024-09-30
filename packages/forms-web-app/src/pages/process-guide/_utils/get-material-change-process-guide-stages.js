@@ -23,10 +23,11 @@ const getMaterialChangeProcessGuideStages = (i18n) => ({
 			i18n.t('processGuide.materialChange.applicationPublished.paragraph5')
 		]
 	),
-	examination: stepViewModel(
-		i18n.t('processGuide.materialChange.examination.heading1'),
-		i18n.t('processGuide.materialChange.examination.paragraph1')
-	),
+	examination: stepViewModel(i18n.t('processGuide.materialChange.examination.heading1'), [
+		i18n.t('processGuide.materialChange.examination.paragraph1'),
+		i18n.t('processGuide.materialChange.examination.paragraph2'),
+		i18n.t('processGuide.materialChange.examination.paragraph3')
+	]),
 	recommendation: stepViewModel(
 		i18n.t('processGuide.materialChange.recommendation.heading1'),
 		i18n.t('processGuide.materialChange.recommendation.paragraph1')

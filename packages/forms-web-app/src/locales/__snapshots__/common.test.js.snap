@@ -39,7 +39,8 @@ exports[`locales/common should return the correct English common translations 1`
   "paginationShowing": "Showing {{-from}} to {{-to}} of {{-total}} results",
   "partOf": "Part of",
   "pinsContactDetails": {
-    "csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)",
+    "csOpeningHoursLine1": "Open Monday to Friday: 9am to 4pm.",
+    "csOpeningHoursLine2": "Closed on weekends and bank holidays.",
   },
   "remove": "Remove",
   "resultsPerPage": "Results per page",
@@ -142,7 +143,8 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "paginationShowing": "Yn dangos {{-from}} i {{-to}} o {{-total}} canlyniadau",
   "partOf": "Rhan o",
   "pinsContactDetails": {
-    "csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)",
+    "csOpeningHoursLine1": "Ar agor o ddydd Llun i ddydd Gwener: 9yb i 4yp",
+    "csOpeningHoursLine2": "Ar gau ar benwythnosau a gwyliau banc.",
   },
   "remove": "Dileu",
   "resultsPerPage": "Canlyniadau fesul tudalen",

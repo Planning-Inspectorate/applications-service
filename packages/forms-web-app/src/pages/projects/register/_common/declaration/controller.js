@@ -38,7 +38,7 @@ const postRegisterDeclarationController = async (req, res) => {
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
 		logger.error(`Could not Post declaration, internal error occurred ${e}`);
-		return res.status(500).render('error/unhandled-exception');
+		return res.status(500).render('error/have-your-say-journey-error');
 	}
 };
 
