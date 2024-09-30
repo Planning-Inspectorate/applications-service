@@ -23,8 +23,12 @@ const GET_LABEL_MAPPING = (isMaterialChange = false) => ({
 
 		// back office mapping
 		'pre-application': mappedLabel('Cyn-ymgeisio', 'Pre-application'),
-		acceptance: mappedLabel('Derbyn', 'Acceptance'),
-		'pre-examination': mappedLabel('Cyn-archwiliad', 'Pre-examination'),
+		acceptance: isMaterialChange
+			? mappedLabel('Cais wedi ei dderbyn', 'Application received')
+			: mappedLabel('Derbyn', 'Acceptance'),
+		'pre-examination': isMaterialChange
+			? mappedLabel(`Cais wedi'i gyhoeddi`, 'Application published')
+			: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
 		examination: mappedLabel('Archwiliad', 'Examination'),
 		recommendation: mappedLabel('Argymhelliad', 'Recommendation'),
 		decision: mappedLabel('Penderfyniad', 'Decision'),
