@@ -14,7 +14,7 @@ describe('use can view and interact with the project informaiton page', () => {
 	});
 
 	it('should verify a user is returned to the project information section', () => {
-		basePage.clickProjectInformationMenuLink('have-your-say');
+		basePage.clickProjectInformationMenuLink('register-to-have-your-say');
 		cy.url().should('include', 'register-have-your-say');
 		basePage.clickProjectInformationMenuLink('projects');
 		basePage.locateH1ByText('Project information');
