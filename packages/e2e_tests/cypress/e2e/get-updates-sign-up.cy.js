@@ -7,7 +7,7 @@ const basePage = new BasePage();
 describe('when user subscribes to get updates about a project', () => {
 	before(() => {
 		cy.clearCookies();
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('should navigate to the Get Updates start page', () => {

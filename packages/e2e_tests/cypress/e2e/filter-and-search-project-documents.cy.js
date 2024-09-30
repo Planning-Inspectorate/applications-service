@@ -9,7 +9,7 @@ const filterOptions = [50, 25, 100];
 describe('User navigates to the documents page and can filter or search project documents', () => {
 	before(() => {
 		cy.clearCookies();
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('Should navigate to the project documents page from the side menu', () => {
