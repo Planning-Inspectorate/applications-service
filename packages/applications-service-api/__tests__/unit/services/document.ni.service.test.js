@@ -29,10 +29,11 @@ describe('document ni service', () => {
 				rows: DB_DOCUMENTS
 			});
 			mapDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
+			const mockIsMaterialChange = false;
 
-			const result = await fetchNIDocuments(filters);
+			const result = await fetchNIDocuments(filters, mockIsMaterialChange);
 
-			expect(mapDocuments).toBeCalledWith(DB_DOCUMENTS);
+			expect(mapDocuments).toBeCalledWith(DB_DOCUMENTS, mockIsMaterialChange);
 			expect(result).toEqual({
 				count: 1,
 				data: RESPONSE_DOCUMENTS
