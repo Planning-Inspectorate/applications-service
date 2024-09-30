@@ -9,6 +9,7 @@ const getBody = (case_ref, query) => {
 	const requestBody = {
 		caseReference: case_ref,
 		filters: mapQueryToFilterBody(getFilters(query)),
+		isMaterialChange: query.isMaterialChange,
 		searchTerm: query.searchTerm,
 		page: parseInt(query.page) || 1,
 		size: Number(query.itemsPerPage) || 25

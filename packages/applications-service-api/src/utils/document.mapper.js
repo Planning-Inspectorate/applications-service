@@ -6,12 +6,16 @@ const mappedLabel = (cy, en) => ({
 	en
 });
 
-const LABEL_MAPPING = {
+const GET_LABEL_MAPPING = (isMaterialChange = false) => ({
 	stage: {
 		// NI mapping
 		1: mappedLabel('Cyn-ymgeisio', 'Pre-application'),
-		2: mappedLabel('Derbyn', 'Acceptance'),
-		3: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
+		2: isMaterialChange
+			? mappedLabel('Cais wedi ei dderbyn', 'Application received')
+			: mappedLabel('Derbyn', 'Acceptance'),
+		3: isMaterialChange
+			? mappedLabel(`Cais wedi'i gyhoeddi`, 'Application published')
+			: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
 		4: mappedLabel('Archwiliad', 'Examination'),
 		5: mappedLabel('Argymhelliad', 'Recommendation'),
 		6: mappedLabel('Penderfyniad', 'Decision'),
@@ -30,10 +34,12 @@ const LABEL_MAPPING = {
 	category: {
 		developersapplication: mappedLabel('Cais y datblygwr', `Developer's application`)
 	}
-};
+});
 
-const mapDocumentFilterLabel = (filterName, filterValue) => {
+const mapDocumentFilterLabel = (filterName, filterValue, isMaterialChange) => {
 	try {
+		const LABEL_MAPPING = GET_LABEL_MAPPING(isMaterialChange);
+
 		if (filterName === 'category') {
 			// normalise filter name as NI DB contains mess of different values
 			const normalisedKey = filterValue.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
@@ -96,7 +102,7 @@ const mapBackOfficeDocuments = (documents) =>
 		dateCreated: document.createdAt
 	}));
 
-const mapFilters = (input) => {
+const mapFilters = (input, isMaterialChange) => {
 	const appendFilter = (filterGroup, filter, filterName) => {
 		const filterValue =
 			Number.isInteger(filter[filterName]) || filterName === 'category'
@@ -107,7 +113,7 @@ const mapFilters = (input) => {
 			filterGroup[filterValue] = {
 				name: filterName,
 				value: filterValue,
-				label: mapDocumentFilterLabel(filterName, filterValue),
+				label: mapDocumentFilterLabel(filterName, filterValue, isMaterialChange),
 				count: 0,
 				type: []
 			};
@@ -138,6 +144,8 @@ const mapFilters = (input) => {
 };
 
 const sortFunction = (a, b) => {
+	const LABEL_MAPPING = GET_LABEL_MAPPING();
+
 	const indexA = Object.keys(LABEL_MAPPING[a.name]).indexOf(a.value);
 	const indexB = Object.keys(LABEL_MAPPING[b.name]).indexOf(b.value);
 	return indexA < indexB ? -1 : indexA > indexB ? 1 : 0;
