@@ -11,7 +11,7 @@ before(() => {
 describe('Agent has their say against the examination timetable', () => {
 	before(() => {
 		cy.clearCookies();
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('Navigates to the examination timetable page for a project and start the journey', () => {

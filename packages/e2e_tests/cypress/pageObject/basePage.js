@@ -140,7 +140,7 @@ export class BasePage {
 				case 'examination-timetable':
 					cy.get('a[href*="/examination-timetable"]').click();
 					break;
-				case 'have-your-say':
+				case 'register-to-have-your-say':
 					cy.get('a[href*="/register-have-your-say"]').click();
 					break;
 				case 'get-updates':

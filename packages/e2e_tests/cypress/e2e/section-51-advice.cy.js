@@ -14,7 +14,7 @@ describe('User can review and search Section 51 advice', () => {
 		cy.fixture('s51Data').then((data) => {
 			s51Data = data;
 		});
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('Should navigate to the Section 51 page and verify page content', () => {

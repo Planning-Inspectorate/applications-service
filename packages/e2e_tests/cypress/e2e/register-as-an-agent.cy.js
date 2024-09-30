@@ -25,11 +25,11 @@ representationOptions.forEach((representationOptions) => {
 				caseData.useOrgName = data.useOrgName;
 			});
 
-			cy.navigateAndSearch('Front Office Auto Test');
+			cy.navigateAndSearch('Front Office');
 		});
 
 		it('Should click on register to have your say link and assert page content', () => {
-			basePage.clickProjectInformationMenuLink('have-your-say');
+			basePage.clickProjectInformationMenuLink('register-to-have-your-say');
 			cy.url().should('include', '/register/register-have-your-say');
 			basePage.locateH1ByText('Register to have your say about a national infrastructure project');
 		});

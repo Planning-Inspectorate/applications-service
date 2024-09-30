@@ -7,7 +7,7 @@ const basePage = new BasePage();
 describe('User registers as an organisation to have their say against the examination timetable', () => {
 	before(() => {
 		cy.clearCookies();
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
@@ -47,10 +47,9 @@ describe('User registers as an organisation to have their say against the examin
 	it('Types a comment and and uploads a PDF file and submits', () => {
 		examinationTimetable.typeComment('This is a test comment');
 		examinationTimetable.clickContinueButton();
-		cy.get('.moj-multi-file-upload__dropzone').selectFile(
-			'cypress/e2e/cypress/fixtures/Testing.pdf',
-			{ action: 'drag-drop' }
-		);
+		cy.get('#upload').selectFile('cypress/e2e/cypress/fixtures/Testing.pdf', {
+			action: 'drag-drop'
+		});
 		examinationTimetable.clickContinueUploadFile();
 	});
 

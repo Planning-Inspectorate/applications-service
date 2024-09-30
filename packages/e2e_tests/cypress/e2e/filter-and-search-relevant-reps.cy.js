@@ -7,7 +7,7 @@ const basePage = new BasePage();
 describe('User can view, filter and search the relevant reps page for a project', () => {
 	before(() => {
 		cy.clearCookies();
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('should navigate to the relevant reps page for a project', () => {

@@ -5,7 +5,7 @@ const basePage = new BasePage();
 describe('use can view and interact with the project informaiton page', () => {
 	before(() => {
 		cy.clearCookies();
-		cy.navigateAndSearch('Front Office Auto Test');
+		cy.navigateAndSearch('Front Office');
 	});
 
 	it('should verify the user is on the project information page', () => {
