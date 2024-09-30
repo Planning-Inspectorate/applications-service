@@ -6,11 +6,11 @@ const {
 const { mapFilters, mapBackOfficeDocuments } = require('../utils/document.mapper');
 const { documentTypeDictionary } = require('@pins/common/src/constants');
 
-const fetchBackOfficeDocuments = async (filters) => {
+const fetchBackOfficeDocuments = async (filters, isMaterialChange) => {
 	const docs = await getDocuments(filters);
 	return {
 		count: docs.count,
-		data: mapBackOfficeDocuments(docs.rows)
+		data: mapBackOfficeDocuments(docs.rows, isMaterialChange)
 	};
 };
 

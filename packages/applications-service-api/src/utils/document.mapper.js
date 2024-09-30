@@ -23,8 +23,12 @@ const GET_LABEL_MAPPING = (isMaterialChange = false) => ({
 
 		// back office mapping
 		'pre-application': mappedLabel('Cyn-ymgeisio', 'Pre-application'),
-		acceptance: mappedLabel('Derbyn', 'Acceptance'),
-		'pre-examination': mappedLabel('Cyn-archwiliad', 'Pre-examination'),
+		acceptance: isMaterialChange
+			? mappedLabel('Cais wedi ei dderbyn', 'Application received')
+			: mappedLabel('Derbyn', 'Acceptance'),
+		'pre-examination': isMaterialChange
+			? mappedLabel(`Cais wedi'i gyhoeddi`, 'Application published')
+			: mappedLabel('Cyn-archwiliad', 'Pre-examination'),
 		examination: mappedLabel('Archwiliad', 'Examination'),
 		recommendation: mappedLabel('Argymhelliad', 'Recommendation'),
 		decision: mappedLabel('Penderfyniad', 'Decision'),
@@ -56,13 +60,14 @@ const mapDocumentFilterLabel = (filterName, filterValue, isMaterialChange) => {
 	}
 };
 
-const mapDocuments = (documents) => {
+const mapDocuments = (documents, isMaterialChange) => {
 	const attributesToLowerCase = (document) =>
 		Object.keys(document).reduce((memo, key) => {
 			let value = document[key];
 
 			if (key === 'path' && value) value = config.documentsHost.concat(value);
-			else if (key === 'stage') memo.stageLabel = mapDocumentFilterLabel('stage', value);
+			else if (key === 'stage')
+				memo.stageLabel = mapDocumentFilterLabel('stage', value, isMaterialChange);
 
 			memo[toCamelCase(key)] = value;
 
@@ -72,13 +77,13 @@ const mapDocuments = (documents) => {
 	return documents.map(attributesToLowerCase);
 };
 
-const mapBackOfficeDocuments = (documents) =>
+const mapBackOfficeDocuments = (documents, isMaterialChange) =>
 	documents.map((document) => ({
 		id: document.id,
 		dataID: document.documentReference,
 		case_reference: document.caseRef,
 		stage: document.stage,
-		stageLabel: mapDocumentFilterLabel('stage', document.stage),
+		stageLabel: mapDocumentFilterLabel('stage', document.stage, isMaterialChange),
 		type: document.documentType,
 		filter1: document.filter1,
 		filter1Welsh: document.filter1Welsh,
