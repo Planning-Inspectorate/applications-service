@@ -6,7 +6,7 @@ const basepage = new BasePage();
 
 beforeEach(() => {
 	cy.clearAllCookies();
-	cy.visit('/');
+	cy.visit(Cypress.env('baseUrl'));
 	basepage.clickAllProjectsLink();
 });
 

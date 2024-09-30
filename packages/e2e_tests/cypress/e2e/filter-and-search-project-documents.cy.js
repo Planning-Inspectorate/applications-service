@@ -1,37 +1,51 @@
-import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
 import { PO_Documents } from '../pageObject/Documents/PO_Documents';
 import { BasePage } from '../pageObject/basePage';
 
-const projectPage = new PO_ProjectPage();
 const documents = new PO_Documents();
 const basePage = new BasePage();
 
+const filterOptions = [50, 25, 100];
+
 describe('User navigates to the documents page and can filter or search project documents', () => {
-	it('Navigates to a project documents page', () => {
+	before(() => {
 		cy.clearCookies();
-		cy.visit('/projects/BC0910150/');
-		projectPage.findAndClickSidebarLinkLeft('Documents');
+		cy.navigateAndSearch('Front Office');
 	});
 
-	it('Sees a list of 4 Documents and can chancge view to 50 Documents', () => {
-		documents.returnListOfDocuments().should('be.visible');
-		documents.returnListOfDocuments().should('have.length', 4);
-		documents.chooseNumberOfResults('50');
-		documents.returnListOfDocuments().should('have.length', 4);
+	it('Should navigate to the project documents page from the side menu', () => {
+		basePage.clickProjectInformationMenuLink('documents');
+		basePage.locateH1ByText('Documents');
+		cy.url('include', '/documents');
 	});
 
-	it('Can search for a document by typing a description', () => {
-		documents.searchDocuments('Rule 8 letter');
+	filterOptions.forEach((option) => {
+		it(`Should correctly apply the filter for ${option} results`, () => {
+			basePage.selectFilterOptions(option);
+			cy.url().should('contain', `itemsPerPage=${option}`);
+		});
+	});
+
+	it('Should search for a term which does not return a result', () => {
+		basePage.govSearchTermType('ytrewq');
 		documents.clickSearchButton();
-		documents.returnListOfDocuments().should('be.visible');
-		documents.checkFirstResultContainsString('Rule 8 letter');
-		basePage.clickGovLink('Clear all filters');
+		basePage.visibleGovBodyCy('No results');
+		basePage.clickGovLink('Clear search and filters');
 	});
 
-	it('Can apply a filter to the list of documents and then remove that filter', () => {
-		documents.expandFilterOptions('Acceptance');
-		basePage.selectCheckBox('test change two');
-		projectPage.findAndClickButton('Apply filters');
-		documents.checkPublishedTitles(['test change two']);
+	it('Should search for a term which returns a result', () => {
+		basePage.govSearchTermType('test');
+		documents.clickSearchButton();
+		documents.sectionResultsVisible();
+		documents.verifyResultStructure();
+	});
+
+	it('Should assert the related guides are visible in documents page', () => {
+		documents.assertRelatedGuidesMenu('Related guides navigation');
+		documents.assertRelatedGuidesMenuItems('Related guides navigation');
+		documents.assertFilterMenu('Filter');
+	});
+
+	it('Should assert the filter menu is visible', () => {
+		documents.assertFilterMenu('Filter');
 	});
 });

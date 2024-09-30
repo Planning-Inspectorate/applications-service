@@ -1,5 +1,7 @@
 const { prismaClient } = require('../lib/prisma');
 const { repFromToWelsh } = require('../utils/representation.mapper');
+const stopWords = require('../utils/stopwords');
+const stopWordList = stopWords.english;
 
 const commonWhereFilters = {
 	status: {
@@ -46,23 +48,44 @@ const getRepresentations = async (options) => {
 	};
 
 	if (options.searchTerm) {
-		const terms = options.searchTerm.split(' ');
+		const terms = options.searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
+
+		// Match all terms in either the representationComment or organizationName fields
 		where['AND'].push({
 			OR: [
-				{ representationComment: { contains: options.searchTerm } },
-				{ representative: { organisationName: { contains: options.searchTerm } } },
-				{ represented: { organisationName: { contains: options.searchTerm } } },
-				...terms.map((term) => ({
-					OR: [
+				// All terms must match in the representationComment field
+				{
+					AND: terms.map((term) => ({
+						representationComment: { contains: term }
+					}))
+				},
+				// All terms must match in the representative.organisationName field
+				{
+					AND: terms.map((term) => ({
+						representative: { organisationName: { contains: term } }
+					}))
+				},
+				// All terms must match in the represented.organisationName field
+				{
+					AND: terms.map((term) => ({
+						represented: { organisationName: { contains: term } }
+					}))
+				},
+				// Match any term in the firstName or lastName fields
+				{
+					OR: terms.flatMap((term) => [
 						{ represented: { firstName: { contains: term } } },
 						{ represented: { lastName: { contains: term } } },
 						{ representative: { firstName: { contains: term } } },
 						{ representative: { lastName: { contains: term } } }
-					]
-				}))
+					])
+				}
 			]
 		});
 	}
+
 	if (options.type) {
 		where['AND'].push({
 			representationType: {
@@ -74,7 +97,7 @@ const getRepresentations = async (options) => {
 	const representations = await prismaClient.representation.findMany({
 		where,
 		orderBy: {
-			dateReceived: 'asc'
+			dateReceived: 'desc'
 		},
 		skip: options.offset,
 		take: options.limit,
@@ -85,6 +108,7 @@ const getRepresentations = async (options) => {
 	});
 
 	const count = await prismaClient.representation.count({ where });
+
 	return { representations, count };
 };
 

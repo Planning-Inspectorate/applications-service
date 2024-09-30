@@ -9,9 +9,14 @@ before(() => {
 });
 
 describe('Agent has their say against the examination timetable', () => {
+	before(() => {
+		cy.clearCookies();
+		cy.navigateAndSearch('Front Office');
+	});
+
 	it('Navigates to the examination timetable page for a project and start the journey', () => {
-		cy.visit('/projects/BC0910150/examination-timetable');
-		basePage.clickProjectInformationMenuLink('have-your-say');
+		basePage.clickProjectInformationMenuLink('examination-timetable');
+		basePage.clickGovBtn('Have your say');
 		examinationTimetable.clickStartNowButton();
 	});
 
