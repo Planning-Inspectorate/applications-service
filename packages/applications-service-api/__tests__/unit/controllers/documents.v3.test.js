@@ -51,7 +51,7 @@ describe('documentsV3 controller', () => {
 				itemsPerPage: 25
 			};
 
-			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters);
+			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters, false);
 			expect(fetchNIDocumentFiltersMock).toBeCalledWith('EN000001', false);
 
 			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
@@ -87,7 +87,8 @@ describe('documentsV3 controller', () => {
 						],
 						searchTerm: 'search',
 						datePublishedFrom: '2000-01-01',
-						datePublishedTo: '2020-12-31'
+						datePublishedTo: '2020-12-31',
+						isMaterialChange: true
 					}
 				},
 				res
@@ -109,7 +110,7 @@ describe('documentsV3 controller', () => {
 				datePublishedTo: '2020-12-31'
 			};
 
-			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters);
+			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters, true);
 
 			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 			expect(res._getData()).toEqual({
@@ -134,7 +135,8 @@ describe('documentsV3 controller', () => {
 					body: {
 						caseReference: 'EN000001',
 						page: 2,
-						size: 101
+						size: 101,
+						isMaterialChange: false
 					}
 				},
 				res
@@ -146,7 +148,7 @@ describe('documentsV3 controller', () => {
 				itemsPerPage: 100
 			};
 
-			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters);
+			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters, false);
 
 			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 			expect(res._getData()).toEqual({
@@ -171,7 +173,8 @@ describe('documentsV3 controller', () => {
 					body: {
 						caseReference: 'EN000001',
 						page: 2,
-						size: 2
+						size: 2,
+						isMaterialChange: false
 					}
 				},
 				res
@@ -183,7 +186,7 @@ describe('documentsV3 controller', () => {
 				itemsPerPage: 2
 			};
 
-			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters);
+			expect(fetchNIDocumentsMock).toBeCalledWith(expectedFilters, false);
 
 			expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 			expect(res._getData()).toEqual({

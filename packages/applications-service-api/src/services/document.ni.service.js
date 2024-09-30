@@ -6,11 +6,11 @@ const {
 } = require('../repositories/document.ni.repository');
 const { documentTypeDictionary } = require('@pins/common/src/constants');
 
-const fetchNIDocuments = async (requestQuery) => {
+const fetchNIDocuments = async (requestQuery, isMaterialChange) => {
 	const documents = await fetchDocuments(requestQuery);
 	return {
 		count: documents.count,
-		data: mapDocuments(documents.rows)
+		data: mapDocuments(documents.rows, isMaterialChange)
 	};
 };
 

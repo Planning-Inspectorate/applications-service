@@ -29,10 +29,11 @@ describe('document back office service', () => {
 				rows: BACK_OFFICE_DB_DOCUMENTS
 			});
 			mapBackOfficeDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
+			const mockIsMaterialChange = false;
 
-			const result = await fetchBackOfficeDocuments(filters);
+			const result = await fetchBackOfficeDocuments(filters, mockIsMaterialChange);
 
-			expect(mapBackOfficeDocuments).toBeCalledWith(BACK_OFFICE_DB_DOCUMENTS);
+			expect(mapBackOfficeDocuments).toBeCalledWith(BACK_OFFICE_DB_DOCUMENTS, mockIsMaterialChange);
 			expect(result).toEqual({
 				count: 1,
 				data: RESPONSE_DOCUMENTS

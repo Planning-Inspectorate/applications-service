@@ -24,7 +24,7 @@ const getDocuments = async (req, res, getDocumentsFn, getFiltersFn) => {
 	const requestFilters = buildFilters(req);
 
 	const [documents, availableFilters] = await Promise.all([
-		getDocumentsFn(requestFilters),
+		getDocumentsFn(requestFilters, isMaterialChange),
 		getFiltersFn(requestFilters.caseReference, isMaterialChange)
 	]);
 

@@ -60,13 +60,14 @@ const mapDocumentFilterLabel = (filterName, filterValue, isMaterialChange) => {
 	}
 };
 
-const mapDocuments = (documents) => {
+const mapDocuments = (documents, isMaterialChange) => {
 	const attributesToLowerCase = (document) =>
 		Object.keys(document).reduce((memo, key) => {
 			let value = document[key];
 
 			if (key === 'path' && value) value = config.documentsHost.concat(value);
-			else if (key === 'stage') memo.stageLabel = mapDocumentFilterLabel('stage', value);
+			else if (key === 'stage')
+				memo.stageLabel = mapDocumentFilterLabel('stage', value, isMaterialChange);
 
 			memo[toCamelCase(key)] = value;
 
@@ -76,13 +77,13 @@ const mapDocuments = (documents) => {
 	return documents.map(attributesToLowerCase);
 };
 
-const mapBackOfficeDocuments = (documents) =>
+const mapBackOfficeDocuments = (documents, isMaterialChange) =>
 	documents.map((document) => ({
 		id: document.id,
 		dataID: document.documentReference,
 		case_reference: document.caseRef,
 		stage: document.stage,
-		stageLabel: mapDocumentFilterLabel('stage', document.stage),
+		stageLabel: mapDocumentFilterLabel('stage', document.stage, isMaterialChange),
 		type: document.documentType,
 		filter1: document.filter1,
 		filter1Welsh: document.filter1Welsh,
