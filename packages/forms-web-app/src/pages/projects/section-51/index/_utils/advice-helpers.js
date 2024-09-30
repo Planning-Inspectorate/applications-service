@@ -11,6 +11,8 @@ const getAdviceName = ({ organisation, firstName, lastName }, i18n) => {
 	let name = i18n.t('section51.anonymous');
 	if (organisation?.trim()) name = organisation.trim();
 	else if (firstName && lastName) name = `${firstName} ${lastName}`;
+	else if (firstName && !lastName) name = `${firstName}`;
+	else if (!firstName && lastName) name = `${lastName}`;
 	return name;
 };
 
