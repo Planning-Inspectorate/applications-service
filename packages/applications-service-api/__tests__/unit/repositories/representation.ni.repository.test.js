@@ -66,7 +66,6 @@ describe('representation ni repository', () => {
 			await getRepresentationsWithCount(mockOptions);
 			// Assert
 
-			//Currently failing - needs investigation
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				caseReference: undefined,
