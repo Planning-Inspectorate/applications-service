@@ -2,20 +2,20 @@ import { BasePage } from '../pageObject/basePage';
 
 const basePage = new BasePage();
 
-before(() => {
-	cy.clearCookies();
-	cy.visit('/projects/BC0910150');
-});
-
 describe('use can view and interact with the project informaiton page', () => {
+	before(() => {
+		cy.clearCookies();
+		cy.navigateAndSearch('Front Office');
+	});
+
 	it('should verify the user is on the project information page', () => {
 		cy.url().should('include', 'projects/BC0910150');
 		basePage.locateH1ByText('Project information');
 	});
 
 	it('should verify a user is returned to the project information section', () => {
-		basePage.clickProjectInformationMenuLink('have-your-say');
-		cy.url().should('include', 'have-your-say-during-examination');
+		basePage.clickProjectInformationMenuLink('register-to-have-your-say');
+		cy.url().should('include', 'register-have-your-say');
 		basePage.clickProjectInformationMenuLink('projects');
 		basePage.locateH1ByText('Project information');
 	});
