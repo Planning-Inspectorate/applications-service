@@ -8,10 +8,12 @@ const {
 const { isLangWelsh } = require('../../../../_utils/is-lang-welsh');
 
 const getAdviceName = ({ organisation, firstName, lastName }, i18n) => {
-	let name = i18n.t('section51.anonymous');
-	if (organisation?.trim()) name = organisation.trim();
-	else if (firstName && lastName) name = `${firstName} ${lastName}`;
-	return name;
+	return (
+		organisation?.trim() ||
+		(firstName && lastName
+			? `${firstName} ${lastName}`
+			: firstName || lastName || i18n.t('section51.anonymous'))
+	);
 };
 
 const isAdviceMeeting = (enquiryMethod) => enquiryMethod === 'Meeting';
