@@ -1,10 +1,7 @@
 const { getProjectsDocumentsController } = require('./controller');
 
 const { mockI18n } = require('../../_mocks/i18n');
-const {
-	getProjectData,
-	wrappedSearchDocumentsV3
-} = require('../../../lib/application-api-wrapper');
+const { wrappedSearchDocumentsV3 } = require('../../../lib/application-api-wrapper');
 const {
 	searchExaminationLibraryDocument
 } = require('./_utils/documents/search-examination-library-document');
@@ -36,16 +33,17 @@ describe('pages/projects/documents/controller', () => {
 					i18n
 				};
 				const res = {
-					locals: { applicationData: { isMaterialChange: false } },
+					locals: {
+						applicationData: {
+							projectName: 'mock project name',
+							isMaterialChange: false
+						}
+					},
 					render: jest.fn(),
 					status: jest.fn(() => res)
 				};
 
 				beforeEach(async () => {
-					getProjectData.mockReturnValue({
-						data: { ProjectName: 'mock project name' },
-						resp_code: 200
-					});
 					wrappedSearchDocumentsV3.mockReturnValue({
 						data: {
 							documents: [
@@ -279,15 +277,20 @@ describe('pages/projects/documents/controller', () => {
 					params: { case_ref: 'mock-case-ref' },
 					i18n
 				};
+
 				const res = {
-					locals: { applicationData: { isMaterialChange: false } },
+					locals: {
+						applicationData: {
+							projectName: 'mock project name',
+							isMaterialChange: false
+						}
+					},
 					render: jest.fn(),
 					status: jest.fn(() => res)
 				};
 
 				beforeEach(async () => {
-					getProjectData.mockReturnValue({
-						data: { ProjectName: 'mock project name' },
+					wrappedSearchDocumentsV3.mockReturnValue({
 						resp_code: 500
 					});
 					await getProjectsDocumentsController(req, res);

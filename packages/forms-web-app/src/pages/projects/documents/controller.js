@@ -5,7 +5,6 @@ const { getDocuments } = require('./_utils/documents/getDocuments');
 const { getFilters } = require('./_utils/filters/getFilters');
 const { getPagination, getPaginationUrl } = require('../_utils/pagination/pagination');
 const { searchDocuments } = require('./_utils/documents/searchDocuments');
-const { getApplicationData } = require('../_utils/get-application-data');
 const { isClearAllFiltersDisplayed } = require('./_utils/is-clear-all-filters-displayed');
 const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
 const { isLangWelsh } = require('../../_utils/is-lang-welsh');
@@ -20,14 +19,11 @@ const getProjectsDocumentsController = async (req, res) => {
 		const { searchTerm } = query;
 		const { locals } = res;
 		const { applicationData } = locals;
-		const { isMaterialChange } = applicationData;
+		const { isMaterialChange, projectName } = applicationData;
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
-
-		const { projectName } = await getApplicationData(case_ref, i18n.language);
-
 		const pageFeatureToggles = featureToggles();
-		const pageDataObj = await pageData(case_ref);
+		const pageDataObj = pageData(case_ref);
 
 		const { documents, examinationLibraryDocument, filters, pagination } = await searchDocuments(
 			case_ref,
