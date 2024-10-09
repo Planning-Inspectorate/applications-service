@@ -52,8 +52,11 @@ const configPageScripts = {
 	entry: {
 		'checkbox-accordion': `${entryPath}/checkbox-accordion`,
 		index: `${entryPath}/index.js`,
-		cookiePreferences: `${entryPath}/cookie-preferences-page.js`,
-		'step-by-step-navigation': `${entryPath}/step-by-step-navigation.js`
+		'cookie-preferences': `${entryPath}/cookie-preferences-page.js`,
+		'step-by-step-navigation': `${entryPath}/step-by-step-navigation.js`,
+		'service-worker': `${entryPath}/service-worker/index.js`,
+		'register-service-worker': `${entryPath}/service-worker/register-service-worker.js`,
+		'unregister-service-worker': `${entryPath}/service-worker/unregister-service-worker.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,
@@ -61,7 +64,6 @@ const configPageScripts = {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			'process.env.googleAnalyticsId': JSON.stringify(process.env.GOOGLE_ANALYTICS_ID),
 			'process.env.googleTagManager': process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true'
 		})
 	]

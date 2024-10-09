@@ -22,9 +22,9 @@ Object.defineProperty(global, 'fetch', {
 	value: mockFetch
 });
 
-describe('scripts/sw', () => {
+describe('scripts/service-worker.script', () => {
 	it('adds event listeners', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		expect(mockAddEventListener).toHaveBeenNthCalledWith(1, 'install', listeners.install);
@@ -33,7 +33,7 @@ describe('scripts/sw', () => {
 	});
 
 	it('handles install event ', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		listeners.install();
@@ -41,7 +41,7 @@ describe('scripts/sw', () => {
 	});
 
 	it('handles active event ', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		const mockWaitUntil = jest.fn();
@@ -52,7 +52,7 @@ describe('scripts/sw', () => {
 	});
 
 	it('intercepts fetch event for form post', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		const mockResponseWith = jest.fn();
@@ -95,7 +95,7 @@ describe('scripts/sw', () => {
 	});
 
 	it('does not handle fetch event for non-form post ', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		const mockResponseWith = jest.fn();
@@ -130,7 +130,7 @@ describe('scripts/sw', () => {
 	});
 
 	it('does not handle fetch event for non-post ', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		const mockResponseWith = jest.fn();
@@ -165,7 +165,7 @@ describe('scripts/sw', () => {
 	});
 
 	it('does not handle fetch event for non-same origin ', async () => {
-		require('../../../src/public/scripts/sw.script.js');
+		require('../../../src/public/scripts/service-worker.script.js');
 		await delay(100); // Give async code time to run
 
 		const mockResponseWith = jest.fn();

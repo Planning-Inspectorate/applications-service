@@ -69,14 +69,21 @@ app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
 
-app.use('/robots.txt', express.static(path.join(__dirname, 'robots.txt')));
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
+const staticOptions = {
+	maxAge: config.cacheControl.maxAge
+};
+
+app.use('/robots.txt', express.static(path.join(__dirname, 'robots.txt'), staticOptions));
+app.use('/public', express.static(path.join(__dirname, 'public'), staticOptions));
+app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets'), staticOptions));
 app.use(
 	'/assets/govuk/all.js',
-	express.static(path.join(govukFrontendRoot, 'govuk', 'all.bundle.js'))
+	express.static(path.join(govukFrontendRoot, 'govuk', 'all.bundle.js'), staticOptions)
 );
-app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
+app.use(
+	'/sw.script.js',
+	express.static(path.join(__dirname, 'public/scripts/sw.script.js'), staticOptions)
+);
 
 // View Engine
 app.set('view engine', 'njk');
