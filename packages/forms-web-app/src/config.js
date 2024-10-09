@@ -19,6 +19,9 @@ module.exports = {
 			limit: '500kb'
 		}
 	},
+	cacheControl: {
+		maxAge: process.env.CACHE_CONTROL_MAX_AGE || '1d'
+	},
 	db: {
 		session: {
 			redis: parseRedisConnectionString(process.env.REDIS_CONNECTION_STRING)
