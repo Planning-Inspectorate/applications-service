@@ -71,7 +71,6 @@ async function handler(
 					return { resp_code: apiResponse.status };
 				}
 				const data = await apiResponse.json();
-				logger.debug(`Response received: ${JSON.stringify(data)}`);
 				const wrappedResp = { data, resp_code: apiResponse.status };
 				logger.debug('Successfully parsed to JSON');
 
