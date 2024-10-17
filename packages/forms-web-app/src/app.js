@@ -80,10 +80,6 @@ app.use(
 	'/assets/govuk/all.js',
 	express.static(path.join(govukFrontendRoot, 'govuk', 'all.bundle.js'), staticOptions)
 );
-app.use(
-	'/sw.script.js',
-	express.static(path.join(__dirname, 'public/scripts/service-worker.script.js'), staticOptions)
-);
 
 // View Engine
 app.set('view engine', 'njk');
