@@ -82,7 +82,7 @@ app.use(
 );
 app.use(
 	'/sw.script.js',
-	express.static(path.join(__dirname, 'public/scripts/sw.script.js'), staticOptions)
+	express.static(path.join(__dirname, 'public/scripts/service-worker.script.js'), staticOptions)
 );
 
 // View Engine
