@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pinoExpress = require('express-pino-logger');
+const { rateLimit } = require('express-rate-limit');
 const uuid = require('uuid');
 const { configureSessionStore } = require('./lib/session');
 const { NotFoundError } = require('./lib/errors');
@@ -51,6 +52,15 @@ const nunjucksEnv = nunjucksConfigure(app);
 if (config.server.useSecureSessionCookie) {
 	app.set('trust proxy', 1); // trust first proxy
 }
+
+const rateLimiter = rateLimit({
+	windowMs: 1000 * 60 * 10, // 10 minutes
+	limit: 150, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false // Disable the `X-RateLimit-*` headers
+});
+
+app.use(rateLimiter);
 
 const sessionStoreConfig = configureSessionStore(session);
 

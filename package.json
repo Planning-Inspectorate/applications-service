@@ -99,6 +99,7 @@
 		"express-async-errors": "^3.1.1",
 		"express-fileupload": "^1.4.0",
 		"express-pino-logger": "^5.0.0",
+		"express-rate-limit": "^7.4.1",
 		"express-session": "^1.17.2",
 		"express-validator": "^6.12.1",
 		"form-data": "^4.0.0",
@@ -140,7 +141,6 @@
 	"devDependencies": {
 		"@babel/core": "^7.18.9",
 		"@babel/preset-env": "^7.18.9",
-		"babel-loader": "^8.2.5",
 		"@commitlint/cli": "^17.0.2",
 		"@commitlint/config-conventional": "^17.0.2",
 		"@semantic-release/exec": "^6.0.3",
@@ -148,6 +148,7 @@
 		"allure-commandline": "^2.20.1",
 		"azure-functions-core-tools": "^4.0.5390",
 		"azurite": "^3.26.0",
+		"babel-loader": "^8.2.5",
 		"commitizen": "^4.2.4",
 		"cross-env": "^7.0.3",
 		"cypress": "^13.6.4",
