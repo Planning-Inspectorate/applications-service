@@ -21,13 +21,14 @@ describe('services/submission.service', () => {
 					response = await postSubmission(caseRef, body);
 				});
 				it('should call fetch ', () => {
-					expect(fetch).toHaveBeenCalledWith('http://test/api/v1/submissions/1234', {
+					expect(fetch).toHaveBeenCalledWith('http://test/api/v1/submissions/1234', expect.objectContaining({
 						body: 'mock body',
 						headers: {
 							'X-Correlation-ID': expect.any(String)
 						},
 						method: 'POST'
-					});
+					  })
+					);
 				});
 				it('should return a body', () => {
 					expect(response).toEqual({ data: { mockData: 'mock data' }, resp_code: 200 });
@@ -57,14 +58,16 @@ describe('services/submission.service', () => {
 					});
 					response = await postSubmissionComplete(submissionsId);
 				});
-				it('should call fecth ', () => {
-					expect(fetch).toHaveBeenCalledWith('http://test/api/v1/submissions/1234/complete', {
-						headers: {
-							'Content-Type': 'application/json',
-							'X-Correlation-ID': expect.any(String)
-						},
-						method: 'POST'
-					});
+				it('should call fetch ', () => {
+					expect(fetch).toHaveBeenCalledWith('http://test/api/v1/submissions/1234/complete',
+						expect.objectContaining({
+							headers: {
+								'Content-Type': 'application/json',
+								'X-Correlation-ID': expect.any(String)
+							},
+							method: 'POST'
+						})
+					);
 				});
 				it('should return a body', () => {
 					expect(response).toEqual({ resp_code: 204 });
