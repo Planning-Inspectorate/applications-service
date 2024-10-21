@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
-const { utils } = require('@pins/common');
 const { queryStringBuilder } = require('../utils/query-string-builder');
 const config = require('../config');
 const parentLogger = require('./logger');
@@ -21,64 +20,71 @@ async function handler(
 		service: 'Application Service API'
 	});
 
+	// set up an abort controller to cancel requests after the configured timeout
+	const controller = new AbortController();
+	const timeout = setTimeout(() => {
+		controller.abort();
+	}, config.applications.timeout);
+
 	try {
 		logger.debug({ url, method, opts, headers }, 'New call');
-		return await utils.promiseTimeout(
-			config.applications.timeout,
-			Promise.resolve().then(async () => {
-				const apiResponse = await fetch(url, {
-					method,
-					headers: {
-						'X-Correlation-ID': correlationId,
-						...headers
-					},
-					...opts
-				});
+		const apiResponse = await fetch(url, {
+			method,
+			headers: {
+				'X-Correlation-ID': correlationId,
+				...headers
+			},
+			...opts,
+			// signal for cancelling requests after a timeout
+			signal: controller.signal
+		});
+		// request complete, cancel the timeout timer
+		clearTimeout(timeout);
 
-				const notFoundResponseCode = { resp_code: 404 };
+		const notFoundResponseCode = { resp_code: 404 };
 
-				if (!apiResponse) {
-					logger.debug('apiResponse is undefined', 'API Response not OK');
-					return notFoundResponseCode;
+		if (!apiResponse) {
+			logger.debug('apiResponse is undefined', 'API Response not OK');
+			return notFoundResponseCode;
+		}
+
+		if (!apiResponse.ok) {
+			logger.debug(apiResponse, 'API Response not OK');
+			if (apiResponse.status === 404) {
+				return notFoundResponseCode;
+			}
+			try {
+				const errorResponse = await apiResponse.json();
+				/* istanbul ignore else */
+				if (errorResponse.errors && errorResponse.errors.length) {
+					throw new Error(errorResponse.errors.join('\n'));
 				}
 
-				if (!apiResponse.ok) {
-					logger.debug(apiResponse, 'API Response not OK');
-					if (apiResponse.status === 404) {
-						return notFoundResponseCode;
-					}
-					try {
-						const errorResponse = await apiResponse.json();
-						/* istanbul ignore else */
-						if (errorResponse.errors && errorResponse.errors.length) {
-							throw new Error(errorResponse.errors.join('\n'));
-						}
+				/* istanbul ignore next */
+				throw new Error(apiResponse.statusText);
+			} catch (e) {
+				throw new Error(e.message);
+			}
+		}
 
-						/* istanbul ignore next */
-						throw new Error(apiResponse.statusText);
-					} catch (e) {
-						throw new Error(e.message);
-					}
-				}
+		logger.debug('Successfully called ' + callingMethod);
 
-				logger.debug('Successfully called ', callingMethod);
+		if (callingMethod === 'putComments') {
+			return apiResponse;
+		}
 
-				if (callingMethod === 'putComments') {
-					return apiResponse;
-				}
-
-				if (apiResponse.status === 204) {
-					return { resp_code: apiResponse.status };
-				}
-				const data = await apiResponse.json();
-				const wrappedResp = { data, resp_code: apiResponse.status };
-				logger.debug('Successfully parsed to JSON');
-
-				return wrappedResp;
-			})
-		);
+		if (apiResponse.status === 204) {
+			return { resp_code: apiResponse.status };
+		}
+		const data = await apiResponse.json();
+		return { data, resp_code: apiResponse.status };
 	} catch (err) {
-		logger.error({ err }, 'Error');
+		if (err?.name === 'AbortError') {
+			logger.error({ url, method, opts, headers }, 'request timeout');
+		} else {
+			logger.error({ err }, 'Error');
+		}
+		clearTimeout(timeout); // clear timeout on error
 		throw err;
 	}
 }

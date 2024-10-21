@@ -32,6 +32,7 @@
 		"@testing-library/dom": "*",
 		"@testing-library/jest-dom": "*",
 		"@testing-library/user-event": "*",
+		"abort-controller": "*",
 		"applicationinsights": "*",
 		"chokidar": "*",
 		"compression": "*",
