@@ -1,7 +1,10 @@
 const express = require('express');
 
 const { getProjectsIndexController } = require('./index/controller');
-const { getProjectsDocumentsController } = require('./documents/controller');
+const {
+	getProjectsDocumentsController,
+	postProjectsDocumentsController
+} = require('./documents/controller');
 const { getProjectsAllUpdatesController } = require('./all-updates/controller');
 const {
 	getProjectsExaminationTimetableController,
@@ -74,6 +77,8 @@ projectsRouter.get(
 	addProjectsDocumentsTranslationsMiddleware,
 	getProjectsDocumentsController
 );
+
+projectsRouter.post(projectsDocumentsURL, postProjectsDocumentsController);
 
 projectsRouter.get(
 	examinationTimetableURL,
