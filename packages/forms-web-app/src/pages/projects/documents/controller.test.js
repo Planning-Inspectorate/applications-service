@@ -1,4 +1,4 @@
-const { getProjectsDocumentsController } = require('./controller');
+const { getProjectsDocumentsController, postProjectsDocumentsController } = require('./controller');
 
 const { mockI18n } = require('../../_mocks/i18n');
 const { wrappedSearchDocumentsV3 } = require('../../../lib/application-api-wrapper');
@@ -12,6 +12,11 @@ jest.mock('../../../lib/application-api-wrapper', () => ({
 }));
 jest.mock('./_utils/documents/search-examination-library-document', () => ({
 	searchExaminationLibraryDocument: jest.fn()
+}));
+
+jest.mock('./config', () => ({
+	allowedQueryParameters: ['mock-filter-1', 'page', 'searchTerm'],
+	projectsDocumentsRoute: 'documents'
 }));
 
 const commonTranslations_EN = require('../../../locales/en/common.json');
@@ -298,6 +303,54 @@ describe('pages/projects/documents/controller', () => {
 				it('should render the error page', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+				});
+			});
+		});
+	});
+
+	describe('#postProjectsDocumentsController', () => {
+		describe('When submitting selected filters on a documents page', () => {
+			describe('and the filter is allowed as a parameter', () => {
+				const req = {
+					body: { 'mock-filter-1': 'mock filter value' },
+					params: { case_ref: 'mock-case-ref' }
+				};
+				const res = {
+					redirect: jest.fn()
+				};
+
+				beforeEach(async () => {
+					await postProjectsDocumentsController(req, res);
+				});
+				it('should trigger a redirect', () => {
+					expect(res.redirect).toHaveBeenCalledTimes(1);
+				});
+				it('should redirect back to documents page with correctly constructed query string from the request body', () => {
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/documents?mock-filter-1=mock%20filter%20value'
+					);
+				});
+			});
+			describe('and the filter is NOT allowed as a parameter', () => {
+				const req = {
+					body: {
+						'bad-filter-name': 'bad-filter-value',
+						'mock-filter-1': 'mock filter value'
+					},
+					params: { case_ref: 'mock-case-ref' }
+				};
+				const res = {
+					redirect: jest.fn()
+				};
+
+				beforeEach(async () => {
+					await postProjectsDocumentsController(req, res);
+				});
+
+				it('should not include the disallowed param/filter in the redirect query', () => {
+					expect(res.redirect).toHaveBeenCalledWith(
+						'/projects/mock-case-ref/documents?mock-filter-1=mock%20filter%20value'
+					);
 				});
 			});
 		});
