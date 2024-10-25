@@ -9,9 +9,11 @@
 
   {% else %}
 
-    <p class="govuk-body">
-      {{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + t("projectsIndex.materialChangeProjectStage.stage" + applicationData.status.number + "name" ) | lower + '</strong>' }) | safe }}
-    </p>
+    {% if applicationData.status.text !== projectStages[2] %}
+      <p class="govuk-body">
+        {{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + t("projectsIndex.materialChangeProjectStage.stage" + applicationData.status.number + "name" ) | lower + '</strong>' }) | safe }}
+      </p>
+    {% endif %}
 
     <div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-!-margin-top-6">
       {% include "./material-change-stages/pre-application/details.njk" %}
