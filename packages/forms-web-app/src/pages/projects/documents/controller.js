@@ -11,8 +11,6 @@ const { isLangWelsh } = require('../../_utils/is-lang-welsh');
 const { isFiltersDisplayed } = require('./_utils/is-filters-displayed');
 const { queryStringBuilder } = require('../../../utils/query-string-builder');
 const { getProjectsDocumentsURL } = require('./_utils/get-projects-documents-url');
-const { allowedQueryParameters } = require('./config');
-const { filterAllowedParams } = require('../../_utils/filter-allowed-params');
 
 const view = 'projects/documents/view.njk';
 
@@ -70,11 +68,7 @@ const postProjectsDocumentsController = async (req, res) => {
 		} = req;
 
 		const queryParamsToKeep = Object.keys(body);
-		const filteredQueryParamsToKeep = filterAllowedParams(
-			queryParamsToKeep,
-			allowedQueryParameters
-		);
-		const queryString = queryStringBuilder(body, filteredQueryParamsToKeep);
+		const queryString = queryStringBuilder(body, queryParamsToKeep);
 		const documentsURL = getProjectsDocumentsURL(case_ref);
 
 		return res.redirect(`${documentsURL}${queryString}`);
