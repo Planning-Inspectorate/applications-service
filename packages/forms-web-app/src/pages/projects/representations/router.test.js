@@ -29,10 +29,12 @@ jest.mock('./index/_middleware/add-representations-index-translations-middleware
 describe('representations/router', () => {
 	describe('#representationsRouter', () => {
 		const get = jest.fn();
+		const post = jest.fn();
 
 		jest.doMock('express', () => ({
 			Router: () => ({
-				get
+				get,
+				post
 			})
 		}));
 
@@ -57,6 +59,7 @@ describe('representations/router', () => {
 			);
 
 			expect(get).toBeCalledTimes(2);
+			expect(post).toBeCalledTimes(1);
 		});
 	});
 });
