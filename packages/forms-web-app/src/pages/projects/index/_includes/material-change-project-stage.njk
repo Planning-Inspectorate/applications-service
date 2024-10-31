@@ -9,11 +9,31 @@
 
   {% else %}
 
-    {% if applicationData.status.text !== projectStages[2] %}
+    {% if applicationData.status.text !== projectStages[2] and applicationData.status.text !== projectStages[7] %}
       <p class="govuk-body">
         {{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + t("projectsIndex.materialChangeProjectStage.stage" + applicationData.status.number + "name" ) | lower + '</strong>' }) | safe }}
       </p>
     {% endif %}
+
+    {% if applicationData.status.text === projectStages[1] %}
+			{% include "./material-change-stages/pre-application/description.njk" %}
+		{% endif %}
+
+		{% if applicationData.status.text === projectStages[2] %}
+			{% include "./material-change-stages/application-received/description.njk" %}
+		{% endif %}
+
+		{% if applicationData.status.text === projectStages[3] %}
+			{% include "./material-change-stages/application-published/description.njk" %}
+      {% endif %}
+
+		{% if applicationData.status.text === projectStages[4] %}
+			{% include "./material-change-stages/examination/description.njk" %}
+		{% endif %}
+
+		{% if applicationData.status.text === projectStages[7] %}
+			{% include "./material-change-stages/post-decision/description.njk" %}
+		{% endif %}
 
     <div id="project-stage-{{ projectStages[1] | lower }}" class="govuk-!-margin-top-6">
       {% include "./material-change-stages/pre-application/details.njk" %}

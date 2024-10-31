@@ -29,7 +29,7 @@
 		"stage4name": "Archwiliad",
 		"stage5name": "Argymhelliad",
 		"stage6name": "Penderfyniad",
-		"stage7name": "Ôl-benderfyniad",
+		"stage7name": "Beth fydd yn digwydd ar ôl i'r penderfyniad gael ei wneud",
 		"common": {
 			"paragraph1": "Efallai byddwch wedi cael buddiant yn ddiweddar mewn tir y mae datblygiad yn effeithio arno. Os nad oedd y datblygwr wedi dweud wrthych fod y cais wedi cael ei wneud neu os na chofrestroch i leisio'ch barn, gallwch ofyn am gael bod yn barti â buddiant o hyd.",
 			"paragraph2": "Bydd angen i chi gysylltu â thîm y prosiect. Bydd y tîm yn gofyn i'r Corff Archwilio a allwch fod yn barti â buddiant a lleisio'ch barn.",
@@ -40,7 +40,9 @@
 			"paragraph2": "Pan fyddwn yn derbyn y cais, byddwn yn paratoi i'w gyhoeddi."
 		},
 		"applicationReceived": {
-			"paragraph1": "Mae'r prosiect hwn ar y cam cais wedi'i dderbyn a chaiff ei gyhoeddi cyn hir.",
+			"sentenceItem1": "Mae'r prosiect hwn ar y cam",
+			"sentenceItem2": "cais wedi'i dderbyn",
+			"sentenceItem3": "a chaiff ei gyhoeddi cyn hir.",
 			"paragraph2": "Nid oes cyfle i wneud sylwadau ar y cais ar y cam hwn."
 		},
 		"applicationPublished": {
@@ -53,7 +55,7 @@
 				"paragraph1": "Os ydych eisiau gwneud sylwadau ar y newidiadau arfaethedig i'r Gorchymyn Caniatâd Datblygu, gallwch {{-link}}",
 				"linkText1": "gofrestru i leisio'ch barn yn awr ",
 				"paragraph2": "Bydd y cyfnod cofrestr'n cau ar {{-date}}.",
-				"linkText2": "Cofrestrwch i leisio'ch barn"
+				"buttonText1": "Cofrestrwch i leisio'ch barn"
 			},
 			"repsClosed": {
 				"paragraph1": "Mae'r cyfnod cofrestru i leisio'ch barn am y prosiect hwn wedi cau.",
@@ -62,7 +64,7 @@
 			},
 			"repsPublished": {
 				"paragraph1": "Rydym wedi cyhoeddi'r holl sylwadau cofrestredig bellach.",
-				"paragraph2": "Gallwch {{-link}}.",
+				"paragraph2": "Gallwch {{-link}}",
 				"linkText1": "weld sylwadau gan bobl eraill a gofrestrodd."
 			},
 			"prelim": {
