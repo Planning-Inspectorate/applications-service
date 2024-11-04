@@ -58,9 +58,9 @@
 		},
 		"preexamination": {
 			"preReps": {
-				"paragraph1": "At this stage you can {{-link}} about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.",
-				"linkText1": "register to have your say",
-				"linkText2": "Find out more about registering to have your say."
+				"paragraph1": "You can view the project application documents to find out more about the application.",
+				"paragraph2": "You will be able to register to have your say when the registration period opens.",
+				"linkText1": "Find out more about registering to have your say."
 			},
 			"repsOpen": {
 				"paragraph1": "If you want to comment on this proposed project, you can now {{-link}}",

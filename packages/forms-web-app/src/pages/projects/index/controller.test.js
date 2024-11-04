@@ -35,7 +35,7 @@ const processGuideStages = {
 		title: 'Examination'
 	},
 	postDecision: {
-		html: '<p class="govuk-body">Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.</p><a class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">What you can do after the decision has been made.</a>',
+		html: '<p class="govuk-body">Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.</p><p class="govuk-body">This must happen within 6 weeks.</p><a class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">What you can do after the decision has been made.</a>',
 		title: 'What happens after the decision is made'
 	},
 	preApplication: {

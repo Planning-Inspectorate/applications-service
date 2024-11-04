@@ -61,7 +61,10 @@ const getProcessGuideStages = (i18n) => ({
 	),
 	postDecision: stepViewModel(
 		i18n.t('processGuide.postDecision.heading1'),
-		i18n.t('processGuide.postDecision.paragraph1'),
+		[
+			i18n.t('processGuide.postDecision.paragraph1'),
+			i18n.t('processGuide.postDecision.paragraph2')
+		],
 		i18n.t('processGuide.postDecision.linkText'),
 		postDecisionURL
 	)

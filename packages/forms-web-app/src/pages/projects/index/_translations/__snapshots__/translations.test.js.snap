@@ -87,9 +87,9 @@ exports[`pages/examination/_translations should return the correct English trans
     },
     "preexamination": {
       "preReps": {
-        "linkText1": "register to have your say",
-        "linkText2": "Find out more about registering to have your say.",
-        "paragraph1": "At this stage you can {{-link}} about the proposed project. This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.",
+        "linkText1": "Find out more about registering to have your say.",
+        "paragraph1": "You can view the project application documents to find out more about the application.",
+        "paragraph2": "You will be able to register to have your say when the registration period opens.",
       },
       "prelim": {
         "linkText1": "rule 6 letter",
@@ -251,9 +251,9 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     },
     "preexamination": {
       "preReps": {
-        "linkText1": "gofrestru i leisio'ch barn",
-        "linkText2": "Dysgwch fwy am gofrestru i leisio'ch barn.",
-        "paragraph1": "Yn ystod y cam hwn, gallwch {{-link}} am y prosiect arfaethedig. Bydd y dudalen hon yn cael ei diweddaru pan fydd y cyfnod cofrestru'n agor. Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+        "linkText1": "Dysgwch fwy am gofrestru i leisio'ch barn.",
+        "paragraph1": "Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+        "paragraph2": "Gallwch gofrestru i leisio'ch barn pan fydd y cyfnod cofrestru'n agor.",
       },
       "prelim": {
         "linkText1": "llythyr rheol 6",
