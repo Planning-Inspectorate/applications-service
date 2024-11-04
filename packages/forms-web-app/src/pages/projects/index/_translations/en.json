@@ -29,7 +29,56 @@
 		"stage4name": "Examination",
 		"stage5name": "Recommendation",
 		"stage6name": "Decision",
-		"stage7name": "Post-decision"
+		"stage7name": "What happens after the decision is made",
+		"common": {
+			"paragraph1": "You may have recently gained an interest in land affected by a development. If the developer did not tell you the application had been made or you did not register to have your say, you can still request to be an interested party.",
+			"paragraph2": "You need to contact the project team. They will ask the Examining Body if you can be an interested party and have your say.",
+			"paragraph3": "Email {{-link}} with your request to become an interested party."
+		},
+		"preapplication": {
+			"paragraph1": "The application is expected to be submitted {{-date}}.",
+			"paragraph2": "When we receive the application, we will prepare to publish it."
+		},
+		"applicationReceived": {
+			"sentenceItem1": "This project is at the",
+			"sentenceItem2": "application received",
+			"sentenceItem3": "stage and will be published shortly.",
+			"paragraph2": "There is no opportunity to make comments on the application at this stage."
+		},
+		"applicationPublished": {
+			"preReps": {
+				"paragraph1": "You can view the project application documents to find out more about the application.",
+				"paragraph2": "You will be able to register to have your say when the registration period opens.",
+				"linkText1": "Find out more about registering to have your say."
+			},
+			"repsOpen": {
+				"paragraph1": "If you want to comment on the proposed changes to the Development Consent Order, you can now {{-link}}",
+				"linkText1": "register to have your say",
+				"paragraph2": "Registration closes on {{-date}}.",
+				"buttonText1": "Register to have your say"
+			},
+			"repsClosed": {
+				"paragraph1": "The registration period to have your say about this project has closed.",
+				"paragraph2": "The Secretary of State will now consider whether the application needs to be examined.",
+				"paragraph3": "Contact the project case team to find out more about how to get involved if you are not registered."
+			},
+			"repsPublished": {
+				"paragraph1": "We have now published all registration comments.",
+				"paragraph2": "You can {{-link}}",
+				"linkText1": "view comments from other people who registered."
+			},
+			"prelim": {
+				"paragraph1": "The preliminary meeting for this project is on: {{-date}}",
+				"paragraph2": "You can check the regulations 27 and 28 letter to find out how to get involved.",
+				"paragraph3": "In this meeting, the Examining Body sets out how they intend to examine the application. This includes the examination timetable and the issues they will focus on during the examination",
+				"linkText1": "Find out more about getting involved in the preliminary meeting"
+			}
+		},
+		"examination": {
+			"paragraph1": "During the examination stage, anyone who has registered to have their say can submit comments at the deadlines set out in the examination timetable. You may also attend hearings, if hearings are held.",
+			"paragraph2": "You can also view the regulation 30 letter to find out more about what you can do during the examination stage.",
+			"linkText1": "Find out more about the examination of the application stage."
+		}
 	},
 	"projectStage": {
 		"heading1": "Project stage",

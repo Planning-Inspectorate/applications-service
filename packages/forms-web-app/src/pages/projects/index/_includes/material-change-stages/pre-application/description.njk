@@ -1,0 +1,9 @@
+{% if applicationData.anticipatedSubmissionDateNonSpecific %}
+	<p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.preapplication.paragraph1', { date: applicationData.anticipatedSubmissionDateNonSpecific }) }}
+	</p>
+{% endif %}
+
+<p class="govuk-body">	
+    {{ t('projectsIndex.materialChangeProjectStage.preapplication.paragraph2') }} 
+</p>

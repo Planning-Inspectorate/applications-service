@@ -1,0 +1,126 @@
+{% set preRepsDescText %}
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.preReps.paragraph1') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.preReps.paragraph2') }}
+	</p>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/having-your-say-guide/registering-have-your-say" target="_blank">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.preReps.linkText1') }}</a>
+	</p>
+{% endset %}
+
+{% set repsOpenDescText %}
+     <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsOpen.paragraph1',
+        { link: '<a href="/having-your-say-guide/registering-have-your-say" class="govuk-link">' + t('projectsIndex.materialChangeProjectStage.applicationPublished.repsOpen.linkText1') + '</a>'}) | safe }}
+	</p>
+
+    {% if applicationData.DateOfRelevantRepresentationClose %}
+        <p class="govuk-body">
+            {{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsOpen.paragraph2', { date: applicationData.DateOfRelevantRepresentationClose |  date('locale', language) | date}) }}
+        </p>
+    {% endif %}
+
+    <a class="govuk-button" href='/projects/{{ caseRef }}/register/register-have-your-say'>
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsOpen.buttonText1') }}
+	</a>
+{% endset %}
+
+{% set repsClosedDescText %}
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsClosed.paragraph1') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsClosed.paragraph2') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsClosed.paragraph3') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.common.paragraph1') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.common.paragraph2') }}
+	</p>
+
+    <p class="govuk-body">	
+        {{ t('projectsIndex.materialChangeProjectStage.common.paragraph3', { link: '<a class="govuk-link" href="mailto:' + contactEmailAddress + '">' + contactEmailAddress + '</a>'}) | safe}} 
+    </p>
+{% endset %}
+
+{% set repsPublishedDescText %}
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsPublished.paragraph1') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.repsPublished.paragraph2', { link: '<a class="govuk-link" href="/projects/' + caseRef +  '/representations">' + t('projectsIndex.materialChangeProjectStage.applicationPublished.repsPublished.linkText1') + '</a>'}) | safe }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.common.paragraph1') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.common.paragraph2') }}
+	</p>
+
+    <p class="govuk-body">	
+        {{ t('projectsIndex.materialChangeProjectStage.common.paragraph3', { link: '<a class="govuk-link" href="mailto:' + contactEmailAddress + '">' + contactEmailAddress + '</a>'}) | safe}} 
+    </p>
+{% endset %}
+
+{% set prelimDescText %}
+    {% if applicationData.DateOfPreliminaryMeeting %}
+		<p class="govuk-body">
+			{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.prelim.paragraph1', { date: applicationData.DateOfPreliminaryMeeting |  date('locale', language) | date }) }} 
+		</p>
+	{% endif %}
+
+    {% if rule6Document.path %}
+        <p class="govuk-body">
+            {{ t('projectsIndex.materialChangeProjectStage.applicationPublished.prelim.paragraph2') }}
+        </p>
+    {% endif %}
+
+    <p class="govuk-body">
+        {{ t('projectsIndex.materialChangeProjectStage.applicationPublished.prelim.paragraph3') }}
+    </p>
+
+    <p class="govuk-body">
+        <a class="govuk-link" href="/having-your-say-guide/get-involved-preliminary-meeting">{{ t('projectsIndex.materialChangeProjectStage.applicationPublished.prelim.linkText1') }}
+        </a>
+    </p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.common.paragraph1') }}
+	</p>
+
+    <p class="govuk-body">
+		{{ t('projectsIndex.materialChangeProjectStage.common.paragraph2') }}
+	</p>
+
+    <p class="govuk-body">	
+        {{ t('projectsIndex.materialChangeProjectStage.common.paragraph3', { link: '<a class="govuk-link" href="mailto:' + contactEmailAddress + '">' + contactEmailAddress + '</a>'}) | safe}} 
+    </p>
+{% endset %}
+
+{% if preExamSubStages.PRE_REPS %}
+	{{ preRepsDescText | safe }}
+{% elseif preExamSubStages.OPEN_REPS %}
+	{{ repsOpenDescText | safe }}
+{% elseif preExamSubStages.CLOSED_REPS %}
+	{{ repsClosedDescText | safe }}
+{% elseif preExamSubStages.PUBLISHED_REPS %}
+	{{ repsPublishedDescText | safe }}
+{% elseif preExamSubStages.RULE_6_PUBLISHED_REPS %}
+	{{ prelimDescText | safe }}
+{% endif %} 

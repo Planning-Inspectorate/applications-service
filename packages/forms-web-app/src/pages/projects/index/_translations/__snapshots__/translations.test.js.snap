@@ -39,13 +39,62 @@ exports[`pages/examination/_translations should return the correct English trans
     "viewAllUpdates": "View all updates",
   },
   "materialChangeProjectStage": {
+    "applicationPublished": {
+      "preReps": {
+        "linkText1": "Find out more about registering to have your say.",
+        "paragraph1": "You can view the project application documents to find out more about the application.",
+        "paragraph2": "You will be able to register to have your say when the registration period opens.",
+      },
+      "prelim": {
+        "linkText1": "Find out more about getting involved in the preliminary meeting",
+        "paragraph1": "The preliminary meeting for this project is on: {{-date}}",
+        "paragraph2": "You can check the regulations 27 and 28 letter to find out how to get involved.",
+        "paragraph3": "In this meeting, the Examining Body sets out how they intend to examine the application. This includes the examination timetable and the issues they will focus on during the examination",
+      },
+      "repsClosed": {
+        "paragraph1": "The registration period to have your say about this project has closed.",
+        "paragraph2": "The Secretary of State will now consider whether the application needs to be examined.",
+        "paragraph3": "Contact the project case team to find out more about how to get involved if you are not registered.",
+      },
+      "repsOpen": {
+        "buttonText1": "Register to have your say",
+        "linkText1": "register to have your say",
+        "paragraph1": "If you want to comment on the proposed changes to the Development Consent Order, you can now {{-link}}",
+        "paragraph2": "Registration closes on {{-date}}.",
+      },
+      "repsPublished": {
+        "linkText1": "view comments from other people who registered.",
+        "paragraph1": "We have now published all registration comments.",
+        "paragraph2": "You can {{-link}}",
+      },
+    },
+    "applicationReceived": {
+      "paragraph2": "There is no opportunity to make comments on the application at this stage.",
+      "sentenceItem1": "This project is at the",
+      "sentenceItem2": "application received",
+      "sentenceItem3": "stage and will be published shortly.",
+    },
+    "common": {
+      "paragraph1": "You may have recently gained an interest in land affected by a development. If the developer did not tell you the application had been made or you did not register to have your say, you can still request to be an interested party.",
+      "paragraph2": "You need to contact the project team. They will ask the Examining Body if you can be an interested party and have your say.",
+      "paragraph3": "Email {{-link}} with your request to become an interested party.",
+    },
+    "examination": {
+      "linkText1": "Find out more about the examination of the application stage.",
+      "paragraph1": "During the examination stage, anyone who has registered to have their say can submit comments at the deadlines set out in the examination timetable. You may also attend hearings, if hearings are held.",
+      "paragraph2": "You can also view the regulation 30 letter to find out more about what you can do during the examination stage.",
+    },
+    "preapplication": {
+      "paragraph1": "The application is expected to be submitted {{-date}}.",
+      "paragraph2": "When we receive the application, we will prepare to publish it.",
+    },
     "stage1name": "Pre-application",
     "stage2name": "Application received",
     "stage3name": "Application published",
     "stage4name": "Examination",
     "stage5name": "Recommendation",
     "stage6name": "Decision",
-    "stage7name": "Post-decision",
+    "stage7name": "What happens after the decision is made",
   },
   "projectLocation": {
     "heading1": "Project location",
@@ -203,13 +252,62 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "viewAllUpdates": "Gweld yr holl ddiweddariadau",
   },
   "materialChangeProjectStage": {
-    "stage1name": "Pre-application",
-    "stage2name": "Application received",
-    "stage3name": "Application published",
-    "stage4name": "Examination",
-    "stage5name": "Recommendation",
-    "stage6name": "Decision",
-    "stage7name": "Post-decision",
+    "applicationPublished": {
+      "preReps": {
+        "linkText1": "Dysgwch fwy am gofrestru i leisio'ch barn.",
+        "paragraph1": "Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+        "paragraph2": "Gallwch gofrestru i leisio'ch barn pan fydd y cyfnod cofrestru'n agor.",
+      },
+      "prelim": {
+        "linkText1": "Dysgwch fwy am gymryd rhan yn y cyfarfod rhagarweiniol",
+        "paragraph1": "Cynhelir y cyfarfod rhagarweiniol ar gyfer y prosiect hwn ar: {{-date}}",
+        "paragraph2": "Gallwch wirio'r llythyr rheoliadau 27 a 28 i gael gwybod sut i gymryd rhan.",
+        "paragraph3": "Yn y cyfarfod hwn, bydd y Corff Archwilio'n amlinellu sut mae'n bwriadu archwilio'r cais. Bydd hyn yn cynnwys amserlen yr archwiliad a'r materion y bydd yn canolbwyntio arnynt yn ystod yr archwiliad.",
+      },
+      "repsClosed": {
+        "paragraph1": "Mae'r cyfnod cofrestru i leisio'ch barn am y prosiect hwn wedi cau.",
+        "paragraph2": "Yn awr, bydd yr Ysgrifennydd Gwladol yn ystyried p'un a oes angen i'r cais gael ei archwilio",
+        "paragraph3": "Cysylltwch â thîm achos y prosiect i gael gwybod mwy am sut i gymryd rhan os nad ydych wedi cofrestru.",
+      },
+      "repsOpen": {
+        "buttonText1": "Cofrestrwch i leisio'ch barn",
+        "linkText1": "gofrestru i leisio'ch barn yn awr ",
+        "paragraph1": "Os ydych eisiau gwneud sylwadau ar y newidiadau arfaethedig i'r Gorchymyn Caniatâd Datblygu, gallwch {{-link}}",
+        "paragraph2": "Bydd y cyfnod cofrestr'n cau ar {{-date}}.",
+      },
+      "repsPublished": {
+        "linkText1": "weld sylwadau gan bobl eraill a gofrestrodd.",
+        "paragraph1": "Rydym wedi cyhoeddi'r holl sylwadau cofrestredig bellach.",
+        "paragraph2": "Gallwch {{-link}}",
+      },
+    },
+    "applicationReceived": {
+      "paragraph2": "Nid oes cyfle i wneud sylwadau ar y cais ar y cam hwn.",
+      "sentenceItem1": "Mae'r prosiect hwn ar y cam",
+      "sentenceItem2": "cais wedi'i dderbyn",
+      "sentenceItem3": "a chaiff ei gyhoeddi cyn hir.",
+    },
+    "common": {
+      "paragraph1": "Efallai byddwch wedi cael buddiant yn ddiweddar mewn tir y mae datblygiad yn effeithio arno. Os nad oedd y datblygwr wedi dweud wrthych fod y cais wedi cael ei wneud neu os na chofrestroch i leisio'ch barn, gallwch ofyn am gael bod yn barti â buddiant o hyd.",
+      "paragraph2": "Bydd angen i chi gysylltu â thîm y prosiect. Bydd y tîm yn gofyn i'r Corff Archwilio a allwch fod yn barti â buddiant a lleisio'ch barn.",
+      "paragraph3": "Anfonwch neges e-bost at {{-link}} i ofyn am gael dod yn barti â buddiant.",
+    },
+    "examination": {
+      "linkText1": "Dysgwch fwy am y cam archwilio cais.",
+      "paragraph1": "Yn ystod y cam archwilio, gall unrhyw un sydd wedi cofrestru i leisio'i farn gyflwyno sylwadau erbyn y dyddiadau cau a nodir yn amserlen yr archwiliad. Cewch fynychu gwrandawiadau hefyd, os cynhelir gwrandawiadau.",
+      "paragraph2": "Gallwch hefyd weld y llythyr rheoliad 30 i gael gwybod mwy am yr hyn y gallwch ei wneud yn ystod y cam archwilio.",
+    },
+    "preapplication": {
+      "paragraph1": "Disgwylir i'r cais gael ei gyflwyno {{-date}}.",
+      "paragraph2": "Pan fyddwn yn derbyn y cais, byddwn yn paratoi i'w gyhoeddi.",
+    },
+    "stage1name": "Cyn-ymgeisio",
+    "stage2name": "Cais wedi'i dderbyn",
+    "stage3name": "Cais wedi'i gyhoeddi",
+    "stage4name": "Archwiliad",
+    "stage5name": "Argymhelliad",
+    "stage6name": "Penderfyniad",
+    "stage7name": "Beth fydd yn digwydd ar ôl i'r penderfyniad gael ei wneud",
   },
   "projectLocation": {
     "heading1": "Lleoliad y prosiect",
