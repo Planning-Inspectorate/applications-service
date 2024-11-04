@@ -40,7 +40,8 @@
 	},
 	"postDecision": {
 		"heading1": "Beth sy'n digwydd ar ôl i'r penderfyniad gael ei wneud",
-		"paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, mae cyfnod o 6 wythnos pryd y gall pobl herio'r penderfyniad yn yr Uchel Lys. Yr enw ar hyn yw adolygiad barnwrol.",
+		"paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, gellir cyflwyno heriau i'r Uchel Lys. Mae'n rhaid dilyn yr holl weithdrefnau wrth gyflwyno her. Bydd yr Uchel Lys yn penderfynu a oes sail ar gyfer adolygiad barnwrol.",
+		"paragraph2": "Mae'n rhaid i hyn ddigwydd o fewn 6 wythnos.",
 		"linkText": "Yr hyn y gallwch ei wneud ar ôl i'r penderfyniad gael ei wneud."
 	},
 	"materialChange": {

@@ -107,9 +107,9 @@
 		},
 		"preexamination": {
 			"preReps": {
-				"paragraph1": "Yn ystod y cam hwn, gallwch {{-link}} am y prosiect arfaethedig. Bydd y dudalen hon yn cael ei diweddaru pan fydd y cyfnod cofrestru'n agor. Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
-				"linkText1": "gofrestru i leisio'ch barn",
-				"linkText2": "Dysgwch fwy am gofrestru i leisio'ch barn."
+				"paragraph1": "Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+				"paragraph2": "Gallwch gofrestru i leisio'ch barn pan fydd y cyfnod cofrestru'n agor.",
+				"linkText1": "Dysgwch fwy am gofrestru i leisio'ch barn."
 			},
 			"repsOpen": {
 				"paragraph1": "Os ydych eisiau gwneud sylwadau ar y prosiect arfaethedig hwn, gallwch {{-link}}.",

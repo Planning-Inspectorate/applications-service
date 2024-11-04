@@ -34,8 +34,10 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 						url: '/decision-making-process-guide/examination-of-the-application'
 					},
 					postDecision: {
-						content:
-							'Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.',
+						content: [
+							'Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.',
+							'This must happen within 6 weeks.'
+						],
 						linkText: 'What you can do after the decision has been made.',
 						title: 'What happens after the decision is made',
 						url: '/decision-making-process-guide/what-happens-after-the-decision-is-made'

@@ -140,7 +140,7 @@ describe('projects/index/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).toContain(
-						'This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
+						'You will be able to register to have your say when the registration period opens.'
 					);
 				});
 			});

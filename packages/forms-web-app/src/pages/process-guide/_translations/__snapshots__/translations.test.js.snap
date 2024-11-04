@@ -68,7 +68,8 @@ exports[`pages/process-guide/_translations should return the correct English tra
   "postDecision": {
     "heading1": "What happens after the decision is made",
     "linkText": "What you can do after the decision has been made.",
-    "paragraph1": "Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.",
+    "paragraph1": "Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.",
+    "paragraph2": "This must happen within 6 weeks.",
   },
   "preApplication": {
     "heading1": "Pre-application",
@@ -159,7 +160,8 @@ exports[`pages/process-guide/_translations should return the correct Welsh trans
   "postDecision": {
     "heading1": "Beth sy'n digwydd ar ôl i'r penderfyniad gael ei wneud",
     "linkText": "Yr hyn y gallwch ei wneud ar ôl i'r penderfyniad gael ei wneud.",
-    "paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, mae cyfnod o 6 wythnos pryd y gall pobl herio'r penderfyniad yn yr Uchel Lys. Yr enw ar hyn yw adolygiad barnwrol.",
+    "paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, gellir cyflwyno heriau i'r Uchel Lys. Mae'n rhaid dilyn yr holl weithdrefnau wrth gyflwyno her. Bydd yr Uchel Lys yn penderfynu a oes sail ar gyfer adolygiad barnwrol.",
+    "paragraph2": "Mae'n rhaid i hyn ddigwydd o fewn 6 wythnos.",
   },
   "preApplication": {
     "heading1": "Cyn-ymgeisio",
