@@ -1,8 +1,9 @@
 {
 	"blobStoreUrl": "https://back-office-applications-docs-test.planninginspectorate.gov.uk/published-documents",
 	"frontOfficeUrl": "https://applications-service-test.planninginspectorate.gov.uk",
-	"documentRedirectCaseReferences": ["EN010120"],
+	"documentRedirectCaseReferences": ["EN010120", "TR010012"],
 	"projectRedirects": {
-		"yorkshire-and-the-humber/drax-bioenergy-with-carbon-capture-and-storage-project": "EN010120"
+		"yorkshire-and-the-humber/drax-bioenergy-with-carbon-capture-and-storage-project": "EN010120",
+		"eastern/elmbridge-transport-scheme": "TR010012"
 	}
 }
