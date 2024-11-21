@@ -11,7 +11,6 @@ describe('forms-web-app/src/lib/get-file-name-from-url.js', () => {
 		});
 		it('should return null if function fails to extract file name', () => {
 			expect(getFileNameFromDocumentUrl('')).toEqual(null);
-			expect(getFileNameFromDocumentUrl('https://www.google.com/no-file')).toEqual(null);
 			expect(
 				getFileNameFromDocumentUrl(
 					'https://nitestaz.planninginspectorate.gov.uk/wp-content/ipc/uploads/wrong_file_name_format.doc'
@@ -35,5 +34,22 @@ describe('forms-web-app/src/lib/get-file-name-from-url.js', () => {
 				)
 			).toEqual('Acceptance of Application');
 		});
+		it('should return correctly when there is no format suffix (Back Office / Migrated cases URIs)', () => {
+			expect(
+				getFileNameFromDocumentUrl(
+					'https://back-office-applications-docs-test.planninginspectorate.gov.uk/published-documents/TR010012-000032-Scoping Opinion'
+				)
+			).toEqual('Scoping Opinion');
+		});
+		expect(
+			getFileNameFromDocumentUrl(
+				'https://back-office-applications-docs-test.planninginspectorate.gov.uk/published-documents/TR010012-000003-130619_TR010012_Letter to relevant stakeholders re consultation'
+			)
+		).toEqual('130619 TR010012 Letter to relevant stakeholders re consultation');
+		expect(
+			getFileNameFromDocumentUrl(
+				'https://back-office-applications-docs-test.planninginspectorate.gov.uk/published-documents/TR010012-000036-Elmbridge Transport Scheme Scoping Report'
+			)
+		).toEqual('Elmbridge Transport Scheme Scoping Report');
 	});
 });
