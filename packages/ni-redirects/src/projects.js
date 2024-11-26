@@ -19,9 +19,10 @@ export function isProjectLink(path) {
  *
  * @param {string} path
  * @param {import('./index').EnvConfig} env
+ * @param {string[]} redirectAllowedCaseReferences
  * @returns {string|null}
  */
-export function getProjectRedirect(path, env) {
+export function getProjectRedirect(path, env, redirectAllowedCaseReferences) {
 	const match = projectsRegex.exec(path);
 
 	if (!match) {
@@ -35,7 +36,7 @@ export function getProjectRedirect(path, env) {
 	}
 
 	const projects = env.projectRedirects;
-	if (Object.hasOwn(projects, suffix)) {
+	if (Object.hasOwn(projects, suffix) && redirectAllowedCaseReferences.includes(projects[suffix])) {
 		return `${env.frontOfficeUrl}/projects/${projects[suffix]}`;
 	}
 

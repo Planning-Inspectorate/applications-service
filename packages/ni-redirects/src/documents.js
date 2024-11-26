@@ -21,9 +21,10 @@ export function isDocumentLink(path) {
  *
  * @param {string} path
  * @param {import('./index').EnvConfig} env
+ * @param {string[]} redirectAllowedCaseReferences
  * @returns {string|null}
  */
-export function getDocumentRedirect(path, env) {
+export function getDocumentRedirect(path, env, redirectAllowedCaseReferences) {
 	const match = documentRegex.exec(path);
 
 	if (!match) {
@@ -36,8 +37,7 @@ export function getDocumentRedirect(path, env) {
 		return null;
 	}
 
-	const cases = env.documentRedirectCaseReferences;
-	if (!cases.includes(caseRef)) {
+	if (!redirectAllowedCaseReferences.includes(caseRef)) {
 		return null; // not enabled for this case
 	}
 	const blobBase = env.blobStoreUrl;
