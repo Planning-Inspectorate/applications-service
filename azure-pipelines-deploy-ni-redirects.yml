@@ -22,7 +22,13 @@ resources:
       ref: refs/tags/release/3.16.1
 
 variables:
-  - group: ni_directs_deploy_${{ lower(parameters.environment )}}
+    - group: ni_directs_deploy_${{ lower(parameters.environment) }}
+    - name: azureSubscription
+      value: applications-service-${{ lower(parameters.environment) }}
+    - name: appName
+      value: pins-app-applications-service-applications-api-${{ lower(parameters.environment) }}-ukw-001
+    - name: resourceGroup
+      value: pins-rg-applications-service-${{ lower(parameters.environment) }}-ukw-001
 
 jobs:
   - deployment: test_and_deploy
@@ -34,6 +40,35 @@ jobs:
           steps:
             - download: none
             - checkout: self
+            - script: |
+                sudo apt-get update
+                sudo apt-get install -y jq
+              displayName: Install jq
+            - task: AzureCLI@2
+              displayName: Fetch BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES and store in config
+              inputs:
+                azureSubscription: $(azureSubscription)
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  RESOURCE_GROUP="${{ variables.resourceGroup }}"
+                  APP_NAME="${{ variables.appName }}"
+
+                  # Fetch environment variable
+                  CASE_REFERENCES=$(az webapp config appsettings list \
+                    --name $APP_NAME \
+                    --resource-group $RESOURCE_GROUP \
+                    --query "[?name=='BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES'].value" -o tsv)
+
+                  # Parse the variable into a JSON array
+                  PARSED_REFERENCES=$(echo $CASE_REFERENCES | jq -R 'split(",")')
+
+                  # Write to JSON file
+                  OUTPUT_FILE="./packages/ni-redirects/src/config.generated.${{ lower(parameters.environment) }}.json"
+                  echo "{\"redirectAllowedCaseReferences\": $PARSED_REFERENCES}" > $OUTPUT_FILE
+
+                  # Confirm file creation
+                  echo "Generated config file: $OUTPUT_FILE"
             - template: steps/node_script.yml@templates
               parameters:
                 script: npm ci
@@ -44,7 +79,7 @@ jobs:
                 workingDirectory: $(Build.Repository.LocalPath)/packages/ni-redirects
             - template: steps/node_script.yml@templates
               parameters:
-                script: npm run deploy:${{ lower(parameters.environment )}}
+                script: npm run deploy:${{ lower(parameters.environment) }}
                 workingDirectory: $(Build.Repository.LocalPath)/packages/ni-redirects
                 environmentVariables:
                   CLOUDFLARE_ACCOUNT_ID: $(CLOUDFLARE_ACCOUNT_ID)

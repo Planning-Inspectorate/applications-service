@@ -13,7 +13,11 @@ jest.mock('../../../lib/application-api-wrapper', () => ({
 describe('pages/projects/all-updates/controller', () => {
 	describe('#getProjectsAllUpdatesController', () => {
 		describe('When there are no issues', () => {
-			const req = {};
+			const req = {
+				i18n: {
+					lang: 'en'
+				}
+			};
 			const res = {
 				render: jest.fn(),
 				locals: {

@@ -31,7 +31,11 @@ const getAllApplications = async (options = {}) => {
 		filterStatements.push({ [Op.or]: sectorStatements });
 	}
 
-	const searchTermStatements = mapNISearchTermToQuery(searchTerm, ['ProjectName', 'PromoterName']);
+	const searchTermStatements = mapNISearchTermToQuery(searchTerm, [
+		'CaseReference',
+		'ProjectName',
+		'PromoterName'
+	]);
 
 	// build where clause
 	if (filterStatements.length > 0)
