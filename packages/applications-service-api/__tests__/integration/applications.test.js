@@ -172,12 +172,14 @@ describe('/api/v1/applications', () => {
 							[Op.or]: [
 								{
 									[Op.or]: [
+										{ CaseReference: { [Op.like]: '%London%' } },
 										{ ProjectName: { [Op.like]: '%London%' } },
 										{ PromoterName: { [Op.like]: '%London%' } }
 									]
 								},
 								{
 									[Op.or]: [
+										{ CaseReference: { [Op.like]: '%Resort%' } },
 										{ ProjectName: { [Op.like]: '%Resort%' } },
 										{ PromoterName: { [Op.like]: '%Resort%' } }
 									]
@@ -232,6 +234,7 @@ describe('/api/v1/applications', () => {
 							[Op.or]: [
 								{
 									[Op.or]: [
+										{ CaseReference: { [Op.like]: '%Nuclear%' } },
 										{ ProjectName: { [Op.like]: '%Nuclear%' } },
 										{ PromoterName: { [Op.like]: '%Nuclear%' } }
 									]
@@ -333,6 +336,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'London Resort' } },
+									{ caseReference: { contains: 'London Resort' } },
 									{
 										OR: [
 											{ applicant: { organisationName: { contains: 'London' } } },
@@ -371,6 +375,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'London Resort' } },
+									{ caseReference: { contains: 'London Resort' } },
 									{ projectNameWelsh: { contains: 'London Resort' } },
 									{
 										OR: [
@@ -418,6 +423,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
+									{ caseReference: { contains: 'Nuclear' } },
 									{ projectNameWelsh: { contains: 'Nuclear' } },
 									{
 										OR: [
@@ -569,6 +575,7 @@ describe('/api/v1/applications', () => {
 							{
 								OR: [
 									{ projectName: { contains: 'Nuclear' } },
+									{ caseReference: { contains: 'Nuclear' } },
 									{ projectNameWelsh: { contains: 'Nuclear' } },
 									{
 										OR: [
@@ -611,6 +618,7 @@ describe('/api/v1/applications', () => {
 						[Op.or]: [
 							{
 								[Op.or]: [
+									{ CaseReference: { [Op.like]: '%Nuclear%' } },
 									{ ProjectName: { [Op.like]: '%Nuclear%' } },
 									{ PromoterName: { [Op.like]: '%Nuclear%' } }
 								]

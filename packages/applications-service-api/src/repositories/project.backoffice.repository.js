@@ -33,6 +33,7 @@ const getAllApplications = async (options = {}) => {
 		where['AND'].push({
 			OR: [
 				{ projectName: { contains: searchTerm } },
+				{ caseReference: { contains: searchTerm } },
 				...(featureFlag.allowWelshTranslation
 					? [{ projectNameWelsh: { contains: searchTerm } }]
 					: []),

@@ -88,6 +88,7 @@ describe('project ni repository', () => {
 					[Op.or]: [
 						{
 							[Op.or]: [
+								{ CaseReference: { [Op.like]: '%foo%' } },
 								{ ProjectName: { [Op.like]: '%foo%' } },
 								{ PromoterName: { [Op.like]: '%foo%' } }
 							]
