@@ -79,6 +79,7 @@ describe('project repository', () => {
 						{
 							OR: [
 								{ projectName: { contains: searchTerm } },
+								{ caseReference: { contains: searchTerm } },
 								{ projectNameWelsh: { contains: searchTerm } },
 								{
 									OR: [
@@ -141,6 +142,7 @@ describe('project repository', () => {
 						{
 							OR: [
 								{ projectName: { contains: searchTerm } },
+								{ caseReference: { contains: searchTerm } },
 								{ projectNameWelsh: { contains: searchTerm } },
 								{
 									OR: [
