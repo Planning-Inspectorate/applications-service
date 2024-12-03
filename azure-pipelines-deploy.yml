@@ -61,6 +61,7 @@ extends:
           - name: Deploy API
             condition: eq(${{ parameters.deployAPI }}, 'true')
             steps:
+              - checkout: self
               # app name is different in the training env (had to be shorter)
               - bash: |
                   if [[ $ENVIRONMENT == "training" ]]; then
@@ -79,9 +80,15 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
+              - script: |
+                  echo "Verifying API Version (using git hash)..."
+                  bash ./packages/scripts/verify_commit_hash.sh "API" "pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001.azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                displayName: API Verify Version
+                failOnStderr: true
           - name: Deploy Web
             condition: eq(${{ parameters.deployWeb }}, 'true')
             steps:
+              - checkout: self
               # app name is different in the training env (had to be shorter)
               - bash: |
                   if [[ $ENVIRONMENT == "training" ]]; then
@@ -100,6 +107,16 @@ extends:
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
+              - script: |
+                  echo "Verifying Web Version (using git hash)..."
+                  if [ "$(ENVIRONMENT)" == "prod" ]; then
+                      url="https://national-infrastructure-consenting.planninginspectorate.gov.uk/health"
+                  else
+                      url="https://pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001.planninginspectorate.gov.uk/health"
+                  fi
+                  bash ./packages/scripts/verify_commit_hash.sh "Web" "$url" "$(resources.pipeline.build.sourceCommit)" 3
+                displayName: Web Verify Version
+                failOnStderr: true
           - name: Deploy Back Office Subscriber Functions
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
             steps:
