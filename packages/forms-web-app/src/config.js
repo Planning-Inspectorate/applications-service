@@ -6,6 +6,7 @@ const httpPort = Number(process.env.PORT || 3000);
 const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
+	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	application: {
 		defaultDisplayDateFormat: 'D MMMM YYYY'
 	},

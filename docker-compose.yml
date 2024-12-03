@@ -19,6 +19,7 @@ services:
     user: node
     container_name: applications-service-api
     environment:
+      GIT_SHA: example-git-sha
       APPLICATIONS_WEB_BASE_URL: http://forms-web-app:9004
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_URL: http://localhost:10000/
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_CONTAINER: application-submission-documents
@@ -85,6 +86,7 @@ services:
     user: node
     container_name: applications-web-app
     environment:
+      GIT_SHA: example-git-sha
       ACTIVATE_PLANNED_OUTAGE: 'false'
       BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: MERGE
       APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
