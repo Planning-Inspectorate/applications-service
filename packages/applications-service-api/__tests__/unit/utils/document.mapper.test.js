@@ -175,7 +175,7 @@ describe('document mapper functions', () => {
 			['stage', 'post-decision', { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
 			[
 				'stage',
-				'developers-application',
+				'developers_application',
 				{ cy: 'Cais y datblygwr', en: `Developer's application` }
 			],
 			[
