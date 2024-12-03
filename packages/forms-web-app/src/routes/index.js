@@ -19,6 +19,15 @@ const { addGlobalMiddleware } = require('../pages/_middleware/add-global-middlew
 const {
 	examinationMiddleware
 } = require('../pages/examination/_middleware/examination.middleware');
+const config = require('../config');
+
+router.get('/health', async (req, res) => {
+	res.status(200).send({
+		status: 'OK',
+		uptime: process.uptime(),
+		commit: config.gitSha
+	});
+});
 
 router.use(addGlobalMiddleware);
 
