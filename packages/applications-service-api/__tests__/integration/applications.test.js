@@ -133,6 +133,7 @@ describe('/api/v1/applications', () => {
 					expect.objectContaining({
 						where: {
 							Region: { [Op.ne]: 'Wales' },
+							CaseReference: { [Op.notIn]: [] },
 							[Op.and]: [
 								{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 								{ Stage: { [Op.in]: [2, 5] } },
@@ -169,6 +170,7 @@ describe('/api/v1/applications', () => {
 					expect.objectContaining({
 						where: {
 							Region: { [Op.ne]: 'Wales' },
+							CaseReference: { [Op.notIn]: [] },
 							[Op.or]: [
 								{
 									[Op.or]: [
@@ -224,6 +226,7 @@ describe('/api/v1/applications', () => {
 					expect.objectContaining({
 						where: {
 							Region: { [Op.ne]: 'Wales' },
+							CaseReference: { [Op.notIn]: [] },
 							[Op.and]: [
 								{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 								{ Stage: { [Op.in]: [2, 5] } },
@@ -608,6 +611,7 @@ describe('/api/v1/applications', () => {
 					raw: true,
 					where: expect.objectContaining({
 						Region: { [Op.ne]: 'Wales' },
+						CaseReference: { [Op.notIn]: [] },
 						[Op.and]: [
 							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 							{ Stage: { [Op.in]: [2, 5] } },
@@ -629,7 +633,8 @@ describe('/api/v1/applications', () => {
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(2, {
 					raw: true,
 					where: {
-						Region: { [Op.ne]: 'Wales' }
+						Region: { [Op.ne]: 'Wales' },
+						CaseReference: { [Op.notIn]: [] }
 					}
 				});
 				expect(response.status).toEqual(200);
