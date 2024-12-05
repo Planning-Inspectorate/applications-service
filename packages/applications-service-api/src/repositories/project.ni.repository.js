@@ -2,6 +2,7 @@ const db = require('../models');
 const { Op } = require('sequelize');
 const { pick } = require('lodash');
 const { mapNISearchTermToQuery } = require('../utils/queries');
+const config = require('../lib/config');
 const getApplication = async (caseReference) =>
 	db.Project.findOne({ where: { CaseReference: caseReference } });
 
@@ -10,7 +11,8 @@ const getAllApplications = async (options = {}) => {
 
 	let findAllOptions = pick(options, ['attributes', 'offset', 'limit', 'order']);
 	findAllOptions.where = {
-		Region: { [Op.ne]: 'Wales' }
+		Region: { [Op.ne]: 'Wales' },
+		CaseReference: { [Op.notIn]: config.backOfficeIntegration.caseReferences }
 	};
 
 	if (excludeNullDateOfSubmission) {
