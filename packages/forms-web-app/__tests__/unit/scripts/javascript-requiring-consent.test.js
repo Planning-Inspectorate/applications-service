@@ -3,8 +3,10 @@ const {
 } = require('../../../src/scripts/javascript-requiring-consent');
 
 const { readCookie } = require('../../../src/scripts/cookie/cookie-jar');
+const { initialiseGoogleAnalytics } = require('../../../src/scripts/google-analytics');
 
 jest.mock('../../../src/scripts/cookie/cookie-jar');
+jest.mock('../../../src/scripts/google-analytics');
 
 describe('scripts/javascript-requiring-consent', () => {
 	describe('initialiseOptionalJavaScripts', () => {
@@ -15,6 +17,7 @@ describe('scripts/javascript-requiring-consent', () => {
 
 			initialiseOptionalJavaScripts();
 
+			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 			// eslint-disable-next-line no-console
 			expect(console.log).toHaveBeenCalledWith('Consent not yet given for optional JavaScripts.');
 		});
@@ -25,6 +28,7 @@ describe('scripts/javascript-requiring-consent', () => {
 			readCookie.mockImplementation(() => JSON.stringify({ a: 'b' }));
 
 			initialiseOptionalJavaScripts();
+			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 		});
 
 		test('return early if `usage=false`', () => {
@@ -34,6 +38,7 @@ describe('scripts/javascript-requiring-consent', () => {
 
 			initialiseOptionalJavaScripts();
 
+			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 			// eslint-disable-next-line no-console
 			expect(console.log).toHaveBeenCalledWith(
 				'Declined consent. Third party cookies are not enabled.'
@@ -44,6 +49,7 @@ describe('scripts/javascript-requiring-consent', () => {
 			readCookie.mockImplementation(() => JSON.stringify({ usage: true }));
 
 			initialiseOptionalJavaScripts();
+			expect(initialiseGoogleAnalytics).toHaveBeenCalled();
 		});
 	});
 });
