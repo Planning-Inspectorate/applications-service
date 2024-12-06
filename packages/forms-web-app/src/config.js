@@ -105,6 +105,8 @@ module.exports = {
 			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation',
 		developmentConsentAndAdviceWelsh:
 			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation.cy',
+		preApplicationProspectus:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-2024-pre-application-prospectus',
 		nationalPolicyStatements:
 			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-national-policy-statements',
 		nationalPolicyStatementsWelsh:
