@@ -20,7 +20,9 @@ describe('pages/process-guide/pre-application/_translations/cy', () => {
 			paragraph5LinkText: "Gwiriwch y canllaw ar sut gallwch leisio'ch barn",
 			heading3: "Ynglŷn â'r gwasanaeth cyn-ymgeisio ar gyfer ymgeiswyr",
 			paragraph6:
-				"Rydym yn cynnig gwasanaeth cyn-ymgeisio i ymgeiswyr sy'n paratoi cais. Mae'r gwasanaeth hwn am ddim.",
+				"Rydym yn cynnig gwasanaeth cyn-ymgeisio i ymgeiswyr sy'n paratoi cais. Mae hwn yn wasanaeth sy'n seiliedig ar ffi. {{-link}}",
+			paragraph6LinkText:
+				'Edrychwch ar ein prosbectws cyn ymgeisio i gael rhagor o wybodaeth am y strwythur ffioedd.',
 			paragraph7: "Mae'n cynnwys:",
 			listItem6: 'rhoi cyngor ar sut i baratoi cais',
 			listItem7: 'gwiriadau cyn-cyflwyno ac adolygu dogfennau drafft',
