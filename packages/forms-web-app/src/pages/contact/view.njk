@@ -80,6 +80,26 @@
       </p>
 
       <h2 class="govuk-heading-m">
+        {{ t('contact.howToComplainHeading1') }}
+      </h2>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph1') }}
+      </p>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph2') }}
+      </p>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}">{{ t('contact.customerContactFormLinkText') }}</a>
+      </p>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph3', { link: '<a class="govuk-link" href="' + govUK.complaintsProcedure + '">here</a>' }) | safe  }}
+      </p>
+
+      <h2 class="govuk-heading-m">
         {{ t('contact.heading4') }}
       </h2>
 
