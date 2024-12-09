@@ -65,7 +65,8 @@ describe('project ni repository', () => {
 			expect(db.Project.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				where: {
-					Region: { [Op.ne]: 'Wales' }
+					Region: { [Op.ne]: 'Wales' },
+					CaseReference: { [Op.notIn]: [] }
 				}
 			});
 		});
@@ -84,6 +85,7 @@ describe('project ni repository', () => {
 				...mockOptions,
 				where: {
 					Region: { [Op.ne]: 'Wales' },
+					CaseReference: { [Op.notIn]: [] },
 					DateOfDCOSubmission: { [Op.gt]: 0, [Op.ne]: null },
 					[Op.or]: [
 						{
