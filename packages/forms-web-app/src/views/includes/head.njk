@@ -2,7 +2,6 @@
 
 {% if googleAnalyticsId %}
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	{{ locals | dump }}
 	<script {% if cspNonce %}nonce={{ cspNonce }}{% endif %}>
 		window.dataLayer = window.dataLayer || [];
 
