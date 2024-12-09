@@ -2,12 +2,18 @@
 
 exports[`pages/contact/_translations should return the correct English translations 1`] = `
 {
+  "customerContactFormLinkText": "Customer contact form",
   "heading1": "Contact us",
   "heading2": "General Enquiries",
   "heading3": "Feedback and complaints",
   "heading4": "Press and media",
+  "howToComplainHeading1": "How to complain",
+  "howToComplainParagraph1": "Complaints should be made as soon as the reason becomes apparent. We will not answer complaints made more than one year after a decision or recommendation.",
+  "howToComplainParagraph2": "Complaints should be made in full at the start, providing as much detail as possible. You can send complaints to us using our contact form or by telephone.",
+  "howToComplainParagraph3": "Details of our complaints procedure can be found {{-link}}.",
+  "howToComplainParagraph3LinkText": "here",
   "paragraph1": "If you are contacting us about a particular project, please email the project team. The project team email address can be found on the project page.",
-  "paragraph10": "Further information about contacting the Planning Inpectorate customer services can be viewed on {{-link}}.",
+  "paragraph10": "Further information about contacting the Planning Inspectorate customer services can be viewed on {{-link}}.",
   "paragraph11": "The Planning Inspectorate tries to provide the best possible service for its customers. We try to ensure everyone is satisfied with the service they receive. Complaints about the examination process or Examining Authority's final report will be considered and responded to.",
   "paragraph12": "Telephone:",
   "paragraph13": "Email:",
@@ -25,10 +31,16 @@ exports[`pages/contact/_translations should return the correct English translati
 
 exports[`pages/contact/_translations should return the correct Welsh translations 1`] = `
 {
+  "customerContactFormLinkText": "Ffurflen gyswllt cwsmer",
   "heading1": "Cysylltu â ni",
   "heading2": "Ymholiadau Cyffredinol",
   "heading3": "Adborth a chwynion",
   "heading4": "Y wasg a'r cyfryngau",
+  "howToComplainHeading1": "Sut i gwyno",
+  "howToComplainParagraph1": "Dylid gwneud cwynion cyn gynted ag y daw'r rheswm i'r amlwg. Ni fyddwn yn ateb cwynion a wneir fwy na blwyddyn ar ôl penderfyniad neu argymhelliad.",
+  "howToComplainParagraph2": "Dylid gwneud cwynion yn llawn ar y dechrau, gan roi cymaint o fanylion â phosibl. Gallwch anfon cwynion atom gan ddefnyddio ein ffurflen gyswllt neu dros y ffôn.",
+  "howToComplainParagraph3": "Mae manylion ein trefn gwyno ar gael {{-link}}.",
+  "howToComplainParagraph3LinkText": "yma",
   "paragraph1": "Os ydych yn cysylltu â ni ynglŷn â phrosiect penodol, anfonwch neges e-bost at dîm y prosiect. Gellir gweld cyfeiriad e-bost tîm y prosiect ar dudalen y prosiect.",
   "paragraph10": "Gallwch weld rhagor o wybodaeth am gysylltu â gwasanaethau cwsmeriaid yr Arolygiaeth Gynllunio ar {{-link}}.",
   "paragraph11": "Mae'r Arolygiaeth Gynllunio yn ceisio darparu'r gwasanaeth gorau posibl i'w chwsmeriaid. Ceisiwn sicrhau bod pawb yn fodlon ar y gwasanaeth a gânt. Bydd cwynion ynglŷn â'r broses archwilio neu adroddiad terfynol yr Awdurdod Archwilio yn cael eu hystyried a rhoddir ymateb iddynt.",
