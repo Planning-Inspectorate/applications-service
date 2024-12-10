@@ -1,5 +1,5 @@
 # Stage 1/2: Build
-FROM node:20-alpine AS build
+FROM node:20-alpine3.20 AS build
 
 # TODO: Remove this once these get fixed:
 # - https://github.com/vercel/turborepo/issues/1097
