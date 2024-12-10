@@ -70,7 +70,7 @@
 				</h2>
 
 				<p class="govuk-body">
-					{{ t('preApplication.paragraph6') }}
+					{{ t('preApplication.paragraph6', { link: '<a class="govuk-link" href="' + govUK.preApplicationProspectus + '">' +  t('preApplication.paragraph6LinkText') + '</a>' }) | safe }}
 				</p>
 
 				<p class="govuk-body">
