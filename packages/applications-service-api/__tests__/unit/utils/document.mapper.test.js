@@ -172,7 +172,7 @@ describe('document mapper functions', () => {
 			['stage', 'examination', { cy: 'Archwiliad', en: 'Examination' }],
 			['stage', 'recommendation', { cy: 'Argymhelliad', en: 'Recommendation' }],
 			['stage', 'decision', { cy: 'Penderfyniad', en: 'Decision' }],
-			['stage', 'post-decision', { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
+			['stage', 'post_decision', { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
 			[
 				'stage',
 				'developers_application',

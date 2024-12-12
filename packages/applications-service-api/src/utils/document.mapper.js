@@ -32,7 +32,7 @@ const GET_LABEL_MAPPING = (isMaterialChange = false) => ({
 		examination: mappedLabel('Archwiliad', 'Examination'),
 		recommendation: mappedLabel('Argymhelliad', 'Recommendation'),
 		decision: mappedLabel('Penderfyniad', 'Decision'),
-		'post-decision': mappedLabel('Ôl-benderfyniad', 'Post-decision'),
+		post_decision: mappedLabel('Ôl-benderfyniad', 'Post-decision'),
 		developers_application: mappedLabel('Cais y datblygwr', `Developer's application`)
 	},
 	category: {
