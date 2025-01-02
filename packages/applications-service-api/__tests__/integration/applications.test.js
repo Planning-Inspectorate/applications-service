@@ -172,18 +172,25 @@ describe('/api/v1/applications', () => {
 							Region: { [Op.ne]: 'Wales' },
 							CaseReference: { [Op.notIn]: [] },
 							[Op.or]: [
+								{ CaseReference: { [Op.like]: '%London Resort%' } },
 								{
-									[Op.or]: [
-										{ CaseReference: { [Op.like]: '%London%' } },
-										{ ProjectName: { [Op.like]: '%London%' } },
-										{ PromoterName: { [Op.like]: '%London%' } }
+									[Op.and]: [
+										{
+											ProjectName: { [Op.like]: `%London%` }
+										},
+										{
+											ProjectName: { [Op.like]: `%Resort%` }
+										}
 									]
 								},
 								{
-									[Op.or]: [
-										{ CaseReference: { [Op.like]: '%Resort%' } },
-										{ ProjectName: { [Op.like]: '%Resort%' } },
-										{ PromoterName: { [Op.like]: '%Resort%' } }
+									[Op.and]: [
+										{
+											PromoterName: { [Op.like]: `%London%` }
+										},
+										{
+											PromoterName: { [Op.like]: `%Resort%` }
+										}
 									]
 								}
 							]
@@ -235,11 +242,19 @@ describe('/api/v1/applications', () => {
 								}
 							],
 							[Op.or]: [
+								{ CaseReference: { [Op.like]: '%Nuclear%' } },
 								{
-									[Op.or]: [
-										{ CaseReference: { [Op.like]: '%Nuclear%' } },
-										{ ProjectName: { [Op.like]: '%Nuclear%' } },
-										{ PromoterName: { [Op.like]: '%Nuclear%' } }
+									[Op.and]: [
+										{
+											ProjectName: { [Op.like]: `%Nuclear%` }
+										}
+									]
+								},
+								{
+									[Op.and]: [
+										{
+											PromoterName: { [Op.like]: `%Nuclear%` }
+										}
 									]
 								}
 							]
@@ -338,20 +353,17 @@ describe('/api/v1/applications', () => {
 						AND: [
 							{
 								OR: [
-									{ projectName: { contains: 'London Resort' } },
 									{ caseReference: { contains: 'London Resort' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'London' } } },
-											{ applicant: { firstName: { contains: 'London' } } },
-											{ applicant: { lastName: { contains: 'London' } } }
+										AND: [
+											{ projectName: { contains: 'London' } },
+											{ projectName: { contains: 'Resort' } }
 										]
 									},
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Resort' } } },
-											{ applicant: { firstName: { contains: 'Resort' } } },
-											{ applicant: { lastName: { contains: 'Resort' } } }
+										AND: [
+											{ applicant: { organisationName: { contains: 'London' } } },
+											{ applicant: { organisationName: { contains: 'Resort' } } }
 										]
 									}
 								]
@@ -377,21 +389,23 @@ describe('/api/v1/applications', () => {
 						AND: [
 							{
 								OR: [
-									{ projectName: { contains: 'London Resort' } },
 									{ caseReference: { contains: 'London Resort' } },
-									{ projectNameWelsh: { contains: 'London Resort' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'London' } } },
-											{ applicant: { firstName: { contains: 'London' } } },
-											{ applicant: { lastName: { contains: 'London' } } }
+										AND: [
+											{ projectName: { contains: 'London' } },
+											{ projectName: { contains: 'Resort' } }
 										]
 									},
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Resort' } } },
-											{ applicant: { firstName: { contains: 'Resort' } } },
-											{ applicant: { lastName: { contains: 'Resort' } } }
+										AND: [
+											{ projectNameWelsh: { contains: 'London' } },
+											{ projectNameWelsh: { contains: 'Resort' } }
+										]
+									},
+									{
+										AND: [
+											{ applicant: { organisationName: { contains: 'London' } } },
+											{ applicant: { organisationName: { contains: 'Resort' } } }
 										]
 									}
 								]
@@ -425,15 +439,15 @@ describe('/api/v1/applications', () => {
 						AND: [
 							{
 								OR: [
-									{ projectName: { contains: 'Nuclear' } },
 									{ caseReference: { contains: 'Nuclear' } },
-									{ projectNameWelsh: { contains: 'Nuclear' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Nuclear' } } },
-											{ applicant: { firstName: { contains: 'Nuclear' } } },
-											{ applicant: { lastName: { contains: 'Nuclear' } } }
-										]
+										AND: [{ projectName: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ projectNameWelsh: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ applicant: { organisationName: { contains: 'Nuclear' } } }]
 									}
 								]
 							},
@@ -577,15 +591,15 @@ describe('/api/v1/applications', () => {
 						AND: [
 							{
 								OR: [
-									{ projectName: { contains: 'Nuclear' } },
 									{ caseReference: { contains: 'Nuclear' } },
-									{ projectNameWelsh: { contains: 'Nuclear' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Nuclear' } } },
-											{ applicant: { firstName: { contains: 'Nuclear' } } },
-											{ applicant: { lastName: { contains: 'Nuclear' } } }
-										]
+										AND: [{ projectName: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ projectNameWelsh: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ applicant: { organisationName: { contains: 'Nuclear' } } }]
 									}
 								]
 							},
@@ -620,11 +634,19 @@ describe('/api/v1/applications', () => {
 							}
 						],
 						[Op.or]: [
+							{ CaseReference: { [Op.like]: '%Nuclear%' } },
 							{
-								[Op.or]: [
-									{ CaseReference: { [Op.like]: '%Nuclear%' } },
-									{ ProjectName: { [Op.like]: '%Nuclear%' } },
-									{ PromoterName: { [Op.like]: '%Nuclear%' } }
+								[Op.and]: [
+									{
+										ProjectName: { [Op.like]: `%Nuclear%` }
+									}
+								]
+							},
+							{
+								[Op.and]: [
+									{
+										PromoterName: { [Op.like]: `%Nuclear%` }
+									}
 								]
 							}
 						]

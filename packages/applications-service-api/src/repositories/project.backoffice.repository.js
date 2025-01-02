@@ -1,5 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
 const { featureFlag } = require('../lib/config');
+const { english: stopWordList } = require('../utils/stopwords');
 
 const getByCaseReference = async (caseReference) => {
 	return prismaClient.project.findUnique({
@@ -29,21 +30,31 @@ const getAllApplications = async (options = {}) => {
 	}
 
 	if (searchTerm) {
-		const terms = options.searchTerm.split(' ');
+		const terms = options.searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
 		where['AND'].push({
 			OR: [
-				{ projectName: { contains: searchTerm } },
-				{ caseReference: { contains: searchTerm } },
+				{ caseReference: { contains: options.searchTerm } },
+				{
+					AND: terms.map((term) => ({
+						projectName: { contains: term }
+					}))
+				},
 				...(featureFlag.allowWelshTranslation
-					? [{ projectNameWelsh: { contains: searchTerm } }]
+					? [
+							{
+								AND: terms.map((term) => ({
+									projectNameWelsh: { contains: term }
+								}))
+							}
+					  ]
 					: []),
-				...terms.map((term) => ({
-					OR: [
-						{ applicant: { organisationName: { contains: term } } },
-						{ applicant: { firstName: { contains: term } } },
-						{ applicant: { lastName: { contains: term } } }
-					]
-				}))
+				{
+					AND: terms.map((term) => ({
+						applicant: { organisationName: { contains: term } }
+					}))
+				}
 			]
 		});
 	}

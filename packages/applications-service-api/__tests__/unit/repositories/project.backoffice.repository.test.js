@@ -78,21 +78,23 @@ describe('project repository', () => {
 					AND: [
 						{
 							OR: [
-								{ projectName: { contains: searchTerm } },
 								{ caseReference: { contains: searchTerm } },
-								{ projectNameWelsh: { contains: searchTerm } },
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: 'test' } } },
-										{ applicant: { firstName: { contains: 'test' } } },
-										{ applicant: { lastName: { contains: 'test' } } }
+									AND: [
+										{ projectName: { contains: searchTerm.split(' ')[0] } },
+										{ projectName: { contains: searchTerm.split(' ')[1] } }
 									]
 								},
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: 'search' } } },
-										{ applicant: { firstName: { contains: 'search' } } },
-										{ applicant: { lastName: { contains: 'search' } } }
+									AND: [
+										{ projectNameWelsh: { contains: searchTerm.split(' ')[0] } },
+										{ projectNameWelsh: { contains: searchTerm.split(' ')[1] } }
+									]
+								},
+								{
+									AND: [
+										{ applicant: { organisationName: { contains: searchTerm.split(' ')[0] } } },
+										{ applicant: { organisationName: { contains: searchTerm.split(' ')[1] } } }
 									]
 								}
 							]
@@ -141,15 +143,15 @@ describe('project repository', () => {
 					AND: [
 						{
 							OR: [
-								{ projectName: { contains: searchTerm } },
 								{ caseReference: { contains: searchTerm } },
-								{ projectNameWelsh: { contains: searchTerm } },
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: searchTerm } } },
-										{ applicant: { firstName: { contains: searchTerm } } },
-										{ applicant: { lastName: { contains: searchTerm } } }
-									]
+									AND: [{ projectName: { contains: searchTerm } }]
+								},
+								{
+									AND: [{ projectNameWelsh: { contains: searchTerm } }]
+								},
+								{
+									AND: [{ applicant: { organisationName: { contains: searchTerm } } }]
 								}
 							]
 						},
