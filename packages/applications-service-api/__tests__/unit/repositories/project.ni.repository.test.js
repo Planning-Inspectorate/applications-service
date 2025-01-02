@@ -88,11 +88,19 @@ describe('project ni repository', () => {
 					CaseReference: { [Op.notIn]: [] },
 					DateOfDCOSubmission: { [Op.gt]: 0, [Op.ne]: null },
 					[Op.or]: [
+						{ CaseReference: { [Op.like]: '%foo%' } },
 						{
-							[Op.or]: [
-								{ CaseReference: { [Op.like]: '%foo%' } },
-								{ ProjectName: { [Op.like]: '%foo%' } },
-								{ PromoterName: { [Op.like]: '%foo%' } }
+							[Op.and]: [
+								{
+									ProjectName: { [Op.like]: `%foo%` }
+								}
+							]
+						},
+						{
+							[Op.and]: [
+								{
+									PromoterName: { [Op.like]: `%foo%` }
+								}
 							]
 						}
 					]

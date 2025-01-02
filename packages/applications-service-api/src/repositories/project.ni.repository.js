@@ -1,8 +1,8 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const { pick } = require('lodash');
-const { mapNISearchTermToQuery } = require('../utils/queries');
 const config = require('../lib/config');
+const { english: stopWordList } = require('../utils/stopwords');
 const getApplication = async (caseReference) =>
 	db.Project.findOne({ where: { CaseReference: caseReference } });
 
@@ -33,17 +33,30 @@ const getAllApplications = async (options = {}) => {
 		filterStatements.push({ [Op.or]: sectorStatements });
 	}
 
-	const searchTermStatements = mapNISearchTermToQuery(searchTerm, [
-		'CaseReference',
-		'ProjectName',
-		'PromoterName'
-	]);
-
 	// build where clause
 	if (filterStatements.length > 0)
 		findAllOptions.where = { ...findAllOptions.where, [Op.and]: filterStatements };
-	if (searchTermStatements)
+	if (searchTerm) {
+		const terms = searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
+		const searchTermStatements = {
+			[Op.or]: [
+				{ CaseReference: { [Op.like]: `%${searchTerm}%` } },
+				{
+					[Op.and]: terms.map((term) => ({
+						ProjectName: { [Op.like]: `%${term}%` }
+					}))
+				},
+				{
+					[Op.and]: terms.map((term) => ({
+						PromoterName: { [Op.like]: `%${term}%` }
+					}))
+				}
+			]
+		};
 		findAllOptions.where = { ...findAllOptions.where, ...searchTermStatements };
+	}
 	const { rows, count } = await db.Project.findAndCountAll({
 		...findAllOptions,
 		raw: true
