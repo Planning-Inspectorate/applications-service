@@ -22,7 +22,7 @@ describe('Visit footer links and verify they redirect to the correct page', () =
 
 	it('Should click Cookies Link', () => {
 		basepage.clickFooterLink('Cookies');
-		basepage.locateH1ByText('Cookies on application service');
+		basepage.locateH1ByText('Cookies on the Find a National Infrastructure Project service');
 		cy.url().should('include', '/cookies');
 	});
 
