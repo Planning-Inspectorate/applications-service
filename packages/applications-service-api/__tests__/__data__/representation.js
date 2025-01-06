@@ -85,6 +85,7 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 			representative: '',
 			docReference: null,
 			author: null,
+			personalName: null,
 			lastModified: '2023-06-19 10:50:31.8860000',
 			dateCreated: '2023-06-19 10:50:31.8860000'
 		}

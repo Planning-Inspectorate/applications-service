@@ -146,6 +146,7 @@ describe('document mapper functions', () => {
 					representative: 'somerep',
 					docReference: 'someref',
 					author: 'someone',
+					personalName: 'someone',
 					authorWelsh: 'author welsh',
 					lastModified: '2023-06-19T10:50:31.957Z',
 					dateCreated: '2023-06-19T10:50:31.957Z'
