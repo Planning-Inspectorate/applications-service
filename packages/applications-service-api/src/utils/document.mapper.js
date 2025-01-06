@@ -95,8 +95,7 @@ const mapBackOfficeDocuments = (documents, isMaterialChange) =>
 		path: document.publishedDocumentURI,
 		// status: 'Published', // should always be Published, so not needed in API response?
 		datePublished: document.datePublished,
-		// deadlineDate: "", // no equivalent in BO schema
-		// personalName: '', // no equivalent in BO schema
+		personalName: document.author,
 		representative: document.representative,
 		// whoFrom: null, // no equivalent in BO schema
 		docReference: document.documentReference,
