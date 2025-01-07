@@ -24,9 +24,6 @@
         "description" : "Finds projects, registers for interest, and makes submissions",
         "destinationId" : "6",
         "id" : "35",
-        "properties" : {
-          "structurizr.dsl.identifier" : "583bdf7e-0f3a-498a-a927-9bdf2a1a2a1f"
-        },
         "sourceId" : "1",
         "tags" : "Relationship,HTTPS,HTML",
         "technology" : ","
@@ -51,9 +48,6 @@
         "description" : "Finds projects, registers for interest, and makes submissions",
         "destinationId" : "6",
         "id" : "37",
-        "properties" : {
-          "structurizr.dsl.identifier" : "5403a264-f458-4762-99e4-072205d0c127"
-        },
         "sourceId" : "2",
         "tags" : "Relationship,HTTPS,HTML",
         "technology" : ","
@@ -78,9 +72,6 @@
         "description" : "Finds projects, registers for interest, and makes submissions",
         "destinationId" : "6",
         "id" : "39",
-        "properties" : {
-          "structurizr.dsl.identifier" : "7c8fb41f-0ae7-47aa-89c1-ecbf81bcd055"
-        },
         "sourceId" : "3",
         "tags" : "Relationship,HTTPS,HTML",
         "technology" : ","
@@ -106,9 +97,6 @@
         "description" : "Manages cases through",
         "destinationId" : "25",
         "id" : "41",
-        "properties" : {
-          "structurizr.dsl.identifier" : "518d839f-7bf8-4243-8d4f-65ebdcc1af98"
-        },
         "sourceId" : "4",
         "tags" : "Relationship",
         "technology" : "HTTPS, HTML, Active Directory Auth"
@@ -131,27 +119,18 @@
           "description" : "Maintains session state and caches data from",
           "destinationId" : "8",
           "id" : "89",
-          "properties" : {
-            "structurizr.dsl.identifier" : "fbf3b4ab-c3f5-4a4a-9538-eb6216e7a604"
-          },
           "sourceId" : "6",
           "tags" : "Relationship"
         }, {
           "description" : "Retrieves secrets from",
           "destinationId" : "24",
           "id" : "90",
-          "properties" : {
-            "structurizr.dsl.identifier" : "f0acfb62-1c11-4fbb-8c21-ca7120371fd8"
-          },
           "sourceId" : "6",
           "tags" : "Relationship"
         }, {
           "description" : "renders pages, gets and posts data using",
           "destinationId" : "7",
           "id" : "91",
-          "properties" : {
-            "structurizr.dsl.identifier" : "8091786d-2d69-43b1-b1cd-ffae38b471fc"
-          },
           "sourceId" : "6",
           "tags" : "Relationship",
           "technology" : "HTTPS, JSON"
@@ -170,18 +149,12 @@
           "description" : "Read only access to",
           "destinationId" : "9",
           "id" : "92",
-          "properties" : {
-            "structurizr.dsl.identifier" : "d913a672-0e5a-40e9-b7e5-baafb564635a"
-          },
           "sourceId" : "7",
           "tags" : "Relationship"
         }, {
           "description" : "Sends notification emails through",
           "destinationId" : "34",
           "id" : "93",
-          "properties" : {
-            "structurizr.dsl.identifier" : "493dae1b-3218-4dc7-bed4-ad2a78d2684b"
-          },
           "sourceId" : "7",
           "tags" : "Relationship",
           "technology" : "HTTPS, JSON"
@@ -196,9 +169,6 @@
           "description" : "Reads and writes legacy case data from",
           "destinationId" : "32",
           "id" : "97",
-          "properties" : {
-            "structurizr.dsl.identifier" : "de7f7927-58cd-430e-8c51-8581dd362ddb"
-          },
           "sourceId" : "7",
           "tags" : "Relationship,TCP,SQL",
           "technology" : ","
@@ -206,18 +176,12 @@
           "description" : "Retrieves secrets from",
           "destinationId" : "24",
           "id" : "99",
-          "properties" : {
-            "structurizr.dsl.identifier" : "cf743892-b65e-495d-b112-7a2839acad62"
-          },
           "sourceId" : "7",
           "tags" : "Relationship"
         }, {
           "description" : "Sends file for submission",
           "destinationId" : "26",
           "id" : "100",
-          "properties" : {
-            "structurizr.dsl.identifier" : "94a037da-4f8c-4179-80f6-cef0817d60c0"
-          },
           "sourceId" : "7",
           "tags" : "Relationship",
           "technology" : "HTTPS"
@@ -263,9 +227,6 @@
           "description" : "Consumes message body to Advice table",
           "destinationId" : "9",
           "id" : "75",
-          "properties" : {
-            "structurizr.dsl.identifier" : "2804a9eb-7b8b-4454-a0db-47c70fadd9d9"
-          },
           "sourceId" : "10",
           "tags" : "Relationship"
         } ],
@@ -284,9 +245,6 @@
           "description" : "Deletes from Advice table",
           "destinationId" : "9",
           "id" : "76",
-          "properties" : {
-            "structurizr.dsl.identifier" : "10250038-a1a2-419e-9406-e00e0a63d055"
-          },
           "sourceId" : "11",
           "tags" : "Relationship"
         } ],
@@ -305,9 +263,6 @@
           "description" : "Consumes message body to Document Metadata table",
           "destinationId" : "9",
           "id" : "77",
-          "properties" : {
-            "structurizr.dsl.identifier" : "2626014a-b917-44c9-8feb-b632bd49e81f"
-          },
           "sourceId" : "12",
           "tags" : "Relationship"
         } ],
@@ -326,9 +281,6 @@
           "description" : "Deletes from Document Metadata table",
           "destinationId" : "9",
           "id" : "78",
-          "properties" : {
-            "structurizr.dsl.identifier" : "4e813347-6a09-45d7-8b9a-649ca8671330"
-          },
           "sourceId" : "13",
           "tags" : "Relationship"
         } ],
@@ -347,9 +299,6 @@
           "description" : "Consumes message body to Exam Time Table table",
           "destinationId" : "9",
           "id" : "79",
-          "properties" : {
-            "structurizr.dsl.identifier" : "0b2a7bf8-1c72-4dc8-b7a9-ba5bc2243ca3"
-          },
           "sourceId" : "14",
           "tags" : "Relationship"
         } ],
@@ -368,9 +317,6 @@
           "description" : "Deletes from Exam Time Table table",
           "destinationId" : "9",
           "id" : "80",
-          "properties" : {
-            "structurizr.dsl.identifier" : "aa79b2f2-512d-457e-826e-cf7d7ba27ae4"
-          },
           "sourceId" : "15",
           "tags" : "Relationship"
         } ],
@@ -389,9 +335,6 @@
           "description" : "Consumes message body to Project table",
           "destinationId" : "9",
           "id" : "81",
-          "properties" : {
-            "structurizr.dsl.identifier" : "99c99b91-9f26-435c-bdbc-8fda466c9fb2"
-          },
           "sourceId" : "16",
           "tags" : "Relationship"
         } ],
@@ -410,9 +353,6 @@
           "description" : "Deletes from Project table",
           "destinationId" : "9",
           "id" : "82",
-          "properties" : {
-            "structurizr.dsl.identifier" : "6728d937-5182-4051-8d8e-53cada1d177f"
-          },
           "sourceId" : "17",
           "tags" : "Relationship"
         } ],
@@ -431,9 +371,6 @@
           "description" : "Consumes message body to Project Update table",
           "destinationId" : "9",
           "id" : "83",
-          "properties" : {
-            "structurizr.dsl.identifier" : "9ebfcd9a-01c2-4252-968e-548c2ff052cd"
-          },
           "sourceId" : "18",
           "tags" : "Relationship"
         } ],
@@ -452,9 +389,6 @@
           "description" : "Consumes message body to Representation table",
           "destinationId" : "9",
           "id" : "84",
-          "properties" : {
-            "structurizr.dsl.identifier" : "74fcad29-c152-46ed-891d-10a6da20b689"
-          },
           "sourceId" : "19",
           "tags" : "Relationship"
         } ],
@@ -473,9 +407,6 @@
           "description" : "Consumes message body to Representation Update table",
           "destinationId" : "9",
           "id" : "85",
-          "properties" : {
-            "structurizr.dsl.identifier" : "d4048d2f-56ec-4c28-a5aa-7cee1d142f50"
-          },
           "sourceId" : "20",
           "tags" : "Relationship"
         } ],
@@ -494,9 +425,6 @@
           "description" : "Deletes from Representation table",
           "destinationId" : "9",
           "id" : "86",
-          "properties" : {
-            "structurizr.dsl.identifier" : "9a1a2ba6-2163-4491-9ce2-fab378aea035"
-          },
           "sourceId" : "21",
           "tags" : "Relationship"
         } ],
@@ -515,9 +443,6 @@
           "description" : "Consumes message body to Service User table",
           "destinationId" : "9",
           "id" : "87",
-          "properties" : {
-            "structurizr.dsl.identifier" : "f67f27be-e737-4894-91ae-f1dc104a8b1e"
-          },
           "sourceId" : "22",
           "tags" : "Relationship"
         } ],
@@ -536,9 +461,6 @@
           "description" : "Deletes from Service User table",
           "destinationId" : "9",
           "id" : "88",
-          "properties" : {
-            "structurizr.dsl.identifier" : "681e30f6-276f-4614-846d-db521a748ee6"
-          },
           "sourceId" : "23",
           "tags" : "Relationship"
         } ],
@@ -613,9 +535,6 @@
           "description" : "Reads published documents files",
           "destinationId" : "7",
           "id" : "104",
-          "properties" : {
-            "structurizr.dsl.identifier" : "fd926952-c630-42f8-a156-fba91856bcef"
-          },
           "sourceId" : "26",
           "tags" : "Relationship"
         }, {
@@ -638,9 +557,6 @@
           "description" : "Renders page, gets and posts data using",
           "destinationId" : "28",
           "id" : "43",
-          "properties" : {
-            "structurizr.dsl.identifier" : "dec04839-a624-4263-acb5-55f9e8806ffe"
-          },
           "sourceId" : "27",
           "tags" : "Relationship",
           "technology" : "HTTPS, JSON"
@@ -658,18 +574,12 @@
           "description" : "Reads and writes case data to",
           "destinationId" : "29",
           "id" : "44",
-          "properties" : {
-            "structurizr.dsl.identifier" : "f16139fb-fa52-456b-a1e9-4f86013040a1"
-          },
           "sourceId" : "28",
           "tags" : "Relationship"
         }, {
           "description" : "Broadcasts message on Advice changes",
           "destinationId" : "10",
           "id" : "46",
-          "properties" : {
-            "structurizr.dsl.identifier" : "edf16ae4-72fe-4efa-b3e5-167efff5178b"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic s51-advice"
@@ -684,9 +594,6 @@
           "description" : "Broadcasts message on Advice Unpublish changes",
           "destinationId" : "11",
           "id" : "49",
-          "properties" : {
-            "structurizr.dsl.identifier" : "a601fb8f-9c0c-486b-9acb-6f70ea7b0a0c"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic s51-advice"
@@ -694,9 +601,6 @@
           "description" : "Broadcasts message on Document Metadata changes",
           "destinationId" : "12",
           "id" : "51",
-          "properties" : {
-            "structurizr.dsl.identifier" : "cf34b3fe-d2cc-46c7-bf03-a94062516e2f"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-document"
@@ -704,9 +608,6 @@
           "description" : "Broadcasts message on Document Metadata Unpublish changes",
           "destinationId" : "13",
           "id" : "53",
-          "properties" : {
-            "structurizr.dsl.identifier" : "8e896a5c-66cd-4674-935d-3560f6dd6443"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-document"
@@ -714,9 +615,6 @@
           "description" : "Broadcasts message on Exam Time Table changes",
           "destinationId" : "14",
           "id" : "55",
-          "properties" : {
-            "structurizr.dsl.identifier" : "565ba8b7-ed9c-4e8a-a67d-bca43dc626b1"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-exam-timetable"
@@ -724,9 +622,6 @@
           "description" : "Broadcasts message on Exam Time Table Unpublish changes",
           "destinationId" : "15",
           "id" : "57",
-          "properties" : {
-            "structurizr.dsl.identifier" : "298b4bf2-0093-4785-8de6-e572fc8623ce"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-exam-timetable"
@@ -734,9 +629,6 @@
           "description" : "Broadcasts message on Project changes",
           "destinationId" : "16",
           "id" : "59",
-          "properties" : {
-            "structurizr.dsl.identifier" : "d96f3c0b-6dcb-4037-8d60-cb385dd19e79"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-project"
@@ -744,9 +636,6 @@
           "description" : "Broadcasts message on Project Unpublish changes",
           "destinationId" : "17",
           "id" : "61",
-          "properties" : {
-            "structurizr.dsl.identifier" : "ed9a660a-321d-471d-aa70-b92e62d42623"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-project"
@@ -754,9 +643,6 @@
           "description" : "Broadcasts message on Project Update changes",
           "destinationId" : "18",
           "id" : "63",
-          "properties" : {
-            "structurizr.dsl.identifier" : "8bbe8127-3b0d-4980-a50e-7e97200e0714"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-project-update"
@@ -764,9 +650,6 @@
           "description" : "Broadcasts message on Representation changes",
           "destinationId" : "19",
           "id" : "65",
-          "properties" : {
-            "structurizr.dsl.identifier" : "f59153c1-555b-4ef8-9196-96913ffe689c"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-representation"
@@ -774,9 +657,6 @@
           "description" : "Broadcasts message on Representation Update changes",
           "destinationId" : "20",
           "id" : "67",
-          "properties" : {
-            "structurizr.dsl.identifier" : "494d280c-a396-45b1-8e32-c083368ace2b"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-representation"
@@ -784,9 +664,6 @@
           "description" : "Broadcasts message on Representation Unpublish changes",
           "destinationId" : "21",
           "id" : "69",
-          "properties" : {
-            "structurizr.dsl.identifier" : "9d15634f-306c-49a4-871a-a853822f0afd"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-representation"
@@ -794,9 +671,6 @@
           "description" : "Broadcasts message on Service User changes",
           "destinationId" : "22",
           "id" : "71",
-          "properties" : {
-            "structurizr.dsl.identifier" : "8a3d5956-9e08-47f5-87f2-3155c5c8c556"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-service-user"
@@ -804,9 +678,6 @@
           "description" : "Broadcasts message on Service User Unpublish changes",
           "destinationId" : "23",
           "id" : "73",
-          "properties" : {
-            "structurizr.dsl.identifier" : "1d122c77-6a38-4115-bcda-9c1b340d81c0"
-          },
           "sourceId" : "28",
           "tags" : "Relationship,ServiceBus",
           "technology" : "Azure Service via topic nsip-service-user"
@@ -837,9 +708,6 @@
         "description" : "Broadcasts message when entities change",
         "destinationId" : "30",
         "id" : "42",
-        "properties" : {
-          "structurizr.dsl.identifier" : "4adf5cd5-3ea9-4a0c-a28a-c955e42fcd89"
-        },
         "sourceId" : "25",
         "tags" : "Relationship,ServiceBus",
         "technology" : "Azure Service Bus via topic subscriptions"
@@ -847,9 +715,6 @@
         "description" : "Broadcasts message when entities change",
         "destinationId" : "5",
         "id" : "45",
-        "properties" : {
-          "structurizr.dsl.identifier" : "1991a972-b347-4e0a-9b23-99c85391c794"
-        },
         "sourceId" : "25",
         "tags" : "Relationship,ServiceBus",
         "technology" : "Azure Service Bus via topic subscriptions"
@@ -995,9 +860,6 @@
         "description" : "Extracts project data including documents and interested party comments (representations)",
         "destinationId" : "31",
         "id" : "107",
-        "properties" : {
-          "structurizr.dsl.identifier" : "fa89a757-1874-4df0-8a2e-66ab43c373a2"
-        },
         "sourceId" : "32",
         "tags" : "Relationship"
       } ],
