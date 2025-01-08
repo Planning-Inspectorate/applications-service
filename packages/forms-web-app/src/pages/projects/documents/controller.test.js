@@ -2,16 +2,14 @@ const { getProjectsDocumentsController, postProjectsDocumentsController } = requ
 
 const { mockI18n } = require('../../_mocks/i18n');
 const { wrappedSearchDocumentsV3 } = require('../../../lib/application-api-wrapper');
-const {
-	searchExaminationLibraryDocument
-} = require('./_utils/documents/search-examination-library-document');
+const { getExaminationLibraryDocument } = require('../../services');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getProjectData: jest.fn(),
 	wrappedSearchDocumentsV3: jest.fn()
 }));
-jest.mock('./_utils/documents/search-examination-library-document', () => ({
-	searchExaminationLibraryDocument: jest.fn()
+jest.mock('../../services', () => ({
+	getExaminationLibraryDocument: jest.fn()
 }));
 
 const commonTranslations_EN = require('../../../locales/en/common.json');
@@ -81,7 +79,7 @@ describe('pages/projects/documents/controller', () => {
 							currentPage: 1
 						}
 					});
-					searchExaminationLibraryDocument.mockReturnValue({
+					getExaminationLibraryDocument.mockReturnValue({
 						mime: 'application/pdf',
 						path: 'mock/path',
 						size: '224630'

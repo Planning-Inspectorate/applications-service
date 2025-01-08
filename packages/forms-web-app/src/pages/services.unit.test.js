@@ -2,7 +2,8 @@ const {
 	getProjectUpdatesData,
 	getProjectDecisionDocument,
 	getRule8DocumentType,
-	getRule6DocumentType
+	getRule6DocumentType,
+	getExaminationLibraryDocument
 } = require('./services');
 const { getProjectUpdates, getDocumentByType } = require('../lib/application-api-wrapper');
 const { documentTypes } = require('@pins/common/src/constants');
@@ -150,7 +151,12 @@ describe('/services', () => {
 	describe('#getRuleDocumentType', () => {
 		describe.each([
 			['getRule6DocumentType', getRule6DocumentType, documentTypes.RULE_6_LETTER],
-			['getRule8DocumentType', getRule8DocumentType, documentTypes.RULE_8_LETTER]
+			['getRule8DocumentType', getRule8DocumentType, documentTypes.RULE_8_LETTER],
+			[
+				'getExaminationLibraryDocument',
+				getExaminationLibraryDocument,
+				documentTypes.EXAMINATION_LIBRARY
+			]
 		])('#%s', (ruleName, getRuleDocumentTypeFn, documentType) => {
 			it(`should call getDocumentByType with ${documentType}`, async () => {
 				//arrange

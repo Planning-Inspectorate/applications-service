@@ -11,6 +11,7 @@ const { isLangWelsh } = require('../../_utils/is-lang-welsh');
 const { isFiltersDisplayed } = require('./_utils/is-filters-displayed');
 const { queryStringBuilder } = require('../../../utils/query-string-builder');
 const { getProjectsDocumentsURL } = require('./_utils/get-projects-documents-url');
+const { getExaminationLibraryDocument } = require('../../services');
 
 const view = 'projects/documents/view.njk';
 
@@ -27,10 +28,12 @@ const getProjectsDocumentsController = async (req, res) => {
 		const pageFeatureToggles = featureToggles();
 		const pageDataObj = pageData(case_ref);
 
-		const { documents, examinationLibraryDocument, filters, pagination } = await searchDocuments(
-			case_ref,
-			{ ...query, isMaterialChange }
-		);
+		const { documents, filters, pagination } = await searchDocuments(case_ref, {
+			...query,
+			isMaterialChange
+		});
+
+		const examinationLibraryDocument = await getExaminationLibraryDocument(case_ref);
 
 		const documentsView = getDocuments(i18n, documents, examinationLibraryDocument);
 		const filteredView = getFilters(i18n, filters, query);
