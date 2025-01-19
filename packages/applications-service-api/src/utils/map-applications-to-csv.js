@@ -2,7 +2,8 @@ const { stringify } = require('csv-stringify/sync');
 const moment = require('moment');
 const { stageNameFromValue } = require('./application.mapper');
 
-const formatDate = (date) => (moment(date).isValid() ? moment(date).format('YYYY-MM-DD') : '');
+const formatIfDate = (potentialDate) =>
+	moment(potentialDate).isValid() ? moment(potentialDate).format('YYYY-MM-DD') : potentialDate;
 
 const formatStageForCSV = (application) => {
 	const { isMaterialChange } = application;
@@ -44,15 +45,19 @@ const mapApplicationsToCSV = (applications) => {
 		'Date of application': application.DateOfDCOSubmission,
 		'Date application accepted': application.DateOfDCOAcceptance_NonAcceptance,
 		'Date Examination started': application.ConfirmedStartOfExamination,
-		'Date Examination closed': formatDate(application.DateTimeExaminationEnds),
+		'Date Examination closed': application.DateTimeExaminationEnds,
 		'Date of recommendation': application.DateOfRecommendations,
 		'Date of decision': application.ConfirmedDateOfDecision,
 		'Date withdrawn': application.DateProjectWithdrawn
 	}));
+
 	return stringify(mappedApplications, {
 		header: true,
 		escape_formulas: true,
-		quoted_string: true
+		quoted_string: true,
+		cast: {
+			date: (value) => formatIfDate(value)
+		}
 	});
 };
 
