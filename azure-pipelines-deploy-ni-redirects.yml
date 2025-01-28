@@ -69,6 +69,8 @@ jobs:
 
                   # Confirm file creation
                   echo "Generated config file: $OUTPUT_FILE"
+                  echo "Contents:"
+                  cat $OUTPUT_FILE
             - template: steps/node_script.yml@templates
               parameters:
                 script: npm ci
