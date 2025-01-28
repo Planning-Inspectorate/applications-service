@@ -24,21 +24,37 @@ describe('advice.backoffice.repository', () => {
 			mockCount.mockResolvedValue(1);
 		});
 		it('should call the database with the correct parameters', async () => {
-			await getAllAdviceByCaseReference('backoffice', 0, 100, 'searchTerm');
+			await getAllAdviceByCaseReference('backoffice', 0, 100, 'search Term');
 			expect(mockFindMany).toHaveBeenCalledWith({
 				where: {
 					AND: [
 						{ caseReference: 'backoffice' },
 						{
 							OR: [
+								{ AND: [{ from: { contains: 'search' } }, { from: { contains: 'Term' } }] },
+								{ AND: [{ agent: { contains: 'search' } }, { agent: { contains: 'Term' } }] },
 								{
-									OR: [
-										{ from: { contains: 'searchTerm' } },
-										{ agent: { contains: 'searchTerm' } },
-										{ enquiryDetails: { contains: 'searchTerm' } },
-										{ enquiryDetailsWelsh: { contains: 'searchTerm' } },
-										{ adviceDetails: { contains: 'searchTerm' } },
-										{ adviceDetailsWelsh: { contains: 'searchTerm' } }
+									AND: [
+										{ enquiryDetails: { contains: 'search' } },
+										{ enquiryDetails: { contains: 'Term' } }
+									]
+								},
+								{
+									AND: [
+										{ enquiryDetailsWelsh: { contains: 'search' } },
+										{ enquiryDetailsWelsh: { contains: 'Term' } }
+									]
+								},
+								{
+									AND: [
+										{ adviceDetails: { contains: 'search' } },
+										{ adviceDetails: { contains: 'Term' } }
+									]
+								},
+								{
+									AND: [
+										{ adviceDetailsWelsh: { contains: 'search' } },
+										{ adviceDetailsWelsh: { contains: 'Term' } }
 									]
 								}
 							]
