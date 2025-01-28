@@ -1,25 +1,32 @@
 const { prismaClient } = require('../lib/prisma');
-const { mapBOSearchTermToQuery } = require('../utils/queries');
+const { english: stopWordList } = require('../utils/stopwords');
+
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
+	const terms = searchTerm?.split(' ').filter((term) => !stopWordList.includes(term.toLowerCase()));
 	const where = {
 		AND: [
 			{
 				caseReference
-			},
-			{
-				...(searchTerm
-					? mapBOSearchTermToQuery(searchTerm, [
-							'from',
-							'agent',
-							'enquiryDetails',
-							'enquiryDetailsWelsh',
-							'adviceDetails',
-							'adviceDetailsWelsh'
-					  ])
-					: {})
 			}
 		]
 	};
+
+	if (terms?.length > 0) {
+		where.AND.push({
+			OR: [
+				'from',
+				'agent',
+				'enquiryDetails',
+				'enquiryDetailsWelsh',
+				'adviceDetails',
+				'adviceDetailsWelsh'
+			].map((field) => ({
+				AND: terms.map((term) => ({
+					[field]: { contains: term }
+				}))
+			}))
+		});
+	}
 
 	const dbQuery = {
 		where,

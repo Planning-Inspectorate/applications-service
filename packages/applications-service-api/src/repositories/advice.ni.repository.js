@@ -1,26 +1,27 @@
 const db = require('../models');
 const { Op } = require('sequelize');
-const { mapNISearchTermToQuery } = require('../utils/queries');
-
+const { english: stopWordList } = require('../utils/stopwords');
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
+	const terms = searchTerm?.split(' ').filter((term) => !stopWordList.includes(term.toLowerCase()));
 	const where = {
 		[Op.and]: [
 			{
 				caseReference
-			},
-			{
-				...(searchTerm
-					? mapNISearchTermToQuery(searchTerm, [
-							'firstName',
-							'lastName',
-							'organisation',
-							'enquiryDetail',
-							'adviceGiven'
-					  ])
-					: {})
 			}
 		]
 	};
+
+	if (terms?.length > 0) {
+		where[Op.and].push({
+			[Op.or]: ['firstName', 'lastName', 'organisation', 'enquiryDetail', 'adviceGiven'].map(
+				(field) => ({
+					[Op.and]: terms.map((term) => ({
+						[field]: { [Op.like]: `%${term}%` }
+					}))
+				})
+			)
+		});
+	}
 
 	const dbQuery = {
 		where,

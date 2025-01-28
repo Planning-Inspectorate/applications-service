@@ -18,7 +18,7 @@ describe('advice.ni.repository', () => {
 		});
 
 		it('should call the database with the correct parameters', async () => {
-			await getAllAdviceByCaseReference('ni', 0, 100, 'searchTerm');
+			await getAllAdviceByCaseReference('ni', 0, 100, 'search Term');
 			expect(db.Advice.findAndCountAll).toHaveBeenCalledWith({
 				where: {
 					[Op.and]: [
@@ -26,12 +26,33 @@ describe('advice.ni.repository', () => {
 						{
 							[Op.or]: [
 								{
-									[Op.or]: [
-										{ firstName: { [Op.like]: '%searchTerm%' } },
-										{ lastName: { [Op.like]: '%searchTerm%' } },
-										{ organisation: { [Op.like]: '%searchTerm%' } },
-										{ enquiryDetail: { [Op.like]: '%searchTerm%' } },
-										{ adviceGiven: { [Op.like]: '%searchTerm%' } }
+									[Op.and]: [
+										{ firstName: { [Op.like]: '%search%' } },
+										{ firstName: { [Op.like]: '%Term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ lastName: { [Op.like]: '%search%' } },
+										{ lastName: { [Op.like]: '%Term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ organisation: { [Op.like]: '%search%' } },
+										{ organisation: { [Op.like]: '%Term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ enquiryDetail: { [Op.like]: '%search%' } },
+										{ enquiryDetail: { [Op.like]: '%Term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ adviceGiven: { [Op.like]: '%search%' } },
+										{ adviceGiven: { [Op.like]: '%Term%' } }
 									]
 								}
 							]
