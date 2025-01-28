@@ -1,7 +1,7 @@
 const { getSubmissionComplete } = require('./controller');
-
 const { getExaminationSubmissionId } = require('../_session/examination-session');
 const { getProjectEmailAddress } = require('../../../controllers/session/app-data-session');
+const { getProjectsIndexURL } = require('../../projects/index/_utils/get-projects-index-url');
 
 jest.mock('../_session/examination-session', () => ({
 	getExaminationSubmissionId: jest.fn()
@@ -11,10 +11,17 @@ jest.mock('../../../controllers/session/app-data-session', () => ({
 	getProjectEmailAddress: jest.fn()
 }));
 
+jest.mock('../../projects/index/_utils/get-projects-index-url', () => ({
+	getProjectsIndexURL: jest.fn()
+}));
+
 describe('submission-complete/controller', () => {
 	describe('#getSubmissionComplete', () => {
 		const session = {};
-		const req = { session };
+		const req = {
+			session,
+			params: { case_ref: '1234' }
+		};
 		const res = {
 			redirect: jest.fn(),
 			render: jest.fn(),
@@ -23,17 +30,21 @@ describe('submission-complete/controller', () => {
 		const mockProjectEmail = 'dummy.email@testing.gov.uk';
 		describe('When getting the submission complete page', () => {
 			beforeEach(() => {
-				getExaminationSubmissionId.mockReturnValue('1234');
+				getExaminationSubmissionId.mockReturnValue('5678');
 				getProjectEmailAddress.mockReturnValue(mockProjectEmail);
+				getProjectsIndexURL.mockReturnValue('mock url');
 			});
-			describe('and the page is rendered with submissionId and project email', () => {
+			describe('and the page is rendered with submissionId, project email and project index URL', () => {
 				beforeEach(() => {
 					getSubmissionComplete(req, res);
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/submission-complete/view.njk', {
-						submissionId: '1234',
-						projectEmail: 'dummy.email@testing.gov.uk'
+						pageData: {
+							submissionId: '5678',
+							projectEmail: 'dummy.email@testing.gov.uk'
+						},
+						projectsIndexURL: 'mock url'
 					});
 				});
 			});
