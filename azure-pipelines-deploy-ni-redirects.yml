@@ -61,7 +61,7 @@ jobs:
                     --query "[?name=='BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES'].value" -o tsv)
 
                   # Parse the variable into a JSON array
-                  PARSED_REFERENCES=$(echo $CASE_REFERENCES | jq -R 'split(",")')
+                  PARSED_REFERENCES=$(echo $CASE_REFERENCES | tr -d ' ' | jq -R 'split(",")')
 
                   # Write to JSON file
                   OUTPUT_FILE="./packages/ni-redirects/src/config.generated.${{ lower(parameters.environment) }}.json"
