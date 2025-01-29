@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 const { pick } = require('lodash');
 const config = require('../lib/config');
 const { english: stopWordList } = require('../utils/stopwords');
+const logger = require('../lib/logger');
 const getApplication = async (caseReference) =>
 	db.Project.findOne({ where: { CaseReference: caseReference } });
 
@@ -57,12 +58,22 @@ const getAllApplications = async (options = {}) => {
 		};
 		findAllOptions.where = { ...findAllOptions.where, ...searchTermStatements };
 	}
-	const { rows, count } = await db.Project.findAndCountAll({
-		...findAllOptions,
-		raw: true
-	});
 
-	return { applications: rows, count };
+	try {
+		const { rows, count } = await db.Project.findAndCountAll({
+			...findAllOptions,
+			raw: true
+		});
+
+		return { applications: rows, count };
+	} catch (e) {
+		logger.error(e);
+		if (e.name === 'SequelizeDatabaseError' && e.parent.code === 'ER_CANT_AGGREGATE_2COLLATIONS') {
+			return { applications: [], count: 0 };
+		} else {
+			throw e;
+		}
+	}
 };
 
 module.exports = {
