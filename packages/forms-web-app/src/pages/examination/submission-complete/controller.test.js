@@ -27,11 +27,10 @@ describe('submission-complete/controller', () => {
 			render: jest.fn(),
 			status: jest.fn(() => res)
 		};
-		const mockProjectEmail = 'dummy.email@testing.gov.uk';
 		describe('When getting the submission complete page', () => {
 			beforeEach(() => {
 				getExaminationSubmissionId.mockReturnValue('5678');
-				getProjectEmailAddress.mockReturnValue(mockProjectEmail);
+				getProjectEmailAddress.mockReturnValue('email@test.gov.uk');
 				getProjectsIndexURL.mockReturnValue('mock url');
 			});
 			describe('and the page is rendered with submissionId, project email and project index URL', () => {
@@ -40,10 +39,8 @@ describe('submission-complete/controller', () => {
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/submission-complete/view.njk', {
-						pageData: {
-							submissionId: '5678',
-							projectEmail: 'dummy.email@testing.gov.uk'
-						},
+						submissionId: '5678',
+						projectEmail: 'email@test.gov.uk',
 						projectsIndexURL: 'mock url'
 					});
 				});
