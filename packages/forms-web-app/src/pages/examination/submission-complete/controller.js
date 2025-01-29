@@ -11,13 +11,11 @@ const getSubmissionComplete = (req, res) => {
 
 		const pageData = {
 			submissionId: getExaminationSubmissionId(session),
-			projectEmail: getProjectEmailAddress(session)
+			projectEmail: getProjectEmailAddress(session),
+			projectsIndexURL: getProjectsIndexURL(caseRef)
 		};
 
-		return res.render(view, {
-			pageData,
-			projectsIndexURL: getProjectsIndexURL(caseRef)
-		});
+		return res.render(view, pageData);
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).render('error/unhandled-exception');
