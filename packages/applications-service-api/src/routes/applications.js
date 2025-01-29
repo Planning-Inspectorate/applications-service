@@ -30,7 +30,7 @@ router.get(
 	parseBooleanQueryParams(['excludeNullDateOfSubmission']),
 	normaliseArrayQueryParams(['stage', 'region', 'sector']),
 	validateRequestWithOpenAPI,
-	applicationsController.getAllApplications
+	asyncRoute(applicationsController.getAllApplications)
 );
 
 module.exports = router;
