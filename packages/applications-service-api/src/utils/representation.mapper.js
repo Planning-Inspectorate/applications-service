@@ -26,15 +26,21 @@ const mapBackOfficeRepresentationsToApi = (representation) => {
 const mapCommonRepresentationBOFieldsToApi = (representation) => {
 	const represented = representation?.represented;
 	const representative = representation?.representative;
+
 	let PersonalName = '';
-	if (!represented.firstName && !represented.lastName) {
+	if (represented.organisationName) {
 		PersonalName = represented.organisationName;
 	} else {
 		PersonalName = `${represented.firstName || ''} ${represented.lastName || ''}`.trim();
 	}
-	const Representative = `${representative?.firstName || ''} ${
-		representative?.lastName || ''
-	}`.trim();
+
+	let Representative = '';
+	if (representative?.organisationName) {
+		Representative = representative.organisationName;
+	} else {
+		Representative = `${representative?.firstName || ''} ${representative?.lastName || ''}`.trim();
+	}
+
 	return {
 		ID: representation.representationId,
 		CaseReference: representation.caseReference,
