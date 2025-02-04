@@ -18,7 +18,7 @@ const CONTACT_TYPES_API = {
 	[BEHALF_AGENT]: CONTACT_TYPES_BACK_OFFICE.agent
 };
 
-const REPRESENTATION_TYPE = 'Members of the Public/Businesses';
+const REPRESENTATION_TYPE = 'Members of the public/businesses';
 
 const mapInterestedParty = (data) => {
 	let interestedParty = {
