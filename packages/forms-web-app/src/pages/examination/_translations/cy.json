@@ -245,16 +245,17 @@
 		"heading1": "Cyflwyniad wedi'i Gwblhau",
 		"notificationText1": "Rhif cyfeirnod eich cyflwyniad",
 		"paragraph1": "Rydym wedi derbyn eich cyflwyniad. Gwnewch nodyn o'ch rhif cyfeirnod.",
+		"paragraph2LinkText": "Dychwelyd i dudalen y prosiect",
 		"heading2": "Cysylltu â ni",
 		"heading3": "Ffoniwch",
-		"paragraph2": "Os oes gennych rif cyfeirnod parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
+		"paragraph3": "Os oes gennych rif cyfeirnod parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
 		"heading4": "Anfonwch neges e-bost",
-		"paragraph3": "Pan fyddwch yn ysgrifennu neges e-bost, rhowch enw'r prosiect yn y llinell bwnc.",
-		"paragraph4": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
+		"paragraph4": "Pan fyddwch yn ysgrifennu neges e-bost, rhowch enw'r prosiect yn y llinell bwnc.",
+		"paragraph5": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
 		"heading5": "Fformatau amgen",
-		"paragraph5": "Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille.",
-		"paragraph6": "{{-link}} rwy gwblhau arolwg byr.",
-		"paragraph6LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn"
+		"paragraph6": "Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille.",
+		"paragraph7": "{{-link}} rwy gwblhau arolwg byr.",
+		"paragraph7LinkText": "Rhowch eich barn i ni am y gwasanaeth hwn"
 	},
 	"submissionError": {
 		"title": "Yn anffodus, mae yna broblem gyda'r gwasanaeth",
