@@ -433,7 +433,6 @@ describe('application.mapper', () => {
 			expect(mapNIApplicationToApi(APPLICATION_FO)).toEqual(
 				expect.objectContaining({
 					...APPLICATION_API,
-					dateOfDCOAcceptance: null,
 					deadlineForAcceptanceDecision: null,
 					sourceSystem: 'HORIZON'
 				})
@@ -453,7 +452,6 @@ describe('application.mapper', () => {
 					...APPLICATION_API,
 					longLat: ['-0.7123', '53.6123'],
 					mapZoomLevel: 6,
-					dateOfDCOAcceptance: null,
 					deadlineForAcceptanceDecision: null,
 					sourceSystem: 'HORIZON'
 				})
@@ -553,7 +551,6 @@ describe('application.mapper', () => {
 			expect(mapBackOfficeApplicationsToApi([APPLICATION_DB])).toEqual([
 				{
 					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
 					sourceSystem: 'ODT'
 				}
 			]);
