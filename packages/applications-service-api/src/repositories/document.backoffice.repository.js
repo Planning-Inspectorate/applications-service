@@ -82,9 +82,7 @@ const getDocumentsByType = async (queryData) =>
 			caseRef: queryData.caseReference,
 			documentType: queryData.type
 		},
-		orderBy: {
-			datePublished: 'desc'
-		},
+		orderBy: [{ datePublished: 'desc' }, { representative: 'asc' }],
 		take: 1
 	});
 
