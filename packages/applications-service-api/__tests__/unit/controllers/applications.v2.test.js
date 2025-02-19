@@ -35,7 +35,6 @@ describe('applications v2 controller', () => {
 
 				expect(responseBody).toEqual({
 					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
 					sourceSystem: 'ODT'
 				});
 			});

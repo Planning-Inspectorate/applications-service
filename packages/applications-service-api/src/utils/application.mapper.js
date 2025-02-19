@@ -227,7 +227,7 @@ const mapNIApplicationToApi = (application) => {
 		anticipatedSubmissionDateNonSpecific: application.AnticipatedSubmissionDateNonSpecific,
 		confirmedDateOfDecision: application.ConfirmedDateOfDecision,
 		confirmedStartOfExamination: application.ConfirmedStartOfExamination,
-		dateOfDCOAcceptance: null, // field is in NI but we don't include it in query
+		dateOfDCOAcceptance: application.DateOfDCOAcceptance_NonAcceptance,
 		dateOfDCOSubmission: application.DateOfDCOSubmission,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
 		dateOfRecommendations: application.DateOfRecommendations,
@@ -366,7 +366,7 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
 		AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
 		DateOfDCOSubmission: getValidDateInStringOrNull(application.dateOfDCOSubmission),
-		DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
+		DateOfDCOAcceptance_NonAcceptance: application.dateOfDCOAcceptance,
 		DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
 		ConfirmedStartOfExamination: application.confirmedStartOfExamination,
 		DateTimeExaminationEnds: application.dateTimeExaminationEnds,

@@ -66,7 +66,6 @@ describe('/api/v1/applications', () => {
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				...APPLICATION_API_V1,
-				DateOfDCOAcceptance_NonAcceptance: null,
 				sourceSystem: 'ODT'
 			});
 		});
@@ -293,8 +292,7 @@ describe('/api/v1/applications', () => {
 					applications: [
 						{
 							...APPLICATION_API_V1,
-							sourceSystem: 'ODT',
-							DateOfDCOAcceptance_NonAcceptance: null
+							sourceSystem: 'ODT'
 						}
 					],
 					currentPage: 1,
@@ -470,7 +468,6 @@ describe('/api/v1/applications', () => {
 		describe('when getAllApplications is MERGE', () => {
 			const BOApplication = {
 				...APPLICATION_API_V1,
-				DateOfDCOAcceptance_NonAcceptance: null,
 				sourceSystem: 'ODT'
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);

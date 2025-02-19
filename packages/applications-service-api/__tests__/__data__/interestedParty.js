@@ -222,7 +222,7 @@ const INTERESTED_PARTY_SELF_BACK_OFFICE = {
 			country: 'England'
 		}
 	},
-	representationType: 'Members of the Public/Businesses',
+	representationType: 'Members of the public/businesses',
 	dateReceived: new Date('2022-12-09 13:30:21:123')
 };
 

@@ -26,7 +26,6 @@ describe('application.merge.service', () => {
 	describe('getAllMergedApplications', () => {
 		const BOApplication = {
 			...APPLICATION_API_V1,
-			DateOfDCOAcceptance_NonAcceptance: null,
 			sourceSystem: 'ODT'
 		};
 		const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
@@ -131,7 +130,6 @@ describe('application.merge.service', () => {
 			});
 			const BOApplication = {
 				...APPLICATION_API_V1,
-				DateOfDCOAcceptance_NonAcceptance: null,
 				sourceSystem: 'ODT'
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
