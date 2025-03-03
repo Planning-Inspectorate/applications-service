@@ -1,6 +1,5 @@
 const { pick, omit, invert } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
-const { featureFlag } = require('../lib/config');
 
 const NI_MAPPING = {
 	sector: [
@@ -124,9 +123,7 @@ const buildApiFiltersFromNIApplications = (applications) => {
 				value: mapColumnValueToApi(field, value),
 				label: mapColumnLabelToApiEn(field, value),
 				count: count,
-				...(featureFlag.allowWelshTranslation
-					? { label_cy: mapColumnLabelToApiCy(field, value) }
-					: {})
+				label_cy: mapColumnLabelToApiCy(field, value)
 			});
 		}
 	}
@@ -243,14 +240,11 @@ const mapNIApplicationToApi = (application) => {
 		stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
 		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
 		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
-		isMaterialChange: application.isMaterialChange
+		isMaterialChange: application.isMaterialChange,
+		projectNameWelsh: application.ProjectNameWelsh,
+		projectDescriptionWelsh: application.SummaryWelsh,
+		projectLocationWelsh: application.ProjectLocationWelsh
 	};
-
-	if (featureFlag.allowWelshTranslation) {
-		apiStruct.projectNameWelsh = application.ProjectNameWelsh;
-		apiStruct.projectDescriptionWelsh = application.SummaryWelsh;
-		apiStruct.projectLocationWelsh = application.ProjectLocationWelsh;
-	}
 
 	return apiStruct;
 };
@@ -294,12 +288,11 @@ const mapBackOfficeApplicationToApi = (application) => {
 		'stage4ExtensionToExamCloseDate',
 		'stage5ExtensionToDecisionDeadline',
 		'stage5ExtensionToRecommendationDeadline',
-		'isMaterialChange'
+		'isMaterialChange',
+		'projectNameWelsh',
+		'projectDescriptionWelsh',
+		'projectLocationWelsh'
 	];
-
-	if (featureFlag.allowWelshTranslation) {
-		fields = fields.concat(['projectNameWelsh', 'projectDescriptionWelsh', 'projectLocationWelsh']);
-	}
 
 	const data = pick(application, fields);
 
@@ -384,14 +377,11 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		sourceSystem: application.sourceSystem,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
 		LongLat: application.longLat,
-		isMaterialChange: application.isMaterialChange
+		isMaterialChange: application.isMaterialChange,
+		ProjectNameWelsh: application.projectNameWelsh,
+		SummaryWelsh: application.projectDescriptionWelsh,
+		ProjectLocationWelsh: application.projectLocationWelsh
 	};
-
-	if (featureFlag.allowWelshTranslation) {
-		legacyStruct.ProjectNameWelsh = application.projectNameWelsh;
-		legacyStruct.SummaryWelsh = application.projectDescriptionWelsh;
-		legacyStruct.ProjectLocationWelsh = application.projectLocationWelsh;
-	}
 
 	return legacyStruct;
 };
