@@ -14,8 +14,10 @@ const getByCaseReference = async (caseReference) => {
 };
 
 const getAllApplications = async (options = {}) => {
+	const removeWelshCases = !featureFlag.allowWelshCases;
 	const { filters, searchTerm, orderBy, offset, size, excludeNullDateOfSubmission } = options;
-	const where = excludeNullDateOfSubmission || searchTerm || filters ? { AND: [] } : {};
+	const where =
+		excludeNullDateOfSubmission || searchTerm || filters || removeWelshCases ? { AND: [] } : {};
 
 	if (excludeNullDateOfSubmission) {
 		where['AND'].push({
@@ -26,6 +28,16 @@ const getAllApplications = async (options = {}) => {
 					}
 				}
 			]
+		});
+	}
+
+	if (removeWelshCases) {
+		where['AND'].push({
+			regions: {
+				not: {
+					contains: 'wales'
+				}
+			}
 		});
 	}
 
@@ -41,15 +53,11 @@ const getAllApplications = async (options = {}) => {
 						projectName: { contains: term }
 					}))
 				},
-				...(featureFlag.allowWelshTranslation
-					? [
-							{
-								AND: terms.map((term) => ({
-									projectNameWelsh: { contains: term }
-								}))
-							}
-					  ]
-					: []),
+				{
+					AND: terms.map((term) => ({
+						projectNameWelsh: { contains: term }
+					}))
+				},
 				{
 					AND: terms.map((term) => ({
 						applicant: { organisationName: { contains: term } }
@@ -65,6 +73,7 @@ const getAllApplications = async (options = {}) => {
 			}))
 		});
 	}
+
 	if (filters?.stage) {
 		where['AND'].push({
 			OR: filters.stage.map((stage) => ({

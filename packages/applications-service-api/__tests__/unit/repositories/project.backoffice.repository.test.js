@@ -2,6 +2,7 @@ const {
 	getByCaseReference,
 	getAllApplications
 } = require('../../../src/repositories/project.backoffice.repository');
+const config = require('../../../src/lib/config');
 const { APPLICATION_DB } = require('../../__data__/application');
 const mockFindUnique = jest.fn();
 const mockFindMany = jest.fn();
@@ -31,6 +32,10 @@ describe('project repository', () => {
 		});
 	});
 	describe('getAllApplications', () => {
+		beforeEach(() => {
+			config.featureFlag.allowWelshCases = true;
+		});
+
 		it('calls findMany with no options', async () => {
 			await getAllApplications();
 
@@ -123,6 +128,25 @@ describe('project repository', () => {
 						},
 						{
 							OR: [{ sector: { contains: 'energy' } }, { sector: { contains: 'transport' } }]
+						}
+					]
+				}
+			});
+		});
+
+		it('excludes welsh cases (FEATURE_ALLOW_WELSH_CASES=false)', async () => {
+			config.featureFlag.allowWelshCases = false;
+			await getAllApplications({});
+			expect(mockFindMany).toBeCalledWith({
+				include: { applicant: true },
+				where: {
+					AND: [
+						{
+							regions: {
+								not: {
+									contains: 'wales'
+								}
+							}
 						}
 					]
 				}

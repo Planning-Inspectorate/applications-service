@@ -276,6 +276,7 @@ describe('/api/v1/applications', () => {
 		describe('when getAllApplications is BO', () => {
 			beforeEach(() => {
 				config.backOfficeIntegration.getAllApplications = 'BO';
+				config.featureFlag.allowWelshCases = true;
 				mockProjectFindMany
 					// applications
 					.mockResolvedValueOnce([APPLICATION_DB])
@@ -337,45 +338,7 @@ describe('/api/v1/applications', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			it('with search term applied (FEATURE_ALLOW_WELSH_TRANSLATION=false)', async () => {
-				config.featureFlag.allowWelshTranslation = false;
-
-				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
-
-				expect(mockProjectFindMany).toBeCalledWith({
-					include: { applicant: true },
-					orderBy: { projectName: 'asc' },
-					skip: 0,
-					take: 25,
-					where: {
-						AND: [
-							{
-								OR: [
-									{ caseReference: { contains: 'London Resort' } },
-									{
-										AND: [
-											{ projectName: { contains: 'London' } },
-											{ projectName: { contains: 'Resort' } }
-										]
-									},
-									{
-										AND: [
-											{ applicant: { organisationName: { contains: 'London' } } },
-											{ applicant: { organisationName: { contains: 'Resort' } } }
-										]
-									}
-								]
-							}
-						]
-					}
-				});
-
-				expect(response.status).toEqual(200);
-			});
-
-			it('with search term applied (FEATURE_ALLOW_WELSH_TRANSLATION=true)', async () => {
-				config.featureFlag.allowWelshTranslation = true;
-
+			it('with search term applied', async () => {
 				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
 
 				expect(mockProjectFindMany).toBeCalledWith({
