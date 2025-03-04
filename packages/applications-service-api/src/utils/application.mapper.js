@@ -241,6 +241,8 @@ const mapNIApplicationToApi = (application) => {
 		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
 		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
 		isMaterialChange: application.isMaterialChange,
+		deadlineForSubmissionOfRecommendation: null,
+		deadlineForDecision: null,
 		projectNameWelsh: application.ProjectNameWelsh,
 		projectDescriptionWelsh: application.SummaryWelsh,
 		projectLocationWelsh: application.ProjectLocationWelsh
@@ -289,6 +291,8 @@ const mapBackOfficeApplicationToApi = (application) => {
 		'stage5ExtensionToDecisionDeadline',
 		'stage5ExtensionToRecommendationDeadline',
 		'isMaterialChange',
+		'deadlineForSubmissionOfRecommendation',
+		'deadlineForDecision',
 		'projectNameWelsh',
 		'projectDescriptionWelsh',
 		'projectLocationWelsh'
@@ -378,6 +382,9 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
 		LongLat: application.longLat,
 		isMaterialChange: application.isMaterialChange,
+		deadlineForAcceptanceDecision: application.deadlineForAcceptanceDecision,
+		deadlineForSubmissionOfRecommendation: application.deadlineForSubmissionOfRecommendation,
+		deadlineForDecision: application.deadlineForDecision,
 		ProjectNameWelsh: application.projectNameWelsh,
 		SummaryWelsh: application.projectDescriptionWelsh,
 		ProjectLocationWelsh: application.projectLocationWelsh

@@ -1,5 +1,12 @@
 <p class="govuk-body">
-    {% if decisionCompletedDate %}
-	    {{ t('projectsIndex.projectStage.decision.paragraph1', { date: decisionCompletedDate | date('locale', language) | date}) }}
+    {% if backOfficeCase and applicationData.deadlineForDecision %}
+
+	    {{ t('projectsIndex.projectStage.decision.paragraph1', { date: applicationData.deadlineForDecision | date('locale', language) | date}) }}
+
+    {% elseif not backOfficeCase and decisionCompletedDate %}
+
+        {{ t('projectsIndex.projectStage.decision.paragraph1', { date: decisionCompletedDate | date('locale', language) | date}) }}
+
     {% endif %}
 </p>
+

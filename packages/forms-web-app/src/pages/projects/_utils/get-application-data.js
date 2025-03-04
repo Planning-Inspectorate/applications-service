@@ -71,7 +71,12 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		longLat: data.LongLat,
 		mapZoomLevel: data.MapZoomLevel,
 		projectLocation: translatedField('ProjectLocation', 'ProjectLocationWelsh'),
-		isMaterialChange: data.isMaterialChange
+		isMaterialChange: data.isMaterialChange,
+		deadlineForAcceptanceDecision: badDateToNull(data.deadlineForAcceptanceDecision),
+		deadlineForSubmissionOfRecommendation: badDateToNull(
+			data.deadlineForSubmissionOfRecommendation
+		),
+		deadlineForDecision: badDateToNull(data.deadlineForDecision)
 	};
 };
 

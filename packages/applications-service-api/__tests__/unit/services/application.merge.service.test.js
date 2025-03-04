@@ -26,7 +26,14 @@ describe('application.merge.service', () => {
 	describe('getAllMergedApplications', () => {
 		const BOApplication = {
 			...APPLICATION_API_V1,
-			sourceSystem: 'ODT'
+			sourceSystem: 'ODT',
+			isMaterialChange: undefined,
+			deadlineForAcceptanceDecision: '2023-01-30',
+			deadlineForSubmissionOfRecommendation: null,
+			deadlineForDecision: null,
+			ProjectNameWelsh: undefined,
+			SummaryWelsh: undefined,
+			ProjectLocationWelsh: undefined
 		};
 		const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 		const combinedApplications = [BOApplication, ...NIApplications];
@@ -130,7 +137,14 @@ describe('application.merge.service', () => {
 			});
 			const BOApplication = {
 				...APPLICATION_API_V1,
-				sourceSystem: 'ODT'
+				sourceSystem: 'ODT',
+				isMaterialChange: undefined,
+				deadlineForAcceptanceDecision: '2023-01-30',
+				deadlineForSubmissionOfRecommendation: null,
+				deadlineForDecision: null,
+				ProjectNameWelsh: undefined,
+				SummaryWelsh: undefined,
+				ProjectLocationWelsh: undefined
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];
