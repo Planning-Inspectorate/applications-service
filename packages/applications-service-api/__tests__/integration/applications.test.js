@@ -66,7 +66,10 @@ describe('/api/v1/applications', () => {
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				...APPLICATION_API_V1,
-				sourceSystem: 'ODT'
+				sourceSystem: 'ODT',
+				deadlineForAcceptanceDecision: '2023-01-30',
+				deadlineForDecision: null,
+				deadlineForSubmissionOfRecommendation: null
 			});
 		});
 
@@ -293,7 +296,10 @@ describe('/api/v1/applications', () => {
 					applications: [
 						{
 							...APPLICATION_API_V1,
-							sourceSystem: 'ODT'
+							sourceSystem: 'ODT',
+							deadlineForAcceptanceDecision: '2023-01-30',
+							deadlineForDecision: null,
+							deadlineForSubmissionOfRecommendation: null
 						}
 					],
 					currentPage: 1,
@@ -431,7 +437,10 @@ describe('/api/v1/applications', () => {
 		describe('when getAllApplications is MERGE', () => {
 			const BOApplication = {
 				...APPLICATION_API_V1,
-				sourceSystem: 'ODT'
+				sourceSystem: 'ODT',
+				deadlineForAcceptanceDecision: '2023-01-30',
+				deadlineForDecision: null,
+				deadlineForSubmissionOfRecommendation: null
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];

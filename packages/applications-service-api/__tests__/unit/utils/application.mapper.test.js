@@ -355,7 +355,13 @@ describe('application.mapper', () => {
 			expect(mapBackOfficeApplicationsToApi([APPLICATION_DB])).toEqual([
 				{
 					...APPLICATION_API_V1,
-					sourceSystem: 'ODT'
+					sourceSystem: 'ODT',
+					DateOfReOpenRelevantRepresentationClose: undefined,
+					DateOfReOpenRelevantRepresentationStart: undefined,
+					deadlineForAcceptanceDecision: '2023-01-30',
+					deadlineForDecision: null,
+					deadlineForSubmissionOfRecommendation: null,
+					isMaterialChange: undefined
 				}
 			]);
 		});

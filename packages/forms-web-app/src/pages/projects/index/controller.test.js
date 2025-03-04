@@ -121,7 +121,6 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
-					decisionCompletedDate: null,
 					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
 					mapAccessToken: 'mock map access token',
 					preExamSubStages: {
@@ -134,9 +133,11 @@ describe('pages/projects/index/controller', () => {
 					processGuideStages,
 					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
 					proposal: 'Generating Stations',
-					recommendationCompletedDate: null,
 					rule6Document: undefined,
-					rule8Document: undefined
+					rule8Document: undefined,
+					recommendationCompletedDate: null,
+					decisionCompletedDate: null,
+					backOfficeCase: false
 				});
 			});
 		});
@@ -170,7 +171,6 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'mock@email.com',
-					decisionCompletedDate: null,
 					latestUpdate: null,
 					mapAccessToken: 'mock map access token',
 					preExamSubStages: {
@@ -183,9 +183,11 @@ describe('pages/projects/index/controller', () => {
 					processGuideStages,
 					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
 					proposal: 'Generating Stations',
-					recommendationCompletedDate: null,
 					rule6Document: undefined,
-					rule8Document: undefined
+					rule8Document: undefined,
+					decisionCompletedDate: null,
+					recommendationCompletedDate: null,
+					backOfficeCase: false
 				});
 			});
 		});

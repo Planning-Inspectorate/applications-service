@@ -15,6 +15,7 @@ const {
 	getExaminationOrDecisionCompletedDate
 } = require('./_utils/examination-or-decision-completed-date');
 const { getMapAccessToken } = require('../../_services');
+const { isBackOfficeCaseReference } = require('./_utils/is-backoffice-case-reference');
 
 const view = 'projects/index/view.njk';
 
@@ -58,6 +59,7 @@ const getProjectsIndexController = async (req, res, next) => {
 			applicationData.dateOfRecommendations,
 			applicationData.stage5ExtensionToDecisionDeadline
 		);
+		const backOfficeCase = isBackOfficeCaseReference(caseRef);
 
 		return res.render(view, {
 			...getPageData(i18n, applicationData, projectUpdates),
@@ -67,7 +69,8 @@ const getProjectsIndexController = async (req, res, next) => {
 			rule8Document,
 			recommendationCompletedDate,
 			decisionCompletedDate,
-			mapAccessToken
+			mapAccessToken,
+			backOfficeCase
 		});
 	} catch (error) {
 		logger.error(error);
