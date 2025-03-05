@@ -12,7 +12,6 @@ const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks')
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
 const formSanitisationMiddleware = require('./middleware/form-sanitisation');
 const { plannedOutage } = require('./middleware/planned-outage');
-const { handleEncodedSpacesInUrl } = require('./middleware/handle-encoded-spaces');
 const {
 	setLocalslDisplayCookieBannerValue
 } = require('./middleware/set-locals-display-cookie-banner-value');
@@ -69,7 +68,6 @@ app.use(session(sessionStoreConfig));
 app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
-app.use(handleEncodedSpacesInUrl);
 
 const staticOptions = {
 	maxAge: config.cacheControl.maxAge
