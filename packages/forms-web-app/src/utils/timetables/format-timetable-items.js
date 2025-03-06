@@ -18,9 +18,9 @@ const removeTimetableItemFormatting = (description) => {
 		//TODO: check if deadline items still contain html elements as we might not need to parse this at all
 		.map((item) =>
 			item
-				.replace(/&amp;/g, '&')
 				.replace(/&#39;/g, "'")
 				.replace(/&quot;/g, '"')
+				.replace(/&amp;/g, '&')
 		);
 
 	return deadlineItems;
