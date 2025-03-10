@@ -1,4 +1,7 @@
 const { getIndexController } = require('./controller');
+const { featureFlag } = require('../../config');
+
+featureFlag.allowWelshCases = true;
 
 const defaultPageData = {
 	homePageUrls: {
@@ -31,7 +34,10 @@ describe('pages/index/controller', () => {
 		});
 
 		it('should render the page using correct template and data', () => {
-			expect(res.render).toHaveBeenCalledWith('index/view.njk', defaultPageData);
+			expect(res.render).toHaveBeenCalledWith('index/view.njk', {
+				...defaultPageData,
+				allowWelshCases: true
+			});
 		});
 	});
 });

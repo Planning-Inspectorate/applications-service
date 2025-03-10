@@ -26,9 +26,11 @@
 						{{ t('index.paragraph2') }}
 					</p>
 
-					<p class="masthead__text">
-						{{ t('index.paragraph3', { link: '<a class="govuk-link govuk-link--inverse" href="' + pinsIndexURL + '">' + t('index.paragraph3LinkText') + '</a>' }) | safe }}
-					</p>
+					{% if not allowWelshCases %}
+						<p class="masthead__text">
+							{{ t('index.paragraph3', { link: '<a class="govuk-link govuk-link--inverse" href="' + pinsIndexURL + '">' + t('index.paragraph3LinkText') + '</a>' }) | safe }}
+						</p>
+					{% endif %}
 				</div>
 			</div>
 		</div>

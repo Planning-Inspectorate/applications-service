@@ -93,6 +93,7 @@ services:
       APPLICATIONS_SERVICE_API_URL: http://applications-service-api:3000
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
+      FEATURE_ALLOW_WELSH_CASES: 'true'
       FEATURE_APPLICATION_INSIGHTS: 'false'
       FEATURE_HOME_PAGE: 'true'
       FEATURE_PRIMARY_NAVIGATION: 'true'
