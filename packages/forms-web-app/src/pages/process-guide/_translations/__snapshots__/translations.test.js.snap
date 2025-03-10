@@ -81,7 +81,7 @@ exports[`pages/process-guide/_translations should return the correct English tra
     "heading1": "Pre-examination",
     "linkText": "What happens during the pre-examination stage.",
     "paragraph1": "The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.",
-    "paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.",
+    "paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 30 days.",
     "paragraph3": "The pre-examination stage usually takes about 3 months.",
   },
   "recommendation": {
@@ -173,7 +173,7 @@ exports[`pages/process-guide/_translations should return the correct Welsh trans
     "heading1": "Cyn-archwilio",
     "linkText": "Beth sy'n digwydd yn ystod y cam cyn-archwilio.",
     "paragraph1": "Penodir Awdurdod Archwilio sy'n cynnwys un neu fwy o arolygwyr. Mae'n rhaid i unrhyw un sydd eisiau lleisio'i farn allu cofrestru yn ystod y cam hwn.",
-    "paragraph2": "Mae'n rhaid i'r ymgeisydd gyhoeddi bod y cais wedi cael ei dderbyn gennym. Bydd yn cynnwys pryd a sut y gall partïon gofrestru i gymryd rhan. Mae'r cyfnod ar gyfer cofrestru'n cael ei osod gan yr ymgeisydd, ond mae'n rhaid iddo beidio â bod yn llai na 28 niwrnod.",
+    "paragraph2": "Mae'n rhaid i'r ymgeisydd gyhoeddi bod y cais wedi cael ei dderbyn gennym. Bydd yn cynnwys pryd a sut y gall partïon gofrestru i gymryd rhan. Mae'r cyfnod ar gyfer cofrestru'n cael ei osod gan yr ymgeisydd, ond mae'n rhaid iddo beidio â bod yn llai na 30 niwrnod.",
     "paragraph3": "Mae'r cam cyn-archwilio'n cymryd oddeutu 3 mis fel arfer.",
   },
   "recommendation": {
