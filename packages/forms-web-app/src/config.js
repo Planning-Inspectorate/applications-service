@@ -6,6 +6,7 @@ const httpPort = Number(process.env.PORT || 3000);
 const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
+	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	application: {
 		defaultDisplayDateFormat: 'D MMMM YYYY'
 	},
@@ -62,7 +63,8 @@ module.exports = {
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
 		),
 		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
-		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true'
+		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
+		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true'
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
@@ -93,6 +95,8 @@ module.exports = {
 			'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
 		customerPrivacyNotice:
 			'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
+		complaintsProcedure:
+			'https://www.gov.uk/government/organisations/planning-inspectorate/about/complaints-procedure',
 		freedomOfInformation: 'https://www.gov.uk/make-a-freedom-of-information-request',
 		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate',
 		dataProtection: 'https://www.gov.uk/data-protection',
@@ -104,6 +108,8 @@ module.exports = {
 			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation',
 		developmentConsentAndAdviceWelsh:
 			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation.cy',
+		preApplicationProspectus:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-2024-pre-application-prospectus',
 		nationalPolicyStatements:
 			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-national-policy-statements',
 		nationalPolicyStatementsWelsh:

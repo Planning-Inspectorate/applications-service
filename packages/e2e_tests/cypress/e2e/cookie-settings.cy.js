@@ -14,7 +14,7 @@ describe('Accept and Decline cookie settings on view cookies page', () => {
 	it('Should navigate to the view cookies page and accept cookies', () => {
 		cookies.clickOnCookieChoice('view');
 		cy.url().should('include', '/cookies');
-		basepage.locateH1ByText('Cookies on application service');
+		basepage.locateH1ByText('Cookies on the Find a National Infrastructure Project service');
 		cookies.selectRadioChoice('yes');
 		cookies.clickSaveChangesButton();
 		cookies.cookiesUpdatedText();
@@ -26,7 +26,7 @@ describe('Accept and Decline cookie settings on view cookies page', () => {
 	it('Should navigate to the view cookies page and decline cookies', () => {
 		cookies.clickOnCookieChoice('view');
 		cy.url().should('include', '/cookies');
-		basepage.locateH1ByText('Cookies on application service');
+		basepage.locateH1ByText('Cookies on the Find a National Infrastructure Project service');
 		cookies.selectRadioChoice('no');
 		cookies.clickSaveChangesButton();
 		cookies.cookiesUpdatedText();

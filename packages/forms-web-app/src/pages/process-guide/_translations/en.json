@@ -19,7 +19,7 @@
 	"preExamination": {
 		"heading1": "Pre-examination",
 		"paragraph1": "The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.",
-		"paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.",
+		"paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 30 days.",
 		"paragraph3": "The pre-examination stage usually takes about 3 months.",
 		"linkText": "What happens during the pre-examination stage."
 	},
@@ -40,7 +40,8 @@
 	},
 	"postDecision": {
 		"heading1": "What happens after the decision is made",
-		"paragraph1": "Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.",
+		"paragraph1": "Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.",
+		"paragraph2": "This must happen within 6 weeks.",
 		"linkText": "What you can do after the decision has been made."
 	},
 	"materialChange": {

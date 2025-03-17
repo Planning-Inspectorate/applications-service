@@ -1,6 +1,5 @@
 const { pick, omit, invert } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
-const { featureFlag } = require('../lib/config');
 
 const NI_MAPPING = {
 	sector: [
@@ -124,9 +123,7 @@ const buildApiFiltersFromNIApplications = (applications) => {
 				value: mapColumnValueToApi(field, value),
 				label: mapColumnLabelToApiEn(field, value),
 				count: count,
-				...(featureFlag.allowWelshTranslation
-					? { label_cy: mapColumnLabelToApiCy(field, value) }
-					: {})
+				label_cy: mapColumnLabelToApiCy(field, value)
 			});
 		}
 	}
@@ -227,7 +224,7 @@ const mapNIApplicationToApi = (application) => {
 		anticipatedSubmissionDateNonSpecific: application.AnticipatedSubmissionDateNonSpecific,
 		confirmedDateOfDecision: application.ConfirmedDateOfDecision,
 		confirmedStartOfExamination: application.ConfirmedStartOfExamination,
-		dateOfDCOAcceptance: null, // field is in NI but we don't include it in query
+		dateOfDCOAcceptance: application.DateOfDCOAcceptance_NonAcceptance,
 		dateOfDCOSubmission: application.DateOfDCOSubmission,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
 		dateOfRecommendations: application.DateOfRecommendations,
@@ -243,14 +240,13 @@ const mapNIApplicationToApi = (application) => {
 		stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
 		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
 		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
-		isMaterialChange: application.isMaterialChange
+		isMaterialChange: application.isMaterialChange,
+		deadlineForSubmissionOfRecommendation: null,
+		deadlineForDecision: null,
+		projectNameWelsh: application.ProjectNameWelsh,
+		projectDescriptionWelsh: application.SummaryWelsh,
+		projectLocationWelsh: application.ProjectLocationWelsh
 	};
-
-	if (featureFlag.allowWelshTranslation) {
-		apiStruct.projectNameWelsh = application.ProjectNameWelsh;
-		apiStruct.projectDescriptionWelsh = application.SummaryWelsh;
-		apiStruct.projectLocationWelsh = application.ProjectLocationWelsh;
-	}
 
 	return apiStruct;
 };
@@ -294,12 +290,13 @@ const mapBackOfficeApplicationToApi = (application) => {
 		'stage4ExtensionToExamCloseDate',
 		'stage5ExtensionToDecisionDeadline',
 		'stage5ExtensionToRecommendationDeadline',
-		'isMaterialChange'
+		'isMaterialChange',
+		'deadlineForSubmissionOfRecommendation',
+		'deadlineForDecision',
+		'projectNameWelsh',
+		'projectDescriptionWelsh',
+		'projectLocationWelsh'
 	];
-
-	if (featureFlag.allowWelshTranslation) {
-		fields = fields.concat(['projectNameWelsh', 'projectDescriptionWelsh', 'projectLocationWelsh']);
-	}
 
 	const data = pick(application, fields);
 
@@ -366,7 +363,7 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
 		AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
 		DateOfDCOSubmission: getValidDateInStringOrNull(application.dateOfDCOSubmission),
-		DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
+		DateOfDCOAcceptance_NonAcceptance: application.dateOfDCOAcceptance,
 		DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
 		ConfirmedStartOfExamination: application.confirmedStartOfExamination,
 		DateTimeExaminationEnds: application.dateTimeExaminationEnds,
@@ -384,14 +381,14 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		sourceSystem: application.sourceSystem,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
 		LongLat: application.longLat,
-		isMaterialChange: application.isMaterialChange
+		isMaterialChange: application.isMaterialChange,
+		deadlineForAcceptanceDecision: application.deadlineForAcceptanceDecision,
+		deadlineForSubmissionOfRecommendation: application.deadlineForSubmissionOfRecommendation,
+		deadlineForDecision: application.deadlineForDecision,
+		ProjectNameWelsh: application.projectNameWelsh,
+		SummaryWelsh: application.projectDescriptionWelsh,
+		ProjectLocationWelsh: application.projectLocationWelsh
 	};
-
-	if (featureFlag.allowWelshTranslation) {
-		legacyStruct.ProjectNameWelsh = application.projectNameWelsh;
-		legacyStruct.SummaryWelsh = application.projectDescriptionWelsh;
-		legacyStruct.ProjectLocationWelsh = application.projectLocationWelsh;
-	}
 
 	return legacyStruct;
 };

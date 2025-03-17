@@ -32,7 +32,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.18.1
+      ref: refs/tags/release/3.20.0
   pipelines:
     - pipeline: build
       source: Applications Service Build
@@ -61,6 +61,7 @@ extends:
           - name: Deploy API
             condition: eq(${{ parameters.deployAPI }}, 'true')
             steps:
+              - checkout: self
               # app name is different in the training env (had to be shorter)
               - bash: |
                   if [[ $ENVIRONMENT == "training" ]]; then
@@ -73,15 +74,22 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
-              - template: ../steps/azure_web_app_deploy.yml
+              - template: ../steps/azure_web_app_deploy_slot.yml
                 parameters:
                   appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
+                  slot: default
+              - script: |
+                  echo "Verifying API Version (using git hash)..."
+                  bash ./verify_commit_hash.sh "API" "https://pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001.azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                displayName: API Verify Version
+                failOnStderr: true
           - name: Deploy Web
             condition: eq(${{ parameters.deployWeb }}, 'true')
             steps:
+              - checkout: self
               # app name is different in the training env (had to be shorter)
               - bash: |
                   if [[ $ENVIRONMENT == "training" ]]; then
@@ -94,12 +102,23 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
-              - template: ../steps/azure_web_app_deploy.yml
+              - template: ../steps/azure_web_app_deploy_slot.yml
                 parameters:
                   appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
+                  slot: default
+              - script: |
+                  echo "Verifying Web Version (using git hash)..."
+                  if [ "$(ENVIRONMENT)" == "prod" ]; then
+                      url="https://national-infrastructure-consenting.planninginspectorate.gov.uk/health"
+                  else
+                      url="https://applications-service-$(ENVIRONMENT).planninginspectorate.gov.uk/health"
+                  fi
+                  bash ./verify_commit_hash.sh "Web" "$url" "$(resources.pipeline.build.sourceCommit)" 3
+                displayName: Web Verify Version
+                failOnStderr: true
           - name: Deploy Back Office Subscriber Functions
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
             steps:

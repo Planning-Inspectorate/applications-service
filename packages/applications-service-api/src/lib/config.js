@@ -10,6 +10,7 @@ const path = require('path');
 const { parseCSV } = require('../utils/parse');
 
 module.exports = {
+	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	backOfficeIntegration: {
 		caseReferences: parseCSV(process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES),
 		getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS,
@@ -113,6 +114,6 @@ module.exports = {
 	},
 	featureFlag: {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
-		allowWelshTranslation: true
+		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true'
 	}
 };

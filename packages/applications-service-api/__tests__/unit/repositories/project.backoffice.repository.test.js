@@ -2,6 +2,7 @@ const {
 	getByCaseReference,
 	getAllApplications
 } = require('../../../src/repositories/project.backoffice.repository');
+const config = require('../../../src/lib/config');
 const { APPLICATION_DB } = require('../../__data__/application');
 const mockFindUnique = jest.fn();
 const mockFindMany = jest.fn();
@@ -31,6 +32,10 @@ describe('project repository', () => {
 		});
 	});
 	describe('getAllApplications', () => {
+		beforeEach(() => {
+			config.featureFlag.allowWelshCases = true;
+		});
+
 		it('calls findMany with no options', async () => {
 			await getAllApplications();
 
@@ -78,20 +83,23 @@ describe('project repository', () => {
 					AND: [
 						{
 							OR: [
-								{ projectName: { contains: searchTerm } },
-								{ projectNameWelsh: { contains: searchTerm } },
+								{ caseReference: { contains: searchTerm } },
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: 'test' } } },
-										{ applicant: { firstName: { contains: 'test' } } },
-										{ applicant: { lastName: { contains: 'test' } } }
+									AND: [
+										{ projectName: { contains: searchTerm.split(' ')[0] } },
+										{ projectName: { contains: searchTerm.split(' ')[1] } }
 									]
 								},
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: 'search' } } },
-										{ applicant: { firstName: { contains: 'search' } } },
-										{ applicant: { lastName: { contains: 'search' } } }
+									AND: [
+										{ projectNameWelsh: { contains: searchTerm.split(' ')[0] } },
+										{ projectNameWelsh: { contains: searchTerm.split(' ')[1] } }
+									]
+								},
+								{
+									AND: [
+										{ applicant: { organisationName: { contains: searchTerm.split(' ')[0] } } },
+										{ applicant: { organisationName: { contains: searchTerm.split(' ')[1] } } }
 									]
 								}
 							]
@@ -126,6 +134,25 @@ describe('project repository', () => {
 			});
 		});
 
+		it('excludes welsh cases (FEATURE_ALLOW_WELSH_CASES=false)', async () => {
+			config.featureFlag.allowWelshCases = false;
+			await getAllApplications({});
+			expect(mockFindMany).toBeCalledWith({
+				include: { applicant: true },
+				where: {
+					AND: [
+						{
+							regions: {
+								not: {
+									contains: 'wales'
+								}
+							}
+						}
+					]
+				}
+			});
+		});
+
 		it('calls findMany with filters and search term', async () => {
 			const searchTerm = 'test';
 			const filters = {
@@ -140,14 +167,15 @@ describe('project repository', () => {
 					AND: [
 						{
 							OR: [
-								{ projectName: { contains: searchTerm } },
-								{ projectNameWelsh: { contains: searchTerm } },
+								{ caseReference: { contains: searchTerm } },
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: searchTerm } } },
-										{ applicant: { firstName: { contains: searchTerm } } },
-										{ applicant: { lastName: { contains: searchTerm } } }
-									]
+									AND: [{ projectName: { contains: searchTerm } }]
+								},
+								{
+									AND: [{ projectNameWelsh: { contains: searchTerm } }]
+								},
+								{
+									AND: [{ applicant: { organisationName: { contains: searchTerm } } }]
 								}
 							]
 						},

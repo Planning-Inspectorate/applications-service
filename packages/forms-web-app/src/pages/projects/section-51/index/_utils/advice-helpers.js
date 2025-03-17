@@ -16,7 +16,8 @@ const getAdviceName = ({ organisation, firstName, lastName }, i18n) => {
 	);
 };
 
-const isAdviceMeeting = (enquiryMethod) => enquiryMethod === 'Meeting';
+const isAdviceMeeting = (enquiryMethod) => enquiryMethod?.toLowerCase() === 'meeting';
+
 const getAdviceDateText = (enquiryMethod, i18n) => {
 	return isAdviceMeeting(enquiryMethod)
 		? i18n.t('section51.dateOfMeeting')

@@ -32,8 +32,8 @@ const GET_LABEL_MAPPING = (isMaterialChange = false) => ({
 		examination: mappedLabel('Archwiliad', 'Examination'),
 		recommendation: mappedLabel('Argymhelliad', 'Recommendation'),
 		decision: mappedLabel('Penderfyniad', 'Decision'),
-		'post-decision': mappedLabel('Ôl-benderfyniad', 'Post-decision'),
-		'developers-application': mappedLabel('Cais y datblygwr', `Developer's application`)
+		post_decision: mappedLabel('Ôl-benderfyniad', 'Post-decision'),
+		developers_application: mappedLabel('Cais y datblygwr', `Developer's application`)
 	},
 	category: {
 		developersapplication: mappedLabel('Cais y datblygwr', `Developer's application`)
@@ -95,8 +95,7 @@ const mapBackOfficeDocuments = (documents, isMaterialChange) =>
 		path: document.publishedDocumentURI,
 		// status: 'Published', // should always be Published, so not needed in API response?
 		datePublished: document.datePublished,
-		// deadlineDate: "", // no equivalent in BO schema
-		// personalName: '', // no equivalent in BO schema
+		personalName: document.author,
 		representative: document.representative,
 		// whoFrom: null, // no equivalent in BO schema
 		docReference: document.documentReference,

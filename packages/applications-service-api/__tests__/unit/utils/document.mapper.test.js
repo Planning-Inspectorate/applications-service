@@ -146,6 +146,7 @@ describe('document mapper functions', () => {
 					representative: 'somerep',
 					docReference: 'someref',
 					author: 'someone',
+					personalName: 'someone',
 					authorWelsh: 'author welsh',
 					lastModified: '2023-06-19T10:50:31.957Z',
 					dateCreated: '2023-06-19T10:50:31.957Z'
@@ -172,10 +173,10 @@ describe('document mapper functions', () => {
 			['stage', 'examination', { cy: 'Archwiliad', en: 'Examination' }],
 			['stage', 'recommendation', { cy: 'Argymhelliad', en: 'Recommendation' }],
 			['stage', 'decision', { cy: 'Penderfyniad', en: 'Decision' }],
-			['stage', 'post-decision', { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
+			['stage', 'post_decision', { cy: 'Ôl-benderfyniad', en: 'Post-decision' }],
 			[
 				'stage',
-				'developers-application',
+				'developers_application',
 				{ cy: 'Cais y datblygwr', en: `Developer's application` }
 			],
 			[

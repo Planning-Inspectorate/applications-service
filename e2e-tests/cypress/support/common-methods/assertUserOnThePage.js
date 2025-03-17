@@ -737,7 +737,7 @@ module.exports = (pageName) => {
 			cy.url().should('include', '/what-happens-after-the-decision-is-made');
 			break;
 		case 'cookies settings':
-			cy.title().should('eq', 'Cookies on application service');
+			cy.title().should('eq', 'Cookies on the Find a National Infrastructure Project service');
 			cy.get('h1')
 				.invoke('text')
 				.then((text) => {

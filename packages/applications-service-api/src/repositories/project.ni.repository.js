@@ -1,7 +1,9 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const { pick } = require('lodash');
-const { mapNISearchTermToQuery } = require('../utils/queries');
+const config = require('../lib/config');
+const { english: stopWordList } = require('../utils/stopwords');
+const logger = require('../lib/logger');
 const getApplication = async (caseReference) =>
 	db.Project.findOne({ where: { CaseReference: caseReference } });
 
@@ -10,7 +12,8 @@ const getAllApplications = async (options = {}) => {
 
 	let findAllOptions = pick(options, ['attributes', 'offset', 'limit', 'order']);
 	findAllOptions.where = {
-		Region: { [Op.ne]: 'Wales' }
+		Region: { [Op.ne]: 'Wales' },
+		CaseReference: { [Op.notIn]: config.backOfficeIntegration.caseReferences }
 	};
 
 	if (excludeNullDateOfSubmission) {
@@ -31,19 +34,46 @@ const getAllApplications = async (options = {}) => {
 		filterStatements.push({ [Op.or]: sectorStatements });
 	}
 
-	const searchTermStatements = mapNISearchTermToQuery(searchTerm, ['ProjectName', 'PromoterName']);
-
 	// build where clause
 	if (filterStatements.length > 0)
 		findAllOptions.where = { ...findAllOptions.where, [Op.and]: filterStatements };
-	if (searchTermStatements)
+	if (searchTerm) {
+		const terms = searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
+		const searchTermStatements = {
+			[Op.or]: [
+				{ CaseReference: { [Op.like]: `%${searchTerm}%` } },
+				{
+					[Op.and]: terms.map((term) => ({
+						ProjectName: { [Op.like]: `%${term}%` }
+					}))
+				},
+				{
+					[Op.and]: terms.map((term) => ({
+						PromoterName: { [Op.like]: `%${term}%` }
+					}))
+				}
+			]
+		};
 		findAllOptions.where = { ...findAllOptions.where, ...searchTermStatements };
-	const { rows, count } = await db.Project.findAndCountAll({
-		...findAllOptions,
-		raw: true
-	});
+	}
 
-	return { applications: rows, count };
+	try {
+		const { rows, count } = await db.Project.findAndCountAll({
+			...findAllOptions,
+			raw: true
+		});
+
+		return { applications: rows, count };
+	} catch (e) {
+		logger.error(e);
+		if (e.name === 'SequelizeDatabaseError' && e.parent.code === 'ER_CANT_AGGREGATE_2COLLATIONS') {
+			return { applications: [], count: 0 };
+		} else {
+			throw e;
+		}
+	}
 };
 
 module.exports = {

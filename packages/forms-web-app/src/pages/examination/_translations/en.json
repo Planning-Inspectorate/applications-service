@@ -106,8 +106,7 @@
 		},
 		"deadlinesOpen": {
 			"phrase1": "Use this service to have your say about the",
-			"phrase2": "at the examination stage.",
-			"paragraph1": "We'll ask for your personal details and your examination comments about this project.",
+			"paragraph1": "We'll ask for your personal details and your comments about this project.",
 			"heading1": "Before you start",
 			"paragraph2": "If you're an individual and have registered as an interested party",
 			"paragraph3": "You'll need your:",
@@ -245,16 +244,17 @@
 		"heading1": "Submission Complete",
 		"notificationText1": "Your submission reference number",
 		"paragraph1": "We have received your submission. Make a note of your reference number.",
+		"paragraph2LinkText": "Go back to the project page",
 		"heading2": "Contact us",
 		"heading3": "Telephone",
-		"paragraph2": "If you have an interested party reference number, have it with you when you call.",
+		"paragraph3": "If you have an interested party reference number, have it with you when you call.",
 		"heading4": "Email",
-		"paragraph3": "When you're writing an email, quote the name of the project in the subject line.",
-		"paragraph4": "We aim to respond within 10 working days.",
+		"paragraph4": "When you're writing an email, quote the name of the project in the subject line.",
+		"paragraph5": "We aim to respond within 10 working days.",
 		"heading5": "Alternative formats",
-		"paragraph5": "Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.",
-		"paragraph6": "{{-link}} by completing a short survey.",
-		"paragraph6LinkText": "Tell us what you thought about this service"
+		"paragraph6": "Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio recording or braille.",
+		"paragraph7": "{{-link}} by completing a short survey.",
+		"paragraph7LinkText": "Tell us what you thought about this service"
 	},
 	"submissionError": {
 		"title": "Sorry, there is a problem with the service",

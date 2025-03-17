@@ -17,7 +17,7 @@ const mapBackOfficeAdviceToApi = (advice) => {
 };
 
 const mapCommonAdviceFieldsToApi = (advice) => {
-	const [firstName, ...lastName] = advice && advice.agent ? advice.agent.split(' ') : '';
+	const [firstName, ...lastName] = advice && advice.from ? advice.from.split(' ') : '';
 
 	return {
 		section51Enquiry: true,
@@ -27,7 +27,7 @@ const mapCommonAdviceFieldsToApi = (advice) => {
 		caseReference: advice?.caseReference,
 		firstName: firstName || '',
 		lastName: lastName?.join(' ') || '',
-		organisation: advice?.from,
+		organisation: advice?.agent,
 		enquiryDetail: advice?.enquiryDetails,
 		enquiryDetailWelsh: advice?.enquiryDetailsWelsh,
 		adviceGiven: advice?.adviceDetails,

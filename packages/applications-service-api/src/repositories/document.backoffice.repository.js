@@ -65,6 +65,8 @@ const getDocuments = async (query) => {
 
 	const rows = await prismaClient.document.findMany({
 		where: whereClause,
+		skip: (query?.page - 1) * query?.itemsPerPage || 0,
+		take: query?.itemsPerPage || 25,
 		orderBy: {
 			datePublished: 'desc'
 		}
@@ -82,9 +84,7 @@ const getDocumentsByType = async (queryData) =>
 			caseRef: queryData.caseReference,
 			documentType: queryData.type
 		},
-		orderBy: {
-			datePublished: 'desc'
-		},
+		orderBy: [{ datePublished: 'desc' }, { representative: 'asc' }],
 		take: 1
 	});
 

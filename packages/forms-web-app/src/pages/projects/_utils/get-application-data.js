@@ -33,10 +33,9 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 	const DateOfDCOSubmission = badDateToNull(data.DateOfDCOSubmission);
 
 	const translatedField = (englishField, welshField) => {
-		if (data.Region === 'Wales' && isLangWelsh(lang) && data[welshField]) {
+		if (data.Region?.toLowerCase().includes('wales') && isLangWelsh(lang) && data[welshField]) {
 			return data[welshField];
 		}
-
 		return data[englishField];
 	};
 
@@ -72,7 +71,12 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 		longLat: data.LongLat,
 		mapZoomLevel: data.MapZoomLevel,
 		projectLocation: translatedField('ProjectLocation', 'ProjectLocationWelsh'),
-		isMaterialChange: data.isMaterialChange
+		isMaterialChange: data.isMaterialChange,
+		deadlineForAcceptanceDecision: badDateToNull(data.deadlineForAcceptanceDecision),
+		deadlineForSubmissionOfRecommendation: badDateToNull(
+			data.deadlineForSubmissionOfRecommendation
+		),
+		deadlineForDecision: badDateToNull(data.deadlineForDecision)
 	};
 };
 

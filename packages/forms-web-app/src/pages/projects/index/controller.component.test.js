@@ -11,6 +11,7 @@ const {
 	getDocumentByType
 } = require('../../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../../_services');
+const { isBackOfficeCaseReference } = require('./_utils/is-backoffice-case-reference');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn(),
@@ -21,6 +22,10 @@ jest.mock('../../../lib/application-api-wrapper', () => ({
 
 jest.mock('../../_services', () => ({
 	getMapAccessToken: jest.fn()
+}));
+
+jest.mock('./_utils/is-backoffice-case-reference', () => ({
+	isBackOfficeCaseReference: jest.fn()
 }));
 
 const commonMockData = {
@@ -55,6 +60,7 @@ describe('projects/index/controller.component', () => {
 			});
 			getDocumentByType.mockResolvedValue({});
 			getMapAccessToken.mockResolvedValue('mock map access token');
+			isBackOfficeCaseReference.mockReturnValue(false);
 		});
 		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
 			describe('pre application ', () => {
@@ -87,41 +93,80 @@ describe('projects/index/controller.component', () => {
 				});
 			});
 			describe('acceptance', () => {
-				it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
-					getProjectData.mockResolvedValue({
-						data: {
-							...commonMockData,
-							DateOfDCOSubmission: '2020-01-01',
-							Stage: 2
-						},
-						resp_code: 200
+				describe('back office case', () => {
+					beforeEach(() => {
+						isBackOfficeCaseReference.mockReturnValue(true);
 					});
+					it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								deadlineForAcceptanceDecision: '2020-01-29',
+								Stage: 2
+							},
+							resp_code: 200
+						});
 
-					const response = await request.get('/projects/EN010085');
+						const response = await request.get('/projects/BC0110001');
 
-					expect(response.status).toEqual(200);
-					//  Add 28 days to DateOfDCOSubmission
-					expect(response.text).toContain(
-						'The decision whether to accept the application for examination will be made by 29 January 2020.'
-					);
+						expect(response.status).toEqual(200);
+						expect(response.text).toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
+					});
+					it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								deadlineForAcceptanceDecision: null,
+								Stage: 2
+							},
+							resp_code: 200
+						});
+
+						const response = await request.get('/projects/BC0110001');
+
+						expect(response.status).toEqual(200);
+						expect(response.text).not.toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
+					});
 				});
+				describe('NI case', () => {
+					it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								DateOfDCOSubmission: '2020-01-01',
+								Stage: 2
+							},
+							resp_code: 200
+						});
 
-				it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
-					getProjectData.mockResolvedValue({
-						data: {
-							...commonMockData,
-							DateOfDCOSubmission: null,
-							Stage: 2
-						},
-						resp_code: 200
+						const response = await request.get('/projects/EN010085');
+
+						expect(response.status).toEqual(200);
+						expect(response.text).toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
 					});
+					it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								DateOfDCOSubmission: null,
+								Stage: 2
+							},
+							resp_code: 200
+						});
 
-					const response = await request.get('/projects/EN010085');
+						const response = await request.get('/projects/EN010085');
 
-					expect(response.status).toEqual(200);
-					expect(response.text).not.toContain(
-						'The decision whether to accept the application for examination will be made by 02 January 2020.'
-					);
+						expect(response.status).toEqual(200);
+						expect(response.text).not.toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
+					});
 				});
 			});
 			describe('pre examination', () => {
@@ -140,7 +185,7 @@ describe('projects/index/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).toContain(
-						'This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
+						'You will be able to register to have your say when the registration period opens.'
 					);
 				});
 			});

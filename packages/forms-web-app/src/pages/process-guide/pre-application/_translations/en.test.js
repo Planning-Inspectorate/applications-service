@@ -20,7 +20,9 @@ describe('pages/process-guide/pre-application/_translations/en', () => {
 			paragraph5LinkText: 'Check the guide on how you can have your say',
 			heading3: 'About the pre-application service for applicants',
 			paragraph6:
-				'We offer a pre-application service for applicants who are preparing an application. This is a free service.',
+				'We offer a pre-application service for applicants who are preparing an application. This is a fee-based service. {{-link}}',
+			paragraph6LinkText:
+				'View our pre-application prospectus for more information on the fee structure.',
 			paragraph7: 'This includes:',
 			listItem6: 'providing advice about how to prepare an application',
 			listItem7: 'pre-submission checks and reviews of draft documents',

@@ -1,11 +1,14 @@
 {% set preRepsDescText %}
 	<p class="govuk-body">
-		{{ t('projectsIndex.projectStage.preexamination.preReps.paragraph1',
-		{ link: '<a href="/having-your-say-guide/registering-have-your-say" class="govuk-link">' + t('projectsIndex.projectStage.preexamination.preReps.linkText1') + '</a>'}) | safe }}
+		{{ t('projectsIndex.projectStage.preexamination.preReps.paragraph1') }}
 	</p>
 
 	<p class="govuk-body">
-		<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">{{t('projectsIndex.projectStage.preexamination.preReps.linkText2')}}</a>
+		{{ t('projectsIndex.projectStage.preexamination.preReps.paragraph2') }}
+	</p>
+
+	<p class="govuk-body">
+		<a href='/having-your-say-guide/registering-have-your-say' class="govuk-link">{{t('projectsIndex.projectStage.preexamination.preReps.linkText1')}}</a>
 	</p>
 {% endset %}
 
