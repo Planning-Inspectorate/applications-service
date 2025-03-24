@@ -5,7 +5,13 @@ const {
 	extractRootDomainNameFromHostnameAndSubdomains
 } = require('./extract-root-domain-name-from-full-domain-name');
 
-const defaultKeepMeCookies = ['connect.sid', cookieConfig.COOKIE_POLICY_KEY, localesQueryCookieID];
+const defaultKeepMeCookies = [
+	'connect.sid',
+	cookieConfig.COOKIE_POLICY_KEY,
+	localesQueryCookieID,
+	'ARRAffinity',
+	'ARRAffinitySameSite'
+];
 
 /**
  * This is a brute force attempt at removing any unwanted cookies.
