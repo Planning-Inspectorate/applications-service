@@ -3,6 +3,7 @@
 exports[`locales/errors should return the correct English errors translations 1`] = `
 {
   "common.contactFormLinkText": "Fill out our contact form",
+  "common.errorId": "Error ID",
   "common.online": "Online:",
   "common.phone": "Phone:",
   "common.questions": "If you have any questions, you can contact us:",
@@ -22,6 +23,7 @@ exports[`locales/errors should return the correct English errors translations 1`
 exports[`locales/errors should return the correct Welsh errors translations 1`] = `
 {
   "common.contactFormLinkText": "Llenwch ein ffurflen gyswllt",
+  "common.errorId": "ID gwall",
   "common.online": "Ar-lein:",
   "common.phone": "Ffôn:",
   "common.questions": "Os oes gennych unrhyw gwestiynau, gallwch gysylltu â ni:",
