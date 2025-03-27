@@ -40,10 +40,18 @@ describe('pages/_middleware/add-global-middleware', () => {
 			expect(res.locals).toMatchObject({
 				global: {
 					headerTitle: 'Find a National Infrastructure Project',
-					localeSelectorLinks: [
-						{ active: true, name: 'English', url: '/?lang=en' },
-						{ active: false, name: 'Cymraeg', url: '/?lang=cy' }
-					],
+					localeSelectorLinks: {
+						en: {
+							active: true,
+							name: 'English',
+							url: '/?lang=en'
+						},
+						cy: {
+							active: false,
+							name: 'Cymraeg',
+							url: '/?lang=cy'
+						}
+					},
 					primaryNavigationLinks: [
 						{ active: true, href: '/', text: 'Home' },
 						{
