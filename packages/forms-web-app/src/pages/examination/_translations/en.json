@@ -82,6 +82,7 @@
 		"listItem11": "physical characteristics",
 		"listItem12": "sex life",
 		"listItem13": "sexual orientation",
+		"labelText": "Your comments",
 		"errorMessage1": "Enter a comment",
 		"errorMessage2": "Your comment must be 65,234 characters or less"
 	},
