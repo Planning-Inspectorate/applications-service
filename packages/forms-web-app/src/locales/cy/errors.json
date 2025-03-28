@@ -4,6 +4,7 @@
 	"common.online": "Ar-lein:",
 	"common.phone": "Ffôn:",
 	"common.contactFormLinkText": "Llenwch ein ffurflen gyswllt",
+	"common.errorId": "ID gwall",
 	"pageNotFound.heading": "Tudalen heb ei chanfod",
 	"pageNotFound.paragraph1": "Os teipioch chi'r cyfeiriad gwe, gwiriwch ei fod yn gywir.",
 	"pageNotFound.paragraph2": "Os gludoch chi'r cyfeiriad gwe, gwiriwch eich bod wedi copïo'r cyfeiriad cyfan.",

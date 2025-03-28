@@ -6,6 +6,13 @@
       <h1>Bad Request</h1>
 
       <p data-cy="400-error-message">{{ message }}</p>
+
+			{% if correlationId %}
+				<p class="govuk-body">
+					Error ID:	{{ correlationId }}
+				</p>
+			{% endif %}
+
     </div>
   </div>
 {% endblock %}

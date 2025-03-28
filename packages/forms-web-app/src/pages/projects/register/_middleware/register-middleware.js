@@ -22,7 +22,10 @@ const registerMiddleware = (req, res, next) => {
 		logger.error(error);
 		if (req.get('Referrer'))
 			logger.info(`Referrer for error (${error.message}) - ${req.get('Referrer')}`);
-		return res.render('error/have-your-say-journey-error');
+
+		const correlationId = res.get('x-app-insights-correlation-id');
+
+		return res.render('error/have-your-say-journey-error', { correlationId });
 	}
 };
 
