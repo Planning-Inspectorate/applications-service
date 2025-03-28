@@ -13,10 +13,10 @@ describe('pages/_utils/get-links/get-locale-selector-links', () => {
 
 					const localeSelectorLinks = getLocaleSelectorLinks(cookies, path, query);
 					it('should return the locale selector links with English active value set to true', () => {
-						expect(localeSelectorLinks).toEqual([
-							{ active: true, name: 'English', url: '/mock-path?lang=en' },
-							{ active: false, name: 'Cymraeg', url: '/mock-path?lang=cy' }
-						]);
+						expect(localeSelectorLinks).toEqual({
+							cy: { active: false, name: 'Cymraeg', url: '/mock-path?lang=cy' },
+							en: { active: true, name: 'English', url: '/mock-path?lang=en' }
+						});
 					});
 				});
 
@@ -29,10 +29,10 @@ describe('pages/_utils/get-links/get-locale-selector-links', () => {
 
 					const localeSelectorLinks = getLocaleSelectorLinks(cookies, path, query);
 					it('should return the locale selector links with Welsh active value set to true', () => {
-						expect(localeSelectorLinks).toEqual([
-							{ active: false, name: 'English', url: '/mock-path?lang=en' },
-							{ active: true, name: 'Cymraeg', url: '/mock-path?lang=cy' }
-						]);
+						expect(localeSelectorLinks).toEqual({
+							cy: { active: true, name: 'Cymraeg', url: '/mock-path?lang=cy' },
+							en: { active: false, name: 'English', url: '/mock-path?lang=en' }
+						});
 					});
 				});
 			});
@@ -45,10 +45,10 @@ describe('pages/_utils/get-links/get-locale-selector-links', () => {
 
 					const localeSelectorLinks = getLocaleSelectorLinks(cookies, path, query);
 					it('should return the locale selector links with English active value set to true', () => {
-						expect(localeSelectorLinks).toEqual([
-							{ active: true, name: 'English', url: '/mock-path?lang=en' },
-							{ active: false, name: 'Cymraeg', url: '/mock-path?lang=cy' }
-						]);
+						expect(localeSelectorLinks).toEqual({
+							cy: { active: false, name: 'Cymraeg', url: '/mock-path?lang=cy' },
+							en: { active: true, name: 'English', url: '/mock-path?lang=en' }
+						});
 					});
 				});
 
@@ -61,10 +61,10 @@ describe('pages/_utils/get-links/get-locale-selector-links', () => {
 
 					const localeSelectorLinks = getLocaleSelectorLinks(cookies, path, query);
 					it('should return the locale selector links with Welsh active value set to true', () => {
-						expect(localeSelectorLinks).toEqual([
-							{ active: false, name: 'English', url: '/mock-path?lang=en' },
-							{ active: true, name: 'Cymraeg', url: '/mock-path?lang=cy' }
-						]);
+						expect(localeSelectorLinks).toEqual({
+							cy: { active: true, name: 'Cymraeg', url: '/mock-path?lang=cy' },
+							en: { active: false, name: 'English', url: '/mock-path?lang=en' }
+						});
 					});
 				});
 			});
@@ -76,10 +76,10 @@ describe('pages/_utils/get-links/get-locale-selector-links', () => {
 
 				const localeSelectorLinks = getLocaleSelectorLinks(cookies, path, query);
 				it('should return the locale selector links with the default locale active value set to true', () => {
-					expect(localeSelectorLinks).toEqual([
-						{ active: true, name: 'English', url: '/mock-path?lang=en' },
-						{ active: false, name: 'Cymraeg', url: '/mock-path?lang=cy' }
-					]);
+					expect(localeSelectorLinks).toEqual({
+						cy: { active: false, name: 'Cymraeg', url: '/mock-path?lang=cy' },
+						en: { active: true, name: 'English', url: '/mock-path?lang=en' }
+					});
 				});
 			});
 		});
