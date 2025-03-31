@@ -8,12 +8,8 @@
 	&__locale {
 		display: flex;
 		align-items: center;
-
-		&:not(:first-child) {
-			&::before {
-				content: '\007c';
-				margin: 0 5px;
-			}
-		}
+	}
+	&__separator {
+		margin: 0 5px;
 	}
 }
