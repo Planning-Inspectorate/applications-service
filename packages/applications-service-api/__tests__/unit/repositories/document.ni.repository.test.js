@@ -93,12 +93,12 @@ describe('documentV3 service', () => {
 			});
 		});
 
-		it('calls query api with searchTerm if it is specified', async () => {
+		it('calls query api with a split and filtered searchTerm if it is specified', async () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
 				itemsPerPage: 25,
-				searchTerm: 'foo'
+				searchTerm: 'a search term'
 			});
 
 			expect(mockFindAndCountAll).toBeCalledWith({
@@ -109,10 +109,27 @@ describe('documentV3 service', () => {
 						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
-								{ description: { [Op.like]: '%foo%' } },
-								{ personal_name: { [Op.like]: '%foo%' } },
-								{ representative: { [Op.like]: '%foo%' } },
-								{ mime: { [Op.like]: '%foo%' } }
+								{
+									[Op.and]: [
+										{ description: { [Op.like]: '%search%' } },
+										{ description: { [Op.like]: '%term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ personal_name: { [Op.like]: '%search%' } },
+										{ personal_name: { [Op.like]: '%term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ representative: { [Op.like]: '%search%' } },
+										{ representative: { [Op.like]: '%term%' } }
+									]
+								},
+								{
+									[Op.and]: [{ mime: { [Op.like]: '%search%' } }, { mime: { [Op.like]: '%term%' } }]
+								}
 							]
 						}
 					]
@@ -193,12 +210,12 @@ describe('documentV3 service', () => {
 			});
 		});
 
-		it('calls query api with searchTerm and stage filter when they are specified', async () => {
+		it('calls query api with a split and filtered searchTerm and stage filter when they are specified', async () => {
 			await fetchDocuments({
 				caseReference: 'EN010085',
 				page: 1,
 				itemsPerPage: 25,
-				searchTerm: 'foo',
+				searchTerm: 'a search term',
 				filters: [
 					{
 						name: 'stage',
@@ -216,10 +233,27 @@ describe('documentV3 service', () => {
 						STAGE_NOT_EMPTY_OR_0_STATEMENT,
 						{
 							[Op.or]: [
-								{ description: { [Op.like]: '%foo%' } },
-								{ personal_name: { [Op.like]: '%foo%' } },
-								{ representative: { [Op.like]: '%foo%' } },
-								{ mime: { [Op.like]: '%foo%' } }
+								{
+									[Op.and]: [
+										{ description: { [Op.like]: '%search%' } },
+										{ description: { [Op.like]: '%term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ personal_name: { [Op.like]: '%search%' } },
+										{ personal_name: { [Op.like]: '%term%' } }
+									]
+								},
+								{
+									[Op.and]: [
+										{ representative: { [Op.like]: '%search%' } },
+										{ representative: { [Op.like]: '%term%' } }
+									]
+								},
+								{
+									[Op.and]: [{ mime: { [Op.like]: '%search%' } }, { mime: { [Op.like]: '%term%' } }]
+								}
 							]
 						},
 						{
