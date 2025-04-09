@@ -31,7 +31,7 @@ describe('pages/process-guide/pre-examination/_translations/en', () => {
 			paragraph3: 'The Examining Authority will:',
 			paragraph4: 'You must register during the pre-examination stage to have your say.',
 			paragraph5:
-				"The registration for each project will be open for at least 28 days to give you time to register. The deadline for registering will be in the applicant's advert, or you can check the project page of this website. You can do this by clicking the All projects link at the top of this page and searching for the project.",
+				"The registration for each project will be open for at least 30 days to give you time to register. The deadline for registering will be in the applicant's advert, or you can check the project page of this website. You can do this by clicking the All projects link at the top of this page and searching for the project.",
 			paragraph6:
 				'There is a separate guide with more information about the steps in the process for {{-link}}.',
 			paragraph6LinkText:

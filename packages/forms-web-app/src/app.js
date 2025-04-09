@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
+
 const { configureSessionStore } = require('./lib/session');
 const { NotFoundError } = require('./lib/errors');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
@@ -32,6 +33,7 @@ const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
 const { configureI18n, i18nRedirect } = require('./i18n');
+const { attachCorrelationId } = require('./middleware/attach-correlation-id');
 
 const app = express();
 
@@ -53,6 +55,9 @@ if (config.server.useSecureSessionCookie) {
 }
 
 const sessionStoreConfig = configureSessionStore(session);
+
+// Attach App Insights correlation id to response header
+app.use(attachCorrelationId);
 
 app.use(compression());
 app.use(express.json());

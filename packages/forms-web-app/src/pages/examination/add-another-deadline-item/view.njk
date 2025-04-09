@@ -8,7 +8,6 @@
 
 {% set backLinkUrl = backLinkUrl %}
 {% set pageTitle = t("examination.addAnotherDeadlineItem.title") %}
-{% set hintHtml = '<legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">' + t("examination.addAnotherDeadlineItem.hintText1") + '</legend>' %}
 
 {% block pageTitle %}
 	{% if errors %}
@@ -94,13 +93,10 @@
 							},
 							fieldset: {
 								legend: {
-									text: '',
+									text: t("examination.addAnotherDeadlineItem.hintText1"),
 									isPageHeading: true,
 									classes: "govuk-fieldset__legend--m"
 								}
-							},
-							hint: {
-								html: hintHtml
 							},
 							items: options
 						}) }}
