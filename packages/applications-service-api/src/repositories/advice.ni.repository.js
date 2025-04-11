@@ -1,15 +1,28 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const { english: stopWordList } = require('../utils/stopwords');
+const { isGeneralAdviceCaseReference } = require('../utils/is-general-advice-case-reference');
+const { featureFlag } = require('../lib/config');
+
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
 	const terms = searchTerm?.split(' ').filter((term) => !stopWordList.includes(term.toLowerCase()));
+	const generalAdviceCaseReference = isGeneralAdviceCaseReference(caseReference);
+
 	const where = {
-		[Op.and]: [
-			{
-				caseReference
-			}
-		]
+		[Op.and]: []
 	};
+
+	if (featureFlag.displaySpecificAndGeneralAdvice && !generalAdviceCaseReference) {
+		where[Op.and].push({
+			caseReference
+		});
+	}
+
+	if (!featureFlag.displaySpecificAndGeneralAdvice) {
+		where[Op.and].push({
+			caseReference
+		});
+	}
 
 	if (terms?.length > 0) {
 		where[Op.and].push({
