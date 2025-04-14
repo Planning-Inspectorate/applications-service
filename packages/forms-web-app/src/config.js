@@ -21,7 +21,10 @@ module.exports = {
 		}
 	},
 	cacheControl: {
-		maxAge: process.env.CACHE_CONTROL_MAX_AGE || '1d'
+		maxAge: process.env.CACHE_CONTROL_MAX_AGE || '1d',
+		defaultMaxAge: process.env.CACHE_CONTROL_DEFAULT_MAX_AGE || 86400,
+		documentsMaxAge: process.env.CACHE_CONTROL_DOCUMENTS_MAX_AGE || 0,
+		representationsMaxAge: process.env.CACHE_CONTROL_REPRESENTATIONS_MAX_AGE || 0
 	},
 	db: {
 		session: {

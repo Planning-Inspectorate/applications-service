@@ -132,13 +132,15 @@ const { getProcessSubmission, postProcessSubmission } = require('./process-submi
 const { getSubmissionComplete } = require('./submission-complete/controller');
 const { getSubmissionError } = require('./submission-error/controller');
 const chooseDeadlineRouter = require('./choose-deadline/router');
+const { cacheNoStoreMiddleware } = require('../../middleware/cache-control');
 
 const router = express.Router({ mergeParams: true });
 
 router.use(
 	addCommonTranslationsMiddleware,
 	addErrorTranslationsMiddleware,
-	addExaminationTranslationsMiddleware
+	addExaminationTranslationsMiddleware,
+	cacheNoStoreMiddleware
 );
 
 router.get(`/${applicant.route}`, getApplicant);

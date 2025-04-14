@@ -41,8 +41,11 @@ const {
 const {
 	addDecisionMadeTranslationsMiddleware
 } = require('./decision-made/_middleware/add-decision-made-translations-middleware');
+const { cacheNoCacheMiddleware } = require('../../middleware/cache-control');
 
 const haveYourSayGuideRouter = express.Router();
+
+haveYourSayGuideRouter.use(cacheNoCacheMiddleware);
 
 haveYourSayGuideRouter.use(
 	addCommonTranslationsMiddleware,

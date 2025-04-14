@@ -8,6 +8,12 @@ const {
 	addRepresentationsIndexTranslationsMiddleware
 } = require('./index/_middleware/add-representations-index-translations-middleware');
 
+jest.mock('../../../middleware/cache-control', () => {
+	return {
+		cacheMustRevalidateMaxAgeMiddleware: () => jest.fn()
+	};
+});
+
 jest.mock('../_middleware/middleware', () => {
 	return {
 		projectsMiddleware: jest.fn()
@@ -30,11 +36,13 @@ describe('representations/router', () => {
 	describe('#representationsRouter', () => {
 		const get = jest.fn();
 		const post = jest.fn();
+		const use = jest.fn();
 
 		jest.doMock('express', () => ({
 			Router: () => ({
 				get,
-				post
+				post,
+				use
 			})
 		}));
 

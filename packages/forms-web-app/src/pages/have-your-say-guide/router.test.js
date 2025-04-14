@@ -99,6 +99,6 @@ describe('pages/have-your-say-guide/router', () => {
 		);
 		expect(get).toHaveBeenCalledTimes(7);
 		expect(post).toBeCalledTimes(0);
-		expect(use).toBeCalledTimes(1);
+		expect(use).toBeCalledTimes(2);
 	});
 });

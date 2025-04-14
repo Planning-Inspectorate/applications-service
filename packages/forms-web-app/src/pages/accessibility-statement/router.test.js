@@ -5,10 +5,12 @@ const {
 
 describe('pages/accessibility-statement/router', () => {
 	const get = jest.fn();
+	const use = jest.fn();
 
 	jest.doMock('express', () => ({
 		Router: () => ({
-			get
+			get,
+			use
 		})
 	}));
 

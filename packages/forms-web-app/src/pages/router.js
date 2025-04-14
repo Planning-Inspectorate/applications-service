@@ -1,4 +1,5 @@
 const express = require('express');
+const { cacheNoCacheMiddleware, cacheNoStoreMiddleware } = require('../middleware/cache-control');
 
 const { getIndexController } = require('./index/controller');
 const { getTermsAndConditionsController } = require('./terms-and-conditions/controller');
@@ -76,11 +77,13 @@ if (featureFlag.allowHomepage) {
 		indexURL,
 		addCommonTranslationsMiddleware,
 		addIndexTranslationsMiddleware,
+		cacheNoStoreMiddleware,
 		getIndexController
 	);
 	pagesRouter.get(
 		detailedInformationURL,
 		addDetailedInformationTranslationsMiddleware,
+		cacheNoStoreMiddleware,
 		getDetailedInformationController
 	);
 	pagesRouter.use(registerOfAdviceRouter);
@@ -91,6 +94,7 @@ pagesRouter.get(
 	addCheckboxAccordionTranslationsMiddleware,
 	addCommonTranslationsMiddleware,
 	addProjectSearchTranslationsMiddleware,
+	cacheNoStoreMiddleware,
 	getProjectSearchController
 );
 
@@ -100,12 +104,14 @@ pagesRouter.get(
 	registerOfApplicationsURL,
 	addCommonTranslationsMiddleware,
 	addRegisterOfApplicationsTranslationsMiddleware,
+	cacheNoStoreMiddleware,
 	getRegisterOfApplicationsController
 );
 
 pagesRouter.get(
 	termsAndConditionsURL,
 	addTermsAndConditionsTranslationsMiddleware,
+	cacheNoCacheMiddleware,
 	getTermsAndConditionsController
 );
 
@@ -113,6 +119,7 @@ pagesRouter.get(
 	cookiesURL,
 	addCommonTranslationsMiddleware,
 	addCookiesTranslationsMiddleware,
+	cacheNoCacheMiddleware,
 	getCookiesController
 );
 
@@ -128,6 +135,7 @@ pagesRouter.get(
 	contactURL,
 	addCommonTranslationsMiddleware,
 	addContactTranslationsMiddleware,
+	cacheNoCacheMiddleware,
 	getContactController
 );
 

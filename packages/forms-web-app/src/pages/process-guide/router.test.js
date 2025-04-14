@@ -40,6 +40,7 @@ const {
 const {
 	addPostDecisionTranslationsMiddleware
 } = require('./post-decision/_middleware/add-post-decision-translations-middleware');
+const { cacheNoCacheMiddleware } = require('../../middleware/cache-control');
 
 jest.mock('../_middleware/i18n/add-common-translations-middleware', () => ({
 	addCommonTranslationsMiddleware: jest.fn()
@@ -95,7 +96,8 @@ describe('pages/process-guide/router', () => {
 	it('should call the process guide routes and controllers', () => {
 		expect(use).toHaveBeenCalledWith(
 			addCommonTranslationsMiddleware,
-			addProcessGuideTranslationsMiddleware
+			addProcessGuideTranslationsMiddleware,
+			cacheNoCacheMiddleware
 		);
 
 		expect(get).toHaveBeenCalledWith(

@@ -47,6 +47,7 @@ const { getUpdatesRouter } = require('./get-updates/router');
 const { registerRouter } = require('./register/router');
 
 const { featureFlag } = require('../../config');
+const { cacheNoStoreMiddleware } = require('../../middleware/cache-control');
 
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
@@ -54,6 +55,8 @@ const projectsDocumentsURL = getProjectsDocumentsURL();
 const examinationTimetableURL = getProjectsExaminationTimetableURL();
 
 const projectsRouter = express.Router();
+
+projectsRouter.use(cacheNoStoreMiddleware);
 
 projectsRouter.use(addProjectsTranslationsMiddleware);
 

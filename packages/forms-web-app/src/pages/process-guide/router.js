@@ -42,6 +42,7 @@ const {
 const {
 	addPostDecisionTranslationsMiddleware
 } = require('./post-decision/_middleware/add-post-decision-translations-middleware');
+const { cacheNoCacheMiddleware } = require('../../middleware/cache-control');
 
 const { processGuideURL } = require('./index/config');
 const { preApplicationURL } = require('./pre-application/config');
@@ -54,7 +55,11 @@ const { postDecisionURL } = require('./post-decision/config');
 
 const processGuideRouter = express.Router();
 
-processGuideRouter.use(addCommonTranslationsMiddleware, addProcessGuideTranslationsMiddleware);
+processGuideRouter.use(
+	addCommonTranslationsMiddleware,
+	addProcessGuideTranslationsMiddleware,
+	cacheNoCacheMiddleware
+);
 
 processGuideRouter.get(
 	processGuideURL,

@@ -4,9 +4,12 @@ const { getAccessibilityStatementURL } = require('./_utils/get-accessibility-sta
 const {
 	addAccessibilityStatementTranslationsMiddleware
 } = require('./_middleware/add-accessibility-statement-translations-middleware');
+const { cacheNoCacheMiddleware } = require('../../middleware/cache-control');
 
 const accessibilityStatementRouter = express.Router();
 const accessibilityStatementURL = getAccessibilityStatementURL();
+
+accessibilityStatementRouter.use(cacheNoCacheMiddleware);
 
 accessibilityStatementRouter.get(
 	accessibilityStatementURL,

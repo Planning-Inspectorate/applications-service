@@ -39,6 +39,14 @@ const { validationErrorHandler } = require('../validators/validation-error-handl
 
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
+const { cacheNoStoreMiddleware, cacheNoCacheMiddleware } = require('../middleware/cache-control');
+
+jest.mock('../middleware/cache-control', () => {
+	return {
+		cacheMustRevalidateMaxAgeMiddleware: jest.fn(() => (req, res, next) => next()),
+		cacheNoStoreMiddleware: jest.fn(() => (req, res, next) => next())
+	};
+});
 
 jest.mock(
 	'./_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware',
@@ -116,6 +124,7 @@ describe('pages/router', () => {
 				'/',
 				addCommonTranslationsMiddleware,
 				addIndexTranslationsMiddleware,
+				cacheNoStoreMiddleware,
 				getIndexController
 			);
 
@@ -123,6 +132,7 @@ describe('pages/router', () => {
 				'/contact',
 				addCommonTranslationsMiddleware,
 				addContactTranslationsMiddleware,
+				cacheNoCacheMiddleware,
 				getContactController
 			);
 
@@ -130,6 +140,7 @@ describe('pages/router', () => {
 				'/cookies',
 				addCommonTranslationsMiddleware,
 				addCookiesTranslationsMiddleware,
+				cacheNoCacheMiddleware,
 				getCookiesController
 			);
 
@@ -144,12 +155,14 @@ describe('pages/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/terms-and-conditions',
 				addTermsAndConditionsTranslationsMiddleware,
+				cacheNoCacheMiddleware,
 				getTermsAndConditionsController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/detailed-information',
 				addDetailedInformationTranslationsMiddleware,
+				cacheNoStoreMiddleware,
 				getDetailedInformationController
 			);
 
@@ -158,6 +171,7 @@ describe('pages/router', () => {
 				addCheckboxAccordionTranslationsMiddleware,
 				addCommonTranslationsMiddleware,
 				addProjectSearchTranslationsMiddleware,
+				cacheNoStoreMiddleware,
 				getProjectSearchController
 			);
 
@@ -165,6 +179,7 @@ describe('pages/router', () => {
 				'/register-of-applications',
 				addCommonTranslationsMiddleware,
 				addRegisterOfApplicationsTranslationsMiddleware,
+				cacheNoStoreMiddleware,
 				getRegisterOfApplicationsController
 			);
 
