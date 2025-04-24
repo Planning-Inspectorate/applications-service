@@ -1,4 +1,10 @@
-const moment = require('moment');
+const moment = require('moment'); //TODO: remove this and use dayjs or date-fns to handle dates rather than js date objects
+const dayjs = require('dayjs');
+const dayjsUtcPlugin = require('dayjs/plugin/utc');
+const dayjsTimezonePlugin = require('dayjs/plugin/timezone');
+
+dayjs.extend(dayjsUtcPlugin);
+dayjs.extend(dayjsTimezonePlugin);
 
 const buildDateSting = (year, month, day) => `${year}-${month}-${day}`;
 
@@ -32,12 +38,21 @@ const setTimeToStartOfDay = (date) => new Date(date).setHours(0, 0, 0, 0);
 
 const setTimeToEndOfDay = (date) => new Date(date).setHours(23, 59, 59, 999);
 
+const localiseDate = (date, format = 'YYYY-MM-DD HH:mm:ss.SSS', timezone = 'Europe/London') => {
+	if (!date || !dayjs(date).isValid()) {
+		throw new Error(`Valid date is required: ${date}`);
+	}
+
+	return dayjs(date).tz(timezone).format(format);
+};
+
 module.exports = {
 	buildDateSting,
 	getDate,
 	getDateNow,
 	getYearNow,
 	formatDate,
+	localiseDate,
 	isNullSQLDate,
 	setTimeToStartOfDay,
 	setTimeToEndOfDay

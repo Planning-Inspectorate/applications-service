@@ -26,6 +26,7 @@ const getProjectsExaminationTimetableController = async (req, res) => {
 		const examinationTimetableData = data;
 		const projectName = examinationTimetableData?.ProjectName;
 		const pageData = getPageData(case_ref, projectName, examinationTimetableData, i18n);
+
 		return res.render(view, {
 			...pageData,
 			events: await getEvents(examinationTimetableData, i18n)
