@@ -23,7 +23,11 @@ const getEvents = async (appData, i18n) => {
 			return {
 				...timetable,
 				dateOfEvent: localiseDate(timetable.dateOfEvent),
-				dateTimeDeadlineStart: localiseDate(timetable.dateTimeDeadlineStart)
+				//some deadline start dates have null values, which the exam date logic happens to handle as it is being fed to js date object and turned into the default 1970-01-01T00:00:00.000
+				//we will need to check if the date is null before localising it, but we should have a more graceful way of handling that
+				dateTimeDeadlineStart: timetable.dateTimeDeadlineStart
+					? localiseDate(timetable.dateTimeDeadlineStart)
+					: null
 			};
 		}
 		return timetable;
