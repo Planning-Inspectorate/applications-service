@@ -2,6 +2,7 @@ const {
 	defaultKeepMeCookies,
 	removeUnwantedCookies
 } = require('../../../src/lib/remove-unwanted-cookies');
+const { EASY_AUTH } = require('../../../src/consts');
 const { mockReq, mockRes } = require('../mocks');
 const cookieConfig = require('../../../src/scripts/cookie/cookie-config');
 const {
@@ -18,7 +19,9 @@ describe('lib/remove-unwanted-cookies', () => {
 				cookieConfig.COOKIE_POLICY_KEY,
 				'lang',
 				'ARRAffinity',
-				'ARRAffinitySameSite'
+				'ARRAffinitySameSite',
+				EASY_AUTH.EASY_AUTH_COOKIE_NAME,
+				EASY_AUTH.SESSION_COOKIE_NAME
 			]);
 		});
 	});
