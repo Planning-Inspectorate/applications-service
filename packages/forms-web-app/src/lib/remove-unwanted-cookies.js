@@ -1,5 +1,6 @@
 const cookieConfig = require('../scripts/cookie/cookie-config');
 const { localesQueryCookieID } = require('../locales/config');
+const { EASY_AUTH } = require('../consts');
 
 const {
 	extractRootDomainNameFromHostnameAndSubdomains
@@ -10,7 +11,9 @@ const defaultKeepMeCookies = [
 	cookieConfig.COOKIE_POLICY_KEY,
 	localesQueryCookieID,
 	'ARRAffinity',
-	'ARRAffinitySameSite'
+	'ARRAffinitySameSite',
+	EASY_AUTH.EASY_AUTH_COOKIE_NAME,
+	EASY_AUTH.SESSION_COOKIE_NAME
 ];
 
 /**
