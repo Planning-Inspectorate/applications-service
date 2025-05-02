@@ -90,6 +90,8 @@ module.exports = {
 			'https://www.gov.uk/search/all?keywords=accessible%20document%20policy',
 		advicePages:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
+		advicePagesWelsh:
+			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-tudalennau-cyngor',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		crownCopyright:
 			'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',

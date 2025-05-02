@@ -9,7 +9,8 @@ const getGovUkUrls = (locale = 'en') => {
 		nationalPolicyStatements,
 		nationalPolicyStatementsWelsh,
 		planningGuidance,
-		advicePages
+		advicePages,
+		advicePagesWelsh
 	} = config.govUK;
 
 	return {
@@ -20,7 +21,7 @@ const getGovUkUrls = (locale = 'en') => {
 			developmentConsentAndAdviceWelsh
 		),
 		planningGuidanceUrl: planningGuidance,
-		advicePagesUrl: advicePages,
+		advicePagesUrl: getGovUkUrl(locale, advicePages, advicePagesWelsh),
 		nationalPolicyStatementsUrl: getGovUkUrl(
 			locale,
 			nationalPolicyStatements,
