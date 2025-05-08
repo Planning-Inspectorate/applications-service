@@ -109,16 +109,14 @@ extends:
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
                   slot: default
-              - script: |
-                  echo "Verifying Web Version (using git hash)..."
-                  if [ "$(ENVIRONMENT)" == "prod" ]; then
-                      url="https://national-infrastructure-consenting.planninginspectorate.gov.uk/health"
-                  else
-                      url="https://applications-service-$(ENVIRONMENT).planninginspectorate.gov.uk/health"
-                  fi
-                  bash ./verify_commit_hash.sh "Web" "$url" "$(resources.pipeline.build.sourceCommit)" 3
-                displayName: Web Verify Version
-                failOnStderr: true
+              - template: ../steps/azure_web_app_verify_git_hash.yml
+                parameters:
+                  appName: web
+                  appUrl: $(WEB_URL)/health
+                  buildCommit: $(resources.pipeline.build.sourceCommit)
+                  appRegistrationClientId: $(appRegistrationClientId)
+                  auth_enabled: "true"
+                  env: $(ENVIRONMENT)
           - name: Deploy Back Office Subscriber Functions
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
             steps:
