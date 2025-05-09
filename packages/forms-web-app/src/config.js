@@ -65,7 +65,7 @@ module.exports = {
 		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
 		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
-		allowRegisterOfAdviceContentUpdate: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
+		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
