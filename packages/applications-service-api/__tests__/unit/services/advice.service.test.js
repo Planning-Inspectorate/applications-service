@@ -53,7 +53,8 @@ describe('Advice Service', () => {
 					'BACKOFFICE-CASEID',
 					0,
 					25,
-					undefined
+					undefined,
+					[{ adviceDate: 'asc' }, { adviceId: 'asc' }]
 				);
 			});
 			it('should map advice to api', async () => {

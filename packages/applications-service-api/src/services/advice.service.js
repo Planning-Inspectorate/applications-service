@@ -24,7 +24,20 @@ const createQueryFilters = (query) => {
 	const offset = (pageNo - 1) * size;
 	const searchTerm = query?.searchTerm;
 
-	return { pageNo, size, offset, searchTerm, caseReference };
+	const allowedSortFieldsWithDirection = ['adviceDate'].flatMap((field) => [
+		field,
+		`+${field}`,
+		`-${field}`
+	]);
+
+	const defaultSort = '+adviceDate';
+	const sort = allowedSortFieldsWithDirection.includes(query?.sort) ? query?.sort : defaultSort;
+	const sortDirection = sort?.startsWith('-') ? 'desc' : 'asc';
+	const sortFieldName = sort?.replace(/^[+-]/, '');
+
+	const orderBy = [{ [sortFieldName]: sortDirection }, { adviceId: 'asc' }];
+
+	return { pageNo, size, offset, searchTerm, caseReference, orderBy };
 };
 
 const mapBackOfficeAdviceToApiWrapper = ({ count, advice }) => {
@@ -34,11 +47,11 @@ const mapBackOfficeAdviceToApiWrapper = ({ count, advice }) => {
 	};
 };
 const getAllAdvice = async (query) => {
-	const { caseReference, pageNo, size, offset, searchTerm } = createQueryFilters(query);
+	const { caseReference, pageNo, size, offset, searchTerm, orderBy } = createQueryFilters(query);
 
 	const { advice, count } = isBackOfficeCaseReference(caseReference)
 		? mapBackOfficeAdviceToApiWrapper(
-				await getAllBackOfficeAdvice(caseReference, offset, size, searchTerm)
+				await getAllBackOfficeAdvice(caseReference, offset, size, searchTerm, orderBy)
 		  )
 		: await getAllNIAdvice(caseReference, offset, size, searchTerm);
 
