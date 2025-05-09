@@ -165,6 +165,7 @@ model Project {
   createdAt                                         DateTime?    @default(now())
   modifiedAt                                        DateTime?    @default(now())
   isMaterialChange                                  Boolean?     @default(false)
+  AdviceProject																	    Advice[]     @relation("AdviceProject")
 }
 
 model ProjectUpdate {
@@ -229,4 +230,5 @@ model Advice {
   attachmentIds       String?
   createdAt           DateTime? @default(now())
   modifiedAt          DateTime? @default(now())
+  project				      Project? @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)
 }

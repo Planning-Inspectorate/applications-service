@@ -114,6 +114,7 @@ module.exports = {
 	},
 	featureFlag: {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
-		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true'
+		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	}
 };

@@ -1,8 +1,10 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const { english: stopWordList } = require('../utils/stopwords');
+
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm) => {
 	const terms = searchTerm?.split(' ').filter((term) => !stopWordList.includes(term.toLowerCase()));
+
 	const where = {
 		[Op.and]: [
 			{

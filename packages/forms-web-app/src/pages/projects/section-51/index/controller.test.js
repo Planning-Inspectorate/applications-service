@@ -97,7 +97,8 @@ describe('pages/projects/section-51/index/controller', () => {
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 1',
-								linkTitle: 'View advice to mock organisation'
+								linkTitle: 'View advice to mock organisation',
+								projectName: ''
 							},
 							{
 								enquiryDetail: 'mock enquiry detail 2',
@@ -108,7 +109,8 @@ describe('pages/projects/section-51/index/controller', () => {
 									text: 'Date of meeting:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 2',
-								linkTitle: 'View meeting with mock organisation'
+								linkTitle: 'View meeting with mock organisation',
+								projectName: ''
 							},
 							{
 								enquiryDetail: 'mock enquiry detail 3',
@@ -119,7 +121,8 @@ describe('pages/projects/section-51/index/controller', () => {
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 3',
-								linkTitle: 'View advice to mock first name mock last name'
+								linkTitle: 'View advice to mock first name mock last name',
+								projectName: ''
 							},
 							{
 								enquiryDetail: 'mock enquiry detail 4',
@@ -130,7 +133,8 @@ describe('pages/projects/section-51/index/controller', () => {
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 4',
-								linkTitle: 'View advice to Anonymous'
+								linkTitle: 'View advice to Anonymous',
+								projectName: ''
 							}
 						]
 					});

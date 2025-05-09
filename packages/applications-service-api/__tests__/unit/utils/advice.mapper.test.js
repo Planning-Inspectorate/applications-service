@@ -6,6 +6,8 @@ const {
 const {
 	ADVICE_BACKOFFICE_RESPONSE,
 	ADVICE_BACKOFFICE_DATA,
+	GENERAL_ADVICE_BACKOFFICE_RESPONSE,
+	GENERAL_ADVICE_BACKOFFICE_DATA,
 	ADVICE_NI_RESPONSE,
 	ADVICE_NI_DATA
 } = require('../../__data__/advice');
@@ -13,9 +15,13 @@ const { documentsHost } = require('../../../src/lib/config');
 
 describe('advice.mapper', () => {
 	describe('mapBackOfficeAdviceListToApi', () => {
-		it('maps the advice record to the API format', () => {
+		it('maps the project specific advice record to the API format', () => {
 			const result = mapBackOfficeAdviceListToApi(ADVICE_BACKOFFICE_DATA);
 			expect(result).toEqual(ADVICE_BACKOFFICE_RESPONSE);
+		});
+		it('maps the general advice record to the API format', () => {
+			const result = mapBackOfficeAdviceListToApi(GENERAL_ADVICE_BACKOFFICE_DATA);
+			expect(result).toEqual(GENERAL_ADVICE_BACKOFFICE_RESPONSE);
 		});
 	});
 	describe('mapBackOfficeAdviceToApi', () => {

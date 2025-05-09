@@ -18,12 +18,17 @@ const rawAdviceDocuments = async (params) => {
 	return handler('searchAdviceDocuments', url, method, {});
 };
 
-const listAdvice = async (caseReference, searchTerm = '', { itemsPerPage = 25, page = 1 }) => {
+const listAdvice = async (
+	caseReference,
+	searchTerm = '',
+	{ itemsPerPage = 25, page = 1, sortBy = '' }
+) => {
 	const { data } = await rawAdviceDocuments({
 		caseReference,
 		searchTerm,
 		size: itemsPerPage,
-		page
+		page,
+		sort: sortBy
 	});
 	return mapResponse(data);
 };
