@@ -28,7 +28,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Date advice given:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 1',
-						linkTitle: 'View advice to mock organisation'
+						linkTitle: 'View advice to mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock organisation',
@@ -39,7 +40,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Date of meeting:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 2',
-						linkTitle: 'View meeting with mock organisation'
+						linkTitle: 'View meeting with mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock first name mock last name',
@@ -50,7 +52,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Date advice given:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 3',
-						linkTitle: 'View advice to mock first name mock last name'
+						linkTitle: 'View advice to mock first name mock last name',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'Anonymous',
@@ -61,7 +64,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Date advice given:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 4',
-						linkTitle: 'View advice to Anonymous'
+						linkTitle: 'View advice to Anonymous',
+						projectName: ''
 					}
 				]);
 			});
@@ -89,7 +93,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 1',
-						linkTitle: 'Gweld cyngor i mock organisation'
+						linkTitle: 'Gweld cyngor i mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock organisation',
@@ -100,7 +105,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Dyddiad y cyfarfod:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 2',
-						linkTitle: 'Gweld cyfarfod gyda mock organisation'
+						linkTitle: 'Gweld cyfarfod gyda mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock first name mock last name',
@@ -111,7 +117,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 3',
-						linkTitle: 'Gweld cyngor i mock first name mock last name'
+						linkTitle: 'Gweld cyngor i mock first name mock last name',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'Dienw',
@@ -122,7 +129,8 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 4',
-						linkTitle: 'Gweld cyngor i Dienw'
+						linkTitle: 'Gweld cyngor i Dienw',
+						projectName: ''
 					}
 				]);
 			});

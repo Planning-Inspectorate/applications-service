@@ -26,6 +26,12 @@
 		margin: 0;
 	}
 
+	&__result-enquiry {
+		@extend .govuk-body-s;
+
+		margin-bottom: govuk-spacing(2);
+	}
+
 	&__result-meta-data {
 		@media (min-width: map-get($govuk-breakpoints, 'tablet')) {
 			display: flex;
