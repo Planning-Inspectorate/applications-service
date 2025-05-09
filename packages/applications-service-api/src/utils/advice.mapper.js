@@ -38,7 +38,9 @@ const mapCommonAdviceFieldsToApi = (advice) => {
 		dateLastModified: advice?.modifiedAt,
 		dateCreated: advice?.createdAt,
 		title: advice?.title,
-		titleWelsh: advice?.titleWelsh
+		titleWelsh: advice?.titleWelsh,
+		projectName: advice?.project?.projectName || '',
+		projectNameWelsh: advice?.project?.projectNameWelsh || ''
 	};
 };
 

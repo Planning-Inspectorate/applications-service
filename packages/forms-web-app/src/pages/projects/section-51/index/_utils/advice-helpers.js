@@ -64,9 +64,20 @@ const doesAdviceExist = (advice) => {
 };
 
 // We need to know if no advice items returned from an api is a result of a search with 0 results, or because there is no advice present.
-
 const wasSearchAttempted = (queryUrl) => {
 	return queryUrl.includes('search');
+};
+
+const getProjectName = (advice, i18n) => {
+	const generalS51CaseRefCBOS = 'GS5110001';
+
+	if (advice.caseReference === generalS51CaseRefCBOS) {
+		return i18n.t('registerOfAdvice.general');
+	} else if (isLangWelsh(i18n.language) && advice.projectNameWelsh) {
+		return advice.projectNameWelsh;
+	} else {
+		return advice.projectName;
+	}
 };
 
 module.exports = {
@@ -79,5 +90,6 @@ module.exports = {
 	getAdviceName,
 	getAdviceEnquiryText,
 	doesAdviceExist,
-	wasSearchAttempted
+	wasSearchAttempted,
+	getProjectName
 };

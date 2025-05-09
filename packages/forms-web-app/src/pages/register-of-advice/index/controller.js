@@ -8,11 +8,12 @@ const view = 'register-of-advice/index/view.njk';
 const getRegisterOfAdviceController = async (req, res, next) => {
 	try {
 		const { query } = req;
-		const { searchTerm, page, itemsPerPage } = query;
+		const { searchTerm, page, itemsPerPage, sortBy } = query;
 
 		const { advice, pagination } = await listAdvice(registerOfAdviceCaseRef, searchTerm, {
 			page,
-			itemsPerPage
+			itemsPerPage,
+			sortBy
 		});
 
 		return res.render(
