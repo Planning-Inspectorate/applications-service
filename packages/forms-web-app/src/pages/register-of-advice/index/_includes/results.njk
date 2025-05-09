@@ -1,7 +1,7 @@
 {% from "projects/section-51/index/_components/results.njk" import sectionResults %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% if featureFlag.allowRegisterOfAdviceContentUpdate == true %}
+{% if featureFlag.displaySpecificAndGeneralAdvice == true %}
 
 	{% set links = [] %}
 

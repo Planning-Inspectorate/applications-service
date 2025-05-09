@@ -7,7 +7,7 @@
 {% block content %}
   <div class="govuk-grid-row">
 
-		{% if featureFlag.allowRegisterOfAdviceContentUpdate == true %}
+		{% if featureFlag.displaySpecificAndGeneralAdvice == true %}
 
     	<div class="govuk-grid-column-full-width">
 
@@ -21,7 +21,7 @@
         {{ t('registerOfAdvice.pageHeading') }}
       </h1>
 
-			{% if featureFlag.allowRegisterOfAdviceContentUpdate == true %}
+			{% if featureFlag.displaySpecificAndGeneralAdvice == true %}
 
 				<p class="govuk-body">
 					{{ t('registerOfAdvice.paragraph2') }}
