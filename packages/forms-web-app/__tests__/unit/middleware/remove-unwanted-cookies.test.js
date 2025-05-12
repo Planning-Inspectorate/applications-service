@@ -38,7 +38,7 @@ describe('middleware/remove-unwanted-cookies', () => {
 			}),
 			expected: (req, res, next) => {
 				expect(removeUnwantedCookies).toHaveBeenCalledWith(req, res, [
-					EASY_AUTH.SESSION_COOKIE_NAME,
+					'connect.sid',
 					EASY_AUTH.EASY_AUTH_COOKIE_NAME
 				]);
 				expect(next).toHaveBeenCalled();
