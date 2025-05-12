@@ -20,8 +20,7 @@ describe('lib/remove-unwanted-cookies', () => {
 				'lang',
 				'ARRAffinity',
 				'ARRAffinitySameSite',
-				EASY_AUTH.EASY_AUTH_COOKIE_NAME,
-				EASY_AUTH.SESSION_COOKIE_NAME
+				EASY_AUTH.EASY_AUTH_COOKIE_NAME
 			]);
 		});
 	});

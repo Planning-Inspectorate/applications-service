@@ -26,10 +26,7 @@ module.exports = (req, res, next) => {
 		activeCookiePolicy = JSON.parse(req.cookies[cookieConfig.COOKIE_POLICY_KEY]);
 	} catch (e) {
 		// something went wrong decoding the cookie policy JSON, so lets wipe it and start again
-		removeUnwantedCookies(req, res, [
-			EASY_AUTH.SESSION_COOKIE_NAME,
-			EASY_AUTH.EASY_AUTH_COOKIE_NAME
-		]);
+		removeUnwantedCookies(req, res, ['connect.sid', EASY_AUTH.EASY_AUTH_COOKIE_NAME]);
 		req.log.warn(e, 'Erasing all cookies due to JSON decoding error in the stored cookie policy.');
 		return next();
 	}
