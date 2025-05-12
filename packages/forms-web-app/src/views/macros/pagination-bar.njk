@@ -29,7 +29,7 @@
               {% endif %}
             {% endfor %}
           </ul>
-          <p class="moj-pagination__results">{{ t('common.paginationShowing', { from: '<b>' + paginationData.fromRange + '</b>', to: '<b>' + paginationData.toRange + '</b>', total: '<b>' + paginationData.totalItems + '</b>' }) | safe }}</p>
+          <p class="moj-pagination__results">{{ t('common.paginationShowing', { from: '<strong>' + paginationData.fromRange + '</strong>', to: '<strong>' + paginationData.toRange + '</strong>', total: '<strong>' + paginationData.totalItems + '</strong>' }) | safe }}</p>
         </nav>
     {% endif %}
 {%- endmacro %}
