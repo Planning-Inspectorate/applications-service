@@ -9,6 +9,7 @@ jest.mock('../../../src/config', () => {
 			developmentConsentAndAdviceWelsh: 'Welsh URL 2',
 			planningGuidance: 'URL 3',
 			advicePages: 'URL 4',
+			advicePagesWelsh: 'Welsh URL 4',
 			nationalPolicyStatements: 'URL 5',
 			nationalPolicyStatementsWelsh: 'Welsh URL 5'
 		}
@@ -30,7 +31,7 @@ describe('pages/_utils/get-govuk-urls', () => {
 				developmentConsentUrl: 'Welsh URL 1',
 				developmentConsentAndAdviceUrl: 'Welsh URL 2',
 				planningGuidanceUrl: 'URL 3',
-				advicePagesUrl: 'URL 4',
+				advicePagesUrl: 'Welsh URL 4',
 				nationalPolicyStatementsUrl: 'Welsh URL 5'
 			});
 		});
