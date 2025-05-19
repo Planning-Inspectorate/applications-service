@@ -161,7 +161,7 @@ extends:
               - template: ../steps/azure_web_app_verify_git_hash.yml
                 parameters:
                   appName: Application service API
-                  appUrl: $(deploySlotOutputs.slotUrl)/health
+                  appUrl: https://pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001.azurewebsites.net/health
                   buildCommit: $(resources.pipeline.build.sourceCommit)
           - name: Deploy Web
             condition: eq(${{ parameters.deployWeb }}, 'true')
