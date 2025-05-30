@@ -8,7 +8,8 @@ describe('pages/projects/section-51/index/_translations/en.json', () => {
 				'There is a statutory duty, under {{-link}}, around an application or potential application. This includes recording the name of the person who requested advice and the advice given. This information has to be made publicly available.',
 			paragraph2LinkText1: 'section 51 of the Planning Act 2008',
 			heading2: 'Search advice',
-			paragraph3: 'Search by key words or the name of person the advice was given to.',
+			paragraph3:
+				'Search by key words for example, Applicant advice log, or the name of person the advice was given to.',
 			phrase1: 'Showing',
 			phrase2: 'to',
 			phrase3: 'of',
