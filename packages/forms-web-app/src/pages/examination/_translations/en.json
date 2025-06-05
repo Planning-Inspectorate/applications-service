@@ -208,7 +208,7 @@
 		"paragraph1": "Your files need to be:",
 		"listItem1": "PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS or XSLX",
 		"listItem2": "a single document not compressed as a zip file",
-		"listItem3": "smaller than {{-maxFileSizeInMb}}mb",
+		"listItem3": "smaller than {{-maxFileSizeInMb}}MB",
 		"insetText1": "You cannot submit the same file against multiple deadline items.",
 		"hintText1": "You should not use racist, inflammatory or abusive language, or include personal information (also called special category information) about yourself or others in your comments.",
 		"summaryText1": "Examples of personal information",
@@ -232,7 +232,7 @@
 		"errorMessage1": "Select a file",
 		"errorMessage2": "{{-fileToUploadName}} is empty",
 		"errorMessage3": "{{-fileToUploadName}} must be a JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX or PDF.",
-		"errorMessage4": "{{-fileToUploadName}} must be smaller than {{-size}}mb.",
+		"errorMessage4": "{{-fileToUploadName}} must be smaller than {{-size}}MB.",
 		"errorMessage5": "You can only select a total of {{-limit}} files per submission"
 	},
 	"selectIfWantToDeleteData": {
