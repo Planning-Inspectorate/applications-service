@@ -280,6 +280,57 @@ prisma:error Violation of PRIMARY KEY constraint 'ServiceUser_pkey'. Cannot inse
 ```
 
 - Run `npm run db:reset` which will reset the database, apply all migrations and run the seed script
+- 2nd alternative solution:  instead of resetting the full database to replace the following inside packages\applications-service-api\prisma\utils.js (line 22).
+
+Before:
+
+```Javascript
+async function createProjectWithServiceUsers(data) {
+	const { applicant, ...projectData } = data;
+	const { applicantId, ...applicantData } = applicant;
+	await prismaClient.project.create({
+		data: {
+			...projectData,
+			applicant: {
+				create: {
+					...applicantData,
+					serviceUserId: applicantId
+				}
+			}
+		}
+	});
+}
+```
+
+After: (upsert ensures update even if user exists)
+
+```Javascript
+async function createProjectWithServiceUsers(data) {
+	const { applicant, ...projectData } = data;
+	const { applicantId, ...applicantData } = applicant;
+	await prismaClient.project.create({
+		data: {
+			...projectData,
+			applicant: {
+				create: {
+					...applicantData,
+					serviceUserId: applicantId
+				}
+			}
+		}
+	});
+}
+
+await prismaClient.serviceUser.upsert({
+		where:{ serviceUserId: applicantId},
+		update:{},
+		create: {
+			serviceUserId: applicantId,
+			...applicantData
+
+		}
+	});
+```
   
 ## Branching
 
