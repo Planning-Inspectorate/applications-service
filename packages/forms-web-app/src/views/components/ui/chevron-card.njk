@@ -1,9 +1,11 @@
-{% macro chevronCard(headerText, headerUrl, contentText) %}
+{% macro chevronCard(hTagSize, headerText, headerUrl, contentText) %}
+    {% set openTag = '<h' + hTagSize + ' class="pins-chevron-card__heading govuk-heading-s" >' %}
+    {% set closeTag = '</h' + hTagSize + '>'%}
     <div class="pins-chevron-card">
         <div class="pins-chevron-card__wrapper">
-            <h3 class="pins-chevron-card__heading govuk-heading-s">
+            {{ openTag | safe }}
                 <a class="govuk-link pins-chevron-card__link"  href="{{ headerUrl }}">{{ headerText }}</a>
-            </h3>
+            {{ closeTag | safe }}
             <p class="govuk-body pins-chevron-card__description">{{ contentText }}</p>
         </div>
     </div>
