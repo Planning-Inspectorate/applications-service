@@ -319,7 +319,6 @@ async function createProjectWithServiceUsers(data) {
 			}
 		}
 	});
-}
 
 await prismaClient.serviceUser.upsert({
 		where:{ serviceUserId: applicantId},
