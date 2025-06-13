@@ -38,6 +38,9 @@ const {
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getRegisterAlreadyRegisteredController
+} = require('../_common/already-registered/controller');
 
 const {
 	getRegisterOrganisationNameURL
@@ -72,9 +75,13 @@ const {
 const {
 	getRegisterOrganisationCompleteURL
 } = require('./complete/_utils/get-register-organisation-complete-url');
+const {
+	getRegisterOrganisationAlreadyRegisteredURL
+} = require('./already-registered/_utils/get-register-organisation-already-registered-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const { noCache } = require('../_middleware/no-cache');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
@@ -106,6 +113,7 @@ const registerOrganisationAboutProjectURL = getRegisterOrganisationAboutProjectU
 const registerOrganisationCheckAnswersURL = getRegisterOrganisationCheckAnswersURL();
 const registerOrganisationDeclarationURL = getRegisterOrganisationDeclarationURL();
 const registerOrganisationCompleteURL = getRegisterOrganisationCompleteURL();
+const registerOrganisationAlreadyRegisteredURL = getRegisterOrganisationAlreadyRegisteredURL();
 
 const registerOrganisationRouter = express.Router({ mergeParams: true });
 
@@ -224,6 +232,7 @@ registerOrganisationRouter.get(
 
 registerOrganisationRouter.get(
 	registerOrganisationDeclarationURL,
+	noCache,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
@@ -237,6 +246,12 @@ registerOrganisationRouter.get(
 	registerOrganisationCompleteURL,
 	registerMiddleware,
 	getRegisterCompleteController
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationAlreadyRegisteredURL,
+	registerMiddleware,
+	getRegisterAlreadyRegisteredController
 );
 
 module.exports = { registerOrganisationRouter };

@@ -36,9 +36,13 @@ const {
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getRegisterAlreadyRegisteredController
+} = require('../_common/already-registered/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const { noCache } = require('../_middleware/no-cache');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
@@ -243,6 +247,7 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/declaration',
+				noCache,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);
@@ -258,7 +263,13 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterCompleteController
 			);
 
-			expect(get).toBeCalledTimes(11);
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/already-registered',
+				registerMiddleware,
+				getRegisterAlreadyRegisteredController
+			);
+
+			expect(get).toBeCalledTimes(12);
 			expect(post).toBeCalledTimes(9);
 			expect(use).toBeCalledTimes(0);
 		});

@@ -26,7 +26,8 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						key: 'myself'
+						key: 'myself',
+						backLinkUrl: null
 					});
 				});
 			});
@@ -47,7 +48,8 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						key: 'organisation'
+						key: 'organisation',
+						backLinkUrl: null
 					});
 				});
 			});
@@ -68,7 +70,8 @@ describe('controllers/register/common/registration-complete/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						key: 'agent'
+						key: 'agent',
+						backLinkUrl: null
 					});
 				});
 			});

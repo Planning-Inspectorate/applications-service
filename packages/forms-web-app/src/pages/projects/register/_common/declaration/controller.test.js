@@ -18,7 +18,10 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+					session: {
+						mySelfRegdata: {}
+					}
 				};
 				beforeEach(() => {
 					getRegisterDeclarationController(req, res);
@@ -34,7 +37,10 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration',
+					session: {
+						orgRegdata: {}
+					}
 				};
 				beforeEach(() => {
 					getRegisterDeclarationController(req, res);
@@ -50,7 +56,10 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration',
+					session: {
+						behalfRegdata: {}
+					}
 				};
 				beforeEach(() => {
 					getRegisterDeclarationController(req, res);
@@ -62,6 +71,70 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 							key: 'agent'
 						}
 					);
+				});
+			});
+			describe('and the user has already submitted', () => {
+				const res = {
+					locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+					render: jest.fn(),
+					redirect: jest.fn(),
+					status: jest.fn(() => res)
+				};
+				describe('for myself', () => {
+					const req = {
+						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+						session: {
+							mySelfRegdata: {
+								hasSubmitted: true
+							}
+						}
+					};
+					beforeEach(() => {
+						getRegisterDeclarationController(req, res);
+					});
+					it('should redirect to the already submitted page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/myself/already-registered'
+						);
+					});
+				});
+				describe('for organisation', () => {
+					const req = {
+						originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration',
+						session: {
+							orgRegdata: {
+								hasSubmitted: true
+							}
+						}
+					};
+					beforeEach(() => {
+						getRegisterDeclarationController(req, res);
+					});
+					it('should redirect to the already submitted page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/organisation/already-registered'
+						);
+					});
+				});
+				describe('for agent', () => {
+					const req = {
+						originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration',
+						session: {
+							behalfRegdata: {
+								representor: {
+									hasSubmitted: true
+								}
+							}
+						}
+					};
+					beforeEach(() => {
+						getRegisterDeclarationController(req, res);
+					});
+					it('should redirect to the already submitted page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/agent/already-registered'
+						);
+					});
 				});
 			});
 		});

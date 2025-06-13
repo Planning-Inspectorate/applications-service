@@ -13,7 +13,8 @@ const getRegisterCompleteController = (req, res) => {
 		return res.render('projects/register/_common/complete/view.njk', {
 			key,
 			ipRefNo,
-			projectsIndexURL: getProjectsIndexURL(caseRef)
+			projectsIndexURL: getProjectsIndexURL(caseRef),
+			backLinkUrl: null
 		});
 	} catch (e) {
 		logger.error(e);
