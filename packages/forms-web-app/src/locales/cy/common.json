@@ -59,6 +59,17 @@
 	"to": "I",
 	"uploadAFile": "Lanlwytho ffeil",
 	"uploadFile": "Lanlwytho ffeil",
+	"genericSubmittedTemplate": {
+		"pageHeading": "{{ journeyHeading }} wedi'i gwblhau",
+		"bodyText": "Mae'r {{ journeyBody }} hwn wedi'i gwblhau.",
+		"backToProjectLink": "Dychwelyd i dudalen y prosiect",
+		"journey": {
+			"registration": {
+				"heading": "Cofrestru",
+				"body": "cofrestriad"
+			}
+		}
+	},
 	"validationErrors": {
 		"emailAddress": {
 			"empty": "Nodwch eich cyfeiriad e-bost",
