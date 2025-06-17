@@ -20,6 +20,17 @@ exports[`locales/common should return the correct English common translations 1`
   "error": "Error",
   "filter": "Filter",
   "from": "From",
+  "genericSubmittedTemplate": {
+    "backToProjectLink": "Go back to the project page",
+    "bodyText": "This {{ journeyBody }} has been completed.",
+    "journey": {
+      "registration": {
+        "body": "registration",
+        "heading": "Registration",
+      },
+    },
+    "pageHeading": "{{ journeyHeading }} complete",
+  },
   "govUK": {
     "pressOfficeOpeningHours": "9am to 5pm on Monday to Thursday and from 9am to 4pm on Friday (closed on weekends and bank holidays)",
   },
@@ -124,6 +135,17 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
   "error": "Gwall",
   "filter": "Hidlydd",
   "from": "Oddi wrth",
+  "genericSubmittedTemplate": {
+    "backToProjectLink": "Dychwelyd i dudalen y prosiect",
+    "bodyText": "Mae'r {{ journeyBody }} hwn wedi'i gwblhau.",
+    "journey": {
+      "registration": {
+        "body": "cofrestriad",
+        "heading": "Cofrestru",
+      },
+    },
+    "pageHeading": "{{ journeyHeading }} wedi'i gwblhau",
+  },
   "govUK": {
     "pressOfficeOpeningHours": "9yb a 5yp o ddydd Llun i ddydd Iau a rhwng 9yb a 4yp ddydd Gwener (ar gau ar benwythnosau a gwyliau banc)",
   },

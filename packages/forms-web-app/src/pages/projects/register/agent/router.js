@@ -54,6 +54,9 @@ const {
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getRegisterAlreadyRegisteredController
+} = require('../_common/already-registered/controller');
 
 const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
 const {
@@ -98,9 +101,13 @@ const {
 const {
 	getRegisterAgentCompleteURL
 } = require('./complete/_utils/get-register-agent-complete-url');
+const {
+	getRegisterAgentAlreadyRegisteredURL
+} = require('./already-registered/_utils/get-register-agent-already-registered-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const { noCache } = require('../_middleware/no-cache');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const {
@@ -149,6 +156,7 @@ const registerAgentTheirTelephoneURL = getRegisterAgentTheirTelephoneURL();
 const registerAgentCheckAnswersURL = getRegisterAgentCheckAnswersURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
 const registerAgentCompleteURL = getRegisterAgentCompleteURL();
+const registerAgentAlreadyRegisteredURL = getRegisterAgentAlreadyRegisteredURL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
@@ -328,6 +336,7 @@ registerAgentRouter.get(
 
 registerAgentRouter.get(
 	registerAgentDeclarationURL,
+	noCache,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
@@ -341,6 +350,12 @@ registerAgentRouter.get(
 	registerAgentCompleteURL,
 	registerMiddleware,
 	getRegisterCompleteController
+);
+
+registerAgentRouter.get(
+	registerAgentAlreadyRegisteredURL,
+	registerMiddleware,
+	getRegisterAlreadyRegisteredController
 );
 
 module.exports = { registerAgentRouter };
