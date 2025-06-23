@@ -33,7 +33,16 @@ async function createProjectWithServiceUsers(data) {
 			}
 		}
 	});
+	await prismaClient.serviceUser.upsert({
+		where: { serviceUserId: applicantId },
+		update: {},
+		create: {
+			serviceUserId: applicantId,
+			...applicantData
+		}
+	});
 }
+
 async function createRepresentationWithServiceUsers(data) {
 	const { represented, representative, ...representationData } = data;
 	await prismaClient.representation.create({
