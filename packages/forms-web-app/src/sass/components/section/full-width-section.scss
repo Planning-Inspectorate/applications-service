@@ -16,7 +16,13 @@
                 padding-bottom: 5px;
                 margin-bottom: 25px;
             }
-            
+            &-no-h2-border {
+                h2 {
+                    border-bottom: none;
+                    padding-bottom: 5px;
+                    margin-bottom: 25px;
+                }
+            }
         }
     }
 }
