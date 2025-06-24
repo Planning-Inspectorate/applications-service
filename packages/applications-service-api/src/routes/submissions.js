@@ -17,7 +17,9 @@ router.post(
 	fileUpload({
 		limits: { fileSize: config.uploads.fileSizeLimit },
 		abortOnLimit: true,
-		limitHandler: fileUploadLimitHandler
+		limitHandler: fileUploadLimitHandler,
+		defCharset: 'utf8',
+		defParamCharset: 'utf8'
 	}),
 	normaliseRequestFileData,
 	parseFormDataProperties(['interestedParty', 'sensitiveData', 'lateSubmission']),
