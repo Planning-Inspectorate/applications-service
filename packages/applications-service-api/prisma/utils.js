@@ -114,7 +114,7 @@ async function createRepresentationWithServiceUsers(data) {
 }
 
 module.exports = {
-	createExaminationTimetableWithEventItems,
 	createRepresentationWithServiceUsers,
+	createExaminationTimetableWithEventItems,
 	createProjectWithServiceUsers
 };
