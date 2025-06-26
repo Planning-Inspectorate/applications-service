@@ -103,6 +103,9 @@ extends:
                 parameters:
                   nodeVersion: 20
                   script: cd packages/applications-service-api && npx prisma generate
+              - script: |
+                  git config list
+                displayName: 'Check git config'
               - template: ../steps/node_script.yml
                 parameters:
                   nodeVersion: 20

@@ -28,7 +28,7 @@
 		"lint": "turbo run lint --parallel --continue",
 		"lint:fix": "turbo run lint --parallel --continue",
 		"prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
-		"release": "multi-semantic-release --ignore-packages=packages/common",
+		"release": "multi-semantic-release --ignore-packages=packages/common --dry-run",
 		"test": "turbo run test --parallel --continue",
 		"test:cov": "turbo run test:cov --parallel --continue",
 		"test:watch": "turbo run test:watch --parallel --continue",
