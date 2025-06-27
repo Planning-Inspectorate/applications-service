@@ -21,13 +21,15 @@ describe('services/submission.service', () => {
 					response = await postSubmission(caseRef, body);
 				});
 				it('should call fetch ', () => {
-					expect(fetch).toHaveBeenCalledWith('http://test/api/v1/submissions/1234', expect.objectContaining({
-						body: 'mock body',
-						headers: {
-							'X-Correlation-ID': expect.any(String)
-						},
-						method: 'POST'
-					  })
+					expect(fetch).toHaveBeenCalledWith(
+						'http://test/api/v1/submissions/1234',
+						expect.objectContaining({
+							body: 'mock body',
+							headers: {
+								'X-Correlation-ID': expect.any(String)
+							},
+							method: 'POST'
+						})
 					);
 				});
 				it('should return a body', () => {
@@ -59,7 +61,8 @@ describe('services/submission.service', () => {
 					response = await postSubmissionComplete(submissionsId);
 				});
 				it('should call fetch ', () => {
-					expect(fetch).toHaveBeenCalledWith('http://test/api/v1/submissions/1234/complete',
+					expect(fetch).toHaveBeenCalledWith(
+						'http://test/api/v1/submissions/1234/complete',
 						expect.objectContaining({
 							headers: {
 								'Content-Type': 'application/json',

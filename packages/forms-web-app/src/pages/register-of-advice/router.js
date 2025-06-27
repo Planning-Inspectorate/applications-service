@@ -28,7 +28,7 @@ const registerOfAdviceRouter = express.Router();
 registerOfAdviceRouter.get(
 	registerOfAdviceIndexURL,
 	addCommonTranslationsMiddleware,
-  addSection51TranslationsMiddleware,
+	addSection51TranslationsMiddleware,
 	registerOfAdviceTranslationsMiddleware,
 	getRegisterOfAdviceController
 );

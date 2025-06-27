@@ -1,16 +1,16 @@
 .full-width-line {
-    height: 1px;
-    clip-path: inset(0 -100vmax);
-    
-    &.full-width-line--bg {
-        &-blue {
-            box-shadow: 0 0 0 100vmax #1d70b8;
-        }
-    }
+	height: 1px;
+	clip-path: inset(0 -100vmax);
 
-    &--bg {
-        &-blue {
-            background-color: #1d70b8;
-        }
-    }
+	&.full-width-line--bg {
+		&-blue {
+			box-shadow: 0 0 0 100vmax #1d70b8;
+		}
+	}
+
+	&--bg {
+		&-blue {
+			background-color: #1d70b8;
+		}
+	}
 }
