@@ -1,6 +1,10 @@
 const express = require('express');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
-const { createSubscription, confirmSubscription, deleteSubscription } = require('../controllers/subscriptions');
+const {
+	createSubscription,
+	confirmSubscription,
+	deleteSubscription
+} = require('../controllers/subscriptions');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router();

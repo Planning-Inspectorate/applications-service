@@ -1,14 +1,14 @@
 .govuk-details {
 	&.pins-modded-summary-full-width {
-        margin: 10px 0 10px 0;
+		margin: 10px 0 10px 0;
 
-        .govuk-details__summary {
-            width: calc(100% - 25px);//account for default padding
+		.govuk-details__summary {
+			width: calc(100% - 25px); //account for default padding
 
-            .summary-content {
-                display: flex;
-                justify-content: space-between;
-            }
-        }
-    }
+			.summary-content {
+				display: flex;
+				justify-content: space-between;
+			}
+		}
+	}
 }

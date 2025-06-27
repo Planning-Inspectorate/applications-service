@@ -1,8 +1,8 @@
 #homepage-search-bar {
-    .ui-search-bar__section--input {
-        @media screen and (min-width: map-get($govuk-breakpoints, "tablet")) {
-            flex-grow: 0;
-            width: 66.6%;
-        }
-    }
+	.ui-search-bar__section--input {
+		@media screen and (min-width: map-get($govuk-breakpoints, 'tablet')) {
+			flex-grow: 0;
+			width: 66.6%;
+		}
+	}
 }

@@ -53,4 +53,9 @@ extends:
             parameters:
               nodeVersion: 20
               condition: succeededOrFailed()
+              script: npm run format-check
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 20
+              condition: succeededOrFailed()
               script: npm run test:cov

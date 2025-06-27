@@ -12,7 +12,7 @@ const upload = async (buffer, mimeType, path) => {
 			new DefaultAzureCredential()
 		);
 	} catch (e) {
-		logger.error("Error creating BlobServiceClient");
+		logger.error('Error creating BlobServiceClient');
 		throw e;
 	}
 
@@ -22,7 +22,7 @@ const upload = async (buffer, mimeType, path) => {
 			.getBlockBlobClient(path)
 			.uploadData(buffer, { blobHTTPHeaders: { blobContentType: mimeType } });
 	} catch (e) {
-		logger.error("Error uploading file to Blob Storage");
+		logger.error('Error uploading file to Blob Storage');
 		throw e;
 	}
 };
