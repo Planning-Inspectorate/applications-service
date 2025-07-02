@@ -175,6 +175,7 @@ services:
     image: mcr.microsoft.com/azure-sql-edge:latest
     container_name: mssql
     cap_add: [ 'SYS_PTRACE' ]
+    user: root
     environment:
       - 'ACCEPT_EULA=1'
       - 'MSSQL_SA_PASSWORD=dbPASSw0_rd'
