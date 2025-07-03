@@ -21,7 +21,7 @@ const publishDeadlineSubmission = async (submission, fileBlobGuid) => {
 			lateSubmission: metadata.lateSubmission,
 			submissionId: metadata.submissionId,
 			blobGuid: fileBlobGuid,
-			documentName: file?.originalName
+			documentName: encodeURIComponent(file?.originalName)
 		},
 		contentType: 'application/json',
 		applicationProperties: {}
