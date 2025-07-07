@@ -1,11 +1,11 @@
 p {
-  @extend .govuk-body;
+	@extend .govuk-body;
 }
 
 .text-secondary {
-  color: $govuk-secondary-text-colour;
+	color: $govuk-secondary-text-colour;
 
-  &--small {
-    @extend .govuk-body-s;
-  }
+	&--small {
+		@extend .govuk-body-s;
+	}
 }

@@ -1,16 +1,16 @@
 .style-contents-list li {
-  padding: 7.5px 25px 0;
-  position: relative;
+	padding: 7.5px 25px 0;
+	position: relative;
 }
 
 .style-contents-list li:before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  width: 20px;
-  overflow: hidden;
+	content: '—';
+	position: absolute;
+	left: 0;
+	width: 20px;
+	overflow: hidden;
 }
 
 .style-contents-list-title {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }

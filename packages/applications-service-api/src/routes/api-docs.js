@@ -2,7 +2,7 @@
 
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
-const { loadOpenAPISpec } = require("../utils/openapi");
+const { loadOpenAPISpec } = require('../utils/openapi');
 
 const router = express.Router();
 
