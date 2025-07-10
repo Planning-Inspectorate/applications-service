@@ -67,6 +67,7 @@ const main = async () => {
 		}
 	});
 
+	await prismaClient.advice.deleteMany();
 	await prismaClient.project.deleteMany(deleteFilter);
 	await prismaClient.examinationTimetableEventItem.deleteMany();
 	await prismaClient.examinationTimetable.deleteMany(deleteFilter);
