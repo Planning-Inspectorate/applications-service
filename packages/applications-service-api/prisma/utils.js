@@ -34,18 +34,20 @@ async function createProjectWithServiceUsers(data) {
 				...applicantData
 			}
 		});
-
-		await tx.project.create({
-			data: {
-				...projectData,
-				applicant: {
-					create: {
-						serviceUserId: applicantId,
-						...applicantData
+		try {
+			await tx.project.create({
+				data: {
+					...projectData,
+					applicant: {
+						connect: {
+							serviceUserId: applicantId
+						}
 					}
 				}
-			}
-		});
+			});
+		} catch (e) {
+			console.error('FAILED TO INSERT serviceUser', e.message);
+		}
 	});
 }
 
@@ -91,16 +93,12 @@ async function createRepresentationWithServiceUsers(data) {
 			data: {
 				...representationData,
 				represented: {
-					create: {
-						serviceUserId: represented.representedId,
-						firstName: represented.firstName,
-						lastName: represented.lastName,
-						organisationName: represented.organisationName,
-						caseReference: representationData.caseReference
+					connect: {
+						serviceUserId: represented.representedId
 					}
 				},
 				representative: {
-					create: {
+					connect: {
 						serviceUserId: representative.representativeId,
 						firstName: representative.firstName,
 						lastName: representative.lastName,
