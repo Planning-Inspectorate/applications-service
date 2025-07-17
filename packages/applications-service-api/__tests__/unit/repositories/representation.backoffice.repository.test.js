@@ -1,5 +1,5 @@
 const {
-	getRepresentationById,
+	getRepresentationByIdAndCaseRef,
 	getRepresentations,
 	getFilters
 } = require('../../../src/repositories/representation.backoffice.repository');
@@ -47,15 +47,16 @@ describe('service.backoffice.repository', () => {
 			}
 		]
 	};
-	describe('getRepresentationById', () => {
+	describe('getRepresentationByIdAndCaseRef', () => {
 		beforeAll(() => {
 			mockFindFirst.mockResolvedValue(REPRESENTATION_BACKOFFICE_DATA);
 		});
-		it('should call the database with the id', async () => {
-			await getRepresentationById('mock-representation-id');
+		it('should call the database with the id and caseReference', async () => {
+			await getRepresentationByIdAndCaseRef('mock-representation-id', 'mock-case-ref');
 			expect(mockFindFirst).toHaveBeenCalledWith({
 				where: {
 					representationId: 'mock-representation-id',
+					caseReference: 'mock-case-ref',
 					...commonWhereFilters
 				},
 				include: {
@@ -65,7 +66,10 @@ describe('service.backoffice.repository', () => {
 			});
 		});
 		it('should return the correct data', async () => {
-			const result = await getRepresentationById('mock-representation-id');
+			const result = await getRepresentationByIdAndCaseRef(
+				'mock-representation-id',
+				'mock-case-ref'
+			);
 			expect(result).toEqual(REPRESENTATION_BACKOFFICE_DATA);
 		});
 	});
