@@ -29,10 +29,11 @@ const commonWhereFilters = {
 	]
 };
 
-const getRepresentationById = async (representationId) => {
+const getRepresentationByIdAndCaseRef = async (representationId, caseReference) => {
 	return prismaClient.representation.findFirst({
 		where: {
 			representationId,
+			caseReference,
 			...commonWhereFilters
 		},
 		include: {
@@ -135,7 +136,7 @@ const getFilters = async (caseReference) => {
 };
 
 module.exports = {
-	getRepresentationById,
+	getRepresentationByIdAndCaseRef,
 	getRepresentations,
 	getFilters
 };

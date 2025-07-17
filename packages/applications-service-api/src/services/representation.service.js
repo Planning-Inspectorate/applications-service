@@ -4,7 +4,7 @@ const {
 	getFilters: getNIFilters
 } = require('../repositories/representation.ni.repository');
 const {
-	getRepresentationById: getRepresentationByBORepository,
+	getRepresentationByIdAndCaseRef: getRepresentationByBORepository,
 	getRepresentations: getRepresentationsBORepository,
 	getFilters: getBOFilters
 } = require('../repositories/representation.backoffice.repository');
@@ -70,10 +70,10 @@ const getRepresentationsForApplication = async (query) => {
 	};
 };
 
-const getRepresentationById = async (id, caseReference) => {
+const getRepresentationByIdAndCaseRef = async (id, caseReference) => {
 	const isBOApplication = isBackOfficeCaseReference(caseReference);
 	const representation = isBOApplication
-		? await getRepresentationByBORepository(id)
+		? await getRepresentationByBORepository(id, caseReference)
 		: await getRepresentationByIdNIRepository(id);
 	if (!representation) return;
 	const documents = isBOApplication
@@ -86,5 +86,5 @@ const getRepresentationById = async (id, caseReference) => {
 
 module.exports = {
 	getRepresentationsForApplication,
-	getRepresentationById
+	getRepresentationByIdAndCaseRef
 };
