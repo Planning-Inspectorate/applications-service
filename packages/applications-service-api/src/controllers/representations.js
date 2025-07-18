@@ -5,7 +5,7 @@ const logger = require('../lib/logger');
 
 const {
 	getRepresentationsForApplication,
-	getRepresentationById
+	getRepresentationByIdAndCaseRef
 } = require('../services/representation.service');
 
 const ApiError = require('../error/apiError');
@@ -31,7 +31,7 @@ module.exports = {
 		const { id } = req.params;
 		const { caseReference } = req.query;
 		logger.debug(`Retrieving representation by id ${id}`);
-		const representation = await getRepresentationById(id, caseReference);
+		const representation = await getRepresentationByIdAndCaseRef(id, caseReference);
 
 		if (!representation) {
 			throw ApiError.representationNotFound(id);
