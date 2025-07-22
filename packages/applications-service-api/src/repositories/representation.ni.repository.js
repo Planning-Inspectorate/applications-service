@@ -4,8 +4,8 @@ const { Op } = require('sequelize');
 const stopWords = require('../utils/stopwords');
 const stopWordList = stopWords.english;
 
-const getRepresentationById = async (ID) => {
-	return db.Representation.findOne({ where: { ID }, raw: true });
+const getRepresentationByIdAndCaseRef = async (ID, caseReference) => {
+	return db.Representation.findOne({ where: { ID, CaseReference: caseReference }, raw: true });
 };
 const getRepresentationsWithCount = async (options = {}) => {
 	let findOptions = pick(options, ['offset', 'limit']);
@@ -63,6 +63,6 @@ const getFilters = async (filter, caseReference) => {
 module.exports = {
 	getRepresentationsWithCount,
 	getRepresentations,
-	getRepresentationById,
+	getRepresentationByIdAndCaseRef,
 	getFilters
 };

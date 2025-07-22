@@ -1,6 +1,6 @@
 const {
 	getRepresentationsWithCount: getRepresentationsWithCountNIRepository,
-	getRepresentationById: getRepresentationByIdNIRepository,
+	getRepresentationByIdAndCaseRef: getRepresentationByIdNIRepository,
 	getFilters: getNIFilters
 } = require('../repositories/representation.ni.repository');
 const {
@@ -74,7 +74,7 @@ const getRepresentationByIdAndCaseRef = async (id, caseReference) => {
 	const isBOApplication = isBackOfficeCaseReference(caseReference);
 	const representation = isBOApplication
 		? await getRepresentationByBORepository(id, caseReference)
-		: await getRepresentationByIdNIRepository(id);
+		: await getRepresentationByIdNIRepository(id, caseReference);
 	if (!representation) return;
 	const documents = isBOApplication
 		? await getDocumentsByIdsBORepository(representation.attachmentIds)
