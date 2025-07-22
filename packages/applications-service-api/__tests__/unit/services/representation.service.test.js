@@ -7,7 +7,7 @@ const config = require('../../../src/lib/config');
 const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	getRepresentationsWithCount: getRepresentationsNIRepository,
-	getRepresentationById: getRepresentationByIdNIRepository,
+	getRepresentationByIdAndCaseRef: getRepresentationByIdNIRepository,
 	getFilters: getNIFilters
 } = require('../../../src/repositories/representation.ni.repository');
 const {
@@ -162,7 +162,7 @@ describe('representation.service', () => {
 		describe('when case reference is ni', () => {
 			it('should call getRepresentationByIdNIRepository with correct params', async () => {
 				await getRepresentationByIdAndCaseRef('1', 'EN010009');
-				expect(getRepresentationByIdNIRepository).toBeCalledWith('1');
+				expect(getRepresentationByIdNIRepository).toBeCalledWith('1', 'EN010009');
 			});
 			it('return undefined if no representation found', async () => {
 				getRepresentationByIdNIRepository.mockResolvedValue(null);
