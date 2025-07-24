@@ -118,7 +118,7 @@ describe('/api/v1/submissions', () => {
 					});
 
 					it('uploads file to blob storage', async () => {
-						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/${generatedPDFFileName}`);
+						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/1`);
 						expect(mockUploadData).toBeCalledWith(mockFileBuffer, {
 							blobHTTPHeaders: { blobContentType: 'application/pdf' }
 						});
@@ -153,7 +153,7 @@ describe('/api/v1/submissions', () => {
 					});
 
 					it('uploads file to blob storage', async () => {
-						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/${generatedPDFFileName}`);
+						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/1`);
 						expect(mockUploadData).toBeCalledWith(mockFileBuffer, {
 							blobHTTPHeaders: { blobContentType: 'application/pdf' }
 						});
@@ -189,7 +189,7 @@ describe('/api/v1/submissions', () => {
 					});
 
 					it('uploads file to blob storage', async () => {
-						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/foo.pdf`);
+						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/1`);
 						expect(mockUploadData).toBeCalledWith(mockFileBuffer, {
 							blobHTTPHeaders: { blobContentType: 'application/pdf' }
 						});
@@ -223,7 +223,7 @@ describe('/api/v1/submissions', () => {
 					});
 
 					it('uploads file to blob storage', async () => {
-						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/foo.pdf`);
+						expect(mockGetBlockBlobClient).toBeCalledWith(`${mockUuid}/1`);
 						expect(mockUploadData).toBeCalledWith(mockFileBuffer, {
 							blobHTTPHeaders: { blobContentType: 'application/pdf' }
 						});
