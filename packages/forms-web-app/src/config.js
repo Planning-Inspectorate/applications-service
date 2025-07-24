@@ -163,7 +163,9 @@ module.exports = {
 		maxFileSizeInMb: process.env.MAX_SIZE_OF_SINLGE_UPLOAD_FILE || 50,
 		expressFileUpload: {
 			tempFileDir: `../../../uploads`,
-			abortOnLimit: true
+			abortOnLimit: true,
+			defCharset: 'utf8',
+			defParamCharset: 'utf8'
 		}
 	},
 	maps: {
