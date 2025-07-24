@@ -19,7 +19,7 @@ const generateRepresentationPDF = (submissionId, submissionRepresentation, fileN
 
 const uploadSubmissionFileToBlobStorage = async (file) => {
 	const blobGuid = uuid.v4();
-	const path = `${blobGuid}/${file.originalName}`;
+	const path = `${blobGuid}/1`;
 
 	logger.info(`Uploading file to blob storage at path ${path}`);
 	await upload(file.buffer, file.mimeType, path);
