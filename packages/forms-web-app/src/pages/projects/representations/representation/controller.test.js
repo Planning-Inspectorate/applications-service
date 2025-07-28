@@ -1,10 +1,8 @@
 const { getRepresentationController } = require('./controller');
 
-const { getProjectData } = require('../../../../lib/application-api-wrapper');
-const { getRepresentation } = require('../../../../services/representation.service');
+const { getRepresentationById } = require('../../../../lib/application-api-wrapper');
 
 jest.mock('../../../../lib/application-api-wrapper');
-jest.mock('../../../../services/representation.service');
 
 describe('pages/projects/representations/representation/controller', () => {
 	let req;
@@ -28,7 +26,7 @@ describe('pages/projects/representations/representation/controller', () => {
 		res = {
 			locals: {
 				applicationData: {
-					projectName: 'mock project name'
+					projectName: 'ABC'
 				}
 			},
 			render: jest.fn()
@@ -44,7 +42,7 @@ describe('pages/projects/representations/representation/controller', () => {
 			UniqueReference: 'WS010006-34601',
 			WebReference: null,
 			PersonalName: 'Test (Test)',
-			Representative: null,
+			Representative: 'a representative',
 			IndvdlOnBhalfName: null,
 			OrgOnBhalfName: null,
 			AgentOrgOnBhalfContactName: null,
@@ -72,13 +70,7 @@ describe('pages/projects/representations/representation/controller', () => {
 		describe('When getting the representation page', () => {
 			describe('and there are no issues', () => {
 				beforeEach(async () => {
-					getProjectData.mockImplementation((applicationCaseRef) =>
-						Promise.resolve({
-							resp_code: 200,
-							data: { CaseReference: applicationCaseRef, ProjectName: 'ABC' }
-						})
-					);
-					getRepresentation.mockImplementation(() =>
+					getRepresentationById.mockImplementation(() =>
 						Promise.resolve({
 							data: { ...representations[0] }
 						})
@@ -92,8 +84,6 @@ describe('pages/projects/representations/representation/controller', () => {
 							langIsWelsh: false,
 							allowProjectInformation: true,
 							backToListUrl: '/projects/EN010009/representations',
-							pageHeading: 'Representation by Test (Test)',
-							pageTitle: 'Relevant Representations | Representation by Test (Test)',
 							projectName: 'ABC',
 							representation: {
 								URL: '/projects/:case_ref/representations/2',
@@ -103,7 +93,7 @@ describe('pages/projects/representations/representation/controller', () => {
 								dateSubmitted: '19 February 2020',
 								hasAttachments: true,
 								name: 'Test (Test)',
-								representative: null,
+								representative: 'a representative',
 								submittedBy: 'Members of the public/businesses',
 								submittedByWelsh: 'Welsh members of the public/businesses'
 							}

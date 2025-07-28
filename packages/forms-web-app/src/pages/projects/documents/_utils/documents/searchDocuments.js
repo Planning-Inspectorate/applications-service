@@ -1,15 +1,12 @@
-const { searchDocumentsV3 } = require('../../../../../services/document.service');
+const { wrappedSearchDocumentsV3 } = require('../../../../../lib/application-api-wrapper');
 const { getBody } = require('./body/getBody');
-const { searchExaminationLibraryDocument } = require('./search-examination-library-document');
 
 const searchDocuments = async (case_ref, query) => {
 	const body = getBody(case_ref, query);
-	const { data } = await searchDocumentsV3(body);
-	const examinationLibraryDocument = await searchExaminationLibraryDocument(case_ref);
+	const { data } = await wrappedSearchDocumentsV3(body);
 
 	return {
 		documents: data.documents,
-		examinationLibraryDocument,
 		filters: data.filters,
 		pagination: {
 			totalItems: data.totalItems,

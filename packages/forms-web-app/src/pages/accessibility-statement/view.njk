@@ -110,7 +110,7 @@
       </h3>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph14') }}
+        {{ t('accessibilityStatement.paragraph14', { link: '<a class="govuk-link" href="' + externalURL.wcag21URL + '">' + t('accessibilityStatement.paragraph14LinkText') + '</a>'}) | safe }}
       </p>
 
       <h2 class="govuk-heading-m">
@@ -152,12 +152,6 @@
         <li>
            {{ t('accessibilityStatement.listItem16') }}
         </li>
-        <li>
-           {{ t('accessibilityStatement.listItem17') }}
-        </li>
-        <li>
-           {{ t('accessibilityStatement.listItem18') }}
-        </li>
       </ul>
 
       <p class="govuk-body">
@@ -177,11 +171,11 @@
       </h3>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph19') }}
+        {{ t('accessibilityStatement.paragraph19', { link: '<a class="govuk-link" href="' + govUK.publicSectorAccessibilityRegulationsURL + '">' + t('accessibilityStatement.paragraph19LinkText') + '</a>'}) | safe }}
       </p>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph20', { link: '<a class="govuk-link" href="' + govUK.publicSectorAccessibilityRegulationsURL + '">' + t('accessibilityStatement.paragraph20LinkText') + '</a>'}) | safe }}
+        {{ t('accessibilityStatement.paragraph20') }}
       </p>
 
       <h2 class="govuk-heading-m">
@@ -190,6 +184,14 @@
 
       <p class="govuk-body">
         {{ t('accessibilityStatement.paragraph21') }}
+      </p>
+
+      <p class="govuk-body">
+        {{ t('accessibilityStatement.paragraph22') }}
+      </p>
+
+      <p class="govuk-body">
+        {{ t('accessibilityStatement.paragraph23') }}
       </p>
 
     </div>

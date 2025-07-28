@@ -65,12 +65,13 @@ describe('representation ni repository', () => {
 			// Act
 			await getRepresentationsWithCount(mockOptions);
 			// Assert
+
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				caseReference: undefined,
 				raw: true,
 				where: { [Op.and]: [{ CaseReference: mockOptions.caseReference }] },
-				order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
+				order: [['DateRrepReceived', 'desc'], ['PersonalName']]
 			});
 		});
 		it('calls findAllAndCount with type', async () => {
@@ -92,47 +93,48 @@ describe('representation ni repository', () => {
 						{ RepFrom: { [Op.in]: [mockOptionsWithType.type] } }
 					]
 				},
-				order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
+				order: [['DateRrepReceived', 'desc'], ['PersonalName']]
 			});
 		});
 		it('calls findAllAndCount with search term', async () => {
 			// Arrange
 			const mockOptionsWithSearchTerm = {
 				...mockOptions,
-				searchTerm: 'foo bar'
+				searchTerm: 'the foo bar'
+			};
+
+			// Simulated stop words for the test
+			const mockStopWords = ['the', 'is', 'a', 'an'];
+
+			// Expected split terms from the searchTerm, removing stop words
+			const expectedTerms = mockOptionsWithSearchTerm.searchTerm
+				.split(' ')
+				.filter((term) => !mockStopWords.includes(term.toLowerCase()));
+
+			const expectedWhereClause = {
+				[Op.and]: [
+					{ CaseReference: mockOptionsWithSearchTerm.caseReference },
+					// Dynamically construct the expected query for each search term
+					...expectedTerms.map((term) => ({
+						[Op.or]: [
+							{ PersonalName: { [Op.like]: `%${term}%` } },
+							{ Representative: { [Op.like]: `%${term}%` } },
+							{ RepresentationRedacted: { [Op.like]: `%${term}%` } }
+						]
+					}))
+				]
 			};
 
 			// Act
 			await getRepresentationsWithCount(mockOptionsWithSearchTerm);
+
 			// Assert
 			expect(db.Representation.findAndCountAll).toBeCalledWith({
 				...mockOptions,
 				caseReference: undefined,
 				raw: true,
-				where: {
-					[Op.and]: [
-						{ CaseReference: mockOptionsWithSearchTerm.caseReference },
-						{
-							[Op.or]: [
-								{
-									[Op.or]: [
-										{ PersonalName: { [Op.like]: `%foo%` } },
-										{ RepresentationRedacted: { [Op.like]: `%foo%` } },
-										{ Representative: { [Op.like]: `%foo%` } }
-									]
-								},
-								{
-									[Op.or]: [
-										{ PersonalName: { [Op.like]: `%bar%` } },
-										{ RepresentationRedacted: { [Op.like]: `%bar%` } },
-										{ Representative: { [Op.like]: `%bar%` } }
-									]
-								}
-							]
-						}
-					]
-				},
-				order: [['DateRrepReceived', 'ASC'], ['PersonalName']]
+				where: expectedWhereClause,
+				order: [['DateRrepReceived', 'desc'], ['PersonalName']]
 			});
 		});
 		it('returns the result of findAllAndCount', async () => {

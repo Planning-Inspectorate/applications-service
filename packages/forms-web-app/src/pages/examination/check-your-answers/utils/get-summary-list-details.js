@@ -11,18 +11,18 @@ const {
 	getSummaryListItemEmail
 } = require('./summary-list-item');
 
-const getSummaryListDetails = (session, i18n) => {
+const getSummaryListDetails = (i18n, session) => {
 	const summaryListDetails = [];
 	const userHasInterestedPartyNumber = getUserHasInterestedPartyNumber(session);
 	const userApplicant = isUserApplicant(session);
 
-	summaryListDetails.push(getSummaryListItemHasInterestedPartyNumber(session, i18n));
+	summaryListDetails.push(getSummaryListItemHasInterestedPartyNumber(i18n, session));
 	if (userHasInterestedPartyNumber)
-		summaryListDetails.push(getSummaryListItemInterestedPartyNumber(session));
-	if (!userApplicant) summaryListDetails.push(getSummaryListItemSubmittingFor(session, i18n));
-	if (userApplicant) summaryListDetails.push(getSummaryListApplicant(session, i18n));
-	if (!userApplicant) summaryListDetails.push(getSummaryListName(session));
-	summaryListDetails.push(getSummaryListItemEmail(session));
+		summaryListDetails.push(getSummaryListItemInterestedPartyNumber(i18n, session));
+	if (!userApplicant) summaryListDetails.push(getSummaryListItemSubmittingFor(i18n, session));
+	if (userApplicant) summaryListDetails.push(getSummaryListApplicant(i18n, session));
+	if (!userApplicant) summaryListDetails.push(getSummaryListName(i18n, session));
+	summaryListDetails.push(getSummaryListItemEmail(i18n, session));
 
 	return summaryListDetails;
 };

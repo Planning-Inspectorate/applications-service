@@ -2,10 +2,10 @@ const {
 	getRegisterDeclarationController,
 	postRegisterDeclarationController
 } = require('./controller');
-const { postRegistrationData } = require('../../../../../services/registration.service');
+const { postRegistration } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('../../../../../../src/services/registration.service', () => ({
-	postRegistrationData: jest.fn()
+jest.mock('../../../../../../src/lib/application-api-wrapper', () => ({
+	postRegistration: jest.fn()
 }));
 describe('pages/projects/register/_common/declaration/controller', () => {
 	describe('#getRegisterDeclarationController', () => {
@@ -18,7 +18,10 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 			};
 			describe('and the user has selected myself', () => {
 				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+					session: {
+						mySelfRegdata: {}
+					}
 				};
 				beforeEach(() => {
 					getRegisterDeclarationController(req, res);
@@ -34,7 +37,10 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 			});
 			describe('and the user has selected organisation', () => {
 				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration',
+					session: {
+						orgRegdata: {}
+					}
 				};
 				beforeEach(() => {
 					getRegisterDeclarationController(req, res);
@@ -50,7 +56,10 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 			});
 			describe('and the user has selected agent', () => {
 				const req = {
-					originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration'
+					originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration',
+					session: {
+						behalfRegdata: {}
+					}
 				};
 				beforeEach(() => {
 					getRegisterDeclarationController(req, res);
@@ -62,6 +71,70 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 							key: 'agent'
 						}
 					);
+				});
+			});
+			describe('and the user has already submitted', () => {
+				const res = {
+					locals: { baseUrl: '/mock-base-url/mock-case-ref' },
+					render: jest.fn(),
+					redirect: jest.fn(),
+					status: jest.fn(() => res)
+				};
+				describe('for myself', () => {
+					const req = {
+						originalUrl: '/mock-base-url/mock-case-ref/register/myself/declaration',
+						session: {
+							mySelfRegdata: {
+								hasSubmitted: true
+							}
+						}
+					};
+					beforeEach(() => {
+						getRegisterDeclarationController(req, res);
+					});
+					it('should redirect to the already submitted page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/myself/already-registered'
+						);
+					});
+				});
+				describe('for organisation', () => {
+					const req = {
+						originalUrl: '/mock-base-url/mock-case-ref/register/organisation/declaration',
+						session: {
+							orgRegdata: {
+								hasSubmitted: true
+							}
+						}
+					};
+					beforeEach(() => {
+						getRegisterDeclarationController(req, res);
+					});
+					it('should redirect to the already submitted page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/organisation/already-registered'
+						);
+					});
+				});
+				describe('for agent', () => {
+					const req = {
+						originalUrl: '/mock-base-url/mock-case-ref/register/agent/declaration',
+						session: {
+							behalfRegdata: {
+								representor: {
+									hasSubmitted: true
+								}
+							}
+						}
+					};
+					beforeEach(() => {
+						getRegisterDeclarationController(req, res);
+					});
+					it('should redirect to the already submitted page', () => {
+						expect(res.redirect).toHaveBeenCalledWith(
+							'/mock-base-url/mock-case-ref/register/agent/already-registered'
+						);
+					});
 				});
 			});
 		});
@@ -96,7 +169,7 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 				});
 
 				it('should render the error page', () => {
-					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
+					expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
 				});
 			});
 			describe('and the user has submitted a declaration for myself', () => {
@@ -111,11 +184,11 @@ describe('pages/projects/register/_common/declaration/controller', () => {
 					}
 				};
 				beforeEach(async () => {
-					postRegistrationData.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
+					postRegistration.mockResolvedValue({ data: 'mock ip ref no from endpoint' });
 					await postRegisterDeclarationController(req, res);
 				});
 				it('should get he ip ref no from the interested party endpoint ', () => {
-					expect(postRegistrationData).toHaveBeenCalledWith(
+					expect(postRegistration).toHaveBeenCalledWith(
 						'{"text":"mock session key data","case_ref":"mock case ref","comment":"mock comment"}'
 					);
 				});

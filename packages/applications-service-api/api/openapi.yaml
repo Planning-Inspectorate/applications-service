@@ -1172,6 +1172,9 @@ components:
         dateOfNonAcceptance:
           type: string
           example: ''
+        isMaterialChange:
+          type: boolean
+          example: true
 
     InterestedParty:
       type: object
@@ -1426,6 +1429,10 @@ components:
           format: date
           description: Filter for documents published on or before {value}
           example: '2023-12-31'
+        isMaterialChange:
+          type: boolean
+          description: Is project material change
+          example: false
 
     DocumentV3RequestFilter:
       required:

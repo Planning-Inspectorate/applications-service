@@ -3,7 +3,7 @@
 
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "darwin", "darwin-arm64", "linux-musl", "linux-musl-arm64-openssl-1.1.x", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows"]
+  binaryTargets = ["native", "darwin", "darwin-arm64", "linux-musl", "linux-musl-arm64-openssl-1.1.x", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -43,8 +43,8 @@ model Document {
   author                 String?
   authorWelsh            String?
   representative         String?
-  description            String?
-  descriptionWelsh       String?
+  description            String?   @db.NText
+  descriptionWelsh       String?   @db.NText
   stage                  String?
   filter1                String?
   filter1Welsh           String?
@@ -164,6 +164,8 @@ model Project {
   applicant                                         ServiceUser? @relation("Applicant", fields: [applicantId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
   createdAt                                         DateTime?    @default(now())
   modifiedAt                                        DateTime?    @default(now())
+  isMaterialChange                                  Boolean?     @default(false)
+  AdviceProject																	    Advice[]     @relation("AdviceProject")
 }
 
 model ProjectUpdate {
@@ -187,8 +189,8 @@ model ExaminationTimetable {
   type                   String
   eventTitle             String
   eventTitleWelsh        String?
-  description            String
-  descriptionWelsh       String?
+  description            String                          @db.NText
+  descriptionWelsh       String?                         @db.NText
   eventDeadlineStartDate DateTime?
   date                   DateTime?
   createdAt              DateTime?                       @default(now())
@@ -228,4 +230,5 @@ model Advice {
   attachmentIds       String?
   createdAt           DateTime? @default(now())
   modifiedAt          DateTime? @default(now())
+  project				      Project? @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)
 }

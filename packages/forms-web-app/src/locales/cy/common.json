@@ -13,6 +13,7 @@
 	"datePublished": "Dyddiad cyhoeddi",
 	"dateTo": "Dyddiad i",
 	"day": "Diwrnod",
+	"email": "E-bost",
 	"error": "Gwall",
 	"filter": "Hidlydd",
 	"from": "Oddi wrth",
@@ -28,9 +29,15 @@
 	"no2": "Nac oes",
 	"no3": "Nac ydyw",
 	"open": "Agor",
+	"paginationShowing": "Yn dangos {{-from}} i {{-to}} o {{-total}} canlyniadau",
+	"paginationNext": "Nesaf",
+	"paginationPrevious": "Flaenorol",
+	"paginationAccessibilityText1": "Set",
+	"paginationAccessibilityText2": "o dudalennau",
 	"partOf": "Rhan o",
 	"pinsContactDetails": {
-		"csOpeningHours": "Ddydd Llun i ddydd Gwener, 9yb a 4yp (ar gau ar benwythnosau a gwyliau banc)"
+		"csOpeningHoursLine1": "Ar agor o ddydd Llun i ddydd Gwener: 9yb i 4yp",
+		"csOpeningHoursLine2": "Ar gau ar benwythnosau a gwyliau banc."
 	},
 	"remove": "Dileu",
 	"resultsPerPage": "Canlyniadau fesul tudalen",
@@ -45,11 +52,24 @@
 	"showAllSteps": "Dangos pob cam",
 	"showFilters": "Dangos hidlydd",
 	"startNow": "Dechrau nawr",
+	"submit": "Cyflwyno",
 	"success": "Llwyddiant",
+	"telephone": "Rhif ffôn",
 	"thereIsAProblem": "Mae yna broblem",
 	"to": "I",
 	"uploadAFile": "Lanlwytho ffeil",
 	"uploadFile": "Lanlwytho ffeil",
+	"genericSubmittedTemplate": {
+		"pageHeading": "{{ journeyHeading }} wedi'i gwblhau",
+		"bodyText": "Mae'r {{ journeyBody }} hwn wedi'i gwblhau.",
+		"backToProjectLink": "Dychwelyd i dudalen y prosiect",
+		"journey": {
+			"registration": {
+				"heading": "Cofrestru",
+				"body": "cofrestriad"
+			}
+		}
+	},
 	"validationErrors": {
 		"emailAddress": {
 			"empty": "Nodwch eich cyfeiriad e-bost",
@@ -84,10 +104,9 @@
 			"length": "Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
 		}
 	},
+	"warning": "Rhybudd",
 	"year": "Blwyddyn",
 	"yes1": "Ydw",
 	"yes2": "Oes",
-	"yes3": "Ydyw",
-	"telephone": "Rhif ffôn",
-	"email": "E-bost"
+	"yes3": "Ydyw"
 }

@@ -15,7 +15,8 @@ jest.mock('../../../src/utils/pdf');
 
 const uploadFileService = require('../../../src/services/ni.api.service').uploadFile;
 const textToPdfUtil = require('../../../src/utils/pdf').textToPdf;
-const updateSubmissionRepository = require('../../../src/repositories/submission.ni.repository').updateSubmission;
+const updateSubmissionRepository =
+	require('../../../src/repositories/submission.ni.repository').updateSubmission;
 
 describe('ni file service', () => {
 	describe('submitUserUploadedFile', () => {

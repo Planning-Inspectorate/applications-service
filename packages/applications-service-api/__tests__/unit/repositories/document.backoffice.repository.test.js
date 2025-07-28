@@ -38,17 +38,17 @@ describe('document repository', () => {
 			expect(mockCount.mock.calls[0][0].where.AND[0]).toEqual({ caseRef: caseReference });
 		});
 
-		it('calls findMany and count with searchTerm if provided', async () => {
+		it('calls findMany and count with split and filtered searchTerm if provided', async () => {
 			await getDocuments({
 				caseReference: caseReference,
-				searchTerm: 'someterm'
+				searchTerm: 'a search term'
 			});
 
-			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].description.contains).toEqual(
-				'someterm'
+			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].AND[0].description.contains).toEqual(
+				'search'
 			);
-			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].description.contains).toEqual(
-				'someterm'
+			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].AND[0].description.contains).toEqual(
+				'search'
 			);
 		});
 
@@ -96,7 +96,7 @@ describe('document repository', () => {
 			});
 
 			expect(mockFindFirst).toHaveBeenCalledWith({
-				orderBy: { datePublished: 'desc' },
+				orderBy: [{ datePublished: 'desc' }, { representative: 'asc' }],
 				take: 1,
 				where: { caseRef: 'mock case ref', documentType: 'mock type' }
 			});

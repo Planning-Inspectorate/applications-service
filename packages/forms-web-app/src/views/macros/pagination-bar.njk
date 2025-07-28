@@ -6,19 +6,19 @@
 
 {% macro paginationBar(pageOptions = [], paginationData = {}, pageLinkHrefTemplate = "?page=:page") -%}
     {% if paginationData.totalPages !== 1 %}
-        <nav class="moj-pagination" id="pagination-label">
-          <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+        <nav class="moj-pagination" aria-labelledby="pagination-label">
+          <p class="govuk-visually-hidden" id="pagination-label">{{ t('global.paginationNavigation') }}</p>
           <ul class="moj-pagination__list">
             {% for page in pageOptions %}
               {% if page === 'prev' %}
                 <li class="moj-pagination__item  moj-pagination__item--prev">
-                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage - 1) }}">Previous<span class="govuk-visually-hidden"> set of pages</span></a>
+                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage - 1) }}"><span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText1') }}</span>{{ t('common.paginationPrevious') }} <span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText2') }}</span></a>
                 </li>
               {% elif page === paginationData.currentPage %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
               {% elif page === 'next' %}
                 <li class="moj-pagination__item  moj-pagination__item--next">
-                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage + 1) }}">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                  <a class="moj-pagination__link" href="{{ pageLinkHrefTemplate | replace(':page', paginationData.currentPage + 1) }}"><span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText1') }}</span>{{ t('common.paginationNext') }} <span class="govuk-visually-hidden">{{ t('common.paginationAccessibilityText2') }}</span></a>
                 </li>
               {% elif page === '...' %}
                 <li class="moj-pagination__item moj-pagination__item--active">{{ page }}</li>
@@ -29,7 +29,7 @@
               {% endif %}
             {% endfor %}
           </ul>
-          <p class="moj-pagination__results">Showing <b>{{ paginationData.fromRange }}</b> to <b>{{ paginationData.toRange }}</b> of <b>{{ paginationData.totalItems }}</b> results</p>
+          <p class="moj-pagination__results">{{ t('common.paginationShowing', { from: '<strong>' + paginationData.fromRange + '</strong>', to: '<strong>' + paginationData.toRange + '</strong>', total: '<strong>' + paginationData.totalItems + '</strong>' }) | safe }}</p>
         </nav>
     {% endif %}
 {%- endmacro %}

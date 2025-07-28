@@ -1,0 +1,12 @@
+<p class="govuk-body">
+    {{ t('projectsIndex.projectStage.paragraph1', { stage: '<strong>' + t("projectsIndex.projectStage.stage" + applicationData.status.number + "name" ) | lower + '</strong>' }) | safe }}
+</p>
+
+{% if applicationDecision and applicationData.confirmedDateOfDecision %}
+    <p class="govuk-body">
+	    {{ t('projectsIndex.projectStage.postDecision.paragraph1', 
+	    { decision:  t('projectsIndex.projectStage.postDecision.' + applicationDecision ), date: applicationData.confirmedDateOfDecision | date('locale', language) | date })
+	    }}
+    </p>
+{% endif %}
+

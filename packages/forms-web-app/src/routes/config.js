@@ -16,15 +16,11 @@ const routesConfig = {
 			},
 			checkSubmissionItem: {
 				id: 'examination-check-submission-item',
-				name: 'Check your answers',
-				route: 'check-your-deadline-item',
-				view: 'pages/examination/check-submission-item'
+				route: 'check-your-deadline-item'
 			},
 			checkYourAnswers: {
 				id: 'examination-check-your-answers',
-				name: 'Check your answers',
-				route: 'check-your-answers',
-				view: 'pages/examination/check-your-answers'
+				route: 'check-your-answers'
 			},
 			email: {
 				id: 'examination-email',
@@ -65,7 +61,6 @@ const routesConfig = {
 				route: 'your-organisation-name'
 			},
 			personalInformation: {
-				name: 'Personal information',
 				sessionId: 'personalInformation'
 			},
 			personalInformationComment: {
@@ -114,40 +109,21 @@ const routesConfig = {
 			},
 			addAnotherDeadlineItem: {
 				id: 'examination-add-another-deadline-item',
-				name: 'You added one deadline item',
-				title: 'You added one deadline item',
-				pageTitle: 'You added one deadline item',
 				route: 'add-another-deadline-item',
-				view: 'pages/examination/add-another-deadline-item',
-				comment: '',
 				changeADeadlineItem: {
 					route: 'change-a-deadline-item'
-				},
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you want to add another deadline item'
-					}
 				}
 			},
 			selectIfYouWantToDeleteData: {
 				id: 'examination-select-if-want-to-delete-data',
-				pageTitle: 'Are you sure you want to delete data for this item?',
 				route: 'select-if-want-to-delete-data',
 				markDeadlineItemForDelete: {
 					route: 'mark-deadline-item-to-delete'
-				},
-				view: 'pages/examination/select-if-want-to-delete-data',
-				onError: {
-					message: {
-						isEmpty: 'Select yes if you need to delete data for this item'
-					}
 				}
 			},
 			processSubmission: {
 				id: 'examination-process-submission',
-				pageTitle: 'Process submission',
-				route: 'process-submission',
-				view: 'pages/examination/process-submission'
+				route: 'process-submission'
 			},
 			submissionComplete: {
 				route: 'submission-complete',
@@ -155,8 +131,7 @@ const routesConfig = {
 			},
 			submissionError: {
 				id: 'examination-submission-error',
-				route: 'submission-error',
-				view: 'error/examination-submission-error'
+				route: 'submission-error'
 			}
 		}
 	},

@@ -66,8 +66,10 @@ describe('/api/v1/applications', () => {
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
 				...APPLICATION_API_V1,
-				DateOfDCOAcceptance_NonAcceptance: null,
-				sourceSystem: 'ODT'
+				sourceSystem: 'ODT',
+				deadlineForAcceptanceDecision: '2023-01-30',
+				deadlineForDecision: null,
+				deadlineForSubmissionOfRecommendation: null
 			});
 		});
 
@@ -133,6 +135,7 @@ describe('/api/v1/applications', () => {
 					expect.objectContaining({
 						where: {
 							Region: { [Op.ne]: 'Wales' },
+							CaseReference: { [Op.notIn]: [] },
 							[Op.and]: [
 								{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 								{ Stage: { [Op.in]: [2, 5] } },
@@ -169,17 +172,27 @@ describe('/api/v1/applications', () => {
 					expect.objectContaining({
 						where: {
 							Region: { [Op.ne]: 'Wales' },
+							CaseReference: { [Op.notIn]: [] },
 							[Op.or]: [
+								{ CaseReference: { [Op.like]: '%London Resort%' } },
 								{
-									[Op.or]: [
-										{ ProjectName: { [Op.like]: '%London%' } },
-										{ PromoterName: { [Op.like]: '%London%' } }
+									[Op.and]: [
+										{
+											ProjectName: { [Op.like]: `%London%` }
+										},
+										{
+											ProjectName: { [Op.like]: `%Resort%` }
+										}
 									]
 								},
 								{
-									[Op.or]: [
-										{ ProjectName: { [Op.like]: '%Resort%' } },
-										{ PromoterName: { [Op.like]: '%Resort%' } }
+									[Op.and]: [
+										{
+											PromoterName: { [Op.like]: `%London%` }
+										},
+										{
+											PromoterName: { [Op.like]: `%Resort%` }
+										}
 									]
 								}
 							]
@@ -222,6 +235,7 @@ describe('/api/v1/applications', () => {
 					expect.objectContaining({
 						where: {
 							Region: { [Op.ne]: 'Wales' },
+							CaseReference: { [Op.notIn]: [] },
 							[Op.and]: [
 								{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 								{ Stage: { [Op.in]: [2, 5] } },
@@ -230,10 +244,19 @@ describe('/api/v1/applications', () => {
 								}
 							],
 							[Op.or]: [
+								{ CaseReference: { [Op.like]: '%Nuclear%' } },
 								{
-									[Op.or]: [
-										{ ProjectName: { [Op.like]: '%Nuclear%' } },
-										{ PromoterName: { [Op.like]: '%Nuclear%' } }
+									[Op.and]: [
+										{
+											ProjectName: { [Op.like]: `%Nuclear%` }
+										}
+									]
+								},
+								{
+									[Op.and]: [
+										{
+											PromoterName: { [Op.like]: `%Nuclear%` }
+										}
 									]
 								}
 							]
@@ -256,6 +279,7 @@ describe('/api/v1/applications', () => {
 		describe('when getAllApplications is BO', () => {
 			beforeEach(() => {
 				config.backOfficeIntegration.getAllApplications = 'BO';
+				config.featureFlag.allowWelshCases = true;
 				mockProjectFindMany
 					// applications
 					.mockResolvedValueOnce([APPLICATION_DB])
@@ -273,7 +297,9 @@ describe('/api/v1/applications', () => {
 						{
 							...APPLICATION_API_V1,
 							sourceSystem: 'ODT',
-							DateOfDCOAcceptance_NonAcceptance: null
+							deadlineForAcceptanceDecision: '2023-01-30',
+							deadlineForDecision: null,
+							deadlineForSubmissionOfRecommendation: null
 						}
 					],
 					currentPage: 1,
@@ -303,7 +329,6 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
 							},
@@ -319,9 +344,7 @@ describe('/api/v1/applications', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			it('with search term applied (FEATURE_ALLOW_WELSH_TRANSLATION=false)', async () => {
-				config.featureFlag.allowWelshTranslation = false;
-
+			it('with search term applied', async () => {
 				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
 
 				expect(mockProjectFindMany).toBeCalledWith({
@@ -331,62 +354,25 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
-									{ projectName: { contains: 'London Resort' } },
+									{ caseReference: { contains: 'London Resort' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'London' } } },
-											{ applicant: { firstName: { contains: 'London' } } },
-											{ applicant: { lastName: { contains: 'London' } } }
+										AND: [
+											{ projectName: { contains: 'London' } },
+											{ projectName: { contains: 'Resort' } }
 										]
 									},
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Resort' } } },
-											{ applicant: { firstName: { contains: 'Resort' } } },
-											{ applicant: { lastName: { contains: 'Resort' } } }
-										]
-									}
-								]
-							}
-						]
-					}
-				});
-
-				expect(response.status).toEqual(200);
-			});
-
-			it('with search term applied (FEATURE_ALLOW_WELSH_TRANSLATION=true)', async () => {
-				config.featureFlag.allowWelshTranslation = true;
-
-				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
-
-				expect(mockProjectFindMany).toBeCalledWith({
-					include: { applicant: true },
-					orderBy: { projectName: 'asc' },
-					skip: 0,
-					take: 25,
-					where: {
-						AND: [
-							{ regions: { not: { contains: 'wales' } } },
-							{
-								OR: [
-									{ projectName: { contains: 'London Resort' } },
-									{ projectNameWelsh: { contains: 'London Resort' } },
-									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'London' } } },
-											{ applicant: { firstName: { contains: 'London' } } },
-											{ applicant: { lastName: { contains: 'London' } } }
+										AND: [
+											{ projectNameWelsh: { contains: 'London' } },
+											{ projectNameWelsh: { contains: 'Resort' } }
 										]
 									},
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Resort' } } },
-											{ applicant: { firstName: { contains: 'Resort' } } },
-											{ applicant: { lastName: { contains: 'Resort' } } }
+										AND: [
+											{ applicant: { organisationName: { contains: 'London' } } },
+											{ applicant: { organisationName: { contains: 'Resort' } } }
 										]
 									}
 								]
@@ -418,17 +404,17 @@ describe('/api/v1/applications', () => {
 					take: 25,
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
-									{ projectName: { contains: 'Nuclear' } },
-									{ projectNameWelsh: { contains: 'Nuclear' } },
+									{ caseReference: { contains: 'Nuclear' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Nuclear' } } },
-											{ applicant: { firstName: { contains: 'Nuclear' } } },
-											{ applicant: { lastName: { contains: 'Nuclear' } } }
-										]
+										AND: [{ projectName: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ projectNameWelsh: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ applicant: { organisationName: { contains: 'Nuclear' } } }]
 									}
 								]
 							},
@@ -451,8 +437,10 @@ describe('/api/v1/applications', () => {
 		describe('when getAllApplications is MERGE', () => {
 			const BOApplication = {
 				...APPLICATION_API_V1,
-				DateOfDCOAcceptance_NonAcceptance: null,
-				sourceSystem: 'ODT'
+				sourceSystem: 'ODT',
+				deadlineForAcceptanceDecision: '2023-01-30',
+				deadlineForDecision: null,
+				deadlineForSubmissionOfRecommendation: null
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];
@@ -570,17 +558,17 @@ describe('/api/v1/applications', () => {
 					orderBy: { projectName: 'asc' },
 					where: {
 						AND: [
-							{ regions: { not: { contains: 'wales' } } },
 							{
 								OR: [
-									{ projectName: { contains: 'Nuclear' } },
-									{ projectNameWelsh: { contains: 'Nuclear' } },
+									{ caseReference: { contains: 'Nuclear' } },
 									{
-										OR: [
-											{ applicant: { organisationName: { contains: 'Nuclear' } } },
-											{ applicant: { firstName: { contains: 'Nuclear' } } },
-											{ applicant: { lastName: { contains: 'Nuclear' } } }
-										]
+										AND: [{ projectName: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ projectNameWelsh: { contains: 'Nuclear' } }]
+									},
+									{
+										AND: [{ applicant: { organisationName: { contains: 'Nuclear' } } }]
 									}
 								]
 							},
@@ -598,9 +586,7 @@ describe('/api/v1/applications', () => {
 				});
 				expect(mockProjectFindMany).toHaveBeenNthCalledWith(2, {
 					include: { applicant: true },
-					where: {
-						AND: [{ regions: { not: { contains: 'wales' } } }]
-					}
+					where: {}
 				});
 				// NI Searches
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(1, {
@@ -608,6 +594,7 @@ describe('/api/v1/applications', () => {
 					raw: true,
 					where: expect.objectContaining({
 						Region: { [Op.ne]: 'Wales' },
+						CaseReference: { [Op.notIn]: [] },
 						[Op.and]: [
 							{ Region: { [Op.in]: ['Eastern', 'North West'] } },
 							{ Stage: { [Op.in]: [2, 5] } },
@@ -616,10 +603,19 @@ describe('/api/v1/applications', () => {
 							}
 						],
 						[Op.or]: [
+							{ CaseReference: { [Op.like]: '%Nuclear%' } },
 							{
-								[Op.or]: [
-									{ ProjectName: { [Op.like]: '%Nuclear%' } },
-									{ PromoterName: { [Op.like]: '%Nuclear%' } }
+								[Op.and]: [
+									{
+										ProjectName: { [Op.like]: `%Nuclear%` }
+									}
+								]
+							},
+							{
+								[Op.and]: [
+									{
+										PromoterName: { [Op.like]: `%Nuclear%` }
+									}
 								]
 							}
 						]
@@ -628,7 +624,8 @@ describe('/api/v1/applications', () => {
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(2, {
 					raw: true,
 					where: {
-						Region: { [Op.ne]: 'Wales' }
+						Region: { [Op.ne]: 'Wales' },
+						CaseReference: { [Op.notIn]: [] }
 					}
 				});
 				expect(response.status).toEqual(200);

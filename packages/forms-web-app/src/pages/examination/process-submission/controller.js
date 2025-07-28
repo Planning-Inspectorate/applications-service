@@ -3,7 +3,7 @@ const logger = require('../../../lib/logger');
 const {
 	routesConfig: {
 		examination: {
-			pages: { processSubmission, submissionComplete, submissionError }
+			pages: { submissionComplete, submissionError }
 		}
 	}
 } = require('../../../routes/config');
@@ -15,17 +15,11 @@ const { getSubmittingItemsSubtitle } = require('./utils/get-submitting-items-sub
 const view = 'examination/process-submission/view.njk';
 
 const getProcessSubmission = (req, res) => {
-	const { session } = req;
+	const { i18n, session } = req;
 
 	try {
 		const pageData = {
-			submittingItemsTitle: 'Processing submission',
-			submittingItemsSubtitle: getSubmittingItemsSubtitle(session),
-			text: 'This may take a few minutes.',
-			title: processSubmission.pageTitle,
-			pageTitle: processSubmission.pageTitle,
-			warningTextJSEnabled: 'This may take several minutes. Do not refresh this page.',
-			warningTextNoScript: 'Do not refresh this page or navigate away until processing is complete.'
+			submittingItemsSubtitle: getSubmittingItemsSubtitle(i18n, session)
 		};
 		return res.render(view, pageData);
 	} catch (error) {

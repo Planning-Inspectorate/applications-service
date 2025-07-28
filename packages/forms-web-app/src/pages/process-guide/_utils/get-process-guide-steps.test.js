@@ -34,8 +34,10 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 						url: '/decision-making-process-guide/examination-of-the-application'
 					},
 					postDecision: {
-						content:
-							'Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.',
+						content: [
+							'Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.',
+							'This must happen within 6 weeks.'
+						],
 						linkText: 'What you can do after the decision has been made.',
 						title: 'What happens after the decision is made',
 						url: '/decision-making-process-guide/what-happens-after-the-decision-is-made'
@@ -52,7 +54,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 					preExamination: {
 						content: [
 							'The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.',
-							'The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.',
+							'The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 30 days.',
 							'The pre-examination stage usually takes about 3 months.'
 						],
 						linkText: 'What happens during the pre-examination stage.',

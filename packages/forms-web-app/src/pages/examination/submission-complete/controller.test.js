@@ -1,45 +1,47 @@
 const { getSubmissionComplete } = require('./controller');
-
-const {
-	getExaminationSubmissionId,
-	getExaminationEmailAddress
-} = require('../_session/examination-session');
+const { getExaminationSubmissionId } = require('../_session/examination-session');
 const { getProjectEmailAddress } = require('../../../controllers/session/app-data-session');
+const { getProjectsIndexURL } = require('../../projects/index/_utils/get-projects-index-url');
 
 jest.mock('../_session/examination-session', () => ({
-	getExaminationSubmissionId: jest.fn(),
-	getExaminationEmailAddress: jest.fn()
+	getExaminationSubmissionId: jest.fn()
 }));
 
 jest.mock('../../../controllers/session/app-data-session', () => ({
 	getProjectEmailAddress: jest.fn()
 }));
 
+jest.mock('../../projects/index/_utils/get-projects-index-url', () => ({
+	getProjectsIndexURL: jest.fn()
+}));
+
 describe('submission-complete/controller', () => {
 	describe('#getSubmissionComplete', () => {
 		const session = {};
-		const req = { session };
+		const req = {
+			session,
+			params: { case_ref: '1234' }
+		};
 		const res = {
 			redirect: jest.fn(),
 			render: jest.fn(),
 			status: jest.fn(() => res)
 		};
-		const mockProjectEmail = 'dummy.email@testing.gov.uk';
 		describe('When getting the submission complete page', () => {
 			beforeEach(() => {
-				getExaminationSubmissionId.mockReturnValue('1234');
-				getExaminationEmailAddress.mockReturnValue('mock email');
-				getProjectEmailAddress.mockReturnValue(mockProjectEmail);
+				getExaminationSubmissionId.mockReturnValue('5678');
+				getProjectEmailAddress.mockReturnValue('email@test.gov.uk');
+				getProjectsIndexURL.mockReturnValue('mock url');
 			});
-			describe('and the page is rendered with submissionId and project email', () => {
+			describe('and the page is rendered with submissionId, project email and project index URL', () => {
 				beforeEach(() => {
 					getSubmissionComplete(req, res);
 				});
 				it('should render the page', () => {
 					expect(res.render).toHaveBeenCalledWith('examination/submission-complete/view.njk', {
-						submissionId: '1234',
-						projectEmail: 'dummy.email@testing.gov.uk',
-						emailAddress: 'mock email'
+						submissionId: '5678',
+						projectEmail: 'email@test.gov.uk',
+						projectsIndexURL: 'mock url'
 					});
 				});
 			});

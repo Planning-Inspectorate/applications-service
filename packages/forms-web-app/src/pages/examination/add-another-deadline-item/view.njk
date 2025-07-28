@@ -7,12 +7,11 @@
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
 {% set backLinkUrl = backLinkUrl %}
-{% set pageTitle = pageTitle %}
-{% set hintHtml = '<legend class="govuk-fieldset__legend govuk-fieldset__legend govuk-fieldset__legend--m">' + hintHtml + '</legend>' %}
+{% set pageTitle = t("examination.addAnotherDeadlineItem.title") %}
 
 {% block pageTitle %}
 	{% if errors %}
-		{% set pageTitle = "Error: " + pageTitle %}
+		{% set pageTitle = t("common.error") + ": " + pageTitle %}
 	{% endif %}
 	{{ pageTitle }}
 {% endblock %}
@@ -20,7 +19,7 @@
 {% block content %}
 	{% if errorSummary %}
 		{{ govukErrorSummary({
-			titleText: "There is a problem",
+			titleText: t("common.thereIsAProblem"),
 			errorList: errorSummary
 		}) }}
 	{% endif %}
@@ -29,18 +28,15 @@
 		<div class="govuk-grid-column-two-thirds">
 			{% if hasNoSubmissionItems %}
 				<h1 class="govuk-heading-l">
-					{{ noDeadlineItems.title }}
+					{{ t("examination.addAnotherDeadlineItem.noDeadlineItems.heading1") }}
 				</h1>
 
-				<a
-					href="{{ noDeadlineItems.selectDeadlineURL }}"
-					class="govuk-button"
-				>
-					Add a deadline item
+				<a href="{{ noDeadlineItems.selectDeadlineURL }}" class="govuk-button">
+					{{ t("examination.addAnotherDeadlineItem.noDeadlineItems.ctaText1") }}
 				</a>
 			{% else %}
 				<h1 class="govuk-heading-l">
-					{{ title }}
+					{{ t("examination.addAnotherDeadlineItem.heading1") }}
 				</h1>
 
 				<dl class="govuk-summary-list">
@@ -49,38 +45,33 @@
 							<dd class="govuk-summary-list__value govuk-!-width-two-thirds">
 								{{ item.submissionItem }}
 							</dd>
+
 							<dd class="govuk-summary-list__actions govuk-!-width-one-third">
 								<ul class="govuk-summary-list__actions-list -white-space--nowrap">
 									<li class="govuk-summary-list__actions-list-item">
-										<form
-											action="{{ item.change.url }}"
-											method="post"
-										>
+										<form action="{{ item.change.url }}" method="post">
 											<button
-												aria-label="Change {{ item.submissionItem }}"
+												aria-label="{{ t("common.change") }} {{ item.submissionItem }}"
 												name="itemIdToChange"
 												type="submit"
 												class="ui-link-button"
 												value="{{ item.change.itemId }}"
 											>
-												Change
+												{{ t("common.change") }}
 											</button>
 										</form>
 									</li>
 
 									<li class="govuk-summary-list__actions-list-item">
-										<form
-											action="{{ item.remove.url }}"
-											method="post"
-										>
+										<form action="{{ item.remove.url }}" method="post">
 											<button
-												aria-label="Remove {{ item.submissionItem }}"
+												aria-label="{{ t("common.remove") }} {{ item.submissionItem }}"
 												name="itemIdToDelete"
 												type="submit"
 												class="ui-link-button"
 												value="{{ item.remove.itemId }}"
 											>
-												Remove
+												{{ t("common.remove") }}
 											</button>
 										</form>
 									</li>
@@ -89,48 +80,46 @@
 						</div>
 					{% endfor %}
 				</dl>
-			{% if moreDeadlineItems.hasMoreDeadlineItemsToSubmit %}
-				<form action="" method="POST" novalidate>
-					{{ govukRadios({
-						attributes: { "data-cy": id },
-						classes: "govuk-radios--inline",
-						idPrefix: id,
-						name: id,
-						errorMessage: errors[id] and {
-							text: errors[id].msg
-						},
-						fieldset: {
-							legend: {
-								text: '',
-								isPageHeading: true,
-								classes: "govuk-fieldset__legend--m"
-							}
-						},
-						hint: {
-							html: hintHtml
-						},
-						items: options
+
+				{% if moreDeadlineItems.hasMoreDeadlineItemsToSubmit %}
+					<form method="POST" novalidate>
+						{{ govukRadios({
+							attributes: { "data-cy": id },
+							classes: "govuk-radios--inline",
+							idPrefix: id,
+							name: id,
+							errorMessage: errors[id] and {
+								text: errors[id].msg
+							},
+							fieldset: {
+								legend: {
+									text: t("examination.addAnotherDeadlineItem.hintText1"),
+									isPageHeading: true,
+									classes: "govuk-fieldset__legend--m"
+								}
+							},
+							items: options
+						}) }}
+
+						{{ govukButton({
+							text: t("common.continue"),
+							type: "Submit"
+						}) }}
+					</form>
+				{% else %}
+					{{ govukWarningText({
+						text: moreDeadlineItems.message,
+						iconFallbackText: t("common.warning")
 					}) }}
 
-					{{ govukButton({
-						text: "Continue",
-						type: "Submit"
-					}) }}
-				</form>
-			{% else %}
-				{{ govukWarningText({
-					text: moreDeadlineItems.message,
-					iconFallbackText: "Warning"
-				}) }}
-
-				<form action="{{ moreDeadlineItems.continueLink }}" method="get" novalidate>
-					{{ govukButton({
-						text: "Continue",
-						type: "Submit"
-					}) }}
-				<form>
+					<form action="{{ moreDeadlineItems.continueLink }}" method="get" novalidate>
+						{{ govukButton({
+							text: t("common.continue"),
+							type: "Submit"
+						}) }}
+					</form>
+				{% endif %}
 			{% endif %}
-		{% endif %}
 		</div>
 	</div>
 {% endblock %}

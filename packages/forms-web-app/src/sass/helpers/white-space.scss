@@ -1,11 +1,11 @@
 .-white-space {
-  white-space: initial;
+	white-space: initial;
 
-  &--nowrap {
-    white-space: nowrap;
-  }
+	&--nowrap {
+		white-space: nowrap;
+	}
 
-  &--pre-line {
-    white-space: pre-line;
-  }
+	&--pre-line {
+		white-space: pre-line;
+	}
 }

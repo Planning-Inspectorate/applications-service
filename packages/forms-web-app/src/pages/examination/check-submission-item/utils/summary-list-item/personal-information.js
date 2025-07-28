@@ -60,7 +60,12 @@ const getChangeUrl = (submissionItem) => {
 const getSummaryListItemPersonalInformation = (i18n, submissionItem) => {
 	const personalInformationValueText = getPersonalInformationValueText(i18n, submissionItem);
 	const changeUrl = getChangeUrl(submissionItem);
-	return getSummaryListItem(personalInformation.name, personalInformationValueText, `${changeUrl}`);
+	return getSummaryListItem(
+		i18n,
+		i18n.t('examination.checkSubmissionItem.summaryListHeading5'),
+		personalInformationValueText,
+		`${changeUrl}`
+	);
 };
 
 module.exports = { getSummaryListItemPersonalInformation };

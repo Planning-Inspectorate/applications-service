@@ -1,57 +1,80 @@
 {% extends "layouts/default.njk" %}
 
-{% block pageTitle %}
-	Submission Complete
-{% endblock %}
+{% set pageTitle = t("examination.submissionComplete.title") %}
 
 {% block content %}
-
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
-
 			<div class="govuk-panel govuk-panel--confirmation">
-				<h1 class="govuk-panel__title">Submission Complete</h1>
+				<h1 class="govuk-panel__title">
+					{{ t("examination.submissionComplete.heading1") }}
+				</h1>
+
 				<div class="govuk-panel__body">
-					Your submission reference number<br>
+					{{ t("examination.submissionComplete.notificationText1") }}
+					<br>
 					<strong>{{ submissionId }}</strong>
 				</div>
 			</div>
 
-			<p class="govuk-body">We've sent a confirmation email to {{ emailAddress }} to confirm we have received your
-				submission.</p>
-
-			<h3 class="govuk-heading-m">Contact us</h3>
-			<h4 class="govuk-heading-s">Telephone </h4>
-			<p>If you have an interested party reference number, have it with you when you call.</p>
-
-			<p class="govuk-body">Telephone: 0303 444 5000
-				<br>
-				Monday to Friday, 9am to 12pm (except public holidays)
+			<p class="govuk-body">
+				{{ t("examination.submissionComplete.paragraph1") }}
+			</p>
+				
+			<p class="govuk-body">
+				<a class="govuk-link" href="{{ projectsIndexURL }}">{{ t('examination.submissionComplete.paragraph2LinkText') }}</a>
 			</p>
 
-			<h4 class="govuk-heading-s">Email </h4>
+			<h2 class="govuk-heading-m">
+				{{ t("examination.submissionComplete.heading2") }}
+			</h2>
+
+			<h3 class="govuk-heading-s">
+				{{ t("examination.submissionComplete.heading3") }}
+			</h3>
+
+			<p class="govuk-body">
+				{{ t("examination.submissionComplete.paragraph3") }}
+			</p>
+
+			<p class="govuk-body">
+				{{ t('common.telephone') }}: {{ pinsContactDetails.supportTeamPhoneNumber }}
+				<p>
+					{{ t("common.pinsContactDetails.csOpeningHoursLine1") }}
+					<br>
+					{{ t("common.pinsContactDetails.csOpeningHoursLine2") }}
+				</p>
+			</p>
+
+			<h3 class="govuk-heading-s">
+				{{ t("examination.submissionComplete.heading4") }}
+			</h3>
+
 			<p class="govuk-body">
 				<a id="project-email-link" href="{{ projectEmail }}" class="govuk-link">
 					{{ projectEmail }}
 				</a>
 			</p>
+
 			<p class="govuk-body">
-				When you're writing an email, quote the name of the project in the subject line.
-			</p>
-			<p class="govuk-body">
-				We aim to respond within 10 working days.
+				{{ t("examination.submissionComplete.paragraph4") }}
 			</p>
 
-			<h4 class="govuk-heading-s">Alternative formats </h4>
 			<p class="govuk-body">
-				Call or email to ask for project documents in alternative formats such as PDF, large print, easy read, audio
-				recording or braille.
-			</p>
-			<p class="govuk-body">
-				<a href="{{ serviceFeedbackUrl }}" class="govuk-link">Tell us what you thought about this service</a> by completing a short survey.
+				{{ t("examination.submissionComplete.paragraph5") }}
 			</p>
 
+			<h3 class="govuk-heading-s">
+				{{ t("examination.submissionComplete.heading5") }}
+			</h3>
+
+			<p class="govuk-body">
+				{{ t("examination.submissionComplete.paragraph6") }}
+			</p>
+
+			<p class="govuk-body">
+				{{ t("examination.submissionComplete.paragraph7", { link: '<a href="' + serviceFeedbackUrl + '" class="govuk-link">' + t("examination.submissionComplete.paragraph7LinkText") + '</a>' }) | safe }}
+			</p>
 		</div>
 	</div>
-
 {% endblock %}

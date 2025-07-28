@@ -35,7 +35,7 @@ describe('examination/check-your-answers/controller', () => {
 					getCheckYourAnswers(req, res);
 				});
 				it('should call the functions', () => {
-					expect(getPageData).toBeCalledWith(req.session, req.i18n);
+					expect(getPageData).toBeCalledWith(req.i18n, req.session);
 				});
 				it('should render the check your answers page', () => {
 					expect(res.render).toHaveBeenCalledWith(

@@ -19,11 +19,12 @@ const formatSubmissionItemFiles = (submissionItemFiles) => {
 	return `<ul class="govuk-list">${valuesAsList}</ul>`;
 };
 
-const getSummaryListItemSelectFile = (submissionItem) => {
+const getSummaryListItemSelectFile = (i18n, submissionItem) => {
 	const submissionItemFiles = getSubmissionItemFiles(submissionItem);
 
 	return getSummaryListItem(
-		'Documents uploaded',
+		i18n,
+		i18n.t('examination.checkSubmissionItem.summaryListHeading3'),
 		formatSubmissionItemFiles(submissionItemFiles),
 		`${selectFile.route}${editQuery}`
 	);

@@ -93,44 +93,48 @@ describe('pages/projects/section-51/index/controller', () => {
 								adviceGivenBy: 'mock organisation',
 								adviceTypeLabel: 'Enquiry from',
 								date: {
-									date: '2023-01-01',
+									date: '1 January 2023',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 1',
-								linkTitle: 'View advice to mock organisation'
+								linkTitle: 'View advice to mock organisation',
+								projectName: ''
 							},
 							{
 								enquiryDetail: 'mock enquiry detail 2',
 								adviceGivenBy: 'mock organisation',
 								adviceTypeLabel: 'Meeting with',
 								date: {
-									date: 'mock date given 2',
+									date: '6 June 2024',
 									text: 'Date of meeting:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 2',
-								linkTitle: 'View meeting with mock organisation'
+								linkTitle: 'View meeting with mock organisation',
+								projectName: ''
 							},
 							{
 								enquiryDetail: 'mock enquiry detail 3',
 								adviceGivenBy: 'mock first name mock last name',
 								adviceTypeLabel: 'Enquiry from',
 								date: {
-									date: 'mock date given 3',
+									date: '12 December 2024',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 3',
-								linkTitle: 'View advice to mock first name mock last name'
+								linkTitle: 'View advice to mock first name mock last name',
+								projectName: ''
 							},
 							{
 								enquiryDetail: 'mock enquiry detail 4',
 								adviceGivenBy: 'Anonymous',
 								adviceTypeLabel: 'Enquiry from',
 								date: {
-									date: 'mock date given 4',
+									date: '10 October 2023',
 									text: 'Date advice given:'
 								},
 								link: '/projects/mock case ref/s51advice/mock advice id 4',
-								linkTitle: 'View advice to Anonymous'
+								linkTitle: 'View advice to Anonymous',
+								projectName: ''
 							}
 						]
 					});

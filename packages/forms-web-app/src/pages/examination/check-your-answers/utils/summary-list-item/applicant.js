@@ -3,7 +3,7 @@ const { getSummaryListItem } = require('../../../../../controllers/utils/get-sum
 const { getSelectedOptionText } = require('./helpers');
 const { getApplicantOptions } = require('../../../applicant/config');
 
-const getSummaryListApplicant = (session, i18n) => {
+const getSummaryListApplicant = (i18n, session) => {
 	const applicantOptions = getApplicantOptions(i18n);
 
 	const applicantText = getSelectedOptionText(
@@ -12,7 +12,11 @@ const getSummaryListApplicant = (session, i18n) => {
 	);
 	if (!applicantText) throw new Error('Applicant text is undefined');
 
-	return getSummaryListItem('Applicant or not', applicantText);
+	return getSummaryListItem(
+		i18n,
+		i18n.t('examination.checkYourAnswers.details.summaryListHeading4'),
+		applicantText
+	);
 };
 
 module.exports = { getSummaryListApplicant };

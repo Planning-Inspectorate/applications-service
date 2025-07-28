@@ -6,7 +6,7 @@ let prismaClientInstance;
 
 const createPrismaClient = () => {
 	const logOption = isProduction
-		? ['query', 'info', 'warn', 'error']
+		? ['warn', 'error']
 		: [{ emit: 'event', level: 'query' }, 'info', 'warn', 'error'];
 
 	if (!prismaClientInstance) {

@@ -1,4 +1,4 @@
-{% macro sectionResults(results) %}
+{% macro sectionResults(results, readMoreLink) %}
 	<ul class="ui-results">
 		{% for result in results %}
 			<li  class="ui-results__result">
@@ -11,10 +11,10 @@
 				</h2>
 
 				<p class="ui-results__result-description govuk-body-s">
-					{{ result.enquiryDetail | truncate(200) }}
+					{{ result.enquiryDetail | truncate(200, true) }}
 
 					{% if result.enquiryDetail | length > 200 %}
-						<a href="{{ result.link }}" class="govuk-link" >Read more</a>
+						<a href="{{ result.link }}" class="govuk-link" >{{ readMoreLink }}</a>
 					{% endif %}
 				</p>
 
@@ -27,7 +27,8 @@
 					<div class="ui-results__result-meta-data-item" data-cy="published-date">
 						<span class="-white-space--nowrap govuk-body-s">
 							<strong>{{ result.date.text }}</strong>
-							{{ result.date.date | date }}</span>
+							{{ result.date.date }}
+						</span>
 					</div>
 				</div>
 			</li>

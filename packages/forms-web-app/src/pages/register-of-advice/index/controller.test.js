@@ -6,6 +6,7 @@ const { handler } = require('../../../lib/application-api-wrapper');
 const { mockI18n } = require('../../_mocks/i18n');
 const commonTranslations_EN = require('../../../locales/en/common.json');
 const section51Translations_EN = require('../../projects/section-51/_translations/en.json');
+const registerOfAdviceTranslations_EN = require('./_translations/en.json');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	handler: jest.fn()
@@ -19,7 +20,8 @@ describe('pages/register-of-advice/index/controller', () => {
 					query: {
 						searchTerm: '',
 						page: '',
-						itemsPerPage: ''
+						itemsPerPage: '',
+						sortBy: ''
 					}
 				};
 				const res = { render: jest.fn() };
@@ -46,11 +48,13 @@ describe('pages/register-of-advice/index/controller', () => {
 						query: {
 							searchTerm: '',
 							page: '',
-							itemsPerPage: ''
+							itemsPerPage: '',
+							sortBy: ''
 						},
 						i18n: mockI18n({
 							common: commonTranslations_EN,
-							section51: section51Translations_EN
+							section51: section51Translations_EN,
+							registerOfAdvice: registerOfAdviceTranslations_EN
 						})
 					};
 					const res = { render: jest.fn() };
@@ -67,7 +71,7 @@ describe('pages/register-of-advice/index/controller', () => {
 								{
 									adviceGivenBy: 'Test organisation',
 									adviceTypeLabel: 'Enquiry from',
-									date: { date: '2021-03-18', text: 'Date advice given:' },
+									date: { date: '18 March 2021', text: 'Date advice given:' },
 									enquiryDetail:
 										'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent volutpat magna arcu, eget interdum risus pretium suscipit. Nam vel urna ut tellus laoreet egestas. Integer venenatis justo a sem scelerisque fermentum.',
 									link: '/register-of-advice/General-Advice-00001',
@@ -76,7 +80,7 @@ describe('pages/register-of-advice/index/controller', () => {
 								{
 									adviceGivenBy: 'Test Inc',
 									adviceTypeLabel: 'Enquiry from',
-									date: { date: '2020-08-16', text: 'Date advice given:' },
+									date: { date: '16 August 2020', text: 'Date advice given:' },
 									enquiryDetail:
 										'Vestibulum sit amet sapien consequat, varius neque vel, bibendum erat. Cras mollis neque id sem feugiat consequat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed efficitur pharetra tortor, at tincidunt elit vulputate a.',
 									link: '/register-of-advice/General-Advice-00002',
@@ -98,12 +102,29 @@ describe('pages/register-of-advice/index/controller', () => {
 							queryUrl: '',
 							registerOfAdviceIndexURL: '/register-of-advice',
 							resultsPerPage: {
-								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50', size: 50 },
-								oneHundred: { active: false, link: '?searchTerm=&itemsPerPage=100', size: 100 },
-								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25', size: 25 }
+								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50&sortBy=', size: 50 },
+								oneHundred: {
+									active: false,
+									link: '?searchTerm=&itemsPerPage=100&sortBy=',
+									size: 100
+								},
+								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25&sortBy=', size: 25 }
 							},
 							searchTerm: '',
-							isWelsh: false
+							isWelsh: false,
+							sortByLinks: [
+								{
+									name: 'Enquiry'
+								},
+								{
+									name: 'Project name'
+								},
+								{
+									link: '?searchTerm=&page=1&itemsPerPage=&sortBy=%2BadviceDate',
+									name: 'Date advice given',
+									sort: 'none'
+								}
+							]
 						});
 					});
 				});
@@ -116,11 +137,13 @@ describe('pages/register-of-advice/index/controller', () => {
 						query: {
 							searchTerm: '',
 							page: '',
-							itemsPerPage: ''
+							itemsPerPage: '',
+							sortBy: ''
 						},
 						i18n: mockI18n({
 							common: commonTranslations_EN,
-							section51: section51Translations_EN
+							section51: section51Translations_EN,
+							registerOfAdvice: registerOfAdviceTranslations_EN
 						})
 					};
 					const res = { render: jest.fn() };
@@ -137,7 +160,7 @@ describe('pages/register-of-advice/index/controller', () => {
 								{
 									adviceGivenBy: 'Test organisation',
 									adviceTypeLabel: 'Enquiry from',
-									date: { date: '2024-02-01T00:00:00.000Z', text: 'Date advice given:' },
+									date: { date: '1 February 2024', text: 'Date advice given:' },
 									enquiryDetail:
 										'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed rutrum enim. Cras est neque, mollis ut bibendum sit amet, feugiat non risus. Vestibulum tristique orci sit amet lacus mattis, at fringilla tortor ullamcorper. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean gravida iaculis venenatis. Quisque non lorem nisl. Praesent efficitur magna lorem, vel laoreet nunc rutrum nec.',
 									link: '/register-of-advice/76',
@@ -146,7 +169,7 @@ describe('pages/register-of-advice/index/controller', () => {
 								{
 									adviceGivenBy: 'Test organisation 2',
 									adviceTypeLabel: 'Enquiry from',
-									date: { date: '2023-09-21T00:00:00.000Z', text: 'Date advice given:' },
+									date: { date: '21 September 2023', text: 'Date advice given:' },
 									enquiryDetail: 'Test advice with attachment',
 									link: '/register-of-advice/18',
 									linkTitle: 'Advice With Document'
@@ -167,12 +190,29 @@ describe('pages/register-of-advice/index/controller', () => {
 							queryUrl: '',
 							registerOfAdviceIndexURL: '/register-of-advice',
 							resultsPerPage: {
-								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50', size: 50 },
-								oneHundred: { active: false, link: '?searchTerm=&itemsPerPage=100', size: 100 },
-								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25', size: 25 }
+								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50&sortBy=', size: 50 },
+								oneHundred: {
+									active: false,
+									link: '?searchTerm=&itemsPerPage=100&sortBy=',
+									size: 100
+								},
+								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25&sortBy=', size: 25 }
 							},
 							searchTerm: '',
-							isWelsh: false
+							isWelsh: false,
+							sortByLinks: [
+								{
+									name: 'Enquiry'
+								},
+								{
+									name: 'Project name'
+								},
+								{
+									link: '?searchTerm=&page=1&itemsPerPage=&sortBy=%2BadviceDate',
+									name: 'Date advice given',
+									sort: 'none'
+								}
+							]
 						});
 					});
 				});

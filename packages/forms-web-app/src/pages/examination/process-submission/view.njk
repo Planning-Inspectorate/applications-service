@@ -7,6 +7,8 @@
 {% from "components/indicator/loading-spinner.njk" import indicatorLoadingSpinner %}
 {% from "components/text/centred-title-subtitle.njk" import centredTitleSubtitle %}
 
+{% set pageTitle = t("examination.processingSubmission.title") %}
+
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
 		{
@@ -21,39 +23,43 @@
 		<div class="govuk-grid-column-two-thirds">
 			<div class="visible-on visible-on--js-enabled">
 				{{ govukWarningText({
-					text: warningTextJSEnabled,
-					iconFallbackText: "Warning"
+					text: t("examination.processingSubmission.warningTextJSEnabled"),
+					iconFallbackText: t("common.warning")
 				}) }}
 
 				{{ indicatorLoadingSpinner() }}
 
-				{{ centredTitleSubtitle(submittingItemsTitle, submittingItemsSubtitle) }}
+				{{ centredTitleSubtitle(t("examination.processingSubmission.heading1"), submittingItemsSubtitle) }}
 
 				<form method="POST">
 					{{ govukButton({
 						attributes: { id: 'page-process-submission-submit-button', style: 'display: none;' },
 						preventDoubleClick: true,
-						text: "Process submission",
+						text: t("examination.processingSubmission.ctaText1"),
 						type: "Submit"
 					}) }}
 				</form>
 			</div>
 
 			<noscript>
-				<h1 class="govuk-heading-l">{{ title }}</h1>
+				<h1 class="govuk-heading-l">
+					{{ t("examination.processingSubmission.heading1NoScript") }}
+				</h1>
 
-				<p>{{ text }}</p>
+				<p class="govuk-body">
+					{{ t("examination.processingSubmission.paragraph1") }}
+				</p>
 
 				{{ govukWarningText({
-					text: warningTextNoScript,
-					iconFallbackText: "Warning"
+					text: t("examination.processingSubmission.warningTextNoScript"),
+					iconFallbackText: t("common.warning")
 				}) }}
 
 				<form method="POST">
 					{{ govukButton({
 						attributes: { id: 'page-process-submission-submit-button' },
 						preventDoubleClick: true,
-						text: "Process submission",
+						text: t("examination.processingSubmission.ctaText1"),
 						type: "Submit"
 					}) }}
 				</form>

@@ -20,7 +20,7 @@ const getCookiesController = (req, res) => {
 };
 
 const postCookiesController = (req, res) => {
-	const { body, i18n } = req;
+	const { body } = req;
 	const { errors = {} } = body;
 
 	if (Object.keys(errors).length > 0) {
@@ -54,12 +54,7 @@ const postCookiesController = (req, res) => {
 		template: {
 			path: cookiesUpdatedMessagePath,
 			vars: {
-				previousPagePath: fromBase64(body.previous_page_path) || '/',
-				successBanner: {
-					heading1: i18n.t('cookies.successBanner.heading1'),
-					paragraph1: i18n.t('cookies.successBanner.paragraph1'),
-					linkText1: i18n.t('cookies.successBanner.linkText1')
-				}
+				previousPagePath: fromBase64(body.previous_page_path) || '/'
 			}
 		}
 	});

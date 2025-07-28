@@ -63,6 +63,45 @@ const filterGroupViewModel = (i18n, { name }) => {
 const hasFilterGroup = (filterGroups, filter) =>
 	filterGroups.find((filterGroup) => filterGroup.name === filter.name);
 
+// north to south order
+const locationOrder = [
+	'north_west',
+	'north_east',
+	'yorkshire_and_the_humber',
+	'west_midlands',
+	'east_midlands',
+	'eastern',
+	'south_west',
+	'south_east',
+	'london',
+	'wales'
+];
+
+// order of completion
+const stageOrder = [
+	'pre_application',
+	'acceptance',
+	'pre_examination',
+	'examination',
+	'recommendation',
+	'decision',
+	'post_decision',
+	'withdrawn'
+];
+
+const orderFilterItems = (items, orderItems) => {
+	const orderedItems = [];
+	orderItems.forEach((orderItem) => {
+		const itemIndex = items.findIndex((item) => item.value === orderItem);
+
+		if (itemIndex >= 0) {
+			const itemElement = items[itemIndex];
+			orderedItems.push(itemElement);
+		}
+	});
+	return orderedItems;
+};
+
 const getFiltersViewModel = (i18n, filters) => {
 	const filterGroups = [];
 
@@ -78,36 +117,19 @@ const getFiltersViewModel = (i18n, filters) => {
 	const locationIndex = filterGroups.findIndex((filterGroup) => filterGroup.name === 'region');
 
 	if (locationIndex >= 0) {
-		filterGroups[locationIndex].items = orderLocationItems(filterGroups[locationIndex]?.items);
+		filterGroups[locationIndex].items = orderFilterItems(
+			filterGroups[locationIndex]?.items,
+			locationOrder
+		);
+	}
+
+	const stageIndex = filterGroups.findIndex((filterGroup) => filterGroup.name === 'stage');
+
+	if (stageIndex >= 0) {
+		filterGroups[stageIndex].items = orderFilterItems(filterGroups[stageIndex]?.items, stageOrder);
 	}
 
 	return orderFilterGroups(filterGroups);
-};
-
-const orderLocationItems = (items) => {
-	// north to south order
-	const locationOrder = [
-		'north_west',
-		'north_east',
-		'yorkshire_and_the_humber',
-		'west_midlands',
-		'east_midlands',
-		'eastern',
-		'south_west',
-		'south_east',
-		'london',
-		'wales'
-	];
-	const orderedItems = [];
-	locationOrder.forEach((region) => {
-		const regionIndex = items.findIndex((item) => item.value === region);
-
-		if (regionIndex >= 0) {
-			const regionElement = items[regionIndex];
-			orderedItems.push(regionElement);
-		}
-	});
-	return orderedItems;
 };
 
 module.exports = { getFiltersViewModel };

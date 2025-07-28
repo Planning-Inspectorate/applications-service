@@ -1,6 +1,9 @@
 const express = require('express');
 
-const { getRepresentationsIndexController } = require('./index/controller');
+const {
+	getRepresentationsIndexController,
+	postRepresentationsIndexController
+} = require('./index/controller');
 const { getRepresentationController } = require('./representation/controller');
 
 const { getRepresentationsIndexURL } = require('./index/_utils/get-representations-index-url');
@@ -29,6 +32,13 @@ representationsRouter.get(
 	getRepresentationsIndexController
 );
 
-representationsRouter.get(representationURL, projectsMiddleware, getRepresentationController);
+representationsRouter.post(representationsIndexURL, postRepresentationsIndexController);
+
+representationsRouter.get(
+	representationURL,
+	projectsMiddleware,
+	addRepresentationsIndexTranslationsMiddleware,
+	getRepresentationController
+);
 
 module.exports = { representationsRouter };

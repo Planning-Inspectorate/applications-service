@@ -39,7 +39,7 @@ describe('pages/process-guide/examination/_translations/en', () => {
 			paragraph14:
 				'All details about the project including documents, questions, comments and any advice given will be published on the project information page.',
 			paragraph15: '{{-link}}.',
-			paragraph15LinkText: 'You can also read the full set of technical advice notes'
+			paragraph15LinkText: 'You can also read the full set of technical advice pages'
 		});
 	});
 });

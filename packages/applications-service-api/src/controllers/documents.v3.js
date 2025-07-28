@@ -18,11 +18,14 @@ const getNIDocuments = (req, res) =>
 	getDocuments(req, res, fetchNIDocuments, fetchNIDocumentFilters);
 
 const getDocuments = async (req, res, getDocumentsFn, getFiltersFn) => {
+	const { body } = req;
+	const { isMaterialChange } = body;
+
 	const requestFilters = buildFilters(req);
 
 	const [documents, availableFilters] = await Promise.all([
-		getDocumentsFn(requestFilters),
-		getFiltersFn(requestFilters.caseReference)
+		getDocumentsFn(requestFilters, isMaterialChange),
+		getFiltersFn(requestFilters.caseReference, isMaterialChange)
 	]);
 
 	const responseBody = {

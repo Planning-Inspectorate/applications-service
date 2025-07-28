@@ -1,6 +1,5 @@
-const { pick, omit } = require('lodash');
+const { pick, omit, invert } = require('lodash');
 const { mapZoomLevel, mapLongLat, mapNorthingEastingToLongLat } = require('./mapLocation');
-const { featureFlag } = require('../lib/config');
 
 const NI_MAPPING = {
 	sector: [
@@ -124,9 +123,7 @@ const buildApiFiltersFromNIApplications = (applications) => {
 				value: mapColumnValueToApi(field, value),
 				label: mapColumnLabelToApiEn(field, value),
 				count: count,
-				...(featureFlag.allowWelshTranslation
-					? { label_cy: mapColumnLabelToApiCy(field, value) }
-					: {})
+				label_cy: mapColumnLabelToApiCy(field, value)
 			});
 		}
 	}
@@ -148,6 +145,32 @@ const buildApplicationsFiltersFromBOApplications = (applications) => {
 		};
 	});
 	return buildApiFiltersFromNIApplications(mappedToNIApplications);
+};
+
+/**
+ * Takes two lists of Applications API filters and merges them,
+ * combining counts when duplicates are encountered.
+ *
+ * @typedef {{name: string, value: string, count: number}} MergeFiltersItem
+ *
+ * @param {MergeFiltersItem[]} filtersA
+ * @param {MergeFiltersItem[]} filtersB
+ * @returns {MergeFiltersItem[]}
+ * */
+const mergeFilters = (filtersA, filtersB) => {
+	let merged = structuredClone(filtersA);
+
+	for (const f of filtersB) {
+		const idx = merged.findIndex((e) => e.name === f.name && e.value === f.value);
+		if (idx === -1) {
+			merged.push(f);
+			continue;
+		}
+
+		merged[idx].count += f.count;
+	}
+
+	return merged;
 };
 
 /**
@@ -201,7 +224,7 @@ const mapNIApplicationToApi = (application) => {
 		anticipatedSubmissionDateNonSpecific: application.AnticipatedSubmissionDateNonSpecific,
 		confirmedDateOfDecision: application.ConfirmedDateOfDecision,
 		confirmedStartOfExamination: application.ConfirmedStartOfExamination,
-		dateOfDCOAcceptance: null, // field is in NI but we don't include it in query
+		dateOfDCOAcceptance: application.DateOfDCOAcceptance_NonAcceptance,
 		dateOfDCOSubmission: application.DateOfDCOSubmission,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
 		dateOfRecommendations: application.DateOfRecommendations,
@@ -216,14 +239,14 @@ const mapNIApplicationToApi = (application) => {
 		sourceSystem: application.sourceSystem,
 		stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
 		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
-		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline
+		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
+		isMaterialChange: application.isMaterialChange,
+		deadlineForSubmissionOfRecommendation: null,
+		deadlineForDecision: null,
+		projectNameWelsh: application.ProjectNameWelsh,
+		projectDescriptionWelsh: application.SummaryWelsh,
+		projectLocationWelsh: application.ProjectLocationWelsh
 	};
-
-	if (featureFlag.allowWelshTranslation) {
-		apiStruct.projectNameWelsh = application.ProjectNameWelsh;
-		apiStruct.projectDescriptionWelsh = application.SummaryWelsh;
-		apiStruct.projectLocationWelsh = application.ProjectLocationWelsh;
-	}
 
 	return apiStruct;
 };
@@ -266,12 +289,14 @@ const mapBackOfficeApplicationToApi = (application) => {
 		'sourceSystem',
 		'stage4ExtensionToExamCloseDate',
 		'stage5ExtensionToDecisionDeadline',
-		'stage5ExtensionToRecommendationDeadline'
+		'stage5ExtensionToRecommendationDeadline',
+		'isMaterialChange',
+		'deadlineForSubmissionOfRecommendation',
+		'deadlineForDecision',
+		'projectNameWelsh',
+		'projectDescriptionWelsh',
+		'projectLocationWelsh'
 	];
-
-	if (featureFlag.allowWelshTranslation) {
-		fields = fields.concat(['projectNameWelsh', 'projectDescriptionWelsh', 'projectLocationWelsh']);
-	}
 
 	const data = pick(application, fields);
 
@@ -294,10 +319,11 @@ const mapBackOfficeApplicationToApi = (application) => {
  * Map Applications array from Back Office to legacy API format
  * @param applications
  */
-const mapBackOfficeApplicationsToApi = (applications) => {
-	const mappedToApi = applications.map(mapBackOfficeApplicationToApi);
-	return mappedToApi.map(mapResponseBackToNILegacyFormat);
-};
+const mapBackOfficeApplicationsToApi = (applications) =>
+	applications.map((application) => {
+		const mappedToApi = mapBackOfficeApplicationToApi(application);
+		return mapResponseBackToNILegacyFormat(mappedToApi);
+	});
 
 /**
  * Adds MapZoomLevel and LongLat properties to NI Application
@@ -337,7 +363,7 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		AnticipatedDateOfSubmission: application.anticipatedDateOfSubmission,
 		AnticipatedSubmissionDateNonSpecific: application.anticipatedSubmissionDateNonSpecific,
 		DateOfDCOSubmission: getValidDateInStringOrNull(application.dateOfDCOSubmission),
-		DateOfDCOAcceptance_NonAcceptance: null, // attribute not present in Back Office schema
+		DateOfDCOAcceptance_NonAcceptance: application.dateOfDCOAcceptance,
 		DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
 		ConfirmedStartOfExamination: application.confirmedStartOfExamination,
 		DateTimeExaminationEnds: application.dateTimeExaminationEnds,
@@ -354,14 +380,15 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		DateProjectWithdrawn: application.dateProjectWithdrawn,
 		sourceSystem: application.sourceSystem,
 		dateOfNonAcceptance: application.dateOfNonAcceptance,
-		LongLat: application.longLat
+		LongLat: application.longLat,
+		isMaterialChange: application.isMaterialChange,
+		deadlineForAcceptanceDecision: application.deadlineForAcceptanceDecision,
+		deadlineForSubmissionOfRecommendation: application.deadlineForSubmissionOfRecommendation,
+		deadlineForDecision: application.deadlineForDecision,
+		ProjectNameWelsh: application.projectNameWelsh,
+		SummaryWelsh: application.projectDescriptionWelsh,
+		ProjectLocationWelsh: application.projectLocationWelsh
 	};
-
-	if (featureFlag.allowWelshTranslation) {
-		legacyStruct.ProjectNameWelsh = application.projectNameWelsh;
-		legacyStruct.SummaryWelsh = application.projectDescriptionWelsh;
-		legacyStruct.ProjectLocationWelsh = application.projectLocationWelsh;
-	}
 
 	return legacyStruct;
 };
@@ -381,6 +408,7 @@ const getValidDateInStringOrNull = (date) => {
 	if (date === '0000-00-00') return null;
 	return date;
 };
+
 const stageMap = {
 	draft: 0,
 	pre_application: 1,
@@ -392,6 +420,8 @@ const stageMap = {
 	post_decision: 7,
 	withdrawn: 8
 };
+
+const stageNameFromValue = (stage) => invert(stageMap)[stage];
 
 const regionMap = {
 	east_midlands: 'East Midlands',
@@ -417,5 +447,7 @@ module.exports = {
 	buildApplicationsFiltersFromBOApplications,
 	mapNIApplicationsToApi,
 	mapColumnLabelToApi: mapColumnLabelToApiEn,
-	mapColumnLabelToApiCy
+	mapColumnLabelToApiCy,
+	mergeFilters,
+	stageNameFromValue
 };

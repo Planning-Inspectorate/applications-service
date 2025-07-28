@@ -6,7 +6,10 @@ const { getContactController } = require('./contact/controller');
 const { getCookiesController, postCookiesController } = require('./cookies/controller');
 const { getDetailedInformationController } = require('./detailed-information/controller');
 const { getRegisterOfApplicationsController } = require('./register-of-applications/controller');
-const { getProjectSearchController } = require('./project-search/controller');
+const {
+	getProjectSearchController,
+	postProjectSearchController
+} = require('./project-search/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -22,6 +25,9 @@ const {
 	getRegisterOfApplicationsURL
 } = require('./register-of-applications/utils/get-register-of-applications-url');
 
+const {
+	addCheckboxAccordionTranslationsMiddleware
+} = require('./_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware');
 const {
 	addCommonTranslationsMiddleware
 } = require('./_middleware/i18n/add-common-translations-middleware');
@@ -82,10 +88,13 @@ if (featureFlag.allowHomepage) {
 
 pagesRouter.get(
 	projectSearchURL,
+	addCheckboxAccordionTranslationsMiddleware,
 	addCommonTranslationsMiddleware,
 	addProjectSearchTranslationsMiddleware,
 	getProjectSearchController
 );
+
+pagesRouter.post(projectSearchURL, postProjectSearchController);
 
 pagesRouter.get(
 	registerOfApplicationsURL,

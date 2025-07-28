@@ -1,15 +1,18 @@
 import { PO_ExaminationTimetable } from '../pageObject/Examination-TimeTable/PO_ExaminationTimetable';
-import { PO_ProjectPage } from '../pageObject/Search-and-project-pages/PO_ProjectPage';
+import { BasePage } from '../pageObject/basePage';
 
 const examinationTimetable = new PO_ExaminationTimetable();
-const projectPage = new PO_ProjectPage();
+const basePage = new BasePage();
 
 describe('User registers as themselves to have their say against the examination timetable', () => {
-	it('Navigates to the examination timetable page for a project and start the journey', () => {
+	before(() => {
 		cy.clearCookies();
-		cy.visit('/projects/EN010120/examination-timetable');
-		projectPage.findAndClickSidebarLinkLeft('Examination timetable');
-		examinationTimetable.clickLink();
+		cy.navigateAndSearch('Front Office');
+	});
+
+	it('Navigates to the examination timetable page for a project and start the journey', () => {
+		basePage.clickProjectInformationMenuLink('examination-timetable');
+		basePage.clickGovBtn('Have your say');
 		examinationTimetable.clickStartNowButton();
 	});
 
@@ -73,7 +76,7 @@ describe('User registers as themselves to have their say against the examination
 	});
 
 	it('Checks other answers correct and submission can be completed', () => {
-		examinationTimetable.checkAnswersSecondtPage(['No', 'Myself', 'John Tester', 'test@test.com']);
+		examinationTimetable.checkAnswersSecondPage(['No', 'Myself', 'John Tester', 'test@test.com']);
 		examinationTimetable.clickButton('Submit');
 		examinationTimetable.confirmTitleTextDisplays('Submission Complete');
 	});

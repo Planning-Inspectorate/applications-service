@@ -70,7 +70,7 @@
 				</h2>
 
 				<p class="govuk-body">
-					{{ t('preApplication.paragraph6') }}
+					{{ t('preApplication.paragraph6', { link: '<a class="govuk-link" href="' + govUK.preApplicationProspectus + '">' +  t('preApplication.paragraph6LinkText') + '</a>' }) | safe }}
 				</p>
 
 				<p class="govuk-body">
@@ -88,7 +88,7 @@
 				</h2>
 
 				<p class="govuk-body">
-					{{ t('preApplication.paragraph8', { link: '<a class="govuk-link" href="' + pinsURL.adviceNotes + '">' +  t('preApplication.paragraph8LinkText') + '</a>' }) | safe }}
+					{{ t('preApplication.paragraph8', { link: '<a class="govuk-link" href="' + pinsURL.advicePages + '">' +  t('preApplication.paragraph8LinkText') + '</a>' }) | safe }}
 				</p>
 
 				<h2 class="govuk-heading-m" id="more-detailed-advice">
@@ -100,7 +100,7 @@
 				</p>
 
 				<p class="govuk-body">
-					<a class="govuk-link" href="{{ pinsURL.adviceNotes }}">{{ t('preApplication.paragraph10LinkText') }}</a>
+					<a class="govuk-link" href="{{ pinsURL.advicePages }}">{{ t('preApplication.paragraph10LinkText') }}</a>
 				</p>
 
 				{{ uiNextStep(processGuide.activeStep.nextStepURL, processGuide.activeStep.nextStepTitle, t('common.next')) }}

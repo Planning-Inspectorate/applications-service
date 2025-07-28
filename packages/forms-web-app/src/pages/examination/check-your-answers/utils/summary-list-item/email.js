@@ -10,9 +10,10 @@ const {
 	}
 } = require('../../../../../routes/config');
 
-const getSummaryListItemEmail = (session) =>
+const getSummaryListItemEmail = (i18n, session) =>
 	getSummaryListItem(
-		'Email Address',
+		i18n,
+		i18n.t('examination.checkYourAnswers.details.summaryListHeading6'),
 		getDeadlineDetailsEmail(session),
 		`${email.route}${editQuery}`
 	);

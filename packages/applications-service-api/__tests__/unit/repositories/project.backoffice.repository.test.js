@@ -2,6 +2,7 @@ const {
 	getByCaseReference,
 	getAllApplications
 } = require('../../../src/repositories/project.backoffice.repository');
+const config = require('../../../src/lib/config');
 const { APPLICATION_DB } = require('../../__data__/application');
 const mockFindUnique = jest.fn();
 const mockFindMany = jest.fn();
@@ -31,22 +32,16 @@ describe('project repository', () => {
 		});
 	});
 	describe('getAllApplications', () => {
+		beforeEach(() => {
+			config.featureFlag.allowWelshCases = true;
+		});
+
 		it('calls findMany with no options', async () => {
 			await getAllApplications();
 
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
-				where: {
-					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						}
-					]
-				}
+				where: {}
 			});
 		});
 		it('calls findMany with the excludeNullDateOfSubmission option', async () => {
@@ -59,10 +54,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
-					AND: [
-						{ regions: { not: { contains: 'wales' } } },
-						{ OR: [{ dateOfDCOSubmission: { not: null } }] }
-					]
+					AND: [{ OR: [{ dateOfDCOSubmission: { not: null } }] }]
 				}
 			});
 		});
@@ -76,17 +68,7 @@ describe('project repository', () => {
 
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
-				where: {
-					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						}
-					]
-				},
+				where: {},
 				orderBy: { projectName: 'asc' },
 				skip: 0,
 				take: 10
@@ -100,28 +82,24 @@ describe('project repository', () => {
 				where: {
 					AND: [
 						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						},
-						{
 							OR: [
-								{ projectName: { contains: searchTerm } },
-								{ projectNameWelsh: { contains: searchTerm } },
+								{ caseReference: { contains: searchTerm } },
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: 'test' } } },
-										{ applicant: { firstName: { contains: 'test' } } },
-										{ applicant: { lastName: { contains: 'test' } } }
+									AND: [
+										{ projectName: { contains: searchTerm.split(' ')[0] } },
+										{ projectName: { contains: searchTerm.split(' ')[1] } }
 									]
 								},
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: 'search' } } },
-										{ applicant: { firstName: { contains: 'search' } } },
-										{ applicant: { lastName: { contains: 'search' } } }
+									AND: [
+										{ projectNameWelsh: { contains: searchTerm.split(' ')[0] } },
+										{ projectNameWelsh: { contains: searchTerm.split(' ')[1] } }
+									]
+								},
+								{
+									AND: [
+										{ applicant: { organisationName: { contains: searchTerm.split(' ')[0] } } },
+										{ applicant: { organisationName: { contains: searchTerm.split(' ')[1] } } }
 									]
 								}
 							]
@@ -143,13 +121,6 @@ describe('project repository', () => {
 				where: {
 					AND: [
 						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						},
-						{
 							OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
 						},
 						{
@@ -157,6 +128,25 @@ describe('project repository', () => {
 						},
 						{
 							OR: [{ sector: { contains: 'energy' } }, { sector: { contains: 'transport' } }]
+						}
+					]
+				}
+			});
+		});
+
+		it('excludes welsh cases (FEATURE_ALLOW_WELSH_CASES=false)', async () => {
+			config.featureFlag.allowWelshCases = false;
+			await getAllApplications({});
+			expect(mockFindMany).toBeCalledWith({
+				include: { applicant: true },
+				where: {
+					AND: [
+						{
+							regions: {
+								not: {
+									contains: 'wales'
+								}
+							}
 						}
 					]
 				}
@@ -176,22 +166,16 @@ describe('project repository', () => {
 				where: {
 					AND: [
 						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						},
-						{
 							OR: [
-								{ projectName: { contains: searchTerm } },
-								{ projectNameWelsh: { contains: searchTerm } },
+								{ caseReference: { contains: searchTerm } },
 								{
-									OR: [
-										{ applicant: { organisationName: { contains: searchTerm } } },
-										{ applicant: { firstName: { contains: searchTerm } } },
-										{ applicant: { lastName: { contains: searchTerm } } }
-									]
+									AND: [{ projectName: { contains: searchTerm } }]
+								},
+								{
+									AND: [{ projectNameWelsh: { contains: searchTerm } }]
+								},
+								{
+									AND: [{ applicant: { organisationName: { contains: searchTerm } } }]
 								}
 							]
 						},
@@ -212,17 +196,7 @@ describe('project repository', () => {
 		it('calls count', async () => {
 			await getAllApplications();
 			expect(mockCount).toBeCalledWith({
-				where: {
-					AND: [
-						{
-							regions: {
-								not: {
-									contains: 'wales'
-								}
-							}
-						}
-					]
-				}
+				where: {}
 			});
 		});
 		it('returns all applications', async () => {

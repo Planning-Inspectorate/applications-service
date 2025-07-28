@@ -1,0 +1,35 @@
+{% extends "layouts/default.njk" %}
+
+{% set pageHeading = t("common.genericSubmittedTemplate.pageHeading", {
+  journeyHeading: t("common.genericSubmittedTemplate.journey." + journey + ".heading")
+}) %}
+
+{% set bodyText = t("common.genericSubmittedTemplate.bodyText", {
+  journeyBody: t("common.genericSubmittedTemplate.journey." + journey + ".body")
+}) %}
+
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle')%}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% block pageTitle %}
+	{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
+            <h1 class="govuk-heading-l">
+                {{ pageHeading }}
+            </h1>
+
+            <p class="govuk-body">
+                {{ bodyText }}
+            </P>
+
+            <p class="govuk-body">
+				<a class="govuk-link" id="project-link" href="{{ projectsIndexURL }}">{{ t('common.genericSubmittedTemplate.backToProjectLink') }}</a>
+			</p>
+        </div>
+    </div>
+{% endblock %}

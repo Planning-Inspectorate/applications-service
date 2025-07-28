@@ -84,7 +84,7 @@ export class PO_ExaminationTimetable {
 		});
 	}
 
-	checkAnswersSecondtPage(expectedAnswers) {
+	checkAnswersSecondPage(expectedAnswers) {
 		this.getAllAnswers().then((answers) => {
 			const myAnswers = [];
 			cy.wrap(answers)

@@ -4,21 +4,23 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
+{% set pageTitle = t("examination.checkYourAnswers.title") %}
+
 {% block content %}
- <div class="govuk-grid-row">
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <span class="govuk-caption-l">{{ deadlineTitle }}</span>
 
-      <h1 class="govuk-heading-l">{{ title }}</h1>
+      <h1 class="govuk-heading-l">{{ t("examination.checkYourAnswers.heading1") }}</h1>
 
-      <h2 class="govuk-heading-m">{{ summaryListDetailsTitle }}</h2>
+      <h2 class="govuk-heading-m">{{ t("examination.checkYourAnswers.details.heading1") }}</h2>
 
       {{ govukSummaryList({
         classes: 'govuk-!-margin-bottom-9',
         rows: summaryListDetails
       }) }}
 
-      <h2 class="govuk-heading-m">{{ summaryListSubmissionItemsTitle }}</h2>
+      <h2 class="govuk-heading-m">{{ t("examination.checkYourAnswers.submissions.heading1") }}</h2>
 
       {{ govukSummaryList({
         classes: 'govuk-!-margin-bottom-9',
@@ -27,23 +29,23 @@
 
       <div class="visible-on visible-on--js-enabled">
         {{ govukWarningText({
-          iconFallbackText: "Warning",
-          text: "You cannot make any further changes after you press submit."
+          iconFallbackText: t("common.warning"),
+          text: t("examination.checkYourAnswers.warningText1")
         }) }}
 
         <a class="govuk-button" href="{{ nextPageUrl }}">
-          Submit
+          {{ t("common.submit") }}
         </a>
       </div>
 
       <noscript>
         {{ govukWarningText({
-          iconFallbackText: "Warning",
-          text: "You cannot make any further changes after you press continue."
+          iconFallbackText: t("common.warning"),
+          text: t("examination.checkYourAnswers.warningText2")
         }) }}
 
         <a class="govuk-button" href="{{ nextPageUrl }}">
-          Continue
+          {{ t("common.continue") }}
         </a>
       </noscript>
     </div>

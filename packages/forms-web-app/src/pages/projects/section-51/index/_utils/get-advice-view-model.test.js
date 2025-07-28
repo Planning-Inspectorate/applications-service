@@ -24,44 +24,48 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 						adviceTypeLabel: 'Enquiry from',
 						enquiryDetail: 'mock enquiry detail',
 						date: {
-							date: '2023-01-01',
+							date: '1 January 2023',
 							text: 'Date advice given:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 1',
-						linkTitle: 'View advice to mock organisation'
+						linkTitle: 'View advice to mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock organisation',
 						adviceTypeLabel: 'Meeting with',
 						enquiryDetail: 'mock enquiry detail 2',
 						date: {
-							date: 'mock date given 2',
+							date: '6 June 2024',
 							text: 'Date of meeting:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 2',
-						linkTitle: 'View meeting with mock organisation'
+						linkTitle: 'View meeting with mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock first name mock last name',
 						adviceTypeLabel: 'Enquiry from',
 						enquiryDetail: 'mock enquiry detail 3',
 						date: {
-							date: 'mock date given 3',
+							date: '12 December 2024',
 							text: 'Date advice given:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 3',
-						linkTitle: 'View advice to mock first name mock last name'
+						linkTitle: 'View advice to mock first name mock last name',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'Anonymous',
 						adviceTypeLabel: 'Enquiry from',
 						enquiryDetail: 'mock enquiry detail 4',
 						date: {
-							date: 'mock date given 4',
+							date: '10 October 2023',
 							text: 'Date advice given:'
 						},
 						link: '/projects/EN000001/s51advice/mock advice id 4',
-						linkTitle: 'View advice to Anonymous'
+						linkTitle: 'View advice to Anonymous',
+						projectName: ''
 					}
 				]);
 			});
@@ -85,44 +89,48 @@ describe('pages/projects/section-51/index/_utils/get-advice-view-model', () => {
 						adviceTypeLabel: 'Ymholiad gan',
 						enquiryDetail: 'mock enquiry detail in Welsh',
 						date: {
-							date: '2023-01-01',
+							date: '1 Ionawr 2023',
 							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 1',
-						linkTitle: 'Gweld cyngor i mock organisation'
+						linkTitle: 'Gweld cyngor i mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock organisation',
 						adviceTypeLabel: 'Cyfarfod gyda',
 						enquiryDetail: 'mock enquiry detail 2 in Welsh',
 						date: {
-							date: 'mock date given 2',
+							date: '6 Mehefin 2024',
 							text: 'Dyddiad y cyfarfod:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 2',
-						linkTitle: 'Gweld cyfarfod gyda mock organisation'
+						linkTitle: 'Gweld cyfarfod gyda mock organisation',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'mock first name mock last name',
 						adviceTypeLabel: 'Ymholiad gan',
 						enquiryDetail: 'mock enquiry detail 3 in Welsh',
 						date: {
-							date: 'mock date given 3',
+							date: '12 Rhagfyr 2024',
 							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 3',
-						linkTitle: 'Gweld cyngor i mock first name mock last name'
+						linkTitle: 'Gweld cyngor i mock first name mock last name',
+						projectName: ''
 					},
 					{
 						adviceGivenBy: 'Dienw',
 						adviceTypeLabel: 'Ymholiad gan',
 						enquiryDetail: 'mock enquiry detail 4 in Welsh',
 						date: {
-							date: 'mock date given 4',
+							date: '10 Hydref 2023',
 							text: 'Y dyddiad y rhoddwyd y cyngor:'
 						},
 						link: '/projects/CY000001/s51advice/mock advice id 4',
-						linkTitle: 'Gweld cyngor i Dienw'
+						linkTitle: 'Gweld cyngor i Dienw',
+						projectName: ''
 					}
 				]);
 			});

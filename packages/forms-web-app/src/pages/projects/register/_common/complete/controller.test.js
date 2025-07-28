@@ -16,7 +16,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 						case_ref: 'mock-case-ref'
 					},
 					session: {
-						mySelfRegdata: { email: 'mock-email', ipRefNo: 'mock-ip-ref-no' }
+						mySelfRegdata: { ipRefNo: 'mock-ip-ref-no' }
 					}
 				};
 				beforeEach(() => {
@@ -24,10 +24,10 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				});
 				it('should render registration complete page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
-						email: 'mock-email',
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						key: 'myself'
+						key: 'myself',
+						backLinkUrl: null
 					});
 				});
 			});
@@ -38,7 +38,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 						case_ref: 'mock-case-ref'
 					},
 					session: {
-						orgRegdata: { email: 'mock-email', ipRefNo: 'mock-ip-ref-no' }
+						orgRegdata: { ipRefNo: 'mock-ip-ref-no' }
 					}
 				};
 				beforeEach(() => {
@@ -46,10 +46,10 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				});
 				it('should render registration complete page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
-						email: 'mock-email',
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						key: 'organisation'
+						key: 'organisation',
+						backLinkUrl: null
 					});
 				});
 			});
@@ -60,7 +60,7 @@ describe('controllers/register/common/registration-complete/controller', () => {
 						case_ref: 'mock-case-ref'
 					},
 					session: {
-						behalfRegdata: { representor: { email: 'mock-email' }, ipRefNo: 'mock-ip-ref-no' }
+						behalfRegdata: { ipRefNo: 'mock-ip-ref-no' }
 					}
 				};
 				beforeEach(() => {
@@ -68,10 +68,10 @@ describe('controllers/register/common/registration-complete/controller', () => {
 				});
 				it('should render registration complete page', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/register/_common/complete/view.njk', {
-						email: 'mock-email',
 						ipRefNo: 'mock-ip-ref-no',
 						projectsIndexURL: '/projects/mock-case-ref',
-						key: 'agent'
+						key: 'agent',
+						backLinkUrl: null
 					});
 				});
 			});

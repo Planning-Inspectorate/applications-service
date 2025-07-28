@@ -3,17 +3,15 @@ const {
 	postProjectsExaminationTimetableController
 } = require('./controller');
 
-const { getAppData } = require('../../../services/applications.service');
+const { getProjectData } = require('../../../lib/application-api-wrapper');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { mockI18n } = require('../../_mocks/i18n');
 
 const examinationTimetableTranslation_EN = require('./_translations/en.json');
 const globalTranslation_EN = require('../../../locales/en/global.json');
 
-jest.mock('../../../services/applications.service', () => ({
-	getAppData: jest.fn()
-}));
 jest.mock('../../../lib/application-api-wrapper', () => ({
+	getProjectData: jest.fn(),
 	getTimetables: jest.fn()
 }));
 
@@ -47,7 +45,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 		describe('When getting the examination table page', () => {
 			describe('and there are no issues', () => {
 				beforeEach(async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							CaseReference: 'mock_case_ref',
 							ConfirmedStartOfExamination: '2023-01-01',
@@ -113,7 +111,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 										state: {
 											isSubmissionOpen: false,
 											tag: {
-												classes: 'govuk-tag',
+												classes: 'govuk-tag govuk-tag--blue',
 												text: 'Closed'
 											}
 										},
@@ -128,7 +126,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 										state: {
 											isSubmissionOpen: false,
 											tag: {
-												classes: 'govuk-tag',
+												classes: 'govuk-tag govuk-tag--blue',
 												text: 'Closed'
 											}
 										},
@@ -162,7 +160,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 										state: {
 											isSubmissionOpen: true,
 											tag: {
-												classes: 'govuk-tag govuk-tag--blue',
+												classes: 'govuk-tag govuk-tag--yellow',
 												text: 'Open'
 											}
 										},
@@ -186,7 +184,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 			});
 			describe('and there is an issue', () => {
 				beforeEach(async () => {
-					getAppData.mockResolvedValue(() => {
+					getProjectData.mockResolvedValue(() => {
 						throw new Error('something went wrong');
 					});
 					await getProjectsExaminationTimetableController(req, res);

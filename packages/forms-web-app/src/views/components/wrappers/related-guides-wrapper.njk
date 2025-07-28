@@ -1,20 +1,26 @@
 {% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
 
-{% macro relatedGuidesWrapper(featureHideLink, styles) %}
+{% macro relatedGuidesWrapper(featureHideLink, styles, isMaterialChange) %}
+
+{% set links = [] %}
+
+{% if not isMaterialChange %}
+	{% set links = (links.push(	{
+			name: t('projects.relatedGuides.process'),
+			url:"/decision-making-process-guide"
+		}), links) %}
+{% endif %}
+
+{% set links = (links.push(	{
+			name: t('projects.relatedGuides.haveYourSay'),
+			url:"/having-your-say-guide"
+		}), links) %}
+
 	<div class="{{ styles }}">
 		{{ uiVerticalTabs(
 			t('projects.relatedGuides.heading'),
 			null,
-			[
-				{
-					name: t('projects.relatedGuides.process'),
-					url:"/decision-making-process-guide"
-				},
-				{
-					name: t('projects.relatedGuides.haveYourSay'),
-					url:"/having-your-say-guide"
-				}
-			],
+			links,
 			t('projects.relatedGuides.navigationLabel'),
 			"h2"
 		) }}

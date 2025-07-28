@@ -22,6 +22,64 @@
 		"paragraph2": "Darllenwch yr {{-link}} i gael gwybod sut rydym yn trin eich gwybodaeth.",
 		"paragraph2LinkText": "hysbysiad preifatrwydd"
 	},
+	"materialChangeProjectStage": {
+		"stage1name": "Cyn-ymgeisio",
+		"stage2name": "Cais wedi'i dderbyn",
+		"stage3name": "Cais wedi'i gyhoeddi",
+		"stage4name": "Archwiliad",
+		"stage5name": "Argymhelliad",
+		"stage6name": "Penderfyniad",
+		"stage7name": "Beth fydd yn digwydd ar ôl i'r penderfyniad gael ei wneud",
+		"common": {
+			"paragraph1": "Efallai byddwch wedi cael buddiant yn ddiweddar mewn tir y mae datblygiad yn effeithio arno. Os nad oedd y datblygwr wedi dweud wrthych fod y cais wedi cael ei wneud neu os na chofrestroch i leisio'ch barn, gallwch ofyn am gael bod yn barti â buddiant o hyd.",
+			"paragraph2": "Bydd angen i chi gysylltu â thîm y prosiect. Bydd y tîm yn gofyn i'r Corff Archwilio a allwch fod yn barti â buddiant a lleisio'ch barn.",
+			"paragraph3": "Anfonwch neges e-bost at {{-link}} i ofyn am gael dod yn barti â buddiant."
+		},
+		"preapplication": {
+			"paragraph1": "Disgwylir i'r cais gael ei gyflwyno {{-date}}.",
+			"paragraph2": "Pan fyddwn yn derbyn y cais, byddwn yn paratoi i'w gyhoeddi."
+		},
+		"applicationReceived": {
+			"sentenceItem1": "Mae'r prosiect hwn ar y cam",
+			"sentenceItem2": "cais wedi'i dderbyn",
+			"sentenceItem3": "a chaiff ei gyhoeddi cyn hir.",
+			"paragraph2": "Nid oes cyfle i wneud sylwadau ar y cais ar y cam hwn."
+		},
+		"applicationPublished": {
+			"preReps": {
+				"paragraph1": "Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+				"paragraph2": "Gallwch gofrestru i leisio'ch barn pan fydd y cyfnod cofrestru'n agor.",
+				"linkText1": "Dysgwch fwy am gofrestru i leisio'ch barn."
+			},
+			"repsOpen": {
+				"paragraph1": "Os ydych eisiau gwneud sylwadau ar y newidiadau arfaethedig i'r Gorchymyn Caniatâd Datblygu, gallwch {{-link}}",
+				"linkText1": "gofrestru i leisio'ch barn yn awr ",
+				"paragraph2": "Bydd y cyfnod cofrestr'n cau ar {{-date}}.",
+				"buttonText1": "Cofrestrwch i leisio'ch barn"
+			},
+			"repsClosed": {
+				"paragraph1": "Mae'r cyfnod cofrestru i leisio'ch barn am y prosiect hwn wedi cau.",
+				"paragraph2": "Yn awr, bydd yr Ysgrifennydd Gwladol yn ystyried p'un a oes angen i'r cais gael ei archwilio",
+				"paragraph3": "Cysylltwch â thîm achos y prosiect i gael gwybod mwy am sut i gymryd rhan os nad ydych wedi cofrestru."
+			},
+			"repsPublished": {
+				"paragraph1": "Rydym wedi cyhoeddi'r holl sylwadau cofrestredig bellach.",
+				"paragraph2": "Gallwch {{-link}}",
+				"linkText1": "weld sylwadau gan bobl eraill a gofrestrodd."
+			},
+			"prelim": {
+				"paragraph1": "Cynhelir y cyfarfod rhagarweiniol ar gyfer y prosiect hwn ar: {{-date}}",
+				"paragraph2": "Gallwch wirio'r llythyr rheoliadau 27 a 28 i gael gwybod sut i gymryd rhan.",
+				"paragraph3": "Yn y cyfarfod hwn, bydd y Corff Archwilio'n amlinellu sut mae'n bwriadu archwilio'r cais. Bydd hyn yn cynnwys amserlen yr archwiliad a'r materion y bydd yn canolbwyntio arnynt yn ystod yr archwiliad.",
+				"linkText1": "Dysgwch fwy am gymryd rhan yn y cyfarfod rhagarweiniol"
+			}
+		},
+		"examination": {
+			"paragraph1": "Yn ystod y cam archwilio, gall unrhyw un sydd wedi cofrestru i leisio'i farn gyflwyno sylwadau erbyn y dyddiadau cau a nodir yn amserlen yr archwiliad. Cewch fynychu gwrandawiadau hefyd, os cynhelir gwrandawiadau.",
+			"paragraph2": "Gallwch hefyd weld y llythyr rheoliad 30 i gael gwybod mwy am yr hyn y gallwch ei wneud yn ystod y cam archwilio.",
+			"linkText1": "Dysgwch fwy am y cam archwilio cais."
+		}
+	},
 	"projectStage": {
 		"heading1": "Cam y prosiect",
 		"paragraph1": "Mae'r prosiect hwn ar y cam {{-stage}}.",
@@ -49,9 +107,9 @@
 		},
 		"preexamination": {
 			"preReps": {
-				"paragraph1": "Yn ystod y cam hwn, gallwch {{-link}} am y prosiect arfaethedig. Bydd y dudalen hon yn cael ei diweddaru pan fydd y cyfnod cofrestru'n agor. Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
-				"linkText1": "gofrestru i leisio'ch barn",
-				"linkText2": "Dysgwch fwy am gofrestru i leisio'ch barn."
+				"paragraph1": "Gallwch weld dogfennau cais y prosiect i gael gwybod mwy am y cais.",
+				"paragraph2": "Gallwch gofrestru i leisio'ch barn pan fydd y cyfnod cofrestru'n agor.",
+				"linkText1": "Dysgwch fwy am gofrestru i leisio'ch barn."
 			},
 			"repsOpen": {
 				"paragraph1": "Os ydych eisiau gwneud sylwadau ar y prosiect arfaethedig hwn, gallwch {{-link}}.",
@@ -145,8 +203,8 @@
 		"WA02": "Trosglwyddo Adnoddau Dŵr"
 	},
 	"stageProgress": {
-		"notStarted": "dim wedi dechrau",
-		"inProgress": "mewn cynnydd",
-		"completed": "wedi cwblhau"
+		"notStarted": "Dim wedi dechrau",
+		"inProgress": "Mewn cynnydd",
+		"completed": "Wedi cwblhau"
 	}
 }

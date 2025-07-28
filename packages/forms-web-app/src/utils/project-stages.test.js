@@ -3,7 +3,8 @@ const {
 	projectStages,
 	projectStagesTranslations,
 	projectInfoProjectStages,
-	registerOfApplicationsStages
+	registerOfApplicationsStages,
+	materialChangeProjectStages
 } = require('./project-stages');
 
 describe('utils/project-stages', () => {
@@ -63,6 +64,21 @@ describe('utils/project-stages', () => {
 				5: 'Recommendation',
 				6: 'Decision',
 				7: 'Post-decision',
+				8: 'Withdrawn'
+			});
+		});
+	});
+
+	describe('#materialChangeProjectStages', () => {
+		it('should return the material change project stages', () => {
+			expect(materialChangeProjectStages).toEqual({
+				1: 'Pre-application',
+				2: 'Application received',
+				3: 'Application published',
+				4: 'Examination',
+				5: 'Recommendation',
+				6: 'Decision',
+				7: 'What happens after the decision is made',
 				8: 'Withdrawn'
 			});
 		});

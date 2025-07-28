@@ -7,3 +7,6 @@ CONFIG = "test"
 
 [env.prod.vars]
 CONFIG = "prod"
+
+[env.test.observability]
+enabled = true

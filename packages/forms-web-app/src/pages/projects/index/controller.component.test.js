@@ -4,26 +4,28 @@ const HTMLParser = require('node-html-parser');
 const app = require('../../../app');
 const request = supertest(app);
 const { getProjectUpdatesSuccessfulFixture } = require('../../_fixtures');
-const { getAppData } = require('../../../services/applications.service');
 const {
 	getTimetables,
+	getProjectData,
 	getProjectUpdates,
 	getDocumentByType
 } = require('../../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../../_services');
+const { isBackOfficeCaseReference } = require('./_utils/is-backoffice-case-reference');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getTimetables: jest.fn(),
+	getProjectData: jest.fn(),
 	getProjectUpdates: jest.fn(),
 	getDocumentByType: jest.fn()
 }));
 
-jest.mock('../../../services/applications.service', () => ({
-	getAppData: jest.fn()
-}));
-
 jest.mock('../../_services', () => ({
 	getMapAccessToken: jest.fn()
+}));
+
+jest.mock('./_utils/is-backoffice-case-reference', () => ({
+	isBackOfficeCaseReference: jest.fn()
 }));
 
 const commonMockData = {
@@ -58,11 +60,12 @@ describe('projects/index/controller.component', () => {
 			});
 			getDocumentByType.mockResolvedValue({});
 			getMapAccessToken.mockResolvedValue('mock map access token');
+			isBackOfficeCaseReference.mockReturnValue(false);
 		});
 		describe('Stages - test when stage is set that the details is expanded and the different permutation of the data is set', () => {
 			describe('pre application ', () => {
 				it('should render the page for pre application (stage 1) - with anticipatedSubmissionDateNonSpecific', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 1
@@ -75,7 +78,7 @@ describe('projects/index/controller.component', () => {
 					expect(response.text).toContain('The application is expected to be submitted Q4 2023');
 				});
 				it('should render the page for pre application (stage 1) - without the time period section if anticipatedSubmissionDateNonSpecific is not available', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							AnticipatedSubmissionDateNonSpecific: null,
@@ -90,46 +93,85 @@ describe('projects/index/controller.component', () => {
 				});
 			});
 			describe('acceptance', () => {
-				it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
-					getAppData.mockResolvedValue({
-						data: {
-							...commonMockData,
-							DateOfDCOSubmission: '2020-01-01',
-							Stage: 2
-						},
-						resp_code: 200
+				describe('back office case', () => {
+					beforeEach(() => {
+						isBackOfficeCaseReference.mockReturnValue(true);
 					});
+					it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								deadlineForAcceptanceDecision: '2020-01-29',
+								Stage: 2
+							},
+							resp_code: 200
+						});
 
-					const response = await request.get('/projects/EN010085');
+						const response = await request.get('/projects/BC0110001');
 
-					expect(response.status).toEqual(200);
-					//  Add 28 days to DateOfDCOSubmission
-					expect(response.text).toContain(
-						'The decision whether to accept the application for examination will be made by 29 January 2020.'
-					);
+						expect(response.status).toEqual(200);
+						expect(response.text).toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
+					});
+					it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								deadlineForAcceptanceDecision: null,
+								Stage: 2
+							},
+							resp_code: 200
+						});
+
+						const response = await request.get('/projects/BC0110001');
+
+						expect(response.status).toEqual(200);
+						expect(response.text).not.toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
+					});
 				});
+				describe('NI case', () => {
+					it('should render the page for Acceptance (stage 2) - with DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								DateOfDCOSubmission: '2020-01-01',
+								Stage: 2
+							},
+							resp_code: 200
+						});
 
-				it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
-					getAppData.mockResolvedValue({
-						data: {
-							...commonMockData,
-							DateOfDCOSubmission: null,
-							Stage: 2
-						},
-						resp_code: 200
+						const response = await request.get('/projects/EN010085');
+
+						expect(response.status).toEqual(200);
+						expect(response.text).toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
 					});
+					it('should render the page for Acceptance (stage 2) - without DateOfDCOAcceptance_NonAcceptance', async () => {
+						getProjectData.mockResolvedValue({
+							data: {
+								...commonMockData,
+								DateOfDCOSubmission: null,
+								Stage: 2
+							},
+							resp_code: 200
+						});
 
-					const response = await request.get('/projects/EN010085');
+						const response = await request.get('/projects/EN010085');
 
-					expect(response.status).toEqual(200);
-					expect(response.text).not.toContain(
-						'The decision whether to accept the application for examination will be made by 02 January 2020.'
-					);
+						expect(response.status).toEqual(200);
+						expect(response.text).not.toContain(
+							'The decision whether to accept the application for examination will be made by 29 January 2020.'
+						);
+					});
 				});
 			});
 			describe('pre examination', () => {
 				it('should render the page for Pre examination (stage 3) - Pre Reps', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							DateOfDCOSubmission: '2020-01-01',
@@ -143,7 +185,7 @@ describe('projects/index/controller.component', () => {
 
 					expect(response.status).toEqual(200);
 					expect(response.text).toContain(
-						'This page will be updated when the registration period opens. You can view the project application documents to find out more about the application.'
+						'You will be able to register to have your say when the registration period opens.'
 					);
 				});
 			});
@@ -151,7 +193,7 @@ describe('projects/index/controller.component', () => {
 		describe('Stage progress tag - test the stage progress tag has correct value depending on stage progress', () => {
 			describe('Not started', () => {
 				it('should render the pre application stage with correct project progress tag text', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 1
@@ -166,12 +208,12 @@ describe('projects/index/controller.component', () => {
 					);
 
 					expect(response.status).toEqual(200);
-					expect(preApplicationStageTag.innerHTML).toContain('not started');
+					expect(preApplicationStageTag.innerHTML).toContain('Not started');
 				});
 			});
 			describe('In progress', () => {
 				it('should render the pre application stage with correct project progress tag text', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 1
@@ -186,12 +228,12 @@ describe('projects/index/controller.component', () => {
 					);
 
 					expect(response.status).toEqual(200);
-					expect(preApplicationStageTag.innerHTML).toContain('in progress');
+					expect(preApplicationStageTag.innerHTML).toContain('In progress');
 				});
 			});
 			describe('Completed', () => {
 				it('should render the pre application stage with correct project progress tag text', async () => {
-					getAppData.mockResolvedValue({
+					getProjectData.mockResolvedValue({
 						data: {
 							...commonMockData,
 							Stage: 3
@@ -205,7 +247,7 @@ describe('projects/index/controller.component', () => {
 					);
 
 					expect(response.status).toEqual(200);
-					expect(preApplicationStageTag.innerHTML).toContain('completed');
+					expect(preApplicationStageTag.innerHTML).toContain('Completed');
 				});
 			});
 		});

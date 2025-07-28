@@ -11,33 +11,41 @@ const adviceList = [
 		enquiryDetailWelsh: 'mock enquiry detail in Welsh',
 		adviceGiven: 'mock advice given',
 		adviceGivenWelsh: 'mock advice given in Welsh',
-		organisation: 'mock organisation'
+		organisation: 'mock organisation',
+		projectName: '',
+		projectNameWelsh: ''
 	},
 	{
 		adviceID: 'mock advice id 2',
 		enquiryMethod: 'Meeting',
 		organisation: 'mock organisation',
-		dateAdviceGiven: 'mock date given 2',
+		dateAdviceGiven: '2024-06-06',
 		enquiryDetail: 'mock enquiry detail 2',
-		enquiryDetailWelsh: 'mock enquiry detail 2 in Welsh'
+		enquiryDetailWelsh: 'mock enquiry detail 2 in Welsh',
+		projectName: '',
+		projectNameWelsh: ''
 	},
 	{
 		adviceID: 'mock advice id 3',
 		firstName: 'mock first name',
 		lastName: 'mock last name',
 		enquiryMethod: 'Email',
-		dateAdviceGiven: 'mock date given 3',
+		dateAdviceGiven: '2024-12-12',
 		enquiryDetail: 'mock enquiry detail 3',
-		enquiryDetailWelsh: 'mock enquiry detail 3 in Welsh'
+		enquiryDetailWelsh: 'mock enquiry detail 3 in Welsh',
+		projectName: '',
+		projectNameWelsh: ''
 	},
 	{
 		adviceID: 'mock advice id 4',
 		enquiryMethod: 'Email',
-		dateAdviceGiven: 'mock date given 4',
+		dateAdviceGiven: '2023-10-10',
 		adviceGiven: 'mock advice given 4',
 		adviceGivenWelsh: 'mock advice given 4 in Welsh',
 		enquiryDetail: 'mock enquiry detail 4',
-		enquiryDetailWelsh: 'mock enquiry detail 4 in Welsh'
+		enquiryDetailWelsh: 'mock enquiry detail 4 in Welsh',
+		projectName: '',
+		projectNameWelsh: ''
 	}
 ];
 
