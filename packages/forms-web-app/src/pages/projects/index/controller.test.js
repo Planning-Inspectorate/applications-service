@@ -35,7 +35,7 @@ const processGuideStages = {
 		title: 'Examination'
 	},
 	postDecision: {
-		html: '<p class="govuk-body">Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.</p><a class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">What you can do after the decision has been made.</a>',
+		html: '<p class="govuk-body">Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.</p><p class="govuk-body">This must happen within 6 weeks.</p><a class="govuk-link" href="/decision-making-process-guide/what-happens-after-the-decision-is-made">What you can do after the decision has been made.</a>',
 		title: 'What happens after the decision is made'
 	},
 	preApplication: {
@@ -43,11 +43,11 @@ const processGuideStages = {
 		title: 'Pre-application'
 	},
 	preExamination: {
-		html: '<p class="govuk-body">The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.</p><p class="govuk-body">The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.</p><p class="govuk-body">The pre-examination stage usually takes about 3 months.</p><a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the pre-examination stage.</a>',
+		html: '<p class="govuk-body">The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.</p><p class="govuk-body">The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 30 days.</p><p class="govuk-body">The pre-examination stage usually takes about 3 months.</p><a class="govuk-link" href="/decision-making-process-guide/pre-examination">What happens during the pre-examination stage.</a>',
 		title: 'Pre-examination'
 	},
 	index: {
-		html: '<p class="govuk-body">null</p><a class="govuk-link" href="/decision-making-process-guide">null</a>',
+		html: '<p class="govuk-body">null</p>',
 		title: 'The process for Nationally Significant Infrastructure Projects (NSIPs)'
 	},
 	recommendation: {
@@ -121,7 +121,6 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
-					decisionCompletedDate: null,
 					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
 					mapAccessToken: 'mock map access token',
 					preExamSubStages: {
@@ -134,9 +133,11 @@ describe('pages/projects/index/controller', () => {
 					processGuideStages,
 					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
 					proposal: 'Generating Stations',
-					recommendationCompletedDate: null,
 					rule6Document: undefined,
-					rule8Document: undefined
+					rule8Document: undefined,
+					recommendationCompletedDate: null,
+					decisionCompletedDate: null,
+					backOfficeCase: false
 				});
 			});
 		});
@@ -170,7 +171,6 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'mock@email.com',
-					decisionCompletedDate: null,
 					latestUpdate: null,
 					mapAccessToken: 'mock map access token',
 					preExamSubStages: {
@@ -183,9 +183,11 @@ describe('pages/projects/index/controller', () => {
 					processGuideStages,
 					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
 					proposal: 'Generating Stations',
-					recommendationCompletedDate: null,
 					rule6Document: undefined,
-					rule8Document: undefined
+					rule8Document: undefined,
+					decisionCompletedDate: null,
+					recommendationCompletedDate: null,
+					backOfficeCase: false
 				});
 			});
 		});

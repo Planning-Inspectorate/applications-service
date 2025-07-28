@@ -7,6 +7,20 @@ exports[`locales/global should return the correct English global translations 1`
     "content": "This is a beta service - your {{-link}} will help us to improve it",
     "feedback": "feedback",
   },
+  "cookieBanner": {
+    "acceptButtonText": "Accept analytics cookies",
+    "acceptedCookiesText": "You’ve accepted analytics cookies. You can {{-link}} at any time.",
+    "actionCookiesLinkText": "change your cookie settings",
+    "cookieBannerAriaLabel": "cookie banner",
+    "headingDefaultService": "application service",
+    "headingPrefix": "Cookies on",
+    "hideMessage": "Hide this message",
+    "paragraph1": "We use some essential cookies to make this service work.",
+    "paragraph2": "We'd also like to use analytics cookies so we can understand how you use the service and make improvements.",
+    "rejectButtonText": "Reject analytics cookies",
+    "rejectedCookiesText": "You’ve rejected analytics cookies. You can {{-link}} at any time.",
+    "viewCookiesLinkText": "View cookies",
+  },
   "footer": {
     "content": "All content is available under the {{-link}}, except where otherwise stated",
     "contentLinkText": "Open Government Licence v3.0",
@@ -25,11 +39,14 @@ exports[`locales/global should return the correct English global translations 1`
     "getUpdates": "Get updates about this project",
     "register": "Register to have your say",
   },
+  "paginationNavigation": "Pagination navigation",
   "primaryNavigation": {
     "detailedInformation": "Detailed information",
     "home": "Home",
+    "primaryNavigationAria": "Primary navigation",
     "projectSearch": "All projects",
   },
+  "relatedContentNavigation": "Related content navigation",
 }
 `;
 
@@ -39,6 +56,20 @@ exports[`locales/global should return the correct Welsh global translations 1`] 
   "betaBanner": {
     "content": "Gwasanaeth beta yw hwn - bydd eich {{-link}} yn ein helpu i'w wella.",
     "feedback": "adborth",
+  },
+  "cookieBanner": {
+    "acceptButtonText": "Derbyn cwcis dadansoddeg",
+    "acceptedCookiesText": "Rydych chi wedi derbyn cwcis dadansoddol. Gallwch {{-link}} ar unrhyw adeg.",
+    "actionCookiesLinkText": "newid eich gosodiadau cwci",
+    "cookieBannerAriaLabel": "cwci baner",
+    "headingDefaultService": "gwasanaeth ymgeisio",
+    "headingPrefix": "Cwcis ar y",
+    "hideMessage": "Cuddio'r neges hon",
+    "paragraph1": "Rydym yn defnyddio rhai cwcis hanfodol i wneud i'r gwasanaeth hwn weithio.",
+    "paragraph2": "Hoffem hefyd ddefnyddio cwcis dadansoddol fel y gallwn ddeall sut rydych yn defnyddio'r gwasanaeth a gwneud gwelliannau.",
+    "rejectButtonText": "Gwrthod cwcis dadansoddeg  ",
+    "rejectedCookiesText": "Rydych chi wedi gwrthod cwcis dadansoddol. Gallwch {{-link}} ar unrhyw adeg.",
+    "viewCookiesLinkText": "Gweld cwcis",
   },
   "footer": {
     "content": "Mae'r holl gynnwys ar gael o dan {{-link}}, ac eithrio lle nodir yn wahanol",
@@ -58,10 +89,13 @@ exports[`locales/global should return the correct Welsh global translations 1`] 
     "getUpdates": "Cael diweddariadau ynglŷn â'r prosiect hwn",
     "register": "Cofrestru i leisio'ch barn",
   },
+  "paginationNavigation": "tudalen cyfeiri",
   "primaryNavigation": {
     "detailedInformation": "Gwybodaeth fanwl",
     "home": "Hafan",
+    "primaryNavigationAria": "Cyfeiri cynradd",
     "projectSearch": "Pob prosiect",
   },
+  "relatedContentNavigation": "Cyfeiri cynnwys cysylltiedig",
 }
 `;

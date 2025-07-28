@@ -1,15 +1,15 @@
 <h2 class="govuk-notification-banner__heading" data-cy="cookies-updated-heading-text">
-  {{ successBanner.heading1 }}
+  {{ t('cookies.successBanner.heading1') }}
 </h2>
 
 <div class="govuk-notification-banner__body" data-cy="cookies-updated-body-text">
   <p>
-    {{ successBanner.paragraph1 }}
+    {{ t('cookies.successBanner.paragraph1') }}
   </p>
 
   {% if previousPagePath and previousPagePath !== '' and previousPagePath !== "/cookies" %}
     <p>
-      <a class="govuk-link" href="{{ previousPagePath }}" data-cy="cookies-updated-go-back-link">{{ successBanner.linkText1 }}</a>.
+      <a class="govuk-link" href="{{ previousPagePath }}" data-cy="cookies-updated-go-back-link">{{ t('cookies.successBanner.linkText1') }}</a>.
     </p>
   {% endif %}
 </div>

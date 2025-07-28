@@ -55,9 +55,12 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 	ID: REPRESENTATION_BACKOFFICE_DATA.representationId,
 	CaseReference: REPRESENTATION_BACKOFFICE_DATA.caseReference,
 	UniqueReference: REPRESENTATION_BACKOFFICE_DATA.referenceId,
-	PersonalName: REPRESENTED_BACKOFFICE_DATA.firstName + ' ' + REPRESENTED_BACKOFFICE_DATA.lastName,
-	Representative:
-		REPRESENTATIVE_BACKOFFICE_DATA.firstName + ' ' + REPRESENTATIVE_BACKOFFICE_DATA.lastName,
+	PersonalName: REPRESENTED_BACKOFFICE_DATA.organisationName
+		? REPRESENTED_BACKOFFICE_DATA.organisationName
+		: REPRESENTED_BACKOFFICE_DATA.firstName + ' ' + REPRESENTED_BACKOFFICE_DATA.lastName,
+	Representative: REPRESENTATIVE_BACKOFFICE_DATA.organisationName
+		? REPRESENTATIVE_BACKOFFICE_DATA.organisationName
+		: REPRESENTATIVE_BACKOFFICE_DATA.firstName + ' ' + REPRESENTATIVE_BACKOFFICE_DATA.lastName,
 	OrgOnBhalfName: REPRESENTED_BACKOFFICE_DATA.organisationName,
 	RepFrom: REPRESENTATION_BACKOFFICE_DATA.representationType,
 	RepFromWelsh: 'Cyngor Plwyf',
@@ -85,6 +88,7 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 			representative: '',
 			docReference: null,
 			author: null,
+			personalName: null,
 			lastModified: '2023-06-19 10:50:31.8860000',
 			dateCreated: '2023-06-19 10:50:31.8860000'
 		}

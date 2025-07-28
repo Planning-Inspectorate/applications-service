@@ -19,7 +19,7 @@
 	"preExamination": {
 		"heading1": "Pre-examination",
 		"paragraph1": "The Examining Authority is appointed and is made up of one or more inspectors. Anyone who wants to have their say needs to register at this stage.",
-		"paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.",
+		"paragraph2": "The applicant must publish that the application has been accepted by us. They include when and how parties can register to get involved. The time period for registering is set by the applicant but must be no less than 30 days.",
 		"paragraph3": "The pre-examination stage usually takes about 3 months.",
 		"linkText": "What happens during the pre-examination stage."
 	},
@@ -40,7 +40,50 @@
 	},
 	"postDecision": {
 		"heading1": "What happens after the decision is made",
-		"paragraph1": "Once the Secretary of State has made a decision, there is a 6 week period where people can challenge the decision in the high court. This is called a judicial review.",
+		"paragraph1": "Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.",
+		"paragraph2": "This must happen within 6 weeks.",
 		"linkText": "What you can do after the decision has been made."
+	},
+	"materialChange": {
+		"preApplication": {
+			"heading1": "Pre-application",
+			"paragraph1": "The applicant plans their application to make a change to the Development Consent Order (DCO).",
+			"paragraph2": "They carry out consultations and publicise the proposed application. This includes gathering information about how the changes to the project could affect the local environment.",
+			"paragraph3": "It is important to get involved at this stage to influence the application before the applicant sends it to the Planning Inspectorate."
+		},
+		"applicationReceived": {
+			"heading1": "Application received",
+			"paragraph1": "We will publish the application when we receive it."
+		},
+		"applicationPublished": {
+			"heading1": "Application published",
+			"paragraph1": "The applicant notifies anyone who has been consulted and publicises the fact that they have made an application. This must include how and when parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.",
+			"paragraph2": "Anyone who wants to have their say needs to register at this stage.",
+			"paragraph3": "After the registration period has closed, the Secretary of State will review the application. They will decide whether the application needs to be examined in detail.",
+			"paragraph4": "If the Secretary of State believes an examination is not required, they'll ask for more information before they make a decision.",
+			"paragraph5": "If an examination is required, they'll appoint an Examining Body to carry this out."
+		},
+		"examination": {
+			"heading1": "Examination",
+			"paragraph1": "The Examining Body asks questions about the proposed changes to the Development Consent Order.",
+			"paragraph2": "The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place.",
+			"paragraph3": "This stage takes up to 4 months."
+		},
+		"recommendation": {
+			"heading1": "Recommendation",
+			"paragraph1": "The Examining Body writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 2 months of the end of examination stage."
+		},
+		"decision": {
+			"heading1": "Decision",
+			"paragraph1": "The relevant Secretary of State makes the final decision.",
+			"paragraph2": "They'll consider the relevant representations received.",
+			"paragraph3": "If an examination was required, the decision will be based on the recommendation report.",
+			"paragraph4": "The Secretary of State has 2 months to make a decision."
+		},
+		"postDecision": {
+			"heading1": "What happens after the decision is made",
+			"paragraph1": "Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.",
+			"paragraph2": "This must happen within 6 weeks."
+		}
 	}
 }

@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/process-guide/_utils/get-material-change-process-guide-stages #getMaterialChangeProcessGuideStages should return the material change process guide stages 1`] = `
+{
+  "applicationPublished": {
+    "content": [
+      "The applicant notifies anyone who has been consulted and publicises the fact that they have made an application. This must include how and when parties can register to get involved. The time period for registering is set by the applicant but must be no less than 28 days.",
+      "Anyone who wants to have their say needs to register at this stage.",
+      "After the registration period has closed, the Secretary of State will review the application. They will decide whether the application needs to be examined in detail.",
+      "If the Secretary of State believes an examination is not required, they'll ask for more information before they make a decision.",
+      "If an examination is required, they'll appoint an Examining Body to carry this out.",
+    ],
+    "title": "Application published",
+  },
+  "applicationReceived": {
+    "content": "We will publish the application when we receive it.",
+    "title": "Application received",
+  },
+  "decision": {
+    "content": [
+      "The relevant Secretary of State makes the final decision.",
+      "They'll consider the relevant representations received.",
+      "If an examination was required, the decision will be based on the recommendation report.",
+      "The Secretary of State has 2 months to make a decision.",
+    ],
+    "title": "Decision",
+  },
+  "examination": {
+    "content": [
+      "The Examining Body asks questions about the proposed changes to the Development Consent Order.",
+      "The applicant and anyone who has registered to have their say can get involved and submit comments at each deadline in the timetable. You can also attend hearings that may take place.",
+      "This stage takes up to 4 months.",
+    ],
+    "title": "Examination",
+  },
+  "postDecision": {
+    "content": [
+      "Once the Secretary of State has made a decision, challenges can be made to the High Court. All procedures must be followed when making a challenge. The High Court will decide if there are grounds for a judicial review.",
+      "This must happen within 6 weeks.",
+    ],
+    "title": "What happens after the decision is made",
+  },
+  "preApplication": {
+    "content": [
+      "The applicant plans their application to make a change to the Development Consent Order (DCO).",
+      "They carry out consultations and publicise the proposed application. This includes gathering information about how the changes to the project could affect the local environment.",
+      "It is important to get involved at this stage to influence the application before the applicant sends it to the Planning Inspectorate.",
+    ],
+    "title": "Pre-application",
+  },
+  "recommendation": {
+    "content": "The Examining Body writes its recommendation report. This must be completed and sent to the relevant Secretary of State within 2 months of the end of examination stage.",
+    "title": "Recommendation",
+  },
+}
+`;

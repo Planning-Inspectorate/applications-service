@@ -25,13 +25,13 @@ describe('pages/process-guide/pre-examination/_translations/en', () => {
 			paragraph12:
 				'The rule 8 letter is sent to everyone who registered, as well as official bodies and people whose land is directly affected. This letter gives details of the examination including the finalised timetable with all deadlines for examination comments.',
 			paragraph13: 'You can find more {{-link}}.',
-			paragraph13LinkText: 'detailed advice in our advice notes',
+			paragraph13LinkText: 'detailed advice in our advice pages',
 			paragraph2:
 				'This involves the Examining Authority making an initial assessment of the issues which will need to be discussed.',
 			paragraph3: 'The Examining Authority will:',
 			paragraph4: 'You must register during the pre-examination stage to have your say.',
 			paragraph5:
-				"The registration for each project will be open for at least 28 days to give you time to register. The deadline for registering will be in the applicant's advert, or you can check the project page of this website. You can do this by clicking the All projects link at the top of this page and searching for the project.",
+				"The registration for each project will be open for at least 30 days to give you time to register. The deadline for registering will be in the applicant's advert, or you can check the project page of this website. You can do this by clicking the All projects link at the top of this page and searching for the project.",
 			paragraph6:
 				'There is a separate guide with more information about the steps in the process for {{-link}}.',
 			paragraph6LinkText:

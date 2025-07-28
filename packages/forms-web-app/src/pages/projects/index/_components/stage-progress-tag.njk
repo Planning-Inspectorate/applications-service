@@ -1,27 +1,25 @@
 {% macro stageProgressTag(status, trigger, t) %}
-        
-        {% if status < trigger %}
-            {% set progressTagColorClass = 'govuk-tag govuk-tag--grey' %}
-            {% set progressLabel = t('projectsIndex.stageProgress.notStarted') %}
-        {% endif %}
+  {% if status < trigger %}
+    {% set progressTagColorClass = 'govuk-tag govuk-tag--grey' %}
+    {% set progressLabel = t('projectsIndex.stageProgress.notStarted') %}
+  {% endif %}
 
-        {% if status == trigger %}
-            {% set progressTagColorClass = 'govuk-tag  govuk-tag--blue' %}
-            {% set progressLabel = t('projectsIndex.stageProgress.inProgress') %}
-        {% endif %}
+  {% if status == trigger %}
+    {% set progressTagColorClass = 'govuk-tag govuk-tag--yellow' %}
+    {% set progressLabel = t('projectsIndex.stageProgress.inProgress') %}
+  {% endif %}
 
-        {% if status > trigger %}
-            {% set progressTagColorClass = 'govuk-tag' %}
-            {% set progressLabel = t('projectsIndex.stageProgress.completed') %}
-        {% endif %}
+  {% if status > trigger %}
+    {% set progressTagColorClass = 'govuk-tag govuk-tag--green' %}
+    {% set progressLabel = t('projectsIndex.stageProgress.completed') %}
+  {% endif %}
 
-        {# don't show the progress tag on completed post decision stage #}
-        {% if status == trigger and status == 7 %}
-            {% set progressTagColorClass = '' %}
-            {% set progressLabel = '' %}
-        {% endif %}
-    <div>
-        <strong class="{{progressTagColorClass}} -white-space--nowrap">{{ progressLabel}}</strong>
-    </div>
-    
+  {# don't show the progress tag on completed post decision stage #}
+  {% if status == trigger and status == 7 %}
+    {% set progressTagColorClass = '' %}
+    {% set progressLabel = '' %}
+  {% endif %}
+  <div>
+    <strong class="{{progressTagColorClass}} -white-space--nowrap">{{ progressLabel}}</strong>
+  </div>
 {% endmacro %}

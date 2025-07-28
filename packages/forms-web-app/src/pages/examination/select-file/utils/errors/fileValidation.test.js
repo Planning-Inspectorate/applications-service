@@ -82,7 +82,7 @@ describe('examination/file-upload/fileValidation', () => {
 				};
 				const result = multipleFileValidations(i18n, badTooBigFile);
 				it('should return the file is larger error', () => {
-					expect(result).toEqual('bad-too-bog-file must be smaller than 50mb.');
+					expect(result).toEqual('bad-too-bog-file must be smaller than 50MB.');
 				});
 			});
 			describe('and the file mimetype is not allowed', () => {

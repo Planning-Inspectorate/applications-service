@@ -4,7 +4,8 @@ const { getDeadlineDetailsApplicant } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
 const { getSelectedOptionText } = require('./helpers');
 const { mockI18n } = require('../../../../_mocks/i18n');
-const commonTranslations__EN = require('../../../../../locales/en/common.json');
+const commonTranslationsEN = require('../../../../../locales/en/common.json');
+const examinationTranslationsEN = require('../../../_translations/en.json');
 
 jest.mock('../../../_session/deadline', () => ({
 	getDeadlineDetailsApplicant: jest.fn()
@@ -17,7 +18,8 @@ jest.mock('./helpers', () => ({
 }));
 
 const i18n = mockI18n({
-	common: commonTranslations__EN
+	common: commonTranslationsEN,
+	examination: examinationTranslationsEN
 });
 
 describe('pages/examination/check-your-answers/utils/summary-list-item/applicant', () => {
@@ -29,7 +31,7 @@ describe('pages/examination/check-your-answers/utils/summary-list-item/applicant
 		describe('When getting the applicant summary list item for the check your answers page', () => {
 			describe('and the applicant value retrived from the session is NOT yes or no', () => {
 				it('should throw an error', () => {
-					expect(() => getSummaryListApplicant(req.session, req.i18n)).toThrowError(
+					expect(() => getSummaryListApplicant(req.i18n, req.session)).toThrowError(
 						'Applicant text is undefined'
 					);
 				});
@@ -45,7 +47,7 @@ describe('pages/examination/check-your-answers/utils/summary-list-item/applicant
 					getDeadlineDetailsApplicant.mockReturnValue(mockApplicant);
 					getSelectedOptionText.mockReturnValue(mockApplicantText);
 					getSummaryListItem.mockReturnValue(mockSummaryListItem);
-					result = getSummaryListApplicant(req.session, req.i18n);
+					result = getSummaryListApplicant(req.i18n, req.session);
 				});
 				it('should use the applicant options to get the applicant option text', () => {
 					expect(getSelectedOptionText).toHaveBeenCalledWith(
@@ -57,7 +59,11 @@ describe('pages/examination/check-your-answers/utils/summary-list-item/applicant
 					);
 				});
 				it('should get the summary list item with the applicant title and selected option text', () => {
-					expect(getSummaryListItem).toHaveBeenCalledWith('Applicant or not', mockApplicantText);
+					expect(getSummaryListItem).toHaveBeenCalledWith(
+						req.i18n,
+						'Applicant or not',
+						mockApplicantText
+					);
 				});
 				it('should return a summary list item', () => {
 					expect(result).toEqual(mockSummaryListItem);

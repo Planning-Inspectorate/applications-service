@@ -9,7 +9,7 @@
       {{- govukNotificationBanner({
         type: flashMessage.type,
         titleHtml: titleHtml,
-        html: flashMessage.template.path | render(flashMessage.template.vars | default({})),
+        html: flashMessage.template.path | render(flashMessage.template.vars | default({}), t),
         attributes: { "data-cy": "flash-message-%1-%2" | replace('%1', flashMessage.type) | replace('%2', loop.index) }
       }) -}}
     {%- endfor -%}

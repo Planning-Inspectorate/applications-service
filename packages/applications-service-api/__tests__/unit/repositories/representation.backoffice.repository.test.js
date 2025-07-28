@@ -81,7 +81,7 @@ describe('service.backoffice.repository', () => {
 				AND: [{ caseReference: mockCaseReference }, commonWhereFilters]
 			},
 			orderBy: {
-				dateReceived: 'asc'
+				dateReceived: 'desc'
 			},
 			include: {
 				represented: true,
@@ -90,34 +90,42 @@ describe('service.backoffice.repository', () => {
 			skip: 0,
 			take: 25
 		};
+
+		const mockSearchTerm = 'the mock search term';
+		const mockStopWordList = ['the', 'is', 'a', 'an'];
+
+		const terms = mockSearchTerm
+			.split(' ')
+			.filter((term) => !mockStopWordList.includes(term.toLowerCase()));
+
 		const expectedSearchTermSection = {
 			OR: [
-				{ representationComment: { contains: 'mock search term' } },
-				{ representative: { organisationName: { contains: 'mock search term' } } },
-				{ represented: { organisationName: { contains: 'mock search term' } } },
+				// All terms must match in the representationComment field
 				{
-					OR: [
-						{ represented: { firstName: { contains: 'mock' } } },
-						{ represented: { lastName: { contains: 'mock' } } },
-						{ representative: { firstName: { contains: 'mock' } } },
-						{ representative: { lastName: { contains: 'mock' } } }
-					]
+					AND: terms.map((term) => ({
+						representationComment: { contains: term }
+					}))
 				},
+				// All terms must match in the representative.organisationName field
 				{
-					OR: [
-						{ represented: { firstName: { contains: 'search' } } },
-						{ represented: { lastName: { contains: 'search' } } },
-						{ representative: { firstName: { contains: 'search' } } },
-						{ representative: { lastName: { contains: 'search' } } }
-					]
+					AND: terms.map((term) => ({
+						representative: { organisationName: { contains: term } }
+					}))
 				},
+				// All terms must match in the represented.organisationName field
 				{
-					OR: [
-						{ represented: { firstName: { contains: 'term' } } },
-						{ represented: { lastName: { contains: 'term' } } },
-						{ representative: { firstName: { contains: 'term' } } },
-						{ representative: { lastName: { contains: 'term' } } }
-					]
+					AND: terms.map((term) => ({
+						represented: { organisationName: { contains: term } }
+					}))
+				},
+				// Match any term in the firstName or lastName fields
+				{
+					OR: terms.flatMap((term) => [
+						{ represented: { firstName: { contains: term } } },
+						{ represented: { lastName: { contains: term } } },
+						{ representative: { firstName: { contains: term } } },
+						{ representative: { lastName: { contains: term } } }
+					])
 				}
 			]
 		};
@@ -134,7 +142,7 @@ describe('service.backoffice.repository', () => {
 					...expectedCommonQuery,
 					where: {
 						...expectedCommonQuery.where,
-						AND: [...expectedCommonQuery.where.AND, expectedSearchTermSection]
+						AND: [...(expectedCommonQuery.where.AND || []), expectedSearchTermSection]
 					}
 				};
 
@@ -144,6 +152,7 @@ describe('service.backoffice.repository', () => {
 					limit: 25,
 					searchTerm: 'mock search term'
 				});
+
 				expect(mockFindMany).toHaveBeenCalledWith(expectedSearchTermQuery);
 			});
 		});
@@ -180,7 +189,7 @@ describe('service.backoffice.repository', () => {
 					where: {
 						...expectedCommonQuery.where,
 						AND: [
-							...expectedCommonQuery.where.AND,
+							...(expectedCommonQuery.where.AND || []), // Ensure it's an empty array if undefined
 							expectedSearchTermSection,
 							{
 								representationType: {
@@ -198,6 +207,7 @@ describe('service.backoffice.repository', () => {
 					searchTerm: 'mock search term',
 					type: ['mock-type']
 				});
+
 				expect(mockFindMany).toHaveBeenCalledWith(expectedQuery);
 			});
 		});

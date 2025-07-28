@@ -1,11 +1,18 @@
 {
 	"pageHeading": "Register of advice",
 	"paragraph1": "This list is a record of general advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.",
-	"paragraph2": "Project specific advice can be viewed on the relevant project page.",
+	"paragraph2": "This list is a record of advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.",
+	"paragraph3": "Project specific advice can be viewed on the relevant project page.",
 	"viewAllProjectsLink": "View all projects",
 	"searchHeading": "Search advice",
 	"searchInstruction": "Search by key words or the name of person the advice was given to.",
+	"searchButtonText": "Search",
 	"noResultsParagraph1": "No advice was found matching your search term.",
 	"noResultsParagraph2": "Would you like to clear your search to view all available advice instead?",
-	"noResultsClearLink": "Clear search"
+	"noResultsClearLink": "Clear search",
+	"resultsTableHeading1": "Enquiry",
+	"resultsTableHeading2": "Project name",
+	"resultsTableHeading3": "Date advice given",
+	"readMore": "Read more",
+	"general": "General Section 51 Advice"
 }

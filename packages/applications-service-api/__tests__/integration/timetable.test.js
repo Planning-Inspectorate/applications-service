@@ -27,6 +27,19 @@ config.timetableItemsPerPage = 100;
 
 describe('/api/v1/timetable', () => {
 	describe(' GET /api/v1/timetables/ {caseReference}', () => {
+		describe('when the case reference contains some script', () => {
+			it('should sanitize the case reference', async () => {
+				const response = await request.get(
+					`/api/v1/timetables/${encodeURIComponent('<script>ABCDEF</script>')}`
+				);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					code: 400,
+					errors: ['Invalid caseReference']
+				});
+			});
+		});
 		describe('when the case reference is ni', () => {
 			describe('and it exists in the ni database', () => {
 				it('should return the correct data', async () => {

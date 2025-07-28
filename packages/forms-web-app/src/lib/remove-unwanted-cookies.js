@@ -1,11 +1,19 @@
 const cookieConfig = require('../scripts/cookie/cookie-config');
 const { localesQueryCookieID } = require('../locales/config');
+const { EASY_AUTH } = require('../consts');
 
 const {
 	extractRootDomainNameFromHostnameAndSubdomains
 } = require('./extract-root-domain-name-from-full-domain-name');
 
-const defaultKeepMeCookies = ['connect.sid', cookieConfig.COOKIE_POLICY_KEY, localesQueryCookieID];
+const defaultKeepMeCookies = [
+	'connect.sid',
+	cookieConfig.COOKIE_POLICY_KEY,
+	localesQueryCookieID,
+	'ARRAffinity',
+	'ARRAffinitySameSite',
+	EASY_AUTH.EASY_AUTH_COOKIE_NAME
+];
 
 /**
  * This is a brute force attempt at removing any unwanted cookies.

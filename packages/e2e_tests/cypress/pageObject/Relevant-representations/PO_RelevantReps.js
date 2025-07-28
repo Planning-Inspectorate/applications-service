@@ -1,6 +1,6 @@
 export class PO_RelevantReps {
 	elements = {
-		relevantRepsLink: () => cy.get('a[href*="representations"]'),
+		relevantRepsLink: () => cy.get('a[href*="/representations"]'),
 		listOfRelevantReps: () => cy.get('[data-cy="representation"]'),
 		paginationLink: () => cy.get('.moj-pagination__link'),
 		resultsPerPage: () => cy.get('.govuk-link'),
@@ -8,13 +8,13 @@ export class PO_RelevantReps {
 		searchButton: () => cy.get('[data-cy="search-button"]'),
 		FilterOption: () => cy.get('[type="checkbox"]'),
 		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]'),
-		relevantRepTitle: () => cy.get('[data-cy="representation"]').first().children().first(),
+		relevantRepTitle: () => cy.get('.ui-results__result-title-link'),
 		relevanteRepHeading: () => cy.get('.govuk-heading-l'),
 		backToResultsLink: () => cy.get('[data-cy="back')
 	};
 
-	clickRelevantRepsLink() {
-		this.elements.relevantRepsLink().click();
+	clickRelevantRepsLink(string) {
+		this.elements.relevantRepsLink().contains(string).click();
 	}
 
 	returnListOfRepresentations() {
@@ -50,7 +50,7 @@ export class PO_RelevantReps {
 	}
 
 	clickFirstTitle() {
-		this.elements.relevantRepTitle().click();
+		this.elements.relevantRepTitle().first().click();
 	}
 
 	returnRepHeading() {

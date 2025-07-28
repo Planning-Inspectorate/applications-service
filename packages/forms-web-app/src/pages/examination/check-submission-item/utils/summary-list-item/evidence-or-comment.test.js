@@ -2,9 +2,11 @@ const { getSummaryListItemEvidenceOrComment } = require('./evidence-or-comment')
 
 const { mockI18n } = require('../../../../_mocks/i18n');
 
+const commonTranslationsEN = require('../../../../../locales/en/common.json');
 const examinationTranslationsEN = require('../../../_translations/en.json');
 
 const i18n = mockI18n({
+	common: commonTranslationsEN,
 	examination: examinationTranslationsEN
 });
 

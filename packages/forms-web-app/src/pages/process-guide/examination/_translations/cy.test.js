@@ -40,7 +40,7 @@ describe('pages/process-guide/examination/_translations/cy', () => {
 			paragraph14:
 				'Bydd yr holl fanylion am y prosiect, gan gynnwys dogfennau, cwestiynau, sylwadau ac unrhyw gyngor a roddwyd, yn cael eu cyhoeddi ar y dudalen gwybodaeth am y prosiect.',
 			paragraph15: '{{-link}}.',
-			paragraph15LinkText: 'Gallwch hefyd ddarllen y gyfres lawn o nodiadau cyngor technegol'
+			paragraph15LinkText: 'Gallwch hefyd ddarllen y gyfres lawn o tudalennau cyngor technegol'
 		});
 	});
 });

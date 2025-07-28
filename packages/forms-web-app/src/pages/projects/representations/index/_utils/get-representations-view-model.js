@@ -1,9 +1,17 @@
 const { marked } = require('marked');
 const { titleCase } = require('../../../../../utils/string-case');
 const { getRepresentationURL } = require('../../representation/_utils/get-representation-url');
-const { formatDateSubmitted } = require('./format-date-submitted');
+const { formatDate } = require('../../../../../utils/date-utils');
 
-const getFormattedComment = (comment) => (comment ? marked.parse(comment).trim() : '');
+const getCommentWithHtmlEntities = (comment) => {
+	if (!comment) return '';
+	return comment.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+};
+
+const getFormattedComment = (comment) => {
+	const commentWithHtmlEntities = getCommentWithHtmlEntities(comment);
+	return commentWithHtmlEntities ? marked.parse(commentWithHtmlEntities).trim() : '';
+};
 
 const getRepresentationViewModel = (
 	{
@@ -17,11 +25,12 @@ const getRepresentationViewModel = (
 		RepresentationRedacted,
 		Representative
 	},
+	language,
 	caseRef
 ) => ({
 	attachments,
 	hasAttachments: (attachments && attachments.length) || !!Attachments,
-	dateSubmitted: formatDateSubmitted(DateRrepReceived),
+	dateSubmitted: formatDate(DateRrepReceived, language),
 	comment: RepresentationRedacted,
 	formattedComment: getFormattedComment(RepresentationRedacted),
 	name: PersonalName,
@@ -31,7 +40,9 @@ const getRepresentationViewModel = (
 	URL: getRepresentationURL(caseRef, ID)
 });
 
-const getRepresentationsViewModel = (representations, caseRef) =>
-	representations.map((representation) => getRepresentationViewModel(representation, caseRef));
+const getRepresentationsViewModel = (representations, language, caseRef) =>
+	representations.map((representation) =>
+		getRepresentationViewModel(representation, language, caseRef)
+	);
 
 module.exports = { getRepresentationsViewModel, getRepresentationViewModel };

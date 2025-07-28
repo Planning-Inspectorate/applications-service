@@ -8,8 +8,22 @@ jest.mock('./config', () => ({
 
 describe('i18n', () => {
 	describe('#i18nRedirect', () => {
+		describe('When the request method is not GET', () => {
+			const req = { cookies: { lang: 'cy' }, method: 'POST', path: '/mock-path', query: {} };
+			const res = { redirect: jest.fn() };
+			const next = jest.fn();
+
+			beforeEach(() => {
+				i18nRedirect(req, res, next);
+			});
+			it('should not redirect and call next', () => {
+				expect(res.redirect).toBeCalledTimes(0);
+				expect(next).toBeCalledTimes(1);
+			});
+		});
+
 		describe('When there is no selected locale', () => {
-			const req = { cookies: {}, path: '/mock-path', query: {} };
+			const req = { cookies: {}, method: 'GET', path: '/mock-path', query: {} };
 			const res = { redirect: jest.fn() };
 			const next = jest.fn();
 
@@ -23,7 +37,7 @@ describe('i18n', () => {
 		});
 
 		describe('When there is a selected locale in the query', () => {
-			const req = { cookies: {}, path: '/mock-path', query: { lang: 'en' } };
+			const req = { cookies: {}, path: '/mock-path', method: 'GET', query: { lang: 'en' } };
 			const res = { redirect: jest.fn() };
 			const next = jest.fn();
 
@@ -38,7 +52,7 @@ describe('i18n', () => {
 
 		describe('When there is a selected locale in the cookies', () => {
 			describe('and the selected locale is the default locale', () => {
-				const req = { cookies: { lang: 'en' }, path: '/mock-path', query: {} };
+				const req = { cookies: { lang: 'en' }, method: 'GET', path: '/mock-path', query: {} };
 				const res = { redirect: jest.fn() };
 				const next = jest.fn();
 
@@ -53,7 +67,7 @@ describe('i18n', () => {
 			});
 
 			describe('and the selected locale is not the default locale', () => {
-				const req = { cookies: { lang: 'cy' }, path: '/mock-path', query: {} };
+				const req = { cookies: { lang: 'cy' }, method: 'GET', path: '/mock-path', query: {} };
 				const res = { redirect: jest.fn() };
 				const next = jest.fn();
 

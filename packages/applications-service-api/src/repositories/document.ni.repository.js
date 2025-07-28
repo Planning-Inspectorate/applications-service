@@ -1,5 +1,7 @@
 const { Op, fn, col, literal } = require('sequelize');
 const db = require('../models');
+const stopWords = require('../utils/stopwords');
+const stopWordList = stopWords.english;
 
 const fetchDocuments = async (requestQuery) => {
 	const where = {
@@ -91,11 +93,16 @@ const mapFiltersToQuery = (filters) => {
 
 const mapSearchTermToQuery = (searchTerm) => {
 	if (searchTerm) {
+		const terms = searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
+
 		const searchStatements = ['description', 'personal_name', 'representative', 'mime'].map(
 			(field) => ({
-				[field]: { [Op.like]: `%${searchTerm}%` }
+				[Op.and]: terms.map((term) => ({ [field]: { [Op.like]: `%${term}%` } }))
 			})
 		);
+
 		return { [Op.or]: searchStatements };
 	}
 };
@@ -113,6 +120,7 @@ const buildDateQuery = ({ from, to } = {}) => {
 		return { ['date_published']: { [Op.gte]: from } };
 	}
 };
+
 const getDocumentsByDataId = (dataIds) => {
 	if (!dataIds || dataIds.length === 0) return [];
 	return db.Document.findAll({

@@ -15,7 +15,8 @@ describe('#registerMiddleware', () => {
 				}
 			};
 			const res = {
-				locals: {}
+				locals: {},
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
 			expect(next).toHaveBeenCalled();
@@ -33,11 +34,12 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/a-case-ref/register/register-have-your-say'
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
 			});
 		});
 		it('registerMiddleware - no case_ref in params', () => {
@@ -52,11 +54,12 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/:case_ref/register/register-have-your-say'
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
 			});
 		});
 		it('registerMiddleware - no caseRef in session', () => {
@@ -72,11 +75,12 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/a-case-ref/register/register-have-your-say'
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
 			});
 		});
 		it('registerMiddleware - no caseRef in session', () => {
@@ -93,11 +97,12 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/register-journey-error.njk', {
-				detailsLink: '/projects/a-case-ref/register/register-have-your-say'
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
 			});
 		});
 	});

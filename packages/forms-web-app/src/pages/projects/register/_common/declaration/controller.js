@@ -1,14 +1,26 @@
-const { postRegistrationData } = require('../../../../../services/registration.service');
+const { postRegistration } = require('../../../../../lib/application-api-wrapper');
 const logger = require('../../../../../lib/logger');
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
-const { getSessionBase } = require('../../../../../controllers/register/common/session');
-const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const {
+	getSessionBase,
+	setSession,
+	getSession
+} = require('../../../../../controllers/register/common/session');
+const { getRedirectUrl, getAlreadySubmittedUrl } = require('./_utils/get-redirect-url');
 
 const view = 'projects/register/_common/declaration/view.njk';
+const hasSubmittedKey = 'hasSubmitted';
 
 const getRegisterDeclarationController = (req, res) => {
 	try {
+		const { session } = req;
 		const key = getKeyFromUrl(req.originalUrl);
+		const userSessionData = getSession(session, key);
+
+		if (userSessionData?.hasSubmitted) {
+			return res.redirect(`${res.locals.baseUrl}${getAlreadySubmittedUrl(key)}`);
+		}
+
 		return res.render(view, {
 			key
 		});
@@ -32,13 +44,14 @@ const postRegisterDeclarationController = async (req, res) => {
 			comment: session.comment
 		};
 
-		const response = await postRegistrationData(JSON.stringify(registrationData));
+		const response = await postRegistration(JSON.stringify(registrationData));
 		sessionForKey.ipRefNo = response.data?.referenceId;
 
+		setSession(session, key, hasSubmittedKey, true);
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
 		logger.error(`Could not Post declaration, internal error occurred ${e}`);
-		return res.status(500).render('error/unhandled-exception');
+		return res.status(500).render('error/have-your-say-journey-error');
 	}
 };
 

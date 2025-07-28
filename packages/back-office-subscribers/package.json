@@ -18,12 +18,12 @@
 		"rep-service-user:clear-and-parallel": "npm run rep-service-user:clear && npm run rep-service-user:parallel"
 	},
 	"dependencies": {
-		"@prisma/client": "^5.17.0",
-		"axios": "^1.6.8",
-		"lodash.pick": "^4.4.0"
+		"@prisma/client": "*",
+		"axios": "*",
+		"lodash.pick": "*"
 	},
 	"devDependencies": {
-		"azure-functions-core-tools": "^4.0.5390",
-		"azurite": "^3.26.0"
+		"azure-functions-core-tools": "*",
+		"azurite": "*"
 	}
 }

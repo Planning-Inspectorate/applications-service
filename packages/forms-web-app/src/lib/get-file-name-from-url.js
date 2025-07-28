@@ -1,11 +1,19 @@
 const getFileNameFromDocumentUrl = (url = '') => {
 	if (typeof url !== 'string') return null;
 
-	const lastUrlSegment = url.split('/').filter(Boolean).pop() || '';
-	const regex = /(?<=-)[^-]*(?=\.[^.]*$)/;
-	const fileName = lastUrlSegment.match(regex);
+	const lastUrlSegment = url.split('/').filter(Boolean).pop();
 
-	return fileName ? fileName[0].replaceAll('_', ' ') : null;
+	if (!lastUrlSegment) return null;
+
+	const regexWithExtension = /(?<=-)[^-]*(?=\.[^.]*$)/;
+	const regexWithoutExtension = /(?<=-)[^-]*$/;
+
+	let match =
+		lastUrlSegment.match(regexWithExtension) || lastUrlSegment.match(regexWithoutExtension);
+
+	if (!match) return null;
+
+	return match[0].replaceAll('_', ' ');
 };
 
 module.exports = { getFileNameFromDocumentUrl };

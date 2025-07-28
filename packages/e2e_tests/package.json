@@ -16,20 +16,20 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"devDependencies": {
-		"@shelex/cypress-allure-plugin": "^2.34.0",
-		"allure-commandline": "^2.20.1",
-		"cypress": "^13.6.4",
-		"cypress-cucumber-preprocessor": "^4.3.1",
-		"cypress-file-upload": "^5.0.8",
-		"cypress-slow-down": "^1.2.1",
-		"mocha-allure-reporter": "^1.4.0"
-	},
 	"cypress-cucumber-preprocessor": {
 		"nonGlobalStepDefinitions": false,
 		"stepDefinitions": "cypress/e2e/step_definitions"
 	},
 	"dependencies": {
-		"dayjs": "^1.11.7"
+		"dayjs": "*"
+	},
+	"devDependencies": {
+		"@shelex/cypress-allure-plugin": "*",
+		"allure-commandline": "*",
+		"cypress": "*",
+		"cypress-cucumber-preprocessor": "*",
+		"cypress-file-upload": "*",
+		"cypress-slow-down": "*",
+		"mocha-allure-reporter": "*"
 	}
 }

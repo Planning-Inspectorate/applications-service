@@ -20,7 +20,7 @@ describe('pages/register-of-advice/router', () => {
 		jest.doMock('express', () => ({
 			Router: () => ({
 				get,
-				post,
+				post
 			})
 		}));
 
@@ -32,7 +32,7 @@ describe('pages/register-of-advice/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/register-of-advice',
 				addCommonTranslationsMiddleware,
-        addSection51TranslationsMiddleware,
+				addSection51TranslationsMiddleware,
 				registerOfAdviceTranslationsMiddleware,
 				getRegisterOfAdviceController
 			);

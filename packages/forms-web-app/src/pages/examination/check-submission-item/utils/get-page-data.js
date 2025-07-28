@@ -8,9 +8,7 @@ const {
 
 const getPageData = () => ({
 	id: checkSubmissionItem.id,
-	nextPageUrl: `${addDeadline.route}`,
-	pageTitle: checkSubmissionItem.name,
-	title: checkSubmissionItem.name
+	nextPageUrl: `${addDeadline.route}`
 });
 
 module.exports = { getPageData };

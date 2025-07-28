@@ -1,42 +1,83 @@
 # Applications Service
 
-Monorepo for all Applications Service services and infrastructure
+Monorepo for all Applications Service services
 
 ## TL;DR
 
-- `npm i`
+- `npm ci` from the project root and in the `e2e-tests` directory- see [Dependencies](#dependencies-npm) below
 - create a `.env` file in `./packages/applications-service-api`. Copy the values from `.env.development`
+- create a `.env` file in the applications service root folder `/`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values
 - `npm run db:generate` to create database
 - `npm run db:migrate:dev` to create tables
 - `npm run db:seed` to populate tables with some data 
 - `npm run dev`
 - Go to [localhost:9004](http://localhost:9004)
 
-## Architecture
+## Structure
 
-The architecture of the applications service and it's relationships with other systems can be viewed through interactive [C4 Model diagrams](https://c4model.com) held as [Structizier](https://docs.structurizr.com) code in the `workspace.dsl` file
+```
+.
++-- e2e-tests
+|   +-- cypress
+|   |   +-- e2e
+|   |   |   +-- ...
+|   |   +-- fixtures
+|   |   |   +-- ...
+|   |   +-- support
+|   |   |   +-- ...
+|   +-- patches
+|   |   |   +-- ...
++-- init
+|   +-- mssql
+|   |   +-- ...
+|   +-- ...
++-- mock-server
++-- packages
+|   +-- applications-service-api
+|   +-- back-office-subscribers
+|   +-- common
+|   +-- e2e_tests
+|   +-- forms-web-app
+|   +-- ni-redirects
+```
 
-This can be viewed locally through an interactive web interface by running `npm run c4`
-
-Finally open your web browser to view [http://localhost:8080](http://localhost:8080)
-
-There is also a deployed version of the C4 model available [here](https://planning-inspectorate.github.io/applications-service/master/)
+- **e2e-tests**: Legacy E2E tests. Still maintained as they continue to be a valuable set of regression tests.
+- **init**: Scripts to create database tables and seed rows.
 
 ### Packages
 
-The monorepo consists of several packages:
+| Package                  | Description                                                        |
+|--------------------------|--------------------------------------------------------------------|
+| forms-web-app            | User-facing website                                                |
+| applications-service-api | Web API which encapsulates business logic for the website          |
+| back-office-subscribers  | Azure Function App for publishing and consuming Service Bus events |
+| e2e_tests                | Cypress test suites                                                |
 
-- **forms-web-app**: User facing website ([link](https://national-infrastructure-consenting.planninginspectorate.gov.uk/))
-  - depends on `redis` for storing session data
-- **applications-service-api**: Web API serving data to the website
-  - depends on `mysql` (NI database), and `mssql` (local Back Office database projection)
-- **back-office-subscribers**: Azure Function App for publishing and consuming Service Bus events on various topics. Mainly uses [output bindings](https://github.com/Azure/azure-functions-sql-extension#azure-sql-bindings-for-azure-functions---preview) to insert/update data into the SQL Server database.
-- **e2e_tests**: Cypress test suite
+
+## Architecture
+
+The architecture of the applications service and its relationships with other systems can be viewed through interactive [C4 Model diagrams](https://c4model.com) held as [Structizer](https://docs.structurizr.com) code in the `workspace.dsl` file.
+
+This can be viewed locally through an interactive web interface by running `npm run c4`.
+
+Finally open your web browser to view [http://localhost:8080](http://localhost:8080).
+
+There is also a deployed version of the C4 model available [here](https://planning-inspectorate.github.io/applications-service/master/).
+
+### Redis
+
+The website (forms-web-app) depends on Redis for storing session data.
+
+### MySQL and MSSQL
+
+MySQL is using for the legacy NI database, while MSSQL is used for the CBOS database projection. These must both be running.
+
 
 ## Pre-requisites
 
 - [Node.js](https://nodejs.org/en/download/)
 - [Docker](https://docs.docker.com/get-docker/)
+
 
 ## Node.js
 
@@ -52,13 +93,36 @@ nvm alias default 20
 
 The Node.js version in use should closely follow [what is supported by the Azure App Service runtime](https://github.com/Azure/app-service-linux-docs/blob/master/Runtime_Support/node_support.md). From time to time, it may be necessary to update Node.js version to a newer LTS release when support for the current version is ending.
 
+## Dependencies (npm)
+
+The repo uses [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces). This allows us to have one node_modules in the root workspace that holds all the project dependencies and a root package.json + package-lock.json that has every dependency + version that's used in the repository listed in it. The individual packages do *not* require package-lock.json files (be careful if using Red Hat Dependency Analytics extension in VS Code as this may automatically generate package-lock.json files when you view individual package.json files). There is an additional node_modules in the `e2e-tests` directory because this is not included in the root workspace.
+
+The current list of workspaces can be found in the root package.json file.
+
+Each workspace in the repo also has a package.json file where its dependency list contains only the dependencies that the workspace requires: the versions are denoted as `*` - they rely on the root package.json for  versioning which helps us keep versioning consistent across the repo. 
+
+**First time installing dependencies**:
+- Run `npm ci` from the root of the project (this will use the project's package-lock.json file to sort your local node_modules directory and will avoid creating package-lock.json diffs where they're not expected).
+- Run `npm ci` in the `e2e-tests` directory.
+
+**To add a dependency**:
+- Add the name and desired version of the dependency to the root package.json (preferably prefixed with a `^` to ensure the most recent minor version is used)
+- Add the name of the dependency with the version marked as a `*` to the relevant workspace's package.json file
+- Run `npm install` from root - avoid creating + merging package-lock.json files within workspaces
+
+*Note that on build, your dependency will not be available to any workspace in the repo that does not have the dependency listed in its respective package.json file (the code build process ensures that only the necessary dependencies are included in the build (the API and web app packages use `npm ci --workspaces --if-present` in their Dockerfiles to ensure this))*
+
+## Environment Setup
+
+Create a `.env` file in the applications service root folder `\`. Copy the variables from `.env.example` (in the same root folder).  Speak to a colleague to get the actual variable values.
+
 ## Running
 
 ### Docker
 
 For local development, we use `docker compose` which creates the various Docker containers using the `docker-compose.yml` config.
 
-Each service contains a `Dockerfile`, which is used to create an image to be deployed to remote environments (Docker Compose is not used)
+Each service contains a `Dockerfile`, which is used to create an image to be deployed to remote environments (Docker Compose is not used).
 
 If making changes to containers, be mindful you may need to update both the `Dockerfile` and `docker-compose.yml` so the changes are consistent between local and remote environments.
 
@@ -91,19 +155,19 @@ This will run just the `forms-web-app` app:
 npm run dev:web
 ```
 
-Other tips:
+#### Other tips
 
 - If you want to remove any containers to they are rebuilt the next time you run `npm run dev`, you can run:
 
-   ```shell
-   docker compose down
-   ```
+```shell
+docker compose down
+```
 
 - If you wish to use the shell of the container:
 
-   ```shell
-   npm run dev:api -- sh
-   ```
+```shell
+npm run dev:api -- sh
+```
 
 ### Database
 
@@ -209,6 +273,14 @@ This probably happens, because you built Prisma Client on a different platform.
 
 - Add the platform (in this case `"linux-musl"`) to `binaryTargets` in `prisma.schema` then run `npm run db:generate` 
 
+On running `npm run db:seed` you may see the error: 
+
+```shell
+prisma:error Violation of PRIMARY KEY constraint 'ServiceUser_pkey'. Cannot insert duplicate key in object 'dbo.ServiceUser'. The duplicate key value is (99)
+```
+
+- Run `npm run db:reset` which will reset the database, apply all migrations and run the seed script
+  
 ## Branching
 
 Please follow the established [branching strategy](https://pins-ds.atlassian.net/wiki/spaces/AAPDS/pages/425132090/Branching+strategy).

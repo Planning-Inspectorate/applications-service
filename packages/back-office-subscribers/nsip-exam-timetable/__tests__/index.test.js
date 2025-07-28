@@ -139,7 +139,6 @@ describe('nsip-exam-timetable', () => {
 			where: {
 				caseReference: mockMessage.caseReference
 			},
-			rejectOnNotFound: false,
 			take: 1
 		});
 	});

@@ -29,10 +29,11 @@ describe('document ni service', () => {
 				rows: DB_DOCUMENTS
 			});
 			mapDocuments.mockReturnValueOnce(RESPONSE_DOCUMENTS);
+			const mockIsMaterialChange = false;
 
-			const result = await fetchNIDocuments(filters);
+			const result = await fetchNIDocuments(filters, mockIsMaterialChange);
 
-			expect(mapDocuments).toBeCalledWith(DB_DOCUMENTS);
+			expect(mapDocuments).toBeCalledWith(DB_DOCUMENTS, mockIsMaterialChange);
 			expect(result).toEqual({
 				count: 1,
 				data: RESPONSE_DOCUMENTS
@@ -44,10 +45,11 @@ describe('document ni service', () => {
 		it('calls getFilters then passes result to mapper', async () => {
 			getAvailableFilters.mockResolvedValueOnce(DB_FILTERS);
 			mapFilters.mockReturnValueOnce(RESPONSE_FILTERS);
+			const mockIsMaterialChange = false;
 
-			const result = await fetchNIDocumentFilters('EN000001');
+			const result = await fetchNIDocumentFilters('EN000001', mockIsMaterialChange);
 
-			expect(mapFilters).toBeCalledWith(DB_FILTERS);
+			expect(mapFilters).toBeCalledWith(DB_FILTERS, false);
 			expect(result).toEqual(RESPONSE_FILTERS);
 		});
 	});

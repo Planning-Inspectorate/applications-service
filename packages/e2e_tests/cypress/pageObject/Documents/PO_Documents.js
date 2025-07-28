@@ -3,10 +3,10 @@ export class PO_Documents {
 		listOfDocuments: () => cy.get('ul.section-results').children(),
 		numberOfResults: () => cy.get('.govuk-link'),
 		expandFilterOption: () => cy.get('.ui-checkbox-accordion__section-switch-title'),
-		selectFilter: (id) => cy.get(`#${id}`),
-		clearAllFilters: () => cy.contains('Clear all filters'),
 		enterSearchText: () => cy.get('input[name="searchTerm"]'),
-		searchButton: () => cy.get('#search-button').contains('Search')
+		searchButton: () => cy.get('#search-button').contains('Search'),
+		govSectionResults: () => cy.get('.section-results'),
+		resultsPanel: () => cy.get('.ui-results')
 	};
 
 	returnListOfDocuments() {
@@ -21,34 +21,6 @@ export class PO_Documents {
 		this.elements.expandFilterOption().contains(string).click();
 	}
 
-	findAndSelectFilter(id) {
-		this.elements.selectFilter(id).click();
-	}
-
-	// The methods below get all published titles for a set of search results and then assert that those titles match whatever we specify
-
-	getAllPublishedTitlesElems() {
-		return cy.get('[data-cy="published-title"]');
-	}
-
-	checkPublishedTitles(publishedTitle) {
-		this.getAllPublishedTitlesElems().then((elements) => {
-			const titles = [];
-			cy.wrap(elements)
-				.each((elem) => titles.push(elem.text().trim()))
-				.then(() => {
-					const matches = publishedTitle.every((title) => titles.includes(title));
-					console.log(titles);
-					console.log(publishedTitle);
-					expect(matches).to.eq(true);
-				});
-		});
-	}
-
-	clearAllFilters() {
-		this.elements.clearAllFilters().click();
-	}
-
 	searchDocuments(text) {
 		this.elements.enterSearchText().type(text);
 	}
@@ -59,5 +31,53 @@ export class PO_Documents {
 
 	checkFirstResultContainsString(string) {
 		cy.get('.section-results__result').find('a').contains(string);
+	}
+
+	verifyResultStructure() {
+		cy.get('.section-results__result').each((result) => {
+			cy.wrap(result).find('p').should('exist').and('be.visible');
+			cy.wrap(result)
+				.find('.section-results__result-link')
+				.should('exist')
+				.and('have.attr', 'href')
+				.then((href) => {
+					expect(href).to.contain('/published-documents/');
+
+					cy.wrap(result).find('[data-cy="published-date"]').should('exist').and('be.visible');
+					cy.wrap(result).find('[data-cy="published-stage"]').should('exist').and('be.visible');
+					cy.wrap(result).find('[data-cy="published-title"]').should('exist').and('be.visible');
+				});
+		});
+	}
+
+	sectionResultsVisible() {
+		this.elements.govSectionResults().should('be.visible');
+	}
+
+	assertRelatedGuidesMenu(ariaLabel) {
+		cy.get(`nav[aria-label="${ariaLabel}"]`)
+			.should('exist')
+			.and('be.visible')
+			.find('h2')
+			.should('contain', 'Related guides')
+			.and('be.visible');
+	}
+
+	assertRelatedGuidesMenuItems(ariaLabel) {
+		cy.get(`nav[aria-label="${ariaLabel}"]`)
+			.find('.ui-vertical-tabs__list-item')
+			.each((listItem) => {
+				cy.wrap(listItem).find('a').should('have.attr', 'href').and('not.be.empty');
+			});
+	}
+
+	assertFilterMenu(h3Text) {
+		cy.get('#documents-page-filters')
+			.should('exist')
+			.and('be.visible')
+			.within(() => {
+				cy.get('h3').should('exist').and('contain.text', h3Text);
+				cy.get('[data-cy="apply-filter-button"]').should('be.visible');
+			});
 	}
 }

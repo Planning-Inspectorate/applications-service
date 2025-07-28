@@ -17,10 +17,9 @@ describe('scripts/javascript-requiring-consent', () => {
 
 			initialiseOptionalJavaScripts();
 
+			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 			// eslint-disable-next-line no-console
 			expect(console.log).toHaveBeenCalledWith('Consent not yet given for optional JavaScripts.');
-
-			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 		});
 
 		test('return early if `usage` is not defined', () => {
@@ -29,7 +28,6 @@ describe('scripts/javascript-requiring-consent', () => {
 			readCookie.mockImplementation(() => JSON.stringify({ a: 'b' }));
 
 			initialiseOptionalJavaScripts();
-
 			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 		});
 
@@ -40,19 +38,17 @@ describe('scripts/javascript-requiring-consent', () => {
 
 			initialiseOptionalJavaScripts();
 
+			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 			// eslint-disable-next-line no-console
 			expect(console.log).toHaveBeenCalledWith(
 				'Declined consent. Third party cookies are not enabled.'
 			);
-
-			expect(initialiseGoogleAnalytics).not.toHaveBeenCalled();
 		});
 
 		test('calls through if `usage=true`', () => {
 			readCookie.mockImplementation(() => JSON.stringify({ usage: true }));
 
 			initialiseOptionalJavaScripts();
-
 			expect(initialiseGoogleAnalytics).toHaveBeenCalled();
 		});
 	});

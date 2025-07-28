@@ -1,0 +1,12 @@
+{% set summaryHtml %}
+<div class="summary-content">
+	<span>{{ processGuideStages.postDecision.title }}</span>
+</div>
+{% endset %}
+
+{{ govukDetails({
+	summaryHtml: summaryHtml,
+	html: processGuideStages.postDecision.html,
+	open: applicationData.status.text === projectStages[7],
+	classes: 'pins-modded-summary-full-width'
+}) }}

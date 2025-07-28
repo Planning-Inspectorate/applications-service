@@ -8,13 +8,16 @@ const {
 const { isLangWelsh } = require('../../../../_utils/is-lang-welsh');
 
 const getAdviceName = ({ organisation, firstName, lastName }, i18n) => {
-	let name = i18n.t('section51.anonymous');
-	if (organisation?.trim()) name = organisation.trim();
-	else if (firstName && lastName) name = `${firstName} ${lastName}`;
-	return name;
+	return (
+		organisation?.trim() ||
+		(firstName && lastName
+			? `${firstName} ${lastName}`
+			: firstName || lastName || i18n.t('section51.anonymous'))
+	);
 };
 
-const isAdviceMeeting = (enquiryMethod) => enquiryMethod === 'Meeting';
+const isAdviceMeeting = (enquiryMethod) => enquiryMethod?.toLowerCase() === 'meeting';
+
 const getAdviceDateText = (enquiryMethod, i18n) => {
 	return isAdviceMeeting(enquiryMethod)
 		? i18n.t('section51.dateOfMeeting')
@@ -61,9 +64,20 @@ const doesAdviceExist = (advice) => {
 };
 
 // We need to know if no advice items returned from an api is a result of a search with 0 results, or because there is no advice present.
-
 const wasSearchAttempted = (queryUrl) => {
 	return queryUrl.includes('search');
+};
+
+const getProjectName = (advice, i18n) => {
+	const generalS51CaseRefCBOS = 'GS5110001';
+
+	if (advice.caseReference === generalS51CaseRefCBOS) {
+		return i18n.t('registerOfAdvice.general');
+	} else if (isLangWelsh(i18n.language) && advice.projectNameWelsh) {
+		return advice.projectNameWelsh;
+	} else {
+		return advice.projectName;
+	}
 };
 
 module.exports = {
@@ -76,5 +90,6 @@ module.exports = {
 	getAdviceName,
 	getAdviceEnquiryText,
 	doesAdviceExist,
-	wasSearchAttempted
+	wasSearchAttempted,
+	getProjectName
 };

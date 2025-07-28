@@ -8,9 +8,9 @@ const mockFormData = {
 	getHeaders: () => mockFormDataHeaders()
 };
 jest.mock('form-data', () => {
-	return function() {
-		return mockFormData
-	}
+	return function () {
+		return mockFormData;
+	};
 });
 
 jest.mock('../../../src/lib/config.js', () => ({
@@ -31,11 +31,11 @@ jest.mock('../../../src/lib/axios', () => {
 		createAxiosInstance: jest.fn().mockImplementation(() => ({
 			post: (url, data, config) => mockAxiosPost(url, data, config)
 		}))
-	}
+	};
 });
 
 describe('ni api service', () => {
-	afterEach(() => jest.resetAllMocks())
+	afterEach(() => jest.resetAllMocks());
 	describe('getToken', () => {
 		it('calls post with correct params and headers', async () => {
 			mockAxiosPost.mockResolvedValueOnce({
@@ -50,22 +50,18 @@ describe('ni api service', () => {
 
 			await fetchToken();
 
-			expect(mockAxiosPost).toBeCalledWith(
-				'https://example.com',
-				mockFormData,
-				{
-					params: {
-						oauth: 'token'
-					},
-					headers: {
-						some: 'header'
-					},
-					auth: {
-						username: 'some-client-id',
-						password: 'some-client-secret'
-					}
+			expect(mockAxiosPost).toBeCalledWith('https://example.com', mockFormData, {
+				params: {
+					oauth: 'token'
+				},
+				headers: {
+					some: 'header'
+				},
+				auth: {
+					username: 'some-client-id',
+					password: 'some-client-secret'
 				}
-			)
+			});
 		});
 
 		it('throws error when post returns non-200 response', async () => {
@@ -87,7 +83,7 @@ describe('ni api service', () => {
 			});
 			mockAxiosPost.mockResolvedValueOnce({
 				status: 200
-			})
+			});
 
 			await uploadFile({
 				buffer: PNG_FILE,
@@ -96,7 +92,9 @@ describe('ni api service', () => {
 				size: 83
 			});
 
-			expect(mockAxiosPost.mock.calls[1][0]).toEqual('https://example.com/api/v1/submissionsupload/file');
+			expect(mockAxiosPost.mock.calls[1][0]).toEqual(
+				'https://example.com/api/v1/submissionsupload/file'
+			);
 			expect(mockAxiosPost.mock.calls[1][1]).toEqual(mockFormData);
 			expect(mockAxiosPost.mock.calls[1][2]).toEqual({
 				params: {

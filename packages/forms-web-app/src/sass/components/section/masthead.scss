@@ -1,34 +1,33 @@
 .masthead {
-    background-color: #00847f;
+	background-color: #00847f;
 
-    &--bg {
-        &-teal {
-            background-color: #00847f;
-        }
-    }
-    
-    &--full-width {
-        clip-path: inset(0 -100vmax);
-    
-        &.masthead--bg {
-            &-teal {
-                box-shadow: 0 0 0 100vmax #00847f;
-            }
-        }
-    }
+	&--bg {
+		&-teal {
+			background-color: #00847f;
+		}
+	}
 
-    &__content {
-        padding-top: 30px;
-        padding-bottom: 40px;
-    }
+	&--full-width {
+		clip-path: inset(0 -100vmax);
 
-    &__title {
-        color: #fff;
-        margin-bottom: 20px;
-    }
+		&.masthead--bg {
+			&-teal {
+				box-shadow: 0 0 0 100vmax #00847f;
+			}
+		}
+	}
 
-    &__text {
-        color: #fff;
-    }
+	&__content {
+		padding-top: 30px;
+		padding-bottom: 40px;
+	}
+
+	&__title {
+		color: #fff;
+		margin-bottom: 20px;
+	}
+
+	&__text {
+		color: #fff;
+	}
 }
-

@@ -5,7 +5,7 @@ const {
 	getHasInterestedPartyNumberOptions
 } = require('../../../has-interested-party-number/utils/get-has-interested-party-number-options');
 
-const getSummaryListItemHasInterestedPartyNumber = (session, i18n) => {
+const getSummaryListItemHasInterestedPartyNumber = (i18n, session) => {
 	const hasInterestedPartyNumberOptions = getHasInterestedPartyNumberOptions(i18n);
 	const hasInterestedPartyNumberText = getSelectedOptionText(
 		hasInterestedPartyNumberOptions,
@@ -14,7 +14,8 @@ const getSummaryListItemHasInterestedPartyNumber = (session, i18n) => {
 	if (!hasInterestedPartyNumberText)
 		throw new Error('Has interested party number text is undefined');
 	return getSummaryListItem(
-		'Interested party reference number available',
+		i18n,
+		i18n.t('examination.checkYourAnswers.details.summaryListHeading1'),
 		hasInterestedPartyNumberText
 	);
 };

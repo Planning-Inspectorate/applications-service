@@ -1,6 +1,6 @@
 {% from "components/ui/tag-link-list.njk" import uiTagLinkList %}
 
-{{ uiTagLinkList('Filtered results', activeFilters, "h2") }}
+{{ uiTagLinkList(t('representationsIndex.filteredResults'), activeFilters, "h2") }}
 
 {% if activeFilters.length  %}
   <p class="govuk-body">

@@ -2,14 +2,16 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 
-{% macro uiCheckboxAccordion(display, sections, title, modalSubtitle, id, isModal, translations = {
-	applyFilters: 'Apply filters',
-	clearFilters: 'Clear filters',
-	hideAllSections: 'Hide all sections',
-	showAllSections: 'Show all sections',
-	selectAllFilters: 'Select all filters',
-	returnToResults: 'Return to results'
-}) %}
+{% macro uiCheckboxAccordion(display, sections, title, modalSubtitle, id, isModal) %}
+	{% set translations = {
+		applyFilters: t('common.applyFilters'),
+		clearFilters: t('common.clearFilters'),
+		hideAllSections: t('common.hideAllSections'),
+		showAllSections: t('common.showAllSections'),
+		selectAllFilters: t('common.selectAllFilters'),
+		returnToResults: t('common.returnToResults')
+	} %}
+
 	{% if display %}
 		<div
 			class="ui-checkbox-accordion {% if isModal %}ui-checkbox-accordion--{{ isModal }}{% endif %}"
@@ -70,11 +72,11 @@
 									</svg>
 
 									<span class="ui-checkbox-accordion__section-switch-title">
-										<span class="govuk-visually-hidden">Select to</span>
+										<span class="govuk-visually-hidden">{{ t('checkboxAccordion.accessibility.filterOptions.segmentText1') }}</span>
 										<span class="ui-checkbox-accordion__section-state-text govuk-visually-hidden"></span>
-										<span class="govuk-visually-hidden">the</span>
+										<span class="govuk-visually-hidden">{{ t('checkboxAccordion.accessibility.filterOptions.segmentText2') }}</span>
 										{{ section.title }}
-										<span class="govuk-visually-hidden">filter options</span>
+										<span class="govuk-visually-hidden">{{ t('checkboxAccordion.accessibility.filterOptions.segmentText3') }}</span>
 									</span>
 								</summary>
 
@@ -87,7 +89,7 @@
 										classes: "govuk-checkboxes--small",
 										fieldset: {
 											legend: {
-												html: '<span class="govuk-visually-hidden">' + section.title + ' filter options</span>'
+												html: '<span class="govuk-visually-hidden">' + section.title + ' ' + t('checkboxAccordion.accessibility.filterOptions.segmentText3') + '</span>'
 											}
 										},
 										idPrefix: section.idPrefix,

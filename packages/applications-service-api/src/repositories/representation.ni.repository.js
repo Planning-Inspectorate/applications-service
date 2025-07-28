@@ -1,14 +1,15 @@
 const db = require('../models');
 const { pick } = require('lodash');
 const { Op } = require('sequelize');
-const { mapNISearchTermToQuery } = require('../utils/queries');
+const stopWords = require('../utils/stopwords');
+const stopWordList = stopWords.english;
 
 const getRepresentationById = async (ID) => {
 	return db.Representation.findOne({ where: { ID }, raw: true });
 };
 const getRepresentationsWithCount = async (options = {}) => {
 	let findOptions = pick(options, ['offset', 'limit']);
-	findOptions.order = [['DateRrepReceived', 'ASC'], ['PersonalName']];
+	findOptions.order = [['DateRrepReceived', 'desc'], ['PersonalName']];
 	findOptions.raw = true;
 	findOptions.where = { [Op.and]: [{ CaseReference: options.caseReference }] };
 
@@ -24,13 +25,19 @@ const getRepresentationsWithCount = async (options = {}) => {
 	}
 
 	if (options.searchTerm) {
-		findOptions.where[Op.and].push(
-			mapNISearchTermToQuery(options.searchTerm, [
-				'PersonalName',
-				'RepresentationRedacted',
-				'Representative'
-			])
-		);
+		const terms = options.searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
+		// Ensure that each search term is found in at least one of the three fields
+		terms.forEach((term) => {
+			findOptions.where[Op.and].push({
+				[Op.or]: [
+					{ PersonalName: { [Op.like]: `%${term}%` } },
+					{ Representative: { [Op.like]: `%${term}%` } },
+					{ RepresentationRedacted: { [Op.like]: `%${term}%` } }
+				]
+			});
+		});
 	}
 
 	const { rows, count } = await db.Representation.findAndCountAll(findOptions);

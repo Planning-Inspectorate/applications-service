@@ -2,8 +2,8 @@ import { PO_Cookies } from '../pageObject/Cookies/PO_Cookies';
 const cookies = new PO_Cookies();
 
 beforeEach(() => {
-	cy.clearAllCookies();
-	cy.visit('/');
+	cy.clearCookies();
+	cy.visit(Cypress.env('baseUrl'));
 });
 
 describe('Accept and Decline cookie settings from banner ', () => {

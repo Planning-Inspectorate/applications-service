@@ -1,8 +1,8 @@
 .centred-title-subtitle {
-  @include govuk-responsive-margin(7, "top");
-  text-align: center;
+	@include govuk-responsive-margin(7, 'top');
+	text-align: center;
 
-  &__title {
-    @extend .govuk-heading-m;
-  }
+	&__title {
+		@extend .govuk-heading-m;
+	}
 }

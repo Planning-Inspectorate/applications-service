@@ -219,7 +219,7 @@
 	"complete": {
 		"pageHeading": "Registration complete",
 		"panel1": "Your reference number",
-		"paragraph1": "We have sent a confirmation to: {{-email}}",
+		"paragraph1": "We have received your registration. Make a note of your reference number.",
 		"paragraph2": "We will contact you if we need more information about the comments you provided in the registration form.",
 		"heading1": "Getting involved in the preliminary meeting",
 		"paragraph3": "After the registration period has closed, you will be sent a letter called the rule 6 letter, telling you when and where the preliminary meeting will be held. This is to talk about how the application will be examined. It will also include a draft timetable for the examination of the application.",

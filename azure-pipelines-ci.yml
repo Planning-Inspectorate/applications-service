@@ -8,6 +8,9 @@ pr:
   branches:
     include:
       - '*'
+  paths:
+    exclude:
+      - infrastructure
 
 resources:
   repositories:
@@ -46,6 +49,11 @@ extends:
               nodeVersion: 20
               condition: succeededOrFailed()
               script: npm run lint
+          - template: ../steps/node_script.yml
+            parameters:
+              nodeVersion: 20
+              condition: succeededOrFailed()
+              script: npm run format-check
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 20

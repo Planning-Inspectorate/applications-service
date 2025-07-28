@@ -64,6 +64,11 @@
 				}) }}
 
 				{{ govukTextarea({
+					label: {
+						text: t("examination.enterComment.labelText"),
+						classes: "govuk-label--s",
+						isPageHeading: false
+					},
 					name: id,
 					id: id,
 					value: comment or errors[id].value,

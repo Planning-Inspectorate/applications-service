@@ -15,8 +15,17 @@ const submissionRouter = require('./submissions');
 const subscriptionRoute = require('./subscriptions');
 const adviceRoute = require('./advice');
 const validateMigrationRouter = require('./validate-migration');
+const config = require('../lib/config');
 
 router.get('/', (req, res) => res.sendStatus(204));
+
+router.get('/health', async (req, res) => {
+	res.status(200).send({
+		status: 'OK',
+		uptime: process.uptime(),
+		commit: config.gitSha
+	});
+});
 
 router.use('/api/v1/applications', applicationsRouter);
 router.use('/api/v1/interested-party', interestedPartyRouter);

@@ -1,20 +1,15 @@
-const { getProjectsDocumentsController } = require('./controller');
+const { getProjectsDocumentsController, postProjectsDocumentsController } = require('./controller');
 
 const { mockI18n } = require('../../_mocks/i18n');
-const { searchDocumentsV3 } = require('../../../services/document.service');
-const { getAppData } = require('../../../services/applications.service');
-const {
-	searchExaminationLibraryDocument
-} = require('./_utils/documents/search-examination-library-document');
+const { wrappedSearchDocumentsV3 } = require('../../../lib/application-api-wrapper');
+const { getExaminationLibraryDocument } = require('../../services');
 
-jest.mock('../../../services/applications.service', () => ({
-	getAppData: jest.fn()
+jest.mock('../../../lib/application-api-wrapper', () => ({
+	getProjectData: jest.fn(),
+	wrappedSearchDocumentsV3: jest.fn()
 }));
-jest.mock('../../../services/document.service', () => ({
-	searchDocumentsV3: jest.fn()
-}));
-jest.mock('./_utils/documents/search-examination-library-document', () => ({
-	searchExaminationLibraryDocument: jest.fn()
+jest.mock('../../services', () => ({
+	getExaminationLibraryDocument: jest.fn()
 }));
 
 const commonTranslations_EN = require('../../../locales/en/common.json');
@@ -35,14 +30,19 @@ describe('pages/projects/documents/controller', () => {
 					params: { case_ref: 'mock-case-ref' },
 					i18n
 				};
-				const res = { render: jest.fn(), status: jest.fn(() => res) };
+				const res = {
+					locals: {
+						applicationData: {
+							projectName: 'mock project name',
+							isMaterialChange: false
+						}
+					},
+					render: jest.fn(),
+					status: jest.fn(() => res)
+				};
 
 				beforeEach(async () => {
-					getAppData.mockReturnValue({
-						data: { ProjectName: 'mock project name' },
-						resp_code: 200
-					});
-					searchDocumentsV3.mockReturnValue({
+					wrappedSearchDocumentsV3.mockReturnValue({
 						data: {
 							documents: [
 								{
@@ -79,7 +79,7 @@ describe('pages/projects/documents/controller', () => {
 							currentPage: 1
 						}
 					});
-					searchExaminationLibraryDocument.mockReturnValue({
+					getExaminationLibraryDocument.mockReturnValue({
 						mime: 'application/pdf',
 						path: 'mock/path',
 						size: '224630'
@@ -275,11 +275,20 @@ describe('pages/projects/documents/controller', () => {
 					params: { case_ref: 'mock-case-ref' },
 					i18n
 				};
-				const res = { render: jest.fn(), status: jest.fn(() => res) };
+
+				const res = {
+					locals: {
+						applicationData: {
+							projectName: 'mock project name',
+							isMaterialChange: false
+						}
+					},
+					render: jest.fn(),
+					status: jest.fn(() => res)
+				};
 
 				beforeEach(async () => {
-					getAppData.mockReturnValue({
-						data: { ProjectName: 'mock project name' },
+					wrappedSearchDocumentsV3.mockReturnValue({
 						resp_code: 500
 					});
 					await getProjectsDocumentsController(req, res);
@@ -288,6 +297,30 @@ describe('pages/projects/documents/controller', () => {
 					expect(res.status).toHaveBeenCalledWith(500);
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 				});
+			});
+		});
+	});
+
+	describe('#postProjectsDocumentsController', () => {
+		describe('When submitting selected filters on a documents page', () => {
+			const req = {
+				body: { 'mock-filter-1': 'mock filter value' },
+				params: { case_ref: 'mock-case-ref' }
+			};
+			const res = {
+				redirect: jest.fn()
+			};
+
+			beforeEach(async () => {
+				await postProjectsDocumentsController(req, res);
+			});
+			it('should trigger a redirect', () => {
+				expect(res.redirect).toHaveBeenCalledTimes(1);
+			});
+			it('should redirect back to documents page with correctly constructed query string from the request body', () => {
+				expect(res.redirect).toHaveBeenCalledWith(
+					'/projects/mock-case-ref/documents?mock-filter-1=mock%20filter%20value'
+				);
 			});
 		});
 	});

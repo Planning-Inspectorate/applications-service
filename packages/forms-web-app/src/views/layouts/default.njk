@@ -4,6 +4,14 @@
 
 {%- set initiateScriptsConfig = [{ src: "/public/scripts/index.script.js" }] -%}
 
+{% if featureFlag.generalisedFormSanitisation %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({ src: "/public/scripts/register-service-worker.script.js" }), initiateScriptsConfig) %}
+{% else %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push({ src: "/public/scripts/unregister-service-worker.script.js" }), initiateScriptsConfig) %}
+{% endif %}
+
+{% set publicPath = '/public' %}
+
 {% block pageTitle %}
 	{% if errors %}
 		{% set pageTitle = t('common.error') + ": " + pageTitle %}

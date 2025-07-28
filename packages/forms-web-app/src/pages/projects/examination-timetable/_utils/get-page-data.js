@@ -8,11 +8,11 @@ const {
 	}
 } = require('../../../../routes/config');
 
-const getPageData = (caseRef, projectName, examinationTimetableData, i18n) => {
+const getPageData = (caseRef, projectName, appData, i18n) => {
 	return {
 		activeProjectLink: examinationTimetable.id,
 		caseRef: caseRef,
-		examination: getExamination(examinationTimetableData, i18n),
+		examination: getExamination(appData, i18n),
 		pageTitle: `${i18n.t('examinationTimetable.heading1')} - ${projectName} - ${i18n.t(
 			'global.headerTitle.default'
 		)}`,

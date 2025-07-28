@@ -1,4 +1,3 @@
-const { omit } = require('lodash');
 const {
 	buildApiFiltersFromNIApplications,
 	buildApplicationsFiltersFromBOApplications,
@@ -7,7 +6,9 @@ const {
 	mapBackOfficeApplicationToApi,
 	addMapZoomLevelAndLongLat,
 	mapBackOfficeApplicationsToApi,
-	mapNIApplicationsToApi
+	mapNIApplicationsToApi,
+	mergeFilters,
+	stageNameFromValue
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATIONS_NI_FILTER_COLUMNS,
@@ -18,30 +19,16 @@ const {
 	APPLICATION_API_V1,
 	APPLICATION_DB
 } = require('../../__data__/application');
-const config = require('../../../src/lib/config');
 
 describe('application.mapper', () => {
 	describe('buildApiFiltersFromNIApplications', () => {
-		it('maps applications from NI database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
-			config.featureFlag.allowWelshTranslation = true;
-
+		it('maps applications from NI database to filters in api format', () => {
 			const result = buildApiFiltersFromNIApplications(APPLICATIONS_NI_FILTER_COLUMNS);
 
 			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
 		});
 
-		it('maps applications from NI database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
-			config.featureFlag.allowWelshTranslation = false;
-
-			const result = buildApiFiltersFromNIApplications(APPLICATIONS_NI_FILTER_COLUMNS);
-
-			const filters = APPLICATIONS_FO_FILTERS.map((filter) => omit(filter, ['label_cy']));
-			expect(result).toEqual(filters);
-		});
-
-		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
-			config.featureFlag.allowWelshTranslation = true;
-
+		it('excludes undefined values from filter counts', () => {
 			const result = buildApiFiltersFromNIApplications([
 				{ Stage: 1, Region: 'South East', Proposal: 'BC08 - Leisure' },
 				{ Stage: null, Region: 'North East', Proposal: 'EN01 - Generating Stations' },
@@ -83,49 +70,7 @@ describe('application.mapper', () => {
 			]);
 		});
 
-		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
-			config.featureFlag.allowWelshTranslation = false;
-
-			const result = buildApiFiltersFromNIApplications([
-				{ Stage: 1, Region: 'South East', Proposal: 'BC08 - Leisure' },
-				{ Stage: null, Region: 'North East', Proposal: 'EN01 - Generating Stations' },
-				{ Stage: 2, Region: null, Proposal: 'BC08 - Leisure' },
-				{ Stage: 2, Region: 'South East', Proposal: null }
-			]);
-
-			expect(result).toEqual([
-				{
-					name: 'stage',
-					label: 'Pre-application',
-					value: 'pre_application',
-					count: 1
-				},
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
-				{
-					name: 'region',
-					label: 'South East',
-					value: 'south_east',
-					count: 2
-				},
-				{
-					name: 'region',
-					label: 'North East',
-					value: 'north_east',
-					count: 1
-				},
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					value: 'business_and_commercial',
-					count: 2
-				},
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 1 }
-			]);
-		});
-
-		it('excludes invalid values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
-			config.featureFlag.allowWelshTranslation = true;
-
+		it('excludes invalid values from filter counts', () => {
 			const result = buildApiFiltersFromNIApplications([
 				{ Stage: 1, Region: 'NOT A REGION', Proposal: 'BC08 - Leisure' },
 				{ Stage: null, Region: 'North East', Proposal: 'NOT A PROPOSAL' },
@@ -156,55 +101,14 @@ describe('application.mapper', () => {
 				}
 			]);
 		});
-
-		it('excludes invalid values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
-			config.featureFlag.allowWelshTranslation = false;
-
-			const result = buildApiFiltersFromNIApplications([
-				{ Stage: 1, Region: 'NOT A REGION', Proposal: 'BC08 - Leisure' },
-				{ Stage: null, Region: 'North East', Proposal: 'NOT A PROPOSAL' },
-				{ Stage: 200, Region: null, Proposal: 'BC08 - Leisure' }
-			]);
-
-			expect(result).toEqual([
-				{
-					name: 'stage',
-					label: 'Pre-application',
-					value: 'pre_application',
-					count: 1
-				},
-				{
-					name: 'region',
-					label: 'North East',
-					value: 'north_east',
-					count: 1
-				},
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					value: 'business_and_commercial',
-					count: 2
-				}
-			]);
-		});
 	});
-
 	describe('buildApplicationsFiltersFromBOApplications', () => {
-		it('maps applications from back office database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
-			config.featureFlag.allowWelshTranslation = true;
+		it('maps applications from back office database to filters in api format', () => {
 			const result = buildApplicationsFiltersFromBOApplications(APPLICATIONS_BO_FILTER_COLUMNS);
 			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
 		});
-		it('maps applications from back office database to filters in api format (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
-			config.featureFlag.allowWelshTranslation = false;
-			const result = buildApplicationsFiltersFromBOApplications(APPLICATIONS_BO_FILTER_COLUMNS);
 
-			const filters = APPLICATIONS_FO_FILTERS.map((filter) => omit(filter, ['label_cy']));
-			expect(result).toEqual(filters);
-		});
-		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
-			config.featureFlag.allowWelshTranslation = true;
-
+		it('excludes undefined values from filter counts', () => {
 			const result = buildApplicationsFiltersFromBOApplications([
 				{ stage: 'acceptance', regions: 'south_east', sector: 'EN01 - Generating Stations' },
 				{ stage: null, regions: 'north_east', sector: 'EN01 - Generating Stations' },
@@ -244,47 +148,8 @@ describe('application.mapper', () => {
 				}
 			]);
 		});
-		it('excludes undefined values from filter counts (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
-			config.featureFlag.allowWelshTranslation = false;
 
-			const result = buildApplicationsFiltersFromBOApplications([
-				{ stage: 'acceptance', regions: 'south_east', sector: 'EN01 - Generating Stations' },
-				{ stage: null, regions: 'north_east', sector: 'EN01 - Generating Stations' },
-				{ stage: 'pre_application', regions: null, sector: 'BC08 - Leisure' },
-				{ stage: 'pre_application', regions: 'south_east', sector: null }
-			]);
-			expect(result).toEqual([
-				{
-					name: 'stage',
-					label: 'Pre-application',
-					value: 'pre_application',
-					count: 2
-				},
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 1 },
-				{
-					name: 'region',
-					label: 'South East',
-					value: 'south_east',
-					count: 2
-				},
-				{
-					name: 'region',
-					label: 'North East',
-					value: 'north_east',
-					count: 1
-				},
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					value: 'business_and_commercial',
-					count: 1
-				}
-			]);
-		});
-		it('handles multiple regions in one application correctly (FEATURE_ALLOW_WELSH_TRANSLATION=true)', () => {
-			config.featureFlag.allowWelshTranslation = true;
-
+		it('handles multiple regions in one application correctly', () => {
 			const result = buildApplicationsFiltersFromBOApplications([
 				{
 					stage: 'acceptance',
@@ -347,65 +212,6 @@ describe('application.mapper', () => {
 				}
 			]);
 		});
-		it('handles multiple regions in one application correctly (FEATURE_ALLOW_WELSH_TRANSLATION=false)', () => {
-			config.featureFlag.allowWelshTranslation = false;
-
-			const result = buildApplicationsFiltersFromBOApplications([
-				{
-					stage: 'acceptance',
-					regions: 'south_east,north_west',
-					sector: 'EN01 - Generating Stations'
-				},
-				{ stage: 'pre_application', regions: 'south_east', sector: 'BC08 - Leisure' },
-				{
-					stage: 'pre_application',
-					regions: 'north_east,north_east,wales',
-					sector: 'BC08 - Leisure'
-				},
-				{ stage: 'acceptance', regions: 'south_west', sector: 'EN01 - Generating Stations' }
-			]);
-			expect(result).toEqual([
-				{
-					name: 'stage',
-					label: 'Pre-application',
-					value: 'pre_application',
-					count: 2
-				},
-				{ name: 'stage', label: 'Acceptance', value: 'acceptance', count: 2 },
-				{
-					name: 'region',
-					label: 'South East',
-					value: 'south_east',
-					count: 2
-				},
-				{
-					name: 'region',
-					label: 'North West',
-					value: 'north_west',
-					count: 1
-				},
-				{
-					name: 'region',
-					label: 'North East',
-					value: 'north_east',
-					count: 2
-				},
-				{ name: 'region', label: 'Wales', value: 'wales', count: 1 },
-				{
-					name: 'region',
-					label: 'South West',
-					value: 'south_west',
-					count: 1
-				},
-				{ name: 'sector', label: 'Energy', value: 'energy', count: 2 },
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					value: 'business_and_commercial',
-					count: 2
-				}
-			]);
-		});
 	});
 
 	describe('mapApplicationFiltersToNI', () => {
@@ -431,7 +237,6 @@ describe('application.mapper', () => {
 			expect(mapNIApplicationToApi(APPLICATION_FO)).toEqual(
 				expect.objectContaining({
 					...APPLICATION_API,
-					dateOfDCOAcceptance: null,
 					deadlineForAcceptanceDecision: null,
 					sourceSystem: 'HORIZON'
 				})
@@ -451,7 +256,6 @@ describe('application.mapper', () => {
 					...APPLICATION_API,
 					longLat: ['-0.7123', '53.6123'],
 					mapZoomLevel: 6,
-					dateOfDCOAcceptance: null,
 					deadlineForAcceptanceDecision: null,
 					sourceSystem: 'HORIZON'
 				})
@@ -551,8 +355,13 @@ describe('application.mapper', () => {
 			expect(mapBackOfficeApplicationsToApi([APPLICATION_DB])).toEqual([
 				{
 					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					sourceSystem: 'ODT'
+					sourceSystem: 'ODT',
+					DateOfReOpenRelevantRepresentationClose: undefined,
+					DateOfReOpenRelevantRepresentationStart: undefined,
+					deadlineForAcceptanceDecision: '2023-01-30',
+					deadlineForDecision: null,
+					deadlineForSubmissionOfRecommendation: null,
+					isMaterialChange: undefined
 				}
 			]);
 		});
@@ -598,6 +407,96 @@ describe('application.mapper', () => {
 					]);
 				}
 			);
+		});
+	});
+	describe('mergeFilters', () => {
+		it('Should accept two lists of filters with non-overlapping names and simply concatenate them', () => {
+			const aFilters = [
+				{
+					name: 'name-a',
+					value: 'value',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			const bFilters = [
+				{
+					name: 'name-b',
+					value: 'value',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			expect(mergeFilters(aFilters, bFilters)).toEqual([...aFilters, ...bFilters]);
+		});
+
+		it('Should accept two lists of filters with non-overlapping values and simply concatenate them', () => {
+			const aFilters = [
+				{
+					name: 'name',
+					value: 'value-a',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			const bFilters = [
+				{
+					name: 'name',
+					value: 'value-b',
+					label: 'Label',
+					count: 1,
+					label_cy: 'Label Cy'
+				}
+			];
+
+			expect(mergeFilters(aFilters, bFilters)).toEqual([...aFilters, ...bFilters]);
+		});
+
+		it('Should combine the counts of any items with matching name AND value', () => {
+			const filters = [
+				{
+					name: 'region',
+					value: 'wales',
+					label: 'Wales',
+					count: 1,
+					label_cy: 'Cymru'
+				}
+			];
+
+			expect(mergeFilters(filters, filters)).toEqual([
+				{
+					name: 'region',
+					value: 'wales',
+					label: 'Wales',
+					count: 2,
+					label_cy: 'Cymru'
+				}
+			]);
+		});
+	});
+	describe('stageNameFromValue', () => {
+		it('Should return the correct string stage value for each corresponding integer value', () => {
+			const expectedStageValues = [
+				'draft',
+				'pre_application',
+				'acceptance',
+				'pre_examination',
+				'examination',
+				'recommendation',
+				'decision',
+				'post_decision',
+				'withdrawn'
+			];
+
+			expectedStageValues.forEach((stage, index) => {
+				expect(stageNameFromValue(index)).toEqual(stage);
+			});
 		});
 	});
 });

@@ -3,10 +3,11 @@ const { getPersonalInformationWhichName } = require('./get-name');
 const { getPersonalInformationWhichUrl } = require('./get-url');
 const { getPersonalInformationWhichValue } = require('./get-value');
 
-const getSummaryListItemPersonalInformationWhich = (submissionItem) =>
+const getSummaryListItemPersonalInformationWhich = (i18n, submissionItem) =>
 	getSummaryListItem(
-		getPersonalInformationWhichName(submissionItem),
-		getPersonalInformationWhichValue(submissionItem),
+		i18n,
+		getPersonalInformationWhichName(i18n, submissionItem),
+		getPersonalInformationWhichValue(i18n, submissionItem),
 		getPersonalInformationWhichUrl(submissionItem)
 	);
 

@@ -15,7 +15,6 @@ const buildNotifyClient = () => {
 const sendIPRegistrationConfirmationEmailToIP = async (details) => {
 	try {
 		const { email, projectName, projectNameWelsh, ipName, ipRef, projectEmail } = details;
-
 		await buildNotifyClient()
 			.setTemplateId(
 				config.services.notify.templates.IPRegistrationConfirmationEmailToIP[
@@ -37,76 +36,69 @@ const sendIPRegistrationConfirmationEmailToIP = async (details) => {
 	} catch (e) {
 		logger.error(
 			{ err: e },
-			'Unable to send IP registration confirmation email to interested party.'
+			`Notify service unable to send IP registration confirmation email to interested party ref ${details.ipRef}.`
 		);
 	}
 };
 
-const sendMagicLinkToIP = async (details) => {
+const sendSubmissionNotification = async (details) => {
 	try {
 		await buildNotifyClient()
-			.setTemplateId(config.services.notify.templates.MagicLinkEmail)
+			.setTemplateId(
+				config.services.notify.templates.submissionCompleteEmail[
+					details.project.welshName ? 'cy' : 'en'
+				]
+			)
 			.setDestinationEmailAddress(details.email)
 			.setTemplateVariablesFromObject({
 				'email address': details.email,
-				interested_party_name: details.ipName,
-				ProjectName: details.projectName,
-				DateOfRelevantRepresentationClose: `${details.repCloseDate} at 11:59pm GMT`,
-				'magic link': `${config.services.notify.magicLinkDomain}/interested-party/confirm-your-email?token=${details.token}`,
-				interested_party_number: details.ipRef
+				submission_id: details.submissionId,
+				project_name: details.project.name,
+				project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk',
+				...(details.project.welshName && { project_name_welsh: details.project.welshName })
 			})
-			.setReference(details.ipRef)
+			.setReference(`Submission ${details.submissionId}`)
 			.sendEmail();
 	} catch (e) {
-		logger.error({ err: e }, 'Unable to send magic link email to interested party.');
+		logger.error(
+			{ err: e },
+			`Notify service unable to send submission notification email for submission ID ${details.submissionId}`
+		);
 	}
 };
 
-const sendSubmissionNotification = async (details) => {
-	await buildNotifyClient()
-		.setTemplateId(
-			config.services.notify.templates.submissionCompleteEmail[
-				details.project.welshName ? 'cy' : 'en'
-			]
-		)
-		.setDestinationEmailAddress(details.email)
-		.setTemplateVariablesFromObject({
-			'email address': details.email,
-			submission_id: details.submissionId,
-			project_name: details.project.name,
-			project_email: details.project.email || 'NIEnquiries@planninginspectorate.gov.uk',
-			...(details.project.welshName && { project_name_welsh: details.project.welshName })
-		})
-		.setReference(`Submission ${details.submissionId}`)
-		.sendEmail();
-};
-
 const sendSubscriptionCreateNotification = async (details) => {
-	await buildNotifyClient()
-		.setTemplateId(
-			config.services.notify.templates.subscriptionCreateEmail[
-				details.project.welshName ? 'cy' : 'en'
-			]
-		)
-		.setDestinationEmailAddress(details.email)
-		.setTemplateVariablesFromObject({
-			subscription_url: config.services.notify.subscriptionCreateDomain.concat(
-				'/projects/',
-				details.project.caseReference,
-				'/get-updates/subscribed?subscriptionDetails=',
-				details.subscriptionDetails
-			),
-			project_name: details.project.name,
-			project_email: details.project.email,
-			...(details.project.welshName && { project_name_welsh: details.project.welshName })
-		})
-		.setReference(`Subscription ${details.project.caseReference} ${details.email}`)
-		.sendEmail();
+	try {
+		await buildNotifyClient()
+			.setTemplateId(
+				config.services.notify.templates.subscriptionCreateEmail[
+					details.project.welshName ? 'cy' : 'en'
+				]
+			)
+			.setDestinationEmailAddress(details.email)
+			.setTemplateVariablesFromObject({
+				subscription_url: config.services.notify.subscriptionCreateDomain.concat(
+					'/projects/',
+					details.project.caseReference,
+					'/get-updates/subscribed?subscriptionDetails=',
+					details.subscriptionDetails
+				),
+				project_name: details.project.name,
+				project_email: details.project.email,
+				...(details.project.welshName && { project_name_welsh: details.project.welshName })
+			})
+			.setReference(`Subscription ${details.project.caseReference} ${details.email}`)
+			.sendEmail();
+	} catch (e) {
+		logger.error(
+			{ err: e },
+			`Notify service unable to send subscription create email for case reference ${details.project.caseReference}`
+		);
+	}
 };
 
 module.exports = {
 	sendIPRegistrationConfirmationEmailToIP,
-	sendMagicLinkToIP,
 	sendSubmissionNotification,
 	sendSubscriptionCreateNotification
 };

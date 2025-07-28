@@ -1,5 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
 const { featureFlag } = require('../lib/config');
+const { english: stopWordList } = require('../utils/stopwords');
 
 const getByCaseReference = async (caseReference) => {
 	return prismaClient.project.findUnique({
@@ -13,18 +14,10 @@ const getByCaseReference = async (caseReference) => {
 };
 
 const getAllApplications = async (options = {}) => {
+	const removeWelshCases = !featureFlag.allowWelshCases;
 	const { filters, searchTerm, orderBy, offset, size, excludeNullDateOfSubmission } = options;
-	const where = {
-		AND: [
-			{
-				regions: {
-					not: {
-						contains: 'wales'
-					}
-				}
-			}
-		]
-	};
+	const where =
+		excludeNullDateOfSubmission || searchTerm || filters || removeWelshCases ? { AND: [] } : {};
 
 	if (excludeNullDateOfSubmission) {
 		where['AND'].push({
@@ -38,21 +31,38 @@ const getAllApplications = async (options = {}) => {
 		});
 	}
 
+	if (removeWelshCases) {
+		where['AND'].push({
+			regions: {
+				not: {
+					contains: 'wales'
+				}
+			}
+		});
+	}
+
 	if (searchTerm) {
-		const terms = options.searchTerm.split(' ');
+		const terms = options.searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
 		where['AND'].push({
 			OR: [
-				{ projectName: { contains: searchTerm } },
-				...(featureFlag.allowWelshTranslation
-					? [{ projectNameWelsh: { contains: searchTerm } }]
-					: []),
-				...terms.map((term) => ({
-					OR: [
-						{ applicant: { organisationName: { contains: term } } },
-						{ applicant: { firstName: { contains: term } } },
-						{ applicant: { lastName: { contains: term } } }
-					]
-				}))
+				{ caseReference: { contains: options.searchTerm } },
+				{
+					AND: terms.map((term) => ({
+						projectName: { contains: term }
+					}))
+				},
+				{
+					AND: terms.map((term) => ({
+						projectNameWelsh: { contains: term }
+					}))
+				},
+				{
+					AND: terms.map((term) => ({
+						applicant: { organisationName: { contains: term } }
+					}))
+				}
 			]
 		});
 	}
@@ -63,6 +73,7 @@ const getAllApplications = async (options = {}) => {
 			}))
 		});
 	}
+
 	if (filters?.stage) {
 		where['AND'].push({
 			OR: filters.stage.map((stage) => ({

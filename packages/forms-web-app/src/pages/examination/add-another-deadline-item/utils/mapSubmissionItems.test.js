@@ -2,6 +2,9 @@ const { mapSubmissionItems } = require('./mapSubmissionItems');
 
 const { getExaminationSession } = require('../../_session/examination-session');
 const { filterSubmissionItems } = require('./filter-submission-items');
+const { mockI18n } = require('../../../_mocks/i18n');
+
+const i18n = mockI18n({});
 
 jest.mock('../../_session/examination-session', () => ({
 	getExaminationSession: jest.fn()
@@ -27,14 +30,13 @@ describe('#mapSubmissionItems', () => {
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
 				filterSubmissionItems.mockReturnValue(mockSubmissionItems);
-				result = mapSubmissionItems(mockSession);
+				result = mapSubmissionItems(i18n, mockSession);
 			});
 			it('should return the mapped data', () => {
 				expect(result).toEqual({
 					hasNoSubmissionItems: false,
 					noDeadlineItems: {
-						selectDeadlineURL: 'select-deadline-item',
-						title: 'You have not added a deadline item'
+						selectDeadlineURL: 'select-deadline-item'
 					},
 					submissionItems: [
 						{
@@ -63,14 +65,13 @@ describe('#mapSubmissionItems', () => {
 			beforeEach(() => {
 				getExaminationSession.mockReturnValue({ submissionItems: mockSubmissionItems });
 				filterSubmissionItems.mockReturnValue(mockSubmissionItems);
-				result = mapSubmissionItems(mockSession);
+				result = mapSubmissionItems(i18n, mockSession);
 			});
 			it('should return the mapped data', () => {
 				expect(result).toEqual({
 					hasNoSubmissionItems: false,
 					noDeadlineItems: {
-						selectDeadlineURL: 'select-deadline-item',
-						title: 'You have not added a deadline item'
+						selectDeadlineURL: 'select-deadline-item'
 					},
 					submissionItems: [
 						{

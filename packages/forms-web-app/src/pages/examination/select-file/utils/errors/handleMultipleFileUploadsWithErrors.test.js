@@ -84,7 +84,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 				expect(result).toEqual([
 					'bad-size-file is empty',
 					'bad-mime-type-file must be a JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX or PDF.',
-					'bad-too-bog-file must be smaller than 50mb.'
+					'bad-too-bog-file must be smaller than 50MB.'
 				]);
 			});
 		});
@@ -123,7 +123,7 @@ describe('#handleMultipleFileUploadsWithErrors', () => {
 			});
 
 			it('should return errors', () => {
-				expect(result).toEqual(['bad-too-bog-file must be smaller than 50mb.']);
+				expect(result).toEqual(['bad-too-bog-file must be smaller than 50MB.']);
 			});
 		});
 	});

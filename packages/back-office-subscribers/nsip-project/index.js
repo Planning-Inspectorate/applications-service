@@ -96,5 +96,6 @@ const projectPropertiesFromMessage = [
 	'deadlineForDecision',
 	'jRPeriodEndDate',
 	'extensionToDateRelevantRepresentationsClose',
-	'examinationTimetableId'
+	'examinationTimetableId',
+	'isMaterialChange'
 ];

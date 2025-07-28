@@ -1,5 +1,7 @@
 const { Prisma } = require('@prisma/client');
 const { prismaClient } = require('../lib/prisma');
+const stopWords = require('../utils/stopwords');
+const stopWordList = stopWords.english;
 
 const getFilters = (caseReference) => {
 	const sql = Prisma.sql`
@@ -28,13 +30,37 @@ const getDocuments = async (query) => {
 	};
 
 	if (query.searchTerm) {
+		const terms = query.searchTerm
+			.split(' ')
+			.filter((term) => !stopWordList.includes(term.toLowerCase()));
+
 		whereClause['AND'].push({
 			OR: [
-				{ description: { contains: query.searchTerm } },
-				{ descriptionWelsh: { contains: query.searchTerm } },
-				{ author: { contains: query.searchTerm } },
-				{ authorWelsh: { contains: query.searchTerm } },
-				{ representative: { contains: query.searchTerm } }
+				{
+					AND: terms.map((term) => ({
+						description: { contains: term }
+					}))
+				},
+				{
+					AND: terms.map((term) => ({
+						descriptionWelsh: { contains: term }
+					}))
+				},
+				{
+					AND: terms.map((term) => ({
+						author: { contains: term }
+					}))
+				},
+				{
+					AND: terms.map((term) => ({
+						authorWelsh: { contains: term }
+					}))
+				},
+				{
+					AND: terms.map((term) => ({
+						representative: { contains: term }
+					}))
+				}
 			]
 		});
 	}
@@ -65,6 +91,8 @@ const getDocuments = async (query) => {
 
 	const rows = await prismaClient.document.findMany({
 		where: whereClause,
+		skip: (query?.page - 1) * query?.itemsPerPage || 0,
+		take: query?.itemsPerPage || 25,
 		orderBy: {
 			datePublished: 'desc'
 		}
@@ -82,9 +110,7 @@ const getDocumentsByType = async (queryData) =>
 			caseRef: queryData.caseReference,
 			documentType: queryData.type
 		},
-		orderBy: {
-			datePublished: 'desc'
-		},
+		orderBy: [{ datePublished: 'desc' }, { representative: 'asc' }],
 		take: 1
 	});
 

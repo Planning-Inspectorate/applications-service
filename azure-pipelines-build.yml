@@ -25,7 +25,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.16.1
+      ref: refs/tags/release/3.20.0
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -95,6 +95,8 @@ extends:
               azurecrName: $(azurecrName)
               dockerfilePath: $(Build.SourcesDirectory)/packages/applications-service-api/Dockerfile
               repository: applications-service/applications-service-api
+              buildArgs:
+                - GIT_SHA=$(Build.SourceVersion)
       - name: Build Web
         condition: >-
           and(
@@ -122,6 +124,8 @@ extends:
               azurecrName: $(azurecrName)
               dockerfilePath: $(Build.Repository.LocalPath)/packages/forms-web-app/Dockerfile
               repository: applications-service/forms-web-app
+              buildArgs:
+                - GIT_SHA=$(Build.SourceVersion)
       - name: Build Back Office Subscriber Functions
         condition: >-
           and(

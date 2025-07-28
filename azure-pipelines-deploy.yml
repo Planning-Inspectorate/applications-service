@@ -32,7 +32,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.16.1
+      ref: refs/tags/release/3.21.1
   pipelines:
     - pipeline: build
       source: Applications Service Build
@@ -61,6 +61,7 @@ extends:
           - name: Deploy API
             condition: eq(${{ parameters.deployAPI }}, 'true')
             steps:
+              - checkout: self
               # app name is different in the training env (had to be shorter)
               - bash: |
                   if [[ $ENVIRONMENT == "training" ]]; then
@@ -73,15 +74,22 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
-              - template: ../steps/azure_web_app_deploy.yml
+              - template: ../steps/azure_web_app_deploy_slot.yml
                 parameters:
                   appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
+                  slot: default
+              - template: ../steps/azure_web_app_verify_git_hash.yml
+                parameters:
+                  appName: Application service API
+                  appUrl: https://pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001.azurewebsites.net/health
+                  buildCommit: $(resources.pipeline.build.sourceCommit)
           - name: Deploy Web
             condition: eq(${{ parameters.deployWeb }}, 'true')
             steps:
+              - checkout: self
               # app name is different in the training env (had to be shorter)
               - bash: |
                   if [[ $ENVIRONMENT == "training" ]]; then
@@ -94,16 +102,22 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
-              - template: ../steps/azure_web_app_deploy.yml
+              - template: ../steps/azure_web_app_deploy_slot.yml
                 parameters:
                   appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
                   azurecrName: $(azurecrName)
                   repository: applications-service/forms-web-app
+                  slot: default
+              - template: ../steps/azure_web_app_verify_git_hash.yml
+                parameters:
+                  appName: web
+                  appUrl: $(WEB_URL)/health
+                  buildCommit: $(resources.pipeline.build.sourceCommit)
+                  appRegistrationClientId: $(appRegistrationClientId)
+                  auth_enabled: "true"
+                  env: $(ENVIRONMENT)
           - name: Deploy Back Office Subscriber Functions
-            artifact:
-              name: back-office-subscribers
-              sourcePipeline: Applications Service Build
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
             steps:
               # app name is different in the training env (had to be shorter)
@@ -118,10 +132,14 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
+              - download: build
+                artifact: back-office-subscribers
+                displayName: Download back-office-subscribers
               - template: ../steps/function_app_deploy.yml
                 parameters:
                   appName: pins-func-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   resourceGroup: $(resourceGroup)
+                  workingDirectory: $(Pipeline.Workspace)/build/back-office-subscribers
           - name: Run Database Migration
             condition: eq(${{ parameters.runDbMigrations }}, 'true')
             steps:

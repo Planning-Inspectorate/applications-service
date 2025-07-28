@@ -12,15 +12,16 @@
 	"paragraph5": "{{-link}}.",
 	"paragraph5LinkText": "Gwiriwch y canllaw ar sut gallwch leisio'ch barn",
 	"heading3": "Ynglŷn â'r gwasanaeth cyn-ymgeisio ar gyfer ymgeiswyr",
-	"paragraph6": "Rydym yn cynnig gwasanaeth cyn-ymgeisio i ymgeiswyr sy'n paratoi cais. Mae'r gwasanaeth hwn am ddim.",
+	"paragraph6": "Rydym yn cynnig gwasanaeth cyn-ymgeisio i ymgeiswyr sy'n paratoi cais. Mae hwn yn wasanaeth sy'n seiliedig ar ffi. {{-link}}",
+	"paragraph6LinkText": "Edrychwch ar ein prosbectws cyn ymgeisio i gael rhagor o wybodaeth am y strwythur ffioedd.",
 	"paragraph7": "Mae'n cynnwys:",
 	"listItem6": "rhoi cyngor ar sut i baratoi cais",
 	"listItem7": "gwiriadau cyn-cyflwyno ac adolygu dogfennau drafft",
 	"listItem8": "gwirio bod ymgeiswyr wedi dilyn yr holl gamau sy'n ofynnol",
 	"heading4": "Cyngor i awdurdodau lleol yn ystod y cam cyn-ymgeisio",
-	"paragraph8": "Gallwch ddarllen ein nodiadau cyngor sy'n cynnwys rhagor o wybodaeth am {{-link}}.",
+	"paragraph8": "Gallwch ddarllen ein tudalennau cyngor sy'n cynnwys rhagor o wybodaeth am {{-link}}.",
 	"paragraph8LinkText": "yr hyn y mae angen i chi ei wneud os ydych yn cynrychioli awdurdod lleol",
 	"heading5": "Cyngor manylach",
-	"paragraph9": "Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein nodiadau cyngor i gael rhagor o wybodaeth.",
-	"paragraph10LinkText": "Darllenwch y gyfres lawn o nodiadau cyngor manwl"
+	"paragraph9": "Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein tudalennau cyngor i gael rhagor o wybodaeth.",
+	"paragraph10LinkText": "Darllenwch y gyfres lawn o tudalennau cyngor manwl"
 }

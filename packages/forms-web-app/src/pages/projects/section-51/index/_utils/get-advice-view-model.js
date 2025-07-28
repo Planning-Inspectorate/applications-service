@@ -3,9 +3,11 @@ const {
 	getAdviceLinkTitle,
 	getAdviceDateText,
 	getAdviceTypeLabel,
-	getAdviceName
+	getAdviceName,
+	getProjectName
 } = require('./advice-helpers');
 const { isLangWelsh } = require('../../../../_utils/is-lang-welsh');
+const { formatDate } = require('../../../../../utils/date-utils');
 
 const getAdviceViewModel = (advices, caseRef, i18n) =>
 	advices.map((advice) => ({
@@ -18,9 +20,10 @@ const getAdviceViewModel = (advices, caseRef, i18n) =>
 		adviceGivenBy: getAdviceName(advice, i18n),
 		adviceTypeLabel: getAdviceTypeLabel(advice.enquiryMethod, i18n),
 		date: {
-			date: advice.dateAdviceGiven,
+			date: formatDate(advice.dateAdviceGiven, i18n.language),
 			text: `${getAdviceDateText(advice.enquiryMethod, i18n)}:`
-		}
+		},
+		projectName: getProjectName(advice, i18n)
 	}));
 
 module.exports = {

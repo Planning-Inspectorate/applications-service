@@ -1,0 +1,25 @@
+<p class="govuk-body">	
+    {{ t('projectsIndex.materialChangeProjectStage.examination.paragraph1') }} 
+</p>
+
+{% if rule8Document.path %}
+    <p class="govuk-body">	
+        {{ t('projectsIndex.materialChangeProjectStage.examination.paragraph2') }} 
+    </p>
+{% endif %}
+
+<p class="govuk-body">	
+    <a class="govuk-link" href="/decision-making-process-guide/examination-of-the-application" target="_blank">{{ t('projectsIndex.materialChangeProjectStage.examination.linkText1') }}</a> 
+</p>
+
+<p class="govuk-body">	
+    {{ t('projectsIndex.materialChangeProjectStage.common.paragraph1') }} 
+</p>
+
+<p class="govuk-body">	
+    {{ t('projectsIndex.materialChangeProjectStage.common.paragraph2') }} 
+</p>
+
+<p class="govuk-body">	
+    {{ t('projectsIndex.materialChangeProjectStage.common.paragraph3', { link: '<a class="govuk-link" href="mailto:' + contactEmailAddress + '">' + contactEmailAddress + '</a>'}) | safe}} 
+</p>

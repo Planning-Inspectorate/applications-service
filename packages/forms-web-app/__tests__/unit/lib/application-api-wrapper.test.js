@@ -5,20 +5,12 @@ const {
 	getProjectData,
 	getAllProjectList,
 	searchDocumentList,
-	getRepresentationById
+	getRepresentationById,
+	handler
 } = require('../../../src/lib/application-api-wrapper');
 
 const config = require('../../../src/config');
-
-const mockLogger = jest.fn();
-jest.mock('../../../src/lib/logger', () => ({
-	child: () => ({
-		debug: mockLogger,
-		error: mockLogger,
-		warn: mockLogger,
-		info: mockLogger
-	})
-}));
+const { TestServer } = require('./application-api-wrapper.test-server');
 
 config.applications.url = 'http://fake.url';
 
@@ -26,11 +18,6 @@ describe('lib/application-api-wrapper', () => {
 	beforeEach(() => {
 		fetch.resetMocks();
 		fetch.doMock();
-		jest.useFakeTimers();
-	});
-
-	afterEach(() => {
-		jest.useRealTimers();
 	});
 
 	describe('getAllProjectList', () => {
@@ -91,6 +78,44 @@ describe('lib/application-api-wrapper', () => {
 					'http://fake.url/api/v1/representations/9?caseReference=mock-case-reference'
 				);
 			});
+		});
+	});
+
+	describe('handle timeouts', () => {
+		const server = new TestServer();
+		const appUrl = config.applications.url;
+
+		beforeEach(() => {
+			fetch.dontMock(); // use real implementation to test timeouts etc..
+			config.applications.url = '';
+			return new Promise((resolve) => server.start(resolve));
+		}, 5000);
+
+		afterEach(() => {
+			config.applications.url = appUrl;
+			return new Promise((resolve) => server.stop(resolve));
+		}, 5000);
+
+		it('returns a fetch response', async () => {
+			server.jsonResponse = {
+				hello: 'world'
+			};
+			const res = await handler('test', server.base, 'GET');
+
+			expect(res).toEqual(
+				expect.objectContaining({
+					resp_code: 200
+				})
+			);
+		});
+
+		it('returns error on timeout', async () => {
+			const to = config.applications.timeout;
+			config.applications.timeout = 10; // 10 ms
+			await expect(async () => {
+				await handler('test', server.base + '/timeout?ms=30', 'GET');
+			}).rejects.toThrow('aborted');
+			config.applications.timeout = to; // reset
 		});
 	});
 });

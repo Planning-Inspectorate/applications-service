@@ -35,8 +35,8 @@ describe('pages/have-your-say-guide/registering/_translations/en', () => {
 				"The deadline for registering will be in the developer's advert, or you can check the project page.",
 			heading7: 'More detailed advice',
 			paragraph10:
-				'If you need more detailed advice, you can check our advice notes for more information.',
-			linkText1: 'Read the full set of advice notes (opens in a new tab)'
+				'If you need more detailed advice, you can check our advice pages for more information.',
+			linkText1: 'Read the full set of advice pages (opens in a new tab)'
 		});
 	});
 });

@@ -42,12 +42,11 @@ const createBackOfficeDescription = (
 	eventType,
 	eventLineItemsDescriptions
 ) => {
-	if (!timetableDescription) return '';
+	let description = timetableDescription || '';
+	const eventLineItems = eventLineItemsDescriptions.filter(Boolean);
 
-	let description = timetableDescription;
-	if (eventType === 'Deadline') {
-		const filteredDescriptions = eventLineItemsDescriptions.filter(Boolean);
-		description += ' \n' + filteredDescriptions.map((desc) => `* ${desc}\r\n`).join('');
+	if (eventType === 'Deadline' && eventLineItems.length) {
+		description += ' \n' + eventLineItems.map((desc) => `* ${desc}\r\n`).join('');
 	}
 	return description;
 };

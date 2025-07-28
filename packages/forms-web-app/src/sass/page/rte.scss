@@ -5,6 +5,10 @@
 
 	a {
 		@extend .govuk-link;
+
+		&[href^='mailto:'] {
+			word-break: break-word;
+		}
 	}
 
 	ul,

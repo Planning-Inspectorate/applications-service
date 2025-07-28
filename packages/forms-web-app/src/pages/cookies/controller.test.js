@@ -206,14 +206,9 @@ describe('pages/cookies/controller.js', () => {
 							template: {
 								path: cookiesUpdatedMessagePath,
 								vars: {
-									previousPagePath: expectedPreviousPagePath,
-									successBanner: {
-										heading1: 'Your cookie settings were saved',
-										paragraph1:
-											'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
-										linkText1: 'Go back to the page you were looking at'
-									}
-								}
+									previousPagePath: expectedPreviousPagePath
+								},
+								t: undefined
 							}
 						});
 

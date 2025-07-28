@@ -1,13 +1,12 @@
 import { BasePage } from '../pageObject/basePage';
 const basePage = new BasePage();
 
-before(() => {
-	// Navigate to the page that has the language switcher
-	cy.clearAllCookies();
-	cy.visit('/');
-});
-
 describe('Checks Language Switcher Functionality', () => {
+	before(() => {
+		cy.clearCookies();
+		cy.visit(Cypress.env('baseUrl'));
+	});
+
 	it('should switch to Welsh when the Welsh link is clicked', () => {
 		let language = 'cy';
 

@@ -59,7 +59,7 @@ describe('/api/v1/advice', () => {
 
 				expect(response.status).toEqual(500);
 				expect(response.text).toEqual(
-					'{"code":500,"message":{"errors":["Unexpected internal server error while handling API call"]}}'
+					'{"code":500,"errors":["Unexpected internal server error while handling API call"]}'
 				);
 			});
 		});
@@ -130,7 +130,7 @@ describe('/api/v1/advice', () => {
 
 				expect(response.status).toEqual(500);
 				expect(response.text).toEqual(
-					'{"code":500,"message":{"errors":["Unexpected internal server error while handling API call"]}}'
+					'{"code":500,"errors":["Unexpected internal server error while handling API call"]}'
 				);
 			});
 		});

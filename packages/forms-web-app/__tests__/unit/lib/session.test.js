@@ -47,7 +47,8 @@ describe('lib/session', () => {
 					tls: false
 				},
 				password: 'some_password',
-				legacyMode: true
+				legacyMode: true,
+				pingInterval: 300000
 			});
 			expect(mockCreateClientOnFn).toBeCalledWith('connect', expect.any(Function));
 			expect(mockCreateClientOnFn).toBeCalledWith('ready', expect.any(Function));

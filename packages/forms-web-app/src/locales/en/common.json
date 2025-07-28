@@ -13,6 +13,7 @@
 	"datePublished": "Date published",
 	"dateTo": "Date to",
 	"day": "Day",
+	"email": "Email",
 	"error": "Error",
 	"filter": "Filter",
 	"from": "From",
@@ -28,9 +29,15 @@
 	"no2": "No",
 	"no3": "No",
 	"open": "Open",
+	"paginationShowing": "Showing {{-from}} to {{-to}} of {{-total}} results",
+	"paginationNext": "Next",
+	"paginationPrevious": "Previous",
+	"paginationAccessibilityText1": "",
+	"paginationAccessibilityText2": "set of pages",
 	"partOf": "Part of",
 	"pinsContactDetails": {
-		"csOpeningHours": "Monday to Friday, 9am to 4pm (closed on weekends and bank holidays)"
+		"csOpeningHoursLine1": "Open Monday to Friday: 9am to 4pm.",
+		"csOpeningHoursLine2": "Closed on weekends and bank holidays."
 	},
 	"remove": "Remove",
 	"resultsPerPage": "Results per page",
@@ -46,10 +53,23 @@
 	"showFilters": "Show filters",
 	"startNow": "Start now",
 	"success": "Success",
+	"submit": "Submit",
+	"telephone": "Telephone",
 	"thereIsAProblem": "There is a problem",
 	"to": "To",
 	"uploadAFile": "Upload a file",
 	"uploadFile": "Upload file",
+	"genericSubmittedTemplate": {
+		"pageHeading": "{{ journeyHeading }} complete",
+		"bodyText": "This {{ journeyBody }} has been completed.",
+		"backToProjectLink": "Go back to the project page",
+		"journey": {
+			"registration": {
+				"heading": "Registration",
+				"body": "registration"
+			}
+		}
+	},
 	"validationErrors": {
 		"emailAddress": {
 			"empty": "Enter your email address",
@@ -84,10 +104,9 @@
 			"length": "What you want to tell us must be {{-maxCharacters}} characters or less"
 		}
 	},
+	"warning": "Warning",
 	"year": "Year",
 	"yes1": "Yes",
 	"yes2": "Yes",
-	"yes3": "Yes",
-	"telephone": "Telephone",
-	"email": "Email"
+	"yes3": "Yes"
 }

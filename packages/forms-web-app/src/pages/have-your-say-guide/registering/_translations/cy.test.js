@@ -36,8 +36,8 @@ describe('pages/have-your-say-guide/registering/_translations/cy', () => {
 				'Bydd y dyddiad cau ar gyfer cofrestru yn cael ei nodi yn hysbyseb y datblygwr, neu fe allwch wirio tudalen y prosiect.',
 			heading7: 'Cyngor manylach',
 			paragraph10:
-				'Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein nodiadau cyngor i gael rhagor o wybodaeth.',
-			linkText1: "Darllenwch y gyfres lawn o nodiadau cyngor (sy'n agor mewn tab newydd)"
+				'Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein tudalennau cyngor i gael rhagor o wybodaeth.',
+			linkText1: "Darllenwch y gyfres lawn o tudalennau cyngor (sy'n agor mewn tab newydd)"
 		});
 	});
 });

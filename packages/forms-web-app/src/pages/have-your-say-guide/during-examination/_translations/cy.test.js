@@ -28,8 +28,8 @@ describe('pages/have-your-say-guide/during-examination/_translations/cy', () => 
 				"Gallwch edrych ar y wybodaeth am y prosiect o hyd. Os byddwch yn cyflwyno gwybodaeth yn ystod y cam hwn, nid oes sicrwydd y bydd eich safbwyntiau'n cael eu cynnwys yn yr archwiliad o'r cais. Bydd yr Awdurdod Archwilio'n penderfynu p'un a ellir ystyried eich safbwyntiau.",
 			heading5: 'Cyngor manylach',
 			paragraph10:
-				'Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein nodiadau cyngor i gael rhagor o wybodaeth.',
-			linkText1: "Darllenwch y gyfres lawn o nodiadau cyngor (sy'n agor mewn tab newydd)"
+				'Os oes arnoch angen cyngor manylach, gallwch gyfeirio at ein tudalennau cyngor i gael rhagor o wybodaeth.',
+			linkText1: "Darllenwch y gyfres lawn o tudalennau cyngor (sy'n agor mewn tab newydd)"
 		});
 	});
 });

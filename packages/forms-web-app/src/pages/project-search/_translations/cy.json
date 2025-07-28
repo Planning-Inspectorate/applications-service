@@ -23,5 +23,9 @@
 		"projectName": "Enw'r Prosiect",
 		"promoterName": "Ymgeisydd",
 		"stage": "Cam"
+	},
+	"sidebar": {
+		"relatedContent": "Cynnwys cysylltiedig",
+		"registerOfApplications": "Cofrestr geisiadau"
 	}
 }

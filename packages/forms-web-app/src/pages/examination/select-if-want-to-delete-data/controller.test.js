@@ -3,9 +3,13 @@ const {
 	postMarkDeadlineItemForDelete,
 	postSelectIfYouWantToDeleteData
 } = require('./controller');
-const { setDeadlineItemToDelete } = require('../_session/deadlineItems-session');
 
+const { setDeadlineItemToDelete } = require('../_session/deadlineItems-session');
 const { yesDeleteSubmissionItem } = require('./utils/yes-delete-submission-item');
+const { mockI18n } = require('../../_mocks/i18n');
+const commonTranslationsEN = require('../../../locales/en/common.json');
+
+const i18n = mockI18n({ common: commonTranslationsEN });
 
 jest.mock('../_session/deadlineItems-session', () => ({
 	setDeadlineItemToDelete: jest.fn()
@@ -17,7 +21,7 @@ jest.mock('./utils/yes-delete-submission-item', () => ({
 
 describe('examination/select-if-want-to-delete-data/controller', () => {
 	describe('#getSelectIfYouWantToDeleteData', () => {
-		const req = {};
+		const req = { i18n };
 		const res = {
 			render: jest.fn(),
 			status: jest.fn(() => req)
@@ -42,8 +46,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 									text: 'No',
 									value: 'no'
 								}
-							],
-							pageTitle: 'Are you sure you want to delete data for this item?'
+							]
 						}
 					);
 				});
@@ -86,6 +89,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 			});
 		});
 	});
+
 	describe('#postSelectIfYouWantToDeleteData', () => {
 		describe('When posting to select if you want to delete data', () => {
 			const res = {
@@ -96,9 +100,11 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 			describe('and the user has not selected and option', () => {
 				const mockSession = 'mock session';
 				const req = {
+					i18n,
 					session: mockSession,
 					body: { 'examination-select-if-want-to-delete-data': 'mock item' }
 				};
+
 				beforeEach(() => {
 					req.body = {
 						errors: 'mock error',
@@ -106,6 +112,7 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 					};
 					postSelectIfYouWantToDeleteData(req, res);
 				});
+
 				it('should render the page with errors', () => {
 					expect(res.render).toHaveBeenCalledWith(
 						'examination/select-if-want-to-delete-data/view.njk',
@@ -123,15 +130,16 @@ describe('examination/select-if-want-to-delete-data/controller', () => {
 									text: 'No',
 									value: 'no'
 								}
-							],
-							pageTitle: 'Are you sure you want to delete data for this item?'
+							]
 						}
 					);
 				});
 			});
+
 			describe('and there is an error', () => {
 				const mockSession = 'mock session';
 				const req = {
+					i18n,
 					session: mockSession,
 					body: { 'examination-select-if-want-to-delete-data': 'mock item' }
 				};

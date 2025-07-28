@@ -14,11 +14,13 @@ const {
 	}
 } = require('../../../routes/config');
 
+const view = 'examination/check-submission-item/view.njk';
+
 const getCheckSubmissionItem = (req, res) => {
 	try {
 		const { i18n, query, session } = req;
 
-		res.render('examination/check-submission-item/view.njk', {
+		res.render(view, {
 			...getPageData(),
 			...getBackLinkUrl(query, session),
 			...getSummaryList(i18n, session)

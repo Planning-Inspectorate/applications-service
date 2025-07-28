@@ -144,7 +144,11 @@
 						name: "documents",
 						label: {
 							text: t("common.uploadAFile"),
-							classes: 'govuk-label--m'
+							classes: 'govuk-label--m',
+							attributes: {
+								role: "link",
+								tabindex: "0"
+							}
 						},
 						attributes: { multiple: 'multiple', accept: ".pdf,.doc,.docx,.jpg,.jpeg,.png,.tif,.tiff,.xls,.xlsx", type: "file" },
 						errorMessage: errorMessage
@@ -179,13 +183,15 @@
 							id="file-upload"
 							type="file"
 							multiple
-							accept=".pdf,.png,.doc,.jpg,.jpeg,.tif,.tiff,.xls"
+							accept=".pdf,.png,.doc,.docx,.jpg,.jpeg,.tif,.tiff,.xls,.xlsx"
 							name="documents"
 						>
 
 						<label
 							for="file-upload"
 							class="govuk-button govuk-button--secondary ui-file-upload__label"
+							role="link"
+							tabindex="0"
 						>
 							{{ t("common.selectFiles") }}
 						</label>

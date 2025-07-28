@@ -2,6 +2,9 @@
 
 Handle redirects from the legacy NI site. This project is a [Cloudflare Worker](https://developers.cloudflare.com/workers/).
 
+The pipeline step will generate the `config.generated.{env}.json` with `redirectAllowedCaseReferences` array using the feature flag 
+from Azure `BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES`.
+
 ## Setup
 
 Use npm to install dependencies:

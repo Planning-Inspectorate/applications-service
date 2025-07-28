@@ -6,7 +6,7 @@ const {
 const filterNameID = 'type';
 
 const getFilterViewModel = ({ count, name, name_cy }, langIsWelsh) => {
-	const filterName = titleCase(langIsWelsh ? name_cy : name);
+	const filterName = titleCase(langIsWelsh && name_cy ? name_cy : name);
 	return {
 		checked: false,
 		label: filterName,

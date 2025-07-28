@@ -14,10 +14,12 @@ describe('#getBody', () => {
 			const mockCaseRef = 'mock case ref';
 			const mockQuery = {};
 			let response;
+
 			beforeEach(() => {
 				getDatesFilterPublishedDates.mockReturnValue({});
 				response = getBody(mockCaseRef, mockQuery);
 			});
+
 			it('should return the body with minimal data required', () => {
 				expect(response).toEqual({
 					caseReference: 'mock case ref',
@@ -27,9 +29,15 @@ describe('#getBody', () => {
 				});
 			});
 		});
+
 		describe('and there are filters, a search term, page number and from and to dates', () => {
 			const mockCaseRef = 'mock case ref';
-			const mockQuery = { 'stage-1': 'mock filter', searchTerm: 'mock search term', page: 3 };
+			const mockQuery = {
+				'stage-1': 'mock filter',
+				searchTerm: 'mock search term',
+				page: 3,
+				isMaterialChange: true
+			};
 			let response;
 			beforeEach(() => {
 				getDatesFilterPublishedDates.mockReturnValue({
@@ -55,6 +63,7 @@ describe('#getBody', () => {
 						}
 					],
 					searchTerm: 'mock search term',
+					isMaterialChange: true,
 					page: 3,
 					size: 25
 				});

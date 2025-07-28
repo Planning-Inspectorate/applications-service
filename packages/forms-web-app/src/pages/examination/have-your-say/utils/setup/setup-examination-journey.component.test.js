@@ -1,12 +1,10 @@
 const { setupExaminationJourney } = require('./setup-examination-journey');
-const { getAppData } = require('../../../../../services/applications.service');
+const { getProjectData } = require('../../../../../lib/application-api-wrapper');
 
 const { getTimetables } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('../../../../../services/applications.service', () => ({
-	getAppData: jest.fn()
-}));
 jest.mock('../../../../../lib/application-api-wrapper', () => ({
+	getProjectData: jest.fn(),
 	getTimetables: jest.fn()
 }));
 
@@ -23,7 +21,7 @@ describe('have your say decide exam journey route', () => {
 			const session = { examination: { examinationTimetableId: 'mock id 2' } };
 			const caseRef = 'mock case ref';
 			beforeEach(async () => {
-				getAppData.mockResolvedValue(fixtureApplicationResponse);
+				getProjectData.mockResolvedValue(fixtureApplicationResponse);
 				getTimetables.mockResolvedValue(fixturesTimetableResponse);
 				await setupExaminationJourney(session, caseRef);
 			});
@@ -65,7 +63,7 @@ describe('have your say decide exam journey route', () => {
 
 			beforeEach(async () => {
 				jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
-				getAppData.mockResolvedValue(fixtureApplicationResponse);
+				getProjectData.mockResolvedValue(fixtureApplicationResponse);
 				getTimetables.mockResolvedValue(fixturesTimetableResponse);
 
 				await setupExaminationJourney(session, caseRef);

@@ -157,7 +157,9 @@ const APPLICATION_API = {
 	sourceSystem: 'abc',
 	stage4ExtensionToExamCloseDate: '2023-06-14',
 	stage5ExtensionToDecisionDeadline: '2023-11-14',
-	stage5ExtensionToRecommendationDeadline: '2023-10-14'
+	stage5ExtensionToRecommendationDeadline: '2023-10-14',
+	deadlineForDecision: null,
+	deadlineForSubmissionOfRecommendation: null
 };
 
 const APPLICATIONS_NI_DB = [

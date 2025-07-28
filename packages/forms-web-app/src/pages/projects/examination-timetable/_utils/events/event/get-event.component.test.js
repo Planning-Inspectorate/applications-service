@@ -40,7 +40,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/get-even
 					inputId: 'project-examination-timetable',
 					state: {
 						isSubmissionOpen: true,
-						tag: { classes: 'govuk-tag govuk-tag--blue', text: 'Open' }
+						tag: { classes: 'govuk-tag govuk-tag--yellow', text: 'Open' }
 					},
 					title: `3 January 2023 - mock title`,
 					typeOfEvent: 'Deadline'
@@ -75,7 +75,7 @@ describe('controllers/projects/examination-timetable/utils/events/event/get-even
 					inputId: 'project-examination-timetable',
 					state: {
 						isSubmissionOpen: true,
-						tag: { classes: 'govuk-tag govuk-tag--blue', text: 'Open' }
+						tag: { classes: 'govuk-tag govuk-tag--yellow', text: 'Open' }
 					},
 					title: `3 Ionawr 2023 - mock welsh title`,
 					typeOfEvent: 'Deadline'

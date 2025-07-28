@@ -1,8 +1,5 @@
 const { VIEW } = require('../../../../../lib/views');
-const {
-	postRegistrationData,
-	postCommentsData
-} = require('../../../../../services/registration.service');
+const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
 const config = require('../../../../../config');
 
 const view = 'projects/register/_common/about-project/view.njk';
@@ -55,7 +52,7 @@ const postRegisterAgentAboutProjectController = async (req, res) => {
 				req.session.behalfRegdata.case_ref = req.session.caseRef;
 
 				const registrationData = JSON.stringify(req.session.behalfRegdata);
-				const response = await postRegistrationData(registrationData);
+				const response = await postRegistration(registrationData);
 
 				ipRefNo = response.data;
 				req.session.behalfRegdata.ipRefNo = ipRefNo;
@@ -66,7 +63,7 @@ const postRegisterAgentAboutProjectController = async (req, res) => {
 				mode: req.session.mode
 			});
 
-			if (commentsData) await postCommentsData(ipRefNo, commentsData);
+			if (commentsData) await putComments(ipRefNo, commentsData);
 
 			return res.redirect(`${res.locals.baseUrl}${routes.registrationComplete}`);
 		} else {

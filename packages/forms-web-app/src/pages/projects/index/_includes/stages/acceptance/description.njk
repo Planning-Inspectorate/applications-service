@@ -1,7 +1,11 @@
-{% set decisionDate = applicationData.DateOfDCOSubmission | date('locale', language) | date %}
+{% if backOfficeCase and applicationData.deadlineForAcceptanceDecision %}
 
-{% if applicationData.DateOfDCOSubmission %}
-	<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph1", { date: decisionDate }) }} </p>
+	<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph1", { date: applicationData.deadlineForAcceptanceDecision | date('locale', language) | date }) }} </p>
+
+{% elseif not backOfficeCase and applicationData.DateOfDCOSubmission %}
+
+	<p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph1", { date: applicationData.DateOfDCOSubmission | date('locale', language) | date }) }} </p>
+
 {% endif %}
 
 <p class="govuk-body"> {{ t("projectsIndex.projectStage.acceptance.paragraph2") }} </p>

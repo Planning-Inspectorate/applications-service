@@ -13,6 +13,7 @@ const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getFilters } = require('./_utils/get-filters');
 const { hasRepresentationsAvailable } = require('./_utils/has-representations-available');
 const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
+const { queryStringBuilder } = require('../../../../utils/query-string-builder');
 
 const view = 'projects/representations/index/view.njk';
 
@@ -50,7 +51,7 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			projectName: applicationData.projectName,
 			caseRef: case_ref,
 			allowProjectInformation,
-			representations: getRepresentationsViewModel(representations, case_ref),
+			representations: getRepresentationsViewModel(representations, i18n.language, case_ref),
 			paginationData,
 			pageOptions,
 			searchTerm,
@@ -69,4 +70,22 @@ const getRepresentationsIndexController = async (req, res, next) => {
 	}
 };
 
-module.exports = { getRepresentationsIndexController };
+const postRepresentationsIndexController = async (req, res) => {
+	try {
+		const {
+			body,
+			params: { case_ref }
+		} = req;
+
+		const queryParamsToKeep = Object.keys(body);
+		const queryString = queryStringBuilder(body, queryParamsToKeep);
+		const representationsURL = getRepresentationsURL(case_ref);
+
+		return res.redirect(`${representationsURL}${queryString}`);
+	} catch (e) {
+		logger.error(e);
+		return res.status(500).render('error/unhandled-exception');
+	}
+};
+
+module.exports = { getRepresentationsIndexController, postRepresentationsIndexController };

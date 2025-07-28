@@ -1,16 +1,11 @@
-import { clickYesOrNoButton } from '../support/customCommands/yesNoCheckBox';
-Cypress.Commands.add('clickYesOrNoButton', clickYesOrNoButton);
-
-Cypress.Commands.add('addressFields', () => {
-	cy.get('#line1').type('45');
-	cy.get('#line2').type('Moss Grange');
-	cy.get('#line3').type('Bristol');
-	cy.get('#postcode').type('BS1 4AJ');
-	cy.get('#country').type('UK');
+Cypress.Commands.add('navigateAndSearch', (searchTerm) => {
+	cy.visit(Cypress.env('baseUrl'));
+	cy.get('.ui-search-bar__input').type(searchTerm);
+	cy.get('[data-cy="search-button"]').click();
+	cy.contains(searchTerm).click();
+	cy.get('.govuk-caption-l').contains(searchTerm);
 });
 
-Cypress.Commands.add('continueButton', () => {
-	cy.get('form > button.govuk-button').click();
+Cypress.Commands.add('saveAndContinue', () => {
+	cy.get('[data-cy="button-save-and-continue"]').click();
 });
-
-import 'cypress-file-upload';

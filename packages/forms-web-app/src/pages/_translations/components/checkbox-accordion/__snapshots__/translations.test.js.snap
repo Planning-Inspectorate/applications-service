@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/_translations/components/checkbox-accordion/translations should return the correct English translations 1`] = `
+{
+  "accessibility": {
+    "filterOptions": {
+      "segmentText1": "Select to",
+      "segmentText2": "the",
+      "segmentText3": "filter options",
+    },
+  },
+}
+`;
+
+exports[`pages/_translations/components/checkbox-accordion/translations should return the correct Welsh translations 1`] = `
+{
+  "accessibility": {
+    "filterOptions": {
+      "segmentText1": "Dewiswch i",
+      "segmentText2": "yr",
+      "segmentText3": "opsiynau hidlo",
+    },
+  },
+}
+`;

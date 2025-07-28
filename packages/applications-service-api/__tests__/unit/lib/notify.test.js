@@ -1,10 +1,14 @@
-const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
+const { notifyBuilder, createNotifyClient } = require('@planning-inspectorate/pins-notify');
+const logger = require('../../../src/lib/logger');
 const {
 	sendIPRegistrationConfirmationEmailToIP,
-	sendMagicLinkToIP,
 	sendSubmissionNotification,
 	sendSubscriptionCreateNotification
 } = require('../../../src/lib/notify');
+
+jest.mock('../../../src/lib/logger', () => ({
+	error: jest.fn().mockReturnThis()
+}));
 
 jest.mock('../../../src/lib/config', () => ({
 	services: {
@@ -14,7 +18,6 @@ jest.mock('../../../src/lib/config', () => ({
 					en: 'registration_confirmation_template_id',
 					cy: 'registration_confirmation_cy_template_id'
 				},
-				MagicLinkEmail: 'magic_link_template_id',
 				submissionCompleteEmail: {
 					en: 'submission_complete_template_id',
 					cy: 'submission_complete_cy_template_id'
@@ -25,7 +28,6 @@ jest.mock('../../../src/lib/config', () => ({
 				}
 			},
 			havingYourSayUrl: 'somedomain.example.com/having-your-say-guide',
-			magicLinkDomain: 'somedomain.example.com',
 			subscriptionCreateDomain: 'somedomain.example.com'
 		}
 	},
@@ -133,34 +135,24 @@ describe('notify lib', () => {
 				project_email: 'NIEnquiries@planninginspectorate.gov.uk'
 			});
 		});
-	});
 
-	describe('sendMagicLinkToIP', () => {
-		it('should send an email', async () => {
+		it('should log errors', async () => {
 			const details = {
-				email: 'elvin.ali@planninginspectorate.gov.uk',
-				ipName: 'David White',
+				email: undefined,
 				projectName: 'St James Barton Giant Wind Turbine',
-				repCloseDate: '2024-08-01',
-				ipRef: '30000120'
+				ipName: 'A Person',
+				ipRef: '30000124'
 			};
-			await sendMagicLinkToIP(details);
+			const error = new Error('problem');
 
-			expect(notifyBuilder.reset).toHaveBeenCalled();
-			expect(notifyBuilder.setTemplateId).toHaveBeenCalledWith('magic_link_template_id');
-			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith(
-				'elvin.ali@planninginspectorate.gov.uk'
+			createNotifyClient.createNotifyClient.mockImplementationOnce(error);
+
+			await sendIPRegistrationConfirmationEmailToIP(details);
+
+			expect(logger.error).toHaveBeenCalledWith(
+				{ err: error },
+				'Notify service unable to send IP registration confirmation email to interested party ref 30000124.'
 			);
-			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
-				'email address': details.email,
-				interested_party_name: details.ipName,
-				ProjectName: details.projectName,
-				DateOfRelevantRepresentationClose: `${details.repCloseDate} at 11:59pm GMT`,
-				'magic link': `somedomain.example.com/interested-party/confirm-your-email?token=${details.token}`,
-				interested_party_number: details.ipRef
-			});
-			expect(notifyBuilder.setReference).toHaveBeenCalledWith('30000120');
-			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
 		});
 	});
 
@@ -235,6 +227,27 @@ describe('notify lib', () => {
 				project_email: 'NIEnquiries@planninginspectorate.gov.uk'
 			});
 		});
+
+		it('should log errors', async () => {
+			const details = {
+				email: 'a@example.com',
+				submissionId: 1,
+				project: {
+					name: 'some project',
+					email: 'project@example.com'
+				}
+			};
+			const error = new Error('problem');
+
+			notifyBuilder.setDestinationEmailAddress.mockImplementationOnce(error);
+
+			await sendSubmissionNotification(details);
+
+			expect(logger.error).toHaveBeenCalledWith(
+				{ err: error },
+				'Notify service unable to send submission notification email for submission ID 1'
+			);
+		});
 	});
 
 	describe('sendSubscriptionCreateNotification', () => {
@@ -294,6 +307,29 @@ describe('notify lib', () => {
 				'Subscription BC0110001 a@example.com'
 			);
 			expect(notifyBuilder.sendEmail).toHaveBeenCalledTimes(1);
+		});
+
+		it('should log errors', async () => {
+			const details = {
+				email: 'a@example.com',
+				subscriptionDetails: 'some_encrypted_string',
+				project: {
+					name: 'some project',
+					email: 'project@example.com',
+					caseReference: 'BC0110001'
+				}
+			};
+
+			const error = new Error('problem');
+
+			notifyBuilder.sendEmail.mockImplementationOnce(error);
+
+			await sendSubscriptionCreateNotification(details);
+
+			expect(logger.error).toHaveBeenCalledWith(
+				{ err: error },
+				'Notify service unable to send subscription create email for case reference BC0110001'
+			);
 		});
 	});
 });

@@ -1,9 +1,15 @@
 const { getAllCommentsAndFilesLength } = require('./get-all-comments-and-files-length');
 
-const getSubmittingItemsSubtitle = (session) => {
+const getSubmittingItemsSubtitle = (i18n, session) => {
 	const examinationSubmissionItemsLength = getAllCommentsAndFilesLength(session);
-	const itemText = examinationSubmissionItemsLength === 1 ? 'item' : 'items';
-	return `We are processing ${examinationSubmissionItemsLength} ${itemText}`;
+
+	return getAllCommentsAndFilesLength(session) === 1
+		? i18n.t('examination.processingSubmission.subTitle1', {
+				itemCount: examinationSubmissionItemsLength
+		  })
+		: i18n.t('examination.processingSubmission.subTitle2', {
+				itemCount: examinationSubmissionItemsLength
+		  });
 };
 
 module.exports = { getSubmittingItemsSubtitle };

@@ -6,11 +6,11 @@ const {
 const { mapFilters, mapBackOfficeDocuments } = require('../utils/document.mapper');
 const { documentTypeDictionary } = require('@pins/common/src/constants');
 
-const fetchBackOfficeDocuments = async (filters) => {
+const fetchBackOfficeDocuments = async (filters, isMaterialChange) => {
 	const docs = await getDocuments(filters);
 	return {
 		count: docs.count,
-		data: mapBackOfficeDocuments(docs.rows)
+		data: mapBackOfficeDocuments(docs.rows, isMaterialChange)
 	};
 };
 
@@ -28,9 +28,9 @@ const fetchBackOfficeDocumentsByType = async ({ caseReference, type }) => {
 	};
 };
 
-const fetchBackOfficeDocumentFilters = async (caseReference) => {
+const fetchBackOfficeDocumentFilters = async (caseReference, isMaterialChange) => {
 	const availableFilters = await getFilters(caseReference);
-	return mapFilters(availableFilters);
+	return mapFilters(availableFilters, isMaterialChange);
 };
 
 module.exports = {

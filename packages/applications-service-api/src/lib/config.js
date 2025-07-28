@@ -10,6 +10,7 @@ const path = require('path');
 const { parseCSV } = require('../utils/parse');
 
 module.exports = {
+	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	backOfficeIntegration: {
 		caseReferences: parseCSV(process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES),
 		getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS,
@@ -94,7 +95,6 @@ module.exports = {
 					en: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP,
 					cy: process.env.SRV_NOTIFY_IP_REGISTRATION_CONFIRMATION_EMAIL_TO_IP_WELSH
 				},
-				MagicLinkEmail: process.env.SRV_NOTIFY_MAGIC_LINK_EMAIL,
 				submissionCompleteEmail: {
 					en: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL,
 					cy: process.env.SRV_NOTIFY_SUBMISSION_COMPLETE_EMAIL_WELSH
@@ -105,16 +105,16 @@ module.exports = {
 				}
 			},
 			havingYourSayUrl: `${process.env.APPLICATIONS_WEB_BASE_URL}/having-your-say-guide`,
-			magicLinkDomain: process.env.APPLICATIONS_WEB_BASE_URL,
 			subscriptionCreateDomain: process.env.APPLICATIONS_WEB_BASE_URL
 		},
 		encryption: {
 			algorithm: 'aes-256-ctr',
-			secretKey: process.env.ENCRYPTION_SECRET_KEY || 'x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+K'
+			secretKey: process.env.ENCRYPTION_SECRET_KEY || 'dummy-key-set-before-the-testrun'
 		}
 	},
 	featureFlag: {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
-		allowWelshTranslation: true
+		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	}
 };

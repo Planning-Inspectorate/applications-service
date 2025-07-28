@@ -15,6 +15,7 @@ const {
 	getExaminationOrDecisionCompletedDate
 } = require('./_utils/examination-or-decision-completed-date');
 const { getMapAccessToken } = require('../../_services');
+const { isBackOfficeCaseReference } = require('./_utils/is-backoffice-case-reference');
 
 const view = 'projects/index/view.njk';
 
@@ -40,9 +41,14 @@ const getProjectsIndexController = async (req, res, next) => {
 		} = res;
 		const { caseRef } = applicationData;
 
-		const projectUpdates = await getProjectUpdatesData(caseRef);
-		const rule6Document = await getRule6DocumentType(caseRef);
-		const rule8Document = await getRule8DocumentType(caseRef);
+		const [projectUpdates, rule6Document, rule8Document, applicationDecision, mapAccessToken] =
+			await Promise.all([
+				getProjectUpdatesData(caseRef),
+				getRule6DocumentType(caseRef),
+				getRule8DocumentType(caseRef),
+				getMiscDataByStageName(applicationData.status.text, caseRef),
+				applicationData.longLat ? getMapAccessToken() : Promise.resolve(null)
+			]);
 
 		const preExamSubStages = getPreExaminationSubStage(applicationData, rule6Document);
 		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
@@ -53,9 +59,7 @@ const getProjectsIndexController = async (req, res, next) => {
 			applicationData.dateOfRecommendations,
 			applicationData.stage5ExtensionToDecisionDeadline
 		);
-		const applicationDecision = await getMiscDataByStageName(applicationData.status.text, caseRef);
-
-		const mapAccessToken = applicationData.longLat ? await getMapAccessToken() : null;
+		const backOfficeCase = isBackOfficeCaseReference(caseRef);
 
 		return res.render(view, {
 			...getPageData(i18n, applicationData, projectUpdates),
@@ -65,7 +69,8 @@ const getProjectsIndexController = async (req, res, next) => {
 			rule8Document,
 			recommendationCompletedDate,
 			decisionCompletedDate,
-			mapAccessToken
+			mapAccessToken,
+			backOfficeCase
 		});
 	} catch (error) {
 		logger.error(error);

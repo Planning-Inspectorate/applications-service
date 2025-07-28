@@ -45,13 +45,15 @@ export class PO_Cookies {
 	cookieSettingsSetBanner(bannerMessage) {
 		switch (bannerMessage) {
 			case 'accepted':
-				cy.get('.govuk-cookie-banner__content').contains(
+				cy.contains(
+					'.govuk-cookie-banner__content',
 					'You’ve accepted analytics cookies. You can change your cookie settings at any time.'
 				);
 				break;
 
 			case 'rejected':
-				cy.get('.govuk-cookie-banner__content').contains(
+				cy.contains(
+					'.govuk-cookie-banner__content',
 					'You’ve rejected analytics cookies. You can change your cookie settings at any time.'
 				);
 				break;
@@ -63,9 +65,6 @@ export class PO_Cookies {
 	}
 
 	cookiesUpdatedText() {
-		cy.get('[data-cy="cookies-updated-heading-text"]').should(
-			'have.text',
-			'\n  Your cookie settings were saved\n'
-		);
+		cy.contains('[data-cy="cookies-updated-heading-text"]', 'Your cookie settings were saved');
 	}
 }

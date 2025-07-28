@@ -38,7 +38,8 @@ const configureRedisStore = (session) => {
 			tls: redisConfig.ssl
 		},
 		password: redisConfig.password,
-		legacyMode: true
+		legacyMode: true,
+		pingInterval: 1000 * 60 * 5 // 5 minutes; to stop Azure Redis 10 minutes idle timeout
 	});
 
 	redisClient.on('connect', () => logger.info('Initiating connection to redis server...'));

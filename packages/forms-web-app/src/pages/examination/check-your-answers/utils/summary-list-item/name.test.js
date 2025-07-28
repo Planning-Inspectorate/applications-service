@@ -5,6 +5,10 @@ const {
 	getDeadlineDetailsName
 } = require('../../../_session/deadline');
 const { getSummaryListItem } = require('../../../../../controllers/utils/get-summary-list-item');
+const { mockI18n } = require('../../../../_mocks/i18n');
+const examinationTranslationsEN = require('../../../_translations/en.json');
+
+const i18n = mockI18n({ examination: examinationTranslationsEN });
 
 jest.mock('../../../_session/deadline', () => ({
 	getDeadlineDetailsSubmittingFor: jest.fn(),
@@ -30,7 +34,7 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 			});
 			describe('and deadline submitting for is equal to myself, organisation or agent', () => {
 				it('should throw an error', () => {
-					expect(() => getSummaryListName(req.session)).toThrowError(
+					expect(() => getSummaryListName(i18n, req.session)).toThrowError(
 						'Summary list item name can not be assigned'
 					);
 				});
@@ -39,10 +43,11 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 				let result;
 				beforeEach(() => {
 					getDeadlineDetailsSubmittingFor.mockReturnValue('myself');
-					result = getSummaryListName(req.session);
+					result = getSummaryListName(i18n, req.session);
 				});
 				it('should get the summary list item with the myself title and value', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
+						i18n,
 						'Full name',
 						mockDeadlineNameValue,
 						'your-name?mode=edit'
@@ -56,10 +61,11 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 				let result;
 				beforeEach(() => {
 					getDeadlineDetailsSubmittingFor.mockReturnValue('organisation');
-					result = getSummaryListName(req.session);
+					result = getSummaryListName(i18n, req.session);
 				});
 				it('should get the summary list item with the organisation title and value', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
+						i18n,
 						`Organisation's name`,
 						mockDeadlineNameValue,
 						'your-organisation-name?mode=edit'
@@ -73,10 +79,11 @@ describe('controllers/examination/check-your-answers/utils/summary-list-item/nam
 				let result;
 				beforeEach(() => {
 					getDeadlineDetailsSubmittingFor.mockReturnValue('agent');
-					result = getSummaryListName(req.session);
+					result = getSummaryListName(i18n, req.session);
 				});
 				it('should get the summary list item with the agent title and value', () => {
 					expect(getSummaryListItem).toHaveBeenCalledWith(
+						i18n,
 						'Submitting on behalf of',
 						mockDeadlineNameValue,
 						'name-of-person-or-group?mode=edit'

@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
+
 const { configureSessionStore } = require('./lib/session');
+const { NotFoundError } = require('./lib/errors');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
@@ -31,6 +33,7 @@ const { calcMaxFileSizeLimit } = require('./pages/examination/select-file/utils/
 const { configureCSP } = require('./csp');
 const { nunjucksConfigure } = require('./nunjucks-configure');
 const { configureI18n, i18nRedirect } = require('./i18n');
+const { attachCorrelationId } = require('./middleware/attach-correlation-id');
 
 const app = express();
 
@@ -53,6 +56,9 @@ if (config.server.useSecureSessionCookie) {
 
 const sessionStoreConfig = configureSessionStore(session);
 
+// Attach App Insights correlation id to response header
+app.use(attachCorrelationId);
+
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded(config.applications.urlencoded));
@@ -68,10 +74,17 @@ app.use(removeUnwantedCookiesMiddelware);
 app.use(formSanitisationMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets')));
-app.use('/assets/govuk/all.js', express.static(path.join(govukFrontendRoot, 'govuk', 'all.js')));
-app.use('/sw.script.js', express.static(path.join(__dirname, 'public/scripts/sw.script.js')));
+const staticOptions = {
+	maxAge: config.cacheControl.maxAge
+};
+
+app.use('/robots.txt', express.static(path.join(__dirname, 'robots.txt'), staticOptions));
+app.use('/public', express.static(path.join(__dirname, 'public'), staticOptions));
+app.use('/assets', express.static(path.join(govukFrontendRoot, 'govuk', 'assets'), staticOptions));
+app.use(
+	'/assets/govuk/all.js',
+	express.static(path.join(govukFrontendRoot, 'govuk', 'all.bundle.js'), staticOptions)
+);
 
 // View Engine
 app.set('view engine', 'njk');
@@ -79,6 +92,8 @@ app.set('view engine', 'njk');
 app.use(i18nRedirect);
 
 configureI18n(app);
+
+app.use(addCommonTranslationsMiddleware, addErrorTranslationsMiddleware);
 
 app.use(flashMessageCleanupMiddleware);
 app.use(flashMessageToNunjucks(nunjucksEnv));
@@ -92,8 +107,6 @@ app.use('/', routes);
 // For working with req.subdomains, primarily for cookie control.
 app.set('subdomain offset', config.server.subdomainOffset);
 
-app.use(addCommonTranslationsMiddleware, addErrorTranslationsMiddleware);
-
 // Error handling
 app
 	.use((req, res, next) => {
@@ -102,6 +115,10 @@ app
 	})
 	.use((err, req, res, next) => {
 		logger.error({ err }, 'Unhandled exception');
+
+		if (err instanceof NotFoundError) {
+			return res.status(404).render('error/not-found');
+		}
 
 		res.status(500).render('error/unhandled-exception');
 		next();

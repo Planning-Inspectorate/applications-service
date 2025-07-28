@@ -5,11 +5,13 @@ const { getDocuments } = require('./_utils/documents/getDocuments');
 const { getFilters } = require('./_utils/filters/getFilters');
 const { getPagination, getPaginationUrl } = require('../_utils/pagination/pagination');
 const { searchDocuments } = require('./_utils/documents/searchDocuments');
-const { getApplicationData } = require('../_utils/get-application-data');
 const { isClearAllFiltersDisplayed } = require('./_utils/is-clear-all-filters-displayed');
 const { documentsPerPage } = require('../_utils/pagination/documentsPerPage');
 const { isLangWelsh } = require('../../_utils/is-lang-welsh');
 const { isFiltersDisplayed } = require('./_utils/is-filters-displayed');
+const { queryStringBuilder } = require('../../../utils/query-string-builder');
+const { getProjectsDocumentsURL } = require('./_utils/get-projects-documents-url');
+const { getExaminationLibraryDocument } = require('../../services');
 
 const view = 'projects/documents/view.njk';
 
@@ -18,18 +20,20 @@ const getProjectsDocumentsController = async (req, res) => {
 		const { i18n, query, params } = req;
 		const { case_ref } = params;
 		const { searchTerm } = query;
+		const { locals } = res;
+		const { applicationData } = locals;
+		const { isMaterialChange, projectName } = applicationData;
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
-
-		const { projectName } = await getApplicationData(case_ref, i18n.language);
-
 		const pageFeatureToggles = featureToggles();
-		const pageDataObj = await pageData(case_ref);
+		const pageDataObj = pageData(case_ref);
 
-		const { documents, examinationLibraryDocument, filters, pagination } = await searchDocuments(
-			case_ref,
-			query
-		);
+		const { documents, filters, pagination } = await searchDocuments(case_ref, {
+			...query,
+			isMaterialChange
+		});
+
+		const examinationLibraryDocument = await getExaminationLibraryDocument(case_ref);
 
 		const documentsView = getDocuments(i18n, documents, examinationLibraryDocument);
 		const filteredView = getFilters(i18n, filters, query);
@@ -59,6 +63,25 @@ const getProjectsDocumentsController = async (req, res) => {
 	}
 };
 
+const postProjectsDocumentsController = async (req, res) => {
+	try {
+		const {
+			body,
+			params: { case_ref }
+		} = req;
+
+		const queryParamsToKeep = Object.keys(body);
+		const queryString = queryStringBuilder(body, queryParamsToKeep);
+		const documentsURL = getProjectsDocumentsURL(case_ref);
+
+		return res.redirect(`${documentsURL}${queryString}`);
+	} catch (e) {
+		logger.error(e);
+		return res.status(500).render('error/unhandled-exception');
+	}
+};
+
 module.exports = {
-	getProjectsDocumentsController
+	getProjectsDocumentsController,
+	postProjectsDocumentsController
 };

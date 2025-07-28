@@ -1,7 +1,10 @@
 const express = require('express');
 
 const { getProjectsIndexController } = require('./index/controller');
-const { getProjectsDocumentsController } = require('./documents/controller');
+const {
+	getProjectsDocumentsController,
+	postProjectsDocumentsController
+} = require('./documents/controller');
 const { getProjectsAllUpdatesController } = require('./all-updates/controller');
 const {
 	getProjectsExaminationTimetableController,
@@ -21,6 +24,9 @@ const {
 const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	addCheckboxAccordionTranslationsMiddleware
+} = require('../_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware');
 const { projectsMiddleware } = require('./_middleware/middleware');
 const {
 	addProcessGuideTranslationsMiddleware
@@ -66,10 +72,13 @@ if (featureFlag.allowProjectInformation) {
 projectsRouter.get(
 	projectsDocumentsURL,
 	projectsMiddleware,
+	addCheckboxAccordionTranslationsMiddleware,
 	addCommonTranslationsMiddleware,
 	addProjectsDocumentsTranslationsMiddleware,
 	getProjectsDocumentsController
 );
+
+projectsRouter.post(projectsDocumentsURL, postProjectsDocumentsController);
 
 projectsRouter.get(
 	examinationTimetableURL,

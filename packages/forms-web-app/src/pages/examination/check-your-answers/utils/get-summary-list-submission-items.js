@@ -1,5 +1,7 @@
 const { getSummaryListItemSubmissionItems } = require('./summary-list-item');
 
-const getSummaryListSubmissionItems = (session) => [getSummaryListItemSubmissionItems(session)];
+const getSummaryListSubmissionItems = (i18n, session) => [
+	getSummaryListItemSubmissionItems(i18n, session)
+];
 
 module.exports = { getSummaryListSubmissionItems };

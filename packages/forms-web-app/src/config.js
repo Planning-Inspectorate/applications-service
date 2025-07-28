@@ -6,6 +6,7 @@ const httpPort = Number(process.env.PORT || 3000);
 const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
 
 module.exports = {
+	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	application: {
 		defaultDisplayDateFormat: 'D MMMM YYYY'
 	},
@@ -18,6 +19,9 @@ module.exports = {
 			extended: false,
 			limit: '500kb'
 		}
+	},
+	cacheControl: {
+		maxAge: process.env.CACHE_CONTROL_MAX_AGE || '1d'
 	},
 	db: {
 		session: {
@@ -51,6 +55,7 @@ module.exports = {
 		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
 		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
 		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
+		useGeneralS51BackOffice: process.env.FEATURE_GENERAL_S51_BO === 'true',
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
@@ -58,7 +63,9 @@ module.exports = {
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
 		),
 		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
-		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true'
+		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
+		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
@@ -76,28 +83,40 @@ module.exports = {
 	pinsURL: {
 		index: 'https://infrastructure.planninginspectorate.gov.uk',
 		indexCY: 'https://infrastructure.planninginspectorate.gov.uk/cy/',
-		adviceNotes:
-			'https://infrastructure.planninginspectorate.gov.uk/legislation-and-advice/advice-notes/'
+		advicePages:
+			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes'
 	},
 	govUK: {
 		accessibleDocumentsPolicy:
 			'https://www.gov.uk/search/all?keywords=accessible%20document%20policy',
-		adviceNotes:
+		advicePages:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
+		advicePagesWelsh:
+			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-tudalennau-cyngor',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		crownCopyright:
 			'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
 		customerPrivacyNotice:
 			'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
+		complaintsProcedure:
+			'https://www.gov.uk/government/organisations/planning-inspectorate/about/complaints-procedure',
 		freedomOfInformation: 'https://www.gov.uk/make-a-freedom-of-information-request',
 		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate',
 		dataProtection: 'https://www.gov.uk/data-protection',
 		developmentConsent:
 			'https://www.gov.uk/government/collections/nationally-significant-infrastructure-projects-development-consent',
+		developmentConsentWelsh:
+			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-caniatad-datblygu.cy',
 		developmentConsentAndAdvice:
-			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-development-consent-legislation/nationally-significant-infrastructure-projects-development-consent-legislation',
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation',
+		developmentConsentAndAdviceWelsh:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-development-consent-legislation.cy',
+		preApplicationProspectus:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-2024-pre-application-prospectus',
 		nationalPolicyStatements:
-			'https://www.gov.uk/government/publications/nationally-significant-infrastructure-projects-national-policy-statements/nationally-significant-infrastructure-projects-national-policy-statements',
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-national-policy-statements',
+		nationalPolicyStatementsWelsh:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-national-policy-statements.cy',
 		OGL: 'https://www.nationalarchives.gov.uk/doc/open-government-licence/version/1/open-government-licence.htm',
 		planningGuidance:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-guidance',

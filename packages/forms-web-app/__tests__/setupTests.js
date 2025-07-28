@@ -4,9 +4,17 @@ const fetchMock = require('jest-fetch-mock');
 
 fetchMock.enableMocks();
 
+const clearAllObjValues = (translations) =>
+	Object.keys(translations).reduce((acc, key) => {
+		if (typeof translations[key] === 'object') acc[key] = clearAllObjValues(translations[key]);
+		else acc[key] = '';
+
+		return acc;
+	}, {});
+
 function toHaveSameKeys(a, b) {
-	const aKeys = Object.keys(a).sort();
-	const bKeys = Object.keys(b).sort();
+	const aKeys = clearAllObjValues(a);
+	const bKeys = clearAllObjValues(b);
 
 	return {
 		pass: this.equals(aKeys, bKeys),

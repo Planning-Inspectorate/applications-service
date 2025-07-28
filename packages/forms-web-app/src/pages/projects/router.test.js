@@ -17,6 +17,9 @@ const {
 const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
+const {
+	addCheckboxAccordionTranslationsMiddleware
+} = require('../_translations/components/checkbox-accordion/add-checkbox-accordion-translations-middleware');
 const { projectsMiddleware } = require('./_middleware/middleware');
 const {
 	addProcessGuideTranslationsMiddleware
@@ -81,6 +84,7 @@ describe('pages/projects/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/documents',
 				projectsMiddleware,
+				addCheckboxAccordionTranslationsMiddleware,
 				addCommonTranslationsMiddleware,
 				addProjectsDocumentsTranslationsMiddleware,
 				getProjectsDocumentsController
@@ -108,7 +112,7 @@ describe('pages/projects/router', () => {
 			expect(use).toHaveBeenCalledWith(registerRouter);
 
 			expect(get).toBeCalledTimes(4);
-			expect(post).toBeCalledTimes(1);
+			expect(post).toBeCalledTimes(2);
 			expect(use).toBeCalledTimes(5);
 		});
 	});

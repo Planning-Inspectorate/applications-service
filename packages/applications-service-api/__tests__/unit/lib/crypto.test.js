@@ -1,3 +1,5 @@
+process.env.ENCRYPTION_SECRET_KEY = 'dummy-key-set-before-the-testrun';
+
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
 
 describe('encrypt', () => {
@@ -9,7 +11,7 @@ describe('encrypt', () => {
 
 describe('decrypt', () => {
 	it('should decrypt a value', async () => {
-		const decrypted = decrypt('3e2895fd6c43c5b24626168d6366c07da167af7dd0b337a3');
+		const decrypted = decrypt('7470437bb930c59a3e753e48f9067e825542a622c2e3405d');
 		expect(decrypted).toEqual('30000120');
 	});
 });

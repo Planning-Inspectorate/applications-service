@@ -19,7 +19,7 @@
 	"preExamination": {
 		"heading1": "Cyn-archwilio",
 		"paragraph1": "Penodir Awdurdod Archwilio sy'n cynnwys un neu fwy o arolygwyr. Mae'n rhaid i unrhyw un sydd eisiau lleisio'i farn allu cofrestru yn ystod y cam hwn.",
-		"paragraph2": "Mae'n rhaid i'r ymgeisydd gyhoeddi bod y cais wedi cael ei dderbyn gennym. Bydd yn cynnwys pryd a sut y gall partïon gofrestru i gymryd rhan. Mae'r cyfnod ar gyfer cofrestru'n cael ei osod gan yr ymgeisydd, ond mae'n rhaid iddo beidio â bod yn llai na 28 niwrnod.",
+		"paragraph2": "Mae'n rhaid i'r ymgeisydd gyhoeddi bod y cais wedi cael ei dderbyn gennym. Bydd yn cynnwys pryd a sut y gall partïon gofrestru i gymryd rhan. Mae'r cyfnod ar gyfer cofrestru'n cael ei osod gan yr ymgeisydd, ond mae'n rhaid iddo beidio â bod yn llai na 30 niwrnod.",
 		"paragraph3": "Mae'r cam cyn-archwilio'n cymryd oddeutu 3 mis fel arfer.",
 		"linkText": "Beth sy'n digwydd yn ystod y cam cyn-archwilio."
 	},
@@ -40,7 +40,50 @@
 	},
 	"postDecision": {
 		"heading1": "Beth sy'n digwydd ar ôl i'r penderfyniad gael ei wneud",
-		"paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, mae cyfnod o 6 wythnos pryd y gall pobl herio'r penderfyniad yn yr Uchel Lys. Yr enw ar hyn yw adolygiad barnwrol.",
+		"paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, gellir cyflwyno heriau i'r Uchel Lys. Mae'n rhaid dilyn yr holl weithdrefnau wrth gyflwyno her. Bydd yr Uchel Lys yn penderfynu a oes sail ar gyfer adolygiad barnwrol.",
+		"paragraph2": "Mae'n rhaid i hyn ddigwydd o fewn 6 wythnos.",
 		"linkText": "Yr hyn y gallwch ei wneud ar ôl i'r penderfyniad gael ei wneud."
+	},
+	"materialChange": {
+		"preApplication": {
+			"heading1": "Cyn-ymgeisio",
+			"paragraph1": "Bydd yr ymgeisydd yn cynllunio ei gais i wneud newid i'r Gorchymyn Caniatâd Datblygu (DCO).",
+			"paragraph2": "Bydd yn cynnal ymgynghoriadau ac yn rhoi cyhoeddusrwydd i'r cais arfaethedig. Mae hyn yn cynnwys casglu gwybodaeth am sut gallai'r newidiadau i'r prosiect effeithio ar yr amgylchedd lleol.",
+			"paragraph3": "Mae'n bwysig cymryd rhan ar y cam hwn i ddylanwadu ar y cais cyn i'r ymgeisydd ei anfon at yr Arolygiaeth Gynllunio."
+		},
+		"applicationReceived": {
+			"heading1": "Cais wedi'i dderbyn",
+			"paragraph1": "Byddwn yn cyhoeddi'r cais pan fyddwn yn ei dderbyn."
+		},
+		"applicationPublished": {
+			"heading1": "Cais wedi'i gyhoeddi",
+			"paragraph1": "Bydd yr ymgeisydd yn rhoi gwybod i unrhyw un yr ymgynghorwyd ag ef ac yn rhoi cyhoeddusrwydd i'r ffaith ei fod wedi gwneud cais. Mae'n rhaid i hyn gynnwys sut a phryd y gall partïon gofrestru i gymryd rhan. Mae'r cyfnod ar gyfer cofrestru yn cael ei osod gan yr ymgeisydd ond mae'n rhaid iddo beidio â bod yn llai na 28 niwrnod.",
+			"paragraph2": "Bydd angen i unrhyw un sydd eisiau lleisio'i farn gofrestru yn ystod y cam hwn",
+			"paragraph3": "Ar ôl i'r cyfnod cofrestru gau, bydd yr Ysgrifennydd Gwladol yn adolygu'r cais. Bydd yn penderfynu a oes angen i'r cais gael ei archwilio'n fanwl.",
+			"paragraph4": "Os bydd yr Ysgrifennydd Gwladol yn credu nad oes angen archwiliad, bydd yn gofyn am fwy o wybodaeth cyn gwneud penderfyniad.",
+			"paragraph5": "Os bydd angen archwiliad, bydd yn penodi Corff Archwilio i'w gynnal"
+		},
+		"examination": {
+			"heading1": "Archwiliad",
+			"paragraph1": "Bydd y Corff Archwilio'n gofyn cwestiynau am y newidiadau arfaethedig i'r Gorchymyn Caniatâd Datblygu",
+			"paragraph2": "Gall yr ymgeisydd ac unrhyw un sydd wedi cofrestru i leisio'i farn gymryd rhan a chyflwyno sylwadau erbyn pob dyddiad cau yn yr amserlen. Gallwch fynychu gwrandawiadau a allai gael eu cynnal hefyd.",
+			"paragraph3": "Bydd y cam hwn yn cymryd hyd at 4 mis."
+		},
+		"recommendation": {
+			"heading1": "Argymhelliad",
+			"paragraph1": "Bydd y Corff Archwilio'n ysgrifennu ei adroddiad argymhelliad. Mae'n rhaid i hwn gael ei gwblhau a'i anfon at yr Ysgrifennydd Gwladol perthnasol o fewn 2 fis o ddiwedd y cam archwilio."
+		},
+		"decision": {
+			"heading1": "Penderfyniad",
+			"paragraph1": "Bydd yr Ysgrifennydd Gwladol perthnasol yn gwneud y penderfyniad terfynol.",
+			"paragraph2": "Bydd yn ystyried y sylwadau perthnasol a dderbyniwyd.",
+			"paragraph3": "Os oedd angen archwiliad, bydd y penderfyniad wedi'i seilio ar yr adroddiad argymhelliad",
+			"paragraph4": "Bydd gan yr Ysgrifennydd Gwladol 2 fis i wneud penderfyniad."
+		},
+		"postDecision": {
+			"heading1": "Beth fydd yn digwydd ar ôl i'r penderfyniad gael ei wneud",
+			"paragraph1": "Pan fydd yr Ysgrifennydd Gwladol wedi gwneud penderfyniad, gellir cyflwyno heriau i'r Uchel Lys. Mae'n rhaid dilyn yr holl weithdrefnau wrth gyflwyno her. Bydd yr Uchel Lys yn penderfynu a oes sail ar gyfer adolygiad barnwrol.",
+			"paragraph2": "Mae'n rhaid i hyn ddigwydd o fewn 6 wythnos."
+		}
 	}
 }

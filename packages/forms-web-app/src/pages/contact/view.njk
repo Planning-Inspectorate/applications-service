@@ -36,8 +36,11 @@
       <p class="govuk-body">
         {{ t('contact.paragraph6') }}
         <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
-        <br>
-        {{ t('common.pinsContactDetails.csOpeningHours') }}
+        <p>
+          {{ t('common.pinsContactDetails.csOpeningHoursLine1') }}
+          <br>
+          {{ t('common.pinsContactDetails.csOpeningHoursLine2') }}
+        </p>
       </p>
 
       <p class="govuk-body">
@@ -74,6 +77,26 @@
 
       <p class="govuk-body">
         {{ t('contact.paragraph11') }}
+      </p>
+
+      <h2 class="govuk-heading-m">
+        {{ t('contact.howToComplainHeading1') }}
+      </h2>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph1') }}
+      </p>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph2') }}
+      </p>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}">{{ t('contact.customerContactFormLinkText') }}</a>
+      </p>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph3', { link: '<a class="govuk-link" href="' + govUK.complaintsProcedure + '">' + t('contact.howToComplainParagraph3LinkText') + '</a>' }) | safe  }}
       </p>
 
       <h2 class="govuk-heading-m">

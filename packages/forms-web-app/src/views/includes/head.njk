@@ -1,52 +1,19 @@
 <link href="/public/stylesheets/main.css" media="all" rel="stylesheet" type="text/css">
 
-{% if featureFlag.generalisedFormSanitisation %}
-<script type="module" src="/public/scripts/register-sw.script.js"></script>
-{% else %}
-<script type="module" src="/public/scripts/unregister-sw.script.js"></script>
-{% endif %}
+{% if googleAnalyticsId %}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script {% if cspNonce %}nonce={{ cspNonce }}{% endif %}>
+		window.dataLayer = window.dataLayer || [];
 
-{% if featureFlag.googleTagManager %}
-	{% if googleTagManagerId and cookies.cookie_policy.usage %}
-		<!-- Google Tag Manager -->
-		<script {% if cspNonce %}nonce={{ cspNonce }}{% endif %}>
-			(function (w, d, s, l, i) {
-				w[l] = w[l] || [];
-				w[l].push({
-					'gtm.start':
-						new Date().getTime(), event: 'gtm.js'
-				});
-				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-				j.async = true;
-				j.src =
-					'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-				f.parentNode.insertBefore(j, f);
-			})(window, document, 'script', 'dataLayer', '{{ googleTagManagerId | safe }}');</script>
-		<!-- End Google Tag Manager -->
-	{% endif %}
-{% else %}
-	<script
-		id="gaId"
-		type='text/plain'
-		{% if cspNonce %}nonce={{ cspNonce }}{% endif %}
-	>
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+
+		gtag('js', new Date());
+		gtag('config', '{{ googleAnalyticsId | safe }}');
+
+	</script>
+	<script id="gaId" type='text/plain' {% if cspNonce %}nonce={{ cspNonce }}{% endif %}>
 		{{ googleAnalyticsId }}
 	</script>
-
-	{% if googleAnalyticsId and cookies.cookie_policy.usage %}
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		{# <script data-cy="Google Analytics" async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId | safe }}"></script> #}
-		<script {% if cspNonce %}nonce={{ cspNonce }}{% endif %}>
-			window.dataLayer = window.dataLayer || [];
-
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-
-			gtag('js', new Date());
-
-			gtag('config', '{{ googleAnalyticsId | safe }}');
-		</script>
-	{% endif %}
 {% endif %}

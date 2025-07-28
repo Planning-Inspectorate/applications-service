@@ -1,11 +1,30 @@
+
+{% set enLink  %}
+	{% if global.localeSelectorLinks.en.active %}
+		<span>{{ global.localeSelectorLinks.en.name }}</span>
+	{% else %}
+		<a class="govuk-link" href="{{ global.localeSelectorLinks.en.url }}">{{ global.localeSelectorLinks.en.name }}</a>
+	{% endif %}
+{% endset %}
+
+{% set cyLink  %}
+	{% if global.localeSelectorLinks.cy.active %}
+		<span>{{ global.localeSelectorLinks.cy.name }}</span>
+	{% else %}
+		<a class="govuk-link" href="{{ global.localeSelectorLinks.cy.url }}">{{ global.localeSelectorLinks.cy.name }}</a>
+	{% endif %}
+{% endset %}
+
+
+
 <ul class="locale-selector">
-  {% for locale in global.localeSelectorLinks %}
-    <li class="locale-selector__locale">
-      {% if locale.active %}
-        <span>{{ locale.name }}</span>
-      {% else %}
-        <a class="govuk-link" href="{{ locale.url }}">{{ locale.name }}</a>
-      {% endif %}
-    </li>
-  {% endfor %}
+	<li class="locale-selector__locale">
+		{{ enLink | safe }}
+	</li>
+	<li class="locale-selector__locale">
+		<span class="locale-selector__separator" aria-hidden="true">|</span>
+	</li>
+	<li class="locale-selector__locale">
+		{{ cyLink | safe }}
+	</li>
 </ul>

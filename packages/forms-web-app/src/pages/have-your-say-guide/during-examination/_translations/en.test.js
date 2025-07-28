@@ -28,8 +28,8 @@ describe('pages/have-your-say-guide/during-examination/_translations/en', () => 
 				'You can still look at the project information. If you submit information at this stage there is no guarantee your views will be included in the examination of the application. The Examining Authority will decide on whether your views can be considered.',
 			heading5: 'More detailed advice',
 			paragraph10:
-				'If you need more detailed advice, you can check our advice notes for more information.',
-			linkText1: 'Read the full set of advice notes (opens in a new tab)'
+				'If you need more detailed advice, you can check our advice pages for more information.',
+			linkText1: 'Read the full set of advice pages (opens in a new tab)'
 		});
 	});
 });

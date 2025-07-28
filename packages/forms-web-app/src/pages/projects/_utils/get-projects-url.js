@@ -4,7 +4,9 @@ const { projectsRoute, projectsRouteParam } = require('../config');
 const getProjectsURL = (caseRef = `:${projectsRouteParam}`) => {
 	const originURL = getOriginURL();
 
-	return `${originURL}/${projectsRoute}/${caseRef}`;
+	const formattedCaseRef = decodeURIComponent(caseRef).trim();
+
+	return `${originURL}/${projectsRoute}/${formattedCaseRef}`;
 };
 
 module.exports = { getProjectsURL };

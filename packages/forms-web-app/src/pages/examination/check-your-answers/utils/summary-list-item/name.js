@@ -13,25 +13,31 @@ const {
 const { editQuery } = require('../../../../../controllers/utils/queryMode');
 const { submittingForOptionValues } = require('../../../submitting-for/config');
 
-const getSummaryListItemName = (session) => {
+const getSummaryListItemName = (i18n, session) => {
 	switch (getDeadlineDetailsSubmittingFor(session)) {
 		case submittingForOptionValues[1]:
-			return { name: 'Full name', url: `${nameMyself.route}${editQuery}` };
+			return {
+				name: i18n.t('examination.checkYourAnswers.details.summaryListHeading5.fullName'),
+				url: `${nameMyself.route}${editQuery}`
+			};
 		case submittingForOptionValues[2]:
 			return {
-				name: `Organisation's name`,
+				name: i18n.t('examination.checkYourAnswers.details.summaryListHeading5.orgName'),
 				url: `${nameOrganisation.route}${editQuery}`
 			};
 		case submittingForOptionValues[3]:
-			return { name: 'Submitting on behalf of', url: `${nameAgent.route}${editQuery}` };
+			return {
+				name: i18n.t('examination.checkYourAnswers.details.summaryListHeading5.behalf'),
+				url: `${nameAgent.route}${editQuery}`
+			};
 		default:
 			throw new Error('Summary list item name can not be assigned');
 	}
 };
 
-const getSummaryListName = (session) => {
-	const { name, url } = getSummaryListItemName(session);
-	return getSummaryListItem(name, getDeadlineDetailsName(session), url);
+const getSummaryListName = (i18n, session) => {
+	const { name, url } = getSummaryListItemName(i18n, session);
+	return getSummaryListItem(i18n, name, getDeadlineDetailsName(session), url);
 };
 
 module.exports = { getSummaryListName };

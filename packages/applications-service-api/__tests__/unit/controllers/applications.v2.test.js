@@ -35,8 +35,14 @@ describe('applications v2 controller', () => {
 
 				expect(responseBody).toEqual({
 					...APPLICATION_API_V1,
-					DateOfDCOAcceptance_NonAcceptance: null,
-					sourceSystem: 'ODT'
+					sourceSystem: 'ODT',
+					isMaterialChange: undefined,
+					deadlineForAcceptanceDecision: '2023-01-30',
+					deadlineForSubmissionOfRecommendation: null,
+					deadlineForDecision: null,
+					ProjectNameWelsh: undefined,
+					SummaryWelsh: undefined,
+					ProjectLocationWelsh: undefined
 				});
 			});
 		});

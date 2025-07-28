@@ -7,7 +7,7 @@
   {% set ariaLabel = 'Cookies on %serviceName%' | replace('%serviceName%', serviceName) %}
 
   {% set acceptHtml %}
-    <p>You’ve accepted analytics cookies. You can <a class="govuk-link" href="{{ cookiePagePath }}">change your cookie settings</a> at any time.</p>
+		<p>{{ t('global.cookieBanner.acceptedCookiesText', { link: '<a class="govuk-link" href="' + cookiePagePath + '">' + t('global.cookieBanner.actionCookiesLinkText')  + '</a>' }) | safe }}</p>
   {% endset %}
 
   {{ govukCookieBanner({
@@ -22,7 +22,7 @@
         html: acceptHtml,
         actions: [
           {
-            text: "Hide this message",
+            text: t('global.cookieBanner.hideMessage'),
             type: "submit",
             name: "cookie_banner_accepted",
             value: "hide",
