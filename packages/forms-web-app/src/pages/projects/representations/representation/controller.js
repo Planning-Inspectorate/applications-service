@@ -1,12 +1,14 @@
 const logger = require('../../../../lib/logger');
 const { NotFoundError } = require('../../../../lib/errors');
 const { getRepresentationById } = require('../../../../lib/application-api-wrapper');
-const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getRepresentationViewModel } = require('../index/_utils/get-representations-view-model');
 const {
 	featureFlag: { allowProjectInformation }
 } = require('../../../../config');
 const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
+const {
+	getRegisterOfAdviceBackLinkURL
+} = require('../../../register-of-advice/index/_utils/get-register-of-advice-back-link-url');
 
 const view = 'projects/representations/representation/view.njk';
 
@@ -21,9 +23,11 @@ const getRepresentationController = async (req, res, next) => {
 			throw new NotFoundError(`Representation with ID ${id}`);
 		}
 
+		const backToListUrl = getRegisterOfAdviceBackLinkURL(i18n.language);
+
 		return res.render(view, {
 			representation: getRepresentationViewModel(representation, i18n.language),
-			backToListUrl: getRepresentationsURL(case_ref),
+			backToListUrl,
 			projectName,
 			allowProjectInformation,
 			langIsWelsh: isLangWelsh(i18n.language)
