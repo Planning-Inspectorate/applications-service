@@ -83,7 +83,7 @@ describe('pages/projects/representations/representation/controller', () => {
 						{
 							langIsWelsh: false,
 							allowProjectInformation: true,
-							backToListUrl: '/register-of-advice',
+							backToListUrl: '/projects/EN010009/representations',
 							projectName: 'ABC',
 							representation: {
 								URL: '/projects/:case_ref/representations/2',
@@ -100,18 +100,6 @@ describe('pages/projects/representations/representation/controller', () => {
 						}
 					);
 				});
-
-				//to test the welsh use
-				// 			it('should return the correct template with Welsh backToListUrl', async () => {
-				//     req.i18n.language = 'cy';
-				//     await getRepresentationController(req, res);
-				//     expect(res.render).toHaveBeenCalledWith(
-				//         'projects/representations/representation/view.njk',
-				//         expect.objectContaining({
-				//             backToListUrl: '/register-of-advice?lang=cy'
-				//         })
-				//     );
-				// });
 			});
 		});
 	});

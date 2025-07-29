@@ -1,3 +1,6 @@
+const {
+	getRegisterOfAdviceBackLinkURL
+} = require('../../../register-of-advice/_utils/get-register-of-advice-back-link-url');
 const logger = require('../../../../lib/logger');
 const { getAdviceDetailData } = require('../../../../services/advice.service');
 const { registerOfAdviceCaseRef } = require('../../../register-of-advice/index/config');
@@ -10,16 +13,23 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 		const { case_ref, id } = params;
 
 		const caseRef = case_ref || registerOfAdviceCaseRef;
-
 		const refURL = req.get('Referrer');
-
 		const adviceDetailData = await getAdviceDetailData(id, caseRef);
-
 		const view = getView(path, id);
+
+		const registerOfAdviceBackLink = getRegisterOfAdviceBackLinkURL(i18n.language);
 
 		return res.render(
 			view,
-			await getPageViewModel(refURL, path, case_ref, id, adviceDetailData, i18n)
+			await getPageViewModel(
+				refURL,
+				path,
+				case_ref,
+				id,
+				adviceDetailData,
+				i18n,
+				registerOfAdviceBackLink
+			)
 		);
 	} catch (error) {
 		logger.error(error);

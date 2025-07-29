@@ -29,9 +29,17 @@ const handleAdviceDetails = (adviceDetails, i18n) => {
 	};
 };
 
-const getPageViewModel = async (refURL, path, caseRef, id, adviceDetails, i18n) => ({
+const getPageViewModel = async (
+	refURL,
+	path,
+	caseRef,
+	id,
+	adviceDetails,
+	i18n,
+	registerOfAdviceBackLink
+) => ({
 	activeId: 'section-51',
-	backToListUrl: getBackToListURL(refURL, path, caseRef, id),
+	backToListUrl: registerOfAdviceBackLink || getBackToListURL(refURL, path, caseRef, id),
 	breadcrumbsItems: getBreadcrumbsItems(path, caseRef, id, i18n),
 	...handleAdviceDetails(adviceDetails, i18n)
 });
