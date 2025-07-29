@@ -8,7 +8,7 @@ const {
 const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 const {
 	getRegisterOfAdviceBackLinkURL
-} = require('../../../register-of-advice/index/_utils/get-register-of-advice-back-link-url');
+} = require('../../../register-of-advice/_utils/get-register-of-advice-back-link-url');
 
 const view = 'projects/representations/representation/view.njk';
 
