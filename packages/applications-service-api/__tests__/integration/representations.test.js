@@ -138,6 +138,29 @@ describe('api/v1/representations', () => {
 		// 		});
 		// 	});
 		// });
+		describe('case reference and representation association', () => {
+			it('should return the representation if the case reference matches the project', async () => {
+				mockBORepresentationFindFirst.mockResolvedValue({
+					...REPRESENTATION_BACKOFFICE_DATA,
+					represented: SERVICE_USERS_BACKOFFICE_DATA[0],
+					representative: SERVICE_USERS_BACKOFFICE_DATA[1],
+					caseReference: 'BC0110001'
+				});
+				const response = await request.get('/api/v1/representations/40?caseReference=BC0110001');
+				expect(response.status).toEqual(200);
+			});
+
+			it('should return 404 if the case reference does not match the representation project', async () => {
+				mockBORepresentationFindFirst.mockResolvedValue(null);
+				const response = await request.get('/api/v1/representations/40?caseReference=BC0999999');
+
+				expect(response.status).toEqual(404);
+				expect(response.body).toEqual({
+					code: 404,
+					errors: ['Representation with ID 40 not found']
+				});
+			});
+		});
 	});
 
 	// describe(' GET /api/v1/representations?caseReference={caseReference}', () => {

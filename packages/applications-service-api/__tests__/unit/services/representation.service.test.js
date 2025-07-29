@@ -1,13 +1,13 @@
 /* eslint-disable consistent-return */
 const {
 	getRepresentationsForApplication,
-	getRepresentationById
+	getRepresentationByIdAndCaseRef
 } = require('../../../src/services/representation.service');
 const config = require('../../../src/lib/config');
 const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	getRepresentationsWithCount: getRepresentationsNIRepository,
-	getRepresentationById: getRepresentationByIdNIRepository,
+	getRepresentationByIdAndCaseRef: getRepresentationByIdNIRepository,
 	getFilters: getNIFilters
 } = require('../../../src/repositories/representation.ni.repository');
 const {
@@ -15,7 +15,7 @@ const {
 } = require('../../../src/repositories/document.ni.repository');
 
 const {
-	getRepresentationById: getRepresentationByBORepository,
+	getRepresentationByIdAndCaseRef: getRepresentationByBORepository,
 	getRepresentations: getRepresentationsBORepository,
 	getFilters: getBOFilters
 } = require('../../../src/repositories/representation.backoffice.repository');
@@ -139,44 +139,44 @@ describe('representation.service', () => {
 		});
 		describe('when case reference is back office', () => {
 			it('should call getRepresentationByBORepository with correct params', async () => {
-				await getRepresentationById('1', 'BC010001');
-				expect(getRepresentationByBORepository).toBeCalledWith('1');
+				await getRepresentationByIdAndCaseRef('1', 'BC010001');
+				expect(getRepresentationByBORepository).toBeCalledWith('1', 'BC010001');
 			});
 			it('should return undefined if no representation found', async () => {
 				getRepresentationByBORepository.mockResolvedValue(null);
-				const data = await getRepresentationById('1', 'BC010001');
+				const data = await getRepresentationByIdAndCaseRef('1', 'BC010001');
 				expect(data).toBeUndefined();
 			});
 			it('should call getDocumentsByIdsBORepository with correct params', async () => {
-				await getRepresentationById('1', 'BC010001');
+				await getRepresentationByIdAndCaseRef('1', 'BC010001');
 				expect(getDocumentsByIdsBORepository).toBeCalledWith(
 					REPRESENTATION_BACKOFFICE_DATA.attachmentIds
 				);
 			});
 			it('should return representation', async () => {
-				expect(await getRepresentationById('1', 'BC010001')).toEqual(
+				expect(await getRepresentationByIdAndCaseRef('1', 'BC010001')).toEqual(
 					REPRESENTATION_BACKOFFICE_RESPONSE
 				);
 			});
 		});
 		describe('when case reference is ni', () => {
 			it('should call getRepresentationByIdNIRepository with correct params', async () => {
-				await getRepresentationById('1', 'EN010009');
-				expect(getRepresentationByIdNIRepository).toBeCalledWith('1');
+				await getRepresentationByIdAndCaseRef('1', 'EN010009');
+				expect(getRepresentationByIdNIRepository).toBeCalledWith('1', 'EN010009');
 			});
 			it('return undefined if no representation found', async () => {
 				getRepresentationByIdNIRepository.mockResolvedValue(null);
-				const data = await getRepresentationById('1', 'EN010009');
+				const data = await getRepresentationByIdAndCaseRef('1', 'EN010009');
 				expect(data).toBeUndefined();
 			});
 			it('should call getDocumentsByDataIdNIRepository with correct params', async () => {
-				await getRepresentationById('1', 'EN010009');
+				await getRepresentationByIdAndCaseRef('1', 'EN010009');
 				expect(getDocumentsByDataIdNIRepository).toBeCalledWith(
 					REPRESENTATION_NI_DATA[0]?.Attachments.split(',')
 				);
 			});
 			it('should return mapped representation', async () => {
-				const data = await getRepresentationById('1', 'EN010009');
+				const data = await getRepresentationByIdAndCaseRef('1', 'EN010009');
 				expect(data).toEqual({
 					...REPRESENTATION_NI_DATA[0],
 					attachments: NI_DB_DOCUMENTS.map((doc) => ({
