@@ -51,6 +51,21 @@ const mapApplicationsToCSV = (applications) => {
 		'Date withdrawn': application.DateProjectWithdrawn
 	}));
 
+	// insert blank rows
+	mappedApplications.push({});
+	mappedApplications.push({});
+	// get URL
+	const originPath = 'https://back-office-applications-docs-dev.planninginspectorate.gov.uk';
+	const pathToQualityDataGuide = `${originPath}${encodeURIComponent(
+		'/published-documents/NSIP projects data quality guide.xlsx'
+	)}`;
+	// append link for quality data guide
+	mappedApplications.push({
+		'Project reference':
+			'To view the quality guide for this data paste this url into your browser:',
+		'Grid reference - Northing:': pathToQualityDataGuide
+	});
+
 	return stringify(mappedApplications, {
 		header: true,
 		escape_formulas: true,
