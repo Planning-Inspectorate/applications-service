@@ -3,7 +3,7 @@ const {
 	getAllApplications: getAllBOApplicationsRepository
 } = require('../repositories/project.backoffice.repository');
 const { getAllNIApplications } = require('./application.ni.service');
-const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
+const { mapApplicationsToCSV } = require('../utils/map-applications-to-csv');
 const {
 	getAllMergedApplications,
 	getAllMergedApplicationsDownload
