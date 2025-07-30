@@ -7,7 +7,7 @@ const {
 	getApplication: getApplicationRepository,
 	getAllApplications: getAllApplicationsRepository
 } = require('../../../src/repositories/project.ni.repository');
-const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
+const { mapApplicationsToCSV } = require('../../../src/utils/map-applications-to-csv');
 const {
 	APPLICATION_FO,
 	APPLICATIONS_NI_DB,
@@ -20,7 +20,9 @@ jest.mock('../../../src/repositories/project.ni.repository', () => ({
 	getAllApplications: jest.fn()
 }));
 
-jest.mock('../../../src/utils/map-applications-to-csv', () => jest.fn());
+jest.mock('../../../src/utils/map-applications-to-csv', () => ({
+	mapApplicationsToCSV: jest.fn()
+}));
 
 describe('application.ni.service', () => {
 	describe('getApplication', () => {
