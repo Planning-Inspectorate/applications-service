@@ -19,7 +19,8 @@ const VIEW = {
 			EMAIL_ADDRESS: 'register/myself/email-address',
 			CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
 			DECLARATION: 'register/myself/declaration',
-			REGISTRATION_COMPLETE: 'register/myself/registration-complete'
+			REGISTRATION_COMPLETE: 'register/myself/registration-complete',
+			ALREADY_REGISTERED: 'register/myself/already-registered'
 		},
 		ORGANISATION: {
 			OVER_18: 'register/organisation/are-you-18-over',
@@ -28,7 +29,8 @@ const VIEW = {
 			EMAIL: 'register/organisation/email-address',
 			CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
 			DECLARATION: 'register/organisation/declaration',
-			REGISTRATION_COMPLETE: 'register/organisation/registration-complete'
+			REGISTRATION_COMPLETE: 'register/organisation/registration-complete',
+			ALREADY_REGISTERED: 'register/organisation/already-registered'
 		},
 		AGENT: {
 			REPRESENTEE_NAME: 'register/agent/name-person-representing',
@@ -38,7 +40,8 @@ const VIEW = {
 			ORGANISATION_NAME: 'register/agent/name-of-organisation',
 			CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
 			DECLARATION: 'register/agent/declaration',
-			REGISTRATION_COMPLETE: 'register/agent/registration-complete'
+			REGISTRATION_COMPLETE: 'register/agent/registration-complete',
+			ALREADY_REGISTERED: 'register/agent/already-registered'
 		}
 	},
 	EXAMINATION: {

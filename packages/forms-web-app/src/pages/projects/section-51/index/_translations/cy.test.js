@@ -9,7 +9,8 @@ describe('pages/projects/section-51/index/_translations/cy.json', () => {
 				"Mae dyletswydd statudol, o dan {{-link}}, ynglŷn â chais neu ddarpar gais. Mae hyn yn cynnwys cofnodi enw'r unigolyn a ofynnodd am y cyngor a'r cyngor a roddwyd. Mae'n rhaid i'r wybodaeth hon gael ei chyhoeddi.",
 			paragraph2LinkText1: 'adran 51 Deddf Cynllunio 2008',
 			heading2: 'Chwilio cyngor',
-			paragraph3: "Chwiliwch yn ôl geiriau allweddol neu enw'r unigolyn y rhoddwyd y cyngor iddo.",
+			paragraph3:
+				"Chwiliwch yn ôl geiriau allweddol er enghraifft, log cyngor Ymgeisydd neu enw'r unigolyn y rhoddwyd y cyngor iddo.",
 			phrase1: 'Yn dangos',
 			phrase2: 'i',
 			phrase3: 'o',

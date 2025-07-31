@@ -1,3 +1,76 @@
 {% from "projects/section-51/index/_components/results.njk" import sectionResults %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
-{{ sectionResults(advice, t('section51.readMore')) }}
+{% if featureFlag.displaySpecificAndGeneralAdvice == true %}
+
+	{% set links = [] %}
+
+	{% for sortByLink in sortByLinks %}
+		{% set linkHtml %}
+			{% if sortByLink.link %}
+				{% if sortByLink.sort !== 'none' %}
+					<a autofocus class="govuk-link" href="{{ sortByLink.link }}">{{ sortByLink.name }}</a>
+				{% else %}
+					<a class="govuk-link" href="{{ sortByLink.link }}">{{ sortByLink.name }}</a>
+				{% endif %}
+			{% else %}
+				{{sortByLink.name}}
+			{% endif %}
+		{% endset %}
+
+		{% set links = (links.push(
+			{
+				attributes: {
+				"aria-sort": sortByLink.sort
+			},
+				html: linkHtml
+			}
+		), links) %}
+	{% endfor %}
+
+	{% set advices = [] %}
+
+
+		{% for advice in advice %}
+			{% set enquiryHtml %}
+					<h2 class="ui-results__result-title">
+						<a href="{{ advice.link }}" class="section-results__result-link">
+							<strong>{{ advice.linkTitle }}</strong>
+						</a>
+					</h2>
+
+					<p class="ui-results__result-enquiry">
+						{{ advice.enquiryDetail | truncate(200, true) }}
+
+						{% if advice.enquiryDetail | length > 200 %}
+							<a href="{{ advice.link }}" class="govuk-link" >{{t('registerOfAdvice.readMore')}}</a>
+						{% endif %}
+					</p>
+
+					<p class="govuk-body-s">
+						<strong>{{ advice.adviceTypeLabel }}: </strong>{{ advice.adviceGivenBy}}
+					</p>
+			{% endset %}
+
+			{% set advices = (advices.push([
+				{ html: enquiryHtml },
+				{ html: advice.projectName,
+					classes: "govuk-body-s govuk-!-width-one-quarter"
+				},
+				{ html: advice.date.date,
+					classes: "govuk-body-s govuk-!-width-one-quarter"
+				}
+			]), advices) %}
+		{% endfor %}
+
+	{{ govukTable({
+		classes: "pins-modded-sort-by-table",
+		head: links,
+		rows: advices
+	}) }}
+
+{% else %}
+
+	{{ sectionResults(advice, t('section51.readMore')) }}
+
+{% endif %}

@@ -44,6 +44,7 @@ services:
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
       FEATURE_APPLICATION_INSIGHTS: 'false'
       FEATURE_ALLOW_WELSH_CASES: 'true'
+      FEATURE_REGISTER_OF_ADVICE: 'true'
       FILE_UPLOADS_PATH: /opt/app/uploads
       LOGGER_LEVEL: debug
       MYSQL_USERNAME: pins
@@ -104,6 +105,7 @@ services:
       FEATURE_ENABLE_GENERALISED_FORM_SANITISATION: 'true'
       FEATURE_GENERAL_S51_BO: 'true'
       FEATURE_PROJECT_INFORMATION: 'true'
+      FEATURE_REGISTER_OF_ADVICE: 'true'
       FILE_UPLOAD_DEBUG: 'false'
       FILE_UPLOAD_MAX_FILE_SIZE_BYTES: 15000000
       FILE_UPLOAD_TMP_PATH: /tmp
@@ -173,6 +175,7 @@ services:
     image: mcr.microsoft.com/azure-sql-edge:latest
     container_name: mssql
     cap_add: [ 'SYS_PTRACE' ]
+    user: root
     environment:
       - 'ACCEPT_EULA=1'
       - 'MSSQL_SA_PASSWORD=dbPASSw0_rd'

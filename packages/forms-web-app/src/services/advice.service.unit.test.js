@@ -27,7 +27,7 @@ describe('./advice.service', () => {
 			it('should call the wrapped searchAdviceDocuments', () => {
 				expect(handler).toHaveBeenCalledWith(
 					'searchAdviceDocuments',
-					'/api/v1/advice?caseReference=mock+case+ref&searchTerm=mock+search+term&size=10&page=1',
+					'/api/v1/advice?caseReference=mock+case+ref&searchTerm=mock+search+term&size=10&page=1&sort=',
 					'GET',
 					{}
 				);

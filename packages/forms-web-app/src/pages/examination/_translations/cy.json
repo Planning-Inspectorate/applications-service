@@ -82,6 +82,7 @@
 		"listItem11": "nodweddion corfforol",
 		"listItem12": "bywyd rhywiol",
 		"listItem13": "cyfeiriadedd rhywiol",
+		"labelText": "Eich sylwadau",
 		"errorMessage1": "Nodwch sylw",
 		"errorMessage2": "Mae'n rhaid i'ch sylw gynnwys 65,234 o nodau neu lai"
 	},
@@ -207,7 +208,7 @@
 		"paragraph1": "Mae angen i'ch ffeiliau fod yn:",
 		"listItem1": "PDF, PNG, DOC, DOCX, JPG, JPEG, TIF, TIFF, XLS neu XSLX",
 		"listItem2": "dogfen unigol nad yw wedi'i chywasgu fel ffeil sip",
-		"listItem3": "llai na {{-maxFileSizeInMb}}mb",
+		"listItem3": "llai na {{-maxFileSizeInMb}}MB",
 		"insetText1": "Ni allwch gyflwyno'r un ffeil ynglŷn â nifer o eitemau terfyn amser.",
 		"hintText1": "Ni ddylech ddefnyddio iaith hiliol, ymfflamychol na difrïol, na chynnwys gwybodaeth bersonol (a elwir yn wybodaeth categori arbennig hefyd) amdanoch chi'ch hun neu bobl eraill yn eich sylwadau.",
 		"summaryText1": "Enghreifftiau o wybodaeth bersonol",
@@ -231,7 +232,7 @@
 		"errorMessage1": "Dewiswch ffeil",
 		"errorMessage2": "Mae {{-fileToUploadName}} yn wag",
 		"errorMessage3": "Mae'n rhaid i'r ffeil {{-fileToUploadName}} a ddewisir fod yn JPG, BMP, PNG, TIF, TIFF, DOC, JPEG, XLS, XSLX neu PDF.",
-		"errorMessage4": "Mae'n rhaid i {{-fileToUploadName}} fod yn llai na {{-size}}mb.",
+		"errorMessage4": "Mae'n rhaid i {{-fileToUploadName}} fod yn llai na {{-size}}MB.",
 		"errorMessage5": "Gallwch ddewis cyfanswm o {{-limit}} o ffeiliau yn unig fesul cyflwyniad"
 	},
 	"selectIfWantToDeleteData": {

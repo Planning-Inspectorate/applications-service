@@ -30,6 +30,9 @@ const {
 	postRegisterDeclarationController
 } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getRegisterAlreadyRegisteredController
+} = require('../_common/already-registered/controller');
 
 const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
@@ -50,9 +53,13 @@ const {
 const {
 	getRegisterMyselfCompleteURL
 } = require('./complete/_utils/get-register-myself-complete-url');
+const {
+	getRegisterMyselfAlreadyRegisteredURL
+} = require('./already-registered/_utils/get-register-myself-already-registered-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
+const { noCache } = require('../_middleware/no-cache');
 
 const { rules: fullNameValidationRules } = require('../../../../validators/shared/full-name');
 const { rules: areYou18ValidationRules } = require('../../../../validators/shared/are-you-18-over');
@@ -76,6 +83,7 @@ const registerMyselfDeclarationURL = getRegisterMyselfDeclarationURL();
 const registerMyselfCompleteURL = getRegisterMyselfCompleteURL();
 const registerMyselfAboutProjectURL = getRegisterMyselfAboutProjectURL();
 const registerMyselfCheckAnswersURL = getRegisterMyselfCheckAnswersURL();
+const registerMyselfAlreadyRegisteredURL = getRegisterMyselfAlreadyRegisteredURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -155,6 +163,7 @@ registerMyselfRouter.get(
 
 registerMyselfRouter.get(
 	registerMyselfDeclarationURL,
+	noCache,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
@@ -168,6 +177,12 @@ registerMyselfRouter.get(
 	registerMyselfCompleteURL,
 	registerMiddleware,
 	getRegisterCompleteController
+);
+
+registerMyselfRouter.get(
+	registerMyselfAlreadyRegisteredURL,
+	registerMiddleware,
+	getRegisterAlreadyRegisteredController
 );
 
 module.exports = { registerMyselfRouter };

@@ -6,6 +6,7 @@ const { handler } = require('../../../lib/application-api-wrapper');
 const { mockI18n } = require('../../_mocks/i18n');
 const commonTranslations_EN = require('../../../locales/en/common.json');
 const section51Translations_EN = require('../../projects/section-51/_translations/en.json');
+const registerOfAdviceTranslations_EN = require('./_translations/en.json');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	handler: jest.fn()
@@ -19,7 +20,8 @@ describe('pages/register-of-advice/index/controller', () => {
 					query: {
 						searchTerm: '',
 						page: '',
-						itemsPerPage: ''
+						itemsPerPage: '',
+						sortBy: ''
 					}
 				};
 				const res = { render: jest.fn() };
@@ -46,11 +48,13 @@ describe('pages/register-of-advice/index/controller', () => {
 						query: {
 							searchTerm: '',
 							page: '',
-							itemsPerPage: ''
+							itemsPerPage: '',
+							sortBy: ''
 						},
 						i18n: mockI18n({
 							common: commonTranslations_EN,
-							section51: section51Translations_EN
+							section51: section51Translations_EN,
+							registerOfAdvice: registerOfAdviceTranslations_EN
 						})
 					};
 					const res = { render: jest.fn() };
@@ -98,12 +102,29 @@ describe('pages/register-of-advice/index/controller', () => {
 							queryUrl: '',
 							registerOfAdviceIndexURL: '/register-of-advice',
 							resultsPerPage: {
-								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50', size: 50 },
-								oneHundred: { active: false, link: '?searchTerm=&itemsPerPage=100', size: 100 },
-								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25', size: 25 }
+								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50&sortBy=', size: 50 },
+								oneHundred: {
+									active: false,
+									link: '?searchTerm=&itemsPerPage=100&sortBy=',
+									size: 100
+								},
+								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25&sortBy=', size: 25 }
 							},
 							searchTerm: '',
-							isWelsh: false
+							isWelsh: false,
+							sortByLinks: [
+								{
+									name: 'Enquiry'
+								},
+								{
+									name: 'Project name'
+								},
+								{
+									link: '?searchTerm=&page=1&itemsPerPage=&sortBy=%2BadviceDate',
+									name: 'Date advice given',
+									sort: 'none'
+								}
+							]
 						});
 					});
 				});
@@ -116,11 +137,13 @@ describe('pages/register-of-advice/index/controller', () => {
 						query: {
 							searchTerm: '',
 							page: '',
-							itemsPerPage: ''
+							itemsPerPage: '',
+							sortBy: ''
 						},
 						i18n: mockI18n({
 							common: commonTranslations_EN,
-							section51: section51Translations_EN
+							section51: section51Translations_EN,
+							registerOfAdvice: registerOfAdviceTranslations_EN
 						})
 					};
 					const res = { render: jest.fn() };
@@ -167,12 +190,29 @@ describe('pages/register-of-advice/index/controller', () => {
 							queryUrl: '',
 							registerOfAdviceIndexURL: '/register-of-advice',
 							resultsPerPage: {
-								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50', size: 50 },
-								oneHundred: { active: false, link: '?searchTerm=&itemsPerPage=100', size: 100 },
-								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25', size: 25 }
+								fifty: { active: false, link: '?searchTerm=&itemsPerPage=50&sortBy=', size: 50 },
+								oneHundred: {
+									active: false,
+									link: '?searchTerm=&itemsPerPage=100&sortBy=',
+									size: 100
+								},
+								twentyFive: { active: true, link: '?searchTerm=&itemsPerPage=25&sortBy=', size: 25 }
 							},
 							searchTerm: '',
-							isWelsh: false
+							isWelsh: false,
+							sortByLinks: [
+								{
+									name: 'Enquiry'
+								},
+								{
+									name: 'Project name'
+								},
+								{
+									link: '?searchTerm=&page=1&itemsPerPage=&sortBy=%2BadviceDate',
+									name: 'Date advice given',
+									sort: 'none'
+								}
+							]
 						});
 					});
 				});

@@ -32,7 +32,7 @@ describe('pages/process-guide/pre-examination/_translations/cy', () => {
 			paragraph3: 'Bydd yr Awdurdod Archwilio yn:',
 			paragraph4: "Mae'n rhaid i chi gofrestru yn ystod y cam cyn-archwilio i leisio'ch barn.",
 			paragraph5:
-				'Bydd y cyfnod cofrestru ar gyfer pob prosiect ar agor am 28 niwrnod o leiaf i roi amser i chi gofrestru. Bydd y dyddiad cau ar gyfer cofrestru yn cael ei nodi yn hysbyseb yr ymgeisydd, neu fe allwch wirio tudalen y prosiect ar y wefan hon. Gallwch wneud hyn trwy glicio ar y ddolen Pob prosiect ar frig y dudalen hon a chwilio am y prosiect.',
+				'Bydd y cyfnod cofrestru ar gyfer pob prosiect ar agor am 30 niwrnod o leiaf i roi amser i chi gofrestru. Bydd y dyddiad cau ar gyfer cofrestru yn cael ei nodi yn hysbyseb yr ymgeisydd, neu fe allwch wirio tudalen y prosiect ar y wefan hon. Gallwch wneud hyn trwy glicio ar y ddolen Pob prosiect ar frig y dudalen hon a chwilio am y prosiect.',
 			paragraph6:
 				"Mae canllaw ar wahân ar gael sy'n cynnwys rhagor o wybodaeth am gamau'r broses ar gyfer {{-link}}.",
 			paragraph6LinkText:

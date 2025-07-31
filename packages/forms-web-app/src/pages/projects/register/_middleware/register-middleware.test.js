@@ -15,7 +15,8 @@ describe('#registerMiddleware', () => {
 				}
 			};
 			const res = {
-				locals: {}
+				locals: {},
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
 			expect(next).toHaveBeenCalled();
@@ -33,10 +34,13 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
+			});
 		});
 		it('registerMiddleware - no case_ref in params', () => {
 			const next = jest.fn();
@@ -50,10 +54,13 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
+			});
 		});
 		it('registerMiddleware - no caseRef in session', () => {
 			const next = jest.fn();
@@ -68,10 +75,13 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
+			});
 		});
 		it('registerMiddleware - no caseRef in session', () => {
 			const next = jest.fn();
@@ -87,10 +97,13 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				render: jest.fn()
+				render: jest.fn(),
+				get: jest.fn().mockReturnValue('app-insights-correlation-id')
 			};
 			registerMiddleware(req, res, next);
-			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
+			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
+				correlationId: 'app-insights-correlation-id'
+			});
 		});
 	});
 });

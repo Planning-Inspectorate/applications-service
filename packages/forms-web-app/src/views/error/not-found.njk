@@ -17,7 +17,13 @@
       <p class="govuk-body">
         {{ t('errors.pageNotFound.paragraph3') }}
       </p>
-      
+
+			{% if correlationId %}
+				<p class="govuk-body">
+					{{ t('errors.common.errorId') }}:	{{ correlationId }}
+				</p>
+			{% endif %}
+
       {% include "error/_includes/contact-details.njk" %}
     </div>
   </div>

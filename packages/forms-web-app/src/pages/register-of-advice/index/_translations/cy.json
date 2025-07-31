@@ -1,11 +1,18 @@
 {
 	"pageHeading": "Cofrestr gyngor",
 	"paragraph1": "Mae’r rhestr hon yn gofnod o gyngor cyffredinol a roddwyd gan yr Arolygiaeth Gynllunio. Rydym yn cyhoeddi hyn i gydymffurfio â Deddf Cynllunio 2008.",
-	"paragraph2": "Gellir gweld cyngor penodol i brosiect ar dudalen y prosiect perthnasol.",
+	"paragraph2": "Mae’r rhestr hon yn gofnod o gyngor a roddwyd gan yr Arolygiaeth Gynllunio. Rydym yn cyhoeddi hyn i gydymffurfio â Deddf Cynllunio 2008.",
+	"paragraph3": "Gellir gweld cyngor penodol i brosiect ar dudalen y prosiect perthnasol.",
 	"viewAllProjectsLink": "Gweld pob prosiect",
 	"searchHeading": "Chwilio cyngor",
 	"searchInstruction": "Chwiliwch yn ôl geiriau allweddol neu enw’r unigolyn y rhoddwyd y cyngor iddo.",
+	"searchButtonText": "Chwilio",
 	"noResultsParagraph1": "Ni ddaethpwyd o hyd i unrhyw gyngor sy’n cyfateb i’ch term chwilio.",
 	"noResultsParagraph2": "A hoffech chi glirio’ch chwiliad i weld yr holl gyngor sydd ar gael yn lle hynny?",
-	"noResultsClearLink": "Clirio chwiliad"
+	"noResultsClearLink": "Clirio chwiliad",
+	"resultsTableHeading1": "Ymholiad",
+	"resultsTableHeading2": "Enw'r prosiect",
+	"resultsTableHeading3": "Y dyddiad y rhoddwyd y cyngor",
+	"readMore": "Darllen mwy",
+	"general": "Cyngor Cyffredinol Adran 51"
 }

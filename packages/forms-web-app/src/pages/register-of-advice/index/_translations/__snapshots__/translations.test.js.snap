@@ -2,12 +2,19 @@
 
 exports[`pages/register-of-advice/_translations should return the correct English register-of-advice translations 1`] = `
 {
+  "general": "General Section 51 Advice",
   "noResultsClearLink": "Clear search",
   "noResultsParagraph1": "No advice was found matching your search term.",
   "noResultsParagraph2": "Would you like to clear your search to view all available advice instead?",
   "pageHeading": "Register of advice",
   "paragraph1": "This list is a record of general advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.",
-  "paragraph2": "Project specific advice can be viewed on the relevant project page.",
+  "paragraph2": "This list is a record of advice provided by the Planning Inspectorate. We publish this to comply with the 2008 Planning Act.",
+  "paragraph3": "Project specific advice can be viewed on the relevant project page.",
+  "readMore": "Read more",
+  "resultsTableHeading1": "Enquiry",
+  "resultsTableHeading2": "Project name",
+  "resultsTableHeading3": "Date advice given",
+  "searchButtonText": "Search",
   "searchHeading": "Search advice",
   "searchInstruction": "Search by key words or the name of person the advice was given to.",
   "viewAllProjectsLink": "View all projects",
@@ -16,12 +23,19 @@ exports[`pages/register-of-advice/_translations should return the correct Englis
 
 exports[`pages/register-of-advice/_translations should return the correct Welsh register-of-advice translations 1`] = `
 {
+  "general": "Cyngor Cyffredinol Adran 51",
   "noResultsClearLink": "Clirio chwiliad",
   "noResultsParagraph1": "Ni ddaethpwyd o hyd i unrhyw gyngor sy’n cyfateb i’ch term chwilio.",
   "noResultsParagraph2": "A hoffech chi glirio’ch chwiliad i weld yr holl gyngor sydd ar gael yn lle hynny?",
   "pageHeading": "Cofrestr gyngor",
   "paragraph1": "Mae’r rhestr hon yn gofnod o gyngor cyffredinol a roddwyd gan yr Arolygiaeth Gynllunio. Rydym yn cyhoeddi hyn i gydymffurfio â Deddf Cynllunio 2008.",
-  "paragraph2": "Gellir gweld cyngor penodol i brosiect ar dudalen y prosiect perthnasol.",
+  "paragraph2": "Mae’r rhestr hon yn gofnod o gyngor a roddwyd gan yr Arolygiaeth Gynllunio. Rydym yn cyhoeddi hyn i gydymffurfio â Deddf Cynllunio 2008.",
+  "paragraph3": "Gellir gweld cyngor penodol i brosiect ar dudalen y prosiect perthnasol.",
+  "readMore": "Darllen mwy",
+  "resultsTableHeading1": "Ymholiad",
+  "resultsTableHeading2": "Enw'r prosiect",
+  "resultsTableHeading3": "Y dyddiad y rhoddwyd y cyngor",
+  "searchButtonText": "Chwilio",
   "searchHeading": "Chwilio cyngor",
   "searchInstruction": "Chwiliwch yn ôl geiriau allweddol neu enw’r unigolyn y rhoddwyd y cyngor iddo.",
   "viewAllProjectsLink": "Gweld pob prosiect",

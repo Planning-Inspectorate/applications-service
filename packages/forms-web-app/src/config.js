@@ -64,7 +64,8 @@ module.exports = {
 		),
 		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
 		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
-		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true'
+		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	},
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
@@ -90,6 +91,8 @@ module.exports = {
 			'https://www.gov.uk/search/all?keywords=accessible%20document%20policy',
 		advicePages:
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
+		advicePagesWelsh:
+			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-tudalennau-cyngor',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		crownCopyright:
 			'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',

@@ -1,7 +1,11 @@
 const { featureFlag } = require('../../../config');
 
 const registerOfAdviceIndexRoute = '';
-const registerOfAdviceCaseRef = featureFlag.useGeneralS51BackOffice ? 'GS5110001' : 'General';
+const generalS51CaseRefNI = 'General';
+const generalS51CaseRefCBOS = 'GS5110001';
+const registerOfAdviceCaseRef = featureFlag.useGeneralS51BackOffice
+	? generalS51CaseRefCBOS
+	: generalS51CaseRefNI;
 const registerOfAdviceI18nNamespace = 'registerOfAdvice';
 
 module.exports = {
