@@ -19,7 +19,9 @@ const generateRepresentationPDF = (submissionId, submissionRepresentation, fileN
 
 const uploadSubmissionFileToBlobStorage = async (file) => {
 	const blobGuid = uuid.v4();
-	const path = `${blobGuid}/${file.originalName}`;
+	//to avoid issues with the blob storage urls not handling special characters, we use a fixed blob name to mitigate that,
+	//The file name is saved separately in the metadata and the blob name is only used programmatically to retrieve/copy the file.
+	const path = `${blobGuid}/1`;
 
 	logger.info(`Uploading file to blob storage at path ${path}`);
 	await upload(file.buffer, file.mimeType, path);
