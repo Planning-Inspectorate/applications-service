@@ -8,7 +8,7 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 servers:
-  - url: '/'
+  - url: http://localhost:3000
 
 paths:
   '/':
@@ -540,6 +540,36 @@ paths:
                 $ref: '#/components/schemas/DocumentV3ResponseBody'
         '400':
           description: Request body validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  '/api/v3/documents/short-link/{docRef}':
+    get:
+      summary: Returns document link
+      description: Returns document link
+      tags:
+        - Documents
+      parameters:
+          - in: path
+            name: docRef
+            example: 'TR040009-00001'
+            required: true
+            schema:
+              type: string
+            description: Full document reference
+      responses:
+        '200':
+          description: Successfully returns the document URI
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: No document found for given reference
+        '400':
+          description: Validation error
           content:
             application/json:
               schema:
