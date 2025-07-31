@@ -39,9 +39,8 @@ async function createProjectWithServiceUsers(data) {
 			data: {
 				...projectData,
 				applicant: {
-					create: {
-						serviceUserId: applicantId,
-						...applicantData
+					connect: {
+						serviceUserId: applicantId
 					}
 				}
 			}
@@ -91,21 +90,13 @@ async function createRepresentationWithServiceUsers(data) {
 			data: {
 				...representationData,
 				represented: {
-					create: {
-						serviceUserId: represented.representedId,
-						firstName: represented.firstName,
-						lastName: represented.lastName,
-						organisationName: represented.organisationName,
-						caseReference: representationData.caseReference
+					connect: {
+						serviceUserId: represented.representedId
 					}
 				},
 				representative: {
-					create: {
-						serviceUserId: representative.representativeId,
-						firstName: representative.firstName,
-						lastName: representative.lastName,
-						organisationName: representative.organisationName,
-						caseReference: representationData.caseReference
+					connect: {
+						serviceUserId: representative.representativeId
 					}
 				}
 			}
