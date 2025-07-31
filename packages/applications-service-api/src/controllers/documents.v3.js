@@ -7,7 +7,8 @@ const {
 const {
 	fetchBackOfficeDocuments,
 	fetchBackOfficeDocumentFilters,
-	fetchBackOfficeDocumentsByType
+	fetchBackOfficeDocumentsByType,
+	fetchBackOfficeDocumentByDocRef
 } = require('../services/document.backoffice.service');
 const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 
@@ -78,8 +79,20 @@ const getDocumentByCaseReference = async (req, res) => {
 	return res.status(StatusCodes.OK).send(response);
 };
 
+const getDocumentLinkByDocumentReference = async (req, res) => {
+	const { docRef } = req.params;
+	const [document] = await fetchBackOfficeDocumentByDocRef(docRef);
+
+	if (!document || !document.path) {
+		return res.status(StatusCodes.NOT_FOUND).send('Document not found');
+	}
+
+	res.status(StatusCodes.OK).send(document.path);
+};
+
 module.exports = {
 	getNIDocuments,
 	getBackOfficeDocuments,
-	getDocumentByCaseReference
+	getDocumentByCaseReference,
+	getDocumentLinkByDocumentReference
 };
