@@ -6,6 +6,8 @@ const { isProduction } = config;
 const prodUrl = config.backOfficeIntegration.blobStorage.prodBlobStoreDocsURL;
 const testUrl = config.backOfficeIntegration.blobStorage.testBlobStoreDocsURL;
 
+const qualityGuideFilename = 'NSIP projects data quality guide.xlsx';
+
 const formatIfDate = (potentialDate) =>
 	moment(potentialDate).isValid() ? moment(potentialDate).format('YYYY-MM-DD') : potentialDate;
 
@@ -61,7 +63,7 @@ const mapApplicationsToCSV = (applications) => {
 	// get URL
 	const originPath = isProduction ? prodUrl : testUrl;
 	const pathToQualityDataGuide = `${originPath}published-documents/${encodeURIComponent(
-		'NSIP projects data quality guide.xlsx'
+		qualityGuideFilename
 	)}`;
 	// append link for quality data guide
 	mappedApplications.push({
