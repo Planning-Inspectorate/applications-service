@@ -563,9 +563,13 @@ paths:
         '200':
           description: Successfully returns the document URI
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                type: object
+                properties:
+                  path:
+                    type: string
+                    example:  'https://example.com/myDoc.pdf'
         '404':
           description: No document found for given reference
         '400':
