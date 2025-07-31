@@ -279,7 +279,7 @@ describe('documentsV3 controller', () => {
 
 			expect(fetchBackOfficeDocumentByDocRef).toHaveBeenCalledWith(docRef);
 			expect(res._getStatusCode()).toBe(StatusCodes.OK);
-			expect(res._getData()).toBe(mockPath);
+			expect(JSON.parse(res._getData())).toEqual({ path: mockPath });
 		});
 
 		it('returns 404 if no document is found', async () => {

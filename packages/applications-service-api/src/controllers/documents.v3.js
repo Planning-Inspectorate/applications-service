@@ -87,7 +87,7 @@ const getDocumentLinkByDocumentReference = async (req, res) => {
 		return res.status(StatusCodes.NOT_FOUND).send('Document not found');
 	}
 
-	res.status(StatusCodes.OK).send(document.path);
+	res.status(StatusCodes.OK).json({ path: document.path });
 };
 
 module.exports = {
