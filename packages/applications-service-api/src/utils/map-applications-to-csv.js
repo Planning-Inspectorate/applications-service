@@ -1,6 +1,10 @@
 const { stringify } = require('csv-stringify/sync');
 const moment = require('moment');
 const { stageNameFromValue } = require('./application.mapper');
+const config = require('../lib/config');
+const { isProduction } = config;
+const prodUrl = config.backOfficeIntegration.blobStorage.prodBlobStoreDocsURL;
+const testUrl = config.backOfficeIntegration.blobStorage.testBlobStoreDocsURL;
 
 const formatIfDate = (potentialDate) =>
 	moment(potentialDate).isValid() ? moment(potentialDate).format('YYYY-MM-DD') : potentialDate;
@@ -55,9 +59,9 @@ const mapApplicationsToCSV = (applications) => {
 	mappedApplications.push({});
 	mappedApplications.push({});
 	// get URL
-	const originPath = 'https://back-office-applications-docs-dev.planninginspectorate.gov.uk';
-	const pathToQualityDataGuide = `${originPath}${encodeURIComponent(
-		'/published-documents/NSIP projects data quality guide.xlsx'
+	const originPath = isProduction ? prodUrl : testUrl;
+	const pathToQualityDataGuide = `${originPath}published-documents/${encodeURIComponent(
+		'NSIP projects data quality guide.xlsx'
 	)}`;
 	// append link for quality data guide
 	mappedApplications.push({

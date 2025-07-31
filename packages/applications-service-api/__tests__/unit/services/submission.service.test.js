@@ -29,6 +29,11 @@ jest.mock('../../../src/lib/config', () => ({
 				REGISTER_NSIP_SUBSCRIPTION: 'register-nsip-subscription',
 				DEADLINE_SUBMISSION: 'deadline-submission-topic'
 			}
+		},
+		blobStorage: {
+			prodBlobStoreDocsURL: 'https://nsip-documents.planninginspectorate.gov.uk/',
+			testBlobStoreDocsURL:
+				'https://back-office-applications-docs-test.planninginspectorate.gov.uk/'
 		}
 	},
 	logger: {
