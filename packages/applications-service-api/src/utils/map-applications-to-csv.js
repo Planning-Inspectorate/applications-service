@@ -1,10 +1,7 @@
 const { stringify } = require('csv-stringify/sync');
 const moment = require('moment');
 const { stageNameFromValue } = require('./application.mapper');
-const config = require('../lib/config');
-const { isProduction } = config;
-const prodUrl = config.backOfficeIntegration.blobStorage.prodBlobStoreDocsURL;
-const testUrl = config.backOfficeIntegration.blobStorage.testBlobStoreDocsURL;
+const constructUrlForBlobStoreDocs = require('./construct-url-for-blob-store-docs');
 
 const qualityGuideFilename = 'NSIP projects data quality guide.xlsx';
 
@@ -61,8 +58,8 @@ const mapApplicationsToCSV = (applications) => {
 	mappedApplications.push({});
 	mappedApplications.push({});
 	// get URL
-	const originPath = isProduction ? prodUrl : testUrl;
-	const pathToQualityDataGuide = `${originPath}published-documents/${encodeURIComponent(
+	const urlForBlobStoreDocs = constructUrlForBlobStoreDocs();
+	const pathToQualityDataGuide = `${urlForBlobStoreDocs}published-documents/${encodeURIComponent(
 		qualityGuideFilename
 	)}`;
 	// append link for quality data guide
