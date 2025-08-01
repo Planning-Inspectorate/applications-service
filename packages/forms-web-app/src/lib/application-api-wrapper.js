@@ -183,6 +183,10 @@ exports.wrappedSearchDocumentsV3 = async (body) => {
 	});
 };
 
+exports.getDocumentUriByDocRef = async (docRef) => {
+	return handler('getDocumentUriByDocRef', `/api/v3/documents/short-link/${docRef}`);
+};
+
 exports.wrappedPostSubmissionComplete = async (submissionId, body) => {
 	const URL = `/api/v1/submissions/${submissionId}/complete`;
 	const method = 'POST';
