@@ -55,8 +55,7 @@ const mapApplicationsToCSV = (applications) => {
 	}));
 
 	// insert blank rows
-	mappedApplications.push({});
-	mappedApplications.push({});
+	mappedApplications.push({}, {});
 	// get URL
 	const urlForBlobStoreDocs = constructUrlForBlobStoreDocs();
 	const pathToQualityDataGuide = `${urlForBlobStoreDocs}published-documents/${encodeURIComponent(
