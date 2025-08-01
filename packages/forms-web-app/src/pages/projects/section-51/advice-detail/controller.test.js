@@ -61,7 +61,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 									{ text: 'View advice (PDF)', url: 'mock document URI 1' },
 									{ text: 'View advice (Word)', url: 'mock document URI 2' }
 								],
-								backToListUrl: '/projects/mock-case-ref/s51advice',
+								backToListUrl: '/register-of-advice',
 								breadcrumbsItems: [
 									{ href: '/projects/mock-case-ref/s51advice', text: 'Section 51 advice' },
 									{ href: undefined, text: 'Advice in detail' }
@@ -106,7 +106,7 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 								{ text: 'Gweld y cyngor (PDF)', url: 'mock document URI 1' },
 								{ text: 'Gweld y cyngor (Word)', url: 'mock document URI 2' }
 							],
-							backToListUrl: '/register-of-advice',
+							backToListUrl: '/register-of-advice?lang=cy',
 							breadcrumbsItems: null,
 							enquirySummaryList: [
 								{ key: { text: 'Oddiwrth' }, value: { text: 'mock organisation' } },
