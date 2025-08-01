@@ -97,9 +97,6 @@ describe('mapApplicationsToCsv', () => {
 			'To view the quality guide for this data paste this url into your browser:'
 		);
 		expect(lines[6]).toContain(
-			'To view the quality guide for this data paste this url into your browser:'
-		);
-		expect(lines[6]).toContain(
 			'https://back-office-applications-docs-test.planninginspectorate.gov.uk/published-documents/NSIP%20projects%20data%20quality%20guide.xlsx'
 		);
 	});
