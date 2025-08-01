@@ -67,29 +67,6 @@ const main = async () => {
 		}
 	});
 
-	await prismaClient.advice.upsert({
-		where: { adviceId: 1 },
-		update: {},
-		create: {
-			adviceId: 1,
-			adviceReference: 'TR0200007-0005',
-			caseReference,
-			caseId: 130,
-			title: 'Advice title',
-			from: 'Advice from',
-			agent: 'Advice agent',
-			method: 'Advice method',
-			enquiryDate: new Date('2021-06-01'),
-			enquiryDetails: 'Advice enquiry details',
-			adviceGivenBy: 'Advice given by',
-			adviceDate: new Date('2021-08-01'),
-			adviceDetails: 'Advice details',
-			status: 'Advice status',
-			redactionStatus: 'Advice redaction status',
-			attachmentIds: '1,2,3'
-		}
-	});
-
 	await prismaClient.project.deleteMany(deleteFilter);
 	await prismaClient.examinationTimetableEventItem.deleteMany();
 	await prismaClient.examinationTimetable.deleteMany(deleteFilter);
@@ -155,6 +132,29 @@ const main = async () => {
 			webAddress: 'https://example.com',
 			phoneNumber: '01234567890',
 			organisationName: 'Example Organisation'
+		}
+	});
+
+	await prismaClient.advice.upsert({
+		where: { adviceId: 1 },
+		update: {},
+		create: {
+			adviceId: 1,
+			adviceReference: 'TR0200007-0005',
+			caseReference,
+			caseId: 130,
+			title: 'Advice title',
+			from: 'Advice from',
+			agent: 'Advice agent',
+			method: 'Advice method',
+			enquiryDate: new Date('2021-06-01'),
+			enquiryDetails: 'Advice enquiry details',
+			adviceGivenBy: 'Advice given by',
+			adviceDate: new Date('2021-08-01'),
+			adviceDetails: 'Advice details',
+			status: 'Advice status',
+			redactionStatus: 'Advice redaction status',
+			attachmentIds: '1,2,3'
 		}
 	});
 
