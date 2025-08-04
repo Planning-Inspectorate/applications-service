@@ -552,13 +552,13 @@ paths:
       tags:
         - Documents
       parameters:
-          - in: path
-            name: docRef
-            example: 'TR040009-00001'
-            required: true
-            schema:
-              type: string
-            description: Full document reference
+        - in: path
+          name: docRef
+          example: 'TR040009-00001'
+          required: true
+          schema:
+            type: string
+          description: Full document reference
       responses:
         '200':
           description: Successfully returns the document URI
@@ -569,7 +569,7 @@ paths:
                 properties:
                   path:
                     type: string
-                    example:  'https://example.com/myDoc.pdf'
+                    example: 'https://example.com/myDoc.pdf'
         '404':
           description: No document found for given reference
         '400':
