@@ -3,7 +3,9 @@ const { pagesRouter } = require('../../../src/pages/router');
 const { apiRouter } = require('../../../src/api/router');
 const { processGuideRouter } = require('../../../src/pages/process-guide/router');
 const { haveYourSayGuideRouter } = require('../../../src/pages/have-your-say-guide/router');
-const { redirectRouter } = require('../../../src/pages/redirects/short-document-link//router');
+const {
+	shortDocLinkRedirectRouter
+} = require('../../../src/pages/redirects/short-document-link//router');
 
 const {
 	accessibilityStatementRouter
@@ -32,7 +34,7 @@ describe('routes/index', () => {
 
 	it('should define the expected routes', () => {
 		expect(use).toHaveBeenCalledWith(addGlobalMiddleware);
-		expect(use).toHaveBeenCalledWith(redirectRouter);
+		expect(use).toHaveBeenCalledWith(shortDocLinkRedirectRouter);
 		expect(use).toHaveBeenCalledWith(pagesRouter);
 		expect(use).toHaveBeenCalledWith(accessibilityStatementRouter);
 		expect(use).toHaveBeenCalledWith(haveYourSayGuideRouter);

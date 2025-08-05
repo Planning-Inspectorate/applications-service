@@ -14,7 +14,7 @@ const { apiSubdirectory } = require('../api/config');
 const { processGuideRouter } = require('../pages/process-guide/router');
 const { haveYourSayGuideRouter } = require('../pages/have-your-say-guide/router');
 const { accessibilityStatementRouter } = require('../pages/accessibility-statement/router');
-const { redirectRouter } = require('../pages/redirects/short-document-link/router');
+const { shortDocLinkRedirectRouter } = require('../pages/redirects/short-document-link/router');
 
 const { addGlobalMiddleware } = require('../pages/_middleware/add-global-middleware');
 const {
@@ -32,7 +32,7 @@ router.get('/health', async (req, res) => {
 
 router.use(addGlobalMiddleware);
 
-router.use(redirectRouter);
+router.use(shortDocLinkRedirectRouter);
 
 router.use(pagesRouter);
 
