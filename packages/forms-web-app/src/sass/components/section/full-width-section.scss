@@ -1,29 +1,28 @@
 .full-width-section {
-    clip-path: inset(0 -100vmax);
-    
-    &.full-width-section--bg {
-        &-lightgrey {
-            box-shadow: 0 0 0 100vmax #f3f2f1;
-        }
-    }
+	clip-path: inset(0 -100vmax);
 
-    &--bg {
-        &-lightgrey {
-            background-color: #f3f2f1;
+	&.full-width-section--bg {
+		&-lightgrey {
+			box-shadow: 0 0 0 100vmax #f3f2f1;
+		}
+	}
 
-            & h2 {
-                border-bottom: 1px solid #b1b4b6;
-                padding-bottom: 5px;
-                margin-bottom: 25px;
-            }
-            &-no-h2-border {
-                h2 {
-                    border-bottom: none;
-                    padding-bottom: 5px;
-                    margin-bottom: 25px;
-                }
-            }
-        }
-    }
+	&--bg {
+		&-lightgrey {
+			background-color: #f3f2f1;
+
+			& h2 {
+				border-bottom: 1px solid #b1b4b6;
+				padding-bottom: 5px;
+				margin-bottom: 25px;
+			}
+			&-no-h2-border {
+				h2 {
+					border-bottom: none;
+					padding-bottom: 5px;
+					margin-bottom: 25px;
+				}
+			}
+		}
+	}
 }
-

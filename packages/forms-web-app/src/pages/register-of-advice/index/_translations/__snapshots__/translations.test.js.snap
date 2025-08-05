@@ -2,7 +2,7 @@
 
 exports[`pages/register-of-advice/_translations should return the correct English register-of-advice translations 1`] = `
 {
-  "general": "General",
+  "general": "General Section 51 Advice",
   "noResultsClearLink": "Clear search",
   "noResultsParagraph1": "No advice was found matching your search term.",
   "noResultsParagraph2": "Would you like to clear your search to view all available advice instead?",
@@ -23,7 +23,7 @@ exports[`pages/register-of-advice/_translations should return the correct Englis
 
 exports[`pages/register-of-advice/_translations should return the correct Welsh register-of-advice translations 1`] = `
 {
-  "general": "Cyffredinol",
+  "general": "Cyngor Cyffredinol Adran 51",
   "noResultsClearLink": "Clirio chwiliad",
   "noResultsParagraph1": "Ni ddaethpwyd o hyd i unrhyw gyngor sy’n cyfateb i’ch term chwilio.",
   "noResultsParagraph2": "A hoffech chi glirio’ch chwiliad i weld yr holl gyngor sydd ar gael yn lle hynny?",
