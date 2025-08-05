@@ -18,6 +18,14 @@ describe('pages/projects/section-51/advice-detail/_utils/get-back-to-list-url', 
 					it('should return the Referrer URL', () => {
 						expect(backToListURL).toEqual('/register-of-advice?searchTerm=test&itemsPerPage=50');
 					});
+
+					it('should return the Referrer URL with lang param if provided', () => {
+						const lang = 'cy';
+						backToListURL = getBackToListURL(refURL, path, caseRef, id, lang);
+						expect(backToListURL).toEqual(
+							'/register-of-advice?searchTerm=test&itemsPerPage=50?lang=cy'
+						);
+					});
 				});
 
 				describe('and the previous page is not the register of advice page', () => {
@@ -33,6 +41,12 @@ describe('pages/projects/section-51/advice-detail/_utils/get-back-to-list-url', 
 					});
 					it('should return the register of advice index URL', () => {
 						expect(backToListURL).toEqual('/register-of-advice');
+					});
+
+					it('should return the register of advice index URL with lang param if provided', () => {
+						const lang = 'cy';
+						backToListURL = getBackToListURL(refURL, path, caseRef, id, lang);
+						expect(backToListURL).toEqual('/register-of-advice?lang=cy');
 					});
 				});
 			});

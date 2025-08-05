@@ -1,9 +1,7 @@
 const express = require('express');
 
 const { getRegisterOfAdviceController } = require('./index/controller');
-const {
-	getSection51AdviceDetailController
-} = require('../projects/section-51/advice-detail/controller');
+const { getRegisterOfAdviceDetailController } = require('./detail/controller');
 
 const { getRegisterOfAdviceIndexURL } = require('./index/_utils/get-register-of-advice-index-url');
 const {
@@ -12,7 +10,6 @@ const {
 const {
 	addSection51TranslationsMiddleware
 } = require('../projects/section-51/_middleware/add-section-51-translations-middleware');
-
 const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
@@ -33,6 +30,6 @@ registerOfAdviceRouter.get(
 	getRegisterOfAdviceController
 );
 
-registerOfAdviceRouter.get(registerOfAdviceDetailURL, getSection51AdviceDetailController);
+registerOfAdviceRouter.get(registerOfAdviceDetailURL, getRegisterOfAdviceDetailController);
 
 module.exports = { registerOfAdviceRouter };

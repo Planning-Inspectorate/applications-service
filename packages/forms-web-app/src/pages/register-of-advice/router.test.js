@@ -1,10 +1,8 @@
 const {
 	addSection51TranslationsMiddleware
 } = require('../projects/section-51/_middleware/add-section-51-translations-middleware');
-const {
-	getSection51AdviceDetailController
-} = require('../projects/section-51/advice-detail/controller');
 const { getRegisterOfAdviceController } = require('./index/controller');
+const { getRegisterOfAdviceDetailController } = require('./detail/controller');
 const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
@@ -39,7 +37,7 @@ describe('pages/register-of-advice/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/register-of-advice/:id',
-				getSection51AdviceDetailController
+				getRegisterOfAdviceDetailController
 			);
 
 			expect(get).toBeCalledTimes(2);
