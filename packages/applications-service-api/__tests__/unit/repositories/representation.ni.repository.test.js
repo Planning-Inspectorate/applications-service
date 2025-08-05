@@ -1,6 +1,6 @@
 const {
 	getRepresentationsWithCount,
-	getRepresentationById,
+	getRepresentationByIdAndCaseRef,
 	getRepresentations
 } = require('../../../src/repositories/representation.ni.repository');
 const db = require('../../../src/models');
@@ -31,9 +31,11 @@ describe('representation ni repository', () => {
 	};
 	describe('getRepresentationById', () => {
 		const mockId = 10;
+		const caseRef = 'EN010009';
 		const mockRepresentation = {
 			ID: mockId,
-			ProjectName: 'foo'
+			ProjectName: 'foo',
+			CaseReference: caseRef
 		};
 		beforeAll(() => {
 			// Arrange
@@ -41,13 +43,16 @@ describe('representation ni repository', () => {
 		});
 		it('calls findOne with caseReference', async () => {
 			// Act
-			await getRepresentationById(mockId);
+			await getRepresentationByIdAndCaseRef(mockId, caseRef);
 			// Assert
-			expect(db.Representation.findOne).toBeCalledWith({ where: { ID: mockId }, raw: true });
+			expect(db.Representation.findOne).toBeCalledWith({
+				where: { ID: mockId, CaseReference: caseRef },
+				raw: true
+			});
 		});
 		it('returns the result of findOne', async () => {
 			// Act
-			const result = await getRepresentationById(mockId);
+			const result = await getRepresentationByIdAndCaseRef(mockId, caseRef);
 			// Assert
 			expect(result).toEqual(mockRepresentation);
 		});
