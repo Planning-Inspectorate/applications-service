@@ -1,4 +1,8 @@
-const mapApplicationsToCsv = require('../../../src/utils/map-applications-to-csv');
+const {
+	mapApplicationsToCSV,
+	getUrlForQualityDataGuide
+} = require('../../../src/utils/map-applications-to-csv');
+const getUrlForBlobStoreDocsTest = require('../../../src/utils/get-url-for-blob-store-docs');
 
 describe('mapApplicationsToCsv', () => {
 	it('returns a csv string', () => {
@@ -75,7 +79,7 @@ describe('mapApplicationsToCsv', () => {
 			}
 		];
 
-		const result = mapApplicationsToCsv(applications);
+		const result = mapApplicationsToCSV(applications);
 
 		const lines = result.split('\n');
 		expect(lines.length).toEqual(8);
@@ -97,7 +101,23 @@ describe('mapApplicationsToCsv', () => {
 			'To view the quality guide for this data paste this url into your browser:'
 		);
 		expect(lines[6]).toContain(
-			'https://back-office-applications-docs-test.planninginspectorate.gov.uk/published-documents/NSIP%20projects%20data%20quality%20guide.xlsx'
+			'https://nsip-documents.planninginspectorate.gov.uk/published-documents/NSIP%20projects%20data%20quality%20guide.xlsx'
+		);
+	});
+});
+
+describe('getUrlForBlobStoreDocs', () => {
+	it('returns the correct URL for production environment', () => {
+		expect(getUrlForBlobStoreDocsTest()).toBe(
+			'https://nsip-documents.planninginspectorate.gov.uk/'
+		);
+	});
+});
+
+describe('getUrlForQualityDataGuide', () => {
+	it('returns the correct URL for quality data guide', () => {
+		expect(getUrlForQualityDataGuide()).toBe(
+			'https://nsip-documents.planninginspectorate.gov.uk/published-documents/NSIP%20projects%20data%20quality%20guide.xlsx'
 		);
 	});
 });
