@@ -31,28 +31,26 @@ const getDocuments = async (query) => {
 
 	if (query.datePublishedFrom || query.datePublishedTo) {
 		const dateConditions = {};
-		if (
-			query.datePublishedFrom &&
-			query.datePublishedTo &&
-			query.datePublishedFrom === query.datePublishedTo
-		) {
-			const day = query.datePublishedFrom;
+
+		if (query.datePublishedFrom === query.datePublishedTo) {
 			dateConditions.datePublished = {
-				contains: day
+				contains: query.datePublishedFrom
 			};
-		} else if (query.datePublishedFrom && query.datePublishedTo) {
-			dateConditions.datePublished = {
-				gte: `${query.datePublishedFrom}T00:00:00.000Z`,
-				lte: `${query.datePublishedTo}T23:59:59.999Z`
-			};
-		} else if (query.datePublishedFrom) {
-			dateConditions.datePublished = {
-				gte: `${query.datePublishedFrom}T00:00:00.000Z`
-			};
-		} else if (query.datePublishedTo) {
-			dateConditions.datePublished = {
-				lte: `${query.datePublishedTo}T23:59:59.999Z`
-			};
+		} else {
+			if (query.datePublishedFrom && query.datePublishedTo) {
+				dateConditions.datePublished = {
+					gte: query.datePublishedFrom,
+					lte: query.datePublishedTo
+				};
+			} else if (query.datePublishedFrom) {
+				dateConditions.datePublished = {
+					gte: query.datePublishedFrom
+				};
+			} else if (query.datePublishedTo) {
+				dateConditions.datePublished = {
+					lte: query.datePublishedTo
+				};
+			}
 		}
 
 		whereClause.AND.push(dateConditions);

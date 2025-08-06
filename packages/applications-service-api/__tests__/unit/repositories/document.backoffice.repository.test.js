@@ -78,6 +78,80 @@ describe('document repository', () => {
 				'Additional Submissions'
 			);
 		});
+
+		it('calls findMany and count with datePublished contains for single day (migrated case)', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedFrom: '2025-06-15',
+				datePublishedTo: '2025-06-15'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some((cond) => cond.datePublished && cond.datePublished.contains === '2025-06-15')
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some(
+					(cond) => cond.datePublished && cond.datePublished.contains === '2025-06-15'
+				)
+			).toBe(true);
+		});
+
+		it('calls findMany and count with datePublished gte for datePublishedFrom only', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedFrom: '2025-06-15'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some((cond) => cond.datePublished && cond.datePublished.gte === '2025-06-15')
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some((cond) => cond.datePublished && cond.datePublished.gte === '2025-06-15')
+			).toBe(true);
+		});
+
+		it('calls findMany and count with datePublished lte for datePublishedTo only', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedTo: '2025-06-15'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some((cond) => cond.datePublished && cond.datePublished.lte === '2025-06-15')
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some((cond) => cond.datePublished && cond.datePublished.lte === '2025-06-15')
+			).toBe(true);
+		});
+
+		it('calls findMany and count with datePublished gte/lte for date range', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedFrom: '2025-06-15',
+				datePublishedTo: '2025-06-16'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some(
+					(cond) =>
+						cond.datePublished &&
+						cond.datePublished.gte === '2025-06-15' &&
+						cond.datePublished.lte === '2025-06-16'
+				)
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some(
+					(cond) =>
+						cond.datePublished &&
+						cond.datePublished.gte === '2025-06-15' &&
+						cond.datePublished.lte === '2025-06-16'
+				)
+			).toBe(true);
+		});
 	});
 
 	describe('getFilters', () => {
