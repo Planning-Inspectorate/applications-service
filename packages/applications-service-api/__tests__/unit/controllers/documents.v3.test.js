@@ -2,11 +2,13 @@ const httpMocks = require('node-mocks-http');
 const { StatusCodes } = require('http-status-codes');
 const {
 	getNIDocuments,
-	getDocumentByCaseReference
+	getDocumentByCaseReference,
+	getDocumentLinkByDocumentReference
 } = require('../../../src/controllers/documents.v3');
 const { RESPONSE_FILTERS, RESPONSE_DOCUMENTS } = require('../../__data__/documents');
 const {
-	fetchBackOfficeDocumentsByType
+	fetchBackOfficeDocumentsByType,
+	fetchBackOfficeDocumentByDocRef
 } = require('../../../src/services/document.backoffice.service');
 const { fetchNIDocumentsByType } = require('../../../src/services/document.ni.service');
 const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
@@ -19,8 +21,9 @@ const fetchNIDocumentFiltersMock =
 	require('../../../src/services/document.ni.service').fetchNIDocumentFilters;
 
 describe('documentsV3 controller', () => {
-	const res = httpMocks.createResponse();
+	let res;
 	beforeEach(() => {
+		res = httpMocks.createResponse();
 		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC0110001');
 	});
 	afterEach(() => {
@@ -258,6 +261,53 @@ describe('documentsV3 controller', () => {
 				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
 				expect(res._getData()).toEqual(RESPONSE_DOCUMENTS[0]);
 			});
+		});
+	});
+	describe('getDocumentLinkByDocumentReference', () => {
+		it('returns the document URI path for valid document reference', async () => {
+			const docRef = 'B0123456-000001';
+			const mockPath = 'https:example.com/myDocument.pdf';
+
+			fetchBackOfficeDocumentByDocRef.mockResolvedValueOnce([{ path: mockPath }]);
+
+			await getDocumentLinkByDocumentReference(
+				{
+					params: { docRef }
+				},
+				res
+			);
+
+			expect(fetchBackOfficeDocumentByDocRef).toHaveBeenCalledWith(docRef);
+			expect(res._getStatusCode()).toBe(StatusCodes.OK);
+			expect(JSON.parse(res._getData())).toEqual({ path: mockPath });
+		});
+
+		it('returns 404 if no document is found', async () => {
+			fetchBackOfficeDocumentByDocRef.mockResolvedValueOnce([]);
+
+			await getDocumentLinkByDocumentReference(
+				{
+					params: { docRef: 'B0123456-000002' }
+				},
+				res
+			);
+
+			expect(res._getStatusCode()).toBe(StatusCodes.NOT_FOUND);
+			expect(res._getData()).toBe('Document not found');
+		});
+
+		it('returns 404 if document has no path', async () => {
+			fetchBackOfficeDocumentByDocRef.mockResolvedValueOnce([{ path: null }]);
+
+			await getDocumentLinkByDocumentReference(
+				{
+					params: { docRef: 'B0123456-000003' }
+				},
+				res
+			);
+
+			expect(res._getStatusCode()).toBe(StatusCodes.NOT_FOUND);
+			expect(res._getData()).toBe('Document not found');
 		});
 	});
 });

@@ -1,4 +1,8 @@
-const { getProjectUpdates, getDocumentByType } = require('../lib/application-api-wrapper');
+const {
+	getProjectUpdates,
+	getDocumentByType,
+	getDocumentUriByDocRef
+} = require('../lib/application-api-wrapper');
 const { documentTypes } = require('@pins/common/src/constants');
 
 const getProjectUpdatesData = async (caseRef) => {
@@ -49,10 +53,16 @@ const getProjectDecisionDocument = async (caseRef) => {
 	return response;
 };
 
+const getShortDocLink = async (docRef) => {
+	const { data, resp_code } = await getDocumentUriByDocRef(docRef);
+	return resp_code === 200 ? data : undefined;
+};
+
 module.exports = {
 	getProjectUpdatesData,
 	getRule6DocumentType,
 	getRule8DocumentType,
 	getExaminationLibraryDocument,
-	getProjectDecisionDocument
+	getProjectDecisionDocument,
+	getShortDocLink
 };
