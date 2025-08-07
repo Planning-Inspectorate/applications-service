@@ -31,7 +31,7 @@ describe('pages/projects/section-51/index/_utils/advice-helpers', () => {
 						registerOfAdvice: registerOfAdviceTranslations_EN
 					})
 				);
-				expect(response).toEqual('General');
+				expect(response).toEqual('General Section 51 Advice');
 			});
 		});
 
@@ -54,7 +54,7 @@ describe('pages/projects/section-51/index/_utils/advice-helpers', () => {
 						registerOfAdvice: registerOfAdviceTranslations_CY
 					})
 				);
-				expect(response).toEqual('Cyffredinol');
+				expect(response).toEqual('Cyngor Cyffredinol Adran 51');
 			});
 		});
 

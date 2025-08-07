@@ -1,13 +1,13 @@
 .style-vertical-tabs {
-  .style-vertical-tabs__tab {
-    margin-bottom: 20px;
+	.style-vertical-tabs__tab {
+		margin-bottom: 20px;
 
-    &--active {
-      background-color: govuk-colour("light-grey");
-      padding: 0.7em;
-      margin-left: calc(-0.7em - 6px);
-      border-left: 6px solid govuk-colour("turquoise");
-      font-weight: 700;
-    }
-  }
+		&--active {
+			background-color: govuk-colour('light-grey');
+			padding: 0.7em;
+			margin-left: calc(-0.7em - 6px);
+			border-left: 6px solid govuk-colour('turquoise');
+			font-weight: 700;
+		}
+	}
 }

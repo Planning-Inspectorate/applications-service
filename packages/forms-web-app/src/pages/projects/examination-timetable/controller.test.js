@@ -173,7 +173,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 							}
 						},
 						examination: {
-							closeDate: 'The examination is expected to close on 3 January 2023',
+							closeDate: '',
 							startDate: 'The examination opened on 1 January 2023'
 						},
 						pageTitle:
