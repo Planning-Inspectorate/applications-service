@@ -39,7 +39,12 @@ describe('pages/projects/examination-timetable/controller', () => {
 			};
 			res = {
 				status: jest.fn(() => res),
-				render: jest.fn()
+				render: jest.fn(),
+				locals: {
+					applicationData: {
+						projectName: 'mock project name'
+					}
+				}
 			};
 		});
 		describe('When getting the examination table page', () => {
