@@ -26,7 +26,10 @@ describe('project repository', () => {
 			await getByCaseReference(caseReference);
 
 			expect(mockFindUnique).toBeCalledWith({
-				where: { caseReference: caseReference },
+				where: {
+					caseReference: caseReference,
+					publishStatus: 'published'
+				},
 				include: { applicant: true }
 			});
 		});
@@ -41,7 +44,7 @@ describe('project repository', () => {
 
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
-				where: {}
+				where: { publishStatus: 'published' }
 			});
 		});
 		it('calls findMany with the excludeNullDateOfSubmission option', async () => {
@@ -54,6 +57,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
+					publishStatus: 'published',
 					AND: [{ OR: [{ dateOfDCOSubmission: { not: null } }] }]
 				}
 			});
@@ -68,7 +72,7 @@ describe('project repository', () => {
 
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
-				where: {},
+				where: { publishStatus: 'published' },
 				orderBy: { projectName: 'asc' },
 				skip: 0,
 				take: 10
@@ -80,6 +84,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
+					publishStatus: 'published',
 					AND: [
 						{
 							OR: [
@@ -119,6 +124,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
+					publishStatus: 'published',
 					AND: [
 						{
 							OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
@@ -140,6 +146,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
+					publishStatus: 'published',
 					AND: [
 						{
 							regions: {
@@ -164,6 +171,7 @@ describe('project repository', () => {
 			expect(mockFindMany).toBeCalledWith({
 				include: { applicant: true },
 				where: {
+					publishStatus: 'published',
 					AND: [
 						{
 							OR: [
@@ -196,7 +204,7 @@ describe('project repository', () => {
 		it('calls count', async () => {
 			await getAllApplications();
 			expect(mockCount).toBeCalledWith({
-				where: {}
+				where: { publishStatus: 'published' }
 			});
 		});
 		it('returns all applications', async () => {
