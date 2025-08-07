@@ -3,6 +3,7 @@ const {
 	getUrlForQualityDataGuide
 } = require('../../../src/utils/map-applications-to-csv');
 const getUrlForBlobStoreDocsTest = require('../../../src/utils/get-url-for-blob-store-docs');
+process.env.AZURE_BLOB_STORE_HOST = 'https://nsip-documents.planninginspectorate.gov.uk';
 
 describe('mapApplicationsToCsv', () => {
 	it('returns a csv string', () => {
@@ -108,9 +109,7 @@ describe('mapApplicationsToCsv', () => {
 
 describe('getUrlForBlobStoreDocs', () => {
 	it('returns the correct URL for production environment', () => {
-		expect(getUrlForBlobStoreDocsTest()).toBe(
-			'https://nsip-documents.planninginspectorate.gov.uk/'
-		);
+		expect(getUrlForBlobStoreDocsTest()).toBe('https://nsip-documents.planninginspectorate.gov.uk');
 	});
 });
 

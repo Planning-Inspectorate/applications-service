@@ -77,9 +77,13 @@ const mapApplicationsToCSV = (applications) => {
 
 // Constructs the full URL to the published Quality Data Guide document.
 function getUrlForQualityDataGuide() {
-	const baseUrl = getUrlForBlobStoreDocs();
-	const encodedFilename = encodeURIComponent(qualityGuideFilename);
-	return `${baseUrl}published-documents/${encodedFilename}`;
+	try {
+		const baseUrl = getUrlForBlobStoreDocs();
+		const encodedFilename = encodeURIComponent(qualityGuideFilename);
+		return `${baseUrl}/published-documents/${encodedFilename}`;
+	} catch (error) {
+		return `Error constructing URL for Quality Data Guide: ${error.message}`;
+	}
 }
 
 module.exports = {
