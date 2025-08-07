@@ -24,7 +24,11 @@ const getProjectsExaminationTimetableController = async (req, res) => {
 		const { case_ref } = params;
 		const { data } = await getProjectData(case_ref);
 		const examinationTimetableData = data;
-		const projectName = examinationTimetableData?.ProjectName;
+		const {
+			locals: {
+				applicationData: { projectName }
+			}
+		} = res;
 		const pageData = getPageData(case_ref, projectName, examinationTimetableData, i18n);
 
 		return res.render(view, {
