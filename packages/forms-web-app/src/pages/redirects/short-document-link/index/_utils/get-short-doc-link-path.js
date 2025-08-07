@@ -1,10 +1,10 @@
 const { getOriginURL } = require('../../../../_utils/get-origin-url');
 const { shortDocRoute, shortDocParam } = require('../../config');
 
-const getShortDocLinkURL = () => {
+const getShortDocLinkPath = () => {
 	const originURL = getOriginURL();
 
 	return `${originURL}/${shortDocRoute}/:${shortDocParam}`;
 };
 
-module.exports = { getShortDocLinkURL };
+module.exports = { getShortDocLinkPath };

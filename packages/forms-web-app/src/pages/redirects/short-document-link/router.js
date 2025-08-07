@@ -1,11 +1,11 @@
 const express = require('express');
-const { getShortDocLinkURL } = require('./index/_utils/get-short-doc-link-url');
+const { getShortDocLinkPath } = require('./index/_utils/get-short-doc-link-path');
 const { getDocumentShortLinkController } = require('./index/controller');
 
-const shortDocLinkURL = getShortDocLinkURL();
+const shortDocLinkPath = getShortDocLinkPath();
 
 const shortDocLinkRedirectRouter = express.Router();
 
-shortDocLinkRedirectRouter.get(shortDocLinkURL, getDocumentShortLinkController);
+shortDocLinkRedirectRouter.get(shortDocLinkPath, getDocumentShortLinkController);
 
 module.exports = { shortDocLinkRedirectRouter };
