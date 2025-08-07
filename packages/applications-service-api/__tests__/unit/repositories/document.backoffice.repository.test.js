@@ -1,7 +1,8 @@
 const {
 	getDocuments,
 	getFilters,
-	getDocumentsByType
+	getDocumentsByType,
+	getDocumentByDocRef
 } = require('../../../src/repositories/document.backoffice.repository');
 
 const mockFindMany = jest.fn();
@@ -102,5 +103,39 @@ describe('document repository', () => {
 			});
 			expect(response).toEqual({ data: 'mock data' });
 		});
+	});
+
+	describe('getDocumentByDocRef', () => {
+		it('calls find first with the docRef', async () => {
+			const mockDocRef = 'WW0110164-000002';
+			const mockResult = {
+				documentReference: mockDocRef,
+				publishedDocumentURI: 'https://example.com'
+			};
+
+			mockFindFirst.mockResolvedValue(mockResult);
+
+			const response = await getDocumentByDocRef(mockDocRef);
+
+			expect(mockFindFirst).toHaveBeenCalledWith({
+				where: { documentReference: mockDocRef }
+			});
+
+			expect(response).toEqual(mockResult);
+		});
+	});
+
+	it('returns null if no document found by docRef', async () => {
+		const mockDocRef = 'WW0110164-000002';
+
+		mockFindFirst.mockResolvedValue(null);
+
+		const response = await getDocumentByDocRef(mockDocRef);
+
+		expect(mockFindFirst).toHaveBeenCalledWith({
+			where: { documentReference: mockDocRef }
+		});
+
+		expect(response).toBeNull();
 	});
 });
