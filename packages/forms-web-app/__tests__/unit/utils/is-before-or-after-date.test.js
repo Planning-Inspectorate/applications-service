@@ -118,7 +118,7 @@ describe('#utils/is-before-or-after-date', () => {
 					result = getDateTimeExaminationEnds(date, undefined, undefined, i18n);
 				});
 				it('should return the correct before date sentence. ', () => {
-					expect(result).toEqual('The examination is expected to close on 1 January 2022');
+					expect(result).toEqual('');
 				});
 			});
 
@@ -147,7 +147,7 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 14 March 2023');
+						expect(result).toEqual('');
 					});
 				});
 				describe('is after', () => {
@@ -186,7 +186,7 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2022');
+						expect(result).toEqual('');
 					});
 				});
 
@@ -199,7 +199,7 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2022');
+						expect(result).toEqual('');
 					});
 				});
 
@@ -212,7 +212,7 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2022');
+						expect(result).toEqual('');
 					});
 				});
 
@@ -225,7 +225,7 @@ describe('#utils/is-before-or-after-date', () => {
 						result = getDateTimeExaminationEnds(date, extensionDate, '2022-09-14', i18n);
 					});
 					it('should return the correct before date sentence. ', () => {
-						expect(result).toEqual('The examination is expected to close on 22 April 2022');
+						expect(result).toEqual('');
 					});
 				});
 			});

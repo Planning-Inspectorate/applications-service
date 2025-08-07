@@ -44,7 +44,7 @@ const isInvalidDate = (date) =>
 
 const isBeforeOrAfterSentence = (date, i18n) =>
 	isBeforeTodayUTC(date)
-		? `${i18n.t('examinationTimetable.examinationClosesOn')} ${formatDate(date)}` //The examination is expected to close on
+		? '' // The examination has not yet closed; display nothing
 		: `${i18n.t('examinationTimetable.examinationClosedOn')} ${formatDate(date)}`; //The examination closed on
 
 const getDateTimeExaminationEnds = (closeDate, extensionCloseDate, startDate, i18n) => {

@@ -135,7 +135,7 @@ workspace "Applications service" {
 		}
 
 		systemGovUk = softwareSystem "GOV.UK"{
-			tags = "ExternalSystem"
+			tags "ExternalSystem"
 			containerGovNotify = container "GOV Notify" "UK government messaging platform for sending emails, text and letters to users"
 		}
 

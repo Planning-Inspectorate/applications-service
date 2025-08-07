@@ -18,5 +18,10 @@ describe('routes/documentsV3', () => {
 			validateRequestWithOpenAPI,
 			expect.any(Function)
 		);
+		expect(get).toHaveBeenCalledWith(
+			'/short-link/:docRef',
+			validateRequestWithOpenAPI,
+			expect.any(Function)
+		);
 	});
 });
