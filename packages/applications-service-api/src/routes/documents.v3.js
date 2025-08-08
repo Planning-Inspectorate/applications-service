@@ -12,6 +12,12 @@ router.get(
 	asyncRoute(documentsV3Controller.getDocumentByCaseReference)
 );
 
+router.get(
+	'/short-link/:docRef',
+	validateRequestWithOpenAPI,
+	asyncRoute(documentsV3Controller.getDocumentLinkByDocumentReference)
+);
+
 const getDocumentsRoute = (req, res, next) => {
 	const route = isBackOfficeCaseReference(req.body.caseReference)
 		? documentsV3Controller.getBackOfficeDocuments

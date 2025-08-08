@@ -125,9 +125,16 @@ const getDocumentsByIds = async (documentIds) => {
 	});
 };
 
+const getDocumentByDocRef = async (docRef) => {
+	return prismaClient.document.findFirst({
+		where: { documentReference: docRef }
+	});
+};
+
 module.exports = {
 	getDocuments,
 	getFilters,
 	getDocumentsByType,
-	getDocumentsByIds
+	getDocumentsByIds,
+	getDocumentByDocRef
 };

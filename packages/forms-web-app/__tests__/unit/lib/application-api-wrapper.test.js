@@ -6,6 +6,7 @@ const {
 	getAllProjectList,
 	searchDocumentList,
 	getRepresentationById,
+	getDocumentUriByDocRef,
 	handler
 } = require('../../../src/lib/application-api-wrapper');
 
@@ -78,6 +79,16 @@ describe('lib/application-api-wrapper', () => {
 					'http://fake.url/api/v1/representations/9?caseReference=mock-case-reference'
 				);
 			});
+		});
+	});
+
+	describe('getDocumentUriByDocRef', () => {
+		it('should call the expected URL', async () => {
+			fetch.mockResponseOnce(JSON.stringify({ shouldBe: 'valid' }));
+			await getDocumentUriByDocRef('mock-doc-ref');
+			expect(fetch.mock.calls[0][0]).toEqual(
+				'http://fake.url/api/v3/documents/short-link/mock-doc-ref'
+			);
 		});
 	});
 

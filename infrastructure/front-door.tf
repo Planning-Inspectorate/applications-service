@@ -90,6 +90,23 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     action  = "Block"
 
     override {
+      rule_group_name = "GENERAL"
+      # Multipart request body failed strict validation
+      rule {
+        action  = "Log"
+        enabled = true
+        rule_id = "200003"
+      }
+
+      # Failed to parse request body.
+      rule {
+        action  = "Log"
+        enabled = true
+        rule_id = "200002"
+      }
+    }
+
+    override {
       rule_group_name = "RFI"
 
       rule {
@@ -475,6 +492,24 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
         action  = "Log"
         enabled = true
         rule_id = "933180"
+      }
+    }
+
+    override {
+      rule_group_name = "PROTOCOL-ENFORCEMENT"
+
+      rule {
+        # Attempted multipart/form-data bypass
+        action  = "Log"
+        enabled = true
+        rule_id = "920120"
+      }
+
+      rule {
+        # Attempted multipart/form-data bypass
+        action  = "Log"
+        enabled = true
+        rule_id = "920121"
       }
     }
 

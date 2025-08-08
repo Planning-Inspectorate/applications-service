@@ -3,14 +3,20 @@ const {
 	getProjectDecisionDocument,
 	getRule8DocumentType,
 	getRule6DocumentType,
-	getExaminationLibraryDocument
+	getExaminationLibraryDocument,
+	getShortDocLink
 } = require('./services');
-const { getProjectUpdates, getDocumentByType } = require('../lib/application-api-wrapper');
+const {
+	getProjectUpdates,
+	getDocumentByType,
+	getDocumentUriByDocRef
+} = require('../lib/application-api-wrapper');
 const { documentTypes } = require('@pins/common/src/constants');
 
 jest.mock('../lib/application-api-wrapper', () => ({
 	getProjectUpdates: jest.fn(),
-	getDocumentByType: jest.fn()
+	getDocumentByType: jest.fn(),
+	getDocumentUriByDocRef: jest.fn()
 }));
 
 describe('/services', () => {
@@ -196,6 +202,35 @@ describe('/services', () => {
 					expect(response).toBeUndefined();
 				});
 			});
+		});
+	});
+
+	describe('#getShortDocLink', () => {
+		const mockDocRef = 'mock-doc-ref';
+
+		it('should return the document URI when the response is 200', async () => {
+			const mockPath = 'http://example.com/document.pdf';
+			getDocumentUriByDocRef.mockResolvedValue({
+				resp_code: 200,
+				data: { path: mockPath }
+			});
+
+			const result = await getShortDocLink(mockDocRef);
+
+			expect(result.path).toEqual(mockPath);
+			expect(getDocumentUriByDocRef).toHaveBeenCalledWith(mockDocRef);
+		});
+
+		it('should return undefined when the response is not 200', async () => {
+			getDocumentUriByDocRef.mockResolvedValue({
+				resp_code: 404,
+				data: {}
+			});
+
+			const result = await getShortDocLink(mockDocRef);
+
+			expect(result).toBeUndefined();
+			expect(getDocumentUriByDocRef).toHaveBeenCalledWith(mockDocRef);
 		});
 	});
 });
