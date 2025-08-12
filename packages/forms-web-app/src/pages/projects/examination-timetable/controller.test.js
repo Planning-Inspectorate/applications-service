@@ -39,7 +39,12 @@ describe('pages/projects/examination-timetable/controller', () => {
 			};
 			res = {
 				status: jest.fn(() => res),
-				render: jest.fn()
+				render: jest.fn(),
+				locals: {
+					applicationData: {
+						projectName: 'mock project name'
+					}
+				}
 			};
 		});
 		describe('When getting the examination table page', () => {
@@ -173,7 +178,7 @@ describe('pages/projects/examination-timetable/controller', () => {
 							}
 						},
 						examination: {
-							closeDate: 'The examination is expected to close on 3 January 2023',
+							closeDate: '',
 							startDate: 'The examination opened on 1 January 2023'
 						},
 						pageTitle:

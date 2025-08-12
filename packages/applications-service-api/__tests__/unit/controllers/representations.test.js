@@ -7,7 +7,7 @@ const {
 } = require('../../../src/controllers/representations');
 const {
 	getRepresentationsForApplication,
-	getRepresentationById
+	getRepresentationByIdAndCaseRef
 } = require('../../../src/services/representation.service');
 const { getDocumentsByDataId } = require('../../../src/repositories/document.ni.repository');
 
@@ -156,7 +156,7 @@ describe('representation controller', () => {
 	});
 	describe('getRepresentationById', () => {
 		it('should get representation from mock', async () => {
-			getRepresentationById.mockResolvedValue(mockData.representations[0]);
+			getRepresentationByIdAndCaseRef.mockResolvedValue(mockData.representations[0]);
 			const req = httpMocks.createRequest({
 				params: {
 					id: 2
