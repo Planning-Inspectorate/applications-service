@@ -40,7 +40,9 @@ describe('routes/submissions', () => {
 		expect(fileUpload).toBeCalledWith({
 			limits: { fileSize: config.uploads.fileSizeLimit },
 			abortOnLimit: true,
-			limitHandler: fileUploadLimitHandlerMock
+			limitHandler: fileUploadLimitHandlerMock,
+			defCharset: 'utf8',
+			defParamCharset: 'utf8'
 		});
 
 		expect(parseFormDataPropertiesMock).toBeCalledWith([
