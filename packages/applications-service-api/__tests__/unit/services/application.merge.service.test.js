@@ -10,7 +10,7 @@ const {
 	getAllApplications: getAllBOApplications
 } = require('../../../src/repositories/project.backoffice.repository');
 const { mapNIApplicationsToApi } = require('../../../src/utils/application.mapper');
-const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
+const { mapApplicationsToCSV } = require('../../../src/utils/map-applications-to-csv');
 const {
 	APPLICATION_DB,
 	APPLICATIONS_NI_DB,

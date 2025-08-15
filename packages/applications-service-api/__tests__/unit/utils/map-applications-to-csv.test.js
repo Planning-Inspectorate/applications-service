@@ -1,4 +1,9 @@
-const mapApplicationsToCsv = require('../../../src/utils/map-applications-to-csv');
+const {
+	mapApplicationsToCSV,
+	getUrlForQualityDataGuide
+} = require('../../../src/utils/map-applications-to-csv');
+const getUrlForBlobStoreDocsTest = require('../../../src/utils/get-url-for-blob-store-docs');
+process.env.AZURE_BLOB_STORE_HOST = 'https://nsip-documents.planninginspectorate.gov.uk';
 
 describe('mapApplicationsToCsv', () => {
 	it('returns a csv string', () => {
@@ -75,10 +80,10 @@ describe('mapApplicationsToCsv', () => {
 			}
 		];
 
-		const result = mapApplicationsToCsv(applications);
+		const result = mapApplicationsToCSV(applications);
 
 		const lines = result.split('\n');
-		expect(lines.length).toEqual(5);
+		expect(lines.length).toEqual(8);
 		expect(lines[0]).toMatchInlineSnapshot(
 			`""Project reference","Project name","Applicant name","Application type","Region","Location","Grid reference - Easting","Grid reference - Northing:","GPS co-ordinates","Stage","Description","Anticipated submission period","Date of application","Date application accepted","Date Examination started","Date Examination closed","Date of recommendation","Date of decision","Date withdrawn""`
 		); // headers
@@ -91,6 +96,27 @@ describe('mapApplicationsToCsv', () => {
 		expect(lines[3]).toMatchInlineSnapshot(
 			`""EN000001","Test Project","Test Promoter","Test Proposal","Test Region","Test Location","Test Easting","Test Northing","Test Long, Test Lat","Application published","Test Summary","Test Submission Date Non Specific","Test Date Of DCO Submission","Test Date Of DCO Acceptance Non Acceptance","Test Confirmed Start Of Examination","2024-01-01 00:00:00","Test Date Of Recommendations","Test Confirmed Date Of Decision","Test Date Project Withdrawn""`
 		);
-		expect(lines[4]).toEqual(''); // last line is empty
+		expect(lines[4]).toEqual(',,,,,,,,,,,,,,,,,,'); // empty row
+		expect(lines[5]).toEqual(',,,,,,,,,,,,,,,,,,'); // empty row
+		expect(lines[6]).toContain(
+			'To view the quality guide for this data paste this url into your browser:'
+		);
+		expect(lines[6]).toContain(
+			'https://nsip-documents.planninginspectorate.gov.uk/published-documents/NSIP%20projects%20data%20quality%20guide.xlsx'
+		);
+	});
+});
+
+describe('getUrlForBlobStoreDocs', () => {
+	it('returns the correct URL for production environment', () => {
+		expect(getUrlForBlobStoreDocsTest()).toBe('https://nsip-documents.planninginspectorate.gov.uk');
+	});
+});
+
+describe('getUrlForQualityDataGuide', () => {
+	it('returns the correct URL for quality data guide', () => {
+		expect(getUrlForQualityDataGuide()).toBe(
+			'https://nsip-documents.planninginspectorate.gov.uk/published-documents/NSIP%20projects%20data%20quality%20guide.xlsx'
+		);
 	});
 });
