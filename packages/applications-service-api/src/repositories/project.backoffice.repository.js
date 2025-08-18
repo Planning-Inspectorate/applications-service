@@ -5,7 +5,8 @@ const { english: stopWordList } = require('../utils/stopwords');
 const getByCaseReference = async (caseReference) => {
 	return prismaClient.project.findUnique({
 		where: {
-			caseReference: caseReference
+			caseReference: caseReference,
+			publishStatus: 'published'
 		},
 		include: {
 			applicant: true
@@ -17,7 +18,14 @@ const getAllApplications = async (options = {}) => {
 	const removeWelshCases = !featureFlag.allowWelshCases;
 	const { filters, searchTerm, orderBy, offset, size, excludeNullDateOfSubmission } = options;
 	const where =
-		excludeNullDateOfSubmission || searchTerm || filters || removeWelshCases ? { AND: [] } : {};
+		excludeNullDateOfSubmission || searchTerm || filters || removeWelshCases
+			? {
+					publishStatus: 'published',
+					AND: []
+			  }
+			: {
+					publishStatus: 'published'
+			  };
 
 	if (excludeNullDateOfSubmission) {
 		where['AND'].push({
@@ -81,6 +89,7 @@ const getAllApplications = async (options = {}) => {
 			}))
 		});
 	}
+
 	if (filters?.sector) {
 		where['AND'].push({
 			OR: filters.sector.map((sector) => ({

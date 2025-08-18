@@ -328,6 +328,7 @@ describe('/api/v1/applications', () => {
 					skip: 0,
 					take: 25,
 					where: {
+						publishStatus: 'published',
 						AND: [
 							{
 								OR: [{ regions: { contains: 'eastern' } }, { regions: { contains: 'north_west' } }]
@@ -353,6 +354,7 @@ describe('/api/v1/applications', () => {
 					skip: 0,
 					take: 25,
 					where: {
+						publishStatus: 'published',
 						AND: [
 							{
 								OR: [
@@ -403,6 +405,7 @@ describe('/api/v1/applications', () => {
 					skip: 0,
 					take: 25,
 					where: {
+						publishStatus: 'published',
 						AND: [
 							{
 								OR: [
@@ -557,6 +560,7 @@ describe('/api/v1/applications', () => {
 					include: { applicant: true },
 					orderBy: { projectName: 'asc' },
 					where: {
+						publishStatus: 'published',
 						AND: [
 							{
 								OR: [
@@ -586,7 +590,9 @@ describe('/api/v1/applications', () => {
 				});
 				expect(mockProjectFindMany).toHaveBeenNthCalledWith(2, {
 					include: { applicant: true },
-					where: {}
+					where: {
+						publishStatus: 'published'
+					}
 				});
 				// NI Searches
 				expect(mockFindAndCountAll).toHaveBeenNthCalledWith(1, {
