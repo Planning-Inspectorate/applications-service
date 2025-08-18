@@ -31,7 +31,7 @@ describe('file utils', () => {
 
 			await uploadSubmissionFileToBlobStorage(fileData);
 
-			expect(upload).toBeCalledWith(fileData.buffer, fileData.mimeType, 'some-uuid/Test.pdf');
+			expect(upload).toBeCalledWith(fileData.buffer, fileData.mimeType, 'some-uuid/1');
 		});
 	});
 });

@@ -29,6 +29,33 @@ const getDocuments = async (query) => {
 		]
 	};
 
+	if (query.datePublishedFrom || query.datePublishedTo) {
+		const dateConditions = {};
+
+		if (query.datePublishedFrom === query.datePublishedTo) {
+			dateConditions.datePublished = {
+				contains: query.datePublishedFrom
+			};
+		} else {
+			if (query.datePublishedFrom && query.datePublishedTo) {
+				dateConditions.datePublished = {
+					gte: query.datePublishedFrom,
+					lte: query.datePublishedTo
+				};
+			} else if (query.datePublishedFrom) {
+				dateConditions.datePublished = {
+					gte: query.datePublishedFrom
+				};
+			} else if (query.datePublishedTo) {
+				dateConditions.datePublished = {
+					lte: query.datePublishedTo
+				};
+			}
+		}
+
+		whereClause.AND.push(dateConditions);
+	}
+
 	if (query.searchTerm) {
 		const terms = query.searchTerm
 			.split(' ')
@@ -125,9 +152,16 @@ const getDocumentsByIds = async (documentIds) => {
 	});
 };
 
+const getDocumentByDocRef = async (docRef) => {
+	return prismaClient.document.findFirst({
+		where: { documentReference: docRef }
+	});
+};
+
 module.exports = {
 	getDocuments,
 	getFilters,
 	getDocumentsByType,
-	getDocumentsByIds
+	getDocumentsByIds,
+	getDocumentByDocRef
 };

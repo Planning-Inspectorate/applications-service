@@ -4,7 +4,8 @@ jest.mock('../../../src/utils/document.mapper');
 const {
 	getDocuments,
 	getFilters,
-	getDocumentsByType
+	getDocumentsByType,
+	getDocumentByDocRef
 } = require('../../../src/repositories/document.backoffice.repository');
 const {
 	BACK_OFFICE_DB_DOCUMENTS,
@@ -15,7 +16,8 @@ const {
 const {
 	fetchBackOfficeDocuments,
 	fetchBackOfficeDocumentFilters,
-	fetchBackOfficeDocumentsByType
+	fetchBackOfficeDocumentsByType,
+	fetchBackOfficeDocumentByDocRef
 } = require('../../../src/services/document.backoffice.service');
 const { mapBackOfficeDocuments, mapFilters } = require('../../../src/utils/document.mapper');
 
@@ -91,6 +93,34 @@ describe('document back office service', () => {
 				type: 'Rule 6 letter'
 			});
 			expect(result).toEqual({ data: RESPONSE_DOCUMENTS[0] });
+		});
+	});
+
+	describe('fetchBackOfficeDocumentByDocRef', () => {
+		it('should fetch and map a document by documentReference', async () => {
+			const docRef = 'WW0110164-000002';
+
+			getDocumentByDocRef.mockResolvedValueOnce(BACK_OFFICE_DB_DOCUMENTS[0]);
+			mapBackOfficeDocuments.mockReturnValueOnce([RESPONSE_DOCUMENTS[0]]);
+
+			const result = await fetchBackOfficeDocumentByDocRef(docRef);
+
+			expect(getDocumentByDocRef).toHaveBeenCalledWith(docRef);
+			expect(mapBackOfficeDocuments).toHaveBeenCalledWith([BACK_OFFICE_DB_DOCUMENTS[0]]);
+			expect(result).toEqual([RESPONSE_DOCUMENTS[0]]);
+		});
+
+		it('should handle null if no document is found', async () => {
+			const docRef = 'INVALID_REF';
+
+			getDocumentByDocRef.mockResolvedValueOnce(null);
+			mapBackOfficeDocuments.mockReturnValueOnce([undefined]);
+
+			const result = await fetchBackOfficeDocumentByDocRef(docRef);
+
+			expect(getDocumentByDocRef).toHaveBeenCalledWith(docRef);
+			expect(mapBackOfficeDocuments).toHaveBeenCalledWith([null]);
+			expect(result).toEqual([undefined]);
 		});
 	});
 });

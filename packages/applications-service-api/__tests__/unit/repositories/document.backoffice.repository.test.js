@@ -1,7 +1,8 @@
 const {
 	getDocuments,
 	getFilters,
-	getDocumentsByType
+	getDocumentsByType,
+	getDocumentByDocRef
 } = require('../../../src/repositories/document.backoffice.repository');
 
 const mockFindMany = jest.fn();
@@ -77,6 +78,80 @@ describe('document repository', () => {
 				'Additional Submissions'
 			);
 		});
+
+		it('calls findMany and count with datePublished contains for single day (migrated case)', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedFrom: '2025-06-15',
+				datePublishedTo: '2025-06-15'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some((cond) => cond.datePublished && cond.datePublished.contains === '2025-06-15')
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some(
+					(cond) => cond.datePublished && cond.datePublished.contains === '2025-06-15'
+				)
+			).toBe(true);
+		});
+
+		it('calls findMany and count with datePublished gte for datePublishedFrom only', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedFrom: '2025-06-15'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some((cond) => cond.datePublished && cond.datePublished.gte === '2025-06-15')
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some((cond) => cond.datePublished && cond.datePublished.gte === '2025-06-15')
+			).toBe(true);
+		});
+
+		it('calls findMany and count with datePublished lte for datePublishedTo only', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedTo: '2025-06-15'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some((cond) => cond.datePublished && cond.datePublished.lte === '2025-06-15')
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some((cond) => cond.datePublished && cond.datePublished.lte === '2025-06-15')
+			).toBe(true);
+		});
+
+		it('calls findMany and count with datePublished gte/lte for date range', async () => {
+			await getDocuments({
+				caseReference,
+				datePublishedFrom: '2025-06-15',
+				datePublishedTo: '2025-06-16'
+			});
+			const where = mockFindMany.mock.calls[0][0].where;
+			expect(
+				where.AND.some(
+					(cond) =>
+						cond.datePublished &&
+						cond.datePublished.gte === '2025-06-15' &&
+						cond.datePublished.lte === '2025-06-16'
+				)
+			).toBe(true);
+			const whereCount = mockCount.mock.calls[0][0].where;
+			expect(
+				whereCount.AND.some(
+					(cond) =>
+						cond.datePublished &&
+						cond.datePublished.gte === '2025-06-15' &&
+						cond.datePublished.lte === '2025-06-16'
+				)
+			).toBe(true);
+		});
 	});
 
 	describe('getFilters', () => {
@@ -102,5 +177,39 @@ describe('document repository', () => {
 			});
 			expect(response).toEqual({ data: 'mock data' });
 		});
+	});
+
+	describe('getDocumentByDocRef', () => {
+		it('calls find first with the docRef', async () => {
+			const mockDocRef = 'WW0110164-000002';
+			const mockResult = {
+				documentReference: mockDocRef,
+				publishedDocumentURI: 'https://example.com'
+			};
+
+			mockFindFirst.mockResolvedValue(mockResult);
+
+			const response = await getDocumentByDocRef(mockDocRef);
+
+			expect(mockFindFirst).toHaveBeenCalledWith({
+				where: { documentReference: mockDocRef }
+			});
+
+			expect(response).toEqual(mockResult);
+		});
+	});
+
+	it('returns null if no document found by docRef', async () => {
+		const mockDocRef = 'WW0110164-000002';
+
+		mockFindFirst.mockResolvedValue(null);
+
+		const response = await getDocumentByDocRef(mockDocRef);
+
+		expect(mockFindFirst).toHaveBeenCalledWith({
+			where: { documentReference: mockDocRef }
+		});
+
+		expect(response).toBeNull();
 	});
 });
