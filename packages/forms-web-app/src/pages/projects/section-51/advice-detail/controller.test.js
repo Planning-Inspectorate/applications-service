@@ -23,7 +23,8 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 
 				beforeEach(() => {
 					mockReq = {
-						get: jest.fn(() => 's51advice/mock-referer-value')
+						get: jest.fn(() => 's51advice/mock-referer-value'),
+						session: {}
 					};
 					mockRes = {
 						render: jest.fn(),
@@ -40,7 +41,8 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							...mockReq,
 							params: {
 								case_ref: 'mock-case-ref',
-								id: 'mock-advice-detail-id'
+								id: 'mock-advice-detail-id',
+								session: {}
 							},
 							path: '/projects/mock-case-ref/s51advice/mock-advice-detail-id',
 							i18n: mockI18n({
@@ -93,7 +95,8 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 									section51: section51Translations_CY
 								},
 								'cy'
-							)
+							),
+							session: {}
 						};
 						await getSection51AdviceDetailController(mockReq, mockRes, mockNext);
 					});
@@ -136,7 +139,8 @@ describe('pages/projects/section-51/advice-detail/controller', () => {
 							case_ref: 'mock-case-ref',
 							id: 'mock-advice-detail-id'
 						},
-						path: '/projects/mock-case-ref/s51advice/mock-advice-detail-id'
+						path: '/projects/mock-case-ref/s51advice/mock-advice-detail-id',
+						session: {}
 					};
 					mockRes = {
 						render: jest.fn(),

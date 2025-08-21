@@ -8,7 +8,6 @@ const {
 
 const getRegisterOfAdviceBackLinkURL = (refURL) => {
 	const registerOfAdviceIndexURL = getRegisterOfAdviceIndexURL();
-
 	return refURL && refURL.includes(registerOfAdviceIndexURL) ? refURL : registerOfAdviceIndexURL;
 };
 
