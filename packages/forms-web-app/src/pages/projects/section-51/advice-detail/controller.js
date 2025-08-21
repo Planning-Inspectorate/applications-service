@@ -6,13 +6,13 @@ const { getView } = require('./_utils/get-view');
 
 const getSection51AdviceDetailController = async (req, res, next) => {
 	try {
-		const { i18n, params, path } = req;
+		const { i18n, params, path, session } = req;
 		const { case_ref, id } = params;
 
 		const caseRef = case_ref || registerOfAdviceCaseRef;
 
-		const refURL = req.get('Referrer');
-
+		const refURL = session.registerOfAdviceBackLink || req.get('Referrer');
+		console.log(session, '### refURL', refURL);
 		const adviceDetailData = await getAdviceDetailData(id, caseRef);
 
 		const view = getView(path, id);
