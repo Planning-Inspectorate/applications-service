@@ -11,6 +11,9 @@ const {
 const {
 	registerOfAdviceTranslationsMiddleware
 } = require('./index/_middleware/register-of-advice-middleware');
+const {
+	storeRegisterOfAdviceReferrerMiddleware
+} = require('./index/_middleware/store-register-of-advice-referrer-middleware');
 
 describe('pages/register-of-advice/router', () => {
 	describe('#section51Router', () => {
@@ -39,6 +42,7 @@ describe('pages/register-of-advice/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/register-of-advice/:id',
+				storeRegisterOfAdviceReferrerMiddleware,
 				getSection51AdviceDetailController
 			);
 
