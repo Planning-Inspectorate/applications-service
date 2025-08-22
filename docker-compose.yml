@@ -21,6 +21,7 @@ services:
     environment:
       GIT_SHA: example-git-sha
       APPLICATIONS_WEB_BASE_URL: http://forms-web-app:9004
+      AZURE_BLOB_STORE_HOST: https://nsip-documents.planninginspectorate.gov.uk/
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_URL: http://localhost:10000/
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_CONTAINER: application-submission-documents
       BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES: BC0110001,BC0110003,BC0110004,BC0110005,GS5110001
