@@ -27,7 +27,8 @@ module.exports = {
 			deadlineSubmissions: {
 				url: process.env.BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_URL,
 				container: process.env.BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_CONTAINER
-			}
+			},
+			docsURL: process.env.AZURE_BLOB_STORE_HOST
 		}
 	},
 	db: {},

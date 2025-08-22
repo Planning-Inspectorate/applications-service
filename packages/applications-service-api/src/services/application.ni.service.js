@@ -2,7 +2,7 @@ const {
 	getApplication: getApplicationRepository,
 	getAllApplications: getAllApplicationsRepository
 } = require('../repositories/project.ni.repository');
-const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
+const { mapApplicationsToCSV } = require('../utils/map-applications-to-csv');
 const {
 	buildApiFiltersFromNIApplications,
 	mapApplicationFiltersToNI,

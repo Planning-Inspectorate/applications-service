@@ -1,6 +1,7 @@
 const { stringify } = require('csv-stringify/sync');
 const moment = require('moment');
 const { stageNameFromValue } = require('./application.mapper');
+const getUrlForBlobStoreDocs = require('./get-url-for-blob-store-docs');
 
 const formatIfDate = (potentialDate) =>
 	moment(potentialDate).isValid() ? moment(potentialDate).format('YYYY-MM-DD') : potentialDate;
@@ -51,6 +52,17 @@ const mapApplicationsToCSV = (applications) => {
 		'Date withdrawn': application.DateProjectWithdrawn
 	}));
 
+	// insert blank rows
+	mappedApplications.push({}, {});
+	// get URL
+
+	// append link for quality data guide
+	mappedApplications.push({
+		'Project reference':
+			'To view the quality guide for this data paste this url into your browser:',
+		'Grid reference - Northing:': getUrlForQualityDataGuide()
+	});
+
 	return stringify(mappedApplications, {
 		header: true,
 		escape_formulas: true,
@@ -61,4 +73,19 @@ const mapApplicationsToCSV = (applications) => {
 	});
 };
 
-module.exports = mapApplicationsToCSV;
+// Constructs the full URL to the published Quality Data Guide document.
+function getUrlForQualityDataGuide() {
+	try {
+		const baseUrl = getUrlForBlobStoreDocs();
+		const qualityGuideFilename = 'NSIP projects data quality guide.xlsx';
+		const encodedFilename = encodeURIComponent(qualityGuideFilename);
+		return `${baseUrl}published-documents/${encodedFilename}`;
+	} catch (error) {
+		return `Error constructing URL for Quality Data Guide: ${error.message}`;
+	}
+}
+
+module.exports = {
+	mapApplicationsToCSV,
+	getUrlForQualityDataGuide
+};
