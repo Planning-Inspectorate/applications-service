@@ -12,7 +12,6 @@ const getSection51AdviceDetailController = async (req, res, next) => {
 		const caseRef = case_ref || registerOfAdviceCaseRef;
 
 		const refURL = session.registerOfAdviceBackLink || req.get('Referrer');
-		console.log(session, '### refURL', refURL);
 		const adviceDetailData = await getAdviceDetailData(id, caseRef);
 
 		const view = getView(path, id);
