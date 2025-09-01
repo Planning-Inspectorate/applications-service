@@ -2,6 +2,7 @@ const config = require('../lib/config');
 
 const { sendMessages } = require('../lib/eventClient');
 const { getDate } = require('../utils/date-utils');
+const { MESSAGE_EVENT_TYPE } = require('@planning-inspectorate/data-model');
 
 const { DEADLINE_SUBMISSION, REGISTER_NSIP_SUBSCRIPTION, REGISTER_REPRESENTATION } =
 	config.backOfficeIntegration.serviceBus.topics;
@@ -43,7 +44,7 @@ const publishCreateNSIPSubscription = async (caseReference, email, subscriptionT
 		contentType: 'application/json',
 		applicationProperties: {
 			version: '0.1',
-			type: 'Create'
+			type: MESSAGE_EVENT_TYPE.CREATE
 		}
 	};
 
@@ -61,7 +62,7 @@ const publishDeleteNSIPSubscription = async (caseReference, email) => {
 		contentType: 'application/json',
 		applicationProperties: {
 			version: '0.1',
-			type: 'Delete'
+			type: MESSAGE_EVENT_TYPE.DELETE
 		}
 	};
 
@@ -74,7 +75,7 @@ const publishRegisterRepresentation = async (interestedParty) => {
 		contentType: 'application/json',
 		applicationProperties: {
 			version: '0.1',
-			type: 'Publish'
+			type: MESSAGE_EVENT_TYPE.PUBLISH
 		}
 	};
 	await sendMessages(REGISTER_REPRESENTATION, [message]);

@@ -30,6 +30,7 @@
 		"@azure/service-bus": "*",
 		"@azure/storage-blob": "*",
 		"@pins/common": "*",
+		"@planning-inspectorate/data-model": "*",
 		"@planning-inspectorate/pins-notify": "*",
 		"@prisma/client": "*",
 		"applicationinsights": "*",
