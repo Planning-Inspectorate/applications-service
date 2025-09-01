@@ -14,7 +14,7 @@ const storeRegisterOfAdviceReferrerMiddleware = (req, res, next) => {
 		req.session.registerOfAdviceBackLink = ref;
 	}
 
-	if (isFromDetailPage) {
+	if (isFromDetailPage && req.query.lang) {
 		req.session.registerOfAdviceBackLink = updateLangQuery(
 			req.session.registerOfAdviceBackLink,
 			req.query.lang
