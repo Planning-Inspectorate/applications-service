@@ -55,6 +55,12 @@ extends:
       - name: Prod
         dependsOn:
           - Test
+    automaticDeployments:
+      environments:
+        - name: Dev
+        - name: Test
+          dependsOn:
+            - Dev
     deploymentStages:
       - name: Deploy Applications
         deploymentJobs:

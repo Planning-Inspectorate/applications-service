@@ -9,7 +9,7 @@ const {
 	mapNIApplicationsToApi,
 	mergeFilters
 } = require('../utils/application.mapper');
-const mapApplicationsToCSV = require('../utils/map-applications-to-csv');
+const { mapApplicationsToCSV } = require('../utils/map-applications-to-csv');
 const {
 	getAllApplications: getAllNIApplicationsRepository
 } = require('../repositories/project.ni.repository');

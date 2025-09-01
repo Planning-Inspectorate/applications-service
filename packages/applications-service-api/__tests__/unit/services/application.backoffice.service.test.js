@@ -30,7 +30,7 @@ const {
 	APPLICATION_API,
 	APPLICATIONS_FO_FILTERS
 } = require('../../__data__/application');
-const mapApplicationsToCSV = require('../../../src/utils/map-applications-to-csv');
+const { mapApplicationsToCSV } = require('../../../src/utils/map-applications-to-csv');
 const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 jest.mock('../../../src/utils/application.mapper');
 jest.mock('../../../src/services/application.ni.service');
