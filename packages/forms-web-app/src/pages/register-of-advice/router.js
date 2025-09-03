@@ -14,11 +14,20 @@ const {
 } = require('../projects/section-51/_middleware/add-section-51-translations-middleware');
 
 const {
+	storeRegisterOfAdviceReferrerMiddleware
+} = require('./index/_middleware/store-register-of-advice-referrer-middleware');
+
+const {
 	addCommonTranslationsMiddleware
 } = require('../_middleware/i18n/add-common-translations-middleware');
+
 const {
 	registerOfAdviceTranslationsMiddleware
 } = require('./index/_middleware/register-of-advice-middleware');
+
+const {
+	clearRegisterOfAdviceReferrerMiddleware
+} = require('./index/_middleware/clear-register-of-advice-referrer-middleware');
 
 const registerOfAdviceIndexURL = getRegisterOfAdviceIndexURL();
 const registerOfAdviceDetailURL = getRegisterOfAdviceDetailURL();
@@ -30,9 +39,14 @@ registerOfAdviceRouter.get(
 	addCommonTranslationsMiddleware,
 	addSection51TranslationsMiddleware,
 	registerOfAdviceTranslationsMiddleware,
+	clearRegisterOfAdviceReferrerMiddleware,
 	getRegisterOfAdviceController
 );
 
-registerOfAdviceRouter.get(registerOfAdviceDetailURL, getSection51AdviceDetailController);
+registerOfAdviceRouter.get(
+	registerOfAdviceDetailURL,
+	storeRegisterOfAdviceReferrerMiddleware,
+	getSection51AdviceDetailController
+);
 
 module.exports = { registerOfAdviceRouter };

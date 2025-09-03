@@ -11,9 +11,15 @@ const {
 const {
 	registerOfAdviceTranslationsMiddleware
 } = require('./index/_middleware/register-of-advice-middleware');
+const {
+	storeRegisterOfAdviceReferrerMiddleware
+} = require('./index/_middleware/store-register-of-advice-referrer-middleware');
+const {
+	clearRegisterOfAdviceReferrerMiddleware
+} = require('./index/_middleware/clear-register-of-advice-referrer-middleware');
 
 describe('pages/register-of-advice/router', () => {
-	describe('#section51Router', () => {
+	describe('#registerOfAdviceRouter', () => {
 		const get = jest.fn();
 		const post = jest.fn();
 
@@ -25,6 +31,8 @@ describe('pages/register-of-advice/router', () => {
 		}));
 
 		beforeEach(() => {
+			get.mockClear();
+			post.mockClear();
 			require('./router');
 		});
 
@@ -34,11 +42,13 @@ describe('pages/register-of-advice/router', () => {
 				addCommonTranslationsMiddleware,
 				addSection51TranslationsMiddleware,
 				registerOfAdviceTranslationsMiddleware,
+				clearRegisterOfAdviceReferrerMiddleware,
 				getRegisterOfAdviceController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/register-of-advice/:id',
+				storeRegisterOfAdviceReferrerMiddleware,
 				getSection51AdviceDetailController
 			);
 
