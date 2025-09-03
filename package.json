@@ -79,6 +79,7 @@
 		"@godaddy/terminus": "^4.7.1",
 		"@ministryofjustice/frontend": "^2.2.0",
 		"@pins/common": "file:./packages/common",
+		"@planning-inspectorate/data-model": "^1.15.0",
 		"@planning-inspectorate/pins-components": "^2.2.6",
 		"@planning-inspectorate/pins-notify": "^1.0.2",
 		"@prisma/client": "^5.17.0",
@@ -142,7 +143,6 @@
 	"devDependencies": {
 		"@babel/core": "^7.18.9",
 		"@babel/preset-env": "^7.18.9",
-		"babel-loader": "^8.2.5",
 		"@commitlint/cli": "^17.0.2",
 		"@commitlint/config-conventional": "^17.0.2",
 		"@semantic-release/exec": "^6.0.3",
@@ -150,6 +150,7 @@
 		"allure-commandline": "^2.20.1",
 		"azure-functions-core-tools": "^4.0.5390",
 		"azurite": "^3.26.0",
+		"babel-loader": "^8.2.5",
 		"commitizen": "^4.2.4",
 		"cross-env": "^7.0.3",
 		"cypress": "^13.6.4",

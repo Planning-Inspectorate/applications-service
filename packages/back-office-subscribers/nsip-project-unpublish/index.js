@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-project-unpublish function`);
@@ -9,12 +10,19 @@ module.exports = async (context, message) => {
 		return;
 	}
 
-	// we use deleteMany to avoid the need to check if the project exists
-	await prismaClient.project.deleteMany({
-		where: {
-			caseReference
-		}
-	});
+	const project = {
+		caseReference,
+		publishStatus: 'unpublished',
+		modifiedAt: new Date()
+	};
 
+	const { statement, parameters } = buildMergeQuery(
+		'project',
+		'caseReference',
+		project,
+		context.bindingData.enqueuedTimeUtc
+	);
+
+	await prismaClient.$executeRawUnsafe(statement, ...parameters);
 	context.log(`unpublished project with caseReference: ${caseReference}`);
 };
