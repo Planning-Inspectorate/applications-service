@@ -11,7 +11,7 @@ parameters:
     type: boolean
     displayName: Deploy Back Office Subscriber Functions
     default: true
-  - name: runDbMigrations
+  - name: schemaMigration
     displayName: Run Database Migration
     type: boolean
     default: false
@@ -84,9 +84,94 @@ extends:
                 parameters:
                   appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
+                  slot: staging
                   azurecrName: $(azurecrName)
                   repository: applications-service/applications-service-api
-                  slot: default
+              - template: ../steps/azure_web_app_verify_git_hash.yml
+                parameters:
+                  appName: Application service API
+                  appUrl: $(deploySlotOutputs.slotUrl)/health
+                  buildCommit: $(resources.pipeline.build.sourceCommit)
+          - name: Stage Web
+            condition: eq(${{ parameters.deployWeb }}, 'true')
+            steps:
+              - checkout: self
+              # app name is different in the training env (had to be shorter)
+              - bash: |
+                  if [[ $ENVIRONMENT == "training" ]]; then
+                    echo "Name: wfe"
+                    echo "##vso[task.setvariable variable=appName;]wfe"
+                  else
+                    echo "Name: applications-wfe"
+                    echo "##vso[task.setvariable variable=appName;]applications-wfe"
+                  fi
+                displayName: Set app name
+                env:
+                  ENVIRONMENT: $(ENVIRONMENT)
+              - template: ../steps/azure_web_app_deploy_slot.yml
+                parameters:
+                  appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appResourceGroup: $(resourceGroup)
+                  slot: staging
+                  azurecrName: $(azurecrName)
+                  repository: applications-service/forms-web-app
+              - template: ../steps/azure_web_app_verify_git_hash.yml
+                parameters:
+                  appName: Application service Web
+                  appUrl: $(deploySlotOutputs.slotUrl)/health
+                  buildCommit: $(resources.pipeline.build.sourceCommit)
+                  appRegistrationClientId: $(appRegistrationClientId)
+                  auth_enabled: 'true'
+                  env: $(ENVIRONMENT)
+      - name: Deploy
+        dependsOn:
+          - Stage
+        deploymentJobs:
+          - name: Database Migration
+            condition: ${{ eq(parameters.schemaMigration, true) }}
+            steps:
+              - checkout: self
+              - template: ../steps/azure_get_secrets.yml
+                parameters:
+                  keyVaultName: pinskvcommon$(ENVIRONMENT)$(REGION_SHORT)001
+                  secrets:
+                    - name: applications-service-sql-server-connection-string
+                      variable: DATABASE_URL
+              - template: ../steps/node_script.yml@templates
+                parameters:
+                  nodeVersion: 22
+                  script: npm ci --workspace=@pins/applications-service-api
+                  workingDirectory: $(Build.Repository.LocalPath)
+              - ${{ if eq(parameters.schemaMigration, true) }}:
+                  - template: ../steps/node_script.yml
+                    parameters:
+                      nodeVersion: 20
+                      environmentVariables:
+                        DATABASE_URL: $(DATABASE_URL)
+                      script: npm run db:migrate:deploy --workspace=@pins/applications-service-api
+                      workingDirectory: $(Build.Repository.LocalPath)/packages/applications-service-api
+          - name: Deploy API
+            condition: eq(${{ parameters.deployAPI }}, 'true')
+            steps:
+              - checkout: self
+              # app name is different in the training env (had to be shorter)
+              - bash: |
+                  if [[ $ENVIRONMENT == "training" ]]; then
+                    echo "Name: api"
+                    echo "##vso[task.setvariable variable=appName;]api"
+                  else
+                    echo "Name: applications-api"
+                    echo "##vso[task.setvariable variable=appName;]applications-api"
+                  fi
+                displayName: Set app name
+                env:
+                  ENVIRONMENT: $(ENVIRONMENT)
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
               - template: ../steps/azure_web_app_verify_git_hash.yml
                 parameters:
                   appName: Application service API
@@ -108,20 +193,19 @@ extends:
                 displayName: Set app name
                 env:
                   ENVIRONMENT: $(ENVIRONMENT)
-              - template: ../steps/azure_web_app_deploy_slot.yml
+              - template: ../steps/azure_web_app_slot_swap.yml
                 parameters:
                   appName: pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   appResourceGroup: $(resourceGroup)
-                  azurecrName: $(azurecrName)
-                  repository: applications-service/forms-web-app
-                  slot: default
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
               - template: ../steps/azure_web_app_verify_git_hash.yml
                 parameters:
-                  appName: web
-                  appUrl: $(WEB_URL)/health
+                  appName: Application service Web
+                  appUrl: https://pins-app-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001.azurewebsites.net/health
                   buildCommit: $(resources.pipeline.build.sourceCommit)
                   appRegistrationClientId: $(appRegistrationClientId)
-                  auth_enabled: "true"
+                  auth_enabled: 'true'
                   env: $(ENVIRONMENT)
           - name: Deploy Back Office Subscriber Functions
             condition: eq(${{ parameters.deployBackOfficeSubscribers }}, 'true')
@@ -146,26 +230,5 @@ extends:
                   appName: pins-func-applications-service-$(appName)-$(ENVIRONMENT)-$(REGION_SHORT)-001
                   resourceGroup: $(resourceGroup)
                   workingDirectory: $(Pipeline.Workspace)/build/back-office-subscribers
-          - name: Run Database Migration
-            condition: eq(${{ parameters.runDbMigrations }}, 'true')
-            steps:
-              - checkout: self
-              - template: ../steps/azure_get_secrets.yml
-                parameters:
-                  secrets:
-                    - name: applications-service-sql-server-connection-string
-                      variable: DATABASE_URL
-              - template: ../steps/node_script.yml@templates
-                parameters:
-                  nodeVersion: 22
-                  script: npm ci --workspace=@pins/applications-service-api
-                  workingDirectory: $(Build.Repository.LocalPath)
-              - template: ../steps/node_script.yml
-                parameters:
-                  nodeVersion: 20
-                  environmentVariables:
-                    DATABASE_URL: $(DATABASE_URL)
-                  script: npm run db:migrate:deploy --workspace=@pins/applications-service-api
-    region: ${{ parameters.Region }}
     globalVariables:
       - template: azure-pipelines-variables.yml@self
