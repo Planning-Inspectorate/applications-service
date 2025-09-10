@@ -35,12 +35,13 @@ describe('storeRegisterOfAdviceReferrerMiddleware', () => {
 		expect(next).toHaveBeenCalled();
 	});
 
-	it('should not update session if coming from detail page', () => {
+	it('should update session with correct language param when coming from detail page and language is selected', () => {
 		req.get.mockReturnValue('http://localhost:9004/register-of-advice/General-Advice-00820');
 		req.session.registerOfAdviceBackLink = 'http://localhost:9004/register-of-advice?search=abc';
+		req.query.lang = 'cy';
 		storeRegisterOfAdviceReferrerMiddleware(req, res, next);
 		expect(req.session.registerOfAdviceBackLink).toBe(
-			'http://localhost:9004/register-of-advice?search=abc'
+			'http://localhost:9004/register-of-advice?search=abc&lang=cy'
 		);
 		expect(next).toHaveBeenCalled();
 	});
