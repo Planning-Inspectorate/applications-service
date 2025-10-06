@@ -1,13 +1,10 @@
 {
 	"version": "2.0",
 	"logging": {
-		"fileLoggingMode": "always",
-		"logLevel": {
-			"default": "Information"
-		},
 		"applicationInsights": {
 			"samplingSettings": {
-				"isEnabled": false
+				"isEnabled": false,
+				"excludedTypes": "Request"
 			}
 		}
 	},
