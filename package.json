@@ -172,7 +172,7 @@
 		"multi-semantic-release": "^2.13.0",
 		"node-html-parser": "^6.1.5",
 		"node-mocks-http": "^1.11.0",
-		"nodemon": "^2.0.12",
+		"nodemon": "^3.1.10",
 		"pino-pretty": "^4.8.0",
 		"prettier": "^2.7.1",
 		"sass": "^1.53.0",
