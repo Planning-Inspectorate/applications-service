@@ -27,6 +27,10 @@
 			{% include "includes/primary-navigation.njk" %}
 		{% endif %}
 
+		{% if global.globalBannerText %}
+			{% include "includes/global-info-banner.njk" %}
+		{% endif %}
+
 		{% if backLinkUrl %}
 			{{ govukBackLink({
 				attributes: {

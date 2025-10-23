@@ -1,0 +1,6 @@
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+
+{{ govukNotificationBanner({
+	text: global.globalBannerText,
+	classes: "govuk-!-margin-top-6"
+}) }}
