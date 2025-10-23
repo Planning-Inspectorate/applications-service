@@ -9,12 +9,14 @@ const globalMiddlewareTranslations = {
 };
 
 jest.mock('../../config', () => {
-	const originalConfig = jest.requireActual('../config');
-
+	const originalConfig = jest.requireActual('../../config');
 	return {
 		...originalConfig,
 		featureFlag: {
 			allowHomepage: true
+		},
+		plannedServiceOutage: {
+			globalBannerText: 'mock warning text'
 		}
 	};
 });
@@ -28,7 +30,9 @@ describe('pages/_middleware/add-global-middleware', () => {
 			query: {}
 		};
 		const res = {
-			locals: {}
+			locals: {
+				global: {}
+			}
 		};
 		const next = jest.fn();
 
@@ -37,35 +41,50 @@ describe('pages/_middleware/add-global-middleware', () => {
 		});
 
 		it('should add the global values to locals', () => {
-			expect(res.locals).toMatchObject({
-				global: {
-					headerTitle: 'Find a National Infrastructure Project',
-					localeSelectorLinks: {
-						en: {
-							active: true,
-							name: 'English',
-							url: '/?lang=en'
-						},
-						cy: {
-							active: false,
-							name: 'Cymraeg',
-							url: '/?lang=cy'
-						}
+			expect(res.locals.global).toStrictEqual({
+				headerTitle: 'Find a National Infrastructure Project',
+				footerLinks: [
+					{
+						text: 'Terms and conditions',
+						href: '/terms-and-conditions',
+						attrs: { 'data-cy': 'Terms and conditions' }
 					},
-					primaryNavigationLinks: [
-						{ active: true, href: '/', text: 'Home' },
-						{
-							active: false,
-							href: '/project-search',
-							text: 'All projects'
-						},
-						{
-							active: false,
-							href: '/detailed-information',
-							text: 'Detailed information'
-						}
-					]
-				}
+					{
+						text: 'Accessibility statement',
+						href: '/accessibility-statement',
+						attrs: { 'data-cy': 'Accessibility' }
+					},
+					{
+						text: 'Privacy',
+						href: 'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
+						attrs: { 'data-cy': 'Privacy Notice (on GOV.UK)' }
+					},
+					{
+						text: 'Cookies',
+						href: '/cookies',
+						attrs: { 'data-cy': 'Cookies' }
+					},
+					{
+						text: 'Contact',
+						href: '/contact',
+						attrs: { 'data-cy': 'Contact' }
+					}
+				],
+				localeSelectorLinks: {
+					en: { active: true, name: 'English', url: '/?lang=en' },
+					cy: { active: false, name: 'Cymraeg', url: '/?lang=cy' }
+				},
+				primaryNavigationLinks: [
+					{ text: 'Home', href: '/', active: true },
+					{ text: 'All projects', href: '/project-search', active: false },
+					{
+						text: 'Detailed information',
+						href: '/detailed-information',
+						active: false
+					}
+				],
+				backLinkText: 'Back',
+				globalBannerText: 'mock warning text'
 			});
 		});
 	});
