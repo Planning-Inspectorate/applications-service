@@ -90,23 +90,6 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     action  = "Block"
 
     override {
-      rule_group_name = "GENERAL"
-      # Multipart request body failed strict validation
-      rule {
-        action  = "Log"
-        enabled = true
-        rule_id = "200003"
-      }
-
-      # Failed to parse request body.
-      rule {
-        action  = "Log"
-        enabled = true
-        rule_id = "200002"
-      }
-    }
-
-    override {
       rule_group_name = "RFI"
 
       rule {
@@ -428,6 +411,28 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
         enabled = true
         rule_id = "932150"
       }
+
+      rule {
+        # Remote Command Execution: Unix Command Injection
+        action  = "Log"
+        enabled = true
+        rule_id = "932100"
+      }
+
+      rule {
+        # Remote Command Execution: Unix Command Injection
+        action  = "Log"
+        enabled = true
+        rule_id = "932105"
+      }
+
+      rule {
+        # Remote Command Execution: Windows Command Injection
+        action  = "Log"
+        enabled = true
+        rule_id = "932115"
+      }
+
     }
 
     override {
@@ -513,6 +518,23 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
       }
     }
 
+    override {
+      rule_group_name = "General"
+      # Multipart request body failed strict validation
+      rule {
+        action  = "Log"
+        enabled = true
+        rule_id = "200003"
+      }
+
+      # Failed to parse request body.
+      rule {
+        action  = "Log"
+        enabled = true
+        rule_id = "200002"
+      }
+    }
+
     # Exception for ASB-2059 - Exclude all rules for this selector.
     exclusion {
       match_variable = "RequestBodyPostArgNames"
@@ -553,22 +575,6 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
       ]
     }
   }
-
-  # custom_rule {
-  #   name     = "IpBlacklist"
-  #   action   = "Block"
-  #   enabled  = true
-  #   priority = 11
-  #   type     = "MatchRule"
-  #
-  #   match_condition {
-  #     match_variable     = "RemoteAddr"
-  #     operator           = "IPMatch"
-  #     negation_condition = false
-  #     # match_values       = local.ip_blacklist
-  #   }
-  # }
-
 
   custom_rule {
     name                           = "RateLimitHttpRequest"
