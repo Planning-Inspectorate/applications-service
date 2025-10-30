@@ -1,5 +1,5 @@
 resource "azurerm_cdn_frontdoor_origin_group" "wfe" {
-  name                     = "${local.org}-fd-${local.service_name}-wfe-${var.environment}" #pins-fd-applications-wfe-dev
+  name                     = "${local.org}-fd-${local.service_name}-wfe-${var.environment}-bkp" #pins-fd-applications-wfe-dev
   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
   session_affinity_enabled = true
   provider                 = azurerm.front_door
@@ -19,7 +19,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "wfe" {
 }
 
 resource "azurerm_cdn_frontdoor_origin" "wfe" {
-  name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
+  name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}-bkp"
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wfe.id
   enabled                       = true
 
