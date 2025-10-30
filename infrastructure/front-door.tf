@@ -74,7 +74,7 @@ resource "azurerm_cdn_frontdoor_custom_domain_association" "wfe" {
 resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
   name                              = replace("${local.org}-waf-${local.service_name}-wfe-${var.environment}", "-", "")
   resource_group_name               = var.front_door_config.rg
-  enabled                           = true
+  enabled                           = false
   mode                              = "Prevention"
   redirect_url                      = "https://${var.web_domain}/error/firewall-error"
   custom_block_response_status_code = 429
