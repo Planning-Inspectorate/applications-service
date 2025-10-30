@@ -18,21 +18,21 @@ resource "azurerm_cdn_frontdoor_origin_group" "wfe" {
   }
 }
 
-resource "azurerm_cdn_frontdoor_origin" "wfe" {
-  name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
-  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wfe.id
-  enabled                       = true
-
-  certificate_name_check_enabled = true
-  provider                       = azurerm.front_door
-
-  host_name          = data.azurerm_linux_web_app.applications.default_hostname
-  origin_host_header = data.azurerm_linux_web_app.applications.default_hostname
-  http_port          = 80
-  https_port         = 443
-  priority           = 1
-  weight             = 1000
-}
+# resource "azurerm_cdn_frontdoor_origin" "wfe" {
+#   name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
+#   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wfe.id
+#   enabled                       = true
+#
+#   certificate_name_check_enabled = true
+#   provider                       = azurerm.front_door
+#
+#   host_name          = data.azurerm_linux_web_app.applications.default_hostname
+#   origin_host_header = data.azurerm_linux_web_app.applications.default_hostname
+#   http_port          = 80
+#   https_port         = 443
+#   priority           = 1
+#   weight             = 1000
+# }
 
 
 resource "azurerm_cdn_frontdoor_custom_domain" "wfe" {
@@ -627,21 +627,21 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
   }
 }
 
-resource "azurerm_cdn_frontdoor_security_policy" "wfe" {
-  name                     = replace("${local.org}-sec-${local.service_name}-wfe-${var.environment}", "-", "")
-  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
-  provider                 = azurerm.front_door
-
-  security_policies {
-    firewall {
-      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.wfe.id
-
-      association {
-        domain {
-          cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
-        }
-        patterns_to_match = ["/*"]
-      }
-    }
-  }
-}
+# resource "azurerm_cdn_frontdoor_security_policy" "wfe" {
+#   name                     = replace("${local.org}-sec-${local.service_name}-wfe-${var.environment}", "-", "")
+#   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
+#   provider                 = azurerm.front_door
+#
+#   security_policies {
+#     firewall {
+#       cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.wfe.id
+#
+#       association {
+#         domain {
+#           cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
+#         }
+#         patterns_to_match = ["/*"]
+#       }
+#     }
+#   }
+# }
