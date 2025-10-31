@@ -18,8 +18,13 @@ resource "azurerm_cdn_frontdoor_origin_group" "wfe" {
   }
 }
 
+import {
+  to = azurerm_cdn_frontdoor_origin_group.wfe
+  id = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-common-prod/providers/Microsoft.Cdn/profiles/pins-fd-common-prod/originGroups/pins-fd-applications-wfe-prod/origins/pins-fd-applications-wfe-prod"
+}
+
 resource "azurerm_cdn_frontdoor_origin" "wfe" {
-  name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}-bkp"
+  name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.wfe.id
   enabled                       = true
 
@@ -627,21 +632,26 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
   }
 }
 
-# resource "azurerm_cdn_frontdoor_security_policy" "wfe" {
-#   name                     = replace("${local.org}-sec-${local.service_name}-wfe-${var.environment}", "-", "")
-#   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
-#   provider                 = azurerm.front_door
-#
-#   security_policies {
-#     firewall {
-#       cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.wfe.id
-#
-#       association {
-#         domain {
-#           cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
-#         }
-#         patterns_to_match = ["/*"]
-#       }
-#     }
-#   }
-# }
+import {
+  to = azurerm_cdn_frontdoor_firewall_policy.wfe
+  id = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-common-prod/providers/Microsoft.Cdn/profiles/pins-fd-common-prod/securityPolicies/pinssecapplicationswfeprod"
+}
+
+resource "azurerm_cdn_frontdoor_security_policy" "wfe" {
+  name                     = replace("${local.org}-sec-${local.service_name}-wfe-${var.environment}", "-", "")
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
+  provider                 = azurerm.front_door
+
+  security_policies {
+    firewall {
+      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.wfe.id
+
+      association {
+        domain {
+          cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
+        }
+        patterns_to_match = ["/*"]
+      }
+    }
+  }
+}
