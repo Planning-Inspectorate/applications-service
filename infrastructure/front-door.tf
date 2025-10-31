@@ -19,7 +19,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "wfe" {
 }
 
 import {
-  to = azurerm_cdn_frontdoor_origin_group.wfe
+  to = azurerm_cdn_frontdoor_origin.wfe
   id = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-common-prod/providers/Microsoft.Cdn/profiles/pins-fd-common-prod/originGroups/pins-fd-applications-wfe-prod/origins/pins-fd-applications-wfe-prod"
 }
 
@@ -633,7 +633,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
 }
 
 import {
-  to = azurerm_cdn_frontdoor_firewall_policy.wfe
+  to = azurerm_cdn_frontdoor_security_policy.wfe
   id = "/subscriptions/d1d6c393-2fe3-40af-ac27-f5b6bad36735/resourceGroups/pins-rg-common-prod/providers/Microsoft.Cdn/profiles/pins-fd-common-prod/securityPolicies/pinssecapplicationswfeprod"
 }
 
