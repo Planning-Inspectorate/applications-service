@@ -10,7 +10,7 @@
       </h1>
 
       <p class="govuk-body-m">
-        {{ t('accessibilityStatement.paragraph1') }} {{ host }}.
+        {{ t('accessibilityStatement.paragraph1') }} {{ host }} {{ t('accessibilityStatement.paragraph24') }}
       </p>
 
       <h2 class="govuk-heading-m">
@@ -82,7 +82,7 @@
       </h2>
 
       <p class="govuk-body">
-        {{ t('accessibilityStatement.paragraph10') }} <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a>
+        {{ t('accessibilityStatement.paragraph10') }} {{ t('accessibilityStatement.paragraph25') }}  <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">{{ pinsContactDetails.enquiriesEmailAddress }}</a> {{ t('accessibilityStatement.paragraph27') }}
       </p>
 
       <h2 class="govuk-heading-m">
@@ -125,15 +125,12 @@
         {{ t('accessibilityStatement.heading10') }}
       </h3>
 
-      <ul class="govuk-list govuk-list--bullet">
+      <ul class="govuk-list govuk-list--number">
         <li>
           {{ t('accessibilityStatement.listItem12') }}
         </li>
         <li>
            {{ t('accessibilityStatement.listItem13') }}
-        </li>
-        <li>
-           {{ t('accessibilityStatement.listItem14') }}
         </li>
       </ul>
 
@@ -177,6 +174,14 @@
       <p class="govuk-body">
         {{ t('accessibilityStatement.paragraph20') }}
       </p>
+
+            <h2 class="govuk-heading-m">
+              {{ t('accessibilityStatement.heading15') }}
+            </h2>
+
+            <p class="govuk-body">
+              {{ t('accessibilityStatement.paragraph26') }}
+            </p>
 
       <h2 class="govuk-heading-m">
         {{ t('accessibilityStatement.heading14') }}
