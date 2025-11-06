@@ -35,17 +35,17 @@
 # }
 
 
-# resource "azurerm_cdn_frontdoor_custom_domain" "wfe" {
-#   name                     = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
-#   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
-#   host_name                = var.web_domain
-#   provider                 = azurerm.front_door
+resource "azurerm_cdn_frontdoor_custom_domain" "wfe" {
+  name                     = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
+  host_name                = var.web_domain
+  provider                 = azurerm.front_door
 
-#   tls {
-#     certificate_type = "ManagedCertificate"
-#     # minimum_tls_version = "TLS12"
-#   }
-# }
+  tls {
+    certificate_type = "ManagedCertificate"
+    # minimum_tls_version = "TLS12"
+  }
+}
 
 # resource "azurerm_cdn_frontdoor_route" "wfe" {
 #   name                          = "${local.org}-fd-${local.service_name}-wfe-${var.environment}"
