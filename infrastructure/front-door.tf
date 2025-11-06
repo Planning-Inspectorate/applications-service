@@ -64,11 +64,11 @@ resource "azurerm_cdn_frontdoor_custom_domain" "wfe" {
 #   link_to_default_domain          = false
 # }
 
-resource "azurerm_cdn_frontdoor_custom_domain_association" "wfe" {
-  cdn_frontdoor_custom_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
-  cdn_frontdoor_route_ids        = [azurerm_cdn_frontdoor_route.wfe.id]
-  provider                       = azurerm.front_door
-}
+# resource "azurerm_cdn_frontdoor_custom_domain_association" "wfe" {
+#   cdn_frontdoor_custom_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
+#   cdn_frontdoor_route_ids        = [azurerm_cdn_frontdoor_route.wfe.id]
+#   provider                       = azurerm.front_door
+# }
 
 # WAF policy
 resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
