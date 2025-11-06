@@ -626,21 +626,21 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
   }
 }
 
-# resource "azurerm_cdn_frontdoor_security_policy" "wfe" {
-#   name                     = replace("${local.org}-sec-${local.service_name}-wfe-${var.environment}", "-", "")
-#   cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
-#   provider                 = azurerm.front_door
+resource "azurerm_cdn_frontdoor_security_policy" "wfe" {
+  name                     = replace("${local.org}-sec-${local.service_name}-wfe-${var.environment}", "-", "")
+  cdn_frontdoor_profile_id = data.azurerm_cdn_frontdoor_profile.shared.id
+  provider                 = azurerm.front_door
 
-#   security_policies {
-#     firewall {
-#       cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.wfe.id
+  security_policies {
+    firewall {
+      cdn_frontdoor_firewall_policy_id = azurerm_cdn_frontdoor_firewall_policy.wfe.id
 
-#       association {
-#         domain {
-#           cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
-#         }
-#         patterns_to_match = ["/*"]
-#       }
-#     }
-#   }
-# }
+      association {
+        domain {
+          cdn_frontdoor_domain_id = azurerm_cdn_frontdoor_custom_domain.wfe.id
+        }
+        patterns_to_match = ["/*"]
+      }
+    }
+  }
+}
