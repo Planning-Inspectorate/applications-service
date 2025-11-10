@@ -1,6 +1,6 @@
 {
 	"heading1": "Datganiad hygyrchedd ar gyfer prosiectau seilwaith cenedlaethol",
-	"paragraph1": "Mae'r datganiad hygyrchedd hwn yn berthnasol i wefan",
+	"paragraph1": "Mae'r datganiad hygyrchedd hwn yn berthnasol i wefan {{-website}}.",
 	"heading2": "Defnyddio'r gwasanaeth hwn",
 	"paragraph2": "Mae'r wefan hon yn cael ei chynnal gan yr Arolygiaeth Gynllunio. Rydym eisiau i gynifer o bobl â phosibl ddefnyddio'r wefan hon. Er enghraifft, mae hyn yn golygu y dylech allu:",
 	"listItem1": "newid lliwiau, lefelau cyferbynnedd a ffontiau",
@@ -13,7 +13,7 @@
 	"paragraph4LinkText": "AbilityNet",
 	"heading3": "Pa mor hygyrch yw'r wefan hon",
 	"paragraph5": "Mae'r gwasanaeth hwn yn cydymffurfio'n rhannol â safon AA y {{-link}}",
-	"paragraph5LinkText": "Canllawiau Hygyrchedd Cynnwys Gwe fersiwn 2.2.",
+	"paragraph5LinkText": "Canllawiau Hygyrchedd Cynnwys Gwe fersiwn (WCAG) 2.2.",
 	"paragraph6": "Rydym yn gwybod nad yw rhai rhannau o'r wefan hon yn gwbl hygyrch:",
 	"listItem6": "nid yw rhai tudalennau a dogfennau atodedig wedi'u hysgrifennu mewn iaith glir",
 	"listItem7": "mae llawer o ddogfennau mewn fformat PDF ac nid ydynt yn hygyrch",
@@ -26,7 +26,8 @@
 	"listItem11": "ffoniwch:",
 	"paragraph9": "Byddwn yn ystyried eich cais ac yn cysylltu â chi ymhen 10 niwrnod gwaith.",
 	"heading5": "Adrodd am broblemau hygyrchedd â'r gwasanaeth hwn",
-	"paragraph10": "Rydym bob amser yn ceisio gwella hygyrchedd y wefan hon.",
+	"paragraph10": "Rydym bob amser yn ceisio gwella hygyrchedd y wefan hon. Anfonwch neges e-bost atom: {{-link}} os dewch ar draws unrhyw broblemau nad ydynt wedi'u rhestru ar y dudalen hon neu os ydych yn credu nad ydym yn bodloni ein gofynion hygyrchedd.",
+	"paragraph10LinkText": "nienquiries@planninginspectorate.gov.uk",
 	"heading6": "Gweithdrefn orfodi",
 	"paragraph11": "Os byddwch yn cysylltu â ni gyda chwyn ac yn anfodlon ar ein hymateb, {{-link}}.",
 	"paragraph11LinkText": "cysylltwch â'r Gwasanaeth Cynghori a Chymorth Cydraddoldeb (EASS)",
@@ -55,9 +56,6 @@
 	"paragraph21": "Paratowyd y datganiad hygyrchedd hwn gyntaf ar 5 Chwefror 2025.",
 	"paragraph22": "Cafwyd adroddiad hygyrchedd o'r gwasanaeth gan Zoonou ym mis Hydref 2023 yn erbyn safon AA WCAG 2.2. Roedd yn cynnwys profion awtomataidd a llaw helaeth ar ystod o borwyr a thechnolegau cynorthwyol.",
 	"paragraph23": "Adolygwyd y datganiad hwn ddiwethaf ar 14 Mai 2025.",
-	"paragraph24": ".",
-	"paragraph25": "Anfonwch neges e-bost atom:",
 	"heading15": "Yr hyn rydym yn ei wneud i wella hygyrchedd",
-	"paragraph26": "Rydym wedi ymrwymo i fynd i’r afael â’r materion a restrir fel rhai nad ydynt yn cydymffurfio, ac fe fyddwn yn diweddaru’r datganiad hygyrchedd hwn pan fydd y materion hyn wedi’u datrys. Pryd bynnag y byddwn yn rhyddhau nodweddion newydd, rydym yn sicrhau eu bod yn cydymffurfio â safon WCAG 2.2 AA.",
-	"paragraph27": "os dewch ar draws unrhyw broblemau nad ydynt wedi'u rhestru ar y dudalen hon neu os ydych yn credu nad ydym yn bodloni ein gofynion hygyrchedd."
+	"paragraph24": "Rydym wedi ymrwymo i fynd i’r afael â’r materion a restrir fel rhai nad ydynt yn cydymffurfio, ac fe fyddwn yn diweddaru’r datganiad hygyrchedd hwn pan fydd y materion hyn wedi’u datrys. Pryd bynnag y byddwn yn rhyddhau nodweddion newydd, rydym yn sicrhau eu bod yn cydymffurfio â safon WCAG 2.2 AA."
 }

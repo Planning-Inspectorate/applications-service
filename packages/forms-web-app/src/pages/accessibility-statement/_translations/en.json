@@ -1,6 +1,6 @@
 {
 	"heading1": "Accessibility statement for national infrastructure projects",
-	"paragraph1": "This accessibility statement applies to the",
+	"paragraph1": "This accessibility statement applies to the {{-website}} website.",
 	"heading2": "Using this service",
 	"paragraph2": "This website is run by the Planning Inspectorate. We want as many people as possible to be able to use this website. For example, that means you should be able to:",
 	"listItem1": "change colours, contrast levels and fonts",
@@ -13,7 +13,7 @@
 	"paragraph4LinkText": "AbilityNet",
 	"heading3": "How accessible this website is",
 	"paragraph5": "This service is partially compliant with the {{-link}} AA standard.",
-	"paragraph5LinkText": "Web Content Accessibility Guidelines version 2.2",
+	"paragraph5LinkText": "Web Content Accessibility Guidelines version (WCAG) 2.2",
 	"paragraph6": "We know some parts of this website are not fully accessible:",
 	"listItem6": "some pages and document attachments are not written in plain English",
 	"listItem7": "many documents are in PDF format and are not accessible",
@@ -26,7 +26,8 @@
 	"listItem11": "call:",
 	"paragraph9": "We'll consider your request and get back to you in 10 working days.",
 	"heading5": "Reporting accessibility problems with this service",
-	"paragraph10": "We're always looking to improve the accessibility of this website.",
+	"paragraph10": "We're always looking to improve the accessibility of this website. Email us at: {{-link}} if you find any problems not listed on this page or think we're not meeting accessibility requirements.",
+	"paragraph10LinkText": "nienquiries@planninginspectorate.gov.uk",
 	"heading6": "Enforcement procedure",
 	"paragraph11": "If you contact us with a complaint and you're not happy with our response {{-link}}.",
 	"paragraph11LinkText": "contact the Equality Advisory and Support Service (EASS)",
@@ -55,9 +56,6 @@
 	"paragraph21": "This accessibility statement was first prepared on 5 February 2025.",
 	"paragraph22": "An accessibility report of the service by Zoonou took place in October 2023 against the WCAG 2.2 AA standard. It included extensive automated and manual testing on a range of browsers and assistive technologies.",
 	"paragraph23": "This statement was last reviewed on 14 May 2025.",
-	"paragraph24": "website.",
-	"paragraph25": "Email us at:",
 	"heading15": "What we’re doing to improve accessibility",
-	"paragraph26": "We are committed to working on the issues listed as non-compliant and we will update this accessibility statement when these issues are fixed. Whenever we release new features, we ensure they meet WCAG 2.2 AA standard.",
-	"paragraph27": "If you find any problems not listed on this page or think we're not meeting accessibility requirements."
+	"paragraph24": "We are committed to working on the issues listed as non-compliant and we will update this accessibility statement when these issues are fixed. Whenever we release new features, we ensure they meet WCAG 2.2 AA standard."
 }
