@@ -127,7 +127,7 @@ module.exports = {
 	},
 	externalURL: {
 		abilityNetURL: 'https://mcmw.abilitynet.org.uk/',
-		wcag21URL: 'https://www.w3.org/TR/WCAG22/',
+		wcag22URL: 'https://www.w3.org/TR/WCAG22/',
 		eassURL: 'https://www.equalityadvisoryservice.com/'
 	},
 	pinsPrivacyNoticeUrl:
