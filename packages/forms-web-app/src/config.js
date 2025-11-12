@@ -70,7 +70,7 @@ module.exports = {
 	serviceFeedbackUrl:
 		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
 	pinsContactDetails: {
-		enquiriesEmailAddress: 'NIEnquiries@planninginspectorate.gov.uk',
+		enquiriesEmailAddress: 'nienquiries@planninginspectorate.gov.uk',
 		supportTeamPhoneNumber: '0303 444 5000',
 		pressAndMediaPhoneNumber: '0303 444 5004',
 		pressAndMediaEmailAddress: 'press.office@planninginspectorate.gov.uk',
@@ -127,7 +127,7 @@ module.exports = {
 	},
 	externalURL: {
 		abilityNetURL: 'https://mcmw.abilitynet.org.uk/',
-		wcag21URL: 'https://www.w3.org/TR/WCAG21/',
+		wcag22URL: 'https://www.w3.org/TR/WCAG22/',
 		eassURL: 'https://www.equalityadvisoryservice.com/'
 	},
 	pinsPrivacyNoticeUrl:
