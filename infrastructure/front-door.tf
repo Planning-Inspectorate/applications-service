@@ -513,6 +513,23 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
       }
     }
 
+		override {
+			rule_group_name = "PROTOCOL-ATTACK"
+
+			rule {
+				# HTTP Request Smuggling Attack
+				action  = "Block"
+				enabled = true
+				rule_id = "921110"
+
+				exclusion {
+					match_variable = "RequestBodyPostArgNames"
+					operator       = "Equals"
+					selector       = "comment"
+				}
+			}
+		}
+
     # Exception for ASB-2059 - Exclude all rules for this selector.
     exclusion {
       match_variable = "RequestBodyPostArgNames"

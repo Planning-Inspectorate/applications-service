@@ -10,7 +10,9 @@ const imgSrc = [
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/'
+	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/',
+	'https://*.openstreetmap.org',
+	'https://*.tile.openstreetmap.org'
 ];
 
 const connectSrc = [
@@ -20,7 +22,9 @@ const connectSrc = [
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://api.os.uk'
+	'https://api.os.uk',
+	'https://*.openstreetmap.org',
+	'https://*.tile.openstreetmap.org'
 ];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;

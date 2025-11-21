@@ -1,0 +1,38 @@
+{% extends "layouts/default.njk" %}
+
+{% set pageTitle = 'All projects map POC' %}
+
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+				integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+				crossorigin=""/>
+{% endblock %}
+
+{% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{
+			callback: "var leafletMap = new appScripts.leaflet.default(); leafletMap.initiate('" + mapAccessToken + "', 'map');",
+			src: "public/scripts/leaflet.script.js"
+		}
+	), initiateScriptsConfig) %}
+{% endblock %}
+
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-full-width">
+			<h1 class="govuk-heading-xl">
+				All projects map POC
+			</h1>
+
+				{% if mapAccessToken %}
+					<div id="map" style="height: 550px;"></div>
+
+				{% else %}
+					Missing map access token.
+				{% endif %}
+
+		</div>
+	</div>
+{% endblock %}
