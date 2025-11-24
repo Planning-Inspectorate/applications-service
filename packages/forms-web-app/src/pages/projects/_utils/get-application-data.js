@@ -58,7 +58,7 @@ const getApplicationData = async (case_ref, lang = 'en') => {
 			data.DateOfReOpenRelevantRepresentationStart
 		),
 		DateOfReOpenRelevantRepresentationClose: badDateToNull(
-			data.DateOfReOpenRelevantRepresentationStart
+			data.DateOfReOpenRelevantRepresentationClose
 		),
 		DateRRepAppearOnWebsite: badDateToNull(data.DateRRepAppearOnWebsite),
 		DateOfPreliminaryMeeting: badDateToNull(data.DateOfPreliminaryMeeting),
