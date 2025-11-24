@@ -550,6 +550,13 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
       operator       = "Equals"
       selector       = "backOfficeProjectUpdateContent"
     }
+
+    # exclude examination enter comment from all rules
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "examination-enter-comment"
+    }
   }
 
   managed_rule {
