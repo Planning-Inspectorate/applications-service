@@ -2,21 +2,23 @@ import L from 'leaflet';
 import 'proj4leaflet';
 
 function leafletMap() {
-	this.initiate = function (token, container, lat = 52.3, lng = -1.7, zoom = 5) {
+	this.initiate = function (token, container, lat = 52.3, lng = -1.7, zoom = 0) {
+
+		const mapResolutions = [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75]
 		const crs27700 = new L.Proj.CRS(
 			'EPSG:27700',
 			'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
 			{
-				resolutions: [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75],
+				resolutions: mapResolutions,
 				origin: [-238375.0, 1376256.0]
 			}
 		);
 
 		const mapOptions = {
 			minZoom: 0,
-			maxZoom: 9, //max zoom available for Light_27700 tile set
+			maxZoom: mapResolutions.length - 1, //match the number of resolutions we have available for our tile source and OS maps plan
 			center: [lat, lng], //rough center of UK in WGS84, will be converted by CRS to BNG
-			zoom: zoom || 0,
+			zoom: zoom,
 			crs: crs27700,
 			//format for max bounds [[southLat, westLon], [northLat, eastLon]]
 			maxBounds: [
