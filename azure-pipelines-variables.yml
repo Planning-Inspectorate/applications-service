@@ -3,3 +3,4 @@ variables:
   resourceGroup: pins-rg-applications-service-$(ENVIRONMENT)-$(REGION_SHORT)-001
   tagPrefix: applications-service
   appRegistrationClientId: api://2f5cb0e8-5df8-49f4-8fa7-c3277a0a8632
+  npm_config_cache: $(Pipeline.Workspace)/.npm
