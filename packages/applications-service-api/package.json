@@ -22,9 +22,6 @@
 		"test:cov": "jest --coverage --verbose",
 		"test:watch": "jest --watchAll --runInBand"
 	},
-	"prisma": {
-		"seed": "node ./prisma/seed.js"
-	},
 	"dependencies": {
 		"@azure/identity": "*",
 		"@azure/service-bus": "*",
@@ -32,6 +29,7 @@
 		"@pins/common": "*",
 		"@planning-inspectorate/data-model": "*",
 		"@planning-inspectorate/pins-notify": "*",
+		"@prisma/adapter-mssql": "*",
 		"@prisma/client": "*",
 		"applicationinsights": "*",
 		"axios": "*",

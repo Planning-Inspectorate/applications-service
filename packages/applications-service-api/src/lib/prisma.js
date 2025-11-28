@@ -1,6 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../../prisma/client');
 const { isProduction } = require('./config');
 const logger = require('./logger');
+const { PrismaMssql } = require('@prisma/adapter-mssql');
 
 let prismaClientInstance;
 
@@ -11,6 +12,7 @@ const createPrismaClient = () => {
 
 	if (!prismaClientInstance) {
 		prismaClientInstance = new PrismaClient({
+			adapter: new PrismaMssql(process.env.DATABASE_URL),
 			log: logOption
 		});
 	}

@@ -5,3 +5,5 @@ README.md
 coverage
 .wrangler
 *.yml
+packages/applications-service-api/prisma/client/*
+packages/back-office-subscribers/lib/prisma-client/*
