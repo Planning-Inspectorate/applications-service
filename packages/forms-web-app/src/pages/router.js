@@ -10,6 +10,7 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
+const { getAllProjectsMapController } = require('./maps-poc/all-projects/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -130,6 +131,8 @@ pagesRouter.get(
 	addContactTranslationsMiddleware,
 	getContactController
 );
+
+pagesRouter.get('/all-projects-map', getAllProjectsMapController);
 
 pagesRouter.use(projectsRouter);
 

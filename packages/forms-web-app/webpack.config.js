@@ -1,9 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const entryPath = path.resolve(__dirname, 'src', 'scripts');
-const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
+const outputPath = path.resolve(__dirname, 'src', 'public');
 const outputFilenamePrefix = 'script';
 
 const config = {
@@ -37,12 +38,13 @@ const configAppScripts = {
 	entry: {
 		initiate: `${entryPath}/initiate.js`,
 		map: `${entryPath}/map`,
+		leaflet: `${entryPath}/leaflet`,
 		modal: `${entryPath}/modal`,
 		simulateUserAction: `${entryPath}/simulate-user-action.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,
-		path: outputPath,
+		path: `${outputPath}/scripts`,
 		library: ['appScripts', '[name]']
 	}
 };
@@ -60,11 +62,30 @@ const configPageScripts = {
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,
-		path: outputPath
+		path: `${outputPath}/scripts`
 	},
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env.googleTagManager': process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true'
+		})
+	]
+};
+
+//TODO finish off
+const configExternalCss = {
+	...config,
+	plugins: [
+		new CopyPlugin({
+			patterns: [
+				{
+					from: path.resolve(__dirname, '../../node_modules/leaflet/dist/leaflet.css'),
+					to: path.resolve(__dirname, `${outputPath}/stylesheets/leaflet.css`)
+				},
+				{
+					from: '../../node_modules/leaflet/dist/images',
+					to: `${outputPath}/images/leaflet`
+				}
+			]
 		})
 	]
 };
