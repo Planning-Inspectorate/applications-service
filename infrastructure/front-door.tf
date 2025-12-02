@@ -502,7 +502,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
 
     override {
       rule_group_name = "PROTOCOL-ATTACK"
-
+      # HTTP Request Smuggling Attack
       rule {
         action  = "Log"
         enabled = true
@@ -525,6 +525,13 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
         action  = "Log"
         enabled = true
         rule_id = "920121"
+      }
+
+      rule {
+        # URL Encoding Abuse Attack Attempt
+        action  = "Log"
+        enabled = true
+        rule_id = "920240"
       }
     }
 
