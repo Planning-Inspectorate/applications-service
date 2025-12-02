@@ -501,6 +501,16 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     }
 
     override {
+      rule_group_name = "PROTOCOL-ATTACK"
+
+      rule {
+        action  = "Log"
+        enabled = true
+        rule_id = "921110"
+      }
+    }
+
+    override {
       rule_group_name = "PROTOCOL-ENFORCEMENT"
 
       rule {
