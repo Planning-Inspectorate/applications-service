@@ -27,6 +27,8 @@ exports[`pages/index/_translations should return the correct English translation
   "paragraph4": "Search by project name or applicant",
   "paragraph5": "See a {{-link}}",
   "paragraph5LinkText": "complete list of all projects",
+  "paragraph7": "See a {{-link}}",
+  "paragraph7LinkText": "map view of all projects",
 }
 `;
 
@@ -57,5 +59,7 @@ exports[`pages/index/_translations should return the correct Welsh translations 
   "paragraph4": "Chwilio yn ôl enw'r prosiect neu'r ymgeisydd",
   "paragraph5": "Gweld {{-link}}",
   "paragraph5LinkText": "rhestr lawn o'r holl brosiectau",
+  "paragraph7": "Gweld {{-link}}",
+  "paragraph7LinkText": "golwg map o'r holl brosiectau",
 }
 `;
