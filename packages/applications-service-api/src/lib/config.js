@@ -62,7 +62,7 @@ module.exports = {
 		port: Number(process.env.SERVER_PORT || 3000),
 		showErrors: process.env.SERVER_SHOW_ERRORS === 'true',
 		terminationGracePeriod: Number(
-			(process.env.SERVER_TERMINATION_GRACE_PERIOD_SECONDS || 0) * 1000
+			Number(process.env.SERVER_TERMINATION_GRACE_PERIOD_SECONDS || 0) * 1000
 		)
 	},
 	apps: {
@@ -116,6 +116,7 @@ module.exports = {
 	featureFlag: {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		enableProjectsMap: process.env.FEATURE_ENABLE_PROJECTS_MAP === 'true',
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	}
 };
