@@ -2,233 +2,240 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "darwin", "darwin-arm64", "linux-musl", "linux-musl-arm64-openssl-1.1.x", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows", "debian-openssl-1.1.x"]
+	provider      = "prisma-client-js"
+	binaryTargets = ["native", "darwin", "darwin-arm64", "linux-musl", "linux-musl-arm64-openssl-1.1.x", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows", "debian-openssl-1.1.x"]
+	output        = "./client"
+}
+
+// crudely share the Prisma client with the back-office-subscribers function
+generator func_client {
+	provider      = "prisma-client-js"
+	binaryTargets = ["native", "darwin", "darwin-arm64", "linux-musl", "linux-musl-arm64-openssl-1.1.x", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows", "debian-openssl-1.1.x"]
+	output        = "../../back-office-subscribers/lib/prisma-client"
 }
 
 datasource db {
-  provider = "sqlserver"
-  url      = env("DATABASE_URL")
+	provider = "sqlserver"
 }
 
 model Document {
-  id                     Int       @unique @default(autoincrement())
-  documentId             String    @id
-  caseId                 Int?
-  caseRef                String?
-  representationId       Int?
-  documentReference      String?
-  version                Int?
-  examinationRefNo       String?
-  filename               String?
-  originalFilename       String?
-  size                   Int?
-  mime                   String?
-  documentURI            String?
-  publishedDocumentURI   String?
-  virusCheckStatus       String?
-  fileMD5                String?
-  dateCreated            String?
-  lastModified           String?
-  caseType               String?
-  documentStatus         String?
-  redactedStatus         String?
-  publishedStatus        String?
-  datePublished          String?
-  documentType           String?
-  securityClassification String?
-  sourceSystem           String?
-  origin                 String?
-  owner                  String?
-  author                 String?
-  authorWelsh            String?
-  representative         String?
-  description            String?   @db.NText
-  descriptionWelsh       String?   @db.NText
-  stage                  String?
-  filter1                String?
-  filter1Welsh           String?
-  filter2                String?
-  createdAt              DateTime? @default(now())
-  modifiedAt             DateTime? @default(now())
+	id                     Int       @unique @default(autoincrement())
+	documentId             String    @id
+	caseId                 Int?
+	caseRef                String?
+	representationId       Int?
+	documentReference      String?
+	version                Int?
+	examinationRefNo       String?
+	filename               String?
+	originalFilename       String?
+	size                   Int?
+	mime                   String?
+	documentURI            String?
+	publishedDocumentURI   String?
+	virusCheckStatus       String?
+	fileMD5                String?
+	dateCreated            String?
+	lastModified           String?
+	caseType               String?
+	documentStatus         String?
+	redactedStatus         String?
+	publishedStatus        String?
+	datePublished          String?
+	documentType           String?
+	securityClassification String?
+	sourceSystem           String?
+	origin                 String?
+	owner                  String?
+	author                 String?
+	authorWelsh            String?
+	representative         String?
+	description            String?   @db.NText
+	descriptionWelsh       String?   @db.NText
+	stage                  String?
+	filter1                String?
+	filter1Welsh           String?
+	filter2                String?
+	createdAt              DateTime? @default(now())
+	modifiedAt             DateTime? @default(now())
 
-  @@index([caseRef])
-  @@index([representationId])
+	@@index([caseRef])
+	@@index([representationId])
 }
 
 model Representation {
-  id                    Int          @unique @default(autoincrement())
-  representationId      Int          @id
-  caseReference         String
-  caseId                Int
-  referenceId           String?
-  status                String?
-  dateReceived          DateTime?
-  representationComment String?      @db.NText
-  representationFrom    String?
-  representationType    String?
-  registerFor           String?
-  representedId         String?
-  representativeId      String?
-  attachmentIds         String?
-  createdAt             DateTime?    @default(now())
-  modifiedAt            DateTime?    @default(now())
-  representative        ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
-  represented           ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	id                    Int          @unique @default(autoincrement())
+	representationId      Int          @id
+	caseReference         String
+	caseId                Int
+	referenceId           String?
+	status                String?
+	dateReceived          DateTime?
+	representationComment String?      @db.NText
+	representationFrom    String?
+	representationType    String?
+	registerFor           String?
+	representedId         String?
+	representativeId      String?
+	attachmentIds         String?
+	createdAt             DateTime?    @default(now())
+	modifiedAt            DateTime?    @default(now())
+	representative        ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	represented           ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
 
-  @@index([caseReference])
+	@@index([caseReference])
 }
 
 model ServiceUser {
-  id               Int              @unique @default(autoincrement())
-  serviceUserId    String           @id
-  caseReference    String?
-  firstName        String?
-  lastName         String?
-  email            String?
-  webAddress       String?
-  phoneNumber      String?
-  organisationName String?
-  role             String?
-  serviceUserType  String?
-  createdAt        DateTime?        @default(now())
-  modifiedAt       DateTime?        @default(now())
-  Represented      Representation[] @relation("Represented")
-  Representative   Representation[] @relation("Representative")
-  Applicant        Project[]        @relation("Applicant")
+	id               Int              @unique @default(autoincrement())
+	serviceUserId    String           @id
+	caseReference    String?
+	firstName        String?
+	lastName         String?
+	email            String?
+	webAddress       String?
+	phoneNumber      String?
+	organisationName String?
+	role             String?
+	serviceUserType  String?
+	createdAt        DateTime?        @default(now())
+	modifiedAt       DateTime?        @default(now())
+	Represented      Representation[] @relation("Represented")
+	Representative   Representation[] @relation("Representative")
+	Applicant        Project[]        @relation("Applicant")
 }
 
 model Project {
-  id                                                Int          @unique @default(autoincrement())
-  caseId                                            Int          @unique
-  caseReference                                     String       @id
-  projectName                                       String?
-  projectNameWelsh                                  String?
-  projectDescription                                String?      @db.VarChar(2000)
-  projectDescriptionWelsh                           String?      @db.VarChar(2000)
-  publishStatus                                     String?
-  sector                                            String?
-  projectType                                       String?
-  sourceSystem                                      String?
-  stage                                             String?
-  projectLocation                                   String?
-  projectLocationWelsh                              String?
-  projectEmailAddress                               String?
-  regions                                           String?
-  transboundary                                     Boolean?
-  easting                                           Int?
-  northing                                          Int?
-  welshLanguage                                     Boolean?
-  mapZoomLevel                                      String?
-  secretaryOfState                                  String?
-  dateProjectAppearsOnWebsite                       DateTime?    @db.Date
-  dateOfDCOAcceptance                               DateTime?    @db.Date
-  dateOfNonAcceptance                               DateTime?    @db.Date
-  dateIAPIDue                                       DateTime?    @db.Date
-  notificationDateForEventsDeveloper                DateTime?    @db.Date
-  notificationDateForPMAndEventsDirectlyFollowingPM DateTime?    @db.Date
-  rule6LetterPublishDate                            DateTime?    @db.Date
-  rule8LetterPublishDate                            DateTime?    @db.Date
-  anticipatedDateOfSubmission                       DateTime?    @db.Date
-  anticipatedSubmissionDateNonSpecific              String?
-  dateOfDCOSubmission                               DateTime?    @db.Date
-  dateOfRepresentationPeriodOpen                    DateTime?    @db.Date
-  dateOfRelevantRepresentationClose                 DateTime?    @db.Date
-  dateRRepAppearOnWebsite                           DateTime?    @db.Date
-  dateOfReOpenRelevantRepresentationStart           DateTime?    @db.Date
-  dateOfReOpenRelevantRepresentationClose           DateTime?    @db.Date
-  confirmedStartOfExamination                       DateTime?    @db.Date
-  dateTimeExaminationEnds                           DateTime?    @db.Date
-  stage4ExtensionToExamCloseDate                    DateTime?    @db.Date
-  stage5ExtensionToRecommendationDeadline           DateTime?    @db.Date
-  dateOfRecommendations                             DateTime?    @db.Date
-  confirmedDateOfDecision                           DateTime?    @db.Date
-  stage5ExtensionToDecisionDeadline                 DateTime?    @db.Date
-  dateProjectWithdrawn                              DateTime?    @db.Date
-  section46Notification                             DateTime?    @db.Date
-  datePINSFirstNotifiedOfProject                    DateTime?    @db.Date
-  screeningOpinionSought                            DateTime?    @db.Date
-  screeningOpinionIssued                            DateTime?    @db.Date
-  scopingOpinionSought                              DateTime?    @db.Date
-  scopingOpinionIssued                              DateTime?    @db.Date
-  deadlineForAcceptanceDecision                     DateTime?    @db.Date
-  dateSection58NoticeReceived                       DateTime?    @db.Date
-  preliminaryMeetingStartDate                       DateTime?    @db.Date
-  deadlineForCloseOfExamination                     DateTime?    @db.Date
-  deadlineForSubmissionOfRecommendation             DateTime?    @db.Date
-  deadlineForDecision                               DateTime?    @db.Date
-  jRPeriodEndDate                                   DateTime?    @db.Date
-  extensionToDateRelevantRepresentationsClose       DateTime?    @db.Date
-  examinationTimetableId                            Int?
-  applicantId                                       String?
-  applicant                                         ServiceUser? @relation("Applicant", fields: [applicantId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
-  createdAt                                         DateTime?    @default(now())
-  modifiedAt                                        DateTime?    @default(now())
-  isMaterialChange                                  Boolean?     @default(false)
-  AdviceProject																	    Advice[]     @relation("AdviceProject")
+	id                                                Int          @unique @default(autoincrement())
+	caseId                                            Int          @unique
+	caseReference                                     String       @id
+	projectName                                       String?
+	projectNameWelsh                                  String?
+	projectDescription                                String?      @db.VarChar(2000)
+	projectDescriptionWelsh                           String?      @db.VarChar(2000)
+	publishStatus                                     String?
+	sector                                            String?
+	projectType                                       String?
+	sourceSystem                                      String?
+	stage                                             String?
+	projectLocation                                   String?
+	projectLocationWelsh                              String?
+	projectEmailAddress                               String?
+	regions                                           String?
+	transboundary                                     Boolean?
+	easting                                           Int?
+	northing                                          Int?
+	welshLanguage                                     Boolean?
+	mapZoomLevel                                      String?
+	secretaryOfState                                  String?
+	dateProjectAppearsOnWebsite                       DateTime?    @db.Date
+	dateOfDCOAcceptance                               DateTime?    @db.Date
+	dateOfNonAcceptance                               DateTime?    @db.Date
+	dateIAPIDue                                       DateTime?    @db.Date
+	notificationDateForEventsDeveloper                DateTime?    @db.Date
+	notificationDateForPMAndEventsDirectlyFollowingPM DateTime?    @db.Date
+	rule6LetterPublishDate                            DateTime?    @db.Date
+	rule8LetterPublishDate                            DateTime?    @db.Date
+	anticipatedDateOfSubmission                       DateTime?    @db.Date
+	anticipatedSubmissionDateNonSpecific              String?
+	dateOfDCOSubmission                               DateTime?    @db.Date
+	dateOfRepresentationPeriodOpen                    DateTime?    @db.Date
+	dateOfRelevantRepresentationClose                 DateTime?    @db.Date
+	dateRRepAppearOnWebsite                           DateTime?    @db.Date
+	dateOfReOpenRelevantRepresentationStart           DateTime?    @db.Date
+	dateOfReOpenRelevantRepresentationClose           DateTime?    @db.Date
+	confirmedStartOfExamination                       DateTime?    @db.Date
+	dateTimeExaminationEnds                           DateTime?    @db.Date
+	stage4ExtensionToExamCloseDate                    DateTime?    @db.Date
+	stage5ExtensionToRecommendationDeadline           DateTime?    @db.Date
+	dateOfRecommendations                             DateTime?    @db.Date
+	confirmedDateOfDecision                           DateTime?    @db.Date
+	stage5ExtensionToDecisionDeadline                 DateTime?    @db.Date
+	dateProjectWithdrawn                              DateTime?    @db.Date
+	section46Notification                             DateTime?    @db.Date
+	datePINSFirstNotifiedOfProject                    DateTime?    @db.Date
+	screeningOpinionSought                            DateTime?    @db.Date
+	screeningOpinionIssued                            DateTime?    @db.Date
+	scopingOpinionSought                              DateTime?    @db.Date
+	scopingOpinionIssued                              DateTime?    @db.Date
+	deadlineForAcceptanceDecision                     DateTime?    @db.Date
+	dateSection58NoticeReceived                       DateTime?    @db.Date
+	preliminaryMeetingStartDate                       DateTime?    @db.Date
+	deadlineForCloseOfExamination                     DateTime?    @db.Date
+	deadlineForSubmissionOfRecommendation             DateTime?    @db.Date
+	deadlineForDecision                               DateTime?    @db.Date
+	jRPeriodEndDate                                   DateTime?    @db.Date
+	extensionToDateRelevantRepresentationsClose       DateTime?    @db.Date
+	examinationTimetableId                            Int?
+	applicantId                                       String?
+	applicant                                         ServiceUser? @relation("Applicant", fields: [applicantId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	createdAt                                         DateTime?    @default(now())
+	modifiedAt                                        DateTime?    @default(now())
+	isMaterialChange                                  Boolean?     @default(false)
+	AdviceProject                                     Advice[]     @relation("AdviceProject")
 }
 
 model ProjectUpdate {
-  id                   Int       @unique @default(autoincrement())
-  projectUpdateId      Int       @id
-  caseReference        String
-  updateDate           String
-  updateName           String?
-  updateContentEnglish String    @db.VarChar(8000)
-  updateContentWelsh   String?   @db.VarChar(8000)
-  updateStatus         String
-  createdAt            DateTime? @default(now())
-  modifiedAt           DateTime? @default(now())
+	id                   Int       @unique @default(autoincrement())
+	projectUpdateId      Int       @id
+	caseReference        String
+	updateDate           String
+	updateName           String?
+	updateContentEnglish String    @db.VarChar(8000)
+	updateContentWelsh   String?   @db.VarChar(8000)
+	updateStatus         String
+	createdAt            DateTime? @default(now())
+	modifiedAt           DateTime? @default(now())
 
-  @@index([caseReference])
+	@@index([caseReference])
 }
 
 model ExaminationTimetable {
-  eventId                Int                             @unique
-  caseReference          String
-  type                   String
-  eventTitle             String
-  eventTitleWelsh        String?
-  description            String                          @db.NText
-  descriptionWelsh       String?                         @db.NText
-  eventDeadlineStartDate DateTime?
-  date                   DateTime?
-  createdAt              DateTime?                       @default(now())
-  modifiedAt             DateTime?                       @default(now())
-  eventLineItems         ExaminationTimetableEventItem[]
+	eventId                Int                             @unique
+	caseReference          String
+	type                   String
+	eventTitle             String
+	eventTitleWelsh        String?
+	description            String                          @db.NText
+	descriptionWelsh       String?                         @db.NText
+	eventDeadlineStartDate DateTime?
+	date                   DateTime?
+	createdAt              DateTime?                       @default(now())
+	modifiedAt             DateTime?                       @default(now())
+	eventLineItems         ExaminationTimetableEventItem[]
 
-  @@index([caseReference])
+	@@index([caseReference])
 }
 
 model ExaminationTimetableEventItem {
-  id                            Int                   @unique @default(autoincrement())
-  eventLineItemDescription      String                @db.NText
-  eventLineItemDescriptionWelsh String?               @db.NText
-  eventId                       Int
-  ExaminationTimetable          ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
+	id                            Int                   @unique @default(autoincrement())
+	eventLineItemDescription      String                @db.NText
+	eventLineItemDescriptionWelsh String?               @db.NText
+	eventId                       Int
+	ExaminationTimetable          ExaminationTimetable? @relation(fields: [eventId], references: [eventId], onDelete: Cascade)
 }
 
 model Advice {
-  adviceId            Int       @unique
-  adviceReference     String?
-  caseReference       String?
-  caseId              Int
-  title               String?
-  titleWelsh          String?
-  from                String?
-  agent               String?
-  method              String?
-  enquiryDate         DateTime
-  enquiryDetails      String?   @db.NText
-  enquiryDetailsWelsh String?   @db.VarChar(4000)
-  adviceGivenBy       String?
-  adviceDate          DateTime
-  adviceDetails       String?   @db.NText
-  adviceDetailsWelsh  String?   @db.VarChar(4000)
-  status              String?
-  redactionStatus     String?
-  attachmentIds       String?
-  createdAt           DateTime? @default(now())
-  modifiedAt          DateTime? @default(now())
-  project				      Project? @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)
+	adviceId            Int       @unique
+	adviceReference     String?
+	caseReference       String?
+	caseId              Int
+	title               String?
+	titleWelsh          String?
+	from                String?
+	agent               String?
+	method              String?
+	enquiryDate         DateTime
+	enquiryDetails      String?   @db.NText
+	enquiryDetailsWelsh String?   @db.VarChar(4000)
+	adviceGivenBy       String?
+	adviceDate          DateTime
+	adviceDetails       String?   @db.NText
+	adviceDetailsWelsh  String?   @db.VarChar(4000)
+	status              String?
+	redactionStatus     String?
+	attachmentIds       String?
+	createdAt           DateTime? @default(now())
+	modifiedAt          DateTime? @default(now())
+	project             Project?  @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)
 }
