@@ -18,7 +18,7 @@ module.exports = defineConfig({
 		testIsolation: false,
 		env: {
 			commandDelay: 0,
-			baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk'
+			baseUrl: 'http://localhost:9004' //'https://applications-service-test.planninginspectorate.gov.uk'
 		},
 		viewportWidth: 1920,
 		viewportHeight: 2000
