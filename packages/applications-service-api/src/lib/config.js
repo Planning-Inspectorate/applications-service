@@ -62,7 +62,7 @@ module.exports = {
 		port: Number(process.env.SERVER_PORT || 3000),
 		showErrors: process.env.SERVER_SHOW_ERRORS === 'true',
 		terminationGracePeriod: Number(
-			Number(process.env.SERVER_TERMINATION_GRACE_PERIOD_SECONDS || 0) * 1000
+			(process.env.SERVER_TERMINATION_GRACE_PERIOD_SECONDS || 0) * 1000
 		)
 	},
 	apps: {
