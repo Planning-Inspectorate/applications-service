@@ -116,6 +116,7 @@ module.exports = {
 	featureFlag: {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		enableProjectsMap: process.env.FEATURE_ENABLE_PROJECTS_MAP === 'true',
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	}
 };
