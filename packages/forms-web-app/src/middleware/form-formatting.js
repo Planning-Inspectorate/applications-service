@@ -1,6 +1,6 @@
-const { sanitiseString } = require('../lib/sanitise-string');
+const { formatFormString } = require('../lib/format-form-string');
 
-module.exports = function formSanitisation() {
+module.exports = function formFormatting() {
 	return (req, res, next) => {
 		try {
 			if (
@@ -12,7 +12,7 @@ module.exports = function formSanitisation() {
 				req.body = Object.fromEntries(
 					Object.entries(req.body).map(([key, value]) => [
 						key,
-						typeof value === 'string' ? sanitiseString(value) : value
+						typeof value === 'string' ? formatFormString(value) : value
 					])
 				);
 			}

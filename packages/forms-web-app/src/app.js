@@ -11,7 +11,7 @@ const { NotFoundError } = require('./lib/errors');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
 const removeUnwantedCookiesMiddelware = require('./middleware/remove-unwanted-cookies');
-const formSanitisationMiddleware = require('./middleware/form-sanitisation');
+const formFormattingMiddleware = require('./middleware/form-formatting');
 const { plannedOutage } = require('./middleware/planned-outage');
 const {
 	setLocalslDisplayCookieBannerValue
@@ -71,7 +71,7 @@ app.use(
 app.use(cookieParser());
 app.use(session(sessionStoreConfig));
 app.use(removeUnwantedCookiesMiddelware);
-app.use(formSanitisationMiddleware());
+app.use(formFormattingMiddleware());
 app.use(setLocalslDisplayCookieBannerValue);
 
 const staticOptions = {
