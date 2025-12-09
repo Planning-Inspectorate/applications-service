@@ -9,7 +9,7 @@
 	"main": "src/main.js",
 	"scripts": {
 		"db:migrate:dev": "npx prisma migrate dev",
-		"db:generate": "npx prisma generate",
+		"db:generate": "npx prisma generate && tsc --project ./prisma/client-tsconfig.json && tsc --project prisma/client-func-tsconfig.json",
 		"db:reset": "npx prisma migrate reset --force",
 		"db:seed": "npx prisma db seed",
 		"db:migrate:deploy": "npx prisma migrate deploy",
@@ -37,6 +37,7 @@
 		"body-parser": "*",
 		"compression": "*",
 		"csv-stringify": "*",
+		"dotenv": "*",
 		"express": "*",
 		"express-async-errors": "*",
 		"express-fileupload": "*",
@@ -70,6 +71,7 @@
 		"node-mocks-http": "*",
 		"nodemon": "*",
 		"pino-pretty": "*",
-		"supertest": "*"
+		"supertest": "*",
+		"typescript": "*"
 	}
 }

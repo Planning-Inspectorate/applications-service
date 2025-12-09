@@ -102,7 +102,7 @@ extends:
               - template: ../steps/node_script.yml
                 parameters:
                   nodeVersion: 20
-                  script: cd packages/applications-service-api && npx prisma generate
+                  script: cd packages/applications-service-api && npm run db:generate
               - template: ../steps/node_script.yml
                 parameters:
                   nodeVersion: 20

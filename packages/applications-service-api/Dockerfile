@@ -39,7 +39,7 @@ WORKDIR /opt/app/packages/applications-service-api
 ARG GIT_SHA
 ENV GIT_SHA=$GIT_SHA
 
-RUN npx prisma generate
+RUN npm run db:generate
 
 EXPOSE 3000
 
