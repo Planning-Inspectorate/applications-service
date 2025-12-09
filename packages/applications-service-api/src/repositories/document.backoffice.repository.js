@@ -1,4 +1,4 @@
-const { Prisma } = require('../../prisma/client');
+const { Prisma } = require('../../prisma/client/client.js');
 const { prismaClient } = require('../lib/prisma');
 const stopWords = require('../utils/stopwords');
 const stopWordList = stopWords.english;

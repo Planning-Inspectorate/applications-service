@@ -1,0 +1,12 @@
+{
+	"include": ["../../back-office-subscribers/lib/prisma-client/client.ts"],
+	"compilerOptions": {
+		"baseUrl": "../../back-office-subscribers/lib/prisma-client",
+		"esModuleInterop": true,
+		"moduleResolution": "nodenext",
+		"checkJs": false,
+		"target": "esnext",
+		"module": "NodeNext",
+		"skipLibCheck": true
+	}
+}
