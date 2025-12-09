@@ -6,12 +6,13 @@ const view = 'index/view.njk';
 
 const getIndexController = async (req, res, next) => {
 	try {
-		const { allowWelshCases } = featureFlag;
+		const { allowWelshCases, enableProjectsMap } = featureFlag;
 		const { i18n } = req;
 
 		return res.render(view, {
 			...getPageData(i18n.language),
-			allowWelshCases
+			allowWelshCases,
+			enableProjectsMap
 		});
 	} catch (error) {
 		logger.error(error);
