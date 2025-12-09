@@ -18,9 +18,11 @@
 		"rep-service-user:clear-and-parallel": "npm run rep-service-user:clear && npm run rep-service-user:parallel"
 	},
 	"dependencies": {
+		"@prisma/adapter-mssql": "*",
 		"@prisma/client": "*",
 		"axios": "*",
-		"lodash.pick": "*"
+		"lodash.pick": "*",
+		"prisma": "*"
 	},
 	"devDependencies": {
 		"azure-functions-core-tools": "*",

@@ -2,13 +2,22 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "darwin", "darwin-arm64", "linux-musl", "linux-musl-arm64-openssl-1.1.x", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "windows", "debian-openssl-1.1.x"]
+  provider            = "prisma-client"
+  output              = "./client"
+  moduleFormat        = "cjs"
+  importFileExtension = "js"
+}
+
+// crudely share the Prisma client with the back-office-subscribers function
+generator func_client {
+  provider            = "prisma-client"
+  output              = "../../back-office-subscribers/lib/prisma-client"
+  moduleFormat        = "cjs"
+  importFileExtension = "js"
 }
 
 datasource db {
   provider = "sqlserver"
-  url      = env("DATABASE_URL")
 }
 
 model Document {
@@ -165,7 +174,7 @@ model Project {
   createdAt                                         DateTime?    @default(now())
   modifiedAt                                        DateTime?    @default(now())
   isMaterialChange                                  Boolean?     @default(false)
-  AdviceProject																	    Advice[]     @relation("AdviceProject")
+  AdviceProject                                     Advice[]     @relation("AdviceProject")
 }
 
 model ProjectUpdate {
@@ -230,5 +239,5 @@ model Advice {
   attachmentIds       String?
   createdAt           DateTime? @default(now())
   modifiedAt          DateTime? @default(now())
-  project				      Project? @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)
+  project             Project?  @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)
 }
