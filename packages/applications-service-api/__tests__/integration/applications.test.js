@@ -69,7 +69,8 @@ describe('/api/v1/applications', () => {
 				sourceSystem: 'ODT',
 				deadlineForAcceptanceDecision: '2023-01-30',
 				deadlineForDecision: null,
-				deadlineForSubmissionOfRecommendation: null
+				deadlineForSubmissionOfRecommendation: null,
+				AnticipatedCloseOfExamination: null
 			});
 		});
 
@@ -299,7 +300,8 @@ describe('/api/v1/applications', () => {
 							sourceSystem: 'ODT',
 							deadlineForAcceptanceDecision: '2023-01-30',
 							deadlineForDecision: null,
-							deadlineForSubmissionOfRecommendation: null
+							deadlineForSubmissionOfRecommendation: null,
+							AnticipatedCloseOfExamination: null
 						}
 					],
 					currentPage: 1,
@@ -443,7 +445,8 @@ describe('/api/v1/applications', () => {
 				sourceSystem: 'ODT',
 				deadlineForAcceptanceDecision: '2023-01-30',
 				deadlineForDecision: null,
-				deadlineForSubmissionOfRecommendation: null
+				deadlineForSubmissionOfRecommendation: null,
+				AnticipatedCloseOfExamination: null
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];

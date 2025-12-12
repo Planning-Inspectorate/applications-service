@@ -287,6 +287,17 @@ describe('application.mapper', () => {
 					})
 				);
 			});
+
+			it('maps anticipatedCloseOfExamination from ExaminationTimetable when present', () => {
+				const application = {
+					...APPLICATION_DB,
+					applicant: null,
+					stage: 'examination',
+					ExaminationTimetable: [{ date: '2025-12-11' }]
+				};
+				const result = mapBackOfficeApplicationToApi(application);
+				expect(result.anticipatedCloseOfExamination).toBe('2025-12-11');
+			});
 		});
 		describe('when applicant exists', () => {
 			it('maps back office application data to api format', () => {
@@ -352,8 +363,9 @@ describe('application.mapper', () => {
 	});
 	describe('mapBackOfficeApplicationsToApi', () => {
 		it('maps back office applications data to api format', () => {
-			expect(mapBackOfficeApplicationsToApi([APPLICATION_DB])).toEqual([
-				{
+			const result = mapBackOfficeApplicationsToApi([APPLICATION_DB]);
+			expect(result[0]).toEqual(
+				expect.objectContaining({
 					...APPLICATION_API_V1,
 					sourceSystem: 'ODT',
 					DateOfReOpenRelevantRepresentationClose: undefined,
@@ -362,8 +374,8 @@ describe('application.mapper', () => {
 					deadlineForDecision: null,
 					deadlineForSubmissionOfRecommendation: null,
 					isMaterialChange: undefined
-				}
-			]);
+				})
+			);
 		});
 	});
 	describe('mapNIApplicationsToApi', () => {

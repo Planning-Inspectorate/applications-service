@@ -33,7 +33,8 @@ describe('application.merge.service', () => {
 			deadlineForDecision: null,
 			ProjectNameWelsh: undefined,
 			SummaryWelsh: undefined,
-			ProjectLocationWelsh: undefined
+			ProjectLocationWelsh: undefined,
+			AnticipatedCloseOfExamination: null
 		};
 		const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 		const combinedApplications = [BOApplication, ...NIApplications];
@@ -144,7 +145,8 @@ describe('application.merge.service', () => {
 				deadlineForDecision: null,
 				ProjectNameWelsh: undefined,
 				SummaryWelsh: undefined,
-				ProjectLocationWelsh: undefined
+				ProjectLocationWelsh: undefined,
+				AnticipatedCloseOfExamination: null
 			};
 			const NIApplications = mapNIApplicationsToApi(APPLICATIONS_NI_DB);
 			const combinedApplications = [BOApplication, ...NIApplications];

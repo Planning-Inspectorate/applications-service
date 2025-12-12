@@ -16,7 +16,15 @@ const getByCaseReference = async (caseReference) => {
 
 const getAllApplications = async (options = {}) => {
 	const removeWelshCases = !featureFlag.allowWelshCases;
-	const { filters, searchTerm, orderBy, offset, size, excludeNullDateOfSubmission } = options;
+	const {
+		filters,
+		searchTerm,
+		orderBy,
+		offset,
+		size,
+		excludeNullDateOfSubmission,
+		includeExaminationTimetable
+	} = options;
 	const where =
 		excludeNullDateOfSubmission || searchTerm || filters || removeWelshCases
 			? {
@@ -104,7 +112,18 @@ const getAllApplications = async (options = {}) => {
 		...(offset !== undefined && { skip: offset }),
 		...(size !== undefined && { take: size }),
 		include: {
-			applicant: true
+			applicant: true,
+			...(includeExaminationTimetable && {
+				ExaminationTimetable: {
+					where: {
+						OR: [
+							{ description: { contains: 'duty to complete' } },
+							{ type: 'Deadline For Close Of Examination' }
+						]
+					},
+					orderBy: { date: 'desc' }
+				}
+			})
 		}
 	};
 

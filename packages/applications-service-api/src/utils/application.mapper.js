@@ -311,7 +311,8 @@ const mapBackOfficeApplicationToApi = (application) => {
 		sector: mapColumnValueToApi('sector', application.sector?.substring(0, 2)),
 		longLat: mapNorthingEastingToLongLat(application.northing, application.easting),
 		mapZoomLevel: mapZoomLevel(application.mapZoomLevel),
-		regions: application.regions?.split(',') // TODO store in separate table not CSV
+		regions: application.regions?.split(','), // TODO store in separate table not CSV
+		anticipatedCloseOfExamination: application.ExaminationTimetable?.[0]?.date ?? null
 	};
 };
 
@@ -367,6 +368,7 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		DateOfPreliminaryMeeting: application.preliminaryMeetingStartDate,
 		ConfirmedStartOfExamination: application.confirmedStartOfExamination,
 		DateTimeExaminationEnds: application.dateTimeExaminationEnds,
+		AnticipatedCloseOfExamination: application.anticipatedCloseOfExamination,
 		DateOfRepresentationPeriodOpen: application.dateOfRepresentationPeriodOpen,
 		DateOfRelevantRepresentationClose: application.dateOfRelevantRepresentationClose,
 		DateOfReOpenRelevantRepresentationStart: application.dateOfReOpenRelevantRepresentationStart,

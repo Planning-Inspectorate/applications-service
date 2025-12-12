@@ -29,6 +29,14 @@ const formatStageForCSV = (application) => {
 	return name;
 };
 
+const shouldShowAnticipatedCloseDate = (application) => {
+	const stage = stageNameFromValue(application.Stage);
+
+	const validStages = ['examination', 'recommendation', 'decision', 'post_decision', 'withdrawn'];
+
+	return validStages.includes(stage) && application.AnticipatedCloseOfExamination;
+};
+
 const mapApplicationsToCSV = (applications) => {
 	const mappedApplications = applications.map((application) => ({
 		'Project reference': application.CaseReference,
@@ -46,6 +54,11 @@ const mapApplicationsToCSV = (applications) => {
 		'Date of application': application.DateOfDCOSubmission,
 		'Date application accepted': application.DateOfDCOAcceptance_NonAcceptance,
 		'Date Examination started': application.ConfirmedStartOfExamination,
+		"Examining Authority's anticipated close of examination": shouldShowAnticipatedCloseDate(
+			application
+		)
+			? application.AnticipatedCloseOfExamination
+			: '',
 		'Date Examination closed': application.DateTimeExaminationEnds,
 		'Date of recommendation': application.DateOfRecommendations,
 		'Date of decision': application.ConfirmedDateOfDecision,
