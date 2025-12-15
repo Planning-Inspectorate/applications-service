@@ -1,5 +1,6 @@
 import L from 'leaflet';
 import 'proj4leaflet';
+import { showProjectList } from './project-list';
 
 function leafletMap() {
 	this.initiate = function (token, container, lat = 52.3, lng = -1.7, zoom = 0) {
@@ -111,6 +112,12 @@ function leafletMap() {
 								.map(([key, value]) => `<strong>${key}:</strong> ${value}`)
 								.join('<br>');
 							layer.bindPopup(popupContent);
+
+							// Add click handler for project selection
+							layer.on('click', function () {
+								// Show project list when area is clicked
+								showProjectList([feature]);
+							});
 						}
 					}
 				}).addTo(map);

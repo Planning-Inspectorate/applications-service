@@ -1,3 +1,4 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% extends "layouts/default.njk" %}
 
 {% set pageTitle = 'Projects map' %}
@@ -17,40 +18,61 @@
 
 {% block content %}
 	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full-width">
-			<h1 class="govuk-heading-xl">
-				Projects map
-			</h1>
+		{% if not isFullscreen %}
+			<div class="govuk-grid-column-one-third">
+				<h2 class="govuk-heading-m">Filters</h2>
+				<p class="govuk-body">Filter options will go here.</p>
+			</div>
+		{% endif %}
+
+		{% if isFullscreen %}
+			<div class="govuk-grid-column-full">
+		{% else %}
+			<div class="govuk-grid-column-two-thirds">
+		{% endif %}
+			<h1 class="govuk-heading-xl">Projects map</h1>
 
 			<p class="govuk-body">
 				This is a map of all project boundaries. To find a specific project select a project boundary.
 			</p>
 
-			<!-- Search bar placeholder -->
-			<div class="govuk-form-group">
-				<label class="govuk-label" for="search">
-					Search for a project
-				</label>
-				<input class="govuk-input" id="search" name="search" type="text" placeholder="Enter project name or reference">
+			<div class="ui-search-bar">
+				<div class="ui-search-bar__section ui-search-bar__section--input">
+					<label class="ui-search-bar__label" for="search">Search for a project</label>
+					<input class="ui-search-bar__input" id="search" name="search" type="text" placeholder="Enter project name or reference">
+				</div>
+				{{ govukButton({
+					text: "Search",
+					classes: "ui-search-bar__submit"
+				}) }}
 			</div>
 
-			<!-- Show filters button placeholder -->
-			<button class="govuk-button govuk-button--secondary" data-module="govuk-button">
-				Show filters
-			</button>
+			<div class="govuk-button-group">
+				{% if isFullscreen %}
+					{{ govukButton({
+						text: "Show Filter",
+						classes: "govuk-button--secondary",
+						href: "/projects-map"
+					}) }}
+				{% else %}
+					{{ govukButton({
+						text: "Hide Filter",
+						classes: "govuk-button--secondary",
+						href: "/projects-map-fullscreen"
+					}) }}
+				{% endif %}
 
-			<!-- Switch to list view link -->
-			<p class="govuk-body">
 				<a class="govuk-link" href="/project-search">Switch to list view</a>
-			</p>
+			</div>
 
 			{% if mapAccessToken %}
-				<div id="map" style="height: 550px;"></div>
+				<div id="map" class="govuk-!-margin-bottom-4" style="height: 550px;"></div>
 			{% else %}
 				<p class="govuk-body">Map is currently unavailable.</p>
 			{% endif %}
 
-			<!-- Warning text -->
+			<div id="project-list" class="govuk-!-margin-top-4" style="display: none;"></div>
+
 			<div class="govuk-warning-text">
 				<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
 				<strong class="govuk-warning-text__text">
@@ -58,7 +80,6 @@
 					Project boundaries shown are for illustrative purposes only. To view the exact boundaries refer to latest relevant plans and drawings.
 				</strong>
 			</div>
-
 		</div>
 	</div>
 {% endblock %}
