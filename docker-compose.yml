@@ -160,7 +160,7 @@ services:
       MYSQL_PASSWORD: pins
       MYSQL_ROOT_HOST: '%'
     ports:
-      - 3306:3306
+      - 3306:3306 # Changed to 3306
     volumes:
       - ./init:/docker-entrypoint-initdb.d
 
@@ -184,7 +184,7 @@ services:
       - 'ACCEPT_EULA=1'
       - 'MSSQL_SA_PASSWORD=dbPASSw0_rd'
     ports:
-      - 1433:1433
+      - 7007:1433 # Changed to 7007
     hostname: mssql
     volumes:
       - ./init/mssql/mssql.conf:/var/opt/mssql/mssql.conf

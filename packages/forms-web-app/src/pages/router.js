@@ -10,6 +10,8 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
+const { getProjectsMapController } = require('./projects-map/controller');
+const { getMasterGeojson } = require('../api/geojson/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -130,6 +132,9 @@ pagesRouter.get(
 	addContactTranslationsMiddleware,
 	getContactController
 );
+
+pagesRouter.get('/projects-map', getProjectsMapController);
+pagesRouter.get('/api/geojson', getMasterGeojson);
 
 pagesRouter.use(projectsRouter);
 

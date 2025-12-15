@@ -172,6 +172,7 @@ module.exports = {
 	},
 	maps: {
 		osMapsApiKey: process.env.OS_MAPS_API_KEY,
-		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
+		osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
+		geojsonURL: process.env.GEOJSON_URL
 	}
 };
