@@ -26,7 +26,7 @@ describe('getMapAccessToken', () => {
 			method: 'POST',
 			body: expect.any(URLSearchParams),
 			headers: {
-				Authorization: 'Basic dGVzdC1rZXk6dGVzdC1zZWNyZXQ='
+				Authorization: 'Basic ' + Buffer.from('test-key:test-secret').toString('base64')
 			}
 		});
 	});
