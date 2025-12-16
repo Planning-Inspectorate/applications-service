@@ -172,7 +172,7 @@ describe('pages/router', () => {
 
 			expect(use).toHaveBeenCalledWith(registerOfAdviceRouter);
 
-			expect(get).toBeCalledTimes(7);
+			expect(get).toBeCalledTimes(10);
 			expect(post).toBeCalledTimes(2);
 			expect(use).toBeCalledTimes(2);
 		});

@@ -1,6 +1,4 @@
-const { getGovUkUrls } = require('./get-govuk-urls');
-
-jest.mock('../../../src/config', () => {
+jest.mock('../../config', () => {
 	return {
 		govUK: {
 			developmentConsent: 'URL 1',
@@ -15,6 +13,8 @@ jest.mock('../../../src/config', () => {
 		}
 	};
 });
+
+const { getGovUkUrls } = require('./get-govuk-urls');
 
 describe('pages/_utils/get-govuk-urls', () => {
 	it('returns correct URLs - en (default)', () => {

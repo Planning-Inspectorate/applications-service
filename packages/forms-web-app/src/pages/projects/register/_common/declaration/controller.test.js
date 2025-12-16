@@ -4,7 +4,7 @@ const {
 } = require('./controller');
 const { postRegistration } = require('../../../../../lib/application-api-wrapper');
 
-jest.mock('../../../../../../src/lib/application-api-wrapper', () => ({
+jest.mock('../../../../../lib/application-api-wrapper', () => ({
 	postRegistration: jest.fn()
 }));
 describe('pages/projects/register/_common/declaration/controller', () => {

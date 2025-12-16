@@ -5,3 +5,7 @@ README.md
 coverage
 .wrangler
 *.yml
+
+packages/forms-web-app/dist/
+packages/forms-web-app/src/public/stylesheets/leaflet.css
+packages/forms-web-app/src/public/stylesheets/main.css

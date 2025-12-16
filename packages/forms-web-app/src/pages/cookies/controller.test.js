@@ -17,7 +17,7 @@ const cookiesURL = getCookiesURL();
 jest.mock('../../../src/config');
 jest.mock('../../../src/lib/remove-unwanted-cookies');
 jest.mock('../../../src/lib/flash-message');
-jest.mock('../../../src/lib/get-previous-page-path');
+jest.mock('../../../src/lib/get-previous-page-path', () => jest.fn());
 
 const cookiesTranslations = {
 	cookies: cookiesTranslation_EN
@@ -37,7 +37,8 @@ describe('pages/cookies/controller.js', () => {
 			...mockReq(),
 			body: {},
 			cookies: {},
-			i18n: mockI18n(cookiesTranslations)
+			i18n: mockI18n(cookiesTranslations),
+			session: { flashMessages: [] }
 		};
 		res = mockRes();
 
@@ -133,7 +134,8 @@ describe('pages/cookies/controller.js', () => {
 						body: {
 							'usage-cookies': 'off',
 							previous_page_path: toBase64(fakePreviousPage)
-						}
+						},
+						session: { flashMessages: [] }
 					}),
 					runExtraAssertions: () => {
 						resCookieCallTest(false, false);
@@ -150,7 +152,8 @@ describe('pages/cookies/controller.js', () => {
 						...req,
 						body: {
 							'usage-cookies': 'on'
-						}
+						},
+						session: { flashMessages: [] }
 					}),
 					expectedPreviousPagePath: '/',
 					runExtraAssertions: () => {
@@ -167,7 +170,8 @@ describe('pages/cookies/controller.js', () => {
 						...req,
 						body: {
 							'usage-cookies': 'off'
-						}
+						},
+						session: { flashMessages: [] }
 					}),
 					expectedPreviousPagePath: '/',
 					runExtraAssertions: () => {
@@ -185,7 +189,8 @@ describe('pages/cookies/controller.js', () => {
 						body: {
 							'usage-cookies': 'on',
 							previous_page_path: toBase64(fakePreviousPage)
-						}
+						},
+						session: { flashMessages: [] }
 					}),
 					runExtraAssertions: () => {
 						resCookieCallTest(true, true);
