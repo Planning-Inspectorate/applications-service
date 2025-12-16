@@ -5,31 +5,27 @@
 
 {% block stylesheet %}
 	<link rel="stylesheet" href="/public/stylesheets/leaflet.css">
+	<link rel="stylesheet" href="/public/stylesheets/leaflet-cluster.css">
 {% endblock %}
 
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
 		{
-			callback: "var leafletMap = new appScripts.leaflet.default(); leafletMap.initiate('" + mapAccessToken + "', 'map');",
+			callback: "var leafletMap = new appScripts.leaflet.default(); window.leafletMapInstance = leafletMap.initiate('" + mapAccessToken + "', 'map');",
 			src: "/public/scripts/leaflet.script.js"
 		}
 	), initiateScriptsConfig) %}
+	<script src="/public/scripts/projects-map-filter.js"></script>
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
-		{% if not isFullscreen %}
-			<div class="govuk-grid-column-one-third">
-				<h2 class="govuk-heading-m">Filters</h2>
-				<p class="govuk-body">Filter options will go here.</p>
-			</div>
-		{% endif %}
+		<div class="govuk-grid-column-one-third govuk-!-display-none" id="filter-panel">
+			<h2 class="govuk-heading-m">Filters</h2>
+			<p class="govuk-body">Filter options will go here.</p>
+		</div>
 
-		{% if isFullscreen %}
-			<div class="govuk-grid-column-full">
-		{% else %}
-			<div class="govuk-grid-column-two-thirds">
-		{% endif %}
+		<div class="govuk-grid-column-full" id="map-panel">
 			<h1 class="govuk-heading-xl">Projects map</h1>
 
 			<p class="govuk-body">
@@ -48,19 +44,11 @@
 			</div>
 
 			<div class="govuk-button-group">
-				{% if isFullscreen %}
-					{{ govukButton({
-						text: "Show Filter",
-						classes: "govuk-button--secondary",
-						href: "/projects-map"
-					}) }}
-				{% else %}
-					{{ govukButton({
-						text: "Hide Filter",
-						classes: "govuk-button--secondary",
-						href: "/projects-map-fullscreen"
-					}) }}
-				{% endif %}
+				{{ govukButton({
+					text: "Show Filters",
+					classes: "govuk-button--secondary",
+					id: "toggle-filter-btn"
+				}) }}
 
 				<a class="govuk-link" href="/project-search">Switch to list view</a>
 			</div>
@@ -71,7 +59,7 @@
 				<p class="govuk-body">Map is currently unavailable.</p>
 			{% endif %}
 
-			<div id="project-list" class="govuk-!-margin-top-4" style="display: none;"></div>
+
 
 			<div class="govuk-warning-text">
 				<span class="govuk-warning-text__icon" aria-hidden="true">!</span>

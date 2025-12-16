@@ -1,7 +1,13 @@
 const { getMapAccessToken } = require('./_utils/get-map-token');
 const logger = require('../../lib/logger');
 
-const renderProjectsMap = async (req, res, next, isFullscreen = false) => {
+/**
+ * Renders the projects map page
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+const getProjectsMapController = async (req, res, next) => {
 	try {
 		const mapAccessToken = await getMapAccessToken();
 
@@ -10,8 +16,7 @@ const renderProjectsMap = async (req, res, next, isFullscreen = false) => {
 		}
 
 		return res.render('projects-map/view.njk', {
-			mapAccessToken,
-			isFullscreen
+			mapAccessToken
 		});
 	} catch (error) {
 		logger.error(error);
@@ -19,11 +24,6 @@ const renderProjectsMap = async (req, res, next, isFullscreen = false) => {
 	}
 };
 
-const getProjectsMapController = (req, res, next) => renderProjectsMap(req, res, next, false);
-const getProjectsMapFullscreenController = (req, res, next) =>
-	renderProjectsMap(req, res, next, true);
-
 module.exports = {
-	getProjectsMapController,
-	getProjectsMapFullscreenController
+	getProjectsMapController
 };

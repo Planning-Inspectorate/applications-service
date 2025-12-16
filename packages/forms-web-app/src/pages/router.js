@@ -10,10 +10,7 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
-const {
-	getProjectsMapController,
-	getProjectsMapFullscreenController
-} = require('./projects-map/controller');
+const { getProjectsMapController } = require('./projects-map/controller');
 const { getMasterGeojson } = require('../api/geojson/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
@@ -137,7 +134,6 @@ pagesRouter.get(
 );
 
 pagesRouter.get('/projects-map', getProjectsMapController);
-pagesRouter.get('/projects-map-fullscreen', getProjectsMapFullscreenController);
 pagesRouter.get('/api/geojson', getMasterGeojson);
 
 pagesRouter.use(projectsRouter);

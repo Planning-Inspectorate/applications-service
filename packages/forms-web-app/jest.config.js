@@ -22,5 +22,7 @@ module.exports = {
 		}
 	},
 	setupFilesAfterEnv: ['./__tests__/setupTests.js'],
-	setupFiles: ['<rootDir>/.jest/setEnvVars.js']
+	setupFiles: ['<rootDir>/.jest/setEnvVars.js'],
+	testPathIgnorePatterns: ['<rootDir>/dist/'],
+	modulePathIgnorePatterns: ['<rootDir>/dist/']
 };
