@@ -123,7 +123,9 @@ const mergeApplicationsAndCounts = (
 const getAllMergedApplicationsDownload = async () => {
 	const allNIApplications = await getAllNIApplicationsRepository();
 	const niApplications = mapNIApplicationsToApi(allNIApplications.applications);
-	const allBOApplications = await getAllBOApplicationsRepository();
+	const allBOApplications = await getAllBOApplicationsRepository({
+		includeExaminationTimetable: true
+	});
 	const boApplications = mapBackOfficeApplicationsToApi(allBOApplications.applications);
 	const mergedApplications = uniqBy([...boApplications, ...niApplications], 'CaseReference');
 	return mapApplicationsToCSV(mergedApplications);

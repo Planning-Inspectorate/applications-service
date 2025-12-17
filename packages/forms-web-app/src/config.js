@@ -65,6 +65,7 @@ module.exports = {
 		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
 		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
+		enableProjectsMap: process.env.FEATURE_ENABLE_PROJECTS_MAP === 'true',
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	},
 	serviceFeedbackUrl:
