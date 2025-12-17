@@ -26,7 +26,7 @@ describe('examination/check-submission-item/utils/summary-list-item/enter-commen
 							]
 						},
 						key: { text: 'Your comment' },
-						value: { html: 'comment' }
+						value: { text: 'comment' }
 					});
 				});
 			});

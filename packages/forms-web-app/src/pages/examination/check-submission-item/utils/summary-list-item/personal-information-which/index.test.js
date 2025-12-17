@@ -46,7 +46,7 @@ describe('examination/check-submission-item/utils/summary-list-item/personal-inf
 						]
 					},
 					key: { text: mockPersonalInformationWhichName },
-					value: { html: mockPersonalInformationWhichValue }
+					value: { text: mockPersonalInformationWhichValue }
 				});
 			});
 		});
