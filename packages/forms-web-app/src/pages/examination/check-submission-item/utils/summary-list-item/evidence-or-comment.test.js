@@ -33,7 +33,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 								]
 							},
 							key: { text: "How you've submitted your representation" },
-							value: { html: 'Make a comment' }
+							value: { text: 'Make a comment' }
 						});
 					});
 				});
@@ -57,7 +57,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 								]
 							},
 							key: { text: "How you've submitted your representation" },
-							value: { html: 'Upload files' }
+							value: { text: 'Upload files' }
 						});
 					});
 				});
@@ -81,7 +81,7 @@ describe('examination/check-submission-item/utils/summary-list-item/evidence-or-
 								]
 							},
 							key: { text: "How you've submitted your representation" },
-							value: { html: 'Make a comment and upload files' }
+							value: { text: 'Make a comment and upload files' }
 						});
 					});
 				});
