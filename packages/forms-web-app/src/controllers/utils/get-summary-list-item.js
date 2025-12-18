@@ -15,8 +15,13 @@ const getSummaryListItem = (i18n, keyText, valueText, actionItemHref) => {
 		keyText === translationEn.checkSubmissionItem.summaryListHeading3 ||
 		keyText === translationCy.checkSubmissionItem.summaryListHeading3;
 
-	// exception for 'Documents uploaded' row which returns ul
-	if (isDocumentsUploadRow) {
+	//if heading is 'Deadline items added'
+	const isDeadlineItemsAddedRow =
+		keyText === translationEn.checkYourAnswers.submissions.summaryListHeading1 ||
+		keyText === translationCy.checkYourAnswers.submissions.summaryListHeading1;
+
+	// exception for 'Documents uploaded' and 'Deadline items added rows which return ul
+	if (isDocumentsUploadRow || isDeadlineItemsAddedRow) {
 		summaryListItem.value.html = valueText;
 		delete summaryListItem.value.text;
 	}
