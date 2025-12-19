@@ -11362,6 +11362,11 @@ button {
 	padding-bottom: 5px;
 	margin-bottom: 25px;
 }
+.full-width-section--bg-lightgrey-no-h2-border h2 {
+	border-bottom: none;
+	padding-bottom: 5px;
+	margin-bottom: 25px;
+}
 .page-section:first-of-type {
 	padding-top: 60px;
 }

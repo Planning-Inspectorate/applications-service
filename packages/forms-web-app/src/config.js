@@ -66,6 +66,9 @@ module.exports = {
 		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
 		enableProjectsMap: process.env.FEATURE_ENABLE_PROJECTS_MAP === 'true',
+		enableProjectsMapClustering: process.env.FEATURE_ENABLE_PROJECTS_MAP_CLUSTERING === 'true',
+		enableProjectsMapBoundaries: process.env.FEATURE_ENABLE_PROJECTS_MAP_BOUNDARIES === 'true',
+		enableProjectsMapCustomIcons: process.env.FEATURE_ENABLE_PROJECTS_MAP_CUSTOM_ICONS !== 'false',
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	},
 	serviceFeedbackUrl:
@@ -172,6 +175,7 @@ module.exports = {
 	},
 	maps: {
 		osMapsApiKey: process.env.OS_MAPS_API_KEY,
-		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
+		osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
+		geojsonURL: process.env.GEOJSON_URL
 	}
 };

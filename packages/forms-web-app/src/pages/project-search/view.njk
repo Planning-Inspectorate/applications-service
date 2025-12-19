@@ -44,6 +44,12 @@
 
 				{% include "./includes/search.njk" %}
 
+				{% if featureFlag.enableProjectsMap %}
+					<p class="govuk-body">
+						<a class="govuk-link" href="/projects-map">Switch to map view</a>
+					</p>
+				{% endif %}
+
 				{% include "./includes/active-filters.njk" %}
 
 				{% if applications | length %}

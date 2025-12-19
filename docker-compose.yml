@@ -5,7 +5,6 @@
 #  - Documentation: 7000-7999
 #  - Websites: 9000-9999
 
-version: '3.7'
 services:
   redis:
     image: redis:6.2.5-alpine
@@ -89,6 +88,8 @@ services:
     image: node:20-alpine3.20
     user: node
     container_name: applications-web-app
+    env_file:
+      - ./packages/forms-web-app/.env
     environment:
       GIT_SHA: example-git-sha
       ACTIVATE_PLANNED_OUTAGE: 'false'
@@ -98,6 +99,9 @@ services:
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
       FEATURE_ALLOW_WELSH_CASES: 'true'
       FEATURE_ENABLE_PROJECTS_MAP: 'true'
+      FEATURE_ENABLE_PROJECTS_MAP_CLUSTERING: 'true'
+      FEATURE_ENABLE_PROJECTS_MAP_BOUNDARIES: 'true'
+      FEATURE_ENABLE_PROJECTS_MAP_CUSTOM_ICONS: 'true'
       FEATURE_APPLICATION_INSIGHTS: 'false'
       FEATURE_HOME_PAGE: 'true'
       FEATURE_PRIMARY_NAVIGATION: 'true'

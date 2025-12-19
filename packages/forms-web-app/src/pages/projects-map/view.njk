@@ -1,0 +1,65 @@
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+{% extends "layouts/default.njk" %}
+
+{% set pageTitle = 'Projects map' %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="/public/stylesheets/leaflet.css">
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css">
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css">
+	<link rel="stylesheet" href="/public/stylesheets/leaflet-cluster.css">
+{% endblock %}
+
+{% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{
+			callback: "var leafletMap = new appScripts.leaflet.default(); window.leafletMapInstance = leafletMap.initiate('" + mapAccessToken + "', 'map', undefined, undefined, undefined, { boundariesUrl: '" + (boundariesUrl or '') + "' });",
+			src: "/public/scripts/leaflet.script.js"
+		}
+	), initiateScriptsConfig) %}
+	<script src="/public/scripts/projects-map-filter.js"></script>
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-one-third govuk-!-display-none" id="filter-panel">
+			<h2 class="govuk-heading-m">Filters</h2>
+			<p class="govuk-body">Filter options will go here.</p>
+		</div>
+
+		<div class="govuk-grid-column-full" id="map-panel">
+			<h1 class="govuk-heading-xl">Projects map</h1>
+
+			<p class="govuk-body">
+				This is a map of all project boundaries. To find a specific project select a project boundary.
+			</p>
+
+			{{ uiSearchBar('projects-map-search-bar', 'searchTerm', '', 'Search for a project', 'Search') }}
+
+			<div class="govuk-button-group">
+				{{ govukButton({
+					text: "Show Filters",
+					classes: "govuk-button--secondary",
+					id: "toggle-filter-btn"
+				}) }}
+
+				<a class="govuk-link" href="/project-search">Switch to list view</a>
+			</div>
+
+			{% if mapAccessToken %}
+				<div id="map" class="govuk-!-margin-bottom-4" style="height: 550px;"></div>
+			{% else %}
+				<p class="govuk-body">Map is currently unavailable.</p>
+			{% endif %}
+
+			{{
+				govukWarningText({
+					text: "Project boundaries shown are for illustrative purposes only. To view the exact boundaries refer to latest relevant plans and drawings.",
+					iconFallbackText: "Warning"
+				})
+			}}
+		</div>
+	</div>
+{% endblock %}
