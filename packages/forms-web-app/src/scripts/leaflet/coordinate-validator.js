@@ -1,5 +1,7 @@
 import { MAP_CONFIG } from './map-config.js';
 
+const DEBUG = process.env.NODE_ENV !== 'production';
+
 /**
  * Validates if coordinates are within UK bounds
  * @param {number} lat - Latitude
@@ -25,7 +27,7 @@ export function validateAndLogCoordinate(coordinates, projectName) {
 	const [lng, lat] = coordinates;
 
 	if (!isValidUKCoordinate(lat, lng)) {
-		console.warn(`Skipping invalid coordinates for ${projectName}:`, coordinates);
+		if (DEBUG) console.warn(`Skipping invalid coordinates for ${projectName}:`, coordinates);
 		return false;
 	}
 

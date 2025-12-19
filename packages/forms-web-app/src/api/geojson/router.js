@@ -1,9 +1,10 @@
 const express = require('express');
 const { getGeoJsonController, getBoundariesController } = require('./controller');
+const { geojsonApiRoute, boundariesApiRoute } = require('./config');
 
 const geojsonRouter = express.Router();
 
-geojsonRouter.get('/geojson', getGeoJsonController);
-geojsonRouter.get('/geojson/boundaries', getBoundariesController);
+geojsonRouter.get(geojsonApiRoute, getGeoJsonController);
+geojsonRouter.get(boundariesApiRoute, getBoundariesController);
 
 module.exports = { geojsonRouter };

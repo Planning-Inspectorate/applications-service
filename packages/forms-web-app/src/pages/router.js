@@ -11,6 +11,7 @@ const {
 	postProjectSearchController
 } = require('./project-search/controller');
 const { getProjectsMapController } = require('./projects-map/controller');
+const { projectsMapRoute } = require('./projects-map/config');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -59,8 +60,6 @@ const { validationErrorHandler } = require('../validators/validation-error-handl
 
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
-
-const projectsMapRoute = '/projects-map';
 
 const indexURL = getIndexURL();
 const termsAndConditionsURL = getTermsAndConditionsURL();

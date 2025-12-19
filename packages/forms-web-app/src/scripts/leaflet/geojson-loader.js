@@ -2,6 +2,8 @@ import { validateAndLogCoordinate } from './coordinate-validator.js';
 import { createMarkersWithClustering } from './marker-cluster.js';
 import { loadProjectBoundaries } from './boundary-loader.js';
 
+const DEBUG = process.env.NODE_ENV !== 'production';
+
 /**
  * Loads project markers from GeoJSON API and adds them to the map
  * @param {L.Map} map - Leaflet map instance
@@ -30,7 +32,8 @@ export async function loadProjectMarkers(map) {
 			return validateAndLogCoordinate(feature.geometry.coordinates, feature.properties.projectName);
 		});
 
-		console.log(`Valid features: ${validFeatures.length} of ${geojsonData.features.length}`);
+		if (DEBUG)
+			console.log(`Valid features: ${validFeatures.length} of ${geojsonData.features.length}`);
 
 		return createMarkersWithClustering(map, validFeatures);
 	} catch (error) {

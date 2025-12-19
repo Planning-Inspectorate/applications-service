@@ -6,8 +6,7 @@ const {
 const { haveYourSayGuideSubdirectory } = require('../../have-your-say-guide/config');
 const { processGuideSubdirectory } = require('../../process-guide/config');
 const { projectSearchRoute } = require('../../project-search/config');
-
-const projectsMapRoute = '/projects-map';
+const { projectsMapRoute } = require('../../projects-map/config');
 
 const getPageData = (locale = 'en') => {
 	return {

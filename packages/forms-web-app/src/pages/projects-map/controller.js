@@ -1,6 +1,7 @@
 const { getMapAccessToken } = require('./_utils/get-map-token');
 const logger = require('../../lib/logger');
 const { maps } = require('../../config');
+const { boundariesApiRoute } = require('../../api/geojson/config');
 
 /**
  * Renders the projects map page
@@ -18,7 +19,7 @@ const getProjectsMapController = async (req, res, next) => {
 
 		return res.render('projects-map/view.njk', {
 			mapAccessToken,
-			boundariesUrl: maps.geojsonURL ? '/api/geojson/boundaries' : ''
+			boundariesUrl: maps.geojsonURL ? `/api${boundariesApiRoute}` : ''
 		});
 	} catch (error) {
 		logger.error(error);

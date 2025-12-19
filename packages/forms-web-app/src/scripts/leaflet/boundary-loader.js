@@ -1,5 +1,7 @@
 import L from 'leaflet';
 
+const DEBUG = process.env.NODE_ENV !== 'production';
+
 /**
  * Stage to color mapping for boundary polygons
  */
@@ -24,6 +26,64 @@ const STAGE_BOUNDARY_COLORS = {
  */
 function getStageColor(stage) {
 	return STAGE_BOUNDARY_COLORS[stage] || STAGE_BOUNDARY_COLORS.Unknown;
+}
+
+/**
+ * Gets the stage from feature properties
+ * @param {Object} feature - GeoJSON feature
+ * @returns {string} Stage name
+ */
+function getFeatureStage(feature) {
+	return (
+		feature.properties?.['infrastructure-project-decision'] ||
+		feature.properties?.stage ||
+		'Unknown'
+	);
+}
+
+/**
+ * Builds a Leaflet style object for a boundary feature
+ * @param {Object} feature - GeoJSON feature
+ * @param {Object} styleOptions - Style options (weight, opacity, fillOpacity)
+ * @returns {Object} Leaflet style options
+ */
+function buildBoundaryStyle(feature, { weight, opacity, fillOpacity }) {
+	const stage = getFeatureStage(feature);
+	const color = getStageColor(stage);
+
+	return {
+		color,
+		weight,
+		opacity,
+		fillColor: color,
+		fillOpacity
+	};
+}
+
+/**
+ * Style function for GeoJSON boundaries
+ * @param {Object} feature - GeoJSON feature
+ * @returns {Object} Leaflet style options
+ */
+function styleBoundary(feature) {
+	return buildBoundaryStyle(feature, {
+		weight: 2,
+		opacity: 0.8,
+		fillOpacity: 0.2
+	});
+}
+
+/**
+ * Highlight style for hover
+ * @param {Object} feature - GeoJSON feature
+ * @returns {Object} Leaflet style options
+ */
+function highlightStyle(feature) {
+	return buildBoundaryStyle(feature, {
+		weight: 4,
+		opacity: 1,
+		fillOpacity: 0.4
+	});
 }
 
 /**
@@ -63,48 +123,6 @@ function createBoundaryPopupContent(properties) {
 }
 
 /**
- * Style function for GeoJSON boundaries
- * @param {Object} feature - GeoJSON feature
- * @returns {Object} Leaflet style options
- */
-function styleBoundary(feature) {
-	const stage =
-		feature.properties?.['infrastructure-project-decision'] ||
-		feature.properties?.stage ||
-		'Unknown';
-	const color = getStageColor(stage);
-
-	return {
-		color: color,
-		weight: 2,
-		opacity: 0.8,
-		fillColor: color,
-		fillOpacity: 0.2
-	};
-}
-
-/**
- * Highlight style for hover
- * @param {Object} feature - GeoJSON feature
- * @returns {Object} Leaflet style options
- */
-function highlightStyle(feature) {
-	const stage =
-		feature.properties?.['infrastructure-project-decision'] ||
-		feature.properties?.stage ||
-		'Unknown';
-	const color = getStageColor(stage);
-
-	return {
-		color: color,
-		weight: 4,
-		opacity: 1,
-		fillColor: color,
-		fillOpacity: 0.4
-	};
-}
-
-/**
  * Loads project boundaries from GeoJSON API endpoint
  * proj4leaflet handles WGS84 to EPSG:27700 transformation automatically
  * @param {L.Map} map - Leaflet map instance
@@ -113,12 +131,12 @@ function highlightStyle(feature) {
  */
 export async function loadProjectBoundaries(map, geojsonUrl) {
 	if (!geojsonUrl) {
-		console.log('No GeoJSON URL provided, skipping boundary loading');
+		if (DEBUG) console.log('No GeoJSON URL provided, skipping boundary loading');
 		return null;
 	}
 
 	try {
-		console.log('Loading project boundaries from:', geojsonUrl);
+		if (DEBUG) console.log('Loading project boundaries from:', geojsonUrl);
 		const response = await fetch(geojsonUrl);
 
 		if (!response.ok) {
@@ -132,7 +150,7 @@ export async function loadProjectBoundaries(map, geojsonUrl) {
 			return null;
 		}
 
-		console.log(`Adding ${geojsonData.features.length} boundary features to map`);
+		if (DEBUG) console.log(`Adding ${geojsonData.features.length} boundary features to map`);
 
 		const boundaryLayer = L.geoJSON(geojsonData, {
 			style: styleBoundary,
@@ -155,11 +173,9 @@ export async function loadProjectBoundaries(map, geojsonUrl) {
 						boundaryLayer.resetStyle(e.target);
 					},
 					click: (e) => {
-						console.log('=== Boundary Feature Clicked ===');
-						console.log('All properties:', feature.properties);
-						console.log('Geometry type:', feature.geometry?.type);
-						console.log('Feature keys:', Object.keys(feature));
-						console.log('Property keys:', Object.keys(feature.properties || {}));
+						if (DEBUG) {
+							console.log('Boundary clicked:', feature.properties?.caseReference);
+						}
 						map.fitBounds(e.target.getBounds());
 					}
 				});
@@ -167,7 +183,7 @@ export async function loadProjectBoundaries(map, geojsonUrl) {
 		});
 
 		boundaryLayer.addTo(map);
-		console.log(`Loaded ${geojsonData.features.length} project boundaries`);
+		if (DEBUG) console.log(`Loaded ${geojsonData.features.length} project boundaries`);
 
 		return boundaryLayer;
 	} catch (error) {

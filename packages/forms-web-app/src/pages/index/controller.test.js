@@ -1,5 +1,6 @@
 const { getIndexController } = require('./controller');
 const { featureFlag } = require('../../config');
+const { projectsMapRoute } = require('../projects-map/config');
 
 featureFlag.allowWelshCases = true;
 featureFlag.enableProjectsMap = true;
@@ -11,7 +12,7 @@ const defaultPageData = {
 		haveYourSayGuideURL: 'having-your-say-guide',
 		processGuideURL: 'decision-making-process-guide',
 		projectSearchURL: 'project-search',
-		projectsMapURL: '/projects-map',
+		projectsMapURL: projectsMapRoute,
 		nsipNewsURL:
 			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest',
 		developmentConsentURL:

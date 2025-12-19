@@ -2,6 +2,8 @@ import L from 'leaflet';
 import 'leaflet.markercluster';
 import { createMarkerIcon, createPopupContent } from './marker-factory.js';
 
+const DEBUG = process.env.NODE_ENV !== 'production';
+
 /**
  * Creates a marker cluster group with custom styling
  * @returns {L.MarkerClusterGroup} Configured marker cluster group
@@ -67,7 +69,7 @@ export function createMarkersWithClustering(map, features) {
 
 	map.addLayer(clusterGroup);
 
-	console.log(`Created ${features.length} markers with clustering`);
+	if (DEBUG) console.log(`Created ${features.length} markers with clustering`);
 
 	return clusterGroup;
 }
