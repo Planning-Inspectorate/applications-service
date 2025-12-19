@@ -125,6 +125,59 @@ describe('nsip-representation', () => {
 			});
 		});
 	});
+	describe('representationComment mapping', () => {
+		const baseMessage = {
+			...mockMessage,
+			originalRepresentation: 'ORIGINAL',
+			editedRepresentation: null,
+			redactedRepresentation: null,
+			redacted: false
+		};
+		const getLastMergeParams = () => {
+			const [, ...receivedParams] = mockExecuteRawUnsafe.mock.calls[2];
+			return receivedParams;
+		};
+		it('uses original when no edit and not redacted', async () => {
+			const message = { ...baseMessage };
+			await sendMessage(mockContext, message);
+			const mergeParams = getLastMergeParams();
+			const representationComment = mergeParams[6];
+			expect(representationComment).toBe('ORIGINAL');
+		});
+		it('uses edited when edited and not redacted', async () => {
+			const message = {
+				...baseMessage,
+				editedRepresentation: 'EDITED'
+			};
+			await sendMessage(mockContext, message);
+			const mergeParams = getLastMergeParams();
+			const representationComment = mergeParams[6];
+			expect(representationComment).toBe('EDITED');
+		});
+		it('uses redacted when redacted and no edit', async () => {
+			const message = {
+				...baseMessage,
+				redacted: true,
+				redactedRepresentation: 'REDACTED'
+			};
+			await sendMessage(mockContext, message);
+			const mergeParams = getLastMergeParams();
+			const representationComment = mergeParams[6];
+			expect(representationComment).toBe('REDACTED');
+		});
+		it('uses redacted when both redacted and edited', async () => {
+			const message = {
+				...baseMessage,
+				editedRepresentation: 'EDITED',
+				redacted: true,
+				redactedRepresentation: 'REDACTED'
+			};
+			await sendMessage(mockContext, message);
+			const mergeParams = getLastMergeParams();
+			const representationComment = mergeParams[6];
+			expect(representationComment).toBe('REDACTED');
+		});
+	});
 	it('calls buildMergeQuery with correct parameters', async () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(buildMergeQuery).toHaveBeenCalledWith(
