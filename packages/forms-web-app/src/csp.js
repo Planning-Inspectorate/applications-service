@@ -1,7 +1,7 @@
 const helmet = require('helmet');
 const crypto = require('node:crypto');
 
-const scriptSrc = ['https://*.googletagmanager.com'];
+const scriptSrc = ['https://*.googletagmanager.com', 'https://unpkg.com'];
 
 const imgSrc = [
 	'https://*.google-analytics.com',
@@ -10,7 +10,9 @@ const imgSrc = [
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/'
+	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/',
+	'https://unpkg.com',
+	'https://*.tile.openstreetmap.org'
 ];
 
 const connectSrc = [
@@ -20,7 +22,8 @@ const connectSrc = [
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://api.os.uk'
+	'https://api.os.uk',
+	'https://*.tile.openstreetmap.org'
 ];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
@@ -34,6 +37,7 @@ function configureCSP(app) {
 	app.use(
 		helmet({
 			referrerPolicy: { policy: 'origin-when-cross-origin' },
+			crossOriginEmbedderPolicy: false,
 			contentSecurityPolicy: {
 				directives: {
 					'script-src': ["'self'", "'unsafe-eval'", ...scriptSrc, addCSPNonce],

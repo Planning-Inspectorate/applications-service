@@ -10,6 +10,7 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
+const { getProjectsMapController } = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -58,6 +59,7 @@ const { validationErrorHandler } = require('../validators/validation-error-handl
 
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
+const { projectsMapRoute } = require('./projects-map/config');
 
 const indexURL = getIndexURL();
 const termsAndConditionsURL = getTermsAndConditionsURL();
@@ -130,6 +132,10 @@ pagesRouter.get(
 	addContactTranslationsMiddleware,
 	getContactController
 );
+
+if (featureFlag.enableProjectsMap) {
+	pagesRouter.get(projectsMapRoute, getProjectsMapController);
+}
 
 pagesRouter.use(projectsRouter);
 

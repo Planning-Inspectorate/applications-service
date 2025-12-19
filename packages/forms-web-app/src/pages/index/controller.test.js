@@ -11,7 +11,7 @@ const defaultPageData = {
 		haveYourSayGuideURL: 'having-your-say-guide',
 		processGuideURL: 'decision-making-process-guide',
 		projectSearchURL: 'project-search',
-		projectsMapURL: 'projects-map',
+		projectsMapURL: '/projects-map',
 		nsipNewsURL:
 			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest',
 		developmentConsentURL:

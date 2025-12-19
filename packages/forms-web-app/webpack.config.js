@@ -38,7 +38,8 @@ const configAppScripts = {
 		initiate: `${entryPath}/initiate.js`,
 		map: `${entryPath}/map`,
 		modal: `${entryPath}/modal`,
-		simulateUserAction: `${entryPath}/simulate-user-action.js`
+		simulateUserAction: `${entryPath}/simulate-user-action.js`,
+		'projects-map': `${entryPath}/projects-map`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,

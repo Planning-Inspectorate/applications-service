@@ -53,6 +53,8 @@
 		"i18next": "*",
 		"i18next-fs-backend": "*",
 		"i18next-http-middleware": "*",
+		"leaflet": "^1.9.4",
+		"leaflet.markercluster": "^1.5.3",
 		"lodash": "*",
 		"marked": "*",
 		"moment": "*",
