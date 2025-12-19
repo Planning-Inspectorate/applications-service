@@ -87,24 +87,44 @@ function highlightStyle(feature) {
 }
 
 /**
+ * Extracts stage from filename pattern like "EN010147_Acceptance.zip"
+ * @param {string} filename - The filename to parse
+ * @returns {string|null} The extracted stage or null
+ */
+function extractStageFromFilename(filename) {
+	if (!filename) return null;
+	const match = filename.match(/_([A-Za-z]+)(?:_[A-Za-z]+)?\.zip$/);
+	return match ? match[1] : null;
+}
+
+/**
  * Creates popup content for a boundary feature
+ * Handles unenriched data where projectName is actually a filename
  * @param {Object} properties - Feature properties
  * @returns {string} HTML content for popup
  */
 function createBoundaryPopupContent(properties) {
-	const name = properties.projectName || properties.name || 'Unknown Project';
 	const reference = properties.caseReference || properties.reference || '';
-	const stage = properties.stage || 'Unknown';
 	const region = properties.region || '';
+
+	const isEnriched = properties.stage && !properties.projectName?.endsWith('.zip');
+	let displayName;
+	let stage;
+
+	if (isEnriched) {
+		displayName = properties.projectName || properties.name || reference;
+		stage = properties.stage;
+	} else {
+		displayName = reference;
+		stage = extractStageFromFilename(properties.projectName) || 'Unknown';
+	}
 
 	return `
 		<div class="cluster-popup-container">
 			<h2 class="cluster-popup-header">Project boundary</h2>
 			<table class="cluster-popup-table">
 				<tr class="cluster-popup-row">
-					<td class="cluster-popup-cell-name">
-						<a href="/projects/${reference}" class="cluster-popup-link">${name}</a>
-					</td>
+					<td class="cluster-popup-cell-name">${displayName}</td>
 					<td class="cluster-popup-cell-stage">${stage}</td>
 				</tr>
 				${
