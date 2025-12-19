@@ -59,7 +59,8 @@ const { validationErrorHandler } = require('../validators/validation-error-handl
 
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
-const { projectsMapRoute } = require('./projects-map/config');
+
+const projectsMapRoute = '/projects-map';
 
 const indexURL = getIndexURL();
 const termsAndConditionsURL = getTermsAndConditionsURL();

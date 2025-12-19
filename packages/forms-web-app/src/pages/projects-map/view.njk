@@ -1,335 +1,65 @@
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
 {% extends "layouts/default.njk" %}
 
 {% set pageTitle = 'Projects map' %}
 
 {% block stylesheet %}
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-		crossorigin=""/>
-	
-	{% if mapFeatureFlags.enableClustering %}
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.css"/>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.1.0/dist/MarkerCluster.Default.css"/>
-	{% endif %}
-
-	<style>
-		#projects-map {
-			height: 600px;
-			width: 100%;
-			border: 1px solid #b1b4b6;
-			margin-bottom: 30px;
-		}
-
-		.projects-map-container {
-			display: flex;
-			gap: 30px;
-		}
-
-		.projects-map-wrapper {
-			flex: 2;
-			min-width: 0;
-		}
-
-		.projects-list-panel {
-			flex: 1;
-			min-width: 300px;
-			max-width: 400px;
-			background: #f3f2f1;
-			padding: 20px;
-			border: 1px solid #b1b4b6;
-			max-height: 600px;
-			overflow-y: auto;
-		}
-
-		.projects-list-panel h3 {
-			margin-top: 0;
-		}
-
-		.project-list-item {
-			padding: 15px 0;
-			border-bottom: 1px solid #b1b4b6;
-		}
-
-		.project-list-item:last-child {
-			border-bottom: none;
-		}
-
-		.project-list-item a {
-			font-weight: bold;
-		}
-
-		.project-meta {
-			margin-top: 8px;
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-		}
-
-		.project-stage-tag {
-			display: inline-block;
-			padding: 2px 8px;
-			font-size: 14px;
-			color: white;
-			border-radius: 3px;
-		}
-
-		.project-sector {
-			display: inline-block;
-			padding: 2px 8px;
-			font-size: 14px;
-			background-color: #505a5f;
-			color: white;
-			border-radius: 3px;
-		}
-
-		.switch-view-link {
-			margin-bottom: 20px;
-		}
-
-		.map-description {
-			margin-bottom: 20px;
-		}
-
-		/* Clustering styles */
-		.marker-cluster {
-			background: transparent;
-		}
-
-		.cluster-icon {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-radius: 50%;
-			color: white;
-			font-weight: bold;
-			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-		}
-
-		.cluster-icon--small {
-			width: 30px;
-			height: 30px;
-			background-color: #42a5f5;
-			font-size: 12px;
-		}
-
-		.cluster-icon--medium {
-			width: 40px;
-			height: 40px;
-			background-color: #ffa726;
-			font-size: 14px;
-		}
-
-		.cluster-icon--large {
-			width: 50px;
-			height: 50px;
-			background-color: #ff6b6b;
-			font-size: 16px;
-		}
-
-		/* Popup styles */
-		.popup-content {
-			min-width: 200px;
-		}
-
-		.popup-title {
-			margin: 0 0 10px 0;
-			color: #0b0c0c;
-			font-size: 16px;
-		}
-
-		.popup-details {
-			margin-bottom: 10px;
-		}
-
-		.popup-details p {
-			margin: 4px 0;
-			font-size: 14px;
-		}
-
-		.popup-stage {
-			display: inline-block;
-			padding: 2px 6px;
-			color: white;
-			border-radius: 3px;
-			font-size: 12px;
-		}
-
-		.popup-link {
-			color: #1d70b8;
-			text-decoration: none;
-			font-weight: bold;
-		}
-
-		.popup-link:hover {
-			text-decoration: underline;
-		}
-
-		.popup-project-list {
-			margin: 10px 0;
-			padding-left: 20px;
-		}
-
-		.popup-project-list li {
-			margin-bottom: 5px;
-		}
-
-		.popup-hint {
-			font-size: 12px;
-			color: #505a5f;
-			font-style: italic;
-		}
-
-		/* Boundary tooltip */
-		.boundary-tooltip {
-			background: white;
-			border: 1px solid #b1b4b6;
-			border-radius: 4px;
-			padding: 8px;
-			font-size: 14px;
-		}
-
-		/* Legend */
-		.map-legend {
-			background: white;
-			padding: 15px;
-			border: 1px solid #b1b4b6;
-			margin-bottom: 20px;
-		}
-
-		.map-legend h4 {
-			margin: 0 0 10px 0;
-		}
-
-		.legend-items {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 15px;
-		}
-
-		.legend-item {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-			font-size: 14px;
-		}
-
-		.legend-color {
-			width: 16px;
-			height: 16px;
-			border-radius: 50%;
-			border: 2px solid white;
-			box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-		}
-
-		@media (max-width: 1024px) {
-			.projects-map-container {
-				flex-direction: column;
-			}
-
-			.projects-list-panel {
-				max-width: none;
-				max-height: 400px;
-			}
-
-			.legend-items {
-				flex-direction: column;
-			}
-		}
-	</style>
+	<link rel="stylesheet" href="/public/stylesheets/leaflet.css">
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css">
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css">
+	<link rel="stylesheet" href="/public/stylesheets/leaflet-cluster.css">
 {% endblock %}
 
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
 		{
-			callback: "var projectsMapInstance = new appScripts['projects-map'].default(); projectsMapInstance.initiate(document.getElementById('projects-map'));",
-			src: "/public/scripts/projects-map.script.js"
+			callback: "var leafletMap = new appScripts.leaflet.default(); window.leafletMapInstance = leafletMap.initiate('" + mapAccessToken + "', 'map', undefined, undefined, undefined, { boundariesUrl: '" + (boundariesUrl or '') + "' });",
+			src: "/public/scripts/leaflet.script.js"
 		}
 	), initiateScriptsConfig) %}
+	<script src="/public/scripts/projects-map-filter.js"></script>
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<h1 class="govuk-heading-xl">{{ pageTitle }}</h1>
+		<div class="govuk-grid-column-one-third govuk-!-display-none" id="filter-panel">
+			<h2 class="govuk-heading-m">Filters</h2>
+			<p class="govuk-body">Filter options will go here.</p>
+		</div>
 
-			<p class="govuk-body map-description">
+		<div class="govuk-grid-column-full" id="map-panel">
+			<h1 class="govuk-heading-xl">Projects map</h1>
+
+			<p class="govuk-body">
 				This is a map of all project boundaries. To find a specific project select a project boundary.
 			</p>
 
-			<div class="switch-view-link">
+			{{ uiSearchBar('projects-map-search-bar', 'searchTerm', '', 'Search for a project', 'Search') }}
+
+			<div class="govuk-button-group">
+				{{ govukButton({
+					text: "Show Filters",
+					classes: "govuk-button--secondary",
+					id: "toggle-filter-btn"
+				}) }}
+
 				<a class="govuk-link" href="/project-search">Switch to list view</a>
 			</div>
 
 			{% if mapAccessToken %}
-				{% if mapFeatureFlags.enableCustomIcons %}
-				<div class="map-legend">
-					<h4 class="govuk-heading-s">Project stages</h4>
-					<div class="legend-items">
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #ff6b6b;"></div>
-							<span>Pre-application</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #ffa726;"></div>
-							<span>Acceptance</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #42a5f5;"></div>
-							<span>Pre-examination</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #66bb6a;"></div>
-							<span>Examination</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #ab47bc;"></div>
-							<span>Recommendation</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #26c6da;"></div>
-							<span>Decision</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #d4e157;"></div>
-							<span>Post decision</span>
-						</div>
-						<div class="legend-item">
-							<div class="legend-color" style="background-color: #8d6e63;"></div>
-							<span>Withdrawn</span>
-						</div>
-					</div>
-				</div>
-				{% endif %}
-
-				<div class="projects-map-container">
-					<div class="projects-map-wrapper">
-						<div id="projects-map" 
-							data-map-token="{{ mapAccessToken }}"
-							data-applications="{{ applications | dump | escape }}"
-							data-feature-flags="{{ mapFeatureFlags | dump | escape }}">
-						</div>
-						<div class="govuk-warning-text">
-							<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-							<strong class="govuk-warning-text__text">
-								<span class="govuk-visually-hidden">Warning</span>
-								Project boundaries shown are for illustrative purposes only. To view the exact boundaries refer to latest relevant plans and drawings.
-							</strong>
-						</div>
-					</div>
-
-					<div class="projects-list-panel" id="projects-list-panel" style="display: none;">
-						<h3 class="govuk-heading-m" id="selected-projects-heading">0 projects selected</h3>
-						<div id="selected-projects-list"></div>
-					</div>
-				</div>
+				<div id="map" class="govuk-!-margin-bottom-4" style="height: 550px;"></div>
 			{% else %}
-				<div class="govuk-error-summary">
-					<h2 class="govuk-error-summary__title">Map unavailable</h2>
-					<div class="govuk-error-summary__body">
-						<p>Unable to load the map. Please try again later.</p>
-					</div>
-				</div>
+				<p class="govuk-body">Map is currently unavailable.</p>
 			{% endif %}
+
+			{{
+				govukWarningText({
+					text: "Project boundaries shown are for illustrative purposes only. To view the exact boundaries refer to latest relevant plans and drawings.",
+					iconFallbackText: "Warning"
+				})
+			}}
 		</div>
 	</div>
 {% endblock %}

@@ -1,0 +1,168 @@
+/* ==========================================================================
+   Leaflet Cluster Markers & Popups
+   ========================================================================== */
+
+:root {
+	--cluster-bg: #d4351c;
+	--cluster-text: white;
+	--popup-text: #0b0c0c;
+	--popup-link: #1d70b8;
+	--popup-link-hover: #003078;
+	--popup-border: #b1b4b6;
+	--font-family: 'GDS Transport', arial, sans-serif;
+}
+
+/* Cluster Marker */
+.marker-cluster {
+	background-clip: padding-box;
+	border-radius: 20px;
+}
+
+.marker-cluster div {
+	width: 30px;
+	height: 30px;
+	margin: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: var(--cluster-bg);
+	color: var(--cluster-text);
+	border: 2px solid white;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	font: bold 12px 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Popup Base */
+.cluster-popup .leaflet-popup-content-wrapper {
+	box-shadow: none;
+	border-radius: 2px;
+}
+
+.cluster-popup .leaflet-popup-content {
+	padding: 0px;
+	font-family: var(--font-family);
+	line-height: 1.25;
+}
+
+/* Popup Content */
+.cluster-popup-container {
+	min-width: 280px;
+}
+
+.cluster-popup-container h2 {
+	margin: 0 0 10px 0;
+	font-size: 22px;
+	font-weight: bold;
+	color: var(--popup-text);
+}
+
+.cluster-popup-container table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.cluster-popup-container tr {
+	border-bottom: 1px solid var(--popup-border);
+}
+
+.cluster-popup-container td {
+	padding: 12px 0;
+	vertical-align: top;
+	border: none;
+}
+
+.cluster-popup-container td:first-child {
+	padding-right: 20px;
+}
+
+.cluster-popup-container td:last-child {
+	color: var(--popup-text);
+	font-size: 16px;
+	text-align: right;
+}
+
+.cluster-popup-container a {
+	color: var(--popup-link);
+	text-decoration: underline;
+	font-size: 16px;
+}
+
+.cluster-popup-container a:hover {
+	color: var(--popup-link-hover);
+}
+
+/* Project Marker Icon */
+.project-marker-icon {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 2px solid white;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+	font-size: 0;
+	padding: 0;
+}
+
+/* ==========================================================================
+   Leaflet.markercluster Overrides
+   ========================================================================== */
+
+.marker-cluster-small {
+	background-color: rgba(181, 226, 140, 0.6);
+}
+
+.marker-cluster-small div {
+	background-color: rgba(110, 204, 57, 0.6);
+}
+
+.marker-cluster-medium {
+	background-color: rgba(241, 211, 87, 0.6);
+}
+
+.marker-cluster-medium div {
+	background-color: rgba(240, 194, 12, 0.6);
+}
+
+.marker-cluster-large {
+	background-color: rgba(253, 156, 115, 0.6);
+}
+
+.marker-cluster-large div {
+	background-color: rgba(241, 128, 23, 0.6);
+}
+
+.marker-cluster {
+	background-clip: padding-box;
+	border-radius: 20px;
+}
+
+.marker-cluster div {
+	width: 30px;
+	height: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+	text-align: center;
+	border-radius: 15px;
+	font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #000;
+	font-weight: bold;
+}
+
+.marker-cluster span {
+	line-height: 30px;
+}
+
+/* ==========================================================================
+   Boundary Polygon Styles
+   ========================================================================== */
+
+.leaflet-interactive.boundary-polygon {
+	cursor: pointer;
+}
+
+.leaflet-interactive.boundary-polygon:hover {
+	fill-opacity: 0.5;
+}

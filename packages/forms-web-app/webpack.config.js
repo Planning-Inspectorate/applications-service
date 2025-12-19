@@ -1,9 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const entryPath = path.resolve(__dirname, 'src', 'scripts');
 const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
+const publicPath = path.resolve(__dirname, 'src', 'public');
+const nodeModulesPath = path.resolve(__dirname, '..', '..', 'node_modules');
 const outputFilenamePrefix = 'script';
 
 const config = {
@@ -36,10 +39,10 @@ const configAppScripts = {
 	...config,
 	entry: {
 		initiate: `${entryPath}/initiate.js`,
+		leaflet: `${entryPath}/leaflet`,
 		map: `${entryPath}/map`,
 		modal: `${entryPath}/modal`,
-		simulateUserAction: `${entryPath}/simulate-user-action.js`,
-		'projects-map': `${entryPath}/projects-map`
+		simulateUserAction: `${entryPath}/simulate-user-action.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,
@@ -66,6 +69,31 @@ const configPageScripts = {
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env.googleTagManager': process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true'
+		}),
+		new CopyPlugin({
+			patterns: [
+				{
+					from: path.resolve(nodeModulesPath, 'leaflet', 'dist', 'leaflet.css'),
+					to: path.resolve(publicPath, 'stylesheets', 'leaflet.css')
+				},
+				{
+					from: path.resolve(nodeModulesPath, 'leaflet', 'dist', 'images'),
+					to: path.resolve(publicPath, 'images', 'leaflet')
+				},
+				{
+					from: path.resolve(nodeModulesPath, 'leaflet.markercluster', 'dist', 'MarkerCluster.css'),
+					to: path.resolve(publicPath, 'stylesheets', 'MarkerCluster.css')
+				},
+				{
+					from: path.resolve(
+						nodeModulesPath,
+						'leaflet.markercluster',
+						'dist',
+						'MarkerCluster.Default.css'
+					),
+					to: path.resolve(publicPath, 'stylesheets', 'MarkerCluster.Default.css')
+				}
+			]
 		})
 	]
 };

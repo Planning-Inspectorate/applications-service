@@ -23,7 +23,8 @@ const connectSrc = [
 	'https://*.google.com',
 	'https://*.google.co.uk',
 	'https://api.os.uk',
-	'https://*.tile.openstreetmap.org'
+	'https://*.tile.openstreetmap.org',
+	'https://nsip-documents.planninginspectorate.gov.uk'
 ];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
