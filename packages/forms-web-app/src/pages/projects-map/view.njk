@@ -1,14 +1,72 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% extends "layouts/default.njk" %}
 
 {% set pageTitle = t('projectsMap.pageTitle') %}
 
+{% block stylesheet %}
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+		crossorigin=""/>
+{% endblock %}
 
 {% block content %}
 		<div class="govuk-grid-row">
-			<div class="govuk-grid-column-full">
-				<h1 class="govuk-heading-xl">{{ t('projectsMap.heading') }}</h1>
+			<div class="govuk-grid-column-one-third" id="maps-sidebar-content">
+				Filter goes here
+			</div>
 
-				This is a maps page for projects.
+			<div class="govuk-grid-column-two-thirds" id="maps-content">
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+					{{ t('projectsMap.heading1') }}
+				</h1>
+
+				{% if featureFlag.allowWelshTranslation == false %}
+					<p class="govuk-body">
+						This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
+					</p>
+				{% endif %}
+
+				<p class="govuk-body">
+					{{ t('projectsMap.paragraph1') }}
+				</p>
+
+				{% include "../project-search/includes/search.njk" %}
+
+				<div class="govuk-button-group">
+					{{ govukButton({
+						text: t('projectsMap.hideFiltersText'),
+						classes: "govuk-button--secondary",
+						attributes: {
+							id: "filters-toggle-btn",
+							'data-show-filters-button-label': t('projectsMap.showFiltersText'),
+							'data-hide-filters-button-label': t('projectsMap.hideFiltersText')
+						}
+					}) }}
+					<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
+				</div>
+
+				<div id="map" class="govuk-!-margin-bottom-4" style="height: 550px;"></div>
+
+				{% include "../project-search/includes/active-filters.njk" %}
+
+				{{ govukWarningText({
+					text: t('projectsMap.warningText'),
+					iconFallbackText: "Warning"
+				}) }}
 			</div>
 		</div>
+{% endblock %}
+
+{% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{
+			callback: "var toggle = new appScripts.toggleMapFilters(); toggle.initiate('#filters-toggle-btn', '#maps-sidebar-content', '#maps-content');",
+			src: "/public/scripts/toggleMapFilters.script.js"
+		},
+		{
+			callback: "var leafletMap = new appScripts.leafletMap.default(); leafletMap.initiate('" + mapAccessToken + "', 'map');",
+			src: "/public/scripts/leafletMap.script.js"
+		}
+	), initiateScriptsConfig) %}
 {% endblock %}
