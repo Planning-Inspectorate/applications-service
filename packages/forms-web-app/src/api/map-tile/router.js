@@ -23,6 +23,7 @@ const mapTileRouter = express.Router();
 mapTileRouter.get('/:z/:x/:y', async (req, res) => {
 	try {
 		const { z, x, y } = req.params;
+		console.log(`[map-tile] Received request for z=${z} x=${x} y=${y}`);
 
 		// Validate tile coordinates
 		if (!z || !x || !y) {
@@ -30,23 +31,30 @@ mapTileRouter.get('/:z/:x/:y', async (req, res) => {
 		}
 
 		// Get OAuth token from backend service
+		console.log('[map-tile] Getting OAuth token...');
 		const mapAccessToken = await getMapAccessToken();
+		console.log(`[map-tile] Got token: ${mapAccessToken ? 'success' : 'null'}`);
 
 		// Fetch tile from OS Maps API with Bearer token
-		const tileResponse = await fetch(
-			`https://api.os.uk/maps/raster/v1/zxy/Light_27700/${z}/${x}/${y}.png`,
-			{
-				headers: {
-					Authorization: `Bearer ${mapAccessToken}`
-				}
+		// Using Light_27700 (British National Grid projection - accurate for UK mapping)
+		const url = `https://api.os.uk/maps/raster/v1/zxy/Light_27700/${z}/${x}/${y}.png`;
+		console.log(`[map-tile] Fetching from: ${url}`);
+		const tileResponse = await fetch(url, {
+			headers: {
+				Authorization: `Bearer ${mapAccessToken}`
 			}
-		);
+		});
+		console.log(`[map-tile] Response status: ${tileResponse.status}`);
 
 		if (!tileResponse.ok) {
-			throw new Error(`Failed to fetch tile: ${tileResponse.status} ${tileResponse.statusText}`);
+			const errorText = await tileResponse.text();
+			throw new Error(
+				`Failed to fetch tile: ${tileResponse.status} ${tileResponse.statusText} - ${errorText}`
+			);
 		}
 
 		const buffer = await tileResponse.arrayBuffer();
+		console.log(`[map-tile] Got buffer, size: ${buffer.byteLength} bytes`);
 
 		// Return tile with proper headers
 		res.writeHead(200, {
@@ -56,8 +64,9 @@ mapTileRouter.get('/:z/:x/:y', async (req, res) => {
 		});
 
 		res.end(Buffer.from(buffer));
+		console.log(`[map-tile] Sent tile successfully`);
 	} catch (error) {
-		console.error('Error fetching map tile:', error.message);
+		console.error('[map-tile] Error:', error.message, error.stack);
 		res.status(500).json({ error: 'Failed to fetch map tile' });
 	}
 });

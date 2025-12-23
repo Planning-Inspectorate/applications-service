@@ -13,7 +13,8 @@ const imgSrc = [
 	'https://*.google.com',
 	'https://*.google.co.uk',
 	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/',
-	'https://api.os.uk'
+	'https://api.os.uk',
+	'https://*.tile.openstreetmap.org'
 ];
 
 const connectSrc = [
@@ -24,7 +25,8 @@ const connectSrc = [
 	'https://*.google.com',
 	'https://*.google.co.uk',
 	'https://api.os.uk',
-	'https://unpkg.com'
+	'https://unpkg.com',
+	'https://*.tile.openstreetmap.org'
 ];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;

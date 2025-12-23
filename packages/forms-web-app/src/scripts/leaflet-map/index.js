@@ -3,6 +3,18 @@ import 'proj4leaflet';
 
 function leafletMap() {
 	this.initiate = function (token, container, lat = 52.3, lng = -1.7, zoom = 0) {
+		console.log(
+			'leafletMap.initiate called with container:',
+			container,
+			'lat:',
+			lat,
+			'lng:',
+			lng,
+			'zoom:',
+			zoom
+		);
+
+		// Setup EPSG:27700 (British National Grid) projection
 		const mapResolutions = [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75];
 		const crs27700 = new L.Proj.CRS(
 			'EPSG:27700',
@@ -33,7 +45,7 @@ function leafletMap() {
 		// Store map instance globally for filter toggle
 		window.leafletMapInstance = map;
 
-		// Add tile layer via proxy endpoint
+		// Add tile layer via proxy endpoint (Light_27700 - accurate OS Maps with EPSG:27700)
 		L.tileLayer('/api/map-tile/{z}/{x}/{y}', {
 			maxZoom: 20,
 			tileSize: 256,
@@ -44,6 +56,47 @@ function leafletMap() {
 		this.loadProjectMarkers(map);
 
 		return map;
+	};
+
+	this.getMarkerIcon = function () {
+		return L.divIcon({
+			className: 'project-marker',
+			html: `<div class="govuk-tag govuk-tag--blue-red project-marker-icon"></div>`,
+			iconSize: [25, 41],
+			iconAnchor: [12.5, 41],
+			popupAnchor: [0, -35]
+		});
+	};
+
+	this.createPopupContent = function (properties) {
+		const { projectName, caseReference, stage } = properties;
+
+		return `
+        <div class="cluster-popup-container">
+            <h2 class="cluster-popup-header">1 project selected</h2>
+            <table class="cluster-popup-table">
+                <tr class="cluster-popup-row">
+                    <td class="cluster-popup-cell-name">
+                        <a href="/projects/${caseReference}" class="cluster-popup-link">${projectName}</a>
+                    </td>
+                    <td class="cluster-popup-cell-stage">
+                        ${stage}
+                    </td>
+                </tr>
+                ${
+									properties.summary
+										? `
+                <tr class="cluster-popup-row cluster-popup-last-row">
+                    <td colspan="2" class="cluster-popup-cell-name">
+                        ${properties.summary}
+                    </td>
+                </tr>
+                `
+										: ''
+								}
+            </table>
+        </div>
+    `;
 	};
 
 	this.loadProjectMarkers = async function (map) {
@@ -59,26 +112,25 @@ function leafletMap() {
 			const projects = await response.json();
 			console.log(`Fetched ${projects.length} projects`);
 
-			// Create markers for each project
-			projects.forEach((project) => {
-				const [lat, lng] = project.coordinates;
+			if (!projects || projects.length === 0) {
+				console.warn('No projects returned from API');
+				return;
+			}
 
-				const marker = L.marker([lat, lng], {
-					title: project.projectName
-				});
-
-				const popupContent = `
-					<strong>${project.projectName}</strong><br/>
-					Case: ${project.caseReference}<br/>
-					Stage: ${project.stage}<br/>
-					Region: ${project.region}
-				`;
-
-				marker.bindPopup(popupContent);
-				marker.addTo(map);
+			// Create feature group for markers (clustering disabled - incompatible with EPSG:27700)
+			const markerGroup = L.featureGroup();
+			projects.forEach((project, index) => {
+				try {
+					const [lat, lng] = project.coordinates;
+					const marker = L.marker([lat, lng], { icon: this.getMarkerIcon() });
+					marker.bindPopup(this.createPopupContent(project), { className: 'cluster-popup' });
+					markerGroup.addLayer(marker);
+				} catch (markerError) {
+					console.error(`Error creating marker for project ${index}:`, markerError);
+				}
 			});
-
-			console.log(`Added ${projects.length} markers to map`);
+			markerGroup.addTo(map);
+			console.log(`✅ ${projects.length} markers added successfully`);
 		} catch (error) {
 			console.error('Error loading project markers:', error);
 		}
