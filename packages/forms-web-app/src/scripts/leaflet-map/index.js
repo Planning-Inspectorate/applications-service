@@ -15,87 +15,80 @@ function leafletMap() {
 
 		const mapOptions = {
 			minZoom: 0,
-			maxZoom: mapResolutions.length - 1, //match the number of resolutions we have available for our tile source and OS maps plan
-			center: [lat, lng], //rough center of UK in WGS84, will be converted by CRS to BNG
+			maxZoom: mapResolutions.length - 1,
+			center: [lat, lng],
 			zoom: zoom,
 			crs: crs27700,
-			//format for max bounds [[southLat, westLon], [northLat, eastLon]]
 			maxBounds: [
 				[49.56, -10.0],
 				[62.0, 6.0]
 			],
 			attributionControl: false,
-			zoomSnap: 1, //prevents fractional zoom levels
-			zoomDelta: 1 //controls zoom increments
+			zoomSnap: 1,
+			zoomDelta: 1
 		};
 
 		const map = L.map(container, mapOptions);
 
-		// Storing map instance globally
+		// Store map instance globally for filter toggle
 		window.leafletMapInstance = map;
 
-		// Set up the tile layer with OAuth token
-		L.TileLayer.Bearer = L.TileLayer.extend({
-			initialize: function (url, options) {
-				L.TileLayer.prototype.initialize.call(this, url, options);
-				this.token = options.token;
-			},
-			createTile: function (coords, done) {
-				const tile = document.createElement('img');
-				const url = this.getTileUrl(coords);
+		// Add tile layer via proxy endpoint
+		L.tileLayer('/api/map-tile/{z}/{x}/{y}', {
+			maxZoom: 20,
+			tileSize: 256,
+			attribution: '© Crown Copyright and database right'
+		}).addTo(map);
 
-				fetch(url, {
-					headers: {
-						Authorization: `Bearer ${this.token}`
-					}
-				})
-					.then((response) => {
-						if (!response.ok) {
-							throw new Error(`HTTP error! status: ${response.status}`);
-						}
-						return response.arrayBuffer();
-					})
-					.then((buffer) => {
-						// Convert to base64 data URL instead of blob URL
-						const base64 = btoa(
-							new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
-						);
-						tile.src = `data:image/png;base64,${base64}`;
-						done(null, tile);
-					})
-					.catch((error) => {
-						console.error('Error loading tile:', error);
-						done(error);
-					});
-
-				return tile;
-			}
-		});
-
-		L.tileLayer.bearer = function (url, options) {
-			return new L.TileLayer.Bearer(url, options);
-		};
-
-		//Add the custom tile layer to the map
-		L.tileLayer
-			.bearer('https://api.os.uk/maps/raster/v1/zxy/Light_27700/{z}/{x}/{y}.png', {
-				maxZoom: 20,
-				token: token
-			})
-			.addTo(map);
-		//use geojson and show project boundaries if available, otherwise fallback to lng/lat and use pins
-		//for now load from public
-		// this.loadGeoJsonFromFile(map);
+		// Load project markers from API
+		this.loadProjectMarkers(map);
 
 		return map;
 	};
+
+	this.loadProjectMarkers = async function (map) {
+		try {
+			console.log('Loading project markers...');
+
+			const response = await fetch('/api/projects-map');
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch projects: ${response.status}`);
+			}
+
+			const projects = await response.json();
+			console.log(`Fetched ${projects.length} projects`);
+
+			// Create markers for each project
+			projects.forEach((project) => {
+				const [lat, lng] = project.coordinates;
+
+				const marker = L.marker([lat, lng], {
+					title: project.projectName
+				});
+
+				const popupContent = `
+					<strong>${project.projectName}</strong><br/>
+					Case: ${project.caseReference}<br/>
+					Stage: ${project.stage}<br/>
+					Region: ${project.region}
+				`;
+
+				marker.bindPopup(popupContent);
+				marker.addTo(map);
+			});
+
+			console.log(`Added ${projects.length} markers to map`);
+		} catch (error) {
+			console.error('Error loading project markers:', error);
+		}
+	};
+
 	this.loadGeoJsonFromFile = async function (map) {
 		try {
-			//loading indicator
 			const loadingControl = L.control({ position: 'topright' });
 			loadingControl.onAdd = function () {
 				const div = L.DomUtil.create('div', 'loading-control');
-				//TODO: move into dedicated CSS file
 				div.innerHTML = 'Loading boundaries...';
 				div.style.backgroundColor = 'white';
 				div.style.padding = '5px';
@@ -104,10 +97,7 @@ function leafletMap() {
 			};
 			loadingControl.addTo(map);
 
-			//const response = await fetch('/public/master_geojson.json'); //local file for testing
 			const response = await fetch('/api/geojson');
-
-			console.log(response);
 
 			if (!response.ok) {
 				throw new Error(`HTTP error while fetching geojson. status: ${response.status}`);
@@ -116,7 +106,6 @@ function leafletMap() {
 			const geojsonData = await response.json();
 
 			if (geojsonData && geojsonData.features) {
-				//geojson layer with styling and popups
 				L.geoJSON(geojsonData, {
 					style: function () {
 						return {
@@ -127,7 +116,6 @@ function leafletMap() {
 						};
 					},
 					onEachFeature: function (feature, layer) {
-						//popup with feature properties if available
 						if (feature.properties) {
 							const popupContent = Object.entries(feature.properties)
 								.map(([key, value]) => `<strong>${key}:</strong> ${value}`)
@@ -138,13 +126,11 @@ function leafletMap() {
 				}).addTo(map);
 
 				map.removeControl(loadingControl);
-
 				console.log(`Loaded ${geojsonData.features.length} features`);
 			}
 		} catch (error) {
 			console.error('Error loading GeoJSON from file:', error);
 
-			//remove indicator on error
 			try {
 				map.eachLayer(function (layer) {
 					if (layer.options && layer.options.position === 'topright') {

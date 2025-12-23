@@ -1,16 +1,19 @@
 const helmet = require('helmet');
 const crypto = require('node:crypto');
 
-const scriptSrc = ['https://*.googletagmanager.com'];
+const scriptSrc = ['https://*.googletagmanager.com', 'https://unpkg.com'];
 
 const imgSrc = [
+	"'self'",
+	'https://unpkg.com',
 	'https://*.google-analytics.com',
 	'https://*.analytics.google.com',
 	'https://*.googletagmanager.com',
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/'
+	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/',
+	'https://api.os.uk'
 ];
 
 const connectSrc = [
@@ -20,7 +23,8 @@ const connectSrc = [
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://api.os.uk'
+	'https://api.os.uk',
+	'https://unpkg.com'
 ];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;
