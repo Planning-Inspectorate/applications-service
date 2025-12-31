@@ -3,14 +3,18 @@ const crypto = require('node:crypto');
 
 const scriptSrc = ['https://*.googletagmanager.com'];
 
+const styleSrc = ["'self'", "'unsafe-inline'"];
+
 const imgSrc = [
+	"'self'",
 	'https://*.google-analytics.com',
 	'https://*.analytics.google.com',
 	'https://*.googletagmanager.com',
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/'
+	'https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/img/',
+	'https://api.os.uk'
 ];
 
 const connectSrc = [
@@ -37,7 +41,8 @@ function configureCSP(app) {
 			contentSecurityPolicy: {
 				directives: {
 					'script-src': ["'self'", "'unsafe-eval'", ...scriptSrc, addCSPNonce],
-					'img-src': ["'self'", ...imgSrc, 'data:'],
+					'style-src': styleSrc,
+					'img-src': ["'self'", ...imgSrc, 'data:', 'https:'],
 					'connect-src': ["'self'", ...connectSrc]
 				}
 			}

@@ -1,7 +1,13 @@
+/**
+ * OS Maps Token Service (Frontend)
+ *
+ * Calls backend OAuth service to get map tokens
+ * Frontend never handles API credentials directly
+ */
+
 const fetch = require('node-fetch');
 const uuid = require('uuid');
 const config = require('../../config');
-const logger = require('../../lib/logger');
 
 const getMapAccessToken = async () => {
 	try {
@@ -26,7 +32,7 @@ const getMapAccessToken = async () => {
 
 		return data.access_token;
 	} catch (error) {
-		logger.error('Error fetching OS Maps token:', error);
+		console.error('Error fetching OS Maps token:', error);
 		throw error;
 	}
 };

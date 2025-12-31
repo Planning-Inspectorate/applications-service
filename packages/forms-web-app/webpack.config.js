@@ -36,9 +36,11 @@ const configAppScripts = {
 	...config,
 	entry: {
 		initiate: `${entryPath}/initiate.js`,
+		leafletMap: `${entryPath}/leaflet-map`,
 		map: `${entryPath}/map`,
 		modal: `${entryPath}/modal`,
-		simulateUserAction: `${entryPath}/simulate-user-action.js`
+		simulateUserAction: `${entryPath}/simulate-user-action.js`,
+		toggleMapFilters: `${entryPath}/map/toggle-map-filters.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,
