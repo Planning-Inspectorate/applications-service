@@ -5,3 +5,4 @@ README.md
 coverage
 .wrangler
 *.yml
+**/dist/**
