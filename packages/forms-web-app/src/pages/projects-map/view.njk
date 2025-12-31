@@ -1,0 +1,108 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% extends "layouts/default.njk" %}
+
+{% set pageTitle = t('projectsMap.pageTitle') %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="/public/stylesheets/leaflet.css"/>
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
+	<link rel="stylesheet" href="/public/stylesheets/leaflet-pins.css">
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-one-third" id="maps-sidebar-content">
+			Filter goes here
+		</div>
+
+		<div class="govuk-grid-column-two-thirds" id="maps-content">
+			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+				{{ t('projectsMap.heading1') }}
+			</h1>
+
+			{% if featureFlag.allowWelshTranslation == false %}
+				<p class="govuk-body">
+					This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
+				</p>
+			{% endif %}
+
+			<p class="govuk-body">
+				{{ t('projectsMap.paragraph1') }}
+			</p>
+
+			{% include "../project-search/includes/search.njk" %}
+
+			<div class="govuk-button-group">
+				{{ govukButton({
+					text: t('projectsMap.hideFiltersText'),
+					classes: "govuk-button--secondary",
+					attributes: {
+						id: "filters-toggle-btn",
+						'data-show-filters-button-label': t('projectsMap.showFiltersText'),
+						'data-hide-filters-button-label': t('projectsMap.hideFiltersText')
+					}
+				}) }}
+				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
+			</div>
+
+			<div id="map" class="govuk-!-margin-bottom-4" style="height: 550px;"></div>
+
+			{% include "../project-search/includes/active-filters.njk" %}
+
+			{{ govukWarningText({
+				text: t('projectsMap.warningText'),
+				iconFallbackText: "Warning"
+			}) }}
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script nonce="{{ cspNonce }}">
+		// Debug flag for all page scripts
+		window.DEBUG_ENABLED = false;
+
+		/**
+		 * Page-level debug logging
+		 * Respects DEBUG_ENABLED flag
+		 */
+		window.pageDebug = function(...args) {
+			if (window.DEBUG_ENABLED) {
+				console.log(...args);
+			}
+		};
+	</script>
+
+	<script nonce="{{ cspNonce }}">
+		/**
+		 * Embed complete map configuration in window scope
+		 * Includes:
+		 * - mapOptions (center, zoom, bounds, etc.)
+		 * - tileLayer config (URL, attribution, etc.)
+		 * - markers (GeoJSON features)
+		 * - clustering flag
+		 * - access token
+		 */
+		window.APP_MAP_CONFIG = {
+			elementId: '{{ mapConfig.elementId }}',
+			mapOptions: {{ mapConfig.mapOptions | dump | safe }},
+			tileLayer: {{ mapConfig.tileLayer | dump | safe }},
+			markers: {{ mapConfig.markers | dump | safe }},
+			clustered: {{ mapConfig.clustered | dump | safe }},
+			totalProjects: {{ mapConfig.totalProjects }}
+		};
+		window.pageDebug('APP_MAP_CONFIG initialized:', window.APP_MAP_CONFIG);
+	</script>
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{
+			callback: "window.pageDebug('Initiating toggle filters'); var toggle = new appScripts.toggleMapFilters(); toggle.initiate('#filters-toggle-btn', '#maps-sidebar-content', '#maps-content'); window.pageDebug('Toggle filters initiated');",
+			src: "/public/scripts/toggleMapFilters.script.js"
+		},
+		{
+			callback: "window.pageDebug('Initiating leaflet map'); var leafletMap = new appScripts.leafletMap(); window.pageDebug('Leaflet map object created'); leafletMap.initiate(window.APP_MAP_CONFIG); window.pageDebug('Leaflet map initiated');",
+			src: "/public/scripts/leafletMap.script.js"
+		}
+	), initiateScriptsConfig) %}
+{% endblock %}

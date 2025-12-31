@@ -14,6 +14,7 @@ const timetablesRouter = require('./timetables');
 const submissionRouter = require('./submissions');
 const subscriptionRoute = require('./subscriptions');
 const adviceRoute = require('./advice');
+const osMapsRouter = require('./os-maps');
 const validateMigrationRouter = require('./validate-migration');
 const config = require('../lib/config');
 
@@ -37,6 +38,7 @@ router.use('/api/v1/timetables', timetablesRouter);
 router.use('/api/v1/submissions', submissionRouter);
 router.use('/api/v1/subscriptions', subscriptionRoute);
 router.use('/api/v1/advice', adviceRoute);
+router.use('/api/v1/os-maps', osMapsRouter);
 router.use('/validate-migration', validateMigrationRouter);
 
 module.exports = router;
