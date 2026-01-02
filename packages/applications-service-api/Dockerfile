@@ -5,8 +5,7 @@ FROM node:20-alpine3.20 AS build
 # - https://github.com/vercel/turborepo/issues/1097
 # - https://github.com/vercel/turborepo/issues/1103
 RUN apk update
-RUN apk add git ca-certificates
-RUN update-ca-certificates
+RUN apk add git
 
 ARG GIT_SHA
 ENV GIT_SHA=$GIT_SHA
