@@ -23,6 +23,13 @@ const getMapAccessToken = async () => {
 		const params = new URLSearchParams();
 		params.append('grant_type', 'client_credentials');
 
+		// In development, Docker containers may not have proper CA certificate setup
+		// Create agent with disabled verification only for development (production uses strict verification by default)
+		const agent =
+			process.env.NODE_ENV === 'production'
+				? undefined
+				: new https.Agent({ rejectUnauthorized: false });
+
 		const response = await fetch('https://api.os.uk/oauth2/token/v1', {
 			method: 'POST',
 			headers: {
@@ -30,10 +37,7 @@ const getMapAccessToken = async () => {
 				Authorization: `Basic ${Buffer.from(`${apiKey}:${apiSecret}`).toString('base64')}`
 			},
 			body: params,
-			agent:
-				process.env.NODE_ENV === 'production'
-					? new https.Agent({ rejectUnauthorized: true })
-					: new https.Agent({ rejectUnauthorized: false })
+			...(agent && { agent })
 		});
 
 		if (response.status !== 200) {
