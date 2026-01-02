@@ -9,7 +9,7 @@ const apiRouter = express.Router();
 
 apiRouter.use(applicationsDownloadRouter);
 apiRouter.use(projectsMapRouter);
-apiRouter.use('/map-tile', mapTileRouter);
-apiRouter.use('/os-maps', osMapsRouter);
+apiRouter.use(mapTileRouter);
+apiRouter.use(osMapsRouter);
 
 module.exports = { apiRouter };

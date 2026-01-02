@@ -1,7 +1,19 @@
+/**
+ * Projects Map Controller
+ *
+ * Handles retrieval and transformation of project data to GeoJSON format
+ * for rendering on the map interface
+ */
+
 const logger = require('../../lib/logger');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { transformProjectsToGeoJSON } = require('../../services/projects-map.service');
 
+/**
+ * Retrieves all projects and transforms them to GeoJSON format
+ *
+ * @returns {Object} GeoJSON FeatureCollection with project features
+ */
 const getProjectsMap = async (req, res, next) => {
 	try {
 		logger.info('Fetching projects for map API');
@@ -13,13 +25,15 @@ const getProjectsMap = async (req, res, next) => {
 			return res.json({ type: 'FeatureCollection', features: [] });
 		}
 
-		const applications = response.data.applications || response.data;
+		const applications = response.data.applications;
+
 		if (!Array.isArray(applications)) {
 			logger.warn('Applications is not an array:', typeof applications);
 			return res.json({ type: 'FeatureCollection', features: [] });
 		}
 
-		// Use shared transformation service
+		// Transform project objects to GeoJSON format for map rendering
+		// This extracts coordinates and properties needed by Leaflet
 		const geojson = transformProjectsToGeoJSON(applications);
 
 		logger.info(`Map API returning ${geojson.features.length} projects`);
