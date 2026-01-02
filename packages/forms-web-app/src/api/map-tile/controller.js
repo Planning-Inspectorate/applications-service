@@ -8,7 +8,6 @@
  */
 
 const fetch = require('node-fetch');
-const https = require('https');
 const logger = require('../../lib/logger');
 const { getMapAccessToken } = require('../_services/os-maps-token-oauth.service');
 
@@ -96,19 +95,11 @@ const getMapTile = async (req, res) => {
 			const url = `https://api.os.uk/maps/raster/v1/zxy/Light_3857/${zoomLevel}/${col}/${row}.png`;
 			logger.info('Fetching from OS Maps', { url });
 
-			// Request tile from OS Maps with Bearer token authentication
-			// In development, Docker containers may not have proper CA certificate setup
-			// Create agent with disabled verification only for development (production uses strict verification by default)
-			const agent =
-				process.env.NODE_ENV === 'production'
-					? undefined
-					: new https.Agent({ rejectUnauthorized: false });
-
+			// Request tile from OS Maps with Bearer token authentication using default HTTPS certificate verification
 			const tileResponse = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${mapAccessToken}`
-				},
-				...(agent && { agent })
+				}
 			});
 
 			logger.info('OS Maps API response', {
