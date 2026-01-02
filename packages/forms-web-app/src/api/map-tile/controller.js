@@ -97,18 +97,18 @@ const getMapTile = async (req, res) => {
 			logger.info('Fetching from OS Maps', { url });
 
 			// Request tile from OS Maps with Bearer token authentication
-			//
-			// Use HTTPS agent with environment-specific SSL verification:
-			// - Production: strict verification (rejectUnauthorized: true) for security
-			// - Development: relaxed verification for local development where CA certs may not be configured
+			// In development, Docker containers may not have proper CA certificate setup
+			// Create agent with disabled verification only for development (production uses strict verification by default)
+			const agent =
+				process.env.NODE_ENV === 'production'
+					? undefined
+					: new https.Agent({ rejectUnauthorized: false });
+
 			const tileResponse = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${mapAccessToken}`
 				},
-				agent:
-					process.env.NODE_ENV === 'production'
-						? new https.Agent({ rejectUnauthorized: true })
-						: new https.Agent({ rejectUnauthorized: false })
+				...(agent && { agent })
 			});
 
 			logger.info('OS Maps API response', {

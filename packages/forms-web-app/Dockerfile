@@ -1,12 +1,5 @@
 # Stage 1/2: Build
-FROM node:20-alpine3.20 AS build
-
-# TODO: Remove this once these get fixed:
-# - https://github.com/vercel/turborepo/issues/1097
-# - https://github.com/vercel/turborepo/issues/1103
-RUN apk update
-RUN apk add git ca-certificates
-RUN update-ca-certificates
+FROM node:20 AS build
 
 WORKDIR /opt/app
 
@@ -28,12 +21,7 @@ RUN npm ci --workspaces --if-present
 RUN npm run build
 
 # Stage 2/2: Run app
-FROM node:20-alpine3.20 AS prod
-
-# Ensure CA certificates are available in final stage
-RUN apk update && \
-    apk add ca-certificates && \
-    update-ca-certificates
+FROM node:20 AS prod
 
 WORKDIR /opt/app
 
