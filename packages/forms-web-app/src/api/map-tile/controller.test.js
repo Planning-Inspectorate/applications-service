@@ -1,10 +1,10 @@
 const supertest = require('supertest');
 const express = require('express');
 const { mapTileRouter } = require('./router');
-const { getMapAccessToken } = require('../_services/os-maps-token.service');
+const { getMapAccessToken } = require('../_services/os-maps-token-oauth.service');
 const fetch = require('node-fetch');
 
-jest.mock('../_services/os-maps-token.service');
+jest.mock('../_services/os-maps-token-oauth.service');
 jest.mock('node-fetch');
 jest.mock('../../lib/logger');
 
@@ -14,7 +14,7 @@ describe('api/map-tile/router', () => {
 
 	beforeEach(() => {
 		app = express();
-		app.use('/api/map-tile', mapTileRouter);
+		app.use('/api', mapTileRouter);
 		request = supertest(app);
 		jest.clearAllMocks();
 	});

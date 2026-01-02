@@ -12,32 +12,34 @@ const https = require('https');
 const logger = require('../../lib/logger');
 const { getMapAccessToken } = require('../_services/os-maps-token-oauth.service');
 
-// Create HTTPS agent
-// In development/Docker, disable strict SSL checking since CA certs may not be properly configured
-const httpsAgent = new https.Agent({
-	rejectUnauthorized: process.env.NODE_ENV === 'production'
-});
-
 // In-memory tile cache (stores up to 1000 tiles)
 const tileCache = new Map();
 const MAX_CACHE_SIZE = 1000;
 
 /**
- * Get cached tile or fetch from OS API
+ * Retrieves a tile from cache or fetches it from OS Maps API
+ * Implements LRU-like eviction to keep cache size manageable
+ *
+ * @param {string} cacheKey - Cache key in format "z-x-y"
+ * @param {Function} fetchFn - Async function that fetches the tile from OS Maps
+ * @returns {Buffer} PNG tile image data
  */
 const getCachedTile = async (cacheKey, fetchFn) => {
+	// Return cached tile if available
 	if (tileCache.has(cacheKey)) {
 		return tileCache.get(cacheKey);
 	}
 
+	// Fetch tile from OS Maps API
 	const tile = await fetchFn();
 
-	// Keep cache size manageable
+	// Evict oldest entry if cache is full (simple FIFO, not true LRU)
 	if (tileCache.size >= MAX_CACHE_SIZE) {
 		const firstKey = tileCache.keys().next().value;
 		tileCache.delete(firstKey);
 	}
 
+	// Store in cache for future requests
 	tileCache.set(cacheKey, tile);
 	return tile;
 };
@@ -46,6 +48,7 @@ const getCachedTile = async (cacheKey, fetchFn) => {
  * GET /api/map-tile/:z/:x/:y
  *
  * Proxies a single OS Maps tile request with Bearer token authentication.
+ * Supports EPSG:3857 (Web Mercator) projection and caches tiles in memory.
  *
  * @param {number} z - Zoom level (0-20)
  * @param {number} x - Tile column
@@ -60,14 +63,14 @@ const getMapTile = async (req, res) => {
 	try {
 		const { z, x, y } = req.params;
 
-		// Validate tile coordinates
+		// Validate required tile coordinate parameters
 		if (!z || !x || !y) {
 			return res.status(400).json({
 				error: 'Invalid tile coordinates. Required: z, x, y'
 			});
 		}
 
-		// Validate coordinates are numbers
+		// Parse and validate coordinates are integers
 		const zoomLevel = parseInt(z, 10);
 		const col = parseInt(x, 10);
 		const row = parseInt(y, 10);
@@ -81,66 +84,80 @@ const getMapTile = async (req, res) => {
 		const cacheKey = `${zoomLevel}-${col}-${row}`;
 		logger.info('Tile request', { z: zoomLevel, x: col, y: row });
 
-		// Use cached tile if available
+		// Fetch tile from cache or OS Maps API
 		const buffer = await getCachedTile(cacheKey, async () => {
-			// Get OAuth token from local service
+			// Obtain OAuth token for authentication
 			const mapAccessToken = await getMapAccessToken();
 			if (!mapAccessToken) {
 				throw new Error('Failed to obtain map access token');
 			}
 
-			// Construct OS Maps API URL for Light style, Web Mercator (3857)
+			// Construct OS Maps API URL (Light style, Web Mercator projection)
 			const url = `https://api.os.uk/maps/raster/v1/zxy/Light_3857/${zoomLevel}/${col}/${row}.png`;
 			logger.info('Fetching from OS Maps', { url });
 
-			// Fetch tile from OS Maps API with Bearer token
+			// Request tile from OS Maps with Bearer token authentication
+			//
+			// Use HTTPS agent with environment-specific SSL verification:
+			// - Production: strict verification (rejectUnauthorized: true) for security
+			// - Development: relaxed verification for local development where CA certs may not be configured
 			const tileResponse = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${mapAccessToken}`
 				},
-				agent: httpsAgent
+				agent:
+					process.env.NODE_ENV === 'production'
+						? new https.Agent({ rejectUnauthorized: true })
+						: new https.Agent({ rejectUnauthorized: false })
 			});
 
-			logger.info('OS API response', {
+			logger.info('OS Maps API response', {
 				status: tileResponse.status,
 				statusText: tileResponse.statusText
 			});
 
-			// Handle non-OK responses
+			// Check for HTTP errors from OS Maps API
 			if (!tileResponse.ok) {
 				const errorText = await tileResponse.text();
-				logger.error('OS API error', {
+				logger.error({
+					msg: 'OS Maps API error response',
 					status: tileResponse.status,
-					errorText: errorText.substring(0, 200)
+					statusText: tileResponse.statusText,
+					errorBody: errorText.substring(0, 200)
 				});
 
-				// Throw error with status code for outer handler
-				const error = new Error(`OS Maps API returned ${tileResponse.status}`);
+				// Preserve HTTP status code for client response
+				const error = new Error(
+					`OS Maps API returned ${tileResponse.status} ${tileResponse.statusText}`
+				);
 				error.statusCode = tileResponse.status;
 				throw error;
 			}
 
-			// Read tile data
+			// Convert tile response to buffer for streaming
 			return await tileResponse.arrayBuffer();
 		});
 
-		logger.info('Tile loaded', { byteLength: buffer.byteLength });
+		logger.info('Tile loaded from cache or API', { byteLength: buffer.byteLength });
 
-		// Return tile with proper HTTP headers
+		// Return tile with proper HTTP headers for browser caching
 		res.writeHead(200, {
 			'Content-Type': 'image/png',
 			'Content-Length': buffer.byteLength,
-			'Cache-Control': 'public, max-age=86400', // Cache tiles for 1 day
+			'Cache-Control': 'public, max-age=86400', // Cache for 24 hours
 			'Access-Control-Allow-Origin': '*'
 		});
 
 		res.end(Buffer.from(buffer));
 	} catch (error) {
+		// Log error details for debugging
 		logger.error({
-			msg: 'Tile proxy error',
+			msg: 'Tile proxy error - failed to fetch or serve tile',
 			error: error.message,
 			stack: error.stack
 		});
+
+		// Return appropriate HTTP status code and error details to client
 		const statusCode = error.statusCode || 500;
 		res.status(statusCode).json({
 			error: 'Failed to fetch map tile',

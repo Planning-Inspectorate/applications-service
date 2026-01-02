@@ -9,11 +9,6 @@ const fetch = require('node-fetch');
 const logger = require('../../lib/logger');
 const https = require('https');
 
-// Create HTTPS agent for OAuth calls
-const httpsAgent = new https.Agent({
-	rejectUnauthorized: process.env.NODE_ENV === 'production'
-});
-
 const getMapAccessToken = async () => {
 	try {
 		const apiKey = process.env.OS_MAPS_API_KEY;
@@ -35,7 +30,10 @@ const getMapAccessToken = async () => {
 				Authorization: `Basic ${Buffer.from(`${apiKey}:${apiSecret}`).toString('base64')}`
 			},
 			body: params,
-			agent: httpsAgent
+			agent:
+				process.env.NODE_ENV === 'production'
+					? new https.Agent({ rejectUnauthorized: true })
+					: new https.Agent({ rejectUnauthorized: false })
 		});
 
 		if (response.status !== 200) {
@@ -45,8 +43,9 @@ const getMapAccessToken = async () => {
 			);
 		}
 
-		const data = await response.json();
-		const mapAccessToken = data.access_token;
+		// Parse OAuth token response which contains { access_token, token_type, expires_in }
+		const tokenResponse = await response.json();
+		const mapAccessToken = tokenResponse.access_token;
 
 		if (!mapAccessToken) {
 			throw new Error('No access token returned from OS Maps OAuth endpoint');

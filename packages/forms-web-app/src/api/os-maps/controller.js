@@ -9,13 +9,11 @@ const { getMapAccessToken } = require('../_services/os-maps-token-oauth.service'
 const logger = require('../../lib/logger');
 
 /**
+ * GET /api/os-maps/token
+ *
+ * Returns an OAuth Bearer token for use by map tile proxy.
  * This endpoint is for frontend/external use.
  * Backend services should import os-maps-token-oauth.service.js directly.
- */
-
-/**
- * GET /api/os-maps/token
- * Returns an OAuth Bearer token for use by map tile proxy
  *
  * @returns {Object} { access_token, token_type, expires_in }
  */
