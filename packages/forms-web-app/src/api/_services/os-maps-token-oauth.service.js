@@ -7,7 +7,6 @@
 
 const fetch = require('node-fetch');
 const logger = require('../../lib/logger');
-const https = require('https');
 
 const getMapAccessToken = async () => {
 	try {
@@ -23,21 +22,13 @@ const getMapAccessToken = async () => {
 		const params = new URLSearchParams();
 		params.append('grant_type', 'client_credentials');
 
-		// In development, Docker containers may not have proper CA certificate setup
-		// Create agent with disabled verification only for development (production uses strict verification by default)
-		const agent =
-			process.env.NODE_ENV === 'production'
-				? undefined
-				: new https.Agent({ rejectUnauthorized: false });
-
 		const response = await fetch('https://api.os.uk/oauth2/token/v1', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				Authorization: `Basic ${Buffer.from(`${apiKey}:${apiSecret}`).toString('base64')}`
 			},
-			body: params,
-			...(agent && { agent })
+			body: params
 		});
 
 		if (response.status !== 200) {

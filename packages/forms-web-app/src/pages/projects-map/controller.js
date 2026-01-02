@@ -18,7 +18,7 @@ const getProjectsMapController = async (req, res, next) => {
 	try {
 		logger.info('Loading projects map page...');
 
-		// Step 1: Fetch raw project data from backend API
+		// Fetch raw project data from backend API
 		const projectsResponse = await getAllProjectList();
 
 		if (!projectsResponse || !projectsResponse.data) {
@@ -27,12 +27,12 @@ const getProjectsMapController = async (req, res, next) => {
 
 		const applications = projectsResponse.data.applications || projectsResponse.data;
 
-		// Step 2: Transform to GeoJSON format (validates, filters, maps data)
+		// Transform to GeoJSON format (validates, filters, maps data)
 		const geojson = transformProjectsToGeoJSON(applications);
 
 		logger.info(`Map page loaded with ${geojson.features.length} projects`);
 
-		// Step 3: Build mapConfig object (configuration-driven pattern)
+		// Build mapConfig object (configuration-driven pattern)
 		const mapConfig = {
 			elementId: 'map',
 			mapOptions: {
@@ -57,10 +57,9 @@ const getProjectsMapController = async (req, res, next) => {
 			markers: geojson.features,
 			clustered: true,
 			totalProjects: geojson.features.length
-			// Note: token NOT included - never expose OAuth tokens to client
 		};
 
-		// Step 4: Render view with complete configuration
+		// Render view with complete configuration
 		// Note: Token handled server-side in tile proxy, never exposed to client
 		res.render(view, {
 			mapConfig,
