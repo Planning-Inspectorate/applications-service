@@ -28,12 +28,20 @@ RUN npm ci --workspaces --if-present
 RUN npm run build
 
 # Stage 2/2: Run app
-FROM build AS prod
+FROM node:20-alpine3.20 AS prod
+
+# Ensure CA certificates are available in final stage
+RUN apk update && \
+    apk add ca-certificates && \
+    update-ca-certificates
 
 WORKDIR /opt/app
 
 ARG GIT_SHA
 ENV GIT_SHA=$GIT_SHA
+
+# Copy built application from build stage
+COPY --from=build /opt/app /opt/app
 
 RUN npm prune --production
 

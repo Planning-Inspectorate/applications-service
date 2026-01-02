@@ -13,8 +13,15 @@
 
 const express = require('express');
 const fetch = require('node-fetch');
+const https = require('https');
 const logger = require('../../lib/logger');
 const { getMapAccessToken } = require('../_services/os-maps-token.service');
+
+// Create HTTPS agent
+// In development/Docker, disable strict SSL checking since CA certs may not be properly configured
+const httpsAgent = new https.Agent({
+	rejectUnauthorized: process.env.NODE_ENV === 'production'
+});
 
 const mapTileRouter = express.Router();
 
@@ -97,7 +104,8 @@ mapTileRouter.get('/:z/:x/:y', async (req, res) => {
 			const tileResponse = await fetch(url, {
 				headers: {
 					Authorization: `Bearer ${mapAccessToken}`
-				}
+				},
+				agent: httpsAgent
 			});
 
 			logger.info('OS API response', {
