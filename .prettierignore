@@ -6,3 +6,4 @@ coverage
 .wrangler
 *.yml
 **/dist/**
+packages/forms-web-app/src/public/stylesheets/main.css
