@@ -1,5 +1,5 @@
 # Stage 1/2: Build
-FROM node:20 AS build
+FROM node:20-alpine AS build
 
 WORKDIR /opt/app
 
@@ -21,15 +21,12 @@ RUN npm ci --workspaces --if-present
 RUN npm run build
 
 # Stage 2/2: Run app
-FROM node:20 AS prod
+FROM build AS prod
 
 WORKDIR /opt/app
 
 ARG GIT_SHA
 ENV GIT_SHA=$GIT_SHA
-
-# Copy built application from build stage
-COPY --from=build /opt/app /opt/app
 
 RUN npm prune --production
 
