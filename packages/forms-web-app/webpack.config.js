@@ -40,7 +40,7 @@ const configAppScripts = {
 		map: `${entryPath}/map`,
 		modal: `${entryPath}/modal`,
 		simulateUserAction: `${entryPath}/simulate-user-action.js`,
-		toggleMapFilters: `${entryPath}/map/toggle-map-filters.js`
+		sidebarToggler: `${entryPath}/ui/sidebar-toggler.js`
 	},
 	output: {
 		filename: `[name].${outputFilenamePrefix}.js`,

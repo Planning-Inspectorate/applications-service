@@ -42,7 +42,7 @@ function configureCSP(app) {
 				directives: {
 					'script-src': ["'self'", "'unsafe-eval'", ...scriptSrc, addCSPNonce],
 					'style-src': styleSrc,
-					'img-src': ["'self'", ...imgSrc, 'data:', 'https:'],
+					'img-src': ["'self'", ...imgSrc, 'data:', 'blob:', 'https:'],
 					'connect-src': ["'self'", ...connectSrc]
 				}
 			}
