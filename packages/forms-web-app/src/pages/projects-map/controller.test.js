@@ -50,11 +50,25 @@ describe('pages/projects-map/controller', () => {
 		expect(transformProjectsToGeoJSON).toHaveBeenCalledWith([
 			expect.objectContaining({ CaseReference: 'EN010001' })
 		]);
+
 		expect(mockRes.render).toHaveBeenCalledWith(
 			'projects-map/view.njk',
 			expect.objectContaining({
 				mapConfig: expect.objectContaining({
+					elementId: 'map',
+					mapOptions: expect.objectContaining({
+						minZoom: 7,
+						maxZoom: 20,
+						center: [51.8086, -1.7139],
+						zoom: 7,
+						attributionControl: true
+					}),
+					tileLayer: expect.objectContaining({
+						url: 'https://api.os.uk/maps/raster/v1/zxy/Light_3857/{z}/{x}/{y}.png',
+						tokenEndpoint: '/api/os-maps/token'
+					}),
 					markers: expect.any(Array),
+					clustered: true,
 					totalProjects: 1
 				}),
 				projectSearchURL: '/projects/search'
@@ -102,5 +116,56 @@ describe('pages/projects-map/controller', () => {
 
 		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
 		expect(mockRes.render).not.toHaveBeenCalled();
+	});
+
+	it('should handle empty projects array', async () => {
+		getAllProjectList.mockResolvedValue({
+			data: { applications: [] }
+		});
+		transformProjectsToGeoJSON.mockReturnValue({
+			type: 'FeatureCollection',
+			features: []
+		});
+
+		await getProjectsMapController({}, mockRes, mockNext);
+
+		expect(mockRes.render).toHaveBeenCalledWith(
+			'projects-map/view.njk',
+			expect.objectContaining({
+				mapConfig: expect.objectContaining({
+					totalProjects: 0,
+					markers: []
+				})
+			})
+		);
+		expect(mockNext).not.toHaveBeenCalled();
+	});
+
+	it('should handle API request rejection', async () => {
+		getAllProjectList.mockRejectedValueOnce(new Error('API connection failed'));
+
+		await getProjectsMapController({}, mockRes, mockNext);
+
+		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
+		expect(mockRes.render).not.toHaveBeenCalled();
+	});
+
+	it('should pass correct application data to GeoJSON transformer', async () => {
+		const applicationData = [
+			{ CaseReference: 'EN010001', ProjectName: 'Project 1', LongLat: [0, 50] },
+			{ CaseReference: 'EN010002', ProjectName: 'Project 2', LongLat: [1, 51] }
+		];
+
+		getAllProjectList.mockResolvedValue({
+			data: { applications: applicationData }
+		});
+		transformProjectsToGeoJSON.mockReturnValue({
+			type: 'FeatureCollection',
+			features: []
+		});
+
+		await getProjectsMapController({}, mockRes, mockNext);
+
+		expect(transformProjectsToGeoJSON).toHaveBeenCalledWith(applicationData);
 	});
 });

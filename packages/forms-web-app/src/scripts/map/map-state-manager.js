@@ -1,22 +1,20 @@
 /**
  * Map State Manager
  *
- * Centralized store for map-related state:
- * - Leaflet map instance
- * - Dual-level tile caching (in-memory L1 + IndexedDB L2)
- * - Container resize handler for maintaining bounds
+ * Provides centralized management for all map-related application state:
+ * - Leaflet map instance lifecycle
+ * - Two-tier tile caching system (L1: in-memory, L2: IndexedDB persistence)
+ * - Container resize synchronization with map bounds preservation
  *
- * Caching Strategy:
- * 1. getTile() checks in-memory cache first (instant)
- * 2. If miss → checks IndexedDB (persistent)
- * 3. If still miss → null (fetch from API)
- * 4. setTile() stores in both caches (non-blocking)
+ * Cache Lookup Strategy:
+ * getTile() → L1 cache (session-fast) → L2 cache (persistent) → null (client fetch)
+ * setTile() → L1 (synchronous) + L2 (asynchronous, non-blocking)
  *
  * Usage:
  *   const mapStateManager = require('./map-state-manager');
  *   mapStateManager.setMap(leafletMapInstance);
- *   mapStateManager.initCache(100); // max size
- *   await mapStateManager.getTile(z, x, y);
+ *   await mapStateManager.initCache(100);
+ *   const tile = await mapStateManager.getTile(z, x, y);
  *   await mapStateManager.setTile(z, x, y, arrayBuffer);
  *   mapStateManager.handleContainerResize(element, bounds);
  */
@@ -31,7 +29,9 @@ const DB_STORE = 'tiles';
 const DB_VERSION = 1;
 
 /**
- * In-memory tile cache with LRU eviction
+ * Session-scoped tile cache with Least Recently Used eviction.
+ * Bounded memory footprint via configurable maximum tile capacity.
+ * @class TileCache
  */
 class TileCache {
 	constructor(maxSize = 100) {
@@ -40,12 +40,12 @@ class TileCache {
 	}
 
 	/**
-	 * Retrieve a tile from memory cache
+	 * Retrieves cached tile data by geographic coordinates.
 	 *
 	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile X coordinate
-	 * @param {number} y - Tile Y coordinate
-	 * @returns {Promise<ArrayBuffer|null>} Tile data or null if not found
+	 * @param {number} x - Tile column coordinate
+	 * @param {number} y - Tile row coordinate
+	 * @returns {Promise<ArrayBuffer|null>} Tile image buffer or null if not cached
 	 */
 	async getTile(z, x, y) {
 		const key = `${z}/${x}/${y}`;
@@ -53,19 +53,19 @@ class TileCache {
 	}
 
 	/**
-	 * Store a tile in memory cache
-	 * Implements simple LRU eviction when cache exceeds maxSize
+	 * Stores tile data in cache with automatic eviction of oldest entry
+	 * when cache capacity is exceeded. Implements FIFO eviction policy
+	 * to maintain bounded memory consumption.
 	 *
 	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile X coordinate
-	 * @param {number} y - Tile Y coordinate
-	 * @param {ArrayBuffer} arrayBuffer - Tile image data
+	 * @param {number} x - Tile column coordinate
+	 * @param {number} y - Tile row coordinate
+	 * @param {ArrayBuffer} arrayBuffer - Raw tile image data
 	 * @returns {Promise<void>}
 	 */
 	async setTile(z, x, y, arrayBuffer) {
 		const key = `${z}/${x}/${y}`;
 
-		// If cache is full, remove oldest entry (first one in Map)
 		if (this.cache.size >= this.maxSize) {
 			const firstKey = this.cache.keys().next().value;
 			this.cache.delete(firstKey);
@@ -75,7 +75,7 @@ class TileCache {
 	}
 
 	/**
-	 * Clear all cached tiles
+	 * Purges all cached tiles and resets cache state.
 	 *
 	 * @returns {Promise<void>}
 	 */
@@ -84,9 +84,9 @@ class TileCache {
 	}
 
 	/**
-	 * Get cache statistics
+	 * Returns cache utilization metrics for monitoring and diagnostics.
 	 *
-	 * @returns {Promise<Object>} Cache stats
+	 * @returns {Promise<{size: number, maxSize: number, filled: string}>} Cache statistics object
 	 */
 	async getStats() {
 		return {
@@ -98,18 +98,19 @@ class TileCache {
 }
 
 /**
- * IndexedDB tile cache for persistent storage
- * Provides fall-back persistent caching across page reloads
+ * Persistent tile cache backed by IndexedDB for cross-session resilience.
+ * Survives page reloads and browser restarts. Failures degrade gracefully
+ * without impacting application functionality.
+ * @class IndexedDBTileCache
  */
 class IndexedDBTileCache {
 	/**
-	 * Initialize IndexedDB connection
-	 * Creates database and tile object store if needed
+	 * Establishes connection to persistent tile database and creates
+	 * object store if needed. Silently succeeds or fails without exception.
 	 *
 	 * @returns {Promise<void>}
 	 */
 	async init() {
-		// Gracefully skip initialization if IndexedDB is not available (e.g., Node.js tests)
 		if (this.db || typeof indexedDB === 'undefined') return;
 
 		return new Promise((resolve) => {
@@ -117,7 +118,7 @@ class IndexedDBTileCache {
 
 			request.onerror = () => {
 				console.warn('IndexedDB initialization failed, tiles will not persist');
-				resolve(); // Don't fail - graceful degradation
+				resolve();
 			};
 
 			request.onsuccess = () => {
@@ -135,12 +136,12 @@ class IndexedDBTileCache {
 	}
 
 	/**
-	 * Retrieve a tile from IndexedDB
+	 * Retrieves cached tile data by geographic coordinates from persistent storage.
 	 *
 	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile X coordinate
-	 * @param {number} y - Tile Y coordinate
-	 * @returns {Promise<ArrayBuffer|null>} Tile data or null if not found
+	 * @param {number} x - Tile column coordinate
+	 * @param {number} y - Tile row coordinate
+	 * @returns {Promise<ArrayBuffer|null>} Tile image buffer or null if not found
 	 */
 	async getTile(z, x, y) {
 		if (!this.db) return null;
@@ -167,13 +168,14 @@ class IndexedDBTileCache {
 	}
 
 	/**
-	 * Store a tile in IndexedDB
-	 * Non-blocking operation
+	 * Persists tile data to IndexedDB without blocking the main thread.
+	 * Failures are logged but suppressed to prevent cache errors from
+	 * impacting tile display functionality.
 	 *
 	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile X coordinate
-	 * @param {number} y - Tile Y coordinate
-	 * @param {ArrayBuffer} arrayBuffer - Tile image data
+	 * @param {number} x - Tile column coordinate
+	 * @param {number} y - Tile row coordinate
+	 * @param {ArrayBuffer} arrayBuffer - Raw tile image data
 	 * @returns {Promise<void>}
 	 */
 	async setTile(z, x, y, arrayBuffer) {
@@ -186,13 +188,12 @@ class IndexedDBTileCache {
 			const store = transaction.objectStore(DB_STORE);
 			store.put(arrayBuffer, key);
 		} catch (error) {
-			// Silently fail - cache is optional
 			console.warn('Failed to cache tile in IndexedDB:', error);
 		}
 	}
 
 	/**
-	 * Clear all cached tiles from IndexedDB
+	 * Purges all persistent tile data and resets database connection.
 	 *
 	 * @returns {Promise<void>}
 	 */
@@ -215,10 +216,11 @@ class IndexedDBTileCache {
 
 module.exports = {
 	/**
-	 * Store map instance
+	 * Stores Leaflet map instance for global access. Validates instance
+	 * is a valid map object before assignment.
 	 *
 	 * @param {L.Map} map - Leaflet map instance
-	 * @throws {Error} If map is not a valid Leaflet map object
+	 * @throws {Error} When provided object is not a valid Leaflet map
 	 */
 	setMap(map) {
 		if (map && typeof map.getZoom === 'function') {
@@ -229,35 +231,37 @@ module.exports = {
 	},
 
 	/**
-	 * Retrieve map instance
+	 * Retrieves the current Leaflet map instance.
 	 *
-	 * @returns {L.Map|null} Leaflet map instance or null if not initialized
+	 * @returns {L.Map|null} Active map instance or null if not initialized
 	 */
 	getMap() {
 		return mapInstance;
 	},
 
 	/**
-	 * Check if map is initialized
+	 * Determines whether a map instance is currently initialized.
 	 *
-	 * @returns {boolean} True if map instance is set
+	 * @returns {boolean} True if map has been initialized
 	 */
 	hasMap() {
 		return mapInstance !== null;
 	},
 
 	/**
-	 * Clear map instance (for cleanup/testing)
+	 * Clears map instance reference during teardown or testing.
+	 *
+	 * @returns {void}
 	 */
 	clearMap() {
 		mapInstance = null;
 	},
 
 	/**
-	 * Initialize tile cache with optional max size
-	 * Sets up both in-memory (L1) and IndexedDB (L2) caches
+	 * Initializes dual-level tile cache system. Creates in-memory L1 cache
+	 * with configurable capacity and establishes persistent L2 cache connection.
 	 *
-	 * @param {number} maxSize - Maximum number of tiles to cache in memory (default: 100)
+	 * @param {number} maxSize - Maximum tiles held in memory (default: 100)
 	 * @returns {Promise<void>}
 	 */
 	async initCache(maxSize = 100) {
@@ -267,26 +271,24 @@ module.exports = {
 	},
 
 	/**
-	 * Retrieve a tile from cache
-	 * Checks in-memory cache first (L1), then IndexedDB (L2)
+	 * Retrieves cached tile by geographic coordinates using layered lookup:
+	 * Session cache (L1) → Persistent cache (L2) → Cache miss. Promotes L2
+	 * hits to L1 for subsequent session requests.
 	 *
 	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile X coordinate
-	 * @param {number} y - Tile Y coordinate
-	 * @returns {Promise<ArrayBuffer|null>} Tile data or null if not found
+	 * @param {number} x - Tile column coordinate
+	 * @param {number} y - Tile row coordinate
+	 * @returns {Promise<ArrayBuffer|null>} Tile image buffer or null if not in cache
 	 */
 	async getTile(z, x, y) {
 		if (!tileCache) return null;
 
-		// L1: Check in-memory cache first (instant)
 		const inMemoryTile = await tileCache.getTile(z, x, y);
 		if (inMemoryTile) return inMemoryTile;
 
-		// L2: Check IndexedDB (persistent but slower)
 		if (tileCacheIndexedDB) {
 			const persistentTile = await tileCacheIndexedDB.getTile(z, x, y);
 			if (persistentTile) {
-				// Promote to in-memory cache for faster access
 				await tileCache.setTile(z, x, y, persistentTile);
 				return persistentTile;
 			}
@@ -296,41 +298,39 @@ module.exports = {
 	},
 
 	/**
-	 * Store a tile in cache
-	 * Stores in both in-memory (L1) and IndexedDB (L2) caches
-	 * Non-blocking: IndexedDB write happens async
+	 * Stores tile in both cache layers synchronously for L1 and
+	 * asynchronously for L2 without blocking the main thread.
 	 *
 	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile X coordinate
-	 * @param {number} y - Tile Y coordinate
-	 * @param {ArrayBuffer} arrayBuffer - Tile image data
+	 * @param {number} x - Tile column coordinate
+	 * @param {number} y - Tile row coordinate
+	 * @param {ArrayBuffer} arrayBuffer - Raw tile image data
 	 * @returns {Promise<void>}
 	 */
 	async setTile(z, x, y, arrayBuffer) {
 		if (!tileCache) return;
 
-		// L1: Store in in-memory cache (synchronous)
 		await tileCache.setTile(z, x, y, arrayBuffer);
 
-		// L2: Store in IndexedDB async (non-blocking)
 		if (tileCacheIndexedDB) {
 			tileCacheIndexedDB.setTile(z, x, y, arrayBuffer).catch(() => null);
 		}
 	},
 
 	/**
-	 * Check if cache is initialized
+	 * Determines whether the tile cache system is initialized and ready.
 	 *
-	 * @returns {boolean} True if cache is initialized
+	 * @returns {boolean} True if cache has been initialized
 	 */
 	hasCache() {
 		return tileCache !== null;
 	},
 
 	/**
-	 * Get cache statistics
+	 * Returns current cache utilization and capacity information for
+	 * monitoring and diagnostics.
 	 *
-	 * @returns {Promise<Object>} Cache stats
+	 * @returns {Promise<{size: number, maxSize: number, filled: string}|null>} Cache metrics or null if not initialized
 	 */
 	async getCacheStats() {
 		if (!tileCache) return null;
@@ -338,8 +338,8 @@ module.exports = {
 	},
 
 	/**
-	 * Clear cache instances (for cleanup/testing)
-	 * Clears both in-memory and IndexedDB caches
+	 * Resets all cache state and releases database resources. Clears
+	 * both session and persistent layers completely.
 	 *
 	 * @returns {Promise<void>}
 	 */
@@ -355,16 +355,14 @@ module.exports = {
 	},
 
 	/**
-	 * Handle container resize while preserving map bounds
-	 * Waits for CSS transition to complete, then restores bounds and invalidates size
-	 * Prevents loading out-of-bounds tiles during layout changes
+	 * Synchronizes map bounds with container resize transitions. Waits for
+	 * layout animation to complete before recalculating viewport, preventing
+	 * unnecessary tile loads during intermediate states. Applies bounds before
+	 * size invalidation to avoid loading tiles in temporarily expanded areas.
 	 *
-	 * Usage:
-	 *   mapStateManager.handleContainerResize(element, bounds);
-	 *
-	 * @param {HTMLElement} element - Element with CSS transition (sidebar, modal, etc)
-	 * @param {L.LatLngBounds} bounds - Original bounds to restore after resize
-	 * @throws {Error} If map is not initialized
+	 * @param {HTMLElement} element - Container element undergoing CSS transition
+	 * @param {L.LatLngBounds} bounds - Geographic bounds to restore post-transition
+	 * @throws {Error} When map instance has not been initialized
 	 */
 	handleContainerResize(element, bounds) {
 		if (!mapInstance) {
@@ -379,12 +377,10 @@ module.exports = {
 			element.removeEventListener('transitionend', onComplete);
 			clearTimeout(timeoutId);
 
-			// fitBounds BEFORE invalidateSize to prevent loading tiles for expanded area
 			mapInstance.fitBounds(bounds, { animate: false, padding: [0, 0] });
 			mapInstance.invalidateSize(false);
 		};
 
-		// Fallback timeout in case transitionend doesn't fire reliably
 		const timeoutId = setTimeout(onComplete, TRANSITION_TIMEOUT_MS);
 		element.addEventListener('transitionend', onComplete, { once: true });
 	}
