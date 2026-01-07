@@ -1,4 +1,22 @@
 const { projectStages } = require('../utils/project-stages');
+const { getAllProjectList } = require('../lib/application-api-wrapper');
+
+/**
+ * Fetches and transforms projects to GeoJSON format
+ *
+ * @returns {Promise<Object>} GeoJSON FeatureCollection
+ * @throws {Error} If projects cannot be fetched
+ */
+const getProjectsMapGeoJSON = async () => {
+	const projectsResponse = await getAllProjectList();
+
+	if (!projectsResponse || !projectsResponse.data) {
+		throw new Error('Failed to fetch projects from database');
+	}
+
+	const applications = projectsResponse.data.applications || projectsResponse.data;
+	return transformProjectsToGeoJSON(applications);
+};
 
 /**
  * Transforms raw application data to GeoJSON FeatureCollection format
@@ -61,5 +79,6 @@ const transformProjectsToGeoJSON = (applications) => {
 };
 
 module.exports = {
+	getProjectsMapGeoJSON,
 	transformProjectsToGeoJSON
 };

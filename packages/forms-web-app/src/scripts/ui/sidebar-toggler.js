@@ -48,6 +48,7 @@ class SidebarToggler {
 			contentVisibleClass: 'govuk-grid-column-two-thirds',
 			...options
 		};
+		this.resizeTimeout = null; // For debouncing resize calls
 	}
 
 	/**
@@ -145,14 +146,54 @@ class SidebarToggler {
 
 		btn.textContent = isHidden ? showLabel : hideLabel;
 
+		// Update aria-expanded for screen readers
+		if (btn.hasAttribute('aria-expanded')) {
+			btn.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+		}
+
+		// Focus management for keyboard users
+		if (isHidden) {
+			// Sidebar becoming hidden - return focus to toggle button
+			btn.focus();
+		} else {
+			// Sidebar becoming visible - focus first interactive element in sidebar
+			const firstInput = sidebar.querySelector(
+				'input, button, select, textarea, [tabindex]:not([tabindex="-1"])'
+			);
+			if (firstInput) {
+				setTimeout(() => firstInput.focus(), 100);
+			}
+		}
+
 		if (callbackName) {
 			this.executeCallback(callbackName, { sidebar, content, isHidden });
 		}
 	}
 
 	/**
+	 * Debounce resize callback to avoid excessive DOM reflows
+	 * Waits 250ms after toggle before calling resize handler
+	 *
+	 * @param {Function} callback - Callback function to debounce
+	 * @param {Object} state - State object to pass to callback
+	 * @param {number} [delay=250] - Debounce delay in milliseconds
+	 * @param {string} [callbackName] - Name of the callback for error logging
+	 */
+	debounceResize(callback, state, delay = 250, callbackName = '') {
+		clearTimeout(this.resizeTimeout);
+		this.resizeTimeout = setTimeout(() => {
+			try {
+				callback(state);
+			} catch (error) {
+				console.error(`Error executing callback ${callbackName}:`, error);
+			}
+		}, delay);
+	}
+
+	/**
 	 * Execute callback function if defined on window
 	 * Supports both direct callbacks (window.myCallback) and namespaced (_applicationService.onToggle)
+	 * Debounces resize callbacks to prevent excessive reflows
 	 *
 	 * @param {string} callbackName - Function name/path on window object (e.g., 'myCallback' or '_applicationService.onSidebarToggle')
 	 * @param {Object} state - State object to pass to callback
@@ -164,7 +205,9 @@ class SidebarToggler {
 		try {
 			const callback = this.resolveCallback(callbackName);
 			if (typeof callback === 'function') {
-				callback(state);
+				// Debounce resize-related callbacks for performance
+				// Prevents excessive DOM reflows during rapid toggles
+				this.debounceResize(callback, state, 250, callbackName);
 			}
 		} catch (error) {
 			console.error(`Error executing callback ${callbackName}:`, error);

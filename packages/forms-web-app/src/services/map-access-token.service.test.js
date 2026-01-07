@@ -1,23 +1,18 @@
-const { getMapAccessToken } = require('./get-map-access-token');
+const { getMapAccessToken } = require('./map-access-token.service');
 
-const { default: fetch } = require('node-fetch');
+jest.mock('../api/_services/os-maps-token-oauth.service');
+const {
+	getMapAccessToken: getOAuthToken
+} = require('../api/_services/os-maps-token-oauth.service');
 
-jest.mock('node-fetch', () => ({
-	default: jest.fn()
-}));
-
-describe('_services/get-map-access-token', () => {
+describe('services/map-access-token', () => {
 	describe('#getMapAccessToken', () => {
 		describe('When getting the map access token', () => {
 			describe('and there are no issues', () => {
 				let mapAccessToken;
 
 				beforeEach(async () => {
-					fetch.mockImplementation(() =>
-						Promise.resolve({
-							json: () => Promise.resolve({ access_token: 'mock map access token' })
-						})
-					);
+					getOAuthToken.mockResolvedValue('mock map access token');
 					mapAccessToken = await getMapAccessToken();
 				});
 

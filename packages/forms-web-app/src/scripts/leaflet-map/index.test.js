@@ -73,6 +73,28 @@ afterEach(() => {
 });
 
 describe('TokenManager', () => {
+	let leafletMap;
+	let originalSetTimeout;
+	let originalClearTimeout;
+	let setTimeoutSpy;
+	let clearTimeoutSpy;
+
+	beforeEach(() => {
+		leafletMap = new LeafletMap();
+		originalSetTimeout = global.setTimeout;
+		originalClearTimeout = global.clearTimeout;
+		setTimeoutSpy = jest.fn(originalSetTimeout);
+		clearTimeoutSpy = jest.fn(originalClearTimeout);
+		global.setTimeout = setTimeoutSpy;
+		global.clearTimeout = clearTimeoutSpy;
+	});
+
+	afterEach(() => {
+		leafletMap.tokenManager.destroy();
+		global.setTimeout = originalSetTimeout;
+		global.clearTimeout = originalClearTimeout;
+	});
+
 	describe('Token Fetching', () => {
 		it('fetches token from default endpoint', async () => {
 			global.fetch.mockResolvedValueOnce({
@@ -80,7 +102,6 @@ describe('TokenManager', () => {
 				json: jest.fn().mockResolvedValueOnce({ access_token: 'token-123' })
 			});
 
-			const leafletMap = new LeafletMap();
 			const token = await leafletMap.tokenManager.fetch();
 
 			expect(global.fetch).toHaveBeenCalledWith('/api/os-maps/token');
@@ -93,7 +114,6 @@ describe('TokenManager', () => {
 				json: jest.fn().mockResolvedValueOnce({ access_token: 'custom-token' })
 			});
 
-			const leafletMap = new LeafletMap();
 			const token = await leafletMap.tokenManager.fetch('/api/my-token');
 
 			expect(global.fetch).toHaveBeenCalledWith('/api/my-token');
@@ -103,7 +123,6 @@ describe('TokenManager', () => {
 		it('throws on non-ok response', async () => {
 			global.fetch.mockResolvedValueOnce({ ok: false, statusText: 'Unauthorized' });
 
-			const leafletMap = new LeafletMap();
 			await expect(leafletMap.tokenManager.fetch()).rejects.toThrow(
 				'Failed to fetch token: Unauthorized'
 			);
@@ -112,7 +131,6 @@ describe('TokenManager', () => {
 		it('throws on network error', async () => {
 			global.fetch.mockRejectedValueOnce(new Error('Network failed'));
 
-			const leafletMap = new LeafletMap();
 			await expect(leafletMap.tokenManager.fetch()).rejects.toThrow('Network failed');
 		});
 
@@ -125,10 +143,151 @@ describe('TokenManager', () => {
 				})
 			});
 
-			const leafletMap = new LeafletMap();
 			const token = await leafletMap.tokenManager.fetch();
 
 			expect(token).toBe('the-token');
+		});
+
+		it('throws if access_token is missing from response', async () => {
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({ token_type: 'Bearer' })
+			});
+
+			await expect(leafletMap.tokenManager.fetch()).rejects.toThrow('No access token in response');
+		});
+	});
+
+	describe('Token Refresh Scheduling', () => {
+		it('schedules token refresh before expiration', async () => {
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({
+					access_token: 'token-123',
+					token_type: 'Bearer',
+					expires_in: 3600
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+
+			// Should schedule refresh at (3600 - 30) * 1000 = 3570000ms
+			expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 3570000);
+		});
+
+		it('does not schedule refresh if expires_in is missing', async () => {
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({
+					access_token: 'token-123',
+					token_type: 'Bearer'
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+
+			expect(setTimeoutSpy).not.toHaveBeenCalled();
+		});
+
+		it('clears previous timer when scheduling new refresh', async () => {
+			global.fetch.mockResolvedValue({
+				ok: true,
+				json: jest.fn().mockResolvedValue({
+					access_token: 'token',
+					expires_in: 3600
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+			expect(setTimeoutSpy).toHaveBeenCalledTimes(1);
+
+			await leafletMap.tokenManager.fetch();
+			expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
+			expect(setTimeoutSpy).toHaveBeenCalledTimes(2);
+		});
+
+		it('calculates refresh time as expires_in minus 30 seconds', async () => {
+			const testCases = [
+				{ expires_in: 3600, expected: 3570000 },
+				{ expires_in: 1800, expected: 1770000 },
+				{ expires_in: 60, expected: 30000 }
+			];
+
+			for (const testCase of testCases) {
+				jest.clearAllMocks();
+				setTimeoutSpy.mockClear();
+				leafletMap = new LeafletMap();
+
+				global.fetch.mockResolvedValueOnce({
+					ok: true,
+					json: jest.fn().mockResolvedValueOnce({
+						access_token: 'token',
+						expires_in: testCase.expires_in
+					})
+				});
+
+				await leafletMap.tokenManager.fetch();
+				expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), testCase.expected);
+
+				leafletMap.tokenManager.destroy();
+			}
+		});
+	});
+
+	describe('Token Storage and Retrieval', () => {
+		it('stores and retrieves token via getToken()', async () => {
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({
+					access_token: 'stored-token',
+					expires_in: 3600
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+			expect(leafletMap.tokenManager.getToken()).toBe('stored-token');
+		});
+
+		it('updates token on subsequent fetch', async () => {
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({
+					access_token: 'first-token',
+					expires_in: 3600
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+			expect(leafletMap.tokenManager.getToken()).toBe('first-token');
+
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({
+					access_token: 'second-token',
+					expires_in: 3600
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+			expect(leafletMap.tokenManager.getToken()).toBe('second-token');
+		});
+	});
+
+	describe('Cleanup', () => {
+		it('destroy clears pending refresh timer', async () => {
+			global.fetch.mockResolvedValueOnce({
+				ok: true,
+				json: jest.fn().mockResolvedValueOnce({
+					access_token: 'token',
+					expires_in: 3600
+				})
+			});
+
+			await leafletMap.tokenManager.fetch();
+			expect(setTimeoutSpy).toHaveBeenCalled();
+
+			leafletMap.tokenManager.destroy();
+			expect(clearTimeoutSpy).toHaveBeenCalled();
 		});
 	});
 });

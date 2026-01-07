@@ -120,6 +120,7 @@ junit.xml
 .DS_Store
 
 packages/forms-web-app/src/public/stylesheets/main.css
+packages/forms-web-app/src/public/images/leaflet/
 
 uploads/*
 !uploads/.gitkeep

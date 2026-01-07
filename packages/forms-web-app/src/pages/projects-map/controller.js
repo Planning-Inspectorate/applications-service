@@ -1,7 +1,7 @@
 const logger = require('../../lib/logger');
-const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getProjectSearchURL } = require('../project-search/utils/get-project-search-url');
-const { transformProjectsToGeoJSON } = require('../../services/projects-map.service');
+const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
+const { maps: mapConfig } = require('../../config');
 
 const view = 'projects-map/view.njk';
 const projectSearchURL = getProjectSearchURL();
@@ -18,53 +18,67 @@ const getProjectsMapController = async (req, res, next) => {
 	try {
 		logger.info('Loading projects map page...');
 
-		// Fetch raw project data from backend API
-		const projectsResponse = await getAllProjectList();
+		// Fetch GeoJSON from service
+		const geojson = await getProjectsMapGeoJSON();
 
-		if (!projectsResponse || !projectsResponse.data) {
-			throw new Error('Failed to fetch projects from database');
+		// Validate GeoJSON structure
+		if (!geojson || typeof geojson !== 'object') {
+			logger.error('Invalid GeoJSON response: not an object', { geojson });
+			return next(new Error('Failed to load map data'));
 		}
 
-		const applications = projectsResponse.data.applications || projectsResponse.data;
+		if (geojson.type !== 'FeatureCollection') {
+			logger.error('Invalid GeoJSON response: missing type FeatureCollection', {
+				type: geojson.type
+			});
+			return next(new Error('Failed to load map data'));
+		}
 
-		// Transform to GeoJSON format (validates, filters, maps data)
-		const geojson = transformProjectsToGeoJSON(applications);
+		if (!Array.isArray(geojson.features)) {
+			logger.error('Invalid GeoJSON response: features is not an array', {
+				features: geojson.features
+			});
+			return next(new Error('Failed to load map data'));
+		}
 
 		logger.info(`Map page loaded with ${geojson.features.length} projects`);
 
-		// Build mapConfig object (configuration-driven pattern)
-		const mapConfig = {
-			elementId: 'map',
-			mapOptions: {
-				minZoom: 7, // OS Maps doesn't have tiles below zoom 7
-				maxZoom: 20,
-				center: [51.8086, -1.7139],
-				zoom: 7,
-				maxBounds: [
-					[49.901711, -5.174561],
-					[53.638125, 1.746826]
-				],
-				// Toggle to show/hide OS Maps copyright notice in bottom-right
-				attributionControl: true
-			},
+		// Build mapOptions from configuration
+		const mapOptions = {
+			minZoom: mapConfig.leafletOptions.minZoom,
+			maxZoom: mapConfig.leafletOptions.maxZoom,
+			center: mapConfig.leafletOptions.center,
+			zoom: mapConfig.leafletOptions.zoom,
+			attributionControl: mapConfig.leafletOptions.attributionControl
+		};
+
+		// Add bounds restriction if enabled
+		if (mapConfig.restrictToUk.enabled) {
+			mapOptions.maxBounds = mapConfig.restrictToUk.bounds;
+			mapOptions.maxBoundsViscosity = mapConfig.restrictToUk.viscosity;
+			logger.info('Map bounds restricted to UK');
+		}
+
+		// Build configuration object for client-side script
+		const renderedMapConfig = {
+			elementId: mapConfig.display.elementId,
+			mapOptions,
 			tileLayer: {
-				// Direct OS Maps API URL (client-side requests with Bearer token)
-				url: 'https://api.os.uk/maps/raster/v1/zxy/Light_3857/{z}/{x}/{y}.png',
-				tokenEndpoint: '/api/os-maps/token',
+				url: mapConfig.tileLayer.url,
+				tokenEndpoint: mapConfig.tileLayer.tokenEndpoint,
 				options: {
-					maxZoom: 20,
-					attribution: '© Crown Copyright and database right'
+					maxZoom: mapConfig.tileLayer.maxZoom,
+					attribution: mapConfig.tileLayer.attribution
 				}
 			},
 			markers: geojson.features,
-			clustered: true,
+			clustered: mapConfig.display.clustered,
 			totalProjects: geojson.features.length
 		};
 
-		// Render view with complete configuration
-		// Note: Token handled server-side in tile proxy, never exposed to client
+		// Render view with map configuration
 		res.render(view, {
-			mapConfig,
+			mapConfig: renderedMapConfig,
 			projectSearchURL
 		});
 	} catch (error) {

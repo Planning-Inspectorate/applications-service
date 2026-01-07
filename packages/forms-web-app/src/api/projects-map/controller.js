@@ -6,35 +6,47 @@
  */
 
 const logger = require('../../lib/logger');
-const { getAllProjectList } = require('../../lib/application-api-wrapper');
-const { transformProjectsToGeoJSON } = require('../../services/projects-map.service');
+const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
 
 /**
- * Retrieves all projects and transforms them to GeoJSON format
+ * GET /api/projects-map
+ * Retrieves all projects in GeoJSON format for map visualization
  *
- * @returns {Object} GeoJSON FeatureCollection with project features
+ * @async
+ * @param {express.Request} req - Express request object
+ * @param {express.Response} res - Express response object
+ * @param {Function} next - Express error handler middleware
+ * @returns {void} Sends GeoJSON FeatureCollection with HTTP 200
+ * @throws {Error} Passes errors to Express error handler via next()
+ *
+ * Response format (HTTP 200):
+ * ```json
+ * {
+ *   "type": "FeatureCollection",
+ *   "features": [
+ *     {
+ *       "type": "Feature",
+ *       "geometry": {
+ *         "type": "Point",
+ *         "coordinates": [longitude, latitude]
+ *       },
+ *       "properties": {
+ *         "caseRef": "EN010001",
+ *         "projectName": "High Speed Rail",
+ *         "stage": "Pre-application",
+ *         "summary": "...",
+ *         "region": "London"
+ *       }
+ *     }
+ *   ]
+ * }
+ * ```
  */
 const getProjectsMap = async (req, res, next) => {
 	try {
 		logger.info('Fetching projects for map API');
 
-		const response = await getAllProjectList();
-
-		if (!response || !response.data) {
-			logger.warn('No projects found in response');
-			return res.json({ type: 'FeatureCollection', features: [] });
-		}
-
-		const applications = response.data.applications;
-
-		if (!Array.isArray(applications)) {
-			logger.warn('Applications is not an array:', typeof applications);
-			return res.json({ type: 'FeatureCollection', features: [] });
-		}
-
-		// Transform project objects to GeoJSON format for map rendering
-		// This extracts coordinates and properties needed by Leaflet
-		const geojson = transformProjectsToGeoJSON(applications);
+		const geojson = await getProjectsMapGeoJSON();
 
 		logger.info(`Map API returning ${geojson.features.length} projects`);
 

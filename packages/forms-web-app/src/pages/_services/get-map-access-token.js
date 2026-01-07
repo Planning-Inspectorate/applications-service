@@ -1,26 +1,31 @@
-/**
- * Get OS Maps OAuth token for server-side rendering
- *
- * This module is used by server-side page controllers to obtain OAuth tokens
- * for passing to map views. It imports the OAuth service directly since this
- * runs on the Node.js backend, not through HTTP.
- */
-
-const {
-	getMapAccessToken: getOAuthToken
-} = require('../../api/_services/os-maps-token-oauth.service');
+const { default: fetch } = require('node-fetch');
+const { maps } = require('../../config');
 const logger = require('../../lib/logger');
 
 const getMapAccessToken = async () => {
 	try {
-		return await getOAuthToken();
-	} catch (error) {
-		logger.error({
-			msg: 'Error fetching OS Maps token for server-side rendering',
-			error: error.message,
-			stack: error.stack
+		const authString = Buffer.from(maps.osMapsApiKey + ':' + maps.osMapsApiSecret).toString(
+			'base64'
+		);
+
+		const params = new URLSearchParams();
+		params.append('grant_type', 'client_credentials');
+
+		const authResponse = await fetch('https://api.os.uk/oauth2/token/v1', {
+			method: 'POST',
+			body: params,
+			headers: {
+				Authorization: 'Basic ' + authString
+			}
 		});
-		throw error;
+
+		const { access_token } = await authResponse.json();
+
+		if (!access_token) throw new Error('Map access token is undefined');
+
+		return access_token;
+	} catch (error) {
+		logger.error(error);
 	}
 };
 
