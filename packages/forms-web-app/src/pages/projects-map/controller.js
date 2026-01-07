@@ -48,7 +48,9 @@ const getProjectsMapController = async (req, res, next) => {
 				attributionControl: true
 			},
 			tileLayer: {
-				url: '/api/map-tile/{z}/{x}/{y}', // Backend proxy handles OAuth token
+				// Direct OS Maps API URL (client-side requests with Bearer token)
+				url: 'https://api.os.uk/maps/raster/v1/zxy/Light_3857/{z}/{x}/{y}.png',
+				tokenEndpoint: '/api/os-maps/token',
 				options: {
 					maxZoom: 20,
 					attribution: '© Crown Copyright and database right'
