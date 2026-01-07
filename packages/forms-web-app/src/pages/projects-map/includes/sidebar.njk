@@ -1,0 +1,26 @@
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion with context %}
+
+{# 
+  Projects Map Filter Sidebar
+  
+  Displays filter groups for:
+  - Region (Location)
+  - Sector
+  - Stage
+  
+  Uses checkbox-accordion component for expandable filter groups.
+  Form submits filter selections via POST, server redirects to GET with query params.
+#}
+
+<form method="post">
+  {{
+    uiCheckboxAccordion(
+      true,
+      filters,
+      t('common.filter'),
+      pagination.totalItems + " " + t('common.projects'),
+      "projects-map-page-filters",
+      'modal-on-tablet'
+    )
+  }}
+</form>

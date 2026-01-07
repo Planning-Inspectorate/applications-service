@@ -14,7 +14,7 @@
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-third" id="maps-sidebar-content">
-			Filter goes here
+			{% include "./includes/sidebar.njk" %}
 		</div>
 
 		<div class="govuk-grid-column-two-thirds" id="maps-content">
@@ -76,6 +76,7 @@
 	</script>
 
 	<script nonce="{{ cspNonce }}">
+		const mapconfig = '{{ mapConfig }}';
 		/**
 		 * Embed complete map configuration in window scope
 		 * Includes:
@@ -93,9 +94,11 @@
 			clustered: {{ mapConfig.clustered | dump | safe }},
 			totalProjects: {{ mapConfig.totalProjects }}
 		};
+		console.log(mapconfig);
 		window.pageDebug('APP_MAP_CONFIG initialized:', window.APP_MAP_CONFIG);
 	</script>
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
 		{
 			callback: "window.pageDebug('Initiating toggle filters'); var toggle = new appScripts.toggleMapFilters(); toggle.initiate('#filters-toggle-btn', '#maps-sidebar-content', '#maps-content'); window.pageDebug('Toggle filters initiated');",
 			src: "/public/scripts/toggleMapFilters.script.js"

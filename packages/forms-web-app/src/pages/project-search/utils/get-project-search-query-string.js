@@ -1,4 +1,5 @@
 const { buildQueryString } = require('../../_utils/build-query-string');
+const { getFilterQueryParams } = require('../../_utils/get-filter-query-params');
 
 const getProjectSearchQueryString = ({
 	itemsPerPage,
@@ -14,9 +15,7 @@ const getProjectSearchQueryString = ({
 		page: page || 1,
 		searchTerm: searchTerm || '',
 		sort: sortBy || '+ProjectName',
-		region: region || [],
-		sector: sector || [],
-		stage: stage || []
+		...getFilterQueryParams({ region, sector, stage })
 	});
 
 module.exports = { getProjectSearchQueryString };

@@ -1,9 +1,9 @@
 const { getProjectsMapController } = require('./controller');
-const { getAllProjectList } = require('../../lib/application-api-wrapper');
+const { getApplications } = require('../../services/applications.service');
 const { transformProjectsToGeoJSON } = require('../../services/projects-map.service');
 
 jest.mock('../../lib/logger');
-jest.mock('../../lib/application-api-wrapper');
+jest.mock('../../services/applications.service');
 jest.mock('../../services/projects-map.service');
 jest.mock('../project-search/utils/get-project-search-url', () => ({
 	getProjectSearchURL: jest.fn(() => '/projects/search')
@@ -20,17 +20,25 @@ describe('pages/projects-map/controller', () => {
 	});
 
 	it('should render view with project data', async () => {
-		getAllProjectList.mockResolvedValue({
-			data: {
-				applications: [
-					{
-						CaseReference: 'EN010001',
-						ProjectName: 'Test Project',
-						LongLat: [-1.5, 51.5],
-						Stage: 'pre-application'
-					}
-				]
-			}
+		getApplications.mockResolvedValue({
+			applications: [
+				{
+					CaseReference: 'EN010001',
+					ProjectName: 'Test Project',
+					LongLat: [-1.5, 51.5],
+					Stage: 'pre-application'
+				}
+			],
+			filters: [
+				{
+					name: 'region',
+					count: 1,
+					label: 'North West',
+					label_cy: 'Gogledd Orllewin',
+					value: 'north_west'
+				}
+			],
+			pagination: { totalItems: 1, totalItemsWithoutFilters: 10 }
 		});
 
 		transformProjectsToGeoJSON.mockReturnValue({
@@ -44,9 +52,10 @@ describe('pages/projects-map/controller', () => {
 			]
 		});
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		const mockReq = { query: {}, i18n: { t: jest.fn((key) => key), language: 'en' } };
+		await getProjectsMapController(mockReq, mockRes, mockNext);
 
-		expect(getAllProjectList).toHaveBeenCalled();
+		expect(getApplications).toHaveBeenCalled();
 		expect(transformProjectsToGeoJSON).toHaveBeenCalledWith([
 			expect.objectContaining({ CaseReference: 'EN010001' })
 		]);
@@ -64,13 +73,15 @@ describe('pages/projects-map/controller', () => {
 	});
 
 	it('should handle different API response structures', async () => {
-		// Test flat data structure
-		getAllProjectList.mockResolvedValue({
-			data: [{ CaseReference: 'EN010002', ProjectName: 'Test 2', LongLat: [-2.0, 52.0] }]
+		getApplications.mockResolvedValue({
+			applications: [{ CaseReference: 'EN010002', ProjectName: 'Test 2', LongLat: [-2.0, 52.0] }],
+			filters: [],
+			pagination: { totalItems: 1, totalItemsWithoutFilters: 10 }
 		});
 		transformProjectsToGeoJSON.mockReturnValue({ type: 'FeatureCollection', features: [] });
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		const mockReq = { query: {}, i18n: { t: jest.fn((key) => key), language: 'en' } };
+		await getProjectsMapController(mockReq, mockRes, mockNext);
 
 		expect(transformProjectsToGeoJSON).toHaveBeenCalledWith([
 			expect.objectContaining({ CaseReference: 'EN010002' })
@@ -79,12 +90,13 @@ describe('pages/projects-map/controller', () => {
 
 	test.each([
 		[null, 'null response'],
-		[{ data: null }, 'null data'],
-		[{}, 'missing data property']
+		[{ applications: null }, 'null applications'],
+		[{}, 'missing applications property']
 	])('should handle API failures: %s', async (apiResponse) => {
-		getAllProjectList.mockResolvedValue(apiResponse);
+		getApplications.mockResolvedValue(apiResponse);
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		const mockReq = { query: {}, i18n: { t: jest.fn((key) => key), language: 'en' } };
+		await getProjectsMapController(mockReq, mockRes, mockNext);
 
 		expect(mockNext).toHaveBeenCalledWith(
 			expect.objectContaining({ message: 'Failed to fetch projects from database' })
@@ -93,12 +105,17 @@ describe('pages/projects-map/controller', () => {
 	});
 
 	it('should handle transformation errors', async () => {
-		getAllProjectList.mockResolvedValue({ data: { applications: [] } });
+		getApplications.mockResolvedValue({
+			applications: [],
+			filters: [],
+			pagination: { totalItems: 0, totalItemsWithoutFilters: 10 }
+		});
 		transformProjectsToGeoJSON.mockImplementation(() => {
 			throw new Error('Transform failed');
 		});
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		const mockReq = { query: {}, i18n: { t: jest.fn((key) => key), language: 'en' } };
+		await getProjectsMapController(mockReq, mockRes, mockNext);
 
 		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
 		expect(mockRes.render).not.toHaveBeenCalled();

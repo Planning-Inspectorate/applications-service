@@ -10,7 +10,10 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
-const { getProjectsMapController } = require('./projects-map/controller');
+const {
+	getProjectsMapController,
+	postProjectsMapController
+} = require('./projects-map/controller');
 const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
@@ -108,6 +111,8 @@ pagesRouter.get(
 );
 
 pagesRouter.post(projectSearchURL, postProjectSearchController);
+
+pagesRouter.post(projectsMapURL, postProjectsMapController);
 
 pagesRouter.get(
 	registerOfApplicationsURL,

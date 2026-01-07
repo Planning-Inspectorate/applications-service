@@ -18,6 +18,7 @@
 		"paragraph2": "Would you like to clear your search and filters to view all projects instead?",
 		"linkText1": "Clear search and filters"
 	},
+	"applyFilters": "Apply filters",
 	"filterLabels": {
 		"region": "Location",
 		"sector": "Sector",
