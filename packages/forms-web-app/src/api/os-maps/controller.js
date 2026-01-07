@@ -19,11 +19,12 @@ const logger = require('../../lib/logger');
  */
 const getOSMapsToken = async (req, res) => {
 	try {
-		const token = await getMapAccessToken();
+		const tokenData = await getMapAccessToken();
 
 		res.json({
-			access_token: token,
-			token_type: 'Bearer'
+			access_token: tokenData.access_token,
+			token_type: tokenData.token_type,
+			expires_in: tokenData.expires_in
 		});
 	} catch (error) {
 		logger.error('Failed to obtain OS Maps token', { error: error.message });

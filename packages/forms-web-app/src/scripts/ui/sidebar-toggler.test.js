@@ -266,7 +266,7 @@ describe('scripts/ui/sidebar-toggler', () => {
 	});
 
 	describe('executeCallback()', () => {
-		it('executes callback function when found on window', () => {
+		it('executes callback function when found on window', (done) => {
 			const callback = jest.fn();
 			window.testCallback = callback;
 
@@ -275,10 +275,13 @@ describe('scripts/ui/sidebar-toggler', () => {
 
 			toggler.executeCallback('testCallback', state);
 
-			expect(callback).toHaveBeenCalledWith(state);
+			setTimeout(() => {
+				expect(callback).toHaveBeenCalledWith(state);
+				done();
+			}, 300);
 		});
 
-		it('handles callbacks on namespaced objects', () => {
+		it('handles callbacks on namespaced objects', (done) => {
 			const callback = jest.fn();
 			window._applicationService = { onToggle: callback };
 
@@ -287,10 +290,13 @@ describe('scripts/ui/sidebar-toggler', () => {
 
 			toggler.executeCallback('_applicationService.onToggle', state);
 
-			expect(callback).toHaveBeenCalledWith(state);
+			setTimeout(() => {
+				expect(callback).toHaveBeenCalledWith(state);
+				done();
+			}, 300);
 		});
 
-		it('handles deeply nested callback paths', () => {
+		it('handles deeply nested callback paths', (done) => {
 			const callback = jest.fn();
 			window.app = { handlers: { sidebar: { toggle: callback } } };
 
@@ -299,7 +305,10 @@ describe('scripts/ui/sidebar-toggler', () => {
 
 			toggler.executeCallback('app.handlers.sidebar.toggle', state);
 
-			expect(callback).toHaveBeenCalledWith(state);
+			setTimeout(() => {
+				expect(callback).toHaveBeenCalledWith(state);
+				done();
+			}, 300);
 		});
 
 		it('silently fails when callback not found', () => {
@@ -324,7 +333,7 @@ describe('scripts/ui/sidebar-toggler', () => {
 			}).not.toThrow();
 		});
 
-		it('logs error when callback execution throws', () => {
+		it('logs error when callback execution throws', (done) => {
 			const error = new Error('Callback error');
 			window.throwingCallback = jest.fn(() => {
 				throw error;
@@ -336,9 +345,14 @@ describe('scripts/ui/sidebar-toggler', () => {
 
 			toggler.executeCallback('throwingCallback', state);
 
-			expect(consoleSpy).toHaveBeenCalledWith('Error executing callback throwingCallback:', error);
-
-			consoleSpy.mockRestore();
+			setTimeout(() => {
+				expect(consoleSpy).toHaveBeenCalledWith(
+					expect.stringContaining('Error executing callback throwingCallback:'),
+					error
+				);
+				consoleSpy.mockRestore();
+				done();
+			}, 300);
 		});
 	});
 
@@ -414,6 +428,10 @@ describe('scripts/ui/sidebar-toggler', () => {
 			expect(sidebar.classList.contains('govuk-!-display-none')).toBe(true);
 			expect(content.classList.contains('govuk-grid-column-full')).toBe(true);
 			expect(toggleBtn.textContent).toBe('Show Sidebar');
+
+			// Wait for debounced callback
+			await new Promise((resolve) => setTimeout(resolve, 300));
+
 			expect(mockCallback).toHaveBeenCalledWith(
 				expect.objectContaining({
 					isHidden: true
@@ -426,6 +444,10 @@ describe('scripts/ui/sidebar-toggler', () => {
 			expect(sidebar.classList.contains('govuk-!-display-none')).toBe(false);
 			expect(content.classList.contains('govuk-grid-column-two-thirds')).toBe(true);
 			expect(toggleBtn.textContent).toBe('Hide Sidebar');
+
+			// Wait for second debounced callback
+			await new Promise((resolve) => setTimeout(resolve, 300));
+
 			expect(mockCallback).toHaveBeenCalledTimes(2);
 		});
 

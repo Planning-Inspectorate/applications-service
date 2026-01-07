@@ -172,6 +172,40 @@ module.exports = {
 	},
 	maps: {
 		osMapsApiKey: process.env.OS_MAPS_API_KEY,
-		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
+		osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
+		leafletOptions: {
+			minZoom: 7, // OS Maps doesn't have tiles below zoom 7
+			maxZoom: 20,
+			// Default center: Central UK (approximately Lichfield)
+			center: [51.8086, -1.7139],
+			zoom: 7,
+			attributionControl: true // Show OS Maps copyright notice in bottom-right
+		},
+		restrictToUk: {
+			enabled: false,
+			// Southwest corner [latitude, longitude]
+			// Northeast corner [latitude, longitude]
+			bounds: [
+				[49.528423, -10.76418],
+				[61.331151, 1.9134116]
+			],
+			// How "sticky" the bounds are (0 = none, 1 = full)
+			viscosity: 1.0
+		},
+		tileLayer: {
+			// Tile server URL with placeholders for {z}/{x}/{y}
+			url: 'https://api.os.uk/maps/raster/v1/zxy/Light_3857/{z}/{x}/{y}.png',
+			// Endpoint to fetch OS Maps API tokens
+			tokenEndpoint: '/api/os-maps/token',
+			// Maximum zoom level for available tiles
+			maxZoom: 20,
+			// Attribution text displayed on map
+			attribution: '© Crown Copyright and database right'
+		},
+		display: {
+			clustered: true, // Enable marker clustering
+			elementId: 'projects-map', // Must match template element ID
+			containerHeight: '550px' // CSS height value
+		}
 	}
 };

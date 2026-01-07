@@ -3,14 +3,23 @@ require('leaflet.markercluster');
 const mapStateManager = require('../map/map-state-manager');
 
 /**
- * TokenManager - Handles OAuth token acquisition from server
+ * TokenManager - Handles OAuth token acquisition and refresh from server
  * Fetches tokens for Bearer authentication to OS Maps API.
+ * Automatically refreshes tokens before expiration.
  *
  * @class TokenManager
  */
 class TokenManager {
+	constructor() {
+		this.token = null;
+		this.expiresAt = null;
+		this.refreshTimer = null;
+		this.endpoint = '/api/os-maps/token';
+	}
+
 	/**
 	 * Fetch OAuth token from server endpoint
+	 * Handles token refresh scheduling based on expiration time.
 	 *
 	 * @param {string} [endpoint='/api/os-maps/token'] - Token endpoint URL
 	 * @returns {Promise<string>} OAuth access token
@@ -18,18 +27,69 @@ class TokenManager {
 	 */
 	async fetch(endpoint = '/api/os-maps/token') {
 		try {
+			this.endpoint = endpoint;
 			const response = await fetch(endpoint);
 			if (!response.ok) {
 				throw new Error(`Failed to fetch token: ${response.statusText}`);
 			}
 			const data = await response.json();
-			return data.access_token;
+
+			if (!data.access_token) {
+				throw new Error('No access token in response');
+			}
+
+			this.token = data.access_token;
+
+			// Schedule refresh: refresh when 30 seconds remain before expiration
+			if (data.expires_in) {
+				const refreshInMs = (data.expires_in - 30) * 1000;
+				this.scheduleRefresh(refreshInMs);
+			}
+
+			return this.token;
 		} catch (error) {
 			if (error.message.includes('Failed to fetch token')) {
 				throw error;
 			}
 			// Re-throw the original error for network failures
 			throw error;
+		}
+	}
+
+	/**
+	 * Schedule automatic token refresh before expiration
+	 *
+	 * @param {number} delayMs - Milliseconds until refresh
+	 * @private
+	 */
+	scheduleRefresh(delayMs) {
+		// Clear any existing timer
+		if (this.refreshTimer) {
+			clearTimeout(this.refreshTimer);
+		}
+
+		this.refreshTimer = setTimeout(() => {
+			this.fetch(this.endpoint).catch((error) => {
+				window.pageDebug?.(`Failed to refresh OS Maps token: ${error.message}`);
+			});
+		}, Math.max(delayMs, 0));
+	}
+
+	/**
+	 * Get current token, triggering refresh if needed
+	 *
+	 * @returns {string} Current access token
+	 */
+	getToken() {
+		return this.token;
+	}
+
+	/**
+	 * Cleanup: clear any pending refresh timers
+	 */
+	destroy() {
+		if (this.refreshTimer) {
+			clearTimeout(this.refreshTimer);
 		}
 	}
 }
@@ -40,6 +100,7 @@ class TokenManager {
  * - Requests tiles from server-side proxy (handles auth and CORS)
  * - Checks in-memory cache before fetching
  * - Falls back to API fetch on cache miss or error
+ * - Uses TokenManager to get current valid token
  *
  * @class TileLayerManager
  */
@@ -47,10 +108,10 @@ class TileLayerManager {
 	/**
 	 * Creates a new TileLayerManager instance
 	 *
-	 * @param {string} token - OAuth Bearer token for OS Maps API authentication
+	 * @param {TokenManager} tokenManager - Token manager for Bearer authentication
 	 */
-	constructor(token) {
-		this.token = token;
+	constructor(tokenManager) {
+		this.tokenManager = tokenManager;
 	}
 
 	/**
@@ -108,7 +169,8 @@ class TileLayerManager {
 					this.fetchTile(url, z, x, y, tile, done);
 				}
 			})
-			.catch(() => {
+			.catch((error) => {
+				window.pageDebug(`Cache lookup error for tile ${z}/${x}/${y}:`, error);
 				this.fetchTile(url, z, x, y, tile, done);
 			});
 	}
@@ -126,9 +188,10 @@ class TileLayerManager {
 	 */
 	fetchTile(url, z, x, y, tile, done) {
 		window.pageDebug(`Fetching tile: ${url}`);
+		const token = this.tokenManager.getToken();
 		fetch(url, {
 			headers: {
-				Authorization: `Bearer ${this.token}`
+				Authorization: `Bearer ${token}`
 			}
 		})
 			.then((response) => {
@@ -139,7 +202,9 @@ class TileLayerManager {
 			})
 			.then((arrayBuffer) => {
 				if (mapStateManager.hasCache()) {
-					mapStateManager.setTile(z, x, y, arrayBuffer).catch(() => null);
+					mapStateManager.setTile(z, x, y, arrayBuffer).catch((cacheError) => {
+						window.pageDebug(`Failed to cache tile ${z}/${x}/${y}:`, cacheError);
+					});
 				}
 				this.setTileImage(tile, arrayBuffer, done);
 			})
@@ -269,6 +334,42 @@ class MarkerLoader {
 	constructor(popupBuilder) {
 		this.popupBuilder = popupBuilder;
 		this.BATCH_SIZE = 10;
+		this.isTouchDevice = this.detectTouchDevice();
+		this.prefersReducedMotion = this.detectReducedMotion();
+	}
+
+	/**
+	 * Detect if device supports touch (mobile/tablet)
+	 * Uses media query to detect hover capability
+	 *
+	 * @returns {boolean} True if device supports touch
+	 */
+	detectTouchDevice() {
+		if (typeof window === 'undefined' || !window.matchMedia) {
+			return false;
+		}
+		try {
+			return window.matchMedia('(hover: none)').matches;
+		} catch (error) {
+			return false;
+		}
+	}
+
+	/**
+	 * Detect if user prefers reduced motion
+	 * Respects accessibility preference for motion-sensitive users
+	 *
+	 * @returns {boolean} True if prefers-reduced-motion is set
+	 */
+	detectReducedMotion() {
+		if (typeof window === 'undefined' || !window.matchMedia) {
+			return false;
+		}
+		try {
+			return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		} catch (error) {
+			return false;
+		}
 	}
 
 	/**
@@ -292,7 +393,8 @@ class MarkerLoader {
 			? L.markerClusterGroup({ showCoverageOnHover: false })
 			: L.featureGroup();
 
-		this.processBatch(map, markerGroup, markers, 0);
+		const mapContainer = document.getElementById(config.elementId);
+		this.processBatch(map, markerGroup, markers, 0, mapContainer);
 	}
 
 	/**
@@ -303,8 +405,9 @@ class MarkerLoader {
 	 * @param {L.MarkerClusterGroup|L.FeatureGroup} markerGroup - Target marker container
 	 * @param {Array<Object>} markers - All GeoJSON features to load
 	 * @param {number} startIndex - Index to start processing from
+	 * @param {HTMLElement} mapContainer - Map container element
 	 */
-	processBatch(map, markerGroup, markers, startIndex) {
+	processBatch(map, markerGroup, markers, startIndex, mapContainer) {
 		const endIndex = Math.min(startIndex + this.BATCH_SIZE, markers.length);
 
 		for (let i = startIndex; i < endIndex; i++) {
@@ -312,7 +415,9 @@ class MarkerLoader {
 		}
 
 		if (endIndex < markers.length) {
-			requestAnimationFrame(() => this.processBatch(map, markerGroup, markers, endIndex));
+			requestAnimationFrame(() =>
+				this.processBatch(map, markerGroup, markers, endIndex, mapContainer)
+			);
 		} else {
 			map.addLayer(markerGroup);
 		}
@@ -321,58 +426,102 @@ class MarkerLoader {
 	/**
 	 * Add single marker to marker group
 	 * Validates GeoJSON feature, creates marker with popup, and adds to group.
-	 * S invalid features (missing geometry, invalid coordinates, etc.).
+	 * Skips invalid features (missing geometry, invalid coordinates, etc.).
 	 *
 	 * @param {L.MarkerClusterGroup|L.FeatureGroup} markerGroup - Target marker container
 	 * @param {Object} feature - GeoJSON Feature object
 	 * @param {Object} feature.geometry - GeoJSON geometry
 	 * @param {Array<number>} feature.geometry.coordinates - [lng, lat] coordinates
 	 * @param {Object} feature.properties - Feature properties for popup
-	 * @returns {void}
+	 * @returns {L.Marker|null} Created marker or null if invalid
 	 */
 	addMarker(markerGroup, feature) {
 		try {
 			if (!feature?.geometry?.coordinates || !feature.properties) {
-				return;
+				return null;
 			}
 
 			const [lng, lat] = feature.geometry.coordinates;
 
 			if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-				return;
+				return null;
 			}
 
 			const marker = L.marker([lat, lng], {
-				icon: this.getIcon()
+				icon: this.getIcon(),
+				properties: feature.properties // Store properties for keyboard accessibility
 			});
 
 			const popupHtml = this.popupBuilder.build(feature.properties);
-			marker.bindPopup(popupHtml, {
+
+			// Disable popup animation if user prefers reduced motion
+			const popupOptions = {
 				className: 'cluster-popup',
 				maxWidth: 300,
-				minWidth: 250
-			});
+				minWidth: 250,
+				direction: 'top',
+				offset: [0, -10],
+				animate: !this.prefersReducedMotion
+			};
+
+			marker.bindPopup(popupHtml, popupOptions);
+
+			// Make marker keyboard accessible
+			const markerElement = marker.getElement();
+			if (markerElement) {
+				markerElement.setAttribute('tabindex', '0');
+				markerElement.setAttribute('role', 'button');
+				markerElement.setAttribute('aria-label', this.getMarkerLabel(feature.properties));
+			}
 
 			markerGroup.addLayer(marker);
+			return marker;
 		} catch (error) {
-			null;
+			return null;
 		}
 	}
 
 	/**
 	 * Get custom marker icon
 	 * Returns Leaflet divIcon configured for project markers with custom styling.
+	 * On touch devices, creates larger hit area (44x44px) for easier interaction.
 	 *
 	 * @returns {L.Icon} Leaflet icon instance
 	 */
 	getIcon() {
+		if (this.isTouchDevice) {
+			// Mobile: larger touch target (44x44px WCAG AAA requirement)
+			return L.divIcon({
+				className: 'projects-marker projects-marker-touch',
+				html: '<div class="projects-marker-icon" role="img" aria-label="Project location marker"></div>',
+				iconSize: [44, 44],
+				iconAnchor: [22, 44],
+				popupAnchor: [0, -44]
+			});
+		}
+
+		// Desktop: default size (25x41px)
 		return L.divIcon({
 			className: 'projects-marker',
-			html: '<div class="projects-marker-icon"></div>',
+			html: '<div class="projects-marker-icon" role="img" aria-label="Project location marker"></div>',
 			iconSize: [25, 41],
 			iconAnchor: [12.5, 41],
 			popupAnchor: [0, -35]
 		});
+	}
+
+	/**
+	 * Get accessible label for marker
+	 *
+	 * @param {Object} properties - Feature properties
+	 * @param {string} properties.projectName - Project name
+	 * @param {string} properties.stage - Project stage
+	 * @returns {string} Accessible label
+	 */
+	getMarkerLabel(properties) {
+		return `Project: ${properties.projectName || 'Unknown'} (${
+			properties.stage || 'Unknown Stage'
+		})`;
 	}
 }
 
@@ -398,7 +547,6 @@ class LeafletMap {
 	 */
 	constructor() {
 		this.tokenManager = new TokenManager();
-		this.token = null;
 		this.tileLayerManager = null;
 		this.popupBuilder = new PopupBuilder();
 		this.markerLoader = new MarkerLoader(this.popupBuilder);
@@ -437,9 +585,15 @@ class LeafletMap {
 
 		// Fetch token from configured or default endpoint
 		const tokenEndpoint = config.tileLayer.tokenEndpoint || '/api/os-maps/token';
-		this.token = await this.tokenManager.fetch(tokenEndpoint);
+		await this.tokenManager.fetch(tokenEndpoint);
 
-		const map = L.map(config.elementId, config.mapOptions);
+		const mapOptions = {
+			...config.mapOptions,
+			animate: !this.markerLoader.prefersReducedMotion,
+			animateZoom: !this.markerLoader.prefersReducedMotion
+		};
+
+		const map = L.map(config.elementId, mapOptions);
 		mapStateManager.setMap(map);
 
 		// Expose map and mapStateManager on window for callbacks (e.g., sidebar toggle)
@@ -453,7 +607,7 @@ class LeafletMap {
 			map.attributionControl.setPrefix(false);
 		}
 
-		this.tileLayerManager = new TileLayerManager(this.token);
+		this.tileLayerManager = new TileLayerManager(this.tokenManager);
 		this.tileLayerManager.addToMap(map, config.tileLayer);
 
 		this.markerLoader.load(map, config);
@@ -463,3 +617,7 @@ class LeafletMap {
 }
 
 module.exports = LeafletMap;
+module.exports.TokenManager = TokenManager;
+module.exports.TileLayerManager = TileLayerManager;
+module.exports.MarkerLoader = MarkerLoader;
+module.exports.PopupBuilder = PopupBuilder;

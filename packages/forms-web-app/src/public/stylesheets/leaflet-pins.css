@@ -107,3 +107,50 @@
 	font-weight: bold;
 	font-family: 'GDS Transport', Arial, sans-serif;
 }
+
+/* Keyboard Navigation & Focus Indicators */
+
+/* Touch device marker optimization (44x44px WCAG AAA) */
+.projects-marker-touch .projects-marker-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+/* Marker focus indicator (keyboard navigation) */
+.leaflet-marker-icon.marker-focused {
+	outline: 3px solid #fd0;
+	outline-offset: 2px;
+	filter: drop-shadow(0 0 4px rgba(253, 208, 0, 0.5));
+}
+
+.leaflet-marker-icon[tabindex]:focus {
+	outline: 3px solid #fd0;
+	outline-offset: 2px;
+}
+
+/* Leaflet Control Touch Target Optimization (44x44px WCAG AAA) */
+.leaflet-control-zoom a,
+.leaflet-control-attribution a {
+	min-width: 44px;
+	min-height: 44px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@media (hover: none) {
+	/* Mobile: Ensure minimum touch target size */
+	.leaflet-control-zoom a,
+	.leaflet-control-attribution a {
+		width: 44px;
+		height: 44px;
+	}
+
+	/* Add padding to interactive elements */
+	.leaflet-control button {
+		padding: 8px;
+	}
+}

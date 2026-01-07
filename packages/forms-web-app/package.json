@@ -75,6 +75,7 @@
 		"@babel/core": "*",
 		"@babel/preset-env": "*",
 		"babel-loader": "*",
+		"copy-webpack-plugin": "^13.0.1",
 		"eslint": "*",
 		"eslint-config-prettier": "*",
 		"eslint-plugin-jest": "*",

@@ -9,13 +9,55 @@
 	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
 	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
 	<link rel="stylesheet" href="/public/stylesheets/leaflet-pins.css">
+	<style>
+		#projects-map {
+			min-height: 550px;
+		}
+
+		@media (min-width: 48.0625em) {
+			#projects-map {
+				height: 550px;
+			}
+		}
+
+		#projects-map:focus,
+		#projects-map:focus-visible {
+			outline: 3px solid #fd0;
+			outline-offset: 2px;
+			box-shadow: 0 0 0 3px rgba(253, 208, 0, 0.25);
+		}
+
+		/* Reduce motion preferences */
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+			}
+
+			/* Leaflet zoom animation */
+			.leaflet-zoom-anim {
+				animation: none !important;
+			}
+
+			/* Leaflet pan animation */
+			.leaflet-panning {
+				animation: none !important;
+			}
+
+			/* Disable marker cluster animations */
+			.leaflet-marker-icon {
+				transition: none !important;
+			}
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-one-third" id="maps-sidebar-content">
+		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
 			Filter goes here
-		</div>
+		</aside>
 
 		<div class="govuk-grid-column-two-thirds" id="maps-content">
 			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
@@ -32,6 +74,7 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
+			{# TODO: create a new sidebar with filter #}
 			{% include "../project-search/includes/search.njk" %}
 
 			<div class="govuk-button-group">
@@ -47,13 +90,26 @@
 						'data-content-visible-class': 'govuk-grid-column-two-thirds',
 						'data-show-label': t('projectsMap.showFiltersText'),
 						'data-hide-label': t('projectsMap.hideFiltersText'),
-						'data-on-toggle': '_applicationService.onSidebarToggle'
+						'data-on-toggle': '_applicationService.onSidebarToggle',
+						'aria-expanded': 'true',
+						'aria-controls': 'maps-sidebar-content'
 					}
 				}) }}
 				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
 			</div>
 
-			<div id="map" class="govuk-!-margin-bottom-4" style="height: 550px;"></div>
+			<div id="projects-map"
+				role="main"
+				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
+				tabindex="0"
+				class="govuk-!-margin-bottom-4"></div>
+
+			<p class="govuk-visually-hidden">
+				This interactive map shows the locations of {{ mapConfig.totalProjects }} National Infrastructure projects across the UK.
+				You can zoom in and out using the controls or keyboard.
+				Click on any marker to view more details about that project.
+				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name or region.
+			</p>
 
 			{% include "../project-search/includes/active-filters.njk" %}
 
@@ -84,7 +140,7 @@
 	<script nonce="{{ cspNonce }}">
 		/**
 		 * Application Service Configuration
-		 * Centralizes all client-side configuration and callbacks
+		 * Centralized client-side configuration and callbacks
 		 */
 		window._applicationService = {
 			mapConfig: {
@@ -97,15 +153,12 @@
 			},
 			/**
 			 * Callback when sidebar toggles
-			 * Preserves map bounds during layout changes
 			 */
 			onSidebarToggle: function(state) {
 				var map = window._applicationService.map;
 				var mapStateManager = window._applicationService.mapStateManager;
 				if (!map || !mapStateManager || !state.content) return;
-				
-				var bounds = map.getBounds();
-				mapStateManager.handleContainerResize(state.content, bounds);
+				mapStateManager.handleContainerResize(state.content);
 			}
 		};
 		window.pageDebug('_applicationService initialized:', window._applicationService);

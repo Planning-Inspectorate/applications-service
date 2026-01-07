@@ -8,7 +8,7 @@
 	"showFiltersText": "Show filters",
 	"hideFiltersText": "Hide filters",
 	"projectSearchLinkText": "Switch to list view",
-	"warningText": "Project boundaries shown are for illustrative purposes only. To the view exact boundaries refer to latest relevant plans and drawings.",
+	"warningText": "Project boundaries shown are for illustrative purposes only. To view exact boundaries refer to latest relevant plans and drawings.",
 	"linkText1": "Download a table containing a complete list of all {{-totalApplications}} projects (CSV)",
 	"accessibilityText1": "Search projects",
 	"heading2": "Filtered results",

@@ -1,10 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const entryPath = path.resolve(__dirname, 'src', 'scripts');
 const outputPath = path.resolve(__dirname, 'src', 'public', 'scripts');
 const outputFilenamePrefix = 'script';
+const leafletSourcePath = path.resolve(__dirname, '../../node_modules/leaflet/dist/images');
+const leafletPublicPath = path.resolve(__dirname, 'src/public/images/leaflet');
 
 const config = {
 	mode: 'production',
@@ -67,6 +70,14 @@ const configPageScripts = {
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env.googleTagManager': process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true'
+		}),
+		new CopyPlugin({
+			patterns: [
+				{
+					from: leafletSourcePath,
+					to: leafletPublicPath
+				}
+			]
 		})
 	]
 };

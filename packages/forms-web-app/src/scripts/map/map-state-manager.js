@@ -206,8 +206,12 @@ class IndexedDBTileCache {
 				const store = transaction.objectStore(DB_STORE);
 				store.clear();
 				transaction.oncomplete = () => resolve();
-				transaction.onerror = () => resolve();
+				transaction.onerror = () => {
+					console.warn('IndexedDB clear failed:', transaction.error);
+					resolve();
+				};
 			} catch (error) {
+				console.warn('Failed to clear IndexedDB:', error);
 				resolve();
 			}
 		});
@@ -355,13 +359,12 @@ module.exports = {
 	},
 
 	/**
-	 * Synchronizes map bounds with container resize transitions. Waits for
-	 * layout animation to complete before recalculating viewport, preventing
-	 * unnecessary tile loads during intermediate states. Applies bounds before
-	 * size invalidation to avoid loading tiles in temporarily expanded areas.
+	 * Handles map size recalculation after container resize transitions.
+	 * Optionally restores map bounds if provided, otherwise only recalculates size.
+	 * Allows free user panning when bounds are not provided.
 	 *
 	 * @param {HTMLElement} element - Container element undergoing CSS transition
-	 * @param {L.LatLngBounds} bounds - Geographic bounds to restore post-transition
+	 * @param {L.LatLngBounds} [bounds] - Optional bounds to restore post-transition
 	 * @throws {Error} When map instance has not been initialized
 	 */
 	handleContainerResize(element, bounds) {
@@ -377,7 +380,7 @@ module.exports = {
 			element.removeEventListener('transitionend', onComplete);
 			clearTimeout(timeoutId);
 
-			mapInstance.fitBounds(bounds, { animate: false, padding: [0, 0] });
+			if (bounds) mapInstance.fitBounds(bounds, { animate: false, padding: [0, 0] });
 			mapInstance.invalidateSize(false);
 		};
 
