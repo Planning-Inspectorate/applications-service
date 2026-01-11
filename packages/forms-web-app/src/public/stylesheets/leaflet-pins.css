@@ -95,7 +95,8 @@
 	background-color: transparent;
 }
 
-.marker-cluster div {
+.cluster-icon,
+.cluster-icon-touch {
 	display: flex;
 	align-items: center;
 	justify-content: center;
