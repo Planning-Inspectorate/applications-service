@@ -390,7 +390,10 @@ class MarkerLoader {
 		}
 
 		const markerGroup = config.clustered
-			? L.markerClusterGroup({ showCoverageOnHover: false })
+			? L.markerClusterGroup({
+					showCoverageOnHover: false,
+					iconCreateFunction: (cluster) => this.getClusterIcon(cluster)
+			  })
 			: L.featureGroup();
 
 		const mapContainer = document.getElementById(config.elementId);
@@ -522,6 +525,35 @@ class MarkerLoader {
 		return `Project: ${properties.projectName || 'Unknown'} (${
 			properties.stage || 'Unknown Stage'
 		})`;
+	}
+
+	/**
+	 * Get responsive cluster icon
+	 * Returns divIcon with responsive sizing based on device type
+	 *
+	 * @param {L.MarkerCluster} cluster - Marker cluster object
+	 * @returns {L.Icon} Leaflet divIcon instance with cluster count
+	 */
+	getClusterIcon(cluster) {
+		const count = cluster.getChildCount();
+
+		if (this.isTouchDevice) {
+			// Mobile: 44x44px matching individual markers
+			return L.divIcon({
+				className: 'cluster-icon cluster-icon-touch',
+				html: `<div class="cluster-icon-inner">${count}</div>`,
+				iconSize: [44, 44],
+				iconAnchor: [22, 44]
+			});
+		}
+
+		// Desktop: 40x40px
+		return L.divIcon({
+			className: 'cluster-icon',
+			html: `<div class="cluster-icon-inner">${count}</div>`,
+			iconSize: [40, 40],
+			iconAnchor: [20, 40]
+		});
 	}
 }
 
