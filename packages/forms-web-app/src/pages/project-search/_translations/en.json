@@ -6,6 +6,7 @@
 	"heading1": "Projects",
 	"paragraph1": "This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.",
 	"linkText1": "Download a table containing a complete list of all {{-totalApplications}} projects (CSV)",
+	"projectsMapLinkText": "Switch to map view",
 	"accessibilityText1": "Search projects",
 	"heading2": "Filtered results",
 	"paragraph2": "Showing {{-from}} to {{-to}} of {{-total}} projects.",

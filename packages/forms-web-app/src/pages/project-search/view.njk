@@ -44,6 +44,10 @@
 
 				{% include "./includes/search.njk" %}
 
+				<p class="govuk-body">
+					<a class="govuk-link" href="{{ projectsMapURL }}">{{ t('projectSearch.projectsMapLinkText') }}</a>
+				</p>
+
 				{% include "./includes/active-filters.njk" %}
 
 				{% if applications | length %}

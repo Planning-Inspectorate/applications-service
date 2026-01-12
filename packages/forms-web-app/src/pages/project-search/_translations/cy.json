@@ -6,6 +6,7 @@
 	"heading1": "Prosiectau",
 	"paragraph1": "Dyma restr o'r holl brosiectau. I ddod o hyd i brosiect penodol, defnyddiwch yr opsiynau hidlo neu chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
 	"linkText1": "Lawrlwythwch dabl sy'n cynnwys rhestr lawn o bob un o'r {{-totalApplications}} o brosiectau (CSV)",
+	"projectsMapLinkText": "Newid i olygfa map",
 	"accessibilityText1": "Chwilio am brosiect",
 	"heading2": "Canlyniadau wedi'u hidlo",
 	"paragraph2": "Yn dangos {{-from}} i {{-to}} o {{-total}} brosiectau.",

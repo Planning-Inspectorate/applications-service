@@ -55,9 +55,15 @@
 
 {% block content %}
 	<div class="govuk-grid-row">
-		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
-			Filter goes here
-		</aside>
+		<div class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
+			<div class="filter-sidebar__content">
+				{% include "./includes/sidebar.njk" %}
+			</div>
+			<div class="govuk-!-margin-top-6 filter-sidebar__active-filters">
+				{% set activeFiltersHeading = t('projectsMap.activeFiltersHeading') %}
+				{% include "./_includes/active-filters.njk" %}
+			</div>
+		</div>
 
 		<div class="govuk-grid-column-two-thirds" id="maps-content">
 			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
@@ -74,7 +80,6 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
-			{# TODO: create a new sidebar with filter #}
 			{% include "../project-search/includes/search.njk" %}
 
 			<div class="govuk-button-group">
@@ -111,8 +116,6 @@
 				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name or region.
 			</p>
 
-			{% include "../project-search/includes/active-filters.njk" %}
-
 			{{ govukWarningText({
 				text: t('projectsMap.warningText'),
 				iconFallbackText: "Warning"
@@ -122,6 +125,14 @@
 {% endblock %}
 
 {% block script %}
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
+		{
+			callback: "var modal = new appScripts.modal(); modal.initiate('#project-map-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#projects-map', 'Show filters', 'tablet');",
+			src: "/public/scripts/modal.script.js"
+		}
+	), initiateScriptsConfig) %}
+
 	<script nonce="{{ cspNonce }}">
 		// Debug flag for all page scripts
 		window.DEBUG_ENABLED = false;
@@ -140,7 +151,7 @@
 	<script nonce="{{ cspNonce }}">
 		/**
 		 * Application Service Configuration
-		 * Centralized client-side configuration and callbacks
+		 * Centralizes client-side configuration and callbacks
 		 */
 		window._applicationService = {
 			mapConfig: {
@@ -153,12 +164,15 @@
 			},
 			/**
 			 * Callback when sidebar toggles
+			 * Preserves map bounds during layout changes
 			 */
 			onSidebarToggle: function(state) {
 				var map = window._applicationService.map;
 				var mapStateManager = window._applicationService.mapStateManager;
 				if (!map || !mapStateManager || !state.content) return;
-				mapStateManager.handleContainerResize(state.content);
+
+				var bounds = map.getBounds();
+				mapStateManager.handleContainerResize(state.content, bounds);
 			}
 		};
 		window.pageDebug('_applicationService initialized:', window._applicationService);

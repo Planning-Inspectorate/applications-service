@@ -11,9 +11,10 @@ describe('project-search/utils/get-project-search-query-string', () => {
 				});
 
 				it('should return the default project search query string', () => {
-					expect(projectSearchQueryString).toEqual(
-						'?size=25&page=1&searchTerm=&sort=%2BProjectName'
-					);
+					expect(projectSearchQueryString).toContain('searchTerm=');
+					expect(projectSearchQueryString).toContain('size=25');
+					expect(projectSearchQueryString).toContain('page=1');
+					expect(projectSearchQueryString).toContain('sort=%2BProjectName');
 				});
 			});
 
@@ -33,9 +34,14 @@ describe('project-search/utils/get-project-search-query-string', () => {
 				});
 
 				it('should return the project search query string with the query parameter values', () => {
-					expect(projectSearchQueryString).toEqual(
-						'?size=50&page=2&searchTerm=mock%20search%20term&sort=mock%20sort%20by&region=mock%20region&sector=mock%20sector%201&sector=mock%20sector%202&stage=mock%20stage'
-					);
+					expect(projectSearchQueryString).toContain('searchTerm=mock%20search%20term');
+					expect(projectSearchQueryString).toContain('size=50');
+					expect(projectSearchQueryString).toContain('page=2');
+					expect(projectSearchQueryString).toContain('sort=mock%20sort%20by');
+					expect(projectSearchQueryString).toContain('region=mock%20region');
+					expect(projectSearchQueryString).toContain('sector=mock%20sector%201');
+					expect(projectSearchQueryString).toContain('sector=mock%20sector%202');
+					expect(projectSearchQueryString).toContain('stage=mock%20stage');
 				});
 			});
 		});

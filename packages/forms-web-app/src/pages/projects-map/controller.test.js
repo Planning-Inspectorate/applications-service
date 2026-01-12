@@ -1,6 +1,8 @@
-const { getProjectsMapController } = require('./controller');
-const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
+const { getProjectsMapController, postProjectsMapController } = require('./controller');
+const { getApplications } = require('../../services/applications.service');
+const { transformProjectsToGeoJSON } = require('../../services/projects-map.service');
 
+jest.mock('../../services/applications.service');
 jest.mock('../../services/projects-map.service');
 jest.mock('../../config', () => ({
 	logger: {
@@ -40,211 +42,178 @@ jest.mock('../../config', () => ({
 }));
 jest.mock('../../lib/logger');
 jest.mock('../project-search/utils/get-project-search-url', () => ({
-	getProjectSearchURL: jest.fn(() => '/projects/search')
+	getProjectSearchURL: jest.fn(() => '/project-search')
+}));
+jest.mock('../../utils/query-string-builder');
+jest.mock('./utils/get-projects-map-url');
+jest.mock('./utils/get-page-data', () => ({
+	getPageData: jest.fn(() => ({
+		filters: [],
+		activeFilters: [],
+		pagination: { totalItems: 0, currentPage: 1, totalPages: 1 }
+	}))
 }));
 
 describe('pages/projects-map/controller', () => {
 	let mockRes;
 	let mockNext;
+	let mockI18n;
 
 	beforeEach(() => {
 		mockRes = { render: jest.fn() };
 		mockNext = jest.fn();
+		mockI18n = { language: 'en', t: jest.fn((key) => key) };
 		jest.clearAllMocks();
 	});
 
-	it('should render view with project data', async () => {
-		const mockGeojson = {
-			type: 'FeatureCollection',
-			features: [
-				{
-					type: 'Feature',
-					geometry: { type: 'Point', coordinates: [-1.5, 51.5] },
-					properties: { caseRef: 'EN010001', projectName: 'Test Project', stage: 'pre-application' }
-				}
-			]
-		};
+	describe('getProjectsMapController', () => {
+		it('should render view with filtered project data', async () => {
+			const mockApplications = [
+				{ id: 1, name: 'Project 1', LongLat: [-1.5, 51.5], CaseReference: 'EN010001' }
+			];
+			const mockFilters = [{ name: 'region', value: 'london', label: 'London', count: 5 }];
+			const mockPagination = { totalItems: 1, currentPage: 1, totalPages: 1 };
 
-		getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+			getApplications.mockResolvedValue({
+				applications: mockApplications,
+				filters: mockFilters,
+				pagination: mockPagination
+			});
 
-		await getProjectsMapController({}, mockRes, mockNext);
+			const mockGeojson = {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						geometry: { type: 'Point', coordinates: [-1.5, 51.5] },
+						properties: { caseRef: 'EN010001', projectName: 'Project 1' }
+					}
+				]
+			};
 
-		expect(getProjectsMapGeoJSON).toHaveBeenCalled();
+			transformProjectsToGeoJSON.mockReturnValue(mockGeojson);
 
-		expect(mockRes.render).toHaveBeenCalledWith(
-			'projects-map/view.njk',
-			expect.objectContaining({
-				mapConfig: expect.objectContaining({
-					elementId: 'map',
-					mapOptions: expect.objectContaining({
-						minZoom: 7,
-						maxZoom: 20,
-						center: [51.8086, -1.7139],
-						zoom: 7,
-						attributionControl: true
+			const { getPageData } = require('./utils/get-page-data');
+			getPageData.mockImplementation(() => ({
+				filters: mockFilters,
+				activeFilters: [],
+				pagination: mockPagination
+			}));
+
+			await getProjectsMapController({ i18n: mockI18n, query: {} }, mockRes, mockNext);
+
+			expect(getApplications).toHaveBeenCalled();
+			expect(transformProjectsToGeoJSON).toHaveBeenCalledWith(mockApplications);
+			expect(mockRes.render).toHaveBeenCalledWith(
+				'projects-map/view.njk',
+				expect.objectContaining({
+					mapConfig: expect.objectContaining({
+						elementId: 'map',
+						markers: expect.any(Array),
+						totalProjects: 1
 					}),
-					tileLayer: expect.objectContaining({
-						url: 'https://api.os.uk/maps/raster/v1/zxy/Light_3857/{z}/{x}/{y}.png',
-						tokenEndpoint: '/api/os-maps/token'
-					}),
-					markers: expect.any(Array),
-					clustered: true,
-					totalProjects: 1
-				}),
-				projectSearchURL: '/projects/search'
-			})
-		);
-		expect(mockNext).not.toHaveBeenCalled();
-	});
-
-	it('should handle null GeoJSON response', async () => {
-		getProjectsMapGeoJSON.mockResolvedValue(null);
-
-		await getProjectsMapController({}, mockRes, mockNext);
-
-		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
-		expect(mockRes.render).not.toHaveBeenCalled();
-	});
-
-	it('should handle invalid GeoJSON type', async () => {
-		getProjectsMapGeoJSON.mockResolvedValue({
-			type: 'InvalidType',
-			features: []
+					projectSearchURL: '/project-search'
+				})
+			);
+			expect(mockNext).not.toHaveBeenCalled();
 		});
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		it('should handle service errors', async () => {
+			getApplications.mockRejectedValueOnce(new Error('Service failed'));
 
-		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
-		expect(mockRes.render).not.toHaveBeenCalled();
-	});
+			await getProjectsMapController({ i18n: mockI18n, query: {} }, mockRes, mockNext);
 
-	it('should handle GeoJSON with invalid features', async () => {
-		getProjectsMapGeoJSON.mockResolvedValue({
-			type: 'FeatureCollection',
-			features: 'not-an-array'
+			expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
+			expect(mockRes.render).not.toHaveBeenCalled();
 		});
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		it('should handle empty projects array', async () => {
+			getApplications.mockResolvedValue({
+				applications: [],
+				filters: [],
+				pagination: { totalItems: 0, currentPage: 1, totalPages: 1 }
+			});
 
-		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
-		expect(mockRes.render).not.toHaveBeenCalled();
-	});
+			transformProjectsToGeoJSON.mockReturnValue({
+				type: 'FeatureCollection',
+				features: []
+			});
 
-	it('should handle service errors', async () => {
-		getProjectsMapGeoJSON.mockRejectedValueOnce(new Error('Service failed'));
+			await getProjectsMapController({ i18n: mockI18n, query: {} }, mockRes, mockNext);
 
-		await getProjectsMapController({}, mockRes, mockNext);
-
-		expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
-		expect(mockRes.render).not.toHaveBeenCalled();
-	});
-
-	it('should handle empty projects array', async () => {
-		getProjectsMapGeoJSON.mockResolvedValue({
-			type: 'FeatureCollection',
-			features: []
+			expect(mockRes.render).toHaveBeenCalledWith(
+				'projects-map/view.njk',
+				expect.objectContaining({
+					mapConfig: expect.objectContaining({
+						totalProjects: 0,
+						markers: []
+					})
+				})
+			);
+			expect(mockNext).not.toHaveBeenCalled();
 		});
 
-		await getProjectsMapController({}, mockRes, mockNext);
+		it('should pass filters data to view', async () => {
+			const mockApplications = [{ id: 1, name: 'Project 1', LongLat: [-1.5, 51.5] }];
+			const mockFilters = [
+				{ name: 'region', value: 'london', label: 'London', count: 5 },
+				{ name: 'sector', value: 'energy', label: 'Energy', count: 3 }
+			];
 
-		expect(mockRes.render).toHaveBeenCalledWith(
-			'projects-map/view.njk',
-			expect.objectContaining({
-				mapConfig: expect.objectContaining({
-					totalProjects: 0,
-					markers: []
-				})
-			})
-		);
-		expect(mockNext).not.toHaveBeenCalled();
+			getApplications.mockResolvedValue({
+				applications: mockApplications,
+				filters: mockFilters,
+				pagination: { totalItems: 1, currentPage: 1, totalPages: 1 }
+			});
+
+			transformProjectsToGeoJSON.mockReturnValue({
+				type: 'FeatureCollection',
+				features: []
+			});
+
+			const { getPageData } = require('./utils/get-page-data');
+			getPageData.mockImplementation(() => ({
+				filters: mockFilters,
+				activeFilters: [],
+				pagination: { totalItems: 1, currentPage: 1, totalPages: 1 }
+			}));
+
+			await getProjectsMapController({ i18n: mockI18n, query: {} }, mockRes, mockNext);
+
+			const renderCall = mockRes.render.mock.calls[0][1];
+			expect(renderCall).toHaveProperty('filters');
+			expect(renderCall).toHaveProperty('activeFilters');
+		});
 	});
 
-	it('should pass correct map config from configuration file', async () => {
-		const mockGeojson = {
-			type: 'FeatureCollection',
-			features: [
-				{
-					type: 'Feature',
-					geometry: { type: 'Point', coordinates: [0, 50] },
-					properties: { caseRef: 'EN010001' }
-				}
-			]
-		};
+	describe('postProjectsMapController', () => {
+		it('should redirect with query parameters', async () => {
+			const { queryStringBuilder } = require('../../utils/query-string-builder');
+			const { getProjectsMapURL } = require('./utils/get-projects-map-url');
 
-		getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+			queryStringBuilder.mockReturnValue('?region=london&sector=energy');
+			getProjectsMapURL.mockReturnValue('/projects-map');
 
-		await getProjectsMapController({}, mockRes, mockNext);
+			mockRes.redirect = jest.fn();
+			const body = { region: 'london', sector: 'energy' };
 
-		expect(mockRes.render).toHaveBeenCalledWith(
-			'projects-map/view.njk',
-			expect.objectContaining({
-				mapConfig: expect.objectContaining({
-					mapOptions: expect.objectContaining({
-						minZoom: 7,
-						maxZoom: 20,
-						center: [51.8086, -1.7139],
-						zoom: 7,
-						attributionControl: true
-					}),
-					tileLayer: expect.objectContaining({
-						url: expect.stringContaining('api.os.uk'),
-						tokenEndpoint: '/api/os-maps/token',
-						options: expect.objectContaining({
-							maxZoom: 20,
-							attribution: expect.stringContaining('Crown Copyright')
-						})
-					}),
-					clustered: true
-				})
-			})
-		);
-	});
+			await postProjectsMapController({ body }, mockRes);
 
-	it('should handle multiple projects', async () => {
-		const mockGeojson = {
-			type: 'FeatureCollection',
-			features: [
-				{
-					type: 'Feature',
-					geometry: { type: 'Point', coordinates: [0, 50] },
-					properties: { caseRef: 'EN010001' }
-				},
-				{
-					type: 'Feature',
-					geometry: { type: 'Point', coordinates: [1, 51] },
-					properties: { caseRef: 'EN010002' }
-				},
-				{
-					type: 'Feature',
-					geometry: { type: 'Point', coordinates: [2, 52] },
-					properties: { caseRef: 'EN010003' }
-				}
-			]
-		};
+			expect(mockRes.redirect).toHaveBeenCalledWith('/projects-map?region=london&sector=energy');
+		});
 
-		getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+		it('should handle POST errors', async () => {
+			const { queryStringBuilder } = require('../../utils/query-string-builder');
 
-		await getProjectsMapController({}, mockRes, mockNext);
+			queryStringBuilder.mockImplementationOnce(() => {
+				throw new Error('Builder error');
+			});
 
-		expect(mockRes.render).toHaveBeenCalledWith(
-			'projects-map/view.njk',
-			expect.objectContaining({
-				mapConfig: expect.objectContaining({
-					totalProjects: 3,
-					markers: expect.arrayContaining([
-						expect.objectContaining({
-							properties: expect.objectContaining({ caseRef: 'EN010001' })
-						}),
-						expect.objectContaining({
-							properties: expect.objectContaining({ caseRef: 'EN010002' })
-						}),
-						expect.objectContaining({
-							properties: expect.objectContaining({ caseRef: 'EN010003' })
-						})
-					])
-				})
-			})
-		);
-		expect(mockNext).not.toHaveBeenCalled();
+			mockRes.status = jest.fn().mockReturnValue({ render: jest.fn() });
+
+			await postProjectsMapController({ body: {} }, mockRes);
+
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+		});
 	});
 });

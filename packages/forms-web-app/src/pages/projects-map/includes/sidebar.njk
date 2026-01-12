@@ -1,0 +1,12 @@
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion with context %}
+
+<form method="post">
+	{{ uiCheckboxAccordion(
+		true,
+		filters,
+		t('common.filter'),
+		mapConfig.totalProjects + " " + t('projectsMap.common.projects'),
+		"project-map-page-filters",
+		'modal-on-tablet'
+	) }}
+</form>
