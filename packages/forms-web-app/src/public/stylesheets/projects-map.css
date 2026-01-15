@@ -10,6 +10,19 @@
 	--popup-link-hover: #003078;
 	--popup-border: #b1b4b6;
 	--font-family: 'GDS Transport', arial, sans-serif;
+	--map-container-height: 450px; /* Mobile default */
+}
+
+@media (min-width: 40.0625em) {
+	:root {
+		--map-container-height: 600px; /* Tablet - GOVUK tablet breakpoint */
+	}
+}
+
+@media (min-width: 48.0625em) {
+	:root {
+		--map-container-height: 700px; /* Desktop - wide screen */
+	}
 }
 
 /* ========================================================================

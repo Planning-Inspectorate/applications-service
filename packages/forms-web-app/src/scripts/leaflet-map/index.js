@@ -672,6 +672,13 @@ class LeafletMap {
 
 		this.markerLoader.load(map, config);
 
+		// Trigger map size recalculation after DOM has been fully rendered
+		// This ensures Leaflet knows the correct container dimensions
+		requestAnimationFrame(() => {
+			map.invalidateSize();
+			window.pageDebug?.('Map size invalidated and recalculated');
+		});
+
 		return map;
 	}
 }

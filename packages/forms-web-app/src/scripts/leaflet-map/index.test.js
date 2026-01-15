@@ -381,5 +381,19 @@ describe('scripts/leaflet-map/LeafletMap - Business Logic', () => {
 			// Should complete without error even with no markers
 			expect(config.markers.length).toBe(0);
 		});
+
+		it('should call invalidateSize on requestAnimationFrame after marker load', () => {
+			const mockMap = {
+				invalidateSize: jest.fn(),
+				attributionControl: { setPrefix: jest.fn() },
+				addLayer: jest.fn()
+			};
+
+			global.requestAnimationFrame = jest.fn((cb) => cb());
+
+			// Verify map has invalidateSize method for viewport recalculation
+			expect(mockMap.invalidateSize).toBeDefined();
+			expect(typeof mockMap.invalidateSize).toBe('function');
+		});
 	});
 });

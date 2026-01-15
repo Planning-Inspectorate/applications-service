@@ -31,6 +31,7 @@ const getProjectsMapController = async (req, res, next) => {
 		// Configuration passed to client for map initialization
 		const renderedMapConfig = {
 			elementId: mapConfig.display.elementId,
+			containerHeight: mapConfig.display.containerHeight,
 			mapOptions,
 			tileLayer: {
 				url: mapConfig.tileLayer.url,

@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const proj4 = require('proj4');
 const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
 
 const httpPort = Number(process.env.PORT || 3000);
@@ -169,44 +170,52 @@ module.exports = {
 			defCharset: 'utf8',
 			defParamCharset: 'utf8'
 		}
+	}
+};
+
+// Convert BNG coordinates to WGS84 for Leaflet center
+const bngProj4String =
+	'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs';
+const bngCenter = [400000, 300000]; // BNG coordinates: shift down to show full UK including southern edge (meters)
+const wgs84Center = proj4(bngProj4String, 'WGS84', bngCenter); // Convert to [lng, lat]
+const leafletCenter = [wgs84Center[1], wgs84Center[0]]; // Flip to [lat, lng] for Leaflet
+
+module.exports.maps = {
+	osMapsApiKey: process.env.OS_MAPS_API_KEY,
+	osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
+	leafletOptions: {
+		minZoom: 0, // Zoom level 0 for EPSG:27700
+		maxZoom: 13, // Matches resolutions array (14 zoom levels: 0-13)
+		// Default center: Central UK (converted from BNG [400000, 500000] to WGS84 via proj4)
+		center: leafletCenter,
+		zoom: 0,
+		attributionControl: true // Show OS Maps copyright notice in bottom-right
 	},
-	maps: {
-		osMapsApiKey: process.env.OS_MAPS_API_KEY,
-		osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
-		leafletOptions: {
-			minZoom: 0, // Zoom level 0 for EPSG:27700
-			maxZoom: 13, // Matches resolutions array (14 zoom levels: 0-13)
-			// Default center: Central UK (WGS84 coordinates, auto-converted to BNG by CRS)
-			center: [52.3, -1.7],
-			zoom: 0,
-			attributionControl: true // Show OS Maps copyright notice in bottom-right
-		},
-		tileLayer: {
-			// Tile server URL with placeholders for {z}/{x}/{y}
-			// {Road, Outdoor, Light, Leisure}_27700 indicates EPSG:27700 (British National Grid) tiles
-			url: 'https://api.os.uk/maps/raster/v1/zxy/Outdoor_27700/{z}/{x}/{y}.png',
-			// Endpoint to fetch OS Maps API tokens
-			tokenEndpoint: '/api/os-maps/token',
-			// Maximum zoom level for available tiles (matches resolutions array in CRS config)
-			maxZoom: 13,
-			// Attribution text displayed on map
-			attribution: '© Crown Copyright and database right'
-		},
-		crs: {
-			// EPSG:27700 - British National Grid (BNG)
-			code: 'EPSG:27700',
-			// Proj4 string defining Transverse Mercator projection for UK
-			proj4String:
-				'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
-			// Tile resolutions for zoom levels 0-13 (matches OS Maps zoom levels 0-13)
-			resolutions: [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75, 0.875, 0.4375, 0.21875, 0.109375],
-			// Origin point (top-left corner) in BNG coordinates
-			origin: [-238375.0, 1376256.0]
-		},
-		display: {
-			clustered: true, // Enable marker clustering
-			elementId: 'projects-map', // Must match template element ID
-			containerHeight: '700px' // CSS height value
-		}
+	tileLayer: {
+		// Tile server URL with placeholders for {z}/{x}/{y}
+		// {Road, Outdoor, Light, Leisure}_27700 indicates EPSG:27700 (British National Grid) tiles
+		url: 'https://api.os.uk/maps/raster/v1/zxy/Outdoor_27700/{z}/{x}/{y}.png',
+		// Endpoint to fetch OS Maps API tokens
+		tokenEndpoint: '/api/os-maps/token',
+		// Maximum zoom level for available tiles (matches resolutions array in CRS config)
+		maxZoom: 13,
+		// Attribution text displayed on map
+		attribution: '© Crown Copyright and database right'
+	},
+	crs: {
+		// EPSG:27700 - British National Grid (BNG)
+		code: 'EPSG:27700',
+		// Proj4 string defining Transverse Mercator projection for UK
+		proj4String:
+			'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
+		// Tile resolutions for zoom levels 0-13 (matches OS Maps zoom levels 0-13)
+		resolutions: [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75, 0.875, 0.4375, 0.21875, 0.109375],
+		// Origin point (top-left corner) in BNG coordinates
+		origin: [-238375.0, 1376256.0]
+	},
+	display: {
+		clustered: true, // Enable marker clustering
+		elementId: 'projects-map', // Must match template element ID
+		containerHeight: '700px' // Default desktop height; CSS media queries override for mobile/tablet
 	}
 };
