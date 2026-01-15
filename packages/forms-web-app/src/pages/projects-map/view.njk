@@ -64,9 +64,8 @@
 
 			<p class="govuk-visually-hidden">
 				This interactive map shows the locations of {{ mapConfig.totalProjects }} National Infrastructure projects across the UK.
-				You can zoom in and out using the controls or keyboard.
-				Click on any marker to view more details about that project.
-				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name or region.
+				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
+				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
 			</p>
 
 			{% include "../project-search/includes/active-filters.njk" %}
