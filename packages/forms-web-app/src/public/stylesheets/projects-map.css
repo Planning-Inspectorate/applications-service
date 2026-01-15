@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Leaflet Markers, Popups & Cluster Styling
+   Projects Map Styling (Leaflet, Markers, Popups & Container)
    ========================================================================== */
 
 :root {
@@ -12,7 +12,10 @@
 	--font-family: 'GDS Transport', arial, sans-serif;
 }
 
-/* Popup Base */
+/* ========================================================================
+   Leaflet Popup Styling
+   ======================================================================== */
+
 .cluster-popup .leaflet-popup-content-wrapper {
 	box-shadow: none;
 	border-radius: 2px;
@@ -79,7 +82,10 @@
 	color: var(--popup-link-hover);
 }
 
-/* Project Marker Icon */
+/* ========================================================================
+   Marker & Cluster Icon Styling
+   ======================================================================== */
+
 .projects-marker-icon {
 	width: 12px;
 	height: 12px;
@@ -109,7 +115,9 @@
 	font-family: 'GDS Transport', Arial, sans-serif;
 }
 
-/* Keyboard Navigation & Focus Indicators */
+/* ========================================================================
+   Accessibility: Keyboard Navigation & Touch Optimization
+   ======================================================================== */
 
 /* Touch device marker optimization (44x44px WCAG AAA) */
 .projects-marker-touch .projects-marker-icon {
@@ -153,5 +161,53 @@
 	/* Add padding to interactive elements */
 	.leaflet-control button {
 		padding: 8px;
+	}
+}
+
+/* ========================================================================
+   Map Container Styling
+   ======================================================================== */
+
+#projects-map {
+	min-height: 550px;
+}
+
+@media (min-width: 48.0625em) {
+	#projects-map {
+		height: 550px;
+	}
+}
+
+#projects-map:focus,
+#projects-map:focus-visible {
+	outline: 3px solid #fd0;
+	outline-offset: 2px;
+	box-shadow: 0 0 0 3px rgba(253, 208, 0, 0.25);
+}
+
+/* ========================================================================
+   Motion & Animation Preferences
+   ======================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+
+	/* Leaflet zoom animation */
+	.leaflet-zoom-anim {
+		animation: none !important;
+	}
+
+	/* Leaflet pan animation */
+	.leaflet-panning {
+		animation: none !important;
+	}
+
+	/* Disable marker cluster animations */
+	.leaflet-marker-icon {
+		transition: none !important;
 	}
 }

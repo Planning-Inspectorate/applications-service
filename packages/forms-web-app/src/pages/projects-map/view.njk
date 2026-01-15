@@ -8,49 +8,7 @@
 	<link rel="stylesheet" href="/public/stylesheets/leaflet.css"/>
 	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
 	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/leaflet-pins.css">
-	<style>
-		#projects-map {
-			min-height: 550px;
-		}
-
-		@media (min-width: 48.0625em) {
-			#projects-map {
-				height: 550px;
-			}
-		}
-
-		#projects-map:focus,
-		#projects-map:focus-visible {
-			outline: 3px solid #fd0;
-			outline-offset: 2px;
-			box-shadow: 0 0 0 3px rgba(253, 208, 0, 0.25);
-		}
-
-		/* Reduce motion preferences */
-		@media (prefers-reduced-motion: reduce) {
-			* {
-				animation-duration: 0.01ms !important;
-				animation-iteration-count: 1 !important;
-				transition-duration: 0.01ms !important;
-			}
-
-			/* Leaflet zoom animation */
-			.leaflet-zoom-anim {
-				animation: none !important;
-			}
-
-			/* Leaflet pan animation */
-			.leaflet-panning {
-				animation: none !important;
-			}
-
-			/* Disable marker cluster animations */
-			.leaflet-marker-icon {
-				transition: none !important;
-			}
-		}
-	</style>
+	<link rel="stylesheet" href="/public/stylesheets/projects-map.css">
 {% endblock %}
 
 {% block content %}
