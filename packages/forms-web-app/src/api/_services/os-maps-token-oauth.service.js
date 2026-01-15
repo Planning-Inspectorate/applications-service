@@ -46,10 +46,6 @@ const getMapAccessToken = async () => {
 			throw new Error('No access token returned from OS Maps OAuth endpoint');
 		}
 
-		logger.info('OS Maps OAuth token obtained successfully', {
-			expiresIn: tokenResponse.expires_in
-		});
-
 		return {
 			access_token: mapAccessToken,
 			token_type: tokenResponse.token_type || 'Bearer',

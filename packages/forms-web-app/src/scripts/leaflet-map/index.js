@@ -3,9 +3,9 @@ require('leaflet.markercluster');
 const mapStateManager = require('../map/map-state-manager');
 
 /**
- * TokenManager - Handles OAuth token acquisition and refresh from server
- * Fetches tokens for Bearer authentication to OS Maps API.
- * Automatically refreshes tokens before expiration.
+ * TokenManager - Handles OAuth token acquisition from server
+ * Fetches tokens on-demand for Bearer authentication to OS Maps API.
+ * Caches token in memory and fetches new one when expired.
  *
  * @class TokenManager
  */
@@ -13,21 +13,41 @@ class TokenManager {
 	constructor() {
 		this.token = null;
 		this.expiresAt = null;
-		this.refreshTimer = null;
 		this.endpoint = '/api/os-maps/token';
 	}
 
 	/**
-	 * Fetch OAuth token from server endpoint
-	 * Handles token refresh scheduling based on expiration time.
+	 * Get or fetch OAuth token from server
+	 * Lazy loads token: fetches on-demand if expired or never fetched.
 	 *
+	 * @public
 	 * @param {string} [endpoint='/api/os-maps/token'] - Token endpoint URL
 	 * @returns {Promise<string>} OAuth access token
 	 * @throws {Error} If token fetch fails
 	 */
-	async fetch(endpoint = '/api/os-maps/token') {
+	async getToken(endpoint = '/api/os-maps/token') {
+		this.endpoint = endpoint;
+
+		// Return cached token if still valid
+		if (this.token && this.expiresAt && Date.now() < this.expiresAt) {
+			return this.token;
+		}
+
+		// Fetch new token if expired or not yet fetched
+		return this.fetchToken(endpoint);
+	}
+
+	/**
+	 * Fetch fresh OAuth token from server endpoint
+	 * Internal method - use getToken() instead
+	 *
+	 * @private
+	 * @param {string} endpoint - Token endpoint URL
+	 * @returns {Promise<string>} OAuth access token
+	 * @throws {Error} If token fetch fails
+	 */
+	async fetchToken(endpoint) {
 		try {
-			this.endpoint = endpoint;
 			const response = await fetch(endpoint);
 			if (!response.ok) {
 				throw new Error(`Failed to fetch token: ${response.statusText}`);
@@ -40,57 +60,24 @@ class TokenManager {
 
 			this.token = data.access_token;
 
-			// Schedule refresh: refresh when 30 seconds remain before expiration
+			// Track expiration: expires_in is in seconds
 			if (data.expires_in) {
-				const refreshInMs = (data.expires_in - 30) * 1000;
-				this.scheduleRefresh(refreshInMs);
+				this.expiresAt = Date.now() + data.expires_in * 1000;
 			}
 
 			return this.token;
 		} catch (error) {
-			if (error.message.includes('Failed to fetch token')) {
-				throw error;
-			}
-			// Re-throw the original error for network failures
+			window.pageDebug?.(`Failed to fetch OS Maps token: ${error.message}`);
 			throw error;
 		}
 	}
 
 	/**
-	 * Schedule automatic token refresh before expiration
-	 *
-	 * @param {number} delayMs - Milliseconds until refresh
-	 * @private
-	 */
-	scheduleRefresh(delayMs) {
-		// Clear any existing timer
-		if (this.refreshTimer) {
-			clearTimeout(this.refreshTimer);
-		}
-
-		this.refreshTimer = setTimeout(() => {
-			this.fetch(this.endpoint).catch((error) => {
-				window.pageDebug?.(`Failed to refresh OS Maps token: ${error.message}`);
-			});
-		}, Math.max(delayMs, 0));
-	}
-
-	/**
-	 * Get current token, triggering refresh if needed
-	 *
-	 * @returns {string} Current access token
-	 */
-	getToken() {
-		return this.token;
-	}
-
-	/**
-	 * Cleanup: clear any pending refresh timers
+	 * Cleanup: clear cached token
 	 */
 	destroy() {
-		if (this.refreshTimer) {
-			clearTimeout(this.refreshTimer);
-		}
+		this.token = null;
+		this.expiresAt = null;
 	}
 }
 
@@ -176,42 +163,43 @@ class TileLayerManager {
 	}
 
 	/**
-	 * Fetch tile from server-side proxy
-	 * Retrieves tile data from proxy, caches it if cache is available, then displays it.
+	 * Fetch tile from OS Maps API
+	 * Gets OAuth token on-demand, fetches tile data, caches it, then displays it.
 	 *
-	 * @param {string} url - Tile proxy URL
+	 * @param {string} url - Tile URL
 	 * @param {number} z - Zoom level
 	 * @param {number} x - Tile X coordinate
 	 * @param {number} y - Tile Y coordinate
 	 * @param {HTMLImageElement} tile - Image element to populate
 	 * @param {Function} done - Callback(error, tile) for Leaflet
 	 */
-	fetchTile(url, z, x, y, tile, done) {
+	async fetchTile(url, z, x, y, tile, done) {
 		window.pageDebug(`Fetching tile: ${url}`);
-		const token = this.tokenManager.getToken();
-		fetch(url, {
-			headers: {
-				Authorization: `Bearer ${token}`
-			}
-		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(`Tile fetch failed: ${response.statusText}`);
+		try {
+			const token = await this.tokenManager.getToken();
+			const response = await fetch(url, {
+				headers: {
+					Authorization: `Bearer ${token}`
 				}
-				return response.arrayBuffer();
-			})
-			.then((arrayBuffer) => {
-				if (mapStateManager.hasCache()) {
-					mapStateManager.setTile(z, x, y, arrayBuffer).catch((cacheError) => {
-						window.pageDebug(`Failed to cache tile ${z}/${x}/${y}:`, cacheError);
-					});
-				}
-				this.setTileImage(tile, arrayBuffer, done);
-			})
-			.catch((error) => {
-				window.pageDebug(`Tile fetch error for ${url}:`, error);
-				done(error, tile);
 			});
+
+			if (!response.ok) {
+				throw new Error(`Tile fetch failed: ${response.statusText}`);
+			}
+
+			const arrayBuffer = await response.arrayBuffer();
+
+			if (mapStateManager.hasCache()) {
+				mapStateManager.setTile(z, x, y, arrayBuffer).catch((cacheError) => {
+					window.pageDebug(`Failed to cache tile ${z}/${x}/${y}:`, cacheError);
+				});
+			}
+
+			this.setTileImage(tile, arrayBuffer, done);
+		} catch (error) {
+			window.pageDebug(`Tile fetch error for ${url}:`, error);
+			done(error, tile);
+		}
 	}
 
 	/**
