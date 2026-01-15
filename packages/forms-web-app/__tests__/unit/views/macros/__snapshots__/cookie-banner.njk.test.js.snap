@@ -13,8 +13,14 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
 <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on application service"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -46,6 +52,9 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
       <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-accept-analytics-cookies">
@@ -56,6 +65,9 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
       <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-reject-analytics-cookies">
@@ -65,6 +77,9 @@ exports[`views/macros/cookie-banner should allow setting a custom cookiePagePath
       
       <a class="govuk-link" href="/some/path/here"
           
+              
+              
+            
               
             
           
@@ -92,8 +107,14 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
 <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on test service name here"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -125,6 +146,9 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
       <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-accept-analytics-cookies">
@@ -135,6 +159,9 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
       <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-reject-analytics-cookies">
@@ -144,6 +171,9 @@ exports[`views/macros/cookie-banner should allow setting a custom serviceName 1`
       
       <a class="govuk-link" href="/cookies"
           
+              
+              
+            
               
             
           
@@ -171,8 +201,14 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
 <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on custom service name"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -204,6 +240,9 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
       <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-accept-analytics-cookies">
@@ -214,6 +253,9 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
       <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-reject-analytics-cookies">
@@ -223,6 +265,9 @@ exports[`views/macros/cookie-banner should allow setting all custom attributes 1
       
       <a class="govuk-link" href="/a/b/c"
           
+              
+              
+            
               
             
           
@@ -250,8 +295,14 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
 <div class="govuk-cookie-banner" data-nosnippet role="region" aria-label="Cookies on application service"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -283,6 +334,9 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
       <button value="accept" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-accept-analytics-cookies">
@@ -293,6 +347,9 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
       <button value="reject" type="submit" name="cookie_banner" class="govuk-button govuk-!-display-none" data-module="govuk-button"
           
               
+              
+            
+              
             
           
          data-cy="cookie-banner-reject-analytics-cookies">
@@ -302,6 +359,9 @@ exports[`views/macros/cookie-banner should have sensible default attributes 1`] 
       
       <a class="govuk-link" href="/cookies"
           
+              
+              
+            
               
             
           

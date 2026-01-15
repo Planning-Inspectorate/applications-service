@@ -12,8 +12,14 @@ exports[`views/macros/cookie-banner-rejected should allow setting a custom cooki
 <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on application service"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -38,6 +44,9 @@ exports[`views/macros/cookie-banner-rejected should allow setting a custom cooki
       
       <button value="hide" type="submit" name="cookie_banner_rejected" class="govuk-button" data-module="govuk-button"
           
+              
+              
+            
               
             
           
@@ -66,8 +75,14 @@ exports[`views/macros/cookie-banner-rejected should allow setting a custom servi
 <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on test service name here"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -92,6 +107,9 @@ exports[`views/macros/cookie-banner-rejected should allow setting a custom servi
       
       <button value="hide" type="submit" name="cookie_banner_rejected" class="govuk-button" data-module="govuk-button"
           
+              
+              
+            
               
             
           
@@ -120,8 +138,14 @@ exports[`views/macros/cookie-banner-rejected should allow setting all custom att
 <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on custom service name"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -146,6 +170,9 @@ exports[`views/macros/cookie-banner-rejected should allow setting all custom att
       
       <button value="hide" type="submit" name="cookie_banner_rejected" class="govuk-button" data-module="govuk-button"
           
+              
+              
+            
               
             
           
@@ -174,8 +201,14 @@ exports[`views/macros/cookie-banner-rejected should have sensible default attrib
 <div class="govuk-cookie-banner govuk-!-display-none" data-nosnippet role="region" aria-label="Cookies on application service"
     
         
+        
+      
+        
       
     
+        
+        
+      
         
       
     
@@ -200,6 +233,9 @@ exports[`views/macros/cookie-banner-rejected should have sensible default attrib
       
       <button value="hide" type="submit" name="cookie_banner_rejected" class="govuk-button" data-module="govuk-button"
           
+              
+              
+            
               
             
           

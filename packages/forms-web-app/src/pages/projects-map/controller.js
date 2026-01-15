@@ -8,42 +8,18 @@ const projectSearchURL = getProjectSearchURL();
 
 /**
  * GET /projects-map
- * Renders projects map with server-side data fetching and configuration
+ * Renders the projects map page with GeoJSON data and Leaflet configuration.
  *
+ * @async
  * @param {Object} req - Express request
  * @param {Object} res - Express response
- * @param {Function} next - Express next middleware
+ * @param {Function} next - Express error handler
  */
 const getProjectsMapController = async (req, res, next) => {
 	try {
-		logger.info('Loading projects map page...');
-
-		// Fetch GeoJSON from service
 		const geojson = await getProjectsMapGeoJSON();
 
-		// Validate GeoJSON structure
-		if (!geojson || typeof geojson !== 'object') {
-			logger.error('Invalid GeoJSON response: not an object', { geojson });
-			return next(new Error('Failed to load map data'));
-		}
-
-		if (geojson.type !== 'FeatureCollection') {
-			logger.error('Invalid GeoJSON response: missing type FeatureCollection', {
-				type: geojson.type
-			});
-			return next(new Error('Failed to load map data'));
-		}
-
-		if (!Array.isArray(geojson.features)) {
-			logger.error('Invalid GeoJSON response: features is not an array', {
-				features: geojson.features
-			});
-			return next(new Error('Failed to load map data'));
-		}
-
-		logger.info(`Map page loaded with ${geojson.features.length} projects`);
-
-		// Build mapOptions from configuration
+		// Leaflet map viewport configuration (zoom, center, bounds)
 		const mapOptions = {
 			minZoom: mapConfig.leafletOptions.minZoom,
 			maxZoom: mapConfig.leafletOptions.maxZoom,
@@ -52,14 +28,12 @@ const getProjectsMapController = async (req, res, next) => {
 			attributionControl: mapConfig.leafletOptions.attributionControl
 		};
 
-		// Add bounds restriction if enabled
 		if (mapConfig.restrictToUk.enabled) {
 			mapOptions.maxBounds = mapConfig.restrictToUk.bounds;
 			mapOptions.maxBoundsViscosity = mapConfig.restrictToUk.viscosity;
-			logger.info('Map bounds restricted to UK');
 		}
 
-		// Build configuration object for client-side script
+		// Configuration passed to client for map initialization
 		const renderedMapConfig = {
 			elementId: mapConfig.display.elementId,
 			mapOptions,
@@ -76,7 +50,6 @@ const getProjectsMapController = async (req, res, next) => {
 			totalProjects: geojson.features.length
 		};
 
-		// Render view with map configuration
 		res.render(view, {
 			mapConfig: renderedMapConfig,
 			projectSearchURL

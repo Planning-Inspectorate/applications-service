@@ -44,12 +44,7 @@ const { getProjectsMapGeoJSON } = require('../../services/projects-map.service')
  */
 const getProjectsMap = async (req, res, next) => {
 	try {
-		logger.info('Fetching projects for map API');
-
 		const geojson = await getProjectsMapGeoJSON();
-
-		logger.info(`Map API returning ${geojson.features.length} projects`);
-
 		res.json(geojson);
 	} catch (error) {
 		logger.error('Error fetching projects for map API:', {

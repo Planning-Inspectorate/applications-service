@@ -4,8 +4,10 @@ const { getAllProjectList } = require('../lib/application-api-wrapper');
 /**
  * Fetches and transforms projects to GeoJSON format
  *
- * @returns {Promise<Object>} GeoJSON FeatureCollection
- * @throws {Error} If projects cannot be fetched
+ * Validates GeoJSON structure to ensure client-side compatibility.
+ *
+ * @returns {Promise<Object>} Valid GeoJSON FeatureCollection
+ * @throws {Error} If projects cannot be fetched or GeoJSON is invalid
  */
 const getProjectsMapGeoJSON = async () => {
 	const projectsResponse = await getAllProjectList();
@@ -15,7 +17,24 @@ const getProjectsMapGeoJSON = async () => {
 	}
 
 	const applications = projectsResponse.data.applications || projectsResponse.data;
-	return transformProjectsToGeoJSON(applications);
+	const geojson = transformProjectsToGeoJSON(applications);
+
+	// Validate GeoJSON structure to prevent client-side errors
+	if (!geojson || typeof geojson !== 'object') {
+		throw new Error('Invalid GeoJSON response: not an object');
+	}
+
+	if (geojson.type !== 'FeatureCollection') {
+		throw new Error(
+			`Invalid GeoJSON response: expected type FeatureCollection, got ${geojson.type}`
+		);
+	}
+
+	if (!Array.isArray(geojson.features)) {
+		throw new Error('Invalid GeoJSON response: features is not an array');
+	}
+
+	return geojson;
 };
 
 /**
