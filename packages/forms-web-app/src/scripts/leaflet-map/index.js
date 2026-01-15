@@ -1,6 +1,15 @@
 const L = require('leaflet');
 require('leaflet.markercluster');
+require('proj4leaflet');
 const mapStateManager = require('../map/map-state-manager');
+
+// Constants
+const DEFAULT_TOKEN_ENDPOINT = '/api/os-maps/token';
+const MARKER_BATCH_SIZE = 5; // Smaller batches for snappier UI responsiveness
+const TILE_CACHE_SIZE = 100;
+const POPUP_MAX_WIDTH = 300;
+const POPUP_MIN_WIDTH = 250;
+const TEXT_WORD_LIMIT = 25;
 
 /**
  * TokenManager - Handles OAuth token acquisition from server
@@ -13,7 +22,7 @@ class TokenManager {
 	constructor() {
 		this.token = null;
 		this.expiresAt = null;
-		this.endpoint = '/api/os-maps/token';
+		this.endpoint = DEFAULT_TOKEN_ENDPOINT;
 	}
 
 	/**
@@ -25,7 +34,7 @@ class TokenManager {
 	 * @returns {Promise<string>} OAuth access token
 	 * @throws {Error} If token fetch fails
 	 */
-	async getToken(endpoint = '/api/os-maps/token') {
+	async getToken(endpoint = DEFAULT_TOKEN_ENDPOINT) {
 		this.endpoint = endpoint;
 
 		// Return cached token if still valid
@@ -157,7 +166,7 @@ class TileLayerManager {
 				}
 			})
 			.catch((error) => {
-				window.pageDebug(`Cache lookup error for tile ${z}/${x}/${y}:`, error);
+				window.pageDebug?.(`Cache lookup error for tile ${z}/${x}/${y}:`, error);
 				this.fetchTile(url, z, x, y, tile, done);
 			});
 	}
@@ -174,7 +183,7 @@ class TileLayerManager {
 	 * @param {Function} done - Callback(error, tile) for Leaflet
 	 */
 	async fetchTile(url, z, x, y, tile, done) {
-		window.pageDebug(`Fetching tile: ${url}`);
+		window.pageDebug?.(`Fetching tile: ${url}`);
 		try {
 			const token = await this.tokenManager.getToken();
 			const response = await fetch(url, {
@@ -191,13 +200,13 @@ class TileLayerManager {
 
 			if (mapStateManager.hasCache()) {
 				mapStateManager.setTile(z, x, y, arrayBuffer).catch((cacheError) => {
-					window.pageDebug(`Failed to cache tile ${z}/${x}/${y}:`, cacheError);
+					window.pageDebug?.(`Failed to cache tile ${z}/${x}/${y}:`, cacheError);
 				});
 			}
 
 			this.setTileImage(tile, arrayBuffer, done);
 		} catch (error) {
-			window.pageDebug(`Tile fetch error for ${url}:`, error);
+			window.pageDebug?.(`Tile fetch error for ${url}:`, error);
 			done(error, tile);
 		}
 	}
@@ -264,7 +273,7 @@ class PopupBuilder {
 			? `
 				<tr class="cluster-popup-row cluster-popup-last-row">
 					<td class="cluster-popup-cell-name">
-						${this.truncateText(summary, 25)}
+						${this.truncateText(summary, TEXT_WORD_LIMIT)}
 					</td>
 				</tr>
 			`
@@ -321,7 +330,6 @@ class MarkerLoader {
 	 */
 	constructor(popupBuilder) {
 		this.popupBuilder = popupBuilder;
-		this.BATCH_SIZE = 10;
 		this.isTouchDevice = this.detectTouchDevice();
 		this.prefersReducedMotion = this.detectReducedMotion();
 	}
@@ -384,8 +392,7 @@ class MarkerLoader {
 			  })
 			: L.featureGroup();
 
-		const mapContainer = document.getElementById(config.elementId);
-		this.processBatch(map, markerGroup, markers, 0, mapContainer);
+		this.processBatch(map, markerGroup, markers, 0);
 	}
 
 	/**
@@ -396,19 +403,16 @@ class MarkerLoader {
 	 * @param {L.MarkerClusterGroup|L.FeatureGroup} markerGroup - Target marker container
 	 * @param {Array<Object>} markers - All GeoJSON features to load
 	 * @param {number} startIndex - Index to start processing from
-	 * @param {HTMLElement} mapContainer - Map container element
 	 */
-	processBatch(map, markerGroup, markers, startIndex, mapContainer) {
-		const endIndex = Math.min(startIndex + this.BATCH_SIZE, markers.length);
+	processBatch(map, markerGroup, markers, startIndex) {
+		const endIndex = Math.min(startIndex + MARKER_BATCH_SIZE, markers.length);
 
 		for (let i = startIndex; i < endIndex; i++) {
 			this.addMarker(markerGroup, markers[i]);
 		}
 
 		if (endIndex < markers.length) {
-			requestAnimationFrame(() =>
-				this.processBatch(map, markerGroup, markers, endIndex, mapContainer)
-			);
+			requestAnimationFrame(() => this.processBatch(map, markerGroup, markers, endIndex));
 		} else {
 			map.addLayer(markerGroup);
 		}
@@ -443,19 +447,17 @@ class MarkerLoader {
 				properties: feature.properties // Store properties for keyboard accessibility
 			});
 
-			const popupHtml = this.popupBuilder.build(feature.properties);
-
-			// Disable popup animation if user prefers reduced motion
+			// Lazy-load popup: build HTML only when popup opens
 			const popupOptions = {
 				className: 'cluster-popup',
-				maxWidth: 300,
-				minWidth: 250,
+				maxWidth: POPUP_MAX_WIDTH,
+				minWidth: POPUP_MIN_WIDTH,
 				direction: 'top',
 				offset: [0, -10],
 				animate: !this.prefersReducedMotion
 			};
 
-			marker.bindPopup(popupHtml, popupOptions);
+			marker.bindPopup(() => this.popupBuilder.build(feature.properties), popupOptions);
 
 			// Make marker keyboard accessible
 			const markerElement = marker.getElement();
@@ -480,25 +482,23 @@ class MarkerLoader {
 	 * @returns {L.Icon} Leaflet icon instance
 	 */
 	getIcon() {
-		if (this.isTouchDevice) {
-			// Mobile: larger touch target (44x44px WCAG AAA requirement)
-			return L.divIcon({
-				className: 'projects-marker projects-marker-touch',
-				html: '<div class="projects-marker-icon" role="img" aria-label="Project location marker"></div>',
-				iconSize: [44, 44],
-				iconAnchor: [22, 44],
-				popupAnchor: [0, -44]
-			});
-		}
+		const iconConfig = this.isTouchDevice
+			? {
+					className: 'projects-marker projects-marker-touch',
+					html: '<div class="projects-marker-icon" role="img" aria-label="Project location marker"></div>',
+					iconSize: [44, 44],
+					iconAnchor: [22, 44],
+					popupAnchor: [0, -44]
+			  }
+			: {
+					className: 'projects-marker',
+					html: '<div class="projects-marker-icon" role="img" aria-label="Project location marker"></div>',
+					iconSize: [25, 41],
+					iconAnchor: [12.5, 41],
+					popupAnchor: [0, -35]
+			  };
 
-		// Desktop: default size (25x41px)
-		return L.divIcon({
-			className: 'projects-marker',
-			html: '<div class="projects-marker-icon" role="img" aria-label="Project location marker"></div>',
-			iconSize: [25, 41],
-			iconAnchor: [12.5, 41],
-			popupAnchor: [0, -35]
-		});
+		return L.divIcon(iconConfig);
 	}
 
 	/**
@@ -525,23 +525,21 @@ class MarkerLoader {
 	getClusterIcon(cluster) {
 		const count = cluster.getChildCount();
 
-		if (this.isTouchDevice) {
-			// Mobile: 44x44px matching individual markers
-			return L.divIcon({
-				className: 'cluster-icon cluster-icon-touch',
-				html: `<div class="cluster-icon-inner">${count}</div>`,
-				iconSize: [44, 44],
-				iconAnchor: [22, 44]
-			});
-		}
+		const iconConfig = this.isTouchDevice
+			? {
+					className: 'cluster-icon cluster-icon-touch',
+					html: `<div class="cluster-icon-inner">${count}</div>`,
+					iconSize: [44, 44],
+					iconAnchor: [22, 44]
+			  }
+			: {
+					className: 'cluster-icon',
+					html: `<div class="cluster-icon-inner">${count}</div>`,
+					iconSize: [40, 40],
+					iconAnchor: [20, 40]
+			  };
 
-		// Desktop: 40x40px
-		return L.divIcon({
-			className: 'cluster-icon',
-			html: `<div class="cluster-icon-inner">${count}</div>`,
-			iconSize: [40, 40],
-			iconAnchor: [20, 40]
-		});
+		return L.divIcon(iconConfig);
 	}
 }
 
@@ -577,7 +575,7 @@ class LeafletMap {
 	 *
 	 * Initialization sequence:
 	 * 1. Initialize in-memory tile cache (100 tile max)
-	 * 2. Create Leaflet map instance
+	 * 2. Create Leaflet map instance with EPSG:27700 CRS
 	 * 3. Store map in global state manager
 	 * 4. Customize attribution control
 	 * 5. Setup tile layer with server-side proxy
@@ -591,6 +589,11 @@ class LeafletMap {
 	 * @param {Array<number>} config.mapOptions.center - Initial center [lat, lng]
 	 * @param {number} config.mapOptions.zoom - Initial zoom level
 	 * @param {boolean} config.mapOptions.attributionControl - Show attribution control
+	 * @param {Object} config.crs - Coordinate Reference System configuration
+	 * @param {string} config.crs.code - EPSG code (e.g., 'EPSG:27700')
+	 * @param {string} config.crs.proj4String - Proj4 definition string
+	 * @param {Array<number>} config.crs.resolutions - Tile resolutions for each zoom level
+	 * @param {Array<number>} config.crs.origin - Origin point [x, y] in CRS coordinates
 	 * @param {Object} config.tileLayer - Tile layer configuration
 	 * @param {string} config.tileLayer.url - Tile proxy URL template with {z}/{x}/{y} placeholders
 	 * @param {Object} config.tileLayer.options - Leaflet tile layer options
@@ -601,14 +604,51 @@ class LeafletMap {
 	 * @throws {Error} If map initialization fails
 	 */
 	async initiate(config) {
-		await mapStateManager.initCache(100);
+		try {
+			await mapStateManager.initCache(TILE_CACHE_SIZE);
 
-		// Fetch token from configured or default endpoint
-		const tokenEndpoint = config.tileLayer.tokenEndpoint || '/api/os-maps/token';
-		await this.tokenManager.fetch(tokenEndpoint);
+			// Fetch token from configured or default endpoint
+			const tokenEndpoint = config.tileLayer.tokenEndpoint || DEFAULT_TOKEN_ENDPOINT;
+			try {
+				await this.tokenManager.getToken(tokenEndpoint);
+			} catch (error) {
+				window.pageDebug?.(
+					'Warning: Failed to fetch OS Maps token, continuing without tiles:',
+					error.message
+				);
+				// Continue without tiles - map will still render with CRS
+			}
+		} catch (error) {
+			window.pageDebug?.('Error initializing map cache:', error.message);
+			throw new Error(`Failed to initialize map: ${error.message}`);
+		}
+
+		// Initialize EPSG:27700 (British National Grid) CRS
+		if (!config.crs) {
+			throw new Error('CRS configuration is required for map initialization');
+		}
+
+		window.pageDebug?.(
+			'Initializing CRS:',
+			config.crs.code,
+			'L.Proj available:',
+			typeof L.Proj !== 'undefined'
+		);
+		let crs;
+		try {
+			crs = new L.Proj.CRS(config.crs.code, config.crs.proj4String, {
+				resolutions: config.crs.resolutions,
+				origin: config.crs.origin
+			});
+			window.pageDebug?.('CRS initialized successfully:', crs);
+		} catch (error) {
+			window.pageDebug?.('Error initializing CRS:', error.message);
+			throw error;
+		}
 
 		const mapOptions = {
 			...config.mapOptions,
+			crs: crs,
 			animate: !this.markerLoader.prefersReducedMotion,
 			animateZoom: !this.markerLoader.prefersReducedMotion
 		};

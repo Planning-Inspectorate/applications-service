@@ -28,11 +28,6 @@ const getProjectsMapController = async (req, res, next) => {
 			attributionControl: mapConfig.leafletOptions.attributionControl
 		};
 
-		if (mapConfig.restrictToUk.enabled) {
-			mapOptions.maxBounds = mapConfig.restrictToUk.bounds;
-			mapOptions.maxBoundsViscosity = mapConfig.restrictToUk.viscosity;
-		}
-
 		// Configuration passed to client for map initialization
 		const renderedMapConfig = {
 			elementId: mapConfig.display.elementId,
@@ -45,6 +40,7 @@ const getProjectsMapController = async (req, res, next) => {
 					attribution: mapConfig.tileLayer.attribution
 				}
 			},
+			crs: mapConfig.crs,
 			markers: geojson.features,
 			clustered: mapConfig.display.clustered,
 			totalProjects: geojson.features.length

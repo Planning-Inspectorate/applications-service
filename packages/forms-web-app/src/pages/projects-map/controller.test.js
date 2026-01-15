@@ -9,24 +9,29 @@ jest.mock('../../config', () => ({
 	},
 	maps: {
 		leafletOptions: {
-			minZoom: 7,
-			maxZoom: 20,
-			center: [51.8086, -1.7139],
-			zoom: 7,
+			minZoom: 0,
+			maxZoom: 13,
+			center: [52.3, -1.7],
+			zoom: 0,
 			attributionControl: true
 		},
-		restrictToUk: {
-			enabled: false
-		},
 		tileLayer: {
-			url: 'https://api.os.uk/maps/raster/v1/zxy/Light_3857/{z}/{x}/{y}.png',
+			url: 'https://api.os.uk/maps/raster/v1/zxy/Light_27700/{z}/{x}/{y}.png',
 			tokenEndpoint: '/api/os-maps/token',
-			maxZoom: 20,
-			attribution: '© Crown Copyright'
+			maxZoom: 13,
+			attribution: '© Crown Copyright and database right'
+		},
+		crs: {
+			code: 'EPSG:27700',
+			proj4String:
+				'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
+			resolutions: [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75, 0.875, 0.4375, 0.21875, 0.109375],
+			origin: [-238375.0, 1376256.0]
 		},
 		display: {
 			clustered: true,
-			elementId: 'map'
+			elementId: 'projects-map',
+			containerHeight: '700px'
 		}
 	}
 }));

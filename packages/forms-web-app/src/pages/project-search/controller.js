@@ -4,6 +4,7 @@ const { queryStringBuilder } = require('../../utils/query-string-builder');
 const { getPageData } = require('./utils/get-page-data');
 const { getProjectSearchQueryString } = require('./utils/get-project-search-query-string');
 const { getProjectSearchURL } = require('./utils/get-project-search-url');
+const { getProjectsMapURL } = require('../projects-map/utils/get-projects-map-url');
 
 const view = 'project-search/view.njk';
 
@@ -15,7 +16,10 @@ const getProjectSearchController = async (req, res, next) => {
 			getProjectSearchQueryString(query)
 		);
 
-		res.render(view, getPageData(i18n, query, applications, filters, pagination));
+		const pageData = getPageData(i18n, query, applications, filters, pagination);
+		pageData.projectsMapURL = getProjectsMapURL();
+
+		res.render(view, pageData);
 	} catch (error) {
 		logger.error(error);
 		next(error);

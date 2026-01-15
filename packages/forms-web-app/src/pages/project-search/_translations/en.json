@@ -27,5 +27,6 @@
 	"sidebar": {
 		"relatedContent": "Related content",
 		"registerOfApplications": "Register of applications"
-	}
+	},
+	"projectsMapLinkText": "Switch to map view"
 }

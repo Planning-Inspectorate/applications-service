@@ -169,12 +169,12 @@
    ======================================================================== */
 
 #projects-map {
-	min-height: 550px;
+	min-height: var(--map-height, 450px);
 }
 
 @media (min-width: 48.0625em) {
 	#projects-map {
-		height: 550px;
+		height: var(--map-height, 600px);
 	}
 }
 
