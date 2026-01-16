@@ -1,7 +1,12 @@
-const { getProjectsMapController } = require('./controller');
-const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
+const { getProjectsMapController, postProjectsMapController } = require('./controller');
+const { transformProjectsToGeoJSON } = require('../../services/projects-map.service');
+const { getApplications } = require('../../services/applications.service');
 
 jest.mock('../../services/projects-map.service');
+jest.mock('../../services/applications.service');
+jest.mock('../../utils/query-string-builder');
+jest.mock('./utils/get-projects-map-query-string');
+jest.mock('./utils/get-page-data');
 jest.mock('../../config', () => ({
 	logger: {
 		level: 'info',
@@ -39,6 +44,9 @@ jest.mock('../../lib/logger');
 jest.mock('../project-search/utils/get-project-search-url', () => ({
 	getProjectSearchURL: jest.fn(() => '/projects/search')
 }));
+jest.mock('./utils/get-projects-map-url', () => ({
+	getProjectsMapURL: jest.fn(() => 'http://localhost:3000/projects-map')
+}));
 
 describe('pages/projects-map/controller', () => {
 	let mockRes;
@@ -52,6 +60,15 @@ describe('pages/projects-map/controller', () => {
 
 	describe('success', () => {
 		it('should render view with map configuration', async () => {
+			const mockApplications = [
+				{
+					CaseReference: 'EN010001',
+					ProjectName: 'Test Project',
+					LongLat: [-1.5, 51.5],
+					Stage: 'examination'
+				}
+			];
+
 			const mockGeojson = {
 				type: 'FeatureCollection',
 				features: [
@@ -63,11 +80,20 @@ describe('pages/projects-map/controller', () => {
 				]
 			};
 
-			getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+			getApplications.mockResolvedValue({
+				applications: mockApplications,
+				filters: [],
+				pagination: { totalItems: 1 }
+			});
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			transformProjectsToGeoJSON.mockReturnValue(mockGeojson);
 
-			expect(getProjectsMapGeoJSON).toHaveBeenCalled();
+			const mockReq = { i18n: {}, query: {} };
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
+
+			expect(getApplications).toHaveBeenCalled();
+			expect(transformProjectsToGeoJSON).toHaveBeenCalled();
 			expect(mockRes.render).toHaveBeenCalledWith(
 				'projects-map/view.njk',
 				expect.objectContaining({
@@ -84,9 +110,17 @@ describe('pages/projects-map/controller', () => {
 				features: []
 			};
 
-			getProjectsMapGeoJSON.mockResolvedValue(emptyGeojson);
+			getApplications.mockResolvedValue({
+				applications: [],
+				filters: [],
+				pagination: { totalItems: 0 }
+			});
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			transformProjectsToGeoJSON.mockReturnValue(emptyGeojson);
+
+			const mockReq = { i18n: {}, query: {} };
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(mockRes.render).toHaveBeenCalled();
 			expect(mockNext).not.toHaveBeenCalled();
@@ -96,20 +130,57 @@ describe('pages/projects-map/controller', () => {
 	describe('error handling', () => {
 		it('should pass error to Express error handler when service fails', async () => {
 			const testError = new Error('Service failed');
-			getProjectsMapGeoJSON.mockRejectedValue(testError);
+			getApplications.mockRejectedValue(testError);
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			const mockReq = { i18n: {}, query: {} };
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(mockNext).toHaveBeenCalledWith(testError);
 			expect(mockRes.render).not.toHaveBeenCalled();
 		});
 
 		it('should not render view on error', async () => {
-			getProjectsMapGeoJSON.mockRejectedValue(new Error('Database error'));
+			getApplications.mockRejectedValue(new Error('Database error'));
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			const mockReq = { i18n: {}, query: {} };
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(mockRes.render).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('POST handler', () => {
+		it('should redirect with query string from form body', async () => {
+			const { queryStringBuilder } = require('../../utils/query-string-builder');
+			queryStringBuilder.mockReturnValue('?region=london');
+
+			const mockReq = { body: { region: 'london' } };
+			mockRes.redirect = jest.fn();
+
+			await postProjectsMapController(mockReq, mockRes);
+
+			expect(queryStringBuilder).toHaveBeenCalledWith({ region: 'london' }, ['region']);
+			expect(mockRes.redirect).toHaveBeenCalledWith(
+				'http://localhost:3000/projects-map?region=london'
+			);
+		});
+
+		it('should render error page on failure', async () => {
+			const { queryStringBuilder } = require('../../utils/query-string-builder');
+			queryStringBuilder.mockImplementation(() => {
+				throw new Error('Failed');
+			});
+
+			const mockReq = { body: { region: 'london' } };
+			mockRes.status = jest.fn().mockReturnValue(mockRes);
+			mockRes.render = jest.fn();
+
+			await postProjectsMapController(mockReq, mockRes);
+
+			expect(mockRes.status).toHaveBeenCalledWith(500);
+			expect(mockRes.render).toHaveBeenCalledWith('error/unhandled-exception');
 		});
 	});
 });
