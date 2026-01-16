@@ -10,18 +10,18 @@
 	--popup-link-hover: #003078;
 	--popup-border: #b1b4b6;
 	--font-family: 'GDS Transport', arial, sans-serif;
-	--map-container-height: 450px; /* Mobile default */
+	--map-height: 450px; /* Mobile default */
 }
 
 @media (min-width: 40.0625em) {
 	:root {
-		--map-container-height: 600px; /* Tablet - GOVUK tablet breakpoint */
+		--map-height: 600px; /* Tablet */
 	}
 }
 
 @media (min-width: 48.0625em) {
 	:root {
-		--map-container-height: 700px; /* Desktop - wide screen */
+		--map-height: 650px; /* Desktop */
 	}
 }
 
@@ -182,13 +182,7 @@
    ======================================================================== */
 
 #projects-map {
-	min-height: var(--map-height, 450px);
-}
-
-@media (min-width: 48.0625em) {
-	#projects-map {
-		height: var(--map-height, 600px);
-	}
+	height: var(--map-height);
 }
 
 #projects-map:focus,

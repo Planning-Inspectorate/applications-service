@@ -215,7 +215,7 @@ module.exports.maps = {
 	},
 	display: {
 		clustered: true, // Enable marker clustering
-		elementId: 'projects-map', // Must match template element ID
-		containerHeight: '700px' // Default desktop height; CSS media queries override for mobile/tablet
+		elementId: 'projects-map' // Must match template element ID
+		// Map height is managed via CSS --map-height variable with media queries
 	}
 };
