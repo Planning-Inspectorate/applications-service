@@ -83,7 +83,7 @@ describe('pages/projects/register/router', () => {
 
 			expect(get).toBeCalledTimes(3);
 			expect(post).toBeCalledTimes(1);
-			expect(use).toBeCalledTimes(5);
+			expect(use).toBeCalledTimes(4);
 		});
 	});
 });
