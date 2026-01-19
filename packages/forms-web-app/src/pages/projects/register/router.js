@@ -26,7 +26,6 @@ const {
 const { registerAgentRouter } = require('./agent/router');
 const { registerMyselfRouter } = require('./myself/router');
 const { registerOrganisationRouter } = require('./organisation/router');
-const { registerStartRedirectMiddleware } = require('./_middleware/start-redirect-middleware');
 
 const registerIndexURL = getRegisterIndexURL();
 const registeringForURL = getRegisteringForURL();
@@ -37,8 +36,6 @@ registerRouter.use(addCommonTranslationsMiddleware, addRegisterTranslationsMiddl
 
 registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
 registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
-
-registerRouter.use(registerStartRedirectMiddleware);
 
 registerRouter.get(registeringForURL, registerMiddleware, getRegisteringForController);
 registerRouter.post(
