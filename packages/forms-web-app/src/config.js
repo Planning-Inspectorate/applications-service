@@ -215,7 +215,7 @@ module.exports.maps = {
 	},
 	display: {
 		clustered: true, // Enable marker clustering
-		elementId: 'projects-map' // Must match template element ID
-		// Map height is managed via CSS --map-height variable with media queries
+		elementId: 'projects-map', // Must match template element ID
+		animateWhenZoomed: false // No animation on zoom to filtered results
 	}
 };

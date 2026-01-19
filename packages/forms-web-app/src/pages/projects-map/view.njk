@@ -14,7 +14,9 @@
 {% block content %}
 	<div class="govuk-grid-row">
 		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
-			Filter goes here
+			<div class="filter-sidebar__content">
+				{% include "./includes/sidebar.njk" %}
+			</div>
 		</aside>
 
 		<div class="govuk-grid-column-two-thirds" id="maps-content">
@@ -32,7 +34,6 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
-			{# TODO: create a new sidebar with filter #}
 			{% include "../project-search/includes/search.njk" %}
 
 			<div class="govuk-button-group">
@@ -56,6 +57,11 @@
 				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
 			</div>
 
+			<div class="govuk-!-margin-bottom-6">
+				{% set activeFiltersHeading = t('projectsMap.activeFiltersHeading') %}
+				{% include "./_includes/active-filters.njk" %}
+			</div>
+
 			<div id="projects-map"
 				role="main"
 				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
@@ -67,8 +73,6 @@
 				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
 				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
 			</p>
-
-			{% include "../project-search/includes/active-filters.njk" %}
 
 			{{ govukWarningText({
 				text: t('projectsMap.warningText'),
@@ -107,7 +111,8 @@
 				crs: {{ mapConfig.crs | dump | safe }},
 				markers: {{ mapConfig.markers | dump | safe }},
 				clustered: {{ mapConfig.clustered | dump | safe }},
-				totalProjects: {{ mapConfig.totalProjects }}
+				hasActiveFilters: {{ mapConfig.hasActiveFilters | dump | safe }},
+				animateWhenZoomed: {{ mapConfig.animateWhenZoomed | dump | safe }}
 			},
 			/**
 			 * Callback when sidebar toggles
@@ -122,6 +127,7 @@
 		window.pageDebug('_applicationService initialized:', window._applicationService);
 	</script>
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
 		{
 			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new window.SidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
 			src: "/public/scripts/sidebarToggler.script.js"

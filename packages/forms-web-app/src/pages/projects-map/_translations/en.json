@@ -5,6 +5,7 @@
 	"pageTitle": "Projects Map",
 	"heading1": "Projects map",
 	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
+	"activeFiltersHeading": "Filtered results",
 	"showFiltersText": "Show filters",
 	"hideFiltersText": "Hide filters",
 	"projectSearchLinkText": "Switch to list view",

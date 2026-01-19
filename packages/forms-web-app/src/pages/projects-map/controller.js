@@ -33,23 +33,43 @@ const getProjectsMapController = async (req, res, next) => {
 		logger.info('Loading projects map page...');
 
 		// Fetch filtered applications based on query parameters
+		// Returns: applications (filtered), filters (available options)
 		const { applications, filters } = await getApplications(getProjectsMapQueryString(query));
 
 		// Transform to GeoJSON format (validates, filters, maps data)
+		// geojson.features contains only the filtered projects that match criteria
 		const geojson = transformProjectsToGeoJSON(applications);
 
 		logger.info(`Map page loaded with ${geojson.features.length} projects`);
 
 		// Leaflet map viewport configuration (zoom, center, bounds)
+		// maxBounds restricts panning to valid UK extent (in lat/lng)
+		// Prevents grey areas from failed tile requests outside valid BNG grid
+		// UK extent: approximately 50-61°N, -8-2°E
 		const mapOptions = {
 			minZoom: mapConfig.leafletOptions.minZoom,
 			maxZoom: mapConfig.leafletOptions.maxZoom,
 			center: mapConfig.leafletOptions.center,
 			zoom: mapConfig.leafletOptions.zoom,
-			attributionControl: mapConfig.leafletOptions.attributionControl
+			attributionControl: mapConfig.leafletOptions.attributionControl,
+			maxBounds: [
+				[50, -8.5], // Southwest corner (UK southernmost point)
+				[61, 2.5] // Northeast corner (UK northernmost/easternmost points)
+			]
 		};
 
+		// Detect if any filters are active by checking query parameters
+		// Filter params are any query params except search terms
+		const filterParams = Object.keys(query).filter(
+			(key) => !['search', 'pageNumber'].includes(key)
+		);
+		const hasActiveFilters = filterParams.length > 0;
+
 		// Configuration passed to client for map initialization
+		// Key distinction for auto-zoom functionality (Scenario 7):
+		// - hasActiveFilters: Boolean flag indicating if user has applied any filters
+		//   Used to determine if map should auto-zoom to filtered results
+		// - Only zoom if hasActiveFilters is true (not just because of missing coords)
 		const renderedMapConfig = {
 			elementId: mapConfig.display.elementId,
 			containerHeight: mapConfig.display.containerHeight,
@@ -65,7 +85,8 @@ const getProjectsMapController = async (req, res, next) => {
 			crs: mapConfig.crs,
 			markers: geojson.features,
 			clustered: mapConfig.display.clustered,
-			totalProjects: geojson.features.length
+			hasActiveFilters,
+			animateWhenZoomed: mapConfig.display.animateWhenZoomed
 		};
 
 		// Render view with complete configuration and filter data

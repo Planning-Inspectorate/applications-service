@@ -218,3 +218,42 @@
 		transition: none !important;
 	}
 }
+
+/* ========================================================================
+   Projects Map Filter Sidebar Styling (IDAS-41)
+   ======================================================================== */
+
+.filter-sidebar__content {
+	padding: 0;
+}
+
+.filter-sidebar__form {
+	margin: 0;
+}
+
+/* ========================================================================
+   Responsive - Mobile/Tablet Adjustments (IDAS-41)
+   ======================================================================== */
+
+@media (max-width: 48.0625em) {
+	.filter-sidebar__content {
+		padding: 1rem 0;
+	}
+}
+
+/* ========================================================================
+   Print Styling (IDAS-41)
+   ======================================================================== */
+
+@media print {
+	.filter-sidebar__content,
+	.filter-sidebar__active-filters,
+	#filters-toggle-btn {
+		display: none;
+	}
+
+	#projects-map {
+		max-height: 400px;
+		page-break-inside: avoid;
+	}
+}
