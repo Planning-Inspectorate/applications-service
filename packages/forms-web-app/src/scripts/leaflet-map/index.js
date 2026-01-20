@@ -450,6 +450,106 @@ class MarkerLoader {
 			requestAnimationFrame(() => this.processBatch(map, markerGroup, markers, endIndex));
 		} else {
 			map.addLayer(markerGroup);
+			// Zoom to fit all markers if we have filtered data
+			this.zoomToMarkers(map, markerGroup, markers);
+		}
+	}
+
+	/**
+	 * Calculate bounds from markers and zoom map to fit them
+	 * Implements Scenario 7: Auto-zoom to filtered results
+	 *
+	 * Algorithm:
+	 * 1. Check if user has applied any filters via hasActiveFilters flag
+	 * 2. If no filters: keep default UK-wide view
+	 * 3. If filters active: use Leaflet's fitBounds() to optimize zoom + pan
+	 * 4. Determine max zoom based on marker count (1 marker: 12, multiple: 10)
+	 * 5. Respect accessibility preference: prefers-reduced-motion
+	 * 6. Open popup on first marker for context
+	 *
+	 * @param {L.Map} map - Leaflet map instance
+	 * @param {L.FeatureGroup|L.MarkerClusterGroup} markerGroup - Marker group on map
+	 * @param {Array<Object>} markers - GeoJSON features (filtered)
+	 * @returns {void}
+	 */
+	zoomToMarkers(map, markerGroup, markers) {
+		if (!markerGroup || markers.length === 0) {
+			return;
+		}
+
+		// Check if user has applied any filters
+		const mapConfig = window._applicationService?.mapConfig;
+		const hasActiveFilters = mapConfig?.hasActiveFilters || false;
+		const enableAnimation = mapConfig?.animateWhenZoomed !== false;
+
+		window.pageDebug?.(
+			`zoomToMarkers - hasActiveFilters: ${hasActiveFilters}, markers.length: ${markers.length}, animate: ${enableAnimation}`
+		);
+
+		// Only zoom to filtered results if user has applied filters
+		// This prevents zooming on page load when no filters are selected
+		if (hasActiveFilters) {
+			try {
+				// Calculate bounding box from all currently visible markers
+				const bounds = markerGroup.getBounds();
+				if (bounds && bounds.isValid()) {
+					// Determine max zoom based on number of filtered projects
+					// If only 1 project: use level 12 (consistent with individual project pages)
+					// If multiple projects: use level 10 (comfortable multi-project view)
+					const maxZoomLevel = markers.length === 1 ? 12 : 10;
+
+					// Fit map to show all filtered markers with comfortable padding
+					// Padding: 50px on all sides ensures text/controls are readable
+					map.fitBounds(bounds, {
+						padding: [50, 50],
+						animate: enableAnimation,
+						maxZoom: maxZoomLevel
+					});
+
+					// Open popup on first marker when auto-zooming to filtered results
+					// Provides immediate context about the filtered data
+					// Delay popup only if animation is enabled
+					if (enableAnimation) {
+						const delay = this.prefersReducedMotion ? 0 : 600;
+						setTimeout(() => {
+							this.showFirstMarkerPopup(markerGroup);
+						}, delay);
+					} else {
+						this.showFirstMarkerPopup(markerGroup);
+					}
+
+					window.pageDebug?.(
+						`Zoomed to ${markers.length} filtered markers due to active filters (maxZoom: ${maxZoomLevel})`
+					);
+				}
+			} catch (error) {
+				window.pageDebug?.('Error calculating marker bounds:', error.message);
+				// Silently fail - don't break map if bounds calculation fails
+				// Map will remain at default zoom level
+			}
+		}
+	}
+
+	/**
+	 * Show popup on the first visible marker in the map
+	 * Used to provide immediate context when auto-zooming to filtered results
+	 *
+	 * @param {L.FeatureGroup|L.MarkerClusterGroup} markerGroup - Marker group containing markers
+	 * @returns {void}
+	 */
+	showFirstMarkerPopup(markerGroup) {
+		try {
+			if (!markerGroup) return;
+
+			// Get the first layer (marker) from the marker group
+			const firstMarker = markerGroup.getLayers()[0];
+			if (firstMarker && typeof firstMarker.openPopup === 'function') {
+				firstMarker.openPopup();
+				window.pageDebug?.('Opened popup for first filtered marker');
+			}
+		} catch (error) {
+			window.pageDebug?.('Error opening first marker popup:', error.message);
+			// Silently fail - popup not critical for map functionality
 		}
 	}
 

@@ -12,10 +12,11 @@
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
-			Filter goes here
-		</aside>
+	<form method="post">
+		<div class="govuk-grid-row">
+			<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
+				{% include "./includes/sidebar.njk" %}
+			</aside>
 
 		<div class="govuk-grid-column-two-thirds" id="maps-content">
 			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
@@ -32,7 +33,6 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
-			{# TODO: create a new sidebar with filter #}
 			{% include "../project-search/includes/search.njk" %}
 
 			<div class="govuk-button-group">
@@ -76,6 +76,7 @@
 			}) }}
 		</div>
 	</div>
+	</form>
 {% endblock %}
 
 {% block script %}
@@ -107,7 +108,9 @@
 				crs: {{ mapConfig.crs | dump | safe }},
 				markers: {{ mapConfig.markers | dump | safe }},
 				clustered: {{ mapConfig.clustered | dump | safe }},
-				totalProjects: {{ mapConfig.totalProjects }}
+				totalProjects: {{ mapConfig.totalProjects }},
+				hasActiveFilters: {{ mapConfig.hasActiveFilters | dump | safe }},
+				animateWhenZoomed: {{ mapConfig.animateWhenZoomed | dump | safe }}
 			},
 			/**
 			 * Callback when sidebar toggles
@@ -122,6 +125,11 @@
 		window.pageDebug('_applicationService initialized:', window._applicationService);
 	</script>
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
+		{
+			callback: "var modal = new appScripts.modal(); modal.initiate('#projects-map-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#projects-map-search-bar', 'Show filters', 'tablet');",
+			src: "/public/scripts/modal.script.js"
+		},
 		{
 			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new window.SidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
 			src: "/public/scripts/sidebarToggler.script.js"

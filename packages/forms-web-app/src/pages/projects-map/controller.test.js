@@ -1,7 +1,9 @@
-const { getProjectsMapController } = require('./controller');
+const { getProjectsMapController, postProjectsMapController } = require('./controller');
 const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
+const { getApplications } = require('../../services/applications.service');
 
 jest.mock('../../services/projects-map.service');
+jest.mock('../../services/applications.service');
 jest.mock('../../config', () => ({
 	logger: {
 		level: 'info',
@@ -40,14 +42,34 @@ jest.mock('../../lib/logger');
 jest.mock('../project-search/utils/get-project-search-url', () => ({
 	getProjectSearchURL: jest.fn(() => '/projects/search')
 }));
+jest.mock('../projects-map/utils/get-projects-map-url', () => ({
+	getProjectsMapURL: jest.fn(() => '/projects-map')
+}));
+jest.mock('../projects-map/utils/get-projects-map-query-string', () => ({
+	getProjectsMapQueryString: jest.fn(() => '')
+}));
+jest.mock('../projects-map/utils/get-page-data', () => ({
+	getPageData: jest.fn(() => ({
+		filters: [],
+		activeFilters: [],
+		query: {},
+		mapConfig: { markers: [] },
+		projectSearchURL: '/project-search'
+	}))
+}));
 
 describe('pages/projects-map/controller', () => {
 	let mockRes;
 	let mockNext;
+	let mockReq;
 
 	beforeEach(() => {
 		mockRes = { render: jest.fn() };
 		mockNext = jest.fn();
+		mockReq = {
+			i18n: { language: 'en' },
+			query: {}
+		};
 		jest.clearAllMocks();
 	});
 
@@ -64,19 +86,89 @@ describe('pages/projects-map/controller', () => {
 				]
 			};
 
+			getApplications.mockResolvedValue({
+				filters: [],
+				pagination: { totalItems: 1 }
+			});
 			getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(getProjectsMapGeoJSON).toHaveBeenCalled();
 			expect(mockRes.render).toHaveBeenCalledWith(
 				'projects-map/view.njk',
 				expect.objectContaining({
-					mapConfig: expect.any(Object),
-					projectSearchURL: '/projects/search'
+					mapConfig: expect.any(Object)
 				})
 			);
 			expect(mockNext).not.toHaveBeenCalled();
+		});
+
+		it('should include hasActiveFilters and animateWhenZoomed in mapConfig when filters are active', async () => {
+			const mockGeojson = {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						geometry: { type: 'Point', coordinates: [-1.5, 51.5] },
+						properties: { caseRef: 'EN010001', projectName: 'Test Project' }
+					}
+				]
+			};
+
+			mockReq.query = { stage: 'pre-application' };
+
+			getApplications.mockResolvedValue({
+				filters: [],
+				pagination: { totalItems: 1 }
+			});
+			getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
+
+			const renderCall = mockRes.render.mock.calls[0];
+			const renderedData = renderCall[1];
+
+			expect(renderedData.mapConfig).toEqual(
+				expect.objectContaining({
+					hasActiveFilters: true,
+					animateWhenZoomed: false,
+					totalProjects: 1
+				})
+			);
+		});
+
+		it('should set hasActiveFilters to false when no filters are applied', async () => {
+			const mockGeojson = {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						geometry: { type: 'Point', coordinates: [-1.5, 51.5] },
+						properties: { caseRef: 'EN010001', projectName: 'Test Project' }
+					}
+				]
+			};
+
+			mockReq.query = {};
+
+			getApplications.mockResolvedValue({
+				filters: [],
+				pagination: { totalItems: 1 }
+			});
+			getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
+
+			const renderCall = mockRes.render.mock.calls[0];
+			const renderedData = renderCall[1];
+
+			expect(renderedData.mapConfig).toEqual(
+				expect.objectContaining({
+					hasActiveFilters: false,
+					animateWhenZoomed: false
+				})
+			);
 		});
 
 		it('should render view with empty markers when no projects exist', async () => {
@@ -85,9 +177,13 @@ describe('pages/projects-map/controller', () => {
 				features: []
 			};
 
+			getApplications.mockResolvedValue({
+				filters: [],
+				pagination: { totalItems: 0 }
+			});
 			getProjectsMapGeoJSON.mockResolvedValue(emptyGeojson);
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(mockRes.render).toHaveBeenCalled();
 			expect(mockNext).not.toHaveBeenCalled();
@@ -97,20 +193,72 @@ describe('pages/projects-map/controller', () => {
 	describe('error handling', () => {
 		it('should pass error to Express error handler when service fails', async () => {
 			const testError = new Error('Service failed');
-			getProjectsMapGeoJSON.mockRejectedValue(testError);
+			getApplications.mockRejectedValue(testError);
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(mockNext).toHaveBeenCalledWith(testError);
 			expect(mockRes.render).not.toHaveBeenCalled();
 		});
 
 		it('should not render view on error', async () => {
-			getProjectsMapGeoJSON.mockRejectedValue(new Error('Database error'));
+			getApplications.mockRejectedValue(new Error('Database error'));
 
-			await getProjectsMapController({}, mockRes, mockNext);
+			await getProjectsMapController(mockReq, mockRes, mockNext);
 
 			expect(mockRes.render).not.toHaveBeenCalled();
+		});
+	});
+});
+
+describe('pages/projects-map/controller#postProjectsMapController', () => {
+	describe('When submitting filters on projects map page', () => {
+		const req = {
+			body: { stage: 'pre_application', region: 'north_west' }
+		};
+		const res = {
+			redirect: jest.fn()
+		};
+
+		beforeEach(async () => {
+			await postProjectsMapController(req, res);
+		});
+
+		it('should trigger a redirect', () => {
+			expect(res.redirect).toHaveBeenCalledTimes(1);
+		});
+
+		it('should redirect to projects-map with correctly constructed query string from the request body', () => {
+			expect(res.redirect).toHaveBeenCalledWith(
+				'/projects-map?stage=pre_application&region=north_west'
+			);
+		});
+
+		it('should URL encode special characters in filter values', async () => {
+			const reqWithSpecialChars = {
+				body: { search: 'Thames Crossing & Related' }
+			};
+			const resWithSpecialChars = { redirect: jest.fn() };
+
+			await postProjectsMapController(reqWithSpecialChars, resWithSpecialChars);
+
+			expect(resWithSpecialChars.redirect).toHaveBeenCalledWith(
+				expect.stringContaining('Thames%20Crossing%20%26%20Related')
+			);
+		});
+
+		it('should persist multiple filter values when submitted', async () => {
+			const reqWithMultipleFilters = {
+				body: { stage: 'pre_application', region: 'london', sector: 'energy' }
+			};
+			const resWithMultipleFilters = { redirect: jest.fn() };
+
+			await postProjectsMapController(reqWithMultipleFilters, resWithMultipleFilters);
+
+			const redirectUrl = resWithMultipleFilters.redirect.mock.calls[0][0];
+			expect(redirectUrl).toContain('stage=pre_application');
+			expect(redirectUrl).toContain('region=london');
+			expect(redirectUrl).toContain('sector=energy');
 		});
 	});
 });

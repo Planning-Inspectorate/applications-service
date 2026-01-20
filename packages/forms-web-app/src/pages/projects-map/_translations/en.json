@@ -2,6 +2,11 @@
 	"common": {
 		"projects": "projects"
 	},
+	"filterLabels": {
+		"region": "Location",
+		"sector": "Sector",
+		"stage": "Stage"
+	},
 	"pageTitle": "Projects Map",
 	"heading1": "Projects map",
 	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
