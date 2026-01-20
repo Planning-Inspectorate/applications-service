@@ -1,0 +1,134 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% extends "layouts/default.njk" %}
+
+{% set pageTitle = t('projectsMap.pageTitle') %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="/public/stylesheets/leaflet.css"/>
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
+	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
+	<link rel="stylesheet" href="/public/stylesheets/projects-map.css">
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
+			Filter goes here
+		</aside>
+
+		<div class="govuk-grid-column-two-thirds" id="maps-content">
+			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+				{{ t('projectsMap.heading1') }}
+			</h1>
+
+			{% if featureFlag.allowWelshTranslation == false %}
+				<p class="govuk-body">
+					This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
+				</p>
+			{% endif %}
+
+			<p class="govuk-body">
+				{{ t('projectsMap.paragraph1') }}
+			</p>
+
+			{# TODO: create a new sidebar with filter #}
+			{% include "../project-search/includes/search.njk" %}
+
+			<div class="govuk-button-group">
+				{{ govukButton({
+					text: t('projectsMap.hideFiltersText'),
+					classes: "govuk-button--secondary",
+					attributes: {
+						id: "filters-toggle-btn",
+						'data-sidebar-toggle': '#maps-sidebar-content',
+						'data-content-toggle': '#maps-content',
+						'data-toggle-class': 'govuk-!-display-none',
+						'data-content-hidden-class': 'govuk-grid-column-full',
+						'data-content-visible-class': 'govuk-grid-column-two-thirds',
+						'data-show-label': t('projectsMap.showFiltersText'),
+						'data-hide-label': t('projectsMap.hideFiltersText'),
+						'data-on-toggle': '_applicationService.onSidebarToggle',
+						'aria-expanded': 'true',
+						'aria-controls': 'maps-sidebar-content'
+					}
+				}) }}
+				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
+			</div>
+
+			<div id="projects-map"
+				role="main"
+				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
+				tabindex="0"
+				class="govuk-!-margin-bottom-4"></div>
+
+			<p class="govuk-visually-hidden">
+				This interactive map shows the locations of {{ mapConfig.totalProjects }} National Infrastructure projects across the UK.
+				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
+				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
+			</p>
+
+			{% include "../project-search/includes/active-filters.njk" %}
+
+			{{ govukWarningText({
+				text: t('projectsMap.warningText'),
+				iconFallbackText: "Warning"
+			}) }}
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script nonce="{{ cspNonce }}">
+		// Debug flag for all page scripts
+		window.DEBUG_ENABLED = false;
+
+		/**
+		 * Page-level debug logging
+		 * Respects DEBUG_ENABLED flag
+		 */
+		window.pageDebug = function(...args) {
+			if (window.DEBUG_ENABLED) {
+				console.log(...args);
+			}
+		};
+	</script>
+
+	<script nonce="{{ cspNonce }}">
+		/**
+		 * Application Service Configuration
+		 * Centralized client-side configuration and callbacks
+		 */
+		window._applicationService = {
+			mapConfig: {
+				elementId: '{{ mapConfig.elementId }}',
+				mapOptions: {{ mapConfig.mapOptions | dump | safe }},
+				tileLayer: {{ mapConfig.tileLayer | dump | safe }},
+				crs: {{ mapConfig.crs | dump | safe }},
+				markers: {{ mapConfig.markers | dump | safe }},
+				clustered: {{ mapConfig.clustered | dump | safe }},
+				totalProjects: {{ mapConfig.totalProjects }}
+			},
+			/**
+			 * Callback when sidebar toggles
+			 */
+			onSidebarToggle: function(state) {
+				var map = window._applicationService.map;
+				var mapStateManager = window._applicationService.mapStateManager;
+				if (!map || !mapStateManager || !state.content) return;
+				mapStateManager.handleContainerResize(state.content);
+			}
+		};
+		window.pageDebug('_applicationService initialized:', window._applicationService);
+	</script>
+	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{
+			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new window.SidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
+			src: "/public/scripts/sidebarToggler.script.js"
+		},
+		{
+			callback: "window.pageDebug('Initiating leaflet map'); var leafletMap = new appScripts.leafletMap(); window.pageDebug('Leaflet map object created'); leafletMap.initiate(window._applicationService.mapConfig).then(function() { window.pageDebug('Leaflet map initiated'); }).catch(function(err) { window.pageDebug('Leaflet map init error:', err); });",
+			src: "/public/scripts/leafletMap.script.js"
+		}
+	), initiateScriptsConfig) %}
+{% endblock %}

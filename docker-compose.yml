@@ -5,7 +5,6 @@
 #  - Documentation: 7000-7999
 #  - Websites: 9000-9999
 
-version: '3.7'
 services:
   redis:
     image: redis:6.2.5-alpine
@@ -21,6 +20,8 @@ services:
     environment:
       GIT_SHA: example-git-sha
       APPLICATIONS_WEB_BASE_URL: http://forms-web-app:9004
+      OS_MAPS_API_KEY: ${OS_MAPS_API_KEY}
+      OS_MAPS_API_SECRET: ${OS_MAPS_API_SECRET}
       AZURE_BLOB_STORE_HOST: https://nsip-documents.planninginspectorate.gov.uk/
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_URL: http://localhost:10000/
       BACK_OFFICE_BLOB_STORAGE_DEADLINE_SUBMISSION_CONTAINER: application-submission-documents
