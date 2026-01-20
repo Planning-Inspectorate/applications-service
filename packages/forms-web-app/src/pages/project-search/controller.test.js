@@ -55,6 +55,7 @@ describe('pages/project-search/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('project-search/view.njk', {
 						activeFilters: [],
 						applicationsDownloadURL: '/api/applications-download',
+						projectsMapURL: '/projects-map',
 						totalApplicationsWithoutFilters: 21,
 						applications: [
 							{
