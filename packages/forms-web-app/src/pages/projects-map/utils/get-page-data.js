@@ -1,6 +1,6 @@
 const { getFilters } = require('./filters/get-filters');
 const { getProjectSearchURL } = require('../../project-search/utils/get-project-search-url');
-const { featureFlag } = require('../../config');
+const { featureFlag } = require('../../../config');
 
 /**
  * Builds the complete page data object for the projects map view
