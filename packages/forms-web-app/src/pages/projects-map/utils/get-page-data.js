@@ -1,6 +1,5 @@
 const { getFilters } = require('./filters/get-filters');
 const { getProjectSearchURL } = require('../../project-search/utils/get-project-search-url');
-const { featureFlag } = require('../../../config');
 
 /**
  * Builds the complete page data object for the projects map view
@@ -22,7 +21,7 @@ const getPageData = (i18n, query, mapMarkers, filters) => ({
 	mapConfig: {
 		markers: mapMarkers
 	},
-	projectSearchURL: featureFlag.enableProjectsMap ? getProjectSearchURL(query) : '#',
+	projectSearchURL: getProjectSearchURL(query),
 	query
 });
 
