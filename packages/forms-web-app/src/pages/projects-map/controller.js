@@ -37,8 +37,9 @@ const getProjectsMapController = async (req, res, next) => {
 
 		// Detect if any filters are active by checking query parameters
 		// Filter params are any query params that represent actual filters
+		// Exclude query params that are not filters (e.g., search, pagination, language)
 		const filterParams = Object.keys(query).filter(
-			(key) => !['search', 'pageNumber'].includes(key)
+			(key) => !['search', 'pageNumber', 'lang'].includes(key)
 		);
 		const hasActiveFilters = filterParams.length > 0;
 

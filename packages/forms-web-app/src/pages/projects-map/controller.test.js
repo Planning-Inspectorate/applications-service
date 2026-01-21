@@ -171,6 +171,38 @@ describe('pages/projects-map/controller', () => {
 			);
 		});
 
+		it('should exclude language parameter from active filters', async () => {
+			const mockGeojson = {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						geometry: { type: 'Point', coordinates: [-1.5, 51.5] },
+						properties: { caseRef: 'EN010001', projectName: 'Test Project' }
+					}
+				]
+			};
+
+			mockReq.query = { lang: 'cy' };
+
+			getApplications.mockResolvedValue({
+				filters: [],
+				pagination: { totalItems: 1 }
+			});
+			getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+
+			await getProjectsMapController(mockReq, mockRes, mockNext);
+
+			const renderCall = mockRes.render.mock.calls[0];
+			const renderedData = renderCall[1];
+
+			expect(renderedData.mapConfig).toEqual(
+				expect.objectContaining({
+					hasActiveFilters: false
+				})
+			);
+		});
+
 		it('should render view with empty markers when no projects exist', async () => {
 			const emptyGeojson = {
 				type: 'FeatureCollection',
