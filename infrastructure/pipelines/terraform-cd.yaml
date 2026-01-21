@@ -15,7 +15,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.24.2
+      ref: refs/tags/release/3.25.0
 
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
@@ -37,3 +37,21 @@ extends:
     containerPrefix: terraform-state-applications-front-office-
     workingDirectory: $(Build.Repository.LocalPath)/infrastructure
     environmentVarFilePath: $(Build.Repository.LocalPath)/infrastructure/environments
+    preliminarySteps:
+      - task: DownloadSecureFile@1
+        name: downloadBlacklistFile
+        displayName: 'Download IP blacklist file'
+        inputs:
+          secureFile: 'ip_blacklist.json'
+          retryCount: 3
+      - script: |
+          echo "Default working directory: $(System.DefaultWorkingDirectory)"
+          echo "Reading ip_blacklist.json..."
+          if [ -f "$(downloadBlacklistFile.secureFilePath)" ]; then
+            echo "File exists. Copying ip_blacklist.json..."
+            echo "command: cp $(downloadBlacklistFile.secureFilePath) $(System.DefaultWorkingDirectory)/ip_blacklist.json"
+            cp $(downloadBlacklistFile.secureFilePath) $(System.DefaultWorkingDirectory)/ip_blacklist.json
+          else
+            echo "File does not exist. Skipping copy."
+          fi
+        displayName: 'Copy IP blacklist file'
