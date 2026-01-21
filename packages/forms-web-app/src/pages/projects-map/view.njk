@@ -4,11 +4,49 @@
 
 {% set pageTitle = t('projectsMap.pageTitle') %}
 
+{% set leafletStyles = [
+	{
+		cdn: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css',
+		local: '/public/stylesheets/leaflet.css'
+	},
+	{
+		cdn: 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.min.css',
+		local: '/public/stylesheets/MarkerCluster.css'
+	},
+	{
+		cdn: 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css',
+		local: '/public/stylesheets/MarkerCluster.Default.css'
+	}
+] %}
+
 {% block stylesheet %}
-	<link rel="stylesheet" href="/public/stylesheets/leaflet.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/projects-map.css">
+	{% for style in leafletStyles %}
+		<link rel="stylesheet" href="{{ style.cdn }}"/>
+	{% endfor %}
+	<link rel="stylesheet" href="/public/stylesheets/projects-map.css"/>
+	<script nonce="{{ cspNonce }}">
+		function loadLocalStylesheet(url) {
+			const link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = url;
+			document.head.appendChild(link);
+		}
+
+		const stylesheets = [
+			{% for style in leafletStyles %}
+			{ cdn: '{{ style.cdn }}', local: '{{ style.local }}' }{{ "," if not loop.last }}
+			{% endfor %}
+		];
+
+		stylesheets.forEach((sheet) => {
+			const link = document.querySelector(`link[href="${sheet.cdn}"]`);
+			if (link) {
+				link.onerror = () => {
+					loadLocalStylesheet(sheet.local);
+				};
+			}
+		});
+	</script>
 {% endblock %}
 
 {% block content %}
