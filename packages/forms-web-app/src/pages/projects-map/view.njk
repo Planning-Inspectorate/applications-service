@@ -63,14 +63,12 @@
 
 			<div id="projects-map"
 				role="main"
-				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
+				aria-label="{{ t('projectsMap.mapAriaLabel') }}"
 				tabindex="0"
 				class="govuk-!-margin-bottom-4"></div>
 
 			<p class="govuk-visually-hidden">
-				This interactive map shows the locations of {{ mapConfig.totalProjects }} National Infrastructure projects across the UK.
-				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
-				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
+				{{ t('projectsMap.mapIntroText', { totalProjects: mapConfig.totalProjects, projectSearchLink: '<a href="' + projectSearchURL + '">' + t('projectsMap.projectSearchText') + '</a>' }) | safe }}
 			</p>
 
 			{{ govukWarningText({
