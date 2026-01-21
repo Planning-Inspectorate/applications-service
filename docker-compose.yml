@@ -46,7 +46,6 @@ services:
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
       FEATURE_APPLICATION_INSIGHTS: 'false'
       FEATURE_ALLOW_WELSH_CASES: 'true'
-      FEATURE_ENABLE_PROJECTS_MAP: 'false'
       FEATURE_REGISTER_OF_ADVICE: 'true'
       FILE_UPLOADS_PATH: /opt/app/uploads
       LOGGER_LEVEL: debug
@@ -98,7 +97,7 @@ services:
       DOCUMENTS_SERVICE_API_URL: http://document-service-api:3000
       FEATURE_ALLOW_WELSH_TRANSLATION: 'true'
       FEATURE_ALLOW_WELSH_CASES: 'true'
-      FEATURE_ENABLE_PROJECTS_MAP: 'false'
+      FEATURE_ENABLE_PROJECTS_MAP: 'true'
       FEATURE_APPLICATION_INSIGHTS: 'false'
       FEATURE_HOME_PAGE: 'true'
       FEATURE_PRIMARY_NAVIGATION: 'true'
