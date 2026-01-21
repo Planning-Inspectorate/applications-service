@@ -12,13 +12,14 @@
 {% endblock %}
 
 {% block content %}
-	<form method="post">
-		<div class="govuk-grid-row">
-			<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
+	<div class="govuk-grid-row">
+		<aside class="govuk-grid-column-one-third govuk-!-display-none" id="maps-sidebar-content" aria-label="Project filters">
+			<form method="post">
 				{% include "./includes/sidebar.njk" %}
-			</aside>
+			</form>
+		</aside>
 
-		<div class="govuk-grid-column-two-thirds" id="maps-content">
+		<div class="govuk-grid-column-full" id="maps-content">
 			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 				{{ t('projectsMap.heading1') }}
 			</h1>
@@ -33,11 +34,9 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
-			{% include "../project-search/includes/search.njk" %}
-
 			<div class="govuk-button-group">
 				{{ govukButton({
-					text: t('projectsMap.hideFiltersText'),
+					text: t('projectsMap.showFiltersText'),
 					classes: "govuk-button--secondary",
 					attributes: {
 						id: "filters-toggle-btn",
@@ -49,12 +48,16 @@
 						'data-show-label': t('projectsMap.showFiltersText'),
 						'data-hide-label': t('projectsMap.hideFiltersText'),
 						'data-on-toggle': '_applicationService.onSidebarToggle',
-						'aria-expanded': 'true',
+						'aria-expanded': 'false',
 						'aria-controls': 'maps-sidebar-content'
 					}
 				}) }}
 				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
 			</div>
+
+			<form method="post">
+				{% include "../project-search/includes/search.njk" %}
+			</form>
 
 			<div id="projects-map"
 				role="main"
@@ -76,7 +79,6 @@
 			}) }}
 		</div>
 	</div>
-	</form>
 {% endblock %}
 
 {% block script %}
@@ -131,7 +133,7 @@
 			src: "/public/scripts/modal.script.js"
 		},
 		{
-			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new window.SidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
+			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new appScripts.sidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
 			src: "/public/scripts/sidebarToggler.script.js"
 		},
 		{
