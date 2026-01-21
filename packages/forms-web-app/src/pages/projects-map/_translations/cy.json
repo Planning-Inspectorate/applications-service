@@ -1,4 +1,7 @@
 {
+	"common": {
+		"projects": "prosiectau"
+	},
 	"pageTitle": "Map prosiectau",
 	"heading1": "Map prosiectau",
 	"paragraph1": "Dyma fap o holl ffiniau'r prosiectau. I ddod o hyd i brosiect penodol, dewiswch ffin prosiect.",
@@ -9,5 +12,10 @@
 	"warningText": "Mae'r ffiniau prosiect a ddangosir er diben darluniadol yn unig. I weld y ffiniau union, cyfeiriwch at y cynlluniau a'r lluniadau perthnasol diweddaraf.",
 	"downloadGeospatialFileText": "Lawrlwythwch ffeil geofodol sy'n cynnwys map cyflawn o'r {X} prosiect i gyd (JSON)",
 	"mapAriaLabel": "Map prosiectau rhyngweithiol. Defnyddiwch fynhyrau saeth i symud o gwmpas a bysellau plws neu minws i chwyddo. Cliciwch ar farcwyr i weld manylion prosiect.",
-	"mapIntroText": "Mae'r map rhyngweithiol hwn yn dangos lleoliad {{-totalProjects}} prosiectau Seilwaith Cenedlaethol Arwyddocaol ar draws y DU. Defnyddiwch fynhyrau saeth i symud o gwmpas a bysellau plws neu minws i chwyddo. Cliciwch neu pwyswch Enter ar unrhyw farcwr i weld manylion prosiect mewn popfad. Fel arall, defnyddiwch y {{-projectSearchLink}} i ddod o hyd i brosiectau yn ôl enw, ardal neu sector."
+	"mapIntroText": "Mae'r map rhyngweithiol hwn yn dangos lleoliad {{-totalProjects}} prosiectau Seilwaith Cenedlaethol Arwyddocaol ar draws y DU. Defnyddiwch fynhyrau saeth i symud o gwmpas a bysellau plws neu minws i chwyddo. Cliciwch neu pwyswch Enter ar unrhyw farcwr i weld manylion prosiect mewn popfad. Fel arall, defnyddiwch y {{-projectSearchLink}} i ddod o hyd i brosiectau yn ôl enw, ardal neu sector.",
+	"filterLabels": {
+		"region": "Lleoliad",
+		"sector": "Sector",
+		"stage": "Cam"
+	}
 }

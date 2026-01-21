@@ -1,4 +1,7 @@
 {
+	"common": {
+		"projects": "projects"
+	},
 	"pageTitle": "Projects Map",
 	"heading1": "Projects map",
 	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
@@ -9,5 +12,10 @@
 	"warningText": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
 	"downloadGeospatialFileText": "Download a geospatial file containing a complete map of all {X} projects (JSON)",
 	"mapAriaLabel": "Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details.",
-	"mapIntroText": "This interactive map shows the locations of {{-totalProjects}} National Infrastructure projects across the UK. Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup. Alternatively, use the {{-projectSearchLink}} to find projects by name, region, or sector."
+	"mapIntroText": "This interactive map shows the locations of {{-totalProjects}} National Infrastructure projects across the UK. Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup. Alternatively, use the {{-projectSearchLink}} to find projects by name, region, or sector.",
+	"filterLabels": {
+		"region": "Location",
+		"sector": "Sector",
+		"stage": "Stage"
+	}
 }
