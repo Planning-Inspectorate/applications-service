@@ -9,7 +9,6 @@ const MARKER_BATCH_SIZE = 5; // Smaller batches for snappier UI responsiveness
 const TILE_CACHE_SIZE = 100;
 const POPUP_MAX_WIDTH = 300;
 const POPUP_MIN_WIDTH = 250;
-const TEXT_WORD_LIMIT = 25;
 
 /**
  * TokenManager - Handles OAuth token acquisition from server
@@ -286,39 +285,32 @@ class TileLayerManager {
  */
 class PopupBuilder {
 	/**
-	 * Build popup HTML content for a marker
-	 * Creates HTML table with project name, case reference, stage, and optional summary.
+	 * Build popup HTML content for marker(s)
+	 * Creates HTML table with project name, case reference, and stage.
+	 * Supports single or multiple projects.
 	 *
-	 * @param {Object} properties - GeoJSON feature properties
+	 * @param {Object|Array} properties - GeoJSON feature properties (single object or array of objects)
 	 * @param {string} [properties.projectName='Unknown Project'] - Project name
 	 * @param {string} [properties.caseRef='#'] - Case reference identifier
 	 * @param {string} [properties.stage='Unknown Stage'] - Project stage
-	 * @param {string} [properties.summary=''] - Project summary (truncated to 25 words)
 	 * @returns {string} HTML popup content
 	 */
 	build(properties) {
-		const {
-			projectName = 'Unknown Project',
-			caseRef = '#',
-			stage = 'Unknown Stage',
-			summary = ''
-		} = properties;
+		// Handle both single object and array of objects
+		const projectsArray = Array.isArray(properties) ? properties : [properties];
+		const projectCount = projectsArray.length;
 
-		const summaryRow = summary
-			? `
-				<tr class="cluster-popup-row cluster-popup-last-row">
-					<td class="cluster-popup-cell-name">
-						${this.truncateText(summary, TEXT_WORD_LIMIT)}
-					</td>
-				</tr>
-			`
-			: '';
+		const rows = projectsArray
+			.map((prop, index) => {
+				const { projectName = 'Unknown Project', caseRef = '#', stage = 'Unknown Stage' } = prop;
 
-		return `
-			<div class="cluster-popup-container">
-				<h2 class="cluster-popup-header">1 project selected</h2>
-				<table class="cluster-popup-table">
-					<tr class="cluster-popup-row">
+				const isLastRow = index === projectCount - 1;
+				const rowClass = isLastRow
+					? 'cluster-popup-row cluster-popup-last-row'
+					: 'cluster-popup-row';
+
+				return `
+					<tr class="${rowClass}">
 						<td class="cluster-popup-cell-name">
 							<a href="/projects/${caseRef}" class="cluster-popup-link">${projectName}</a>
 						</td>
@@ -326,27 +318,20 @@ class PopupBuilder {
 							${stage}
 						</td>
 					</tr>
-					${summaryRow}
+				`;
+			})
+			.join('');
+
+		return `
+			<div class="cluster-popup-container">
+				<h2 class="cluster-popup-header">${projectCount} project${
+			projectCount !== 1 ? 's' : ''
+		} selected</h2>
+				<table class="cluster-popup-table">
+					${rows}
 				</table>
 			</div>
 		`;
-	}
-
-	/**
-	 * Truncate text to word limit
-	 * Returns text as-is if within limit, otherwise truncates and adds ellipsis.
-	 *
-	 * @param {string} text - Text to truncate
-	 * @param {number} wordLimit - Maximum word count
-	 * @returns {string} Truncated text with ellipsis if needed
-	 */
-	truncateText(text, wordLimit) {
-		if (typeof text !== 'string') return '';
-
-		const words = text.trim().split(/\s+/);
-		if (words.length <= wordLimit) return text.trim();
-
-		return words.slice(0, wordLimit).join(' ') + '...';
 	}
 }
 
