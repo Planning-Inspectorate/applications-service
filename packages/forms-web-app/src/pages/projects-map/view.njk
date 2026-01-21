@@ -59,6 +59,8 @@
 				{% include "../project-search/includes/search.njk" %}
 			</form>
 
+			{% include "../project-search/includes/active-filters.njk" %}
+
 			<div id="projects-map"
 				role="main"
 				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
@@ -70,8 +72,6 @@
 				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
 				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
 			</p>
-
-			{% include "../project-search/includes/active-filters.njk" %}
 
 			{{ govukWarningText({
 				text: t('projectsMap.warningText'),
