@@ -117,7 +117,7 @@
 		"jspdf": "^2.5.1",
 		"leaflet": "^1.9.4",
 		"leaflet.markercluster": "^1.5.3",
-		"lodash": "^4.17.21",
+		"lodash": "^4.17.23",
 		"lodash.pick": "^4.4.0",
 		"marked": "^4.1.0",
 		"moment": "^2.29.3",
