@@ -491,18 +491,6 @@ class MarkerLoader {
 						maxZoom: maxZoomLevel
 					});
 
-					// Open popup on first marker when auto-zooming to filtered results
-					// Provides immediate context about the filtered data
-					// Delay popup only if animation is enabled
-					if (enableAnimation) {
-						const delay = this.prefersReducedMotion ? 0 : 600;
-						setTimeout(() => {
-							this.showFirstMarkerPopup(markerGroup);
-						}, delay);
-					} else {
-						this.showFirstMarkerPopup(markerGroup);
-					}
-
 					window.pageDebug?.(
 						`Zoomed to ${markers.length} filtered markers due to active filters (maxZoom: ${maxZoomLevel})`
 					);
