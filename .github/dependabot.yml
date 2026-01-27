@@ -12,33 +12,14 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      azure:
+      deps: # all app dependencies to test and merge together
         patterns:
-          - '@azure/*'
-      commitlint:
+          - '*'
+        dependency-type: 'production'
+      devDeps: # all dev dependencies to test and merge together
         patterns:
-          - '@commitlint/*'
-      jest:
-        patterns:
-          - 'jest'
-          - 'jest-*'
-          - '@types/jest'
-      prettier:
-        patterns:
-          - 'prettier'
-          - 'prettier-*'
-      prisma: # group prisma library and client updates together
-        patterns:
-          - 'prisma'
-          - '@prisma/*'
-      types:
-        patterns:
-          - '@microsoft/microsoft-graph-types'
-          - '@types/*'
-      webpack:
-        patterns:
-          - 'webpack'
-          - 'webpack-*'
+          - '*'
+        dependency-type: 'development'
   - package-ecosystem: 'terraform'
     directory: '/infrastructure' # Location of package manifests
     schedule:
