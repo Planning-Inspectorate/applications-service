@@ -106,6 +106,7 @@ const {
 } = require('./already-registered/_utils/get-register-agent-already-registered-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const { noCache } = require('../_middleware/no-cache');
 
@@ -160,9 +161,15 @@ const registerAgentAlreadyRegisteredURL = getRegisterAgentAlreadyRegisteredURL()
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
-registerAgentRouter.get(registerAgentNameURL, registerMiddleware, getRegisterNameController);
+registerAgentRouter.get(
+	registerAgentNameURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterNameController
+);
 registerAgentRouter.post(
 	registerAgentNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),
@@ -172,29 +179,43 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentOrgNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentOrgNameController
 );
 registerAgentRouter.post(
 	registerAgentOrgNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	organisationNameValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentOrgNameController
 );
 
-registerAgentRouter.get(registerAgentEmailURL, registerMiddleware, getRegisterEmailController);
+registerAgentRouter.get(
+	registerAgentEmailURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterEmailController
+);
 registerAgentRouter.post(
 	registerAgentEmailURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
 	postRegisterEmailController
 );
 
-registerAgentRouter.get(registerAgentAddressURL, registerMiddleware, getRegisterAddressController);
+registerAgentRouter.get(
+	registerAgentAddressURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterAddressController
+);
 registerAgentRouter.post(
 	registerAgentAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
@@ -203,11 +224,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingWhoURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingWhoController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingWhoURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	representingWhoValidationRules(),
 	validationErrorHandler,
@@ -216,11 +239,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingPersonNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingPersonNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
@@ -229,11 +254,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingOrgNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingOrgNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
@@ -242,20 +269,28 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentRepresentingHouseholdURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentRepresentingNameController
 );
 registerAgentRouter.post(
 	registerAgentRepresentingHouseholdURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	representingNameValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentRepresentingNameController
 );
 
-registerAgentRouter.get(registerAgentNumberURL, registerMiddleware, getRegisterNumberController);
+registerAgentRouter.get(
+	registerAgentNumberURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterNumberController
+);
 registerAgentRouter.post(
 	registerAgentNumberURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,
@@ -264,11 +299,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentAreTheyOver18URL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAreThey18Controller
 );
 registerAgentRouter.post(
 	registerAgentAreTheyOver18URL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	areThey18ValidationRules(),
 	validationErrorHandler,
@@ -277,11 +314,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirAddressController
 );
 registerAgentRouter.post(
 	registerAgentTheirAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
@@ -290,11 +329,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirEmailURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirEmailController
 );
 registerAgentRouter.post(
 	registerAgentTheirEmailURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	theirEmailValidationRules(),
 	validationErrorHandler,
@@ -303,11 +344,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentAboutProjectURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentAboutProjectController
 );
 registerAgentRouter.post(
 	registerAgentAboutProjectURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),
@@ -317,11 +360,13 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentTheirTelephoneURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentTheirTelephoneController
 );
 registerAgentRouter.post(
 	registerAgentTheirTelephoneURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	theirTelephoneValidationRules(),
 	validationErrorHandler,
@@ -330,30 +375,35 @@ registerAgentRouter.post(
 
 registerAgentRouter.get(
 	registerAgentCheckAnswersURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAgentCheckAnswersController
 );
 
 registerAgentRouter.get(
 	registerAgentDeclarationURL,
+	registerStartRedirectMiddleware,
 	noCache,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
 registerAgentRouter.post(
 	registerAgentDeclarationURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	postRegisterDeclarationController
 );
 
 registerAgentRouter.get(
 	registerAgentCompleteURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );
 
 registerAgentRouter.get(
 	registerAgentAlreadyRegisteredURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAlreadyRegisteredController
 );
