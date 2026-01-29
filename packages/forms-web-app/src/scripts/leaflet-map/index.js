@@ -9,7 +9,6 @@ const MARKER_BATCH_SIZE = 5; // Smaller batches for snappier UI responsiveness
 const TILE_CACHE_SIZE = 100;
 const POPUP_MAX_WIDTH = 300;
 const POPUP_MIN_WIDTH = 250;
-const TEXT_WORD_LIMIT = 25;
 
 /**
  * TokenManager - Handles OAuth token acquisition from server
@@ -286,39 +285,32 @@ class TileLayerManager {
  */
 class PopupBuilder {
 	/**
-	 * Build popup HTML content for a marker
-	 * Creates HTML table with project name, case reference, stage, and optional summary.
+	 * Build popup HTML content for marker(s)
+	 * Creates HTML table with project name, case reference, and stage.
+	 * Supports single or multiple projects.
 	 *
-	 * @param {Object} properties - GeoJSON feature properties
+	 * @param {Object|Array} properties - GeoJSON feature properties (single object or array of objects)
 	 * @param {string} [properties.projectName='Unknown Project'] - Project name
 	 * @param {string} [properties.caseRef='#'] - Case reference identifier
 	 * @param {string} [properties.stage='Unknown Stage'] - Project stage
-	 * @param {string} [properties.summary=''] - Project summary (truncated to 25 words)
 	 * @returns {string} HTML popup content
 	 */
 	build(properties) {
-		const {
-			projectName = 'Unknown Project',
-			caseRef = '#',
-			stage = 'Unknown Stage',
-			summary = ''
-		} = properties;
+		// Handle both single object and array of objects
+		const projectsArray = Array.isArray(properties) ? properties : [properties];
+		const projectCount = projectsArray.length;
 
-		const summaryRow = summary
-			? `
-				<tr class="cluster-popup-row cluster-popup-last-row">
-					<td class="cluster-popup-cell-name">
-						${this.truncateText(summary, TEXT_WORD_LIMIT)}
-					</td>
-				</tr>
-			`
-			: '';
+		const rows = projectsArray
+			.map((prop, index) => {
+				const { projectName = 'Unknown Project', caseRef = '#', stage = 'Unknown Stage' } = prop;
 
-		return `
-			<div class="cluster-popup-container">
-				<h2 class="cluster-popup-header">1 project selected</h2>
-				<table class="cluster-popup-table">
-					<tr class="cluster-popup-row">
+				const isLastRow = index === projectCount - 1;
+				const rowClass = isLastRow
+					? 'cluster-popup-row cluster-popup-last-row'
+					: 'cluster-popup-row';
+
+				return `
+					<tr class="${rowClass}">
 						<td class="cluster-popup-cell-name">
 							<a href="/projects/${caseRef}" class="cluster-popup-link">${projectName}</a>
 						</td>
@@ -326,27 +318,20 @@ class PopupBuilder {
 							${stage}
 						</td>
 					</tr>
-					${summaryRow}
+				`;
+			})
+			.join('');
+
+		return `
+			<div class="cluster-popup-container">
+				<h2 class="cluster-popup-header">${projectCount} project${
+			projectCount !== 1 ? 's' : ''
+		} selected</h2>
+				<table class="cluster-popup-table">
+					${rows}
 				</table>
 			</div>
 		`;
-	}
-
-	/**
-	 * Truncate text to word limit
-	 * Returns text as-is if within limit, otherwise truncates and adds ellipsis.
-	 *
-	 * @param {string} text - Text to truncate
-	 * @param {number} wordLimit - Maximum word count
-	 * @returns {string} Truncated text with ellipsis if needed
-	 */
-	truncateText(text, wordLimit) {
-		if (typeof text !== 'string') return '';
-
-		const words = text.trim().split(/\s+/);
-		if (words.length <= wordLimit) return text.trim();
-
-		return words.slice(0, wordLimit).join(' ') + '...';
 	}
 }
 
@@ -450,6 +435,94 @@ class MarkerLoader {
 			requestAnimationFrame(() => this.processBatch(map, markerGroup, markers, endIndex));
 		} else {
 			map.addLayer(markerGroup);
+			// Zoom to fit all markers if we have filtered data
+			this.zoomToMarkers(map, markerGroup, markers);
+		}
+	}
+
+	/**
+	 * Calculate bounds from markers and zoom map to fit them
+	 * Implements Scenario 7: Auto-zoom to filtered results
+	 *
+	 * Algorithm:
+	 * 1. Check if user has applied any filters via hasActiveFilters flag
+	 * 2. If no filters: keep default UK-wide view
+	 * 3. If filters active: use Leaflet's fitBounds() to optimize zoom + pan
+	 * 4. Determine max zoom based on marker count (1 marker: 12, multiple: 10)
+	 * 5. Respect accessibility preference: prefers-reduced-motion
+	 * 6. Open popup on first marker for context
+	 *
+	 * @param {L.Map} map - Leaflet map instance
+	 * @param {L.FeatureGroup|L.MarkerClusterGroup} markerGroup - Marker group on map
+	 * @param {Array<Object>} markers - GeoJSON features (filtered)
+	 * @returns {void}
+	 */
+	zoomToMarkers(map, markerGroup, markers) {
+		if (!markerGroup || markers.length === 0) {
+			return;
+		}
+
+		// Check if user has applied any filters
+		const mapConfig = window._applicationService?.mapConfig;
+		const hasActiveFilters = mapConfig?.hasActiveFilters || false;
+		const enableAnimation = mapConfig?.animateWhenZoomed !== false;
+
+		window.pageDebug?.(
+			`zoomToMarkers - hasActiveFilters: ${hasActiveFilters}, markers.length: ${markers.length}, animate: ${enableAnimation}`
+		);
+
+		// Only zoom to filtered results if user has applied filters
+		// This prevents zooming on page load when no filters are selected
+		if (hasActiveFilters) {
+			try {
+				// Calculate bounding box from all currently visible markers
+				const bounds = markerGroup.getBounds();
+				if (bounds && bounds.isValid()) {
+					// Determine max zoom based on number of filtered projects
+					// If only 1 project: use level 12 (consistent with individual project pages)
+					// If multiple projects: use level 10 (comfortable multi-project view)
+					const maxZoomLevel = markers.length === 1 ? 12 : 10;
+
+					// Fit map to show all filtered markers with comfortable padding
+					// Padding: 50px on all sides ensures text/controls are readable
+					map.fitBounds(bounds, {
+						padding: [50, 50],
+						animate: enableAnimation,
+						maxZoom: maxZoomLevel
+					});
+
+					window.pageDebug?.(
+						`Zoomed to ${markers.length} filtered markers due to active filters (maxZoom: ${maxZoomLevel})`
+					);
+				}
+			} catch (error) {
+				window.pageDebug?.('Error calculating marker bounds:', error.message);
+				// Silently fail - don't break map if bounds calculation fails
+				// Map will remain at default zoom level
+			}
+		}
+	}
+
+	/**
+	 * Show popup on the first visible marker in the map
+	 * Used to provide immediate context when auto-zooming to filtered results
+	 *
+	 * @param {L.FeatureGroup|L.MarkerClusterGroup} markerGroup - Marker group containing markers
+	 * @returns {void}
+	 */
+	showFirstMarkerPopup(markerGroup) {
+		try {
+			if (!markerGroup) return;
+
+			// Get the first layer (marker) from the marker group
+			const firstMarker = markerGroup.getLayers()[0];
+			if (firstMarker && typeof firstMarker.openPopup === 'function') {
+				firstMarker.openPopup();
+				window.pageDebug?.('Opened popup for first filtered marker');
+			}
+		} catch (error) {
+			window.pageDebug?.('Error opening first marker popup:', error.message);
+			// Silently fail - popup not critical for map functionality
 		}
 	}
 

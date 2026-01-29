@@ -1,0 +1,13 @@
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion with context %}
+{% from "components/layout/slots.njk" import layoutSlots %}
+
+{{ layoutSlots([
+	uiCheckboxAccordion(
+		true,
+		filters,
+		t('common.filter'),
+		mapConfig.totalProjects + " " + t('projectsMap.common.projects'),
+		"projects-map-page-filters",
+		'modal-on-tablet'
+	)
+]) }}

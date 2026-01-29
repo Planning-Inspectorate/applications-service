@@ -2,15 +2,16 @@ const { projectStages } = require('../utils/project-stages');
 const { getAllProjectList } = require('../lib/application-api-wrapper');
 
 /**
- * Fetches and transforms projects to GeoJSON format
+ * Fetches and transforms projects to GeoJSON format with optional filtering
  *
  * Validates GeoJSON structure to ensure client-side compatibility.
  *
+ * @param {string} [queryString] - Optional query string for filtering (e.g., '?region=south_east&sector=energy')
  * @returns {Promise<Object>} Valid GeoJSON FeatureCollection
  * @throws {Error} If projects cannot be fetched or GeoJSON is invalid
  */
-const getProjectsMapGeoJSON = async () => {
-	const projectsResponse = await getAllProjectList();
+const getProjectsMapGeoJSON = async (queryString) => {
+	const projectsResponse = await getAllProjectList(queryString);
 
 	if (!projectsResponse || !projectsResponse.data) {
 		throw new Error('Failed to fetch projects from database');

@@ -4,20 +4,60 @@
 
 {% set pageTitle = t('projectsMap.pageTitle') %}
 
+{% set leafletStyles = [
+	{
+		cdn: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css',
+		local: '/public/stylesheets/leaflet.css'
+	},
+	{
+		cdn: 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.min.css',
+		local: '/public/stylesheets/MarkerCluster.css'
+	},
+	{
+		cdn: 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css',
+		local: '/public/stylesheets/MarkerCluster.Default.css'
+	}
+] %}
+
 {% block stylesheet %}
-	<link rel="stylesheet" href="/public/stylesheets/leaflet.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/projects-map.css">
+	{% for style in leafletStyles %}
+		<link rel="stylesheet" href="{{ style.cdn }}"/>
+	{% endfor %}
+	<link rel="stylesheet" href="/public/stylesheets/projects-map.css"/>
+	<script nonce="{{ cspNonce }}">
+		function loadLocalStylesheet(url) {
+			const link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = url;
+			document.head.appendChild(link);
+		}
+
+		const stylesheets = [
+			{% for style in leafletStyles %}
+			{ cdn: '{{ style.cdn }}', local: '{{ style.local }}' }{{ "," if not loop.last }}
+			{% endfor %}
+		];
+
+		stylesheets.forEach((sheet) => {
+			const link = document.querySelector(`link[href="${sheet.cdn}"]`);
+			if (link) {
+				link.onerror = () => {
+					loadLocalStylesheet(sheet.local);
+				};
+			}
+		});
+	</script>
 {% endblock %}
 
 {% block content %}
 	<div class="govuk-grid-row">
-		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
-			Filter goes here
+		<aside class="govuk-grid-column-one-third govuk-!-display-none" id="maps-sidebar-content" aria-label="Project filters">
+			<form method="post">
+				{% include "./includes/sidebar.njk" %}
+			</form>
 		</aside>
 
-		<div class="govuk-grid-column-two-thirds" id="maps-content">
+		<div class="govuk-grid-column-full" id="maps-content">
 			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 				{{ t('projectsMap.heading1') }}
 			</h1>
@@ -32,12 +72,9 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
-			{# TODO: create a new sidebar with filter #}
-			{% include "../project-search/includes/search.njk" %}
-
 			<div class="govuk-button-group">
 				{{ govukButton({
-					text: t('projectsMap.hideFiltersText'),
+					text: t('projectsMap.showFiltersText'),
 					classes: "govuk-button--secondary",
 					attributes: {
 						id: "filters-toggle-btn",
@@ -49,26 +86,28 @@
 						'data-show-label': t('projectsMap.showFiltersText'),
 						'data-hide-label': t('projectsMap.hideFiltersText'),
 						'data-on-toggle': '_applicationService.onSidebarToggle',
-						'aria-expanded': 'true',
+						'aria-expanded': 'false',
 						'aria-controls': 'maps-sidebar-content'
 					}
 				}) }}
 				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
 			</div>
 
+			<form method="post">
+				{% include "../project-search/includes/search.njk" %}
+			</form>
+
+			{% include "../project-search/includes/active-filters.njk" %}
+
 			<div id="projects-map"
 				role="main"
-				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
+				aria-label="{{ t('projectsMap.mapAriaLabel') }}"
 				tabindex="0"
 				class="govuk-!-margin-bottom-4"></div>
 
 			<p class="govuk-visually-hidden">
-				This interactive map shows the locations of {{ mapConfig.totalProjects }} National Infrastructure projects across the UK.
-				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
-				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
+				{{ t('projectsMap.mapIntroText', { totalProjects: mapConfig.totalProjects, projectSearchLink: '<a href="' + projectSearchURL + '">' + t('projectsMap.projectSearchText') + '</a>' }) | safe }}
 			</p>
-
-			{% include "../project-search/includes/active-filters.njk" %}
 
 			{{ govukWarningText({
 				text: t('projectsMap.warningText'),
@@ -107,7 +146,9 @@
 				crs: {{ mapConfig.crs | dump | safe }},
 				markers: {{ mapConfig.markers | dump | safe }},
 				clustered: {{ mapConfig.clustered | dump | safe }},
-				totalProjects: {{ mapConfig.totalProjects }}
+				totalProjects: {{ mapConfig.totalProjects }},
+				hasActiveFilters: {{ mapConfig.hasActiveFilters | dump | safe }},
+				animateWhenZoomed: {{ mapConfig.animateWhenZoomed | dump | safe }}
 			},
 			/**
 			 * Callback when sidebar toggles
@@ -122,8 +163,13 @@
 		window.pageDebug('_applicationService initialized:', window._applicationService);
 	</script>
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
 		{
-			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new window.SidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
+			callback: "var modal = new appScripts.modal(); modal.initiate('#projects-map-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#projects-map-search-bar', 'Show filters', 'tablet');",
+			src: "/public/scripts/modal.script.js"
+		},
+		{
+			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new appScripts.sidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
 			src: "/public/scripts/sidebarToggler.script.js"
 		},
 		{

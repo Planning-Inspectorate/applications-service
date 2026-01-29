@@ -102,26 +102,26 @@ describe('scripts/leaflet-map/LeafletMap - Business Logic', () => {
 		});
 	});
 
-	describe('PopupBuilder - HTML Generation & Text Truncation', () => {
+	describe('PopupBuilder - HTML Generation & Table Layout', () => {
 		let popupBuilder;
 
 		beforeEach(() => {
 			popupBuilder = new PopupBuilder();
 		});
 
-		it('should generate valid popup HTML with all properties', () => {
+		it('should generate valid popup HTML with project details in table format', () => {
 			const html = popupBuilder.build({
 				projectName: 'Thames Crossing',
 				caseRef: 'EN010001',
-				stage: 'pre-application',
-				summary: 'Major infrastructure project'
+				stage: 'pre-application'
 			});
 
 			expect(html).toContain('Thames Crossing');
 			expect(html).toContain('EN010001');
 			expect(html).toContain('pre-application');
-			expect(html).toContain('Major infrastructure project');
 			expect(html).toContain('href="/projects/EN010001"');
+			expect(html).toContain('cluster-popup-table');
+			expect(html).toContain('1 project selected');
 		});
 
 		it('should use defaults for missing properties', () => {
@@ -130,27 +130,32 @@ describe('scripts/leaflet-map/LeafletMap - Business Logic', () => {
 			expect(html).toContain('Unknown Project');
 			expect(html).toContain('#');
 			expect(html).toContain('Unknown Stage');
+			expect(html).toContain('1 project selected');
 		});
 
-		it('should truncate summary to 25 words', () => {
-			const longSummary = 'word '.repeat(50); // 50 words
-			const html = popupBuilder.build({ summary: longSummary });
+		it('should handle multiple projects in array format', () => {
+			const html = popupBuilder.build([
+				{ projectName: 'Project A', caseRef: 'EN010001', stage: 'stage-1' },
+				{ projectName: 'Project B', caseRef: 'EN010002', stage: 'stage-2' }
+			]);
 
-			// Should contain truncation indicator
-			expect(html).toContain('...');
-
-			// Count words in the truncated text (should be ~25)
-			const truncatedText = html.match(/word.*?\.\.\./)[0];
-			const wordCount = truncatedText.split(/\s+/).length;
-			expect(wordCount).toBeLessThanOrEqual(30); // Allow some flexibility
+			expect(html).toContain('Project A');
+			expect(html).toContain('Project B');
+			expect(html).toContain('2 projects selected');
+			expect(html).toContain('EN010001');
+			expect(html).toContain('EN010002');
 		});
 
-		it('should not add ellipsis for short summaries', () => {
-			const shortSummary = 'Short text';
-			const html = popupBuilder.build({ summary: shortSummary });
+		it('should pluralize project count correctly', () => {
+			const singleHTML = popupBuilder.build({ projectName: 'Single' });
+			expect(singleHTML).toContain('1 project selected');
 
-			expect(html).not.toContain('...');
-			expect(html).toContain('Short text');
+			const multiHTML = popupBuilder.build([
+				{ projectName: 'Project 1' },
+				{ projectName: 'Project 2' },
+				{ projectName: 'Project 3' }
+			]);
+			expect(multiHTML).toContain('3 projects selected');
 		});
 
 		it('should generate correct project link with case reference', () => {
