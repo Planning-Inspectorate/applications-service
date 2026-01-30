@@ -6,6 +6,7 @@ const {
 
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { registerMiddleware } = require('./_middleware/register-middleware');
+const { registerStartRedirectMiddleware } = require('./_middleware/start-redirect-middleware');
 const {
 	addRegisterTranslationsMiddleware
 } = require('./_middleware/add-register-translations-middleware');
@@ -64,11 +65,13 @@ describe('pages/projects/register/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/who-registering-for',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisteringForController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/who-registering-for',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				validateRegisteringForOptions(),
 				validationErrorHandler,

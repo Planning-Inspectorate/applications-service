@@ -2,6 +2,7 @@ const { getIndexController } = require('./controller');
 const { featureFlag } = require('../../config');
 
 featureFlag.allowWelshCases = true;
+featureFlag.enableProjectsMap = true;
 
 const defaultPageData = {
 	homePageUrls: {
@@ -10,6 +11,7 @@ const defaultPageData = {
 		haveYourSayGuideURL: 'having-your-say-guide',
 		processGuideURL: 'decision-making-process-guide',
 		projectSearchURL: 'project-search',
+		projectsMapURL: 'projects-map',
 		nsipNewsURL:
 			'https://www.gov.uk/search/news-and-communications?parent=planning-inspectorate&organisations%5B%5D=planning-inspectorate&order=updated-newest',
 		developmentConsentURL:
@@ -36,7 +38,8 @@ describe('pages/index/controller', () => {
 		it('should render the page using correct template and data', () => {
 			expect(res.render).toHaveBeenCalledWith('index/view.njk', {
 				...defaultPageData,
-				allowWelshCases: true
+				allowWelshCases: true,
+				enableProjectsMap: true
 			});
 		});
 	});

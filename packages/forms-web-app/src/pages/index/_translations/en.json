@@ -23,5 +23,7 @@
 	"linkTitle5": "I need help",
 	"linkParagraph5": "How to get in contact with us.",
 	"linkTitle6": "See the latest news",
-	"linkParagraph6": "See the latest NSIP news."
+	"linkParagraph6": "See the latest NSIP news.",
+	"paragraph7": "See a {{-link}}",
+	"paragraph7LinkText": "map view of all projects"
 }

@@ -33,7 +33,7 @@ module.exports = async (context, message) => {
 		dateReceived: message.dateReceived,
 		representationComment: message.redacted
 			? message.redactedRepresentation
-			: message.originalRepresentation,
+			: message.editedRepresentation || message.originalRepresentation,
 		representationFrom: message.representationFrom,
 		representationType: message.representationType,
 		registerFor: message.registerFor,

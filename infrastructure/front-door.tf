@@ -500,6 +500,16 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     }
 
     override {
+      rule_group_name = "PROTOCOL-ATTACK"
+      # HTTP Request Smuggling Attack
+      rule {
+        action  = "Log"
+        enabled = true
+        rule_id = "921110"
+      }
+    }
+
+    override {
       rule_group_name = "PROTOCOL-ENFORCEMENT"
 
       rule {
@@ -514,6 +524,13 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
         action  = "Log"
         enabled = true
         rule_id = "920121"
+      }
+
+      rule {
+        # URL Encoding Abuse Attack Attempt
+        action  = "Log"
+        enabled = true
+        rule_id = "920240"
       }
     }
 
@@ -534,11 +551,47 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
       }
     }
 
-    # Exception for ASB-2059 - Exclude all rules for this selector.
+    # Exclude all rules for these selectors (Register to HYS).
     exclusion {
       match_variable = "RequestBodyPostArgNames"
       operator       = "Equals"
       selector       = "comment"
+    }
+
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "full-name"
+    }
+
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "StartsWith"
+      selector       = "line"
+    }
+
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "country"
+    }
+
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "postcode"
+    }
+
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "organisation-name"
+    }
+
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "role"
     }
 
     # Exception for ASB-1692 merged with ASB-1928 - Exclude all rules for this selector.
@@ -548,6 +601,13 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
       match_variable = "RequestBodyPostArgNames"
       operator       = "Equals"
       selector       = "backOfficeProjectUpdateContent"
+    }
+
+    # exclude examination enter comment from all rules
+    exclusion {
+      match_variable = "RequestBodyPostArgNames"
+      operator       = "Equals"
+      selector       = "examination-enter-comment"
     }
   }
 

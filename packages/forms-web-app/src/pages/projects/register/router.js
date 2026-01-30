@@ -11,6 +11,7 @@ const { getRegisteringForURL } = require('./registering-for/_utils/get-registeri
 
 const { projectsMiddleware } = require('../_middleware/middleware');
 const { registerMiddleware } = require('./_middleware/register-middleware');
+const { registerStartRedirectMiddleware } = require('./_middleware/start-redirect-middleware');
 const {
 	addRegisterTranslationsMiddleware
 } = require('./_middleware/add-register-translations-middleware');
@@ -37,9 +38,15 @@ registerRouter.use(addCommonTranslationsMiddleware, addRegisterTranslationsMiddl
 registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
 registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
 
-registerRouter.get(registeringForURL, registerMiddleware, getRegisteringForController);
+registerRouter.get(
+	registeringForURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisteringForController
+);
 registerRouter.post(
 	registeringForURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	validateRegisteringForOptions(),
 	validationErrorHandler,

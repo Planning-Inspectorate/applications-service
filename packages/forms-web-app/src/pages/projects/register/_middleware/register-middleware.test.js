@@ -16,7 +16,8 @@ describe('#registerMiddleware', () => {
 			};
 			const res = {
 				locals: {},
-				get: jest.fn().mockReturnValue('app-insights-correlation-id')
+				get: jest.fn().mockReturnValue('app-insights-correlation-id'),
+				status: jest.fn()
 			};
 			registerMiddleware(req, res, next);
 			expect(next).toHaveBeenCalled();
@@ -35,9 +36,14 @@ describe('#registerMiddleware', () => {
 			const res = {
 				locals: {},
 				render: jest.fn(),
-				get: jest.fn().mockReturnValue('app-insights-correlation-id')
+				get: jest.fn().mockReturnValue('app-insights-correlation-id'),
+				status: jest.fn()
 			};
+			//mock the express method chaining of res.status().render()
+			res.status.mockReturnValue(res);
 			registerMiddleware(req, res, next);
+
+			expect(res.status).toHaveBeenCalledWith(500);
 			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
 				correlationId: 'app-insights-correlation-id'
 			});
@@ -55,9 +61,16 @@ describe('#registerMiddleware', () => {
 			const res = {
 				locals: {},
 				render: jest.fn(),
-				get: jest.fn().mockReturnValue('app-insights-correlation-id')
+				get: jest.fn().mockReturnValue('app-insights-correlation-id'),
+				status: jest.fn()
 			};
+
+			//mock the express method chaining of res.status().render()
+			res.status.mockReturnValue(res);
+
 			registerMiddleware(req, res, next);
+
+			expect(res.status).toHaveBeenCalledWith(500);
 			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
 				correlationId: 'app-insights-correlation-id'
 			});
@@ -76,9 +89,16 @@ describe('#registerMiddleware', () => {
 			const res = {
 				locals: {},
 				render: jest.fn(),
-				get: jest.fn().mockReturnValue('app-insights-correlation-id')
+				get: jest.fn().mockReturnValue('app-insights-correlation-id'),
+				status: jest.fn()
 			};
+
+			//mock the express method chaining of res.status().render()
+			res.status.mockReturnValue(res);
+
 			registerMiddleware(req, res, next);
+
+			expect(res.status).toHaveBeenCalledWith(500);
 			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
 				correlationId: 'app-insights-correlation-id'
 			});
@@ -98,9 +118,15 @@ describe('#registerMiddleware', () => {
 			const res = {
 				locals: {},
 				render: jest.fn(),
-				get: jest.fn().mockReturnValue('app-insights-correlation-id')
+				get: jest.fn().mockReturnValue('app-insights-correlation-id'),
+				status: jest.fn()
 			};
+			//mock the express method chaining of res.status().render()
+			res.status.mockReturnValue(res);
+
 			registerMiddleware(req, res, next);
+
+			expect(res.status).toHaveBeenCalledWith(500);
 			expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error', {
 				correlationId: 'app-insights-correlation-id'
 			});

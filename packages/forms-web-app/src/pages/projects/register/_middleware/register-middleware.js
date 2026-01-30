@@ -25,7 +25,7 @@ const registerMiddleware = (req, res, next) => {
 
 		const correlationId = res.get('x-app-insights-correlation-id');
 
-		return res.render('error/have-your-say-journey-error', { correlationId });
+		return res.status(500).render('error/have-your-say-journey-error', { correlationId });
 	}
 };
 

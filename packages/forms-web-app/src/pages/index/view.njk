@@ -58,10 +58,14 @@
 					<h2 class="govuk-heading-m ">
 						{{ t('index.heading3') }}
 					</h2>
-
 					<p class="govuk-body">
-						{{ t('index.paragraph5', { link: '<a class="govuk-link" href="' + homePageUrls.projectSearchURL + '">' + t('index.paragraph5LinkText') + '</a>' }) | safe }}
+    		{{ t('index.paragraph5', { link: '<a class="govuk-link" href="' + homePageUrls.projectSearchURL + '">' + t('index.paragraph5LinkText') + '</a>' }) | safe }}
 					</p>
+					{% if enableProjectsMap %}
+    <p class="govuk-body">
+        {{ t('index.paragraph7', { link: '<a class="govuk-link" href="' + homePageUrls.projectsMapURL + '">' + t('index.paragraph7LinkText') + '</a>' }) | safe }}
+    </p>
+{% endif %}
 				</div>
 			</div>
 		</div>

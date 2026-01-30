@@ -18,7 +18,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.21.1
+      ref: refs/tags/release/3.24.2
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -27,10 +27,19 @@ extends:
     validationJobs:
       - name: Check Commits
         steps:
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)" | package-lock.json
+              path: $(Pipeline.Workspace)/.npm
+            displayName: Cache NPM
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 22
               script: npm ci
+              environmentVariables:
+                npm_config_cache: $(Pipeline.Workspace)/.npm
 #          - template: ../steps/node_script.yml
 #            parameters:
 #              nodeVersion: 22

@@ -58,6 +58,7 @@ const {
 } = require('./already-registered/_utils/get-register-myself-already-registered-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const { noCache } = require('../_middleware/no-cache');
 
@@ -87,9 +88,15 @@ const registerMyselfAlreadyRegisteredURL = getRegisterMyselfAlreadyRegisteredURL
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
-registerMyselfRouter.get(registerMyselfNameURL, registerMiddleware, getRegisterNameController);
+registerMyselfRouter.get(
+	registerMyselfNameURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterNameController
+);
 registerMyselfRouter.post(
 	registerMyselfNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),
@@ -99,20 +106,28 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAreYou18URL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAreYou18Controller
 );
 registerMyselfRouter.post(
 	registerMyselfAreYou18URL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	areYou18ValidationRules(),
 	validationErrorHandler,
 	postRegisterAreYou18Controller
 );
 
-registerMyselfRouter.get(registerMyselfEmailURL, registerMiddleware, getRegisterEmailController);
+registerMyselfRouter.get(
+	registerMyselfEmailURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterEmailController
+);
 registerMyselfRouter.post(
 	registerMyselfEmailURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
@@ -121,20 +136,28 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAddressController
 );
 registerMyselfRouter.post(
 	registerMyselfAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
 	postRegisterAddressController
 );
 
-registerMyselfRouter.get(registerMyselfNumberURL, registerMiddleware, getRegisterNumberController);
+registerMyselfRouter.get(
+	registerMyselfNumberURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterNumberController
+);
 registerMyselfRouter.post(
 	registerMyselfNumberURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,
@@ -143,11 +166,13 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfAboutProjectURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterMyselfAboutProjectController
 );
 registerMyselfRouter.post(
 	registerMyselfAboutProjectURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),
@@ -157,30 +182,35 @@ registerMyselfRouter.post(
 
 registerMyselfRouter.get(
 	registerMyselfCheckAnswersURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterMyselfCheckAnswersController
 );
 
 registerMyselfRouter.get(
 	registerMyselfDeclarationURL,
+	registerStartRedirectMiddleware,
 	noCache,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
 registerMyselfRouter.post(
 	registerMyselfDeclarationURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	postRegisterDeclarationController
 );
 
 registerMyselfRouter.get(
 	registerMyselfCompleteURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );
 
 registerMyselfRouter.get(
 	registerMyselfAlreadyRegisteredURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAlreadyRegisteredController
 );

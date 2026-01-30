@@ -35,7 +35,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 										]
 									},
 									key: { text: 'Personal information' },
-									value: { html: 'Yes' }
+									value: { text: 'Yes' }
 								});
 							});
 						});
@@ -59,7 +59,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 										]
 									},
 									key: { text: 'Personal information' },
-									value: { html: 'Yes' }
+									value: { text: 'Yes' }
 								});
 							});
 						});
@@ -83,7 +83,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 										]
 									},
 									key: { text: 'Personal information' },
-									value: { html: 'Yes' }
+									value: { text: 'Yes' }
 								});
 							});
 						});
@@ -121,7 +121,7 @@ describe('examination/check-submission-item/utils/summary-list-item', () => {
 								]
 							},
 							key: { text: 'Personal information' },
-							value: { html: 'No' }
+							value: { text: 'No' }
 						});
 					});
 				});

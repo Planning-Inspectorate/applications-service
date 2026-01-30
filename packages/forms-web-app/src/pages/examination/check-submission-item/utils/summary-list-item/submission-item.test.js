@@ -48,7 +48,7 @@ describe('examination/check-submission-item/utils/summary-list-item/submission-i
 								]
 							},
 							key: { text: 'Deadline item' },
-							value: { html: 'mock submission item' }
+							value: { text: 'mock submission item' }
 						});
 					});
 				});
@@ -77,7 +77,7 @@ describe('examination/check-submission-item/utils/summary-list-item/submission-i
 					it('should return the object', () => {
 						expect(result).toEqual({
 							key: { text: 'Deadline item' },
-							value: { html: 'mock submission item' }
+							value: { text: 'mock submission item' }
 						});
 					});
 				});

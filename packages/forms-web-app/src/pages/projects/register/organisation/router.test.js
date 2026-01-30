@@ -41,6 +41,7 @@ const {
 } = require('../_common/already-registered/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const { noCache } = require('../_middleware/no-cache');
 
@@ -131,11 +132,13 @@ describe('pages/projects/register/organisation/router', () => {
 		it('should call the register organisation routes and controllers', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/full-name',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/full-name',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				fullNameValidationRules(),
@@ -146,11 +149,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/are-you-18-over',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterAreYou18Controller
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/are-you-18-over',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				areYou18ValidationRules(),
 				validationErrorHandler,
@@ -159,11 +164,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationOrgNameController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/name-of-organisation-or-charity',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				organisationOrgNameValidationRules(),
 				validationErrorHandler,
@@ -172,11 +179,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterEmailController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/email-address',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				emailValidationRules(),
 				validationErrorHandler,
@@ -185,11 +194,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationJobTitleController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/what-job-title-or-role',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				jobTitleValidationRules(),
@@ -200,11 +211,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterAddressController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/address',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				addressValidationRules(),
 				validationErrorHandler,
@@ -213,11 +226,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/telephone-number',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterNumberController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/telephone-number',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				telephoneValidationRules(),
 				validationErrorHandler,
@@ -226,11 +241,13 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/tell-us-about-project',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationAboutProjectController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/tell-us-about-project',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				decodeUri(),
 				aboutProjectValidationRules(),
@@ -241,30 +258,35 @@ describe('pages/projects/register/organisation/router', () => {
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/check-answers',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterOrganisationCheckAnswersController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/declaration',
+				registerStartRedirectMiddleware,
 				noCache,
 				registerMiddleware,
 				getRegisterDeclarationController
 			);
 			expect(post).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/declaration',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				postRegisterDeclarationController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/registration-complete',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterCompleteController
 			);
 
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/already-registered',
+				registerStartRedirectMiddleware,
 				registerMiddleware,
 				getRegisterAlreadyRegisteredController
 			);
