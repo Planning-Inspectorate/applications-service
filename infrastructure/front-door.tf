@@ -678,6 +678,24 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     }
   }
 
+  dynamic "custom_rule" {
+    for_each = var.environment == "dev" ? local.ip_blacklist_chunks : [] # only apply in dev environment. Can be modified to other environments as needed
+    content {
+      name     = "IpBlacklist${custom_rule.key + 1}"
+      action   = "Block"
+      enabled  = true
+      priority = 11 + custom_rule.key
+      type     = "MatchRule"
+
+      match_condition {
+        match_variable     = "RemoteAddr"
+        operator           = "IPMatch"
+        negation_condition = false
+        match_values       = custom_rule.value
+      }
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       # match the first custom rule (IpBlock) and ignore the match values (IPs)
