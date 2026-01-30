@@ -59,6 +59,7 @@
 		"marked": "*",
 		"moment": "*",
 		"node-fetch": "*",
+        "node-object-hash": "*",
 		"nunjucks": "*",
 		"nunjucks-date-filter": "*",
 		"ol": "*",
