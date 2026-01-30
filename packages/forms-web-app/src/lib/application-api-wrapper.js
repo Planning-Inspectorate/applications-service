@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
+const { hasher } = require('node-object-hash');
+const { hash: hashObject } = hasher();
+const { getCache, setCache } = require('./redis-cache');
+
 const { queryStringBuilder } = require('../utils/query-string-builder');
 const config = require('../config');
 const parentLogger = require('./logger');
@@ -106,7 +110,22 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 };
 
 exports.getDocumentByType = async (case_ref, type) => {
-	return handler('getDocumentByType', `/api/v3/documents/${case_ref}?type=${type}`);
+	const requestUrl = `/api/v3/documents/${case_ref}?type=${type}`;
+	//TODO: remove logs
+	console.log('getDocumentByType:>>', requestUrl);
+	const cacheKey = `${case_ref}:docsByType:${type}`;
+	console.log('cacheKey:>>>', cacheKey);
+	const cached = await getCache(cacheKey);
+	if (cached) {
+		console.log(`Returning cached response for ${cacheKey}`, cached);
+		return cached;
+	}
+
+	const response = await handler('getDocumentByType', requestUrl);
+	await setCache(cacheKey, response);
+	console.log(`Response cached for ${cacheKey}`);
+	console.dir(response, { depth: null, colors: true });
+	return response
 };
 
 exports.searchRepresentations = async (query = '') =>
@@ -176,11 +195,28 @@ exports.wrappedPostSubmission = async (caseRef, body) => {
 };
 
 exports.wrappedSearchDocumentsV3 = async (body) => {
-	const URL = `/api/v3/documents`;
+	const requestURL = `/api/v3/documents`;
 	const method = 'POST';
-	return handler('searchDocumentsV3', URL, method, {
+	const caseRef = body.caseReference
+	//TODO: remove logs
+
+	const hashedBody = hashObject(body);
+	const cacheKey = `${caseRef}:docs:${hashedBody}`;
+
+	const cached = await getCache(cacheKey);
+	if (cached) {
+		console.log(`Returning cached response for ${cacheKey}`, cached);
+
+		return cached;
+	}
+
+	const response = await handler('searchDocumentsV3', requestURL, method, {
 		body: JSON.stringify(body)
 	});
+
+	await setCache(cacheKey, response);
+
+	return response
 };
 
 exports.getDocumentUriByDocRef = async (docRef) => {

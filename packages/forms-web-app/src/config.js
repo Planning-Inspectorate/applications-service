@@ -24,6 +24,11 @@ module.exports = {
 	cacheControl: {
 		maxAge: process.env.CACHE_CONTROL_MAX_AGE || '1d'
 	},
+	redisCache: {
+		enabled: process.env.REDIS_CACHE_ENABLED === 'true',
+		redisApiKey: process.env.REDIS_CACHE_API_KEY,
+		ttl: process.env.REDIS_CACHE_TTL
+	},
 	db: {
 		session: {
 			redis: parseRedisConnectionString(process.env.REDIS_CONNECTION_STRING)

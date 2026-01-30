@@ -2,9 +2,10 @@ const { createClient } = require('redis');
 
 const config = require('../config');
 const logger = require('./logger');
+const { redisCache } = config
 
 let cacheClient = null;
-const DEFAULT_TTL = 300; //5 minutes for now, set from an env var?
+const CACHE_TTL = redisCache.ttl //5 minutes for now, set from an env var?
 
 const initializeCacheClient = () => {
 	if (cacheClient) {
@@ -37,36 +38,9 @@ const initializeCacheClient = () => {
 };
 
 
-// const initializeCacheClient = async () => {
-// 	if (cacheClient) {
-// 		return cacheClient;
-// 	}
-//
-// 	const redisConfig = config.db.session.redis;
-//
-// 	cacheClient = createClient({
-// 		socket: {
-// 			host: redisConfig.host,
-// 			port: redisConfig.port,
-// 			tls: redisConfig.ssl
-// 		},
-// 		password: redisConfig.password,
-// 		pingInterval: 1000 * 60 * 5
-// 	});
-//
-// 	cacheClient.on('error', (err) => logger.error(`Redis cache client error: ${err}`));
-//
-// 	await cacheClient.connect();
-// 	logger.info('Redis cache client connected');
-//
-// 	return cacheClient;
-// };
-
 
 const getCache = async (key) => {
 	try {
-		//const client = await initializeCacheClient();
-
 		if (!cacheClient) {
 			logger.warn('Redis cache client not initialized, skipping cache get');
 			return null;
@@ -90,7 +64,24 @@ const getCache = async (key) => {
 };
 
 
-const setCache = async (key, value, ttl = DEFAULT_TTL) => {
+const getCacheKeyCountByPattern = async (cacheKeyPattern) => {
+	try {
+		if (!cacheClient) {
+			logger.warn('Redis cache client not initialized, skipping cache get keys count');
+			return null;
+		}
+
+		const cacheKeys = await cacheClient.keys(cacheKeyPattern);
+
+		return cacheKeys.length;
+	} catch (err) {
+		logger.error(`Redis cache GET keys count error for pattern ${cacheKeyPattern}: ${err}`);
+		return false;
+	}
+};
+
+
+const setCache = async (key, value, ttl = CACHE_TTL) => {
 	try {
 		if (!cacheClient) {
 			logger.warn('Redis cache client not initialized, skipping cache set');
@@ -107,18 +98,6 @@ const setCache = async (key, value, ttl = DEFAULT_TTL) => {
 };
 
 
-const delCache = async (key) => {
-	try {
-
-		await cacheClient.del(`cache:${key}`);
-
-		return true;
-	} catch (err) {
-		logger.error(`Redis cache DEL error for key ${key}: ${err}`);
-		return false;
-	}
-};
-
 const flushAllCache = async () => {
 	try {
 		if (!cacheClient) {
@@ -127,59 +106,52 @@ const flushAllCache = async () => {
 		}
 		//only delete keys starting with "cache:", we don't want to clear the entire redis instance (contains session data)
 		const cacheKeyPattern = 'cache:*';
-		let result = {
-			success: false,
-			deletedKeys: 0
-		};
 
 		logger.warn(`FLUSHING ALL CACHE`);
 
 		const cachedKeys = await cacheClient.keys(cacheKeyPattern);
+		console.log('cached keys to flush:>>', cachedKeys);
 
 		if (cachedKeys.length === 0) {
 			logger.info('No cache keys found to flush');
-			result.sucess = true;
 
-			return result
+			return 0
 		}
 
 		const deletedKeys = await cacheClient.del(cachedKeys);
 
-		logger.info(`Cache flush complete - ${deletedKeys.length} keys deleted`);
+		logger.info(`Cache flush complete - ${deletedKeys} keys deleted`);
 
-		result.success = true;
-		result.deletedKeys = deletedKeys.length;
 
-		return result
+		return deletedKeys
 	} catch (err) {
 		logger.error(`Redis cache FLUSH error: ${err}`);
 		return false;
 	}
 }
 
-const flushCacheByPattern = async (pattern) => {
+const delCacheByPattern = async (pattern) => {
 	try {
 		if (!cacheClient) {
-			logger.warn('Redis cache client not initialized, skipping cache flush by pattern');
+			logger.warn('Redis cache client not initialized, skipping cache clear by pattern');
 			return false;
 		}
 
-		const cacheKeyPattern = `cache:${pattern}`;
-
-		logger.warn(`FLUSHING CACHE BY PATTERN: ${pattern}`);
-
-		const cachedKeys = await cacheClient.keys(cacheKeyPattern);
+		const cachedKeys = await cacheClient.keys(pattern);
+		console.log('cached keys to clear:>>', cachedKeys);
 
 		if (cachedKeys.length === 0) {
-			logger.info('No cache keys found to flush for pattern');
-			return true;
+			logger.info('No cache keys found to clear');
+
+			return 0
 		}
 
 		const deletedKeys = await cacheClient.del(cachedKeys);
-		logger.info(`Cache flush by pattern complete - ${deletedKeys.length} keys deleted`);
-		return true;
+		logger.info(`Cache clear complete - ${deletedKeys} keys deleted`);
+
+		return deletedKeys
 	} catch (err) {
-		logger.error(`Redis cache FLUSH BY PATTERN error: ${err}`);
+		logger.error(`Redis cache FLUSH error: ${err}`);
 		return false;
 	}
 }
@@ -188,8 +160,8 @@ const flushCacheByPattern = async (pattern) => {
 module.exports = {
 	initializeCacheClient,
 	getCache,
+	getCacheKeyCountByPattern,
 	setCache,
-	delCache,
-	flushCacheByPattern,
+	delCacheByPattern,
 	flushAllCache
 };
