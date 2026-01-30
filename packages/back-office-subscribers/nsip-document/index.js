@@ -1,3 +1,4 @@
+const axios = require('axios');
 const pick = require('lodash.pick');
 const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
@@ -5,10 +6,22 @@ const buildMergeQuery = require('../lib/build-merge-query');
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-document function`);
 	const documentId = message.documentId;
+	const caseRef = message.caseReference;
 
 	if (!documentId) {
 		throw new Error('documentId is required');
 	}
+
+	if (!caseRef) {
+		throw new Error('caseReference is required');
+	}
+
+	context.log(`clearing documents cache for caseRef ${caseRef}`);
+
+	const cacheKeyPattern = `cache:${caseRef}:docs*`
+	const cacheClearResponse = await axios.delete(`${process.env.APPLICATIONS_WEB_BASE_URL}/api/cache/clear?${cacheKeyPattern}`)
+
+	context.log(`cleared ${cacheClearResponse} keys for pattern ${cacheKeyPattern}`);
 
 	const documents = {
 		...pick(message, documentPropertiesFromMessage),
