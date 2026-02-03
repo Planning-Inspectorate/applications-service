@@ -14,7 +14,7 @@ parameters:
   - name: schemaMigration
     displayName: Run Database Migration
     type: boolean
-    default: false
+    default: true
   - name: region
     displayName: Region
     type: string
@@ -62,9 +62,9 @@ extends:
           dependsOn:
             - Dev
     deploymentStages:
-      - name: Deploy Applications
+      - name: Stage
         deploymentJobs:
-          - name: Deploy API
+          - name: Stage API
             condition: eq(${{ parameters.deployAPI }}, 'true')
             steps:
               - checkout: self
