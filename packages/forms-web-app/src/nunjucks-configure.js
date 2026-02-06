@@ -34,7 +34,9 @@ function nunjucksConfigure(app) {
 		autoescape: true,
 		noCache: true,
 		watch: isDev,
-		express: app
+		express: app,
+		trimBlocks: true,
+		lstripBlocks: true
 	};
 	const nunjucksEnv = nunjucks.configure(viewPaths, nunjucksConfig);
 

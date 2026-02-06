@@ -15,7 +15,9 @@ const viewPaths = [
 ];
 
 const nunjucksConfig = {
-	noCache: true
+	noCache: true,
+	trimBlocks: true,
+	lstripBlocks: true
 };
 
 const env = nunjucks.configure(viewPaths, nunjucksConfig);
