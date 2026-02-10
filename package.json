@@ -88,7 +88,7 @@
 		"@testing-library/user-event": "^12.8.3",
 		"abort-controller": "^3.0.0",
 		"applicationinsights": "^2.9.0",
-		"axios": "^1.12.2",
+		"axios": "^1.13.5",
 		"axios-logger": "^2.6.1",
 		"body-parser": "^1.19.0",
 		"chokidar": "^3.5.3",
