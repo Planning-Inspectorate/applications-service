@@ -8,7 +8,7 @@ locals {
   # resource_suffix           = "${local.service_name}-${var.environment}"
   # secondary_resource_suffix = "${local.service_name}-secondary-${var.environment}"
 
-  # get the IPs from the ip_blacklist secure file only for dev environment
+  # get the IPs from the ip_blacklist secure file only for prod environment
   # defines the file location and is dependent on preliminarySteps defined in pipeline
   ip_blacklist_file_path = abspath("../ip_blacklist.json")
   # function takes a JSON string and converts it into a Terraform list value
