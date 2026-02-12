@@ -679,7 +679,7 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
   }
 
   dynamic "custom_rule" {
-    for_each = var.environment == "dev" ? local.ip_blacklist_chunks : [] # only apply in dev environment. Can be modified to other environments as needed
+    for_each = var.environment == "prod" ? local.ip_blacklist_chunks : [] # only apply in prod environment. Can be modified to other environments as needed
     content {
       name     = "IpBlacklist${custom_rule.key + 1}"
       action   = "Block"
